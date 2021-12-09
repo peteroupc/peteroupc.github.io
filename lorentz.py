@@ -382,6 +382,10 @@ class C2PiecewisePoly:
                     self.polys[d] = [lo, up]
             if n not in self.polys:
                 raise ValueError
+            if len(self.polys[n][0]) != n:
+                raise ValueError
+            if len(self.polys[n][1]) != n:
+                raise ValueError
             return self.polys[n]
 
     def _fbelow(self, n, k):
@@ -393,7 +397,7 @@ class C2PiecewisePoly:
     def simulate(self, coin):
         return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
 
-class C2PiecewisePoly2:
+class C2PiecewisePoly:
     def __init__(self, pwp):
         self.pwp = pwp
         self.initialdeg = 4
@@ -435,6 +439,18 @@ class C2PiecewisePoly2:
     def simulate(self, coin):
         return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
 
+def _fb(fbelow, a, b):
+    if b > a:
+        raise ValueError
+    return int(Fraction(fbelow(a, b)) * math.comb(a, b))
+
+def _fa(fabove, a, b):
+    if b > a:
+        raise ValueError
+    mv = Fraction(fabove(a, b)) * math.comb(a, b)
+    imv = int(mv)
+    return imv if mv == imv else imv + 1
+
 def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
     """Simulates a general factory function defined by two
     sequences of polynomials that converge from above and below.
@@ -453,6 +469,10 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
        must be specified)."""
     ones = 0
     lastdegree = 0
+    l = Fraction(0)
+    lt = Fraction(0)
+    u = Fraction(1)
+    ut = Fraction(1)
     degree = nextdegree(0) if nextdegree != None else 1
     while True:
         fb = fbound(degree)
@@ -462,43 +482,36 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
     startdegree = degree
     a = {}
     b = {}
+    ret = random.random()
     while True:
         for i in range(degree - lastdegree):
             if coin() == 1:
                 ones += 1
-        c = int(math.comb(degree, ones))
-        # c *= 2 ** degree
-        # print([degree,float(fbelow(degree, ones)),float(fabove(degree, ones))])
-        a[(degree, ones)] = int(Fraction(fbelow(degree, ones)) * c)
-        b[(degree, ones)] = int((1 - Fraction(fabove(degree, ones))) * c)
-        acount = a[(degree, ones)]
-        bcount = b[(degree, ones)]
-        c -= acount + bcount
+        c = math.comb(degree, ones)
+        l = Fraction(_fb(fbelow, degree, ones), c)
+        u = Fraction(_fa(fabove, degree, ones), c)
+        if degree == startdegree:
+            ls = Fraction(0)
+            us = Fraction(1)
         if degree > startdegree:
-            diff = degree - lastdegree
-            u = max(ones - lastdegree, 0)
-            v = min(ones, diff)
-            g = math.comb(lastdegree, ones - u)
-            h = 1
-            # h = 2 ** degree
-            for k in range(u, v + 1):
-                o = ones - k
-                if not (lastdegree, o) in a:
-                    a[(lastdegree, o)] = int(Fraction(fbelow(lastdegree, o)) * g * h)
-                if not (lastdegree, o) in b:
-                    b[(lastdegree, o)] = int(
-                        (1 - Fraction(fabove(lastdegree, o))) * g * h
-                    )
-                st = math.comb(diff, k)
-                acount -= a[(lastdegree, o)] * st
-                bcount -= b[(lastdegree, o)] * st
-                g *= o
-                g //= lastdegree + 1 - o
-        # print([acount,bcount,c])
-        r = random.randint(0, (acount + bcount + c) - 1)
-        if r < acount:
+            nh = math.comb(degree, ones)
+            ls = sum(
+                _fb(fbelow, lastdegree, j)
+                * Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                for j in range(0, min(lastdegree, ones) + 1)
+            )
+            us = sum(
+                _fa(fabove, lastdegree, j)
+                * Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                for j in range(0, min(lastdegree, ones) + 1)
+            )
+        m = (ut - lt) / (us - ls)
+        lt = lt + (l - ls) * m
+        ut = ut - (us - u) * m
+        # if degree>256:print([ret,float(lt),float(ut),"l",float(l),"u",float(u)])
+        if ret <= lt:
             return 1
-        if r < acount + bcount:
+        if ret >= ut:
             return 0
         lastdegree = degree
         degree = nextdegree(degree) if nextdegree != None else degree * 2

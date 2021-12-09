@@ -1156,6 +1156,10 @@ class Bernoulli:
            must be specified)."""
         ones = 0
         lastdegree = 0
+        l = Fraction(0)
+        lt = Fraction(0)
+        u = Fraction(1)
+        ut = Fraction(1)
         degree = nextdegree(0) if nextdegree != None else 1
         while True:
             fb = fbound(degree)
@@ -1165,47 +1169,35 @@ class Bernoulli:
         startdegree = degree
         a = {}
         b = {}
+        ret = []
         while True:
             for i in range(degree - lastdegree):
                 if coin() == 1:
                     ones += 1
-            c = int(math.comb(degree, ones))
-            try:
-                a[(degree, ones)] = int(fbelow(degree, ones) * c)
-                b[(degree, ones)] = int((1 - fabove(degree, ones)) * c)
-            except:
-                a[(degree, ones)] = int(Fraction(fbelow(degree, ones)) * c)
-                b[(degree, ones)] = int((1 - Fraction(fabove(degree, ones))) * c)
-            acount = a[(degree, ones)]
-            bcount = b[(degree, ones)]
-            c -= acount + bcount
+            c = math.comb(degree, ones)
+            l = Fraction(_fb(fbelow, degree, ones), c)
+            u = Fraction(_fa(fabove, degree, ones), c)
+            if degree == startdegree:
+                ls = Fraction(0)
+                us = Fraction(1)
             if degree > startdegree:
-                diff = degree - lastdegree
-                u = max(ones - lastdegree, 0)
-                v = min(ones, diff)
-                g = math.comb(lastdegree, ones - u)
-                for k in range(u, v + 1):
-                    o = ones - k
-                    comb_lastdegree_o = g
-                    if not (lastdegree, o) in a:
-                        a[(lastdegree, o)] = int(
-                            Fraction(fbelow(lastdegree, o)) * comb_lastdegree_o
-                        )
-                    if not (lastdegree, o) in b:
-                        b[(lastdegree, o)] = int(
-                            (1 - Fraction(fabove(lastdegree, o))) * comb_lastdegree_o
-                        )
-                    st = int(math.comb(diff, k))
-                    acount -= a[(lastdegree, o)] * st
-                    bcount -= b[(lastdegree, o)] * st
-                    g *= ones - k
-                    g //= lastdegree + 1 - (ones - k)
-                if acount + bcount + c <= 0:
-                    print(["ac", alpha, beta, acount, bcount, c])
-            r = self.rndint((acount + bcount + c) - 1)
-            if r < acount:
+                nh = math.comb(degree, ones)
+                ls = sum(
+                    _fb(fbelow, lastdegree, j)
+                    * Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                    for j in range(0, min(lastdegree, ones) + 1)
+                )
+                us = sum(
+                    _fa(fabove, lastdegree, j)
+                    * Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                    for j in range(0, min(lastdegree, ones) + 1)
+                )
+            m = (ut - lt) / (us - ls)
+            lt = lt + (l - ls) * m
+            ut = ut - (us - u) * m
+            if self._uniform_less(ret, lt):
                 return 1
-            if r < acount + bcount:
+            if not self._uniform_less(ret, ut):
                 return 0
             lastdegree = degree
             degree = nextdegree(degree) if nextdegree != None else degree * 2

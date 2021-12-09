@@ -451,12 +451,12 @@ A coin with unknown probability of heads of _&lambda;_ can be turned into a coin
 - The polynomials are written in _Bernstein form_ (see "[**Certain Polynomials**](#Certain_Polynomials)").
 - For each sequence, the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).
 
-This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:
+The following algorithm can be used to simulate factory functions via polynomials.  In the algorithm:
 
 - **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> coefficient for a degree-_n_ polynomial in Bernstein form that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_. (See note 3 below.)
 - **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> coefficient for a degree-_n_ polynomial in Bernstein form  that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_. (See note 3.)
 
-The first algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011\)[^20] and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012\)[^21], although an error in Algorithm I is noted below.  The first algorithm follows.
+The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011\)[^20] and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012\)[^21], although an error in Algorithm I is noted below.  The first algorithm follows.
 
 1. Generate a uniform(0, 1) random variate, call it _ret_.
 2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _lastdegree_ to 0, and set _ones_ to 0.
@@ -468,42 +468,17 @@ The first algorithm implements the reverse-time martingale framework (Algorithm 
     2. Define **FA**(_a_, _b_) as follows: Let _c_ be choose(_a_, _b_).  Calculate **fabove**(_a_, _b_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that ceil(_LB_\*_c_) = ceil(_UB_\*_c_), then return ceil(_LB_\*_c_).
     3. Let _c_ be choose(_degree_, _ones_).  Set _&#x2113;_ to (**FB**(_degree_, _ones_))/_c_ and set _u_ to (**FA**(_degree_, _ones_))/_c_.
 7. (This step and the next find the expected values of the previous _&#x2113;_ and _u_ given the current coin flips.) If _degree_ equals _startdegree_, set _&#x2113;s_ to 0 and _us_ to 1. (Algorithm I of Flegal and Herbei 2012 doesn't take this into account.)
-8. If _degree_ is greater than _startdegree_: Let _nh_ be choose(_degree_, _ones_), and let _od_ be _degree_/2.  Set _&#x2113;s_ to &sum;<sub>_j_=0,...,_ones_</sub> **FB**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)/_nh_, and set _us_ to &sum;<sub>_j_=0,...,_ones_</sub> **FA**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)/_nh_.
+8. If _degree_ is greater than _startdegree_: Let _nh_ be choose(_degree_, _ones_).  Set _&#x2113;s_ to &sum;<sub>_j_=0,...,min(_lastdegree, _ones_)</sub> **FB**(_lastdegree_,_j_)\*choose(_degree_&minus;_lastdegree_, _ones_&minus;_j_)/_nh_, and set _us_ to &sum;<sub>_j_=0,...,min(_lastdegree, _ones_)</sub> **FA**(_lastdegree_,_j_)\*choose(_degree_&minus;_lastdegree_, _ones_&minus;_j_)/_nh_.
 9. Let _m_ be (_ut_&minus;_&#x2113;t_)/(_us_&minus;_&#x2113;s_).  Set _&#x2113;t_ to _&#x2113;t_+(_&#x2113;_&minus;_&#x2113;s_)\*_m_, and set _ut_ to _ut_&minus;(_us_&minus;_u_)\*_m_.
 10. If _ret_ is less than (or equal to) _&#x2113;t_, return 1.  If _ret_ is less than _ut_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-11. (Find the next pair of polynomials and restart the loop.) Increase _degree_ so that the next pair of polynomials has degree equal to a higher value of _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 5.
+11. (Find the next pair of polynomials and restart the loop.) Set _lastdegree_ to _degree_, then increase _degree_ so that the next pair of polynomials has degree equal to a higher value of _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 5.
 
-The second algorithm was given in Thomas and Blanchet (2012\)[^11]; it assumes the same sequences of polynomials are available as in the previous algorithm.   An algorithm equivalent to that algorithm is given below.
-
-1. Set _ones_ to 0, and set _lastdegree_ to 0.
-2. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
-3. Set _startdegree_ to _degree_.
-4. (The remaining steps are now done repeatedly until the algorithm finishes by returning a value.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
-5. Set _c_ to choose(_degree_, _ones_).
-6. Find _acount_ and _bcount_ as follows:
-    1. Calculate **fbelow**(_degree_, _ones_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_c_) = floor(_UB_\*_c_).  Then set _a_\[_degree_,_ones_\] and _acount_ to floor(_LB_\*_c_).
-    2. Calculate 1&minus;**fabove**(_degree_, _ones_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_c_) = floor(_UB_\*_c_).  Then set _b_\[_degree_,_ones_\] and _bcount_ to floor(_LB_\*_c_).
-    3. Subtract (_acount_ + _bcount_) from _c_.
-7. If _degree_ is greater than _startdegree_, then:
-    1. Let _diff_ be _degree_&minus;_lastdegree_, let _u_ be max(0, _ones_&minus;_lastdegree_),
-and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes from _acount_ and _bcount_ that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.)
-    2. Set _g_ to choose(_lastdegree_, _ones_&minus;_u_).  Set _h_ to 1.
-    3. For each integer _k_ in the interval [_u_, _v_]:
-        1. Set _d_ to choose(_diff_, _k_).  Let _&omega;_ be _ones_&minus;_k_.
-        2. If not already calculated: Calculate **fbelow**(_lastdegree_, _&omega;_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_g_\*_h_) = floor(_UB_\*_g_\*_h_).  Then set _a_\[_lastdegree_, _&omega;_\] to floor(_LB_\*_g_\*_h_).
-        3. If not already calculated: Calculate 1&minus;**fabove**(_lastdegree_, _&omega;_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_g_\*_h_) = floor(_UB_\*_g_\*_h_).  Then set _b_\[_lastdegree_, _&omega;_\] to floor(_LB_\*_g_\*_h_).
-        4. Subtract (_a_\[_lastdegree_, _&omega;_\]\*_d_) from _acount_.
-        5. Subtract (_b_\[_lastdegree_, _&omega;_\]\*_d_) from _bcount_.
-        6. Multiply _g_ by _&omega;_, then divide _g_ by (_lastdegree_+1&minus;_&omega;_). (Sets _g_ to choose(_lastdegree_, (_ones_&minus;_k_)&minus;1).)
-8. Choose 0, 1, or 2 with probability proportional to the following weights: [_acount_, _bcount_, _c_].
-9. If the number chosen by the previous step is 0, return 1.  If the number chosen by that step is 1, return 0.
-10. (Find the next pair of polynomials and restart the loop.) Set _lastdegree_ to _degree_, then increase _degree_ so that the next pair of polynomials has degree equal to a higher value of _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 4.
+Another algorithm, given in Thomas and Blanchet (2012\)[^11], was based on the one from Nacu and Peres (2005\)[^16].  However, in both papers, the algorithm works only if _&lambda;_ is in the interval (0, 1), unlike the algorithm above, so this second algorithm is not given here.
 
 > **Notes:**
 >
-> 1. The efficiency of these two algorithms depends on many things, including how "smooth" _f_ is and how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** for a given function _f_ will require a deep mathematical analysis of that function.  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
+> 1. The efficiency of this algorithm depends on many things, including how "smooth" _f_ is and how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** for a given function _f_ will require a deep mathematical analysis of that function.  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
 > 2. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not "smooth" enough.  An intriguing suggestion from Thomas and Blanchet (2012\)[^11] is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
-> 3. The second algorithm, as presented in Thomas and Blanchet (2012\)[^11], was based on the one from Nacu and Peres (2005\)[^16].  In both papers, the algorithm works only if _&lambda;_ is in the interval (0, 1).
 
 <a id=Algorithms_for_General_Irrational_Constants></a>
 ### Algorithms for General Irrational Constants
