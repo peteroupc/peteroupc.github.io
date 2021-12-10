@@ -76,15 +76,24 @@ class PolyDiff:
     def get_coeffs(self):
         a = self.a.get_coeffs()
         b = self.b.get_coeffs()
+        oldmax = max(len(a), len(b))
         if len(a) < len(b):
             a = elevate(a, (len(b) - 1) - (len(a) - 1))
         if len(a) > len(b):
             b = elevate(b, (len(b) - 1) - (len(a) - 1))
+        newmax = max(len(a), len(b))
+        if newmax != oldmax:
+            raise ValueError
         return [aa - bb for aa, bb in zip(a, b)]
 
 class PiecewiseBernsteinPoly:
     def __init__(self):
         self.pieces = []
+        self.comb = {}
+        self.diff2pieces = None
+        self.valueAtime = 0
+        self.valueBtime = 0
+        self.pieces2 = []
 
     def fromcoeffs(coeffs):
         return PiecewiseBernsteinPoly().piece(coeffs, 0, 1)
@@ -92,16 +101,59 @@ class PiecewiseBernsteinPoly:
     def piece(self, coeffs, mn, mx):
         if len(coeffs) == 0:
             raise ValueError
+        # Bernstein coefficients
         self.pieces.append([coeffs, mn, mx])
+        # Homogeneous coefficients
+        for coeffs, mn, mx in self.pieces:
+            n = len(coeffs) - 1
+            self.pieces2.append(
+                [[coeffs[i] * math.comb(n, i) for i in range(len(coeffs))], mn, mx]
+            )
         return self
 
+    def valueC(self, x):  # Value of piecewise polynomial
+        for coeffs, mn, mx in self.pieces:
+            if x >= mn and x <= mx:
+                # print(["value",len(coeffs),x])
+                tmp = [v for v in coeffs]
+                n = len(tmp) - 1
+                for z in range(1, n + 1):
+                    for i in range(0, (n - z) + 1):
+                        tmp[i] += (tmp[i + 1] - tmp[i]) * x
+                # print(["value",float(tmp[0])])
+                return tmp[0]
+        return 0
+
+    def value_(self, x):  # Value of piecewise polynomial
+        t = time.time()
+        v1 = self.valueA(x)
+        self.valueAtime += time.time() - t
+        t = time.time()
+        v2 = self.valueB(x)
+        self.valueBtime += time.time() - t
+        if v1 != v2:
+            raise ValueError
+        if self.valueAtime > 0.5:
+            print([self.valueAtime, self.valueBtime])
+        return v1
+
     def value(self, x):  # Value of piecewise polynomial
+        for coeffs, mn, mx in self.pieces2:
+            if x >= mn and x <= mx:
+                n = len(coeffs) - 1
+                return sum(
+                    coeffs[i] * x ** i * (1 - x) ** (n - i)
+                    for i in range(0, len(coeffs))
+                )
+        return 0
+
+    def valueA(self, x):  # Value of piecewise polynomial
         for coeffs, mn, mx in self.pieces:
             if x >= mn and x <= mx:
                 n = len(coeffs) - 1
                 return sum(
                     coeffs[i] * x ** i * (1 - x) ** (n - i) * math.comb(n, i)
-                    for i in range(len(coeffs))
+                    for i in range(0, len(coeffs))
                 )
         return 0
 
@@ -121,20 +173,47 @@ class PiecewiseBernsteinPoly:
                 )
         return 0
 
-    def diff2(self, x):  # Second derivative of piecewise polynomial
+    def _ensurediff2(self):
+        if self.diff2pieces != None:
+            return
+        self.diff2pieces = []
         for coeffs, mn, mx in self.pieces:
+            if len(coeffs) <= 2:
+                self.diff2pieces.append([None, mn, mx])
+            else:
+                n = len(coeffs) - 1
+                tmp = [
+                    Fraction(
+                        n * (n - 1) * (coeffs[i] - 2 * coeffs[i + 1] + coeffs[i + 2])
+                    )
+                    for i in range(len(coeffs) - 2)
+                ]
+                self.diff2pieces.append([tmp, mn, mx])
+
+    def diff2_(self, x):  # Second derivative of piecewise polynomial
+        self._ensurediff2()
+        for coeffs, mn, mx in self.diff2pieces:
             if x >= mn and x <= mx:
-                if len(coeffs) <= 2:
+                if coeffs == None:
+                    return 0
+                tmp = [v for v in coeffs]
+                n = len(tmp) - 1
+                for z in range(1, n + 1):
+                    for i in range(0, (n - z) + 1):
+                        tmp[i] += (tmp[i + 1] - tmp[i]) * x
+                return tmp[0]
+        return 0
+
+    def diff2(self, x):  # Second derivative of piecewise polynomial
+        self._ensurediff2()
+        for coeffs, mn, mx in self.diff2pieces:
+            if x >= mn and x <= mx:
+                if coeffs == None:
                     return 0
                 n = len(coeffs) - 1
                 return sum(
-                    n
-                    * (n - 1)
-                    * (coeffs[i] - 2 * coeffs[i + 1] + coeffs[i + 2])
-                    * x ** i
-                    * (1 - x) ** (n - i - 2)
-                    * math.comb(n - 2, i)
-                    for i in range(0, len(coeffs) - 2)
+                    coeffs[i] * x ** i * (1 - x) ** (n - i) * math.comb(n, i)
+                    for i in range(0, len(coeffs))
                 )
         return 0
 
@@ -143,13 +222,6 @@ class PiecewiseBernsteinPoly:
             raise ValueError("likely not a polynomial")
         return self.pieces[0][0]
 
-def bincocache(c, n, k):  # Cache for binomial coefficients
-    if (n, k) in c:
-        return c[(n, k)]
-    v = Fraction(math.comb(n, k))
-    c[(n, k)] = v
-    return v
-
 def elevate(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
     if r < 0:
         raise ValueError
@@ -157,12 +229,10 @@ def elevate(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
         return coeffs
     combs = {}
     n = len(coeffs) - 1
+    nrk = [Fraction(math.comb(n + r, k)) for k in range(n + r + 1)]
     return [
         sum(
-            bincocache(combs, r, k - j)
-            * bincocache(combs, n, j)
-            * coeffs[j]
-            / bincocache(combs, n + r, k)
+            math.comb(r, k - j) * math.comb(n, j) * coeffs[j] / nrk[k]
             for j in range(max(0, k - r), min(n, k) + 1)
         )
         for k in range(n + r + 1)
@@ -266,7 +336,7 @@ Now all that remains is to find $D$ given $\alpha=2$.  I haven't found how to do
 Moreover, there remains to find the parameters for the Lorentz operator when $r>2$.
 """
 
-def iterconstruct(pwp, x):
+def iterconstruct(pwp):
     # Iterative construction of approximating
     # polynomials using Lorentz-2 operator
     n = 4
@@ -282,22 +352,6 @@ def iterconstruct(pwp, x):
         ret.append(fn.get_coeffs())
     return ret
 
-def diffconstruct(pwp, x):
-    # Iterative construction of approximating
-    # polynomials using Lorentz-2 operator;
-    # differences only
-    n = 4
-    fn = lorentz2polyB(pwp, n)
-    ret = []
-    for i in range(5):
-        # Build polynomials of degree 8+r, 16+r,
-        # 32+r, 64+r, 128+r, where r=2
-        n *= 2
-        resid = lorentz2polyB(PolyDiff(pwp, fn), n)
-        fn = PolySum(fn, resid)
-        ret.append(resid.get_coeffs())
-    return ret
-
 def polyshift(nrcoeffs, theta, d):
     # Upward and downward shift of polynomial according to step 5
     # in Holtz et al. 2011, for r=2 (twice differentiable
@@ -311,7 +365,9 @@ def polyshift(nrcoeffs, theta, d):
         Fraction(theta, n ** alpha) + (Fraction(i, n) * (1 - Fraction(i, n)) / n)
         for i in range(n + 1)
     ]
+    # t=time.time()
     phi = elevate(phi, r)
+    # print(["elevate",r,time.time()-t])
     upper = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
     lower = [nrcoeffs[i] - phi[i] * d for i in range(len(phi))]
     return upper, lower
@@ -361,11 +417,15 @@ class C2PiecewisePoly:
             d = self.lastdegree
             while d <= n:
                 d = self.nextdegree(d)
+                # print("nextdegree %d" % (d))
                 if self.lastfn == None:
                     self.lastfn = lorentz2polyB(self.pwp, d - 2)
                 else:
                     resid = lorentz2polyB(PolyDiff(self.pwp, self.lastfn), d - 2)
                     self.lastfn = PolySum(self.lastfn, resid)
+                    self.lastfn = PiecewiseBernsteinPoly.fromcoeffs(
+                        self.lastfn.get_coeffs()
+                    )
                 self.lastdegree = d
                 if d not in self.polys:
                     up, lo = polyshift(
@@ -382,9 +442,9 @@ class C2PiecewisePoly:
                     self.polys[d] = [lo, up]
             if n not in self.polys:
                 raise ValueError
-            if len(self.polys[n][0]) != n:
+            if len(self.polys[n][0]) != n + 1:
                 raise ValueError
-            if len(self.polys[n][1]) != n:
+            if len(self.polys[n][1]) != n + 1:
                 raise ValueError
             return self.polys[n]
 
@@ -397,7 +457,7 @@ class C2PiecewisePoly:
     def simulate(self, coin):
         return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
 
-class C2PiecewisePoly:
+class C2PiecewisePoly2:
     def __init__(self, pwp):
         self.pwp = pwp
         self.initialdeg = 4
@@ -495,20 +555,22 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
             us = Fraction(1)
         if degree > startdegree:
             nh = math.comb(degree, ones)
+            combs = [
+                Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                for j in range(0, min(lastdegree, ones) + 1)
+            ]
             ls = sum(
-                _fb(fbelow, lastdegree, j)
-                * Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                _fb(fbelow, lastdegree, j) * combs[j]
                 for j in range(0, min(lastdegree, ones) + 1)
             )
             us = sum(
-                _fa(fabove, lastdegree, j)
-                * Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                _fa(fabove, lastdegree, j) * combs[j]
                 for j in range(0, min(lastdegree, ones) + 1)
             )
         m = (ut - lt) / (us - ls)
         lt = lt + (l - ls) * m
         ut = ut - (us - u) * m
-        # if degree>256:print([ret,float(lt),float(ut),"l",float(l),"u",float(u)])
+        # print([ret,"lt",float(lt),"ut",float(ut),"l",float(l),"u",float(u)])
         if ret <= lt:
             return 1
         if ret >= ut:
