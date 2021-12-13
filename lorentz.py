@@ -73,6 +73,12 @@ class PolyDiff:
     def diff2(self, x):
         return self.a.diff2(x) - self.b.diff2(x)
 
+    def valuei(self, x):
+        return self.a.valuei(x) - self.b.valuei(x)
+
+    def diff2i(self, x):
+        return self.a.diff2i(x) - self.b.diff2i(x)
+
     def get_coeffs(self):
         a = self.a.get_coeffs()
         b = self.b.get_coeffs()
@@ -90,7 +96,7 @@ class PiecewiseBernsteinPoly:
     def __init__(self):
         self.pieces = []
         self.comb = {}
-        self.diff2pieces = None
+        self.diff2pieces = []
         self.valueAtime = 0
         self.valueBtime = 0
         self.pieces2 = []
@@ -98,17 +104,24 @@ class PiecewiseBernsteinPoly:
     def fromcoeffs(coeffs):
         return PiecewiseBernsteinPoly().piece(coeffs, 0, 1)
 
+    def _ensure_homogen(self):
+        if len(self.pieces2) == len(self.pieces):
+            return
+        # Homogeneous coefficients
+        for i in range(len(self.pieces2), len(self.pieces)):
+            coeffs, mn, mx = self.pieces[i]
+            n = len(coeffs) - 1
+            self.pieces2.append(
+                [[coeffs[j] * math.comb(n, j) for j in range(len(coeffs))], mn, mx]
+            )
+        if len(self.pieces2) != len(self.pieces):
+            raise ValueError
+
     def piece(self, coeffs, mn, mx):
         if len(coeffs) == 0:
             raise ValueError
         # Bernstein coefficients
         self.pieces.append([coeffs, mn, mx])
-        # Homogeneous coefficients
-        for coeffs, mn, mx in self.pieces:
-            n = len(coeffs) - 1
-            self.pieces2.append(
-                [[coeffs[i] * math.comb(n, i) for i in range(len(coeffs))], mn, mx]
-            )
         return self
 
     def valueC(self, x):  # Value of piecewise polynomial
@@ -138,11 +151,23 @@ class PiecewiseBernsteinPoly:
         return v1
 
     def value(self, x):  # Value of piecewise polynomial
+        self._ensure_homogen()
         for coeffs, mn, mx in self.pieces2:
             if x >= mn and x <= mx:
                 n = len(coeffs) - 1
                 return sum(
                     coeffs[i] * x ** i * (1 - x) ** (n - i)
+                    for i in range(0, len(coeffs))
+                )
+        return 0
+
+    def valuei(self, x):  # Value of piecewise polynomial
+        for coeffs, mn, mx in self.pieces:
+            if x >= mn and x <= mx:
+                n = len(coeffs) - 1
+                return sum(
+                    FInterval(coeffs[i])
+                    * (x ** i * (1 - x) ** (n - i) * math.comb(n, i))
                     for i in range(0, len(coeffs))
                 )
         return 0
@@ -174,21 +199,22 @@ class PiecewiseBernsteinPoly:
         return 0
 
     def _ensurediff2(self):
-        if self.diff2pieces != None:
+        if len(self.diff2pieces) == len(self.pieces):
             return
-        self.diff2pieces = []
-        for coeffs, mn, mx in self.pieces:
+        # Homogeneous coefficients
+        for i in range(len(self.diff2pieces), len(self.pieces)):
+            coeffs, mn, mx = self.pieces[i]
             if len(coeffs) <= 2:
                 self.diff2pieces.append([None, mn, mx])
             else:
                 n = len(coeffs) - 1
                 tmp = [
-                    Fraction(
-                        n * (n - 1) * (coeffs[i] - 2 * coeffs[i + 1] + coeffs[i + 2])
-                    )
-                    for i in range(len(coeffs) - 2)
+                    n * (n - 1) * (coeffs[j] - 2 * coeffs[j + 1] + coeffs[j + 2])
+                    for j in range(len(coeffs) - 2)
                 ]
                 self.diff2pieces.append([tmp, mn, mx])
+        if len(self.diff2pieces) != len(self.pieces):
+            raise ValueError
 
     def diff2_(self, x):  # Second derivative of piecewise polynomial
         self._ensurediff2()
@@ -217,26 +243,39 @@ class PiecewiseBernsteinPoly:
                 )
         return 0
 
+    def diff2i(self, x):  # Second derivative of piecewise polynomial
+        self._ensurediff2()
+        for coeffs, mn, mx in self.diff2pieces:
+            if x >= mn and x <= mx:
+                if coeffs == None:
+                    return 0
+                n = len(coeffs) - 1
+                return sum(
+                    FInterval(coeffs[i])
+                    * (x ** i * (1 - x) ** (n - i) * math.comb(n, i))
+                    for i in range(0, len(coeffs))
+                )
+        return 0
+
     def get_coeffs(self):
         if len(self.pieces) != 1:
             raise ValueError("likely not a polynomial")
         return self.pieces[0][0]
 
+def elevate1(coeffs):  # Elevate polynomial in Bernstein form by 1 degree
+    n = len(coeffs) - 1
+    return [
+        coeffs[max(0, k - 1)] * Fraction(k, n + 1)
+        + coeffs[min(n, k)] * Fraction((n + 1) - k, n + 1)
+        for k in range(n + 2)
+    ]
+
 def elevate(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
     if r < 0:
         raise ValueError
-    if r == 0:
-        return coeffs
-    combs = {}
-    n = len(coeffs) - 1
-    nrk = [Fraction(math.comb(n + r, k)) for k in range(n + r + 1)]
-    return [
-        sum(
-            math.comb(r, k - j) * math.comb(n, j) * coeffs[j] / nrk[k]
-            for j in range(max(0, k - r), min(n, k) + 1)
-        )
-        for k in range(n + r + 1)
-    ]
+    for i in range(r):
+        coeffs = elevate1(coeffs)
+    return coeffs
 
 def lorentz2poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=2,
@@ -294,7 +333,7 @@ def lorentz2polyB(pwpoly, n):
         f0v = pwpoly.value(Fraction(k) / n)  # Value
         vals[k] = f0v
     # Elevate to degree n+r
-    vals = elevate(vals, 2)
+    vals = elevate(vals, r)
     # Shift downward according to Lorentz operator
     for k in range(1, n + r):
         f2v = pwpoly.diff2(Fraction(k - 1) / n)  # Second derivative
@@ -304,6 +343,249 @@ def lorentz2polyB(pwpoly, n):
         fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
         vals[k] -= fv
     return PiecewiseBernsteinPoly.fromcoeffs(vals)
+
+def lorentz2polyC(pwpoly, n):
+    # Polynomial for Lorentz operator with r=2,
+    # of degree n+r = n+2, given C2 continuous piecewise polynomial
+    # NOTE: Currently well-defined only if value and diff2 are
+    # rational whenever k/n is rational
+    r = 2
+    # Get degree n coefficients
+    vals = [0 for i in range(n + 1)]
+    for k in range(0, n + 1):
+        f0v = pwpoly.valuei(Fraction(k) / n)  # Value
+        vals[k] = f0v
+    # Elevate to degree n+r
+    # t=time.time()
+    vals = elevate(vals, r)
+    # print(["elevate",r,time.time()-t])
+    # Shift downward according to Lorentz operator
+    for k in range(1, n + r):
+        f2v = pwpoly.diff2i(Fraction(k - 1) / n)  # Second derivative
+        fv = (f2v / (4 * n)) * 2
+        # fv=fv*math.comb(n,k-1)/math.comb(n+r,k)
+        # Alternative impl.
+        fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
+        vals[k] -= fv
+    return PiecewiseBernsteinPoly.fromcoeffs(vals)
+
+class FInterval:
+    """An interval of two Fractions.  x.sup holds the upper bound, and x.inf holds
+    the lower bound."""
+
+    def __new__(cl, v, sup=None, prec=None):
+        if isinstance(v, FInterval) and sup == None:
+            return v
+        scl = super(FInterval, cl)
+        self = scl.__new__(cl)
+        if isinstance(v, int) and sup == None:
+            self.sup = Fraction(v)
+            self.inf = self.sup
+            if self.inf > self.sup:
+                raise ValueError
+            return self
+        elif isinstance(v, int) and isinstance(sup, int):
+            self.sup = Fraction(sup)
+            self.inf = Fraction(v)
+            if self.inf > self.sup:
+                raise ValueError
+            return self
+        inf = v
+        sup = v if sup == None else sup
+        self.sup = sup if isinstance(sup, Fraction) else Fraction(sup)
+        self.inf = inf if isinstance(inf, Fraction) else Fraction(inf)
+        if self.inf > self.sup:
+            raise ValueError
+        # Truncation
+        self._truncate(512)
+        return self
+
+    def _truncate(self, bits):
+        if (
+            self.sup.numerator.bit_length() < bits
+            and self.sup.denominator.bit_length() < bits
+            and self.inf.numerator.bit_length() < bits
+            and self.inf.denominator.bit_length() < bits
+        ):
+            return
+        # print(["truncate",self.inf.denominator.bit_length(),
+        #    float(self.inf),
+        #    self.sup.denominator.bit_length(),float(self.sup)])
+        infnum = self.inf.numerator
+        infden = self.inf.denominator
+        supnum = self.sup.numerator
+        supden = self.sup.denominator
+        ninf = (infnum << bits) // infden
+        ninf = ninf - 1 if infnum < 0 else ninf
+        nsup = (supnum << bits) // supden
+        nsup = nsup if supnum < 0 else nsup + 1
+        self.inf = Fraction(ninf, 1 << bits)
+        self.sup = Fraction(nsup, 1 << bits)
+        # print([float(oldinf),float(self.inf),float(oldsup),float(self.sup)])
+
+    def __max__(a, b):
+        b = FInterval(b)
+        return FInterval(min(a.sup, b.sup), max(a.sup, b.sup))
+
+    def __min__(a, b):
+        b = FInterval(b)
+        return FInterval(min(a.inf, b.inf), max(a.inf, b.inf))
+
+    def __add__(self, v):
+        y = FInterval(v)
+        return FInterval(self.inf + y.inf, self.sup + y.sup)
+
+    def __abs__(self):
+        return self.abs()
+
+    def negate(self):
+        return FInterval(-self.sup, -self.inf)
+
+    def __neg__(self):
+        return self.negate()
+
+    def __rsub__(self, v):
+        return FInterval(v) - self
+
+    def __rmul__(self, v):
+        return FInterval(v) * self
+
+    def __radd__(self, v):
+        return FInterval(v) + self
+
+    def __rtruediv__(self, v):
+        return FInterval(v) / self
+
+    def __sub__(self, v):
+        y = FInterval(v)
+        return FInterval(self.inf - y.sup, self.sup - y.inf)
+
+    def __mul__(self, v):
+        if self.sup == self.inf:
+            if isinstance(v, FInterval) and v.sup == v.inf:
+                r = self.inf * v.inf
+                return FInterval(r, r)
+            if not isinstance(v, FInterval):
+                r = self.inf * v
+                return FInterval(r, r)
+        y = FInterval(v)
+        a = self.inf * y.inf
+        b = self.inf * y.sup
+        c = self.sup * y.inf
+        d = self.sup * y.sup
+        return FInterval(min([a, b, c, d]), max([a, b, c, d]))
+
+    def __truediv__(self, v):
+        if self.sup == self.inf:
+            if isinstance(v, FInterval) and v.sup == v.inf:
+                r = self.inf * v.inf
+                return FInterval(r, r)
+            if not isinstance(v, FInterval):
+                r = self.inf * v
+                return FInterval(r, r)
+        y = FInterval(v)
+        newinf = Fraction(y.sup.denominator, y.sup.numerator)
+        newsup = Fraction(y.inf.denominator, y.inf.numerator)
+        a = self.inf * newinf
+        b = self.inf * newsup
+        c = self.sup * newinf
+        d = self.sup * newsup
+        return FInterval(min([a, b, c, d]), max([a, b, c, d]))
+
+    def union(v):
+        y = FInterval(v)
+        return FInterval(min(self.inf, y.inf), max(self.sup, y.sup))
+
+    def mignitude(self):
+        if self.inf < 0 and self.sup > 0:
+            return Fraction(0)
+        return min(abs(self.sup), abs(self.inf))
+
+    def magnitude(self):
+        return max(abs(self.sup), abs(self.inf))
+
+    def abs(self):
+        if (self.inf < 0) != (self.sup < 0):
+            return FInterval(0, max(abs(self.inf), abs(self.sup)))
+        else:
+            a = abs(self.inf)
+            b = abs(self.sup)
+            return FInterval(min(a, b), max(a, b))
+
+    def _fracfloor(x):
+        ix = int(x)
+        if x >= 0:
+            return ix
+        if x != ix:
+            return ix - 1
+        return ix
+
+    def _fracceil(x):
+        ix = int(x)
+        if x < 0:
+            return ix
+        if x != ix:
+            return ix + 1
+        return ix
+
+    def floor(self):
+        floorinf = FInterval._fracfloor(self.inf)
+        floorsup = FInterval._fracfloor(self.sup)
+        return FInterval(min(floorinf, floorsup), max(floorinf, floorsup))
+
+    def ceil(self):
+        cinf = FInterval._fracceil(self.inf)
+        csup = FInterval._fracceil(self.sup)
+        return FInterval(min(cinf, csup), max(cinf, csup))
+
+    def rem(self, v):
+        return self - (self / v).floor() * v
+
+    def greaterThanScalar(self, a):
+        return self.inf > a
+
+    def greaterEqualScalar(self, a):
+        return self.inf >= a
+
+    def lessThanScalar(self, a):
+        return self.sup < a
+
+    def lessEqualScalar(self, a):
+        return self.sup <= a
+
+    def intersect(self, y):
+        if x.sup < y.inf or x.inf > y.sup:
+            return None
+        return FInterval(max(x.inf, y.inf), min(x.sup, y.sup))
+
+    def containedIn(self, y):
+        return y.inf <= self.inf and self.sup <= y.sup
+
+    def pow(self, v):
+        y = v if isinstance(v, FInterval) else FInterval(v)
+        if y.inf == y.sup and int(y.inf) == y.inf and y.inf >= 0 and y.inf <= 32:
+            # Special case: Integer power
+            yn = int(y.inf)
+            if yn == 0:
+                return FInterval(1, 1)
+            if yn == 1:
+                return self
+            if yn % 2 == 1 or self.inf >= 0:
+                return FInterval(self.inf ** yn, self.sup ** yn)
+            if self.sup <= 0:
+                return FInterval(self.sup ** yn, self.inf ** yn)
+            return FInterval(0, max(self.inf ** yn, self.sup ** yn))
+        if self.inf == self.sup and self.inf == 0:
+            # Special case: 0
+            return FInterval(0)
+        raise ValueError("Not supported")
+
+    def __pow__(self, v):
+        """ For convenience only. """
+        return self.pow(v)
+
+    def __repr__(self):
+        return "[%s, %s]" % (float(self.inf), float(self.sup))
 
 """
 
@@ -365,11 +647,13 @@ def polyshift(nrcoeffs, theta, d):
         Fraction(theta, n ** alpha) + (Fraction(i, n) * (1 - Fraction(i, n)) / n)
         for i in range(n + 1)
     ]
-    # t=time.time()
     phi = elevate(phi, r)
-    # print(["elevate",r,time.time()-t])
-    upper = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
-    lower = [nrcoeffs[i] - phi[i] * d for i in range(len(phi))]
+    if isinstance(nrcoeffs[0], FInterval):
+        upper = [nrcoeffs[i].sup + phi[i] * d for i in range(len(phi))]
+        lower = [nrcoeffs[i].inf - phi[i] * d for i in range(len(phi))]
+    else:
+        upper = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
+        lower = [nrcoeffs[i] - phi[i] * d for i in range(len(phi))]
     return upper, lower
 
 def example1():
@@ -399,6 +683,8 @@ def example1():
     return pwp2
 
 class C2PiecewisePoly:
+    # Implements Holtz method with Lorentz operator of degree 2.
+    # For piecewise polynomials that are C2 continuous.
     def __init__(self, pwp):
         self.pwp = pwp
         self.initialdeg = 4
@@ -417,7 +703,7 @@ class C2PiecewisePoly:
             d = self.lastdegree
             while d <= n:
                 d = self.nextdegree(d)
-                # print("nextdegree %d" % (d))
+                # t=time.time(); print("nextdegree %d" % (d))
                 if self.lastfn == None:
                     self.lastfn = lorentz2polyB(self.pwp, d - 2)
                 else:
@@ -426,8 +712,11 @@ class C2PiecewisePoly:
                     self.lastfn = PiecewiseBernsteinPoly.fromcoeffs(
                         self.lastfn.get_coeffs()
                     )
+                # print("nextdegree %d done %f" % (d,time.time()-t))
                 self.lastdegree = d
                 if d not in self.polys:
+                    # NOTE: Value of 1 is not certain to work for
+                    # all functions within this class's scope.
                     up, lo = polyshift(
                         self.lastfn.get_coeffs(), Fraction(2703, 1000), 1
                     )
@@ -455,6 +744,7 @@ class C2PiecewisePoly:
         return self._ensure(n)[1][k]
 
     def simulate(self, coin):
+        """ - coin(): Function that returns 1 or 0 with a fixed probability."""
         return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
 
 class C2PiecewisePoly2:
@@ -471,12 +761,14 @@ class C2PiecewisePoly2:
         if n in self.polys:
             return self.polys[n]
         else:
+            # Fraction("3.75") is absolute maximum value of second derivative
+            # for example function
             up = [
-                self.pwp.value(Fraction(i, n)) + Fraction(1, 7 * n)
+                self.pwp.value(Fraction(i, n)) + Fraction(1, 7 * n) * Fraction("3.75")
                 for i in range(n + 1)
             ]
             lo = [
-                self.pwp.value(Fraction(i, n)) - Fraction(1, 7 * n)
+                self.pwp.value(Fraction(i, n)) - Fraction(1, 7 * n) * Fraction("3.75")
                 for i in range(n + 1)
             ]
             # Replace out-of-bounds polynomials with constant polynomials
@@ -485,6 +777,16 @@ class C2PiecewisePoly2:
             if max(up) > 1:
                 up = [1 for v in up]
             print(float(min(lo)), float(max(up)))
+            """
+            if n//2 in self.polys:
+                lastpolys=self.polys[n//2]
+                lastlo=elevate(lastpolys[0],n//2)
+                lastup=elevate(lastpolys[1],n//2)
+                for prev,curr in zip(lastlo,lo):
+                   if prev>curr: raise ValueError("invalid lower curve: deg=%d" % (n))
+                for prev,curr in zip(lastup,up):
+                   if prev<curr: raise ValueError("invalid upper curve: deg=%d" % (n))
+            """
             self.polys[n] = [lo, up]
             if n not in self.polys:
                 raise ValueError
@@ -497,19 +799,20 @@ class C2PiecewisePoly2:
         return self._ensure(n)[1][k]
 
     def simulate(self, coin):
+        """ - coin(): Function that returns 1 or 0 with a fixed probability."""
         return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
 
-def _fb(fbelow, a, b):
+def _fb2(fbelow, a, b, v=1):
     if b > a:
         raise ValueError
-    return int(Fraction(fbelow(a, b)) * math.comb(a, b))
+    return Fraction(int(Fraction(fbelow(a, b)) * v), v)
 
-def _fa(fabove, a, b):
+def _fa2(fabove, a, b, v=1):
     if b > a:
         raise ValueError
-    mv = Fraction(fabove(a, b)) * math.comb(a, b)
+    mv = Fraction(fabove(a, b)) * v
     imv = int(mv)
-    return imv if mv == imv else imv + 1
+    return Fraction(imv, v) if mv == imv else Fraction(imv + 1, v)
 
 def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
     """Simulates a general factory function defined by two
@@ -540,33 +843,62 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
             break
         degree = nextdegree(degree) if nextdegree != None else degree * 2
     startdegree = degree
-    a = {}
-    b = {}
+    fba = {}
+    faa = {}
     ret = random.random()
     while True:
+        # if degree>=8192:
+        #  print("skipped")
+        #  return 0
         for i in range(degree - lastdegree):
             if coin() == 1:
                 ones += 1
         c = math.comb(degree, ones)
-        l = Fraction(_fb(fbelow, degree, ones), c)
-        u = Fraction(_fa(fabove, degree, ones), c)
-        if degree == startdegree:
-            ls = Fraction(0)
-            us = Fraction(1)
+        md = degree
+        l = _fb2(fbelow, degree, ones, 2 ** md * c)
+        u = _fa2(fabove, degree, ones, 2 ** md * c)
+        fba[(degree, ones)] = l
+        faa[(degree, ones)] = u
+        ls = Fraction(0)
+        us = Fraction(1)
         if degree > startdegree:
             nh = math.comb(degree, ones)
+            md = lastdegree
             combs = [
-                Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                Fraction(
+                    math.comb(degree - lastdegree, ones - j) * math.comb(lastdegree, j),
+                    nh,
+                )
                 for j in range(0, min(lastdegree, ones) + 1)
             ]
+            if False:  # Correctness check
+                for j in range(0, min(lastdegree, ones) + 1):
+                    fb = _fb2(fbelow, lastdegree, j, 2 ** md * math.comb(lastdegree, j))
+                    if (lastdegree, j) in fba:
+                        # print(fb)
+                        if fba[(lastdegree, j)] != fb:
+                            raise ValueError
+                    fa = _fa2(fabove, lastdegree, j, 2 ** md * math.comb(lastdegree, j))
+                    if (lastdegree, j) in faa:
+                        # print(fa)
+                        if faa[(lastdegree, j)] != fa:
+                            raise ValueError
             ls = sum(
-                _fb(fbelow, lastdegree, j) * combs[j]
+                _fb2(fbelow, lastdegree, j, 2 ** md * math.comb(lastdegree, j))
+                * combs[j]
                 for j in range(0, min(lastdegree, ones) + 1)
             )
             us = sum(
-                _fa(fabove, lastdegree, j) * combs[j]
+                _fa2(fabove, lastdegree, j, 2 ** md * math.comb(lastdegree, j))
+                * combs[j]
                 for j in range(0, min(lastdegree, ones) + 1)
             )
+            if ls > l:
+                # print([lastdegree,degree,ones,"ls",float(ls),"l",float(l)])
+                raise ValueError
+            if us < u:
+                # print([lastdegree,degree,ones,"us",float(us),"u",float(u)])
+                raise ValueError
         m = (ut - lt) / (us - ls)
         lt = lt + (l - ls) * m
         ut = ut - (us - u) * m

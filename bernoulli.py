@@ -1138,6 +1138,18 @@ class Bernoulli:
         c = beta * c / (beta - 1)
         return self.linear(f, c, eps=Fraction(1) - m)
 
+    def _fb2(self, fbelow, a, b, v=1):
+        if b > a:
+            raise ValueError
+        return Fraction(int(Fraction(fbelow(a, b)) * v), v)
+
+    def _fa2(self, fabove, a, b, v=1):
+        if b > a:
+            raise ValueError
+        mv = Fraction(fabove(a, b)) * v
+        imv = int(mv)
+        return Fraction(imv, v) if mv == imv else Fraction(imv + 1, v)
+
     def simulate(self, coin, fbelow, fabove, fbound, nextdegree=None):
         """Simulates a general factory function defined by two
         sequences of polynomials that converge from above and below.
@@ -1167,37 +1179,75 @@ class Bernoulli:
                 break
             degree = nextdegree(degree) if nextdegree != None else degree * 2
         startdegree = degree
-        a = {}
-        b = {}
+        fba = {}
+        faa = {}
         ret = []
         while True:
+            # if degree>=8192:
+            #  print("skipped")
+            #  return 0
             for i in range(degree - lastdegree):
                 if coin() == 1:
                     ones += 1
             c = math.comb(degree, ones)
-            l = Fraction(_fb(fbelow, degree, ones), c)
-            u = Fraction(_fa(fabove, degree, ones), c)
-            if degree == startdegree:
-                ls = Fraction(0)
-                us = Fraction(1)
+            md = degree
+            l = self._fb2(fbelow, degree, ones, 2 ** md * c)
+            u = self._fa2(fabove, degree, ones, 2 ** md * c)
+            if False:
+                fba[(degree, ones)] = l
+                faa[(degree, ones)] = u
+            ls = Fraction(0)
+            us = Fraction(1)
             if degree > startdegree:
                 nh = math.comb(degree, ones)
+                md = lastdegree
+                combs = [
+                    Fraction(
+                        math.comb(degree - lastdegree, ones - j)
+                        * math.comb(lastdegree, j),
+                        nh,
+                    )
+                    for j in range(0, min(lastdegree, ones) + 1)
+                ]
+                if False:  # Correctness check
+                    for j in range(0, min(lastdegree, ones) + 1):
+                        fb = self._fb2(
+                            fbelow, lastdegree, j, 2 ** md * math.comb(lastdegree, j)
+                        )
+                        if (lastdegree, j) in fba:
+                            # print(fb)
+                            if fba[(lastdegree, j)] != fb:
+                                raise ValueError
+                        fa = self._fa2(
+                            fabove, lastdegree, j, 2 ** md * math.comb(lastdegree, j)
+                        )
+                        if (lastdegree, j) in faa:
+                            # print(fa)
+                            if faa[(lastdegree, j)] != fa:
+                                raise ValueError
                 ls = sum(
-                    _fb(fbelow, lastdegree, j)
-                    * Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                    self._fb2(fbelow, lastdegree, j, 2 ** md * math.comb(lastdegree, j))
+                    * combs[j]
                     for j in range(0, min(lastdegree, ones) + 1)
                 )
                 us = sum(
-                    _fa(fabove, lastdegree, j)
-                    * Fraction(math.comb(degree - lastdegree, ones - j), nh)
+                    self._fa2(fabove, lastdegree, j, 2 ** md * math.comb(lastdegree, j))
+                    * combs[j]
                     for j in range(0, min(lastdegree, ones) + 1)
                 )
+                if ls > l:
+                    # print([lastdegree,degree,ones,"ls",float(ls),"l",float(l)])
+                    raise ValueError
+                if us < u:
+                    # print([lastdegree,degree,ones,"us",float(us),"u",float(u)])
+                    raise ValueError
             m = (ut - lt) / (us - ls)
             lt = lt + (l - ls) * m
             ut = ut - (us - u) * m
+            # print([ret,"lt",float(lt),"ut",float(ut),"l",float(l),"u",float(u)])
             if self._uniform_less(ret, lt):
                 return 1
-            if not self._uniform_less(ret, ut):
+            if not self.uniform_less(ret, ut):
                 return 0
             lastdegree = degree
             degree = nextdegree(degree) if nextdegree != None else degree * 2

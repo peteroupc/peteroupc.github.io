@@ -464,21 +464,25 @@ The algorithm implements the reverse-time martingale framework (Algorithm 4) in 
 4. Set _startdegree_ to _degree_.
 5. (The remaining steps are now done repeatedly until the algorithm finishes by returning a value.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
 6. Calculate _&#x2113;_ and _u_ as follows:
-    1. Define **FB**(_a_, _b_) as follows: Let _c_ be choose(_a_, _b_).  Calculate **fbelow**(_a_, _b_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_c_) = floor(_UB_\*_c_), then return floor(_LB_\*_c_).
-    2. Define **FA**(_a_, _b_) as follows: Let _c_ be choose(_a_, _b_).  Calculate **fabove**(_a_, _b_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that ceil(_LB_\*_c_) = ceil(_UB_\*_c_), then return ceil(_LB_\*_c_).
-    3. Let _c_ be choose(_degree_, _ones_).  Set _&#x2113;_ to (**FB**(_degree_, _ones_))/_c_ and set _u_ to (**FA**(_degree_, _ones_))/_c_.
+    1. Define **FB**(_a_, _b_) as follows: Let _c_ be choose(_a_, _b_). (Optionally, multiply _c_ by 2<sup>_a_</sup>; see note 3.)  Calculate **fbelow**(_a_, _b_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_c_) = floor(_UB_\*_c_), then return floor(_LB_\*_c_)/_c_.
+    2. Define **FA**(_a_, _b_) as follows: Let _c_ be choose(_a_, _b_). (Optionally, multiply _c_ by 2<sup>_a_</sup>; see note 3.)  Calculate **fabove**(_a_, _b_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that ceil(_LB_\*_c_) = ceil(_UB_\*_c_), then return ceil(_LB_\*_c_)/_c_.
+    3. Set _&#x2113;_ to **FB**(_degree_, _ones_) and set _u_ to **FA**(_degree_, _ones_).
 7. (This step and the next find the expected values of the previous _&#x2113;_ and _u_ given the current coin flips.) If _degree_ equals _startdegree_, set _&#x2113;s_ to 0 and _us_ to 1. (Algorithm I of Flegal and Herbei 2012 doesn't take this into account.)
-8. If _degree_ is greater than _startdegree_: Let _nh_ be choose(_degree_, _ones_), and let _k_ be min(_lastdegree_, ones).  Set _&#x2113;s_ to &sum;<sub>_j_=0,...,_k_</sub> **FB**(_lastdegree_,_j_)\*choose(_degree_&minus;_lastdegree_, _ones_&minus;_j_)/_nh_, and set _us_ to &sum;<sub>_j_=0,...,_k_</sub> **FA**(_lastdegree_,_j_)\*choose(_degree_&minus;_lastdegree_, _ones_&minus;_j_)/_nh_.
+8. If _degree_ is greater than _startdegree_:
+    1. Let _nh_ be choose(_degree_, _ones_), and let _k_ be min(_lastdegree_, _ones_).
+    2. Set _&#x2113;s_ to &sum;<sub>_j_=0,...,_k_</sub> **FB**(_lastdegree_,_j_)\*choose(_degree_&minus;_lastdegree_, _ones_&minus;_j_)\*choose(_lastdegree_,_j_)/_nh_.
+    3. Set _us_ to &sum;<sub>_j_=0,...,_k_</sub> **FA**(_lastdegree_,_j_)\*choose(_degree_&minus;_lastdegree_, _ones_&minus;_j_)\*choose(_lastdegree_,_j_)/_nh_.
 9. Let _m_ be (_ut_&minus;_&#x2113;t_)/(_us_&minus;_&#x2113;s_).  Set _&#x2113;t_ to _&#x2113;t_+(_&#x2113;_&minus;_&#x2113;s_)\*_m_, and set _ut_ to _ut_&minus;(_us_&minus;_u_)\*_m_.
 10. If _ret_ is less than (or equal to) _&#x2113;t_, return 1.  If _ret_ is less than _ut_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 11. (Find the next pair of polynomials and restart the loop.) Set _lastdegree_ to _degree_, then increase _degree_ so that the next pair of polynomials has degree equal to a higher value of _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 5.
 
-Another algorithm, given in Thomas and Blanchet (2012\)[^11], was based on the one from Nacu and Peres (2005\)[^16].  However, in both papers, the algorithm works only if _&lambda;_ is in the interval (0, 1), unlike the algorithm above, so this second algorithm is not given here.
+Another algorithm, given in Thomas and Blanchet (2012\)[^11], was based on the one from Nacu and Peres (2005\)[^16].  That algorithm is not given here, however.
 
 > **Notes:**
 >
 > 1. The efficiency of this algorithm depends on many things, including how "smooth" _f_ is and how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** for a given function _f_ will require a deep mathematical analysis of that function.  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
 > 2. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not "smooth" enough.  An intriguing suggestion from Thomas and Blanchet (2012\)[^11] is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
+> 3. Normally, the algorithm works only if _&lambda;_ is in the interval (0, 1), If _&lambda;_ can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011\)[^22], the _c_ in **FA** and **FB** can be multiplied by 2<sup>_a_</sup> (as shown in step 6) to ensure correctness for every value of _&lambda;_.
 
 <a id=Algorithms_for_General_Irrational_Constants></a>
 ### Algorithms for General Irrational Constants
