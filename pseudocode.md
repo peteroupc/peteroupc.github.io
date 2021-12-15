@@ -61,6 +61,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 * `abs(a)` is the absolute value of `a`; it makes negative numbers non-negative.
 * `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
+* `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This operation is equivalent to `-floor(-a)`.
 * `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
 * `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
 * `exp(a)` is the inverse natural logarithm of `a`.  Also known as the base of natural logarithms raised to the power `a`, so that `exp(1)` is the base of natural logarithms commonly denoted _e_.

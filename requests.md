@@ -29,10 +29,13 @@ The following is a list of my questions on _MathOverflow_ and other _Stack Excha
 - [**Relatively simple simulations that succeed with an irrational probability**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili)
 - [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations)
 - [**Estimating f(E(X)) with a guaranteed error performance**](https://stats.stackexchange.com/questions/522429/estimating-f-mathbbex-with-a-guaranteed-error-performance)
-- [**From coin flips to algebraic functions via pushdown automata**](https://mathoverflow.net/questions/404956/from-coin-flips-to-algebraic-functions-via-pushdown-automata)
+- [**From coin flips to algebraic functions via pushdown automata**](https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata)
 - [**From biased coins, and nothing else, to biased coins**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)
 - [**Reverse time martingale for non-polynomial approximating functions**](https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions)
 - [**Checking if a shape covers a box**](https://math.stackexchange.com/questions/3882545/what-conditions-ensure-that-checking-if-a-shape-covers-a-box-can-be-done-just-by)
+- [**Approximation of concave functions by polynomials**](https://mathoverflow.net/questions/409174/approximation-of-concave-functions-by-polynomials)
+- [**Probability distributions computable by pushdown automata**](https://cstheory.stackexchange.com/questions/50826/probability-distributions-generated-by-pushdown-automata)
+- [**A generalized randomized mean estimate based on the Chebyshev inequality**](https://stats.stackexchange.com/questions/555066/a-generalized-randomized-mean-estimate-based-on-the-chebyshev-inequality)
 
 <a id=Randomization_and_Sampling_Methods></a>
 ## Randomization and Sampling Methods

@@ -1183,16 +1183,13 @@ class Bernoulli:
         faa = {}
         ret = []
         while True:
-            # if degree>=8192:
-            #  print("skipped")
-            #  return 0
             for i in range(degree - lastdegree):
                 if coin() == 1:
                     ones += 1
             c = math.comb(degree, ones)
             md = degree
-            l = self._fb2(fbelow, degree, ones, 2 ** md * c)
-            u = self._fa2(fabove, degree, ones, 2 ** md * c)
+            l = self._fb2(fbelow, degree, ones, c << md)
+            u = self._fa2(fabove, degree, ones, c << md)
             if False:
                 fba[(degree, ones)] = l
                 faa[(degree, ones)] = u
@@ -1212,26 +1209,26 @@ class Bernoulli:
                 if False:  # Correctness check
                     for j in range(0, min(lastdegree, ones) + 1):
                         fb = self._fb2(
-                            fbelow, lastdegree, j, 2 ** md * math.comb(lastdegree, j)
+                            fbelow, lastdegree, j, math.comb(lastdegree, j) << md
                         )
                         if (lastdegree, j) in fba:
                             # print(fb)
                             if fba[(lastdegree, j)] != fb:
                                 raise ValueError
                         fa = self._fa2(
-                            fabove, lastdegree, j, 2 ** md * math.comb(lastdegree, j)
+                            fabove, lastdegree, j, math.comb(lastdegree, j) << md
                         )
                         if (lastdegree, j) in faa:
                             # print(fa)
                             if faa[(lastdegree, j)] != fa:
                                 raise ValueError
                 ls = sum(
-                    self._fb2(fbelow, lastdegree, j, 2 ** md * math.comb(lastdegree, j))
+                    self._fb2(fbelow, lastdegree, j, math.comb(lastdegree, j) << md)
                     * combs[j]
                     for j in range(0, min(lastdegree, ones) + 1)
                 )
                 us = sum(
-                    self._fa2(fabove, lastdegree, j, 2 ** md * math.comb(lastdegree, j))
+                    self._fa2(fabove, lastdegree, j, math.comb(lastdegree, j) << md)
                     * combs[j]
                     for j in range(0, min(lastdegree, ones) + 1)
                 )
