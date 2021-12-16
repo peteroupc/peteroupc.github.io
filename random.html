@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2021/11/14"><meta name="citation_online_date" content="2021/11/14"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2021/12/16"><meta name="citation_online_date" content="2021/12/16"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -134,7 +134,7 @@ however, it&#39;s not enough for this sequence to merely &quot;look random&quot;
 <h2>Summary</h2>
 
 <ul>
-<li>Does the application use random-behaving numbers for <strong>information security</strong> purposes (e.g., as passwords or other secrets)?
+<li>Does the application use random-behaving numbers for <strong>information security</strong> purposes (for example, as passwords or other secrets)?
 
 <ul>
 <li>Yes: Use a <a href="#Cryptographic_RNGs"><strong>cryptographic RNG</strong></a>.</li>
@@ -193,7 +193,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p>Noncryptographic PRNGs vary widely in the quality of randomness of the numbers they generate.  For this reason, a noncryptographic PRNG should not be used&mdash;</p>
 
 <ul>
-<li>for information security purposes (e.g., to generate random passwords, encryption keys, or other secrets),</li>
+<li>for information security purposes (for example, to generate random passwords, encryption keys, or other secrets),</li>
 <li>if cryptographic RNGs are fast enough for the application, or</li>
 <li>if the PRNG is not <em>high quality</em> (see &quot;<a href="#High_Quality_RNGs_Requirements"><strong>High-Quality RNGs: Requirements</strong></a>&quot;).</li>
 </ul>
@@ -225,7 +225,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ul>
 <li>makes the seed (or a &quot;code&quot; or &quot;password&quot; based on the seed) accessible to the user, or</li>
-<li>finds it impractical to store or distribute the &quot;random&quot; numbers or &quot;random&quot; content, rather than the seed, for later use (e.g., to store those numbers to &quot;replay&quot; later, to store that content in a &quot;save file&quot;, or to distribute that content rather than a seed to networked users), and</li>
+<li>finds it impractical to store or distribute the &quot;random&quot; numbers or &quot;random&quot; content, rather than the seed, for later use (for example, to store those numbers to &quot;replay&quot; later, to store that content in a &quot;save file&quot;, or to distribute that content rather than a seed to networked users), and</li>
 </ul></li>
 <li>any feature that uses such a PRNG to generate that &quot;random&quot; result is reproducible, in that it produces the same &quot;random&quot; result for the same seed for as long as the feature is still in use by the application.</li>
 </ol>
@@ -278,15 +278,15 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p>In general, the bigger that &quot;random&quot; content is, the greater the justification to use a manually-seeded PRNG and a custom seed to generate that content.  The following are special cases:</p>
 
 <ol>
-<li>If the game needs reproducible &quot;random&quot; content only at the start of the game session (e.g., a &quot;random&quot; game board or a &quot;random&quot; order of virtual cards) and that content is small (say, no more than a hundred numbers):
+<li>If the game needs reproducible &quot;random&quot; content only at the start of the game session (for example, a &quot;random&quot; game board or a &quot;random&quot; order of virtual cards) and that content is small (say, no more than a hundred numbers):
 
 <ul>
 <li>The game should not use a manually-seeded PRNG unless the seed is based on a &quot;code&quot; or &quot;password&quot; entered by the user.  This is a good sign that the game ought to store the &quot;random&quot; content instead of a seed.</li>
 </ul></li>
-<li>In a networked game where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and numbers from an RNG or PRNG are used to update that game state:
+<li>In a networked game where multiple computers (for example, multiple players, or a client and server) have a shared view of the game state and numbers from an RNG or PRNG are used to update that game state:
 
 <ul>
-<li>The game should not use a manually-seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (e.g., the random outcome is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game may use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and AI.</li>
+<li>The game should not use a manually-seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (for example, the random outcome is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game may use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and AI.</li>
 </ul></li>
 </ol>
 
@@ -560,7 +560,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ul>
 <li>The individual bits of a hash code can serve as pseudorandom numbers, or the hash code can serve as the seed for a PRNG.</li>
-<li>Good hash functions include cryptographic hash functions (e.g., SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs.</li>
+<li>Good hash functions include cryptographic hash functions (for example, SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs.</li>
 <li>Poor hash functions include linear PRNGs such as LCGs and the Xorshift family.</li>
 </ul>
 
@@ -576,7 +576,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ul>
 <li>should include randomly generated or pseudorandom numbers, and</li>
-<li>should not vary from one run to the next while the noise function is used for a given purpose (e.g., to generate terrain for a given map).</li>
+<li>should not vary from one run to the next while the noise function is used for a given purpose (for example, to generate terrain for a given map).</li>
 </ul>
 
 <p><a id=Pseudorandom_Functions></a></p>
@@ -639,7 +639,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p>The following are some questions to consider when generating unique identifiers:</p>
 
 <ol>
-<li>Can the application easily check identifiers for uniqueness within the desired scope and range (e.g., check whether a file or database record with that identifier already exists)[^31]?</li>
+<li>Can the application easily check identifiers for uniqueness within the desired scope and range (for example, check whether a file or database record with that identifier already exists)[^31]?</li>
 <li>Can the application tolerate the risk of generating the same identifier for different resources[^32]?</li>
 <li>Do identifiers have to be hard to guess, be simply &quot;random-looking&quot;, or be neither?</li>
 <li>Do identifiers have to be typed in or otherwise relayed by end users[^33]?</li>
@@ -692,8 +692,8 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ol>
 <li>Generating verifiable randomness has been described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a>, which describes the selection process for the Nominations Committee (NomCom) of the Internet Engineering Task Force.</li>
-<li><em>Verifiable delay functions</em> calculate an output as well as a proof that the output was correctly calculated; these functions deliberately take much more time to calculate the output (e.g., to generate a random-behaving number from public data) than to verify its correctness.[^36] In many cases, such a function deliberately takes much more time than the time allowed to contribute randomness to that function.[^37]</li>
-<li>In a so-called <a href="https://en.wikipedia.org/wiki/Commitment_scheme"><strong><em>commitment scheme</em></strong></a>, one computer generates data to be committed (e.g. a randomly generated number or a chess move), then reveals its hash code or digital signature (<em>commitment</em>), and only later reveals to all participants the committed data (along with other information needed, if any, to verify that the data wasn&#39;t changed in between).  Examples of commitment schemes are <em>hash-based commitments</em>.[^37]</li>
+<li><em>Verifiable delay functions</em> calculate an output as well as a proof that the output was correctly calculated; these functions deliberately take much more time to calculate the output (for example, to generate a random-behaving number from public data) than to verify its correctness.[^36] In many cases, such a function deliberately takes much more time than the time allowed to contribute randomness to that function.[^37]</li>
+<li>In a so-called <a href="https://en.wikipedia.org/wiki/Commitment_scheme"><strong><em>commitment scheme</em></strong></a>, one computer generates data to be committed (for example, a randomly generated number or a chess move), then reveals its hash code or digital signature (<em>commitment</em>), and only later reveals to all participants the committed data (along with other information needed, if any, to verify that the data wasn&#39;t changed in between).  Examples of commitment schemes are <em>hash-based commitments</em>.[^37]</li>
 <li>So-called <em>mental card game</em> (<em>mental poker</em>) schemes can be used in networked games where a deck of cards has to be shuffled and dealt to players, so that the identity of some cards is known to some but not all players.[^37]</li>
 </ol>
 </blockquote>
@@ -837,7 +837,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>[^8]: For integers, this problem also occurs, but is generally limited to the question of rounding after an integer division or remainder, which different programming languages answer differently.</p>
 
-<p>[^9]: <em>Fixed-point numbers</em> are integers that store multiples of 1/<em>n</em> (e.g. 1/10000, 1/256, or 1/65536).  Their resolution doesn&#39;t vary depending on the number, unlike with floating-point numbers. &quot;<a href="https://www.moddb.com/members/kevryan/blogs/the-butterfly-effect-deterministic-physics-in-the-incredible-machine-and-contraption-maker"><strong>The Butterfly Effect - Deterministic Physics in The Incredible Machine and Contraption Maker</strong></a>&quot; is one use case showing how fixed-point numbers aid reproducibility.  I have written a sample <a href="https://peteroupc.github.io/fixed.py"><strong>Python implementation</strong></a> of fixed-point numbers.</p>
+<p>[^9]: <em>Fixed-point numbers</em> are integers that store multiples of 1/<em>n</em> (for example, 1/10000, 1/256, or 1/65536).  Their resolution doesn&#39;t vary depending on the number, unlike with floating-point numbers. &quot;<a href="https://www.moddb.com/members/kevryan/blogs/the-butterfly-effect-deterministic-physics-in-the-incredible-machine-and-contraption-maker"><strong>The Butterfly Effect - Deterministic Physics in The Incredible Machine and Contraption Maker</strong></a>&quot; is one use case showing how fixed-point numbers aid reproducibility.  I have written a sample <a href="https://peteroupc.github.io/fixed.py"><strong>Python implementation</strong></a> of fixed-point numbers.</p>
 
 <p>[^10]: Leierson, C.E., et al., &quot;Deterministic Parallel Random-Number Generation for Dynamic Multithreading Platforms&quot;, 2012.</p>
 
@@ -859,7 +859,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>[^19]: Bauke and Mertens, &quot;Random numbers for large-scale distributed Monte Carlo simulations&quot;, 2007.</p>
 
-<p>[^20]: Besides the seed, other things are hashed that together serve as a <em>domain separation tag</em> (see, e.g., the work-in-progress document &quot;draft-irtf-cfrg-hash-to-curve&quot;).  Note the following:
+<p>[^20]: Besides the seed, other things are hashed that together serve as a <em>domain separation tag</em> (see, for example, the work-in-progress document &quot;draft-irtf-cfrg-hash-to-curve&quot;).  Note the following:
     - In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a <em>collision risk</em>) or that a seed not allowed by the PRNG is produced (a &quot;rejection risk&quot;), but this risk decreases the more seeds the PRNG admits (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).
     - M. O&#39;Neill (in &quot;Developing a <code>seed_seq</code> Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, <code>seed_seq_fe128</code> hashes 128-bit seeds to 128-bit or longer unique values.
     - An application can handle a rejected seed by hashing with a different value or by using a backup seed instead, depending on how tolerant the application is to bias.
@@ -885,14 +885,14 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>[^30]: van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</p>
 
-<p>[^31]: For applications distributed across multiple computers (e.g., servers), this check is made easier if each computer is assigned a unique value from a central database, because then the computer can use that unique value as part of unique identifiers it generates and ensure that the identifiers are unique across the application without further contacting other computers or the central database.  An example is Twitter&#39;s <a href="https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html"><strong>Snowflake service</strong></a>.</p>
+<p>[^31]: For applications distributed across multiple computers (for example, servers), this check is made easier if each computer is assigned a unique value from a central database, because then the computer can use that unique value as part of unique identifiers it generates and ensure that the identifiers are unique across the application without further contacting other computers or the central database.  An example is Twitter&#39;s <a href="https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html"><strong>Snowflake service</strong></a>.</p>
 
 <p>[^32]: In theory, generating two or more random integers of the same size runs the risk of producing a duplicate number this way.  However, this risk decreases as that size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;
     - about 2.7 billion billion random 122-bit integers (including those found in version-4 UUIDs, or universally unique identifiers),
     - about 1.4 million billion billion random 160-bit integers, or
     - about 93 billion billion billion random 192-bit integers.</p>
 
-<p>[^33]: If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (e.g., &quot;ABCDEF&quot; becomes &quot;ABC-DEF&quot;); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin&#39;s BIP39); or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</p>
+<p>[^33]: If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (for example, 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (for example, &quot;ABCDEF&quot; becomes &quot;ABC-DEF&quot;); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin&#39;s BIP39); or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</p>
 
 <p>[^34]: Note that the <em>insecure direct object references</em> problem can occur if an application enables access to a sensitive resource via an easy-to-guess identifier, but without any access control checks.</p>
 
@@ -916,7 +916,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>[^41]: An example is the &quot;shrinking generator&quot; technique to combine two RNGs; see J. D. Cook, &quot;Using one RNG to sample another&quot;, June 4, 2019, for more.</p>
 
-<p>[^42]: Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</p>
+<p>[^42]: Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (for example, to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</p>
 
 <p><a id=License></a></p>
 

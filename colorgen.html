@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2021/11/14"><meta name="citation_online_date" content="2021/11/14"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2021/12/16"><meta name="citation_online_date" content="2021/12/16"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -723,7 +723,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>This document does not seek to survey the various ways in which Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye&#39;s normally greater spatial sensitivity to luminance (Y, as approximated, e.g., by Y&prime;, luma) than chromatic sensitivity (e.g., C<sub><em>B</em></sub>, C<sub><em>R</em></sub>).</li>
+<li>This document does not seek to survey the various ways in which Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye&#39;s normally greater spatial sensitivity to luminance (Y, as approximated, for example, by Y&prime;, luma) than chromatic sensitivity (for example, C<sub><em>B</em></sub>, C<sub><em>R</em></sub>).</li>
 <li>Other video color formats include &quot;BT.2020 constant luminance&quot;, in <a href="https://en.wikipedia.org/wiki/Rec._2020"><strong>Rec. 2020</strong></a>, and IC<sub><em>T</em></sub>C<sub><em>P</em></sub>, mentioned in Rep. 2390-4 and detailed in a <a href="https://www.dolby.com/us/en/technologies/dolby-vision/ICtCp-white-paper.pdf"><strong>Dolby white paper</strong></a>.</li>
 </ol>
 </blockquote>
@@ -1119,7 +1119,7 @@ END METHOD
 
 <h3>CMYK and Other Ink-Mixture Color Models</h3>
 
-<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.[^22] However, since <a href="#Color_Mixture"><strong>color mixture</strong></a> of inks or other colorants is very complex, the exact color appearance of any recipe of colorants (not just in the CMYK context) depends on the <em>printing condition</em> (as defined in ISO 12647-1), including what colorants are used, how the colorants are printed, and what surface (e.g., paper) the printed output appears on.</p>
+<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.[^22] However, since <a href="#Color_Mixture"><strong>color mixture</strong></a> of inks or other colorants is very complex, the exact color appearance of any recipe of colorants (not just in the CMYK context) depends on the <em>printing condition</em> (as defined in ISO 12647-1), including what colorants are used, how the colorants are printed, and what surface (for example, paper) the printed output appears on.</p>
 
 <p><strong>Characterization tables.</strong> In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color &quot;patches&quot; and using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a> to measure their <a href="#CIELAB"><strong>CIELAB</strong></a> colors under standardized lighting and measurement conditions.</p>
 
@@ -1197,8 +1197,8 @@ END METHOD
 <ol>
 <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.</li>
 <li><strong>Average</strong> of the multicomponent color&#39;s components (see <a href="#Alpha_Blending"><strong>Alpha Blending</strong></a>).</li>
-<li><strong>Maximum</strong>; e.g., <code>max(max(color[0], color[1]), color[2])</code> for three-component colors.</li>
-<li><strong>Minimum</strong>; e.g., <code>min(min(color[0], color[1]), color[2])</code> for three-component colors. (For techniques 1-4, see also (Helland)[^24].)</li>
+<li><strong>Maximum</strong>; for example, <code>max(max(color[0], color[1]), color[2])</code> for three-component colors.</li>
+<li><strong>Minimum</strong>; for example, <code>min(min(color[0], color[1]), color[2])</code> for three-component colors. (For techniques 1-4, see also (Helland)[^24].)</li>
 <li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot; (Cook 2009)[^25]).</li>
 </ol>
 </blockquote>
@@ -1613,7 +1613,7 @@ END METHOD
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither"><strong>&quot;dithering&quot;</strong></a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.[^35]</li>
 </ul></li>
 <li><strong>Unique colors</strong>: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.[^36]</li>
-<li><strong>Disqualifying dominant colors</strong>:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image&#39;s edges, can ignore certain kinds of colors (e.g., gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the dominant color list.</li>
+<li><strong>Disqualifying dominant colors</strong>:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image&#39;s edges, can ignore certain kinds of colors (for example, gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the dominant color list.</li>
 <li>Averaging the colors of an image, component-by-component, can lead to a meaningless result, especially if there is a wide color variety represented in the image (see <code>stackoverflow.com/questions/43111029</code>).</li>
 <li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a>, or be calculated from [<strong><em>scene-referred</em> image data</strong>](<a href="http://eilv.cie.co.at/term/567%5C)%5B%5E37%5D">http://eilv.cie.co.at/term/567\)[^37]</a>. PNG and many other image formats store image data commonly interpreted as <a href="#sRGB"><strong>sRGB</strong></a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><strong><em>output-referred</em></strong></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
 </ol>
@@ -1667,7 +1667,7 @@ END METHOD
 
 <ul>
 <li>As used in the <a href="http://www.w3.org/TR/css3-color/"><strong>CSS Color Module Level 3</strong></a>, named colors defined in that module are expressed as encoded RGB colors in the <a href="#sRGB"><strong><em>sRGB color space</em></strong></a>.</li>
-<li>If the color names identify points in a color space (as in the &quot;5RP 5/6&quot; example), converting a color name with a similar format (e.g., &quot;5.6PB 7.1/2.5&quot;) to a color can be done by multidimensional interpolation of the known color points.[^23]</li>
+<li>If the color names identify points in a color space (as in the &quot;5RP 5/6&quot; example), converting a color name with a similar format (for example, &quot;5.6PB 7.1/2.5&quot;) to a color can be done by multidimensional interpolation of the known color points.[^23]</li>
 </ul>
 </blockquote>
 
@@ -1747,15 +1747,15 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 <li>To generate a random <strong>dark RGB color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code> until a <em>light&ndash;dark factor</em>  is less than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code> until a <em>light&ndash;dark factor</em>  is less than a given threshold, for example, 0.5, or</li>
 <li>generate <code>color = [RNDRANGEMinMaxExc(0, maxComp), RNDRANGEMinMaxExc(0, maxComp), RNDRANGEMinMaxExc(0, maxComp)]</code>, where <code>maxComp</code> is the
-maximum value of each color component, e.g., 0.5.</li>
+maximum value of each color component, for example, 0.5.</li>
 </ul></li>
 <li>To generate a random <strong>light RGB color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code> until a <em>light&ndash;dark factor</em> is greater than a given threshold, e.g., 0.5, or</li>
-<li>generate <code>color = [minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, e.g., 0.5.</li>
+<li>generate <code>color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code> until a <em>light&ndash;dark factor</em> is greater than a given threshold, for example, 0.5, or</li>
+<li>generate <code>color = [minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, for example, 0.5.</li>
 </ul></li>
 <li>One way to generate a random <strong>pastel RGB color</strong> is to generate <code>color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code> until a <em>light&ndash;dark factor</em> is greater than 0.75 and less than 0.9.</li>
 <li>To generate a <strong>random three-component color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp3(color1, color2, RNDRANGEMinMaxExc(0, 1))</code>.</li>
@@ -2022,7 +2022,7 @@ END METHOD
 
 <p>[^16]: Chromatic adaptation transforms include linear Bradford transformations, but are not further detailed in this document. (See also E. Stone, &quot;<a href="https://ninedegreesbelow.com/photography/srgb-luminance.html"><strong>The Luminance of an sRGB Color</strong></a>&quot;, 2013.)</p>
 
-<p>[^17]: Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (<em>r</em>, <em>g</em>, <em>b</em>) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (<em>x</em>, <em>y</em>, <em>z</em>) coordinates.</p>
+<p>[^17]: Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (for example, (<em>r</em>, <em>g</em>, <em>b</em>) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (<em>x</em>, <em>y</em>, <em>z</em>) coordinates.</p>
 
 <p>[^18]: <a href="http://www.cie.co.at/publications/technical-notes"><strong>CIE Technical Note 001:2014</strong></a> says the chromaticity difference (<em>&Delta;<sub>u&prime;v&prime;</sub></em>) should be calculated as the <a href="#Color_Differences"><strong>Euclidean distance</strong></a> between two <em>u&prime;v&prime;</em> pairs and that a chromaticity difference of 0.0013 is just noticeable &quot;at 50% probability&quot;.</p>
 
@@ -2081,7 +2081,7 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p>[^43]: See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/"><strong>Colour Rendering of Spectra</strong></a>&quot;.</p>
 
-<p>[^44]: As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch"><strong>B. MacEvoy explains</strong></a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39"><strong>principles 39 to 41</strong></a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
+<p>[^44]: As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch"><strong>B. MacEvoy explains</strong></a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39"><strong>principles 39 to 41</strong></a>), and &quot;the material attributes of the support [for example, the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
 
 <p>[^45]: Walowit, E.  &quot;Spectrophotometric color formulation based on two-constant Kubelka-Munk theory&quot;. Thesis, Rochester Institute of Technology, 1985.</p>
 

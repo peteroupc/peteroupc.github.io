@@ -11,7 +11,7 @@ a requirement called the "independence requirement" in this short document.
 
 To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey and show no failures ("FAILs") in the PractRand tests at 1 TiB (2^40 bytes) or greater.  For more information, see "[**How to Test with PractRand**](http://www.pcg-random.org/posts/how-to-test-with-practrand.html)" by M. E. O'Neill.
 
-**Random number streams.** Many PRNGs use different strategies to produce nearby sequences (or _streams_) of pseudorandom numbers.  But not every strategy produces _independent_ streams.  To determine whether nearby sequences of the PRNG meet the independence requirement, the output sent to PractRand should be formed by interleaving the outputs of those sequences (e.g., one output from the first sequence, one output from the second, another output from the first, another from the second, and so on).
+**Random number streams.** Many PRNGs use different strategies to produce nearby sequences (or _streams_) of pseudorandom numbers.  But not every strategy produces _independent_ streams.  To determine whether nearby sequences of the PRNG meet the independence requirement, the output sent to PractRand should be formed by interleaving the outputs of those sequences (for example, one output from the first sequence, one output from the second, another output from the first, another from the second, and so on).
 
 There are several kinds of nearby sequences to test for this purpose:
 
@@ -45,7 +45,7 @@ _Other combinations and transformations._  There are other ways to combine two P
 
 - Keeping some outputs and discarding others (as in RANLUX).
 - The [**Bays&ndash;Durham shuffle**](https://peteroupc.github.io/bdshuffle.html) (as in C++'s `shuffle_block_engine`).
-- Transforming a PRNG's outputs with a permutation function (e.g., Mersenne Twister's "tempering").
+- Transforming a PRNG's outputs with a permutation function (for example, Mersenne Twister's "tempering").
 - The "shrinking generator" technique, which takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019\)[^6]).
 - "Self-shrinking" and von Neumann unbiasing, which each transform a PRNG based on pairs of output bits.
 

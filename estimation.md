@@ -9,7 +9,7 @@ This page presents general-purpose algorithms for estimating the mean value of a
 
 The algorithms are described to make them easy to implement by programmers.
 
-Not yet covered are unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (e.g., estimators that average an increasing number of sample points).  See, for example, Vihola (2018\)[^1].
+Not yet covered are unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (for example, estimators that average an increasing number of sample points).  See, for example, Vihola (2018\)[^1].
 
 <a id=Concepts></a>
 ## Concepts

@@ -599,7 +599,7 @@ The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB 
 
 > **Notes:**
 >
-> 1. This document does not seek to survey the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated, e.g., by Y&prime;, luma) than chromatic sensitivity (e.g., C<sub>_B_</sub>, C<sub>_R_</sub>).
+> 1. This document does not seek to survey the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated, for example, by Y&prime;, luma) than chromatic sensitivity (for example, C<sub>_B_</sub>, C<sub>_R_</sub>).
 > 2. Other video color formats include "BT.2020 constant luminance", in [**Rec. 2020**](https://en.wikipedia.org/wiki/Rec._2020), and IC<sub>_T_</sub>C<sub>_P_</sub>, mentioned in Rep. 2390-4 and detailed in a [**Dolby white paper**](https://www.dolby.com/us/en/technologies/dolby-vision/ICtCp-white-paper.pdf).
 
 <a id=Other_Color_Models></a>
@@ -945,7 +945,7 @@ In the following pseudocode&mdash;
 <a id=CMYK_and_Other_Ink_Mixture_Color_Models></a>
 ### CMYK and Other Ink-Mixture Color Models
 
-The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.[^22] However, since [**color mixture**](#Color_Mixture) of inks or other colorants is very complex, the exact color appearance of any recipe of colorants (not just in the CMYK context) depends on the _printing condition_ (as defined in ISO 12647-1), including what colorants are used, how the colorants are printed, and what surface (e.g., paper) the printed output appears on.
+The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.[^22] However, since [**color mixture**](#Color_Mixture) of inks or other colorants is very complex, the exact color appearance of any recipe of colorants (not just in the CMYK context) depends on the _printing condition_ (as defined in ISO 12647-1), including what colorants are used, how the colorants are printed, and what surface (for example, paper) the printed output appears on.
 
 **Characterization tables.** In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices) to measure their [**CIELAB**](#CIELAB) colors under standardized lighting and measurement conditions.
 
@@ -1012,8 +1012,8 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 >
 > 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.
 > 2. **Average** of the multicomponent color's components (see [**Alpha Blending**](#Alpha_Blending)).
-> 3. **Maximum**; e.g., `max(max(color[0], color[1]), color[2])` for three-component colors.
-> 4. **Minimum**; e.g., `min(min(color[0], color[1]), color[2])` for three-component colors. (For techniques 1-4, see also (Helland\)[^24].)
+> 3. **Maximum**; for example, `max(max(color[0], color[1]), color[2])` for three-component colors.
+> 4. **Minimum**; for example, `min(min(color[0], color[1]), color[2])` for three-component colors. (For techniques 1-4, see also (Helland\)[^24].)
 > 5. **Light/dark factor**: A [**CIELAB**](#CIELAB) or [**CIELUV**](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as [**HSL**](#HSL) "lightness" (Cook 2009\)[^25]).
 
 <a id=Alpha_Blending></a>
@@ -1351,7 +1351,7 @@ There are several methods of finding the kind or kinds of colors that appear mos
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [**nearest dominant colors**](#Nearest_Colors)), or
 >     - applying a [**"dithering"**](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.[^35]
 > 3. **Unique colors**: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.[^36]
-> 4. **Disqualifying dominant colors**:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image's edges, can ignore certain kinds of colors (e.g., gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the dominant color list.
+> 4. **Disqualifying dominant colors**:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image's edges, can ignore certain kinds of colors (for example, gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the dominant color list.
 > 5. Averaging the colors of an image, component-by-component, can lead to a meaningless result, especially if there is a wide color variety represented in the image (see `stackoverflow.com/questions/43111029`).
 > 6. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices), or be calculated from [**_scene-referred_ image data**](http://eilv.cie.co.at/term/567\)[^37]. PNG and many other image formats store image data commonly interpreted as [**sRGB**](#sRGB) by default; however, sRGB is an [**_output-referred_**](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
 
@@ -1389,7 +1389,7 @@ If each name, number, or code in a color map is associated with one or several c
 > **Notes:**
 >
 > - As used in the [**CSS Color Module Level 3**](http://www.w3.org/TR/css3-color/), named colors defined in that module are expressed as encoded RGB colors in the [**_sRGB color space_**](#sRGB).
-> - If the color names identify points in a color space (as in the "5RP 5/6" example), converting a color name with a similar format (e.g., "5.6PB 7.1/2.5") to a color can be done by multidimensional interpolation of the known color points.[^23]
+> - If the color names identify points in a color space (as in the "5RP 5/6" example), converting a color name with a similar format (for example, "5.6PB 7.1/2.5") to a color can be done by multidimensional interpolation of the known color points.[^23]
 
 <a id=Visually_Distinct_Colors></a>
 ### Visually Distinct Colors
@@ -1449,12 +1449,12 @@ The techniques follow.
 - Generating a random three-component color in the **0-1 format** can be done as follows: `[RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]`.
 - Generating a random **8-bpc encoded RGB color** can be done as follows: `From888(RNDINT(16777215))`.
 - To generate a random **dark RGB color**, either&mdash;
-    - generate `color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]` until a _light&ndash;dark factor_  is less than a given threshold, e.g., 0.5, or
+    - generate `color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]` until a _light&ndash;dark factor_  is less than a given threshold, for example, 0.5, or
     - generate `color = [RNDRANGEMinMaxExc(0, maxComp), RNDRANGEMinMaxExc(0, maxComp), RNDRANGEMinMaxExc(0, maxComp)]`, where `maxComp` is the
-       maximum value of each color component, e.g., 0.5.
+       maximum value of each color component, for example, 0.5.
 - To generate a random **light RGB color**, either&mdash;
-    - generate `color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]` until a _light&ndash;dark factor_ is greater than a given threshold, e.g., 0.5, or
-    - generate `color = [minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp)]`, where `minComp` is the minimum value of each color component, e.g., 0.5.
+    - generate `color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]` until a _light&ndash;dark factor_ is greater than a given threshold, for example, 0.5, or
+    - generate `color = [minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp)]`, where `minComp` is the minimum value of each color component, for example, 0.5.
 - One way to generate a random **pastel RGB color** is to generate `color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]` until a _light&ndash;dark factor_ is greater than 0.75 and less than 0.9.
 - To generate a **random three-component color at or between two others** (`color1` and `color2`), generate `Lerp3(color1, color2, RNDRANGEMinMaxExc(0, 1))`.
 - To generate a **random shade** of a given RGB color, generate `Lerp3(color1, [0, 0, 0], RNDRANGEMinMaxExc(0.2, 1.0))`.
@@ -1677,7 +1677,7 @@ For a detailed overview on phenomena involving human color vision, see section 9
 
 [^16]: Chromatic adaptation transforms include linear Bradford transformations, but are not further detailed in this document. (See also E. Stone, "[**The Luminance of an sRGB Color**](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)
 
-[^17]: Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (_r_, _g_, _b_) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (_x_, _y_, _z_) coordinates.
+[^17]: Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (for example, (_r_, _g_, _b_) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (_x_, _y_, _z_) coordinates.
 
 [^18]: [**CIE Technical Note 001:2014**](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [**Euclidean distance**](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
 
@@ -1736,7 +1736,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 [^43]: See also J. Walker, "[**Colour Rendering of Spectra**](http://www.fourmilab.ch/documents/specrend/)".
 
-[^44]: As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
+[^44]: As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [for example, the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
 
 [^45]: Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.
 

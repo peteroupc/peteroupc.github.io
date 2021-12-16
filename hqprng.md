@@ -181,7 +181,7 @@ The following helper method, in pseudocode, is used in the description above:
     METHOD BitsToBytes(bits)
        // Unfortunately, the Claessen paper sec. 3.3 pads
        // blocks with zeros, creating a risk that different paths
-       // encode to the same byte sequence (e.g., <1100> vs.
+       // encode to the same byte sequence (for example, <1100> vs.
        // <11000> or <0011> vs. <00011>). Even without this padding,
        // this risk exists unless the underlying hash function hashes
        // bit sequences (not just byte sequences), which is rare.

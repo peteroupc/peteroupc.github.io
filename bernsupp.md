@@ -121,7 +121,7 @@ Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;
 then _f_ can be simulated using the following algorithm:
 
 1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
-2. Run a Bernoulli factory algorithm for _g_(.) and return the result of that algorithm.  This can be one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) if there is a way to calculate polynomials that converge to _g_(.) in a manner needed for that algorithm (e.g., if _g_ is described earlier in this section).
+2. Run a Bernoulli factory algorithm for _g_(.) and return the result of that algorithm.  This can be one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) if there is a way to calculate polynomials that converge to _g_(.) in a manner needed for that algorithm (for example, if _g_ is described earlier in this section).
 
 > **Notes:**
 >
@@ -158,7 +158,7 @@ Now, if _r_(_&lambda;_) is continuous on [0, 1], then _f_ can be simulated using
 
 1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
 2. Run a Bernoulli factory algorithm for _q_(.).  If the call returns 1, return 1.
-3. Run a Bernoulli factory algorithm for _r_(.), and return 1 minus the result of that call.  The Bernoulli factory algorithm can be one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) if there is a way to calculate polynomials that converge to _r_(.) in a manner needed for that algorithm (e.g., if _r_ is described earlier in this section).
+3. Run a Bernoulli factory algorithm for _r_(.), and return 1 minus the result of that call.  The Bernoulli factory algorithm can be one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) if there is a way to calculate polynomials that converge to _r_(.) in a manner needed for that algorithm (for example, if _r_ is described earlier in this section).
 
 > **Note:** Quick proof: Rewrite $f=h\dot{}(q\dot{}1+(1-q)\dot{}(1-r))+(1-h)\dot{}0$.
 >
@@ -710,7 +710,7 @@ _Proof of Proposition 2:_  The following cases can occur:
 
 _Proof:_ If _f_ is 0 everywhere in its domain or 1 everywhere in its domain: Return 0 or 1, respectively.  Otherwise, let&mdash;
 
-- _M_ be the Lipschitz constant of _f_ (e.g., its "slope" function's maximum absolute value), or a computable number greater than this.
+- _M_ be the Lipschitz constant of _f_ (for example, its "slope" function's maximum absolute value), or a computable number greater than this.
 - _l_ be either 0 if 0 is in the domain of _f_, or 1 otherwise, and
 - _u_ be either 0 if 1 is in the domain of _f_, or 1 otherwise.
 

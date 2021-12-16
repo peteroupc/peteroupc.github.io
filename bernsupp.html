@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/12/05"><meta name="citation_online_date" content="2021/12/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/12/16"><meta name="citation_online_date" content="2021/12/16"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -172,7 +172,7 @@
 
 <ol>
 <li>Run a Bernoulli factory algorithm for <em>h</em>.  If the call returns 0, return 0. (For example, if <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, then this step amounts to the following: &quot;Flip the input coin.  If it returns 0, return 0.&quot;)</li>
-<li>Run a Bernoulli factory algorithm for <em>g</em>(.) and return the result of that algorithm.  This can be one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> if there is a way to calculate polynomials that converge to <em>g</em>(.) in a manner needed for that algorithm (e.g., if <em>g</em> is described earlier in this section).</li>
+<li>Run a Bernoulli factory algorithm for <em>g</em>(.) and return the result of that algorithm.  This can be one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> if there is a way to calculate polynomials that converge to <em>g</em>(.) in a manner needed for that algorithm (for example, if <em>g</em> is described earlier in this section).</li>
 </ol>
 
 <blockquote>
@@ -226,7 +226,7 @@
 <ol>
 <li>Run a Bernoulli factory algorithm for <em>h</em>.  If the call returns 0, return 0. (For example, if <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, then this step amounts to the following: &quot;Flip the input coin.  If it returns 0, return 0.&quot;)</li>
 <li>Run a Bernoulli factory algorithm for <em>q</em>(.).  If the call returns 1, return 1.</li>
-<li>Run a Bernoulli factory algorithm for <em>r</em>(.), and return 1 minus the result of that call.  The Bernoulli factory algorithm can be one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> if there is a way to calculate polynomials that converge to <em>r</em>(.) in a manner needed for that algorithm (e.g., if <em>r</em> is described earlier in this section).</li>
+<li>Run a Bernoulli factory algorithm for <em>r</em>(.), and return 1 minus the result of that call.  The Bernoulli factory algorithm can be one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> if there is a way to calculate polynomials that converge to <em>r</em>(.) in a manner needed for that algorithm (for example, if <em>r</em> is described earlier in this section).</li>
 </ol>
 
 <blockquote>
@@ -1107,7 +1107,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <p><em>Proof:</em> If <em>f</em> is 0 everywhere in its domain or 1 everywhere in its domain: Return 0 or 1, respectively.  Otherwise, let&mdash;</p>
 
 <ul>
-<li><em>M</em> be the Lipschitz constant of <em>f</em> (e.g., its &quot;slope&quot; function&#39;s maximum absolute value), or a computable number greater than this.</li>
+<li><em>M</em> be the Lipschitz constant of <em>f</em> (for example, its &quot;slope&quot; function&#39;s maximum absolute value), or a computable number greater than this.</li>
 <li><em>l</em> be either 0 if 0 is in the domain of <em>f</em>, or 1 otherwise, and</li>
 <li><em>u</em> be either 0 if 1 is in the domain of <em>f</em>, or 1 otherwise.</li>
 </ul>

@@ -407,7 +407,7 @@ Each of the resulting uniform random values will be in the interval [0, 1], and 
 
 Other kinds of copulas describe different kinds of dependence between randomly sampled numbers.  Examples of other copulas are&mdash;
 
-- the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDRANGEMinMaxExc(0, 1)`,
+- the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (for example, `[x, x]`), where `x = RNDRANGEMinMaxExc(0, 1)`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDRANGEMinMaxExc(0, 1)`,
 - the **product copula**, where each number is a separately generated `RNDRANGEMinMaxExc(0, 1)` (indicating no dependence between the numbers), and
 - the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011\)[^17].

@@ -182,7 +182,6 @@ class PiecewiseBernsteinPoly:
                 n = len(coeffs) - 1
                 return sum(
                     FInterval(coeffs[i]) * binco2(x ** i * (1 - x) ** (n - i), n, i)
-                    # * (x ** i * (1 - x) ** (n - i) * ccomb(n, i))
                     for i in range(0, len(coeffs))
                 )
         return 0
@@ -245,7 +244,6 @@ class PiecewiseBernsteinPoly:
                 n = len(coeffs) - 1
                 return sum(
                     FInterval(coeffs[i]) * binco2(x ** i * (1 - x) ** (n - i), n, i)
-                    # * (x ** i * (1 - x) ** (n - i) * ccomb(n, i))
                     for i in range(0, len(coeffs))
                 ) * ((n + 1) * (n + 2))
         return 0
@@ -286,10 +284,7 @@ def elevate(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
         r -= 256
     for i in range(r):
         coeffs = elevate1(coeffs)
-        # totalbits=sum(v.n.bit_length()+v.d.bit_length() for v in coeffs)
         coeffs = [v.reduce() for v in coeffs]
-        # totalbits2=sum(v.n.bit_length()+v.d.bit_length() for v in coeffs)
-        # print(totalbits,totalbits2)
     return coeffs
 
 def lorentz2poly(pwpoly, n):
@@ -408,8 +403,8 @@ class FInterval:
             return self
         inf = v
         sup = v if sup == None else sup
-        self.sup = sup if isinstance(sup, Fraction) else Frac(sup)
-        self.inf = inf if isinstance(inf, Fraction) else Frac(inf)
+        self.sup = sup if isinstance(sup, Frac) else Frac(sup)
+        self.inf = inf if isinstance(inf, Frac) else Frac(inf)
         # Truncation
         self._truncate()
         return self
@@ -614,6 +609,9 @@ class FInterval:
             return FInterval(1, 1)
         if yn == 1:
             return self
+        while yn > 32:
+            self = self.pow(32)
+            yn -= 32
         if yn % 2 == 1 or self.inf >= 0:
             return FInterval(self.inf ** yn, self.sup ** yn)
         if self.sup <= 0:
@@ -621,7 +619,6 @@ class FInterval:
         return FInterval(0, max(self.inf ** yn, self.sup ** yn))
 
     def __pow__(self, v):
-        """ For convenience only. """
         return self.pow(v)
 
     def __repr__(self):
@@ -776,6 +773,7 @@ class C2PiecewisePoly:
             d = self.lastdegree
             while d <= n:
                 d = self.nextdegree(d)
+                lastfn_coeffs = None
                 # t=time.time(); print("nextdegree %d" % (d))
                 if self.lastfn == None:
                     self.lastfn = lorentz2polyC(self.pwp, d - 2)
@@ -838,13 +836,13 @@ def verifyPolys(lo, up, lastlo, lastup):
     lastup = elevate(lastup, degdiff)
     for prev, curr in zip(lastlo, lo):
         if prev > curr:
-            print([float(v) for v in lastlo])
-            print([float(v) for v in lo])
+            # print([float(v) for v in lastlo])
+            # print([float(v) for v in lo])
             raise ValueError("invalid lower curve: deg=%d" % (len(lo) - 1))
     for prev, curr in zip(lastup, up):
         if prev < curr:
-            print([float(v) for v in lastup])
-            print([float(v) for v in up])
+            # print([float(v) for v in lastup])
+            # print([float(v) for v in up])
             raise ValueError("invalid upper curve: deg=%d" % (len(up) - 1))
 
 class C2PiecewisePoly2:
@@ -949,6 +947,9 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
     faa = {}
     ret = random.random()
     while True:
+        # The following condition should not be present for exact
+        # simulation, but is here in order to keep simulation
+        # times reasonable
         if degree >= 8192:
             print("skipped")
             return 0
@@ -1017,28 +1018,34 @@ _dogcd = 0
 class Frac:
     def __new__(cl, n, d=1):
         global _dogcd
-        if isinstance(n, Frac) and d == 1:
+        isfrac = isinstance(n, Frac)
+        if isfrac and d == 1:
             return n
         scl = super(Frac, cl)
         self = scl.__new__(cl)
-        if isinstance(n, Fraction) and d == 1:
-            self.n = n.numerator
-            self.d = n.denominator
-        elif isinstance(n, Frac) and isinstance(d, int):
+        if isinstance(n, Fraction):
+            if d == 1:
+                self.n = n.numerator
+                self.d = n.denominator
+            elif isinstance(d, int):
+                self.n = n.numerator
+                self.d = n.denominator * d
+            else:
+                n /= d
+                self.n = n.numerator
+                self.d = n.denominator
+        elif isfrac and isinstance(d, int):
             self.n = n.n
             self.d = n.d * d
-        elif isinstance(n, Fraction) and isinstance(d, int):
-            self.n = n.numerator
-            self.d = n.denominator * d
-        elif isinstance(n, float) and d == 1:
+        elif (not isfrac) and (isinstance(n, float) and d == 1):
             n = Fraction(n)
             self.n = n.numerator
             self.d = n.denominator
         else:
             _dogcd += 1
-            if _dogcd > 15:
+            if _dogcd > 30:
                 # Do lowest-terms reduction only occasionally,
-                # rather than every time a Fraction is created.
+                # rather than every time a Frac is created.
                 # Doing so significantly improves performance
                 _dogcd = 0
                 try:
@@ -1051,7 +1058,7 @@ class Frac:
             else:
                 self.n = n
                 self.d = d
-        if self.d < 0:
+        if self.d <= 0:
             raise ValueError
         return self
 
@@ -1068,8 +1075,6 @@ class Frac:
 
     def __add__(self, v):
         v = Frac(v)
-        # if self.n.bit_length()>100000:raise ValueError
-        # print([self.n.bit_length(),self.d.bit_length(),v.n.bit_length(),v.d.bit_length()])
         return Frac(self.n * v.d + self.d * v.n, self.d * v.d)
 
     def __abs__(self):
@@ -1095,6 +1100,8 @@ class Frac:
         return Frac(self.n * v.d - self.d * v.n, self.d * v.d)
 
     def __mul__(self, v):
+        if isinstance(v, int):
+            return Frac(self.n * v, self.d)
         v = Frac(v)
         return Frac(self.n * v.n, self.d * v.d)
 
