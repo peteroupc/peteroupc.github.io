@@ -50,6 +50,12 @@ class PolySum:
     def diff2(self, x):
         return self.a.diff2(x) + self.b.diff2(x)
 
+    def diff3(self, x):
+        return self.a.diff3(x) + self.b.diff3(x)
+
+    def diff4(self, x):
+        return self.a.diff4(x) + self.b.diff4(x)
+
     def get_coeffs(self):
         # print(["get_coeffs",self])
         a = self.a.get_coeffs()
@@ -73,6 +79,12 @@ class PolyDiff:
 
     def diff2(self, x):
         return self.a.diff2(x) - self.b.diff2(x)
+
+    def diff3(self, x):
+        return self.a.diff3(x) - self.b.diff3(x)
+
+    def diff4(self, x):
+        return self.a.diff4(x) - self.b.diff4(x)
 
     def valuei(self, x):
         return self.a.valuei(x) - self.b.valuei(x)
@@ -138,6 +150,8 @@ class PiecewiseBernsteinPoly:
     def __init__(self):
         self.pieces = []
         self.diff2pieces = []
+        self.diff3pieces = []
+        self.diff4pieces = []
         self.valueAtime = 0
         self.valueBtime = 0
         self.pieces2 = []
@@ -222,6 +236,48 @@ class PiecewiseBernsteinPoly:
         if len(self.diff2pieces) != len(self.pieces):
             raise ValueError
 
+    def _ensurediff3(self):
+        if len(self.diff3pieces) == len(self.pieces):
+            return
+        # Homogeneous coefficients
+        for i in range(len(self.diff3pieces), len(self.pieces)):
+            coeffs, mn, mx = self.pieces[i]
+            if len(coeffs) <= 3:
+                self.diff3pieces.append([None, mn, mx])
+            else:
+                n = len(coeffs) - 1
+                tmp = [
+                    (coeffs[j + 3] - 3 * coeffs[j + 2] + 3 * coeffs[j + 1] - coeffs[j])
+                    for j in range(len(coeffs) - 3)
+                ]
+                self.diff3pieces.append([tmp, mn, mx])
+        if len(self.diff3pieces) != len(self.pieces):
+            raise ValueError
+
+    def _ensurediff4(self):
+        if len(self.diff4pieces) == len(self.pieces):
+            return
+        # Homogeneous coefficients
+        for i in range(len(self.diff4pieces), len(self.pieces)):
+            coeffs, mn, mx = self.pieces[i]
+            if len(coeffs) <= 4:
+                self.diff4pieces.append([None, mn, mx])
+            else:
+                n = len(coeffs) - 1
+                tmp = [
+                    (
+                        coeffs[j]
+                        - 4 * coeffs[j + 1]
+                        + 6 * coeffs[j + 2]
+                        - 4 * coeffs[j + 3]
+                        + coeffs[j + 4]
+                    )
+                    for j in range(len(coeffs) - 4)
+                ]
+                self.diff4pieces.append([tmp, mn, mx])
+        if len(self.diff4pieces) != len(self.pieces):
+            raise ValueError
+
     def diff2(self, x):  # Second derivative of piecewise polynomial
         self._ensurediff2()
         for coeffs, mn, mx in self.diff2pieces:
@@ -246,6 +302,58 @@ class PiecewiseBernsteinPoly:
                     FInterval(coeffs[i]) * binco2(x ** i * (1 - x) ** (n - i), n, i)
                     for i in range(0, len(coeffs))
                 ) * ((n + 1) * (n + 2))
+        return 0
+
+    def diff3(self, x):  # Third derivative of piecewise polynomial
+        self._ensurediff3()
+        for coeffs, mn, mx in self.diff3pieces:
+            if x >= mn and x <= mx:
+                if coeffs == None:
+                    return 0
+                n = len(coeffs) - 1
+                return sum(
+                    (coeffs[i]) * binco2(x ** i * (1 - x) ** (n - i), n, i)
+                    for i in range(0, len(coeffs))
+                ) * ((n + 1) * (n + 2) * (n + 3))
+        return 0
+
+    def diff4(self, x):  # Fourth derivative of piecewise polynomial
+        self._ensurediff4()
+        for coeffs, mn, mx in self.diff4pieces:
+            if x >= mn and x <= mx:
+                if coeffs == None:
+                    return 0
+                n = len(coeffs) - 1
+                return sum(
+                    (coeffs[i]) * binco2(x ** i * (1 - x) ** (n - i), n, i)
+                    for i in range(0, len(coeffs))
+                ) * ((n + 1) * (n + 2) * (n + 3) * (n + 4))
+        return 0
+
+    def diff3i(self, x):  # Third derivative of piecewise polynomial
+        self._ensurediff3()
+        for coeffs, mn, mx in self.diff3pieces:
+            if x >= mn and x <= mx:
+                if coeffs == None:
+                    return 0
+                n = len(coeffs) - 1
+                return sum(
+                    FInterval(coeffs[i]) * binco2(x ** i * (1 - x) ** (n - i), n, i)
+                    for i in range(0, len(coeffs))
+                ) * ((n + 1) * (n + 2) * (n + 3))
+        return 0
+
+    def diff4i(self, x):  # Fourth derivative of piecewise polynomial
+        self._ensurediff4()
+        for coeffs, mn, mx in self.diff4pieces:
+            if x >= mn and x <= mx:
+                if coeffs == None:
+                    return 0
+                n = len(coeffs) - 1
+                return sum(
+                    FInterval(coeffs[i]) * binco2(x ** i * (1 - x) ** (n - i), n, i)
+                    for i in range(0, len(coeffs))
+                ) * ((n + 1) * (n + 2) * (n + 3) * (n + 4))
         return 0
 
     def get_coeffs(self):
@@ -287,6 +395,59 @@ def elevate(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
         coeffs = [v.reduce() for v in coeffs]
     return coeffs
 
+"""
+#$\tau_2(x,n)$ = (n*x*(x-1)/factorial(2))
+#$\tau_3(x,n)$ = (n*x*(-2*x**2+2*x+x-1)/factorial(3))
+#$\tau_4(x,n)$ = (n*x*((3*(n+2))*x**3 - (6*(n+2))*x**2 + (3*(n+2))*x+x-1)/factorial(4))
+
+f0,f2,f3,f4=symbols('f0 f2 f3 f4') # For the value and 2nd, 3rd, and 4th derivatives
+tau2=(n*x*(x-1)/factorial(2))
+tau3=(n*x*(-2*x**2+2*x+x-1)/factorial(3))
+tau4=(n*x*((3*(n+2))*x**3 - (6*(n+2))*x**2 + (3*(n+2))*x+x-1)/factorial(4))
+bco=f0 + f2*tau2/n**2 + f3*tau3/n**3 + f4*tau4/n**4
+
+When bco is rewritten as a Bernstein polynomial of degree 4, we get
+the following Bernstein coefficients:
+
+f0,
+f0 - f2/(8*n) - f3/(24*n**2) - f4/(96*n**3),
+f0 - f2/(6*n) + f4/(48*n**2) + f4/(36*n**3),
+f0 - f2/(8*n) + f3/(24*n**2) - f4/(96*n**3),
+f0
+
+"""
+
+def lorentz4poly(pwpoly, n):
+    # Polynomial for Lorentz operator with r=4,
+    # of degree n+r = n+4, given C2 continuous piecewise polynomial
+    # NOTE: Currently well-defined only if value and derivatives are
+    # rational whenever k/n is rational
+    r = 4
+    # Stores homogeneous coefficients for the degree n+2 polynomial.
+    vals = [0 for i in range(n + r + 1)]
+    for k in range(0, n + 1):
+        f0v = pwpoly.value(Frac(k) / n)  # Value
+        f2v = pwpoly.diff2(Frac(k) / n)  # Second derivative
+        f3v = pwpoly.diff3(Frac(k) / n)  # Third derivative
+        f4v = pwpoly.diff4(Frac(k) / n)  # Fourth derivative
+        nck = ccomb(n, k)
+        vals[k + 0] += f0v * 1 * nck
+        vals[k + 1] += (
+            (f0v - f2v / (8 * n) - f3v / (24 * n ** 2) - f4v / (96 * n ** 3)) * 4 * nck
+        )
+        vals[k + 2] += (
+            (f0v - f2v / (6 * n) + f4v / (48 * n ** 2) + f4v / (36 * n ** 3)) * 6 * nck
+        )
+        vals[k + 3] += (
+            (f0v - f2v / (8 * n) + f3v / (24 * n ** 2) - f4v / (96 * n ** 3)) * 4 * nck
+        )
+        vals[k + 4] += f0v * 1 * nck
+    # Divide homogeneous coefficient i by (n+r) choose i to turn
+    # it into a Bernstein coefficient
+    return PiecewiseBernsteinPoly.fromcoeffs(
+        [Frac(vals[i]) / ccomb(n + r, i) for i in range(n + r + 1)]
+    )
+
 def lorentz2poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=2,
     # of degree n+r = n+2, given C2 continuous piecewise polynomial
@@ -310,6 +471,8 @@ def lorentz2poly(pwpoly, n):
         # part of the (k+0)th homogeneous coefficient of
         # the degree n+2 polynomial
         vals[k + 0] += homoc
+        # Same for (k+2)th homogeneous coefficient
+        vals[k + 2] += homoc
         # Bernstein coefficient times choose(2,1)
         # times n choose k, for the
         # (k+1)th homogeneous coefficient of
@@ -319,9 +482,6 @@ def lorentz2poly(pwpoly, n):
         # "homoc = f0v * 2 - Frac(f2v, 4*n) * 2"
         homoc *= nck
         vals[k + 1] += homoc
-        homoc = f0v * 1
-        homoc *= nck
-        vals[k + 2] += homoc
     # Divide homogeneous coefficient i by (n+r) choose i to turn
     # it into a Bernstein coefficient
     return PiecewiseBernsteinPoly.fromcoeffs(
@@ -375,7 +535,7 @@ def lorentz2polyC(pwpoly, n):
     for k in range(1, n + r):
         f2v = pwpoly.diff2i(Frac(k - 1) / n)  # Second derivative
         fv = (f2v / (4 * n)) * 2
-        # fv=fv*ccomb(n,k-1)/ccomb(n+r,k)
+        # fv=fv*binomial(n,k-1)/binomial(n+r,k)
         # Alternative impl. to the previous line
         fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
         vals[k] -= fv
@@ -655,25 +815,9 @@ Now all that remains is to find $D$ given $\alpha=2$.  I haven't found how to do
 Moreover, there remains to find the parameters for the Lorentz operator when $r>2$.
 """
 
-def iterconstruct(pwp):
-    # Iterative construction of approximating
-    # polynomials using Lorentz-2 operator
-    n = 4
-    fn = lorentz2polyB(pwp, n)
-    # Polynomial of degree 4+r, where r=2
-    ret = [fn.get_coeffs()]
-    for i in range(5):
-        # Build polynomials of degree 8+r, 16+r,
-        # 32+r, 64+r, 128+r, where r=2
-        n *= 2
-        resid = lorentz2polyB(PolyDiff(pwp, fn), n)
-        fn = PolySum(fn, resid)
-        ret.append(fn.get_coeffs())
-    return ret
-
-def polyshift(nrcoeffs, theta, d):
+def polyshift(nrcoeffs, theta, d, r=2):
     # Upward and downward shift of polynomial according to step 5
-    # in Holtz et al. 2011, for r=2 (twice differentiable
+    # in Holtz et al. 2011, for even integer r>=2 (r-times differentiable
     # functions with Hölder continuous second derivative)
     # NOTE: Supports fraction intervals (with lower and upper
     # bounds of limited precision), but the fractional intervals's
@@ -683,11 +827,12 @@ def polyshift(nrcoeffs, theta, d):
     # looser bounds than desired in some cases.
     if theta < 1:
         raise ValueError("disallowed theta")
-    r = 2
+    if r < 2 or int(r) != r or r % 2 != 0:
+        raise ValueError("disallowed r")
     alpha = r
     n = len(nrcoeffs) - 1 - r  # n+r+1 coefficients
     phi = [
-        Frac(theta) / (n ** alpha) + (Frac(i, n) * (1 - Frac(i, n)) / n)
+        Frac(theta) / (n ** alpha) + (Frac(i, n) * (1 - Frac(i, n)) / n) ** (alpha // 2)
         for i in range(n + 1)
     ]
     phi = elevate(phi, r)
@@ -726,6 +871,34 @@ def uceil(v, n, k):
     # NOTE: In Python, integer division has floor semantics
     return -((-v.n) * ccomb(n, k) // v.d)
 
+def example2():
+    # Example function: A C4 continuous piecewise polynomial
+    pwp2 = PiecewiseBernsteinPoly()
+    pwp2.piece(
+        [
+            Frac(1, 384) + Frac(1, 10),
+            Frac(953, 9600) + Frac(1, 10),
+            Frac(2681, 9600) + Frac(1, 10),
+            Frac(4409, 9600) + Frac(1, 10),
+            Frac(6137, 9600) + Frac(1, 10),
+            Frac(1573, 1920) + Frac(1, 10),
+        ],
+        Frac(1, 2),
+        1,
+    )
+    pwp2.piece(
+        [
+            Frac(0, 1) + Frac(1, 10),
+            Frac(163, 1280) + Frac(1, 10),
+            Frac(2167, 5760) + Frac(1, 10),
+            Frac(2267, 3840) + Frac(1, 10),
+            Frac(263, 320) + Frac(1, 10),
+        ],
+        0,
+        Frac(1, 2),
+    )
+    return pwp2
+
 def example1():
     # Example function: A concave piecewise polynomial
     pwp2 = PiecewiseBernsteinPoly()
@@ -751,6 +924,81 @@ def example1():
         Frac(1, 2),
     )
     return pwp2
+
+class C4PiecewisePoly:
+    # Implements Holtz method with Lorentz operator of degree 4.
+    # For piecewise polynomials that are C4 continuous.
+    def __init__(self, pwp):
+        self.pwp = pwp
+        self.initialdeg = 4
+        r = 4
+        self.nextdegree = lambda n: max(self.initialdeg + r, (n - r) * 2 + r)
+        self.fbelow = lambda n, k: self._fbelow(n, k)
+        self.fabove = lambda n, k: self._fabove(n, k)
+        self.fbound = lambda n: (0, 1)
+        self.polys = {}
+        self.lastfn = None
+        self.lastdegree = 0
+
+    def _ensure(self, n):
+        if n in self.polys:
+            return self.polys[n]
+        else:
+            d = self.lastdegree
+            while d <= n:
+                d = self.nextdegree(d)
+                lastfn_coeffs = None
+                # t=time.time(); print("nextdegree %d" % (d))
+                if self.lastfn == None:
+                    self.lastfn = lorentz4poly(self.pwp, d - 4)
+                else:
+                    # Iterative construction
+                    resid = lorentz4poly(PolyDiff(self.pwp, self.lastfn), d - 4)
+                    self.lastfn = PolySum(self.lastfn, resid)
+                    self.lastfn = PiecewiseBernsteinPoly.fromcoeffs(
+                        self.lastfn.get_coeffs()
+                    )
+                # print("nextdegree %d done %f" % (d,time.time()-t))
+                olddegree = self.lastdegree
+                self.lastdegree = d
+                if d not in self.polys:
+                    # NOTE: Value of 1 is not certain to work for
+                    # all functions within this class's scope.
+                    up, lo = polyshift(
+                        self.lastfn.get_coeffs(), Frac(1897, 1000), 1, r=4
+                    )
+                    if len(up) != d + 1:
+                        raise ValueError
+                    # Replace out-of-bounds polynomials with constant polynomials
+                    if min(lo) < 0:
+                        lo = [0 for v in lo]
+                    if max(up) > 1:
+                        up = [1 for v in up]
+                    print(d, float(min(lo)), float(max(up)))
+                    if False:
+                        # Verifying whether polynomial meets the
+                        # consistency requirement
+                        if olddegree in self.polys:
+                            lastpolys = self.polys[olddegree]
+                            verifyPolys(lo, up, lastpolys[0], lastpolys[1])
+                    self.polys[d] = [lo, up]
+            if n not in self.polys:
+                raise ValueError
+            if len(self.polys[n][0]) != n + 1:
+                raise ValueError
+            if len(self.polys[n][1]) != n + 1:
+                raise ValueError
+            return self.polys[n]
+
+    def _fbelow(self, n, k):
+        return self._ensure(n)[0][k]
+
+    def _fabove(self, n, k):
+        return self._ensure(n)[1][k]
+
+    def simulate(self, coin):
+        """ - coin(): Function that returns 1 or 0 with a fixed probability."""
+        return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
 
 class C2PiecewisePoly:
     # Implements Holtz method with Lorentz operator of degree 2.
@@ -778,6 +1026,7 @@ class C2PiecewisePoly:
                 if self.lastfn == None:
                     self.lastfn = lorentz2polyC(self.pwp, d - 2)
                 else:
+                    # Iterative construction
                     resid = lorentz2polyC(PolyDiff(self.pwp, self.lastfn), d - 2)
                     self.lastfn = PolySum(self.lastfn, resid)
                     self.lastfn = PiecewiseBernsteinPoly.fromcoeffs(
