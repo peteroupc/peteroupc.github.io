@@ -261,7 +261,7 @@ Then the following algorithm transforms that number to a random variate for the 
 
 In some cases, it may be possible to calculate the needed digit size in advance.
 
-As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ on the interval \[_a_, _b_\], which roughly means that it's a continuous function with no vertical slope on that interval, then the following algorithm generates a quantile with error tolerance _&epsilon;_:
+As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ on the interval \[_a_, _b_\][^42], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
 
 1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(_&epsilon;_)) / ln(_&beta;_)), where _L_ is an upper bound of the quantile function's maximum slope (also known as the _Lipschitz constant_). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
 2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of _Q_(_a_) and _Q_(_b_), respectively, that are within _&epsilon;_/2 of the true quantiles, call the bounds _low_ and _high_, respectively.
@@ -470,6 +470,8 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 [^40]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
 [^41]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+
+[^42]: A Lipschitz continuous function, with constant _L_ is a continuous function such that _f_(_x_) and _f_(_y_) is no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere", and does not tend to a vertical slope anywhere.
 
 <a id=License></a>
 ## License

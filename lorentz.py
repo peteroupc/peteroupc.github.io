@@ -419,19 +419,20 @@ f0
 
 def lorentz4poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=4,
-    # of degree n+r = n+4, given C2 continuous piecewise polynomial
+    # of degree n+r = n+4, given four times differentiable piecewise polynomial
     # NOTE: Currently well-defined only if value and derivatives are
     # rational whenever k/n is rational
     r = 4
-    # Stores homogeneous coefficients for the degree n+2 polynomial.
-    vals = [0 for i in range(n + r + 1)]
+    # Stores homogeneous coefficients for the degree n+4 polynomial.
+    vals = [Frac(0) for i in range(n + r + 1)]
     for k in range(0, n + 1):
         f0v = pwpoly.value(Frac(k) / n)  # Value
         f2v = pwpoly.diff2(Frac(k) / n)  # Second derivative
         f3v = pwpoly.diff3(Frac(k) / n)  # Third derivative
         f4v = pwpoly.diff4(Frac(k) / n)  # Fourth derivative
         nck = ccomb(n, k)
-        vals[k + 0] += f0v * 1 * nck
+        ends = f0v * 1 * nck
+        vals[k + 0] += ends
         vals[k + 1] += (
             (f0v - f2v / (8 * n) - f3v / (24 * n ** 2) - f4v / (96 * n ** 3)) * 4 * nck
         )
@@ -441,7 +442,7 @@ def lorentz4poly(pwpoly, n):
         vals[k + 3] += (
             (f0v - f2v / (8 * n) + f3v / (24 * n ** 2) - f4v / (96 * n ** 3)) * 4 * nck
         )
-        vals[k + 4] += f0v * 1 * nck
+        vals[k + 4] += ends
     # Divide homogeneous coefficient i by (n+r) choose i to turn
     # it into a Bernstein coefficient
     return PiecewiseBernsteinPoly.fromcoeffs(
@@ -450,12 +451,12 @@ def lorentz4poly(pwpoly, n):
 
 def lorentz2poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=2,
-    # of degree n+r = n+2, given C2 continuous piecewise polynomial
+    # of degree n+r = n+2, given twice differentiable piecewise polynomial
     # NOTE: Currently well-defined only if value and diff2 are
     # rational whenever k/n is rational
     r = 2
     # Stores homogeneous coefficients for the degree n+2 polynomial.
-    vals = [0 for i in range(n + r + 1)]
+    vals = [Frac(0) for i in range(n + r + 1)]
     for k in range(0, n + 1):
         f0v = pwpoly.value(Frac(k) / n)  # Value
         f2v = pwpoly.diff2(Frac(k) / n)  # Second derivative
@@ -493,52 +494,54 @@ def pwp2poly(p):
 
 def lorentz2polyB(pwpoly, n):
     # Polynomial for Lorentz operator with r=2,
-    # of degree n+r = n+2, given C2 continuous piecewise polynomial
+    # of degree n+r = n+2, given twice differentiable piecewise polynomial
     # NOTE: Currently well-defined only if value and diff2 are
     # rational whenever k/n is rational
     r = 2
     # Get degree n coefficients
-    vals = [0 for i in range(n + 1)]
+    vals = [Frac(0) for i in range(n + 1)]
     for k in range(0, n + 1):
         f0v = pwpoly.value(Frac(k) / n)  # Value
         vals[k] = f0v
     # Elevate to degree n+r
     vals = elevate(vals, r)
-    # Shift downward according to Lorentz operator
-    for k in range(1, n + r):
-        f2v = pwpoly.diff2(Frac(k - 1) / n)  # Second derivative
-        fv = Frac(f2v, 4 * n) * 2
-        # fv=fv*ccomb(n,k-1)/ccomb(n+r,k)
-        # Alternative impl.
-        fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
-        vals[k] -= fv
+    if r >= 2:
+        # Shift downward according to Lorentz operator
+        for k in range(1, n + r):
+            f2v = pwpoly.diff2(Frac(k - 1) / n)  # Second derivative
+            fv = Frac(f2v, 4 * n) * 2
+            # fv=fv*ccomb(n,k-1)/ccomb(n+r,k)
+            # Alternative impl.
+            fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
+            vals[k] -= fv
     return PiecewiseBernsteinPoly.fromcoeffs(vals)
 
 def lorentz2polyC(pwpoly, n):
     # Polynomial for Lorentz operator with r=2,
-    # of degree n+r = n+2, given C2 continuous piecewise polynomial
+    # of degree n+r = n+2, given twice differentiable piecewise polynomial
     # Uses fractional intervals.
     # NOTE: Currently well-defined only if value and diff2 are
     # rational whenever k/n is rational
     # NOTE: See note in polyshift w.r.t. fractional intervals.
     r = 2
     # Get degree n coefficients
-    vals = [0 for i in range(n + 1)]
+    vals = [Frac(0) for i in range(n + 1)]
     for k in range(0, n + 1):
         f0v = pwpoly.valuei(Frac(k) / n)  # Value
         vals[k] = f0v
     # Elevate to degree n+r
     # t=time.time()
     vals = elevate(vals, r)
-    # print(["elevate",r,time.time()-t])
-    # Shift downward according to Lorentz operator
-    for k in range(1, n + r):
-        f2v = pwpoly.diff2i(Frac(k - 1) / n)  # Second derivative
-        fv = (f2v / (4 * n)) * 2
-        # fv=fv*binomial(n,k-1)/binomial(n+r,k)
-        # Alternative impl. to the previous line
-        fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
-        vals[k] -= fv
+    if r >= 2:
+        # print(["elevate",r,time.time()-t])
+        # Shift downward according to Lorentz operator
+        for k in range(1, n + r):
+            f2v = pwpoly.diff2i(Frac(k - 1) / n)  # Second derivative
+            fv = (f2v / (4 * n)) * 2
+            # fv=fv*binomial(n,k-1)/binomial(n+r,k)
+            # Alternative impl. to the previous line
+            fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
+            vals[k] -= fv
     return PiecewiseBernsteinPoly.fromcoeffs(vals)
 
 class FInterval:
@@ -927,7 +930,9 @@ def example1():
 
 class C4PiecewisePoly:
     # Implements Holtz method with Lorentz operator of degree 4.
-    # For piecewise polynomials that are C4 continuous.
+    # For piecewise polynomials with the following necessary
+    # conditions: Four times differentiable; third derivative is in the Zygmund class.
+    # (C4 continuous implies third derivative is in Zygmund class.)
     def __init__(self, pwp):
         self.pwp = pwp
         self.initialdeg = 4
@@ -971,10 +976,10 @@ class C4PiecewisePoly:
                         raise ValueError
                     # Replace out-of-bounds polynomials with constant polynomials
                     if min(lo) < 0:
-                        lo = [0 for v in lo]
+                        lo = [Frac(0) for v in lo]
                     if max(up) > 1:
-                        up = [1 for v in up]
-                    print(d, float(min(lo)), float(max(up)))
+                        up = [Frac(1) for v in up]
+                    # print(d, float(min(lo)), float(max(up)))
                     if False:
                         # Verifying whether polynomial meets the
                         # consistency requirement
@@ -1002,7 +1007,9 @@ class C4PiecewisePoly:
 
 class C2PiecewisePoly:
     # Implements Holtz method with Lorentz operator of degree 2.
-    # For piecewise polynomials that are C2 continuous.
+    # For piecewise polynomials with the following necessary
+    # conditions: Twice differentiable; derivative is in the Zygmund class.
+    # (C2 continuous implies derivative is in Zygmund class.)
     def __init__(self, pwp):
         self.pwp = pwp
         self.initialdeg = 4
@@ -1043,10 +1050,10 @@ class C2PiecewisePoly:
                         raise ValueError
                     # Replace out-of-bounds polynomials with constant polynomials
                     if min(lo) < 0:
-                        lo = [0 for v in lo]
+                        lo = [Frac(0) for v in lo]
                     if max(up) > 1:
-                        up = [1 for v in up]
-                    print(d, float(min(lo)), float(max(up)))
+                        up = [Frac(1) for v in up]
+                    # print(d, float(min(lo)), float(max(up)))
                     if False:
                         # Verifying whether polynomial meets the
                         # consistency requirement
@@ -1120,9 +1127,9 @@ class C2PiecewisePoly2:
             ]
             # Replace out-of-bounds polynomials with constant polynomials
             if min(lo) < 0:
-                lo = [0 for v in lo]
+                lo = [Frac(0) for v in lo]
             if max(up) > 1:
-                up = [1 for v in up]
+                up = [Frac(1) for v in up]
             lo = [Frac(int(v * 2 ** n), 2 ** n) for v in lo]
             up = [
                 Frac(int(v * 2 ** n), 2 ** n)
@@ -1130,12 +1137,11 @@ class C2PiecewisePoly2:
                 else Frac(int(v * 2 ** n) + 1, 2 ** n)
                 for v in up
             ]
-            print(float(min(lo)), float(max(up)))
-            """
-            if n//2 in self.polys:
-                lastpolys=self.polys[n//2]
-                verifyPolys(lo,up,lastpolys[0],lastpolys[1])
-            """
+            # print(float(min(lo)), float(max(up)))
+            if False:
+                if n // 2 in self.polys:
+                    lastpolys = self.polys[n // 2]
+                    verifyPolys(lo, up, lastpolys[0], lastpolys[1])
             self.polys[n] = [lo, up]
             if n not in self.polys:
                 raise ValueError
