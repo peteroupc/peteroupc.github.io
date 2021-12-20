@@ -192,7 +192,7 @@ The algorithm, like _Algorithm C_, works only if the stream's distribution has t
 
 1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), or the _inverse modulus of continuity_, which is found by taking the so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_h_), and solving the equation _&omega;_(_h_) = _&epsilon;_ for _h_.
     - Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the maximum range of _f_ in a window of size _h_.
-    - For example, if _f_ has a bounded "slope" and _f_ has only finitely many "sharp turns", then _f_ is _Lipschitz continuous_ and its modulus of continuity is _&omega;_(_h_) = _M_\*_h_, where _M_ is the Lipschitz constant, which in this case is the maximum absolute value of _f_'s "slope function".  The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
+    - For example, if _f_ has a bounded "slope" at all points, and has only finitely many "sharp turns", then _f_ is _Lipschitz continuous_ and its modulus of continuity is _&omega;_(_h_) = _M_\*_h_, where _M_ is the Lipschitz constant, which in this case is the maximum absolute value of _f_'s "slope function".  The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
     - Because _f_ is continuous on a closed interval, it's guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
 2. Run _Algorithm C_ with the given parameters _p_, _q_, _&kappa;_, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).

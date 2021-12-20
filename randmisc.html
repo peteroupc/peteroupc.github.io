@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/12/18"><meta name="citation_online_date" content="2021/12/18"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/12/20"><meta name="citation_online_date" content="2021/12/20"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -373,7 +373,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <p>In some cases, it may be possible to calculate the needed digit size in advance.</p>
 
-<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> on the interval [<em>a</em>, <em>b</em>][^42], then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
+<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> on the interval [<em>a</em>, <em>b</em>][^36], then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
 
 <ol>
 <li>Let <em>d</em> be ceil((ln(max(1,<em>L</em>)) &minus; ln(<em>&epsilon;</em>)) / ln(<em>&beta;</em>)), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>). For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
@@ -393,7 +393,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <li><em>Q</em> on [<em>a</em>, <em>b</em>] admits a continuous and monotone increasing function <em>&omega;</em>(<em>&delta;</em>) as a <em>modulus of continuity</em>,</li>
 </ul>
 
-<p>then <em>d</em> in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(<em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>))/ln(<em>&beta;</em>))),<br/>where <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) gives the quantile function&#39;s maximum range in a window of size <em>&delta;</em>, and the inverse modulus <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) finds a window small enough that the quantile function differs by no more than <em>&epsilon;</em> in the window.[^36]).[^37]</p>
+<p>then <em>d</em> in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(<em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>))/ln(<em>&beta;</em>))),<br/>where <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) gives the quantile function&#39;s maximum range in a window of size <em>&delta;</em>, and the inverse modulus <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) finds a window small enough that the quantile function differs by no more than <em>&epsilon;</em> in the window.[^37]).[^38]</p>
 
 <p>For example&mdash;</p>
 
@@ -422,7 +422,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <h2>ExpoExact</h2>
 
-<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2019)[^38]; Canonne et al. (2020)[^39].  In this section, <code>RNDINT(1)</code> generates an independent unbiased random bit.</p>
+<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2019)[^39]; Canonne et al. (2020)[^40].  In this section, <code>RNDINT(1)</code> generates an independent unbiased random bit.</p>
 
 <pre>METHOD ZeroOrOneExpMinus(x, y)
   if y==0 or y&lt;0 or x&lt;0: return error
@@ -464,14 +464,14 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random variate, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the given precision (Karney 2016)[^40].</p>
+<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random variate, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the given precision (Karney 2016)[^41].</p>
 </blockquote>
 
 <p><a id=A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights></a></p>
 
 <h2>A sampler for distributions with nonincreasing or nondecreasing weights</h2>
 
-<p>An algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to weights listed in <em>nonincreasing</em> order (example: [10, 3, 2, 1, 1] when <em>a</em> = 0 and <em>b</em> = 5) can be implemented as follows (Chewi et al. 2021)[^41].  It has a logarithmic time complexity in terms of setup and sampling.</p>
+<p>An algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to weights listed in <em>nonincreasing</em> order (example: [10, 3, 2, 1, 1] when <em>a</em> = 0 and <em>b</em> = 5) can be implemented as follows (Chewi et al. 2021)[^42].  It has a logarithmic time complexity in terms of setup and sampling.</p>
 
 <ul>
 <li>Setup:  Let <em>w</em>[<em>i</em>] be the weight for integer <em>i</em> (with <em>i</em> starting at <em>a</em>).
@@ -511,7 +511,7 @@ END METHOD
 
 <h2>A sampler for unimodal distributions of weights</h2>
 
-<p>The following is an algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to a <em>unimodal distribution</em> of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2021)[^41].  It assumes the mode (the point with the highest weight) is known.  An example is [1, 3, 9, 4, 4] when <em>a</em> = 0 and <em>b</em> = 5, and the <em>mode</em> is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.</p>
+<p>The following is an algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to a <em>unimodal distribution</em> of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2021)[^42].  It assumes the mode (the point with the highest weight) is known.  An example is [1, 3, 9, 4, 4] when <em>a</em> = 0 and <em>b</em> = 5, and the <em>mode</em> is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.</p>
 
 <ul>
 <li>Setup:
@@ -611,19 +611,19 @@ END METHOD
 
 <p>[^35]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^36]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, &quot;Computational complexity of roots of real functions.&quot; In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989.</p>
+<p>[^36]: A Lipschitz continuous function, with constant <em>L</em> is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot;, and that slope is bounded wherever it&#39;s defined.</p>
 
-<p>[^37]: Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it&#39;s uniformly continuous there.  For this reason, there is a positive function <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) such that <em>Q</em>(<em>x</em>) is less than <em>&epsilon;</em>-away from <em>Q</em>(<em>y</em>) whenever <em>x</em> is less than <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>)-away from <em>y</em>, for every <em>&epsilon;</em>&gt;0 and for any <em>x</em> and <em>y</em> in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and monotone increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(<em>z</em>)/ln(<em>&beta;</em>))) is an upper bound on the number of base-<em>&beta;</em> fractional digits needed to store 1/<em>z</em> with an error of at most <em>&epsilon;</em>.</p>
+<p>[^37]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, &quot;Computational complexity of roots of real functions.&quot; In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989.</p>
 
-<p>[^38]: Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</p>
+<p>[^38]: Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it&#39;s uniformly continuous there.  For this reason, there is a positive function <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) such that <em>Q</em>(<em>x</em>) is less than <em>&epsilon;</em>-away from <em>Q</em>(<em>y</em>) whenever <em>x</em> is less than <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>)-away from <em>y</em>, for every <em>&epsilon;</em>&gt;0 and for any <em>x</em> and <em>y</em> in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and monotone increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(<em>z</em>)/ln(<em>&beta;</em>))) is an upper bound on the number of base-<em>&beta;</em> fractional digits needed to store 1/<em>z</em> with an error of at most <em>&epsilon;</em>.</p>
 
-<p>[^39]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
+<p>[^39]: Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</p>
 
-<p>[^40]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+<p>[^40]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
 
-<p>[^41]: Chewi, S., Gerber, P., et al., &quot;<a href="https://arxiv.org/abs/2105.14166"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>&quot;, arXiv:2105.14166, 2021</p>
+<p>[^41]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
-<p>[^42]: A Lipschitz continuous function, with constant <em>L</em> is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) is no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot;, and does not tend to a vertical slope anywhere.</p>
+<p>[^42]: Chewi, S., Gerber, P., et al., &quot;<a href="https://arxiv.org/abs/2105.14166"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>&quot;, arXiv:2105.14166, 2021</p>
 
 <p><a id=License></a></p>
 

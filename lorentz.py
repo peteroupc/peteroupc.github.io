@@ -123,7 +123,8 @@ def binco2(v, n, k):
         return v * ccomb(n, k)
     if (n, k) in SPLITBINCOMBS:
         s = SPLITBINCOMBS[(n, k)]
-        return (v * s[0]) * s[1]
+        v0 = (v * s[0]) * s[1]
+        return v0
     if k == 0 or k == n:
         return v
     if k < 0 or k > n:
@@ -134,8 +135,9 @@ def binco2(v, n, k):
     for i in range(n - k + 1, split):
         num *= i
         den *= n - i + 1
-    s = [0, 0]
+    s = [FRAC_ZERO, FRAC_ZERO]
     s[0] = Frac(num, den).reduce()
+    oldv = v
     v *= s[0]
     num = 1
     den = 1
@@ -144,7 +146,13 @@ def binco2(v, n, k):
         den *= n - i + 1
     s[1] = Frac(num, den).reduce()
     SPLITBINCOMBS[(n, k)] = s
-    return v * s[1]
+    v0 = v * s[1]
+    return v0
+
+def fstr(x):
+    if isinstance(x, Frac):
+        return float(x)
+    return x
 
 class PiecewiseBernsteinPoly:
     def __init__(self):
@@ -194,6 +202,21 @@ class PiecewiseBernsteinPoly:
         for coeffs, mn, mx in self.pieces:
             if x >= mn and x <= mx:
                 n = len(coeffs) - 1
+                if len(coeffs) > 200:
+                    if x == 0:
+                        return FInterval(coeffs[0])
+                    if x == 1:
+                        return FInterval(coeffs[n])
+                    xp = [FINTERVAL_ONE for i in range(n + 1)]
+                    xm = [FINTERVAL_ONE for i in range(n + 1)]
+                    for i in range(1, n + 1):
+                        xp[i] = xp[i - 1] * x
+                        xm[i] = xm[i - 1] * (1 - x)
+                    v0 = sum(
+                        coeffs[i] * binco2(xp[i] * xm[n - i], n, i)
+                        for i in range(0, len(coeffs))
+                    )
+                    return v0
                 return sum(
                     FInterval(coeffs[i]) * binco2(x ** i * (1 - x) ** (n - i), n, i)
                     for i in range(0, len(coeffs))
@@ -298,6 +321,20 @@ class PiecewiseBernsteinPoly:
                 if coeffs == None:
                     return 0
                 n = len(coeffs) - 1
+                if len(coeffs) > 200:
+                    if x == 0:
+                        return FInterval(coeffs[0])
+                    if x == 1:
+                        return FInterval(coeffs[n])
+                    xp = [FINTERVAL_ONE for i in range(n + 1)]
+                    xm = [FINTERVAL_ONE for i in range(n + 1)]
+                    for i in range(1, n + 1):
+                        xp[i] = xp[i - 1] * x
+                        xm[i] = xm[i - 1] * (1 - x)
+                    return sum(
+                        coeffs[i] * binco2(xp[i] * xm[n - i], n, i)
+                        for i in range(0, len(coeffs))
+                    )
                 return sum(
                     FInterval(coeffs[i]) * binco2(x ** i * (1 - x) ** (n - i), n, i)
                     for i in range(0, len(coeffs))
@@ -424,7 +461,7 @@ def lorentz4poly(pwpoly, n):
     # rational whenever k/n is rational
     r = 4
     # Stores homogeneous coefficients for the degree n+4 polynomial.
-    vals = [Frac(0) for i in range(n + r + 1)]
+    vals = [FRAC_ZERO for i in range(n + r + 1)]
     for k in range(0, n + 1):
         f0v = pwpoly.value(Frac(k) / n)  # Value
         f2v = pwpoly.diff2(Frac(k) / n)  # Second derivative
@@ -456,7 +493,7 @@ def lorentz2poly(pwpoly, n):
     # rational whenever k/n is rational
     r = 2
     # Stores homogeneous coefficients for the degree n+2 polynomial.
-    vals = [Frac(0) for i in range(n + r + 1)]
+    vals = [FRAC_ZERO for i in range(n + r + 1)]
     for k in range(0, n + 1):
         f0v = pwpoly.value(Frac(k) / n)  # Value
         f2v = pwpoly.diff2(Frac(k) / n)  # Second derivative
@@ -492,14 +529,15 @@ def lorentz2poly(pwpoly, n):
 def pwp2poly(p):
     return bernpoly(p.pieces[0][0], x)
 
-def lorentz2polyB(pwpoly, n):
-    # Polynomial for Lorentz operator with r=2,
-    # of degree n+r = n+2, given twice differentiable piecewise polynomial
-    # NOTE: Currently well-defined only if value and diff2 are
+def lorentz2polyB(pwpoly, n, r=2):
+    # Polynomial for Lorentz operator with r=0, 1, 2,
+    # of degree n+r, given twice differentiable piecewise polynomial
+    # NOTE: Currently well-defined only if value (and diff2 if r=2) are
     # rational whenever k/n is rational
-    r = 2
+    if r != 0 and r != 1 and r != 2:
+        raise ValueError("unsupported r")
     # Get degree n coefficients
-    vals = [Frac(0) for i in range(n + 1)]
+    vals = [FRAC_ZERO for i in range(n + 1)]
     for k in range(0, n + 1):
         f0v = pwpoly.value(Frac(k) / n)  # Value
         vals[k] = f0v
@@ -510,27 +548,27 @@ def lorentz2polyB(pwpoly, n):
         for k in range(1, n + r):
             f2v = pwpoly.diff2(Frac(k - 1) / n)  # Second derivative
             fv = Frac(f2v, 4 * n) * 2
-            # fv=fv*ccomb(n,k-1)/ccomb(n+r,k)
+            # fv=fv*binomial(n,k-1)/binomial(n+r,k)
             # Alternative impl.
             fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
             vals[k] -= fv
     return PiecewiseBernsteinPoly.fromcoeffs(vals)
 
-def lorentz2polyC(pwpoly, n):
-    # Polynomial for Lorentz operator with r=2,
-    # of degree n+r = n+2, given twice differentiable piecewise polynomial
+def lorentz2polyC(pwpoly, n, r=2):
+    # Polynomial for Lorentz operator with r=0, 1, 2,
+    # of degree n+r given twice differentiable piecewise polynomial
     # Uses fractional intervals.
-    # NOTE: Currently well-defined only if value and diff2 are
+    # NOTE: Currently well-defined only if value (and diff2 if r=2) are
     # rational whenever k/n is rational
     # NOTE: See note in polyshift w.r.t. fractional intervals.
-    r = 2
+    if r != 0 and r != 1 and r != 2:
+        raise ValueError("unsupported r")
     # Get degree n coefficients
-    vals = [Frac(0) for i in range(n + 1)]
+    vals = [FRAC_ZERO for i in range(n + 1)]
     for k in range(0, n + 1):
         f0v = pwpoly.valuei(Frac(k) / n)  # Value
         vals[k] = f0v
     # Elevate to degree n+r
-    # t=time.time()
     vals = elevate(vals, r)
     if r >= 2:
         # print(["elevate",r,time.time()-t])
@@ -588,21 +626,29 @@ class FInterval:
         ninf = ninf - 1 if infnum < 0 else ninf
         nsup = (supnum << bits) // supden
         nsup = nsup if supnum < 0 else nsup + 1
-        self.inf = Frac(ninf, FInterval.BITDENOM)
-        self.sup = Frac(nsup, FInterval.BITDENOM)
-        # if supnum.bit_length()>20000:
-        #  print([supnum.bit_length(),float(infnum/infden),float(self.inf),float(supnum/supden),float(self.sup)])
+        self.inf = FRAC_ZERO if ninf == 0 else Frac(ninf, FInterval.BITDENOM)
+        self.sup = FRAC_ZERO if nsup == 0 else Frac(nsup, FInterval.BITDENOM)
+        if supnum.bit_length() > 10000:
+            print(
+                [
+                    supnum.bit_length(),
+                    float(infnum / infden),
+                    float(self.inf),
+                    float(supnum / supden),
+                    float(self.sup),
+                ]
+            )
 
     def _truncatend(self, infnum, infden, bits=TRUNCATEBITS):
-        if True or infnum.bit_length() < bits and infden.bit_length() < bits:
+        if True or (infnum.bit_length() < bits and infden.bit_length() < bits):
             fr = Frac(infnum, infden)
             return FInterval(fr, fr)
         ninf = (infnum << bits) // infden
         nsup = ninf
         ninf = ninf - 1 if infnum < 0 else ninf
         nsup = nsup if infnum < 0 else nsup + 1
-        inf = Frac(ninf, FInterval.BITDENOM)
-        sup = Frac(nsup, FInterval.BITDENOM)
+        inf = FRAC_ZERO if ninf == 0 else Frac(ninf, FInterval.BITDENOM)
+        sup = FRAC_ZERO if nsup == 0 else Frac(nsup, FInterval.BITDENOM)
         return FInterval(inf, sup)
 
     def _truncatend2(self, infnum, infden, supnum, supden, bits=TRUNCATEBITS):
@@ -619,8 +665,8 @@ class FInterval:
         ninf = ninf - 1 if infnum < 0 else ninf
         nsup = (supnum << bits) // supden
         nsup = nsup if supnum < 0 else nsup + 1
-        inf = Frac(ninf, FInterval.BITDENOM)
-        sup = Frac(nsup, FInterval.BITDENOM)
+        inf = FRAC_ZERO if ninf == 0 else Frac(ninf, FInterval.BITDENOM)
+        sup = FRAC_ZERO if nsup == 0 else Frac(nsup, FInterval.BITDENOM)
         return FInterval(inf, sup)
 
     def __max__(a, b):
@@ -662,20 +708,22 @@ class FInterval:
 
     def __mul__(self, v):
         if self.sup == self.inf:
-            if isinstance(v, FInterval) and v.sup == v.inf:
+            isintv = isinstance(v, FInterval)
+            if isintv and v.sup == v.inf:
                 r = self.inf * v.inf
                 return FInterval(r, r)
             if isinstance(v, int):
                 rn = self.inf.n * v
-                rd = self.inf.d * v
+                rd = self.inf.d
                 return self._truncatend(rn, rd)
             if isinstance(v, Frac):
                 rn = self.inf.n * v.n
                 rd = self.inf.d * v.d
                 return self._truncatend(rn, rd)
-            if not isinstance(v, FInterval):
+            if not isintv:
                 r = self.inf * v
                 return FInterval(r, r)
+        # print([self.inf,"-----",v])
         if isinstance(v, Frac):
             if v >= 0:
                 an = self.inf.n * v.n
@@ -692,9 +740,11 @@ class FInterval:
             b = self.sup * v
             return FInterval(min(a, b), max(a, b))
         y = FInterval(v)
-        # print([self.inf,"-----",v])
         if self.inf >= 0 and y.inf >= 0:
+            # if self.inf.n.bit_length()+y.inf.n.bit_length()>10000:
+            #    print(["imul",self.inf.n.bit_length(),y.inf.n.bit_length()])
             return FInterval(self.inf * y.inf, self.sup * y.sup)
+        # print([self.inf,"1-----",v])
         a = self.inf * y.inf
         b = self.inf * y.sup
         c = self.sup * y.inf
@@ -818,16 +868,45 @@ Now all that remains is to find $D$ given $\alpha=2$.  I haven't found how to do
 Moreover, there remains to find the parameters for the Lorentz operator when $r>2$.
 """
 
+def roundLowerCoeffs(lower):
+    if not isinstance(lower[0], FInterval):
+        return lower
+    # Round the coefficients down in a manner
+    # that suffices for the Bernoulli factory problem
+    # (when coin is not one-sided).
+    # NOTE: Merely using the fractional intervals's
+    # sup or inf is not guaranteed to form monotonic polynomials
+    # that satisfy Bernoulli factory requirements, even if the full-precision
+    # values do.  This is because interval arithmetic might produce
+    # looser bounds than desired in some cases.
+    n = len(lower) - 1
+    lf = [lfloor(lower[i].inf, n, i) for i in range(n + 1)]
+    alower = sum(1 if lf[i] == lfloor(lower[i].sup, n, i) else 0 for i in range(n + 1))
+    if alower != n + 1:
+        print(["lower not accurate enough", alower, n])
+    return [Frac(lf[i], ccomb(n, i)) for i in range(n + 1)]
+
+def roundUpperCoeffs(upper):
+    if not isinstance(upper[0], FInterval):
+        return upper
+    # Round the coefficients up in a manner
+    # that suffices for the Bernoulli factory problem
+    # (when coin is not one-sided).
+    # See note in roundLowerCoeffs.
+    n = len(upper) - 1
+    uc = [uceil(upper[i].inf, n, i) for i in range(n + 1)]
+    aupper = sum(1 if uc[i] == uceil(upper[i].sup, n, i) else 0 for i in range(n + 1))
+    if aupper != n + 1:
+        print(["upper not accurate enough", aupper, n])
+    ret = [Frac(uc[i], ccomb(n, i)) for i in range(n + 1)]
+    return ret
+
 def polyshift(nrcoeffs, theta, d, r=2):
     # Upward and downward shift of polynomial according to step 5
     # in Holtz et al. 2011, for even integer r>=2 (r-times differentiable
     # functions with Hölder continuous second derivative)
     # NOTE: Supports fraction intervals (with lower and upper
-    # bounds of limited precision), but the fractional intervals's
-    # sup or inf are not guaranteed to form monotonic polynomials
-    # that satisfy Bernoulli factory requirements, even if the full-precision
-    # values do.  This is because interval arithmetic might produce
-    # looser bounds than desired in some cases.
+    # bounds of limited precision).
     if theta < 1:
         raise ValueError("disallowed theta")
     if r < 2 or int(r) != r or r % 2 != 0:
@@ -841,29 +920,8 @@ def polyshift(nrcoeffs, theta, d, r=2):
     phi = elevate(phi, r)
     upper = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
     lower = [nrcoeffs[i] - phi[i] * d for i in range(len(phi))]
-    if isinstance(nrcoeffs[0], FInterval):
-        # Round the coefficients down and up in a manner
-        # that suffices for the Bernoulli factory problem
-        # (when coin is not one-sided).
-        uc = [uceil(upper[i].inf, n + r, i) for i in range(n + r + 1)]
-        lf = [lfloor(lower[i].inf, n + r, i) for i in range(n + r + 1)]
-        aupper = sum(
-            1 if uc[i] == uceil(upper[i].sup, n + r, i) else 0 for i in range(n + r + 1)
-        )
-        alower = sum(
-            1 if lf[i] == lfloor(lower[i].sup, n + r, i) else 0
-            for i in range(n + r + 1)
-        )
-        if aupper != n + r + 1:
-            print(["upper not accurate enough", aupper, n + r])
-        if alower != n + r + 1:
-            print(["lower not accurate enough", alower, n + r])
-        # upper = [upper[i].sup for i in range(n+r+1)]
-        # lower = [lower[i].inf for i in range(n+r+1)]
-        upper = [Frac(uc[i], ccomb(n + r, i)) for i in range(n + r + 1)]
-        lower = [Frac(lf[i], ccomb(n + r, i)) for i in range(n + r + 1)]
-        # print([float(v) for v in upper])
-        # print([float(v) for v in lower])
+    upper = roundUpperCoeffs(upper)
+    lower = roundLowerCoeffs(lower)
     return upper, lower
 
 def lfloor(v, n, k):
@@ -935,6 +993,7 @@ class C4PiecewisePoly:
     # (C4 continuous implies third derivative is in Zygmund class.)
     def __init__(self, pwp):
         self.pwp = pwp
+        self.concave = False
         self.initialdeg = 4
         r = 4
         self.nextdegree = lambda n: max(self.initialdeg + r, (n - r) * 2 + r)
@@ -975,10 +1034,12 @@ class C4PiecewisePoly:
                     if len(up) != d + 1:
                         raise ValueError
                     # Replace out-of-bounds polynomials with constant polynomials
-                    if min(lo) < 0:
-                        lo = [Frac(0) for v in lo]
+                    if self.concave:  # Concave special case
+                        lo = [self.pwp.value(Frac(i, d)) for i in range(d + 1)]
+                    elif min(lo) < 0:
+                        lo = [FRAC_ZERO for v in lo]
                     if max(up) > 1:
-                        up = [Frac(1) for v in up]
+                        up = [FRAC_ONE for v in up]
                     # print(d, float(min(lo)), float(max(up)))
                     if False:
                         # Verifying whether polynomial meets the
@@ -1020,6 +1081,7 @@ class C2PiecewisePoly:
         self.polys = {}
         self.lastfn = None
         self.lastdegree = 0
+        self.concave = False
 
     def _ensure(self, n):
         if n in self.polys:
@@ -1049,11 +1111,15 @@ class C2PiecewisePoly:
                     if len(up) != d + 1:
                         raise ValueError
                     # Replace out-of-bounds polynomials with constant polynomials
-                    if min(lo) < 0:
-                        lo = [Frac(0) for v in lo]
+                    if self.concave:  # Concave special case
+                        lo = roundLowerCoeffs(
+                            [self.pwp.valuei(Frac(i, d)) for i in range(d + 1)]
+                        )
+                    elif min(lo) < 0:
+                        lo = [FRAC_ZERO for v in lo]
                     if max(up) > 1:
-                        up = [Frac(1) for v in up]
-                    # print(d, float(min(lo)), float(max(up)))
+                        up = [FRAC_ONE for v in up]
+                    print(d, float(min(lo[1:-2])), float(max(up[1:-2])))
                     if False:
                         # Verifying whether polynomial meets the
                         # consistency requirement
@@ -1127,9 +1193,9 @@ class C2PiecewisePoly2:
             ]
             # Replace out-of-bounds polynomials with constant polynomials
             if min(lo) < 0:
-                lo = [Frac(0) for v in lo]
+                lo = [FRAC_ZERO for v in lo]
             if max(up) > 1:
-                up = [Frac(1) for v in up]
+                up = [FRAC_ONE for v in up]
             lo = [Frac(int(v * 2 ** n), 2 ** n) for v in lo]
             up = [
                 Frac(int(v * 2 ** n), 2 ** n)
@@ -1313,6 +1379,7 @@ class Frac:
             else:
                 self.n = n
                 self.d = d
+        # if self.n==0: self.d=1
         if self.d <= 0:
             raise ValueError
         return self
@@ -1357,8 +1424,11 @@ class Frac:
     def __mul__(self, v):
         if isinstance(v, int):
             return Frac(self.n * v, self.d)
-        v = Frac(v)
-        return Frac(self.n * v.n, self.d * v.d)
+        try:
+            return Frac(self.n * v.n, self.d * v.d)
+        except:
+            v = Frac(v)
+            return Frac(self.n * v.n, self.d * v.d)
 
     def __truediv__(self, v):
         v = Frac(v)
@@ -1366,6 +1436,8 @@ class Frac:
 
     def __pow__(self, v):
         # Only integer powers supported
+        # if (self.n.bit_length()*v)>10000:
+        #   print(["pow",self.n.bit_length(),self.d.bit_length(),"v",v])
         return Frac(self.n ** v, self.d ** v)
 
     def __repr__(self):
@@ -1378,20 +1450,54 @@ class Frac:
         return (-1 if self.n < 0 else 1) * (abs(self.n) // self.d)
 
     def __lt__(a, b):
-        b = Frac(b)
-        if a.n < 0 and b.n >= 0:
-            return True
-        if b.n < 0 and a.n >= 0:
-            return False
-        return a.n * b.d - a.d * b.n < 0
+        try:
+            if a.n < 0 and b.n >= 0:
+                return True
+            if b.n < 0 and a.n >= 0:
+                return False
+            return a.n * b.d - a.d * b.n < 0
+        except:
+            b = Frac(b)
+            if a.n < 0 and b.n >= 0:
+                return True
+            if b.n < 0 and a.n >= 0:
+                return False
+            return a.n * b.d - a.d * b.n < 0
 
     def __gt__(a, b):
-        b = Frac(b)
-        if a.n < 0 and b.n >= 0:
-            return False
-        if b.n < 0 and a.n >= 0:
-            return True
-        return a.n * b.d - a.d * b.n > 0
+        try:
+            if a.n < 0 and b.n >= 0:
+                return False
+            if b.n < 0 and a.n >= 0:
+                return True
+            return a.n * b.d - a.d * b.n > 0
+        except:
+            b = Frac(b)
+            if a.n < 0 and b.n >= 0:
+                return False
+            if b.n < 0 and a.n >= 0:
+                return True
+            return a.n * b.d - a.d * b.n > 0
+
+    def __eq__(a, b):
+        try:
+            if b is None:
+                return False
+            if a.n < 0 and b.n >= 0:
+                return False
+            if b.n < 0 and a.n >= 0:
+                return False
+            return a.n * b.d - a.d * b.n == 0
+        except:
+            try:
+                b = Frac(b)
+                if a.n < 0 and b.n >= 0:
+                    return False
+                if b.n < 0 and a.n >= 0:
+                    return False
+                return a.n * b.d - a.d * b.n == 0
+            except:
+                return False
 
     def __le__(a, b):
         b = Frac(b)
@@ -1400,3 +1506,7 @@ class Frac:
     def __ge__(a, b):
         b = Frac(b)
         return a.n * b.d - a.d * b.n >= 0
+
+FRAC_ZERO = Frac(0)
+FRAC_ONE = Frac(1)
+FINTERVAL_ONE = FInterval(Frac(1))

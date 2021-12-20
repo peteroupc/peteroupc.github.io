@@ -2392,7 +2392,7 @@ CLASSES
      |        distributions share the same sampling domain, which
      |        is given depending on the preceding two cases.
      |     For this sampler to work, the PDF must be "locally Lipschitz" in the
-     |     sampling domain, meaning that the PDF is continuous and there is a constant _L_ such that PDF(_x_) and PDF(_y_) is no more than _L_ times _&epsilon;_ apart whenever _x_ and _y_ are no more than _&epsilon;_ apart.
+     |     sampling domain, meaning that the PDF is continuous and there is a constant _L_ such that PDF(_x_) and PDF(_y_) are no more than _L_ times _&epsilon;_ apart whenever _x_ and _y_ are no more than _&epsilon;_ apart.
      |  - numlabels: The number of labels associated with the distribution, if it's a
      |     transdimensional distribution.  Optional; the default is 1.
      |  - bitAccuracy: Bit accuracy of the sampler; the sampler will sample from

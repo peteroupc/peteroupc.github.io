@@ -261,7 +261,7 @@ Then the following algorithm transforms that number to a random variate for the 
 
 In some cases, it may be possible to calculate the needed digit size in advance.
 
-As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ on the interval \[_a_, _b_\][^42], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
+As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ on the interval \[_a_, _b_\][^36], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
 
 1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(_&epsilon;_)) / ln(_&beta;_)), where _L_ is an upper bound of the quantile function's maximum slope (also known as the _Lipschitz constant_). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
 2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of _Q_(_a_) and _Q_(_b_), respectively, that are within _&epsilon;_/2 of the true quantiles, call the bounds _low_ and _high_, respectively.
@@ -277,7 +277,7 @@ Specifically, if&mdash;
 - _Q_ on the interval \[_a_, _b_\] is continuous and has a minimum and maximum, and
 - _Q_ on \[_a_, _b_\] admits a continuous and monotone increasing function _&omega;_(_&delta;_) as a _modulus of continuity_,
 
-then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) gives the quantile function's maximum range in a window of size _&delta;_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.[^36]).[^37]
+then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) gives the quantile function's maximum range in a window of size _&delta;_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.[^37]).[^38]
 
 For example&mdash;
 
@@ -299,7 +299,7 @@ Here is a sketch of how this rejection sampler might work:
 <a id=ExpoExact></a>
 ## ExpoExact
 
-This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019\)[^38]; Canonne et al. (2020\)[^39].  In this section, `RNDINT(1)` generates an independent unbiased random bit.
+This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019\)[^39]; Canonne et al. (2020\)[^40].  In this section, `RNDINT(1)` generates an independent unbiased random bit.
 
     METHOD ZeroOrOneExpMinus(x, y)
       if y==0 or y<0 or x<0: return error
@@ -339,12 +339,12 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
        return ret
     END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2016\)[^40].
+> **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2016\)[^41].
 
 <a id=A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights></a>
 ## A sampler for distributions with nonincreasing or nondecreasing weights
 
-An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nonincreasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2021\)[^41].  It has a logarithmic time complexity in terms of setup and sampling.
+An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nonincreasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2021\)[^42].  It has a logarithmic time complexity in terms of setup and sampling.
 
 - Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
     1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
@@ -368,7 +368,7 @@ For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follo
 <a id=A_sampler_for_unimodal_distributions_of_weights></a>
 ## A sampler for unimodal distributions of weights
 
-The following is an algorithm for sampling an integer in the interval \[_a_, _b_\) with probability proportional to a _unimodal distribution_ of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2021\)[^41].  It assumes the mode (the point with the highest weight) is known.  An example is \[1, 3, 9, 4, 4\] when _a_ = 0 and _b_ = 5, and the _mode_ is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.
+The following is an algorithm for sampling an integer in the interval \[_a_, _b_\) with probability proportional to a _unimodal distribution_ of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2021\)[^42].  It assumes the mode (the point with the highest weight) is known.  An example is \[1, 3, 9, 4, 4\] when _a_ = 0 and _b_ = 5, and the _mode_ is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.
 
 - Setup:
     1. Find the point with the highest weight, such as via binary search.  Call this point _mode_.
@@ -459,19 +459,19 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 
 [^35]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^36]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
+[^36]: A Lipschitz continuous function, with constant _L_ is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere", and that slope is bounded wherever it's defined.
 
-[^37]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  For this reason, there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_) whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_, for every _&epsilon;_&gt;0 and for any _x_ and _y_ in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and monotone increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
+[^37]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
 
-[^38]: Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.
+[^38]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  For this reason, there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_) whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_, for every _&epsilon;_&gt;0 and for any _x_ and _y_ in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and monotone increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
 
-[^39]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
+[^39]: Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.
 
-[^40]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
+[^40]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
-[^41]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+[^41]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
-[^42]: A Lipschitz continuous function, with constant _L_ is a continuous function such that _f_(_x_) and _f_(_y_) is no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere", and does not tend to a vertical slope anywhere.
+[^42]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
 
 <a id=License></a>
 ## License
