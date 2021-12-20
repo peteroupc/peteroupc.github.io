@@ -514,7 +514,7 @@ class FInterval:
         lower = x / upper
         if lower > upper:
             raise ValueError
-        return FInterval(max(lower, upper), max(lower, upper))
+        return FInterval(min(lower, upper), max(lower, upper))
 
     def _atanbounds(x, n):
         x = x if isinstance(x, Fraction) else Fraction(x)
