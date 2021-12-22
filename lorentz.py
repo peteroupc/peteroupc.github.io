@@ -1022,7 +1022,7 @@ class C4PiecewisePoly:
 
            Generally, the algorithm converges at a rate near O(1/n^2) if the input coin
            is close to fair, and near O(1/n^4) if the coin leans heavily towards heads
-           or tails.
+           or tails.  However, the algorithm relies on Conjecture 34, which is not yet proved.
 
            pwp is a PiecewiseBernsteinPoly, PolySum, or PolyDiff.
 
@@ -1118,7 +1118,7 @@ class C2PiecewisePoly:
 
            Generally, the algorithm converges at a rate near O(1/n) if the input coin
            is close to fair, and near O(1/n^2) if the coin leans heavily towards heads
-           or tails.
+           or tails. However, the algorithm relies on Conjecture 34, which is not yet proved.
 
            pwp is a PiecewiseBernsteinPoly, PolySum, or PolyDiff.
 

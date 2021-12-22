@@ -61,13 +61,13 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 * `abs(a)` is the absolute value of `a`; it makes negative numbers non-negative.
 * `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
-* `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This operation is equivalent to `-floor(-a)`.
 * `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
 * `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
 * `exp(a)` is the inverse natural logarithm of `a`.  Also known as the base of natural logarithms raised to the power `a`, so that `exp(1)` is the base of natural logarithms commonly denoted _e_.
-* `rem(a, b)` is the part of `b` that does not divide evenly into `a`, where the result has the sign of `b`.  This operation is equivalent to `a - floor(a / b) * b`.
 * `min(a, b)` is the smaller of `a` and `b`.
 * `max(a, b)` is the larger of `a` and `b`.
+* `rem(a, b)` is the part of `b` that does not divide evenly into `a`, where the result has the sign of `b`.  This operation is equivalent to `a - floor(a / b) * b`.
+* `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This operation is equivalent to `-floor(-a)`.
 
 **Notes:**
 
@@ -83,7 +83,7 @@ In the pseudocode:
 * The pseudocode shown is not guaranteed to cover all error handling, such as recovery from overflows, out-of-bounds memory accesses, divisions by zero, unexpected infinity values, and other errors that might happen in a particular implementation.
 * The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.  Implementations are free to deviate from the pseudocode as long as they produce the same results as the pseudocode, except that&mdash;
     - arithmetic operations, `rem`, `sqrt`, `ln`, `exp`, `pow`, `sin`, `cos`, `tan`, and `atan2` must return a result that is at least substantially close to the correctly rounded result, and
-    - arithmetic operations, `abs`, `sqrt`, `floor`, `round`, and `rem`, if implemented in fixed-precision number formats, must return the correctly rounded result.
+    - arithmetic operations, `abs`, `sqrt`, `floor`, `ceil`, `round`, and `rem`, if implemented in fixed-precision number formats, must return the correctly rounded result.
 * Unless noted otherwise, the pseudocode does not care how a particular implementation stores integers and non-integers (for example, as floating-point, fixed-point, decimal, binary, two's-complement, ones'-complement, Chinese remainder theorem, or otherwise).
 
 <a id=License></a>

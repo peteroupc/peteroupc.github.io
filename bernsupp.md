@@ -307,7 +307,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 > **Notes:**
 >
-> 1. By the results of Holtz et al., it is suspected that the target function _f_ can't be simulated using a finite number of flips on average unless _f_ is _C_<sup>2</sup> continuous.
+> 1. By the results of Holtz et al., it is suspected that the target function _f_ can't be simulated using a finite number of flips on average for every probability of heads unless _f_'s fourth derivative is Hölder continuous.
 > 2. If a function is constant on some non-empty open interval in its domain, but is not constant on the whole domain, then it can't be real analytic.
 
 <a id=Complexity></a>
