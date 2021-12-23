@@ -1012,8 +1012,7 @@ def example1():
 class C4PiecewisePoly:
         """ This is an algorithm to toss heads with probability equal to
             a piecewise polynomial function (defined on the closed interval [0, 1])
-            that is four times differentiable. (Implies third derivative is in Zygmund class,
-            which is a necessary condition.)
+            that is four times differentiable. (Necessary condition is: third derivative is in Zygmund class.)
 
            The algorithm implements the method of Holtz et al. 2011,
            using polynomials that converge from above and below to the
@@ -1108,8 +1107,7 @@ class C2PiecewisePoly:
     def __init__(self, pwp):
         """ This is an algorithm to toss heads with probability equal to
             a piecewise polynomial function (defined on the closed interval [0, 1])
-            that is twice differentiable. (Implies derivative is in Zygmund class,
-            which is a necessary condition.)
+            that is twice differentiable. (Necessary condition is: derivative is in Zygmund class.)
 
            The algorithm implements the method of Holtz et al. 2011,
            using polynomials that converge from above and below to the
