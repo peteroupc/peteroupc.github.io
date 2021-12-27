@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/12/22"><meta name="citation_online_date" content="2021/12/22"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/12/26"><meta name="citation_online_date" content="2021/12/26"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -570,23 +570,6 @@
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>)</strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin.  If it returns 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>))/<em>&lambda;</em><sup>2</sup> otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 405238440128399386484736/(1953125*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 6331850627006240413824/(1953125*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-</ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>*sin(7*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
@@ -911,7 +894,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>[^1]: Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</p>
 
-<p>[^2]: A Lipschitz continuous function on [0, 1], with constant <em>L</em> is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot; in [0, 1], and that slope is bounded wherever it&#39;s defined.</p>
+<p>[^2]: A Lipschitz continuous function on [0, 1], with constant <em>L</em> is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are in [0, 1] and no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot; in [0, 1], and that slope is bounded wherever it&#39;s defined.</p>
 
 <p>[^3]: Specifically, the constant <em>m</em> is a number equal to or greater than abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1] such that <em>x</em> != <em>y</em>.  However, <em>m</em> can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</p>
 

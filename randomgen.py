@@ -3583,8 +3583,8 @@ class RandomGen:
 
     def numbers_from_dist_inversion(self, icdf, n=1, digitplaces=53, base=2):
         """
-        Generates 'n' random numbers that follow a continuous
-        or discrete probability distribution, using the inversion method.
+        Generates 'n' random numbers that follow a discrete or non-discrete
+        probability distribution, using the inversion method.
         Implements section 5 of Devroye and Gravel,
         "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
         - 'n' is the number of random numbers to generate.  Default is 1.
@@ -3623,8 +3623,8 @@ class RandomGen:
     def numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53):
         """
         Generates 'n' random numbers that follow a continuous
-        distribution in an interval [mn, mx].  The distribution's
-        PDF (probability density function) must be bounded from above
+        distribution in an interval [mn, mx].  The distribution must have a
+        PDF (probability density function) and the PDF must be bounded from above
         (have a finite value) and be continuous almost everywhere
         in the interval.  Implements section 4 of Devroye and Gravel,
         "The expected bit complexity of the von Neumann rejection
@@ -3797,7 +3797,7 @@ class RandomGen:
         return self.piecewise_linear_n(values, weights, n)
 
     def numbers_from_cdf(self, cdf, mn, mx, n=1):
-        """Generates one or more random numbers from a continuous probability
+        """Generates one or more random numbers from a non-discrete probability
         distribution by numerically inverting its cumulative
         distribution function (CDF).
 
@@ -3813,7 +3813,7 @@ class RandomGen:
 
     def numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None):
         """Transforms one or more random numbers into numbers
-        (called quantiles) that follow a continuous probability distribution, based on its PDF
+        (called quantiles) that follow a non-discrete probability distribution, based on its PDF
         (probability density function) and/or its CDF (cumulative distribution
         function).
 
@@ -4023,7 +4023,7 @@ class RandomGen:
         call.
         - point: A list of coordinates of a point in space.  This method assumes
           the point was random generated and within the support of a continuous
-          distribution.  Let N be the number of coordinates of this parameter
+          distribution with a PDF.  Let N be the number of coordinates of this parameter
           (the number of dimensions).
         - pdf: The probability density function (PDF) of the continuous distribution.
           This method takes as input a list
@@ -5085,7 +5085,7 @@ class PrefixDistributionSampler:
                     prefixLength += 1
 
 class KVectorSampler:
-    """A K-Vector-like sampler of a continuous distribution
+    """A K-Vector-like sampler of a non-discrete distribution
     with a known cumulative distribution function (CDF).
     Uses algorithms
     described in Arnas, D., Leake, C., Mortari, D., "Random

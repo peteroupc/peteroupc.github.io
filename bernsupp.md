@@ -369,14 +369,6 @@ The following are approximation schemes and hints to simulate a coin of probabil
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 26278337571/(25600000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-* Let _f_(_&lambda;_) = **sqrt(1 &minus; _&lambda;_<sup>2</sup>)**.  Then simulate _f_ by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin.  If it returns 0, return 1.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return 1 minus the result.<br>
-    Let _g_(_&lambda;_) = 1/2 if _&lambda;_ = 0; (1 &minus; sqrt(1 &minus; _&lambda;_<sup>2</sup>))/_&lambda;_<sup>2</sup> otherwise. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 405238440128399386484736/(1953125\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
-    * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 6331850627006240413824/(1953125\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
 * Let _f_(_&lambda;_) = **_&lambda;_\*sin(7\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be twice differentiable using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 523/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 11346621/(700000\*n).
@@ -537,7 +529,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
 
 [^1]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
 
-[^2]: A Lipschitz continuous function on [0, 1], with constant _L_ is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere" in [0, 1], and that slope is bounded wherever it's defined.
+[^2]: A Lipschitz continuous function on [0, 1], with constant _L_ is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are in [0, 1] and no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere" in [0, 1], and that slope is bounded wherever it's defined.
 
 [^3]: Specifically, the constant _m_ is a number equal to or greater than abs(_f_(_x_)&minus;_f_(_y_))/(abs(_x_&minus;_y_)<sup>_&alpha;_</sup>) for every _x_ in \[0, 1\] and every _y_ in \[0, 1\] such that _x_ != _y_.  However, _m_ can't directly be calculated as it would involve checking an infinite number of _x_, _y_ pairs.
 

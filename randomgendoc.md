@@ -360,7 +360,7 @@ CLASSES
     class KVectorSampler(builtins.object)
      |  KVectorSampler(cdf, xmin, xmax, pdf=None, nd=200)
      |
-     |  A K-Vector-like sampler of a continuous distribution
+     |  A K-Vector-like sampler of a non-discrete distribution
      |  with a known cumulative distribution function (CDF).
      |  Uses algorithms
      |  described in Arnas, D., Leake, C., Mortari, D., "Random
@@ -821,7 +821,7 @@ CLASSES
      |      call.
      |      - point: A list of coordinates of a point in space.  This method assumes
      |        the point was random generated and within the support of a continuous
-     |        distribution.  Let N be the number of coordinates of this parameter
+     |        distribution with a PDF.  Let N be the number of coordinates of this parameter
      |        (the number of dimensions).
      |      - pdf: The probability density function (PDF) of the continuous distribution.
      |        This method takes as input a list
@@ -1055,7 +1055,7 @@ CLASSES
      |  numbersWithSum(self, count, sum=1.0)
      |
      |  numbers_from_cdf(self, cdf, mn, mx, n=1)
-     |      Generates one or more random numbers from a continuous probability
+     |      Generates one or more random numbers from a non-discrete probability
      |      distribution by numerically inverting its cumulative
      |      distribution function (CDF).
      |
@@ -1068,8 +1068,8 @@ CLASSES
      |
      |  numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53)
      |      Generates 'n' random numbers that follow a continuous
-     |      distribution in an interval [mn, mx].  The distribution's
-     |      PDF (probability density function) must be bounded from above
+     |      distribution in an interval [mn, mx].  The distribution must have a
+     |      PDF (probability density function) and the PDF must be bounded from above
      |      (have a finite value) and be continuous almost everywhere
      |      in the interval.  Implements section 4 of Devroye and Gravel,
      |      "The expected bit complexity of the von Neumann rejection
@@ -1086,8 +1086,8 @@ CLASSES
      |         are set to 0 and 1, respectively, by default.
      |
      |  numbers_from_dist_inversion(self, icdf, n=1, digitplaces=53, base=2)
-     |      Generates 'n' random numbers that follow a continuous
-     |      or discrete probability distribution, using the inversion method.
+     |      Generates 'n' random numbers that follow a discrete or non-discrete
+     |      probability distribution, using the inversion method.
      |      Implements section 5 of Devroye and Gravel,
      |      "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
      |      - 'n' is the number of random numbers to generate.  Default is 1.
@@ -1115,7 +1115,7 @@ CLASSES
      |
      |  numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None)
      |      Transforms one or more random numbers into numbers
-     |      (called quantiles) that follow a continuous probability distribution, based on its PDF
+     |      (called quantiles) that follow a non-discrete probability distribution, based on its PDF
      |      (probability density function) and/or its CDF (cumulative distribution
      |      function).
      |
@@ -2360,9 +2360,9 @@ CLASSES
      |  MooreSampler(pdf, mn, mx, numLabels=1, bitAccuracy=53)
      |
      |  Moore rejection sampler, for generating independent samples
-     |  from continuous distributions in a way that minimizes error,
-     |  if the distribution's PDF (probability density function)
-     |  uses "well-defined" arithmetic expressions.
+     |  from a distribution in a way that minimizes error,
+     |  if the distribution has a PDF (probability density function)
+     |  and the PDF uses "well-defined" arithmetic expressions.
      |  It can sample from one-dimensional or multidimensional
      |  distributions.  It can also sample from so-called "transdimensional
      |  distributions" if the distribution is the union of several component
@@ -2392,7 +2392,7 @@ CLASSES
      |        distributions share the same sampling domain, which
      |        is given depending on the preceding two cases.
      |     For this sampler to work, the PDF must be "locally Lipschitz" in the
-     |     sampling domain, meaning that the PDF is continuous and there is a constant _L_ such that PDF(_x_) and PDF(_y_) are no more than _L_ times _&epsilon;_ apart whenever _x_ and _y_ are no more than _&epsilon;_ apart.
+     |     sampling domain, meaning that the PDF is continuous and there is a constant _L_ such that PDF(_x_) and PDF(_y_) are in the sampling domain and no more than _L_ times _&epsilon;_ apart whenever _x_ and _y_ are no more than _&epsilon;_ apart.
      |  - numlabels: The number of labels associated with the distribution, if it's a
      |     transdimensional distribution.  Optional; the default is 1.
      |  - bitAccuracy: Bit accuracy of the sampler; the sampler will sample from

@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page presents general-purpose algorithms for estimating the mean value of a stream of random variates, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.
+Suppose we have an endless stream of numbers, each generated at random and independently from each other, and we can sample as many numbers from the stream as we want.  These numbers are called _random variates_.  This page presents general-purpose algorithms for estimating the mean value ("long-run average") of those variates, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.
 
 The algorithms are described to make them easy to implement by programmers.
 
@@ -229,7 +229,11 @@ If the stream is **unbounded** (can take on any real number) and its distributio
 <a id=Randomized_Integration></a>
 ## Randomized Integration
 
-Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.  _Algorithm C_ can be used to estimate an integral of a function _h_(**z**), with the following properties:
+Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.
+
+This time, suppose we have an endless stream of _vectors_ (_n_-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.
+
+_Algorithm C_ can be used to estimate an integral of a function _h_(**z**), where **z** is a vector from the stream, with the following properties:
 
 - _h_(**z**) is a multidimensional function that takes an _n_-dimensional vector and returns a real number.  _h_(**z**) is usually a function that's easy to evaluate but whose integral is hard to calculate.
 - **z** is an _n_-dimensional vector chosen at random in the sampling domain.

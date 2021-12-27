@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/12/16"><meta name="citation_online_date" content="2021/12/16"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/12/27"><meta name="citation_online_date" content="2021/12/27"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -8,7 +8,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p><strong>Abstract:</strong> This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers.</p>
+<p><strong>Abstract:</strong> This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers.</p>
 
 <p><strong>2020 Mathematics Subject Classification:</strong> 68W20, 60-08, 60-04.</p>
 
@@ -16,7 +16,7 @@
 
 <h2>Introduction</h2>
 
-<p>This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  These samplers are designed to not rely on floating-point arithmetic.  They may depend on algorithms given in the following pages:</p>
+<p>This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  These samplers are designed to not rely on floating-point arithmetic.  They may depend on algorithms given in the following pages:</p>
 
 <ul>
 <li><a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</strong></a></li>
@@ -332,7 +332,7 @@
 <p><strong>Example 5:</strong> Take $f(\lambda) = 1/2 + \cos(\pi\lambda)/4$.  This is as in Example 3, except step 2 runs the algorithm for $1/2 + \cos(6\lambda)/4$ in Example 4.</p>
 
 <blockquote>
-<p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;).  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).</p>
+<p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;).  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table), and ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient.</p>
 
 <table><thead>
 <tr>
@@ -354,6 +354,11 @@
 <tr>
 <td>$\cos(\sqrt \lambda)$</td>
 <td>$a_i = \frac{(-1)^i}{(2i)!}$.</td>
+<td>1.</td>
+</tr>
+<tr>
+<td>$\sum_{i\ge 0} a_i x^i$ (<a href="https://math.stackexchange.com/questions/855517"><strong>source</strong></a>)</td>
+<td>$a_i = \frac{(-1)^i 4^i}{(2i+1)^2 {2i \choose i}}$.</td>
 <td>1.</td>
 </tr>
 </tbody></table>
@@ -492,7 +497,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> The check &quot;With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>)&quot; is exact if the oracle produces only rational numbers.  If the oracle can produce irrational numbers (such as numbers that follow a beta distribution or another continuous distribution), then the code for the oracle should use uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  In that case, the check can be implemented as follows.  Let <em>x</em> be a uniform PSRN representing a number generated by the oracle.  Set <em>y</em> to <strong>RandUniformFromReal</strong>(<em>b</em>&minus;<em>a</em>), then the check succeeds if <strong>URandLess</strong>(<em>y</em>, <strong>UniformAddRational</strong>(<em>x</em>, &minus;<em>a</em>)) returns 1, and fails otherwise.</p>
+<p><strong>Note:</strong> The check &quot;With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>)&quot; is exact if the oracle produces only rational numbers.  If the oracle can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then the code for the oracle should use uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  In that case, the check can be implemented as follows.  Let <em>x</em> be a uniform PSRN representing a number generated by the oracle.  Set <em>y</em> to <strong>RandUniformFromReal</strong>(<em>b</em>&minus;<em>a</em>), then the check succeeds if <strong>URandLess</strong>(<em>y</em>, <strong>UniformAddRational</strong>(<em>x</em>, &minus;<em>a</em>)) returns 1, and fails otherwise.</p>
 
 <p><strong>Example:</strong> Suppose an oracle produces random variates in the interval [3, 13] with unknown mean <em>&mu;</em>, and we seek to use the oracle to produce non-negative random variates with mean <em>f</em>(<em>&mu;</em>) = &minus;319/100 + <em>&mu;</em>*103/50 &minus; <em>&mu;</em><sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of <em>f</em> in that interval, <em>g</em>(<em>&lambda;</em>) is a degree-2 polynomial with Bernstein coefficients [2/8, 9/8, 5/8] in the interval [0, 1].  <em>g</em> can&#39;t be simulated as is, though, but by increasing <em>g</em>&#39;s degree to 3 we get the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so we can proceed with the following algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;):</p>
 
@@ -1934,7 +1939,7 @@ calc_linear_func(count=8)
 <li><em>m</em> is taken as max(<em>b</em>&minus;<em>a</em>, <em>c</em>&minus;<em>b</em>).</li>
 <li>When Algorithm 2 finishes, add <em>b</em> to its return value.</li>
 </ul></li>
-<li>The check &quot;With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>&quot; is exact if the oracle produces only rational numbers <em>and</em> if <em>f</em>(<em>x</em>) outputs only rational numbers.  If the oracle or <em>f</em> can produce irrational numbers (such as numbers that follow a beta distribution or another continuous distribution), then this check should be implemented using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</li>
+<li>The check &quot;With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>&quot; is exact if the oracle produces only rational numbers <em>and</em> if <em>f</em>(<em>x</em>) outputs only rational numbers.  If the oracle or <em>f</em> can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then this check should be implemented using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</li>
 </ol>
 </blockquote>
 

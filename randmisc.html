@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/12/20"><meta name="citation_online_date" content="2021/12/20"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/12/27"><meta name="citation_online_date" content="2021/12/27"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -175,11 +175,18 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <ul>
 <li>A distribution&#39;s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nondecreasing function that maps uniform random variates in the closed interval [0, 1] to numbers that follow the distribution.</li>
-<li>A distribution&#39;s <em>support</em> is the set of values the distribution can take on.  For example, the beta distribution&#39;s support is the interval [0, 1], and the normal distribution&#39;s support is the entire real line.</li>
+<li>A distribution&#39;s <em>support</em> is the set of values the distribution can take on.  For example, the beta distribution&#39;s support is the closed interval [0, 1], and the normal distribution&#39;s support is the entire real line.</li>
 <li>A distribution&#39;s <em>probability generating function</em> is a function written as <em>a</em>[0]*<em>x</em><sup>0</sup> + <em>a</em>[1]*<em>x</em><sup>1</sup> + ..., where 0 &lt; <em>x</em> &lt; 1 and <em>a</em>[<em>i</em>] is the probability of getting <em>i</em> (provided the distribution takes on only values that are positive integers and/or zero).</li>
 </ul>
 
-<p><strong>G families.</strong> In general, families of the form &quot;X-G&quot; (such as &quot;beta-G&quot; (Eugene et al., 2002)[^9]) use two distributions, X and G, where X is a continuous distribution whose support is the interval [0, 1] and G is a distribution with an easy-to-compute quantile function.  The following algorithm samples a random variate following a distribution from this kind of family:</p>
+<p><strong>G families.</strong> In general, families of the form &quot;X-G&quot; (such as &quot;beta-G&quot; (Eugene et al., 2002)[^9]) use two distributions, X and G, where&mdash;</p>
+
+<ul>
+<li>X is a distribution whose support is the closed interval [0, 1], and</li>
+<li>G is a distribution with an easy-to-compute quantile function.</li>
+</ul>
+
+<p>The following algorithm samples a random variate following a distribution from this kind of family:</p>
 
 <ol>
 <li>Generate a random variate that follows the distribution X. (Or generate a uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random number (PSRN)</strong></a> that follows the distribution X.)  Call the number <em>x</em>.</li>
@@ -195,7 +202,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <li>A <em>cubic rank transmuted</em> distribution (Granzotto et al. 2017)[^13] uses parameters <em>&lambda;</em><sub>0</sub> and <em>&lambda;</em><sub>1</sub> in the interval [0, 1]; step 1 is modified to read: &quot;Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: [<em>&lambda;</em><sub>0</sub>, <em>&lambda;</em><sub>1</sub>, 3&minus;<em>&lambda;</em><sub>0</sub>&minus;<em>&lambda;</em><sub>1</sub>].  Then set <em>x</em> to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively.&quot;</li>
 </ul>
 
-<p><strong>Transformed&ndash;transformer family.</strong> In fact, the &quot;X-G&quot; families are a special case of the so-called &quot;transformed&ndash;transformer&quot; family of distributions introduced by Alzaatreh et al. (2013)[^14] that uses two distributions, X and G, where X (the &quot;transformed&quot;) is an arbitrary continuous distribution, G (the &quot;transformer&quot;) is a distribution with an easy-to-compute quantile function, and <em>W</em> is a nondecreasing function that maps a number in [0, 1] to a number that has the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:</p>
+<p><strong>Transformed&ndash;transformer family.</strong> In fact, the &quot;X-G&quot; families are a special case of the so-called &quot;transformed&ndash;transformer&quot; family of distributions introduced by Alzaatreh et al. (2013)[^14] that uses two distributions, X and G, where X (the &quot;transformed&quot;) is an arbitrary distribution with a PDF; G (the &quot;transformer&quot;) is a distribution with an easy-to-compute quantile function; and <em>W</em> is a nondecreasing function that maps a number in [0, 1] to a number that has the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:</p>
 
 <ol>
 <li>Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
@@ -205,7 +212,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <p>The following are special cases of the &quot;transformed&ndash;transformer&quot; family:</p>
 
 <ul>
-<li>The &quot;T-R{<em>Y</em>}&quot; family (Aljarrah et al., 2014)[^15], in which <em>T</em> is an arbitrary continuous distribution (X in the algorithm above), <em>R</em> is a distribution with an easy-to-compute quantile function (G in the algorithm above), and <em>W</em> is the quantile function for the distribution <em>Y</em>, whose support must contain the support of <em>T</em> (so that <em>W</em><sup>&minus;1</sup>(<em>x</em>) is the cumulative distribution function for <em>Y</em>, or the probability that a <em>Y</em>-distributed number is <em>x</em> or less).</li>
+<li>The &quot;T-R{<em>Y</em>}&quot; family (Aljarrah et al., 2014)[^15], in which <em>T</em> is an arbitrary distribution with a PDF (X in the algorithm above), <em>R</em> is a distribution with an easy-to-compute quantile function (G in the algorithm above), and <em>W</em> is the quantile function for the distribution <em>Y</em>, whose support must contain the support of <em>T</em> (so that <em>W</em><sup>&minus;1</sup>(<em>x</em>) is the cumulative distribution function for <em>Y</em>, or the probability that a <em>Y</em>-distributed number is <em>x</em> or less).</li>
 <li>Several versions of <em>W</em> have been proposed for the case when distribution X&#39;s support is [0, &infin;), such as the Rayleigh and gamma distributions.  They include:
 
 <ul>
@@ -353,7 +360,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <h2>Random Variate Generation via Quantiles</h2>
 
-<p>This note is about generating random variates from a continuous distribution via inverse transform sampling (or via quantiles), using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  See &quot;Certain Families of Distributions&quot; for a definition of quantile functions.  A <em>uniform PSRN</em> is ultimately a number that lies in an interval; it contains a sign, an integer part, and a fractional part made up of digits sampled on demand.</p>
+<p>This note is about generating random variates from a non-discrete distribution via inverse transform sampling (or via quantiles), using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  See &quot;Certain Families of Distributions&quot; for a definition of quantile functions.  A <em>uniform PSRN</em> is ultimately a number that lies in an interval; it contains a sign, an integer part, and a fractional part made up of digits sampled on demand.</p>
 
 <p>Take the following situation:</p>
 

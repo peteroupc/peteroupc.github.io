@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/12/22"><meta name="citation_online_date" content="2021/12/22"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/12/27"><meta name="citation_online_date" content="2021/12/27"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -14,7 +14,7 @@
 
 <h2>Introduction</h2>
 
-<p>This page introduces a Python implementation of <em>partially-sampled random numbers</em> (PSRNs).  Although structures for PSRNs were largely described before this work, this document unifies the concepts for these kinds of numbers from prior works and shows how they can be used to sample the beta distribution (for most sets of parameters), the exponential distribution (with an arbitrary rate parameter), and other continuous distributions&mdash;</p>
+<p>This page introduces a Python implementation of <em>partially-sampled random numbers</em> (PSRNs).  Although structures for PSRNs were largely described before this work, this document unifies the concepts for these kinds of numbers from prior works and shows how they can be used to sample the beta distribution (for most sets of parameters), the exponential distribution (with an arbitrary rate parameter), and many other continuous distributions&mdash;</p>
 
 <ul>
 <li>while avoiding floating-point arithmetic, and</li>
@@ -152,7 +152,7 @@
 
 <h2>About Partially-Sampled Random Numbers</h2>
 
-<p>In this document, a <em>partially-sampled random number</em> (PSRN) is a data structure that stores a real number of unlimited precision, but whose contents are sampled only when necessary. PSRNs open the door to algorithms that sample a random variate that &quot;exactly&quot; follows a continuous distribution, <em>with arbitrary precision</em>, and <em>without floating-point arithmetic</em> (see &quot;Properties&quot; later in this section).</p>
+<p>In this document, a <em>partially-sampled random number</em> (PSRN) is a data structure that stores a real number of unlimited precision, but whose contents are sampled only when necessary. PSRNs open the door to algorithms that sample a random variate that &quot;exactly&quot; follows a probability distribution, <em>with arbitrary precision</em>, and <em>without floating-point arithmetic</em> (see &quot;Properties&quot; later in this section).</p>
 
 <p>PSRNs specified here consist of the following three things:</p>
 
@@ -166,7 +166,7 @@
 
 <p>If the integer part is not stored, it&#39;s assumed to be 0.  If the sign is not stored, it&#39;s assumed to be positive.  For example, an implementation can care only about PSRNs in the interval [0, 1] by storing only a fractional part.</p>
 
-<p>PSRNs ultimately represent a random variate between two others; one of the number&#39;s two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it&#39;s negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part [3, 5, 6] (in base 10), then the PSRN represents a random variate in the interval [3.356, 3.357].  Here, one of the bounds is built using the PSRN&#39;s sign, integer part, and fractional part, and because the PSRN is positive, this is a lower bound.</p>
+<p>PSRNs ultimately represent a random variate between two other numbers; one of the variate&#39;s two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it&#39;s negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part [3, 5, 6] (in base 10), then the PSRN represents a random variate in the interval [3.356, 3.357].  Here, one of the bounds is built using the PSRN&#39;s sign, integer part, and fractional part, and because the PSRN is positive, this is a lower bound.</p>
 
 <p>This section specifies two kinds of PSRNs: uniform and exponential.</p>
 
@@ -211,7 +211,7 @@
 
 <h3>Properties</h3>
 
-<p>An algorithm that samples from a continuous distribution using PSRNs has the following properties:</p>
+<p>An algorithm that samples from a non-discrete distribution using PSRNs has the following properties:</p>
 
 <ol>
 <li>The algorithm relies only on a source of independent and unbiased random bits for randomness.</li>
@@ -225,7 +225,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>It is not easy to turn a sampler for a continuous distribution into an algorithm that meets these properties.  Some reasons for this are given in the section &quot;<a href="#Discussion"><strong>Discussion</strong></a>&quot; later in this document.</li>
+<li>It is not easy to turn a sampler for a non-discrete distribution into an algorithm that meets these properties.  Some reasons for this are given in the section &quot;<a href="#Discussion"><strong>Discussion</strong></a>&quot; later in this document.</li>
 <li>The <em>exact rejection sampling</em> algorithm described by Oberhoff (2018)[^13] produces samples that act like PSRNs; however, the algorithm doesn&#39;t have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm&#39;s progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)[^4]).  For completeness, Oberhoff&#39;s method appears in the appendix.</li>
 </ol>
 </blockquote>
@@ -727,7 +727,7 @@
 <p>Partially-sampled-number arithmetic may also be possible by relating the relative probabilities of each digit, in the result&#39;s digit expansion, to some kind of formula.</p>
 
 <ul>
-<li>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)[^17], (Nezhad et al., 2013)[^18].  This previous work points to building a probability tree, where the probability of the next digit depends on the value of the previous digits.  However, calculating each probability requires knowing the distribution&#39;s cumulative distribution function (CDF), and the calculations can incur rounding and cancellation errors especially when the digit probabilities are not rational numbers or they have no simple mathematical form, as is often the case.</li>
+<li>There is previous work that relates non-discrete distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)[^17], (Nezhad et al., 2013)[^18].  This previous work points to building a probability tree, where the probability of the next digit depends on the value of the previous digits.  However, calculating each probability requires knowing the distribution&#39;s cumulative distribution function (CDF), and the calculations can incur rounding and cancellation errors especially when the digit probabilities are not rational numbers or they have no simple mathematical form, as is often the case.</li>
 <li>For some distributions, the digit probabilities don&#39;t depend on previous digits, only on the position of the digit.  However, the uniform and exponential distributions are the only practical distributions of this kind.  See the <a href="#Setting_Digits_by_Digit_Probabilities"><strong>appendix</strong></a> for details.</li>
 </ul>
 
@@ -1825,7 +1825,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h2>Accurate Simulation of Continuous Distributions Supported on 0 to 1</h2>
 
-<p>The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on [0, 1], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) <em>b</em> (such as 2 for binary).  (See also (Devroye 1986, ch. 2, sec. 3.8, exercise 14)[^19].)</p>
+<p>The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions with PDFs on the domain [0, 1], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) <em>b</em> (such as 2 for binary).  (See also (Devroye 1986, ch. 2, sec. 3.8, exercise 14)[^19].)</p>
 
 <ol>
 <li>Create an uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part.  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that PSRN.</li>
@@ -1936,11 +1936,11 @@ def contbernoullidist(b, lamda, precision=53):
 <p>Existing work shows how to calculate the bit complexity for any probability distribution:</p>
 
 <ul>
-<li>For a 1-dimensional continuous distribution, the bit complexity is bounded from below by <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random variate&#39;s fractional part (Devroye and Gravel 2020)[^3].</li>
+<li>For a 1-dimensional distribution with a probability density function (PDF), the bit complexity is bounded from below by <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random variate&#39;s fractional part (Devroye and Gravel 2020)[^3].</li>
 <li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)[^24].  (For a given probability <em>p</em>, the binary entropy is <code>0 - p*log2(p)</code> where <code>log2(x) = ln(x)/ln(2)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
 </ul>
 
-<p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/<em>&lambda;</em>), so the minimum bit complexity for this distribution is log2(exp(1)/<em>&lambda;</em>) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when <em>&lambda;</em> = 1, decreases when <em>&lambda;</em> goes up, and increases when <em>&lambda;</em> goes down.  In the case of any other continuous distribution, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s PDF.</p>
+<p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/<em>&lambda;</em>), so the minimum bit complexity for this distribution is log2(exp(1)/<em>&lambda;</em>) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when <em>&lambda;</em> = 1, decreases when <em>&lambda;</em> goes up, and increases when <em>&lambda;</em> goes down.  In the case of any other distribution with a PDF, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s PDF.</p>
 
 <p>Although existing work shows lower bounds on the number of random bits an algorithm will need on average, most algorithms will generally not achieve these lower bounds in practice.</p>
 
@@ -2127,7 +2127,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h3>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</h3>
 
-<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability density function (PDF) is continuous &quot;almost everywhere&quot; and bounded from above (Oberhoff 2018, section 3)[^13], see also (Devroye and Gravel 2020)[^3]. (Note that if the PDF&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
+<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution with PDFs on the domain [0, 1], as long as its probability density function (PDF) is continuous &quot;almost everywhere&quot; and bounded from above (Oberhoff 2018, section 3)[^13], see also (Devroye and Gravel 2020)[^3]. (Note that if the PDF&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
 
 <ol>
 <li>Set <em>pdfmax</em> to an upper bound of the PDF (or the PDF times a possibly unknown constant factor) on the domain at [0, 1].  Let <em>base</em> be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).</li>

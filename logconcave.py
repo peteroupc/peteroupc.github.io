@@ -102,8 +102,7 @@ class TConcaveDiscreteSampler:
 class TConcaveSampler:
     """
     Generates a random number that follows a
-    continuous distribution
-    whose probability density function (PDF) is T-concave.
+    distribution whose probability density function (PDF) is T-concave.
     Specifically, the PDF is proportional to a function f for
     which -1/sqrt(f(x)) is a continuous concave function.
     T-concave functions include log-concave functions (those

@@ -15,9 +15,9 @@ from interval import FInterval
 class MooreSampler:
     """
     Moore rejection sampler, for generating independent samples
-    from continuous distributions in a way that minimizes error,
-    if the distribution's PDF (probability density function)
-    uses "well-defined" arithmetic expressions.
+    from a distribution in a way that minimizes error,
+    if the distribution has a PDF (probability density function)
+    and the PDF uses "well-defined" arithmetic expressions.
     It can sample from one-dimensional or multidimensional
     distributions.  It can also sample from so-called "transdimensional
     distributions" if the distribution is the union of several component
@@ -47,7 +47,7 @@ class MooreSampler:
           distributions share the same sampling domain, which
           is given depending on the preceding two cases.
        For this sampler to work, the PDF must be "locally Lipschitz" in the
-       sampling domain, meaning that the PDF is continuous and there is a constant _L_ such that PDF(_x_) and PDF(_y_) are no more than _L_ times _&epsilon;_ apart whenever _x_ and _y_ are no more than _&epsilon;_ apart.
+       sampling domain, meaning that the PDF is continuous and there is a constant _L_ such that PDF(_x_) and PDF(_y_) are in the sampling domain and no more than _L_ times _&epsilon;_ apart whenever _x_ and _y_ are no more than _&epsilon;_ apart.
     - numlabels: The number of labels associated with the distribution, if it's a
        transdimensional distribution.  Optional; the default is 1.
     - bitAccuracy: Bit accuracy of the sampler; the sampler will sample from

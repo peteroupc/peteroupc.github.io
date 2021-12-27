@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/12/21"><meta name="citation_online_date" content="2021/12/21"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/12/25"><meta name="citation_online_date" content="2021/12/25"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -12,7 +12,7 @@
 
 <h2>Introduction</h2>
 
-<p>This page presents general-purpose algorithms for estimating the mean value of a stream of random variates, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.</p>
+<p>Suppose we have an endless stream of numbers, each generated at random and independently from each other, and we can sample as many numbers from the stream as we want.  These numbers are called <em>random variates</em>.  This page presents general-purpose algorithms for estimating the mean value (&quot;long-run average&quot;) of those variates, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.</p>
 
 <p>The algorithms are described to make them easy to implement by programmers.</p>
 
@@ -326,7 +326,11 @@
 
 <h2>Randomized Integration</h2>
 
-<p>Monte Carlo integration is a randomized way to estimate the integral (&quot;area under the graph&quot;) of a function.  <em>Algorithm C</em> can be used to estimate an integral of a function <em>h</em>(<strong>z</strong>), with the following properties:</p>
+<p>Monte Carlo integration is a randomized way to estimate the integral (&quot;area under the graph&quot;) of a function.</p>
+
+<p>This time, suppose we have an endless stream of <em>vectors</em> (<em>n</em>-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.</p>
+
+<p><em>Algorithm C</em> can be used to estimate an integral of a function <em>h</em>(<strong>z</strong>), where <strong>z</strong> is a vector from the stream, with the following properties:</p>
 
 <ul>
 <li><em>h</em>(<strong>z</strong>) is a multidimensional function that takes an <em>n</em>-dimensional vector and returns a real number.  <em>h</em>(<strong>z</strong>) is usually a function that&#39;s easy to evaluate but whose integral is hard to calculate.</li>

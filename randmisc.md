@@ -132,10 +132,15 @@ emphasis on sampling random variates from them.  Some of these families are desc
 The following definitions are used:
 
 - A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nondecreasing function that maps uniform random variates in the closed interval [0, 1] to numbers that follow the distribution.
-- A distribution's _support_ is the set of values the distribution can take on.  For example, the beta distribution's support is the interval [0, 1], and the normal distribution's support is the entire real line.
+- A distribution's _support_ is the set of values the distribution can take on.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
 - A distribution's _probability generating function_ is a function written as _a_\[0]\*_x_<sup>0</sup> + _a_\[1]\*_x_<sup>1</sup> + ..., where 0 &lt; _x_ &lt; 1 and _a_\[_i_] is the probability of getting _i_ (provided the distribution takes on only values that are positive integers and/or zero).
 
-**G families.** In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002\)[^9]) use two distributions, X and G, where X is a continuous distribution whose support is the interval \[0, 1\] and G is a distribution with an easy-to-compute quantile function.  The following algorithm samples a random variate following a distribution from this kind of family:
+**G families.** In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002\)[^9]) use two distributions, X and G, where&mdash;
+
+- X is a distribution whose support is the closed interval \[0, 1\], and
+- G is a distribution with an easy-to-compute quantile function.
+
+The following algorithm samples a random variate following a distribution from this kind of family:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform [**partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) that follows the distribution X.)  Call the number _x_.
 2. Calculate the quantile for G of _x_, and return that quantile. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
@@ -147,14 +152,14 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 - The _transmuted-G_ family (Shaw and Buckley 2007\)[^12]. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^3]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^13] mentions the same distribution, but with parameter _&lambda;_ = _&eta;_ + 1, in the interval [0, 2].)
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^13] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
 
-**Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^14] that uses two distributions, X and G, where X (the "transformed") is an arbitrary continuous distribution, G (the "transformer") is a distribution with an easy-to-compute quantile function, and _W_ is a nondecreasing function that maps a number in [0, 1] to a number that has the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:
+**Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^14] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a PDF; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nondecreasing function that maps a number in [0, 1] to a number that has the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. Calculate the quantile for G of _W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _W_), and return that quantile. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
 
 The following are special cases of the "transformed&ndash;transformer" family:
 
-- The "T-R{_Y_}" family (Aljarrah et al., 2014\)[^15], in which _T_ is an arbitrary continuous distribution (X in the algorithm above), _R_ is a distribution with an easy-to-compute quantile function (G in the algorithm above), and _W_ is the quantile function for the distribution _Y_, whose support must contain the support of _T_ (so that _W_<sup>&minus;1</sup>(_x_) is the cumulative distribution function for _Y_, or the probability that a _Y_-distributed number is _x_ or less).
+- The "T-R{_Y_}" family (Aljarrah et al., 2014\)[^15], in which _T_ is an arbitrary distribution with a PDF (X in the algorithm above), _R_ is a distribution with an easy-to-compute quantile function (G in the algorithm above), and _W_ is the quantile function for the distribution _Y_, whose support must contain the support of _T_ (so that _W_<sup>&minus;1</sup>(_x_) is the cumulative distribution function for _Y_, or the probability that a _Y_-distributed number is _x_ or less).
 - Several versions of _W_ have been proposed for the case when distribution X's support is \[0, &infin;\), such as the Rayleigh and gamma distributions.  They include:
     - _W_(_x_) = &minus;ln(1&minus;_x_) (_W_<sup>&minus;1</sup>(_x_) = 1&minus;exp(&minus;_x_)).  Suggested in the original paper by Alzaatreh et al.
     - _W_(_x_) = _x_/(1&minus;_x_) (_W_<sup>&minus;1</sup>(_x_) = _x_/(1+_x_)).  Suggested in the original paper by Alzaatreh et al.  This choice forms the so-called "odd X G" family, and one example is the "odd log-logistic G" family (Gleaton and Lynch 2006\)[^16].
@@ -245,7 +250,7 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 <a id=Random_Variate_Generation_via_Quantiles></a>
 ## Random Variate Generation via Quantiles
 
-This note is about generating random variates from a continuous distribution via inverse transform sampling (or via quantiles), using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  See "Certain Families of Distributions" for a definition of quantile functions.  A _uniform PSRN_ is ultimately a number that lies in an interval; it contains a sign, an integer part, and a fractional part made up of digits sampled on demand.
+This note is about generating random variates from a non-discrete distribution via inverse transform sampling (or via quantiles), using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  See "Certain Families of Distributions" for a definition of quantile functions.  A _uniform PSRN_ is ultimately a number that lies in an interval; it contains a sign, an integer part, and a fractional part made up of digits sampled on demand.
 
 Take the following situation:
 
