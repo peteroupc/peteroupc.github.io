@@ -1649,8 +1649,8 @@ Some applications need to convert a pregenerated number in \[0, 1\] (usually a n
 In addition, the following methods approximate the quantile if the application can trade accuracy for speed:
 
 - Distribution is **discrete, with known PDF-like function** (and the distribution takes on integers): If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `wsum = 0; for i in a..b: wsum=wsum+PDF(i); for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * wsum)`.  However, finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019\)[^77].  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
-- Distribution is **continuous, with known PDF-like function**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [`mini`, `maxi`], with pieces up to `step` wide. (Devroye and Gravel 2020\)[^11]. See also `DensityInversionSampler`, `numbers_from_u01`, and `numbers_from_dist_inversion` (Derflinger et al. 2010\)[^78], (Devroye and Gravel 2020\)[^11] in the Python sample code [^79].
-- Distribution is **continuous, with known CDF**: See `numbers_from_u01` in the Python sample code.
+- Distribution is **absolutely continuous, with known PDF-like function**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [`mini`, `maxi`], with pieces up to `step` wide. (Devroye and Gravel 2020\)[^11]. See also `DensityInversionSampler`, `numbers_from_u01`, and `numbers_from_dist_inversion` (Derflinger et al. 2010\)[^78], (Devroye and Gravel 2020\)[^11] in the Python sample code [^79].
+- Distribution is **absolutely continuous, with known CDF**: See `numbers_from_u01` in the Python sample code.
 
 &nbsp;
 

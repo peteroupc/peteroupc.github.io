@@ -391,7 +391,7 @@ Each of the resulting uniform random values will be in the interval [0, 1], and 
 >              -log1p(-copula[1]) / rate2]
 >         END METHOD
 >
-> 3. The _**T**&ndash;Poisson hierarchy_ (Knudson et al. 2021\)[^16] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with a parameter `lamda` and a marginal that must be a _continuous non-negative_ probability distribution (one that takes on any of an uncountable number of non-negative values, such as any number 0 or greater).  To sample from the **T**&ndash;Poisson hierarchy&mdash;
+> 3. The _**T**&ndash;Poisson hierarchy_ (Knudson et al. 2021\)[^16] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with a parameter `lamda` and a marginal distribution that must be able to take on any of an uncountable number of non-negative values, such as any number 0 or greater.  To sample from the **T**&ndash;Poisson hierarchy&mdash;
 >
 >     1. sample an N-dimensional random vector via a copula (such as `GaussianCopula`), producing an N-dimensional vector of correlated uniform numbers; then
 >     2. for each component in the vector, replace it with that component's quantile for the corresponding marginal; then
@@ -501,7 +501,7 @@ There are three kinds of randomization algorithms:
 2. An _error-bounded algorithm_ is a sampling algorithm with the following requirements:
 
     - If the ideal distribution is discrete (takes on a countable number of values), the algorithm samples exactly from that distribution.
-    - If the ideal distribution is continuous, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see below for details).  The algorithm can instead sample a number from the distribution only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.
+    - If the ideal distribution is not discrete, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see below for details).  The algorithm can instead sample a number from the distribution only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.
     - In sampling from a distribution, the algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).
 
     Many error-bounded algorithms use random bits as their only source of randomness. An application should use error-bounded algorithms whenever possible.
