@@ -458,7 +458,14 @@ END METHOD
      -log1p(-copula[1]) / rate2]
 END METHOD
 </pre></li>
-<li><p>The <em><strong>T</strong>&ndash;Poisson hierarchy</em> (Knudson et al. 2021)[^16] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with a parameter <code>lamda</code> and a marginal distribution that must be able to take on any of an uncountable number of non-negative values, such as any number 0 or greater.  To sample from the <strong>T</strong>&ndash;Poisson hierarchy&mdash;</p>
+<li><p>The <em><strong>T</strong>&ndash;Poisson hierarchy</em> (Knudson et al. 2021)[^16] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with&mdash;</p>
+
+<ul>
+<li>a parameter <code>lamda</code>, and</li>
+<li>a marginal distribution that may not be discrete and takes on only non-negative values.</li>
+</ul>
+
+<p>To sample from the <strong>T</strong>&ndash;Poisson hierarchy&mdash;</p>
 
 <ol>
 <li>sample an N-dimensional random vector via a copula (such as <code>GaussianCopula</code>), producing an N-dimensional vector of correlated uniform numbers; then</li>

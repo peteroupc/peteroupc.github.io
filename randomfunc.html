@@ -1974,8 +1974,8 @@ END METHOD
 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, <code>CDF(x)</code>, is the probability of choosing a number less than or equal to <code>x</code> at random.  The probabilities are in the interval [0, 1].</li>
-<li><em>Discrete distributions</em>[^74] generally have a <em>probability mass function</em>, or <em>PMF</em>, which gives the probability that each number is randomly chosen.</li>
-<li><em>Absolutely continuous distributions</em> generally have a <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, <code>PDF(x)</code>, which is the &quot;slope&quot; function of the CDF, or the relative probability of choosing a number &quot;close&quot; to <code>x</code> at random. The relative probabilities are 0 or greater, and the area under the PDF is 1.</li>
+<li><em>Discrete distributions</em>[^74] have a <em>probability mass function</em>, or <em>PMF</em>, which gives the probability that each number is randomly chosen.</li>
+<li><em>Absolutely continuous distributions</em> have a <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, <code>PDF(x)</code>, which is the &quot;slope&quot; function of the CDF, or the relative probability of choosing a number &quot;close&quot; to <code>x</code> at random. The relative probabilities are 0 or greater, and the area under the PDF is 1.</li>
 <li>The <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is the inverse of the CDF and maps numbers in the interval [0, 1) to numbers in the distribution, from low to high.</li>
 </ul>
 
@@ -2375,7 +2375,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Pascal distribution</strong>: <code>NegativeBinomial(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution, except <code>successes</code> is always an integer.</li>
 <li><strong>Pearson VI distribution</strong>: <code>GammaDist(v, 1) / GammaDist(w, 1)</code>, where <code>v</code> and <code>w</code> are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional <code>b</code> parameter is defined, but that parameter is canceled out in the source code).</li>
 <li><strong>Piecewise constant distribution</strong>: See <a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>.</li>
-<li><strong>Piecewise linear distribution</strong>: See <a href="#Continuous_Weighted_Choice"><strong>Continuous Weighted Choice</strong></a>.</li>
+<li><strong>Piecewise linear distribution</strong>: See <a href="#Piecewise_Linear_Distribution"><strong>Piecewise Linear Distribution</strong></a>.</li>
 <li><strong>P&oacute;lya&ndash;Aeppli distribution</strong>: See <a href="#Transformations_of_Random_Numbers_Additional_Examples"><strong>Transformations of Random Variates: Additional Examples</strong></a>.</li>
 <li><strong>Power distribution</strong>: <code>BetaDist(alpha, 1) / b</code>, where <code>alpha</code>  is the shape and <code>b</code> is the domain.  Nominally in the interval (0, 1).</li>
 <li><strong>Power law distribution</strong>: <code>pow(RNDRANGEMinMaxExc(pow(mn,n+1),pow(mx,n+1)), 1.0 / (n+1))</code>, where <code>n</code>  is the exponent, <code>mn</code> is the minimum, and <code>mx</code> is the maximum.  <a href="http://mathworld.wolfram.com/RandomNumber.html"><strong>Reference</strong></a>.</li>
