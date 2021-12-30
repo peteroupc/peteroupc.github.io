@@ -559,7 +559,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
 
 [^16]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.
 
-[^17]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random variate generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^17]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
 [^18]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.
 
@@ -722,7 +722,7 @@ It is suspected that the conditions in Proposition 2 are necessary and sufficien
 
 A related topic is a Bernoulli factory that takes a coin with unknown probability of heads _&lambda;_ and produces one or more samples of the probability _f_(_&lambda;_).  This section calls it a _multiple-output Bernoulli factory_.
 
-Obviously, any single-output Bernoulli factory can produce multiple outputs by running itself multiple times.  But for some functions _f_, there may be a more efficient algorithm in terms of input coin flips.
+Obviously, any single-output Bernoulli factory can produce multiple outputs by running itself multiple times.  But for some functions _f_, it may be that producing multiple outputs at a time may use fewer input coin flips than producing one output multiple times.
 
 Let _J_ be a closed interval on (0, 1), such as [1/100, 99/100].  Define the _entropy bound_ as _h_(_f_(_&lambda;_))/_h_(_&lambda;_) where _h_(_x_) = &minus;_x_\*ln(_x_)&minus;(1&minus;_x_)\*ln(1&minus;_x_) is related to the Shannon entropy function.  The question is:
 
