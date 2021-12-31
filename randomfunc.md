@@ -2251,8 +2251,6 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 [^107]: For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
 
-[^108]: Borel, É., "Sur l'emploi du théoreme de Bernoulli pour faciliter le calcul d'une infinité de coefficients. Application au probleme de l’attente à un guichet", C. r. A. S. Paris 214, 1942.
-
 <a id=Appendix></a>
 ## Appendix
 
