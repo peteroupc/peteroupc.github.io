@@ -26,6 +26,7 @@ This page contains additional algorithms for arbitrary-precision sampling of dis
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
     - [**ln(_c_+_&lambda;_)/(_c_+_&lambda;_)**](#ln__c____lambda____c____lambda)
+    - [**Examples for the von Neumann schema**](#Examples_for_the_von_Neumann_schema)
 - [**Irrational Probabilities**](#Irrational_Probabilities)
     - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1)
@@ -403,6 +404,26 @@ In this algorithm, _c_ must be an integer 1 or greater, and _&lambda;_ is the pr
 2. If _g_ is 0, return 0.  Otherwise, return a number that is 1 with probability 1/_g_ or 0 otherwise. (Here, returning 0 means that the von Neumann schema would require another iteration; see the note.)
 
 > **Note:** This algorithm is based on the [**von Neumann schema**](https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes) with the single-cycle permutation class.  In this case, given a coin that shows heads with probability _z_, the schema will terminate in one iteration with probability (1&minus;_z_)\*ln(1/(1&minus;_z_)).  Thus, if the coin shows heads with probability 1 &minus; _z_, the one-iteration probability is _z_\*ln(1/_z_), so if the coin shows heads with probability 1 &minus; 1/(_m_+_z_), the one-iteration probability is (1/(_m_+_z_))\*ln(1/(1/(_m_+_z_))) = ln(_m_+_z_)/(_m_+_z_).
+
+<a id=Examples_for_the_von_Neumann_schema></a>
+### Examples for the von Neumann schema
+
+Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^13].  In the table:
+
+- _&lambda;_ is the unknown heads probability of a coin
+- _&mu;_ is another coin that flips the _&lambda;_ coin and returns 1 minus the result (thus simulating 1 &minus; _&lambda;_).
+- "Domain" is the set of values _&lambda;_ can take on.
+
+| Function | Domain |  Algorithm |
+ --- | ---- |
+| exp(&minus;_&lambda;_) | [0, 1) | Uses von Neumann schema algorithm (VNS) with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| exp(_&lambda;_ &minus; 1) = exp(&minus;(1 &minus; _&lambda;_)) | (0, 1] | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| (1&minus;_&lambda;_)\*exp(_&lambda;_) | [0, 1) | Uses VNS with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_\*exp(1&minus;_&lambda;_) | (0, 1] | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_/ln(1/(1&minus;_&lambda;_)) | [0, 1) | Uses VNS with **single-cycle** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| (1&minus;_&lambda;_)/ln(1/_&lambda;_) | (0, 1] | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| (1&minus;_&lambda;_)\*ln(1/(1&minus;_&lambda;_)) | [0, 1) | Uses VNS with single-cycle permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_\*ln(1/_&lambda;_) | (0, 1] | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
 
 <a id=Irrational_Probabilities></a>
 ## Irrational Probabilities
