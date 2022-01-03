@@ -660,7 +660,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <p>Examples contained in Theorem 2.3 of Flajolet et al. (2010)[^13].  In the table:</p>
 
 <ul>
-<li><em>&lambda;</em> is the unknown heads probability of a coin</li>
+<li><em>&lambda;</em> is the unknown heads probability of a coin.</li>
 <li><em>&mu;</em> is another coin that flips the <em>&lambda;</em> coin and returns 1 minus the result (thus simulating 1 &minus; <em>&lambda;</em>).</li>
 <li>&quot;Domain&quot; is the set of values <em>&lambda;</em> can take on.</li>
 </ul>
@@ -674,8 +674,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 </thead><tbody>
 <tr>
 <td>exp(&minus;<em>&lambda;</em>)</td>
-<td>[0, 1)</td>
-<td>Uses von Neumann schema algorithm (VNS) with sorted permutations, and the <em>&lambda;</em> coin.  Return 1 if VNS returns 0, and 0 otherwise.</td>
+<td>[**0, 1)</td>
+<td>Uses <a href="https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes"><strong>von Neumann schema algorithm</strong></a> (VNS) with <strong>sorted</strong> permutations, and the <em>&lambda;</em> coin.  Return 1 if VNS returns 0, and 0 otherwise.</td>
 </tr>
 <tr>
 <td>exp(<em>&lambda;</em> &minus; 1) = exp(&minus;(1 &minus; <em>&lambda;</em>))</td>
@@ -695,12 +695,12 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <tr>
 <td><em>&lambda;</em>/ln(1/(1&minus;<em>&lambda;</em>))</td>
 <td>[0, 1)</td>
-<td>Uses VNS with <strong>single-cycle</strong> permutations, and the <em>&lambda;</em> coin.  Return 1 if VNS returns 0, and 0 otherwise.</td>
+<td>Uses VNS with <strong>single-cycle</strong> permutations, and the <em>&lambda;</em> coin.  Return 1 if VNS returns <strong>1</strong>, and 0 otherwise.</td>
 </tr>
 <tr>
 <td>(1&minus;<em>&lambda;</em>)/ln(1/<em>&lambda;</em>)</td>
 <td>(0, 1]</td>
-<td>Uses VNS with single-cycle permutations, and the <em>&mu;</em> coin.  Return 1 if VNS returns 0, and 0 otherwise.</td>
+<td>Uses VNS with single-cycle permutations, and the <em>&mu;</em> coin.  Return 1 if VNS returns <strong>1</strong>, and 0 otherwise.</td>
 </tr>
 <tr>
 <td>(1&minus;<em>&lambda;</em>)*ln(1/(1&minus;<em>&lambda;</em>))</td>
@@ -711,6 +711,26 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <td><em>&lambda;</em>*ln(1/<em>&lambda;</em>)</td>
 <td>(0, 1]</td>
 <td>Uses VNS with single-cycle permutations, and the <em>&mu;</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
+</tr>
+<tr>
+<td>cos(<em>&lambda;</em>)</td>
+<td>[0, 1)</td>
+<td>Uses VNS with <strong>alternating even-sized</strong> permutations, and the <em>&lambda;</em> coin.  Return 1 if VNS returns <strong>0</strong>, and 0 otherwise.</td>
+</tr>
+<tr>
+<td>(1&minus;<em>&lambda;</em>)/cos(<em>&lambda;</em>) = (1&minus;<em>&lambda;</em>)*sec(<em>&lambda;</em>)</td>
+<td>[0, 1)</td>
+<td>Uses VNS with alternating even-sized permutations, and the <em>&lambda;</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
+</tr>
+<tr>
+<td><em>&lambda;</em>/tan(<em>&lambda;</em>)</td>
+<td>[0, 1)</td>
+<td>Uses VNS with <strong>alternating odd-sized</strong> permutations, and the <em>&lambda;</em> coin.  Return 1 if VNS returns <strong>1</strong>, and 0 otherwise.</td>
+</tr>
+<tr>
+<td>(1&minus;<em>&lambda;</em>)*tan(<em>&lambda;</em>)</td>
+<td>[0, 1)</td>
+<td>Uses VNS with alternating odd-sized permutations, and the <em>&lambda;</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
 </tr>
 </tbody></table>
 

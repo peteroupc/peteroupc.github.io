@@ -410,20 +410,24 @@ In this algorithm, _c_ must be an integer 1 or greater, and _&lambda;_ is the pr
 
 Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^13].  In the table:
 
-- _&lambda;_ is the unknown heads probability of a coin
+- _&lambda;_ is the unknown heads probability of a coin.
 - _&mu;_ is another coin that flips the _&lambda;_ coin and returns 1 minus the result (thus simulating 1 &minus; _&lambda;_).
 - "Domain" is the set of values _&lambda;_ can take on.
 
 | Function | Domain |  Algorithm |
  --- | ---- | --- |
-| exp(&minus;_&lambda;_) | [0, 1) | Uses von Neumann schema algorithm (VNS) with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| exp(&minus;_&lambda;_) | [**0, 1) | Uses [**von Neumann schema algorithm**](https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes) (VNS) with **sorted** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
 | exp(_&lambda;_ &minus; 1) = exp(&minus;(1 &minus; _&lambda;_)) | (0, 1] | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
 | (1&minus;_&lambda;_)\*exp(_&lambda;_) | [0, 1) | Uses VNS with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
 | _&lambda;_\*exp(1&minus;_&lambda;_) | (0, 1] | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| _&lambda;_/ln(1/(1&minus;_&lambda;_)) | [0, 1) | Uses VNS with **single-cycle** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
-| (1&minus;_&lambda;_)/ln(1/_&lambda;_) | (0, 1] | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| _&lambda;_/ln(1/(1&minus;_&lambda;_)) | [0, 1) | Uses VNS with **single-cycle** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
+| (1&minus;_&lambda;_)/ln(1/_&lambda;_) | (0, 1] | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
 | (1&minus;_&lambda;_)\*ln(1/(1&minus;_&lambda;_)) | [0, 1) | Uses VNS with single-cycle permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
 | _&lambda;_\*ln(1/_&lambda;_) | (0, 1] | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| cos(_&lambda;_) | [0, 1) | Uses VNS with **alternating even-sized** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **0**, and 0 otherwise. |
+| (1&minus;_&lambda;_)/cos(_&lambda;_) = (1&minus;_&lambda;_)\*sec(_&lambda;_) | [0, 1) | Uses VNS with alternating even-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_/tan(_&lambda;_) | [0, 1) | Uses VNS with **alternating odd-sized** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
+| (1&minus;_&lambda;_)\*tan(_&lambda;_) | [0, 1) | Uses VNS with alternating odd-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
 
 <a id=Irrational_Probabilities></a>
 ## Irrational Probabilities

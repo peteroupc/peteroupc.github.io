@@ -1136,21 +1136,29 @@ functions, or functions in general.</p>
 <li>Alternating permutations of odd size (EGF(<em>&lambda;</em>) = tan(<em>&lambda;</em>); V(<em>n</em>) = W((<em>n</em>+1)/2) if <em>n</em> is odd and 0 otherwise, where the W(<em>m</em>) starting at <em>m</em> = 1 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>).</li>
 </ul></li>
 <li><p>Using the class of <em>sorted permutations</em>, we can generate a Poisson random variate with mean <em>&lambda;</em> via the von Neumann schema, where <em>&lambda;</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;<em>&lambda;</em>) &mdash; outputting 1 if a Poisson random variate with mean <em>&lambda;</em> is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm gets slower as <em>&lambda;</em> approaches 1.  Also, if <em>c</em> &gt; 0 is a real number, adding a Poisson random variate with mean floor(<em>c</em>) to one with mean <em>c</em>&minus;floor(<em>c</em>) generates a Poisson random variate with mean <em>c</em>.</p></li>
+<li><p>The algorithm for exp(&minus;<em>&lambda;</em>), described in example 2, is as follows:</p>
+
+<ol>
+<li>Flip the input coin repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.</li>
+<li>With probability 1/((<em>X</em>)!), <em>X</em> is accepted so return a number that is 1 if <em>X</em> is 0 and 0 otherwise.  Otherwise, go to step 1.</li>
+</ol></li>
 <li><p>For the class of <em>alternating permutations of even size</em> (see example 1), step 2 can be implemented as follows (Flajolet et al. 2010, sec. 2.2)[^1]:</p>
 
 <ul>
-<li>(2a.) If <em>X</em> is odd, reject <em>X</em> (and go to step 1).  Generate a uniform(0, 1) random variate U, then set <em>i</em> to 1.</li>
-<li>(2b.) While <em>i</em> is less than <em>X</em>:
+<li>(2a.) (Limit to even-sized permutations.) If <em>X</em> is odd, reject <em>X</em> (and go to step 1).</li>
+<li>(2b.) Generate a uniform(0, 1) random variate U, then set <em>i</em> to 1.</li>
+<li>(2c.) While <em>i</em> is less than <em>X</em>:
 
 <ul>
 <li>Generate a uniform(0, 1) random variate V.</li>
 <li>If <em>i</em> is odd and V is less than U, or if <em>i</em> is even and U is less than V, reject <em>X</em> (and go to step 1).</li>
 <li>Add 1 to i, then set U to V.</li>
 </ul></li>
-<li>(2c.) (<em>X</em> is accepted.) Return <em>X</em>.</li>
+<li>(2d.) (<em>X</em> is accepted.) Return <em>X</em>.</li>
 </ul></li>
-<li><p>By computing&mdash; $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), we find that the algorithm&#39;s output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$.</p></li>
-<li>The <em>X</em> in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because the Bernoulli race algorithm is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if <em>X</em> is a Poisson random variate with mean <em>z</em><sup>2</sup>/4, where <em>z</em> &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(<em>z</em>), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</li>
+<li><p>For the class of <em>alternating permutations of odd size</em> (see example 1), step 2 can be implemented as in example 4, except 2a reads: &quot;(2a.) (Limit to odd-sized permutations.) If <em>X</em> is even, reject <em>X</em> (and go to step 1).&quot; (Flajolet et al. 2010, sec. 2.2)[^1]:</p></li>
+<li>By computing&mdash; $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), we find that the algorithm&#39;s output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$.</li>
+<li>The <em>X</em> generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because the Bernoulli race algorithm is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if <em>X</em> is a Poisson random variate with mean <em>z</em><sup>2</sup>/4, where <em>z</em> &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(<em>z</em>), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</li>
 </ol>
 </blockquote>
 
