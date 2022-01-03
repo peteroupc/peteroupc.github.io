@@ -415,7 +415,7 @@ Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^13].  In the table
 - "Domain" is the set of values _&lambda;_ can take on.
 
 | Function | Domain |  Algorithm |
- --- | ---- |
+ --- | ---- | --- |
 | exp(&minus;_&lambda;_) | [0, 1) | Uses von Neumann schema algorithm (VNS) with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
 | exp(_&lambda;_ &minus; 1) = exp(&minus;(1 &minus; _&lambda;_)) | (0, 1] | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
 | (1&minus;_&lambda;_)\*exp(_&lambda;_) | [0, 1) | Uses VNS with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
