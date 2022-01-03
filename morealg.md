@@ -25,6 +25,7 @@ This page contains additional algorithms for arbitrary-precision sampling of dis
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
+    - [**ln(_c_+_&lambda;_)/(_c_+_&lambda;_)**](#ln__c____lambda____c____lambda)
 - [**Irrational Probabilities**](#Irrational_Probabilities)
     - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1)
@@ -36,6 +37,7 @@ This page contains additional algorithms for arbitrary-precision sampling of dis
     - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
     - [**_&pi;_ &minus; 3**](#pi___minus_3)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
+    - [**ln(_&pi;_)/_&pi;_**](#ln___pi_____pi)
     - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
     - [**Other Probabilities**](#Other_Probabilities)
 - [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
@@ -392,6 +394,16 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1 ("heads"), add _H_ to _d_.  Otherwise ("tails"), subtract _T_ from _d_.  (Note: This substep is not done again.)
 
+<a id=ln__c____lambda____c____lambda></a>
+### ln(_c_+_&lambda;_)/(_c_+_&lambda;_)
+
+In this algorithm, _c_ must be an integer 1 or greater, and _&lambda;_ is the probability of heads of the input coin.
+
+1. Run the algorithm for **_d_ / (_c_ + _&lambda;_)**, with _d_=1 and _c_=_c_, repeatedly, until the run returns 1, then set _g_ to the number of runs that returned 0 this way.
+2. If _g_ is 0, return 0.  Otherwise, return a number that is 1 with probability 1/_g_ or 0 otherwise. (Here, returning 0 means that the von Neumann schema would require another iteration; see the note.)
+
+> **Note:** This algorithm is based on the [**von Neumann schema**](https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes) with the single-cycle permutation class.  In this case, given a coin that shows heads with probability _z_, the schema will terminate in one iteration with probability (1&minus;_z_)\*ln(1/(1&minus;_z_)).  Thus, if the coin shows heads with probability 1 &minus; _z_, the one-iteration probability is _z_\*ln(1/_z_), so if the coin shows heads with probability 1 &minus; 1/(_m_+_z_), the one-iteration probability is (1/(_m_+_z_))\*ln(1/(1/(_m_+_z_))) = ln(_m_+_z_)/(_m_+_z_).
+
 <a id=Irrational_Probabilities></a>
 ## Irrational Probabilities
 
@@ -538,6 +550,14 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 2. Let _x_ be one of those PSRNs.  Run **SampleGeometricBag** on that PSRN and return the result (which will be either 0 or 1).
 
 > **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_ is _p_(_z_) = sqrt(1 &minus; _z_\*_z_), where _z_ is in the interval [0, 1].  Now find the area under the graph of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the area under the graph of _p_(_z_)).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
+
+<a id=ln___pi_____pi></a>
+### ln(_&pi;_)/_&pi;_
+
+Special case of the algorithm for **ln(_c_+_&lambda;_)/(_c_+_&lambda;_)**.
+
+1. Run the algorithm for **1/_&pi;_** repeatedly, until the run returns 1, then set _g_ to the number of runs that returned 0 this way.
+2. If _g_ is 0, return 0.  Otherwise, return a number that is 1 with probability 1/_g_ or 0 otherwise.
 
 <a id=1_exp__k__1_exp__k__1></a>
 ### (1 + exp(_k_)) / (1 + exp(_k_ + 1))

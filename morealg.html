@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/12/27"><meta name="citation_online_date" content="2021/12/27"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/01/03"><meta name="citation_online_date" content="2022/01/03"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -38,6 +38,7 @@
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
 <li><a href="#Pushdown_Automata_for_Square_Root_Like_Functions"><strong>Pushdown Automata for Square-Root-Like Functions</strong></a></li>
+<li><a href="#ln__c____lambda____c____lambda"><strong>ln(<em>c</em>+<em>&lambda;</em>)/(<em>c</em>+<em>&lambda;</em>)</strong></a></li>
 </ul></li>
 <li><a href="#Irrational_Probabilities"><strong>Irrational Probabilities</strong></a>
 
@@ -52,6 +53,7 @@
 <li><a href="#pi___minus_3_4"><strong>(<em>&pi;</em> &minus; 3)/4</strong></a></li>
 <li><a href="#pi___minus_3"><strong><em>&pi;</em> &minus; 3</strong></a></li>
 <li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a></li>
+<li><a href="#ln___pi_____pi"><strong>ln(<em>&pi;</em>)/<em>&pi;</em></strong></a></li>
 <li><a href="#1_exp__k__1_exp__k__1"><strong>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</strong></a></li>
 <li><a href="#Other_Probabilities"><strong>Other Probabilities</strong></a></li>
 </ul></li>
@@ -635,6 +637,21 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 </ol></li>
 </ol>
 
+<p><a id=ln__c____lambda____c____lambda></a></p>
+
+<h3>ln(<em>c</em>+<em>&lambda;</em>)/(<em>c</em>+<em>&lambda;</em>)</h3>
+
+<p>In this algorithm, <em>c</em> must be an integer 1 or greater, and <em>&lambda;</em> is the probability of heads of the input coin.</p>
+
+<ol>
+<li>Run the algorithm for <strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong>, with <em>d</em>=1 and <em>c</em>=<em>c</em>, repeatedly, until the run returns 1, then set <em>g</em> to the number of runs that returned 0 this way.</li>
+<li>If <em>g</em> is 0, return 0.  Otherwise, return a number that is 1 with probability 1/<em>g</em> or 0 otherwise. (Here, returning 0 means that the von Neumann schema would require another iteration; see the note.)</li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> This algorithm is based on the <a href="https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes"><strong>von Neumann schema</strong></a> with the single-cycle permutation class.  In this case, given a coin that shows heads with probability <em>z</em>, the schema will terminate in one iteration with probability (1&minus;<em>z</em>)*ln(1/(1&minus;<em>z</em>)).  Thus, if the coin shows heads with probability 1 &minus; <em>z</em>, the one-iteration probability is <em>z</em>*ln(1/<em>z</em>), so if the coin shows heads with probability 1 &minus; 1/(<em>m</em>+<em>z</em>), the one-iteration probability is (1/(<em>m</em>+<em>z</em>))*ln(1/(1/(<em>m</em>+<em>z</em>))) = ln(<em>m</em>+<em>z</em>)/(<em>m</em>+<em>z</em>).</p>
+</blockquote>
+
 <p><a id=Irrational_Probabilities></a></p>
 
 <h2>Irrational Probabilities</h2>
@@ -847,6 +864,17 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <blockquote>
 <p><strong>Note:</strong> The mean value 4/(3*<em>&pi;</em>) can be derived as follows.  The relative probability that <em>x</em> is &quot;close&quot; to <em>z</em> is <em>p</em>(<em>z</em>) = sqrt(1 &minus; <em>z</em>*<em>z</em>), where <em>z</em> is in the interval [0, 1].  Now find the area under the graph of <em>z</em>*<em>p</em>(<em>z</em>)/<em>c</em> (where <em>c</em>=<em>&pi;</em>/4 is the area under the graph of <em>p</em>(<em>z</em>)).  The result is the mean value 4/(3*<em>&pi;</em>).  The following Python code prints this mean value using the SymPy computer algebra library: <code>p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));</code>.</p>
 </blockquote>
+
+<p><a id=ln___pi_____pi></a></p>
+
+<h3>ln(<em>&pi;</em>)/<em>&pi;</em></h3>
+
+<p>Special case of the algorithm for <strong>ln(<em>c</em>+<em>&lambda;</em>)/(<em>c</em>+<em>&lambda;</em>)</strong>.</p>
+
+<ol>
+<li>Run the algorithm for <strong>1/<em>&pi;</em></strong> repeatedly, until the run returns 1, then set <em>g</em> to the number of runs that returned 0 this way.</li>
+<li>If <em>g</em> is 0, return 0.  Otherwise, return a number that is 1 with probability 1/<em>g</em> or 0 otherwise.</li>
+</ol>
 
 <p><a id=1_exp__k__1_exp__k__1></a></p>
 
