@@ -16,18 +16,23 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Contents**](#Contents)
 - [**Polynomials that approach a factory function**](#Polynomials_that_approach_a_factory_function)
     - [**Formal Statement**](#Formal_Statement)
+    - [**Questions**](#Questions)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
+    - [**Questions**](#Questions_2)
 - [**Reverse-time martingales**](#Reverse_time_martingales)
 - [**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)
     - [**Using Two Polynomial Sequences**](#Using_Two_Polynomial_Sequences)
     - [**Using a Series Expansion**](#Using_a_Series_Expansion)
+    - [**Questions**](#Questions_3)
 - [**Simulable and strongly simulable functions**](#Simulable_and_strongly_simulable_functions)
 - [**Multiple-Output Bernoulli Factories**](#Multiple_Output_Bernoulli_Factories)
+    - [**Questions**](#Questions_4)
     - [**Functions with Optimal Factories**](#Functions_with_Optimal_Factories)
 - [**From coin flips to algebraic functions via pushdown automata**](#From_coin_flips_to_algebraic_functions_via_pushdown_automata)
     - [**Pushdown Automata**](#Pushdown_Automata)
     - [**Algebraic Functions**](#Algebraic_Functions)
-- [**Questions**](#Questions)
+    - [**Questions**](#Questions_5)
+- [**Other Questions**](#Other_Questions)
 - [**Remarks**](#Remarks)
 - [**My Attempt**](#My_Attempt)
 - [**References**](#References)
@@ -71,6 +76,18 @@ for every integer $n\ge1$, such that—
 where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.
 
 It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.
+
+<a id=Questions></a>
+### Questions
+
+1. Given a function with a Hölder continuous fourth derivative, are there practical formulas to compute polynomials that&mdash;
+
+    - meet the formal statement above, and
+    - can be used to simulate that function with a finite expected running time?
+
+    One example to question 1 is the function $\min(2\lambda,1-\epsilon)$ on the domain $(0, 1/2-\epsilon)$ given in Nacu and Peres 2005.
+
+2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
@@ -120,6 +137,19 @@ However, the Holtz method is not yet implementable, for the following reasons am
 
 And I seek ways to make this solution implementable.
 
+<a id=Questions_2></a>
+### Questions
+
+1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as smoothness and/or concavity requirements on $f$ and/or its derivatives)?
+2. Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the "New coins from old, smoothly" method valid in the following cases?  (Note that the method as written doesn't apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)
+
+    - With $\alpha=1, r=0$, when $f$ is Lipschitz continuous and/or differentiable.
+    - With $\alpha=2, r=1$, when $f$ has a Lipschitz continuous first derivative.
+    - With $\alpha=2, r=2$, when $f$ is twice differentiable.
+    - With $\alpha=4, r=3$, when $f$ has a Lipschitz continuous third derivative.
+    - With $\alpha=4, r=4$, when $f$ is four times differentiable.
+    - With $\alpha=5, r=4$, when $f$ has a Lipschitz continuous fourth derivative.
+
 <a id=Reverse_time_martingales></a>
 ## Reverse-time martingales
 
@@ -145,7 +175,7 @@ Though the paper as well as the section on general factory functions that I link
 1. Given the number of heads $H_n$, $L_n$ is the $H_n$th Bernstein coefficient of the $n$th lower approximating polynomial, and $U_n$ is the $H_n$th Bernstein coefficient of the $n$th upper approximating polynomial.
 2. $L^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.
 
-But how do these steps work when the **approximating functions (the functions that converge to _f_) are other than polynomials?**
+But how do these steps work when the **approximating functions (the functions that converge to _f_) are other than polynomials?** Specifically, what if the approximating functions are rational functions with integer coefficients? rational functions with rational coefficients? arbitrary approximating functions?
 
 <a id=Tossing_Heads_According_to_a_Concave_Function></a>
 ## Tossing Heads According to a Concave Function
@@ -206,6 +236,13 @@ $$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(p)} \
 
 for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except that $\frac{\gamma_a(\lambda)}{\pi(p)}$ is polynomially bounded for every $a\gt k$ but not necessarily for $a\le k$.  This way of writing $f$ is acceptable for my purposes.
 
+<a id=Questions_3></a>
+### Questions
+
+1. Given that a factory function $f(\lambda)$ is concave and $C^\alpha$ continuous, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.
+2. Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?
+3. Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(1)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz's results.
+
 <a id=Simulable_and_strongly_simulable_functions></a>
 ## Simulable and strongly simulable functions
 
@@ -234,6 +271,8 @@ As another illustration, I managed to find the following [**result**](https://pe
 
 And the proof proceeds by showing, among other things, that the Bernoulli factory for $f$ must flip the input coin and get 0 and 1 before it simulates any fair coin flips via the von Neumann trick.
 
+Question: **Does the result just given describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?**  Examples of functions to ponder are those that are not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha \in (0, 1)$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.
+
 <a id=Multiple_Output_Bernoulli_Factories></a>
 ## Multiple-Output Bernoulli Factories
 
@@ -241,13 +280,17 @@ And the proof proceeds by showing, among other things, that the Bernoulli factor
 
 Let $J$ be a closed interval on $(0, 1)$, and let $f(\lambda):J \to (0, 1)$ be continuous.
 
-Then by Keane and O'Brien, $f$ admits an algorithm that solves the Bernoulli factory problem given above for $f$ (using only the biased coin, in fact). A related problem is a Bernoulli factory that takes a coin with unknown probability of heads $\lambda \in J$ and produces _one or more_ samples, at a time, of the probability $f(\lambda)$. This question calls it a _multiple-output Bernoulli factory_.
+Then by Keane and O'Brien, $f$ admits an algorithm that solves the Bernoulli factory problem for $f$ (using only the biased coin, in fact). A related problem is a Bernoulli factory that takes a coin with unknown probability of heads $\lambda \in J$ and produces _one or more_ samples, at a time, of the probability $f(\lambda)$. This question calls it a _multiple-output Bernoulli factory_.
 
 Obviously, any single-output Bernoulli factory can produce multiple outputs by running itself multiple times. But for some functions $f$, it may be that producing multiple outputs at a time may use fewer coin flips than producing one output multiple times.
 
 Define the entropy bound as&mdash; $$h(f(\lambda))/h(\lambda),$$ where&mdash; $$h(x)=-x \ln(x)-(1-x) \ln(1-x),$$ is related to the Shannon entropy function.
 
-The question is: Is there an multiple-output Bernoulli factory algorithm for $f$ with an expected number of coin flips per sample that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain? Call such a Bernoulli factory an _optimal factory_.
+<a id=Questions_4></a>
+### Questions
+
+1. Given that a function $f(\lambda)$ is continuous and maps a closed interval in (0, 1) to (0, 1), is there a multiple-output Bernoulli factory algorithm for $f$ with an expected number of coin flips per sample that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain? Call such a Bernoulli factory an _optimal factory_.  (See Nacu and Peres 2005, Question 1.)
+2. Does the answer to question 1 change if the algorithm can also use a fair coin in addition to the biased coin?
 
 <a id=Functions_with_Optimal_Factories></a>
 ### Functions with Optimal Factories
@@ -308,58 +351,14 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 - If a pushdown automaton can generate a discrete distribution of _n_-letter words of the same letter, it can generate that distribution conditioned on a finite set of word lengths, or a periodic infinite set of word lengths (e.g., odd word lengths only).
 - Every quadratic irrational in (0, 1) is in $\mathcal{D}$.
 
-<a id=Questions></a>
-## Questions
-
-Converging polynomials:
-
-1. Given a function with a Hölder continuous fourth derivative, are there practical formulas to compute polynomials that&mdash;
-
-    - meet the formal statement above, and
-    - can be used to simulate that function with a finite expected running time?
-
-    One example to question 1 is the function $\min(2\lambda,1-\epsilon)$ on the domain $(0, 1/2-\epsilon)$ given in Nacu and Peres 2005.
-
-2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
-
-New coins from old, smoothly:
-
-1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as smoothness and/or concavity requirements on $f$ and/or its derivatives)?
-2. Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the "New coins from old, smoothly" method valid in the following cases?  (Note that the method as written doesn't apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)
-
-    - With $\alpha=1, r=0$, when $f$ is Lipschitz continuous and/or differentiable.
-    - With $\alpha=2, r=1$, when $f$ has a Lipschitz continuous first derivative.
-    - With $\alpha=2, r=2$, when $f$ is twice differentiable.
-    - With $\alpha=4, r=3$, when $f$ has a Lipschitz continuous third derivative.
-    - With $\alpha=4, r=4$, when $f$ is four times differentiable.
-    - With $\alpha=5, r=4$, when $f$ has a Lipschitz continuous fourth derivative.
-
-Reverse-time martingales:
-
-- How does the reverse-time martingale algorithm work when the **approximating functions (the functions that converge to _f_) are other than polynomials?** Specifically, what if the approximating functions are&mdash;
-    - rational functions with integer coefficients?
-    - rational functions with rational coefficients?
-    - arbitrary approximating functions?
-
-Simulable functions:
-
-- **Does the result given in "Simulable and strongly simulable functions" describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?**  Examples of functions to ponder are those that are not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha \in (0, 1)$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.
-
-Multiple-output Bernoulli factories:
-
-1. Given that a function $f(\lambda)$ is continuous and maps a closed interval in (0, 1) to (0, 1), is there a multiple-output Bernoulli factory algorithm for $f$ with an expected number of coin flips per sample that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain? Call such a Bernoulli factory an _optimal factory_.  (See Nacu and Peres 2005, Question 1.)
-2. Does the answer to question 1 change if the algorithm can also use a fair coin in addition to the biased coin?
-
-Concave functions:
-
-1. Given that a factory function $f(\lambda)$ is concave and $C^\alpha$ continuous, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.
-2. Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?
-3. Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(1)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz's results.
-
-Pushdown automata:
+<a id=Questions_5></a>
+### Questions
 
 1. For every function in class $\mathcal{C}$ (given in "Algebraic Functions" above), is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
 2. In particular, is min($\lambda$, $1-\lambda$) in class $\mathcal{D}$? What about $\lambda^{1/p}$ for some prime $p\ge 3$?
+
+<a id=Other_Questions></a>
+## Other Questions
 
 [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili):
 
@@ -448,4 +447,4 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Etessami, K. And Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", Journal of the ACM 56(1), pp.1-66, 2009.
 - Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
 - Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science, 2004. (pp. 12-21). IEEE.
-- Flajolet, P., Pelletier, M., Soria, M., "[On Buffon machines and numbers](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2 [math.PR], 2010.
+- Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2 [math.PR], 2010.

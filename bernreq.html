@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/01/03"><meta name="citation_online_date" content="2022/01/03"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/01/04"><meta name="citation_online_date" content="2022/01/04"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -27,19 +27,26 @@
 
 <ul>
 <li><a href="#Formal_Statement"><strong>Formal Statement</strong></a></li>
+<li><a href="#Questions"><strong>Questions</strong></a></li>
 </ul></li>
-<li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a></li>
+<li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>
+
+<ul>
+<li><a href="#Questions_2"><strong>Questions</strong></a></li>
+</ul></li>
 <li><a href="#Reverse_time_martingales"><strong>Reverse-time martingales</strong></a></li>
 <li><a href="#Tossing_Heads_According_to_a_Concave_Function"><strong>Tossing Heads According to a Concave Function</strong></a>
 
 <ul>
 <li><a href="#Using_Two_Polynomial_Sequences"><strong>Using Two Polynomial Sequences</strong></a></li>
 <li><a href="#Using_a_Series_Expansion"><strong>Using a Series Expansion</strong></a></li>
+<li><a href="#Questions_3"><strong>Questions</strong></a></li>
 </ul></li>
 <li><a href="#Simulable_and_strongly_simulable_functions"><strong>Simulable and strongly simulable functions</strong></a></li>
 <li><a href="#Multiple_Output_Bernoulli_Factories"><strong>Multiple-Output Bernoulli Factories</strong></a>
 
 <ul>
+<li><a href="#Questions_4"><strong>Questions</strong></a></li>
 <li><a href="#Functions_with_Optimal_Factories"><strong>Functions with Optimal Factories</strong></a></li>
 </ul></li>
 <li><a href="#From_coin_flips_to_algebraic_functions_via_pushdown_automata"><strong>From coin flips to algebraic functions via pushdown automata</strong></a>
@@ -47,8 +54,9 @@
 <ul>
 <li><a href="#Pushdown_Automata"><strong>Pushdown Automata</strong></a></li>
 <li><a href="#Algebraic_Functions"><strong>Algebraic Functions</strong></a></li>
+<li><a href="#Questions_5"><strong>Questions</strong></a></li>
 </ul></li>
-<li><a href="#Questions"><strong>Questions</strong></a></li>
+<li><a href="#Other_Questions"><strong>Other Questions</strong></a></li>
 <li><a href="#Remarks"><strong>Remarks</strong></a></li>
 <li><a href="#My_Attempt"><strong>My Attempt</strong></a></li>
 <li><a href="#References"><strong>References</strong></a></li>
@@ -103,6 +111,22 @@
 <p>where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.</p>
 
 <p>It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.</p>
+
+<p><a id=Questions></a></p>
+
+<h3>Questions</h3>
+
+<ol>
+<li><p>Given a function with a Hölder continuous fourth derivative, are there practical formulas to compute polynomials that&mdash;</p>
+
+<ul>
+<li>meet the formal statement above, and</li>
+<li>can be used to simulate that function with a finite expected running time?</li>
+</ul>
+
+<p>One example to question 1 is the function $\min(2\lambda,1-\epsilon)$ on the domain $(0, 1/2-\epsilon)$ given in Nacu and Peres 2005.</p></li>
+<li><p>Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?</p></li>
+</ol>
 
 <p><a id=New_coins_from_old_smoothly></a></p>
 
@@ -161,6 +185,24 @@
 
 <p>And I seek ways to make this solution implementable.</p>
 
+<p><a id=Questions_2></a></p>
+
+<h3>Questions</h3>
+
+<ol>
+<li>What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the &quot;New coins from old, smoothly&quot; method, given a factory function $f$, with or without additional assumptions on $f$ (such as smoothness and/or concavity requirements on $f$ and/or its derivatives)?</li>
+<li><p>Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the &quot;New coins from old, smoothly&quot; method valid in the following cases?  (Note that the method as written doesn&#39;t apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)</p>
+
+<ul>
+<li>With $\alpha=1, r=0$, when $f$ is Lipschitz continuous and/or differentiable.</li>
+<li>With $\alpha=2, r=1$, when $f$ has a Lipschitz continuous first derivative.</li>
+<li>With $\alpha=2, r=2$, when $f$ is twice differentiable.</li>
+<li>With $\alpha=4, r=3$, when $f$ has a Lipschitz continuous third derivative.</li>
+<li>With $\alpha=4, r=4$, when $f$ is four times differentiable.</li>
+<li>With $\alpha=5, r=4$, when $f$ has a Lipschitz continuous fourth derivative.</li>
+</ul></li>
+</ol>
+
 <p><a id=Reverse_time_martingales></a></p>
 
 <h2>Reverse-time martingales</h2>
@@ -192,7 +234,7 @@
 <li>$L^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.</li>
 </ol>
 
-<p>But how do these steps work when the <strong>approximating functions (the functions that converge to <em>f</em>) are other than polynomials?</strong></p>
+<p>But how do these steps work when the <strong>approximating functions (the functions that converge to <em>f</em>) are other than polynomials?</strong> Specifically, what if the approximating functions are rational functions with integer coefficients? rational functions with rational coefficients? arbitrary approximating functions?</p>
 
 <p><a id=Tossing_Heads_According_to_a_Concave_Function></a></p>
 
@@ -262,6 +304,16 @@
 
 <p>for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except that $\frac{\gamma_a(\lambda)}{\pi(p)}$ is polynomially bounded for every $a\gt k$ but not necessarily for $a\le k$.  This way of writing $f$ is acceptable for my purposes.</p>
 
+<p><a id=Questions_3></a></p>
+
+<h3>Questions</h3>
+
+<ol>
+<li>Given that a factory function $f(\lambda)$ is concave and $C^\alpha$ continuous, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz&#39;s results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.</li>
+<li>Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?</li>
+<li>Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(1)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz&#39;s results.</li>
+</ol>
+
 <p><a id=Simulable_and_strongly_simulable_functions></a></p>
 
 <h2>Simulable and strongly simulable functions</h2>
@@ -297,6 +349,8 @@
 
 <p>And the proof proceeds by showing, among other things, that the Bernoulli factory for $f$ must flip the input coin and get 0 and 1 before it simulates any fair coin flips via the von Neumann trick.</p>
 
+<p>Question: <strong>Does the result just given describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?</strong>  Examples of functions to ponder are those that are not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha \in (0, 1)$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.</p>
+
 <p><a id=Multiple_Output_Bernoulli_Factories></a></p>
 
 <h2>Multiple-Output Bernoulli Factories</h2>
@@ -305,13 +359,20 @@
 
 <p>Let $J$ be a closed interval on $(0, 1)$, and let $f(\lambda):J \to (0, 1)$ be continuous.</p>
 
-<p>Then by Keane and O&#39;Brien, $f$ admits an algorithm that solves the Bernoulli factory problem given above for $f$ (using only the biased coin, in fact). A related problem is a Bernoulli factory that takes a coin with unknown probability of heads $\lambda \in J$ and produces <em>one or more</em> samples, at a time, of the probability $f(\lambda)$. This question calls it a <em>multiple-output Bernoulli factory</em>.</p>
+<p>Then by Keane and O&#39;Brien, $f$ admits an algorithm that solves the Bernoulli factory problem for $f$ (using only the biased coin, in fact). A related problem is a Bernoulli factory that takes a coin with unknown probability of heads $\lambda \in J$ and produces <em>one or more</em> samples, at a time, of the probability $f(\lambda)$. This question calls it a <em>multiple-output Bernoulli factory</em>.</p>
 
 <p>Obviously, any single-output Bernoulli factory can produce multiple outputs by running itself multiple times. But for some functions $f$, it may be that producing multiple outputs at a time may use fewer coin flips than producing one output multiple times.</p>
 
 <p>Define the entropy bound as&mdash; $$h(f(\lambda))/h(\lambda),$$ where&mdash; $$h(x)=-x \ln(x)-(1-x) \ln(1-x),$$ is related to the Shannon entropy function.</p>
 
-<p>The question is: Is there an multiple-output Bernoulli factory algorithm for $f$ with an expected number of coin flips per sample that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$&#39;s domain? Call such a Bernoulli factory an <em>optimal factory</em>.</p>
+<p><a id=Questions_4></a></p>
+
+<h3>Questions</h3>
+
+<ol>
+<li>Given that a function $f(\lambda)$ is continuous and maps a closed interval in (0, 1) to (0, 1), is there a multiple-output Bernoulli factory algorithm for $f$ with an expected number of coin flips per sample that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$&#39;s domain? Call such a Bernoulli factory an <em>optimal factory</em>.  (See Nacu and Peres 2005, Question 1.)</li>
+<li>Does the answer to question 1 change if the algorithm can also use a fair coin in addition to the biased coin?</li>
+</ol>
 
 <p><a id=Functions_with_Optimal_Factories></a></p>
 
@@ -387,79 +448,18 @@
 <li>Every quadratic irrational in (0, 1) is in $\mathcal{D}$.</li>
 </ul>
 
-<p><a id=Questions></a></p>
+<p><a id=Questions_5></a></p>
 
-<h2>Questions</h2>
-
-<p>Converging polynomials:</p>
-
-<ol>
-<li><p>Given a function with a Hölder continuous fourth derivative, are there practical formulas to compute polynomials that&mdash;</p>
-
-<ul>
-<li>meet the formal statement above, and</li>
-<li>can be used to simulate that function with a finite expected running time?</li>
-</ul>
-
-<p>One example to question 1 is the function $\min(2\lambda,1-\epsilon)$ on the domain $(0, 1/2-\epsilon)$ given in Nacu and Peres 2005.</p></li>
-<li><p>Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?</p></li>
-</ol>
-
-<p>New coins from old, smoothly:</p>
-
-<ol>
-<li>What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the &quot;New coins from old, smoothly&quot; method, given a factory function $f$, with or without additional assumptions on $f$ (such as smoothness and/or concavity requirements on $f$ and/or its derivatives)?</li>
-<li><p>Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the &quot;New coins from old, smoothly&quot; method valid in the following cases?  (Note that the method as written doesn&#39;t apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)</p>
-
-<ul>
-<li>With $\alpha=1, r=0$, when $f$ is Lipschitz continuous and/or differentiable.</li>
-<li>With $\alpha=2, r=1$, when $f$ has a Lipschitz continuous first derivative.</li>
-<li>With $\alpha=2, r=2$, when $f$ is twice differentiable.</li>
-<li>With $\alpha=4, r=3$, when $f$ has a Lipschitz continuous third derivative.</li>
-<li>With $\alpha=4, r=4$, when $f$ is four times differentiable.</li>
-<li>With $\alpha=5, r=4$, when $f$ has a Lipschitz continuous fourth derivative.</li>
-</ul></li>
-</ol>
-
-<p>Reverse-time martingales:</p>
-
-<ul>
-<li>How does the reverse-time martingale algorithm work when the <strong>approximating functions (the functions that converge to <em>f</em>) are other than polynomials?</strong> Specifically, what if the approximating functions are&mdash;
-
-<ul>
-<li>rational functions with integer coefficients?</li>
-<li>rational functions with rational coefficients?</li>
-<li>arbitrary approximating functions?</li>
-</ul></li>
-</ul>
-
-<p>Simulable functions:</p>
-
-<ul>
-<li><strong>Does the result given in &quot;Simulable and strongly simulable functions&quot; describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?</strong>  Examples of functions to ponder are those that are not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha \in (0, 1)$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.</li>
-</ul>
-
-<p>Multiple-output Bernoulli factories:</p>
-
-<ol>
-<li>Given that a function $f(\lambda)$ is continuous and maps a closed interval in (0, 1) to (0, 1), is there a multiple-output Bernoulli factory algorithm for $f$ with an expected number of coin flips per sample that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$&#39;s domain? Call such a Bernoulli factory an <em>optimal factory</em>.  (See Nacu and Peres 2005, Question 1.)</li>
-<li>Does the answer to question 1 change if the algorithm can also use a fair coin in addition to the biased coin?</li>
-</ol>
-
-<p>Concave functions:</p>
-
-<ol>
-<li>Given that a factory function $f(\lambda)$ is concave and $C^\alpha$ continuous, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz&#39;s results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.</li>
-<li>Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?</li>
-<li>Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(1)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz&#39;s results.</li>
-</ol>
-
-<p>Pushdown automata:</p>
+<h3>Questions</h3>
 
 <ol>
 <li>For every function in class $\mathcal{C}$ (given in &quot;Algebraic Functions&quot; above), is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).</li>
 <li>In particular, is min($\lambda$, $1-\lambda$) in class $\mathcal{D}$? What about $\lambda^{1/p}$ for some prime $p\ge 3$?</li>
 </ol>
+
+<p><a id=Other_Questions></a></p>
+
+<h2>Other Questions</h2>
 
 <p><a href="https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili"><strong>Simple simulation algorithms</strong></a>:</p>
 
@@ -571,7 +571,7 @@ above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
 <li>Etessami, K. And Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, Journal of the ACM 56(1), pp.1-66, 2009.</li>
 <li>Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.</li>
 <li>Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science, 2004. (pp. 12-21). IEEE.</li>
-<li>Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2">On Buffon machines and numbers</a>&quot;, arXiv:0906.5560v2 [math.PR], 2010.</li>
+<li>Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2 [math.PR], 2010.</li>
 </ul>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
