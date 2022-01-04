@@ -35,6 +35,8 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 <a id=Polynomials_that_approach_a_factory_function></a>
 ## Polynomials that approach a factory function
 
+[https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
+
 An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) simulates a factory function via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
 
 1. Generate U, a uniform random number in $[0, 1]$.
@@ -50,7 +52,7 @@ However, the algorithm requires the polynomial sequences to meet certain require
 
 See below for a formal statement of these polynomials.
 
-The answer below and my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but **none of them ensure a finite expected number of coin flips in general**, and it is suspected that an expected finite number of flips isn't possible for every probability of heads unless the factory function has a Hölder continuous fourth derivative. (Indeed, see related results by Holtz et al. (2011) that only functions with a Hölder continuous fourth derivative can be approximated by polynomials at a rate of $O(1/n^{2+\epsilon})$ or better, for $\epsilon>0$ and for every $\lambda$ in [0, 1].)
+The [**answer to my StackExchange question**](https://math.stackexchange.com/a/3945261/721857) and my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but **none of them ensure a finite expected number of coin flips in general**, and it is suspected that an expected finite number of flips isn't possible for every probability of heads unless the factory function has a Hölder continuous fourth derivative. (Indeed, see related results by Holtz et al. (2011) that only functions with a Hölder continuous fourth derivative can be approximated by polynomials at a rate of $O(1/n^{2+\epsilon})$ or better, for $\epsilon>0$ and for every $\lambda$ in [0, 1].)
 
 <a id=Formal_Statement></a>
 ### Formal Statement
@@ -72,6 +74,8 @@ It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all 
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
+
+[https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
 
 Now, we focus on a **specific approximation scheme**, the one **presented by [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly"**.
 
@@ -119,6 +123,8 @@ And I seek ways to make this solution implementable.
 <a id=Reverse_time_martingales></a>
 ## Reverse-time martingales
 
+[https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions](https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions)
+
 One way to toss heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ is to build randomized upper and lower bounds that converge to $f$ on average. These bounds serve as an unbiased estimator of $f(\lambda)$; the algorithm returns 1 with probability equal to the estimate, and 0 otherwise.
 
 Part of the _reverse-time martingale algorithm_ of Łatuszyński et al. (2009/2011) (see "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)") to simulate a factory function $f(\lambda)$ is as follows. For each _n_ starting with 1:
@@ -143,6 +149,8 @@ But how do these steps work when the **approximating functions (the functions th
 
 <a id=Tossing_Heads_According_to_a_Concave_Function></a>
 ## Tossing Heads According to a Concave Function
+
+[https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials](https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials)
 
 <a id=Using_Two_Polynomial_Sequences></a>
 ### Using Two Polynomial Sequences
@@ -201,6 +209,8 @@ for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except tha
 <a id=Simulable_and_strongly_simulable_functions></a>
 ## Simulable and strongly simulable functions
 
+[https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)
+
 There are two kinds of factory functions:
 
 - A function $f(\lambda)$ is _simulable_ if an algorithm exists to toss heads with probability $f(\lambda)$ given a coin with probability of heads $\lambda$ (the "biased coin") as well as a fair coin.
@@ -226,6 +236,8 @@ And the proof proceeds by showing, among other things, that the Bernoulli factor
 
 <a id=Multiple_Output_Bernoulli_Factories></a>
 ## Multiple-Output Bernoulli Factories
+
+[https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible)
 
 Let $J$ be a closed interval on $(0, 1)$, and let $f(\lambda):J \to (0, 1)$ be continuous.
 
@@ -258,6 +270,8 @@ See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp
 
 <a id=From_coin_flips_to_algebraic_functions_via_pushdown_automata></a>
 ## From coin flips to algebraic functions via pushdown automata
+
+[https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata](https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata)
 
 This section is about solving the Bernoulli factory problem on a restricted computing model, namely the model of _pushdown automata_ (finite-state machines with a stack) that are driven by flips of a coin and produce new probabilities.
 
@@ -408,7 +422,6 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Nacu, Şerban, and Yuval Peres. "Fast simulation of new coins from old", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
 - Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 - Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.
-
 - Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
 - Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy." Journal of Mathematical Psychology 95 (2020): 102308.
 - Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
