@@ -1702,7 +1702,6 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 1. Besides the algorithms on this page, what simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
     - Should use only uniform random integers (or bits) and integer arithmetic.
     - Does not use floating-point arithmetic or make direct use of square root or transcendental functions.
-    - Does not calculate base-_n_ expansions directly.
     - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
 
     See also Flajolet et al. (2010\)[^1].  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:

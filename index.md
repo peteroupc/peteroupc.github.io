@@ -8,7 +8,7 @@ to see this site's source code.
 <a id=Articles></a>
 ### Articles
 
-Open-source articles on programming subjects.  Help me on my [**requests and open questions**](./requests.html).
+Open-source articles on programming subjects.  Help me on my [**requests and open questions**](./requests.html) (and [**open questions on the Bernoulli factory problem**](./bernreq.html)).
 
 **Random and Pseudorandom Number Generators**
 

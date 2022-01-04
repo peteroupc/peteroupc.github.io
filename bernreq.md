@@ -35,7 +35,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 <a id=Polynomials_that_approach_a_factory_function></a>
 ## Polynomials that approach a factory function
 
-[https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
+[**https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
 
 An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) simulates a factory function via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
 
@@ -75,7 +75,7 @@ It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
 
-[https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
+[**https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
 
 Now, we focus on a **specific approximation scheme**, the one **presented by [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly"**.
 
@@ -123,7 +123,7 @@ And I seek ways to make this solution implementable.
 <a id=Reverse_time_martingales></a>
 ## Reverse-time martingales
 
-[https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions](https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions)
+[**https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions**](https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions)
 
 One way to toss heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ is to build randomized upper and lower bounds that converge to $f$ on average. These bounds serve as an unbiased estimator of $f(\lambda)$; the algorithm returns 1 with probability equal to the estimate, and 0 otherwise.
 
@@ -150,7 +150,7 @@ But how do these steps work when the **approximating functions (the functions th
 <a id=Tossing_Heads_According_to_a_Concave_Function></a>
 ## Tossing Heads According to a Concave Function
 
-[https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials](https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials)
+[**https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials**](https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials)
 
 <a id=Using_Two_Polynomial_Sequences></a>
 ### Using Two Polynomial Sequences
@@ -209,7 +209,7 @@ for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except tha
 <a id=Simulable_and_strongly_simulable_functions></a>
 ## Simulable and strongly simulable functions
 
-[https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)
+[**https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)
 
 There are two kinds of factory functions:
 
@@ -237,7 +237,7 @@ And the proof proceeds by showing, among other things, that the Bernoulli factor
 <a id=Multiple_Output_Bernoulli_Factories></a>
 ## Multiple-Output Bernoulli Factories
 
-[https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible)
+[**https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible)
 
 Let $J$ be a closed interval on $(0, 1)$, and let $f(\lambda):J \to (0, 1)$ be continuous.
 
@@ -271,7 +271,7 @@ See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp
 <a id=From_coin_flips_to_algebraic_functions_via_pushdown_automata></a>
 ## From coin flips to algebraic functions via pushdown automata
 
-[https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata](https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata)
+[**https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata**](https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata)
 
 This section is about solving the Bernoulli factory problem on a restricted computing model, namely the model of _pushdown automata_ (finite-state machines with a stack) that are driven by flips of a coin and produce new probabilities.
 
@@ -361,6 +361,26 @@ Pushdown automata:
 1. For every function in class $\mathcal{C}$ (given in "Algebraic Functions" above), is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
 2. In particular, is min($\lambda$, $1-\lambda$) in class $\mathcal{D}$? What about $\lambda^{1/p}$ for some prime $p\ge 3$?
 
+[**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili):
+
+- What simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
+    - Should use only uniform random integers (or bits) and integer arithmetic.
+    - Does not use floating-point arithmetic or make direct use of square root or transcendental functions.
+    - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
+
+    See also Flajolet et al., "On Buffon machines and numbers", 2010.  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:
+
+    - For irrational constants:
+        - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions.
+        - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/morealg.html#pi___4)
+        - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
+        - Functions that map [0, 1] to [0, 1] whose integral (area under curve) is an irrational number.
+    - Bernoulli factory functions with any of the following series expansions, using rational arithmetic only:
+        - Series with non-negative terms where _f_(0) is 0 and _f_(1) is rational or vice versa (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
+        - Series with non-negative terms that can be "tucked" under a discrete probability mass function (see "[**Convex Combinations**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations)").
+        - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
+        - Series with non-negative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
+
 <a id=Remarks></a>
 ## Remarks
 
@@ -428,3 +448,4 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Etessami, K. And Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", Journal of the ACM 56(1), pp.1-66, 2009.
 - Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
 - Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science, 2004. (pp. 12-21). IEEE.
+- Flajolet, P., Pelletier, M., Soria, M., "[On Buffon machines and numbers](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2 [math.PR], 2010.
