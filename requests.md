@@ -23,19 +23,13 @@ This page lists questions and issues relating to my articles posted on this site
 
 The following is a list of my questions on _MathOverflow_ and other _Stack Exchange_ sites.  Can you help answer any of these?  Answers to them will greatly improve my articles on this site.
 
-- [**Polynomials that converge to a Bernoulli factory function**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
-- [**Holtz method for polynomials that converge to a Bernoulli factory function**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
-- [**Approximation of concave functions by polynomials**](https://mathoverflow.net/questions/409174/approximation-of-concave-functions-by-polynomials)
-- [**Relatively simple simulations that succeed with an irrational probability**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili)
 - [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations)
-- [**From coin flips to algebraic functions via pushdown automata**](https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata)
 - [**Probability distributions computable by pushdown automata**](https://cstheory.stackexchange.com/questions/50826/probability-distributions-generated-by-pushdown-automata)
-- [**From biased coins, and nothing else, to biased coins**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)
-- [**From biased coins to biased coins, as efficiently as possible**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible)
-- [**Reverse time martingale for non-polynomial approximating functions**](https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions)
 - [**Checking if a shape covers a box**](https://math.stackexchange.com/questions/3882545/what-conditions-ensure-that-checking-if-a-shape-covers-a-box-can-be-done-just-by)
 - [**Estimating f(E(X)) with a guaranteed error performance**](https://stats.stackexchange.com/questions/522429/estimating-f-mathbbex-with-a-guaranteed-error-performance)
 - [**A generalized randomized mean estimate based on the Chebyshev inequality**](https://stats.stackexchange.com/questions/555066/a-generalized-randomized-mean-estimate-based-on-the-chebyshev-inequality)
+
+Other questions are also found in [**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html#Tossing_Heads_According_to_a_Concave_Function).
 
 <a id=Randomization_and_Sampling_Methods></a>
 ## Randomization and Sampling Methods

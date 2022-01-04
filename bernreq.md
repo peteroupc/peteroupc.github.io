@@ -166,7 +166,7 @@ Part of the _reverse-time martingale algorithm_ of Łatuszyński et al. (2009/20
 More technically (Algorithm 4):
 
 1. Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,
-2. Compute $L^\star_n = \mathbb{E}[L_{n-1} | \mathcal{F}_n]$ and $U^\star_n = \mathbb{E}[U_{n-1} | \mathcal{F}_n]$,
+2. Compute $L^{\star}_{n}$ = $\mathbb{E}(L_{n-1} | \mathcal{F}_{n})$ and $U^{\star}_{n}$ = $\mathbb{E}(U_{n-1} | \mathcal{F}_{n})$,
 
 where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.
 
@@ -354,7 +354,7 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 <a id=Questions_5></a>
 ### Questions
 
-1. For every function in class $\mathcal{C}$ (given in "Algebraic Functions" above), is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
+1. For every function in class $\mathcal{C}$, is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
 2. In particular, is min($\lambda$, $1-\lambda$) in class $\mathcal{D}$? What about $\lambda^{1/p}$ for some prime $p\ge 3$?
 
 <a id=Other_Questions></a>
@@ -420,7 +420,7 @@ Solve for $K$: $$(1-(1+\gamma)/2^{\alpha/2} - 4/(4*K)) = 0.$$  The solution for 
 
 Now find:  $$\theta_a = ((4/4) K^{\alpha/2}/n^\alpha) / ((1-(1+\gamma)/2^\alpha)/n^\alpha)$$ The solution for $\alpha=2$ is $\theta_a = 8/((\gamma-3) (\gamma-1))$.
 
-For $\gamma=1/100$ and $\alpha=2$, $\theta_a = 80000/29601 \approx 2.703$.
+For $\gamma=1/100$ and $\alpha=2$, $\theta_a = 80000/29601 < 2.703$.
 
 There's no need to check whether the output polynomials have Bernstein coefficients in $(0, 1)$, since out-of-bounds polynomials will be replaced with 0 or 1 as necessary &mdash; which is more practical and convenient.
 
@@ -448,3 +448,4 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
 - Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science, 2004. (pp. 12-21). IEEE.
 - Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2 [math.PR], 2010.
+- von Neumann, J., "Various techniques used in connection with random digits", 1951.
