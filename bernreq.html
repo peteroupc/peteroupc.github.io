@@ -14,16 +14,44 @@
 
 <p>Specifically, the only functions that can be simulated this way <strong>are continuous and polynomially bounded on their domain, and map $[0, 1]$ or a subset thereof to $[0, 1]$</strong>, as well as $f=0$ and $f=1$. These functions are called <em>factory functions</em> in this page. (A function $f(x)$ is <em>polynomially bounded</em> if both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O&#39;Brien 1994). This implies that $f$ admits no roots on (0, 1) and can&#39;t take on the value 0 or 1 except possibly at 0 and/or 1.)</p>
 
-<p>This page contains several questions about the Bernoulli factory problem.  Answers to them will greatly improve my pages on this site about Bernoulli factories.  They relate to:</p>
+<p>This page contains several questions about the <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory</strong></a> problem.  Answers to them will greatly improve my pages on this site about Bernoulli factories.</p>
+
+<p><a id=Contents></a></p>
+
+<h2>Contents</h2>
 
 <ul>
-<li>Polynomials that approach a factory function.</li>
-<li>&quot;New coins from old, smoothly&quot;, by Holtz, Nazarov, and Peres (2011).</li>
-<li>Reverse-time martingales.</li>
-<li>Tossing heads according to a concave function.</li>
-<li>Simulable and strongly simulable functions (functions that require a fair coin to simulate vs. those that don&#39;t).</li>
-<li>Multiple-output Bernoulli factories.</li>
-<li>Algebraic functions via pushdown automata (state machines with a stack).</li>
+<li><a href="#Background"><strong>Background</strong></a></li>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#Polynomials_that_approach_a_factory_function"><strong>Polynomials that approach a factory function</strong></a>
+
+<ul>
+<li><a href="#Formal_Statement"><strong>Formal Statement</strong></a></li>
+</ul></li>
+<li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a></li>
+<li><a href="#Reverse_time_martingales"><strong>Reverse-time martingales</strong></a></li>
+<li><a href="#Tossing_Heads_According_to_a_Concave_Function"><strong>Tossing Heads According to a Concave Function</strong></a>
+
+<ul>
+<li><a href="#Using_Two_Polynomial_Sequences"><strong>Using Two Polynomial Sequences</strong></a></li>
+<li><a href="#Using_a_Series_Expansion"><strong>Using a Series Expansion</strong></a></li>
+</ul></li>
+<li><a href="#Simulable_and_strongly_simulable_functions"><strong>Simulable and strongly simulable functions</strong></a></li>
+<li><a href="#Multiple_Output_Bernoulli_Factories"><strong>Multiple-Output Bernoulli Factories</strong></a>
+
+<ul>
+<li><a href="#Functions_with_Optimal_Factories"><strong>Functions with Optimal Factories</strong></a></li>
+</ul></li>
+<li><a href="#From_coin_flips_to_algebraic_functions_via_pushdown_automata"><strong>From coin flips to algebraic functions via pushdown automata</strong></a>
+
+<ul>
+<li><a href="#Pushdown_Automata"><strong>Pushdown Automata</strong></a></li>
+<li><a href="#Algebraic_Functions"><strong>Algebraic Functions</strong></a></li>
+</ul></li>
+<li><a href="#Questions"><strong>Questions</strong></a></li>
+<li><a href="#Remarks"><strong>Remarks</strong></a></li>
+<li><a href="#My_Attempt"><strong>My Attempt</strong></a></li>
+<li><a href="#References"><strong>References</strong></a></li>
 </ul>
 
 <p><a id=Polynomials_that_approach_a_factory_function></a></p>
@@ -146,16 +174,16 @@
 
 <ol>
 <li>Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,</li>
-<li>Compute $L^<em><em>n = \mathbb{E}[L</em>{n-1} | \mathcal{F}_n]$ and $U^</em><em>n = \mathbb{E}[U</em>{n-1} | \mathcal{F}_n]$,</li>
+<li>Compute $L^\star_n = \mathbb{E}[L_{n-1} | \mathcal{F}<em>n]$ and $U^\star_n = \mathbb{E}[U</em>{n-1} | \mathcal{F}_n]$,</li>
 </ol>
 
 <p>where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.</p>
 
-<p>Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^<em>$ and $U$ or $U^</em>$ are their lower and upper bound approximations. An example for <a href="https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con"><strong>polynomials</strong></a> follows:</p>
+<p>Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^\star$ and $U$ or $U^\star$ are their lower and upper bound approximations. An example for <a href="https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con"><strong>polynomials</strong></a> follows:</p>
 
 <ol>
 <li>Given the number of heads $H_n$, $L_n$ is the $H_n$th Bernstein coefficient of the $n$th lower approximating polynomial, and $U_n$ is the $H_n$th Bernstein coefficient of the $n$th upper approximating polynomial.</li>
-<li>$L^<em>_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^</em>_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.</li>
+<li>$L^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.</li>
 </ol>
 
 <p>But how do these steps work when the <strong>approximating functions (the functions that converge to <em>f</em>) are other than polynomials?</strong></p>
@@ -334,7 +362,7 @@
 
 <p>I don&#39;t yet know whether $\mathcal{D}=\mathcal{C}$ (and that was also a question of Mossel and Peres).</p>
 
-<p>The following section of my open-source page, <a href="https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions">https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions</a>, contains information on the question. As that section shows, I could establish the following about the class $\mathcal{D}$:</p>
+<p>The following section of my open-source page, <a href="https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions,"><strong>https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions,</strong></a> contains information on the question. As that section shows, I could establish the following about the class $\mathcal{D}$:</p>
 
 <ul>
 <li>$\sqrt{\lambda}$ is in $\mathcal{D}$, and so is every rational function in $\mathcal{C}$.</li>
@@ -463,7 +491,7 @@ above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
 
 <p>Solve for $K$: $$(1-(1+\gamma)/2^{\alpha/2} - 4/(4*K)) = 0.$$  The solution for $\alpha=2$ is $K = 2/(1-\gamma)$.</p>
 
-<p>Now find:  $$\theta_a = ((4/4)<em>K^{\alpha/2}/n^\alpha) / ((1-(1+\gamma)/2^\alpha)/n^\alpha)$$ The solution for $\alpha=2$ is $\theta_a = 8/((\gamma-3)</em>(\gamma-1))$.</p>
+<p>Now find:  $$\theta_a = ((4/4) K^{\alpha/2}/n^\alpha) / ((1-(1+\gamma)/2^\alpha)/n^\alpha)$$ The solution for $\alpha=2$ is $\theta_a = 8/((\gamma-3) (\gamma-1))$.</p>
 
 <p>For $\gamma=1/100$ and $\alpha=2$, $\theta_a = 80000/29601 \approx 2.703$.</p>
 
@@ -484,7 +512,7 @@ above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
 <h2>References</h2>
 
 <ul>
-<li>Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2">Simulating events of unknown probabilities via reverse time martingales</a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</li>
+<li>Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</li>
 <li>Keane, M. S., and O&#39;Brien, G. L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</li>
 <li>Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, Constructive Approximation 33 (2011).</li>
 <li>Nacu, Şerban, and Yuval Peres. &quot;Fast simulation of new coins from old&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</li>
