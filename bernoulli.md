@@ -154,7 +154,7 @@ A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an algorithm that takes a
 Keane and O'Brien (1994\)[^2] showed that a function _f_ that maps \[0, 1\] (or a subset of it) to [0, 1] admits a Bernoulli factory if and only if&mdash;
 
 - _f_ is constant on its domain, or
-- _f_ is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
+- _f_ is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are not less than min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
 
 The following shows some functions that are factory functions and some that are not.  In the table below, _&#x03F5;_ is a number greater than 0 and less than 1/2.
 
@@ -199,7 +199,7 @@ This section shows implementation notes that apply to the algorithms in this art
 In the following algorithms:
 
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads of the input coin.
--  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002\)[^5].  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
+-  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={\n choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002\)[^5].  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial.
 - The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
@@ -232,7 +232,11 @@ functions, or functions in general.
 <a id=Certain_Polynomials></a>
 #### Certain Polynomials
 
-Any polynomial can be written in _Bernstein form_ as &sum;<sub>_i_ = 0, ..., _n_</sub> choose(_n_, _i_) * _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's _degree_ and _a_\[_i_\] are its _n_ plus one coefficients.
+Any polynomial can be written in _Bernstein form_ as&mdash;
+
+$$\sum_{i=0}^n {n \choose i} \lambda^i (1-\lambda)^{n-i} a[i],$$
+
+where _n_ is the polynomial's _degree_ and _a_\[_i_\] are its _n_ plus one _coefficients_.
 
 But the only polynomials that admit a Bernoulli factory are those whose coefficients are all in the interval \[0, 1\] (once the polynomials are written in Bernstein form), and these polynomials are the only functions that can be simulated with a fixed number of coin flips (Goyal and Sigman 2012[^6]; Qian et al. 2011\)[^7]; see also Wästlund 1999, section 4[^8]).  Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.
 
@@ -657,7 +661,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 > **Notes:**
 >
 > 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sub>(_&lambda;_), where _w_<sub>_n_</sub> are continuous functions whose maximum values in the domain [0, 1] sum to 1 or less.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash;<br><br>_f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _g_(_n_) \* (_w_<sub>_n_</sub>(_&lambda;_) / _g_(_n_)),<br><br>but this works only if the following conditions are met for each integer _n_&ge;0:
->     - _g_(_n_) &ge; _w_<sub>_n_</sub>(_&lambda;_) &ge; 0 for every _&lambda;_ in the interval \[0, 1\] (which roughly means that _w_<sub>_n_</sub> is bounded from above or "dominated" by _g_(_n_)).
+>     - _g_(_n_) &ge; _w_<sub>_n_</sub>(_&lambda;_) &ge; 0 for every _&lambda;_ in the interval \[0, 1\] (which roughly means that _w_<sub>_n_</sub> is no greater than _g_(_n_)).
 >     - The function _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_) admits a Bernoulli factory (which it won't if it touches 0 or 1 inside the interval (0, 1), but isn't constant, for example).
 >
 >     See also Mendo (2019\)[^19].
@@ -746,7 +750,7 @@ The method uses the **convex combination algorithm** given above, where step 1 i
 >     The ordinary generating function for this modified algorithm is thus&mdash; $$OGF(z) = 1\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; z\frac{\alpha^\alpha (\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha-1}}\right).$$
 > 4.  The probability involved in example 2 likewise involves hypergeometric functions: $$f(\lambda)=(1-\lambda)\times_{t-1} F_{t-2}\left(\frac{1}{t},\frac{2}{t},...,\frac{t-1}{t}; \frac{1}{t-1},\frac{2}{t-1},...,\frac{t-2}{t-1}; \lambda^t \frac{t^t (\beta-1)^{t-1}}{(t-1)^{t-1} \beta^t}\right).$$
 
-**The von Neumann schema.** Flajolet et al. (2010\)[^1], section 2, describes what it calls the _von Neumann schema_, which produces random variates based on a coin with unknown heads probability.  To describe the schema, the following definition is needed:
+**The von Neumann schema.** Flajolet et al. (2010\)[^1], section 2, describes what it calls the _von Neumann schema_, which produces random integers based on a coin with unknown heads probability.  To describe the schema, the following definition is needed:
 
 - A _permutation class_ is a rule that describes how a sequence of numbers must be ordered.  The ordering of the numbers is called a _permutation_.  Two examples of permutation classes cover permutations sorted in descending order, and permutations whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.
 
@@ -774,7 +778,7 @@ The von Neumann schema uses the **generalized Bernoulli race algorithm** given e
 > 3. The algorithm for exp(&minus;_&lambda;_), described in example 2, is as follows:
 >
 >     1. Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way.
->     2. With probability 1/((_X_)!), _X_ is accepted so return a number that is 1 if _X_ is 0 and 0 otherwise.  Otherwise, go to step 1.
+>     2. With probability 1/((_X_)!), _X_ is accepted so return a number that is 1 if _X_ is 0 and 0 otherwise.  Otherwise, go to the previous step.
 >
 > 4. For the class of _alternating permutations of even size_ (see example 1), step 2 can be implemented as follows (Flajolet et al. 2010, sec. 2.2\)[^1]:
 >
@@ -786,7 +790,7 @@ The von Neumann schema uses the **generalized Bernoulli race algorithm** given e
 >         - Add 1 to i, then set U to V.
 >     - (2d.) (_X_ is accepted.) Return _X_.
 >
-> 5. For the class of _alternating permutations of odd size_ (see example 1), step 2 can be implemented as in example 4, except 2a reads: "(2a.) (Limit to odd-sized permutations.) If _X_ is even, reject _X_ (and go to step 1)." (Flajolet et al. 2010, sec. 2.2\)[^1]:
+> 5. For the class of _alternating permutations of odd size_ (see example 1), step 2 can be implemented as in example 4, except 2a reads: "(2a.) (Limit to odd-sized permutations.) If _X_ is even, reject _X_ (and go to step 1)." (Flajolet et al. 2010, sec. 2.2\)[^1].
 > 6. By computing&mdash; $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), we find that the algorithm's output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$.
 > 7. The _X_ generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because the Bernoulli race algorithm is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if _X_ is a Poisson random variate with mean _z_<sup>2</sup>/4, where _z_ &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
 

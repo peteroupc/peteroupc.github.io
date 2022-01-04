@@ -195,7 +195,7 @@
 
 <ul>
 <li><em>f</em> is constant on its domain, or</li>
-<li><em>f</em> is continuous and polynomially bounded on its domain (polynomially bounded means that both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em>).</li>
+<li><em>f</em> is continuous and polynomially bounded on its domain (polynomially bounded means that both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are not less than min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em>).</li>
 </ul>
 
 <p>The following shows some functions that are factory functions and some that are not.  In the table below, <em>&#x03F5;</em> is a number greater than 0 and less than 1/2.</p>
@@ -296,7 +296,7 @@
 
 <ul>
 <li>The Greek letter lambda (<em>&lambda;</em>) represents the unknown probability of heads of the input coin.</li>
-<li> choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Manolopoulos 2002)[^5].  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</li>
+<li> choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) $={\n choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Manolopoulos 2002)[^5].  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</li>
 <li><em>n</em>! = 1*2*3*...*<em>n</em> is also known as <em>n</em> factorial.</li>
 <li>The instruction to &quot;generate a uniform(0, 1) random variate&quot; can be implemented&mdash;
 
@@ -347,7 +347,11 @@ functions, or functions in general.</p>
 
 <h4>Certain Polynomials</h4>
 
-<p>Any polynomial can be written in <em>Bernstein form</em> as &sum;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[<em>i</em>] are its <em>n</em> plus one coefficients.</p>
+<p>Any polynomial can be written in <em>Bernstein form</em> as&mdash;</p>
+
+<p>$$\sum_{i=0}^n {n \choose i} \lambda^i (1-\lambda)^{n-i} a[i],$$</p>
+
+<p>where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[<em>i</em>] are its <em>n</em> plus one <em>coefficients</em>.</p>
 
 <p>But the only polynomials that admit a Bernoulli factory are those whose coefficients are all in the interval [0, 1] (once the polynomials are written in Bernstein form), and these polynomials are the only functions that can be simulated with a fixed number of coin flips (Goyal and Sigman 2012[^6]; Qian et al. 2011)[^7]; see also Wästlund 1999, section 4[^8]).  Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.</p>
 
@@ -970,7 +974,7 @@ functions, or functions in general.</p>
 <li><p><strong>Building convex combinations.</strong> Assume we have a function of the form <em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>), where <em>w</em><sub><em>n</em></sub> are continuous functions whose maximum values in the domain [0, 1] sum to 1 or less.  Let <em>g</em>(<em>n</em>) be the probability that a randomly chosen number <em>X</em> is <em>n</em>, such that <em>g</em>(0) + <em>g</em>(1) + ... = 1.  Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability <em>f</em>(<em>&lambda;</em>) as the convex combination&mdash;<br><br><em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>g</em>(<em>n</em>) * (<em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) / <em>g</em>(<em>n</em>)),<br><br>but this works only if the following conditions are met for each integer <em>n</em>&ge;0:</p>
 
 <ul>
-<li><em>g</em>(<em>n</em>) &ge; <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) &ge; 0 for every <em>&lambda;</em> in the interval [0, 1] (which roughly means that <em>w</em><sub><em>n</em></sub> is bounded from above or &quot;dominated&quot; by <em>g</em>(<em>n</em>)).</li>
+<li><em>g</em>(<em>n</em>) &ge; <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) &ge; 0 for every <em>&lambda;</em> in the interval [0, 1] (which roughly means that <em>w</em><sub><em>n</em></sub> is no greater than <em>g</em>(<em>n</em>)).</li>
 <li>The function <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>n</em>) admits a Bernoulli factory (which it won&#39;t if it touches 0 or 1 inside the interval (0, 1), but isn&#39;t constant, for example).</li>
 </ul>
 
@@ -1104,7 +1108,7 @@ functions, or functions in general.</p>
 </ol>
 </blockquote>
 
-<p><strong>The von Neumann schema.</strong> Flajolet et al. (2010)[^1], section 2, describes what it calls the <em>von Neumann schema</em>, which produces random variates based on a coin with unknown heads probability.  To describe the schema, the following definition is needed:</p>
+<p><strong>The von Neumann schema.</strong> Flajolet et al. (2010)[^1], section 2, describes what it calls the <em>von Neumann schema</em>, which produces random integers based on a coin with unknown heads probability.  To describe the schema, the following definition is needed:</p>
 
 <ul>
 <li>A <em>permutation class</em> is a rule that describes how a sequence of numbers must be ordered.  The ordering of the numbers is called a <em>permutation</em>.  Two examples of permutation classes cover permutations sorted in descending order, and permutations whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.</li>
@@ -1140,7 +1144,7 @@ functions, or functions in general.</p>
 
 <ol>
 <li>Flip the input coin repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.</li>
-<li>With probability 1/((<em>X</em>)!), <em>X</em> is accepted so return a number that is 1 if <em>X</em> is 0 and 0 otherwise.  Otherwise, go to step 1.</li>
+<li>With probability 1/((<em>X</em>)!), <em>X</em> is accepted so return a number that is 1 if <em>X</em> is 0 and 0 otherwise.  Otherwise, go to the previous step.</li>
 </ol></li>
 <li><p>For the class of <em>alternating permutations of even size</em> (see example 1), step 2 can be implemented as follows (Flajolet et al. 2010, sec. 2.2)[^1]:</p>
 
@@ -1156,7 +1160,7 @@ functions, or functions in general.</p>
 </ul></li>
 <li>(2d.) (<em>X</em> is accepted.) Return <em>X</em>.</li>
 </ul></li>
-<li><p>For the class of <em>alternating permutations of odd size</em> (see example 1), step 2 can be implemented as in example 4, except 2a reads: &quot;(2a.) (Limit to odd-sized permutations.) If <em>X</em> is even, reject <em>X</em> (and go to step 1).&quot; (Flajolet et al. 2010, sec. 2.2)[^1]:</p></li>
+<li><p>For the class of <em>alternating permutations of odd size</em> (see example 1), step 2 can be implemented as in example 4, except 2a reads: &quot;(2a.) (Limit to odd-sized permutations.) If <em>X</em> is even, reject <em>X</em> (and go to step 1).&quot; (Flajolet et al. 2010, sec. 2.2)[^1].</p></li>
 <li>By computing&mdash; $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), we find that the algorithm&#39;s output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$.</li>
 <li>The <em>X</em> generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because the Bernoulli race algorithm is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if <em>X</em> is a Poisson random variate with mean <em>z</em><sup>2</sup>/4, where <em>z</em> &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(<em>z</em>), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</li>
 </ol>
