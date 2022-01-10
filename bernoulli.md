@@ -266,7 +266,7 @@ Because the coefficients _a_\[_i_\] must be in the interval [0, 1], some or all 
 > **Notes**:
 >
 > 1. Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where _&lambda;_ is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when _&lambda;_ = 0, and 0.6 when _&lambda;_ = 1.  (The curve, however, is not at 0.3 when _&lambda;_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
-> 2. The problem of simulating polynomials in Bernstein form is related to _stochastic logic_, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and XOR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for further discussion see (Qian et al. 2011\)[^7], Qian and Riedel 2008[^10]).
+> 2. The problem of simulating polynomials in Bernstein form is related to _stochastic logic_, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and exclusive-OR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for further discussion see (Qian et al. 2011\)[^7], Qian and Riedel 2008[^10]).
 > 3. These algorithms can serve as an approximate way to simulate any function _f_ that maps the interval \[0, 1] to \[0, 1], whether continuous or not.  In this case, _a_\[_j_\] is calculated as _f_(_j_/_n_), so that the resulting polynomial closely approximates the function.  In fact, if _f_ is continuous, it's possible to choose _n_ high enough to achieve a given maximum error (this is a result of the so-called "Weierstrass approximation theorem").  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
 >
 > **Examples:**
@@ -370,7 +370,7 @@ For certain power series with non-negative coefficients, Mendo (2019\)[^19] gave
 1. Set _dsum_ to 0 and _i_ to 1.
 2. Do the following process repeatedly, until this algorithm returns a value:
     1. Flip the input coin.  If it returns _v_, return 1.
-    2. If this is an infinite series or if _i_ is equal to or less than the number of coefficients:
+    2. If the power series has infinitely many coefficients, or if _i_ is equal to or less than the number of coefficients:
         - With probability _c_\[_i_\]/(_CS_ &minus; _dsum_), return 0.  Otherwise, add _c_\[_i_\] to _dsum_. (_CS_ is defined later.)
     3. Add 1 to _i_.
 
@@ -453,7 +453,7 @@ A coin with unknown probability of heads of _&lambda;_ can be turned into a coin
 - One sequence of polynomials converges from above to _f_, the other from below.
 - For each sequence, the polynomials must have increasing degree.
 - The polynomials are written in _Bernstein form_ (see "[**Certain Polynomials**](#Certain_Polynomials)").
-- For each sequence, the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).
+- For each _n_, the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).
 
 The following algorithm can be used to simulate factory functions via polynomials.  In the algorithm:
 
@@ -605,7 +605,7 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
 A general-purpose algorithm was given by Mendo (2020\)[^27] that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;
 
 - that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all rational numbers greater than 0 and sum to _p_ (in other words, the series _converges_ to _p_)
-- for which a sequence _err_\[0\], _err_\[1\], ... is available that is nonincreasing and has a limit of 0 (_converges_ to 0), where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
+- for which a sequence _err_\[0\], _err_\[1\], ... is available that is nonincreasing and has a limit of 0 (_converges_ to 0), where _err_\[_n_\] is an upper bound on the error from "cutting off" the series _a_ after summing the first _n_+1 terms.
 
 The algorithm follows.
 
@@ -1664,7 +1664,7 @@ The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;
 3. If _lamunq_+_&#x03F5;_ &le; _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
 4. If _lamunq_ > _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
 5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&#x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
-6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&#x03F5;_ to an upper bound on the error that results if the series is truncated after summing this and the previous terms.) If _n_ is 0, add 1/2 to _lamunq_ and set _&#x03F5;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)\*(2\*_n_+2)) to _lamunq_ and set _&#x03F5;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest integer _b_&ge;1 such that _n_ &lt; 2<sup>_b_</sup>).
+6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&#x03F5;_ to an upper bound on the error that results if the series is "cut off" after summing this and the previous terms.) If _n_ is 0, add 1/2 to _lamunq_ and set _&#x03F5;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)\*(2\*_n_+2)) to _lamunq_ and set _&#x03F5;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest integer _b_&ge;1 such that _n_ &lt; 2<sup>_b_</sup>).
 7. Add 1 to _n_, then set _prev_ to _&#x03F5;_, then go to step 3.
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ &le; _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
@@ -1716,7 +1716,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
             - Series with non-negative terms where _f_(0) is 0 and _f_(1) is rational or vice versa (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
             - Series with non-negative terms that can be "tucked" under a discrete probability mass function (see "[**Convex Combinations**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations)").
             - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
-            - Series with non-negative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
+            - Series with non-negative terms and bounds on the error when cutting off the series expansion (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
         - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  For a formal statement of these polynomials, see my [**question on MathOverflow**](https://mathoverflow.net/questions/379858).<br><br>The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn't possible unless the factory function has four or more continuous derivatives ("slope functions") that are "nice" enough.  Thus one question is: Given such a factory function, are there practical algorithms for building polynomials described here, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?  One example worth pondering is sin(_&lambda;_ \* _&pi;_/2) = cos((1&minus;_&lambda;_)\* _&pi;_/2), which equals 0 at 0 and 1 at 1.
 2. Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way minus 1.  In this case:
     1. What is the probability that _n_ is returned?
@@ -1976,7 +1976,7 @@ Then the algorithm's behavior is given in the tables below.
  --- | --- | --- | --- |
 | Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV\)[^23]; see also Forsythe 1972[^55]).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
 | Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979[^59]).  DPDF and ECDF are as above. |
-| Numbers sorted in descending order | Both uniform in (0,1) | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951\)[^57]. |
+| Numbers sorted in descending order | Both uniform in (0,1) | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and "cut off" to the interval \[0, 1\] (von Neumann 1951\)[^57]. |
 | Numbers sorted in descending order | _D_ is uniform in (0,1); _E_ is max. of two uniform variates in (0,1). | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 > **Notes:**

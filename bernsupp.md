@@ -160,7 +160,7 @@ Now, if _r_(_&lambda;_) is continuous on [0, 1], then _f_ can be simulated using
 2. Run a Bernoulli factory algorithm for _q_(.).  If the call returns 1, return 1.
 3. Run a Bernoulli factory algorithm for _r_(.), and return 1 minus the result of that call.  The Bernoulli factory algorithm can be one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) if there is a way to calculate polynomials that converge to _r_(.) in a manner needed for that algorithm (for example, if _r_ is described earlier in this section).
 
-> **Note:** Quick proof: Rewrite $f=h\dot{}(q\dot{}1+(1-q)\dot{}(1-r))+(1-h)\dot{}0$.
+> **Note:** Quick proof: Rewrite $f=h\cdot(q\cdot1+(1-q)\cdot(1-r))+(1-h)\cdot0$.
 >
 > **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, and from below by _&omega;_(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = _&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: `fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)`.
 

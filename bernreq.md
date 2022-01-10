@@ -44,7 +44,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 
 An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) simulates a factory function via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
 
-1. Generate U, a uniform random number in $[0, 1]$.
+1. Generate U, a uniform random variate in $[0, 1]$.
 2. Flip the input coin (with a probability of heads of $\lambda$), then build an upper and lower bound for $f(\lambda)$, based on the outcomes of the flips so far. In this case, these bounds come from two degree-$n$ polynomials that approach $f$ as $n$ gets large, where $n$ is the number of coin flips so far in the algorithm.
 3. If U is less than or equal to the lower bound, return 1. If U is greater than the upper bound, return 0. Otherwise, go to step 2.
 
@@ -108,7 +108,7 @@ Specifically, Holtz et al. proved the following results:
 
 The scheme is as follows:
 
-Let $f$ be a continuous and $r$-times differentiable function&mdash;
+Let $f$ be a function&mdash;
 
 - that maps [0, 1] to the open interval (0, 1), and
 - whose $r$th derivative is $\beta$-Hölder continuous, where $\beta$ is in (0, 1).

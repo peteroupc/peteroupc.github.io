@@ -21,7 +21,7 @@ This page lists certain open questions on probability.  Any answers to these que
 <a id=Probability_distributions_computable_by_pushdown_automata></a>
 ## Probability distributions computable by pushdown automata
 
-[https://cstheory.stackexchange.com/questions/50826/probability-distributions-generated-by-pushdown-automata](https://cstheory.stackexchange.com/questions/50826/probability-distributions-generated-by-pushdown-automata)
+[**https://cstheory.stackexchange.com/questions/50826/probability-distributions-generated-by-pushdown-automata**](https://cstheory.stackexchange.com/questions/50826/probability-distributions-generated-by-pushdown-automata)
 
 This question is about generating random variates, in the form of their binary expansions, on restricted computing models. Specifically, the computing model is based on _pushdown automata_ (finite-state machines with a stack) that are driven by flips of a coin and generate the binary expansion of a real number. This results in machines called _pushdown generators_, defined next.
 
@@ -180,8 +180,8 @@ The algorithm produces a discrete random variate based on a permutation class. L
 
 If $D$ and $E$ are both uniform(0, 1), this algorithm returns the number _n_ with the following probability:
 
-$$G(n)= (1-\frac{V(n+1)}{V(n)*(n+1)}) * (1-\sum_{j=0}^{n-1} G(j))$$
-$$= \frac{V(n)*(n+1)-V(n+1)}{V(0)*(n+1)!},$$
+$$G(n)= (1-\frac{V(n+1)}{V(n) (n+1)})  (1-\sum_{j=0}^{n-1} G(j))$$
+$$= \frac{V(n) (n+1)-V(n+1)}{V(0) (n+1)!},$$
 
 where $V(n) \in (0, n!]$ is the number of permutations of size _n_ that meet the permutation class's requirements. $V(n)$ can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm. (Examples of permutation classes include permutations whose numbers are sorted in descending order, or permutations whose first number is highest.) For example, if we use the class of permutations sorted in descending order, the EGF is $\exp(\lambda)$, so that $V(n)$ = 1.
 
@@ -195,7 +195,7 @@ Thus, for example, if we allow sorted permutations, the algorithm returns an odd
 
 Depending on the permutation class, the distributions $D$ and $E$, and which values of $n$ we care about, different probabilities and different distributions of numbers will arise. For example:
 
-- If the class is sorted permutations, both $D$ and $E$ are the uniform distribution, and given that the return value $n$ is odd, it is known since von Neumann's 1951 algorithm that that number has a truncated exponential distribution.
+- If the class is sorted permutations, both $D$ and $E$ are the uniform distribution, and given that the return value $n$ is odd, it is known since von Neumann's 1951 algorithm that that number has an exponential distribution limited to the interval [0, 1].
 - If the class is sorted permutations, both $D$ and $E$ are arbitrary distributions, and given that the return value $n$ is odd, then Forsythe (1972) and Monahan (1979) have characterized the distribution function of the sequence's first number.
 
 See the tables in my section "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations)" for further examples.

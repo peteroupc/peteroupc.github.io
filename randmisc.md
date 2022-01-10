@@ -117,7 +117,7 @@ The trick here is to sample the peak in such a way that the result is either for
 
 It is relatively straightforward to adapt this algorithm for monotonically increasing PDFs with the unbounded peak at 1, or to PDFs with a different domain than \[0, 1\].
 
-This algorithm is similar to the "inversion&ndash;rejection" algorithm mentioned in section 4.4 of chapter 7 of Devroye's _Non-Uniform Random Variate Generation_ (1986\)[^3].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution (including its PDF and cumulative distribution function) can take on any value in the interval [0, 1] and only those values (that is, its _support_ is [0, 1]), while the algorithm presented in this article doesn't make that assumption (for example, the interval [0, 1] can cover only part of the PDF's support).
+This algorithm is similar to the "inversion&ndash;rejection" algorithm mentioned in section 4.4 of chapter 7 of Devroye's _Non-Uniform Random Variate Generation_ (1986\)[^3].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution (including its PDF and cumulative distribution function) has support [0, 1] ("support" is defined later), while the algorithm presented in this article doesn't make that assumption (for example, the interval [0, 1] can cover only part of the PDF's support).
 
 By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random variate, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html).  Even so, the algorithm I have come up with in this note may be of independent interest.
 
@@ -132,7 +132,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 The following definitions are used:
 
 - A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nondecreasing function that maps uniform random variates in the closed interval [0, 1] to numbers that follow the distribution.
-- A distribution's _support_ is the set of values the distribution can take on.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
+- A distribution's _support_ is the set of values the distribution can take on, plus that set's endpoints.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
 - A distribution's _probability generating function_ is a function written as _a_\[0]\*_x_<sup>0</sup> + _a_\[1]\*_x_<sup>1</sup> + ..., where 0 &lt; _x_ &lt; 1 and _a_\[_i_] is the probability of getting _i_ (provided the distribution takes on only values that are positive integers and/or zero).
 
 **G families.** In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002\)[^9]) use two distributions, X and G, where&mdash;
