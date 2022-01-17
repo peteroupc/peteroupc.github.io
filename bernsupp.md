@@ -137,7 +137,7 @@ then _f_ can be simulated using the following algorithm:
 > **Examples:**
 >
 > 1. If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following code in Python that uses the SymPy computer algebra library computes this example: `fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))`.
-> 2. If _f_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 0 if _&lambda;_ = 0, and (cosh(_&lambda;_)&minus;1)/_&lambda;_ otherwise.  Since _g_(0) = 0, we find new functions _g_ and _h_ based on the current _g_.  The current _g_ is bounded from above by _H_(_&lambda;_) = _&lambda;_\*3\*(2&minus;_&lambda;_)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so _G_(_&lambda;_) = 5/12 if _&lambda;_ = 0, and &minus;(5\*cosh(_&lambda;_) &minus; 5)/(3\*_&lambda;_<sup>2</sup>\*(_&lambda;_&minus;2)) otherwise. _G_ is bounded away from 0 and 1, so we have the following algorithm:
+> 2. If _f_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 0 if _&lambda;_ = 0, and (cosh(_&lambda;_)&minus;1)/_&lambda;_ otherwise.  Now, since _g_(0) = 0, find new functions _g_ and _h_ based on the current _g_.  The current _g_ is bounded from above by _H_(_&lambda;_) = _&lambda;_\*3\*(2&minus;_&lambda;_)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so _G_(_&lambda;_) = 5/12 if _&lambda;_ = 0, and &minus;(5\*cosh(_&lambda;_) &minus; 5)/(3\*_&lambda;_<sup>2</sup>\*(_&lambda;_&minus;2)) otherwise. _G_ is bounded away from 0 and 1, resulting in the following algorithm:
 >
 >     1. (Simulate _h_.) Flip the input coin.  If it returns 0, return 0.
 >     2. (Simulate _H_.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
@@ -200,7 +200,7 @@ The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].
 
 - Once elevated to degree 4, the degree-2 polynomial's coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].
 
-As we can see, the elevated polynomial's coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.
+As can be seen, the elevated polynomial's coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.
 
 _The rest of this section will note counterexamples involving other functions and schemes, without demonstrating them in detail._
 
@@ -229,26 +229,26 @@ Let _g_ and _h_ be two polynomials in Bernstein form as follows:
 
 After elevating _g_'s degree, _g_'s coefficients are no less than _h_'s, as required by the consistency property.
 
-However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.
+However, by clamping coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.
 
 <a id=Approximate_Bernoulli_Factories></a>
 ## Approximate Bernoulli Factories
 
-Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, so that we get an **approximate Bernoulli factory** for _f_.
+Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, leading to an **approximate Bernoulli factory** for _f_.
 
 Here, _f_(_&lambda;_) can be any function that maps the closed interval [0, 1] to [0, 1], even if it isn't continuous or a factory function (examples include the "step function" 0 if _&lambda;_ < 1/2 and 1 otherwise, or the function 2\*min(_&lambda;_, 1 &minus; _&lambda;_)).  Continuous functions can be approximated arbitrarily well by an approximate Bernoulli factory (as a result of the so-called "Weierstrass approximation theorem"), but this is not the case in general for discontinuous functions.
 
 To build an approximate Bernoulli factory:
 
-1. We first find a polynomial in Bernstein form of degree _n_ that is close to the desired function _f_.
+1. First, find a polynomial in Bernstein form of degree _n_ that is close to the desired function _f_.
 
     The simplest choice for this polynomial has _n_+1 coefficients and its _j_<sup>th</sup> coefficient (starting at 0) is found as _f_(_j_/_n_), and this is used in the examples below.  For this choice, if _f_ is continuous, the polynomial can be brought arbitrarily close to _f_ by choosing _n_ high enough.
 
     Whatever polynomial is used, the polynomial's coefficients must all lie in \[0, 1\].
 
-2. Then, we use one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" to toss heads with probability equal to that polynomial, given its coefficients.
+2. Then, use one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" to toss heads with probability equal to that polynomial, given its coefficients.
 
-**Examples of approximate Bernoulli factories.** The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, we need to solve the following equation for _n_:
+**Examples of approximate Bernoulli factories.** The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, the following equation is solved for _n_:
 
 - _&epsilon;_ = _L_\*((4306+837*sqrt(6))/5832) / sqrt(_n_).
 
@@ -256,7 +256,7 @@ This has the following solution:
 
 - _n_ = _L_<sup>2</sup>\*(3604122\*sqrt(6) + 11372525)/(17006112\*_&epsilon;_<sup>2</sup>).
 
-This is generally not an integer, so we use _n_ = ceil(_n_) to get the solution if it's an integer, or the nearest integer that's bigger than the solution.  This solution can be simplified further to _n_ = ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)), which bounds the previous solution from above.
+This is generally not an integer, so use _n_ = ceil(_n_) to get the solution if it's an integer, or the nearest integer that's bigger than the solution.  This solution can be simplified further to _n_ = ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)), which bounds the previous solution from above.
 
 Now, if _f_ is a Lipschitz continuous factory function with Lipschitz constant _L_, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
 
@@ -264,13 +264,13 @@ Now, if _f_ is a Lipschitz continuous factory function with Lipschitz constant _
 2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0. (If _f_(_j_/_n_) can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to sample this irrational probability exactly.)
 
-As another example, we use the first scheme in the previous section to get the following approximate algorithm for C<sup>2</sup> continuous functions with maximum "slope-of-slope" of _M_:
+As another example, the first scheme in the previous section is used to get the following approximate algorithm for C<sup>2</sup> continuous functions with maximum "slope-of-slope" of _M_:
 
 1. Calculate _n_ as ceil(_M_/(8\*_&epsilon;_)) (upper bound of the solution to the equation _&epsilon;_ = _M_/(8\*_n_)).
 2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0.
 
-We can proceed similarly with other methods that give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function _f_ that we seek to approximate.
+Other methods similar to this one can give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function _f_ to be approximated.
 
 **Approximate methods for linear functions.** There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_ > 1 and _&lambda;_ lies in \[0, 1/_c_).  ("Approximate" because this function touches 1 at 1/_c_, so it can't be a factory function.) Since the methods use only up to _n_ flips, where _n_ is an integer greater than 0, the approximation will be a polynomial of degree _n_.
 
@@ -615,7 +615,7 @@ The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli fa
 
 Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory algorithm for _f_ must return 1 with probability 1, or 0 with probability 1, when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
 
-We can show that _f_ is strongly simulable by showing that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
+To show that _f_ is strongly simulable, it's enough to show that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
 
 **Proposition 1.** _If f(&lambda;) is described in the strong simulability statement and is a polynomial with computable coefficients, it is strongly simulable._
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/01/05"><meta name="citation_online_date" content="2022/01/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/01/16"><meta name="citation_online_date" content="2022/01/16"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -195,7 +195,7 @@
 
 <ol>
 <li>If <em>f</em>(<em>&lambda;</em>) = (sinh(<em>&lambda;</em>)+cosh(<em>&lambda;</em>)&minus;1)/4, then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 1/4 if <em>&lambda;</em> = 0, and (exp(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em>) otherwise.  The following code in Python that uses the SymPy computer algebra library computes this example: <code>fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))</code>.</li>
-<li><p>If <em>f</em>(<em>&lambda;</em>) = cosh(<em>&lambda;</em>) &minus; 1, then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 0 if <em>&lambda;</em> = 0, and (cosh(<em>&lambda;</em>)&minus;1)/<em>&lambda;</em> otherwise.  Since <em>g</em>(0) = 0, we find new functions <em>g</em> and <em>h</em> based on the current <em>g</em>.  The current <em>g</em> is bounded from above by <em>H</em>(<em>&lambda;</em>) = <em>&lambda;</em>*3*(2&minus;<em>&lambda;</em>)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so <em>G</em>(<em>&lambda;</em>) = 5/12 if <em>&lambda;</em> = 0, and &minus;(5*cosh(<em>&lambda;</em>) &minus; 5)/(3*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em>&minus;2)) otherwise. <em>G</em> is bounded away from 0 and 1, so we have the following algorithm:</p>
+<li><p>If <em>f</em>(<em>&lambda;</em>) = cosh(<em>&lambda;</em>) &minus; 1, then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 0 if <em>&lambda;</em> = 0, and (cosh(<em>&lambda;</em>)&minus;1)/<em>&lambda;</em> otherwise.  Now, since <em>g</em>(0) = 0, find new functions <em>g</em> and <em>h</em> based on the current <em>g</em>.  The current <em>g</em> is bounded from above by <em>H</em>(<em>&lambda;</em>) = <em>&lambda;</em>*3*(2&minus;<em>&lambda;</em>)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so <em>G</em>(<em>&lambda;</em>) = 5/12 if <em>&lambda;</em> = 0, and &minus;(5*cosh(<em>&lambda;</em>) &minus; 5)/(3*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em>&minus;2)) otherwise. <em>G</em> is bounded away from 0 and 1, resulting in the following algorithm:</p>
 
 <ol>
 <li>(Simulate <em>h</em>.) Flip the input coin.  If it returns 0, return 0.</li>
@@ -300,7 +300,7 @@
 <li>Once elevated to degree 4, the degree-2 polynomial&#39;s coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].</li>
 </ul>
 
-<p>As we can see, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
+<p>As can be seen, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
 
 <p><em>The rest of this section will note counterexamples involving other functions and schemes, without demonstrating them in detail.</em></p>
 
@@ -335,28 +335,28 @@
 
 <p>After elevating <em>g</em>&#39;s degree, <em>g</em>&#39;s coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.</p>
 
-<p>However, if we clamp coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.</p>
+<p>However, by clamping coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.</p>
 
 <p><a id=Approximate_Bernoulli_Factories></a></p>
 
 <h2>Approximate Bernoulli Factories</h2>
 
-<p>Although the schemes in the previous section don&#39;t work when building a <em>family</em> of polynomials that converge to a function <em>f</em>(<em>&lambda;</em>), they are still useful for building an <em>approximation</em> to that function, in the form of a <em>single</em> polynomial, so that we get an <strong>approximate Bernoulli factory</strong> for <em>f</em>.</p>
+<p>Although the schemes in the previous section don&#39;t work when building a <em>family</em> of polynomials that converge to a function <em>f</em>(<em>&lambda;</em>), they are still useful for building an <em>approximation</em> to that function, in the form of a <em>single</em> polynomial, leading to an <strong>approximate Bernoulli factory</strong> for <em>f</em>.</p>
 
 <p>Here, <em>f</em>(<em>&lambda;</em>) can be any function that maps the closed interval [0, 1] to [0, 1], even if it isn&#39;t continuous or a factory function (examples include the &quot;step function&quot; 0 if <em>&lambda;</em> &lt; 1/2 and 1 otherwise, or the function 2*min(<em>&lambda;</em>, 1 &minus; <em>&lambda;</em>)).  Continuous functions can be approximated arbitrarily well by an approximate Bernoulli factory (as a result of the so-called &quot;Weierstrass approximation theorem&quot;), but this is not the case in general for discontinuous functions.</p>
 
 <p>To build an approximate Bernoulli factory:</p>
 
 <ol>
-<li><p>We first find a polynomial in Bernstein form of degree <em>n</em> that is close to the desired function <em>f</em>.</p>
+<li><p>First, find a polynomial in Bernstein form of degree <em>n</em> that is close to the desired function <em>f</em>.</p>
 
 <p>The simplest choice for this polynomial has <em>n</em>+1 coefficients and its <em>j</em><sup>th</sup> coefficient (starting at 0) is found as <em>f</em>(<em>j</em>/<em>n</em>), and this is used in the examples below.  For this choice, if <em>f</em> is continuous, the polynomial can be brought arbitrarily close to <em>f</em> by choosing <em>n</em> high enough.</p>
 
 <p>Whatever polynomial is used, the polynomial&#39;s coefficients must all lie in [0, 1].</p></li>
-<li><p>Then, we use one of the algorithms in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; to toss heads with probability equal to that polynomial, given its coefficients.</p></li>
+<li><p>Then, use one of the algorithms in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; to toss heads with probability equal to that polynomial, given its coefficients.</p></li>
 </ol>
 
-<p><strong>Examples of approximate Bernoulli factories.</strong> The schemes in the previous section give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> polynomial in Bernstein form.  For example, the third scheme does this when <em>f</em> is a Lipschitz continuous function (with Lipschitz constant <em>L</em>).  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, we need to solve the following equation for <em>n</em>:</p>
+<p><strong>Examples of approximate Bernoulli factories.</strong> The schemes in the previous section give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> polynomial in Bernstein form.  For example, the third scheme does this when <em>f</em> is a Lipschitz continuous function (with Lipschitz constant <em>L</em>).  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, the following equation is solved for <em>n</em>:</p>
 
 <ul>
 <li><em>&epsilon;</em> = <em>L</em>*((4306+837*sqrt(6))/5832) / sqrt(<em>n</em>).</li>
@@ -368,7 +368,7 @@
 <li><em>n</em> = <em>L</em><sup>2</sup>*(3604122*sqrt(6) + 11372525)/(17006112*<em>&epsilon;</em><sup>2</sup>).</li>
 </ul>
 
-<p>This is generally not an integer, so we use <em>n</em> = ceil(<em>n</em>) to get the solution if it&#39;s an integer, or the nearest integer that&#39;s bigger than the solution.  This solution can be simplified further to <em>n</em> = ceil(59393*<em>L</em><sup>2</sup>/(50000*<em>&epsilon;</em><sup>2</sup>)), which bounds the previous solution from above.</p>
+<p>This is generally not an integer, so use <em>n</em> = ceil(<em>n</em>) to get the solution if it&#39;s an integer, or the nearest integer that&#39;s bigger than the solution.  This solution can be simplified further to <em>n</em> = ceil(59393*<em>L</em><sup>2</sup>/(50000*<em>&epsilon;</em><sup>2</sup>)), which bounds the previous solution from above.</p>
 
 <p>Now, if <em>f</em> is a Lipschitz continuous factory function with Lipschitz constant <em>L</em>, the following algorithm (adapted from &quot;Certain Polynomials&quot;) simulates a polynomial that approximates <em>f</em> with a maximum error of <em>&epsilon;</em>:</p>
 
@@ -378,7 +378,7 @@
 <li>With probability <em>f</em>(<em>j</em>/<em>n</em>), return 1.  Otherwise, return 0. (If <em>f</em>(<em>j</em>/<em>n</em>) can be an irrational number, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants"><strong>Algorithms for General Irrational Constants</strong></a>&quot; for ways to sample this irrational probability exactly.)</li>
 </ol>
 
-<p>As another example, we use the first scheme in the previous section to get the following approximate algorithm for C<sup>2</sup> continuous functions with maximum &quot;slope-of-slope&quot; of <em>M</em>:</p>
+<p>As another example, the first scheme in the previous section is used to get the following approximate algorithm for C<sup>2</sup> continuous functions with maximum &quot;slope-of-slope&quot; of <em>M</em>:</p>
 
 <ol>
 <li>Calculate <em>n</em> as ceil(<em>M</em>/(8*<em>&epsilon;</em>)) (upper bound of the solution to the equation <em>&epsilon;</em> = <em>M</em>/(8*<em>n</em>)).</li>
@@ -386,7 +386,7 @@
 <li>With probability <em>f</em>(<em>j</em>/<em>n</em>), return 1.  Otherwise, return 0.</li>
 </ol>
 
-<p>We can proceed similarly with other methods that give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function <em>f</em> that we seek to approximate.</p>
+<p>Other methods similar to this one can give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function <em>f</em> to be approximated.</p>
 
 <p><strong>Approximate methods for linear functions.</strong> There are a number of approximate methods to simulate <em>&lambda;</em>*<em>c</em>, where <em>c</em> &gt; 1 and <em>&lambda;</em> lies in [0, 1/<em>c</em>).  (&quot;Approximate&quot; because this function touches 1 at 1/<em>c</em>, so it can&#39;t be a factory function.) Since the methods use only up to <em>n</em> flips, where <em>n</em> is an integer greater than 0, the approximation will be a polynomial of degree <em>n</em>.</p>
 
@@ -989,7 +989,7 @@
 
 <p>Keane and O&#39;Brien already showed that <em>f</em> is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of <em>f</em>.  Conditions 3 and 4 are required because <em>&lambda;</em> (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a &quot;degenerate&quot; coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory algorithm for <em>f</em> must return 1 with probability 1, or 0 with probability 1, when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.</p>
 
-<p>We can show that <em>f</em> is strongly simulable by showing that there is a Bernoulli factory for <em>f</em> that must flip the input coin and get 0 and 1 before it uses any outside randomness.</p>
+<p>To show that <em>f</em> is strongly simulable, it&#39;s enough to show that there is a Bernoulli factory for <em>f</em> that must flip the input coin and get 0 and 1 before it uses any outside randomness.</p>
 
 <p><strong>Proposition 1.</strong> <em>If f(&lambda;) is described in the strong simulability statement and is a polynomial with computable coefficients, it is strongly simulable.</em></p>
 

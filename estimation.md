@@ -174,6 +174,21 @@ The algorithm, called **Algorithm C** in this document, follows.
 > 2. The kurtosis of a Poisson distribution with mean _&mu;_ is (3 + 1/_&mu;_).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or greater but otherwise unknown, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (3 + 1/_&nu;_)<sup>1/4</sup>.
 > 3. The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; 9<sup>1/4</sup> = sqrt(3).
 
+<a id=Estimating_the_Mode></a>
+## Estimating the Mode
+
+Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the _mode_.(Dutta and Goswami 2010)[^12]  This assumes the following are known:
+
+- Exactly one item must occur more frequently than the others.
+- $\epsilon$ is greater than 0 and less than one half of the smallest possible difference between the mode's probability and the next most frequent item's probability.
+- $\delta$ is greater than 0 and less than 1.
+- _n_ is the number of distinct items that can be taken.
+
+The following algorithm correctly estimates the mode with probability $1-\delta$.
+
+1. Calculate _m_ = ceil($\frac{(4\epsilon+3)(\ln(\frac{n}{\delta})+\ln(2))}{6\epsilon^2}$).
+2. Take _m_ items from the stream.  If one item occurs more frequently than any other item taken this way, return the most frequent item.  Otherwise, return an arbitrary but fixed item (among the items the stream can take).
+
 <a id=Estimating_a_Function_of_the_Mean></a>
 ## Estimating a Function of the Mean
 
@@ -342,6 +357,9 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 [^10]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
 [^11]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+
+[^12]:
+    Dutta, Santanu, and Alok Goswami. "Mode estimation for discrete distributions." Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.
 
 <a id=License></a>
 ## License
