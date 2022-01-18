@@ -8,31 +8,6 @@
 
 <h1>com.upokecenter.util.ArrayWriter</h1>
 
-<pre>public final class ArrayWriter extends java.lang.Object implements IWriter
-</pre>
-
-<p>An array of bytes that grows as needed.</p>
-
-<h2>Methods</h2>
-
-<ul>
-<li><code>ArrayWriter() com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class
-with a default backing store size of 16.</li>
-<li><code>ArrayWriter​(int initialSize) com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class.</li>
-<li><code>void Clear()</code><br>
-Offers a fast way to reset the length of the array writer&#39;s data to 0.</li>
-<li><code>byte[] ToArray()</code><br>
-Generates an array of all bytes written so far to it.</li>
-<li><code>void write​(byte[] src,
- int offset,
- int length)</code><br>
-Writes a series of bytes to the array.</li>
-<li><code>void write​(int byteValue)</code><br>
-Writes an 8-bit byte to the array.</li>
-</ul>
-
 <h2>Constructors</h2>
 
 <ul>
@@ -43,40 +18,28 @@ with a default backing store size of 16.</li>
 Initializes a new instance of the com.upokecenter.ArrayWriter class.</li>
 </ul>
 
-<h2>Method Details</h2>
-
-<h3>ArrayWriter</h3>
-
-<pre>public ArrayWriter()
-</pre>
-
-<p>Initializes a new instance of the <code>com.upokecenter.ArrayWriter</code> class
- with a default backing store size of 16.</p>
-
-<h3>ArrayWriter</h3>
-
-<pre>public ArrayWriter​(int initialSize)
-</pre>
-
-<p>Initializes a new instance of the <code>com.upokecenter.ArrayWriter</code> class.</p>
-
-<p><strong>Parameters:</strong></p>
+<h2>Methods</h2>
 
 <ul>
-<li><code>initialSize</code> - The initial size of the array writer&#39;s backing store.</li>
+<li><code>void Clear()</code><br>
+Offers a fast way to reset the length of the array writer&#39;s data to 0.</li>
+<li><code>byte[] ToArray()</code><br>
+Generates an array of all bytes written so far to it.</li>
+<li><code>void write​(byte[] src,
+int offset,
+int length)</code><br>
+Writes a series of bytes to the array.</li>
+<li><code>void write​(int byteValue)</code><br>
+Writes an 8-bit byte to the array.</li>
 </ul>
 
-<h3>Clear</h3>
+<h2>Method Details</h2>
 
-<pre>public void Clear()
-</pre>
+<h3><a id='Clear()'>Clear</a></h3>
 
 <p>Offers a fast way to reset the length of the array writer&#39;s data to 0.</p>
 
-<h3>ToArray</h3>
-
-<pre>public byte[] ToArray()
-</pre>
+<h3><a id='ToArray()'>ToArray</a></h3>
 
 <p>Generates an array of all bytes written so far to it.</p>
 
@@ -86,10 +49,7 @@ Initializes a new instance of the com.upokecenter.ArrayWriter class.</li>
 <li>A byte array.</li>
 </ul>
 
-<h3>write</h3>
-
-<pre>public void write​(int byteValue)
-</pre>
+<h3><a id='write(int)'>write</a></h3>
 
 <p>Writes an 8-bit byte to the array.</p>
 
@@ -106,10 +66,7 @@ Initializes a new instance of the com.upokecenter.ArrayWriter class.</li>
 bits of this value will be used.</li>
 </ul>
 
-<h3>write</h3>
-
-<pre>public void write​(byte[] src, int offset, int length)
-</pre>
+<h3><a id='write(byte[],int,int)'>write</a></h3>
 
 <p>Writes a series of bytes to the array.</p>
 

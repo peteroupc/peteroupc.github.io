@@ -40,11 +40,11 @@ Instead, convert this object to a number (with .getAsNumber()()),
 and use that number&#39;s.getAbs()() method.</li>
 <li><code>CBORObject Add​(CBORObject obj)</code><br>
 Adds a new object to the end of this array.</li>
-<li><code>CBORObject Add​(java.lang.Object obj)</code><br>
+<li><code>CBORObject Add​(Object obj)</code><br>
 Converts an object to a CBOR object and adds it to the end of this
 array.</li>
-<li><code>CBORObject Add​(java.lang.Object key,
-java.lang.Object valueOb)</code><br>
+<li><code>CBORObject Add​(Object key,
+Object valueOb)</code><br>
 Adds a new key and its value to this CBOR map, or adds the value if the
 key doesn&#39;t exist.</li>
 <li><code>static CBORObject Addition​(CBORObject first,
@@ -137,11 +137,11 @@ is Integer.</li>
 Converts this object to a CBOR number.</li>
 <li><code>float AsSingle()</code><br>
 Converts this object to a 32-bit floating point number.</li>
-<li><code>java.lang.String AsString()</code><br>
+<li><code>String AsString()</code><br>
 Gets the value of this object as a text string.</li>
-<li><code>CBORObject AtJSONPointer​(java.lang.String pointer)</code><br>
+<li><code>CBORObject AtJSONPointer​(String pointer)</code><br>
 Gets the CBOR object referred to by a JSON Pointer according to RFC6901.</li>
-<li><code>CBORObject AtJSONPointer​(java.lang.String pointer,
+<li><code>CBORObject AtJSONPointer​(String pointer,
 CBORObject defaultValue)</code><br>
 Gets the CBOR object referred to by a JSON Pointer according to RFC6901, or
 a default value if the operation fails.</li>
@@ -212,9 +212,9 @@ Compares this object and another CBOR object, ignoring the tags they have,
 if any.</li>
 <li><code>boolean ContainsKey​(CBORObject key)</code><br>
 Determines whether a value of the given key exists in this object.</li>
-<li><code>boolean ContainsKey​(java.lang.Object objKey)</code><br>
+<li><code>boolean ContainsKey​(Object objKey)</code><br>
 Determines whether a value of the given key exists in this object.</li>
-<li><code>boolean ContainsKey​(java.lang.String key)</code><br>
+<li><code>boolean ContainsKey​(String key)</code><br>
 Determines whether a value of the given key exists in this object.</li>
 <li><code>static CBORObject DecodeFromBytes​(byte[] data)</code><br>
 Generates a CBOR object from an array of CBOR-encoded bytes.</li>
@@ -224,24 +224,24 @@ Generates a CBOR object from an array of CBOR-encoded bytes, using the given
 CBOREncodeOptions object to control the decoding process.</li>
 <li><code>static &lt;T&gt; T DecodeObjectFromBytes​(byte[] data,
 CBOREncodeOptions enc,
-java.lang.reflect.Type t) CBOREncodeOptions</code><br>
+Type t) CBOREncodeOptions</code><br>
 Generates an object of an arbitrary type from an array of CBOR-encoded
 bytes, using the given CBOREncodeOptions object to control
 the decoding process.</li>
 <li><code>static &lt;T&gt; T DecodeObjectFromBytes​(byte[] data,
 CBOREncodeOptions enc,
-java.lang.reflect.Type t,
+Type t,
 CBORTypeMapper mapper,
 PODOptions pod) CBOREncodeOptions</code><br>
 Generates an object of an arbitrary type from an array of CBOR-encoded
 bytes, using the given CBOREncodeOptions object to control
 the decoding process.</li>
 <li><code>static &lt;T&gt; T DecodeObjectFromBytes​(byte[] data,
-java.lang.reflect.Type t)</code><br>
+Type t)</code><br>
 Generates an object of an arbitrary type from an array of CBOR-encoded
 bytes.</li>
 <li><code>static &lt;T&gt; T DecodeObjectFromBytes​(byte[] data,
-java.lang.reflect.Type t,
+Type t,
 CBORTypeMapper mapper,
 PODOptions pod)</code><br>
 Generates an object of an arbitrary type from an array of CBOR-encoded
@@ -269,7 +269,7 @@ array of that representation, using the specified options for
 encoding the object to CBOR format.</li>
 <li><code>boolean equals​(CBORObject other)</code><br>
 Compares the equality of two CBOR objects.</li>
-<li><code>boolean equals​(java.lang.Object obj)</code><br>
+<li><code>boolean equals​(Object obj)</code><br>
 Determines whether this object and another object are equal and have the
 same type.</li>
 <li><code>static CBORObject FromFloatingPointBits​(long floatingBits,
@@ -304,22 +304,22 @@ JSONOptions options)</code><br>
 Generates a list of CBOR objects from an array of bytes in JavaScript object
 Notation (JSON) text sequence format (RFC 7464), using the specified
 options to control the decoding process.</li>
-<li><code>static CBORObject FromJSONString​(java.lang.String str)</code><br>
+<li><code>static CBORObject FromJSONString​(String str)</code><br>
 Generates a CBOR object from a text string in JavaScript object Notation
 (JSON) format.</li>
-<li><code>static CBORObject FromJSONString​(java.lang.String str,
+<li><code>static CBORObject FromJSONString​(String str,
 int offset,
 int count)</code><br>
 Generates a CBOR object from a text string in JavaScript object Notation
 (JSON) format.</li>
-<li><code>static CBORObject FromJSONString​(java.lang.String str,
+<li><code>static CBORObject FromJSONString​(String str,
 int offset,
 int count,
 JSONOptions jsonoptions)</code><br>
 Generates a CBOR object from a text string in JavaScript object Notation
 (JSON) format, using the specified options to control the decoding
 process.</li>
-<li><code>static CBORObject FromJSONString​(java.lang.String str,
+<li><code>static CBORObject FromJSONString​(String str,
 CBOREncodeOptions options)</code><br>
 Deprecated.
 Instead, use.getFromJSONString()(str,
@@ -330,7 +330,7 @@ Instead, use.getFromJSONString()(str,
 new JSONOptions(\allowduplicatekeys = true))
 or .getFromJSONString()(str,   new
 JSONOptions(\allowduplicatekeys = false)), as appropriate.</li>
-<li><code>static CBORObject FromJSONString​(java.lang.String str,
+<li><code>static CBORObject FromJSONString​(String str,
 JSONOptions jsonoptions)</code><br>
 Generates a CBOR object from a text string in JavaScript object Notation
 (JSON) format, using the specified options to control the decoding
@@ -369,27 +369,27 @@ number.</li>
 Generates a CBOR object from an arbitrary-precision integer.</li>
 <li><code>static CBORObject FromObject​(com.upokecenter.numbers.ERational bigValue)</code><br>
 Generates a CBOR object from an arbitrary-precision rational number.</li>
-<li><code>static CBORObject FromObject​(java.lang.Object obj)</code><br>
+<li><code>static CBORObject FromObject​(Object obj)</code><br>
 Generates a CBORObject from an arbitrary object.</li>
-<li><code>static CBORObject FromObject​(java.lang.Object obj,
+<li><code>static CBORObject FromObject​(Object obj,
 CBORTypeMapper mapper)</code><br>
 Generates a CBORObject from an arbitrary object.</li>
-<li><code>static CBORObject FromObject​(java.lang.Object obj,
+<li><code>static CBORObject FromObject​(Object obj,
 CBORTypeMapper mapper,
 PODOptions options)</code><br>
 Generates a CBORObject from an arbitrary object, using the given options
 to control how certain objects are converted to CBOR objects.</li>
-<li><code>static CBORObject FromObject​(java.lang.Object obj,
+<li><code>static CBORObject FromObject​(Object obj,
 PODOptions options)</code><br>
 Generates a CBORObject from an arbitrary object.</li>
-<li><code>static CBORObject FromObject​(java.lang.String strValue)</code><br>
+<li><code>static CBORObject FromObject​(String strValue)</code><br>
 Generates a CBOR object from a text string.</li>
-<li><code>static CBORObject FromObjectAndTag​(java.lang.Object valueObValue,
+<li><code>static CBORObject FromObjectAndTag​(Object valueObValue,
 int smallTag)</code><br>
 Generates a CBOR object from an arbitrary object and gives the resulting
 object a tag in addition to its existing tags (the new tag is made
 the outermost tag).</li>
-<li><code>static CBORObject FromObjectAndTag​(java.lang.Object valueOb,
+<li><code>static CBORObject FromObjectAndTag​(Object valueOb,
 com.upokecenter.numbers.EInteger bigintTag)</code><br>
 Generates a CBOR object from an arbitrary object and gives the resulting
 object a tag in addition to its existing tags (the new tag is made
@@ -402,17 +402,17 @@ key in this map.</li>
 <li><code>CBORObject get​(CBORObject key)</code><br>
 Gets the value of a CBOR object by integer index in this array or by CBOR
 object key in this map.</li>
-<li><code>CBORObject get​(java.lang.String key)</code><br>
+<li><code>CBORObject get​(String key)</code><br>
 Gets the value of a CBOR object in this map, using a string as the key.</li>
 <li><code>com.upokecenter.numbers.EInteger[] GetAllTags()</code><br>
 Gets a list of all tags, from outermost to innermost.</li>
 <li><code>byte[] GetByteString()</code><br>
 Gets the backing byte array used in this CBOR object, if this object is a
 byte string, without copying the data to a new byte array.</li>
-<li><code>java.util.Collection&lt;java.util.Map.Entry&lt;CBORObject,​CBORObject&gt;&gt; getEntries()</code><br>
+<li><code>Collection&lt;Map.Entry&lt;CBORObject,​CBORObject&gt;&gt; getEntries()</code><br>
 Gets a collection of the key/value pairs stored in this CBOR object, if it&#39;s
 a map.</li>
-<li><code>java.util.Collection&lt;CBORObject&gt; getKeys()</code><br>
+<li><code>Collection&lt;CBORObject&gt; getKeys()</code><br>
 Gets a collection of the keys of this CBOR object.</li>
 <li><code>com.upokecenter.numbers.EInteger getMostInnerTag()</code><br>
 Gets the last defined tag for this CBOR data item, or -1 if the item is
@@ -420,7 +420,7 @@ untagged.</li>
 <li><code>com.upokecenter.numbers.EInteger getMostOuterTag()</code><br>
 Gets the outermost tag for this CBOR data item, or -1 if the item is
 untagged.</li>
-<li><code>CBORObject GetOrDefault​(java.lang.Object key,
+<li><code>CBORObject GetOrDefault​(Object key,
 CBORObject defaultValue)</code><br>
 Gets the value of a CBOR object by integer index in this array or by CBOR
 object key in this map, or a default value if that value is not
@@ -432,7 +432,7 @@ simple value.</li>
 Gets the number of tags this object has.</li>
 <li><code>CBORType getType()</code><br>
 Gets the general data type of this CBOR object.</li>
-<li><code>java.util.Collection&lt;CBORObject&gt; getValues()</code><br>
+<li><code>Collection&lt;CBORObject&gt; getValues()</code><br>
 Gets a collection of the values of this CBOR object, if it&#39;s a map or an
 array.</li>
 <li><code>int hashCode()</code><br>
@@ -462,7 +462,7 @@ Returns whether this object has a tag of the given number.</li>
 <li><code>boolean HasTag​(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
 Returns whether this object has a tag of the given number.</li>
 <li><code>CBORObject Insert​(int index,
-java.lang.Object valueOb)</code><br>
+Object valueOb)</code><br>
 Inserts an object at the specified position in this CBOR array.</li>
 <li><code>boolean isFalse()</code><br>
 Gets a value indicating whether this value is a CBOR false value, whether
@@ -549,16 +549,16 @@ Creates a new empty CBOR map that stores its keys in an undefined order.</li>
 <li><code>static CBORObject NewOrderedMap()</code><br>
 Creates a new empty CBOR map that ensures that keys are stored in the order
 in which they are first inserted.</li>
-<li><code>static CBORObject Read​(java.io.InputStream stream)</code><br>
+<li><code>static CBORObject Read​(InputStream stream)</code><br>
 Reads an object in CBOR format from a data stream.</li>
-<li><code>static CBORObject Read​(java.io.InputStream stream,
+<li><code>static CBORObject Read​(InputStream stream,
 CBOREncodeOptions options)</code><br>
 Reads an object in CBOR format from a data stream, using the specified
 options to control the decoding process.</li>
-<li><code>static CBORObject ReadJSON​(java.io.InputStream stream)</code><br>
+<li><code>static CBORObject ReadJSON​(InputStream stream)</code><br>
 Generates a CBOR object from a data stream in JavaScript object Notation
 (JSON) format.</li>
-<li><code>static CBORObject ReadJSON​(java.io.InputStream stream,
+<li><code>static CBORObject ReadJSON​(InputStream stream,
 CBOREncodeOptions options)</code><br>
 Deprecated.
 Instead, use.getReadJSON()(stream,
@@ -571,21 +571,21 @@ new JSONOptions(\allowduplicatekeys = true))
 or .getReadJSON()(stream,
 new JSONOptions(\allowduplicatekeys = false)),
 as appropriate.</li>
-<li><code>static CBORObject ReadJSON​(java.io.InputStream stream,
+<li><code>static CBORObject ReadJSON​(InputStream stream,
 JSONOptions jsonoptions)</code><br>
 Generates a CBOR object from a data stream in JavaScript object Notation
 (JSON) format, using the specified options to control the decoding
 process.</li>
-<li><code>static CBORObject[] ReadJSONSequence​(java.io.InputStream stream)</code><br>
+<li><code>static CBORObject[] ReadJSONSequence​(InputStream stream)</code><br>
 Generates a list of CBOR objects from a data stream in JavaScript object
 Notation (JSON) text sequence format (RFC 7464).</li>
-<li><code>static CBORObject[] ReadJSONSequence​(java.io.InputStream stream,
+<li><code>static CBORObject[] ReadJSONSequence​(InputStream stream,
 JSONOptions jsonoptions)</code><br>
 Generates a list of CBOR objects from a data stream in JavaScript object
 Notation (JSON) text sequence format (RFC 7464).</li>
-<li><code>static CBORObject[] ReadSequence​(java.io.InputStream stream)</code><br>
+<li><code>static CBORObject[] ReadSequence​(InputStream stream)</code><br>
 Reads a sequence of objects in CBOR format from a data stream.</li>
-<li><code>static CBORObject[] ReadSequence​(java.io.InputStream stream,
+<li><code>static CBORObject[] ReadSequence​(InputStream stream,
 CBOREncodeOptions options)</code><br>
 Reads a sequence of objects in CBOR format from a data stream.</li>
 <li><code>static CBORObject Remainder​(CBORObject first,
@@ -598,7 +598,7 @@ use the first number&#39;s.Remainder() method.</li>
 <li><code>boolean Remove​(CBORObject obj)</code><br>
 If this object is an array, removes the first instance of the specified item
 from the array.</li>
-<li><code>boolean Remove​(java.lang.Object obj)</code><br>
+<li><code>boolean Remove​(Object obj)</code><br>
 If this object is an array, removes the first instance of the specified item
 (once converted to a CBOR object) from the array.</li>
 <li><code>boolean RemoveAt​(int index)</code><br>
@@ -611,11 +611,11 @@ key in this map.</li>
 CBORObject value)</code><br>
 Sets the value of a CBOR object by integer index in this array or by CBOR
 object key in this map.</li>
-<li><code>void set​(java.lang.String key,
+<li><code>void set​(String key,
 CBORObject value)</code><br>
 Sets the value of a CBOR object in this map, using a string as the key.</li>
-<li><code>CBORObject Set​(java.lang.Object key,
-java.lang.Object valueOb)</code><br>
+<li><code>CBORObject Set​(Object key,
+Object valueOb)</code><br>
 Maps an object to a key in this CBOR map, or adds the value if the key
 doesn&#39;t exist.</li>
 <li><code>int signum()</code><br>
@@ -640,25 +640,25 @@ format.</li>
 <li><code>byte[] ToJSONBytes​(JSONOptions jsonoptions)</code><br>
 Converts this object to a byte array in JavaScript object Notation (JSON)
 format.</li>
-<li><code>java.lang.String ToJSONString()</code><br>
+<li><code>String ToJSONString()</code><br>
 Converts this object to a text string in JavaScript object Notation (JSON)
 format.</li>
-<li><code>java.lang.String ToJSONString​(JSONOptions options)</code><br>
+<li><code>String ToJSONString​(JSONOptions options)</code><br>
 Converts this object to a text string in JavaScript object Notation (JSON)
 format, using the specified options to control the encoding process.</li>
-<li><code>&lt;T&gt; T ToObject​(java.lang.reflect.Type t)</code><br>
+<li><code>&lt;T&gt; T ToObject​(Type t)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
-<li><code>&lt;T&gt; T ToObject​(java.lang.reflect.Type t,
+<li><code>&lt;T&gt; T ToObject​(Type t,
 CBORTypeMapper mapper)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
-<li><code>&lt;T&gt; T ToObject​(java.lang.reflect.Type t,
+<li><code>&lt;T&gt; T ToObject​(Type t,
 CBORTypeMapper mapper,
 PODOptions options)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
-<li><code>&lt;T&gt; T ToObject​(java.lang.reflect.Type t,
+<li><code>&lt;T&gt; T ToObject​(Type t,
 PODOptions options)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
-<li><code>java.lang.String toString()</code><br>
+<li><code>String toString()</code><br>
 Returns this CBOR object in a text form intended to be read by humans.</li>
 <li><code>CBORObject Untag()</code><br>
 Gets an object with the same value as this one but without the tags it has,
@@ -675,119 +675,119 @@ Generates a CBOR object from this one, but gives the resulting object a tag
 in addition to its existing tags (the new tag is made the outermost
 tag).</li>
 <li><code>static void Write​(boolean value,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a Boolean value in CBOR format to a data stream.</li>
 <li><code>static void Write​(byte value,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a byte (0 to 255) in CBOR format to a data stream.</li>
 <li><code>static void Write​(double value,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a 64-bit floating-point number in CBOR format to a data stream.</li>
 <li><code>static void Write​(float value,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a 32-bit floating-point number in CBOR format to a data stream.</li>
 <li><code>static void Write​(int value,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a 32-bit signed integer in CBOR format to a data stream.</li>
 <li><code>static void Write​(long value,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a 64-bit signed integer in CBOR format to a data stream.</li>
 <li><code>static void Write​(short value,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a 16-bit signed integer in CBOR format to a data stream.</li>
 <li><code>static void Write​(CBORObject value,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a CBOR object to a CBOR data stream.</li>
 <li><code>static void Write​(com.upokecenter.numbers.EDecimal bignum,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a decimal floating-point number in CBOR format to a data stream, as
 though it were converted to a CBOR object via
 CBORObject.FromObject(EDecimal) and then written out.</li>
 <li><code>static void Write​(com.upokecenter.numbers.EFloat bignum,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a binary floating-point number in CBOR format to a data stream, as
 though it were converted to a CBOR object via
 CBORObject.FromObject(EFloat) and then written out.</li>
 <li><code>static void Write​(com.upokecenter.numbers.EInteger bigint,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a arbitrary-precision integer in CBOR format to a data stream.</li>
 <li><code>static void Write​(com.upokecenter.numbers.ERational rational,
-java.io.OutputStream stream)</code><br>
+OutputStream stream)</code><br>
 Writes a rational number in CBOR format to a data stream, as though it were
 converted to a CBOR object via CBORObject.FromObject(ERational) and
 then written out.</li>
-<li><code>static void Write​(java.lang.Object objValue,
-java.io.OutputStream stream)</code><br>
+<li><code>static void Write​(Object objValue,
+OutputStream stream)</code><br>
 Writes a CBOR object to a CBOR data stream.</li>
-<li><code>static void Write​(java.lang.Object objValue,
-java.io.OutputStream output,
+<li><code>static void Write​(Object objValue,
+OutputStream output,
 CBOREncodeOptions options)</code><br>
 Writes an arbitrary object to a CBOR data stream, using the specified
 options for controlling how the object is encoded to CBOR data
 format.</li>
-<li><code>static void Write​(java.lang.String str,
-java.io.OutputStream stream)</code><br>
+<li><code>static void Write​(String str,
+OutputStream stream)</code><br>
 Writes a text string in CBOR format to a data stream.</li>
-<li><code>static void Write​(java.lang.String str,
-java.io.OutputStream stream,
+<li><code>static void Write​(String str,
+OutputStream stream,
 CBOREncodeOptions options)</code><br>
 Writes a text string in CBOR format to a data stream, using the given
 options to control the encoding process.</li>
-<li><code>static int WriteFloatingPointBits​(java.io.OutputStream outputStream,
+<li><code>static int WriteFloatingPointBits​(OutputStream outputStream,
 long floatingBits,
 int byteCount)</code><br>
 Writes the bits of a floating-point number in CBOR format to a data stream.</li>
-<li><code>static int WriteFloatingPointBits​(java.io.OutputStream outputStream,
+<li><code>static int WriteFloatingPointBits​(OutputStream outputStream,
 long floatingBits,
 int byteCount,
 boolean shortestForm)</code><br>
 Writes the bits of a floating-point number in CBOR format to a data stream.</li>
-<li><code>static int WriteFloatingPointValue​(java.io.OutputStream outputStream,
+<li><code>static int WriteFloatingPointValue​(OutputStream outputStream,
 double doubleVal,
 int byteCount)</code><br>
 Writes a 64-bit binary floating-point number in CBOR format to a data
 stream, either in its 64-bit form, or its rounded 32-bit or 16-bit
 equivalent.</li>
-<li><code>static int WriteFloatingPointValue​(java.io.OutputStream outputStream,
+<li><code>static int WriteFloatingPointValue​(OutputStream outputStream,
 float singleVal,
 int byteCount)</code><br>
 Writes a 32-bit binary floating-point number in CBOR format to a data
 stream, either in its 64- or 32-bit form, or its rounded 16-bit
 equivalent.</li>
-<li><code>static void WriteJSON​(java.lang.Object obj,
-java.io.OutputStream outputStream)</code><br>
+<li><code>static void WriteJSON​(Object obj,
+OutputStream outputStream)</code><br>
 Converts an arbitrary object to a text string in JavaScript object Notation
 (JSON) format, as in the ToJSONString method, and writes that string
 to a data stream in UTF-8.</li>
-<li><code>void WriteJSONTo​(java.io.OutputStream outputStream)</code><br>
+<li><code>void WriteJSONTo​(OutputStream outputStream)</code><br>
 Converts this object to a text string in JavaScript object Notation (JSON)
 format, as in the ToJSONString method, and writes that string to a
 data stream in UTF-8.</li>
-<li><code>void WriteJSONTo​(java.io.OutputStream outputStream,
+<li><code>void WriteJSONTo​(OutputStream outputStream,
 JSONOptions options)</code><br>
 Converts this object to a text string in JavaScript object Notation (JSON)
 format, as in the ToJSONString method, and writes that string to a
 data stream in UTF-8, using the given JSON options to control the
 encoding process.</li>
-<li><code>void WriteTo​(java.io.OutputStream stream)</code><br>
+<li><code>void WriteTo​(OutputStream stream)</code><br>
 Writes this CBOR object to a data stream.</li>
-<li><code>void WriteTo​(java.io.OutputStream stream,
+<li><code>void WriteTo​(OutputStream stream,
 CBOREncodeOptions options)</code><br>
 Writes this CBOR object to a data stream, using the specified options for
 encoding the data to CBOR format.</li>
-<li><code>static int WriteValue​(java.io.OutputStream outputStream,
+<li><code>static int WriteValue​(OutputStream outputStream,
 int majorType,
 int value)</code><br>
 Writes a CBOR major type number and an integer 0 or greater associated with
 it to a data stream, where that integer is passed to this method as
 a 32-bit signed integer.</li>
-<li><code>static int WriteValue​(java.io.OutputStream outputStream,
+<li><code>static int WriteValue​(OutputStream outputStream,
 int majorType,
 long value)</code><br>
 Writes a CBOR major type number and an integer 0 or greater associated with
 it to a data stream, where that integer is passed to this method as
 a 64-bit signed integer.</li>
-<li><code>static int WriteValue​(java.io.OutputStream outputStream,
+<li><code>static int WriteValue​(OutputStream outputStream,
 int majorType,
 com.upokecenter.numbers.EInteger bigintValue)</code><br>
 Writes a CBOR major type number and an integer 0 or greater associated with
@@ -966,7 +966,7 @@ returned collection while iterating over the returned collection.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object is not a map.</li>
+<li><code>IllegalStateException</code> - This object is not a map.</li>
 </ul>
 
 <h3><a id='isNegative()'>isNegative</a></h3>
@@ -1006,7 +1006,7 @@ untagged.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number, or
+<li><code>IllegalStateException</code> - This object does not represent a number, or
 this object is a not-a-number (NaN) value.</li>
 </ul>
 
@@ -1067,7 +1067,7 @@ returned collection.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object is not a map.</li>
+<li><code>IllegalStateException</code> - This object is not a map.</li>
 </ul>
 
 <h3><a id='getValues()'>getValues</a></h3>
@@ -1093,7 +1093,7 @@ returned collection.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object is not a map or an array.</li>
+<li><code>IllegalStateException</code> - This object is not a map or an array.</li>
 </ul>
 
 <h3><a id='get(int)'>get</a></h3>
@@ -1122,10 +1122,10 @@ later).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object is not an array or map.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - This object is an array and the index is less than
+<li><p><code>IllegalStateException</code> - This object is not an array or map.</p></li>
+<li><p><code>IllegalArgumentException</code> - This object is an array and the index is less than
 0 or at least the size of the array.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter &quot;value&quot; is null (as opposed to
+<li><p><code>NullPointerException</code> - The parameter &quot;value&quot; is null (as opposed to
 CBORObject.Null).</p></li>
 </ul>
 
@@ -1145,10 +1145,10 @@ integer, even a negative one.).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object is not an array or map.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - This object is an array and the index is less than
+<li><p><code>IllegalStateException</code> - This object is not an array or map.</p></li>
+<li><p><code>IllegalArgumentException</code> - This object is an array and the index is less than
 0 or at least the size of the array.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter &quot;value&quot; is null (as opposed to
+<li><p><code>NullPointerException</code> - The parameter &quot;value&quot; is null (as opposed to
 CBORObject.Null).</p></li>
 </ul>
 
@@ -1203,11 +1203,11 @@ CBORObject.Null</code>) if an item with the given key doesn&#39;t exist.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The key is null (as opposed to
+<li><p><code>NullPointerException</code> - The key is null (as opposed to
 CBORObject.Null); or the set method is called and the value is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - This CBOR object is an array and the key is not an
+<li><p><code>IllegalArgumentException</code> - This CBOR object is an array and the key is not an
 integer 0 or greater and less than the size of the array.</p></li>
-<li><p><code>java.lang.IllegalStateException</code> - This object is not a map or an array.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map or an array.</p></li>
 </ul>
 
 <h3><a id='set(com.upokecenter.cbor.CBORObject,com.upokecenter.cbor.CBORObject)'>set</a></h3>
@@ -1226,11 +1226,11 @@ greater and less than the size of the array.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The key is null (as opposed to
+<li><p><code>NullPointerException</code> - The key is null (as opposed to
 CBORObject.Null); or the set method is called and the value is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - This CBOR object is an array and the key is not an
+<li><p><code>IllegalArgumentException</code> - This CBOR object is an array and the key is not an
 integer 0 or greater and less than the size of the array.</p></li>
-<li><p><code>java.lang.IllegalStateException</code> - This object is not a map or an array.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map or an array.</p></li>
 </ul>
 
 <h3><a id='get(java.lang.String)'>get</a></h3>
@@ -1253,8 +1253,8 @@ if an item with the given key doesn&#39;t exist.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The key is null.</p></li>
-<li><p><code>java.lang.IllegalStateException</code> - This object is not a map.</p></li>
+<li><p><code>NullPointerException</code> - The key is null.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
 </ul>
 
 <h3><a id='set(java.lang.String,com.upokecenter.cbor.CBORObject)'>set</a></h3>
@@ -1270,8 +1270,8 @@ if an item with the given key doesn&#39;t exist.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The key is null.</p></li>
-<li><p><code>java.lang.IllegalStateException</code> - This object is not a map.</p></li>
+<li><p><code>NullPointerException</code> - The key is null.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
 </ul>
 
 <h3><a id='Addition(com.upokecenter.cbor.CBORObject,com.upokecenter.cbor.CBORObject)'>Addition</a></h3>
@@ -1294,9 +1294,9 @@ if an item with the given key doesn&#39;t exist.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either or both operands are not numbers (as
+<li><p><code>IllegalArgumentException</code> - Either or both operands are not numbers (as
 opposed to Not-a-Number, NaN).</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+<li><p><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
 is null.</p></li>
 </ul>
 
@@ -1323,7 +1323,7 @@ is null.</p></li>
 parsing the data. This includes cases where not all of the byte
 array represents a CBOR object. This exception is also thrown if the
 parameter <code>data</code> is empty.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
 </ul>
 
 <h3><a id='DecodeSequenceFromBytes(byte[])'>DecodeSequenceFromBytes</a></h3>
@@ -1352,7 +1352,7 @@ an empty array if <code>data</code> is empty.</li>
 <li><p><code>CBORException</code> - There was an error in reading or
 parsing the data. This includes cases where the last CBOR object in
 the data was read only partly.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
 </ul>
 
 <h3><a id='DecodeSequenceFromBytes(byte[],com.upokecenter.cbor.CBOREncodeOptions)'>DecodeSequenceFromBytes</a></h3>
@@ -1385,7 +1385,7 @@ an empty array if <code>data</code> is empty.</li>
 <li><p><code>CBORException</code> - There was an error in reading or
 parsing the data. This includes cases where the last CBOR object in
 the data was read only partly.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
 parameter <code>options</code> is null.</p></li>
 </ul>
 
@@ -1417,7 +1417,7 @@ could not be parsed are replaced with <code>null</code> (as opposed to
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 <li><p><code>CBORException</code> - The byte array is not empty and
 does not begin with a record separator byte (0x1e), or an I/O error
 occurred.</p></li>
@@ -1459,7 +1459,7 @@ JSON.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>jsonoptions</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>jsonoptions</code> is null.</li>
 </ul>
 
 <h3><a id='FromJSONSequenceBytes(byte[],com.upokecenter.cbor.JSONOptions)'>FromJSONSequenceBytes</a></h3>
@@ -1492,7 +1492,7 @@ could not be parsed are replaced with <code>null</code> (as opposed to
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
 <li><p><code>CBORException</code> - The byte array is not empty and
 does not begin with a record separator byte (0x1e), or an I/O error
 occurred.</p></li>
@@ -1535,7 +1535,7 @@ parsing the data. This includes cases where not all of the byte
 array represents a CBOR object. This exception is also thrown if the
 parameter <code>data</code> is empty unless the AllowEmpty property is
 set on the given options object.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
 parameter <code>options</code> is null.</p></li>
 </ul>
 
@@ -1559,7 +1559,7 @@ parameter <code>options</code> is null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
 is null.</li>
 </ul>
 
@@ -1596,9 +1596,9 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 <li><p><code>CBORException</code> - The string is not in JSON format.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
 than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
 length minus <code>offset</code> is less than <code>count</code>.</p></li>
 </ul>
@@ -1631,7 +1631,7 @@ begin with a byte-order mark (U+FEFF).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> or <code>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>
 jsonoptions</code> is null.</p></li>
 <li><p><code>CBORException</code> - The string is not in JSON format.</p></li>
 </ul>
@@ -1665,7 +1665,7 @@ begin with a byte-order mark (U+FEFF).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 <li><p><code>CBORException</code> - The string is not in JSON format.</p></li>
 </ul>
 
@@ -1698,7 +1698,7 @@ method uses only the AllowDuplicateKeys property of this object.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> or <code>options</code>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>options</code>
 is null.</p></li>
 <li><p><code>CBORException</code> - The string is not in JSON format.</p></li>
 </ul>
@@ -1734,10 +1734,10 @@ object.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> or <code>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>
 jsonoptions</code> is null.</p></li>
 <li><p><code>CBORException</code> - The string is not in JSON format.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
 than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
 length minus <code>offset</code> is less than <code>count</code>.</p></li>
 </ul>
@@ -1785,7 +1785,7 @@ those types should likewise meet either criterion above.</li>
 this object&#39;s CBOR type, is not supported, or the given object&#39;s
 nesting is too deep, or another error occurred when serializing the
 object.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>t</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>t</code> is null.</p></li>
 </ul>
 
 <h3><a id='ToObject(java.lang.reflect.Type,com.upokecenter.cbor.CBORTypeMapper)'>ToObject</a></h3>
@@ -1824,7 +1824,7 @@ CBOR objects to certain data types.</p></li>
 <li><p><code>CBORException</code> - The given type <code>t</code>, or this
 object&#39;s CBOR type, is not supported, or the given object&#39;s nesting
 is too deep, or another error occurred when serializing the object.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>t</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>t</code> is null.</p></li>
 </ul>
 
 <h3><a id='ToObject(java.lang.reflect.Type,com.upokecenter.cbor.PODOptions)'>ToObject</a></h3>
@@ -1861,9 +1861,9 @@ objects.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.UnsupportedOperationException</code> - The given type <code>t</code>, or this object&#39;s
+<li><p><code>UnsupportedOperationException</code> - The given type <code>t</code>, or this object&#39;s
 CBOR type, is not supported.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>t</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>t</code> is null.</p></li>
 <li><p><code>CBORException</code> - The given object&#39;s nesting is too
 deep, or another error occurred when serializing the object.</p></li>
 </ul>
@@ -2088,7 +2088,7 @@ objects.</p></li>
 this object&#39;s CBOR type, is not supported, or the given object&#39;s
 nesting is too deep, or another error occurred when serializing the
 object.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>t</code> or <code>options</code> is
+<li><p><code>NullPointerException</code> - The parameter <code>t</code> or <code>options</code> is
 null.</p></li>
 </ul>
 
@@ -2142,7 +2142,7 @@ set on the given options object. Also thrown if the given type
 <code>t</code>, or this object&#39;s CBOR type, is not supported, or the
 given object&#39;s nesting is too deep, or another error occurred when
 serializing the object.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
 parameter <code>enc</code> is null, or the parameter <code>t</code> or <code>
 pod</code> is null.</p></li>
 </ul>
@@ -2192,7 +2192,7 @@ set on the given options object. Also thrown if the given type
 <code>t</code>, or this object&#39;s CBOR type, is not supported, or the
 given object&#39;s nesting is too deep, or another error occurred when
 serializing the object.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
 parameter <code>enc</code> is null, or the parameter <code>t</code> is null.</p></li>
 </ul>
 
@@ -2242,7 +2242,7 @@ set on the given options object. Also thrown if the given type
 <code>t</code>, or this object&#39;s CBOR type, is not supported, or the
 given object&#39;s nesting is too deep, or another error occurred when
 serializing the object.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
 parameter <code>t</code> or <code>pod</code> is null.</p></li>
 </ul>
 
@@ -2287,7 +2287,7 @@ set on the given options object. Also thrown if the given type
 <code>t</code>, or this object&#39;s CBOR type, is not supported, or the
 given object&#39;s nesting is too deep, or another error occurred when
 serializing the object.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
 parameter <code>t</code> is null.</p></li>
 </ul>
 
@@ -2467,7 +2467,7 @@ stringValue is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The string contains an unpaired surrogate code
+<li><code>IllegalArgumentException</code> - The string contains an unpaired surrogate code
 point.</li>
 </ul>
 
@@ -2713,7 +2713,7 @@ CBORObject.Null if the object is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>options</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>options</code> is null.</li>
 </ul>
 
 <h3><a id='FromObject(java.lang.Object,com.upokecenter.cbor.CBORTypeMapper)'>FromObject</a></h3>
@@ -2747,7 +2747,7 @@ CBORObject.Null if the object is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>mapper</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>mapper</code> is null.</li>
 </ul>
 
 <h3><a id='FromObject(java.lang.Object,com.upokecenter.cbor.CBORTypeMapper,com.upokecenter.cbor.PODOptions)'>FromObject</a></h3>
@@ -2888,7 +2888,7 @@ CBORObject.Null if the object is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>options</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>options</code> is null.</p></li>
 <li><p><code>CBORException</code> - An error occurred while
 converting the given object to a CBOR object.</p></li>
 </ul>
@@ -2920,9 +2920,9 @@ made the outermost tag).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>bigintTag</code> is less than 0 or
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigintTag</code> is less than 0 or
 greater than 2^64-1.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigintTag</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintTag</code> is null.</p></li>
 </ul>
 
 <h3><a id='FromObjectAndTag(java.lang.Object,com.upokecenter.numbers.EInteger)'>FromObjectAndTag</a></h3>
@@ -2961,9 +2961,9 @@ is null, returns a version of CBORObject.Null with the given tag.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>bigintTag</code> is less than 0 or
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigintTag</code> is less than 0 or
 greater than 2^64-1.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigintTag</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintTag</code> is null.</p></li>
 </ul>
 
 <h3><a id='WithTag(int)'>WithTag</a></h3>
@@ -2994,7 +2994,7 @@ made the outermost tag).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>smallTag</code> is less than 0.</li>
+<li><code>IllegalArgumentException</code> - The parameter <code>smallTag</code> is less than 0.</li>
 </ul>
 
 <h3><a id='FromObjectAndTag(java.lang.Object,int)'>FromObjectAndTag</a></h3>
@@ -3034,7 +3034,7 @@ null, returns a version of CBORObject.Null with the given tag.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>smallTag</code> is less than 0.</li>
+<li><code>IllegalArgumentException</code> - The parameter <code>smallTag</code> is less than 0.</li>
 </ul>
 
 <h3><a id='FromSimpleValue(int)'>FromSimpleValue</a></h3>
@@ -3057,7 +3057,7 @@ integer.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>simpleValue</code> is less than 0,
+<li><code>IllegalArgumentException</code> - The parameter <code>simpleValue</code> is less than 0,
 greater than 255, or from 24 through 31.</li>
 </ul>
 
@@ -3081,9 +3081,9 @@ greater than 255, or from 24 through 31.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either or both operands are not numbers (as
+<li><p><code>IllegalArgumentException</code> - Either or both operands are not numbers (as
 opposed to Not-a-Number, NaN).</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+<li><p><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
 is null.</p></li>
 </ul>
 
@@ -3141,12 +3141,12 @@ stream.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null, or the
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null, or the
 parameter &quot;options&quot; is null.</p></li>
 <li><p><code>CBORException</code> - There was an error in reading or
 parsing the data, including if the last CBOR object was read only
 partially.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='ReadSequence(java.io.InputStream,com.upokecenter.cbor.CBOREncodeOptions)'>ReadSequence</a></h3>
@@ -3176,12 +3176,12 @@ stream.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null, or the
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null, or the
 parameter <code>options</code> is null.</p></li>
 <li><p><code>CBORException</code> - There was an error in reading or
 parsing the data, including if the last CBOR object was read only
 partially.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='Read(java.io.InputStream)'>Read</a></h3>
@@ -3205,7 +3205,7 @@ partially.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
 <li><p><code>CBORException</code> - There was an error in reading or
 parsing the data.</p></li>
 </ul>
@@ -3234,7 +3234,7 @@ stream. See CBOREncodeOptions for more information.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
 <li><p><code>CBORException</code> - There was an error in reading or
 parsing the data.</p></li>
 </ul>
@@ -3269,8 +3269,8 @@ objects.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>CBORException</code> - The data stream contains invalid
 encoding or is not in JSON format.</p></li>
 </ul>
@@ -3305,8 +3305,8 @@ could not be parsed are replaced with <code>null</code> (as opposed to
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>CBORException</code> - The data stream is not empty and
 does not begin with a record separator byte (0x1e).</p></li>
 </ul>
@@ -3341,8 +3341,8 @@ method uses only the AllowDuplicateKeys property of this object.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>CBORException</code> - The data stream contains invalid
 encoding or is not in JSON format.</p></li>
 </ul>
@@ -3379,8 +3379,8 @@ could not be parsed are replaced with <code>null</code> (as opposed to
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>CBORException</code> - The data stream is not empty and
 does not begin with a record separator byte (0x1e).</p></li>
 </ul>
@@ -3418,8 +3418,8 @@ decoded to CBOR. See the JSONOptions class.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>CBORException</code> - The data stream contains invalid
 encoding or is not in JSON format.</p></li>
 </ul>
@@ -3458,7 +3458,7 @@ previous behavior of also supporting UTF-16 and UTF-32.).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 <li><p><code>CBORException</code> - The byte array contains invalid
 encoding or is not in JSON format.</p></li>
 </ul>
@@ -3498,7 +3498,7 @@ to CBOR. See the JSONOptions class.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> or <code>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> or <code>
 jsonoptions</code> is null.</p></li>
 <li><p><code>CBORException</code> - The byte array contains invalid
 encoding or is not in JSON format.</p></li>
@@ -3543,10 +3543,10 @@ behavior of also supporting UTF-16 and UTF-32.).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 <li><p><code>CBORException</code> - The byte array contains invalid
 encoding or is not in JSON format.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
 than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s
 length minus <code>offset</code> is less than <code>count</code>.</p></li>
 </ul>
@@ -3591,11 +3591,11 @@ to CBOR. See the JSONOptions class.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> or <code>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> or <code>
 jsonoptions</code> is null.</p></li>
 <li><p><code>CBORException</code> - The byte array contains invalid
 encoding or is not in JSON format.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
 than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s
 length minus <code>offset</code> is less than <code>count</code>.</p></li>
 </ul>
@@ -3621,7 +3621,7 @@ length minus <code>offset</code> is less than <code>count</code>.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
 is null.</li>
 </ul>
 
@@ -3645,9 +3645,9 @@ is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either or both operands are not numbers (as
+<li><p><code>IllegalArgumentException</code> - Either or both operands are not numbers (as
 opposed to Not-a-Number, NaN).</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+<li><p><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
 is null.</p></li>
 </ul>
 
@@ -3666,8 +3666,8 @@ is null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(java.lang.String,java.io.OutputStream,com.upokecenter.cbor.CBOREncodeOptions)'>Write</a></h3>
@@ -3686,8 +3686,8 @@ is null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(com.upokecenter.numbers.EFloat,java.io.OutputStream)'>Write</a></h3>
@@ -3707,8 +3707,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(com.upokecenter.numbers.ERational,java.io.OutputStream)'>Write</a></h3>
@@ -3727,8 +3727,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(com.upokecenter.numbers.EDecimal,java.io.OutputStream)'>Write</a></h3>
@@ -3747,8 +3747,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(com.upokecenter.numbers.EInteger,java.io.OutputStream)'>Write</a></h3>
@@ -3765,8 +3765,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(long,java.io.OutputStream)'>Write</a></h3>
@@ -3783,8 +3783,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(int,java.io.OutputStream)'>Write</a></h3>
@@ -3801,8 +3801,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(short,java.io.OutputStream)'>Write</a></h3>
@@ -3819,8 +3819,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(boolean,java.io.OutputStream)'>Write</a></h3>
@@ -3837,8 +3837,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(byte,java.io.OutputStream)'>Write</a></h3>
@@ -3857,8 +3857,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(float,java.io.OutputStream)'>Write</a></h3>
@@ -3877,8 +3877,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(double,java.io.OutputStream)'>Write</a></h3>
@@ -3897,8 +3897,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='Write(com.upokecenter.cbor.CBORObject,java.io.OutputStream)'>Write</a></h3>
@@ -3915,8 +3915,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='Write(java.lang.Object,java.io.OutputStream)'>Write</a></h3>
@@ -3934,7 +3934,7 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.io.IOException</code></li>
+<li><code>IOException</code></li>
 </ul>
 
 <h3><a id='Write(java.lang.Object,java.io.OutputStream,com.upokecenter.cbor.CBOREncodeOptions)'>Write</a></h3>
@@ -3976,10 +3976,10 @@ likewise meet either criterion above.</p>.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The object&#39;s type is not supported.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>options</code> or <code>
+<li><p><code>IllegalArgumentException</code> - The object&#39;s type is not supported.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>options</code> or <code>
 output</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='WriteJSON(java.lang.Object,java.io.OutputStream)'>WriteJSON</a></h3>
@@ -4013,8 +4013,8 @@ likewise meet either criterion above.</p>.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='Abs()'>Abs</a></h3>
@@ -4030,7 +4030,7 @@ likewise meet either criterion above.</p>.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+<li><code>IllegalStateException</code> - This object does not represent a number (for
 this purpose, infinities and not-a-number or NaN values, but not
 CBORObject.Null, are considered numbers).</li>
 </ul>
@@ -4063,10 +4063,10 @@ CBORObject.Null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>key</code> already exists in this
+<li><p><code>IllegalArgumentException</code> - The parameter <code>key</code> already exists in this
 map.</p></li>
-<li><p><code>java.lang.IllegalStateException</code> - This object is not a map.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>key</code> or <code>valueOb</code> has
+<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>key</code> or <code>valueOb</code> has
 an unsupported type.</p></li>
 </ul>
 
@@ -4097,7 +4097,7 @@ an unsupported type.</p></li>
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object is not an array.
+* <code>IllegalStateException</code> - This object is not an array.
 
 ### <a id='Add(java.lang.Object)'>Add</a>
     CBORObject obj = CBORObject.NewArray() .Add(CBORObject.False) .Add(5) .Add("text string") .Add(CBORObject.FromObjectAndTag(9999, 1));
@@ -4121,9 +4121,9 @@ an unsupported type.</p></li>
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This instance is not an array.
+* <code>IllegalStateException</code> - This instance is not an array.
 
-* <code>java.lang.IllegalArgumentException</code> - The type of <code>obj</code> is not supported.
+* <code>IllegalArgumentException</code> - The type of <code>obj</code> is not supported.
 
 ### <a id='AsEInteger()'>AsEInteger</a>
 
@@ -4136,11 +4136,11 @@ Converts this object to an arbitrary-precision integer. See the ToObject
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+* <code>IllegalStateException</code> - This object does not represent a number (for
  the purposes of this method, infinity and not-a-number values, but
  not <code>CBORObject.Null</code>, are considered numbers).
 
-* <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
+* <code>ArithmeticException</code> - This object's value is infinity or not-a-number
  (NaN).
 
 ### <a id='AsBoolean()'>AsBoolean</a>
@@ -4164,11 +4164,11 @@ Converts this object to a byte (0 to 255). Floating point values are
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+* <code>IllegalStateException</code> - This object does not represent a number (for
  this purpose, infinities and not-a-number or NaN values, but not
  CBORObject.Null, are considered numbers).
 
-* <code>java.lang.ArithmeticException</code> - This object's value exceeds the range of a byte
+* <code>ArithmeticException</code> - This object's value exceeds the range of a byte
  (would be less than 0 or greater than 255 when converted to an
  integer by discarding its fractional part).
 
@@ -4184,7 +4184,7 @@ Converts this object to a 64-bit floating point number.
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+* <code>IllegalStateException</code> - This object does not represent a number (for
  this purpose, infinities and not-a-number or NaN values, but not
  CBORObject.Null, are considered numbers).
 
@@ -4198,7 +4198,7 @@ Converts this object to a decimal number.
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+* <code>IllegalStateException</code> - This object does not represent a number (for
  the purposes of this method, infinity and not-a-number values, but
  not <code>CBORObject.Null</code>, are considered numbers).
 
@@ -4214,7 +4214,7 @@ Converts this object to an arbitrary-precision binary floating point number.
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+* <code>IllegalStateException</code> - This object does not represent a number (for
  the purposes of this method, infinity and not-a-number values, but
  not <code>CBORObject.Null</code>, are considered numbers).
 
@@ -4229,7 +4229,7 @@ Converts this object to a rational number. See the ToObject overload taking
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+* <code>IllegalStateException</code> - This object does not represent a number (for
  the purposes of this method, infinity and not-a-number values, but
  not <code>CBORObject.Null</code>, are considered numbers).
 
@@ -4244,11 +4244,11 @@ Converts this object to a 16-bit signed integer. Floating point values are
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+* <code>IllegalStateException</code> - This object does not represent a number (for
  this purpose, infinities and not-a-number or NaN values, but not
  CBORObject.Null, are considered numbers).
 
-* <code>java.lang.ArithmeticException</code> - This object's value exceeds the range of a 16-bit
+* <code>ArithmeticException</code> - This object's value exceeds the range of a 16-bit
  signed integer.
 
 ### <a id='AsInt32Value()'>AsInt32Value</a>
@@ -4270,9 +4270,9 @@ Converts this object to a 32-bit signed integer if this CBOR object's type
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object&#39;s type is not <code>
+<li><p><code>IllegalStateException</code> - This object&#39;s type is not <code>
 CBORType.Integer</code>.</p></li>
-<li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value exceeds the range of a 32-bit
+<li><p><code>ArithmeticException</code> - This object&#39;s value exceeds the range of a 32-bit
 signed integer.</p></li>
 </ul>
 
@@ -4297,9 +4297,9 @@ signed integer.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object&#39;s type is not <code>
+<li><p><code>IllegalStateException</code> - This object&#39;s type is not <code>
 CBORType.Integer</code>.</p></li>
-<li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value exceeds the range of a 64-bit
+<li><p><code>ArithmeticException</code> - This object&#39;s value exceeds the range of a 64-bit
 signed integer.</p></li>
 </ul>
 
@@ -4347,7 +4347,7 @@ signed integer.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object&#39;s type is not <code>
+<li><code>IllegalStateException</code> - This object&#39;s type is not <code>
 CBORType.Integer</code>.</li>
 </ul>
 
@@ -4373,7 +4373,7 @@ not-a-number (NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object&#39;s type is not <code>
+<li><code>IllegalStateException</code> - This object&#39;s type is not <code>
 CBORType.FloatingPoint</code>.</li>
 </ul>
 
@@ -4392,7 +4392,7 @@ CBORType.FloatingPoint</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object&#39;s type is not <code>
+<li><code>IllegalStateException</code> - This object&#39;s type is not <code>
 CBORType.FloatingPoint</code>.</li>
 </ul>
 
@@ -4411,7 +4411,7 @@ CBORType.FloatingPoint</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+<li><code>IllegalStateException</code> - This object does not represent a number (for
 this purpose, infinities and not-a-number or NaN values, but not
 CBORObject.Null, are considered numbers).</li>
 </ul>
@@ -4439,10 +4439,10 @@ CBORObject.Null, are considered numbers).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+<li><p><code>IllegalStateException</code> - This object does not represent a number (for
 this purpose, infinities and not-a-number or NaN values, but not
 CBORObject.Null, are considered numbers).</p></li>
-<li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value exceeds the range of a 32-bit
+<li><p><code>ArithmeticException</code> - This object&#39;s value exceeds the range of a 32-bit
 signed integer.</p></li>
 </ul>
 
@@ -4469,10 +4469,10 @@ signed integer.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+<li><p><code>IllegalStateException</code> - This object does not represent a number (for
 this purpose, infinities and not-a-number or NaN values, but not
 CBORObject.Null, are considered numbers).</p></li>
-<li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value exceeds the range of a 64-bit
+<li><p><code>ArithmeticException</code> - This object&#39;s value exceeds the range of a 64-bit
 signed integer.</p></li>
 </ul>
 
@@ -4491,7 +4491,7 @@ value exceeds the range of a 32-bit floating point number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+<li><code>IllegalStateException</code> - This object does not represent a number (for
 this purpose, infinities and not-a-number or NaN values, but not
 CBORObject.Null, are considered numbers).</li>
 </ul>
@@ -4518,7 +4518,7 @@ CBORObject.Null, are considered numbers).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object&#39;s type is not a text string (for
+<li><code>IllegalStateException</code> - This object&#39;s type is not a text string (for
 the purposes of this method, infinity and not-a-number values, but
 not <code>CBORObject.Null</code>, are considered numbers). To check the
 CBOR object for null before conversion, use the following idiom
@@ -4641,7 +4641,7 @@ less than 2^63; otherwise, <code>false</code>.</li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code> in interface <code>java.lang.Comparable&lt;CBORObject&gt;</code></li>
+<li><code>compareTo</code> in interface <code>Comparable&lt;CBORObject&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -4777,7 +4777,7 @@ false</code> if the given key is not found or this object is not a map.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>options</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>options</code> is null.</li>
 </ul>
 
 <h3><a id='AtJSONPointer(java.lang.String)'>AtJSONPointer</a></h3>
@@ -4900,7 +4900,7 @@ null or the patch operation failed.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>java.lang.Object</code></li>
+<li><code>equals</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -4952,7 +4952,7 @@ type or if one is null and the other isn&#39;t.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object is not a byte string.</li>
+<li><code>IllegalStateException</code> - This object is not a byte string.</li>
 </ul>
 
 <h3><a id='hashCode()'>hashCode</a></h3>
@@ -4965,7 +4965,7 @@ type or if one is null and the other isn&#39;t.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
+<li><code>hashCode</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -5016,7 +5016,7 @@ given number; otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than 0.</li>
+<li><code>IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than 0.</li>
 </ul>
 
 <h3><a id='HasOneTag(com.upokecenter.numbers.EInteger)'>HasOneTag</a></h3>
@@ -5040,8 +5040,8 @@ given number; otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less than 0.</p></li>
 </ul>
 
 <h3><a id='getTagCount()'>getTagCount</a></h3>
@@ -5075,7 +5075,7 @@ the given number; otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than 0.</li>
+<li><code>IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than 0.</li>
 </ul>
 
 <h3><a id='HasMostInnerTag(com.upokecenter.numbers.EInteger)'>HasMostInnerTag</a></h3>
@@ -5099,8 +5099,8 @@ the given number; otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less than 0.</p></li>
 </ul>
 
 <h3><a id='HasMostOuterTag(int)'>HasMostOuterTag</a></h3>
@@ -5124,7 +5124,7 @@ the given number; otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than 0.</li>
+<li><code>IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than 0.</li>
 </ul>
 
 <h3><a id='HasMostOuterTag(com.upokecenter.numbers.EInteger)'>HasMostOuterTag</a></h3>
@@ -5148,8 +5148,8 @@ the given number; otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less than 0.</p></li>
 </ul>
 
 <h3><a id='HasTag(int)'>HasTag</a></h3>
@@ -5172,8 +5172,8 @@ otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than 0.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>tagValue</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>tagValue</code> is null.</p></li>
 </ul>
 
 <h3><a id='HasTag(com.upokecenter.numbers.EInteger)'>HasTag</a></h3>
@@ -5196,8 +5196,8 @@ otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less than 0.</p></li>
 </ul>
 
 <h3><a id='Insert(int,java.lang.Object)'>Insert</a></h3>
@@ -5222,8 +5222,8 @@ CBORObject.Null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object is not an array.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>valueOb</code> has an unsupported
+<li><p><code>IllegalStateException</code> - This object is not an array.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>valueOb</code> has an unsupported
 type; or <code>index</code> is not a valid index into this array.</p></li>
 </ul>
 
@@ -5289,7 +5289,7 @@ otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+<li><code>IllegalStateException</code> - This object does not represent a number (for
 this purpose, infinities and not-a-number or NaN values, but not
 CBORObject.Null, are considered numbers).</li>
 </ul>
@@ -5302,7 +5302,7 @@ CBORObject.Null, are considered numbers).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object is not a CBOR array or CBOR map.</li>
+<li><code>IllegalStateException</code> - This object is not a CBOR array or CBOR map.</li>
 </ul>
 
 <h3><a id='Remove(java.lang.Object)'>Remove</a></h3>
@@ -5327,9 +5327,9 @@ CBORObject.Null, are considered numbers).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>obj</code> is null (as opposed
+<li><p><code>NullPointerException</code> - The parameter <code>obj</code> is null (as opposed
 to CBORObject.Null).</p></li>
-<li><p><code>java.lang.IllegalStateException</code> - The object is not an array or map.</p></li>
+<li><p><code>IllegalStateException</code> - The object is not an array or map.</p></li>
 </ul>
 
 <h3><a id='RemoveAt(int)'>RemoveAt</a></h3>
@@ -5353,7 +5353,7 @@ items in the array.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object is not a CBOR array.</li>
+<li><code>IllegalStateException</code> - This object is not a CBOR array.</li>
 </ul>
 
 <h3><a id='Remove(com.upokecenter.cbor.CBORObject)'>Remove</a></h3>
@@ -5377,9 +5377,9 @@ items in the array.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>obj</code> is null (as opposed
+<li><p><code>NullPointerException</code> - The parameter <code>obj</code> is null (as opposed
 to CBORObject.Null).</p></li>
-<li><p><code>java.lang.IllegalStateException</code> - The object is not an array or map.</p></li>
+<li><p><code>IllegalStateException</code> - The object is not an array or map.</p></li>
 </ul>
 
 <h3><a id='Set(java.lang.Object,java.lang.Object)'>Set</a></h3>
@@ -5411,8 +5411,8 @@ CBORObject.Null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object is not a map or an array.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>key</code> or <code>valueOb</code> has
+<li><p><code>IllegalStateException</code> - This object is not a map or an array.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>key</code> or <code>valueOb</code> has
 an unsupported type, or this instance is a CBOR array and <code>
 key</code> is less than 0, is the size of this array or greater, or is not
 a 32-bit signed integer (<code>int</code>).</p></li>
@@ -5521,7 +5521,7 @@ a 32-bit signed integer (<code>int</code>).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>options</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>options</code> is null.</li>
 </ul>
 
 <h3><a id='toString()'>toString</a></h3>
@@ -5538,7 +5538,7 @@ a 32-bit signed integer (<code>int</code>).</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>java.lang.Object</code></li>
+<li><code>toString</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -5633,8 +5633,8 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
 </ul>
 
 <h3><a id='WriteJSONTo(java.io.OutputStream,com.upokecenter.cbor.JSONOptions)'>WriteJSONTo</a></h3>
@@ -5661,8 +5661,8 @@ object to JSON.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
 </ul>
 
 <h3><a id='FromFloatingPointBits(long,int)'>FromFloatingPointBits</a></h3>
@@ -5694,7 +5694,7 @@ invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+<li><code>IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
 4, or 8.</li>
 </ul>
 
@@ -5728,10 +5728,10 @@ stream.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+<li><p><code>IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
 4, or 8.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='WriteFloatingPointBits(java.io.OutputStream,long,int,boolean)'>WriteFloatingPointBits</a></h3>
@@ -5767,10 +5767,10 @@ the number of bytes given by &#39;byteCount&#39; to the data stream.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+<li><p><code>IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
 4, or 8.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='WriteFloatingPointValue(java.io.OutputStream,double,int)'>WriteFloatingPointValue</a></h3>
@@ -5801,10 +5801,10 @@ invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+<li><p><code>IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
 4, or 8.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='WriteFloatingPointValue(java.io.OutputStream,float,int)'>WriteFloatingPointValue</a></h3>
@@ -5834,10 +5834,10 @@ values for this parameter are invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+<li><p><code>IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
 4, or 8.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='WriteValue(java.io.OutputStream,int,long)'>WriteValue</a></h3>
@@ -5882,9 +5882,9 @@ the array; 5: number of key-value pairs in the map; 6: tag number;
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Value is from 24 to 31 and major type is 7.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>IllegalArgumentException</code> - Value is from 24 to 31 and major type is 7.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='WriteValue(java.io.OutputStream,int,int)'>WriteValue</a></h3>
@@ -5937,9 +5937,9 @@ the array; 5: number of key-value pairs in the map; 6: tag number;
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Value is from 24 to 31 and major type is 7.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>IllegalArgumentException</code> - Value is from 24 to 31 and major type is 7.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='WriteValue(java.io.OutputStream,int,com.upokecenter.numbers.EInteger)'>WriteValue</a></h3>
@@ -5984,11 +5984,11 @@ greater than 2^64 - 1.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>majorType</code> is 7 and value is
+<li><p><code>IllegalArgumentException</code> - The parameter <code>majorType</code> is 7 and value is
 greater than 255.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> or <code>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> or <code>
 bigintValue</code> is null.</p></li>
-<li><p><code>java.io.IOException</code></p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3><a id='WriteTo(java.io.OutputStream)'>WriteTo</a></h3>
@@ -6059,8 +6059,8 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
 <h3><a id='WriteTo(java.io.OutputStream,com.upokecenter.cbor.CBOREncodeOptions)'>WriteTo</a></h3>
@@ -6086,9 +6086,9 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Unexpected data type&quot;.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>IllegalArgumentException</code> - Unexpected data type&quot;.</p></li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

@@ -8,103 +8,6 @@
 
 <h1>com.upokecenter.text.Encodings</h1>
 
-<pre>public final class Encodings extends java.lang.Object
-</pre>
-
-<p>Contains methods for converting text from one character encoding to another.
- This class also contains convenience methods for converting strings
- and other character inputs to sequences of bytes and vice versa.
- <p>The Encoding Standard, which is a Candidate Recommendation as of
- early November 2015, defines algorithms for the most common character
- encodings used on Web pages and recommends the UTF-8 encoding for new
- specifications and Web pages. Calling the <code>GetEncoding(name)</code>
- method returns one of the character encodings with the given name
- under the Encoding Standard.</p> <p>Now let&#39;s define some terms.</p>
- <p><b>Encoding Terms</b></p> <ul> <li>A <b>code point</b> is a number
- that identifies a single text character, such as a letter, digit, or
- symbol. (A collection of such characters is also called an <i>abstract
- character repertoire</i>.)</li> <li>A <b>coded character set</b> is a
- set of code points which are each assigned to a single text character.
- As used here, coded character sets don&#39;t define how code points are
- laid out in memory.</li> <li>A <b>character encoding</b> is a mapping
- from a sequence of code points, in one or more specific coded
- character sets, to a sequence of bytes and vice versa. (For brevity,
- the rest of this documentation may use the term <i>encoding</i>
- instead. RFC 6365 uses the analogous term <i>charset</i> instead; in
- this documentation, however, <i>charset</i> is used only to refer to
- the names that identify a character encoding.)</li> <li><b>ASCII</b>
- is a 128-code-point coded character set that includes the English
- letters and digits, common punctuation and symbols, and control
- characters. As used here, its code points match the code points within
- the Basic Latin block (0-127 or U+0000 to U+007F) of the Unicode
- Standard.</li></ul> <p>There are several kinds of character
- encodings:</p> <ul> <li><b>Single-byte encodings</b> define a coded
- character set that assigns one code point to one byte. Thus, they can
- have a maximum of 256 code points. For example:</li> <li>(a) ISO 8859
- encodings and <code>windows-1252</code>.</li> <li>(b) ASCII is usually used
- as a single-byte encoding where each code point fits in the lower 7
- bits of an eight-bit byte (in that case, the encoding is often called
- <code>US-ASCII</code>). In the Encoding Standard, all single-byte encodings
- use the ASCII characters as the first 128 code points of their coded
- character sets.</li> <li><b>Multi-byte encodings</b> include code
- points from one or more coded character sets and assign some or all
- code points to several bytes. For example:</li> <li>(a)
- <code>UTF-16LE</code> and <code>UTF-16BE</code> are two encodings defined in the
- Unicode Standard. They use 2 bytes for the most common code points,
- and 4 bytes for supplementary code points.</li> <li>(b) <code>UTF-8</code>
- is another encoding defined in the Unicode Standard. It uses 1 byte
- for ASCII and 2 to 4 bytes for the other Unicode code points.</li>
- <li>(c) Most legacy East Asian encodings, such as <code>Shift_JIS</code>,
- <code>GBK</code>, and <code>Big5</code> use 1 byte for ASCII (or a slightly
- modified version) and, usually, 2 or more bytes for national standard
- coded character sets. In many of these encodings, notably
- <code>Shift_JIS</code>, characters whose code points use one byte
- traditionally take half the space of characters whose code points use
- two bytes.</li> <li><b>Escape-based encodings</b> are combinations of
- single- and/or multi-byte encodings, and use escape sequences and/or
- shift codes to change which encoding to use for the bytes that follow.
- For example:</li> <li>(a) <code>ISO-2022-JP</code> supports several escape
- sequences that shift into different encodings, including a Katakana, a
- Kanji, and an ASCII encoding (with ASCII as the default).</li> <li>(b)
- UTF-7 (not included in the Encoding Standard) is an encoding that uses
- the Unicode Standard&#39;s coded character set, which is encoded using a
- limited subset of ASCII. The plus symbol (U+002B) is used to shift
- into a UTF-16BE multi-byte encoding (converted to a modified version
- of base-64) to encode other Unicode code points.</li> <li>The Encoding
- Standard also defines a <b>replacement encoding</b>, which causes a
- decoding error and is used to alias a few problematic or unsupported
- encoding names, such as <code>hz-gb-2312</code>.</li></ul> <p><b>Getting an
- Encoding</b></p> <p>The Encoding Standard includes UTF-8, UTF-16, and
- many legacy encodings, and gives each one of them a name. The
- <code>GetEncoding(name)</code> method takes a name string and returns an
- ICharacterEncoding object that implements that encoding, or
- <code>null</code> if the name is unrecognized.</p> <p>However, the Encoding
- Standard is designed to include only encodings commonly used on Web
- pages, not in other protocols such as email. For email, the Encoding
- class includes an alternate function <code>GetEncoding(name,
- forEmail)</code>. Setting <code>forEmail</code> to <code>true</code> will use rules
- modified from the Encoding Standard to better suit encoding and
- decoding text from email messages.</p> <p><b>Classes for Character
- Encodings</b></p> <p>This Encodings class provides access to common
- character encodings through classes as described below:</p> <ul>
- <li>An <b>encoder class</b> is a class that converts a sequence of
- bytes to a sequence of code points in the universal character set
- (otherwise known under the name Unicode). An encoder class implements
- the <code>ICharacterEncoder</code> interface.</li> <li>A <b>decoder
- class</b> is a class that converts a sequence of Unicode code points
- to a sequence of bytes. A decoder class implements the
- <code>ICharacterDecoder</code> interface.</li> <li>An <b>encoding class</b>
- allows access to both an encoder class and a decoder class and
- implements the <code>ICharacterEncoding</code> interface. The encoder and
- decoder classes should implement the same character
- encoding.</li></ul> <p><b>Custom Encodings</b></p> <p>Classes that
- implement the ICharacterEncoding interface can provide additional
- character encodings not included in the Encoding Standard. Some
- examples of these include the following:</p> <ul> <li>A modified
- version of UTF-8 used in Java&#39;s serialization formats.</li> <li>A
- modified version of UTF-7 used in the IMAP email protocol.</li></ul>
- <p>(Note that this library doesn&#39;t implement either encoding.)</p></p>
-
 <h2>Fields</h2>
 
 <ul>
@@ -118,101 +21,101 @@ bytes.</li>
 
 <ul>
 <li><code>static java.lang.String DecodeToString​(ICharacterEncoding enc,
-          byte[] bytes)</code><br>
+byte[] bytes)</code><br>
 Reads a byte array from a data source and converts the bytes from a given
 encoding to a text string.</li>
 <li><code>static java.lang.String DecodeToString​(ICharacterEncoding enc,
-          byte[] bytes,
-          int offset,
-          int length)</code><br>
+byte[] bytes,
+int offset,
+int length)</code><br>
 Reads a portion of a byte array from a data source and converts the bytes
 from a given encoding to a text string.</li>
 <li><code>static java.lang.String DecodeToString​(ICharacterEncoding encoding,
-          IByteReader input)</code><br>
+IByteReader input)</code><br>
 Reads bytes from a data source and converts the bytes from a given encoding
 to a text string.</li>
 <li><code>static java.lang.String DecodeToString​(ICharacterEncoding enc,
-          java.io.InputStream input)</code><br>
+java.io.InputStream input)</code><br>
 Decodes data read from a data stream into a text string in the given
 character encoding.</li>
 <li><code>static byte[] EncodeToBytes​(ICharacterInput input,
-         ICharacterEncoder encoder)</code><br>
+ICharacterEncoder encoder)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using a given character encoding.</li>
 <li><code>static byte[] EncodeToBytes​(ICharacterInput input,
-         ICharacterEncoder encoder,
-         boolean htmlFallback)</code><br>
+ICharacterEncoder encoder,
+boolean htmlFallback)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using the given character encoder and fallback
 strategy.</li>
 <li><code>static byte[] EncodeToBytes​(ICharacterInput input,
-         ICharacterEncoding encoding)</code><br>
+ICharacterEncoding encoding)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using the given character encoder.</li>
 <li><code>static byte[] EncodeToBytes​(java.lang.String str,
-         ICharacterEncoding enc)</code><br>
+ICharacterEncoding enc)</code><br>
 Reads Unicode characters from a text string and writes them to a byte array
 encoded in a given character encoding.</li>
 <li><code>static byte[] EncodeToBytes​(java.lang.String str,
-         ICharacterEncoding enc,
-         boolean htmlFallback)</code><br>
+ICharacterEncoding enc,
+boolean htmlFallback)</code><br>
 Reads Unicode characters from a text string and writes them to a byte array
 encoded in a given character encoding and using the given encoder
 fallback strategy.</li>
 <li><code>static void EncodeToWriter​(ICharacterInput input,
-          ICharacterEncoder encoder,
-          IWriter writer)</code><br>
+ICharacterEncoder encoder,
+IWriter writer)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded in a given character encoding.</li>
 <li><code>static void EncodeToWriter​(ICharacterInput input,
-          ICharacterEncoder encoder,
-          java.io.OutputStream output)</code><br>
+ICharacterEncoder encoder,
+java.io.OutputStream output)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded in a given character encoding.</li>
 <li><code>static void EncodeToWriter​(ICharacterInput input,
-          ICharacterEncoding encoding,
-          IWriter writer)</code><br>
+ICharacterEncoding encoding,
+IWriter writer)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using the given character encoder.</li>
 <li><code>static void EncodeToWriter​(ICharacterInput input,
-          ICharacterEncoding encoding,
-          java.io.OutputStream output)</code><br>
+ICharacterEncoding encoding,
+java.io.OutputStream output)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using the given character encoder.</li>
 <li><code>static void EncodeToWriter​(java.lang.String str,
-          ICharacterEncoding enc,
-          IWriter writer)</code><br>
+ICharacterEncoding enc,
+IWriter writer)</code><br>
 Converts a text string to bytes and writes the bytes to an output byte
 writer.</li>
 <li><code>static void EncodeToWriter​(java.lang.String str,
-          ICharacterEncoding enc,
-          java.io.OutputStream output)</code><br>
+ICharacterEncoding enc,
+java.io.OutputStream output)</code><br>
 Converts a text string to bytes and writes the bytes to an output data
 stream.</li>
 <li><code>static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding,
-           IByteReader stream)</code><br>
+IByteReader stream)</code><br>
 Converts a character encoding into a character input stream, given a
 streamable source of bytes.</li>
 <li><code>static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding,
-           java.io.InputStream input)</code><br>
+java.io.InputStream input)</code><br>
 Converts a character encoding into a character input stream, given a data
 stream.</li>
 <li><code>static ICharacterInput GetDecoderInputSkipBom​(ICharacterEncoding encoding,
-                  IByteReader stream)</code><br>
+IByteReader stream)</code><br>
 Converts a character encoding into a character input stream, given a
 streamable source of bytes.</li>
 <li><code>static ICharacterInput GetDecoderInputSkipBom​(ICharacterEncoding encoding,
-                  java.io.InputStream input)</code><br>
+java.io.InputStream input)</code><br>
 Converts a character encoding into a character input stream, given a
 readable data stream.</li>
 <li><code>static ICharacterEncoding GetEncoding​(java.lang.String name)</code><br>
 Returns a character encoding from the given name.</li>
 <li><code>static ICharacterEncoding GetEncoding​(java.lang.String name,
-       boolean forEmail)</code><br>
+boolean forEmail)</code><br>
 Returns a character encoding from the given name.</li>
 <li><code>static ICharacterEncoding GetEncoding​(java.lang.String name,
-       boolean forEmail,
-       boolean allowReplacement)</code><br>
+boolean forEmail,
+boolean allowReplacement)</code><br>
 Returns a character encoding from the given name.</li>
 <li><code>static java.lang.String InputToString​(ICharacterInput reader)</code><br>
 Reads Unicode characters from a character input and converts them to a text
@@ -223,26 +126,23 @@ Resolves a character encoding&#39;s name to a standard form.</li>
 Resolves a character encoding&#39;s name to a canonical form, using rules more
 suitable for email.</li>
 <li><code>static byte[] StringToBytes​(ICharacterEncoder encoder,
-         java.lang.String str)</code><br>
+java.lang.String str)</code><br>
 Converts a text string to a byte array using the given character encoder.</li>
 <li><code>static byte[] StringToBytes​(ICharacterEncoding encoding,
-         java.lang.String str)</code><br>
+java.lang.String str)</code><br>
 Converts a text string to a byte array encoded in a given character
 encoding.</li>
 <li><code>static ICharacterInput StringToInput​(java.lang.String str)</code><br>
 Converts a text string to a character input.</li>
 <li><code>static ICharacterInput StringToInput​(java.lang.String str,
-         int offset,
-         int length)</code><br>
+int offset,
+int length)</code><br>
 Converts a portion of a text string to a character input.</li>
 </ul>
 
 <h2>Field Details</h2>
 
-<h3>UTF8</h3>
-
-<pre>public static final ICharacterEncoding UTF8
-</pre>
+<h3><a id='UTF8'>UTF8</a></h3>
 
 <p>Character encoding object for the UTF-8 character encoding, which represents
  each code point in the universal coded character set using 1 to 4
@@ -250,10 +150,7 @@ Converts a portion of a text string to a character input.</li>
 
 <h2>Method Details</h2>
 
-<h3>DecodeToString</h3>
-
-<pre>public static java.lang.String DecodeToString​(ICharacterEncoding encoding, IByteReader input)
-</pre>
+<h3><a id='DecodeToString(com.upokecenter.text.ICharacterEncoding,com.upokecenter.util.IByteReader)'>DecodeToString</a></h3>
 
 <p>Reads bytes from a data source and converts the bytes from a given encoding
  to a text string. <p>In the.NET implementation, this method is
@@ -285,10 +182,7 @@ character (U+FFFD).</p></li>
 input</code> is null.</li>
 </ul>
 
-<h3>DecodeToString</h3>
-
-<pre>public static java.lang.String DecodeToString​(ICharacterEncoding enc, java.io.InputStream input)
-</pre>
+<h3><a id='DecodeToString(com.upokecenter.text.ICharacterEncoding,java.io.InputStream)'>DecodeToString</a></h3>
 
 <p>Decodes data read from a data stream into a text string in the given
  character encoding. <p>In the.NET implementation, this method is
@@ -324,10 +218,7 @@ encoder and a decoder).</p></li>
 null.</li>
 </ul>
 
-<h3>DecodeToString</h3>
-
-<pre>public static java.lang.String DecodeToString​(ICharacterEncoding enc, byte[] bytes)
-</pre>
+<h3><a id='DecodeToString(com.upokecenter.text.ICharacterEncoding,byte[])'>DecodeToString</a></h3>
 
 <p>Reads a byte array from a data source and converts the bytes from a given
  encoding to a text string. Errors in decoding are handled by
@@ -365,10 +256,7 @@ encoder and a decoder).</p></li>
 null.</li>
 </ul>
 
-<h3>DecodeToString</h3>
-
-<pre>public static java.lang.String DecodeToString​(ICharacterEncoding enc, byte[] bytes, int offset, int length)
-</pre>
+<h3><a id='DecodeToString(com.upokecenter.text.ICharacterEncoding,byte[],int,int)'>DecodeToString</a></h3>
 
 <p>Reads a portion of a byte array from a data source and converts the bytes
  from a given encoding to a text string. Errors in decoding are
@@ -414,10 +302,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 null.</p></li>
 </ul>
 
-<h3>EncodeToBytes</h3>
-
-<pre>public static byte[] EncodeToBytes​(ICharacterInput input, ICharacterEncoding encoding)
-</pre>
+<h3><a id='EncodeToBytes(com.upokecenter.text.ICharacterInput,com.upokecenter.text.ICharacterEncoding)'>EncodeToBytes</a></h3>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded using the given character encoder. When writing to the
@@ -448,10 +333,7 @@ null.</p></li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>encoding</code> is null.</li>
 </ul>
 
-<h3>EncodeToBytes</h3>
-
-<pre>public static byte[] EncodeToBytes​(ICharacterInput input, ICharacterEncoder encoder)
-</pre>
+<h3><a id='EncodeToBytes(com.upokecenter.text.ICharacterInput,com.upokecenter.text.ICharacterEncoder)'>EncodeToBytes</a></h3>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded using a given character encoding. When writing to the
@@ -489,10 +371,7 @@ null.</p></li>
 is null.</li>
 </ul>
 
-<h3>EncodeToBytes</h3>
-
-<pre>public static byte[] EncodeToBytes​(ICharacterInput input, ICharacterEncoder encoder, boolean htmlFallback)
-</pre>
+<h3><a id='EncodeToBytes(com.upokecenter.text.ICharacterInput,com.upokecenter.text.ICharacterEncoder,boolean)'>EncodeToBytes</a></h3>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded using the given character encoder and fallback
@@ -528,10 +407,7 @@ byte (0x3f) upon encountering invalid characters.</p></li>
 is null.</li>
 </ul>
 
-<h3>EncodeToBytes</h3>
-
-<pre>public static byte[] EncodeToBytes​(java.lang.String str, ICharacterEncoding enc)
-</pre>
+<h3><a id='EncodeToBytes(java.lang.String,com.upokecenter.text.ICharacterEncoding)'>EncodeToBytes</a></h3>
 
 <p>Reads Unicode characters from a text string and writes them to a byte array
  encoded in a given character encoding. When reading the string, any
@@ -571,10 +447,7 @@ encoder and a decoder).</p></li>
 null.</li>
 </ul>
 
-<h3>EncodeToBytes</h3>
-
-<pre>public static byte[] EncodeToBytes​(java.lang.String str, ICharacterEncoding enc, boolean htmlFallback)
-</pre>
+<h3><a id='EncodeToBytes(java.lang.String,com.upokecenter.text.ICharacterEncoding,boolean)'>EncodeToBytes</a></h3>
 
 <p>Reads Unicode characters from a text string and writes them to a byte array
  encoded in a given character encoding and using the given encoder
@@ -612,10 +485,7 @@ byte (0x3f) upon encountering invalid characters.</p></li>
 null.</li>
 </ul>
 
-<h3>EncodeToWriter</h3>
-
-<pre>public static void EncodeToWriter​(ICharacterInput input, ICharacterEncoding encoding, IWriter writer)
-</pre>
+<h3><a id='EncodeToWriter(com.upokecenter.text.ICharacterInput,com.upokecenter.text.ICharacterEncoding,com.upokecenter.util.IWriter)'>EncodeToWriter</a></h3>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded using the given character encoder. When writing to the
@@ -647,10 +517,7 @@ null.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>encoding</code> is null.</li>
 </ul>
 
-<h3>EncodeToWriter</h3>
-
-<pre>public static void EncodeToWriter​(ICharacterInput input, ICharacterEncoder encoder, IWriter writer)
-</pre>
+<h3><a id='EncodeToWriter(com.upokecenter.text.ICharacterInput,com.upokecenter.text.ICharacterEncoder,com.upokecenter.util.IWriter)'>EncodeToWriter</a></h3>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded in a given character encoding. When writing to the
@@ -683,10 +550,7 @@ null.</li>
 is null.</li>
 </ul>
 
-<h3>EncodeToWriter</h3>
-
-<pre>public static void EncodeToWriter​(java.lang.String str, ICharacterEncoding enc, IWriter writer)
-</pre>
+<h3><a id='EncodeToWriter(java.lang.String,com.upokecenter.text.ICharacterEncoding,com.upokecenter.util.IWriter)'>EncodeToWriter</a></h3>
 
 <p>Converts a text string to bytes and writes the bytes to an output byte
  writer. When reading the string, any unpaired surrogate characters
@@ -720,10 +584,7 @@ encoder and a decoder).</p></li>
 null.</li>
 </ul>
 
-<h3>EncodeToWriter</h3>
-
-<pre>public static void EncodeToWriter​(ICharacterInput input, ICharacterEncoding encoding, java.io.OutputStream output) throws java.io.IOException
-</pre>
+<h3><a id='EncodeToWriter(com.upokecenter.text.ICharacterInput,com.upokecenter.text.ICharacterEncoding,java.io.OutputStream)'>EncodeToWriter</a></h3>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded using the given character encoder. When writing to the
@@ -756,10 +617,7 @@ null.</li>
 <li><p><code>java.io.IOException</code></p></li>
 </ul>
 
-<h3>EncodeToWriter</h3>
-
-<pre>public static void EncodeToWriter​(ICharacterInput input, ICharacterEncoder encoder, java.io.OutputStream output) throws java.io.IOException
-</pre>
+<h3><a id='EncodeToWriter(com.upokecenter.text.ICharacterInput,com.upokecenter.text.ICharacterEncoder,java.io.OutputStream)'>EncodeToWriter</a></h3>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded in a given character encoding. When writing to the
@@ -793,10 +651,7 @@ is null.</p></li>
 <li><p><code>java.io.IOException</code></p></li>
 </ul>
 
-<h3>EncodeToWriter</h3>
-
-<pre>public static void EncodeToWriter​(java.lang.String str, ICharacterEncoding enc, java.io.OutputStream output) throws java.io.IOException
-</pre>
+<h3><a id='EncodeToWriter(java.lang.String,com.upokecenter.text.ICharacterEncoding,java.io.OutputStream)'>EncodeToWriter</a></h3>
 
 <p>Converts a text string to bytes and writes the bytes to an output data
  stream. When reading the string, any unpaired surrogate characters
@@ -831,10 +686,7 @@ null.</p></li>
 <li><p><code>java.io.IOException</code></p></li>
 </ul>
 
-<h3>GetDecoderInput</h3>
-
-<pre>public static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding, IByteReader stream)
-</pre>
+<h3><a id='GetDecoderInput(com.upokecenter.text.ICharacterEncoding,com.upokecenter.util.IByteReader)'>GetDecoderInput</a></h3>
 
 <p>Converts a character encoding into a character input stream, given a
  streamable source of bytes. The input stream doesn&#39;t check the first
@@ -869,10 +721,7 @@ returning a replacement character in its place.</p></li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>encoding</code> is null.</li>
 </ul>
 
-<h3>GetDecoderInput</h3>
-
-<pre>public static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding, java.io.InputStream input)
-</pre>
+<h3><a id='GetDecoderInput(com.upokecenter.text.ICharacterEncoding,java.io.InputStream)'>GetDecoderInput</a></h3>
 
 <p>Converts a character encoding into a character input stream, given a data
  stream. The input stream doesn&#39;t check the first few bytes for a
@@ -912,10 +761,7 @@ returning a replacement character in its place.</p></li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>encoding</code> is null.</li>
 </ul>
 
-<h3>GetDecoderInputSkipBom</h3>
-
-<pre>public static ICharacterInput GetDecoderInputSkipBom​(ICharacterEncoding encoding, IByteReader stream)
-</pre>
+<h3><a id='GetDecoderInputSkipBom(com.upokecenter.text.ICharacterEncoding,com.upokecenter.util.IByteReader)'>GetDecoderInputSkipBom</a></h3>
 
 <p>Converts a character encoding into a character input stream, given a
  streamable source of bytes. But if the input stream starts with a
@@ -946,10 +792,7 @@ returning a replacement character in its place.</p></li>
 <li>An ICharacterInput object.</li>
 </ul>
 
-<h3>GetDecoderInputSkipBom</h3>
-
-<pre>public static ICharacterInput GetDecoderInputSkipBom​(ICharacterEncoding encoding, java.io.InputStream input)
-</pre>
+<h3><a id='GetDecoderInputSkipBom(com.upokecenter.text.ICharacterEncoding,java.io.InputStream)'>GetDecoderInputSkipBom</a></h3>
 
 <p>Converts a character encoding into a character input stream, given a
  readable data stream. But if the input stream starts with a UTF-8 or
@@ -980,10 +823,7 @@ returning a replacement character in its place.</p></li>
 <li>An ICharacterInput object.</li>
 </ul>
 
-<h3>GetEncoding</h3>
-
-<pre>public static ICharacterEncoding GetEncoding​(java.lang.String name)
-</pre>
+<h3><a id='GetEncoding(java.lang.String)'>GetEncoding</a></h3>
 
 <p>Returns a character encoding from the given name.</p>
 
@@ -1001,10 +841,7 @@ method. Can be null.</li>
 encoder and a decoder).</li>
 </ul>
 
-<h3>GetEncoding</h3>
-
-<pre>public static ICharacterEncoding GetEncoding​(java.lang.String name, boolean forEmail, boolean allowReplacement)
-</pre>
+<h3><a id='GetEncoding(java.lang.String,boolean,boolean)'>GetEncoding</a></h3>
 
 <p>Returns a character encoding from the given name.</p>
 
@@ -1027,10 +864,7 @@ character encoding. Returns null if the name is null or empty, or if
 it names an unrecognized or unsupported encoding.</li>
 </ul>
 
-<h3>GetEncoding</h3>
-
-<pre>public static ICharacterEncoding GetEncoding​(java.lang.String name, boolean forEmail)
-</pre>
+<h3><a id='GetEncoding(java.lang.String,boolean)'>GetEncoding</a></h3>
 
 <p>Returns a character encoding from the given name.</p>
 
@@ -1052,10 +886,7 @@ character encoding. Returns null if the name is null or empty, or if
 it names an unrecognized or unsupported encoding.</li>
 </ul>
 
-<h3>InputToString</h3>
-
-<pre>public static java.lang.String InputToString​(ICharacterInput reader)
-</pre>
+<h3><a id='InputToString(com.upokecenter.text.ICharacterInput)'>InputToString</a></h3>
 
 <p>Reads Unicode characters from a character input and converts them to a text
  string. <p>In the.NET implementation, this method is implemented as
@@ -1084,10 +915,7 @@ string.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>reader</code> is null.</li>
 </ul>
 
-<h3>ResolveAlias</h3>
-
-<pre>public static java.lang.String ResolveAlias​(java.lang.String name)
-</pre>
+<h3><a id='ResolveAlias(java.lang.String)'>ResolveAlias</a></h3>
 
 <p>Resolves a character encoding&#39;s name to a standard form. This involves
  changing aliases of a character encoding to a standardized name.
@@ -1156,10 +984,7 @@ deal with deployed content&quot;.</p>.</li>
 unsupported.</li>
 </ul>
 
-<h3>ResolveAliasForEmail</h3>
-
-<pre>public static java.lang.String ResolveAliasForEmail​(java.lang.String name)
-</pre>
+<h3><a id='ResolveAliasForEmail(java.lang.String)'>ResolveAliasForEmail</a></h3>
 
 <p>Resolves a character encoding&#39;s name to a canonical form, using rules more
  suitable for email.</p>
@@ -1219,10 +1044,7 @@ supports additional character sets.</li></ul> .</li>
 unsupported.</li>
 </ul>
 
-<h3>StringToBytes</h3>
-
-<pre>public static byte[] StringToBytes​(ICharacterEncoding encoding, java.lang.String str)
-</pre>
+<h3><a id='StringToBytes(com.upokecenter.text.ICharacterEncoding,java.lang.String)'>StringToBytes</a></h3>
 
 <p>Converts a text string to a byte array encoded in a given character
  encoding. When reading the string, any unpaired surrogate characters
@@ -1256,10 +1078,7 @@ encoding.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>encoding</code> is null.</li>
 </ul>
 
-<h3>StringToBytes</h3>
-
-<pre>public static byte[] StringToBytes​(ICharacterEncoder encoder, java.lang.String str)
-</pre>
+<h3><a id='StringToBytes(com.upokecenter.text.ICharacterEncoder,java.lang.String)'>StringToBytes</a></h3>
 
 <p>Converts a text string to a byte array using the given character encoder.
  When reading the string, any unpaired surrogate characters are
@@ -1298,10 +1117,7 @@ encoding.</li>
 is null.</li>
 </ul>
 
-<h3>StringToInput</h3>
-
-<pre>public static ICharacterInput StringToInput​(java.lang.String str)
-</pre>
+<h3><a id='StringToInput(java.lang.String)'>StringToInput</a></h3>
 
 <p>Converts a text string to a character input. The resulting input can then be
  used to encode the text to bytes, or to read the string code point
@@ -1336,10 +1152,7 @@ is null.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
-<h3>StringToInput</h3>
-
-<pre>public static ICharacterInput StringToInput​(java.lang.String str, int offset, int length)
-</pre>
+<h3><a id='StringToInput(java.lang.String,int,int)'>StringToInput</a></h3>
 
 <p>Converts a portion of a text string to a character input. The resulting
  input can then be used to encode the text to bytes, or to read the

@@ -53,15 +53,15 @@ JSONOptions options) char</code><br>
 Parses a number from a sequence of char s whose format follows the
 JSON specification (RFC 8259) and converts that number to a CBOR
 object.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(String str)</code><br>
 Parses a number whose format follows the JSON specification.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+<li><code>static CBORObject ParseJSONNumber​(String str,
 boolean integersOnly,
 boolean positiveOnly)</code><br>
 Deprecated.
 Call the one-argument version of this method instead.
 Call the one-argument version of this method instead.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+<li><code>static CBORObject ParseJSONNumber​(String str,
 boolean integersOnly,
 boolean positiveOnly,
 boolean preserveNegativeZero)</code><br>
@@ -72,19 +72,19 @@ false.
 Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that
 sets preserveNegativeZero to the desired value, either true or
 false.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+<li><code>static CBORObject ParseJSONNumber​(String str,
 int offset,
 int count)</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259) from
 a portion of a text string, and converts that number to a CBOR
 object.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+<li><code>static CBORObject ParseJSONNumber​(String str,
 int offset,
 int count,
 JSONOptions options)</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259) and
 converts that number to a CBOR object.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+<li><code>static CBORObject ParseJSONNumber​(String str,
 JSONOptions options)</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259) and
 converts that number to a CBOR object.</li>
@@ -238,10 +238,10 @@ parsing fails, including if the string is null or empty.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
 than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
 length minus <code>offset</code> is less than <code>count</code>.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3><a id='ParseJSONNumber(java.lang.String,int,int,com.upokecenter.cbor.JSONOptions)'>ParseJSONNumber</a></h3>
@@ -280,8 +280,8 @@ count</code> is 0 or less.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
 </ul>
 
 <h3><a id='ParseJSONNumber(byte[],int,int,com.upokecenter.cbor.JSONOptions)'>ParseJSONNumber</a></h3>
@@ -321,8 +321,8 @@ parsing fails, including if the byte sequence is null or empty or
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
 </ul>
 
 <h3><a id='ParseJSONNumber(byte[],com.upokecenter.cbor.JSONOptions)'>ParseJSONNumber</a></h3>
@@ -387,10 +387,10 @@ parsing fails, including if the byte sequence is null or empty.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
 than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s
 length minus <code>offset</code> is less than <code>count</code>.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 </ul>
 
 <h3><a id='ParseJSONNumber(byte[])'>ParseJSONNumber</a></h3>
@@ -451,8 +451,8 @@ or empty or <code>count</code> is 0 or less.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
 </ul>
 
 <h3><a id='ParseJSONNumber(char[],com.upokecenter.cbor.JSONOptions)'>ParseJSONNumber</a></h3>
@@ -519,10 +519,10 @@ or empty.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
 than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s
 length minus <code>offset</code> is less than <code>count</code>.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
 </ul>
 
 <h3><a id='ParseJSONNumber(char[])'>ParseJSONNumber</a></h3>

@@ -68,11 +68,11 @@ second to a CBOR object.</li>
 int[] lesserFields)</code><br>
 Converts a date/time in the form of a year, month, day, hour, minute,
 second, fractional seconds, and time offset to a CBOR object.</li>
-<li><code>java.util.Date FromCBORObject​(CBORObject obj)</code><br>
+<li><code>Date FromCBORObject​(CBORObject obj)</code><br>
 Converts a CBOR object to a java.util.Date (in DotNet) or a Date (in Java).</li>
 <li><code>CBORDateConverter.ConversionType getType()</code><br>
 Gets the conversion type for this date converter.</li>
-<li><code>CBORObject ToCBORObject​(java.util.Date obj)</code><br>
+<li><code>CBORObject ToCBORObject​(Date obj)</code><br>
 Converts a java.util.Date (in DotNet) or Date (in Java) to a CBOR object in a
 manner specified by this converter&#39;s conversion type.</li>
 <li><code>boolean TryGetDateTimeFields​(CBORObject obj,
@@ -137,7 +137,7 @@ Tries to extract the fields of a date and time in the form of a CBOR object.</li
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>FromCBORObject</code> in interface <code>ICBORToFromConverter&lt;java.util.Date&gt;</code></li>
+<li><code>FromCBORObject</code> in interface <code>ICBORToFromConverter&lt;Date&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -157,7 +157,7 @@ object.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>obj</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>obj</code> is null.</p></li>
 <li><p><code>CBORException</code> - The format of the CBOR object is
 not supported, or another error occurred in conversion.</p></li>
 </ul>
@@ -201,7 +201,7 @@ otherwise.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>year</code> or <code>
+<li><code>NullPointerException</code> - The parameter <code>year</code> or <code>
 lesserFields</code> is null, or contains fewer elements than required.</li>
 </ul>
 
@@ -286,7 +286,7 @@ conversion type used to create this date converter.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>lesserFields</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>lesserFields</code> is null.</p></li>
 <li><p><code>CBORException</code> - An error occurred in conversion.</p></li>
 </ul>
 
@@ -314,7 +314,7 @@ conversion type used to create this date converter.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigYear</code> or <code>
+<li><p><code>NullPointerException</code> - The parameter <code>bigYear</code> or <code>
 lesserFields</code> is null.</p></li>
 <li><p><code>CBORException</code> - An error occurred in conversion.</p></li>
 </ul>
@@ -327,7 +327,7 @@ lesserFields</code> is null.</p></li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>ToCBORObject</code> in interface <code>ICBORConverter&lt;java.util.Date&gt;</code></li>
+<li><code>ToCBORObject</code> in interface <code>ICBORConverter&lt;Date&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
