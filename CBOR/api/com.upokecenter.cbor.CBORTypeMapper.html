@@ -18,16 +18,16 @@ Initializes a new instance of the CBORTypeMapper class.</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>&lt;T&gt; CBORTypeMapper AddConverter​(Type type,
+<li><code>&lt;T&gt; CBORTypeMapper AddConverter​(java.lang.reflect.Type type,
 ICBORConverter&lt;T&gt; converter)</code><br>
 Registers an object that converts objects of a given type to CBOR objects
 (called a CBOR converter).</li>
-<li><code>CBORTypeMapper AddTypeName​(String name)</code><br>
+<li><code>CBORTypeMapper AddTypeName​(java.lang.String name)</code><br>
 Adds the fully qualified name of a Java or.NET type for use in type
 matching.</li>
-<li><code>CBORTypeMapper AddTypePrefix​(String prefix)</code><br>
+<li><code>CBORTypeMapper AddTypePrefix​(java.lang.String prefix)</code><br>
 Adds a prefix of a Java or.NET type for use in type matching.</li>
-<li><code>boolean FilterTypeName​(String typeName)</code><br>
+<li><code>boolean FilterTypeName​(java.lang.String typeName)</code><br>
 Returns whether the given Java or.NET type name fits the filters given in
 this mapper.</li>
 </ul>
@@ -68,9 +68,9 @@ object.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>type</code> or <code>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>type</code> or <code>
 converter</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Converter doesn&#39;t contain a proper ToCBORObject
+<li><p><code>java.lang.IllegalArgumentException</code> - Converter doesn&#39;t contain a proper ToCBORObject
 method&quot;.</p></li>
 </ul>
 
@@ -116,8 +116,8 @@ filters given in this mapper, or <code>false</code> otherwise.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>prefix</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>prefix</code> is empty.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>prefix</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>prefix</code> is empty.</p></li>
 </ul>
 
 <h3><a id='AddTypeName(java.lang.String)'>AddTypeName</a></h3>
@@ -141,8 +141,8 @@ java.math.BigInteger</code> or <code>System.Globalization.CultureInfo</code>).</
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>name</code> is empty.</p></li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

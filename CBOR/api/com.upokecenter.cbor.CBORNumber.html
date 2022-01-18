@@ -159,7 +159,7 @@ value.</li>
 Converts this number&#39;s value to an integer by discarding its fractional
 part, and returns the least-significant bits of its two&#39;s-complement
 form as a 64-bit signed integer.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Returns the value of this object in text form.</li>
 </ul>
 
@@ -349,7 +349,7 @@ false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number.</li>
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number.</li>
 </ul>
 
 <h3><a id='ToEIntegerIfExact()'>ToEIntegerIfExact</a></h3>
@@ -366,7 +366,7 @@ false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number or is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number or is not
 an exact integer.</li>
 </ul>
 
@@ -385,7 +385,7 @@ an exact integer.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or the
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
 number, once converted to an integer by discarding its fractional
 part, is less than 0 or greater than 255.</li>
 </ul>
@@ -418,7 +418,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than 0 or greater than 255.</li>
 </ul>
 
@@ -453,7 +453,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or the
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
 number, once converted to an integer by discarding its fractional
 part, is less than -32768 or greater than 32767.</li>
 </ul>
@@ -486,7 +486,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -32768 or greater than 32767.</li>
 </ul>
 
@@ -521,7 +521,7 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or the
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
 number, once converted to an integer by discarding its fractional
 part, is less than -2147483648 or greater than 2147483647.</li>
 </ul>
@@ -554,7 +554,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
@@ -574,7 +574,7 @@ an exact integer, or is less than -2147483648 or greater than
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or the
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
 number, once converted to an integer by discarding its fractional
 part, is less than -9223372036854775808 or greater than
 9223372036854775807.</li>
@@ -608,7 +608,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
 </ul>
@@ -620,7 +620,7 @@ than 9223372036854775807.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -783,8 +783,8 @@ reversed.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
-<li><p><code>OutOfMemoryError</code> - The exact result of the operation might be too big
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
+<li><p><code>java.lang.OutOfMemoryError</code> - The exact result of the operation might be too big
 to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
@@ -808,8 +808,8 @@ to store).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
-<li><p><code>OutOfMemoryError</code> - The exact result of the operation might be too big
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
+<li><p><code>java.lang.OutOfMemoryError</code> - The exact result of the operation might be too big
 to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
@@ -834,8 +834,8 @@ to store).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
-<li><p><code>OutOfMemoryError</code> - The exact result of the operation might be too big
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
+<li><p><code>java.lang.OutOfMemoryError</code> - The exact result of the operation might be too big
 to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
@@ -859,8 +859,8 @@ to store).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
-<li><p><code>OutOfMemoryError</code> - The exact result of the operation might be too big
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
+<li><p><code>java.lang.OutOfMemoryError</code> - The exact result of the operation might be too big
 to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
@@ -884,8 +884,8 @@ to store).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
-<li><p><code>OutOfMemoryError</code> - The exact result of the operation might be too big
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>b</code> is null.</p></li>
+<li><p><code>java.lang.OutOfMemoryError</code> - The exact result of the operation might be too big
 to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
@@ -941,7 +941,7 @@ implementation returns a positive number if.</li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code> in interface <code>Comparable&lt;CBORNumber&gt;</code></li>
+<li><code>compareTo</code> in interface <code>java.lang.Comparable&lt;CBORNumber&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
