@@ -59,7 +59,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)**](#exp_minus__m____lambda_____mu)
         - [**exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)**](#exp_minus__m____lambda____k)
         - [**exp(_&lambda;_)*(1&minus;_&lambda;_)**](#exp___lambda___1_minus___lambda)
-        - [**(exp(_&lambda;_)&minus;1) \* exp(&minus;_&lambda;_) or (exp(_&lambda;_)&minus;1) / exp(_&lambda;_)**](#exp___lambda___minus_1_exp_minus___lambda___or_exp___lambda___minus_1_exp___lambda)
+        - [**(1 &minus; exp(&minus;(_m_ + _&lambda;_))) / (_m_ + _&lambda;_)**](#1_minus_exp_minus__m____lambda____m____lambda)
         - [**1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))**](#1_2_k____lambda___or_exp_minus__k____lambda___ln_2)
         - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)\*(_k_ + _&lambda;_)) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
         - [**_c_ * _&lambda;_ * _&beta;_ / (_&beta;_ * (_c_ * _&lambda;_ + _d_ * _&mu;_) &minus; (_&beta;_ &minus; 1) * (_c_ + _d_))**](#c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d)
@@ -145,7 +145,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
 A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin's probability of heads.
 
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads.
-- The Bernoulli factory's outputs are statistically independent.
+- The Bernoulli factory's outputs are statistically independent, and so are those of the input coin.
 - Many Bernoulli factories also use a _fair coin_ in addition to the input coin.  A fair coin shows heads or tails with equal probability, and represents a source of randomness outside the input coin.
 - A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the _closed_ interval [0, 1] or a subset of that interval, and returns a probability in [0, 1].
 
@@ -199,7 +199,7 @@ This section shows implementation notes that apply to the algorithms in this art
 In the following algorithms:
 
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads of the input coin.
--  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={\n choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002\)[^5].  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
+-  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002\)[^5].  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial.
 - The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
@@ -361,7 +361,7 @@ Then the algorithm is as follows:
 <a id=Certain_Power_Series></a>
 #### Certain Power Series
 
-A _power series_ is a function written as&mdash; $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are _coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this article must be factory functions.
+A _power series_ is a function written as&mdash; $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are _coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this article do, and they must be factory functions.
 
 ----
 
@@ -921,11 +921,15 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater unless no
 4. If _k_ > 0 and _w_ is less than _U_, return 0.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
-<a id=exp___lambda___minus_1_exp_minus___lambda___or_exp___lambda___minus_1_exp___lambda></a>
-#### (exp(_&lambda;_)&minus;1) \* exp(&minus;_&lambda;_) or (exp(_&lambda;_)&minus;1) / exp(_&lambda;_)
+<a id=1_minus_exp_minus__m____lambda____m____lambda></a>
+#### (1 &minus; exp(&minus;(_m_ + _&lambda;_))) / (_m_ + _&lambda;_)
 
-1. Flip the input coin.  If it returns 0, return 0.
-2. Run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients if $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
+In this algorithm, _m_ is an integer 0 or greater.
+
+1. (Write as series expansion if _m_ is 0.) If _m_ is 0, run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
+2. (Separate as two functions otherwise.) If _m_ is greater than 0:
+    1. Run the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1.  If it returns 1, return 0.
+    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1 and _c_=_m_, and return the result of that algorithm.
 
 <a id=1_2_k____lambda___or_exp_minus__k____lambda___ln_2></a>
 #### 1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))
@@ -1391,6 +1395,7 @@ Algorithms in bold are given in this page.
 |  1 / (_c_ + _&lambda;_)  |  (_&lambda;_ is unknown heads probability of a coin; _c_&ge;1 is a rational number.)<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_ = 1. |
 |  1 / (1 + _&lambda;_<sup>2</sup>)  |  (Slope function of arctan(_&lambda;_).  _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin that flips _&lambda;_ coin twice and returns either 1 if both flips return 1, or 0 otherwise.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
 |  1 / (_c_ + exp(&minus; _&lambda;_))  |  (_&lambda;_ is unknown heads probability of a coin; _c_&ge;1 is a rational number.)<br>Create _&mu;_ coin for algorithm **exp(&minus; _&lambda;_)**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=1, _c_=_c_, and _&lambda;_ being the _&mu;_ coin. |
+| 1&minus;exp(_&minus; (_m_+_&lambda;_)) = (exp((_m_+_&lambda;_))&minus;1) \* exp(&minus;(_m_+_&lambda;_)) = (exp(_m_+_&lambda;_)&minus;1) / exp(_m_+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin. _m_ &ge; 0 is a rational number.)<br>Run algorithm **exp(&minus;(_m_+_&lambda;_)<sup>k</sup>)** with _k_ = 1, and return 1 minus the result. |
 | exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_)) | ((Dughmi et al. 2017\)[^31]; applies an exponential weight&mdash;here, _c_&mdash;to an input coin)<br>(1) If _c_ is 0, return 1.<br>(2) Generate _N_, a Poisson random variate with mean _c_.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped _N_ times, whichever comes first, then return a number that is 1 if _N_ is 0 or all of the coin flips (including the last) return 1, or 0 otherwise. |
 | exp(_&lambda;_)\*(1&minus;_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for power series 1, with _c_\[_i_\] = (_i_&minus;1)/(_i_!), and _CS_ = 1 (see "[**Certain Power Series**](#Certain_Power_Series)). |
 | exp(_&lambda;_<sup>2</sup>) &minus; _&lambda;_\*exp(_&lambda;_<sup>2</sup>) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0=1$, and $a_i=\frac{(-1)^i}{(\text{floor}(i/2))!}$. |

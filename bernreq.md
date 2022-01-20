@@ -271,7 +271,7 @@ As another illustration, I managed to find the following [**result**](https://pe
 
 And the proof proceeds by showing, among other things, that the Bernoulli factory for $f$ must flip the input coin and get 0 and 1 before it simulates any fair coin flips via the von Neumann trick.
 
-Question: **Does the result just given describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?**  Examples of functions to ponder are those that are not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha \in (0, 1)$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.
+Question: **Does the result just given describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?**  Examples of functions to ponder are those that are continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha \in (0, 1)$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.
 
 <a id=Multiple_Output_Bernoulli_Factories></a>
 ## Multiple-Output Bernoulli Factories
