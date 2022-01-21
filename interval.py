@@ -503,17 +503,17 @@ class FInterval:
             fac *= 2 * i + 2
         upbound = ret + (-1) ** (m) * x ** (2 * (m)) / fac
         if upbound > ret:
-            raise ValueError
+            raise ValueError("Sanity check failed")
         return FInterval(1 + upbound, 1 + ret)
 
-    def _sqrtbounds(x, n):
+    def _sqrtbounds(x, n):  # x>=0; n is number of iterations
         x = x if isinstance(x, Fraction) else Fraction(x)
         upper = x + 1
         for i in range(0, n):
             upper = (upper + x / upper) / 2
         lower = x / upper
         if lower > upper:
-            raise ValueError
+            raise ValueError("Sanity check failed")
         return FInterval(min(lower, upper), max(lower, upper))
 
     def _atanbounds(x, n):
