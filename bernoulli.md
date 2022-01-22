@@ -203,7 +203,7 @@ In the following algorithms:
 - _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial.
 - The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
-    - by generating a uniform random variate in the openopen interval [**0, 1) (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
+    - by generating a uniform random variate in the open interval (0, 1) (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
 - The instruction to "generate an exponential random variate" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
     - by getting the result of the **ExpRand** or **ExpRand2** algorithm (described in my article on PSRNs) with a rate of 1, or
