@@ -240,7 +240,7 @@ The table below shows algorithms that have been proposed for choosing an integer
 | _Modulo reduction_: Generate `bignumber` as above, then find `rem(bignumber, n)`.  | No | No | Constant |
 | _Fast Dice Roller_ (Lumbroso 2013\)[^6] \(see pseudocode above). | Yes | Yes | Runs forever in worst case |
 | Math Forum (2004\)[^7] or (Mennucci 2018\)[^8] \(batching/recycling random bits). | Yes | Yes | Runs forever in worst case |
-| "FP Multiply" surveyed by [**M. O'Neill**](https://web.archive.org/web/20211026014702/https://www.pcg-random.org/posts/bounded-rands.html). | No | No | Constant |
+| "FP Multiply" surveyed by [**M. O'Neill**](https://www.pcg-random.org/posts/bounded-rands.html). | No | No | Constant |
 | Algorithm in "Conclusion" section by O'Neill. | No | Yes | Runs forever in worst case |
 | "Debiased" and "Bitmask with Rejection" surveyed by M. O'Neill. | No | Yes | Runs forever in worst case |
 
