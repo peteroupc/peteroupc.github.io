@@ -1509,7 +1509,7 @@ In the algorithm below, _a_, _b_, _x_, and _y_ are integers, and the case where 
 
 The algorithm follows.
 
-1. If _x_/_y_ is less than 0, swap _a_ and _b_, and remove the sign from _x_/_y_.  If _a_/_b_ is now no longer in the interval [0, 1], return an error.
+1. If _x_/_y_ is less than 0, swap _a_ and _b_, and remove the sign from _x_/_y_.  If _a_/_b_ is now less than 0 or greater than 1, return an error.
 2. If _x_/_y_ is equal to 1, return 1 with probability _a_/_b_ and 0 otherwise.
 3. If _x_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, if _a_ equals _b_, return 1.
 4. If _x_/_y_ is greater than 1:
