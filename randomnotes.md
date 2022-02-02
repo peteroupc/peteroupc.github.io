@@ -10,6 +10,7 @@
         - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
         - [**Gamma Distribution**](#Gamma_Distribution)
         - [**Beta Distribution**](#Beta_Distribution)
+        - [**Uniform Partition with a Positive Sum**](#Uniform_Partition_with_a_Positive_Sum)
         - [**Noncentral Hypergeometric Distributions**](#Noncentral_Hypergeometric_Distributions)
         - [**von Mises Distribution**](#von_Mises_Distribution)
         - [**Stable Distribution**](#Stable_Distribution)
@@ -156,6 +157,24 @@ The following method samples a number from a _beta distribution_, in the interva
     END METHOD
 
 I give an [**error-bounded sampler**](https://peteroupc.github.io/exporand.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
+
+<a id=Uniform_Partition_with_a_Positive_Sum></a>
+#### Uniform Partition with a Positive Sum
+
+The following algorithm chooses at random a uniform partition of the number `sum` into `n` parts, and returns an `n`-item list of the chosen numbers, which sum to `sum` assuming no rounding error.  In this algorithm, `n` must be an integer greater than 0, and `sum` must be greater than 0.  The method was described in Bini and Buttazzo (2005)[^20] and Mai et al. (2022)[^21].
+
+```
+METHOD UniformSum(n, sum):
+  if n<=0 or sum<=0: return error
+  w=1; nn=n-1;ret=NewList()
+  while nn>0
+   v=w*(1-pow(RNDU01MinMaxExc(),1.0/nn))
+   ret.append(v*sum)
+   w=w-v; nn=nn-1
+  end
+  AddItem(ret, w*sum); return ret
+END METHOD
+```
 
 <a id=Noncentral_Hypergeometric_Distributions></a>
 #### Noncentral Hypergeometric Distributions
@@ -457,6 +476,10 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 [^18]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
 [^19]: Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.
+
+[^20]: Bini, B., Buttazzo, G.C., "Measuring the Performance of Schedulability Tests", _Real-Time Systems_ 30, 129-154 (2005)
+
+[^21]: Mai, J., Craig, J.R., Tolson, B.A., "[**The pie-sharing problem: Unbiased sampling of N+1 summative weights**](https://www.sciencedirect.com/science/article/pii/S1364815221003248)", _Environmental Modelling & Software_ 148, February 2022.
 
 <a id=Appendix></a>
 ## Appendix

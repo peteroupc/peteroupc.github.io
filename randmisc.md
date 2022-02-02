@@ -33,7 +33,7 @@ Take the following sampler of a binomial(_n_, 1/2) distribution (where _n_ is ev
 6. (Second, accept or reject _ret_.) If _ret_ < 0 or _ret_ > _n_, go to step 3.
 7. With probability choose(_n_, _ret_)\*_m_\*2<sup>(_k_&minus;_n_)+2</sup>, return _ret_.  Otherwise, go to step 3. (Here, choose(_n_, _k_) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.[^2])
 
-This algorithm has an acceptance rate of 1/16 regardless of the value of _n_.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as _n_ gets larger, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge's approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated that is much more economical in terms of storage than the full exact probability.  Then, an exponential random variate can be generated, negated, and compared with that logarithm to determine whether the step succeeds.
+This algorithm has an acceptance rate of 1/16 regardless of the value of _n_.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as _n_ gets larger, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge's approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated, then an exponential random variate can be generated, negated, and compared with that logarithm to determine whether the step succeeds.
 
 More specifically, step 7 can be changed as follows:
 
@@ -63,7 +63,7 @@ The following algorithm is equivalent to the geometric(_px_/_py_) sampler that a
 3. With probability (1&minus;_px_/_py_)<sup>2<sup>_k_</sup></sup>, add 1 to _d_ and repeat this step. (To simulate this probability, the first sub-algorithm below can be used.)
 4. Generate a uniform random integer in [0, 2<sup>_k_</sup>), call it _m_, then with probability (1&minus;_px_/_py_)<sup>_m_</sup>, return _d_\*2<sup>_k_</sup>+_m_. Otherwise, repeat this step. (The Bringmann paper, though, suggests to simulate this probability by sampling only as many bits of _m_ as needed to do so, rather than just generating _m_ in one go, then using the first sub-algorithm on _m_.  However, the implementation, given as the second sub-algorithm below, is much more complicated and is not crucial for correctness.)
 
-The first sub-algorithm returns 1 with probability (1&minus;_px_/_py_)<sup>_n_</sup>, assuming that _n_\*_px_/_py_ &le; 1.  It implements the approach from the Bringmann paper by rewriting the probability using the binomial theorem. (More generally, to return 1 with probability (1&minus;_p_)<sup>_n_</sup>, it's enough to flip a coin that shows heads with probability _p_, _n_times or until it shows heads, whichever comes first, and then return either 1 if all the flips showed tails, or 0 otherwise.  See also "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".)
+The first sub-algorithm returns 1 with probability (1&minus;_px_/_py_)<sup>_n_</sup>, assuming that _n_\*_px_/_py_ &le; 1.  It implements the approach from the Bringmann paper by rewriting the probability using the binomial theorem. (More generally, to return 1 with probability (1&minus;_p_)<sup>_n_</sup>, it's enough to flip a coin that shows heads with probability _p_, _n_ times or until it shows heads, whichever comes first, and then return either 1 if all the flips showed tails, or 0 otherwise.  See also "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".)
 
 1. Set _pnum_, _pden_, and _j_  to 1, then set _r_ to 0, then set _qnum_ to _px_, and _qden_ to _py_, then set _i_ to 2.
 2. If _j_ is greater than _n_, go to step 5.
@@ -121,7 +121,7 @@ This algorithm is similar to the "inversion&ndash;rejection" algorithm mentioned
 
 By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random variate, with arbitrary precision, without actually calculating that power (a na√Øve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html).  Even so, the algorithm I have come up with in this note may be of independent interest.
 
-In the case of powers of a uniform random variate in the interval [0, 1], call the variate _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>.  Note that this formula is the same regardless of _i_. (To return 1 with probability (1/2)<sup>1/_n_</sup>, the algorithm for **(_a_/_b_)<sup>_x_/_y_</sup> in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)" can be used with _a_=1, _b_=2, _x_=1, and _y_=_n_.)  This is found by taking the PDF _f_(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
+In the case of powers of a uniform random variate in the interval [0, 1], call the variate _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>.  Note that this formula is the same regardless of _i_. (To return 1 with probability (1/2)<sup>1/_n_</sup>, the algorithm for **(_a_/_b_)<sup>_x_/_y_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)" can be used with _a_=1, _b_=2, _x_=1, and _y_=_n_.)  This is found by taking the PDF _f_(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
 
 <a id=Certain_Families_of_Distributions></a>
 ## Certain Families of Distributions
@@ -189,7 +189,7 @@ A distribution of minimums or of maximums can be generated as follows (Duarte-L√
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. With probability _w_(_x_), return _x_.  Otherwise, go to step 1.
 
-Some weighted distributions allow any weight function _w_(_x_) whose values are non-negative everywhere in X's support (Rao 1985\)[^27].  (If _w_(_x_) = _x_, the distribution is often called a _length-biased_ or _size-biased distribution_; if _w_(_x_) = _x_<sup>2</sup>, _area-biased_.)  Their probability density functions are proportional to the original density functions multiplied by _w_(_x_).
+Some weighted distributions allow any weight function _w_(_x_) whose values are non-negative everywhere in X's support (Rao 1985\)[^27].  (If _w_(_x_) = _x_, the distribution is often called a _length-biased_ or _size-biased distribution_; if _w_(_x_) = _x_<sup>2</sup>, _area-biased_.)  Their PDFs are proportional to the original PDFs multiplied by _w_(_x_).
 
 **Inflated distributions.** To generate an _inflated X_ (also called _c-inflated X_ or _c-adjusted X_) random variate with parameters _c_ and _&alpha;_, generate&mdash;
 
@@ -291,13 +291,13 @@ For example&mdash;
 
 The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
-- The target distribution's probability density function, or a function proportional to it, must be known.  This is called the density function in the rest of this section.
-- The density function must be continuous "almost everywhere" and bounded from above (see also (Devroye and Gravel 2020\)[^34]).
+- The target distribution must have a probability density function (PDF), as is the case with the normal and exponential distributions.
+- That PDF, or a function proportional to it, must be known, must be bounded from above, and must be continuous "almost everywhere" (the set of discontinuous points is "zero-volume", that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020\)[^34]).
 
 Here is a sketch of how this rejection sampler might work:
 
 1. After using one of the algorithms given earlier in this section to sample digits of _x_ as needed, let _a_ and _b_ be _x_'s upper and lower bounds.  Calculate lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively).
-2. Given the density function, sample a uniform PSRN, _y_, in the interval \[_alow_, _bhigh_\] using an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)).
+2. Given the target function's PDF or a function proportional to it, sample a uniform PSRN, _y_, in the interval \[_alow_, _bhigh_\] using an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)).
 3. Accept _y_ (and return it) if it clearly lies in \[_ahigh_, _blow_\].  Reject _y_ (and go to the previous step) if it clearly lies outside \[_alow_, _bhigh_\].  If _y_ clearly lies in \[_alow_, _ahigh_\] or in \[_blow_, _bhigh_\], generate more digits of _x_, uniformly at random, and go to the first step.
 4. If _y_ doesn't clearly fall in any of the cases in the previous step, generate more digits of _y_, uniformly at random, and go to the previous step.
 

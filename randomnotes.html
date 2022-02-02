@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2021/12/27"><meta name="citation_online_date" content="2021/12/27"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/02/02"><meta name="citation_online_date" content="2022/02/02"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -22,6 +22,7 @@
 <li><a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a></li>
 <li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
 <li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
+<li><a href="#Uniform_Partition_with_a_Positive_Sum"><strong>Uniform Partition with a Positive Sum</strong></a></li>
 <li><a href="#Noncentral_Hypergeometric_Distributions"><strong>Noncentral Hypergeometric Distributions</strong></a></li>
 <li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
 <li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
@@ -197,6 +198,24 @@ END METHOD
 </pre>
 
 <p>I give an <a href="https://peteroupc.github.io/exporand.html"><strong>error-bounded sampler</strong></a> for the beta distribution (when <code>a</code> and <code>b</code> are both 1 or greater) in a separate page.</p>
+
+<p><a id=Uniform_Partition_with_a_Positive_Sum></a></p>
+
+<h4>Uniform Partition with a Positive Sum</h4>
+
+<p>The following algorithm chooses at random a uniform partition of the number <code>sum</code> into <code>n</code> parts, and returns an <code>n</code>-item list of the chosen numbers, which sum to <code>sum</code> assuming no rounding error.  In this algorithm, <code>n</code> must be an integer greater than 0, and <code>sum</code> must be greater than 0.  The method was described in Bini and Buttazzo (2005)[^20] and Mai et al. (2022)[^21].</p>
+
+<pre>METHOD UniformSum(n, sum):
+  if n&lt;=0 or sum&lt;=0: return error
+  w=1; nn=n-1;ret=NewList()
+  while nn&gt;0
+   v=w*(1-pow(RNDU01MinMaxExc(),1.0/nn))
+   ret.append(v*sum)
+   w=w-v; nn=nn-1
+  end
+  AddItem(ret, w*sum); return ret
+END METHOD
+</pre>
 
 <p><a id=Noncentral_Hypergeometric_Distributions></a></p>
 
@@ -533,6 +552,10 @@ END METHOD
 <p>[^18]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
 
 <p>[^19]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
+
+<p>[^20]: Bini, B., Buttazzo, G.C., &quot;Measuring the Performance of Schedulability Tests&quot;, <em>Real-Time Systems</em> 30, 129-154 (2005)</p>
+
+<p>[^21]: Mai, J., Craig, J.R., Tolson, B.A., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S1364815221003248"><strong>The pie-sharing problem: Unbiased sampling of N+1 summative weights</strong></a>&quot;, <em>Environmental Modelling &amp; Software</em> 148, February 2022.</p>
 
 <p><a id=Appendix></a></p>
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/01/20"><meta name="citation_online_date" content="2022/01/20"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/02/01"><meta name="citation_online_date" content="2022/02/01"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -307,7 +307,7 @@
 </ul></li>
 </ul>
 
-<p><strong>Example 2:</strong> Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$, another power series.</p>
+<p><strong>Example 2:</strong> Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$, rewritable as another power series.</p>
 
 <ul>
 <li>$f$ is bounded above by $Z=3/4 \lt 1$.</li>
@@ -405,7 +405,7 @@
 <li>Add 1 to <em>i</em> and go to step 2.</li>
 </ol>
 
-<p>It would be interesting to find general formulas to find the appropriate polynomials (degrees and <em>Y parameters</em>) given only the values for <em>mult</em> and <em>&epsilon;</em>, rather than find them &quot;the hard way&quot; via <code>calc_linear_func</code>.  For this procedure, the degrees and <em>Y parameters</em> can be upper bounds, as long as the sequence of degrees is monotonically increasing and the sequence of Y parameters is nonincreasing.</p>
+<p>It would be interesting to find general formulas to find the appropriate polynomials (degrees and <em>Y parameters</em>) given only the values for <em>mult</em> and <em>&epsilon;</em>, rather than find them &quot;the hard way&quot; via <code>calc_linear_func</code>.  For this procedure, the degrees and <em>Y parameters</em> can be upper bounds, as long as the sequence of degrees is monotone increasing and the sequence of Y parameters is nonincreasing.</p>
 
 <blockquote>
 <p><strong>Note:</strong> In Nacu and Peres (2005)[^7], the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$, provided $\varepsilon \lt 1/8$, where <em>n</em> is a power of 2.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.</p>
@@ -1104,13 +1104,13 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <h3>Building an Arbitrary-Precision Sampler</h3>
 
-<p>If a continuous distribution&mdash;</p>
+<p>If a probability distribution&mdash;</p>
 
 <ul>
 <li>has a probability density function (PDF), or a function proportional to the PDF, with a known symbolic form,</li>
 <li>has a cumulative distribution function (CDF) with a known symbolic form,</li>
 <li>takes on only values 0 or greater, and</li>
-<li>has a PDF that has an infinite tail to the right, is bounded from above (that is, <em>PDF(0)</em> is other than infinity), and decreases monotonically,</li>
+<li>has a PDF that has an infinite tail to the right, is bounded from above (that is, <em>PDF(0)</em> is other than infinity), and is monotone decreasing,</li>
 </ul>
 
 <p>it may be possible to describe an arbitrary-precision sampler for that distribution.  Such a description has the following skeleton.</p>
@@ -1136,7 +1136,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <ul>
 <li>The probability <em>C</em>(<em>i</em>, <em>&lambda;</em>) is calculated as <em>PDF</em>(<em>i</em> + <em>&lambda;</em>) / <em>M</em>, where <em>PDF</em> is the distribution&#39;s PDF or a function proportional to the PDF, and should be found analytically using a computer algebra system such as SymPy.</li>
-<li>In this formula, <em>M</em> is any convenient number in the interval [<em>PDF</em>(<em>intval</em>),  max(1, <em>PDF</em>(<em>intval</em>))], and should be as low as feasible. <em>M</em> serves to ensure that <em>C</em> is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of <em>M</em> can vary for each interval (each value of <em>intval</em>, which can only be 0, 1, or a power of 2).  Any such choice for <em>M</em> preserves the algorithm&#39;s correctness because the PDF has to be monotonically decreasing and a new interval isn&#39;t chosen when <em>&lambda;</em> is rejected.</li>
+<li>In this formula, <em>M</em> is any convenient number in the interval [<em>PDF</em>(<em>intval</em>),  max(1, <em>PDF</em>(<em>intval</em>))], and should be as low as feasible. <em>M</em> serves to ensure that <em>C</em> is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of <em>M</em> can vary for each interval (each value of <em>intval</em>, which can only be 0, 1, or a power of 2).  Any such choice for <em>M</em> preserves the algorithm&#39;s correctness because the PDF has to be monotone decreasing and a new interval isn&#39;t chosen when <em>&lambda;</em> is rejected.</li>
 <li>The symbolic form of <em>C</em> will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.</li>
 </ul></li>
 <li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
@@ -1182,7 +1182,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <h3>Cumulative Distribution Functions</h3>
 
-<p>Suppose we have a real number <em>z</em> (which might be a uniform PSRN or a rational number).  If a continuous distribution&mdash;</p>
+<p>Suppose we have a real number <em>z</em> (which might be a uniform PSRN or a rational number).  If a probability distribution&mdash;</p>
 
 <ul>
 <li>has a probability density function (PDF) (as with the normal or exponential distribution), and</li>

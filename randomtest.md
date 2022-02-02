@@ -29,7 +29,7 @@ The _leapfrogging_ technique involves assigning N processes each a PRNG that dif
 
 In general, a hash function without PractRand failures is worthy of mention if it's noncryptographic and faster than hash functions designed for cryptography, such as MD5 and the SHA family.
 
-**Combined PRNGs.** As G. Marsaglia (in KISS), D. Jones (in JKISS), and A. Fog (2015\)[^2] have recognized, combining two or more PRNGs of weaker quality often leads to a higher-quality PRNG.  A PRNG that isn't high-quality could be converted to a high-quality PRNG in one of the following ways:
+**Combined PRNGs.** As G. Marsaglia (in KISS), D. Jones (in JKISS), and A. Fog (2015\)[^2] have recognized, combining two or more PRNGs of weaker quality often leads to a higher-quality PRNG.  It might be possible to convert a PRNG that isn't high-quality to a high-quality PRNG in one of the following ways:
 
 - If the PRNG has at least 128 bits of state and uses a _permutation function_[^3] `P(x)` to transform that state, have the PRNG generate each number as follows instead:
      1. Add 1 (or another odd constant[^4]) to the state (using wraparound addition).
@@ -47,7 +47,7 @@ _Other combinations and transformations._  There are other ways to combine two P
 - The [**Bays&ndash;Durham shuffle**](https://peteroupc.github.io/bdshuffle.html) (as in C++'s `shuffle_block_engine`).
 - Transforming a PRNG's outputs with a permutation function (for example, Mersenne Twister's "tempering").
 - The "shrinking generator" technique, which takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019\)[^6]).
-- "Self-shrinking" and von Neumann unbiasing, which each transform a PRNG based on pairs of output bits.
+- "Self-shrinking" and von Neumann unbiasing (von Neumann 1951)[^8], which each transform a PRNG based on pairs of output bits.
 
 **Splittable PRNGs.** A _splittable PRNG_ consists of two operations: a `split` operation to create multiple new internal states from one, and a `generate` operation to produce a pseudorandom number from a state (Schaathun 2015; Claessen et al., 2013\)[^7]. The Schaathun paper surveys several known constructions of splittable PRNGs.  Some of the constructions can be used by any PRNG, but do not necessarily lead to high-quality splittable PRNGs.
 
@@ -81,3 +81,5 @@ The Schaathun paper suggests the following four random number sequences for test
 [^6]: J. D. Cook, "Using one RNG to sample another", June 4, 2019.
 
 [^7]: Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators", 2015; Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", Proceedings of Haskell Symposium 2013, pp. 47-58.
+
+[^8]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
