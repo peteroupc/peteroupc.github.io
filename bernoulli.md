@@ -718,7 +718,7 @@ Then both algorithms are now described as follows:
 | Name |  To sample: | Use this algorithm: |
  --- | --- | --- |
 | Convex combinations | 1 with probability:<br>$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)$ | (1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability _g_(_X_, _&lambda;_).<br>(2) Flip the coin represented by _X_ (run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(_&lambda;_)) and return the result. |
-| Generalized Bernoulli race | Integer _i_ with probability:<br>$\frac{g(i,\lambda) h_i(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}$ | (1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability proportional to _g_(_X_, _&lambda;_).<br>(2) Run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(**_&mu;_**).  If the run returns 0 (_X_ is rejected), go to step 1.  Otherwise (_X_ is accepted), return _X_. |
+| Generalized Bernoulli race | Integer _i_ with probability:<br>$\frac{g(i,\lambda) h_i(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}$ | (**_&mu;_** is the probabilities of heads of one or more input coins.)<br>(1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability proportional to _g_(_X_, _&lambda;_).<br>(2) Run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(**_&mu;_**).  If the run returns 0 (_X_ is rejected), go to step 1.  Otherwise (_X_ is accepted), return _X_. |
 
 > **Note:**  The probability that $r$ many values of $X$ are rejected by the generalized Bernoulli race is $p(1 − p)^r$, where&mdash; $$p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda)}.$$
 

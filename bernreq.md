@@ -1,5 +1,7 @@
 # Open Questions on the Bernoulli Factory Problem
 
+[**Peter Occil**](mailto:poccil14@gmail.com)
+
 <a id=Background></a>
 ## Background
 
