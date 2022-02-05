@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/02/02"><meta name="citation_online_date" content="2022/02/02"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/02/05"><meta name="citation_online_date" content="2022/02/05"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -203,7 +203,7 @@ END METHOD
 
 <h4>Uniform Partition with a Positive Sum</h4>
 
-<p>The following algorithm chooses at random a uniform partition of the number <code>sum</code> into <code>n</code> parts, and returns an <code>n</code>-item list of the chosen numbers, which sum to <code>sum</code> assuming no rounding error.  In this algorithm, <code>n</code> must be an integer greater than 0, and <code>sum</code> must be greater than 0.  The method was described in Bini and Buttazzo (2005)[^20] and Mai et al. (2022)[^21].</p>
+<p>The following algorithm chooses at random a uniform partition of the number <code>sum</code> into <code>n</code> parts, and returns an <code>n</code>-item list of the chosen numbers, which sum to <code>sum</code> assuming no rounding error.  In this algorithm, <code>n</code> must be an integer greater than 0, and <code>sum</code> must be greater than 0.  The method was described in Bini and Buttazzo (2005)[^13] and Mai et al. (2022)[^14].</p>
 
 <pre>METHOD UniformSum(n, sum):
   if n&lt;=0 or sum&lt;=0: return error
@@ -244,7 +244,7 @@ END METHOD
 
 <p>The <em>von Mises distribution</em> describes a distribution of circular angles and uses two parameters: <code>mean</code> is the mean angle and <code>kappa</code> is a shape parameter.  The distribution is uniform at <code>kappa = 0</code> and approaches a normal distribution with increasing <code>kappa</code>.</p>
 
-<p>The algorithm below samples a number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)[^13] with errata incorporated).</p>
+<p>The algorithm below samples a number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)[^15] with errata incorporated).</p>
 
 <pre>METHOD VonMises(mean, kappa)
     if kappa &lt; 0: return error
@@ -309,7 +309,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)[^14].  Here, <code>alpha</code> is in (0, 2], <code>lamda</code> is greater than 0, and <code>tau</code>&#39;s absolute value is not more than min(1, 2/<code>alpha</code> &minus; 1).  The result of <code>GeometricStable</code> is a symmetric Linnik distribution if <code>tau = 0</code>, or a Mittag-Leffler distribution if <code>tau = 1</code> and <code>alpha &lt; 1</code>.</p>
+<p>Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)[^16].  Here, <code>alpha</code> is in (0, 2], <code>lamda</code> is greater than 0, and <code>tau</code>&#39;s absolute value is not more than min(1, 2/<code>alpha</code> &minus; 1).  The result of <code>GeometricStable</code> is a symmetric Linnik distribution if <code>tau = 0</code>, or a Mittag-Leffler distribution if <code>tau = 1</code> and <code>alpha &lt; 1</code>.</p>
 
 <pre>METHOD GeometricStable(alpha, lamda, tau)
    rho = alpha*(1-tau)/2
@@ -428,7 +428,7 @@ method for generating multiple random vectors in one call.</p>
 <li>A <strong>Rice (Rician) distribution</strong> is a Beckmann distribution in which the binormal random pair is generated with <code>m1 = m2 = a / sqrt(2)</code>, <code>rho = 0</code>, and <code>s1 = s2 = b</code>, where <code>a</code> and <code>b</code> are the parameters to the Rice distribution.</li>
 <li><strong>Rice&ndash;Norton distribution</strong>: Generate <code>vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])</code> (where <code>v = a/sqrt(m*2)</code>, <code>w = b*b/m</code>, and <code>a</code>, <code>b</code>, and <code>m</code> are the parameters to the Rice&ndash;Norton distribution), then apply <code>Norm(vec)</code> to that vector.</li>
 <li>A <strong>standard</strong> <a href="https://en.wikipedia.org/wiki/Complex_normal_distribution"><strong>complex normal distribution</strong></a> is a binormal distribution in which the binormal random pair is generated with <code>s1 = s2 = sqrt(0.5)</code> and <code>mu1 = mu2 = 0</code> and treated as the real and imaginary parts of a complex number.</li>
-<li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000)[^14].</li>
+<li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000)[^16].</li>
 </ol>
 </blockquote>
 
@@ -458,7 +458,7 @@ method for generating multiple random vectors in one call.</p>
 END METHOD
 </pre>
 
-<p>Each of the resulting uniform random values will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> or <em>marginal</em> here) by taking the quantile of that uniform number for that distribution (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a>&quot;, and see also (Cario and Nelson 1997)[^15].)</p>
+<p>Each of the resulting uniform random values will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> or <em>marginal</em> here) by taking the quantile of that uniform number for that distribution (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a>&quot;, and see also (Cario and Nelson 1997)[^17].)</p>
 
 <blockquote>
 <p><strong>Note:</strong> The Gaussian copula is also known as the <em>normal-to-anything</em> method.</p>
@@ -477,7 +477,7 @@ END METHOD
      -log1p(-copula[1]) / rate2]
 END METHOD
 </pre></li>
-<li><p>The <em><strong>T</strong>&ndash;Poisson hierarchy</em> (Knudson et al. 2021)[^16] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with&mdash;</p>
+<li><p>The <em><strong>T</strong>&ndash;Poisson hierarchy</em> (Knudson et al. 2021)[^18] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with&mdash;</p>
 
 <ul>
 <li>a parameter <code>lamda</code>, and</li>
@@ -508,7 +508,7 @@ END METHOD
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (for example, <code>[x, x]</code>), where <code>x = RNDRANGEMinMaxExc(0, 1)</code>,</li>
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDRANGEMinMaxExc(0, 1)</code>,</li>
 <li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDRANGEMinMaxExc(0, 1)</code> (indicating no dependence between the numbers), and</li>
-<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)[^17].</li>
+<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)[^19].</li>
 </ul>
 
 <p><a id=Notes></a></p>
@@ -539,23 +539,23 @@ END METHOD
 
 <p>[^12]: A. Stuart, &quot;Gamma-distributed products of independent random variables&quot;, <em>Biometrika</em> 49, 1962.</p>
 
-<p>[^13]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^13]: Bini, B., Buttazzo, G.C., &quot;Measuring the Performance of Schedulability Tests&quot;, <em>Real-Time Systems</em> 30, 129-154 (2005)</p>
 
-<p>[^14]: Tomasz J. Kozubowski, &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0377042799003180"><strong>Computer simulation of geometric stable distributions</strong></a>&quot;, <em>Journal of Computational and Applied Mathematics</em> 116(2), pp. 221-229, 2000. <a href="https://doi.org/10.1016/S0377-0427%2899%2900318-0"><strong>https://doi.org/10.1016/S0377-0427(99)00318-0</strong></a></p>
+<p>[^14]: Mai, J., Craig, J.R., Tolson, B.A., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S1364815221003248"><strong>The pie-sharing problem: Unbiased sampling of N+1 summative weights</strong></a>&quot;, <em>Environmental Modelling &amp; Software</em> 148, February 2022.</p>
 
-<p>[^15]: Cario, M. C., B. L. Nelson, &quot;Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix&quot;, 1997.</p>
+<p>[^15]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
 
-<p>[^16]: Knudson, A.D., Kozubowski, T.J., et al., &quot;A flexible multivariate model for high-dimensional correlated count data&quot;, <em>Journal of Statistical Distributions and Applications</em> 8:6, 2021.</p>
+<p>[^16]: Tomasz J. Kozubowski, &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0377042799003180"><strong>Computer simulation of geometric stable distributions</strong></a>&quot;, <em>Journal of Computational and Applied Mathematics</em> 116(2), pp. 221-229, 2000. <a href="https://doi.org/10.1016/S0377-0427%2899%2900318-0"><strong>https://doi.org/10.1016/S0377-0427(99)00318-0</strong></a></p>
 
-<p>[^17]: Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  <em>Journal of Statistical Software</em> 39(9), 2011, pp. 1-20.</p>
+<p>[^17]: Cario, M. C., B. L. Nelson, &quot;Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix&quot;, 1997.</p>
 
-<p>[^18]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
+<p>[^18]: Knudson, A.D., Kozubowski, T.J., et al., &quot;A flexible multivariate model for high-dimensional correlated count data&quot;, <em>Journal of Statistical Distributions and Applications</em> 8:6, 2021.</p>
 
-<p>[^19]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
+<p>[^19]: Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  <em>Journal of Statistical Software</em> 39(9), 2011, pp. 1-20.</p>
 
-<p>[^20]: Bini, B., Buttazzo, G.C., &quot;Measuring the Performance of Schedulability Tests&quot;, <em>Real-Time Systems</em> 30, 129-154 (2005)</p>
+<p>[^20]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
 
-<p>[^21]: Mai, J., Craig, J.R., Tolson, B.A., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S1364815221003248"><strong>The pie-sharing problem: Unbiased sampling of N+1 summative weights</strong></a>&quot;, <em>Environmental Modelling &amp; Software</em> 148, February 2022.</p>
+<p>[^21]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -608,7 +608,7 @@ END METHOD
 <li>can generate independent uniform random real numbers</li>
 </ul>
 
-<p>(Devroye 1986, p. 1-2)[^13].  However, an exact algorithm implemented on real-life computers can incur error due to the use of fixed precision, such as rounding and cancellations, especially when floating-point numbers are involved. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)[^13]. All methods given on this page are exact unless otherwise noted.  Note that the <code>RNDRANGEMinMaxExc</code> method is exact in theory, but has no required implementation.</p></li>
+<p>(Devroye 1986, p. 1-2)[^15].  However, an exact algorithm implemented on real-life computers can incur error due to the use of fixed precision, such as rounding and cancellations, especially when floating-point numbers are involved. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)[^15]. All methods given on this page are exact unless otherwise noted.  Note that the <code>RNDRANGEMinMaxExc</code> method is exact in theory, but has no required implementation.</p></li>
 <li><p>An <em>error-bounded algorithm</em> is a sampling algorithm with the following requirements:</p>
 
 <ul>
@@ -618,19 +618,19 @@ END METHOD
 </ul>
 
 <p>Many error-bounded algorithms use random bits as their only source of randomness. An application should use error-bounded algorithms whenever possible.</p></li>
-<li>An <em>inexact</em>, <em>approximate</em>, or <em>biased algorithm</em> is neither exact nor error-bounded; it uses &quot;a mathematical approximation of sorts&quot; to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2)[^13].  An application should use this kind of algorithm only if it&#39;s willing to trade accuracy for speed.</li>
+<li>An <em>inexact</em>, <em>approximate</em>, or <em>biased algorithm</em> is neither exact nor error-bounded; it uses &quot;a mathematical approximation of sorts&quot; to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2)[^15].  An application should use this kind of algorithm only if it&#39;s willing to trade accuracy for speed.</li>
 </ol>
 
 <p>Most algorithms on this page, though, are not <em>error-bounded</em>, but even so, they may still be useful to an application willing to trade accuracy for speed.</p>
 
-<p>There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020)[^18] is Wasserstein distance (or &quot;earth-mover distance&quot;).  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.</p>
+<p>There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020)[^20] is Wasserstein distance (or &quot;earth-mover distance&quot;).  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
 
 <ol>
 <li>Sampling from the exponential distribution via <code>-ln(RNDRANGEMinMaxExc(0, 1))</code> is an <em>exact algorithm</em> (in theory), but not an <em>error-bounded</em> one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.</li>
-<li>Sampling from the exponential distribution using the <code>ExpoExact</code> method in the page &quot;<a href="https://peteroupc.github.io/randmisc.html#ExpoExact"><strong>Miscellaneous Observations on Randomization</strong></a>&quot; is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2016)[^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018)[^19].</li>
+<li>Sampling from the exponential distribution using the <code>ExpoExact</code> method in the page &quot;<a href="https://peteroupc.github.io/randmisc.html#ExpoExact"><strong>Miscellaneous Observations on Randomization</strong></a>&quot; is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2016)[^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018)[^21].</li>
 <li>Examples of <em>approximate algorithms</em> include sampling from a Gaussian-like distribution via a sum of <code>RNDRANGEMinMaxExc(0, 1)</code>, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N"><strong>RNDINT</strong></a>&quot;).</li>
 </ol>
 </blockquote>

@@ -47,9 +47,9 @@ _Other combinations and transformations._  There are other ways to combine two P
 - The [**Bays&ndash;Durham shuffle**](https://peteroupc.github.io/bdshuffle.html) (as in C++'s `shuffle_block_engine`).
 - Transforming a PRNG's outputs with a permutation function (for example, Mersenne Twister's "tempering").
 - The "shrinking generator" technique, which takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019\)[^6]).
-- "Self-shrinking" and von Neumann unbiasing (von Neumann 1951)[^8], which each transform a PRNG based on pairs of output bits.
+- "Self-shrinking" and von Neumann unbiasing (von Neumann 1951)[^7], which each transform a PRNG based on pairs of output bits.
 
-**Splittable PRNGs.** A _splittable PRNG_ consists of two operations: a `split` operation to create multiple new internal states from one, and a `generate` operation to produce a pseudorandom number from a state (Schaathun 2015; Claessen et al., 2013\)[^7]. The Schaathun paper surveys several known constructions of splittable PRNGs.  Some of the constructions can be used by any PRNG, but do not necessarily lead to high-quality splittable PRNGs.
+**Splittable PRNGs.** A _splittable PRNG_ consists of two operations: a `split` operation to create multiple new internal states from one, and a `generate` operation to produce a pseudorandom number from a state (Schaathun 2015; Claessen et al., 2013\)[^8]. The Schaathun paper surveys several known constructions of splittable PRNGs.  Some of the constructions can be used by any PRNG, but do not necessarily lead to high-quality splittable PRNGs.
 
 The Schaathun paper suggests the following four random number sequences for testing purposes:
 
@@ -80,6 +80,6 @@ The Schaathun paper suggests the following four random number sequences for test
 
 [^6]: J. D. Cook, "Using one RNG to sample another", June 4, 2019.
 
-[^7]: Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators", 2015; Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", Proceedings of Haskell Symposium 2013, pp. 47-58.
+[^7]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
 
-[^8]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
+[^8]: Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators", 2015; Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", Proceedings of Haskell Symposium 2013, pp. 47-58.

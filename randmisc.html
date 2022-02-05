@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/02/02"><meta name="citation_online_date" content="2022/02/02"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/02/05"><meta name="citation_online_date" content="2022/02/05"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -139,7 +139,7 @@
 
 <h2>Sampling Unbounded Monotone Density Functions</h2>
 
-<p>This section shows a preprocessing algorithm to generate a random variate in [0, 1] from a distribution whose probability density function (PDF)&mdash;</p>
+<p>This section shows a preprocessing algorithm to generate a random variate in the closed interval [0, 1] from a distribution whose probability density function (PDF)&mdash;</p>
 
 <ul>
 <li>is continuous in the interval [0, 1],</li>
@@ -158,7 +158,7 @@
 
 <p>It is relatively straightforward to adapt this algorithm for monotonically increasing PDFs with the unbounded peak at 1, or to PDFs with a different domain than [0, 1].</p>
 
-<p>This algorithm is similar to the &quot;inversion&ndash;rejection&quot; algorithm mentioned in section 4.4 of chapter 7 of Devroye&#39;s <em>Non-Uniform Random Variate Generation</em> (1986)[^3].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution (including its PDF and cumulative distribution function) has support <a href="%22support%22%20is%20defined%20later">0, 1</a>, while the algorithm presented in this article doesn&#39;t make that assumption (for example, the interval [0, 1] can cover only part of the PDF&#39;s support).</p>
+<p>This algorithm is similar to the &quot;inversion&ndash;rejection&quot; algorithm mentioned in section 4.4 of chapter 7 of Devroye&#39;s <em>Non-Uniform Random Variate Generation</em> (1986)[^3].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution has support [0, 1] (&quot;support&quot; is defined later), while the algorithm presented in this article doesn&#39;t make that assumption (for example, the interval [0, 1] can cover only part of the distribution&#39;s support).</p>
 
 <p>By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random variate, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>.  Even so, the algorithm I have come up with in this note may be of independent interest.</p>
 
@@ -168,15 +168,14 @@
 
 <h2>Certain Families of Distributions</h2>
 
-<p>This section is a note on certain families of univariate (one-variable) probability distributions, with
-emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019)[^8].</p>
+<p>This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019)[^8].</p>
 
 <p>The following definitions are used:</p>
 
 <ul>
 <li>A distribution&#39;s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nondecreasing function that maps uniform random variates in the closed interval [0, 1] to numbers that follow the distribution.</li>
 <li>A distribution&#39;s <em>support</em> is the set of values the distribution can take on, plus that set&#39;s endpoints.  For example, the beta distribution&#39;s support is the closed interval [0, 1], and the normal distribution&#39;s support is the entire real line.</li>
-<li>A distribution&#39;s <em>probability generating function</em> is a function written as <em>a</em>[0]*<em>x</em><sup>0</sup> + <em>a</em>[1]*<em>x</em><sup>1</sup> + ..., where 0 &lt; <em>x</em> &lt; 1 and <em>a</em>[<em>i</em>] is the probability of getting <em>i</em> (provided the distribution takes on only values that are positive integers and/or zero).</li>
+<li>The <em>zero-truncated Poisson</em> distribution: To generate a random variate that follows this distribution (with parameter <em>&lambda;</em> &gt; 0), generate Poisson variates with parameter <em>&lambda;</em> until a variate other than 0 is generated this way, then take the last generated variate.</li>
 </ul>
 
 <p><strong>G families.</strong> In general, families of the form &quot;X-G&quot; (such as &quot;beta-G&quot; (Eugene et al., 2002)[^9]) use two distributions, X and G, where&mdash;</p>
@@ -198,7 +197,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <ul>
 <li>The <em>alpha power</em> or <em>alpha power transformed</em> family (Mahdavi and Kundu 2017)[^10]. The family uses a shape parameter <em>&alpha;</em> &gt; 0; step 1 is modified to read: &quot;Generate <em>U</em>, a uniform random variate in the interval [0, 1], then set <em>x</em> to ln((<em>&alpha;</em>&minus;1)*<em>U</em> + 1)/ln(<em>&alpha;</em>) if <em>&alpha;</em> != 1, and <em>U</em> otherwise.&quot;</li>
 <li>The <em>exponentiated</em> family (Mudholkar and Srivastava 1993)[^11]. The family uses a shape parameter <em>a</em> &gt; 1; step 1 is modified to read: &quot;Generate <em>u</em>, a uniform random variate in the interval [0, 1], then set <em>x</em> to <em>u</em><sup>1/<em>a</em></sup>.&quot;</li>
-<li>The <em>transmuted-G</em> family (Shaw and Buckley 2007)[^12]. The family uses a shape parameter <em>&eta;</em> in the interval [&minus;1, 1]; step 1 is modified to read: &quot;Generate a piecewise linear random variate in [0, 1] with weight 1&minus;<em>&eta;</em> at 0 and weight 1+<em>&eta;</em> at 1, call the number <em>x</em>. (It can be generated as follows, see also (Devroye 1986, p. 71-72)[^3]: With probability min(1&minus;<em>&eta;</em>, 1+<em>&eta;</em>), generate <em>x</em>, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set <em>x</em> to the higher of the two, then if <em>&eta;</em> is less than 0, set <em>x</em> to 1&minus;<em>x</em>.)&quot;. ((Granzotto et al. 2017)[^13] mentions the same distribution, but with parameter <em>&lambda;</em> = <em>&eta;</em> + 1, in the interval [0, 2].)</li>
+<li>The <em>transmuted-G</em> family (Shaw and Buckley 2007)[^12]. The family uses a shape parameter <em>&eta;</em> in the interval [&minus;1, 1]; step 1 is modified to read: &quot;Generate a piecewise linear random variate in [0, 1] with weight 1&minus;<em>&eta;</em> at 0 and weight 1+<em>&eta;</em> at 1, call the number <em>x</em>. (It can be generated as follows, see also (Devroye 1986, p. 71-72)[^3]: With probability min(1&minus;<em>&eta;</em>, 1+<em>&eta;</em>), generate <em>x</em>, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set <em>x</em> to the higher of the two, then if <em>&eta;</em> is less than 0, set <em>x</em> to 1&minus;<em>x</em>.)&quot;. ((Granzotto et al. 2017)[^13] mentions the same distribution, but with a parameter <em>&lambda;</em> = <em>&eta;</em> + 1 lying in the interval [0, 2].)</li>
 <li>A <em>cubic rank transmuted</em> distribution (Granzotto et al. 2017)[^13] uses parameters <em>&lambda;</em><sub>0</sub> and <em>&lambda;</em><sub>1</sub> in the interval [0, 1]; step 1 is modified to read: &quot;Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: [<em>&lambda;</em><sub>0</sub>, <em>&lambda;</em><sub>1</sub>, 3&minus;<em>&lambda;</em><sub>0</sub>&minus;<em>&lambda;</em><sub>1</sub>].  Then set <em>x</em> to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively.&quot;</li>
 </ul>
 
@@ -225,7 +224,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <p>A family very similar to the &quot;transformed&ndash;transformer&quot; family uses a <em>decreasing</em> <em>W</em>.  When distribution X&#39;s support is [0, &infin;), one such <em>W</em> that has been proposed is <em>W</em>(<em>x</em>) = &minus;ln(<em>x</em>) (<em>W</em><sup>&minus;1</sup>(<em>x</em>) = exp(&minus;<em>x</em>); examples include the &quot;Rayleigh-G&quot; family or &quot;Rayleigh&ndash;Rayleigh&quot; distribution (Al Noor and Assi 2020)[^18], as well as the &quot;generalized gamma-G&quot; family, where &quot;generalized gamma&quot; refers to the Stacy distribution (Boshi et al. 2020)[^19]).</p>
 
-<p><strong>Minimums, maximums, and sums.</strong> Some distributions are described as a minimum, maximum, or sum of <em>N</em> random variates distributed as <em>X</em>, where <em>N</em> &ge; 1 is an integer distributed as the discrete distribution <em>Y</em>.</p>
+<p><strong>Minimums, maximums, and sums.</strong> Some distributions are described as a minimum, maximum, or sum of <em>N</em> independent random variates distributed as <em>X</em>, where <em>N</em> &ge; 1 is an integer distributed as the discrete distribution <em>Y</em>.</p>
 
 <ul>
 <li>Tahir and Cordeiro (2016)[^20] calls a distribution of minimums a <em>compound distribution</em>, and a distribution of maximums a <em>complementary compound distribution</em>.</li>
@@ -237,11 +236,11 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <p><strong>Example:</strong> The &quot;geometric zero-truncated Poisson distribution&quot; is a distribution of maximums where <em>X</em> is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and <em>Y</em> is the zero-truncated Poisson distribution (Akdoğan et al., 2020)[^23].</p>
 </blockquote>
 
-<p>A distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021)[^24]:</p>
+<p>A variate following a distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021)[^24]:</p>
 
 <ol>
 <li>Generate a uniform random variate in (0, 1). (Or generate a uniform PSRN with integer part 0, positive sign, and empty fractional part.)  Call the number <em>x</em>.</li>
-<li>For minimums, calculate the quantile for <em>X</em> of 1&minus;<em>W</em><sup>&minus;1</sup>(<em>x</em>) (where <em>W</em><sup>&minus;1</sup>(.) is the inverse of <em>Y</em>&#39;s probability generating function), and return that quantile.[^25] (If <em>x</em> is a uniform PSRN, see &quot;Random Variate Generation via Quantiles&quot;, later.)</li>
+<li>For minimums, calculate the quantile for <em>X</em> of 1&minus;<em>W</em><sup>&minus;1</sup>(<em>x</em>) (where <em>W</em><sup>&minus;1</sup>(.) is the inverse of <em>Y</em>&#39;s probability generating function), and return that quantile.[^25] (If <em>x</em> is a uniform PSRN, see &quot;Random Variate Generation via Quantiles&quot;, later.  <em>Y</em>&#39;s probability generating function is <em>W</em>(<em>x</em>) = <em>a</em>[0]*<em>x</em><sup>0</sup> + <em>a</em>[1]*<em>x</em><sup>1</sup> + ..., where 0 &lt; <em>x</em> &lt; 1 and <em>a</em>[<em>i</em>] is the probability that a <em>Y</em>-distributed variate equals <em>i</em>.)</li>
 <li>For maximums, calculate the quantile for <em>X</em> of <em>W</em><sup>&minus;1</sup>(<em>x</em>), and return that quantile.</li>
 </ol>
 
@@ -429,7 +428,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <h2>ExpoExact</h2>
 
-<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2019)[^39]; Canonne et al. (2020)[^40].  In this section, <code>RNDINT(1)</code> generates an independent unbiased random bit.</p>
+<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2019)[^39]; Canonne et al. (2020)[^40].  In this section, <code>RNDINT(1)</code> generates an independent unbiased random bit.  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this section.</p>
 
 <pre>METHOD ZeroOrOneExpMinus(x, y)
   if y==0 or y&lt;0 or x&lt;0: return error
@@ -471,7 +470,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random variate, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the given precision (Karney 2016)[^41].</p>
+<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random variate, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the precision given in <code>precision</code> (see also Karney 2016)[^41].</p>
 </blockquote>
 
 <p><a id=A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights></a></p>
@@ -618,7 +617,7 @@ END METHOD
 
 <p>[^35]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^36]: A Lipschitz continuous function, with constant <em>L</em> is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot;, and that slope is bounded wherever it&#39;s defined.</p>
+<p>[^36]: A Lipschitz continuous function, with constant <em>L</em>, is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot;, and that slope is bounded wherever it&#39;s defined.</p>
 
 <p>[^37]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, &quot;Computational complexity of roots of real functions.&quot; In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989.</p>
 

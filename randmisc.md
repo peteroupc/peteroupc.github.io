@@ -102,7 +102,7 @@ As used in the Bringmann paper, a bounded geometric(_p_, _n_) random variate is 
 <a id=Sampling_Unbounded_Monotone_Density_Functions></a>
 ## Sampling Unbounded Monotone Density Functions
 
-This section shows a preprocessing algorithm to generate a random variate in [0, 1] from a distribution whose probability density function (PDF)&mdash;
+This section shows a preprocessing algorithm to generate a random variate in the closed interval [0, 1] from a distribution whose probability density function (PDF)&mdash;
 
 - is continuous in the interval [0, 1],
 - is monotonically decreasing in [0, 1], and
@@ -117,23 +117,22 @@ The trick here is to sample the peak in such a way that the result is either for
 
 It is relatively straightforward to adapt this algorithm for monotonically increasing PDFs with the unbounded peak at 1, or to PDFs with a different domain than \[0, 1\].
 
-This algorithm is similar to the "inversion&ndash;rejection" algorithm mentioned in section 4.4 of chapter 7 of Devroye's _Non-Uniform Random Variate Generation_ (1986\)[^3].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution (including its PDF and cumulative distribution function) has support [0, 1] ("support" is defined later), while the algorithm presented in this article doesn't make that assumption (for example, the interval [0, 1] can cover only part of the PDF's support).
+This algorithm is similar to the "inversion&ndash;rejection" algorithm mentioned in section 4.4 of chapter 7 of Devroye's _Non-Uniform Random Variate Generation_ (1986\)[^3].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution has support \[0, 1\] ("support" is defined later), while the algorithm presented in this article doesn't make that assumption (for example, the interval [0, 1] can cover only part of the distribution's support).
 
 By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random variate, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html).  Even so, the algorithm I have come up with in this note may be of independent interest.
 
-In the case of powers of a uniform random variate in the interval [0, 1], call the variate _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>.  Note that this formula is the same regardless of _i_. (To return 1 with probability (1/2)<sup>1/_n_</sup>, the algorithm for **(_a_/_b_)<sup>_x_/_y_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)" can be used with _a_=1, _b_=2, _x_=1, and _y_=_n_.)  This is found by taking the PDF _f_(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
+In the case of powers of a uniform random variate in the interval \[0, 1], call the variate _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>.  Note that this formula is the same regardless of _i_. (To return 1 with probability (1/2)<sup>1/_n_</sup>, the algorithm for **(_a_/_b_)<sup>_x_/_y_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)" can be used with _a_=1, _b_=2, _x_=1, and _y_=_n_.)  This is found by taking the PDF _f_(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
 
 <a id=Certain_Families_of_Distributions></a>
 ## Certain Families of Distributions
 
-This section is a note on certain families of univariate (one-variable) probability distributions, with
-emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019\)[^8].
+This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019\)[^8].
 
 The following definitions are used:
 
 - A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nondecreasing function that maps uniform random variates in the closed interval [0, 1] to numbers that follow the distribution.
 - A distribution's _support_ is the set of values the distribution can take on, plus that set's endpoints.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
-- A distribution's _probability generating function_ is a function written as _a_\[0]\*_x_<sup>0</sup> + _a_\[1]\*_x_<sup>1</sup> + ..., where 0 &lt; _x_ &lt; 1 and _a_\[_i_] is the probability of getting _i_ (provided the distribution takes on only values that are positive integers and/or zero).
+- The _zero-truncated Poisson_ distribution: To generate a random variate that follows this distribution (with parameter _&lambda;_ > 0), generate Poisson variates with parameter _&lambda;_ until a variate other than 0 is generated this way, then take the last generated variate.
 
 **G families.** In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002\)[^9]) use two distributions, X and G, where&mdash;
 
@@ -149,7 +148,7 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 
 - The _alpha power_ or _alpha power transformed_ family (Mahdavi and Kundu 2017\)[^10]. The family uses a shape parameter _&alpha;_ > 0; step 1 is modified to read: "Generate _U_, a uniform random variate in the interval [0, 1], then set _x_ to ln((_&alpha;_&minus;1)\*_U_ + 1)/ln(_&alpha;_) if _&alpha;_ != 1, and _U_ otherwise."
 - The _exponentiated_ family (Mudholkar and Srivastava 1993\)[^11]. The family uses a shape parameter _a_ > 1; step 1 is modified to read: "Generate _u_, a uniform random variate in the interval [0, 1], then set _x_ to _u_<sup>1/_a_</sup>."
-- The _transmuted-G_ family (Shaw and Buckley 2007\)[^12]. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^3]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^13] mentions the same distribution, but with parameter _&lambda;_ = _&eta;_ + 1, in the interval [0, 2].)
+- The _transmuted-G_ family (Shaw and Buckley 2007\)[^12]. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^3]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^13] mentions the same distribution, but with a parameter _&lambda;_ = _&eta;_ + 1 lying in the interval [0, 2].)
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^13] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
 
 **Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^14] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a PDF; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nondecreasing function that maps a number in [0, 1] to a number that has the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:
@@ -168,7 +167,7 @@ Many special cases of the "transformed&ndash;transformer" family have been propo
 
 A family very similar to the "transformed&ndash;transformer" family uses a _decreasing_ _W_.  When distribution X's support is \[0, &infin;), one such _W_ that has been proposed is _W_(_x_) = &minus;ln(_x_) (_W_<sup>&minus;1</sup>(_x_) = exp(&minus;_x_); examples include the "Rayleigh-G" family or "Rayleigh&ndash;Rayleigh" distribution (Al Noor and Assi 2020\)[^18], as well as the "generalized gamma-G" family, where "generalized gamma" refers to the Stacy distribution (Boshi et al. 2020\)[^19]).
 
-**Minimums, maximums, and sums.** Some distributions are described as a minimum, maximum, or sum of _N_ random variates distributed as _X_, where _N_ &ge; 1 is an integer distributed as the discrete distribution _Y_.
+**Minimums, maximums, and sums.** Some distributions are described as a minimum, maximum, or sum of _N_ independent random variates distributed as _X_, where _N_ &ge; 1 is an integer distributed as the discrete distribution _Y_.
 
 - Tahir and Cordeiro (2016\)[^20] calls a distribution of minimums a _compound distribution_, and a distribution of maximums a _complementary compound distribution_.
 - Pérez-Casany et al. (2016\)[^21] calls a distribution of minimums or of maximums a _random-stopped extreme distribution_.
@@ -176,10 +175,10 @@ A family very similar to the "transformed&ndash;transformer" family uses a _decr
 
 > **Example:** The "geometric zero-truncated Poisson distribution" is a distribution of maximums where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020\)[^23].
 
-A distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021\)[^24]\:
+A variate following a distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021\)[^24]\:
 
 1. Generate a uniform random variate in (0, 1). (Or generate a uniform PSRN with integer part 0, positive sign, and empty fractional part.)  Call the number _x_.
-2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile.[^25] \(If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
+2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile.[^25] \(If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.  _Y_'s probability generating function is _W_(_x_) = _a_\[0]\*_x_<sup>0</sup> + _a_\[1]\*_x_<sup>1</sup> + ..., where 0 &lt; _x_ &lt; 1 and _a_\[_i_] is the probability that a _Y_-distributed variate equals _i_.)
 3. For maximums, calculate the quantile for _X_ of _W_<sup>&minus;1</sup>(_x_), and return that quantile.
 
 **Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982\)[^26] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter _&theta;_ > 0.
@@ -304,7 +303,7 @@ Here is a sketch of how this rejection sampler might work:
 <a id=ExpoExact></a>
 ## ExpoExact
 
-This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019\)[^39]; Canonne et al. (2020\)[^40].  In this section, `RNDINT(1)` generates an independent unbiased random bit.
+This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019\)[^39]; Canonne et al. (2020\)[^40].  In this section, `RNDINT(1)` generates an independent unbiased random bit.  The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this section.
 
     METHOD ZeroOrOneExpMinus(x, y)
       if y==0 or y<0 or x<0: return error
@@ -344,7 +343,7 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
        return ret
     END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2016\)[^41].
+> **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the precision given in `precision` (see also Karney 2016\)[^41].
 
 <a id=A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights></a>
 ## A sampler for distributions with nonincreasing or nondecreasing weights
@@ -464,7 +463,7 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 
 [^35]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^36]: A Lipschitz continuous function, with constant _L_ is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere", and that slope is bounded wherever it's defined.
+[^36]: A Lipschitz continuous function, with constant _L_, is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere", and that slope is bounded wherever it's defined.
 
 [^37]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
 

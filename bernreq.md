@@ -202,21 +202,21 @@ I believe a more general solution is to somehow find the maximum difference betw
 
 There is another way to simulate a concave $f$.  This involves rewriting the concave function as a series expansion as follows:
 
-$$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(p)} \pi(p), \tag{1}$$
+$$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{1}$$
 
 where&mdash;
 
 - $\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,
-- $\pi(p) = p (1-p)^a$ is the probability of getting a non-negative integer $a$ in step 1 of the following algorithm,
+- $\pi(a, p) = p (1-p)^a$ is the probability of getting a non-negative integer $a$ in step 1 of the following algorithm,
 - $g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,
 - $(n_a)$ is an increasing sequence of positive integers,
 - $p$ is a rational number in $(0, 1)$, and
-- $\frac{\gamma_a(\lambda)}{\pi(p)}$, which will be a polynomial, must be polynomially bounded (1 or less at 0 and/or 1; less than 1 elsewhere).  In the case of concave functions, this polynomial will always be non-negative.
+- $\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it's a constant.  In the case of concave functions, this polynomial will always be non-negative.
 
 Then an algorithm to toss heads with probability equal to $f$ would be:
 
 1. Flip a coin that shows heads with probability $p$ until that coin shows heads.  Set $a$ to the number of tails.
-2. Write $\frac{\gamma_a(\lambda)}{\pi(p)}$ as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial's degree, and let $j$ be the number of heads.
+2. Write $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial's degree, and let $j$ be the number of heads.
 3. Return 1 with probability equal to the polynomial's $j$th Bernstein coefficient, or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).
 
 (This algorithm has similarities to the one used in the proof in Keane and O'Brien 1994.)
@@ -228,13 +228,13 @@ However, using this technique for a given concave $f$ requires finding the appro
 
 Finding these parameters was far from rigorous, though, and the process will have to be repeated for each concave function.
 
-It's also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(p)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.
+It's also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(a, p)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.
 
 Note: Some concave functions can be rewritten as&mdash;
 
-$$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(p)} \pi(p), \tag{2}$$
+$$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{2}$$
 
-for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except that $\frac{\gamma_a(\lambda)}{\pi(p)}$ is polynomially bounded for every $a\gt k$ but not necessarily for $a\le k$.  This way of writing $f$ is acceptable for my purposes.
+for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except that $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ whenever $a\le k$.  This way of writing $f$ is acceptable for my purposes.
 
 <a id=Questions_3></a>
 ### Questions
