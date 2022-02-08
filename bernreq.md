@@ -236,7 +236,7 @@ Note: Some concave functions can be rewritten as&mdash;
 
 $$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{2}$$
 
-for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except that $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ whenever $a\le k$.  This way of writing $f$ is acceptable for my purposes.
+for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except that $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.
 
 <a id=Questions_3></a>
 ### Questions

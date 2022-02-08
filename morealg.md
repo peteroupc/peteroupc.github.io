@@ -634,6 +634,9 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 |  _r_/_&pi;_  |  (_r_ is a rational number in open interval (0, 3).)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Create _&mu;_ coin that does: "With probability _r_ &minus; floor(_r_), return 1; otherwise return 0."<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=floor(_r_) and _c_=3.  |
 |  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 |  exp(1)/4  |  Follow the algorithm for **exp(_&lambda;_/4)/2**, except the probability in step 2 is 2<sup>_n_&minus;1</sup>/(_n_!), _c_ is 0, and step 3 is replaced with "Return 1."  |
+|  _r_\*_&lambda;_ &minus; _r_ + _r_\*exp(&minus;_&lambda;_)  |  (_r_ is a rational number in open interval (0, exp(1)).  _&lambda;_ is the unknown heads probability of a coin.)<br>Run the **general martingale algorithm** in "Bernoulli Factory Algorithms" with $g(\lambda) = _&lambda;_$, and with $d_0 = 1$  and coefficients $a_i = \frac{_r_}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.  |
+|  _n_\*exp(&minus;1) = _n_/exp(1)  |  (_n_ is 1 or 2.)<br>Create _&lambda;_ coin for algorithm **exp(1) &minus; 2**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=_n_ and _c_=2.  |
+|  _r_\*exp(&minus;1) = _r_/exp(1)  |  (_r_ is a rational number in open interval (0, exp(1)).)<br>Run algorithm for **_c_\*_&lambda;_ &minus; _c_ + _c_\*exp(&minus;_&lambda;_)** with _r_=_r_ and _&lambda;_ being a coin that always returns 1. |
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
