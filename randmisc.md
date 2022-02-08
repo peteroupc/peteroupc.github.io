@@ -213,6 +213,8 @@ In this algorithm:
 - X and Y are distributions that each have support on either the whole real line or the positive real line.  However, the book intends X to have an easy-to-compute quantile function.
 - _H_(_z_) is Y's _cumulative distribution function_, or the probability that a Y-distributed random variate is _z_ or less.  The book likewise intends _H_ to be easy to compute.
 
+> **Note:** An important property for use in statistical estimation is _identifiability_.  A family of distributions is _identifiable_ if it has the property that if two parameter vectors (_&theta;_<sub>1</sub> and _&theta;_<sub>2</sub>) determine the same distribution, then _&theta;_<sub>1</sub> must equal _&theta;_<sub>2</sub>.
+
 <a id=Certain_Distributions></a>
 ## Certain Distributions
 
