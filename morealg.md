@@ -283,7 +283,7 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 
 The Bernoulli factory is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an _oracle_ (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a _coin that shows heads or tails where the probability of heads is unknown_.  The rest of this section deals with oracles that go beyond coins.
 
-**Algorithm 1.** Say we have an oracle that produces independent random variates in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random variates whose expected ("average") value is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
+**Algorithm 1.** Suppose there is an oracle that produces independent random variates in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random variates whose expected ("average") value is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
 - _f_ is continuous on \[_a_, _b_\], and
 - _f_(_&mu;_) is bounded from below by _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is non-negative and neither touches 0 inside (_a_, _b_) nor moves away from 0 more slowly than a polynomial)
@@ -337,7 +337,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 
 > - There is a computable function _f_(_k_) that outputs a positive number.
 > - For each _n_, Supp(_n_) is included in Supp(_n_+1).
-> - For every _k_ and for every _n_ starting with the greater of 2 or the first _n_ for which _k_ is in Supp(_n_), the probability of seeing _k_ given parameter _n_ is at least (1/_n_)<sup>_f_(_k_)</sup> (roughly speaking, the probability doesn't decay at a faster than polynomial rate as _n_ increases).
+> - For every _k_ and for every _n_ &ge; 2 starting with the first _n_ for which _k_ is in Supp(_n_), the probability of seeing _k_ given parameter _n_ is at least (1/_n_)<sup>_f_(_k_)</sup> (roughly speaking, the probability doesn't decay at a faster than polynomial rate as _n_ increases).
 
 <a id=Pushdown_Automata_for_Square_Root_Like_Functions></a>
 ### Pushdown Automata for Square-Root-Like Functions
@@ -348,7 +348,7 @@ In this section, ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient.
 
 The following algorithm extends the square-root construction of Flajolet et al. (2010\)[^13], takes an input coin with probability of heads _&lambda;_, and returns 1 with probability&mdash;
 
-$$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda(g(\lambda))^2-1}} = (1-\lambda)\sum_{n\ge 0} \lambda^n (g(\lambda))^n (1-g(\lambda))^n {2n \choose n} = (1-\lambda)\sum_{n\ge 0} (\lambda g(\lambda) (1-g(\lambda)))^n {2n \choose n},$$
+$$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda(g(\lambda))^2-1}} = (1-\lambda)\sum_{n\ge 0} \lambda^n (g(\lambda))^n (1-g(\lambda))^n {2n \choose n}$$ $$= (1-\lambda)\sum_{n\ge 0} (\lambda g(\lambda) (1-g(\lambda)))^n {2n \choose n},$$
 
 and 0 otherwise, where:
 
@@ -399,7 +399,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <a id=ln__c____lambda____c____lambda></a>
 ### ln(_c_+_&lambda;_)/(_c_+_&lambda;_)
 
-In this algorithm, _c_ must be an integer 1 or greater, and _&lambda;_ is the probability of heads of the input coin.
+In this algorithm, _c_ must be an integer 1 or greater, and _&lambda;_ is the unknown heads probability of a coin.
 
 1. Run the algorithm for **_d_ / (_c_ + _&lambda;_)**, with _d_=1 and _c_=_c_, repeatedly, until the run returns 1, then set _g_ to the number of runs that returned 0 this way.
 2. If _g_ is 0, return 0.  Otherwise, return a number that is 1 with probability 1/_g_ or 0 otherwise. (Here, returning 0 means that the von Neumann schema would require another iteration; see the note.)
@@ -417,7 +417,7 @@ Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^13].  In the table
 
 | Function | Domain |  Algorithm |
  --- | ---- | --- |
-| exp(&minus;_&lambda;_) | [**0, 1) | Uses [**von Neumann schema algorithm**](https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes) (VNS) with **sorted** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| exp(&minus;_&lambda;_) | \[0, 1\) | Uses [**von Neumann schema algorithm**](https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes) (VNS) with **sorted** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
 | exp(_&lambda;_ &minus; 1) = exp(&minus;(1 &minus; _&lambda;_)) | (0, 1] | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
 | (1&minus;_&lambda;_)\*exp(_&lambda;_) | [0, 1) | Uses VNS with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
 | _&lambda;_\*exp(1&minus;_&lambda;_) | (0, 1] | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
@@ -431,12 +431,12 @@ Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^13].  In the table
 | (1&minus;_&lambda;_)\*tan(_&lambda;_) | [0, 1) | Uses VNS with alternating odd-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
 
 <a id=1_1__m____lambda___2></a>
-### **1/(1+(_m_+_&lambda;_)<sup>2</sup>)**
+### 1/(1+(_m_+_&lambda;_)<sup>2</sup>)
 
-This is a rational function (ratio of two polynomials) with variable _&lambda;_, and this rational function admits the following algorithm.  Here, _m_ is an integer 0 or greater, and _&lambda;_ is the unknown heads probability of a coin.
+This is a rational function (ratio of two polynomials) with variable _&lambda;_, and this rational function admits the following algorithm.  In this algorithm, _m_ must be an integer 0 or greater, and _&lambda;_ is the unknown heads probability of a coin.
 
-1. Let _d_ be the three-item list [1, 2, 1] \(for numerator 1).  Let _e_ be the three-item list [1+m**2, 2*(1+m**2+m), 1+m**2+2*m+1] \(for denominator).  Find the highest number in _e_, then divide each item in _d_ and in _e_ by that number (using rational arithmetic).
-2. Run the algorithm for [**rational functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions) in "Bernoulli Factory Algorithms", with _n_ = 2, and with _d_ and _e_ given above.
+1. Let _d_ be the three-item list [1, 2, 1] \(for numerator 1).  Let _e_ be the three-item list [1+m<sup>2</sup>, 2\*(1+m<sup>2</sup>+m), 1+m<sup>2</sup>+2\*m+1] \(for denominator).  Find the highest number in _e_, then divide each item in _d_ and in _e_ by that number (using rational arithmetic).
+2. Run the first algorithm for [**rational functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions) in "Bernoulli Factory Algorithms", with _n_ = 2, and with _d_ and _e_ given above.
 
 <a id=Irrational_Probabilities></a>
 ## Irrational Probabilities
@@ -1413,7 +1413,7 @@ As given above, each term $w_n(\mu)$ is a polynomial in $\mu$, and is monotone i
 <a id=Sampling_Distributions_Using_Incomplete_Information_Omitted_Algorithms></a>
 ### Sampling Distributions Using Incomplete Information: Omitted Algorithms
 
-**Algorithm 2.** Say we have an _oracle_ that produces independent random real numbers whose expected ("average") value is a known or unknown mean. The goal is now to produce non-negative random variates whose expected value is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever _f_ has a finite minimum and maximum and the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014\)[^41]\:
+**Algorithm 2.** Suppose there is an _oracle_ that produces independent random real numbers whose expected ("average") value is a known or unknown mean. The goal is now to produce non-negative random variates whose expected value is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever _f_ has a finite minimum and maximum and the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014\)[^41]\:
 
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
@@ -1430,7 +1430,7 @@ As given above, each term $w_n(\mu)$ is a polynomial in $\mu$, and is monotone i
 >     - When Algorithm 2 finishes, add _b_ to its return value.
 > 3. The check "With probability abs(_f_(_x_))/_m_" is exact if the oracle produces only rational numbers _and_ if _f_(_x_) outputs only rational numbers.  If the oracle or _f_ can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then this check should be implemented using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
 
-**Algorithm 3.** Say we have an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown.  The goal is to use the oracle to produce non-negative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nondecreasing in that interval (Jacob and Thiery 2015\)[^9].  This can be done using the algorithm below.  In the algorithm:
+**Algorithm 3.** Suppose there is an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown.  The goal is to use the oracle to produce non-negative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nondecreasing in that interval (Jacob and Thiery 2015\)[^9].  This can be done using the algorithm below.  In the algorithm:
 
 - _f_(_&mu;_) must be a function that can be written as the following infinite series expansion: _c_[0]\*_z_<sup>0</sup> + _c_[1]\*_z_<sup>1</sup> + ..., where _z_ = _&mu;_&minus;_a_ and all _c_\[_i_\] are 0 or greater.
 - _&psi;_ is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)

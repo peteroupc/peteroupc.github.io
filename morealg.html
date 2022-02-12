@@ -484,7 +484,7 @@
 
 <p>The Bernoulli factory is a special case of the problem of <strong>sampling a probability distribution with unknown parameters</strong>.  This problem can be described as sampling from a new distribution using an <em>oracle</em> (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a <em>coin that shows heads or tails where the probability of heads is unknown</em>.  The rest of this section deals with oracles that go beyond coins.</p>
 
-<p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates whose expected (&quot;average&quot;) value is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
+<p><strong>Algorithm 1.</strong> Suppose there is an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates whose expected (&quot;average&quot;) value is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
 
 <ul>
 <li><em>f</em> is continuous on [<em>a</em>, <em>b</em>], and</li>
@@ -558,7 +558,7 @@
 <ul>
 <li>There is a computable function <em>f</em>(<em>k</em>) that outputs a positive number.</li>
 <li>For each <em>n</em>, Supp(<em>n</em>) is included in Supp(<em>n</em>+1).</li>
-<li>For every <em>k</em> and for every <em>n</em> starting with the greater of 2 or the first <em>n</em> for which <em>k</em> is in Supp(<em>n</em>), the probability of seeing <em>k</em> given parameter <em>n</em> is at least (1/<em>n</em>)<sup><em>f</em>(<em>k</em>)</sup> (roughly speaking, the probability doesn&#39;t decay at a faster than polynomial rate as <em>n</em> increases).</li>
+<li>For every <em>k</em> and for every <em>n</em> &ge; 2 starting with the first <em>n</em> for which <em>k</em> is in Supp(<em>n</em>), the probability of seeing <em>k</em> given parameter <em>n</em> is at least (1/<em>n</em>)<sup><em>f</em>(<em>k</em>)</sup> (roughly speaking, the probability doesn&#39;t decay at a faster than polynomial rate as <em>n</em> increases).</li>
 </ul>
 </blockquote>
 
@@ -572,7 +572,7 @@
 
 <p>The following algorithm extends the square-root construction of Flajolet et al. (2010)[^13], takes an input coin with probability of heads <em>&lambda;</em>, and returns 1 with probability&mdash;</p>
 
-<p>$$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda(g(\lambda))^2-1}} = (1-\lambda)\sum_{n\ge 0} \lambda^n (g(\lambda))^n (1-g(\lambda))^n {2n \choose n} = (1-\lambda)\sum_{n\ge 0} (\lambda g(\lambda) (1-g(\lambda)))^n {2n \choose n},$$</p>
+<p>$$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda(g(\lambda))^2-1}} = (1-\lambda)\sum_{n\ge 0} \lambda^n (g(\lambda))^n (1-g(\lambda))^n {2n \choose n}$$ $$= (1-\lambda)\sum_{n\ge 0} (\lambda g(\lambda) (1-g(\lambda)))^n {2n \choose n},$$</p>
 
 <p>and 0 otherwise, where:</p>
 
@@ -643,7 +643,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <h3>ln(<em>c</em>+<em>&lambda;</em>)/(<em>c</em>+<em>&lambda;</em>)</h3>
 
-<p>In this algorithm, <em>c</em> must be an integer 1 or greater, and <em>&lambda;</em> is the probability of heads of the input coin.</p>
+<p>In this algorithm, <em>c</em> must be an integer 1 or greater, and <em>&lambda;</em> is the unknown heads probability of a coin.</p>
 
 <ol>
 <li>Run the algorithm for <strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong>, with <em>d</em>=1 and <em>c</em>=<em>c</em>, repeatedly, until the run returns 1, then set <em>g</em> to the number of runs that returned 0 this way.</li>
@@ -675,7 +675,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 </thead><tbody>
 <tr>
 <td>exp(&minus;<em>&lambda;</em>)</td>
-<td>[**0, 1)</td>
+<td>[0, 1)</td>
 <td>Uses <a href="https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes"><strong>von Neumann schema algorithm</strong></a> (VNS) with <strong>sorted</strong> permutations, and the <em>&lambda;</em> coin.  Return 1 if VNS returns 0, and 0 otherwise.</td>
 </tr>
 <tr>
@@ -737,13 +737,13 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <p><a id=1_1__m____lambda___2></a></p>
 
-<h3><strong>1/(1+(<em>m</em>+<em>&lambda;</em>)<sup>2</sup>)</strong></h3>
+<h3>1/(1+(<em>m</em>+<em>&lambda;</em>)<sup>2</sup>)</h3>
 
-<p>This is a rational function (ratio of two polynomials) with variable <em>&lambda;</em>, and this rational function admits the following algorithm.  Here, <em>m</em> is an integer 0 or greater, and <em>&lambda;</em> is the unknown heads probability of a coin.</p>
+<p>This is a rational function (ratio of two polynomials) with variable <em>&lambda;</em>, and this rational function admits the following algorithm.  In this algorithm, <em>m</em> must be an integer 0 or greater, and <em>&lambda;</em> is the unknown heads probability of a coin.</p>
 
 <ol>
-<li>Let <em>d</em> be the three-item list [1, 2, 1] (for numerator 1).  Let <em>e</em> be the three-item list [1+m<strong>2, 2*(1+m</strong>2+m), 1+m*<em>2+2</em>m+1] (for denominator).  Find the highest number in <em>e</em>, then divide each item in <em>d</em> and in <em>e</em> by that number (using rational arithmetic).</li>
-<li>Run the algorithm for <a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>rational functions</strong></a> in &quot;Bernoulli Factory Algorithms&quot;, with <em>n</em> = 2, and with <em>d</em> and <em>e</em> given above.</li>
+<li>Let <em>d</em> be the three-item list [1, 2, 1] (for numerator 1).  Let <em>e</em> be the three-item list [1+m<sup>2</sup>, 2*(1+m<sup>2</sup>+m), 1+m<sup>2</sup>+2*m+1] (for denominator).  Find the highest number in <em>e</em>, then divide each item in <em>d</em> and in <em>e</em> by that number (using rational arithmetic).</li>
+<li>Run the first algorithm for <a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>rational functions</strong></a> in &quot;Bernoulli Factory Algorithms&quot;, with <em>n</em> = 2, and with <em>d</em> and <em>e</em> given above.</li>
 </ol>
 
 <p><a id=Irrational_Probabilities></a></p>
@@ -2052,7 +2052,7 @@ calc_linear_func(count=8)
 
 <h3>Sampling Distributions Using Incomplete Information: Omitted Algorithms</h3>
 
-<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces independent random real numbers whose expected (&quot;average&quot;) value is a known or unknown mean. The goal is now to produce non-negative random variates whose expected value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever <em>f</em> has a finite minimum and maximum and the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)[^41]:</p>
+<p><strong>Algorithm 2.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers whose expected (&quot;average&quot;) value is a known or unknown mean. The goal is now to produce non-negative random variates whose expected value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever <em>f</em> has a finite minimum and maximum and the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)[^41]:</p>
 
 <ol>
 <li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
@@ -2077,7 +2077,7 @@ calc_linear_func(count=8)
 </ol>
 </blockquote>
 
-<p><strong>Algorithm 3.</strong> Say we have an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown.  The goal is to use the oracle to produce non-negative random variates with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nondecreasing in that interval (Jacob and Thiery 2015)[^9].  This can be done using the algorithm below.  In the algorithm:</p>
+<p><strong>Algorithm 3.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown.  The goal is to use the oracle to produce non-negative random variates with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nondecreasing in that interval (Jacob and Thiery 2015)[^9].  This can be done using the algorithm below.  In the algorithm:</p>
 
 <ul>
 <li><em>f</em>(<em>&mu;</em>) must be a function that can be written as the following infinite series expansion: <em>c</em>[0]*<em>z</em><sup>0</sup> + <em>c</em>[1]*<em>z</em><sup>1</sup> + ..., where <em>z</em> = <em>&mu;</em>&minus;<em>a</em> and all <em>c</em>[<em>i</em>] are 0 or greater.</li>
