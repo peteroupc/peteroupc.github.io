@@ -27,6 +27,7 @@ This page contains additional algorithms for arbitrary-precision sampling of dis
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
     - [**ln(_c_+_&lambda;_)/(_c_+_&lambda;_)**](#ln__c____lambda____c____lambda)
     - [**Examples for the von Neumann schema**](#Examples_for_the_von_Neumann_schema)
+    - [**1/(1+(_m_+_&lambda;_)<sup>2</sup>)**](#1_1__m____lambda___2)
 - [**Irrational Probabilities**](#Irrational_Probabilities)
     - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1)
@@ -429,6 +430,14 @@ Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^13].  In the table
 | _&lambda;_/tan(_&lambda;_) | [0, 1) | Uses VNS with **alternating odd-sized** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
 | (1&minus;_&lambda;_)\*tan(_&lambda;_) | [0, 1) | Uses VNS with alternating odd-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
 
+<a id=1_1__m____lambda___2></a>
+### **1/(1+(_m_+_&lambda;_)<sup>2</sup>)**
+
+This is a rational function (ratio of two polynomials) with variable _&lambda;_, and this rational function admits the following algorithm.  Here, _m_ is an integer 0 or greater, and _&lambda;_ is the unknown heads probability of a coin.
+
+1. Let _d_ be the three-item list [1, 2, 1] \(for numerator 1).  Let _e_ be the three-item list [1+m**2, 2*(1+m**2+m), 1+m**2+2*m+1] \(for denominator).  Find the highest number in _e_, then divide each item in _d_ and in _e_ by that number (using rational arithmetic).
+2. Run the algorithm for [**rational functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions) in "Bernoulli Factory Algorithms", with _n_ = 2, and with _d_ and _e_ given above.
+
 <a id=Irrational_Probabilities></a>
 ## Irrational Probabilities
 
@@ -634,9 +643,9 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 |  _r_/_&pi;_  |  (_r_ is a rational number in open interval (0, 3).)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Create _&mu;_ coin that does: "With probability _r_ &minus; floor(_r_), return 1; otherwise return 0."<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=floor(_r_) and _c_=3.  |
 |  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 |  exp(1)/4  |  Follow the algorithm for **exp(_&lambda;_/4)/2**, except the probability in step 2 is 2<sup>_n_&minus;1</sup>/(_n_!), _c_ is 0, and step 3 is replaced with "Return 1."  |
-|  _r_\*_&lambda;_ &minus; _r_ + _r_\*exp(&minus;_&lambda;_)  |  (_r_ is a rational number in open interval (0, exp(1)).  _&lambda;_ is the unknown heads probability of a coin.)<br>Run the **general martingale algorithm** in "Bernoulli Factory Algorithms" with $g(\lambda) = \lambda$, and with $d_0 = 1$  and coefficients $a_i = \frac{r}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.  |
+|  _r_\*_&lambda;_ &minus; _r_ + _r_\*exp(&minus;_&lambda;_)  |  (_r_ is a rational number in half-open interval (0, 2].  _&lambda;_ is the unknown heads probability of a coin.)<br>Run the **general martingale algorithm** in "Bernoulli Factory Algorithms" with $g(\lambda) = \lambda$, and with $d_0 = r/2$  and coefficients $a_i = \frac{r}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.  |
 |  _n_\*exp(&minus;1) = _n_/exp(1)  |  (_n_ is 1 or 2.)<br>Create _&lambda;_ coin for algorithm **exp(1) &minus; 2**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=_n_ and _c_=2.  |
-|  _r_\*exp(&minus;1) = _r_/exp(1)  |  (_r_ is a rational number in open interval (0, exp(1)).)<br>Run algorithm for **_c_\*_&lambda;_ &minus; _c_ + _c_\*exp(&minus;_&lambda;_)** with _r_=_r_ and _&lambda;_ being a coin that always returns 1. |
+|  _r_\*exp(&minus;1) = _r_/exp(1)  |  (_r_ is a rational number in half-open interval (0, 2].)<br>Run algorithm for **_c_\*_&lambda;_ &minus; _c_ + _c_\*exp(&minus;_&lambda;_)** with _r_=_r_ and _&lambda;_ being a coin that always returns 1. |
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers

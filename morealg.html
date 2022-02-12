@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/02/11"><meta name="citation_online_date" content="2022/02/11"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/02/12"><meta name="citation_online_date" content="2022/02/12"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -40,6 +40,7 @@
 <li><a href="#Pushdown_Automata_for_Square_Root_Like_Functions"><strong>Pushdown Automata for Square-Root-Like Functions</strong></a></li>
 <li><a href="#ln__c____lambda____c____lambda"><strong>ln(<em>c</em>+<em>&lambda;</em>)/(<em>c</em>+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#Examples_for_the_von_Neumann_schema"><strong>Examples for the von Neumann schema</strong></a></li>
+<li><a href="#1_1__m____lambda___2"><strong>1/(1+(<em>m</em>+<em>&lambda;</em>)<sup>2</sup>)</strong></a></li>
 </ul></li>
 <li><a href="#Irrational_Probabilities"><strong>Irrational Probabilities</strong></a>
 
@@ -734,6 +735,17 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 </tr>
 </tbody></table>
 
+<p><a id=1_1__m____lambda___2></a></p>
+
+<h3><strong>1/(1+(<em>m</em>+<em>&lambda;</em>)<sup>2</sup>)</strong></h3>
+
+<p>This is a rational function (ratio of two polynomials) with variable <em>&lambda;</em>, and this rational function admits the following algorithm.  Here, <em>m</em> is an integer 0 or greater, and <em>&lambda;</em> is the unknown heads probability of a coin.</p>
+
+<ol>
+<li>Let <em>d</em> be the three-item list [1, 2, 1] (for numerator 1).  Let <em>e</em> be the three-item list [1+m<strong>2, 2*(1+m</strong>2+m), 1+m*<em>2+2</em>m+1] (for denominator).  Find the highest number in <em>e</em>, then divide each item in <em>d</em> and in <em>e</em> by that number (using rational arithmetic).</li>
+<li>Run the algorithm for <a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>rational functions</strong></a> in &quot;Bernoulli Factory Algorithms&quot;, with <em>n</em> = 2, and with <em>d</em> and <em>e</em> given above.</li>
+</ol>
+
 <p><a id=Irrational_Probabilities></a></p>
 
 <h2>Irrational Probabilities</h2>
@@ -1049,7 +1061,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 </tr>
 <tr>
 <td><em>r</em>*<em>&lambda;</em> &minus; <em>r</em> + <em>r</em>*exp(&minus;<em>&lambda;</em>)</td>
-<td>(<em>r</em> is a rational number in open interval (0, exp(1)).  <em>&lambda;</em> is the unknown heads probability of a coin.)<br>Run the <strong>general martingale algorithm</strong> in &quot;Bernoulli Factory Algorithms&quot; with $g(\lambda) = \lambda$, and with $d_0 = 1$  and coefficients $a_i = \frac{r}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.</td>
+<td>(<em>r</em> is a rational number in half-open interval (0, 2].  <em>&lambda;</em> is the unknown heads probability of a coin.)<br>Run the <strong>general martingale algorithm</strong> in &quot;Bernoulli Factory Algorithms&quot; with $g(\lambda) = \lambda$, and with $d_0 = r/2$  and coefficients $a_i = \frac{r}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.</td>
 </tr>
 <tr>
 <td><em>n</em>*exp(&minus;1) = <em>n</em>/exp(1)</td>
@@ -1057,7 +1069,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 </tr>
 <tr>
 <td><em>r</em>*exp(&minus;1) = <em>r</em>/exp(1)</td>
-<td>(<em>r</em> is a rational number in open interval (0, exp(1)).)<br>Run algorithm for <strong><em>c</em>*<em>&lambda;</em> &minus; <em>c</em> + <em>c</em>*exp(&minus;<em>&lambda;</em>)</strong> with <em>r</em>=<em>r</em> and <em>&lambda;</em> being a coin that always returns 1.</td>
+<td>(<em>r</em> is a rational number in half-open interval (0, 2].)<br>Run algorithm for <strong><em>c</em>*<em>&lambda;</em> &minus; <em>c</em> + <em>c</em>*exp(&minus;<em>&lambda;</em>)</strong> with <em>r</em>=<em>r</em> and <em>&lambda;</em> being a coin that always returns 1.</td>
 </tr>
 </tbody></table>
 

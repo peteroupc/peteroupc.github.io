@@ -604,8 +604,8 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
 
 A general-purpose algorithm was given by Mendo (2020\)[^27] that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;
 
-- that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all rational numbers greater than 0 and sum to _p_ (in other words, the series _converges_ to _p_)
-- for which a sequence _err_\[0\], _err_\[1\], ... is available that is nonincreasing and has a limit of 0 (_converges_ to 0), where _err_\[_n_\] is an upper bound on the error from "cutting off" the series _a_ after summing the first _n_+1 terms.
+- that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all rational numbers greater than 0 and sum to _p_ (in other words, the series _converges_ to _p_), and
+- for which a sequence of rational numbers _err_\[0\], _err_\[1\], ... is available that is nonincreasing and has a limit of 0 (_converges_ to 0), where _err_\[_n_\] equals or is greater than the error from "cutting off" the series _a_ after summing the first _n_+1 terms.
 
 The algorithm follows.
 
