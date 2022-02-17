@@ -554,8 +554,8 @@ There are many ways to describe closeness between two distributions.  One sugges
 >
 > **Note:** Unfortunately, there are discrete distributions that require an infinite sampling time on average, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^20].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^22] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values, which is not the case for zeta Dirichlet.  On the other hand, a distribution can be sampled in finite time on average whenever&mdash;
 >
-> - it takes on only integers 0 or greater and has a finite mean ("long-run average") (Rioul 2022)[^23] (Devroye and Gravel 2020)[^20], or
-> - it takes on only integers and has a finite variance ("long-run average of squares") (Massey 1988)[^24] (Devroye and Gravel 2020)[^20].
+> - it takes on only integers 0 or greater and has a finite mean ("long-run average") (Rioul 2022\)[^23] \(Devroye and Gravel 2020)[^20], or
+> - it takes on only integers and has a finite variance ("long-run average of squares") (Massey 1988\)[^24] \(Devroye and Gravel 2020)[^20].
 
 <a id=License></a>
 ## License
