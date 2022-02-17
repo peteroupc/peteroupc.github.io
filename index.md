@@ -25,7 +25,7 @@ Open-source articles on programming subjects.  Help me on my [**requests and ope
 * [**More Random Sampling Methods**](./randomnotes.html)
 * [**The Most Common Topics Involving Randomization**](./randomcommon.html)
 * [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.html)
-* [**Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Numbers**](./uniformsum.html)
+* [**Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates**](./uniformsum.html)
 * [**Bernoulli Factory Algorithms**](./bernoulli.html)
 * [**Supplemental Notes for Bernoulli Factory Algorithms**](./bernsupp.html)
 * [**More Algorithms for Arbitrary-Precision Sampling**](./morealg.html)

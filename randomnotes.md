@@ -483,6 +483,10 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 
 [^22]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
 
+[^23]: O. Rioul, "Variations on a Theme by Massey," in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.
+
+[^24]: Massey, J.L., "On the entropy of integer-valued random variables", 1988.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -548,7 +552,10 @@ There are many ways to describe closeness between two distributions.  One sugges
 > 2. Sampling from the exponential distribution using the `ExpoExact` method in the page "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html#ExpoExact)" is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2016\)[^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018\)[^21].
 > 3. Examples of _approximate algorithms_ include sampling from a Gaussian-like distribution via a sum of `RNDRANGEMinMaxExc(0, 1)`, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section "[**RNDINT**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)").
 >
-> **Note:** Unfortunately, there are discrete distributions that require an infinite sampling time on average, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^20].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^22] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values, which is not the case for zeta Dirichlet.
+> **Note:** Unfortunately, there are discrete distributions that require an infinite sampling time on average, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^20].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^22] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values, which is not the case for zeta Dirichlet.  On the other hand, a distribution can be sampled in finite time on average whenever&mdash;
+>
+> - it takes on only integers 0 or greater and has a finite mean ("long-run average") (Rioul 2022)[^23] (Devroye and Gravel 2020)[^20], or
+> - it takes on only integers and has a finite variance ("long-run average of squares") (Massey 1988)[^24] (Devroye and Gravel 2020)[^20].
 
 <a id=License></a>
 ## License

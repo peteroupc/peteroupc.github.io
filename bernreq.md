@@ -211,7 +211,7 @@ where&mdash;
 - $\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,
 - $\pi(a, p) = p (1-p)^a$ is the probability of getting a non-negative integer $a$ in step 1 of the following algorithm,
 - $g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,
-- $(n_a)$ is an increasing sequence of positive integers,
+- $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,
 - $p$ is a rational number in $(0, 1)$, and
 - $\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it's a constant.  In the case of concave functions, this polynomial will always be non-negative.
 

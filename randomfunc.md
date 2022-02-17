@@ -1532,7 +1532,7 @@ Many probability distributions can be defined in terms of any of the following:
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, `CDF(x)`, is the probability of choosing a number less than or equal to `x` at random.  The probabilities are in the interval [0, 1].
 * _Discrete distributions_[^74] have a _probability mass function_, or _PMF_, which gives the probability that each number is randomly chosen.
 * _Absolutely continuous distributions_ have a [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, `PDF(x)`, which is the "slope" function of the CDF, or the relative probability of choosing a number "close" to `x` at random. The relative probabilities are 0 or greater, and the area under the PDF is 1.
-* The _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is the inverse of the CDF and maps numbers in the interval [0, 1\) to numbers in the distribution, from low to high.
+* The _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is the inverse of the CDF and maps numbers in the interval (0, 1\) to numbers in the distribution, from low to high.
 
 In this section, a **PDF-like function** is the PDF, the PMF, or either function times a (possibly unknown) positive constant.
 
