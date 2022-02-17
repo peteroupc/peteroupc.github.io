@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/02/16"><meta name="citation_online_date" content="2022/02/16"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/02/17"><meta name="citation_online_date" content="2022/02/17"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -563,6 +563,8 @@ END METHOD
 
 <p>[^24]: Massey, J.L., &quot;On the entropy of integer-valued random variables&quot;, 1988.</p>
 
+<p>[^25]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -640,11 +642,11 @@ END METHOD
 <li>Examples of <em>approximate algorithms</em> include sampling from a Gaussian-like distribution via a sum of <code>RNDRANGEMinMaxExc(0, 1)</code>, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N"><strong>RNDINT</strong></a>&quot;).</li>
 </ol>
 
-<p><strong>Note:</strong> Unfortunately, there are discrete distributions that require an infinite sampling time on average, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^20].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^22] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values, which is not the case for zeta Dirichlet.  On the other hand, a distribution can be sampled in finite time on average whenever&mdash;</p>
+<p><strong>Note:</strong> A discrete distribution can be sampled in finite time on average if and only if its <em>Shannon entropy</em> is finite (Knuth and Yao 1976)[^25]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^20].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^22] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution&#39;s Shannon entropy is finite whenever&mdash;</p>
 
 <ul>
-<li>it takes on only integers 0 or greater and has a finite mean (&quot;long-run average&quot;) (Rioul 2022)[^23] (Devroye and Gravel 2020)[^20], or</li>
-<li>it takes on only integers and has a finite variance (&quot;long-run average of squares&quot;) (Massey 1988)[^24] (Devroye and Gravel 2020)[^20].</li>
+<li>it takes on only integers 0 or greater and has a finite mean (&quot;long-run average&quot;) (Rioul 2022)[^23], or</li>
+<li>it takes on only integers and has a finite variance (&quot;long-run average&quot; of squared deviation from the mean) (Massey 1988)[^24].</li>
 </ul>
 </blockquote>
 
