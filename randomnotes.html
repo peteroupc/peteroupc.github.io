@@ -557,13 +557,13 @@ END METHOD
 
 <p>[^21]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
 
-<p>[^22]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, &quot;<a href="https://arxiv.org/abs/2001.04555v1"><strong>Optimal Approximate Sampling From Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</p>
+<p>[^22]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^23]: O. Rioul, &quot;Variations on a Theme by Massey,&quot; in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.</p>
+<p>[^23]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, &quot;<a href="https://arxiv.org/abs/2001.04555v1"><strong>Optimal Approximate Sampling From Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</p>
 
-<p>[^24]: Massey, J.L., &quot;On the entropy of integer-valued random variables&quot;, 1988.</p>
+<p>[^24]: O. Rioul, &quot;Variations on a Theme by Massey,&quot; in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.</p>
 
-<p>[^25]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^25]: Massey, J.L., &quot;On the entropy of integer-valued random variables&quot;, 1988.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -642,11 +642,11 @@ END METHOD
 <li>Examples of <em>approximate algorithms</em> include sampling from a Gaussian-like distribution via a sum of <code>RNDRANGEMinMaxExc(0, 1)</code>, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N"><strong>RNDINT</strong></a>&quot;).</li>
 </ol>
 
-<p><strong>Note:</strong> A discrete distribution can be sampled in finite time on average if and only if its <em>Shannon entropy</em> is finite (Knuth and Yao 1976)[^25]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^20].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^22] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution&#39;s Shannon entropy is finite whenever&mdash;</p>
+<p><strong>Note:</strong> A discrete distribution can be sampled in finite time on average if and only if its <em>Shannon entropy</em> is finite (Knuth and Yao 1976)[^22]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^20].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^23] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution&#39;s Shannon entropy is finite whenever&mdash;</p>
 
 <ul>
-<li>it takes on only integers 0 or greater and has a finite mean (&quot;long-run average&quot;) (Rioul 2022)[^23], or</li>
-<li>it takes on only integers and has a finite variance (&quot;long-run average&quot; of squared deviation from the mean) (Massey 1988)[^24].</li>
+<li>it takes on only integers 0 or greater and has a finite mean (&quot;long-run average&quot;) (Rioul 2022)[^24], or</li>
+<li>it takes on only integers and has a finite variance (&quot;long-run average&quot; of squared deviation from the mean) (Massey 1988)[^25].</li>
 </ul>
 </blockquote>
 
