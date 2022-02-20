@@ -87,8 +87,6 @@ It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all 
     - meet the formal statement above, and
     - can be used to simulate that function with a finite expected running time?
 
-    One example to question 1 is the function $\min(2\lambda,1-\epsilon)$ on the domain $(0, 1/2-\epsilon)$ given in Nacu and Peres 2005.
-
 2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
 
 <a id=New_coins_from_old_smoothly></a>
@@ -385,7 +383,7 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 <a id=Remarks></a>
 ## Remarks
 
-- Besides the questions above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu & Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it's not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given earlier.
+- Besides the questions on concave functions given above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu & Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it's not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given earlier.
 - A practical solution to the questions on concave functions might require more sophisticated methods than simply using $f$'s Bernstein polynomials, since I am aware that the plain Bernstein approximation doesn't improve in convergence rate if a function has two or more continuous derivatives (as opposed to just one), at least without further knowledge of $f$.
 
 The following remarks relate to the questions on pushdown automata:
@@ -406,7 +404,7 @@ Here is my current progress for the Lorentz operator for $\alpha=2$, so $r=2$ (w
 
 The Lorentz operator for $r=2$ finds the degree-n Bernstein polynomial for the target function $f$, elevates it to degree $n+r$, then shifts the coefficient at $k+1$ by $-f\prime\prime(k/n) A(n,k)$ (but the coefficients at 0 and $n+r$ are not shifted this way), where:
 
-$$A(n,k) = (1/(4*n)) * 2 *(n+2-k)/((n+1)*(n+2)),$$
+$$A(n,k) = (1/(4n)) \times  2 \times (n+2-k)/((n+1)\times (n+2)),$$
 
 where $k$ is an integer in $[0,n+r]$. Observing that $A(n,k)$ equals 0 at 0 and at $n+r$, and has a peak at $(n+r)/2$,
 the shift will be no greater (in absolute value) than

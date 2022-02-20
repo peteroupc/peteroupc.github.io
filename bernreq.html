@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/02/14"><meta name="citation_online_date" content="2022/02/14"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/02/20"><meta name="citation_online_date" content="2022/02/20"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -124,9 +124,7 @@
 <ul>
 <li>meet the formal statement above, and</li>
 <li>can be used to simulate that function with a finite expected running time?</li>
-</ul>
-
-<p>One example to question 1 is the function $\min(2\lambda,1-\epsilon)$ on the domain $(0, 1/2-\epsilon)$ given in Nacu and Peres 2005.</p></li>
+</ul></li>
 <li><p>Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?</p></li>
 </ol>
 
@@ -501,7 +499,7 @@
 <h2>Remarks</h2>
 
 <ul>
-<li>Besides the questions above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu &amp; Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it&#39;s not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given earlier.</li>
+<li>Besides the questions on concave functions given above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu &amp; Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it&#39;s not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given earlier.</li>
 <li>A practical solution to the questions on concave functions might require more sophisticated methods than simply using $f$&#39;s Bernstein polynomials, since I am aware that the plain Bernstein approximation doesn&#39;t improve in convergence rate if a function has two or more continuous derivatives (as opposed to just one), at least without further knowledge of $f$.</li>
 </ul>
 
@@ -526,7 +524,7 @@
 
 <p>The Lorentz operator for $r=2$ finds the degree-n Bernstein polynomial for the target function $f$, elevates it to degree $n+r$, then shifts the coefficient at $k+1$ by $-f\prime\prime(k/n) A(n,k)$ (but the coefficients at 0 and $n+r$ are not shifted this way), where:</p>
 
-<p>$$A(n,k) = (1/(4<em>n)) * 2 *(n+2-k)/((n+1)</em>(n+2)),$$</p>
+<p>$$A(n,k) = (1/(4n)) \times  2 \times (n+2-k)/((n+1)\times (n+2)),$$</p>
 
 <p>where $k$ is an integer in $[0,n+r]$. Observing that $A(n,k)$ equals 0 at 0 and at $n+r$, and has a peak at $(n+r)/2$,
 the shift will be no greater (in absolute value) than
