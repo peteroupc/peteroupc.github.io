@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/02/06"><meta name="citation_online_date" content="2022/02/06"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/02/26"><meta name="citation_online_date" content="2022/02/26"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -269,6 +269,8 @@
 <li>Generate a unit Lindley(<em>&theta;</em>) random variate, that is, generate <em>x</em>/(1+<em>x</em>) where <em>x</em> is a <a href="https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley(<em>&theta;</em>) random variate</strong></a>.</li>
 </ol>
 
+<p><strong>Unit distributions.</strong> To generate a <em>unit X</em> random variate (where X is a distribution whose support is the positive real line), generate a random variate distributed as X, call it <em>x</em>, then return exp(&minus;<em>x</em>) or 1 &minus;exp(&minus;<em>x</em>) (also known as &quot;Type I&quot; or &quot;Type II&quot;, respectively).  For example, a unit gamma distribution is also known as the <em>Grassia distribution</em> (Grassia 1977)[^43].</p>
+
 <p><strong>CDF&ndash;quantile family.</strong> Given two distributions X and Y (which can be the same), a location parameter <em>&mu;</em> &ge; 0, and a dispersion parameter <em>&sigma;</em>&gt;0, a variate from this family of distributions can be generated as follows (Smithson and Shou 2019)[^42]:</p>
 
 <ol>
@@ -332,6 +334,11 @@
 <td>Power Lomax(<em>&alpha;</em>, <em>&beta;</em>) (Rady et al. 2016)[^33].</td>
 <td><em>L</em><sup>1/<em>&beta;</em></sup></td>
 <td><em>&beta;</em> &gt; 0; <em>L</em> is Lomax(<em>&alpha;</em>).</td>
+</tr>
+<tr>
+<td>Topp&ndash;Leone(<em>&alpha;</em>)</td>
+<td>1&minus;sqrt(1&minus;<em>U</em><sup>1/<em>&alpha;</em></sup>).</td>
+<td><em>&alpha;</em> &gt; 0.</td>
 </tr>
 </tbody></table>
 
@@ -634,6 +641,8 @@ END METHOD
 <p>[^41]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
 <p>[^42]: Chewi, S., Gerber, P., et al., &quot;<a href="https://arxiv.org/abs/2105.14166"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>&quot;, arXiv:2105.14166, 2021</p>
+
+<p>[^43]: Grassia, A., &quot;On a family of distributions with argument between 0 and 1 obtained by transformation of the gamma and derived compound distributions&quot;, <em>Australian Journal of Statistics</em>, 1977.</p>
 
 <p><a id=License></a></p>
 

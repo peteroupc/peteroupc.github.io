@@ -200,6 +200,8 @@ For example, a _zero-inflated beta_ random variate is 0 with probability _&alpha
 1. With probability _&alpha;_, return a number that is 0 with probability _p_ and 1 otherwise.
 2. Generate a unit Lindley(_&theta;_) random variate, that is, generate _x_/(1+_x_) where _x_ is a [**Lindley(_&theta;_) random variate**](https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures).
 
+**Unit distributions.** To generate a _unit X_ random variate (where X is a distribution whose support is the positive real line), generate a random variate distributed as X, call it _x_, then return exp(&minus;_x_) or 1 &minus;exp(&minus;_x_) (also known as "Type I" or "Type II", respectively).  For example, a unit gamma distribution is also known as the _Grassia distribution_ (Grassia 1977)[^43].
+
 **CDF&ndash;quantile family.** Given two distributions X and Y (which can be the same), a location parameter _&mu;_ &ge; 0, and a dispersion parameter _&sigma;_>0, a variate from this family of distributions can be generated as follows (Smithson and Shou 2019\)[^42]:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
@@ -228,6 +230,7 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1].
 | Marshall&ndash;Olkin(_&alpha;_) (Marshall and Olkin 1997\)[^32] | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
 | Lomax(_&alpha;_). | (&minus;1/(_U_&minus;1))<sup>1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016\)[^33]. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
+| Topp&ndash;Leone(_&alpha;_) | 1&minus;sqrt(1&minus;_U_<sup>1/_&alpha;_</sup>). | _&alpha;_ > 0. |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
 ## Batching Random Samples via Randomness Extraction
@@ -478,6 +481,8 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 [^41]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
 [^42]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+
+[^43]: Grassia, A., "On a family of distributions with argument between 0 and 1 obtained by transformation of the gamma and derived compound distributions", _Australian Journal of Statistics_, 1977.
 
 <a id=License></a>
 ## License

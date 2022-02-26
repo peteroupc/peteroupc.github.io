@@ -694,6 +694,8 @@ The following pseudocode implements coupling from the past.  In the method, `Sta
        return states[0] // Return the steady state
     END METHOD
 
+> **Note:** A **discrete phase-type distribution** consists of a Markov chain, a start state, and an end state.  It models the (random) number of steps, minus 1, needed for the Markov chain to move from the start state to the end state.
+
 <a id=Random_Graphs></a>
 ### Random Graphs
 

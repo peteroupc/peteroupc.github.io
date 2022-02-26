@@ -1778,7 +1778,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^13]: And this shows that the polynomial couldn't be simulated if _c_ were allowed to be 1, since the required degree would be infinity; in fact, the polynomial would touch 1 at the point 0.5 in this case, ruling out its simulation by any algorithm (see "About Bernoulli Factories", earlier).
 
-[^14]: Niazadeh, R., Leme, R.P., Schneider, J., "[**Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes**](https://dl.acm.org/doi/10.1145/3406325.3451072)", in _Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory of Computing_, pp. 833-846, June 2021; also at [**https://arxiv.org/abs/2011.03865.pdf**](https://arxiv.org/abs/2011.03865).
+[^14]: Niazadeh, R., Paes Leme, R., Schneider, J., "[**Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes**](https://dl.acm.org/doi/10.1145/3406325.3451072)", in _Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory of Computing_, pp. 833-846, June 2021; also at [**https://arxiv.org/abs/2011.03865.pdf**](https://arxiv.org/abs/2011.03865).
 
 [^15]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
 
