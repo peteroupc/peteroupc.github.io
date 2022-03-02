@@ -2252,8 +2252,6 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 [^106]: For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
 
-[^107]: Piccolo, D. (2003). "On the moments of a mixture of uniform and shifted binomial random variables", _Quaderni di Statistica_ 5(1), 85-104.
-
 <a id=Appendix></a>
 ## Appendix
 
