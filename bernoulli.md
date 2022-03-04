@@ -660,17 +660,17 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 >
 > **Notes:**
 >
-> 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sub>(_&lambda;_), where _w_<sub>_n_</sub> are continuous functions whose maximum values in the domain [0, 1] sum to 1 or less.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash;<br><br>_f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _g_(_n_) \* (_w_<sub>_n_</sub>(_&lambda;_) / _g_(_n_)),<br><br>but this works only if the following conditions are met for each integer _n_&ge;0:
->     - _g_(_n_) &ge; _w_<sub>_n_</sub>(_&lambda;_) &ge; 0 for every _&lambda;_ in the interval \[0, 1\] (which roughly means that _w_<sub>_n_</sub> is no greater than _g_(_n_)).
->     - The function _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_) admits a Bernoulli factory (which it won't if it touches 0 or 1 inside the interval (0, 1), but isn't constant, for example).
+> 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sub>(_&lambda;_), where _w_<sub>_n_</sub> are continuous functions whose maximum values in the domain [0, 1] sum to 1 or less.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=\sum_{n\ge 0} g(n)\times \frac{w_n(\lambda)}{g(n)},$$ but this works only if the following conditions are met for each integer _n_&ge;0:
+>     - $g(n) \ge w_n(\lambda) \ge 0$ for every $\lambda$ in the interval \[0, 1\] (which roughly means that $w_n$ is no greater than $g(n)$).
+>     - The function $w_n(\lambda)/g(n)$ admits a Bernoulli factory (which it won't if it touches 0 or 1 inside the interval (0, 1), but isn't constant, for example).
 >
 >     See also Mendo (2019\)[^19].
-> 2. **Constants with non-negative series expansions.** A special case of note 1.  Let _g_ be as in note 1.  Assume we have a constant with the following series expansion: _c_ = _a_<sub>0</sub> + _a_<sub>1</sub> + _a_<sub>2</sub> + ..., where&mdash;
+> 2. **Constants with non-negative series expansions.** A special case of note 1.  Let _g_ be as in note 1.  Assume we have a constant with the following series expansion: $$c=a_0+a_1+a_2+...,$$ where&mdash;
 >
->     - _a_<sub>_n_</sub> are each 0 or greater and sum to 1 or less,
->     - _g_(_n_) &ge; _a_<sub>_n_</sub> &ge; 0 for each integer _n_&ge;0,
+>     - $a_n$ are each 0 or greater and sum to 1 or less, and
+>     - $g(n) \ge a_n \ge 0$ for each integer _n_&ge;0,
 >
->     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash;<br><br>_c_ = &sum;<sub>_n_=0,1,...</sub> _g_(_n_) \* (_a_<sub>_n_</sub> / _g_(_n_)).
+>     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash; $$c=\sum_{n\ge 0} g(n)\times \frac{a_n}{g(n)}.$$
 >
 > **Examples:**
 >
