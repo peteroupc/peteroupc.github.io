@@ -33,7 +33,7 @@ Perhaps the most familiar example of randomness extraction is the one by von Neu
 1. Flip a coin twice (whose probability of heads is unknown).
 2. If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.
 
-An algorithm found in (Morina et al. 2019\)[^6] \(called **Algorithm M** in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
+An algorithm found in (Morina et al. 2022\)[^6] \(called **Algorithm M** in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
 
 1. Throw a (loaded) die, call the result _X_.  Throw the die again, call the result _Y_.
 2. If _X_ is less than _Y_, return 0.  If _X_ is greater than _Y_, return 1.  If neither is the case, go to step 1.
@@ -82,7 +82,7 @@ Devroye and Gravel (2020\)[^14] suggest a special randomness extractor to reduce
 
 [^5]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
 
-[^6]: Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229)", arXiv:1912.09229 [math.PR], 2019.
+[^6]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [https://doi.org/10.1214/21-AAP1679](https://doi.org/10.1214/21-AAP1679)
 
 [^7]: Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.
 

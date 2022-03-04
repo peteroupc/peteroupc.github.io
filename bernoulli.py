@@ -24,9 +24,7 @@ class Bernoulli:
     - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
     polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
     Article 12 (March 2012), 5 pages.
-    - Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice
-    Enterprise via Perfect Sampling of Markov Chains",
-    arXiv:1912.09229v1 [math.PR], 2019.
+    -  Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. https://doi.org/10.1214/21-AAP1679
     - Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh.
     2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design.
     In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory

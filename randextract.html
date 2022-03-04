@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>A Note on Randomness Extraction</title><meta name="citation_title" content="A Note on Randomness Extraction"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randextract.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randextract.html"><meta name="citation_date" content="2021/12/16"><meta name="citation_online_date" content="2021/12/16"><meta name="og:title" content="A Note on Randomness Extraction"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randextract.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="A Note on Randomness Extraction"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>A Note on Randomness Extraction</title><meta name="citation_title" content="A Note on Randomness Extraction"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randextract.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randextract.html"><meta name="citation_date" content="2022/03/04"><meta name="citation_online_date" content="2022/03/04"><meta name="og:title" content="A Note on Randomness Extraction"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randextract.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="A Note on Randomness Extraction"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -49,7 +49,7 @@
 <li>If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.</li>
 </ol>
 
-<p>An algorithm found in (Morina et al. 2019)[^6] (called <strong>Algorithm M</strong> in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key &quot;is to find two non overlapping events of the same probability&quot; via &quot;symmetric events {X_1 &lt; X_2}  and  {X_2 &lt; X_1} that have the same probability&quot;.</p>
+<p>An algorithm found in (Morina et al. 2022)[^6] (called <strong>Algorithm M</strong> in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key &quot;is to find two non overlapping events of the same probability&quot; via &quot;symmetric events {X_1 &lt; X_2}  and  {X_2 &lt; X_1} that have the same probability&quot;.</p>
 
 <ol>
 <li>Throw a (loaded) die, call the result <em>X</em>.  Throw the die again, call the result <em>Y</em>.</li>
@@ -110,7 +110,7 @@
 
 <p>[^5]: von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</p>
 
-<p>[^6]: Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229 [math.PR], 2019.</p>
+<p>[^6]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. &quot;From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains.&quot; Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. <a href="https://doi.org/10.1214/21-AAP1679">https://doi.org/10.1214/21-AAP1679</a></p>
 
 <p>[^7]: Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</p>
 

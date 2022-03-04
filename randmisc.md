@@ -310,7 +310,7 @@ Here is a sketch of how this rejection sampler might work:
 <a id=ExpoExact></a>
 ## ExpoExact
 
-This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019\)[^41]; Canonne et al. (2020\)[^42].  In this section, `RNDINT(1)` generates an independent unbiased random bit.  The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this section.
+This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2022\)[^41]; Canonne et al. (2020\)[^42].  In this section, `RNDINT(1)` generates an independent unbiased random bit.  The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this section.
 
     METHOD ZeroOrOneExpMinus(x, y)
       if y==0 or y<0 or x<0: return error
@@ -338,7 +338,7 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
        ret=0
        for i in 1..precision
         // This loop adds to ret with probability 1/(exp(2^-prec)+1).
-        // References: Alg. 6 of Morina et al. 2019; Canonne et al. 2020.
+        // References: Alg. 6 of Morina et al. 2022; Canonne et al. 2020.
         denom=pow(2,i)*ry
         while true
            if RNDINT(1)==0: break
@@ -480,7 +480,7 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 
 [^40]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  For this reason, there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_) whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_, for every _&epsilon;_&gt;0 and for any _x_ and _y_ in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and monotone increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
 
-[^41]: Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.
+[^41]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [https://doi.org/10.1214/21-AAP1679](https://doi.org/10.1214/21-AAP1679)
 
 [^42]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
