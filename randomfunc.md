@@ -1320,7 +1320,7 @@ For fixed-point number formats representing multiples of 1/`n`, this method is t
 
 * `RNDRANGEMinMaxExc(a, b)`: `RNDINTRANGE(fpa + 1, fpb - 1)`, or an error if `fpa >= fpb or a == fpb - 1`.  But if `a` is 0 and `b` is 1: `(RNDINT(n - 2) + 1)` or `(RNDINTEXC(n - 1) + 1)`.
 
-> **Note:** Additional methods to sample integers in a different interval are given below, but are not used in the rest of this article.
+> **Note:** Additional methods to sample fixed-point numbers in a different interval are given below, but are not used in the rest of this article.
 >
 > * `RNDRANGE(a, b)`, interval [`a`, `b`]: `RNDINTRANGE(fpa, fpb)`.  But if `a` is 0 and `b` is 1: `RNDINT(n)`.
 > * `RNDRANGEMinExc(a, b)`, interval (`a`, `b`]: `RNDINTRANGE(fpa + 1, fpb)`, or an error if `fpa >= fpb`.  But if `a` is 0 and `b` is 1: `(RNDINT(n - 1) + 1)` or `(RNDINTEXC(n) + 1)`.
@@ -1329,7 +1329,7 @@ For fixed-point number formats representing multiples of 1/`n`, this method is t
 <a id=For_Rational_Number_Formats></a>
 #### For Rational Number Formats
 
-A _rational number_ is a ratio of integers.  If the rational number's denominator is `n` (which must be 1 or greater), use the previous section to generate its numerator, which will be a multiple of 1/`n`.
+A _rational number_ is a ratio of integers.  If the rational number's denominator is `n` (which must be 1 or greater), use the previous section to generate its numerator, so that the rational number is a multiple of 1/`n`.
 
 <a id=For_Floating_Point_Number_Formats></a>
 #### For Floating-Point Number Formats

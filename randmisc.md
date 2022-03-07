@@ -126,7 +126,7 @@ In the case of powers of a uniform random variate in the interval \[0, 1], call 
 <a id=Certain_Families_of_Distributions></a>
 ## Certain Families of Distributions
 
-This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019\)[^8].
+This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019\)[^8], Jones (2015)[^45].
 
 The following definitions are used:
 
@@ -146,8 +146,7 @@ The following algorithm samples a random variate following a distribution from t
 
 Certain special cases of the "X-G" families, such as the following, use a specially designed distribution for X:
 
-- The _alpha power_ or _alpha power transformed_ family (Mahdavi and Kundu 2017\)[^10]. The family uses a shape parameter _&alpha;_ > 0; step 1 is modified to read: "Generate _U_, a uniform random variate in the interval [0, 1], then set _x_ to ln((_&alpha;_&minus;1)\*_U_ + 1)/ln(_&alpha;_) if _&alpha;_ != 1, and _U_ otherwise."
-- The _exponentiated_ family (Mudholkar and Srivastava 1993\)[^11]. The family uses a shape parameter _a_ > 1; step 1 is modified to read: "Generate _u_, a uniform random variate in the interval [0, 1], then set _x_ to _u_<sup>1/_a_</sup>."
+- The _exp-G_ family (Barreto-Souza and Simas 2010)[^46], where X is an exponential distribution, truncated to the interval [0, 1], with parameter _&lambda;_ &ge; 0; step 1 is modified to read: "Generate _U_, a uniform random variate in the interval [0, 1], then set _x_ to &minus;ln((exp(&minus;_&lambda;_)&minus;1)\*_U_ + 1)/_&lambda;_ if _&lambda;_ != 0, and _U_ otherwise." (The _alpha power_ or _alpha power transformed_ family (Mahdavi and Kundu 2017\)[^10] uses the same distribution for X, but with _&lambda;_=&minus;ln(_&alpha;_) where _&alpha;_ is in \(0, 1\].) - The _exponentiated_ family (Mudholkar and Srivastava 1993\)[^11]. The family uses a shape parameter _a_ > 1; step 1 is modified to read: "Generate _u_, a uniform random variate in the interval [0, 1], then set _x_ to _u_<sup>1/_a_</sup>."
 - The _transmuted-G_ family (Shaw and Buckley 2007\)[^12]. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^3]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^13] mentions the same distribution, but with a parameter _&lambda;_ = _&eta;_ + 1 lying in the interval [0, 2].)
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^13] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
 
@@ -487,6 +486,10 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 [^43]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
 [^44]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+
+[^45]: Jones, M. C. "On families of distributions with shape parameters." International Statistical Review 83, no. 2 (2015): 175-192.
+
+[^46]: Barreto‐Souza, Wagner and Alexandre B. Simas. "The exp-G family of probability distributions." arXiv:1003.1727v1 [stat.ME], 2010.
 
 <a id=License></a>
 ## License
