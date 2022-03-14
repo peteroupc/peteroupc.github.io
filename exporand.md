@@ -37,6 +37,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**Other Distributions**](#Other_Distributions)
     - [**Properties**](#Properties)
     - [**Limitations**](#Limitations)
+    - [**Relation to Constructive Reals**](#Relation_to_Constructive_Reals)
 - [**Sampling Uniform and Exponential PSRNs**](#Sampling_Uniform_and_Exponential_PSRNs)
     - [**Sampling Uniform PSRNs**](#Sampling_Uniform_PSRNs)
     - [**Sampling E-rands**](#Sampling_E_rands)
@@ -67,7 +68,6 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**General Principles**](#General_Principles)
     - [**Complexity of Specific Algorithms**](#Complexity_of_Specific_Algorithms)
 - [**Application to Weighted Reservoir Sampling**](#Application_to_Weighted_Reservoir_Sampling)
-- [**Open Questions**](#Open_Questions)
 - [**Acknowledgments**](#Acknowledgments)
 - [**Other Documents**](#Other_Documents)
 - [**Notes**](#Notes)
@@ -178,6 +178,11 @@ In the case of curves and surfaces, a PSRN can't directly store the coordinates,
 >
 > 1. To represent a point on the edge of a circle, a PSRN can store a random variate in the interval \[0, 2\*_&pi;_\), via the **RandUniformFromReal** method, given later, for 2\*_&pi;_ (for example, it can store an integer part of 2 and a fractional part of \[1, 3, 5\] and thus represent a number in the interval \[2.135, 2.136\]), and the number stored this way indicates the distance on the circular arc relative to its starting position.  A program that cares about the point's X and Y coordinates can then generate enough digits of the PSRN to compute an approximation of cos(_P_) and sin(_P_), respectively, to the desired accuracy, where _P_ is the number stored by the PSRN.  (However, the direct use of mathematical functions such as `cos` and `sin` is outside the scope of this document, because the focus here is on "exact sampling".)
 > 2. Example 1 is quite trivial, because each point on the interval maps evenly to a point on the circle.  But this is not true in general: an interval's or box's points don't map evenly to points on a curve or surface in general.  For example, take two PSRNs describing the U and V coordinates of a 3 dimensional cone's surface: \[1.135, 1.136\] for U and \[0.288, 0.289\] for V, and the cone's coordinates are X = U\*cos(V), Y = U\*sin(V), Z = U. In this example, the PSRNs form a box that's mapped to a small part of the cone surface.  However, the points in the box don't map to the cone evenly this way, so generating enough digits to calculate X, Y, and Z to the desired accuracy will not sample uniformly from that part of the cone without more work (see Williamson (1987\)[^15] for one solution).
+
+<a id=Relation_to_Constructive_Reals></a>
+### Relation to Constructive Reals
+
+Partially-sampled random numbers are related to a body of work dealing with so-called "constructive reals" or "recursive reals", or operations on real numbers that compute an approximation of the exact result to a user-specified number of digit places.  For example, in Hans-J. Boehm's implementation (Boehm 2020)[^31], (Boehm 1987)[^32], each operation on "constructive reals" (such as addition, multiplication, `exp`, `ln`, and so on) is associated with a function `f(n)` (where `n` is usually 0 or greater) that returns an integer `m` such that `abs(m/pow(2, n) - x) < 1/pow(2, n)`, where `x` is the exact result of the operation.  As suggested in Goubault-Larrecq et al. (2021)[^33], there can also be an operation that samples the digits of a uniform random variate in [0, 1] and gives access to approximations of that variate, sampling random digits as necessary.  Similarly, operations of this kind can be defined for PSRNs (including uniform PSRNs and exponential PSRNs).
 
 <a id=Sampling_Uniform_and_Exponential_PSRNs></a>
 ## Sampling Uniform and Exponential PSRNs
@@ -1514,11 +1519,6 @@ For **SampleGeometricBag** with base 2, the bit complexity has two components.
 
 (see also (Efraimidis 2015\)[^26]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom `-ln(1-X)/w`, where `X` is a uniform random variate in the interval [0, 1], in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
-<a id=Open_Questions></a>
-## Open Questions
-
-- The following is an open question on PSRNs.  Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random variate that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
-
 <a id=Acknowledgments></a>
 ## Acknowledgments
 
@@ -1601,6 +1601,12 @@ The following are some additional articles I have written on the topic of random
 [^29]: George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .
 
 [^30]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.
+
+[^31]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
+
+[^32]: Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
+
+[^33]: Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "A Domain-Theoretic Approach to Statistical Programming Languages." arXiv preprint arXiv:2106.16190 (2021) (especially sec. 12.3).
 
 <a id=Appendix></a>
 ## Appendix

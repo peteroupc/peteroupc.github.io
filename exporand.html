@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2022/02/04"><meta name="citation_online_date" content="2022/02/04"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2022/03/14"><meta name="citation_online_date" content="2022/03/14"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -54,6 +54,7 @@
 <li><a href="#Other_Distributions"><strong>Other Distributions</strong></a></li>
 <li><a href="#Properties"><strong>Properties</strong></a></li>
 <li><a href="#Limitations"><strong>Limitations</strong></a></li>
+<li><a href="#Relation_to_Constructive_Reals"><strong>Relation to Constructive Reals</strong></a></li>
 </ul></li>
 <li><a href="#Sampling_Uniform_and_Exponential_PSRNs"><strong>Sampling Uniform and Exponential PSRNs</strong></a>
 
@@ -109,7 +110,6 @@
 <li><a href="#Complexity_of_Specific_Algorithms"><strong>Complexity of Specific Algorithms</strong></a></li>
 </ul></li>
 <li><a href="#Application_to_Weighted_Reservoir_Sampling"><strong>Application to Weighted Reservoir Sampling</strong></a></li>
-<li><a href="#Open_Questions"><strong>Open Questions</strong></a></li>
 <li><a href="#Acknowledgments"><strong>Acknowledgments</strong></a></li>
 <li><a href="#Other_Documents"><strong>Other Documents</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -253,6 +253,12 @@
 <li>Example 1 is quite trivial, because each point on the interval maps evenly to a point on the circle.  But this is not true in general: an interval&#39;s or box&#39;s points don&#39;t map evenly to points on a curve or surface in general.  For example, take two PSRNs describing the U and V coordinates of a 3 dimensional cone&#39;s surface: [1.135, 1.136] for U and [0.288, 0.289] for V, and the cone&#39;s coordinates are X = U*cos(V), Y = U*sin(V), Z = U. In this example, the PSRNs form a box that&#39;s mapped to a small part of the cone surface.  However, the points in the box don&#39;t map to the cone evenly this way, so generating enough digits to calculate X, Y, and Z to the desired accuracy will not sample uniformly from that part of the cone without more work (see Williamson (1987)[^15] for one solution).</li>
 </ol>
 </blockquote>
+
+<p><a id=Relation_to_Constructive_Reals></a></p>
+
+<h3>Relation to Constructive Reals</h3>
+
+<p>Partially-sampled random numbers are related to a body of work dealing with so-called &quot;constructive reals&quot; or &quot;recursive reals&quot;, or operations on real numbers that compute an approximation of the exact result to a user-specified number of digit places.  For example, in Hans-J. Boehm&#39;s implementation (Boehm 2020)[^31], (Boehm 1987)[^32], each operation on &quot;constructive reals&quot; (such as addition, multiplication, <code>exp</code>, <code>ln</code>, and so on) is associated with a function <code>f(n)</code> (where <code>n</code> is usually 0 or greater) that returns an integer <code>m</code> such that <code>abs(m/pow(2, n) - x) &lt; 1/pow(2, n)</code>, where <code>x</code> is the exact result of the operation.  As suggested in Goubault-Larrecq et al. (2021)[^33], there can also be an operation that samples the digits of a uniform random variate in [0, 1] and gives access to approximations of that variate, sampling random digits as necessary.  Similarly, operations of this kind can be defined for PSRNs (including uniform PSRNs and exponential PSRNs).</p>
 
 <p><a id=Sampling_Uniform_and_Exponential_PSRNs></a></p>
 
@@ -1989,14 +1995,6 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>(see also (Efraimidis 2015)[^26]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom <code>-ln(1-X)/w</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
 
-<p><a id=Open_Questions></a></p>
-
-<h2>Open Questions</h2>
-
-<ul>
-<li>The following is an open question on PSRNs.  Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random variate that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?</li>
-</ul>
-
 <p><a id=Acknowledgments></a></p>
 
 <h2>Acknowledgments</h2>
@@ -2084,6 +2082,12 @@ def contbernoullidist(b, lamda, precision=53):
 <p>[^29]: George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</p>
 
 <p>[^30]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</p>
+
+<p>[^31]: Boehm, Hans-J. &quot;Towards an API for the real numbers.&quot; In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.</p>
+
+<p>[^32]: Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221</p>
+
+<p>[^33]: Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. &quot;A Domain-Theoretic Approach to Statistical Programming Languages.&quot; arXiv preprint arXiv:2106.16190 (2021) (especially sec. 12.3).</p>
 
 <p><a id=Appendix></a></p>
 
