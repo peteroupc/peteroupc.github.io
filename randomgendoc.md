@@ -2443,8 +2443,121 @@ NAME
 
 CLASSES
     builtins.object
+        Real
+            RandUniform
+            RealAdd
+            RealFraction
+            RealMultiply
         ShapeSampler
         ShapeSampler2
+
+    class RandUniform(Real)
+     |  Method resolution order:
+     |      RandUniform
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class Real(builtins.object)
+     |  Methods defined here:
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealAdd(Real)
+     |  RealAdd(a, b)
+     |
+     |  Method resolution order:
+     |      RealAdd
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a, b)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealFraction(Real)
+     |  RealFraction(a)
+     |
+     |  Method resolution order:
+     |      RealFraction
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealMultiply(Real)
+     |  RealMultiply(a, b)
+     |
+     |  Method resolution order:
+     |      RealMultiply
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a, b)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
 
     class ShapeSampler(builtins.object)
      |  ShapeSampler(inshape, dx=1, dy=1)

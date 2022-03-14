@@ -1480,6 +1480,103 @@ def addto1(rg):
             break
     return i
 
+########################
+
+# Random real numbers.  Uses ideas from H.J. Boehm's
+# concept of "constructive reals".
+# Essentially, each operation on real numbers has
+# a function ev(n) that returns an integer m such that
+# m/2^n is strictly within 1/2^n of the exact result
+# of the operation.
+#
+#   References:
+#
+# Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
+# Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
+# Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "A Domain-Theoretic Approach to Statistical Programming Languages." arXiv preprint arXiv:2106.16190 (2021) (especially sec. 12.3).
+
+# TODO: Add constructive real operation
+# that takes a PSRN (with base-2 fractional digits)
+# as input.
+
+class Real:
+    def ev(self, n):
+        raise NotImplementedError
+
+class RandUniform(Real):
+    # Random uniform real number in the interval (0, 1).
+    def __init__(self):
+        self.bits = 0
+        self.count = 0
+
+    def ev(self, n):
+        n1 = n + 1
+        if n1 > self.count:
+            diff = n1 - self.count
+            self.bits = (self.bits << diff) + random.randint(0, (1 << diff) - 1)
+            self.count = n1
+        ret = self.bits >> (self.count - n)
+        # Rounding to ensure result has error strictly less
+        # than 1 ulp (with probability one)
+        if (self.bits >> (self.count - n - 1)) & 1 == 1:
+            ret += 1
+        return ret
+
+class RealFraction(Real):
+    def __init__(self, a):
+        self.a = Fraction(a)
+
+    def ev(self, n):
+        ret = int(self.a * (1 << (n + 2)))
+        ret = (ret // 4) + 1 if ret % 4 >= 2 else (ret // 4)
+
+        return ret
+
+class RealAdd(Real):
+    def __init__(self, a, b):
+        self.a = a if isinstance(a, Real) else RealFraction(a)
+        self.b = b if isinstance(b, Real) else RealFraction(b)
+
+    def ev(self, n):
+        r = self.a.ev(n + 2) + self.b.ev(n + 2)
+        return (r // 4) + 1 if r % 4 >= 2 else (r // 4)
+
+class RealMultiply(Real):
+    def __init__(self, a, b):
+        self.a = a if isinstance(a, Real) else RealFraction(a)
+        self.b = b if isinstance(b, Real) else RealFraction(b)
+
+    def ev(self, n):
+        nv = n + 2
+        while True:
+            av = self.a.ev(nv)
+            bv = self.b.ev(nv)
+            # a's interval is weakly within 1/2^nv
+            # of the exact value of a
+            ainf = Fraction(av - 1, 1 << nv)
+            asup = Fraction(av + 1, 1 << nv)
+            # b's interval is weakly within 1/2^nv
+            # of the exact value of b
+            binf = Fraction(bv - 1, 1 << nv)
+            bsup = Fraction(bv + 1, 1 << nv)
+            # Do calculation
+            a = ainf * binf
+            b = ainf * bsup
+            c = asup * binf
+            d = asup * bsup
+            # Calculate n-bit approximation of
+            # the two bounds
+            cinf = RealFraction(min([a, b, c, d])).ev(n)
+            csup = RealFraction(max([a, b, c, d])).ev(n)
+            if cinf == csup:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                return cinf
+            nv += 4
+
+######################
+
 if __name__ == "__main__":
     # The following code tests some of the methods in this module.
 
@@ -2156,3 +2253,64 @@ if __name__ == "__main__":
             rg, 1, 5, [0, 0, 0, 0, 1, 1], Fraction(1, 3), digits=digits
         )
         psrn_add_fraction_test(rg, -1, 4, [], Fraction(-9, 8), digits=digits)
+
+    def rationaltest(num, den):
+        frac = Fraction(num, den)
+        rr = RealFraction(Fraction(num, den))
+        for n in range(0, 60):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("%d/%d, n=%d, ret=%d" % (num, den, n, ret))
+
+    def addmultiplytest(num, den, num2, den2):
+        frac = Fraction(num, den) + Fraction(num2, den2)
+        rr = RealAdd(Fraction(num, den), Fraction(num2, den2))
+        for n in range(0, 60):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError(
+                    "add(%d/%d, %d/%d) n=%d, ret=%d" % (num, den, num2, den2, n, ret)
+                )
+        frac = Fraction(num, den) * Fraction(num2, den2)
+        rr = RealMultiply(Fraction(num, den), Fraction(num2, den2))
+        for n in range(0, 60):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError(
+                    "mul(%d/%d, %d/%d) n=%d, ret=%d" % (num, den, num2, den2, n, ret)
+                )
+
+    def rutest(bits, count, ev2, ev3):
+        ru = RandUniform()
+        ru.bits = bits
+        ru.count = count
+        if ru.ev(2) != ev2:
+            raise ValueError(ru.ev(2))
+        if ru.ev(3) != ev3:
+            raise ValueError(ru.ev(3))
+        ru = RealFraction(Fraction(bits, 2 ** count))
+        if ru.ev(2) != ev2:
+            raise ValueError(ru.ev(2))
+        if ru.ev(3) != ev3:
+            raise ValueError(ru.ev(3))
+
+    def randomrealtest():
+        rutest(0x7F, 8, 2, 4)
+        rutest(0x80, 8, 2, 4)
+        rutest(0xFF, 8, 4, 8)
+        rutest(0x3F, 8, 1, 2)
+        rutest(0x40, 8, 1, 2)
+        rutest(0x5F, 8, 1, 3)
+        rutest(0x60, 8, 2, 3)
+        for i in range(300):
+            num = random.randint(-10000000, 10000000)
+            den = random.randint(1, 10000000)
+            rationaltest(num, den)
+        for i in range(300):
+            num = random.randint(-10000000, 10000000)
+            den = random.randint(1, 10000000)
+            num2 = random.randint(-10000000, 10000000)
+            den2 = random.randint(1, 10000000)
+            addmultiplytest(num, den, num2, den2)
+
+    randomrealtest()
