@@ -2448,6 +2448,7 @@ CLASSES
             RandUniform
             RealAdd
             RealCos
+            RealDivide
             RealExp
             RealFraction
             RealLn
@@ -2554,6 +2555,30 @@ CLASSES
      |  Methods defined here:
      |
      |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealDivide(Real)
+     |  RealDivide(a, b)
+     |
+     |  Method resolution order:
+     |      RealDivide
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a, b)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ev(self, n)
@@ -2829,6 +2854,8 @@ FUNCTIONS
         - bx, by: Numerator and denominator of second shape parameter.
         - precision: Number of bits after the point that the result will contain.
 
+    dobucket(v, bounds=None, allints=None)
+
     genshape(rg, inshape)
         Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
         inshape is a function that takes three parameters (x, y, s) and
@@ -2918,6 +2945,10 @@ FUNCTIONS
     psrn_sample(rg, psrn, digits=2)
 
     psrnexpo(rg)
+
+    realIsLess(a, b)
+
+    showbuckets(ls, buckets)
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

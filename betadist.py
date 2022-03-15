@@ -1501,41 +1501,65 @@ class Real:
 
 class RealSin(Real):
     def __init__(self, a):
-        raise NotImplementedError
+        self.a = a if isinstance(a, Real) else RealFraction(a)
 
     def ev(self, n):
         raise NotImplementedError
 
 class RealCos(Real):
     def __init__(self, a):
-        raise NotImplementedError
+        self.a = a if isinstance(a, Real) else RealFraction(a)
 
     def ev(self, n):
         raise NotImplementedError
 
 class RealExp(Real):
     def __init__(self, a):
-        raise NotImplementedError
+        self.a = a if isinstance(a, Real) else RealFraction(a)
 
     def ev(self, n):
         raise NotImplementedError
 
 class RealPow(Real):
     def __init__(self, a, b):
+        self.a = a if isinstance(a, Real) else RealFraction(a)
+        self.b = b if isinstance(b, Real) else RealFraction(b)
+
+    def ev(self, n):
         raise NotImplementedError
+
+class RealDivide(Real):
+    def __init__(self, a, b):
+        self.a = a if isinstance(a, Real) else RealFraction(a)
+        self.b = b if isinstance(b, Real) else RealFraction(b)
 
     def ev(self, n):
         raise NotImplementedError
 
 class RandPSRN(Real):
     # Constructive real operation
-    # that takes a PSRN (with base-2 fractional digits)
-    # as input.
+    # that takes a positive uniform PSRN with base-2
+    # fractional digits as input.
     def __init__(self, a):
-        raise NotImplementedError
+        if a[0] < 0:
+            raise NotImplementedError("Negative PSRN not supported")
+        self.psrn = a
 
     def ev(self, n):
-        raise NotImplementedError
+        bits = self.psrn[1]
+        while len(self.psrn[2]) < n + 1:
+            self.psrn[2].append(random.randint(0, 1))
+        for i in range(n + 1):
+            if self.psrn[2][i] == None:
+                self.psrn[2][i] = random.randint(0, 1)
+            bits = (bits << 1) | self.psrn[2][i]
+        if bits & 1 == 1:
+            # Rounding to ensure result has error strictly less
+            # than 1 ulp (with probability one)
+            bits = (bits >> 1) + 1
+        else:
+            bits = bits >> 1
+        return bits
 
 class RandUniform(Real):
     # Random uniform real number in the interval (0, 1).
@@ -1600,6 +1624,17 @@ class RealLn(Real):
                 # of the exact result
                 return cinf
             nv += 2
+
+def realIsLess(a, b):
+    n = 3
+    while True:
+        aa = a.ev(n)
+        bb = b.ev(n)
+        if bb + 1 <= aa:
+            return False
+        if bb - 2 >= aa:
+            return True
+        n += 2
 
 class RealPi(Real):
     def __init__(self):
@@ -1706,13 +1741,77 @@ class RealMultiply(Real):
                 return cinf
             nv += 4
 
+def showbuckets(ls, buckets):
+    mx = max(0.00000001, max(buckets))
+    sumbuckets = max(0.00000001, sum(buckets))
+    if mx == 0:
+        return
+    labels = [
+        ("%0.5f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+        if int(buckets[i]) == buckets[i]
+        else ("%0.5f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+        for i in range(len(buckets))
+    ]
+    maxlen = max([len(x) for x in labels])
+    i = 0
+    while i < (len(buckets)):
+        print(
+            labels[i]
+            + " " * (1 + (maxlen - len(labels[i])))
+            + ("*" * int(buckets[i] * 40 / mx))
+        )
+        if (
+            buckets[i] == 0
+            and i + 2 < len(buckets)
+            and buckets[i + 1] == 0
+            and buckets[i + 2] == 0
+        ):
+            print(" ... ")
+            while (
+                buckets[i] == 0
+                and i + 2 < len(buckets)
+                and buckets[i + 1] == 0
+                and buckets[i + 2] == 0
+            ):
+                i += 1
+        i += 1
+
+def dobucket(v, bounds=None, allints=None):
+    a = Fraction(min(v))
+    b = Fraction(max(v))
+    if bounds != None:
+        a, b = bounds
+    size = int(max(30, math.ceil(b - a)))
+    if allints != True and allints != False:
+        allints = True
+        if size == 30:
+            for x in v:
+                if int(x) != x:
+                    allints = False
+                    break
+            if allints:
+                size = int(b - a)
+        else:
+            allints = False
+    if allints:
+        ls = [int(a + (b - a) * x / size) for x in range(size + 1)]
+    else:
+        ls = [a + (b - a) * (x / size) for x in range(size + 1)]
+    buckets = [0 for i in range(size)]
+    for x in v:
+        for i in range(len(buckets)):
+            if x >= ls[i] and x < ls[i + 1]:
+                buckets[i] += 1
+                break
+    showbuckets(ls, buckets)
+    return buckets
+
 ######################
 
 if __name__ == "__main__":
     # The following code tests some of the methods in this module.
 
     import scipy.stats as st
-    import math
 
     def dobucket(v, bounds=None, allints=None):
         a = Fraction(min(v))
