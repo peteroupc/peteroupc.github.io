@@ -49,24 +49,23 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 <a id=Functions></a>
 ## Functions
 
+* `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
+* `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
+* `exp(a)` is the inverse natural logarithm of `a`.  Also known as the base of natural logarithms raised to the power `a`, so that `exp(1)` is the base of natural logarithms commonly denoted _e_.
+* `pow(a, b)` is the number `a` raised to the power `b`.
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
 * `atan2(y, x)` is&mdash;
     - the inverse tangent of `y/x`, in radians, if `x > 0`,
     - &pi; plus the inverse tangent of `y/x`, in radians, if `y >= 0 and x < 0`,
-    - -&pi; plus the inverse tangent of `y/x`, in radians, if `y < 0 and x < 0`,
-    - -&pi; divided by 2 if `y < 0 and x == 0`,
+    - &minus;&pi; plus the inverse tangent of `y/x`, in radians, if `y < 0 and x < 0`,
+    - &minus;&pi; divided by 2 if `y < 0 and x == 0`,
     - &pi; divided by 2 if `y > 0 and x == 0`, and
     - 0 if `y == 0 and x == 0`.
-* `pow(a, b)` is the number `a` raised to the power `b`.
 * `abs(a)` is the absolute value of `a`; it makes negative numbers non-negative.
-* `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
-* `floor(a)` is the highest integer that is less than or equal to `a`.
-* `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
-* `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
-* `exp(a)` is the inverse natural logarithm of `a`.  Also known as the base of natural logarithms raised to the power `a`, so that `exp(1)` is the base of natural logarithms commonly denoted _e_.
 * `min(a, b)` is the smaller of `a` and `b`.
 * `max(a, b)` is the larger of `a` and `b`.
-* `rem(a, b)` is the part of `b` that does not divide evenly into `a`, where the result has the sign of `b`.  This operation is equivalent to `a - floor(a / b) * b`.
+* `floor(a)` is the highest integer that is less than or equal to `a`.
+* `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
 * `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This operation is equivalent to `-floor(-a)`.
 
 **Notes:**

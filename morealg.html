@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/02/12"><meta name="citation_online_date" content="2022/02/12"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/03/15"><meta name="citation_online_date" content="2022/03/15"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -484,7 +484,7 @@
 
 <p>The Bernoulli factory is a special case of the problem of <strong>sampling a probability distribution with unknown parameters</strong>.  This problem can be described as sampling from a new distribution using an <em>oracle</em> (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a <em>coin that shows heads or tails where the probability of heads is unknown</em>.  The rest of this section deals with oracles that go beyond coins.</p>
 
-<p><strong>Algorithm 1.</strong> Suppose there is an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates whose expected (&quot;average&quot;) value is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
+<p><strong>Algorithm 1.</strong> Suppose there is an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates whose expected value (&quot;long-run average&quot;) is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
 
 <ul>
 <li><em>f</em> is continuous on [<em>a</em>, <em>b</em>], and</li>
@@ -512,7 +512,7 @@
 </ol>
 </blockquote>
 
-<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces non-negative random variates whose expected (&quot;average&quot;) value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
+<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces non-negative random variates whose expected value (&quot;long-run average&quot;) is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
 
 <p><strong>Algorithm 3.</strong> For this algorithm, see the appendix.</p>
 
@@ -2031,7 +2031,7 @@ calc_linear_func(count=8)
 <ol>
 <li>Choose at random an integer <em>n</em> (0 or greater) with probability (<em>&pi;</em>/2)<sup>4*<em>n</em>+2</sup>/((4*<em>n</em>+2)!) &minus; (<em>&pi;</em>/2)<sup>4*<em>n</em>+4</sup>/((4*<em>n</em>+4)!).</li>
 <li>Let <em>v</em> = 16*(<em>n</em>+1)*(4*<em>n</em>+3).</li>
-<li>Flip the input coin 4*<em>n</em>+4 times.  Let <em>tails</em> be the number of flips that returned 0 this way. (This is the number of heads if the probability <em>&lambda;</em> were 1 &minus; <em>&lambda;</em>.)</li>
+<li>Flip the input coin 4*<em>n</em>+4 times.  Let <em>tails</em> be the number of flips that returned 0 this way. (This would be the number of heads if the probability <em>&lambda;</em> were 1 &minus; <em>&lambda;</em>.)</li>
 <li>If <em>tails</em> = 4*<em>n</em>+4, return 0.</li>
 <li>If <em>tails</em> = 4*<em>n</em>+3, return a number that is 0 with probability 8*(4*<em>n</em>+3)/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
 <li>If <em>tails</em> = 4*<em>n</em>+2, return a number that is 0 with probability 8/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
@@ -2052,7 +2052,14 @@ calc_linear_func(count=8)
 
 <h3>Sampling Distributions Using Incomplete Information: Omitted Algorithms</h3>
 
-<p><strong>Algorithm 2.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers whose expected (&quot;average&quot;) value is a known or unknown mean. The goal is now to produce non-negative random variates whose expected value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever <em>f</em> has a finite minimum and maximum and the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)[^41]:</p>
+<p><strong>Algorithm 2.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers whose expected value (&quot;long-run average&quot;) is a known or unknown mean. The goal is now to produce non-negative random variates whose expected value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever&mdash;</p>
+
+<ul>
+<li><em>f</em> is bounded from above and below on its domain, and</li>
+<li>the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0.</li>
+</ul>
+
+<p>The algorithm to achieve this goal follows (see Lee et al. 2014)[^41]:</p>
 
 <ol>
 <li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
@@ -2060,7 +2067,7 @@ calc_linear_func(count=8)
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> An example from Lee et al. (2014)[^41].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random variates whose expected (&quot;average&quot;) value is that mean.</p>
+<p><strong>Example:</strong> An example from Lee et al. (2014)[^41].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
 
 <p><strong>Notes:</strong></p>
 

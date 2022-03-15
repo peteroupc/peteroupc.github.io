@@ -149,7 +149,7 @@ class FInterval:
         )
 
     def sin(self, n):
-        pi = FInterval.pi(n)
+        pi = FInterval.pi((n // 2) + 1)
         if self.containedIn(FInterval(-pi.inf / 2, pi.inf / 2)):
             return FInterval(
                 FInterval._sinbounds(self.inf, n).inf,
@@ -174,7 +174,7 @@ class FInterval:
             return FInterval(-1, 1)
 
     def cos(self, n):
-        pi = FInterval.pi(n)
+        pi = FInterval.pi((n // 2) + 1)
         if self.containedIn(FInterval(0, pi.inf)):
             return FInterval(
                 FInterval._cosbounds(self.sup, n).inf,

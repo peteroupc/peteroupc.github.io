@@ -2444,12 +2444,44 @@ NAME
 CLASSES
     builtins.object
         Real
+            RandPSRN
             RandUniform
             RealAdd
+            RealCos
+            RealExp
             RealFraction
+            RealLn
             RealMultiply
+            RealPi
+            RealPow
+            RealSin
+            RealSqrt
         ShapeSampler
         ShapeSampler2
+
+    class RandPSRN(Real)
+     |  RandPSRN(a)
+     |
+     |  Method resolution order:
+     |      RandPSRN
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
 
     class RandUniform(Real)
      |  Method resolution order:
@@ -2511,11 +2543,83 @@ CLASSES
      |  __weakref__
      |      list of weak references to the object (if defined)
 
+    class RealCos(Real)
+     |  RealCos(a)
+     |
+     |  Method resolution order:
+     |      RealCos
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealExp(Real)
+     |  RealExp(a)
+     |
+     |  Method resolution order:
+     |      RealExp
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
     class RealFraction(Real)
      |  RealFraction(a)
      |
      |  Method resolution order:
      |      RealFraction
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealLn(Real)
+     |  RealLn(a)
+     |
+     |  Method resolution order:
+     |      RealLn
      |      Real
      |      builtins.object
      |
@@ -2546,6 +2650,100 @@ CLASSES
      |  Methods defined here:
      |
      |  __init__(self, a, b)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealPi(Real)
+     |  Method resolution order:
+     |      RealPi
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealPow(Real)
+     |  RealPow(a, b)
+     |
+     |  Method resolution order:
+     |      RealPow
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a, b)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealSin(Real)
+     |  RealSin(a)
+     |
+     |  Method resolution order:
+     |      RealSin
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealSqrt(Real)
+     |  RealSqrt(a)
+     |
+     |  Method resolution order:
+     |      RealSqrt
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ev(self, n)

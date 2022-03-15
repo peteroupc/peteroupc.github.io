@@ -1495,11 +1495,45 @@ def addto1(rg):
 # Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
 # Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "A Domain-Theoretic Approach to Statistical Programming Languages." arXiv preprint arXiv:2106.16190 (2021) (especially sec. 12.3).
 
-# TODO: Add constructive real operation
-# that takes a PSRN (with base-2 fractional digits)
-# as input.
-
 class Real:
+    def ev(self, n):
+        raise NotImplementedError
+
+class RealSin(Real):
+    def __init__(self, a):
+        raise NotImplementedError
+
+    def ev(self, n):
+        raise NotImplementedError
+
+class RealCos(Real):
+    def __init__(self, a):
+        raise NotImplementedError
+
+    def ev(self, n):
+        raise NotImplementedError
+
+class RealExp(Real):
+    def __init__(self, a):
+        raise NotImplementedError
+
+    def ev(self, n):
+        raise NotImplementedError
+
+class RealPow(Real):
+    def __init__(self, a, b):
+        raise NotImplementedError
+
+    def ev(self, n):
+        raise NotImplementedError
+
+class RandPSRN(Real):
+    # Constructive real operation
+    # that takes a PSRN (with base-2 fractional digits)
+    # as input.
+    def __init__(self, a):
+        raise NotImplementedError
+
     def ev(self, n):
         raise NotImplementedError
 
@@ -1529,7 +1563,6 @@ class RealFraction(Real):
     def ev(self, n):
         ret = int(self.a * (1 << (n + 2)))
         ret = (ret // 4) + 1 if ret % 4 >= 2 else (ret // 4)
-
         return ret
 
 class RealAdd(Real):
@@ -1541,6 +1574,104 @@ class RealAdd(Real):
         r = self.a.ev(n + 2) + self.b.ev(n + 2)
         return (r // 4) + 1 if r % 4 >= 2 else (r // 4)
 
+from interval import FInterval
+
+class RealLn(Real):
+    def __init__(self, a):
+        self.a = a if isinstance(a, Real) else RealFraction(a)
+
+    def ev(self, n):
+        nv = n
+        while True:
+            av = self.a.ev(nv)
+            # a's interval is weakly within 1/2^nv
+            # of the exact value of a
+            ainf = Fraction(max(0, av - 1), 1 << nv)
+            asup = Fraction(av + 1, 1 << nv)
+            # Do calculation
+            a = FInterval(ainf, asup).log(nv)
+            # Calculate n-bit approximation of
+            # the two bounds
+            cinf = RealFraction(a.inf).ev(n)
+            csup = RealFraction(a.sup).ev(n)
+            if cinf == csup:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                return cinf
+            nv += 2
+
+class RealPi(Real):
+    def __init__(self):
+        pass
+
+    def ev(self, n):
+        k = 0
+        lower = Fraction(0)
+        upper = Fraction(0)
+        while True:
+            # Do calculation (BBP formula)
+            upper += (
+                Fraction(4, 8 * k + 1)
+                - Fraction(2, 8 * k + 4)
+                - Fraction(1, 8 * k + 5)
+                - Fraction(1, 8 * k + 6)
+            ) / 16 ** k
+            cinf = RealFraction(upper).ev(n)
+            csup = RealFraction(lower).ev(n)
+            if cinf == csup:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                return cinf
+            lower = upper
+            k += 1
+
+def _truncatesup(sup, bits):
+    nsup = sup * 2 ** bits
+    nsup = int(nsup) if nsup < 0 else int(nsup) + 1
+    return Fraction(nsup, 2 ** bits)
+
+class RealSqrt(Real):
+    def __init__(self, a):
+        self.a = a if isinstance(a, Real) else RealFraction(a)
+
+    def ev(self, n):
+        nv = n
+        while True:
+            av = self.a.ev(nv)  # sqrt
+            # a's interval is weakly within 1/2^nv
+            # of the exact value of a
+            ainf = Fraction(max(0, av - 1), 1 << nv)
+            asup = Fraction(av + 1, 1 << nv)
+
+            # Do calculation
+            upper = ainf + 1
+            for i in range(0, nv):
+                upper = (upper + ainf / upper) / 2
+                upper = _truncatesup(upper, nv * 2)
+            lower = ainf / upper
+            ainf = lower
+
+            upper = asup + 1
+            for i in range(0, nv):
+                upper = (upper + asup / upper) / 2
+                upper = _truncatesup(upper, nv * 2)
+            lower = ainf / upper
+            asup = upper
+
+            a = FInterval(ainf, asup)
+            # Calculate n-bit approximation of
+            # the two bounds
+            cinf = RealFraction(a.inf).ev(n)
+            csup = RealFraction(a.sup).ev(n)
+            if cinf == csup:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                return cinf
+            nv += 2
+
 class RealMultiply(Real):
     def __init__(self, a, b):
         self.a = a if isinstance(a, Real) else RealFraction(a)
@@ -1549,8 +1680,8 @@ class RealMultiply(Real):
     def ev(self, n):
         nv = n + 2
         while True:
-            av = self.a.ev(nv)
-            bv = self.b.ev(nv)
+            av = self.a.ev(nv)  # mul
+            bv = self.b.ev(nv)  # mul
             # a's interval is weakly within 1/2^nv
             # of the exact value of a
             ainf = Fraction(av - 1, 1 << nv)
