@@ -1629,7 +1629,7 @@ class RandUniform(Real):
 
 class RealFraction(Real):
     def __init__(self, a):
-        self.a = Fraction(a)
+        self.a = a if isinstance(a, int) else Fraction(a)
 
     def ev(self, n):
         ret = int(self.a * (1 << (n + 2)))
@@ -1659,11 +1659,22 @@ from interval import FInterval
 class RealLn(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
+        self.ev_n = -1
+        self.ev_v = 0
 
     def ev(self, n):
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
         nv = n
         while True:
             av = self.a.ev(nv)
+            if av < 2:
+                nv += 2
+                continue
             # a's interval is weakly within 1/2^nv
             # of the exact value of a
             ainf = Fraction(max(0, av - 1), 1 << nv)
@@ -1678,6 +1689,8 @@ class RealLn(Real):
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
                 return cinf
             nv += 2
 
@@ -1782,8 +1795,14 @@ class RealMultiply(Real):
     def __init__(self, a, b):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.b = b if isinstance(b, Real) else RealFraction(b)
+        self.ev_n = -1
+        self.ev_v = 0
 
     def ev(self, n):
+        if self.ev_n == n:
+            return self.ev_v
+        if n < self.ev_n:
+            return self.ev_v >> (self.ev_n - n)
         nv = n + 2
         while True:
             av = self.a.ev(nv)  # mul
@@ -1818,16 +1837,12 @@ def realNormalROU():
     while True:
         a = RandUniform()
         b = RealMultiply(0.858, RandUniform())
-        c = None
         c = RealMultiply(RealMultiply(a, a), RealMultiply(4, RealLn(a)))
         c = RealSubtract(0, c)
         if realIsLess(RealMultiply(b, b), c):
-                if random.randint(0, 1) == 0:
-                    return RealSubtract(0, RealDivide(b, a))
-                return RealDivide(b, a)
-        except:
-            # TODO: Address issues with RealLn
-            continue
+            if random.randint(0, 1) == 0:
+                return RealSubtract(0, RealDivide(b, a))
+            return RealDivide(b, a)
 
 ######################
 
@@ -1901,8 +1916,17 @@ if __name__ == "__main__":
                     i += 1
             i += 1
 
-    # rou=[realNormalROU().ev(30)/2**30 for i in range(10000)]
-    # dobucket(rou)
+    def routest():
+        rou = [realNormalROU().ev(30) / 2 ** 30 for i in range(10000)]
+        dobucket(rou)
+
+    # routest()
+
+    # rr = RealLn(9)
+    # for n in list(range(0, 32))+list(range(0,32)):
+    #        ret = rr.ev(n)
+    #        if abs(Fraction(ret, 1 << n) - math.log(9)) >= 2**-n:
+    #            raise ValueError
     # exit()
 
     ###################
@@ -1910,7 +1934,7 @@ if __name__ == "__main__":
     def rationaltest(num, den):
         frac = Fraction(num, den)
         rr = RealFraction(Fraction(num, den))
-        for n in range(0, 60):
+        for n in list(range(0, 60)) + list(range(0, 60)):
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError("%d/%d, n=%d, ret=%d" % (num, den, n, ret))
@@ -1918,7 +1942,7 @@ if __name__ == "__main__":
     def addmultiplytest(num, den, num2, den2):
         frac = Fraction(num, den) + Fraction(num2, den2)
         rr = RealAdd(Fraction(num, den), Fraction(num2, den2))
-        for n in range(0, 60):
+        for n in list(range(0, 60)) + list(range(0, 60)):
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError(
@@ -1926,7 +1950,8 @@ if __name__ == "__main__":
                 )
         frac = Fraction(num, den) - Fraction(num2, den2)
         rr = RealSubtract(Fraction(num, den), Fraction(num2, den2))
-        for n in range(0, 60):
+
+        for n in list(range(0, 60)) + list(range(0, 60)):
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError(
@@ -1934,7 +1959,7 @@ if __name__ == "__main__":
                 )
         frac = Fraction(num, den) * Fraction(num2, den2)
         rr = RealMultiply(Fraction(num, den), Fraction(num2, den2))
-        for n in range(0, 60):
+        for n in list(range(0, 60)) + list(range(0, 60)):
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError(
@@ -2422,8 +2447,14 @@ if __name__ == "__main__":
 
     bern = bernoulli.Bernoulli()
     rg = randomgen.RandomGen()
-    # _test_rand_extraction(lambda rg: psrnexpo(rg))
     psrn_expo_test(rg)
+
+    # More tests.  TODO: Find out why these tests are failing
+    psrn_multiply_test(rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0], digits=2)
+    psrn_multiply_test(rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0], digits=3)
+    psrn_multiply_test(rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0], digits=10)
+    psrn_multiply_test(rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0], digits=5)
+    exit()
 
     sample1 = []
     sample2 = []
@@ -2467,11 +2498,6 @@ if __name__ == "__main__":
     psrn_multiply_test(rg, -1, 5, [], 1, 2, [], digits=10)
     psrn_multiply_test(rg, -1, 2, [], 1, 2, [], digits=10)
     psrn_multiply_test(rg, 1, 5, [], 1, 6, [], digits=3)
-    # More tests
-    psrn_multiply_test(rg, -1,8,[0, 0, 0, 1, 1, 1],-1,0,[0, 0, 0, 0],digits=2)
-    psrn_multiply_test(rg, -1,8,[0, 0, 0, 1, 1, 1],-1,0,[0, 0, 0, 0],digits=3)
-    psrn_multiply_test(rg, -1,8,[0, 0, 0, 1, 1, 1],-1,0,[0, 0, 0, 0],digits=10)
-    psrn_multiply_test(rg, -1,8,[0, 0, 0, 1, 1, 1],-1,0,[0, 0, 0, 0],digits=5)
 
     for digits in [2, 3, 10, 5, 16]:
         psrn_in_range_test(rg, Fraction(-9, 11), Fraction(1, 23), digits=2)

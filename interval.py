@@ -366,7 +366,7 @@ class FInterval:
             # print([va, vb, vtrunc])
             # Calculate upper bound
             vc = xmn
-            vd = xmd * i
+            vd = xmd * (2 * n + 1)
             ua = va * vd + vb * vc
             ub = vb * vd
             # Add truncation error (vtrunc/2**bittol) to upper bound
