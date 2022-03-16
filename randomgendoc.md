@@ -2457,6 +2457,7 @@ CLASSES
             RealPow
             RealSin
             RealSqrt
+            RealSubtract
         ShapeSampler
         ShapeSampler2
 
@@ -2689,6 +2690,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class RealPi(Real)
+     |  RealPi(fraction=1)
+     |
      |  Method resolution order:
      |      RealPi
      |      Real
@@ -2696,7 +2699,7 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __init__(self)
+     |  __init__(self, fraction=1)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ev(self, n)
@@ -2782,6 +2785,30 @@ CLASSES
      |  __weakref__
      |      list of weak references to the object (if defined)
 
+    class RealSubtract(Real)
+     |  RealSubtract(a, b)
+     |
+     |  Method resolution order:
+     |      RealSubtract
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a, b)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
     class ShapeSampler(builtins.object)
      |  ShapeSampler(inshape, dx=1, dy=1)
      |
@@ -2853,8 +2880,6 @@ FUNCTIONS
         - ax, ay: Numerator and denominator of first shape parameter.
         - bx, by: Numerator and denominator of second shape parameter.
         - precision: Number of bits after the point that the result will contain.
-
-    dobucket(v, bounds=None, allints=None)
 
     genshape(rg, inshape)
         Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
@@ -2948,7 +2973,9 @@ FUNCTIONS
 
     realIsLess(a, b)
 
-    showbuckets(ls, buckets)
+    realIsNegative(a)
+
+    realNormalROU()
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
