@@ -543,15 +543,21 @@ def psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False):
         frac1 = frac1 * digits + psrn1[2][i]
     for i in range(digitcount):
         frac2 = frac2 * digits + psrn2[2][i]
-    while frac1 == 0 or frac2 == 0:
-        # Avoid degenerate cases
-        d1 = rg.rndint(digits - 1)
-        psrn1[2].append(d1)
-        d2 = rg.rndint(digits - 1)
-        psrn2[2].append(d2)
-        frac1 = frac1 * digits + d1
-        frac2 = frac2 * digits + d2
-        digitcount += 1
+    # TODO: Document this
+    zero = (frac1 == 0 and frac2 != 0) or (frac2 == 0 and frac1 != 0)
+    # print(["before",frac1,frac2,zero])
+    if False:
+        while frac1 == 0 or frac2 == 0:
+            # TODO: See if removing this loop affects correctness
+            # Avoid degenerate cases
+            d1 = rg.rndint(digits - 1)
+            psrn1[2].append(d1)
+            d2 = rg.rndint(digits - 1)
+            psrn2[2].append(d2)
+            frac1 = frac1 * digits + d1
+            frac2 = frac2 * digits + d2
+            digitcount += 1
+    # print(["after",frac1,frac2])
     small = frac1 * frac2
     mid1 = frac1 * (frac2 + 1)
     mid2 = (frac1 + 1) * frac2
@@ -567,7 +573,7 @@ def psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False):
         if iters > 1500:
             return None
         rv = rg.rndint(large - small - 1)
-        if rv < midmin - small or rv >= midmax - small:
+        if (not zero) and (rv < midmin - small or rv >= midmax - small):
             ru = small + rv
             succ = False
             if rv < midmin - small:
@@ -595,12 +601,13 @@ def psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False):
                 return cpsrn
         else:
             # Middle, or uniform, part of product density
-            if mid1 > mid2:
-                if _log_1n(rg, frac1) == 0:
-                    continue
-            else:
-                if _log_1n(rg, frac2) == 0:
-                    continue
+            if not zero:
+                if mid1 > mid2:
+                    if _log_1n(rg, frac1) == 0:
+                        continue
+                else:
+                    if _log_1n(rg, frac2) == 0:
+                        continue
             sret = small + rv
             for i in range(dc2):
                 cpsrn[2][dc2 - 1 - i] = sret % digits
@@ -1999,7 +2006,7 @@ if __name__ == "__main__":
             den2 = random.randint(1, 10000000)
             addmultiplytest(num, den, num2, den2)
 
-    randomrealtest()
+    # randomrealtest()
 
     ###################
 
@@ -2339,7 +2346,7 @@ if __name__ == "__main__":
                 dobucket(sample1)
                 dobucket(sample2)
 
-    def psrn_multiply_test(rg, ps, pi, pf, qs, qi, qf, i=0, digits=2):
+    def psrn_multiply_test(rg, ps, pi, pf, qs, qi, qf, i=0, digits=2, count=3000):
         pfc = [x for x in pf]
         qfc = [x for x in qf]
         psrn1 = [ps, pi, pf]
@@ -2382,8 +2389,11 @@ if __name__ == "__main__":
                 digits=digits,
             )
             sample1 = [
-                random.uniform(p, p2) * random.uniform(q, q2) for _ in range(3000)
+                random.uniform(min(p, p2), max(p, p2))
+                * random.uniform(min(q, q2), max(q, q2))
+                for _ in range(count * 10)
             ]
+            fullsample1 = sample1
             sample2 = [
                 psrn_multiply(
                     rg,
@@ -2391,7 +2401,7 @@ if __name__ == "__main__":
                     [qs, qi, [x for x in qfc]],
                     digits=digits,
                 )
-                for _ in range(3000)
+                for _ in range(count)
             ]
 
             def compact(c):
@@ -2431,7 +2441,10 @@ if __name__ == "__main__":
                     print(
                         "    # act. range about %s - %s" % (min(sample2), max(sample2))
                     )
-                    dobucket(sample1)
+                    print([p, p2, q, q2])
+                    print("Expected:")
+                    dobucket(fullsample1)
+                    print("Actual:")
                     dobucket(sample2)
 
     def psrn_expo_test(rg):
@@ -2447,14 +2460,28 @@ if __name__ == "__main__":
 
     bern = bernoulli.Bernoulli()
     rg = randomgen.RandomGen()
-    psrn_expo_test(rg)
 
-    # More tests.  TODO: Find out why these tests are failing
-    psrn_multiply_test(rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0], digits=2)
-    psrn_multiply_test(rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0], digits=3)
-    psrn_multiply_test(rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0], digits=10)
-    psrn_multiply_test(rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0], digits=5)
-    exit()
+    # More tests.
+    for d in [2, 3, 10, 5]:
+        psrn_multiply_test(rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0], digits=d)
+        psrn_multiply_test(
+            rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0, 0, 0], digits=d
+        )
+        psrn_multiply_test(rg, 1, 8, [0, 0, 0, 1, 1, 1], 1, 0, [0, 0, 0, 0], digits=d)
+        psrn_multiply_test(
+            rg, 1, 8, [0, 0, 0, 1, 1, 1], 1, 0, [0, 0, 0, 0, 0, 0], digits=d
+        )
+        psrn_multiply_test(
+            rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0, 1, 1], digits=d
+        )
+        psrn_multiply_test(
+            rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0, 0, 1], digits=d
+        )
+        psrn_multiply_test(
+            rg, -1, 8, [0, 0, 0, 1, 1, 1], -1, 0, [0, 0, 0, 0, 1, 0], digits=d
+        )
+
+    psrn_expo_test(rg)
 
     sample1 = []
     sample2 = []

@@ -987,28 +987,10 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 <a id=Gamma_Distribution></a>
 ### Gamma Distribution
 
-The path to building an arbitrary-precision gamma sampler makes use of two algorithms: one for integer parameters of _a_, and another for rational parameters of _a_ in [0, 1).  Both algorithms can be combined into an arbitrary-precision gamma generator for rational parameters _a_>0.
-
-First is an arbitrary-precision sampler for the sum of _n_ independent exponential random variates (also known as the Erlang(_n_) or gamma(_n_) distribution), implemented via partially-sampled uniform random variates.  Obviously, this algorithm is inefficient for large values of _n_.
+The following arbitrary-precision sampler generates the sum of _n_ independent exponential random variates (also known as the Erlang(_n_) or gamma(_n_) distribution), implemented via partially-sampled uniform random variates.  Obviously, this algorithm is inefficient for large values of _n_.
 
 1. Generate _n_ exponential random variates with a rate of 1 via the **ExpRand** or **ExpRand2** algorithm described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  These numbers will be uniform PSRNs; this algorithm won't work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
 2. Generate the sum of the random variates generated in step 1 by applying the [**UniformAdd**](https://peteroupc.github.io/exporand.html#Addition_and_Subtraction) algorithm given in another document.
-
-The second algorithm takes a parameter _a_, which must be a rational number in the interval (0, 1].  Adapted from Berman's gamma generator, as given in Devroye 1986, p. 419.  Because of the power-of-uniform sub-algorithm this algorithm works only if the PSRN's fractional digits are binary (zeros or ones).
-
-1. Create _ret_, a uniform PSRN with a positive sign and an integer part of 0.  If _a_ is 1, instead generate an exponential random variate with a rate of 1 via the **ExpRand** or
-**ExpRand2** algorithm and return that variate.
-2. Generate a PSRN _ret_ using the **power-of-uniform sub-algorithm** (in the page on PSRNs) with _px_/_py_ = 1/_a_.
-3. (The following two steps succeed with probability (1&minus;_ret_)<sup>1&minus;_a_</sup>.)  Create an input coin that does the following: "Flip the input coin and return 1 minus the result."
-4. Run the **algorithm for _&lambda;_<sup>_x_/_y_</sup>** with _x_/_y_ = 1&minus;_a_, using the input coin from step 3.  If the run returns 0, go to step 1.
-5. (At this point, _ret_ is distributed as beta(_a_, 2 &minus; _a_).)  Generate two exponential random variates with a rate of 1 via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm.  Call the sum _z_.
-6. Run the **UniformMultiply** algorithm on _ret_ and _z_, and return the result of that algorithm.
-
-The third algorithm combines both algorithms and works for any rational parameter _a_>0.
-
-1. Let _n_ = floor(_a_).  Generate _ret_, a sum of _n_ exponential variates generated via the first algorithm in this section.  If _n_ = _a_, return _ret_.
-2. Let _frac_ be _a_ &minus; floor(_a_).  Generate _ret2_, a gamma variate generated via the second algorithm in this section, with _a_ = _frac_.
-3. Run the **UniformAdd** algorithm on _ret_ and _ret2_ and return the result of that algorithm.
 
 <a id=One_Dimensional_Epanechnikov_Kernel></a>
 ### One-Dimensional Epanechnikov Kernel
