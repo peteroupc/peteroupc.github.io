@@ -17,6 +17,7 @@ In addition to the familiar `+`, `-`, `*` (multiplication), and `/` (division) o
 * `true` and `false` are the two Boolean values.
 * `==` means "is equal to".
 * `!=` means "is not equal to".
+* A minus before a variable means 0 minus that variable.  For example, `-a` means `(0 - a)`.
 * The `<<` operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If each side is 0 or greater, it is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
 * The `>>` operator in the pseudocode is a bitwise right shift, with both sides of the operator being integers.  If each side is 0 or greater, it is the same as dividing the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side, and discarding the fractional part of the result.
 * The `|` operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.
@@ -66,7 +67,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 * `max(a, b)` is the larger of `a` and `b`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
 * `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
-* `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This operation is equivalent to `-floor(-a)`.
+* `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This operation is equivalent to `(0 - floor(0 - a))`.
 
 **Notes:**
 

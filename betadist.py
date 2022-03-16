@@ -1819,10 +1819,9 @@ def realNormalROU():
         a = RandUniform()
         b = RealMultiply(0.858, RandUniform())
         c = None
-        try:
-            c = RealMultiply(RealMultiply(a, a), RealMultiply(4, RealLn(a)))
-            c = RealSubtract(0, c)
-            if realIsLess(RealMultiply(b, b), c):
+        c = RealMultiply(RealMultiply(a, a), RealMultiply(4, RealLn(a)))
+        c = RealSubtract(0, c)
+        if realIsLess(RealMultiply(b, b), c):
                 if random.randint(0, 1) == 0:
                     return RealSubtract(0, RealDivide(b, a))
                 return RealDivide(b, a)
@@ -2468,6 +2467,11 @@ if __name__ == "__main__":
     psrn_multiply_test(rg, -1, 5, [], 1, 2, [], digits=10)
     psrn_multiply_test(rg, -1, 2, [], 1, 2, [], digits=10)
     psrn_multiply_test(rg, 1, 5, [], 1, 6, [], digits=3)
+    # More tests
+    psrn_multiply_test(rg, -1,8,[0, 0, 0, 1, 1, 1],-1,0,[0, 0, 0, 0],digits=2)
+    psrn_multiply_test(rg, -1,8,[0, 0, 0, 1, 1, 1],-1,0,[0, 0, 0, 0],digits=3)
+    psrn_multiply_test(rg, -1,8,[0, 0, 0, 1, 1, 1],-1,0,[0, 0, 0, 0],digits=10)
+    psrn_multiply_test(rg, -1,8,[0, 0, 0, 1, 1, 1],-1,0,[0, 0, 0, 0],digits=5)
 
     for digits in [2, 3, 10, 5, 16]:
         psrn_in_range_test(rg, Fraction(-9, 11), Fraction(1, 23), digits=2)

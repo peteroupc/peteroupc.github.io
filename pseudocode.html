@@ -26,6 +26,7 @@
 <li><code>true</code> and <code>false</code> are the two Boolean values.</li>
 <li><code>==</code> means &quot;is equal to&quot;.</li>
 <li><code>!=</code> means &quot;is not equal to&quot;.</li>
+<li>A minus before a variable means 0 minus that variable.  For example, <code>-a</code> means <code>(0 - a)</code>.</li>
 <li>The <code>&lt;&lt;</code> operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If each side is 0 or greater, it is the same as multiplying the left-hand side by 2<sup><em>n</em></sup>, where <em>n</em> is the right-hand side.</li>
 <li>The <code>&gt;&gt;</code> operator in the pseudocode is a bitwise right shift, with both sides of the operator being integers.  If each side is 0 or greater, it is the same as dividing the left-hand side by 2<sup><em>n</em></sup>, where <em>n</em> is the right-hand side, and discarding the fractional part of the result.</li>
 <li>The <code>|</code> operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.</li>
@@ -87,7 +88,7 @@
 <li><code>max(a, b)</code> is the larger of <code>a</code> and <code>b</code>.</li>
 <li><code>floor(a)</code> is the highest integer that is less than or equal to <code>a</code>.</li>
 <li><code>round(a)</code> is the closest integer to <code>a</code> or, if two integers are tied for closest, the integer among them that is farther from 0.</li>
-<li><code>ceil(a)</code> is the lowest integer that is greater than or equal to <code>a</code>.  This operation is equivalent to <code>-floor(-a)</code>.</li>
+<li><code>ceil(a)</code> is the lowest integer that is greater than or equal to <code>a</code>.  This operation is equivalent to <code>(0 - floor(0 - a))</code>.</li>
 </ul>
 
 <p><strong>Notes:</strong></p>
