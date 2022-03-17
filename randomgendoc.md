@@ -2477,6 +2477,29 @@ CLASSES
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
      |  __dict__
@@ -2499,6 +2522,29 @@ CLASSES
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
      |  __dict__
@@ -2509,6 +2555,26 @@ CLASSES
 
     class Real(builtins.object)
      |  Methods defined here:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
      |
      |  ev(self, n)
      |
@@ -2537,6 +2603,29 @@ CLASSES
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
      |  __dict__
@@ -2559,6 +2648,29 @@ CLASSES
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -2585,6 +2697,29 @@ CLASSES
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
      |  __dict__
@@ -2607,6 +2742,29 @@ CLASSES
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -2633,6 +2791,29 @@ CLASSES
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
      |  __dict__
@@ -2655,6 +2836,29 @@ CLASSES
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -2681,6 +2885,29 @@ CLASSES
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
      |  __dict__
@@ -2703,6 +2930,29 @@ CLASSES
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -2729,6 +2979,29 @@ CLASSES
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
      |  __dict__
@@ -2751,6 +3024,29 @@ CLASSES
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -2777,6 +3073,29 @@ CLASSES
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
      |  __dict__
@@ -2799,6 +3118,29 @@ CLASSES
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -2970,6 +3312,8 @@ FUNCTIONS
     psrn_sample(rg, psrn, digits=2)
 
     psrnexpo(rg)
+
+    realGamma(ml)
 
     realIsLess(a, b)
 
