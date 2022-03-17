@@ -47,7 +47,7 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007\)[^2], and (Malik and 
         while true
             a=RNDRANGEMinMaxExc(0,1)
             bv = sqrt(2.0/exp(1.0))
-            // Or bv = 0.858, which is also correct
+            // Or bv = 858/1000.0, which is also correct
             b=RNDRANGEMinMaxExc(0,bv)
             if b*b <= -a * a * 4 * ln(a)
               return (RNDINT(1) * 2 - 1) *

@@ -1511,6 +1511,9 @@ CLASSES
 FUNCTIONS
     numericalTable(func, x, y, n=100)
 
+DATA
+    REAL_858_1000 = RealFraction(429/500)
+
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
 
@@ -2453,6 +2456,7 @@ CLASSES
             RealFraction
             RealLn
             RealMultiply
+            RealNegate
             RealPi
             RealPow
             RealSin
@@ -2473,6 +2477,9 @@ CLASSES
      |
      |  __init__(self, a)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
      |
      |  ev(self, n)
      |
@@ -2519,6 +2526,9 @@ CLASSES
      |  __init__(self)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
@@ -2564,6 +2574,9 @@ CLASSES
      |
      |  __radd__(a, b)
      |
+     |  __repr__(a)
+     |      Return repr(self).
+     |
      |  __rmul__(a, b)
      |
      |  __rsub__(a, b)
@@ -2599,6 +2612,9 @@ CLASSES
      |
      |  __init__(self, a, b)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
      |
      |  ev(self, n)
      |
@@ -2647,6 +2663,9 @@ CLASSES
      |  __init__(self, a)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
@@ -2693,6 +2712,9 @@ CLASSES
      |
      |  __init__(self, a, b)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
      |
      |  ev(self, n)
      |
@@ -2741,6 +2763,9 @@ CLASSES
      |  __init__(self, a)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
@@ -2787,6 +2812,9 @@ CLASSES
      |
      |  __init__(self, a)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
      |
      |  ev(self, n)
      |
@@ -2835,6 +2863,9 @@ CLASSES
      |  __init__(self, a)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
@@ -2881,6 +2912,59 @@ CLASSES
      |
      |  __init__(self, a, b)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealNegate(Real)
+     |  RealNegate(a)
+     |
+     |  Method resolution order:
+     |      RealNegate
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
      |
      |  ev(self, n)
      |
@@ -2929,6 +3013,9 @@ CLASSES
      |  __init__(self, fraction=1)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
@@ -2975,6 +3062,9 @@ CLASSES
      |
      |  __init__(self, a, b)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
      |
      |  ev(self, n)
      |
@@ -3023,6 +3113,9 @@ CLASSES
      |  __init__(self, a)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
@@ -3070,6 +3163,9 @@ CLASSES
      |  __init__(self, a)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
@@ -3116,6 +3212,9 @@ CLASSES
      |
      |  __init__(self, a, b)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
      |
      |  ev(self, n)
      |
@@ -3320,6 +3419,9 @@ FUNCTIONS
     realIsNegative(a)
 
     realNormalROU()
+
+DATA
+    REAL_858_1000 = RealFraction(429/500)
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

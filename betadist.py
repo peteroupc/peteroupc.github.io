@@ -543,20 +543,17 @@ def psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False):
         frac1 = frac1 * digits + psrn1[2][i]
     for i in range(digitcount):
         frac2 = frac2 * digits + psrn2[2][i]
-    # TODO: Document this
-    zero = (frac1 == 0 and frac2 != 0) or (frac2 == 0 and frac1 != 0)
+    zero = False  # (frac1 == 0 and frac2 != 0) or (frac2 == 0 and frac1 != 0)
     # print(["before",frac1,frac2,zero])
-    if False:
-        while frac1 == 0 or frac2 == 0:
-            # TODO: See if removing this loop affects correctness
-            # Avoid degenerate cases
-            d1 = rg.rndint(digits - 1)
-            psrn1[2].append(d1)
-            d2 = rg.rndint(digits - 1)
-            psrn2[2].append(d2)
-            frac1 = frac1 * digits + d1
-            frac2 = frac2 * digits + d2
-            digitcount += 1
+    while frac1 == 0 or frac2 == 0:
+        # Avoid degenerate cases
+        d1 = rg.rndint(digits - 1)
+        psrn1[2].append(d1)
+        d2 = rg.rndint(digits - 1)
+        psrn2[2].append(d2)
+        frac1 = frac1 * digits + d1
+        frac2 = frac2 * digits + d2
+        digitcount += 1
     # print(["after",frac1,frac2])
     small = frac1 * frac2
     mid1 = frac1 * (frac2 + 1)
@@ -1507,7 +1504,7 @@ class Real:
         raise NotImplementedError
 
     def __neg__(a):
-        return RealSubtract(0, a)
+        return RealNegate(a)
 
     def __mul__(a, b):
         return RealMultiply(a, b)
@@ -1536,10 +1533,16 @@ class Real:
     def disp(a):
         return a.ev(30) / 2 ** 30
 
+    def __repr__(a):
+        return "Real"
+
 class RealSin(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.piTimes2 = RealPi(2)
+
+    def __repr__(self):
+        return "RealSin(%s)" % (self.a)
 
     def ev(self, n):
         nv = n
@@ -1567,12 +1570,18 @@ class RealCos(Real):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.rsin = RealSin(RealAdd(self.a, RealPi(Fraction(1, 2))))
 
+    def __repr__(self):
+        return "RealCos(%s)" % (self.a)
+
     def ev(self, n):
         return self.rsin.ev(n)
 
 class RealExp(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
+
+    def __repr__(self):
+        return "RealExp(%s)" % (self.a)
 
     def ev(self, n):
         raise NotImplementedError
@@ -1582,6 +1591,9 @@ class RealPow(Real):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.b = b if isinstance(b, Real) else RealFraction(b)
 
+    def __repr__(self):
+        return "RealPow(%s,%s)" % (self.a, self.b)
+
     def ev(self, n):
         raise NotImplementedError
 
@@ -1589,6 +1601,9 @@ class RealDivide(Real):
     def __init__(self, a, b):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.b = b if isinstance(b, Real) else RealFraction(b)
+
+    def __repr__(self):
+        return "RealDivide(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
         nv = n
@@ -1629,6 +1644,9 @@ class RandPSRN(Real):
             raise NotImplementedError("Negative PSRN not supported")
         self.psrn = a
 
+    def __repr__(self):
+        return "RandPSRN(%s)" % (self.psrn)
+
     def ev(self, n):
         bits = self.psrn[1]
         while len(self.psrn[2]) < n + 1:
@@ -1653,6 +1671,9 @@ class RandUniform(Real):
         self.bits = 0
         self.count = 0
 
+    def __repr__(self):
+        return "RandUniform(%s,%s)" % (self.bits, self.count)
+
     def ev(self, n):
         global _realbits
         n1 = n + 1
@@ -1672,15 +1693,31 @@ class RealFraction(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, int) else Fraction(a)
 
+    def __repr__(self):
+        return "RealFraction(%s)" % (self.a)
+
     def ev(self, n):
         ret = int(self.a * (1 << (n + 2)))
         ret = (ret // 4) + 1 if ret % 4 >= 2 else (ret // 4)
         return ret
 
+class RealNegate(Real):
+    def __init__(self, a):
+        self.a = a if isinstance(a, Real) else RealFraction(a)
+
+    def __repr__(self):
+        return "RealNegate(%s)" % (self.a)
+
+    def ev(self, n):
+        return -self.a.ev(n)
+
 class RealSubtract(Real):
     def __init__(self, a, b):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.b = b if isinstance(b, Real) else RealFraction(b)
+
+    def __repr__(self):
+        return "RealSubtract(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
         r = self.a.ev(n + 2) - self.b.ev(n + 2)
@@ -1692,6 +1729,9 @@ class RealAdd(Real):
         self.b = b if isinstance(b, Real) else RealFraction(b)
         self.ev_n = -1
         self.ev_v = 0
+
+    def __repr__(self):
+        return "RealAdd(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
         if self.ev_n == n:
@@ -1708,6 +1748,9 @@ class RealLn(Real):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.ev_n = -1
         self.ev_v = 0
+
+    def __repr__(self):
+        return "RealLn(%s,%s)" % (self.a)
 
     def ev(self, n):
         if self.ev_n == n:
@@ -1767,6 +1810,9 @@ class RealPi(Real):
         self.fraction = Fraction(fraction)
         pass
 
+    def __repr__(self):
+        return "RealPi(%s)" % (self.fraction)
+
     def ev(self, n):
         k = 0
         lower = Fraction(0)
@@ -1803,6 +1849,9 @@ class RealSqrt(Real):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.ev_n = -1
         self.ev_v = 0
+
+    def __repr__(self):
+        return "RealSqrt(%s)" % (self.a)
 
     def ev(self, n):
         if self.ev_n == n:
@@ -1851,6 +1900,9 @@ class RealMultiply(Real):
         self.ev_n = -1
         self.ev_v = 0
 
+    def __repr__(self):
+        return "RealMultiply(%s,%s)" % (self.a, self.b)
+
     def ev(self, n):
         if self.ev_n == n:
             return self.ev_v
@@ -1891,17 +1943,19 @@ class RealMultiply(Real):
                 return cinf
             nv += 2
 
+REAL_858_1000 = RealFraction(Fraction(858, 1000))
+
 def realNormalROU():
     # Generates a Gaussian random variate using
     # the ratio of uniforms method.
     while True:
         a = RandUniform()
-        b = RealMultiply(0.858, RandUniform())
+        b = RealMultiply(REAL_858_1000, RandUniform())
         c = RealMultiply(RealMultiply(a, a), RealMultiply(4, RealLn(a)))
-        c = RealSubtract(0, c)
+        c = -c
         if realIsLess(RealMultiply(b, b), c):
             if random.randint(0, 1) == 0:
-                return RealSubtract(0, RealDivide(b, a))
+                return RealNegate(RealDivide(b, a))
             return RealDivide(b, a)
 
 def realGamma(ml):
@@ -2029,6 +2083,12 @@ if __name__ == "__main__":
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError("%d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        frac = -Fraction(num, den)
+        rr = RealNegate(Fraction(num, den))
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("-%d/%d, n=%d, ret=%d" % (num, den, n, ret))
 
     def addmultiplytest(num, den, num2, den2):
         frac = Fraction(num, den) + Fraction(num2, den2)

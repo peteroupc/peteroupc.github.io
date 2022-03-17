@@ -688,7 +688,7 @@ def loggamma(k, v=4):
     # involving Stirling Series", arXiv:1602.00336v1 [math.NT], 2016.
     # Usually, Stirling's approximation diverges, which however is inappropriate for
     # use in exact sampling algorithms, where series expansions must converge
-    # in order for the algorithm to halt almost surely.
+    # in order for the algorithm to halt with probability 1.
     # Unfortunately, the formula from the paper is monotonically increasing and
     # that paper didn't specify the exact rate of convergence or
     # an upper bound on the error incurred when truncating the series (a bound required
