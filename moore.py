@@ -111,7 +111,7 @@ class MooreSampler:
         rangeSup = Fraction(intv.sup)
         # NOTE: We are dealing here with the range of the box from which
         # a vector is chosen uniformly at random during the
-        # sampling process.  A random number x/denom is chosen, where
+        # sampling process.  A random value x/denom is chosen, where
         # x is a random integer in [rangeInf, rangeSup).
         # Minimum denominator is 2^bitAccuracy,
         # so that all vectors with a coarsest resolution

@@ -1759,7 +1759,7 @@ class RealLn(Real):
         if n < self.ev_n:
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
-        nv = n
+        nv = n + 2
         while True:
             av = self.a.ev(nv)
             if av < 2:
@@ -1950,13 +1950,12 @@ def realNormalROU():
     # the ratio of uniforms method.
     while True:
         a = RandUniform()
-        b = RealMultiply(REAL_858_1000, RandUniform())
-        c = RealMultiply(RealMultiply(a, a), RealMultiply(4, RealLn(a)))
-        c = -c
-        if realIsLess(RealMultiply(b, b), c):
+        b = REAL_858_1000 * RandUniform()
+        c = -a * a * 4 * RealLn(a)
+        if realIsLess(b * b, c):
             if random.randint(0, 1) == 0:
-                return RealNegate(RealDivide(b, a))
-            return RealDivide(b, a)
+                return -b / a
+            return b / a
 
 def realGamma(ml):
     # Generates a gamma random variate
