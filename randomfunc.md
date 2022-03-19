@@ -29,7 +29,7 @@ The randomization methods presented on this page assume we have an endless sourc
 - This document does not explain how to specify or generate "seeds" for use in PRNGs.  This is [**covered in detail**](https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation) elsewhere.
 - This document does not show how to generate random security parameters such as encryption keys.
 - This document does not cover randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_).  See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html).
-- Variance reduction techniques, such as importance sampling or common random numbers, are not in the scope of this document.
+- "Variance reduction" methods, such as importance sampling or common random numbers, are outside the scope of this document.
 
 In addition, this page is not focused on sampling methods used for computer graphics rendering (such as Poisson disk sampling, multiple importance sampling, blue noise, and gradient noise), because this application tends to give performance and visual acceptability a greater weight than accuracy and exact sampling.  In particular, [**rejection sampling**](#Rejection_Sampling) is hardly used in graphics rendering.
 
@@ -915,7 +915,7 @@ If the number of items in a list is not known in advance, then the following pse
 <a id=Weighted_Choice_with_Inclusion_Probabilities></a>
 #### Weighted Choice with Inclusion Probabilities
 
-For the weighted-choice-without-replacement methods given earlier, the weights have the property that higher-weighted items are chosen first, but each item's weight is not necessarily the chance that a given sample of `n` items will include that item (an _inclusion probability_).  The following method chooses a random sample of `n` indices from a list of items (whose weights are integers stored in a list called `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.   The chosen indices will not necessarily be in random order. The method implements the splitting method found in pp. 73-74 in "[**Algorithms of sampling with equal or unequal probabilities**](https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf)".
+For the weighted-choice-without-replacement methods given earlier, the weights have the property that higher-weighted items are chosen first, but each item's weight is not necessarily the chance that a given sample of `n` items will include that item (an _inclusion probability_).  The following method chooses a random sample of `n` indices from a list of items (whose weights are integers stored in a list called `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.   The chosen indices will not necessarily be in random order. The method implements the "[**splitting method**](https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf#page=68)" (Deville and Tillé 1998)[^106].
 
 ```
 METHOD InclusionSelect(weights, n)
@@ -1309,14 +1309,14 @@ The methods in this section should not be used to sample at random for informati
 <a id=Uniform_Random_Real_Numbers></a>
 ### Uniform Random Real Numbers
 
-This section defines a method to generate independent uniform random real numbers in the open interval (`a`, `b`), namely `RNDRANGEMinMaxExc(a, b)`.  (Both bounds are excluded because mathematically, any specific real number is generated this way with probability 0.)
+This section defines a method, namely `RNDRANGEMinMaxExc(a, b)`, to generate independent "uniform" random real numbers in the open interval (`a`, `b`).[^107]
 
-The sections that follow show how this method can be implemented for fixed-point, rational, and floating-point numbers.  An additional format for random real numbers is the [**partially-sampled random number**](https://peteroupc.github.io/exporand.html).
+The sections that follow show how this method can be implemented for fixed-point, rational, and floating-point numbers.  Other formats for random real numbers include [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) and "constructive reals" or "recursive reals" (Boehm 2020)[^108].
 
 <a id=For_Fixed_Point_Number_Formats></a>
 #### For Fixed-Point Number Formats
 
-For fixed-point number formats representing multiples of 1/`n`, this method is trivial.  The following implementations return integers that represent fixed-point numbers.  In the method below (and in the note), `fpa` and `fpb` are the bounds of the fixed-point number generated and are integers that represent fixed-point numbers (such that `fpa = a * n` and `fpb = b * n`).  For example, if `n` is 100, to generate a number in the open interval (6.35, 9.96), generate `RNDRANGEMinMaxExc(6.35, 9.96)` or `RNDINTRANGE(635 + 1, 996 - 1)`.
+For fixed-point number formats representing multiples of 1/`n`, this method is trivial.  The following returns an integer that represents a fixed-point number.  In the method below (and in the note), `fpa` and `fpb` are the bounds of the fixed-point number generated and are integers that represent fixed-point numbers (such that `fpa = a * n` and `fpb = b * n`).  For example, if `n` is 100, to generate a number in the open interval (6.35, 9.96), generate `RNDRANGEMinMaxExc(6.35, 9.96)` or `RNDINTRANGE(635 + 1, 996 - 1)`.
 
 * `RNDRANGEMinMaxExc(a, b)`: `RNDINTRANGE(fpa + 1, fpb - 1)`, or an error if `fpa >= fpb or a == fpb - 1`.  But if `a` is 0 and `b` is 1: `(RNDINT(n - 2) + 1)` or `(RNDINTEXC(n - 1) + 1)`.
 
@@ -1421,7 +1421,7 @@ See also (Downey 2007\)[^59] and the [**Rademacher Floating-Point Library**](htt
 >     - `RNDRANGEMaxExc(mn, mx)`, interval \[`mx`, `mx`\): If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mx` is generated this way.
 >     - `RNDRANGEMinExc(mn, mx)`, interval \(`mn`, `mx`\]: If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mn` is generated this way.
 >
-> 2. Many software libraries sample real numbers in a uniform distribution by multiplying or dividing a uniform random integer by a constant.  For example, a method to sample uniformly at random from the half-open interval \[0, 1\) is often implemented like `RNDINTEXC(X) * (1.0/X)` or `RNDINTEXC(X) / X`, where X varies based on the software library.[^60] The disadvantage here is that doing so does not necessarily cover all numbers a floating-point format can represent in the range (Goualard 2020\)[^61].  As another example, a method to sample uniformly at random from the half-open interval \[`a`, `b`\) is often implemented like `a + Math.random() * (b - a)`, where `Math.random()` samples uniformly at random from \[0, 1\); however, this not only has the same disadvantage, but has many other issues where floating-point numbers are involved (Monahan 1985\)[^62].
+> 2. Many software libraries sample "uniform" real numbers by multiplying or dividing a uniform random integer by a constant.  For example, a method to sample uniformly at random from the half-open interval \[0, 1\) is often implemented like `RNDINTEXC(X) * (1.0/X)` or `RNDINTEXC(X) / X`, where X varies based on the software library.[^60] The disadvantage here is that doing so does not necessarily cover all numbers a floating-point format can represent in the range (Goualard 2020\)[^61].  As another example, a method to sample "uniformly" at random from the half-open interval \[`a`, `b`\) is often implemented like `a + Math.random() * (b - a)`, where `Math.random()` samples "uniformly" at random from \[0, 1\); however, this not only has the same disadvantage, but has many other issues where floating-point numbers are involved (Monahan 1985\)[^62].
 
 <a id=Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization></a>
 ### Monte Carlo Sampling: Expected Values, Integration, and Optimization
@@ -1438,7 +1438,7 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
     - The (biased) **sample variance**, the second sample central moment.
     - The **sample probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
 
-    There are two sources of error in Monte Carlo estimators: bias and variance. An estimator is _unbiased_ (has bias 0) if multiple independent samples of any fixed size `k` (from the same distribution) are expected to average to the true expected value (Halmos 1946\)[^63].  For example, any `n`th sample _raw_ moment is an unbiased estimator provided `k` >= `n`, but the sample variance is not unbiased, and neither is one for any sample _central_ moment other than the first (Halmos 1946\)[^63].  Unlike with bias, there are ways to reduce variance, which are outside the scope of this document.  An estimator's _mean squared error_ equals variance plus square of bias.
+    There are two sources of error in Monte Carlo estimators: bias and variance. An estimator is _unbiased_ (has bias 0) if multiple independent samples of any fixed size `k` (from the same distribution) are expected to average to the true expected value (Halmos 1946\)[^63].  For example, any `n`th sample _raw_ moment is an unbiased estimator provided `k` >= `n`, but the sample variance is not unbiased, and neither is one for any sample _central_ moment other than the first (Halmos 1946\)[^63]. ("Variance reduction" methods are outside the scope of this document.) An estimator's _mean squared error_ equals variance plus square of bias.
 
     For Monte Carlo estimators with accuracy guarantees, see "[**Randomized Estimation Algorithms**](https://peteroupc.github.io/estimation.html)".
 
@@ -2249,6 +2249,12 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 [^104]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965.)", arXiv:2108.00965.
 
 [^105]: For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
+
+[^106]: Deville, J.-C. and Tillé, Y.  Unequal probability sampling without replacement through a splitting method. Biometrika 85 (1998).
+
+[^107]: "Uniform" in quotes means, as close to the uniform distribution as possible for the number format.  Both bounds are excluded because mathematically, any specific real number from the uniform distribution occurs with probability 0.
+
+[^108]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
 
 <a id=Appendix></a>
 ## Appendix

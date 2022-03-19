@@ -189,7 +189,7 @@ The algorithms as described here do not always lead to the best performance.  An
 > **Notes:**
 >
 > 1. Most of the algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But in many cases, they can be implemented using nothing but those coins as a source of randomness.  See the [**appendix**](#Appendix) for details.
-> 2. Bernoulli factory algorithms that sample the probability _f_(_&lambda;_) act as unbiased estimators of _f_(_&lambda;_). See the [**appendix**](#Bernoulli_Factories_and_Unbiased_Estimation) for details.
+> 2. Bernoulli factory algorithms that sample the probability _f_(_&lambda;_) act as unbiased estimators of _f_(_&lambda;_) (their "long run average" equals _f_(_&lambda;_)). See the [**appendix**](#Bernoulli_Factories_and_Unbiased_Estimation) for details.
 
 <a id=Implementation_Notes></a>
 ### Implementation Notes
@@ -1907,7 +1907,7 @@ If an algorithm&mdash;
 - takes flips of a coin with an unknown probability of heads (_&lambda;_), and
 - produces heads with a probability that depends on _&lambda;_ (_f_(_&lambda;_)) and tails otherwise,
 
-the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011\)[^20]. (And an estimator like this is possible only if _f_ is a factory function; see Łatuszyński.) Because the algorithm is _unbiased_, its expected value (or mean) is _f_(_&lambda;_).  Here's one result of unbiasedness: Take a sample of _n_ independent outputs of the algorithm, sum them, then divide by _n_.  Then with probability 1, this _average_ approaches _f_(_&lambda;_) as _n_ gets _large_.  This is the _law of large numbers_ in action.
+the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011\)[^20]. (And an estimator like this is possible only if _f_ is a factory function; see Łatuszyński.) Because the algorithm is _unbiased_, its expected value (or mean or "long-run average") is _f_(_&lambda;_).  Here's one result of unbiasedness: Take a sample of _n_ independent outputs of the algorithm, sum them, then divide by _n_.  Then with probability 1, this _average_ approaches _f_(_&lambda;_) as _n_ gets _large_.  This is the _law of large numbers_ in action.
 
 On the other hand&mdash;
 
@@ -1918,7 +1918,7 @@ is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&p
 
 This page focuses on _unbiased_ estimators because "exact sampling" depends on it. See also (Mossel and Peres 2005, section 4\)[^15].
 
-> **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for _f_(_&lambda;_) equals _f_(_&lambda;_) \* (1&minus;_f_(_&lambda;_)) and can go as high as 1/4.  There are ways to reduce this variance, which are outside the scope of this document.  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
+> **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for _f_(_&lambda;_) equals _f_(_&lambda;_) \* (1&minus;_f_(_&lambda;_)) and can go as high as 1/4.  ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 
 <a id=Proof_of_the_General_Martingale_Algorithm></a>
 ### Proof of the General Martingale Algorithm

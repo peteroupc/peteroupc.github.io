@@ -142,7 +142,7 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
 <a id=Beta_Distribution></a>
 #### Beta Distribution
 
-The beta distribution is a bounded-domain probability distribution; its two parameters, `a` and `b`, are both greater than 0 and describe the distribution's shape.  Depending on `a` and `b`, the shape can be a smooth peak or a smooth valley.
+The beta distribution takes on values on the interval (0, 1).  Its two parameters, `a` and `b`, are both greater than 0 and describe the distribution's shape.  Depending on `a` and `b`, the shape can be a smooth peak or a smooth valley.
 
 The following method samples a number from a _beta distribution_, in the interval [0, 1).
 

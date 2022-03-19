@@ -1160,20 +1160,56 @@ class RandomGen:
             if ret != 0.0:
                 return ret
 
+    def _rndrangehelper(self, lo, hi):
+        losgn = -1 if lo < 0 else 0
+        hisgn = -1 if hi < 0 else 0
+        loexp = self._fpExponent(lo)
+        hiexp = self._fpExponent(hi)
+        losig = self._fpSignificand(lo)
+        hisig = self._fpSignificand(hi)
+        if lo > hi:
+            raise ValueError
+        if losgn == 1 and hisgn == -1:
+            raise ValueError
+        if losgn == -1 and hisgn == 1:
+            mabs = max(abs(lo), abs(hi))
+            while True:
+                ret = self.rndrangehelper(0, mabs)
+                neg = self.rndint(1)
+                if neg == 0:
+                    ret = -ret
+                if ret >= lo and ret <= hi:
+                    return ret
+        if lo == hi:
+            return lo
+        if losgn == -1:
+            return -rndrangehelper(abs(lo), abs(hi))
+        expdiff = hiexp - loexp
+        if loexp == hiexp:
+            s = RNDINTRANGE(losig, hisig)
+            return s * 1.0 * pow(2, loexp)
+        while True:
+            ex = hiexp
+            while ex > MINEXP:
+                v = self.rndint(2 - 1)
+                if v == 0:
+                    ex = ex - 1
+                else:
+                    break
+            s = 0
+            if ex == MINEXP:
+                s = self.rndint(2 ** FPPRECISION - 1)
+            else:
+                sm = 2 ** (FPPRECISION - 1)
+                s = self.rndint(sm - 1) + sm
+            ret = s * 1.0 * FPRADIX ** (ex)
+            if ret >= lo and ret <= hi:
+                return ret
+
     def rndrange(self, minInclusive, maxInclusive):
         if minInclusive > maxInclusive:
             raise ValueError
-        if minInclusive >= 0 or minInclusive + _FLOAT_MAX >= maxInclusive:
-            return minInclusive + (maxInclusive - minInclusive) * self.rndu01()
-        while True:
-            ret = self.rndu01() * _FLOAT_MAX
-            negative = self.rndint(1) == 0
-            if negative:
-                ret = 0 - ret
-            if negative and ret == 0:
-                continue
-            if ret >= minInclusive and ret <= maxInclusive:
-                return ret
+        return self._rndrangehelper(minInclusive, maxInclusive)
 
     def rndrangemaxexc(self, minInclusive, maxExclusive):
         if minInclusive >= maxExclusive:
@@ -1445,10 +1481,10 @@ class RandomGen:
 
     def weighted_choice_inclusion(self, weights, n):
         """
-        Chooses a random sample of `n` indices from a list of items (whose weights are given as `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.  It implements the splitting method found in pp. 73-74 in "Algorithms of sampling with equal or unequal probabilities", www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf .
+        Chooses a random sample of `n` indices from a list of items (whose weights are given as `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.  It implements the splitting method referenced below.
+
+        Deville, J.-C. and Tillé, Y.  Unequal probability sampling without replacement through a splitting method. Biometrika 85 (1998).
         """
-        # Deville, J.-C. and Tillé, Y.  Unequal probability sampling
-        # without replacement through a splitting method. Biometrika 85 (1998).
         if n > weights.length:
             raise ValueError
         if n == 0:

@@ -1334,7 +1334,9 @@ CLASSES
      |  weighted_choice(self, weights)
      |
      |  weighted_choice_inclusion(self, weights, n)
-     |      Chooses a random sample of `n` indices from a list of items (whose weights are given as `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.  It implements the splitting method found in pp. 73-74 in "Algorithms of sampling with equal or unequal probabilities", www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf .
+     |      Chooses a random sample of `n` indices from a list of items (whose weights are given as `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.  It implements the splitting method referenced below.
+     |
+     |      Deville, J.-C. and Tillé, Y.  Unequal probability sampling without replacement through a splitting method. Biometrika 85 (1998).
      |
      |  weighted_choice_n(self, weights, n=1)
      |
