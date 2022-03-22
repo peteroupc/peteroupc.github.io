@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/03/14"><meta name="citation_online_date" content="2022/03/14"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/03/22"><meta name="citation_online_date" content="2022/03/22"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -224,7 +224,7 @@
 
 <p>A family very similar to the &quot;transformed&ndash;transformer&quot; family uses a <em>decreasing</em> <em>W</em>.  When distribution X&#39;s support is [0, &infin;), one such <em>W</em> that has been proposed is <em>W</em>(<em>x</em>) = &minus;ln(<em>x</em>) (<em>W</em><sup>&minus;1</sup>(<em>x</em>) = exp(&minus;<em>x</em>); examples include the &quot;Rayleigh-G&quot; family or &quot;Rayleigh&ndash;Rayleigh&quot; distribution (Al Noor and Assi 2020)[^21], as well as the &quot;generalized gamma-G&quot; family, where &quot;generalized gamma&quot; refers to the Stacy distribution (Boshi et al. 2020)[^22]).</p>
 
-<p><strong>Minimums, maximums, and sums.</strong> Some distributions are described as a minimum, maximum, or sum of <em>N</em> independent random variates distributed as <em>X</em>, where <em>N</em> &ge; 1 is an integer distributed as the discrete distribution <em>Y</em>.</p>
+<p><strong>Minimums, maximums, and sums.</strong> Some distributions are described as a minimum, maximum, or sum of <em>N</em> independent random variates distributed as <em>X</em>, where <em>N</em> &ge; 1 is an independent integer distributed as the discrete distribution <em>Y</em>.</p>
 
 <ul>
 <li>Tahir and Cordeiro (2016)[^23] calls a distribution of minimums a <em>compound distribution</em>, and a distribution of maximums a <em>complementary compound distribution</em>.</li>
@@ -300,7 +300,7 @@
 
 <h2>Certain Distributions</h2>
 
-<p>In the table below, <em>U</em> is a uniform random variate in the interval [0, 1].</p>
+<p>In the table below, <em>U</em> is a uniform random variate in the interval [0, 1], and all random variates are independently generated.</p>
 
 <table><thead>
 <tr>
@@ -343,6 +343,21 @@
 <td>Topp&ndash;Leone(<em>&alpha;</em>)</td>
 <td>1&minus;sqrt(1&minus;<em>U</em><sup>1/<em>&alpha;</em></sup>).</td>
 <td><em>&alpha;</em> &gt; 0.</td>
+</tr>
+<tr>
+<td>Bell&ndash;Touchard(<em>a</em>, <em>b</em>) (Castellares et al. 2020)[^48].</td>
+<td>Sum of <em>N</em> zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is Poisson with parameter <em>b</em>*exp(<em>a</em>)&minus;<em>b</em>.</td>
+<td><em>a</em>&gt;0, <em>b</em>&gt;0.</td>
+</tr>
+<tr>
+<td>Bell(<em>a</em>) (Castellares et al. 2020)[^49].</td>
+<td>Bell&ndash;Touchard(<em>a</em>, 0).</td>
+<td><em>a</em>&gt;0.</td>
+</tr>
+<tr>
+<td>Neyman type A(<em>&amp;delta</em>, <em>&tau;</em>) (Batsidis and Lemonte 2021)[^50]</td>
+<td>Bell&ndash;Touchard(<em>&tau;</em>, <em>&delta;</em>*exp(&minus;<em>&tau;</em>)).</td>
+<td><em>&delta;</em>&gt;0, <em>&tau;</em>&gt;0.</td>
 </tr>
 </tbody></table>
 
@@ -655,6 +670,20 @@ END METHOD
 <p>[^46]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
 <p>[^47]: Chewi, S., Gerber, P., et al., &quot;<a href="https://arxiv.org/abs/2105.14166"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>&quot;, arXiv:2105.14166, 2021</p>
+
+<p>[^48]: Castellares, F., Lemonte, A.J., Moreno, G., &quot;On the two-parameter Bell-Touchard discrete distribution&quot;, _Communications in Statistics</p>
+
+<ul>
+<li>Theory and Methods_ 4, (2020).</li>
+</ul>
+
+<p>[^49]: Castellares, F., Lemonte, A.J., Moreno, G., &quot;On the two-parameter Bell-Touchard discrete distribution&quot;, _Communications in Statistics</p>
+
+<ul>
+<li>Theory and Methods_ 4, (2020).</li>
+</ul>
+
+<p>[^50]: Batsidis, A., Lemonte, A.J., &quot;On Goodness-of-Fit Tests for the Neyman Type A Distribution&quot;, REVSTAT-Statistical Journal (accepted Nov. 2021).</p>
 
 <p><a id=License></a></p>
 

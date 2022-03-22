@@ -167,7 +167,7 @@ Many special cases of the "transformed&ndash;transformer" family have been propo
 
 A family very similar to the "transformed&ndash;transformer" family uses a _decreasing_ _W_.  When distribution X's support is \[0, &infin;), one such _W_ that has been proposed is _W_(_x_) = &minus;ln(_x_) (_W_<sup>&minus;1</sup>(_x_) = exp(&minus;_x_); examples include the "Rayleigh-G" family or "Rayleigh&ndash;Rayleigh" distribution (Al Noor and Assi 2020\)[^21], as well as the "generalized gamma-G" family, where "generalized gamma" refers to the Stacy distribution (Boshi et al. 2020\)[^22]).
 
-**Minimums, maximums, and sums.** Some distributions are described as a minimum, maximum, or sum of _N_ independent random variates distributed as _X_, where _N_ &ge; 1 is an integer distributed as the discrete distribution _Y_.
+**Minimums, maximums, and sums.** Some distributions are described as a minimum, maximum, or sum of _N_ independent random variates distributed as _X_, where _N_ &ge; 1 is an independent integer distributed as the discrete distribution _Y_.
 
 - Tahir and Cordeiro (2016\)[^23] calls a distribution of minimums a _compound distribution_, and a distribution of maximums a _complementary compound distribution_.
 - Pérez-Casany et al. (2016\)[^24] calls a distribution of minimums or of maximums a _random-stopped extreme distribution_.
@@ -222,7 +222,7 @@ In this algorithm:
 <a id=Certain_Distributions></a>
 ## Certain Distributions
 
-In the table below, _U_ is a uniform random variate in the interval [0, 1].
+In the table below, _U_ is a uniform random variate in the interval [0, 1], and all random variates are independently generated.
 
 | This distribution: |  Is distributed as: | And uses these parameters: |
  --- | --- | --- |
@@ -233,6 +233,9 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1].
 | Lomax(_&alpha;_). | (1&minus;_U_)<sup>&minus;1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016\)[^38]. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
 | Topp&ndash;Leone(_&alpha;_) | 1&minus;sqrt(1&minus;_U_<sup>1/_&alpha;_</sup>). | _&alpha;_ > 0. |
+| Bell&ndash;Touchard(_a_, _b_) (Castellares et al. 2020)[^48]. | Sum of _N_ zero-truncated Poisson(_a_) random variates, where _N_ is Poisson with parameter _b_\*exp(_a_)&minus;_b_. | _a_>0, _b_>0. |
+| Bell(_a_) (Castellares et al. 2020)[^49]. | Bell&ndash;Touchard(_a_, 0). | _a_>0. |
+| Neyman type A(_&delta_, _&tau;_) (Batsidis and Lemonte 2021)[^50]| Bell&ndash;Touchard(_&tau;_, _&delta;_\*exp(&minus;_&tau;_)). | _&delta;_>0, _&tau;_>0. |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
 ## Batching Random Samples via Randomness Extraction
@@ -493,6 +496,14 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 [^46]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
 [^47]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+
+[^48]: Castellares, F., Lemonte, A.J., Moreno, G., "On the two-parameter Bell-Touchard discrete distribution", _Communications in Statistics
+- Theory and Methods_ 4, (2020).
+
+[^49]: Castellares, F., Lemonte, A.J., Moreno, G., "On the two-parameter Bell-Touchard discrete distribution", _Communications in Statistics
+- Theory and Methods_ 4, (2020).
+
+[^50]: Batsidis, A., Lemonte, A.J., "On Goodness-of-Fit Tests for the Neyman Type A Distribution", REVSTAT-Statistical Journal (accepted Nov. 2021).
 
 <a id=License></a>
 ## License
