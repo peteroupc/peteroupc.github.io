@@ -81,10 +81,8 @@ In the pseudocode:
 
 * Divisions do not round to an integer.  (In some programming languages, division of two integers results in an integer, which may be rounded differently depending on the language.  For instance, Python's and Ruby's integer division does a floor rounding on the result of division, while Java's discards the fractional part of the result of division.)
 * The pseudocode shown is not guaranteed to cover all error handling, such as recovery from overflows, out-of-bounds memory accesses, divisions by zero, unexpected infinity values, and other errors that might happen in a particular implementation.
-* The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.  Implementations are free to deviate from the pseudocode as long as they produce the same results as the pseudocode, except that&mdash;
-    - arithmetic operations, `rem`, `sqrt`, `ln`, `exp`, `pow`, `sin`, `cos`, `tan`, and `atan2` must return a result that is at least substantially close to the correctly rounded result, and
-    - arithmetic operations, `abs`, `sqrt`, `floor`, `ceil`, `round`, and `rem`, if implemented in fixed-precision number formats, must return the correctly rounded result.
-* Unless noted otherwise, the pseudocode does not care how a particular implementation stores integers and non-integers (for example, as floating-point, fixed-point, decimal, binary, two's-complement, ones'-complement, Chinese remainder theorem, or otherwise, or using symbolic or other representations).
+* The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.
+* In general, computer implementations of the operations and functions above risk numerical errors, since computers can't operate "exactly" on real numbers. (This is less of an issue if the implementation uses an arbitrary-precision rational number format and the pseudocode uses only rational arithmetic and inputs.  In addition, an implementation can work with _symbolic_ representations of real numbers instead of those numbers.)
 
 <a id=License></a>
 ## License
