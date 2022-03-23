@@ -491,6 +491,8 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 
 [^25]: Massey, J.L., "On the entropy of integer-valued random variables", 1988.
 
+[^26]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -545,7 +547,7 @@ There are three kinds of randomization algorithms:
     Many error-bounded algorithms use random bits as their only source of randomness. An application should use error-bounded algorithms whenever possible.
 3. An _inexact_, _approximate_, or _biased algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2\)[^15].  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
-Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
+Most algorithms on this page, though, are not _error-bounded_ when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as "constructive reals" or "recursive reals" that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^26].)
 
 There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020\)[^20] is Wasserstein distance (or "earth-mover distance").  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.
 

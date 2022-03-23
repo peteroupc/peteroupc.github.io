@@ -1648,7 +1648,7 @@ Some applications need to convert a pregenerated number in \[0, 1\] (usually a n
 
 - Distribution is **discrete, with known PMF** (and the distribution takes on integers): Sequential search (Devroye 1986, p. 85\)[^19]\: `i = 0; p = PMF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PMF(i); end; return p`, but this is not always fast. (This works only if `PMF`'s values sum to 1, which is why a PMF and not a PDF-like function is allowed here.)
 
-In addition, the following methods approximate the quantile if the application can trade accuracy for speed:
+In addition, the following methods approximate the quantile:
 
 - Distribution is **discrete, with known PDF-like function** (and the distribution takes on integers): If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `wsum = 0; for i in a..b: wsum=wsum+PDF(i); for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * wsum)`.  However, finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019\)[^79].  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - Distribution is **absolutely continuous, with known PDF-like function**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [`mini`, `maxi`], with pieces up to `step` wide. (Devroye and Gravel 2020\)[^11]. See also `DensityInversionSampler`, `numbers_from_u01`, and `numbers_from_dist_inversion` (Derflinger et al. 2010\)[^80], (Devroye and Gravel 2020\)[^11] in the Python sample code [^81].
@@ -1771,7 +1771,7 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
 <a id=Specific_Distributions></a>
 ### Specific Distributions
 
-Methods to sample additional distributions are given in a [**separate page**](https://peteroupc.github.io/randomnotes.html). They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won't sample the given distribution in a manner that minimizes approximation error, but they may still be useful if the application is willing to trade accuracy for speed.
+Methods to sample additional distributions are given in a [**separate page**](https://peteroupc.github.io/randomnotes.html). They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
@@ -1797,7 +1797,7 @@ Most commonly used:
 - **Extreme value distribution**: See generalized extreme value distribution.
 - **Gamma distribution**: See [**Gamma Distribution**](https://peteroupc.github.io/randomnotes.html#Gamma_Distribution). Generalized gamma distributions include the **Stacy distribution** (`pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter) and the **Amoroso distribution** (Crooks 2015\)[^89], (`pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value).
 - **Gaussian distribution**: See [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
-- **Geometric distribution**: See [**Geometric Distribution**](#Geometric_Distribution).  If the application can trade accuracy for speed: `floor(-Expo(1)/ln(1-p))` (Devroye 1986, p. 500\)[^19] \(ceil replaced with floor because this page defines geometric distribution differently).
+- **Geometric distribution**: See [**Geometric Distribution**](#Geometric_Distribution).  The following is "exact" assuming computers can operate "exactly" on real numbers: `floor(-Expo(1)/ln(1-p))` (Devroye 1986, p. 500\)[^19] \(ceil replaced with floor because this page defines geometric distribution differently).
 - **Gumbel distribution**: See generalized extreme value distribution.
 - **Inverse gamma distribution**: `b / GammaDist(a, 1)`, where `a` and `b` have the
  same meaning as in the gamma distribution.  Alternatively, `1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)`, where `c` and `d` are shape and location parameters, respectively.
@@ -1807,7 +1807,7 @@ Most commonly used:
 - **Multinormal distribution**: See multivariate normal distribution.
 - **Multivariate normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution).
 - **Normal distribution**: See [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
-- **Poisson distribution**: See "[**Poisson Distribution**](#Poisson_Distribution)". If the application can trade accuracy for convenience, the following can be used (Devroye 1986, p. 504\)[^19]\: `c = 0; s = 0; while true; sum = sum + Expo(1); if sum>=mean: return c; else: c = c + 1; end`; and in addition the following optimization from (Devroye 1991\)[^91] can be used: `while mean > 20; n=ceil(mean-pow(mean,0.7)); g=GammaDist(n, 1); if g>=mean: return c+(n-1-Binomial(n-1,(g-mean)/g)); mean = mean - g; c = c + n; end`, or the following approximation suggested in (Giammatteo and Di Mascio 2020\)[^92] for `mean` greater than 50: `floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))`.
+- **Poisson distribution**: See "[**Poisson Distribution**](#Poisson_Distribution)". The following is "exact" assuming computers can operate "exactly" on real numbers (Devroye 1986, p. 504\)[^19]\: `c = 0; s = 0; while true; sum = sum + Expo(1); if sum>=mean: return c; else: c = c + 1; end`; and in addition the following optimization from (Devroye 1991\)[^91] can be used: `while mean > 20; n=ceil(mean-pow(mean,0.7)); g=GammaDist(n, 1); if g>=mean: return c+(n-1-Binomial(n-1,(g-mean)/g)); mean = mean - g; c = c + n; end`, or the following approximation suggested in (Giammatteo and Di Mascio 2020\)[^92] for `mean` greater than 50: `floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))`.
 - **Pareto distribution**: `pow(RNDRANGEMinMaxExc(0, 1), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
 - **Rayleigh distribution**&dagger;: `sqrt(Expo(0.5))`.  If the scale parameter (`sigma`) follows a logarithmic normal distribution, the result is a _Suzuki distribution_.
 - **Standard normal distribution**&dagger;: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
@@ -1866,7 +1866,7 @@ Miscellaneous:
 - **Landau distribution**: See stable distribution.
 - **L&eacute;vy distribution**&dagger;: `0.5 / GammaDist(0.5, 1)`.  The scale parameter (`sigma`) is also called dispersion.
 - **Logarithmic logistic distribution**: See beta prime distribution.
-- **Logarithmic series distribution**: Generate `n = NegativeBinomialInt(1, py - px, py)+1` (where `px`/`py` is a parameter in (0,1)), then return `n` if `ZeroOrOne(1, n) == 1`, or repeat this process otherwise (Flajolet et al., 2010\)[^97].  If the application can trade accuracy for speed, the following can be used instead: `floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDRANGEMinMaxExc(0, 1)))))`, where `p` is the parameter in (0, 1); see (Devroye 1986\)[^19].
+- **Logarithmic series distribution**: Generate `n = NegativeBinomialInt(1, py - px, py)+1` (where `px`/`py` is a parameter in (0,1)), then return `n` if `ZeroOrOne(1, n) == 1`, or repeat this process otherwise (Flajolet et al., 2010\)[^97].  The following is "exact" assuming computers can operate "exactly" on real numbers: `floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDRANGEMinMaxExc(0, 1)))))`, where `p` is the parameter in (0, 1); see (Devroye 1986\)[^19].
 - **Logistic distribution**&dagger;: `(ln(x)-log1p(-x))` ([**_logit function_**](http://timvieira.github.io/blog/post/2016/07/04/fast-sigmoid-sampling/)), where `x` is `RNDRANGEMinMaxExc(0, 1)`.
 - **Log-multinormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Max-of-uniform distribution**: `BetaDist(n, 1)`.  Returns a number that simulates the largest out of `n` uniform random variates in [**0, 1).  See also (Devroye 1986, p. 675\)[^19].
@@ -1877,7 +1877,7 @@ Miscellaneous:
 - **Multivariate Poisson distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Multivariate _t_-copula**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Multivariate _t_-distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
-- **Negative binomial distribution** (`NegativeBinomial(successes, p)`): See [**Negative Binomial Distribution**](#Negative_Binomial_Distribution).  If the application can trade accuracy for speed: `Poisson(GammaDist(successes, (1 - p) / p))` (works even if `successes` is not an integer).
+- **Negative binomial distribution** (`NegativeBinomial(successes, p)`): See [**Negative Binomial Distribution**](#Negative_Binomial_Distribution).  The following is "exact" assuming computers can operate "exactly" on real numbers: `Poisson(GammaDist(successes, (1 - p) / p))` (works even if `successes` is not an integer).
 - **Negative multinomial distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Noncentral beta distribution**&#x2b26;: `BetaDist(a + Poisson(nc), b)`, where `nc` (a noncentrality), `a`, and `b` are greater than 0.
 - **Parabolic distribution**&#x2b26;: `BetaDist(2, 2)` (Saucier 2000, p. 30).

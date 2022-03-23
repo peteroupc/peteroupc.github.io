@@ -1734,6 +1734,14 @@ class RealAdd(Real):
         return "RealAdd(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
         if self.ev_n == n:
             return self.ev_v
         if n < self.ev_n:
@@ -1753,6 +1761,14 @@ class RealLn(Real):
         return "RealLn(%s,%s)" % (self.a)
 
     def ev(self, n):
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
         if self.ev_n == n:
             # print(["fast",self.ev_n,self.ev_v])
             return self.ev_v
@@ -1854,6 +1870,14 @@ class RealSqrt(Real):
         return "RealSqrt(%s)" % (self.a)
 
     def ev(self, n):
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
         if self.ev_n == n:
             return self.ev_v
         if n < self.ev_n:
@@ -1904,6 +1928,14 @@ class RealMultiply(Real):
         return "RealMultiply(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
         if self.ev_n == n:
             return self.ev_v
         if n < self.ev_n:
