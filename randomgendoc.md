@@ -2494,9 +2494,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2542,9 +2546,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2574,12 +2582,16 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __repr__(a)
      |      Return repr(self).
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2629,9 +2641,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2671,6 +2687,11 @@ CLASSES
      |  ev(self, n)
      |
      |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  FRACZERO = Fraction(0, 1)
+     |
+     |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
@@ -2679,9 +2700,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2729,9 +2754,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2779,9 +2808,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2829,9 +2862,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2879,9 +2916,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2929,9 +2970,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -2979,9 +3024,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -3029,9 +3078,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -3079,9 +3132,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -3129,9 +3186,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -3179,9 +3240,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -3229,9 +3294,13 @@ CLASSES
      |
      |  __neg__(a)
      |
+     |  __pow__(a, b)
+     |
      |  __radd__(a, b)
      |
      |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
      |
      |  __rsub__(a, b)
      |
@@ -3323,6 +3392,8 @@ FUNCTIONS
         - ax, ay: Numerator and denominator of first shape parameter.
         - bx, by: Numerator and denominator of second shape parameter.
         - precision: Number of bits after the point that the result will contain.
+
+    fracAreClose(a, b, n)
 
     genshape(rg, inshape)
         Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.

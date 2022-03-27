@@ -67,7 +67,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 * `max(a, b)` is the larger of `a` and `b`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
 * `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
-* `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This operation is equivalent to `(0 - floor(0 - a))`.
+* `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This function is equivalent to `(0 - floor(0 - a))`.
 
 **Notes:**
 
@@ -82,7 +82,7 @@ In the pseudocode:
 * Divisions do not round to an integer.  (In some programming languages, division of two integers results in an integer, which may be rounded differently depending on the language.  For instance, Python's and Ruby's integer division does a floor rounding on the result of division, while Java's discards the fractional part of the result of division.)
 * The pseudocode shown is not guaranteed to cover all error handling, such as recovery from overflows, out-of-bounds memory accesses, divisions by zero, unexpected infinity values, and other errors that might happen in a particular implementation.
 * The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.
-* In general, computer implementations of the operations and functions above risk numerical errors, since computers can't operate "exactly" on real numbers. (This is less of an issue if the implementation uses an arbitrary-precision rational number format and the pseudocode uses only rational arithmetic and inputs.  In addition, an implementation can work with _symbolic_ representations of real numbers instead of those numbers.)
+* In general, computer implementations of the operators and functions above risk numerical errors, since computers generally can't operate "exactly" on real numbers. (This is less of an issue if the implementation uses an arbitrary-precision rational number format and the pseudocode uses only rational arithmetic and inputs.  In addition, an implementation can work with _symbolic_ representations of real numbers instead of those numbers.)
 
 <a id=License></a>
 ## License

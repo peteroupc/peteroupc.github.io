@@ -1512,6 +1512,16 @@ class Real:
     def __rmul__(a, b):
         return RealMultiply(b, a)
 
+    def __pow__(a, b):
+        if b == 2:
+            return RealMultiply(a, a)
+        return RealPow(a, b)
+
+    def __rpow__(b, a):
+        if a == 2:
+            return RealMultiply(b, b)
+        return RealPow(b, a)
+
     def __truediv__(a, b):
         return RealDivide(a, b)
 
@@ -1539,73 +1549,292 @@ class Real:
 class RealSin(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
-        self.piTimes2 = RealPi(2)
+        self.ev_n = -1
+        self.ev_v = 0
 
     def __repr__(self):
         return "RealSin(%s)" % (self.a)
 
+    def _sinbounds(x, n):
+        x = x if isinstance(x, Fraction) else Fraction(x)
+        m = 2 * n if x < 0 else 2 * n + 1
+        ret = Fraction(0)
+        fac = 1
+        for i in range(1, m + 1):
+            ret += (-1) ** (i - 1) * x ** (2 * i - 1) / fac
+            fac *= 2 * i * (2 * i + 1)
+        upbound = ret + (-1) ** (m + 1) * x ** (2 * (m + 1) - 1) / fac
+        if ret > upbound:
+            raise ValueError
+        return [ret, upbound]
+
     def ev(self, n):
-        nv = n
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
+        nv = n // 3
         while True:
             av = self.a.ev(nv)
+            if abs(av) < 2:
+                nv += 2
+                continue
             # a's interval is weakly within 1/2^nv
             # of the exact value of a
             ainf = Fraction(av - 1, 1 << nv)
             asup = Fraction(av + 1, 1 << nv)
             # Do calculation
-            raise NotImplementedError
+            ss = RealSin._sinbounds(asup, nv)
+            ii = RealSin._sinbounds(ainf, nv)
             # Calculate n-bit approximation of
             # the two bounds
-            cinf = RealFraction(a.inf).ev(n)
-            csup = RealFraction(a.sup).ev(n)
+            cinf = fracAreClose(min(ss[0], ii[0]), max(ss[1], ii[1]), n)
+            # print([nv,cinf,csup])
             if cinf == csup:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
                 return cinf
-            nv += 2
+            nv += 8
+
+def fracAreClose(a, b, n):
+    if a > b:
+        raise ValueError
+    if (b - a) >= Fraction(1, 1 << n):
+        return None
+    ra = RealFraction(a).ev(n)
+    rb = RealFraction(b).ev(n)
+    # print([ra,rb,float(Fraction(ra,1<<n)),float(Fraction(rb,1<<n))])
+    if ra == rb:
+        return ra
+    if ra != rb - 1:
+        return None
+    if (
+        a.numerator * (1 << n) > a.denominator * ra
+        and b.numerator * (1 << n) < b.denominator * rb
+    ):
+        return ra
+    # print([ra,rb,a,b])
+    # if a>Fraction(ra,1<<n) and \
+    #    b<Fraction(rb,1<<n):
+    #  return ra
+    return None
 
 class RealCos(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
-        self.rsin = RealSin(RealAdd(self.a, RealPi(Fraction(1, 2))))
+        self.ev_n = -1
+        self.ev_v = 0
 
     def __repr__(self):
         return "RealCos(%s)" % (self.a)
 
+    FRACZERO = Fraction(0)
+
+    def _cosbounds(x, n, bits):
+        m = 2 * n if x < 0 else 2 * n + 1
+        ret = RealCos.FRACZERO
+        oldret = ret
+        fac = 2
+        bitsshift = Fraction(1, 1 << (bits + 8))
+        for i in range(1, m + 1):
+            inc = Fraction((-1) ** (i), fac) * x ** (2 * i)
+            ret += inc
+            # print([i,float(ret)<float(oldret),float(inc)])
+            if ((i & 1) == (m & 1)) and abs(inc) < bitsshift:
+                # print([i,m])
+                break
+            elif i < m:
+                oldret = ret
+                fac *= (2 * i + 1) * (2 * i + 2)
+        upbound = oldret
+        lowbound = ret
+        if lowbound > upbound:
+            raise ValueError("Sanity check failed")
+        return [1 + lowbound, 1 + upbound]
+
     def ev(self, n):
-        return self.rsin.ev(n)
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
+        nv = 2
+        while True:
+            av = self.a.ev(nv)
+            if abs(av) < 2:
+                nv += 2
+                continue
+            # a's interval is weakly within 1/2^nv
+            # of the exact value of a
+            ainf = Fraction(av - 1, 1 << nv)
+            asup = Fraction(av + 1, 1 << nv)
+            # Do calculation
+            ss = RealCos._cosbounds(asup, nv, n)
+            ii = RealCos._cosbounds(ainf, nv, n)
+            # Calculate n-bit approximation of
+            # the two bounds
+            cinf = min(ss[0], ii[0])
+            csup = max(ss[1], ii[1])
+            # print([nv,float(csup-cinf),1/(1<<n)])
+            cinf = fracAreClose(cinf, csup, n)
+            # if nv>200:
+            #   print([self.a,n,float(min(ss[0],ii[0])),float(max(ss[1],ii[1]))])
+            #   print(["supdiff",float(abs(ss[0]-ss[1]))])
+            #   print(["infdiff",float(abs(ii[0]-ii[1]))])
+            #   raise ValueError
+            if cinf != None:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
+                return cinf
+            nv += 6
 
 class RealExp(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
+        self.ev_n = -1
+        self.ev_v = 0
 
     def __repr__(self):
         return "RealExp(%s)" % (self.a)
 
     def ev(self, n):
-        raise NotImplementedError
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
+        nv = n + 2
+        while True:
+            av = self.a.ev(nv)
+            if av < 2:
+                nv += 2
+                continue
+            # a's interval is weakly within 1/2^nv
+            # of the exact value of a
+            ainf = Fraction(max(0, av - 1), 1 << nv)
+            asup = Fraction(av + 1, 1 << nv)
+            # Do calculation
+            a = FInterval(ainf, asup).exp(nv)
+            # Calculate n-bit approximation of
+            # the two bounds
+            cinf = fracAreClose(a.inf, a.sup, n)
+            if cinf != None:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
+                return cinf
+            nv += 2
 
 class RealPow(Real):
     def __init__(self, a, b):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.b = b if isinstance(b, Real) else RealFraction(b)
+        self.ev_n = -1
+        self.ev_v = 0
 
     def __repr__(self):
         return "RealPow(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
-        raise NotImplementedError
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
+        nv = n
+        while True:
+            av = self.a.ev(nv)  # pow
+            bv = self.b.ev(nv)  # pow
+            # a's interval is weakly within 1/2^nv
+            # of the exact value of a
+            ainf = Fraction(av - 1, 1 << nv)
+            asup = Fraction(av + 1, 1 << nv)
+            binf = Fraction(bv - 1, 1 << nv)
+            bsup = Fraction(bv + 1, 1 << nv)
+            # Do calculation
+            a = FInterval(ainf, asup).pow(FInterval(binf, bsup), nv)
+            # Calculate n-bit approximation of
+            # the two bounds
+            cinf = fracAreClose(a.inf, a.sup, n)
+            if cinf != None:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
+                return cinf
+            nv += 4
 
 class RealDivide(Real):
     def __init__(self, a, b):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.b = b if isinstance(b, Real) else RealFraction(b)
+        self.ev_n = -1
+        self.ev_v = 0
 
     def __repr__(self):
         return "RealDivide(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
         nv = n
         while True:
             av = self.a.ev(nv)  # div
@@ -1626,12 +1855,13 @@ class RealDivide(Real):
             d = asup * newsup
             # Calculate n-bit approximation of
             # the two bounds
-            cinf = RealFraction(min([a, b, c, d])).ev(n)
-            csup = RealFraction(max([a, b, c, d])).ev(n)
-            if cinf == csup:
+            cinf = fracAreClose(min([a, b, c, d]), max([a, b, c, d]), n)
+            if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
                 return cinf
             nv += 4
 
@@ -1691,14 +1921,43 @@ class RandUniform(Real):
 
 class RealFraction(Real):
     def __init__(self, a):
-        self.a = a if isinstance(a, int) else Fraction(a)
+        if isinstance(a, int):
+            self.num = a
+            self.den = 1
+        else:
+            a = Fraction(a)
+            self.num = a.numerator
+            self.den = a.denominator
 
     def __repr__(self):
-        return "RealFraction(%s)" % (self.a)
+        return "RealFraction(%s)" % (Fraction(self.num, self.den))
 
     def ev(self, n):
-        ret = int(self.a * (1 << (n + 2)))
-        ret = (ret // 4) + 1 if ret % 4 >= 2 else (ret // 4)
+        sh = 2
+        shv = 4
+        while True:
+            sn = self.num * (1 << (n + sh))
+            ret = abs(sn) // self.den
+            if sn < 0:
+                ret = -ret
+            if ret != int(Fraction(self.num, self.den) * (1 << (n + sh))):
+                raise ValueError
+            ret2 = (ret // shv) + 1 if ret % shv >= (shv >> 1) else (ret // shv)
+            # print([float(Fraction(ret2,1<<n)*(1<<n)),float(Fraction(self.num,self.den)*(1<<n))])
+            if False and ret % shv == shv >> 1:
+                # print([ret2,n,float(Fraction(self.num,self.den)),Fraction(1,1<<(n-1))])
+                if abs(
+                    Fraction(ret2, 1 << n) - Fraction(self.num, self.den)
+                ) == Fraction(1, 1 << (n + 1)):
+                    # Exact fraction
+                    ret = ret2
+                    break
+                sh += 1
+                shv <<= 1
+                continue
+            else:
+                ret = ret2
+            break
         return ret
 
 class RealNegate(Real):
@@ -1747,7 +2006,10 @@ class RealAdd(Real):
         if n < self.ev_n:
             return self.ev_v >> (self.ev_n - n)
         r = self.a.ev(n + 2) + self.b.ev(n + 2)
-        return (r // 4) + 1 if r % 4 >= 2 else (r // 4)
+        ret = (r // 4) + 1 if r % 4 >= 2 else (r // 4)
+        self.ev_n = n
+        self.ev_v = ret
+        return ret
 
 from interval import FInterval
 
@@ -1758,7 +2020,7 @@ class RealLn(Real):
         self.ev_v = 0
 
     def __repr__(self):
-        return "RealLn(%s,%s)" % (self.a)
+        return "RealLn(%s)" % (self.a)
 
     def ev(self, n):
         # Use best approximation calculated so far
@@ -1789,9 +2051,8 @@ class RealLn(Real):
             a = FInterval(ainf, asup).log(nv)
             # Calculate n-bit approximation of
             # the two bounds
-            cinf = RealFraction(a.inf).ev(n)
-            csup = RealFraction(a.sup).ev(n)
-            if cinf == csup:
+            cinf = fracAreClose(a.inf, a.sup, n)
+            if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
@@ -1824,15 +2085,26 @@ def realIsNegative(a):
 class RealPi(Real):
     def __init__(self, fraction=1):
         self.fraction = Fraction(fraction)
-        pass
+        if self.fraction < 0:
+            raise ValueError
+        self.ev_n = -1
+        self.ev_v = 0
 
     def __repr__(self):
         return "RealPi(%s)" % (self.fraction)
 
     def ev(self, n):
+        if self.fraction == 0:
+            return 0
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
         k = 0
         lower = Fraction(0)
-        upper = Fraction(0)
+        upper = lower
         while True:
             # Do calculation (BBP formula)
             upper += (
@@ -1845,12 +2117,13 @@ class RealPi(Real):
                 )
                 / 16 ** k
             )
-            cinf = RealFraction(upper).ev(n)
-            csup = RealFraction(lower).ev(n)
-            if cinf == csup:
+            cinf = fracAreClose(lower, upper, n)
+            if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
                 return cinf
             lower = upper
             k += 1
@@ -1908,9 +2181,8 @@ class RealSqrt(Real):
             a = FInterval(ainf, asup)
             # Calculate n-bit approximation of
             # the two bounds
-            cinf = RealFraction(a.inf).ev(n)
-            csup = RealFraction(a.sup).ev(n)
-            if cinf == csup:
+            cinf = fracAreClose(a.inf, a.sup, n)
+            if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
@@ -1949,8 +2221,9 @@ class RealMultiply(Real):
             if av >= 2 and bv >= 2:
                 a = (av - 1) * (bv - 1)
                 b = (av + 1) * (bv + 1)
-                cinf = RealFraction(Fraction(a, 1 << (nv * 2))).ev(n)
-                csup = RealFraction(Fraction(b, 1 << (nv * 2))).ev(n)
+                cinf = fracAreClose(
+                    Fraction(a, 1 << (nv * 2)), Fraction(b, 1 << (nv * 2)), n
+                )
             else:
                 ainf = Fraction(av - 1, 1 << nv)
                 asup = Fraction(av + 1, 1 << nv)
@@ -1966,9 +2239,8 @@ class RealMultiply(Real):
                 # print([a,b,c,d])
                 # Calculate n-bit approximation of
                 # the two bounds
-                cinf = RealFraction(min([a, b, c, d])).ev(n)
-                csup = RealFraction(max([a, b, c, d])).ev(n)
-            if cinf == csup:
+                cinf = fracAreClose(min([a, b, c, d]), max([a, b, c, d]), n)
+            if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
@@ -2020,6 +2292,7 @@ def realGamma(ml):
 ######################
 
 if __name__ == "__main__":
+
     # The following code tests some of the methods in this module.
 
     import scipy.stats as st
@@ -2088,6 +2361,22 @@ if __name__ == "__main__":
                 ):
                     i += 1
             i += 1
+
+    ru = RandUniform()
+    ru.bits = 13316137426883106017001167244436327878983283970967943792329288895
+    ru.count = 215
+    ru = RealCos(RealMultiply(ru, RealPi(2)))
+    ru.ev(17)
+    ru = RandUniform()
+    ru.bits = 12701413119756455176826198713937382767308938832267691531265144707
+    ru.count = 213
+    ru = RealCos(RealMultiply(ru, RealPi(2)))
+    ru.ev(19)
+    ru = RandUniform()
+    ru.bits = 7777011677718951988093522150082782455248378071942131481561209356
+    ru.count = 213
+    ru = RealCos(RealMultiply(ru, RealPi(2)))
+    ru.ev(17)
 
     def routest():
         rou = [realNormalROU().ev(30) / 2 ** 30 for i in range(10000)]

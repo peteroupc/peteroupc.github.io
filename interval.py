@@ -186,7 +186,7 @@ class FInterval:
             return FInterval(
                 min(
                     FInterval._cosbounds(self.inf, n).inf,
-                    FInterval._cosbounds(self.sup, n).inf,
+                    FInterval._cosbounds(self.sup, n).sup,
                 ),
                 1,
             )
@@ -497,14 +497,13 @@ class FInterval:
         m = 2 * n if x < 0 else 2 * n + 1
         ret = Fraction(0)
         fac = 2
-        for i in range(1, m + 1):
+        for i in range(1, m):
             ret += (-1) ** (i) * x ** (2 * i) / fac
-            fac *= 2 * i + 1
-            fac *= 2 * i + 2
-        upbound = ret + (-1) ** (m) * x ** (2 * (m)) / fac
-        if upbound > ret:
+            fac *= (2 * i + 1) * (2 * i + 2)
+        lowbound = ret + (-1) ** m * x ** (2 * m) / fac
+        if lowbound > ret:
             raise ValueError("Sanity check failed")
-        return FInterval(1 + upbound, 1 + ret)
+        return FInterval(1 + lowbound, 1 + ret)
 
     def _sqrtbounds(x, n):  # x>=0; n is number of iterations
         x = x if isinstance(x, Fraction) else Fraction(x)
