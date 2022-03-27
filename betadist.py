@@ -1612,7 +1612,13 @@ class RealSin(Real):
 def fracAreClose(a, b, n):
     if a > b:
         raise ValueError
-    if (b - a) >= Fraction(1, 1 << n):
+    onen = 1 << n
+    an = a.numerator
+    ad = a.denominator
+    bn = b.numerator
+    bd = b.denominator
+    # (b-a)>=1/2^n
+    if onen * (ad * bn - an * bd) >= ad * bd:
         return None
     ra = RealFraction(a).ev(n)
     rb = RealFraction(b).ev(n)
@@ -1621,15 +1627,8 @@ def fracAreClose(a, b, n):
         return ra
     if ra != rb - 1:
         return None
-    if (
-        a.numerator * (1 << n) > a.denominator * ra
-        and b.numerator * (1 << n) < b.denominator * rb
-    ):
+    if an * onen > ad * ra and bn * onen < bd * rb:  # a>ra/2^n  # b<rb/2^n
         return ra
-    # print([ra,rb,a,b])
-    # if a>Fraction(ra,1<<n) and \
-    #    b<Fraction(rb,1<<n):
-    #  return ra
     return None
 
 class RealCos(Real):
@@ -1924,6 +1923,9 @@ class RealFraction(Real):
         if isinstance(a, int):
             self.num = a
             self.den = 1
+        elif isinstance(a, Fraction):
+            self.num = a.numerator
+            self.den = a.denominator
         else:
             a = Fraction(a)
             self.num = a.numerator
@@ -1940,8 +1942,8 @@ class RealFraction(Real):
             ret = abs(sn) // self.den
             if sn < 0:
                 ret = -ret
-            if ret != int(Fraction(self.num, self.den) * (1 << (n + sh))):
-                raise ValueError
+            # if ret != int(Fraction(self.num, self.den) * (1 << (n + sh))):
+            #    raise ValueError
             ret2 = (ret // shv) + 1 if ret % shv >= (shv >> 1) else (ret // shv)
             # print([float(Fraction(ret2,1<<n)*(1<<n)),float(Fraction(self.num,self.den)*(1<<n))])
             if False and ret % shv == shv >> 1:
@@ -2018,6 +2020,7 @@ class RealLn(Real):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.ev_n = -1
         self.ev_v = 0
+        self.nv_last = -1
 
     def __repr__(self):
         return "RealLn(%s)" % (self.a)
@@ -2037,7 +2040,7 @@ class RealLn(Real):
         if n < self.ev_n:
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
-        nv = n + 2
+        nv = max(self.nv_last, n + 4)
         while True:
             av = self.a.ev(nv)
             if av < 2:
@@ -2049,6 +2052,7 @@ class RealLn(Real):
             asup = Fraction(av + 1, 1 << nv)
             # Do calculation
             a = FInterval(ainf, asup).log(nv)
+            # print([av,nv,a,float(a.sup-a.inf),1/(1<<n)])
             # Calculate n-bit approximation of
             # the two bounds
             cinf = fracAreClose(a.inf, a.sup, n)
@@ -2058,11 +2062,12 @@ class RealLn(Real):
                 # of the exact result
                 self.ev_n = n
                 self.ev_v = cinf
+                self.nv_last = nv + 4
                 return cinf
             nv += 2
 
 def realIsLess(a, b):
-    n = 3
+    n = 8
     while True:
         aa = a.ev(n)
         bb = b.ev(n)
@@ -2070,7 +2075,7 @@ def realIsLess(a, b):
             return False
         if bb - 2 >= aa:
             return True
-        n += 2
+        n += 8
 
 def realIsNegative(a):
     n = 3
@@ -2270,6 +2275,7 @@ def realGamma(ml):
         d += 1
     d = d - Fraction(1, 3)
     c = 1 / RealSqrt(9 * d)
+    frac0_0331 = Fraction(331, 10000)
     while True:
         x = 0
         while True:
@@ -2280,7 +2286,7 @@ def realGamma(ml):
                 break
         u = RandUniform()
         x2 = x * x
-        if realIsLess(u, 1 - (Fraction(0.0331) * x2 * x2)):
+        if realIsLess(u, 1 - (frac0_0331 * x2 * x2)):
             break
         if realIsLess(RealLn(u), x2 / 2 + (d * (1 - v + RealLn(v)))):
             break
@@ -2379,13 +2385,22 @@ if __name__ == "__main__":
     ru.ev(17)
 
     def routest():
-        rou = [realNormalROU().ev(30) / 2 ** 30 for i in range(10000)]
+        rou = [realNormalROU().ev(52) / 2 ** 52 for i in range(10000)]
         dobucket(rou)
+
+    def routest2():
+        rou = [random.normalvariate(0, 1) for i in range(10000)]
+        dobucket(rou)
+
+    def routest3(rg):
+        # rou = [random.normalvariate(0,1) for i in range(10000)]
+        rou = [psrnexpo(rg) for i in range(10000)]
+        # dobucket(rou)
 
     def gammatest():
         for i in range(300):
             g = realGamma(1.3)
-        print(g.ev(30) / 2 ** 12)
+            print(g.ev(30) / 2 ** 30)
 
     # rr = RealLn(9)
     # for n in list(range(0, 32))+list(range(0,32)):
