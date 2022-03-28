@@ -368,25 +368,8 @@ if __name__ == "__main__":
                     i += 1
             i += 1
 
-    def normalpdf(x, mean=0, sd=1):
-        mean = FInterval(mean)
-        sd = FInterval(sd)
-        return (-((x - mean) ** 2) / (2 * sd ** 2)).exp(5)
-
-    def fullnormalpdf(x, mean=0, sd=1):
-        mean = FInterval(mean)
-        sd = FInterval(sd)
-        return (-((x - mean) ** 2) / (2 * sd ** 2)).exp(5) / (
-            sd * FInterval(2 * math.pi).sqrt(5)
-        )
-
     def gammapdf(x, al=2, sc=2):
         return (x ** (al - 1)) * (-x / sc).exp(5)
-
-    def normalpdfv(x, mean=0, vari=1):
-        mean = FInterval(mean)
-        vari = FInterval(vari)
-        return (-((x - mean) ** 2) / (2 * vari)).exp(5)
 
     def betapdf(x):
         if x.sup < 0 or x.inf >= 1:

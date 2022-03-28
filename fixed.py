@@ -661,7 +661,7 @@ class Fixed:
             return r
         return (bv * av.log()).exp()
 
-    LogMin = (1 << BITS) * 15 / 100  # In BITS fractional bits
+    LogMin = (1 << BITS) * 15 // 100  # In BITS fractional bits
     Log2Bits = 726817  # log(2), in BITS fractional bits
 
     def log(a):

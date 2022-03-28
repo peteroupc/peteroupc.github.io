@@ -1514,6 +1514,7 @@ FUNCTIONS
     numericalTable(func, x, y, n=100)
 
 DATA
+    ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
     REAL_858_1000 = RealFraction(429/500)
 
 FILE
@@ -1710,7 +1711,7 @@ CLASSES
      |
      |  Log2Bits = 726817
      |
-     |  LogMin = 157286.4
+     |  LogMin = 157286
      |
      |  MASK = 1048575
      |
@@ -3393,6 +3394,8 @@ FUNCTIONS
         - bx, by: Numerator and denominator of second shape parameter.
         - precision: Number of bits after the point that the result will contain.
 
+    crudelog(av)
+
     fpNormalROU()
 
     fracAreClose(a, b, n)
@@ -3425,6 +3428,8 @@ FUNCTIONS
           here, and would probably have the function use arbitrary-precision
           rational or floating-point numbers rather than the fixed-precision
           'float' type of Python, which usually has 53 bits of precision.
+
+    logsmall(av, n)
 
     powerOfUniform(b, px, py, precision=53)
         Generates a power of a uniform random number.
@@ -3500,6 +3505,7 @@ FUNCTIONS
     realNormalROU()
 
 DATA
+    ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
     REAL_858_1000 = RealFraction(429/500)
 
 FILE

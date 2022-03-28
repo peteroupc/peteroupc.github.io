@@ -9,7 +9,7 @@ import random
 
 class TConcaveDiscreteSampler:
     """
-    Generates a random number that follows a
+    Generates a random variate that follows a
     discrete distribution whose probability mass
     function (PMF) is T-concave.
     Specifically, the PMF is proportional to a function f for
@@ -19,9 +19,9 @@ class TConcaveDiscreteSampler:
     necessarily has a single mode, or peak,
     and its range is bounded from above by a finite value.
     Informally, a function is concave if
-    the area "above" the function's graph is concave.)
+    its slope does not increase on its domain.)
       - f: A function that takes one integer and
-         outputs the probability for a random number to equal
+         outputs the probability for a random variate to equal
          that integer.  For this sampler to work, f must
          be T-concave.
       - area: Sum of all probabilities.  Optional; default is 1.
@@ -101,7 +101,7 @@ class TConcaveDiscreteSampler:
 
 class TConcaveSampler:
     """
-    Generates a random number that follows a
+    Generates a random variate that follows a
     distribution whose probability density function (PDF) is T-concave.
     Specifically, the PDF is proportional to a function f for
     which -1/sqrt(f(x)) is a continuous concave function.
@@ -110,7 +110,7 @@ class TConcaveSampler:
     necessarily has a single mode, or peak,
     and its range is bounded from above by a finite value.
     Informally, a function is concave
-    if the area "above" the function's graph is concave.)
+    if its slope does not increase on its domain.)
       - f: A function that takes one number and
          outputs one number.  For this sampler to work, f must
          be T-concave.
@@ -232,7 +232,7 @@ class TConcaveSampler:
 
 class LogConcaveSampler:
     """
-    Generates a random number that follows a distribution
+    Generates a random variate that follows a distribution
     whose probability density function (PDF) is log-concave.  Specifically
     the PDF is proportional to exp(psi), where psi is a continuous concave
     function. (A log-concave PDF necessarily has a single mode, or peak,
@@ -241,7 +241,7 @@ class LogConcaveSampler:
       - psi - A function that takes one number and
          outputs one number.  For this sampler to work, psi must be a
          continuous concave function (informally, a function is concave
-         if the area "above" the function's graph is concave).
+         if its slope does not increase on its domain).
       - dpsi - Derivative of psi.  Optional; if not given, this derivative will be
          numerically approximated from psi, assuming that 0 is the
          distribution's mode (peak location) and psi(0) = 0 (and thus
@@ -356,7 +356,7 @@ class LogConcaveSampler:
 
 class UnimodalSampler:
     """
-    Generates a random number that follows a unimodal distribution
+    Generates a random variate that follows a unimodal distribution
     for which three things are known: the probability density function (PDF) (or
     a function proportional to it), the cumulative distribution function (CDF),
     and the exact location of the PDF's mode (highest point).
@@ -431,7 +431,7 @@ class UnimodalSampler:
 
 class LogConcaveSampler2:
     """
-    Generates a random number that follows a distribution
+    Generates a random variate that follows a distribution
     whose probability density function (PDF) is log-concave.  Specifically
     the PDF is proportional to exp(psi), where psi is a continuous concave
     function. (A log-concave PDF necessarily has a single mode, or peak,
@@ -440,7 +440,7 @@ class LogConcaveSampler2:
       - psi - A function that takes one number and
          outputs one number.  For this sampler to work, psi must be a
          continuous concave function (informally, a function is concave
-         if the area "above" the function's graph is concave),
+         if its slope does not increase on its domain),
          and 0 must be the distribution's mode (peak location) and thus
          the peak of psi must be at 0.
 
@@ -487,7 +487,7 @@ class LogConcaveSampler2:
 
 class LogConcaveSamplerMonotone:
     """
-    Generates a random number that follows a distribution
+    Generates a random variate that follows a distribution
     whose probability density function (PDF) is log-concave, monotonically
     nonincreasing, and has a positive domain.  Specifically
     the PDF is proportional to exp(psi), where psi is a continuous concave
@@ -498,7 +498,7 @@ class LogConcaveSamplerMonotone:
          outputs one number.  For this sampler to work, psi must be a
          continuous concave function, monotonically
          nonincreasing, and have a positive domain (informally, a
-         function is concave if the area "above" the function's graph is concave),
+         function is concave if its slope does not increase on its domain),
          and 0 must be the distribution's mode (peak location) and thus
          the peak of psi must be at 0.
       - symmetric - If true, the PDF is symmetric on both sides of the origin.

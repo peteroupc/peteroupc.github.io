@@ -1473,7 +1473,7 @@ def _test_rand_extraction(rg, func, digits=2, nofill=False):
             pass
 
 def addto1(rg):
-    # Simulates the number of random numbers
+    # Simulates the number of uniforms
     # in [0,1] needed to produce a sum greater than 1.
     pa = psrn_new_01()
     i = 1
@@ -1875,7 +1875,7 @@ class RealDivide(Real):
                 # Calculate n-bit approximation of
                 # the two bounds
                 cinf = fracAreClose(a, b, n)
-            elif av < 1 and bv > 1:
+            elif av < -1 and bv > 1:
                 b = ainf * newsup
                 c = asup * newinf
                 # Calculate n-bit approximation of
@@ -2029,6 +2029,101 @@ class RealAdd(Real):
 
 from interval import FInterval
 
+ArcTanHTable = [
+    0,
+    294906490,
+    137123709,
+    67461703,
+    33598225,
+    16782680,
+    8389290,
+    4194389,
+    2097162,
+    1048577,
+    524288,
+    262144,
+    131072,
+    65536,
+    32768,
+    16384,
+    8192,
+    4096,
+    2048,
+    1024,
+    512,
+    256,
+    128,
+    64,
+    32,
+    16,
+    8,
+    4,
+    2,
+    1,
+]
+
+def _roundedshiftraw(a, shift):
+    aa = abs(a)
+    ret = aa >> shift
+    frac = aa & ((1 << shift) - 1)
+    # Divisor's least significant bit is even
+    if frac > (1 << (shift - 1)) or (frac == (1 << (shift - 1)) and (ret & 1) == 1):
+        ret += 1
+    if a < 0:
+        ret = -ret
+    return ret
+
+def logsmall(av, n):
+    if n > 16 or av < 2:
+        return None
+    if av >= (1 << n):
+        return None
+    avminus = (av - 1) << (16 - n)
+    avplus = (av + 1) << (16 - n)
+    # Calculate crude log
+    infcr = crudelog(av - 1)
+    supcr = crudelog(av + 1)
+    # Tolerance adjustment
+    infcr = infcr - 2 if (av - 1) <= 271 else infcr - 1
+    supcr = supcr + 2 if (av - 1) <= 271 else supcr + 1
+    return (infcr, 65536, supcr, 65536)
+
+def crudelog(av):
+    # Calculates an approximation of the natural logarithm of av/2^_bits.
+    # When _bits=16, crudelog is accurate to 2/2^16 for av in [1, 271],
+    # and to 1/2^16 in [272, 65536].
+    _bits = 16
+    _logmin = (1 << _bits) * 15 // 100
+    _log2bits = 45426
+    _arcTanFrac = 29
+    _arcTanBitDiff = _arcTanFrac - _bits
+    if av <= 0:
+        raise ValueError
+    if av == 1 << _bits:
+        return 0
+    if av >= 1 << (_bits):
+        return crudelog(av // 2) + _log2bits + 1
+    if av < _logmin:
+        return crudelog(av * 2) - _log2bits
+    avx = av << _arcTanBitDiff
+    rx = avx + (1 << _arcTanFrac)
+    ry = avx - (1 << _arcTanFrac)
+    rz = 0
+    for i in range(1, len(ArcTanHTable)):
+        iters = 2 if i == 4 or i == 13 else 1
+        for m in range(iters):
+            x = rx >> i
+            y = ry >> i
+            if ry <= 0:
+                rx += y
+                ry += x
+                rz -= ArcTanHTable[i]
+            else:
+                rx -= y
+                ry -= x
+                rz += ArcTanHTable[i]
+    return _roundedshiftraw(rz, _arcTanBitDiff - 1)
+
 class RealLn(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
@@ -2047,6 +2142,10 @@ class RealLn(Real):
     _logboundscache = {}
 
     def _logbounds(num, den, n, bits):
+        # See interval arithmetic described in:
+        # Daumas, M., Lester, D., Muñoz, C., "Verified Real Number Calculations:
+        #  A Library for Interval Arithmetic", arXiv:0708.3721 [cs.MS], 2007.
+        # Unfortunately, at least the arXiv version has some errors.
         bittol = bits * 2
         if num == 0 or den == 0 or (num < 0 and den > 0) or (den < 0 and num > 0):
             raise ValueError
@@ -2105,7 +2204,7 @@ class RealLn(Real):
             # First two is infimum; last two is supremum
             return (-bounds[2], bounds[3], -bounds[0], bounds[1])
         # now, x>2
-        # NOTE: Replacing 2 with 1.5, which leads to much
+        # NOTE: Replacing 2 (used in paper) with 1.5, which leads to much
         # faster convergence
         m = 0
         xn = num
@@ -2166,14 +2265,18 @@ class RealLn(Real):
             if av < 2:
                 nv += 2
                 continue
-            # a's interval is weakly within 1/2^nv
-            # of the exact value of a
-            ainfnum = max(0, av - 1)
-            ainfden = 1 << nv
-            asupnum = av + 1
-            asupden = 1 << nv
-            # Do calculation
-            a = RealLn._log(ainfnum, ainfden, asupnum, asupden, nv, n + 8)
+            sl = logsmall(av, nv)
+            if sl != None:
+                a = sl
+            else:
+                # Interval is weakly within 1/2^nv
+                # of the exact value of a
+                ainfnum = max(0, av - 1)
+                ainfden = 1 << nv
+                asupnum = av + 1
+                asupden = 1 << nv
+                # Do calculation
+                a = RealLn._log(ainfnum, ainfden, asupnum, asupden, nv, n + 8)
             # if Fraction(ainfnum,ainfden)>Fraction(asupnum,asupden): raise ValueError
             # print([av,nv,a,float(a.sup-a.inf),1/(1<<n)])
             # Calculate n-bit approximation of
@@ -2314,6 +2417,8 @@ class RealSqrt(Real):
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
                 return cinf
             nv += 2
 
@@ -2344,6 +2449,9 @@ class RealMultiply(Real):
         while True:
             av = self.a.ev(nv)  # mul
             bv = self.b.ev(nv)  # mul
+            if abs(av) < 2 or abs(bv) < 2:
+                nv += 2
+                continue
             # a's interval is weakly within 1/2^nv
             # of the exact value of a
             if av >= 2 and bv >= 2:
@@ -2351,13 +2459,29 @@ class RealMultiply(Real):
                 b = (av + 1) * (bv + 1)
                 onenv2 = 1 << (nv * 2)
                 cinf = fracAreCloseND(a, onenv2, b, onenv2, n)
+            elif av <= -2 and bv <= -2:
+                av = abs(av)
+                bv = abs(bv)
+                a = (av - 1) * (bv - 1)
+                b = (av + 1) * (bv + 1)
+                onenv2 = 1 << (nv * 2)
+                cinf = fracAreCloseND(a, onenv2, b, onenv2, n)
+            elif av <= -2 or bv <= -2:
+                av = abs(av)
+                bv = abs(bv)
+                a = -((av - 1) * (bv - 1))
+                b = -((av + 1) * (bv + 1))
+                onenv2 = 1 << (nv * 2)
+                cinf = fracAreCloseND(b, onenv2, a, onenv2, n)
             else:
-                ainf = Fraction(av - 1, 1 << nv)
-                asup = Fraction(av + 1, 1 << nv)
+                # print([av,bv])
+                onenv = 1 << nv
+                ainf = Fraction(av - 1, onenv)
+                asup = Fraction(av + 1, onenv)
                 # b's interval is weakly within 1/2^nv
                 # of the exact value of b
-                binf = Fraction(bv - 1, 1 << nv)
-                bsup = Fraction(bv + 1, 1 << nv)
+                binf = Fraction(bv - 1, onenv)
+                bsup = Fraction(bv + 1, onenv)
                 # Do calculation
                 a = ainf * binf
                 b = ainf * bsup
@@ -2371,6 +2495,8 @@ class RealMultiply(Real):
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
                 return cinf
             nv += 6
 
@@ -2542,18 +2668,21 @@ if __name__ == "__main__":
     import time
     import cProfile
 
-    tm = time.time()
-    cProfile.run("routest()")
-    print(time.time() - tm)
-    t1 = 0
-    t2 = 0
-    tm = time.time()
-    routest()
-    t1 = time.time() - tm
-    tm = time.time()
-    routest2()
-    t2 = time.time() - tm
-    print([t1, t2, "times slower:", t1 / t2])
+    def cpr():
+        tm = time.time()
+        cProfile.run("routest()")
+        print(time.time() - tm)
+        t1 = 0
+        t2 = 0
+        tm = time.time()
+        routest()
+        t1 = time.time() - tm
+        tm = time.time()
+        routest2()
+        t2 = time.time() - tm
+        print([t1, t2, "times slower:", t1 / t2])
+
+    cpr()
     exit()
 
     # rr = RealLn(9)
