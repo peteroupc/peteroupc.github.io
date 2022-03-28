@@ -219,14 +219,6 @@ class FInterval:
             frac.numerator < 0 and frac.denominator < 0
         )
 
-    def log(self, n):
-        if not FInterval._greaterThanZero(self.inf):
-            raise ValueError
-        return FInterval(
-            FInterval._logbounds(self.inf.numerator, self.inf.denominator, n).inf,
-            FInterval._logbounds(self.sup.numerator, self.sup.denominator, n).sup,
-        )
-
     def abs(self):
         if (self.inf < 0) != (self.sup < 0):
             return FInterval(0, max(abs(self.inf), abs(self.sup)))
@@ -315,6 +307,14 @@ class FInterval:
         """ For convenience only. """
         return self.pow(v, 5)
 
+    def log(self, n):
+        if not FInterval._greaterThanZero(self.inf):
+            raise ValueError
+        return FInterval(
+            FInterval._logbounds(self.inf.numerator, self.inf.denominator, n).inf,
+            FInterval._logbounds(self.sup.numerator, self.sup.denominator, n).sup,
+        )
+
     _logboundscache = {}
 
     def _logbounds(num, den, n):
@@ -342,6 +342,7 @@ class FInterval:
             va = 0
             vb = 1
             vtrunc = 0
+            # print("--num=%s den=%s n=%d--" % (num,den,n))
             for i in range(1, 2 * n + 1):
                 vc = xmn
                 vd = xmd * i
@@ -363,6 +364,7 @@ class FInterval:
                 # numerator and denominator
                 if i % 4 == 0 or i == 2 * n:
                     va, vb, vtrunc = FInterval._truncateNumDen(va, vb, n, vtrunc)
+                # print("va=%s vb=%s vtrunc=%d"%(va,vb,vtrunc))
             # print([va, vb, vtrunc])
             # Calculate upper bound
             vc = xmn

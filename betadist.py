@@ -1610,19 +1610,40 @@ class RealSin(Real):
             nv += 8
 
 def fracAreClose(a, b, n):
-    if a > b:
-        raise ValueError
-    onen = 1 << n
+    # if a>b: raise ValueError
     an = a.numerator
     ad = a.denominator
     bn = b.numerator
     bd = b.denominator
+    return fracAreCloseND(an, ad, bn, bd, n)
+
+def fracEV(sn, sd, n):
+    sh = 2
+    shv = 4
+    sn = sn << (n + sh) if sn >= 0 else sn * (1 << (n + sh))
+    ret = abs(sn) // sd
+    if sn < 0:
+        ret = -ret
+    # if ret != int(Fraction(self.num, self.den) * (1 << (n + sh))):
+    #    raise ValueError
+    ret2 = (ret // shv) + 1 if ret % shv >= (shv >> 1) else (ret // shv)
+    return ret2
+
+def fracAreCloseND(an, ad, bn, bd, n):
+    if ad < 0 or bd < 0:
+        raise ValueError
+    onen = 1 << n
     # (b-a)>=1/2^n
-    if onen * (ad * bn - an * bd) >= ad * bd:
-        return None
-    ra = RealFraction(a).ev(n)
-    rb = RealFraction(b).ev(n)
-    # print([ra,rb,float(Fraction(ra,1<<n)),float(Fraction(rb,1<<n))])
+    if ad == bd:
+        if onen * (bn - an) >= ad:
+            # print(["too far (easy)",an,ad,bn,bd])
+            return None
+    else:
+        if onen * (ad * bn - an * bd) >= ad * bd:
+            # print(["too far",an,ad,bn,bd])
+            return None
+    ra = fracEV(an, ad, n)
+    rb = fracEV(bn, bd, n)
     if ra == rb:
         return ra
     if ra != rb - 1:
@@ -1843,18 +1864,33 @@ class RealDivide(Real):
                 continue
             # a's interval is weakly within 1/2^nv
             # of the exact value of a
-            ainf = Fraction(av - 1, 1 << nv)
-            asup = Fraction(av + 1, 1 << nv)
-            newsup = Fraction(1 << nv, bv - 1)
-            newinf = Fraction(1 << nv, bv + 1)
-            # Do calculation
-            a = ainf * newinf
-            b = ainf * newsup
-            c = asup * newinf
-            d = asup * newsup
-            # Calculate n-bit approximation of
-            # the two bounds
-            cinf = fracAreClose(min([a, b, c, d]), max([a, b, c, d]), n)
+            onenv = 1 << nv
+            ainf = Fraction(av - 1, onenv)
+            asup = Fraction(av + 1, onenv)
+            newsup = Fraction(onenv, bv - 1)
+            newinf = Fraction(onenv, bv + 1)
+            if av > 1 and bv > 1:
+                a = ainf * newinf
+                b = asup * newsup
+                # Calculate n-bit approximation of
+                # the two bounds
+                cinf = fracAreClose(a, b, n)
+            elif av < 1 and bv > 1:
+                b = ainf * newsup
+                c = asup * newinf
+                # Calculate n-bit approximation of
+                # the two bounds
+                cinf = fracAreClose(b, c, n)
+            else:
+                # Do calculation
+                a = ainf * newinf
+                b = ainf * newsup
+                c = asup * newinf
+                d = asup * newsup
+                # Calculate n-bit approximation of
+                # the two bounds
+                print([av, bv, float(a), float(b), float(c), float(d)])
+                cinf = fracAreClose(min([a, b, c, d]), max([a, b, c, d]), n)
             if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
@@ -1919,8 +1955,11 @@ class RandUniform(Real):
         return ret
 
 class RealFraction(Real):
-    def __init__(self, a):
-        if isinstance(a, int):
+    def __init__(self, a, b=None):
+        if b != None:
+            self.num = a
+            self.den = b
+        elif isinstance(a, int):
             self.num = a
             self.den = 1
         elif isinstance(a, Fraction):
@@ -1935,32 +1974,7 @@ class RealFraction(Real):
         return "RealFraction(%s)" % (Fraction(self.num, self.den))
 
     def ev(self, n):
-        sh = 2
-        shv = 4
-        while True:
-            sn = self.num * (1 << (n + sh))
-            ret = abs(sn) // self.den
-            if sn < 0:
-                ret = -ret
-            # if ret != int(Fraction(self.num, self.den) * (1 << (n + sh))):
-            #    raise ValueError
-            ret2 = (ret // shv) + 1 if ret % shv >= (shv >> 1) else (ret // shv)
-            # print([float(Fraction(ret2,1<<n)*(1<<n)),float(Fraction(self.num,self.den)*(1<<n))])
-            if False and ret % shv == shv >> 1:
-                # print([ret2,n,float(Fraction(self.num,self.den)),Fraction(1,1<<(n-1))])
-                if abs(
-                    Fraction(ret2, 1 << n) - Fraction(self.num, self.den)
-                ) == Fraction(1, 1 << (n + 1)):
-                    # Exact fraction
-                    ret = ret2
-                    break
-                sh += 1
-                shv <<= 1
-                continue
-            else:
-                ret = ret2
-            break
-        return ret
+        return fracEV(self.num, self.den, n)
 
 class RealNegate(Real):
     def __init__(self, a):
@@ -2025,6 +2039,112 @@ class RealLn(Real):
     def __repr__(self):
         return "RealLn(%s)" % (self.a)
 
+    def _log(infnum, infden, supnum, supden, n, bits):
+        inf = RealLn._logbounds(infnum, infden, n, bits)
+        sup = RealLn._logbounds(supnum, supden, n, bits)
+        return (inf[0], inf[1], sup[2], sup[3])
+
+    _logboundscache = {}
+
+    def _logbounds(num, den, n, bits):
+        bittol = bits * 2
+        if num == 0 or den == 0 or (num < 0 and den > 0) or (den < 0 and num > 0):
+            raise ValueError
+        if num == den:
+            return (0, 1, 0, 1)
+        if num > den and num * 2 <= den * 3:  # ... and (num/den)<=1.5
+            xmn = num - den
+            xmd = den
+            xva = xmn
+            xvb = xmd
+            # Numerator and denominator of lower bound
+            va = 0
+            vb = 1
+            vtrunc = 0
+            # print("--num=%s den=%s n=%d bits=%d--" % (num,den,n,bits))
+            for i in range(1, 2 * n + 1):
+                oldva = va
+                oldvb = vb
+                vc = xmn
+                vd = xmd * i
+                xmn *= xva
+                xmd *= xvb
+                if i % 2 == 0:
+                    # Subtract from lower bound
+                    ra = va * vd - vb * vc
+                    rb = vb * vd
+                    va = ra
+                    vb = rb
+                else:
+                    # Add to lower bound
+                    ra = va * vd + vb * vc
+                    rb = vb * vd
+                    va = ra
+                    vb = rb
+                # Truncate lower bound to mitigate "runaway" growth of
+                # numerator and denominator
+                if i % 4 == 0 or i == 2 * n:
+                    va, vb, vtrunc = RealLn._truncateNumDen(va, vb, bittol, vtrunc)
+            # print("--done--")
+            # Calculate upper bound
+            vc = xmn
+            vd = xmd * (2 * n + 1)
+            ua = va * vd + vb * vc
+            ub = vb * vd
+            # Add truncation error (vtrunc/2^bittol) to upper bound
+            if vtrunc > 0:
+                tua = ua * (1 << bittol) + ub * vtrunc
+                tub = ub * (1 << bittol)
+                ua = tua
+                ub = tub
+            return (va, vb, ua, ub)
+        if num < den:
+            bounds = RealLn._logbounds(den, num, n, bits)
+            # NOTE: Correcting an error in arXiv version
+            # of the paper
+            # First two is infimum; last two is supremum
+            return (-bounds[2], bounds[3], -bounds[0], bounds[1])
+        # now, x>2
+        # NOTE: Replacing 2 with 1.5, which leads to much
+        # faster convergence
+        m = 0
+        xn = num
+        xd = den
+        while xn * 2 > xd * 3:  # (xn/xd)>1.5
+            m += 1
+            xn *= 2  # Denominator of 1.5
+            xd *= 3  # Numerator of 1.5
+        # print("m=%d n=%d"%(m,n))
+        if not ((n, bits) in RealLn._logboundscache):
+            # Find logbounds for 1.5 and given accuracy level
+            # print(["logbounds",n,bits])
+            lbc = RealLn._logbounds(3, 2, n, bits)
+            l2inf = Fraction(lbc[0], lbc[1])
+            l2sup = Fraction(lbc[2], lbc[3])
+            RealLn._logboundscache[(n, bits)] = (l2inf, l2sup)
+        l2 = RealLn._logboundscache[(n, bits)]
+        ly = RealLn._logbounds(xn, xd, n, bits)
+        lyinf = Fraction(ly[0], ly[1])
+        lysup = Fraction(ly[2], ly[3])
+        lower = m * l2[0] + lyinf
+        upper = m * l2[1] + lysup
+        return (lower.numerator, lower.denominator, upper.numerator, upper.denominator)
+
+    def _truncateNumDen(infnum, infden, bittol, vtrunc):
+        if infnum.bit_length() > bittol:
+            ninf = infnum << bittol if infnum > 0 else infnum * 2 ** bittol
+            ninf = (
+                -int(abs(ninf) // abs(infden)) - 1
+                if infnum < 0
+                else int(abs(ninf) // abs(infden))
+            )
+            # vtrunc stores an upper bound on the truncation
+            # error, which in this case
+            # is no more than 2**bittol per call.
+            return (ninf, 1 << bittol, vtrunc + 1)
+        else:
+            return (infnum, infden, vtrunc)
+
     def ev(self, n):
         # Use best approximation calculated so far
         # to save time when n is no greater than that
@@ -2048,14 +2168,17 @@ class RealLn(Real):
                 continue
             # a's interval is weakly within 1/2^nv
             # of the exact value of a
-            ainf = Fraction(max(0, av - 1), 1 << nv)
-            asup = Fraction(av + 1, 1 << nv)
+            ainfnum = max(0, av - 1)
+            ainfden = 1 << nv
+            asupnum = av + 1
+            asupden = 1 << nv
             # Do calculation
-            a = FInterval(ainf, asup).log(nv)
+            a = RealLn._log(ainfnum, ainfden, asupnum, asupden, nv, n + 8)
+            # if Fraction(ainfnum,ainfden)>Fraction(asupnum,asupden): raise ValueError
             # print([av,nv,a,float(a.sup-a.inf),1/(1<<n)])
             # Calculate n-bit approximation of
             # the two bounds
-            cinf = fracAreClose(a.inf, a.sup, n)
+            cinf = fracAreCloseND(a[0], a[1], a[2], a[3], n)
             if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
@@ -2217,7 +2340,7 @@ class RealMultiply(Real):
             return self.ev_v
         if n < self.ev_n:
             return self.ev_v >> (self.ev_n - n)
-        nv = n + 2
+        nv = n + 4
         while True:
             av = self.a.ev(nv)  # mul
             bv = self.b.ev(nv)  # mul
@@ -2226,9 +2349,8 @@ class RealMultiply(Real):
             if av >= 2 and bv >= 2:
                 a = (av - 1) * (bv - 1)
                 b = (av + 1) * (bv + 1)
-                cinf = fracAreClose(
-                    Fraction(a, 1 << (nv * 2)), Fraction(b, 1 << (nv * 2)), n
-                )
+                onenv2 = 1 << (nv * 2)
+                cinf = fracAreCloseND(a, onenv2, b, onenv2, n)
             else:
                 ainf = Fraction(av - 1, 1 << nv)
                 asup = Fraction(av + 1, 1 << nv)
@@ -2250,7 +2372,7 @@ class RealMultiply(Real):
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
                 return cinf
-            nv += 2
+            nv += 6
 
 REAL_858_1000 = RealFraction(Fraction(858, 1000))
 
@@ -2262,6 +2384,20 @@ def realNormalROU():
         b = REAL_858_1000 * RandUniform()
         c = -a * a * 4 * RealLn(a)
         if realIsLess(b * b, c):
+            if random.randint(0, 1) == 0:
+                return -b / a
+            return b / a
+
+def fpNormalROU():
+    # Generates a Gaussian random variate using
+    # the ratio of uniforms method.
+    while True:
+        a = random.random()
+        if a == 0:
+            continue
+        b = (858 / 1000) * random.random()
+        c = -a * a * 4 * math.log(a)
+        if b * b < c:
             if random.randint(0, 1) == 0:
                 return -b / a
             return b / a
@@ -2385,12 +2521,13 @@ if __name__ == "__main__":
     ru.ev(17)
 
     def routest():
+        # rou = [realNormalROU().ev(52) / 2 ** 52 for i in range(10000)]
         rou = [realNormalROU().ev(52) / 2 ** 52 for i in range(10000)]
-        dobucket(rou)
+        # dobucket(rou)
 
     def routest2():
-        rou = [random.normalvariate(0, 1) for i in range(10000)]
-        dobucket(rou)
+        rou = [fpNormalROU() for i in range(10000)]
+        # dobucket(rou)
 
     def routest3(rg):
         # rou = [random.normalvariate(0,1) for i in range(10000)]
@@ -2401,6 +2538,23 @@ if __name__ == "__main__":
         for i in range(300):
             g = realGamma(1.3)
             print(g.ev(30) / 2 ** 30)
+
+    import time
+    import cProfile
+
+    tm = time.time()
+    cProfile.run("routest()")
+    print(time.time() - tm)
+    t1 = 0
+    t2 = 0
+    tm = time.time()
+    routest()
+    t1 = time.time() - tm
+    tm = time.time()
+    routest2()
+    t2 = time.time() - tm
+    print([t1, t2, "times slower:", t1 / t2])
+    exit()
 
     # rr = RealLn(9)
     # for n in list(range(0, 32))+list(range(0,32)):

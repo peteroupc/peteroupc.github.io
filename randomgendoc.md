@@ -2836,7 +2836,7 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class RealFraction(Real)
-     |  RealFraction(a)
+     |  RealFraction(a, b=None)
      |
      |  Method resolution order:
      |      RealFraction
@@ -2845,7 +2845,7 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __init__(self, a)
+     |  __init__(self, a, b=None)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  __repr__(self)
@@ -3393,7 +3393,13 @@ FUNCTIONS
         - bx, by: Numerator and denominator of second shape parameter.
         - precision: Number of bits after the point that the result will contain.
 
+    fpNormalROU()
+
     fracAreClose(a, b, n)
+
+    fracAreCloseND(an, ad, bn, bd, n)
+
+    fracEV(sn, sd, n)
 
     genshape(rg, inshape)
         Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
