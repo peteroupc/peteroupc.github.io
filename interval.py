@@ -307,147 +307,17 @@ class FInterval:
         """ For convenience only. """
         return self.pow(v, 5)
 
-    def log(self, n):
+    def log(self, precision):
         if not FInterval._greaterThanZero(self.inf):
             raise ValueError
+        # Use precision 1 greater than requested, so that
+        # bounds will come (weakly) within 2^(precision+1) and thus
+        # strictly within 2^precision.
+        rli = RealLog(self.inf).ev(precision + 1) - 1
+        rls = RealLog(self.sup).ev(precision + 1) + 1
         return FInterval(
-            FInterval._logbounds(self.inf.numerator, self.inf.denominator, n).inf,
-            FInterval._logbounds(self.sup.numerator, self.sup.denominator, n).sup,
+            Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
         )
-
-    _logboundscache = {}
-
-    def _logbounds(num, den, n):
-        if num == 0 or den == 0 or (num < 0 and den > 0) or (den < 0 and num > 0):
-            raise ValueError
-        if num == den:
-            return FInterval(0)
-        if num == den * 2:  # log 2, special case not used in paper
-            num = 0
-            den = 1
-            for i in range(1, n + 1):
-                ad = i << i
-                num = num * ad + den
-                den *= ad
-            logden = (n + 1) << (n + 1)
-            lower = Fraction(num, den)
-            upper = lower + Fraction(1, logden) * 2
-            return FInterval(lower, upper)
-        if num > den and num * 2 <= den * 3:  # ... and (num/den)<=1.5
-            xmn = num - den
-            xmd = den
-            xva = xmn
-            xvb = xmd
-            # Numerator and denominator of lower bound
-            va = 0
-            vb = 1
-            vtrunc = 0
-            # print("--num=%s den=%s n=%d--" % (num,den,n))
-            for i in range(1, 2 * n + 1):
-                vc = xmn
-                vd = xmd * i
-                xmn *= xva
-                xmd *= xvb
-                if i % 2 == 0:
-                    # Subtract from lower bound
-                    ra = va * vd - vb * vc
-                    rb = vb * vd
-                    va = ra
-                    vb = rb
-                else:
-                    # Add to lower bound
-                    ra = va * vd + vb * vc
-                    rb = vb * vd
-                    va = ra
-                    vb = rb
-                # Truncate lower bound to mitigate "runaway" growth of
-                # numerator and denominator
-                if i % 4 == 0 or i == 2 * n:
-                    va, vb, vtrunc = FInterval._truncateNumDen(va, vb, n, vtrunc)
-                # print("va=%s vb=%s vtrunc=%d"%(va,vb,vtrunc))
-            # print([va, vb, vtrunc])
-            # Calculate upper bound
-            vc = xmn
-            vd = xmd * (2 * n + 1)
-            ua = va * vd + vb * vc
-            ub = vb * vd
-            # Add truncation error (vtrunc/2**bittol) to upper bound
-            if vtrunc > 0:
-                bittol = max(n * 4, 128)
-                tua = ua * 2 ** bittol + ub * vtrunc
-                tub = ub * 2 ** bittol
-                ua = tua
-                ub = tub
-            return FInterval._toTruncated(va, vb, ua, ub)
-        if num < den:
-            lb = FInterval._logbounds(den, num, n)
-            # NOTE: Correcting an error in arXiv version
-            # of the paper
-            lower = -lb.sup
-            upper = -lb.inf
-            return FInterval(lower, upper)
-        # now, x>2
-        # NOTE: Replacing 2 with 1.5, which leads to much
-        # faster convergence
-        m = 0
-        xn = num
-        xd = den
-        while xn * 2 > xd * 3:  # (xn/xd)>1.5
-            m += 1
-            xn *= 2  # Denominator of 1.5
-            xd *= 3  # Numerator of 1.5
-        if not (n in FInterval._logboundscache):
-            # Find logbounds for 1.5 and given accuracy level
-            FInterval._logboundscache[n] = FInterval._logbounds(3, 2, n)
-        l2 = FInterval._logboundscache[n]
-        ly = FInterval._logbounds(xn, xd, n)
-        lower = m * l2.inf + ly.inf
-        upper = m * l2.sup + ly.sup
-        return FInterval(lower, upper)
-
-    def _truncateNumDen(infnum, infden, v, vtrunc):
-        bittol = max(v * 4, 128)
-        if infnum.bit_length() > bittol:
-            ninf = infnum << bittol if infnum > 0 else infnum * 2 ** bittol
-            ninf = (
-                -int(abs(ninf) // abs(infden)) - 1
-                if infnum < 0
-                else int(abs(ninf) // abs(infden))
-            )
-            # vtrunc stores an upper bound on the truncation
-            # error, which in this case
-            # is no more than 2**bittol per call.
-            return (ninf, 1 << bittol, vtrunc + 1)
-        else:
-            return (infnum, infden, vtrunc)
-
-    def _toTruncated(infnum, infden, supnum, supden):
-        bittol = 128
-        if infnum < (1 << bittol) and supnum < (1 << bittol):
-            # print([infnum,supnum])
-            ret = Fraction(infnum, infden)
-            upper = Fraction(supnum, supden)
-            return FInterval(ret, upper)
-        elif ((supnum * infden - supden * infnum) * (1 << bittol)) < (infden * supden):
-            ret = Fraction(infnum, infden)
-            upper = Fraction(supnum, supden)
-            # print(float(upper-ret))
-            return FInterval(ret, upper)
-        else:
-            ninf = infnum * 2 ** bittol
-            ninf = (
-                -int(abs(ninf) // abs(infden)) - 1
-                if infnum < 0
-                else int(abs(ninf) // abs(infden))
-            )
-            nsup = supnum * 2 ** bittol
-            nsup = (
-                -int(abs(nsup) // abs(supden)) - 1
-                if supnum < 0
-                else int(abs(nsup) // abs(supden))
-            )
-            # print([ninf,nsup])
-            return FInterval(Fraction(ninf, 2 ** bittol), Fraction(nsup, 2 ** bittol))
 
     def _expbounds(x, n):
         x = x if isinstance(x, Fraction) else Fraction(x)
@@ -559,29 +429,6 @@ class FInterval:
                 raise ValueError
             return FInterval(-at.sup, -at.inf)
 
-    def truncate(self):
-        """Truncates the numerator and denominator of this interval's
-        bounds if it's relatively wide.  This can help improve performance
-        in arithmetic operations involving this interval, since it reduces
-        the work that needs to be done (especially in reductions to lowest
-        terms) when generating new Fractions as a result of these operations.
-        In Python in particular, working with Fractions is very slow."""
-        if (
-            self.sup.numerator.bit_length() < 64
-            and self.sup.denominator.bit_length() < 64
-            and self.inf.numerator.bit_length() < 64
-            and self.inf.denominator.bit_length() < 64
-        ):
-            return self
-        if self.sup - self.inf < Fraction(1, 2 ** 64):
-            return self
-        ninf = self.inf * 2 ** 64
-        ninf = int(ninf) - 1 if ninf < 0 else int(ninf)
-        nsup = self.sup * 2 ** 64
-        nsup = int(nsup) if nsup < 0 else int(nsup) + 1
-        ret = FInterval(Fraction(ninf, 2 ** 64), Fraction(nsup, 2 ** 64))
-        return ret
-
     def exp(self, n):
         return FInterval(
             FInterval._expbounds(self.inf, n).inf, FInterval._expbounds(self.sup, n).sup
@@ -683,7 +530,7 @@ def loggamma(k, v=4):
     if k <= 2:
         return FInterval(0)
     if not (v in _logpi2cache):
-        _logpi2cache[v] = (FInterval.pi(v * 2) * 2).log(v * 2).truncate()
+        _logpi2cache[v] = (FInterval.pi(v * 2) * 2).log(v * 2)
     # Implements the first listed convergent version of Stirling's formula
     # given in section 3 of R. Schumacher, "Rapidly Convergent Summation Formulas
     # involving Stirling Series", arXiv:1602.00336v1 [math.NT], 2016.
@@ -746,7 +593,7 @@ def logbinco(n, k, v=4):
         r = loggamma(n + 1, v) - loggamma(k + 1, v) * 2
     else:
         r = loggamma(n + 1, v) - loggamma(k + 1, v) - loggamma((n - k) + 1, v)
-    return r.truncate()
+    return r
 
 def logbinprob(n, k, v=4):
     # Log of binomial probability, that is, the log of the probability

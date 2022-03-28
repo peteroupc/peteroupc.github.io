@@ -2277,7 +2277,7 @@ CLASSES
      |
      |  lessThanScalar(self, a)
      |
-     |  log(self, n)
+     |  log(self, precision)
      |
      |  magnitude(self)
      |
@@ -2296,14 +2296,6 @@ CLASSES
      |  sqrt(self, n)
      |
      |  tan(self, n)
-     |
-     |  truncate(self)
-     |      Truncates the numerator and denominator of this interval's
-     |      bounds if it's relatively wide.  This can help improve performance
-     |      in arithmetic operations involving this interval, since it reduces
-     |      the work that needs to be done (especially in reductions to lowest
-     |      terms) when generating new Fractions as a result of these operations.
-     |      In Python in particular, working with Fractions is very slow.
      |
      |  union(v)
      |

@@ -2081,11 +2081,11 @@ def logsmall(av, n):
     avminus = (av - 1) << (16 - n)
     avplus = (av + 1) << (16 - n)
     # Calculate crude log
-    infcr = crudelog(av - 1)
-    supcr = crudelog(av + 1)
+    infcr = crudelog(avminus)
+    supcr = crudelog(avplus)
     # Tolerance adjustment
-    infcr = infcr - 2 if (av - 1) <= 271 else infcr - 1
-    supcr = supcr + 2 if (av - 1) <= 271 else supcr + 1
+    infcr = infcr - 2 if (avminus) <= 271 else infcr - 1
+    supcr = supcr + 2 if (avplus) <= 271 else supcr + 1
     return (infcr, 65536, supcr, 65536)
 
 def crudelog(av):
@@ -2259,7 +2259,7 @@ class RealLn(Real):
         if n < self.ev_n:
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
-        nv = max(self.nv_last, n + 4)
+        nv = n + 4
         while True:
             av = self.a.ev(nv)
             if av < 2:
@@ -2409,10 +2409,9 @@ class RealSqrt(Real):
             lower = ainf / upper
             asup = upper
 
-            a = FInterval(ainf, asup)
             # Calculate n-bit approximation of
             # the two bounds
-            cinf = fracAreClose(a.inf, a.sup, n)
+            cinf = fracAreClose(ainf, asup, n)
             if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
@@ -2682,8 +2681,8 @@ if __name__ == "__main__":
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
 
-    cpr()
-    exit()
+    # cpr()
+    # exit()
 
     # rr = RealLn(9)
     # for n in list(range(0, 32))+list(range(0,32)):
@@ -2693,6 +2692,19 @@ if __name__ == "__main__":
     # exit()
 
     ###################
+
+    _havesympy = False
+
+    def lntest(num, den):
+        global _havesympy
+        if not _havesympy:
+            return
+        frac = log(Fraction(num, den))
+        rr = RealLn(Fraction(num, den))
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("%d/%d, n=%d, ret=%d" % (num, den, n, ret))
 
     def rationaltest(num, den):
         frac = Fraction(num, den)
@@ -2749,6 +2761,13 @@ if __name__ == "__main__":
         if ru.ev(3) != ev3:
             raise ValueError(ru.ev(3))
 
+    try:
+        from sympy import log
+
+        _havesympy = True
+    except:
+        pass
+
     def randomrealtest():
         rutest(0x7F, 8, 2, 4)
         rutest(0x80, 8, 2, 4)
@@ -2757,6 +2776,14 @@ if __name__ == "__main__":
         rutest(0x40, 8, 1, 2)
         rutest(0x5F, 8, 1, 3)
         rutest(0x60, 8, 2, 3)
+        ru = RealLn(Fraction(1752140, 4790796))
+        ev = ru.ev(0)
+        if ev != -1 and ev != -2:
+            raise ValueError
+        for i in range(100):
+            num = random.randint(1, 10000000)
+            den = random.randint(1, 10000000)
+            lntest(num, den)
         for i in range(30000):
             num = random.randint(-10000000, 10000000)
             den = random.randint(1, 10000000)
