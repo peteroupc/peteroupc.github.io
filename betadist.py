@@ -1546,68 +1546,67 @@ class Real:
     def __repr__(a):
         return "Real"
 
-class RealSin(Real):
-    def __init__(self, a):
-        self.a = a if isinstance(a, Real) else RealFraction(a)
+class RealPi(Real):
+    def __init__(self, fraction=1):
+        self.fraction = Fraction(fraction)
+        if self.fraction < 0:
+            raise ValueError
         self.ev_n = -1
         self.ev_v = 0
 
     def __repr__(self):
-        return "RealSin(%s)" % (self.a)
-
-    def _sinbounds(x, n):
-        x = x if isinstance(x, Fraction) else Fraction(x)
-        m = 2 * n if x < 0 else 2 * n + 1
-        ret = Fraction(0)
-        fac = 1
-        for i in range(1, m + 1):
-            ret += (-1) ** (i - 1) * x ** (2 * i - 1) / fac
-            fac *= 2 * i * (2 * i + 1)
-        upbound = ret + (-1) ** (m + 1) * x ** (2 * (m + 1) - 1) / fac
-        if ret > upbound:
-            raise ValueError
-        return [ret, upbound]
+        return "RealPi(%s)" % (self.fraction)
 
     def ev(self, n):
-        # Use best approximation calculated so far
-        # to save time when n is no greater than that
-        # approximation's length.
-        # NOTE: Because of this feature, ev(n) can return
-        # inconsistent values across runs; all that it must do is
-        # return an n-bit approximation to the true result, and
-        # depending on the true result there may be one or
-        # two correct answers.
+        if self.fraction == 0:
+            return 0
         if self.ev_n == n:
             # print(["fast",self.ev_n,self.ev_v])
             return self.ev_v
         if n < self.ev_n:
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
-        nv = n // 3
+        k = 0
+        lower = Fraction(0)
+        upper = lower
         while True:
-            av = self.a.ev(nv)
-            if abs(av) < 2:
-                nv += 2
-                continue
-            # a's interval is weakly within 1/2^nv
-            # of the exact value of a
-            ainf = Fraction(av - 1, 1 << nv)
-            asup = Fraction(av + 1, 1 << nv)
-            # Do calculation
-            ss = RealSin._sinbounds(asup, nv)
-            ii = RealSin._sinbounds(ainf, nv)
-            # Calculate n-bit approximation of
-            # the two bounds
-            cinf = fracAreClose(min(ss[0], ii[0]), max(ss[1], ii[1]), n)
-            # print([nv,cinf,csup])
-            if cinf == csup:
+            # Do calculation (BBP formula)
+            upper += (
+                self.fraction
+                * (
+                    Fraction(4, 8 * k + 1)
+                    - Fraction(2, 8 * k + 4)
+                    - Fraction(1, 8 * k + 5)
+                    - Fraction(1, 8 * k + 6)
+                )
+                / 16 ** k
+            )
+            cinf = fracAreClose(lower, upper, n)
+            if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
                 self.ev_n = n
                 self.ev_v = cinf
                 return cinf
-            nv += 8
+            lower = upper
+            k += 1
+
+REALPI = RealPi()
+REALHALFPI = RealPi(Fraction(1, 2))
+
+class RealSin(Real):
+    def __init__(self, a):
+        self.a = a if isinstance(a, Real) else RealFraction(a)
+        self.a = RealCos(REALHALFPI - self.a)
+        self.ev_n = -1
+        self.ev_v = 0
+
+    def __repr__(self):
+        return "RealSin(%s)" % (self.a)
+
+    def ev(self, n):
+        return self.a.ev(n)
 
 def fracAreClose(a, b, n):
     # if a>b: raise ValueError
@@ -1654,9 +1653,19 @@ def fracAreCloseND(an, ad, bn, bd, n):
 
 class RealCos(Real):
     def __init__(self, a):
-        self.a = a if isinstance(a, Real) else RealFraction(a)
+        self.is_zero = False
+        if isinstance(a, Real):
+            self.a = a
+        else:
+            self.a = RealFraction(abs(a))
+            self.is_zero = a == 0
         self.ev_n = -1
         self.ev_v = 0
+        self.is_even = True
+        # TODO: Assumes 'a' is positive
+        while realIsLess(REALPI, self.a):
+            self.a = RealSubtract(self.a, REALPI)
+            self.is_even = not self.is_even
 
     def __repr__(self):
         return "RealCos(%s)" % (self.a)
@@ -1682,10 +1691,12 @@ class RealCos(Real):
         upbound = oldret
         lowbound = ret
         if lowbound > upbound:
-            raise ValueError("Sanity check failed")
+            raise ValueError("Sanity check failed: x=%d n=%d" % (x, n))
         return [1 + lowbound, 1 + upbound]
 
     def ev(self, n):
+        if self.is_zero:
+            return 1 << n
         # Use best approximation calculated so far
         # to save time when n is no greater than that
         # approximation's length.
@@ -1702,7 +1713,7 @@ class RealCos(Real):
             return self.ev_v >> (self.ev_n - n)
         nv = 2
         while True:
-            av = self.a.ev(nv)
+            av = abs(self.a.ev(nv))
             if abs(av) < 2:
                 nv += 2
                 continue
@@ -1717,7 +1728,8 @@ class RealCos(Real):
             # the two bounds
             cinf = min(ss[0], ii[0])
             csup = max(ss[1], ii[1])
-            # print([nv,float(csup-cinf),1/(1<<n)])
+            # print([nv,n,"a",av,"cinf",float(cinf/2**n),"csup",float(csup/2**n),
+            #   "even",self.is_even])
             cinf = fracAreClose(cinf, csup, n)
             # if nv>200:
             #   print([self.a,n,float(min(ss[0],ii[0])),float(max(ss[1],ii[1]))])
@@ -1728,6 +1740,8 @@ class RealCos(Real):
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
+                if not self.is_even:
+                    cinf = -cinf
                 self.ev_n = n
                 self.ev_v = cinf
                 return cinf
@@ -2313,52 +2327,6 @@ def realIsNegative(a):
             return True
         n += 2
 
-class RealPi(Real):
-    def __init__(self, fraction=1):
-        self.fraction = Fraction(fraction)
-        if self.fraction < 0:
-            raise ValueError
-        self.ev_n = -1
-        self.ev_v = 0
-
-    def __repr__(self):
-        return "RealPi(%s)" % (self.fraction)
-
-    def ev(self, n):
-        if self.fraction == 0:
-            return 0
-        if self.ev_n == n:
-            # print(["fast",self.ev_n,self.ev_v])
-            return self.ev_v
-        if n < self.ev_n:
-            # print(["faster",self.ev_n,self.ev_v])
-            return self.ev_v >> (self.ev_n - n)
-        k = 0
-        lower = Fraction(0)
-        upper = lower
-        while True:
-            # Do calculation (BBP formula)
-            upper += (
-                self.fraction
-                * (
-                    Fraction(4, 8 * k + 1)
-                    - Fraction(2, 8 * k + 4)
-                    - Fraction(1, 8 * k + 5)
-                    - Fraction(1, 8 * k + 6)
-                )
-                / 16 ** k
-            )
-            cinf = fracAreClose(lower, upper, n)
-            if cinf != None:
-                # In this case, cinf*ulp is strictly within 1 ulp of
-                # both bounds, and thus strictly within 1 ulp
-                # of the exact result
-                self.ev_n = n
-                self.ev_v = cinf
-                return cinf
-            lower = upper
-            k += 1
-
 def _truncatesup(sup, bits):
     nsup = sup * 2 ** bits
     nsup = int(nsup) if nsup < 0 else int(nsup) + 1
@@ -2684,13 +2652,6 @@ if __name__ == "__main__":
     # cpr()
     # exit()
 
-    # rr = RealLn(9)
-    # for n in list(range(0, 32))+list(range(0,32)):
-    #        ret = rr.ev(n)
-    #        if abs(Fraction(ret, 1 << n) - math.log(9)) >= Fraction(1,2**n):
-    #            raise ValueError
-    # exit()
-
     ###################
 
     _havesympy = False
@@ -2705,6 +2666,29 @@ if __name__ == "__main__":
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError("%d/%d, n=%d, ret=%d" % (num, den, n, ret))
+
+    TWOPI = RealPi(2)
+
+    def sincostest(num, den):
+        global _havesympy
+        if not _havesympy:
+            return
+        frac = sin(Fraction(num, den))
+        rr = RealSin(Fraction(num, den))
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("sin %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        frac = cos(Fraction(num, den))
+        rr = RealCos(Fraction(num, den))
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            try:
+                ret = rr.ev(n)
+            except:
+                print("cos %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+                raise
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("cos %d/%d, n=%d, ret=%d" % (num, den, n, ret))
 
     def rationaltest(num, den):
         frac = Fraction(num, den)
@@ -2762,7 +2746,7 @@ if __name__ == "__main__":
             raise ValueError(ru.ev(3))
 
     try:
-        from sympy import log
+        from sympy import log, sin, cos
 
         _havesympy = True
     except:
@@ -2780,6 +2764,13 @@ if __name__ == "__main__":
         ev = ru.ev(0)
         if ev != -1 and ev != -2:
             raise ValueError
+        ru = RealCos(Fraction(0, 1))
+        ev = ru.ev(0)
+        if ev != 1:
+            raise ValueError
+        ev = ru.ev(100)
+        if ev != 1 << 100:
+            raise ValueError
         for i in range(100):
             num = random.randint(1, 10000000)
             den = random.randint(1, 10000000)
@@ -2794,8 +2785,27 @@ if __name__ == "__main__":
             num2 = random.randint(-10000000, 10000000)
             den2 = random.randint(1, 10000000)
             addmultiplytest(num, den, num2, den2)
+        for i in range(300):
+            num = random.randint(0, 62700000)
+            den = 10000000
+            sincostest(num, den)
+        for i in range(300):
+            ru = RandUniform() * TWOPI
+            rr = RealSin(ru)
+            rs = math.sin(ru.ev(52) / 2 ** 52)
+            for n in list(range(0, 60)) + list(range(0, 60)):
+                ret = rr.ev(n)
+                if float(abs(Fraction(ret, 1 << n) - rs)) >= float(Fraction(1, 1 << n)):
+                    print(
+                        float(abs(Fraction(ret, 1 << n) - rs))
+                        - float(Fraction(1, 1 << n))
+                    )
+        sincostest(102900, 65536)
+        sincostest(102943, 65536)
+        sincostest(102944, 65536)
 
     randomrealtest()
+    exit()
 
     ###################
 
