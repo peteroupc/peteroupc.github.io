@@ -2261,8 +2261,6 @@ CLASSES
      |
      |  containedIn(self, y)
      |
-     |  cos(self, n)
-     |
      |  exp(self, n)
      |
      |  floor(self)
@@ -2287,9 +2285,9 @@ CLASSES
      |
      |  negate(self)
      |
-     |  pi(n)
+     |  pi(precision)
      |
-     |  pow(self, v, n)
+     |  pow(self, v, precision)
      |
      |  rem(self, v)
      |
@@ -3489,6 +3487,10 @@ FUNCTIONS
     psrn_sample(rg, psrn, digits=2)
 
     psrnexpo(rg)
+
+    realCeiling(a)
+
+    realFloor(a)
 
     realGamma(ml)
 

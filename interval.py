@@ -138,9 +138,15 @@ class FInterval:
     def sqrt(self, n):
         return self.pow(FInterval(0.5), n)
 
-    def pi(n):
-        ab = FInterval._atanbounds(1, n)
-        return ab * 4
+    def pi(precision):
+        # Use precision 1 greater than requested, so that
+        # bounds will come (weakly) within 2^(precision+1) and thus
+        # strictly within 2^precision.
+        rli = RealPi().ev(precision + 1)
+        return FInterval(
+            Fraction(rli - 1, 1 << (precision + 1)),
+            Fraction(rli + 1, 1 << (precision + 1)),
+        )
 
     def atan(self, n):
         return FInterval(
@@ -149,63 +155,48 @@ class FInterval:
         )
 
     def sin(self, n):
-        pi = FInterval.pi((n // 2) + 1)
-        if self.containedIn(FInterval(-pi.inf / 2, pi.inf / 2)):
-            return FInterval(
-                FInterval._sinbounds(self.inf, n).inf,
-                FInterval._sinbounds(self.sup, n).sup,
-            )
-        elif self.containedIn(FInterval(pi.sup / 2, pi.inf)):
-            return FInterval(
-                FInterval._sinbounds(self.sup, n).inf,
-                FInterval._sinbounds(self.inf, n).sup,
-            )
-        elif self.containedIn(FInterval(0, pi.inf)):
-            return FInterval(
-                min(
-                    FInterval._sinbounds(self.inf, n).inf,
-                    FInterval._sinbounds(self.sup, n).inf,
-                ),
-                1,
-            )
-        elif self.containedIn(FInterval(-pi.inf, 0)):
-            return self.negate().sin(n).negate()
-        else:
+        if self.sup - self.inf >= Fraction(62832, 10000):
             return FInterval(-1, 1)
+        halfpi = RealPi(Fraction(1, 2))
+        return FInterval._cos(halfpi - self.inf, halfpi - self.sup, precision)
 
-    def cos(self, n):
-        pi = FInterval.pi((n // 2) + 1)
-        if self.containedIn(FInterval(0, pi.inf)):
-            return FInterval(
-                FInterval._cosbounds(self.sup, n).inf,
-                FInterval._cosbounds(self.inf, n).sup,
-            )
-        elif self.containedIn(FInterval(-pi.inf, 0)):
-            return self.negate().cos(n)
-        elif self.containedIn(FInterval(-pi.inf / 2, pi.inf / 2)):
-            return FInterval(
-                min(
-                    FInterval._cosbounds(self.inf, n).inf,
-                    FInterval._cosbounds(self.sup, n).sup,
-                ),
-                1,
-            )
-        else:
+    def _cos(self, precision):
+        if self.sup - self.inf >= Fraction(62832, 10000):
             return FInterval(-1, 1)
+        return FInterval._cos(RealFraction(self.inf), RealFraction(self.sup), precision)
+
+    @staticmethod
+    def _cos(sup, inf, precision):
+        inffloor = realFloor(inf / RealPi())
+        supfloor = realFloor(sup / RealPi())
+        if abs(supfloor - inffloor) >= 2:
+            return FInterval(-1, 1)
+        rli = RealCos(inf).ev(precision + 1)
+        rls = RealCos(sup).ev(precision + 1)
+        precden = 1 << (precision + 1)
+        if rli < -precden or rli > precden or rls < -precden or rli > precden:
+            raise ValueError
+        if abs(supfloor - inffloor) == 1:
+            # Straddles pi boundaries
+            even = (inffloor >= 0 and inffloor % 2 == 0) or (
+                inffloor < 0 and inffloor % 2 == 1
+            )
+            # Even means descending then ascending
+            if even:
+                rlinf = -1
+            else:
+                rlinf = Fraction(max(-precden, min(rli - 1, rls - 1)), precden)
+            if not even:
+                rlsup = 1
+            else:
+                rlsup = Fraction(min(precden, max(rli + 1, rls + 1)), precden)
+        else:
+            rlinf = Fraction(max(-precden, min(rli - 1, rls - 1)), precden)
+            rlsup = Fraction(min(precden, max(rli + 1, rls + 1)), precden)
+        return FInterval(rlinf, rlsup)
 
     def tan(self, n):
-        pi = FInterval.pi(n + 5)
-        if not self.containedIn([-pi.inf / 2, pi.inf / 2]):
-            raise ValueError
-        sl = FInterval._sinbounds(self.inf, n + 5)
-        su = FInterval._sinbounds(self.sup, n + 5)
-        cl = FInterval._cosbounds(self.inf, n + 5)
-        cu = FInterval._cosbounds(self.sup, n + 5)
-        lower = sl.inf / cl.sup
-        upper = su.sup / cl.inf
-        if lower > upper:
-            raise ValueError
-        return FInterval(lower, upper)
+        raise NotImplementedError
 
     def isAccurateTo(self, v):
         # If upper bound on width is less than or equal to desired accuracy
@@ -276,7 +267,7 @@ class FInterval:
     def containedIn(self, y):
         return y.inf <= self.inf and self.sup <= y.sup
 
-    def pow(self, v, n):
+    def pow(self, v, precision):
         y = v if isinstance(v, FInterval) else FInterval(v)
         if y.inf == y.sup and int(y.inf) == y.inf and y.inf >= 0 and y.inf <= 32:
             # Special case: Integer power
@@ -293,15 +284,14 @@ class FInterval:
         if self.inf == self.sup and self.inf == 0:
             # Special case: 0
             return FInterval(0)
-        if y.inf == y.sup and y.inf == Fraction(1, 2):
-            # Square root special case
-            if not self.greaterEqualScalar(0):
-                raise ValueError
-            return FInterval(
-                FInterval._sqrtbounds(self.inf, n).inf,
-                FInterval._sqrtbounds(self.sup, n).sup,
-            )
-        return (self.log(n) * y).exp(n)
+        # Use precision 1 greater than requested, so that
+        # bounds will come (weakly) within 2^(precision+1) and thus
+        # strictly within 2^precision.
+        rli = RealPow(self.inf, v).ev(precision + 1) - 1
+        rls = RealPow(self.sup, v).ev(precision + 1) + 1
+        return FInterval(
+            Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
+        )
 
     def __pow__(self, v):
         """ For convenience only. """
@@ -313,38 +303,11 @@ class FInterval:
         # Use precision 1 greater than requested, so that
         # bounds will come (weakly) within 2^(precision+1) and thus
         # strictly within 2^precision.
-        rli = RealLog(self.inf).ev(precision + 1) - 1
-        rls = RealLog(self.sup).ev(precision + 1) + 1
+        rli = RealLn(self.inf).ev(precision + 1) - 1
+        rls = RealLn(self.sup).ev(precision + 1) + 1
         return FInterval(
             Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
         )
-
-    def _sinbounds(x, n):
-        x = x if isinstance(x, Fraction) else Fraction(x)
-        m = 2 * n if x < 0 else 2 * n + 1
-        ret = Fraction(0)
-        fac = 1
-        for i in range(1, m + 1):
-            ret += (-1) ** (i - 1) * x ** (2 * i - 1) / fac
-            fac *= 2 * i
-            fac *= 2 * i + 1
-        upbound = ret + (-1) ** (m + 1) * x ** (2 * (m + 1) - 1) / fac
-        if ret > upbound:
-            raise ValueError
-        return FInterval(ret, upbound)
-
-    def _cosbounds(x, n):
-        x = x if isinstance(x, Fraction) else Fraction(x)
-        m = 2 * n if x < 0 else 2 * n + 1
-        ret = Fraction(0)
-        fac = 2
-        for i in range(1, m):
-            ret += (-1) ** (i) * x ** (2 * i) / fac
-            fac *= (2 * i + 1) * (2 * i + 2)
-        lowbound = ret + (-1) ** m * x ** (2 * m) / fac
-        if lowbound > ret:
-            raise ValueError("Sanity check failed")
-        return FInterval(1 + lowbound, 1 + ret)
 
     def _sqrtbounds(x, n):  # x>=0; n is number of iterations
         x = x if isinstance(x, Fraction) else Fraction(x)

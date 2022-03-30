@@ -51,7 +51,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 ## Functions
 
 * `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
-* `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
+* `ln(a)` is the natural logarithm of `a`.
 * `exp(a)` is the inverse natural logarithm of `a`.  Also known as the base of natural logarithms raised to the power `a`, so that `exp(1)` is the base of natural logarithms commonly denoted _e_.
 * `pow(a, b)` is the number `a` raised to the power `b`.
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
@@ -67,6 +67,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 * `max(a, b)` is the larger of `a` and `b`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
 * `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
+* `rem(a, b)` is the part of `b` that does not divide evenly into `a`, where the result has the sign of `b`.  This operation is equivalent to `a - floor(a / b) * b`.
 * `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This function is equivalent to `(0 - floor(0 - a))`.
 
 **Notes:**
