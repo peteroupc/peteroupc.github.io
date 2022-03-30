@@ -178,9 +178,7 @@ class FInterval:
             raise ValueError
         if abs(supfloor - inffloor) == 1:
             # Straddles pi boundaries
-            even = (inffloor >= 0 and inffloor % 2 == 0) or (
-                inffloor < 0 and inffloor % 2 == 1
-            )
+            even = abs(inffloor) % 2 == 0
             # Even means descending then ascending
             if even:
                 rlinf = -1

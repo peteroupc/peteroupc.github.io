@@ -1724,14 +1724,13 @@ class RealCos(Real):
             # ainf will be less than pi due to argument reduction
             ainf = Fraction(av - 1, 1 << nv)
             asup = Fraction(av + 1, 1 << nv)
-            # TODO: For correctness, check whether 'asup'
-            # is greater than pi, and if so, replace lower bound with 0.
+            greaterThanPi = asup > Fraction(314159, 100000) and realIsLess(REALPI, asup)
             # Do calculation
             ss = RealCos._cosbounds(asup, nv, n)
             ii = RealCos._cosbounds(ainf, nv, n)
             # Calculate n-bit approximation of
             # the two bounds
-            cinf = min(ss[0], ii[0])
+            cinf = Fraction(-1) if greaterThanPi else min(ss[0], ii[0])
             csup = max(ss[1], ii[1])
             # print([nv,n,"a",av,"cinf",float(cinf/2**n),"csup",float(csup/2**n),
             #   "even",self.is_even])
