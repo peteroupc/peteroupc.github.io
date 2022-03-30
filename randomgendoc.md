@@ -2261,6 +2261,8 @@ CLASSES
      |
      |  containedIn(self, y)
      |
+     |  cos(self, precision)
+     |
      |  exp(self, n)
      |
      |  floor(self)
@@ -2291,7 +2293,7 @@ CLASSES
      |
      |  rem(self, v)
      |
-     |  sin(self, n)
+     |  sin(self, precision)
      |
      |  sqrt(self, n)
      |

@@ -1724,7 +1724,9 @@ class RealCos(Real):
             # ainf will be less than pi due to argument reduction
             ainf = Fraction(av - 1, 1 << nv)
             asup = Fraction(av + 1, 1 << nv)
-            greaterThanPi = asup > Fraction(314159, 100000) and realIsLess(REALPI, asup)
+            greaterThanPi = asup > Fraction(314159, 100000) and realIsLess(
+                REALPI, RealFraction(asup)
+            )
             # Do calculation
             ss = RealCos._cosbounds(asup, nv, n)
             ii = RealCos._cosbounds(ainf, nv, n)
@@ -1775,15 +1777,24 @@ class RealExp(Real):
             return (Fraction(1), Fraction(1))
         if x >= -1 and x < 0:
             ret = Fraction(0)
+            oldret = ret
             fac = 1
-            for i in range(0, 2 * (n + 1) + 1):
-                ret += x ** i / fac
-                fac *= i + 1
+            bitsshift = Fraction(1, 1 << (bits + 8))
             m = 2 * (n + 1) + 1
-            lowerbound = ret + x ** m / fac
-            if lowerbound > ret:
-                raise ValueError
-            return (lowerbound, ret)
+            for i in range(0, m + 1):
+                inc = x ** i / fac
+                ret += inc
+                # print([n,i,bits,"inc",float(inc),"ret",float(ret)])
+                if (i & 1) == 1 and abs(inc) < bitsshift:
+                    break
+                elif i < m:
+                    oldret = ret
+                    fac *= i + 1
+            upperbound = oldret
+            lowerbound = ret
+            if lowerbound > upperbound:
+                raise ValueError("Sanity check failed: x=%d n=%d" % (x, n))
+            return (lowerbound, upperbound)
         if x < -1:
             negfloor = -RealExp._fracfloor(x)
             ex = RealExp._expbounds(x / negfloor, n, bits)
@@ -1822,7 +1833,7 @@ class RealExp(Real):
         if n < self.ev_n:
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
-        nv = n // 2
+        nv = n
         # print("--exp nv=%s--" % (nv))
         while True:
             av = self.a.ev(nv)
@@ -1831,8 +1842,8 @@ class RealExp(Real):
             ainf = Fraction(av - 1, 1 << nv)
             asup = Fraction(av + 1, 1 << nv)
             # Do calculation
-            a = RealExp._exp(ainf, asup, nv, n + 8)
-            # print(["exp",nv,n,float(ainf),float(asup),float(a[0]),float(a[1])])
+            a = RealExp._exp(ainf, asup, nv, n)
+            # print(["exp",nv,n,float(ainf),float(asup),float(abs(a[0]-a[1]))])
             # Calculate n-bit approximation of
             # the two bounds
             cinf = fracAreClose(a[0], a[1], n)
@@ -2212,8 +2223,10 @@ class RealLn(Real):
                     vb = rb
                 # Truncate lower bound to mitigate "runaway" growth of
                 # numerator and denominator
-                if i % 4 == 0 or i == 2 * n:
+                # print(["befor",va.bit_length()])
+                if True or i % 4 == 0 or i == 2 * n:
                     va, vb, vtrunc = RealLn._truncateNumDen(va, vb, bittol, vtrunc)
+                # print(["after",va.bit_length()])
             # print("--done--")
             # Calculate upper bound
             vc = xmn
@@ -2226,6 +2239,13 @@ class RealLn(Real):
                 tub = ub * (1 << bittol)
                 ua = tua
                 ub = tub
+            ua, ub, utrunc = RealLn._truncateNumDen(ua, ub, bittol, 0)
+            if utrunc > 0:
+                tua = ua * (1 << bittol) + ub * utrunc
+                tub = ub * (1 << bittol)
+                ua = tua
+                ub = tub
+            # print(["end",va.bit_length(), ua.bit_length()])
             return (va, vb, ua, ub)
         if num < den:
             bounds = RealLn._logbounds(den, num, n, bits)
@@ -2248,6 +2268,7 @@ class RealLn(Real):
             # Find logbounds for 1.5 and given accuracy level
             # print(["logbounds",n,bits])
             lbc = RealLn._logbounds(3, 2, n, bits)
+            # print(lbc)
             l2inf = Fraction(lbc[0], lbc[1])
             l2sup = Fraction(lbc[2], lbc[3])
             RealLn._logboundscache[(n, bits)] = (l2inf, l2sup)
@@ -2311,7 +2332,8 @@ class RealLn(Real):
             # if Fraction(ainfnum,ainfden)>Fraction(asupnum,asupden): raise ValueError
             # print([n,"nv",nv,"av",av,[float(Fraction(a[0],a[1])),
             #    float(Fraction(a[2],a[3]))],float(Fraction(a[2],a[3])-Fraction(a[0],a[1])),
-            #   1/(1<<n)])
+            #   "lengths",len(str(a[0])),len(str(a[1])),len(str(a[2])),len(str(a[3])),
+            #    1/(1<<n)])
             # Calculate n-bit approximation of
             # the two bounds
             cinf = fracAreCloseND(a[0], a[1], a[2], a[3], n)
@@ -2319,11 +2341,12 @@ class RealLn(Real):
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
+                # print("--ln done--")
                 self.ev_n = n
                 self.ev_v = cinf
                 self.nv_last = nv + 4
                 return cinf
-            nv += 2
+            nv += 4
 
 def realFloor(a):
     if isinstance(a, RealFraction):
@@ -2626,14 +2649,21 @@ if __name__ == "__main__":
     import cProfile
 
     def ccos():
-        return RandUniform() ** 8
+        return RandUniform() ** 3
         # while True:
         #    r = RandUniform()
         #    if realIsLess(RandUniform(), RealCos(r)):
         #        return r
 
     def routest():
-        rou = [ccos().ev(52) / 2 ** 52 for i in range(10000)]
+        rou = []
+        for i in range(10000):
+            # print("--routest %d--"%(i))
+            rou.append(ccos().ev(52) / 2 ** 52)
+        dobucket(rou)
+
+    def routest2():
+        rou = [random.random() ** 3 for i in range(10000)]
         dobucket(rou)
 
     def cpr():

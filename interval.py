@@ -154,13 +154,13 @@ class FInterval:
             FInterval._atanbounds(self.sup, n).sup,
         )
 
-    def sin(self, n):
+    def sin(self, precision):
         if self.sup - self.inf >= Fraction(62832, 10000):
             return FInterval(-1, 1)
         halfpi = RealPi(Fraction(1, 2))
         return FInterval._cos(halfpi - self.inf, halfpi - self.sup, precision)
 
-    def _cos(self, precision):
+    def cos(self, precision):
         if self.sup - self.inf >= Fraction(62832, 10000):
             return FInterval(-1, 1)
         return FInterval._cos(RealFraction(self.inf), RealFraction(self.sup), precision)
