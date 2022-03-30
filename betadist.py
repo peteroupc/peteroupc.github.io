@@ -1662,7 +1662,6 @@ class RealCos(Real):
         self.ev_n = -1
         self.ev_v = 0
         self.is_even = True
-        # TODO: Assumes 'a' is positive
         while realIsLess(REALPI, self.a):
             self.a = RealSubtract(self.a, REALPI)
             self.is_even = not self.is_even
@@ -1756,6 +1755,50 @@ class RealExp(Real):
     def __repr__(self):
         return "RealExp(%s)" % (self.a)
 
+    @staticmethod
+    def _fracfloor(x):
+        ix = int(x)
+        if x >= 0:
+            return ix
+        if x != ix:
+            return ix - 1
+        return ix
+
+    @staticmethod
+    def _expbounds(x, n):
+        if x == 0:
+            return (Fraction(1), Fraction(1))
+        if x >= -1 and x < 0:
+            ret = Fraction(0)
+            fac = 1
+            for i in range(0, 2 * (n + 1) + 1):
+                ret += x ** i / fac
+                fac *= i + 1
+            m = 2 * (n + 1) + 1
+            bound = ret + x ** m / fac
+            if bound > ret:
+                raise ValueError
+            return (bound, ret)
+        if x < -1:
+            negfloor = -RealExp._fracfloor(x)
+            ex = RealExp._expbounds(x / negfloor, n)
+            lower = ex[0] ** negfloor
+            upper = ex[1] ** negfloor
+            if lower > upper:
+                raise ValueError
+            return (lower, upper)
+        else:
+            ex = RealExp._expbounds(-x, n)
+            lower = 1 / ex[1]
+            upper = 1 / ex[0]
+            if lower > upper:
+                raise ValueError
+            return (lower, upper)
+
+    @staticmethod
+    def _exp(inf, sup, n):
+        return (RealExp._expbounds(inf, n)[0], RealExp._expbounds(sup, n)[1])
+
     def ev(self, n):
         # Use best approximation calculated so far
         # to save time when n is no greater than that
@@ -1772,20 +1815,19 @@ class RealExp(Real):
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
         nv = n + 2
+        # print("--starting--")
         while True:
             av = self.a.ev(nv)
-            if av < 2:
-                nv += 2
-                continue
             # a's interval is weakly within 1/2^nv
             # of the exact value of a
-            ainf = Fraction(max(0, av - 1), 1 << nv)
+            ainf = Fraction(av - 1, 1 << nv)
             asup = Fraction(av + 1, 1 << nv)
             # Do calculation
-            a = FInterval(ainf, asup).exp(nv)
+            a = RealExp._exp(ainf, asup, nv)
+            # print([nv,n,float(ainf),float(asup),a])
             # Calculate n-bit approximation of
             # the two bounds
-            cinf = fracAreClose(a.inf, a.sup, n)
+            cinf = fracAreClose(a[0], a[1], n)
             if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
@@ -1793,7 +1835,7 @@ class RealExp(Real):
                 self.ev_n = n
                 self.ev_v = cinf
                 return cinf
-            nv += 2
+            nv += 4
 
 class RealPow(Real):
     def __init__(self, a, b):
@@ -2098,12 +2140,13 @@ def logsmall(av, n):
     infcr = crudelog(avminus)
     supcr = crudelog(avplus)
     # Tolerance adjustment
-    infcr = infcr - 2 if (avminus) <= 271 else infcr - 1
-    supcr = supcr + 2 if (avplus) <= 271 else supcr + 1
+    infcr = infcr - 2 if avminus <= 271 else infcr - 1
+    supcr = supcr + 2 if avplus <= 271 else supcr + 1
     return (infcr, 65536, supcr, 65536)
 
 def crudelog(av):
-    # Calculates an approximation of the natural logarithm of av/2^_bits.
+    # The CORDIC way to
+    # calculate an approximation of the natural logarithm of av/2^_bits.
     # When _bits=16, crudelog is accurate to 2/2^16 for av in [1, 271],
     # and to 1/2^16 in [272, 65536].
     _bits = 16
@@ -2635,6 +2678,12 @@ if __name__ == "__main__":
     import time
     import cProfile
 
+    def ccos():
+        while True:
+            r = RandUniform()
+            if realIsLess(RandUniform(), RealCos(r)):
+                return r
+
     def cpr():
         tm = time.time()
         cProfile.run("routest()")
@@ -2665,7 +2714,18 @@ if __name__ == "__main__":
         for n in list(range(0, 60)) + list(range(0, 60)):
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("%d/%d, n=%d, ret=%d" % (num, den, n, ret))
+                raise ValueError("ln %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+
+    def exptest(num, den):
+        global _havesympy
+        if not _havesympy:
+            return
+        frac = exp(Fraction(num, den))
+        rr = RealExp(Fraction(num, den))
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("exp %d/%d, n=%d, ret=%d" % (num, den, n, ret))
 
     TWOPI = RealPi(2)
 
@@ -2746,7 +2806,7 @@ if __name__ == "__main__":
             raise ValueError(ru.ev(3))
 
     try:
-        from sympy import log, sin, cos
+        from sympy import log, sin, cos, exp
 
         _havesympy = True
     except:
@@ -2789,17 +2849,13 @@ if __name__ == "__main__":
             num = random.randint(0, 62700000)
             den = 10000000
             sincostest(num, den)
+            num = random.randint(0, 62700)
+            den = 10000
+            sincostest(num, den)
         for i in range(300):
-            ru = RandUniform() * TWOPI
-            rr = RealSin(ru)
-            rs = math.sin(ru.ev(52) / 2 ** 52)
-            for n in list(range(0, 60)) + list(range(0, 60)):
-                ret = rr.ev(n)
-                if float(abs(Fraction(ret, 1 << n) - rs)) >= float(Fraction(1, 1 << n)):
-                    print(
-                        float(abs(Fraction(ret, 1 << n) - rs))
-                        - float(Fraction(1, 1 << n))
-                    )
+            num = random.randint(-100000000, 100000000)
+            den = 10000000
+            exptest(num, den)
         sincostest(102900, 65536)
         sincostest(102943, 65536)
         sincostest(102944, 65536)

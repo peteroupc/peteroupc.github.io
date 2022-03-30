@@ -319,37 +319,6 @@ class FInterval:
             Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
         )
 
-    def _expbounds(x, n):
-        x = x if isinstance(x, Fraction) else Fraction(x)
-        if x == 0:
-            return FInterval(1)
-        if x >= -1 and x < 0:
-            ret = Fraction(0)
-            fac = 1
-            for i in range(0, 2 * (n + 1) + 1):
-                ret += x ** i / fac
-                fac *= i + 1
-            m = 2 * (n + 1) + 1
-            bound = ret + x ** m / fac
-            if bound > ret:
-                raise ValueError
-            return FInterval(bound, ret)
-        if x < 1:
-            negfloor = -FInterval._fracfloor(x)
-            ex = FInterval._expbounds(x / negfloor, n)
-            lower = ex.inf ** negfloor
-            upper = ex.sup ** negfloor
-            if lower > upper:
-                raise ValueError
-            return FInterval(lower, upper)
-        else:
-            ex = FInterval._expbounds(-x, n)
-            lower = 1 / ex.sup
-            upper = 1 / ex.inf
-            if lower > upper:
-                raise ValueError
-            return FInterval(lower, upper)
-
     def _sinbounds(x, n):
         x = x if isinstance(x, Fraction) else Fraction(x)
         m = 2 * n if x < 0 else 2 * n + 1
@@ -430,8 +399,13 @@ class FInterval:
             return FInterval(-at.sup, -at.inf)
 
     def exp(self, n):
+        # Use precision 1 greater than requested, so that
+        # bounds will come (weakly) within 2^(precision+1) and thus
+        # strictly within 2^precision.
+        rli = RealExp(self.inf).ev(precision + 1) - 1
+        rls = RealExp(self.sup).ev(precision + 1) + 1
         return FInterval(
-            FInterval._expbounds(self.inf, n).inf, FInterval._expbounds(self.sup, n).sup
+            Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
         )
 
     def __repr__(self):
