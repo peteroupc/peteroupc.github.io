@@ -1767,39 +1767,38 @@ class RealExp(Real):
         return ix
 
     @staticmethod
-    def _expbounds(x, n, bits):
+    def _expbounds(x, bits):
         if x == 0:
             return (Fraction(1), Fraction(1))
         if x >= -1 and x < 0:
-            ret = Fraction(0)
-            oldret = ret
-            fac = 1
-            bitsshift = Fraction(1, 1 << (bits + 8))
-            m = 2 * (n + 1) + 1
-            for i in range(0, m + 1):
-                inc = x ** i / fac
-                ret += inc
-                # print([n,i,bits,"inc",float(inc),"ret",float(ret)])
-                if (i & 1) == 1 and abs(inc) < bitsshift:
+            num = x.numerator
+            den = x.denominator
+            fpi = FPInterval(num + den, den, bits)
+            fppow = FPInterval(num, den, bits)
+            i = 2
+            fac = 2
+            # print(fpi)
+            while True:
+                fppow.mulnumden(num, den)
+                c = fppow.copy()
+                c.mulnumden(1, fac)
+                fpi.addintv(c)
+                i += 1
+                fac *= i
+                # print([bits,i,c])
+                if c.infn == 0:
                     break
-                elif i < m:
-                    oldret = ret
-                    fac *= i + 1
-            upperbound = oldret
-            lowerbound = ret
-            if lowerbound > upperbound:
-                raise ValueError("Sanity check failed: x=%d n=%d" % (x, n))
-            return (lowerbound, upperbound)
+            return (Fraction(fpi.infn, fpi.infd), Fraction(fpi.supn, fpi.supd))
         if x < -1:
             negfloor = -RealExp._fracfloor(x)
-            ex = RealExp._expbounds(x / negfloor, n, bits)
+            ex = RealExp._expbounds(x / negfloor, bits)
             lower = ex[0] ** negfloor
             upper = ex[1] ** negfloor
             if lower > upper:
                 raise ValueError
             return (lower, upper)
         else:
-            ex = RealExp._expbounds(-x, n, bits)
+            ex = RealExp._expbounds(-x, bits)
             lower = 1 / ex[1]
             upper = 1 / ex[0]
             if lower > upper:
@@ -1807,10 +1806,10 @@ class RealExp(Real):
             return (lower, upper)
 
     @staticmethod
-    def _exp(inf, sup, n, bits):
+    def _exp(inf, sup, bits):
         return (
-            RealExp._expbounds(inf, n, bits)[0],
-            RealExp._expbounds(sup, n, bits)[1],
+            RealExp._expbounds(inf, bits)[0],
+            RealExp._expbounds(sup, bits)[1],
         )
 
     def ev(self, n):
@@ -1837,7 +1836,7 @@ class RealExp(Real):
             ainf = Fraction(av - 1, 1 << nv)
             asup = Fraction(av + 1, 1 << nv)
             # Do calculation
-            a = RealExp._exp(ainf, asup, nv, n)
+            a = RealExp._exp(ainf, asup, nv + 4)
             # print(["exp",nv,n,float(ainf),float(asup),float(abs(a[0]-a[1]))])
             # Calculate n-bit approximation of
             # the two bounds
@@ -2456,7 +2455,11 @@ class RealLn(Real):
             fpi = FPInterval(num - den, den, bits)
             fppow = FPInterval(num - den, den, bits)
             i = 2
-            # print(fpi)
+            iters = bittol
+            # ensure iterations is even so that the last term in the
+            # series is added not subtracted
+            if iters % 1 == 1:
+                iters += 1
             while i < bittol:
                 fppow.mulnumden(num - den, den)
                 c = fppow.copy()
@@ -2468,7 +2471,7 @@ class RealLn(Real):
                     fpi.addintv(c)
                 # print([i,fpi])
                 i += 1
-                if c.infn == 0:
+                if c.infn == 0 and i % 2 == 1:
                     break
             return (fpi.infn, fpi.infd, fpi.supn, fpi.supd)
         if num < den:
@@ -2885,21 +2888,21 @@ if __name__ == "__main__":
     import cProfile
 
     def ccos():
-        return RandUniform() ** 3
+        return RandUniform() ** (3.01)
         # while True:
         #    r = RandUniform()
         #    if realIsLess(RandUniform(), RealCos(r)):
         #        return r
 
-    def routest_():
+    def routest():
         rou = []
         for i in range(10000):
             # print("--routest %d--"%(i))
             rou.append(ccos().ev(52) / 2 ** 52)
         dobucket(rou)
 
-    def routest2_():
-        rou = [random.random() ** 3 for i in range(10000)]
+    def routest2():
+        rou = [random.random() ** 3.01 for i in range(10000)]
         dobucket(rou)
 
     def cpr():
