@@ -1737,11 +1737,6 @@ class RealCos(Real):
             # print([nv,n,"a",av,"cinf",float(cinf/2**n),"csup",float(csup/2**n),
             #   "even",self.is_even])
             cinf = fracAreClose(cinf, csup, n)
-            # if nv>200:
-            #   print([self.a,n,float(min(ss[0],ii[0])),float(max(ss[1],ii[1]))])
-            #   print(["supdiff",float(abs(ss[0]-ss[1]))])
-            #   print(["infdiff",float(abs(ii[0]-ii[1]))])
-            #   raise ValueError
             if cinf != None:
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
@@ -1858,14 +1853,59 @@ class RealExp(Real):
 
 class RealPow(Real):
     def __init__(self, a, b):
+        self.powint = None
+        self.r = None
         self.a = a if isinstance(a, Real) else RealFraction(a)
-        self.b = b if isinstance(b, Real) else RealFraction(b)
-        self.r = RealExp(RealLn(self.a) * self.b)
+        if isinstance(b, int) and b >= 0:
+            self.powint = b
+        else:
+            self.b = b if isinstance(b, Real) else RealFraction(b)
+            self.r = RealExp(RealLn(self.a) * self.b)
+        self.ev_n = -1
+        self.ev_v = 0
 
     def __repr__(self):
         return "RealPow(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
+        if self.powint != None:
+            if self.powint == 0:
+                return 1 << n
+            if self.powint == 1:
+                return self.a.ev(n)
+            if self.ev_n == n:
+                # print(["fast",self.ev_n,self.ev_v])
+                return self.ev_v
+            if n < self.ev_n:
+                # print(["faster",self.ev_n,self.ev_v])
+                return self.ev_v >> (self.ev_n - n)
+            nv = n
+            while True:
+                av = self.a.ev(nv)  # div
+                if abs(av) < 2:
+                    nv += 4
+                    continue
+                # a's interval is weakly within 1/2^nv
+                # of the exact value of 'a'
+                onenv = 1 << nv
+                ainf = Fraction(av - 1, onenv)
+                asup = Fraction(av + 1, onenv)
+                if True:
+                    # Do calculation
+                    a = ainf ** self.powint
+                    c = asup ** self.powint
+                    # Calculate n-bit approximation of
+                    # the two bounds
+                    # print([av, bv, float(a), float(b), float(c), float(d)])
+                    cinf = fracAreClose(min([a, c]), max([a, c]), n)
+                if cinf != None:
+                    # In this case, cinf*ulp is strictly within 1 ulp of
+                    # both bounds, and thus strictly within 1 ulp
+                    # of the exact result
+                    self.ev_n = n
+                    self.ev_v = cinf
+                    return cinf
+                nv += 4
         return self.r.ev(n)
 
 class RealDivide(Real):
@@ -2069,8 +2109,9 @@ class RealAdd(Real):
 
 from interval import FInterval
 
+# floor(atanh(1/2^i)*2^29)
 ArcTanHTable = [
-    0,
+    0,  # Infinity
     294906490,
     137123709,
     67461703,
@@ -2151,7 +2192,7 @@ def crudelog(av):
     ry = avx - (1 << _arcTanFrac)
     rz = 0
     for i in range(1, len(ArcTanHTable)):
-        iters = 2 if i == 4 or i == 13 else 1
+        iters = 2 if i > 1 and ((i - 1) % 3) == 0 else 1
         for m in range(iters):
             x = rx >> i
             y = ry >> i
@@ -2164,6 +2205,145 @@ def crudelog(av):
                 ry -= x
                 rz += ArcTanHTable[i]
     return _roundedshiftraw(rz, _arcTanBitDiff - 1)
+
+# 10-degree Chebyshev approximation of ln(x) on [1, 1.0625].
+# Absolute error is bounded by 1.82e-21 (about 68.9 bits precision).
+LNPOLY2 = [
+    Fraction(
+        -28986367995118693560815763349978591117027361355259,
+        10000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        9701016418120346375490548765948153643195749510911,
+        1000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -5293428508298339461585286804118193022153079502429,
+        250000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        9128341044462277537616148366082205992474798520103,
+        250000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -46484540308997630146456595253831770558539480110741,
+        1000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        2164149239176768949706401740647716834310320723931,
+        50000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -2277520101777210216624487352491152051412991187863,
+        78125000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        2769586135136842854366433064949899687141147754863,
+        200000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -44065812906678733229734775796033610611955924744053,
+        10000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        84410095422382073563181466894198558528831751957027,
+        100000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -18416818573462270724777988103011973623809120390977,
+        250000000000000000000000000000000000000000000000000,
+    ),
+]
+
+# 10-degree Chebyshev approximation of ln(x) on [1.0625, 1.5].
+# Absolute error is bounded by 4.06e-13 (about 41.16 bits precision).
+LNPOLY3 = [
+    Fraction(
+        -13476514299119388971296440703878263005361644498323,
+        5000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        15820733263963548106665347826303069139616369891289,
+        2000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -7029078737135890255291720562034247383719826974047,
+        500000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        19710989671687628739846760093774990941573432177053,
+        1000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -2037344716536559494732584191745116420299873890067,
+        100000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        15379705006556301361866459699897448308337323964407,
+        1000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -16771998524807928238167265926685172122201488243649,
+        2000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        32203139826896968401066009824960024757623226380369,
+        10000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -41361557800270845393100269272356411667051919216251,
+        50000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        3193410719912744872038076912214453914545530974751,
+        25000000000000000000000000000000000000000000000000,
+    ),
+    Fraction(
+        -44869015578168616384361695335469706981160439395793,
+        5000000000000000000000000000000000000000000000000000,
+    ),
+]
+
+class FPInterval:
+    def __init__(self, n, d, prec):
+        self.infn = n
+        self.infd = d
+        self.supn = n
+        self.supd = d
+        self.prec = prec
+        self.oneprec = 1 << prec
+
+    def _truncate(self):
+        if self.infd.bit_length() < self.prec or self.supd.bit_length() < self.prec:
+            # NOTE: Python's "//" does a floor division
+            self.infn = (self.infn * self.oneprec) // self.infd  # Floor division
+            self.supn = -((-self.supn * self.oneprec) // self.infd)  # Ceiling division
+            self.infd = self.oneprec
+            self.supd = self.oneprec
+
+    def addnumden(self, n, d):
+        infn = self.infn * d + self.infd * n
+        infd = self.infd * d
+        supn = self.supn * d + self.supd * n
+        supd = self.supd * d
+        self._truncate()
+
+    def mulnumden(self, n, d):
+        an = self.infn * n
+        ad = self.infd * d
+        bn = self.supn * n
+        bd = self.supd * d
+        if Fraction(an, ad) < Fraction(bn, bd):
+            self.infn = an
+            self.infd = ad
+            self.supn = bn
+            self.supd = bd
+        else:
+            self.infn = bn
+            self.infd = bd
+            self.supn = an
+            self.supd = ad
+        self._truncate()
 
 class RealLn(Real):
     def __init__(self, a):
@@ -2188,11 +2368,83 @@ class RealLn(Real):
         #  A Library for Interval Arithmetic", arXiv:0708.3721 [cs.MS], 2007.
         # Unfortunately, at least the arXiv version has some errors.
         bittol = bits * 2
+        threshnum = 5
+        threshden = 4
         if num == 0 or den == 0 or (num < 0 and den > 0) or (den < 0 and num > 0):
             raise ValueError
         if num == den:
             return (0, 1, 0, 1)
-        if num > den and num * 2 <= den * 3:  # ... and (num/den)<=1.5
+        if (
+            num > den and num * threshden <= den * threshnum
+        ):  # ... and (num/den)<=threshold
+            if True and num * 16 <= den * 17 and bits <= 68:  # (num/den)<=1.0625 ...
+                x = Fraction(num, den)
+                poly = LNPOLY2
+                fr = poly[0] + x * (
+                    poly[1]
+                    + x
+                    * (
+                        poly[2]
+                        + x
+                        * (
+                            poly[3]
+                            + x
+                            * (
+                                poly[4]
+                                + x
+                                * (
+                                    poly[5]
+                                    + x
+                                    * (
+                                        poly[6]
+                                        + x
+                                        * (
+                                            poly[7]
+                                            + x
+                                            * (poly[8] + x * (poly[9] + x * (poly[10])))
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                nu = int(fr * (1 << bits))
+                return (max(0, nu - 1), 1 << bits, nu + 1, 1 << bits)
+            elif True and bits <= 41:
+                x = Fraction(num, den)
+                poly = LNPOLY3
+                fr = poly[0] + x * (
+                    poly[1]
+                    + x
+                    * (
+                        poly[2]
+                        + x
+                        * (
+                            poly[3]
+                            + x
+                            * (
+                                poly[4]
+                                + x
+                                * (
+                                    poly[5]
+                                    + x
+                                    * (
+                                        poly[6]
+                                        + x
+                                        * (
+                                            poly[7]
+                                            + x
+                                            * (poly[8] + x * (poly[9] + x * (poly[10])))
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                nu = int(fr * (1 << bits))
+                return (max(0, nu - 1), 1 << bits, nu + 1, 1 << bits)
             xmn = num - den
             xmd = den
             xva = xmn
@@ -2254,21 +2506,20 @@ class RealLn(Real):
             # First two is infimum; last two is supremum
             return (-bounds[2], bounds[3], -bounds[0], bounds[1])
         # now, x>2
-        # NOTE: Replacing 2 (used in paper) with 1.5, which leads to much
+        # NOTE: Replacing 2 (used in paper) with a smaller threshold that leads to much
         # faster convergence
         m = 0
         xn = num
         xd = den
-        while xn * 2 > xd * 3:  # (xn/xd)>1.5
+        while xn * threshden > xd * threshnum:  # (xn/xd)>threshold
             m += 1
-            xn *= 2  # Denominator of 1.5
-            xd *= 3  # Numerator of 1.5
+            xn *= threshden  # Denominator of threshold
+            xd *= threshnum  # Numerator of threshold
         # print("m=%d n=%d"%(m,n))
         if not ((n, bits) in RealLn._logboundscache):
-            # Find logbounds for 1.5 and given accuracy level
-            # print(["logbounds",n,bits])
-            lbc = RealLn._logbounds(3, 2, n, bits)
-            # print(lbc)
+            # Find logbounds for threshold and given accuracy level
+            lbc = RealLn._logbounds(threshnum, threshden, n, bits)
+            # print(["logbounds",n,bits,lbc])
             l2inf = Fraction(lbc[0], lbc[1])
             l2sup = Fraction(lbc[2], lbc[3])
             RealLn._logboundscache[(n, bits)] = (l2inf, l2sup)
@@ -2330,10 +2581,24 @@ class RealLn(Real):
                 # Do calculation
                 a = RealLn._log(ainfnum, ainfden, asupnum, asupden, nv, n + 8)
             # if Fraction(ainfnum,ainfden)>Fraction(asupnum,asupden): raise ValueError
-            # print([n,"nv",nv,"av",av,[float(Fraction(a[0],a[1])),
-            #    float(Fraction(a[2],a[3]))],float(Fraction(a[2],a[3])-Fraction(a[0],a[1])),
-            #   "lengths",len(str(a[0])),len(str(a[1])),len(str(a[2])),len(str(a[3])),
-            #    1/(1<<n)])
+            if False:
+                print(
+                    [
+                        n,
+                        "nv",
+                        nv,
+                        "av",
+                        av,
+                        [float(Fraction(a[0], a[1])), float(Fraction(a[2], a[3]))],
+                        float(Fraction(a[2], a[3]) - Fraction(a[0], a[1])),
+                        "lengths",
+                        len(str(a[0])),
+                        len(str(a[1])),
+                        len(str(a[2])),
+                        len(str(a[3])),
+                        1 / (1 << n),
+                    ]
+                )
             # Calculate n-bit approximation of
             # the two bounds
             cinf = fracAreCloseND(a[0], a[1], a[2], a[3], n)
@@ -2679,9 +2944,6 @@ if __name__ == "__main__":
         routest2()
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
-
-    cpr()
-    exit()
 
     ###################
 

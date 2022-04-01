@@ -1515,6 +1515,8 @@ FUNCTIONS
 
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
+    LNPOLY2 = [Fraction(-28986367995118693560815763349978591117...00000000...
+    LNPOLY3 = [Fraction(-13476514299119388971296440703878263005...00000000...
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
@@ -2443,6 +2445,7 @@ NAME
 
 CLASSES
     builtins.object
+        FPInterval
         Real
             RandPSRN
             RandUniform
@@ -2461,6 +2464,27 @@ CLASSES
             RealSubtract
         ShapeSampler
         ShapeSampler2
+
+    class FPInterval(builtins.object)
+     |  FPInterval(n, d, prec)
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, n, d, prec)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  addnumden(self, n, d)
+     |
+     |  mulnumden(self, n, d)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
 
     class RandPSRN(Real)
      |  RandPSRN(a)
@@ -3504,6 +3528,8 @@ FUNCTIONS
 
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
+    LNPOLY2 = [Fraction(-28986367995118693560815763349978591117...00000000...
+    LNPOLY3 = [Fraction(-13476514299119388971296440703878263005...00000000...
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
