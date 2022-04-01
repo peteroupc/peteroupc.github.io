@@ -2313,19 +2313,75 @@ class FPInterval:
         self.prec = prec
         self.oneprec = 1 << prec
 
+    def setprec(self, prec):
+        self.prec = prec
+        self.oneprec = 1 << prec
+        self._truncate()
+
+    def copy(self):
+        r = FPInterval(0, 1, self.prec)
+        r.infn = self.infn
+        r.infd = self.infd
+        r.supn = self.supn
+        r.supd = self.supd
+        return r
+
     def _truncate(self):
-        if self.infd.bit_length() < self.prec or self.supd.bit_length() < self.prec:
+        if self.infd.bit_length() > self.prec or self.supd.bit_length() > self.prec:
             # NOTE: Python's "//" does a floor division
             self.infn = (self.infn * self.oneprec) // self.infd  # Floor division
             self.supn = -((-self.supn * self.oneprec) // self.infd)  # Ceiling division
             self.infd = self.oneprec
             self.supd = self.oneprec
 
+    def __repr__(self):
+        return "FPInterval(%s,%s,%s,%s,%d)" % (
+            self.infn,
+            self.infd,
+            self.supn,
+            self.supd,
+            self.prec,
+        )
+
+    def addintv(self, intv):
+        infn = self.infn * intv.infd + self.infd * intv.infn
+        infd = self.infd * intv.infd
+        supn = self.supn * intv.supd + self.supd * intv.supn
+        supd = self.supd * intv.supd
+        if infd == 0:
+            raise ValueError
+        if supd == 0:
+            raise ValueError
+        self.infn = infn
+        self.infd = infd
+        self.supn = supn
+        self.supd = supd
+        self._truncate()
+
+    def subintv(self, intv):
+        infn = self.infn * intv.supd - self.infd * intv.supn
+        infd = self.infd * intv.supd
+        supn = self.supn * intv.infd - self.supd * intv.infn
+        supd = self.supd * intv.infd
+        if infd == 0:
+            raise ValueError
+        if supd == 0:
+            raise ValueError
+        self.infn = infn
+        self.infd = infd
+        self.supn = supn
+        self.supd = supd
+        self._truncate()
+
     def addnumden(self, n, d):
         infn = self.infn * d + self.infd * n
         infd = self.infd * d
         supn = self.supn * d + self.supd * n
         supd = self.supd * d
+        self.infn = infn
+        self.infd = infd
+        self.supn = supn
+        self.supd = supd
         self._truncate()
 
     def mulnumden(self, n, d):
@@ -2333,7 +2389,7 @@ class FPInterval:
         ad = self.infd * d
         bn = self.supn * n
         bd = self.supd * d
-        if Fraction(an, ad) < Fraction(bn, bd):
+        if an * bd < ad * bn:
             self.infn = an
             self.infd = ad
             self.supn = bn
@@ -2343,7 +2399,9 @@ class FPInterval:
             self.infd = bd
             self.supn = an
             self.supd = ad
+        # print(["mul0",self.infn/self.infd,self.supn/self.supd])
         self._truncate()
+        # print(["mul1",self.infn/self.infd,self.supn/self.supd])
 
 class RealLn(Real):
     def __init__(self, a):
@@ -2355,21 +2413,17 @@ class RealLn(Real):
     def __repr__(self):
         return "RealLn(%s)" % (self.a)
 
-    def _log(infnum, infden, supnum, supden, n, bits):
-        inf = RealLn._logbounds(infnum, infden, n, bits)
-        sup = RealLn._logbounds(supnum, supden, n, bits)
+    def _log(infnum, infden, supnum, supden, bits):
+        inf = RealLn._logbounds(infnum, infden, bits)
+        sup = RealLn._logbounds(supnum, supden, bits)
         return (inf[0], inf[1], sup[2], sup[3])
 
     _logboundscache = {}
 
-    def _logbounds(num, den, n, bits):
-        # See interval arithmetic described in:
-        # Daumas, M., Lester, D., Muñoz, C., "Verified Real Number Calculations:
-        #  A Library for Interval Arithmetic", arXiv:0708.3721 [cs.MS], 2007.
-        # Unfortunately, at least the arXiv version has some errors.
-        bittol = bits * 2
+    def _logbounds(num, den, bits):
         threshnum = 5
         threshden = 4
+        bittol = bits
         if num == 0 or den == 0 or (num < 0 and den > 0) or (den < 0 and num > 0):
             raise ValueError
         if num == den:
@@ -2378,136 +2432,53 @@ class RealLn(Real):
             num > den and num * threshden <= den * threshnum
         ):  # ... and (num/den)<=threshold
             if True and num * 16 <= den * 17 and bits <= 68:  # (num/den)<=1.0625 ...
-                x = Fraction(num, den)
                 poly = LNPOLY2
-                fr = poly[0] + x * (
-                    poly[1]
-                    + x
-                    * (
-                        poly[2]
-                        + x
-                        * (
-                            poly[3]
-                            + x
-                            * (
-                                poly[4]
-                                + x
-                                * (
-                                    poly[5]
-                                    + x
-                                    * (
-                                        poly[6]
-                                        + x
-                                        * (
-                                            poly[7]
-                                            + x
-                                            * (poly[8] + x * (poly[9] + x * (poly[10])))
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-                nu = int(fr * (1 << bits))
-                return (max(0, nu - 1), 1 << bits, nu + 1, 1 << bits)
+                fpi = FPInterval(poly[10].numerator, poly[10].denominator, bits)
+                i = 9
+                while i >= 0:
+                    fpi.mulnumden(num, den)
+                    fpi.addnumden(poly[i].numerator, poly[i].denominator)
+                    i -= 1
+                if fpi.infn == fpi.supn and fpi.infd == fpi.supd:
+                    raise ValueError
+                return (max(0, fpi.infn), fpi.infd, fpi.supn, fpi.supd)
             elif True and bits <= 41:
-                x = Fraction(num, den)
                 poly = LNPOLY3
-                fr = poly[0] + x * (
-                    poly[1]
-                    + x
-                    * (
-                        poly[2]
-                        + x
-                        * (
-                            poly[3]
-                            + x
-                            * (
-                                poly[4]
-                                + x
-                                * (
-                                    poly[5]
-                                    + x
-                                    * (
-                                        poly[6]
-                                        + x
-                                        * (
-                                            poly[7]
-                                            + x
-                                            * (poly[8] + x * (poly[9] + x * (poly[10])))
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-                nu = int(fr * (1 << bits))
-                return (max(0, nu - 1), 1 << bits, nu + 1, 1 << bits)
-            xmn = num - den
-            xmd = den
-            xva = xmn
-            xvb = xmd
-            # Numerator and denominator of lower bound
-            va = 0
-            vb = 1
-            vtrunc = 0
-            # print("--num=%s den=%s n=%d bits=%d--" % (num,den,n,bits))
-            for i in range(1, 2 * n + 1):
-                oldva = va
-                oldvb = vb
-                vc = xmn
-                vd = xmd * i
-                xmn *= xva
-                xmd *= xvb
+                fpi = FPInterval(poly[10].numerator, poly[10].denominator, bits)
+                i = 9
+                while i >= 0:
+                    fpi.mulnumden(num, den)
+                    fpi.addnumden(poly[i].numerator, poly[i].denominator)
+                    i -= 1
+                if fpi.infn == fpi.supn and fpi.infd == fpi.supd:
+                    raise ValueError
+                return (max(0, fpi.infn), fpi.infd, fpi.supn, fpi.supd)
+            fpi = FPInterval(num - den, den, bits)
+            fppow = FPInterval(num - den, den, bits)
+            i = 2
+            # print(fpi)
+            while i < bittol:
+                fppow.mulnumden(num - den, den)
+                c = fppow.copy()
+                c.mulnumden(1, i)
+                # print([i,c])
                 if i % 2 == 0:
-                    # Subtract from lower bound
-                    ra = va * vd - vb * vc
-                    rb = vb * vd
-                    va = ra
-                    vb = rb
+                    fpi.subintv(c)
                 else:
-                    # Add to lower bound
-                    ra = va * vd + vb * vc
-                    rb = vb * vd
-                    va = ra
-                    vb = rb
-                # Truncate lower bound to mitigate "runaway" growth of
-                # numerator and denominator
-                # print(["befor",va.bit_length()])
-                if True or i % 4 == 0 or i == 2 * n:
-                    va, vb, vtrunc = RealLn._truncateNumDen(va, vb, bittol, vtrunc)
-                # print(["after",va.bit_length()])
-            # print("--done--")
-            # Calculate upper bound
-            vc = xmn
-            vd = xmd * (2 * n + 1)
-            ua = va * vd + vb * vc
-            ub = vb * vd
-            # Add truncation error (vtrunc/2^bittol) to upper bound
-            if vtrunc > 0:
-                tua = ua * (1 << bittol) + ub * vtrunc
-                tub = ub * (1 << bittol)
-                ua = tua
-                ub = tub
-            ua, ub, utrunc = RealLn._truncateNumDen(ua, ub, bittol, 0)
-            if utrunc > 0:
-                tua = ua * (1 << bittol) + ub * utrunc
-                tub = ub * (1 << bittol)
-                ua = tua
-                ub = tub
-            # print(["end",va.bit_length(), ua.bit_length()])
-            return (va, vb, ua, ub)
+                    fpi.addintv(c)
+                # print([i,fpi])
+                i += 1
+                if c.infn == 0:
+                    break
+            return (fpi.infn, fpi.infd, fpi.supn, fpi.supd)
         if num < den:
-            bounds = RealLn._logbounds(den, num, n, bits)
+            bounds = RealLn._logbounds(den, num, bits)
             # NOTE: Correcting an error in arXiv version
             # of the paper
             # First two is infimum; last two is supremum
             return (-bounds[2], bounds[3], -bounds[0], bounds[1])
-        # now, x>2
-        # NOTE: Replacing 2 (used in paper) with a smaller threshold that leads to much
-        # faster convergence
+        # now, x>1.5
+        # ln(x) = m*ln(1.5)+ln(x/1.5**m)
         m = 0
         xn = num
         xd = den
@@ -2516,15 +2487,15 @@ class RealLn(Real):
             xn *= threshden  # Denominator of threshold
             xd *= threshnum  # Numerator of threshold
         # print("m=%d n=%d"%(m,n))
-        if not ((n, bits) in RealLn._logboundscache):
+        if not (bits in RealLn._logboundscache):
             # Find logbounds for threshold and given accuracy level
-            lbc = RealLn._logbounds(threshnum, threshden, n, bits)
+            lbc = RealLn._logbounds(threshnum, threshden, bits)
             # print(["logbounds",n,bits,lbc])
             l2inf = Fraction(lbc[0], lbc[1])
             l2sup = Fraction(lbc[2], lbc[3])
-            RealLn._logboundscache[(n, bits)] = (l2inf, l2sup)
-        l2 = RealLn._logboundscache[(n, bits)]
-        ly = RealLn._logbounds(xn, xd, n, bits)
+            RealLn._logboundscache[bits] = (l2inf, l2sup)
+        l2 = RealLn._logboundscache[bits]
+        ly = RealLn._logbounds(xn, xd, bits)
         lyinf = Fraction(ly[0], ly[1])
         lysup = Fraction(ly[2], ly[3])
         lower = m * l2[0] + lyinf
@@ -2579,7 +2550,7 @@ class RealLn(Real):
                 asupnum = av + 1
                 asupden = 1 << nv
                 # Do calculation
-                a = RealLn._log(ainfnum, ainfden, asupnum, asupden, nv, n + 8)
+                a = RealLn._log(ainfnum, ainfden, asupnum, asupden, nv + 4)
             # if Fraction(ainfnum,ainfden)>Fraction(asupnum,asupden): raise ValueError
             if False:
                 print(
@@ -2920,14 +2891,14 @@ if __name__ == "__main__":
         #    if realIsLess(RandUniform(), RealCos(r)):
         #        return r
 
-    def routest():
+    def routest_():
         rou = []
         for i in range(10000):
             # print("--routest %d--"%(i))
             rou.append(ccos().ev(52) / 2 ** 52)
         dobucket(rou)
 
-    def routest2():
+    def routest2_():
         rou = [random.random() ** 3 for i in range(10000)]
         dobucket(rou)
 
@@ -2944,6 +2915,9 @@ if __name__ == "__main__":
         routest2()
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
+
+    cpr()
+    exit()
 
     ###################
 

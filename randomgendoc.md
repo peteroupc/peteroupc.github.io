@@ -2473,9 +2473,20 @@ CLASSES
      |  __init__(self, n, d, prec)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  addintv(self, intv)
+     |
      |  addnumden(self, n, d)
      |
+     |  copy(self)
+     |
      |  mulnumden(self, n, d)
+     |
+     |  setprec(self, prec)
+     |
+     |  subintv(self, intv)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
