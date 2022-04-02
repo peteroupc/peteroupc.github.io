@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2021/12/16"><meta name="citation_online_date" content="2021/12/16"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2022/04/02"><meta name="citation_online_date" content="2022/04/02"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -341,7 +341,12 @@ END METHOD
 
 <p>The following pseudocode presents methods to convert RGB colors to and from different binary color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):</p>
 
-<pre>// Converts 0-1 format to N/N/N format as an integer.
+<pre>METHOD round(x):
+   if floor(x)&lt;0.5: return floor(x)
+   else: return ceil(b)
+END METHOD
+
+// Converts 0-1 format to N/N/N format as an integer.
 METHOD ToNNN(rgb, scale)
    sm1 = scale - 1
    return round(rgb[2]*sm1) * scale * scale + round(rgb[1]*sm1) * scale +
@@ -366,12 +371,12 @@ METHOD From555(rgb): return FromNNN(rgb, 32)
 METHOD From888(rgb): return FromNNN(rgb, 256)
 METHOD From161616(rgb): return FromNNN(rgb, 65536)
 
-METHOD To565(rgb, scale)
+METHOD To565(rgb)
    return round(rgb[2] * 31) * 32 * 64 + round(rgb[1] * 63) * 32 +
          round(rgb[0] * 31)
 END METHOD
 
-METHOD From565(rgb, scale)
+METHOD From565(rgb)
    r = rem(rgb, 32)
    g = rem(floor(rgb / 32.0), 64)
    b = rem(floor(rgb / (32.0 * 64.0)), 32)
@@ -412,9 +417,15 @@ METHOD HexToNum(x)
 END METHOD
 
 METHOD ColorToHtml(rgb)
-   r = round(rgb[0] * 255)
-   g = round(rgb[1] * 255)
-   b = round(rgb[2] * 255)
+   r = (rgb[0] * 255)
+   g = (rgb[1] * 255)
+   b = (rgb[2] * 255)
+   if floor(r)&lt;0.5: r=floor(r)
+   else: r=ceil(r)
+   if floor(g)&lt;0.5: g=floor(g)
+   else: g=ceil(g)
+   if floor(b)&lt;0.5: b=floor(b)
+   else: b=ceil(b)
    return [&quot;#&quot;,
      NumToHex(rem(floor(r/16),16)), NumToHex(rem(r, 16)),
      NumToHex(rem(floor(g/16),16)), NumToHex(rem(g, 16)),
@@ -1712,7 +1723,9 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
     END METHOD
 
     METHOD ColorMapDiscrete(colormap, value)
-       return colormap[round(value * (N - 1))]
+       vn1=value*(N-1)
+       if floor(vn1)&lt;0.5: return colormap[floor(vn1)]
+       return colormap[ceil(vn1)]
     END METHOD
 </pre>
 

@@ -66,7 +66,6 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 * `min(a, b)` is the smaller of `a` and `b`.
 * `max(a, b)` is the larger of `a` and `b`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
-* `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
 * `rem(a, b)` is the part of `b` that does not divide evenly into `a`, where the result has the sign of `b`.  This operation is equivalent to `a - floor(a / b) * b`.
 * `ceil(a)` is the lowest integer that is greater than or equal to `a`.  This function is equivalent to `(0 - floor(0 - a))`.
 

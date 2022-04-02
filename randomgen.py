@@ -2586,22 +2586,10 @@ class RandomGen:
         if sides == 1:
             return dice
         ret = 0
-        if dice > 50:
-            # If there are many dice to roll,
-            # use a faster approach, noting that
-            # the dice-roll distribution approaches
-            # a "discrete" normal distribution as the
-            # number of dice increases.
-            mean = dice * (sides + 1) * 0.5
-            sigma = math.sqrt(dice * (sides * sides - 1) / 12)
-            ret = -1
-            while ret < dice or ret > dice * sides:
-                ret = round(self.normal(mean, sigma))
-        else:
-            i = 0
-            while i < dice:
-                ret = ret + self.rndintrange(1, sides)
-                i = i + 1
+        i = 0
+        while i < dice:
+            ret = ret + self.rndintrange(1, sides)
+            i = i + 1
         ret = ret + bonus
         if ret < 0:
             ret = 0

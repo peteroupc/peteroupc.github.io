@@ -253,6 +253,11 @@ There are many ways to store RGB and RGBA colors in these formats as integers or
 
 The following pseudocode presents methods to convert RGB colors to and from different binary color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):
 
+    METHOD round(x):
+       if floor(x)<0.5: return floor(x)
+       else: return ceil(b)
+    END METHOD
+
     // Converts 0-1 format to N/N/N format as an integer.
     METHOD ToNNN(rgb, scale)
        sm1 = scale - 1
@@ -278,12 +283,12 @@ The following pseudocode presents methods to convert RGB colors to and from diff
     METHOD From888(rgb): return FromNNN(rgb, 256)
     METHOD From161616(rgb): return FromNNN(rgb, 65536)
 
-    METHOD To565(rgb, scale)
+    METHOD To565(rgb)
        return round(rgb[2] * 31) * 32 * 64 + round(rgb[1] * 63) * 32 +
              round(rgb[0] * 31)
     END METHOD
 
-    METHOD From565(rgb, scale)
+    METHOD From565(rgb)
        r = rem(rgb, 32)
        g = rem(floor(rgb / 32.0), 64)
        b = rem(floor(rgb / (32.0 * 64.0)), 32)
@@ -322,9 +327,15 @@ The following pseudocode presents methods to convert RGB colors to and from the 
     END METHOD
 
     METHOD ColorToHtml(rgb)
-       r = round(rgb[0] * 255)
-       g = round(rgb[1] * 255)
-       b = round(rgb[2] * 255)
+       r = (rgb[0] * 255)
+       g = (rgb[1] * 255)
+       b = (rgb[2] * 255)
+       if floor(r)<0.5: r=floor(r)
+       else: r=ceil(r)
+       if floor(g)<0.5: g=floor(g)
+       else: g=ceil(g)
+       if floor(b)<0.5: b=floor(b)
+       else: b=ceil(b)
        return ["#",
          NumToHex(rem(floor(r/16),16)), NumToHex(rem(r, 16)),
          NumToHex(rem(floor(g/16),16)), NumToHex(rem(g, 16)),
@@ -1425,7 +1436,9 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
         END METHOD
 
         METHOD ColorMapDiscrete(colormap, value)
-           return colormap[round(value * (N - 1))]
+           vn1=value*(N-1)
+           if floor(vn1)<0.5: return colormap[floor(vn1)]
+           return colormap[ceil(vn1)]
         END METHOD
 
 > **Example:** The idiom `ColorMapContinuous(colormap, 1 - value)` gets a continuous color from the reversed version of a color map.
