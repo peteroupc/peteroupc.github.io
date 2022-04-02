@@ -2319,19 +2319,6 @@ CLASSES
      |  __weakref__
      |      list of weak references to the object (if defined)
 
-FUNCTIONS
-    bernoullinum(n)
-
-    logbinco(n, k, v=4)
-
-    logbinprob(n, k, v=4)
-
-    loggamma(k, v=4)
-
-    logpoisson(lamda, n, v=4)
-
-    stirling1(n, k)
-
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
 
@@ -3714,7 +3701,13 @@ FUNCTIONS
           rational or floating-point numbers rather than the fixed-precision
           'float' type of Python, which usually has 53 bits of precision.
 
+    logbinco(n, k)
+
+    logbinprob(n, k)
+
     loggammahelper(n, precision)
+
+    logpoisson(lamda, n)
 
     logsmall(av, n)
 

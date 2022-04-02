@@ -1821,6 +1821,28 @@ class _RealLogGammaIntHelper(Real):
                 return cinf
             nv += 6
 
+def logbinco(n, k):
+    # Log binomial coefficient.
+    if k + 1 == (n - k) + 1:
+        r = RealLogGammaInt(n + 1) - RealLogGammaInt(k + 1) * 2
+    else:
+        r = (
+            RealLogGammaInt(n + 1)
+            - RealLogGammaInt(k + 1)
+            - RealLogGammaInt((n - k) + 1)
+        )
+    return r
+
+def logbinprob(n, k):
+    # Log of binomial probability, that is, the log of the probability
+    # that exactly k zeros occur among n unbiased random bits.
+    divisor = RealLn(2) * n  # ln(2)*n = ln(2**n)
+    return logbinco(n, k) - divisor
+
+def logpoisson(lamda, n):
+    # Log of the probability that a Poisson(lamda) random number is n.
+    return RealLn(lamda) * n - lamda - RealLogGammaInt(n + 1)
+
 class RealArcTan(Real):
     def __init__(self, a):
         self.frac = None
@@ -1833,6 +1855,12 @@ class RealArcTan(Real):
                 self.r = RealNegate(RealArcTan(RealNegate(self.a)))
             elif realIsLess(RealFraction(1), self.a):
                 self.r = REALHALFPI - RealArcTan(1 / self.a)
+            elif realIsLess(RealFraction(Fraction(1, 4)), self.a):
+                # Further argument reduction (eq. 36 in MathWorld
+                # article on inverse tangent).
+                self.r = RealArcTan(Fraction(1, 4)) + RealArcTan(
+                    RealDivide(4 * self.a - 1, self.a + 4)
+                )
         else:
             self.a = RealFraction(a)
             # print("--- %s ---"%(a))
@@ -1846,6 +1874,12 @@ class RealArcTan(Real):
                 self.r = RealNegate(RealArcTan(RealNegate(self.a)))
             elif a > 1:
                 self.r = REALHALFPI - RealArcTan(Fraction(1) / a)
+            elif a > Fraction(1, 4):
+                # Further argument reduction (eq. 36 in MathWorld
+                # article on inverse tangent).
+                self.r = RealArcTan(Fraction(1, 4)) + RealArcTan(
+                    Fraction(4 * a - 1, a + 4)
+                )
             # print("--- frac %s ---"%(a))
 
     def __repr__(self):
@@ -1853,8 +1887,6 @@ class RealArcTan(Real):
 
     def _arctanbounds(x, bits):
         # Assert that x is in [0, 1].
-        # TODO: Use argument reduction to further bound
-        # x away from 1; the convergence is slower as x approaches 1.
         if x > 1:
             raise ValueError
         if x < 0:
@@ -3326,11 +3358,6 @@ if __name__ == "__main__":
         routest2()
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
-
-    from sympy import *
-
-    # for i in range(6,20):
-    #   print([i,RealLogGammaInt(i).ev(30),floor(loggamma(i)*2**30).n()])
 
     # exit()
     # cpr();exit()
