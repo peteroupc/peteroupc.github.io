@@ -2596,7 +2596,7 @@ class RandomGen:
         return ret
 
     def _ierf(self, x):
-        """ Inverse error function. """
+        """ Approximation of the inverse error function. """
         coeffs = [
             0.3333333333333333,
             0.23333333333333333,

@@ -509,20 +509,22 @@ The pseudocode below shows an approximate implementation of the [**error functio
         // line can be added:
         // if v>=6: return 1
         i=1
-        ret=0
-        zp=-(v*v)
-        zval=1.0
-        den=1.0
+        fac=1
+        dosub=true
+        ret=v
         while i < 100
-            r=v*zval/den
-            den=den+2
-            ret=ret+r
+            zval=zval*v*v
+            den=fac*(2*i+1)
+            c=zval/den
+            if dosub: ret=ret-c
+            else: ret=ret+c
             // NOTE: EPSILON can be pow(10,14),
             // for example.
-            if abs(r)<EPSILON: break
-            if i==1: zval=zp
-            else: zval = zval*zp/i
+            if abs(c)<EPSILON: break
             i = i + 1
+            fac=fac*i
+            if dosub: dosub=false
+            else: dosub=true
         end
         return ret*2/sqrt(pi)
     END METHOD

@@ -1843,9 +1843,117 @@ def logpoisson(lamda, n):
     # Log of the probability that a Poisson(lamda) random number is n.
     return RealLn(lamda) * n - lamda - RealLogGammaInt(n + 1)
 
+class RealErf(Real):
+    def __init__(self, a):
+        self.a = a
+        self.r = _RealErfHelper(self.a) * 2 / RealSqrt(REALPI)
+        self.r2 = _RealErfHelper(self.a)
+
+    def __repr__(self):
+        return "RealErf(%s)" % (self.a)
+
+    def ev(self, n):
+        return self.r.ev(n)
+
+class _RealErfHelper(Real):
+    def __init__(self, a):
+        self.r = None
+        self.ev_n = -1
+        self.ev_v = 0
+        if isinstance(a, Real):
+            self.a = a
+            if realIsNegative(self.a):
+                self.r = RealNegate(_RealErfHelper(RealNegate(self.a)))
+        else:
+            self.a = RealFraction(a)
+            # print("--- %s ---"%(a))
+            if a == 0:
+                self.r = RealFraction(0)
+            elif a < 0:
+                self.r = RealNegate(_RealErfHelper(RealNegate(self.a)))
+
+    def __repr__(self):
+        return "RealErf(%s)" % (self.a)
+
+    def _erfbounds(x, bits):
+        if x < 0:
+            raise ValueError
+        zval = FPInterval(x.numerator, x.denominator, bits)
+        fpi = zval.copy()
+        xnsq = x.numerator ** 2
+        xdsq = x.denominator ** 2
+        i = 1
+        fac = 1
+        dosub = True
+        while True:
+            zval.mulnumden(xnsq, xdsq)
+            c = zval.copy()
+            den = fac * (2 * i + 1)
+            # print([i,fac,den])
+            c.mulnumden(1, den)
+            if dosub:
+                fpi.subintv(c)
+            else:
+                fpi.addintv(c)
+            # print([float(x),bits,i,dosub,float(Fraction(c.infn, c.infd)), float(Fraction(c.supn, c.supd))])
+            # print([float(x),bits,i,dosub,float(Fraction(fpi.infn, fpi.infd)), float(Fraction(fpi.supn, fpi.supd))])
+            if c.infn == 0 and not dosub:
+                break
+            i += 1
+            fac *= i
+            dosub = not dosub
+        return (Fraction(fpi.infn, fpi.infd), Fraction(fpi.supn, fpi.supd))
+
+    def ev(self, n):
+        if self.r != None:
+            return self.r.ev(n)
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
+        nv = n
+        while True:
+            av = abs(self.a.ev(nv))
+            if abs(av) < 2:
+                nv += 2
+                continue
+            # a's interval is weakly within 1/2^nv
+            # of the exact value of a.
+            # ainf will be on [0, 1] due to argument reduction
+            ainf = Fraction(av - 1, 1 << nv)
+            asup = Fraction(av + 1, 1 << nv)
+            # Do calculation
+            ss = _RealErfHelper._erfbounds(asup, nv + 8)
+            ii = _RealErfHelper._erfbounds(ainf, nv + 8)
+            # Calculate n-bit approximation of
+            # the two bounds
+            cinf = min(ss[0], ii[0])
+            csup = max(ss[1], ii[1])
+            # if nv>200: raise ValueError
+            # print([nv,n,"a",av,"cinf",float(cinf/2**n),
+            #  "csup",float(csup/2**n)])
+            cinf = fracAreClose(cinf, csup, n)
+            if cinf != None:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
+                return cinf
+            nv += 6
+
 class RealArcTan(Real):
     def __init__(self, a):
-        self.frac = None
         self.r = None
         self.ev_n = -1
         self.ev_v = 0
@@ -3359,6 +3467,11 @@ if __name__ == "__main__":
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
 
+    for i in range(10):
+        r = random.random() * 6 - 3
+        print([r, RealErf(r).disp(), math.erf(r)])
+
+    exit()
     # exit()
     # cpr();exit()
 

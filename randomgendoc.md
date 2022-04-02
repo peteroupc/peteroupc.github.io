@@ -2440,6 +2440,7 @@ CLASSES
             RealArcTan2
             RealCos
             RealDivide
+            RealErf
             RealExp
             RealFraction
             RealLn
@@ -2875,6 +2876,62 @@ CLASSES
      |  Methods defined here:
      |
      |  __init__(self, a, b)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __pow__(a, b)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  isNegative(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealErf(Real)
+     |  RealErf(a)
+     |
+     |  Method resolution order:
+     |      RealErf
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  __repr__(self)
