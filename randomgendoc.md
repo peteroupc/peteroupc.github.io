@@ -2515,6 +2515,8 @@ CLASSES
      |
      |  ev(self, n)
      |
+     |  isNegative()
+     |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
      |
@@ -2541,8 +2543,6 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  disp(a)
-     |
-     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -2841,6 +2841,8 @@ CLASSES
      |
      |  ev(self, n)
      |
+     |  isNegative()
+     |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
      |
@@ -2867,8 +2869,6 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  disp(a)
-     |
-     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:

@@ -1768,6 +1768,9 @@ class RealExp(Real):
     def __repr__(self):
         return "RealExp(%s)" % (self.a)
 
+    def isNegative():
+        return False
+
     @staticmethod
     def _fracfloor(x):
         ix = int(x)
@@ -1867,13 +1870,19 @@ class RealPow(Real):
         self.baseint = None
         self.r = None
         self.is_sqrt = False
-        self.a = a if isinstance(a, Real) else RealFraction(a)
+        if isinstance(a, Real):
+            self.a = a
+        else:
+            fr = Fraction(a)
+            if fr.numerator == fr.denominator:
+                self.baseint = int(fr)
+            self.a = RealFraction(fr)
         if isinstance(b, int) and b >= 0:
             self.powint = b
         elif isinstance(b, Fraction) and b == Fraction(1, 2):
             self.is_sqrt = True
             self.b = b
-            self.r = RealExp(RealLn(self.a) / 2)
+            self.r = None
         else:
             self.b = b if isinstance(b, Real) else RealFraction(b)
             self.r = RealExp(RealLn(self.a) * self.b)
@@ -1885,8 +1894,46 @@ class RealPow(Real):
 
     def ev(self, n):
         if self.is_sqrt:
-            # TODO: Implement square root special case
-            pass
+            # Square root special case
+            if self.ev_n == n:
+                # print(["fast",self.ev_n,self.ev_v])
+                return self.ev_v
+            if n < self.ev_n:
+                # print(["faster",self.ev_n,self.ev_v])
+                return self.ev_v >> (self.ev_n - n)
+            if self.baseint != None:
+                if self.baseint < 0:
+                    raise ValueError
+                if self.baseint == 0:
+                    return 0
+                self.ev_v = math.isqrt(self.baseint << n)
+                self.ev_n = n
+                return self.ev_v
+            nv = n + 2
+            while True:
+                av = self.a.ev(nv)  # div
+                if abs(av) < 2:
+                    nv += 4
+                    continue
+                # a's interval is weakly within 1/2^nv
+                # of the exact value of 'a'
+                if True:
+                    # Do calculation
+                    # NOTE: The underlying base must not be a perfect
+                    # square, to avoid infinite loops
+                    aisqrt = math.isqrt((av - 1) << nv)
+                    assqrt = math.isqrt((av + 1) << nv) + 1
+                    # Calculate n-bit approximation of
+                    # the two bounds
+                    cinf = fracAreCloseND(aisqrt, 1 << nv, assqrt + 1, 1 << nv, n)
+                if cinf != None:
+                    # In this case, cinf*ulp is strictly within 1 ulp of
+                    # both bounds, and thus strictly within 1 ulp
+                    # of the exact result
+                    self.ev_n = n
+                    self.ev_v = cinf
+                    return cinf
+                nv += 4
         if self.powint != None:
             if self.powint == 0:
                 return 1 << n
@@ -2006,6 +2053,9 @@ class RandPSRN(Real):
             raise NotImplementedError("Negative PSRN not supported")
         self.psrn = a
 
+    def isNegative():
+        return True
+
     def __repr__(self):
         return "RandPSRN(%s)" % (self.psrn)
 
@@ -2034,7 +2084,7 @@ class RandUniform(Real):
         self.count = 0
 
     def isNegative(self):
-        return false
+        return False
 
     def __repr__(self):
         return "RandUniform(%s,%s)" % (self.bits, self.count)
@@ -2898,11 +2948,11 @@ if __name__ == "__main__":
 
     def routest():
         rou = [realGamma(2).ev(52) / 2 ** 52 for i in range(10000)]
-        # dobucket(rou)
+        dobucket(rou)
 
     def routest2():
         rou = [random.gammavariate(2, 1) for i in range(10000)]
-        # dobucket(rou)
+        dobucket(rou)
 
     def routest3(rg):
         # rou = [random.normalvariate(0,1) for i in range(10000)]
@@ -2949,11 +2999,14 @@ if __name__ == "__main__":
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
 
+    cpr()
+    exit()
+
     ###################
 
     _havesympy = False
 
-    def lntest(num, den):
+    def lnsqrttest(num, den):
         global _havesympy
         if not _havesympy:
             return
@@ -2963,6 +3016,12 @@ if __name__ == "__main__":
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError("ln %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        frac = sqrt(Fraction(num, den))
+        rr = RealSqrt(Fraction(num, den))
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("sqrt %d/%d, n=%d, ret=%d" % (num, den, n, ret))
 
     def exptest(num, den):
         global _havesympy
@@ -3095,7 +3154,7 @@ if __name__ == "__main__":
         for i in range(500):
             num = random.randint(1, 10000000)
             den = random.randint(1, 10000000)
-            lntest(num, den)
+            lnsqrttest(num, den)
         print("rationaltest")
         for i in range(30000):
             num = random.randint(-10000000, 10000000)
