@@ -1540,6 +1540,9 @@ class Real:
     def __rsub__(a, b):
         return RealSubtract(b, a)
 
+    def isNegative(self):
+        raise NotImplementedError
+
     def disp(a):
         return a.ev(30) / 2 ** 30
 
@@ -1653,11 +1656,13 @@ def fracAreCloseND(an, ad, bn, bd, n):
 
 class RealCos(Real):
     def __init__(self, a):
-        # NOTE: Currently assumes 'a' is greater than -pi,
-        # and works best if 'a' is in (-pi, 2*pi).
+        # NOTE: Works best if 'a' is in (-2*pi, 2*pi).
         self.is_zero = False
         if isinstance(a, Real):
-            self.a = a
+            if realIsNegative(a):
+                self.a = RealNegate(a)
+            else:
+                self.a = a
         else:
             # Here, we can assume 'a' is any rational on the real line
             self.a = RealFraction(abs(a))
@@ -1665,8 +1670,10 @@ class RealCos(Real):
         self.ev_n = -1
         self.ev_v = 0
         self.is_even = True
+        # print(["--RealCos--",self.a.disp()])
         while realIsLess(REALPI, self.a):
             self.a = RealSubtract(self.a, REALPI)
+            # print(["--RealCos now--",self.a.disp()])
             self.is_even = not self.is_even
 
     def __repr__(self):
@@ -1674,27 +1681,29 @@ class RealCos(Real):
 
     FRACZERO = Fraction(0)
 
-    def _cosbounds(x, n, bits):
-        m = 2 * n if x < 0 else 2 * n + 1
-        ret = RealCos.FRACZERO
-        oldret = ret
+    def _cosbounds(x, bits):
+        fpi = FPInterval(1, 1, bits)
+        xnsq = x.numerator ** 2
+        xdsq = x.denominator ** 2
+        fppow = FPInterval(1, 1, bits)
+        i = 1
         fac = 2
-        bitsshift = Fraction(1, 1 << (bits + 8))
-        for i in range(1, m + 1):
-            inc = Fraction((-1) ** (i), fac) * x ** (2 * i)
-            ret += inc
-            # print([i,float(ret)<float(oldret),float(inc)])
-            if ((i & 1) == (m & 1)) and abs(inc) < bitsshift:
-                # print([i,m])
+        while True:
+            fppow.mulnumden(x.numerator ** 2, x.denominator ** 2)
+            c = fppow.copy()
+            c.mulnumden(1, fac)
+            if i % 2 == 1:
+                fpi.subintv(c)
+            else:
+                fpi.addintv(c)
+            # print([i,fac,c,fpi])
+            fac *= (2 * i + 1) * (2 * i + 2)
+            i += 1
+            if c.infn == 0 and i % 2 == 0:
                 break
-            elif i < m:
-                oldret = ret
-                fac *= (2 * i + 1) * (2 * i + 2)
-        upbound = oldret
-        lowbound = ret
-        if lowbound > upbound:
-            raise ValueError("Sanity check failed: x=%d n=%d" % (x, n))
-        return [1 + lowbound, 1 + upbound]
+        # print([float(x),float(Fraction(fpi.infn,fpi.infd)),
+        #    float(Fraction(fpi.supn,fpi.supd))])
+        return (Fraction(fpi.infn, fpi.infd), Fraction(fpi.supn, fpi.supd))
 
     def ev(self, n):
         if self.is_zero:
@@ -1713,7 +1722,7 @@ class RealCos(Real):
         if n < self.ev_n:
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
-        nv = 2
+        nv = n
         while True:
             av = abs(self.a.ev(nv))
             if abs(av) < 2:
@@ -1728,13 +1737,15 @@ class RealCos(Real):
                 REALPI, RealFraction(asup)
             )
             # Do calculation
-            ss = RealCos._cosbounds(asup, nv, n)
-            ii = RealCos._cosbounds(ainf, nv, n)
+            ss = RealCos._cosbounds(asup, nv + 8)
+            ii = RealCos._cosbounds(ainf, nv + 8)
             # Calculate n-bit approximation of
             # the two bounds
             cinf = Fraction(-1) if greaterThanPi else min(ss[0], ii[0])
             csup = max(ss[1], ii[1])
-            # print([nv,n,"a",av,"cinf",float(cinf/2**n),"csup",float(csup/2**n),
+            # if nv>500: raise ValueError
+            # print([nv,n,"a",av,"cinf",float(cinf/2**n),
+            #   "csup",float(csup/2**n),
             #   "even",self.is_even])
             cinf = fracAreClose(cinf, csup, n)
             if cinf != None:
@@ -1853,10 +1864,16 @@ class RealExp(Real):
 class RealPow(Real):
     def __init__(self, a, b):
         self.powint = None
+        self.baseint = None
         self.r = None
+        self.is_sqrt = False
         self.a = a if isinstance(a, Real) else RealFraction(a)
         if isinstance(b, int) and b >= 0:
             self.powint = b
+        elif isinstance(b, Fraction) and b == Fraction(1, 2):
+            self.is_sqrt = True
+            self.b = b
+            self.r = RealExp(RealLn(self.a) / 2)
         else:
             self.b = b if isinstance(b, Real) else RealFraction(b)
             self.r = RealExp(RealLn(self.a) * self.b)
@@ -1867,6 +1884,9 @@ class RealPow(Real):
         return "RealPow(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
+        if self.is_sqrt:
+            # TODO: Implement square root special case
+            pass
         if self.powint != None:
             if self.powint == 0:
                 return 1 << n
@@ -2013,6 +2033,9 @@ class RandUniform(Real):
         self.bits = 0
         self.count = 0
 
+    def isNegative(self):
+        return false
+
     def __repr__(self):
         return "RandUniform(%s,%s)" % (self.bits, self.count)
 
@@ -2048,6 +2071,9 @@ class RealFraction(Real):
             a = Fraction(a)
             self.num = a.numerator
             self.den = a.denominator
+
+    def isNegative(self):
+        return self.num < 0
 
     def __repr__(self):
         return "RealFraction(%s)" % (Fraction(self.num, self.den))
@@ -2618,6 +2644,10 @@ def realIsLess(a, b):
         n += 8
 
 def realIsNegative(a):
+    try:
+        return a.isNegative()
+    except:
+        pass
     n = 3
     while True:
         aa = a.ev(n)
@@ -2867,11 +2897,11 @@ if __name__ == "__main__":
     ru.ev(17)
 
     def routest():
-        rou = [realNormalROU().ev(52) / 2 ** 52 for i in range(10000)]
+        rou = [realGamma(2).ev(52) / 2 ** 52 for i in range(10000)]
         # dobucket(rou)
 
     def routest2():
-        rou = [fpNormalROU() for i in range(10000)]
+        rou = [random.gammavariate(2, 1) for i in range(10000)]
         # dobucket(rou)
 
     def routest3(rg):
@@ -2894,14 +2924,14 @@ if __name__ == "__main__":
         #    if realIsLess(RandUniform(), RealCos(r)):
         #        return r
 
-    def routest():
+    def routest_():
         rou = []
         for i in range(10000):
             # print("--routest %d--"%(i))
             rou.append(ccos().ev(52) / 2 ** 52)
         dobucket(rou)
 
-    def routest2():
+    def routest2_():
         rou = [random.random() ** 3.01 for i in range(10000)]
         dobucket(rou)
 
@@ -2918,9 +2948,6 @@ if __name__ == "__main__":
         routest2()
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
-
-    cpr()
-    exit()
 
     ###################
 
@@ -3034,6 +3061,7 @@ if __name__ == "__main__":
         pass
 
     def randomrealtest():
+        print("started randomrealtest")
         rutest(0x7F, 8, 2, 4)
         rutest(0x80, 8, 2, 4)
         rutest(0xFF, 8, 4, 8)
@@ -3052,20 +3080,7 @@ if __name__ == "__main__":
         ev = ru.ev(100)
         if ev != 1 << 100:
             raise ValueError
-        for i in range(100):
-            num = random.randint(1, 10000000)
-            den = random.randint(1, 10000000)
-            lntest(num, den)
-        for i in range(30000):
-            num = random.randint(-10000000, 10000000)
-            den = random.randint(1, 10000000)
-            rationaltest(num, den)
-        for i in range(30000):
-            num = random.randint(-10000000, 10000000)
-            den = random.randint(1, 10000000)
-            num2 = random.randint(-10000000, 10000000)
-            den2 = random.randint(1, 10000000)
-            addmultiplytest(num, den, num2, den2)
+        print("sincostest")
         for i in range(300):
             num = random.randint(0, 62700000)
             den = 10000000
@@ -3073,13 +3088,33 @@ if __name__ == "__main__":
             num = random.randint(0, 62700)
             den = 10000
             sincostest(num, den)
+        sincostest(102900, 65536)
+        sincostest(102943, 65536)
+        sincostest(102944, 65536)
+        print("lntest")
+        for i in range(500):
+            num = random.randint(1, 10000000)
+            den = random.randint(1, 10000000)
+            lntest(num, den)
+        print("rationaltest")
+        for i in range(30000):
+            num = random.randint(-10000000, 10000000)
+            den = random.randint(1, 10000000)
+            rationaltest(num, den)
+        print("addmultiplytest")
+        for i in range(30000):
+            num = random.randint(-10000000, 10000000)
+            den = random.randint(1, 10000000)
+            num2 = random.randint(-10000000, 10000000)
+            den2 = random.randint(1, 10000000)
+            addmultiplytest(num, den, num2, den2)
+        print("exptest")
         for i in range(300):
             num = random.randint(-100000000, 100000000)
             den = 10000000
             exptest(num, den)
-        sincostest(102900, 65536)
-        sincostest(102943, 65536)
-        sincostest(102944, 65536)
+        print("other")
+        print("ended randomrealtest")
 
     randomrealtest()
     exit()

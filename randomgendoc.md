@@ -2542,6 +2542,8 @@ CLASSES
      |
      |  disp(a)
      |
+     |  isNegative(self)
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
@@ -2566,6 +2568,8 @@ CLASSES
      |      Return repr(self).
      |
      |  ev(self, n)
+     |
+     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
@@ -2635,6 +2639,8 @@ CLASSES
      |
      |  ev(self, n)
      |
+     |  isNegative(self)
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
      |
@@ -2688,6 +2694,8 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  disp(a)
+     |
+     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -2748,6 +2756,8 @@ CLASSES
      |
      |  disp(a)
      |
+     |  isNegative(self)
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
@@ -2801,6 +2811,8 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  disp(a)
+     |
+     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -2856,6 +2868,8 @@ CLASSES
      |
      |  disp(a)
      |
+     |  isNegative(self)
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
@@ -2882,6 +2896,8 @@ CLASSES
      |      Return repr(self).
      |
      |  ev(self, n)
+     |
+     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
@@ -2964,6 +2980,8 @@ CLASSES
      |
      |  disp(a)
      |
+     |  isNegative(self)
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
@@ -3017,6 +3035,8 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  disp(a)
+     |
+     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -3072,6 +3092,8 @@ CLASSES
      |
      |  disp(a)
      |
+     |  isNegative(self)
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
@@ -3125,6 +3147,8 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  disp(a)
+     |
+     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -3180,6 +3204,8 @@ CLASSES
      |
      |  disp(a)
      |
+     |  isNegative(self)
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
@@ -3233,6 +3259,8 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  disp(a)
+     |
+     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -3288,6 +3316,8 @@ CLASSES
      |
      |  disp(a)
      |
+     |  isNegative(self)
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
      |
@@ -3341,6 +3371,8 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  disp(a)
+     |
+     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
