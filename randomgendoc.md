@@ -2233,9 +2233,6 @@ CLASSES
      |
      |  __neg__(self)
      |
-     |  __pow__(self, v)
-     |      For convenience only.
-     |
      |  __radd__(self, v)
      |
      |  __repr__(self)
@@ -2253,7 +2250,9 @@ CLASSES
      |
      |  abs(self)
      |
-     |  atan(self, n)
+     |  atan(self, precision)
+     |
+     |  atan2(self, x, precision)
      |
      |  ceil(self)
      |
@@ -2265,7 +2264,7 @@ CLASSES
      |
      |  cos(self, precision)
      |
-     |  exp(self, n)
+     |  exp(self, precision)
      |
      |  floor(self)
      |
@@ -2299,7 +2298,7 @@ CLASSES
      |
      |  sqrt(self, n)
      |
-     |  tan(self, n)
+     |  tan(self, precision)
      |
      |  union(v)
      |
@@ -2450,11 +2449,14 @@ CLASSES
             RandPSRN
             RandUniform
             RealAdd
+            RealArcTan
+            RealArcTan2
             RealCos
             RealDivide
             RealExp
             RealFraction
             RealLn
+            RealLogGammaInt
             RealMultiply
             RealNegate
             RealPi
@@ -2462,6 +2464,7 @@ CLASSES
             RealSin
             RealSqrt
             RealSubtract
+            RealTan
         ShapeSampler
         ShapeSampler2
 
@@ -2706,6 +2709,118 @@ CLASSES
      |  __weakref__
      |      list of weak references to the object (if defined)
 
+    class RealArcTan(Real)
+     |  RealArcTan(a)
+     |
+     |  Method resolution order:
+     |      RealArcTan
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __pow__(a, b)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  isNegative(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealArcTan2(Real)
+     |  RealArcTan2(y, x)
+     |
+     |  Method resolution order:
+     |      RealArcTan2
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, y, x)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __pow__(a, b)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  isNegative(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
     class RealCos(Real)
      |  RealCos(a)
      |
@@ -2723,11 +2838,6 @@ CLASSES
      |      Return repr(self).
      |
      |  ev(self, n)
-     |
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes defined here:
-     |
-     |  FRACZERO = Fraction(0, 1)
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
@@ -2940,6 +3050,62 @@ CLASSES
      |
      |  Method resolution order:
      |      RealLn
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __pow__(a, b)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  isNegative(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RealLogGammaInt(Real)
+     |  RealLogGammaInt(a)
+     |
+     |  Method resolution order:
+     |      RealLogGammaInt
      |      Real
      |      builtins.object
      |
@@ -3383,6 +3549,62 @@ CLASSES
      |  __weakref__
      |      list of weak references to the object (if defined)
 
+    class RealTan(Real)
+     |  RealTan(a)
+     |
+     |  Method resolution order:
+     |      RealTan
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, a)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __pow__(a, b)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  isNegative(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
     class ShapeSampler(builtins.object)
      |  ShapeSampler(inshape, dx=1, dy=1)
      |
@@ -3443,6 +3665,8 @@ CLASSES
 FUNCTIONS
     addto1(rg)
 
+    bernoullinum(n)
+
     betadist(b, ax=1, ay=1, bx=1, by=1, precision=53)
 
     betadist_geobag(b, ax=1, ay=1, bx=1, by=1)
@@ -3489,6 +3713,8 @@ FUNCTIONS
           here, and would probably have the function use arbitrary-precision
           rational or floating-point numbers rather than the fixed-precision
           'float' type of Python, which usually has 53 bits of precision.
+
+    loggammahelper(n, precision)
 
     logsmall(av, n)
 
@@ -3568,6 +3794,8 @@ FUNCTIONS
     realIsNegative(a)
 
     realNormalROU()
+
+    stirling1(n, k)
 
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...

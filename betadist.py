@@ -1498,6 +1498,11 @@ def addto1(rg):
 # Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
 # Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
 # Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "A Domain-Theoretic Approach to Statistical Programming Languages." arXiv preprint arXiv:2106.16190 (2021) (especially sec. 12.3).
+# See also Daumas, M., Lester, D., Muñoz, C., "Verified Real Number Calculations:
+# A Library for Interval Arithmetic", arXiv:0708.3721 [cs.MS], 2007, which presents
+# an interval arithmetic involving rational numbers.  The approximation
+# parameter 'n', given there, means the interval returned by the operator is closer to the true result the closer 'n' is; however, this specification is too loose for our purposes, since
+# it doesn't relate consistently to precision from one operator to another.
 
 class Real:
     def ev(self, n):
@@ -1598,6 +1603,332 @@ class RealPi(Real):
 REALPI = RealPi()
 REALHALFPI = RealPi(Fraction(1, 2))
 
+class RealTan(Real):
+    def __init__(self, a):
+        self.a = a if isinstance(a, Real) else RealFraction(a)
+        self.a = RealDivide(RealSin(a), RealCos(a))
+        self.ev_n = -1
+        self.ev_v = 0
+
+    def __repr__(self):
+        return "RealTan(%s)" % (self.a)
+
+    def ev(self, n):
+        return self.a.ev(n)
+
+class RealArcTan2(Real):
+    def __init__(self, y, x):
+        self.r = None
+        self.x = x
+        self.y = y if isinstance(y, Real) else RealFraction(y)
+        if isinstance(x, Real):
+            self.r = RealArcTan(RealDivide(self.y, x))
+            if realIsNegative(self.x):
+                if realIsNegative(self.y):
+                    self.r -= REALPI
+                else:
+                    self.r += REALPI
+        else:
+            if x == 0:
+                if realIsNegative(self.y):
+                    self.r = RealNegate(REALHALFPI)
+                else:
+                    self.r = REALHALFPI
+            else:
+                self.r = RealArcTan(RealDivide(self.y, x))
+                if x < 0:
+                    if realIsNegative(self.y):
+                        self.r -= REALPI
+                    else:
+                        self.r += REALPI
+
+    def __repr__(self):
+        return "RealArcTan2(%s, %s)" % (self.y, self.x)
+
+    def ev(self, n):
+        return self.r.ev(n)
+
+_BERNNUMBERS = [
+    Fraction(1),
+    Fraction(-1, 2),
+    Fraction(1, 6),
+    0,
+    Fraction(-1, 30),
+    0,
+    Fraction(1, 42),
+    0,
+    Fraction(-1, 30),
+    0,
+    Fraction(5, 66),
+    0,
+]
+_extrabernnumbers = {}
+
+def bernoullinum(n):
+    # Calculates Bernoulli numbers
+    global _extrabernnumbers
+    if n < len(_BERNNUMBERS):
+        return _BERNNUMBERS[n]
+    if n % 2 == 1:
+        return 0
+    if n in _extrabernnumbers:
+        return _extrabernnumbers[n]
+    # print(n)
+    v = 1
+    v += Fraction(-(n + 1), 2)
+    i = 2
+    while i < n:
+        v += math.comb(n + 1, i) * bernoullinum(i)
+        i += 2
+    ret = -v / (n + 1)
+    _extrabernnumbers[n] = ret
+    return ret
+
+_STIRLING1 = {}
+
+def stirling1(n, k):
+    # Calculates Stirling numbers of the first kind
+    if n == k:
+        return 1
+    if k <= 0:
+        return 0
+    if (n, k) in _STIRLING1:
+        return _STIRLING1[(n, k)]
+    ret = stirling1(n - 1, k - 1) - stirling1(n - 1, k) * (n - 1)
+    _STIRLING1[(n, k)] = ret
+    return ret
+
+def loggammahelper(n, precision):
+    # Implements the first listed convergent version of Stirling's formula
+    # given in section 3 of R. Schumacher, "Rapidly Convergent Summation Formulas
+    # involving Stirling Series", arXiv:1602.00336v1 [math.NT], 2016.
+    # Usually, Stirling's approximation diverges, which however is inappropriate for
+    # use in exact sampling algorithms, where series expansions must converge
+    # in order for the algorithm to halt with probability 1.
+    # Unfortunately, the formula from the paper is monotonically increasing and
+    # that paper didn't specify the exact rate of convergence or
+    # an upper bound on the error incurred when truncating the series (a bound required
+    # for our purposes of exact sampling).  For this reason, this method
+    # employs an error bound suggested to me by the user "Simply Beautiful Art"
+    # from the Mathematics Stack Exchange community:
+    # The error is abs(t[n+1]**2 / (t[n+2] - t[n+1])), where t[n+1] and t[n+2] are the first
+    # two neglected terms.
+    k = 1
+    sden = 1
+    terms = [0, 0]
+    result = FPInterval(0, 1, precision)
+    while True:
+        num = Fraction(0)
+        for l in range(1, k + 1):
+            bn = bernoullinum(l + 1)
+            sn = stirling1(k, l)
+            num += Fraction((-1) ** l * bn * sn, l * (l + 1))
+        sden *= n + k
+        term = Fraction(num, sden) * (-1) ** k
+        c = FPInterval(term.numerator, term.denominator, precision)
+        c.setprec(precision)
+        result.addintv(c)
+        k += 1
+        if c.infn == 0:
+            break
+    # Get neglected terms
+    num = Fraction(0)
+    for l in range(1, k + 1):
+        bn = bernoullinum(l + 1)
+        sn = stirling1(k, l)
+        num += Fraction((-1) ** l * bn * sn, l * (l + 1))
+    sden *= n + k
+    term1 = Fraction(num, sden) * (-1) ** k
+    k += 1
+    num = Fraction(0)
+    for l in range(1, k + 1):
+        bn = bernoullinum(l + 1)
+        sn = stirling1(k, l)
+        num += Fraction((-1) ** l * bn * sn, l * (l + 1))
+    sden *= n + k
+    term2 = Fraction(num, sden) * (-1) ** k
+    err = abs(term1 ** 2 / (term2 - term1))
+    errintv = FPInterval(err.numerator, err.denominator, precision)
+    errintv.addnumden(result.supn, result.supd)
+    return (result.infn, result.infd, errintv.supn, errintv.supd)
+
+class RealLogGammaInt(Real):
+    def __init__(self, a):
+        self.a = a
+        if a < 1 or int(a) != a:
+            raise ValueError
+        a -= 1
+        logn = RealLn(a)
+        if a < 10:
+            # Schumacher's convergent series converges
+            # slowly for small 'a'; just use ln((a-1)!) instead
+            # (subtraction by 1 already happened above)
+            self.r = RealLn(math.factorial(a))
+        else:
+            self.r = (
+                a * logn
+                - a
+                + RealLn(RealPi(2)) / 2
+                + logn / 2
+                + _RealLogGammaIntHelper(a)
+            )
+
+    def __repr__(self):
+        return "RealLogGammaInt(%s)" % (self.a)
+
+    def ev(self, n):
+        if self.a == 1 or self.a == 2:
+            return 0
+        return self.r.ev(n)
+
+class _RealLogGammaIntHelper(Real):
+    def __init__(self, a):
+        self.a = a
+        self.ev_n = -1
+        self.ev_v = 0
+
+    def __repr__(self):
+        return "RealLogGammaInt(%s)" % (self.a)
+
+    def ev(self, n):
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
+        nv = n
+        while True:
+            # Do calculation
+            ss = loggammahelper(self.a, nv + 8)
+            # Calculate n-bit approximation of
+            # the two bounds
+            cinf = fracAreCloseND(ss[0], ss[1], ss[2], ss[3], n)
+            if cinf != None:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
+                return cinf
+            nv += 6
+
+class RealArcTan(Real):
+    def __init__(self, a):
+        self.frac = None
+        self.r = None
+        self.ev_n = -1
+        self.ev_v = 0
+        if isinstance(a, Real):
+            self.a = a
+            if realIsNegative(self.a):
+                self.r = RealNegate(RealArcTan(RealNegate(self.a)))
+            elif realIsLess(RealFraction(1), self.a):
+                self.r = REALHALFPI - RealArcTan(1 / self.a)
+        else:
+            self.a = RealFraction(a)
+            # print("--- %s ---"%(a))
+            if a == 1:
+                self.r = RealPi(Fraction(1, 4))
+            elif a == 0:
+                self.r = RealFraction(0)
+            elif a == -1:
+                self.r = RealNegate(RealPi(Fraction(1, 4)))
+            elif a < 0:
+                self.r = RealNegate(RealArcTan(RealNegate(self.a)))
+            elif a > 1:
+                self.r = REALHALFPI - RealArcTan(Fraction(1) / a)
+            # print("--- frac %s ---"%(a))
+
+    def __repr__(self):
+        return "RealArcTan(%s)" % (self.a)
+
+    def _arctanbounds(x, bits):
+        # Assert that x is in [0, 1].
+        # TODO: Use argument reduction to further bound
+        # x away from 1; the convergence is slower as x approaches 1.
+        if x > 1:
+            raise ValueError
+        if x < 0:
+            raise ValueError
+        fpi = FPInterval(x.numerator, x.denominator, bits)
+        xnsq = x.numerator ** 2
+        xdsq = x.denominator ** 2
+        fppow = FPInterval(x.numerator, x.denominator, bits)
+        i = 3
+        dosub = True
+        while True:
+            fppow.mulnumden(xnsq, xdsq)
+            c = fppow.copy()
+            c.mulnumden(1, i)
+            if dosub:
+                fpi.subintv(c)
+            else:
+                fpi.addintv(c)
+            i += 2
+            # print([float(x),i,c])
+            # print([float(x),i,float(Fraction(fpi.infn, fpi.infd)), float(Fraction(fpi.supn, fpi.supd))])
+            if c.infn == 0 and not dosub:
+                break
+            dosub = not dosub
+        return (Fraction(fpi.infn, fpi.infd), Fraction(fpi.supn, fpi.supd))
+
+    def ev(self, n):
+        if self.r != None:
+            return self.r.ev(n)
+        # Use best approximation calculated so far
+        # to save time when n is no greater than that
+        # approximation's length.
+        # NOTE: Because of this feature, ev(n) can return
+        # inconsistent values across runs; all that it must do is
+        # return an n-bit approximation to the true result, and
+        # depending on the true result there may be one or
+        # two correct answers.
+        if self.ev_n == n:
+            # print(["fast",self.ev_n,self.ev_v])
+            return self.ev_v
+        if n < self.ev_n:
+            # print(["faster",self.ev_n,self.ev_v])
+            return self.ev_v >> (self.ev_n - n)
+        nv = n
+        while True:
+            av = abs(self.a.ev(nv))
+            if abs(av) < 2:
+                nv += 2
+                continue
+            # a's interval is weakly within 1/2^nv
+            # of the exact value of a.
+            # ainf will be on [0, 1] due to argument reduction
+            ainf = Fraction(av - 1, 1 << nv)
+            asup = Fraction(min(1 << nv, av + 1), 1 << nv)
+            # Do calculation
+            ss = RealArcTan._arctanbounds(asup, nv + 8)
+            ii = RealArcTan._arctanbounds(ainf, nv + 8)
+            # Calculate n-bit approximation of
+            # the two bounds
+            cinf = min(ss[0], ii[0])
+            csup = max(ss[1], ii[1])
+            # if nv>500: raise ValueError
+            # print([nv,n,"a",av,"cinf",float(cinf/2**n),
+            #  "csup",float(csup/2**n)])
+            cinf = fracAreClose(cinf, csup, n)
+            if cinf != None:
+                # In this case, cinf*ulp is strictly within 1 ulp of
+                # both bounds, and thus strictly within 1 ulp
+                # of the exact result
+                self.ev_n = n
+                self.ev_v = cinf
+                return cinf
+            nv += 6
+
 class RealSin(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
@@ -1679,8 +2010,6 @@ class RealCos(Real):
     def __repr__(self):
         return "RealCos(%s)" % (self.a)
 
-    FRACZERO = Fraction(0)
-
     def _cosbounds(x, bits):
         fpi = FPInterval(1, 1, bits)
         xnsq = x.numerator ** 2
@@ -1689,7 +2018,7 @@ class RealCos(Real):
         i = 1
         fac = 2
         while True:
-            fppow.mulnumden(x.numerator ** 2, x.denominator ** 2)
+            fppow.mulnumden(xnsq, xdsq)
             c = fppow.copy()
             c.mulnumden(1, fac)
             if i % 2 == 1:
@@ -2182,8 +2511,6 @@ class RealAdd(Real):
         self.ev_v = ret
         return ret
 
-from interval import FInterval
-
 # floor(atanh(1/2^i)*2^29)
 ArcTanHTable = [
     0,  # Infinity
@@ -2380,6 +2707,7 @@ LNPOLY3 = [
 ]
 
 class FPInterval:
+    # Fixed-point interval
     def __init__(self, n, d, prec):
         self.infn = n
         self.infd = d
@@ -2999,8 +3327,13 @@ if __name__ == "__main__":
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
 
-    cpr()
-    exit()
+    from sympy import *
+
+    # for i in range(6,20):
+    #   print([i,RealLogGammaInt(i).ev(30),floor(loggamma(i)*2**30).n()])
+
+    # exit()
+    # cpr();exit()
 
     ###################
 
@@ -3056,6 +3389,16 @@ if __name__ == "__main__":
                 raise
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError("cos %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        frac = tan(Fraction(num, den))
+        rr = RealTan(Fraction(num, den))
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            try:
+                ret = rr.ev(n)
+            except:
+                print("tan %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+                raise
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("tan %d/%d, n=%d, ret=%d" % (num, den, n, ret))
 
     def rationaltest(num, den):
         frac = Fraction(num, den)
@@ -3070,6 +3413,30 @@ if __name__ == "__main__":
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError("-%d/%d, n=%d, ret=%d" % (num, den, n, ret))
+
+    def atantest(num, den):
+        global _havesympy
+        if not _havesympy:
+            return
+        frac = atan(Fraction(num, den))
+        rr = RealArcTan(Fraction(num, den))
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("atan %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+
+    def atan2test(num, den, num2, den2):
+        global _havesympy
+        if not _havesympy:
+            return
+        frac = atan2(Fraction(num, den), Fraction(num2, den2))
+        rr = RealArcTan2(Fraction(num, den), Fraction(num2, den2))
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            ret = rr.ev(n)
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError(
+                    "atan2 %d/%d, %d/%d, n=%d, ret=%d" % (num, den, num2, den2, n, ret)
+                )
 
     def addmultiplytest(num, den, num2, den2):
         frac = Fraction(num, den) + Fraction(num2, den2)
@@ -3113,7 +3480,7 @@ if __name__ == "__main__":
             raise ValueError(ru.ev(3))
 
     try:
-        from sympy import log, sin, cos, exp
+        from sympy import log, sin, cos, exp, tan, atan, atan2, sqrt
 
         _havesympy = True
     except:
@@ -3139,6 +3506,17 @@ if __name__ == "__main__":
         ev = ru.ev(100)
         if ev != 1 << 100:
             raise ValueError
+        print("atantest")
+        for i in range(400):
+            num = random.randint(-80000000, 80000000)
+            den = 10000000
+            atantest(num, den)
+        for i in range(400):
+            num = random.randint(-80000000, 80000000)
+            den = 10000000
+            num2 = random.randint(-80000000, 80000000)
+            den2 = 10000000
+            atan2test(num, den, num2, den2)
         print("sincostest")
         for i in range(300):
             num = random.randint(0, 62700000)

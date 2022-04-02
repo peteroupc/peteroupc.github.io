@@ -138,33 +138,6 @@ class FInterval:
     def sqrt(self, n):
         return self.pow(FInterval(0.5), n)
 
-    def pi(precision):
-        # Use precision 1 greater than requested, so that
-        # bounds will come (weakly) within 2^(precision+1) and thus
-        # strictly within 2^precision.
-        rli = RealPi().ev(precision + 1)
-        return FInterval(
-            Fraction(rli - 1, 1 << (precision + 1)),
-            Fraction(rli + 1, 1 << (precision + 1)),
-        )
-
-    def atan(self, n):
-        return FInterval(
-            FInterval._atanbounds(self.inf, n).inf,
-            FInterval._atanbounds(self.sup, n).sup,
-        )
-
-    def sin(self, precision):
-        if self.sup - self.inf >= Fraction(62832, 10000):
-            return FInterval(-1, 1)
-        halfpi = RealPi(Fraction(1, 2))
-        return FInterval._cos(halfpi - self.inf, halfpi - self.sup, precision)
-
-    def cos(self, precision):
-        if self.sup - self.inf >= Fraction(62832, 10000):
-            return FInterval(-1, 1)
-        return FInterval._cos(RealFraction(self.inf), RealFraction(self.sup), precision)
-
     @staticmethod
     def _cos(sup, inf, precision):
         inffloor = realFloor(inf / RealPi())
@@ -192,9 +165,6 @@ class FInterval:
             rlinf = Fraction(max(-precden, min(rli - 1, rls - 1)), precden)
             rlsup = Fraction(min(precden, max(rli + 1, rls + 1)), precden)
         return FInterval(rlinf, rlsup)
-
-    def tan(self, n):
-        raise NotImplementedError
 
     def isAccurateTo(self, v):
         # If upper bound on width is less than or equal to desired accuracy
@@ -291,10 +261,6 @@ class FInterval:
             Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
         )
 
-    def __pow__(self, v):
-        """ For convenience only. """
-        return self.pow(v, 5)
-
     def log(self, precision):
         if not FInterval._greaterThanZero(self.inf):
             raise ValueError
@@ -307,59 +273,17 @@ class FInterval:
             Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
         )
 
-    def _sqrtbounds(x, n):  # x>=0; n is number of iterations
-        x = x if isinstance(x, Fraction) else Fraction(x)
-        upper = x + 1
-        for i in range(0, n):
-            upper = (upper + x / upper) / 2
-        lower = x / upper
-        if lower > upper:
-            raise ValueError("Sanity check failed")
-        return FInterval(lower, upper)
+    def tan(self, precision):
+        # Use precision 1 greater than requested, so that
+        # bounds will come (weakly) within 2^(precision+1) and thus
+        # strictly within 2^precision.
+        rli = RealTan(self.inf).ev(precision + 1) - 1
+        rls = RealTan(self.sup).ev(precision + 1) + 1
+        return FInterval(
+            Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
+        )
 
-    def _atanbounds(x, n):
-        x = x if isinstance(x, Fraction) else Fraction(x)
-        if x == 0:
-            return FInterval(0, 0)
-        if x == 1:
-            a1 = FInterval._atanbounds(Fraction(1, 5), n)
-            a2 = FInterval._atanbounds(Fraction(1, 239), n)
-            a3 = [
-                4 * a1.inf - a2.inf,
-                4 * a1.inf - a2.sup,
-                4 * a1.sup - a2.inf,
-                4 * a1.sup - a2.sup,
-            ]
-            # print(a3)
-            return FInterval(min(a3), max(a3))
-        if x > 0 and x < 1:
-            ret = Fraction(0)
-            # NOTE: Another error corrected in arXiv version
-            # of the paper: The series starts at i=0, not i=1
-            for i in range(0, 2 * n + 1):
-                ret += (-1) ** i * x ** (2 * i + 1) / (2 * i + 1)
-                # print("ret %f" % (ret))
-            m = 2 * n + 1
-            bound = ret + (-1) ** (m) * x ** (2 * m + 1) / (2 * m + 1)
-            # print("x %f, ret=%f, bound=%f" % (float(x),float(ret),float(bound)))
-            if ret < bound:
-                raise ValueError
-            return FInterval(bound, ret)
-        if x > 1:
-            pi = FInterval.pi(n)
-            at = FInterval._atanbounds(1 / x, n)
-            low = pi.inf / 2 - at.sup
-            high = pi.sup / 2 - at.inf
-            if low > high:
-                raise ValueError
-            return FInterval(low, high)
-        else:
-            at = FInterval._atanbounds(-x, n)
-            if -at.sup > -at.inf:
-                raise ValueError
-            return FInterval(-at.sup, -at.inf)
-
-    def exp(self, n):
+    def exp(self, precision):
         # Use precision 1 greater than requested, so that
         # bounds will come (weakly) within 2^(precision+1) and thus
         # strictly within 2^precision.
@@ -368,6 +292,52 @@ class FInterval:
         return FInterval(
             Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
         )
+
+    def atan2(self, x, precision):
+        x = FInterval(x)
+        if x.sup < 0 and x.inf > 0:
+            pi = FInterval.pi(precision)
+            return FInterval(-pi.sup, pi.sup)
+        rla = RealArcTan2(self.inf, x.inf).ev(precision + 1)
+        rlb = RealArcTan2(self.sup, x.inf).ev(precision + 1)
+        rlc = RealArcTan2(self.inf, x.sup).ev(precision + 1)
+        rld = RealArcTan2(self.sup, x.sup).ev(precision + 1)
+        oneprec = 1 << (precision + 1)
+        return FInterval(
+            Fraction(min(rla - 1, rlb - 1, rlc - 1, rld - 1), 1 << (precision + 1)),
+            Fraction(max(rla + 1, rlb + 1, rlc + 1, rld + 1), 1 << (precision + 1)),
+        )
+
+    def atan(self, precision):
+        # Use precision 1 greater than requested, so that
+        # bounds will come (weakly) within 2^(precision+1) and thus
+        # strictly within 2^precision.
+        rli = RealArcTan(self.inf).ev(precision + 1) - 1
+        rls = RealArcTan(self.sup).ev(precision + 1) + 1
+        return FInterval(
+            Fraction(rli, 1 << (precision + 1)), Fraction(rls, 1 << (precision + 1))
+        )
+
+    def pi(precision):
+        # Use precision 1 greater than requested, so that
+        # bounds will come (weakly) within 2^(precision+1) and thus
+        # strictly within 2^precision.
+        rli = RealPi().ev(precision + 1)
+        return FInterval(
+            Fraction(rli - 1, 1 << (precision + 1)),
+            Fraction(rli + 1, 1 << (precision + 1)),
+        )
+
+    def sin(self, precision):
+        if self.sup - self.inf >= Fraction(62832, 10000):
+            return FInterval(-1, 1)
+        halfpi = RealPi(Fraction(1, 2))
+        return FInterval._cos(halfpi - self.inf, halfpi - self.sup, precision)
+
+    def cos(self, precision):
+        if self.sup - self.inf >= Fraction(62832, 10000):
+            return FInterval(-1, 1)
+        return FInterval._cos(RealFraction(self.inf), RealFraction(self.sup), precision)
 
     def __repr__(self):
         return "[%s, %s]" % (float(self.inf), float(self.sup))
