@@ -12,9 +12,10 @@ from fractions import Fraction
 
 #
 #  Implements interval numbers and interval arithmetic, backed
-#  by Fractions.  Implements the interval arithmetic in
-#  Daumas, M., Lester, D., Muñoz, C., "Verified Real Number Calculations:
-#  A Library for Interval Arithmetic", arXiv:0708.3721 [cs.MS], 2007.
+#  by Fractions.  Builds on the concept of "constructive reals"
+#  or "recursive reals", which provide a function that outputs a value
+#  strictly within 1/2^n of the true result, where n is a user-specified
+#  precision in bits.
 #
 
 class FInterval:

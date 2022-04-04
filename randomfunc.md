@@ -1415,7 +1415,7 @@ See also (Downey 2007\)[^62] and the [**Rademacher Floating-Point Library**](htt
 
 > **Notes:**
 >
-> 1. Additional methods to sample real numbers in a different interval are given below, but are not used in the rest of this article.
+> 1. Additional methods to sample "uniform" floating-point numbers in a different interval are given below, but are not used in the rest of this article.
 >
 >     - `RNDRANGE(mn, mx)`, interval \[`mn`, `mx`\]: Generate `RNDRANGEHelper(mn, mx)`.
 >     - `RNDRANGEMaxExc(mn, mx)`, interval \[`mx`, `mx`\): If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mx` is generated this way.

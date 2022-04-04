@@ -1515,11 +1515,18 @@ FUNCTIONS
 
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
-    LNPOLY2 = [Fraction(-28986367995118693560815763349978591117...00000000...
-    LNPOLY3 = [Fraction(-13476514299119388971296440703878263005...00000000...
+    CRUDELOG = [0, -726816, -681390, -654818, -635964, -621340, -609392, -...
+    CRUDELOG_ARCTANBITDIFF = 13
+    CRUDELOG_ARCTANFRAC = 29
+    CRUDELOG_BITS = 16
+    CRUDELOG_LOG2BITS = 45426
+    CRUDELOG_LOGMIN = 9830
+    LNPOLY2 = [(-28986367995118693...8591117027361355259, 1000000000000000...
+    LNPOLY3 = [(-13476514299119388...8263005361644498323, 5000000000000000...
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
+    t = 1649053030.6506462
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -2429,6 +2436,12 @@ Help on module betadist:
 NAME
     betadist
 
+DESCRIPTION
+    #  Written by Peter O. Any copyright to this file is released to the Public Domain.
+    #  In case this is not possible, this file is also licensed under Creative Commons Zero
+    #  (https://creativecommons.org/publicdomain/zero/1.0/).
+    #
+
 CLASSES
     builtins.object
         FPInterval
@@ -3043,11 +3056,29 @@ CLASSES
      |
      |  Methods defined here:
      |
+     |  __add__(self, b)
+     |
      |  __init__(self, a, b=None)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  __mul__(self, b)
+     |
+     |  __neg__(self)
+     |
+     |  __radd__(self, b)
+     |
      |  __repr__(self)
      |      Return repr(self).
+     |
+     |  __rmul__(self, b)
+     |
+     |  __rsub__(self, b)
+     |
+     |  __rtruediv__(self, b)
+     |
+     |  __sub__(self, b)
+     |
+     |  __truediv__(self, b)
      |
      |  ev(self, n)
      |
@@ -3056,27 +3087,9 @@ CLASSES
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
      |
-     |  __add__(a, b)
-     |
-     |  __mul__(a, b)
-     |
-     |  __neg__(a)
-     |
      |  __pow__(a, b)
      |
-     |  __radd__(a, b)
-     |
-     |  __rmul__(a, b)
-     |
      |  __rpow__(b, a)
-     |
-     |  __rsub__(a, b)
-     |
-     |  __rtruediv__(a, b)
-     |
-     |  __sub__(a, b)
-     |
-     |  __truediv__(a, b)
      |
      |  disp(a)
      |
@@ -3849,11 +3862,18 @@ FUNCTIONS
 
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
-    LNPOLY2 = [Fraction(-28986367995118693560815763349978591117...00000000...
-    LNPOLY3 = [Fraction(-13476514299119388971296440703878263005...00000000...
+    CRUDELOG = [0, -726816, -681390, -654818, -635964, -621340, -609392, -...
+    CRUDELOG_ARCTANBITDIFF = 13
+    CRUDELOG_ARCTANFRAC = 29
+    CRUDELOG_BITS = 16
+    CRUDELOG_LOG2BITS = 45426
+    CRUDELOG_LOGMIN = 9830
+    LNPOLY2 = [(-28986367995118693...8591117027361355259, 1000000000000000...
+    LNPOLY3 = [(-13476514299119388...8263005361644498323, 5000000000000000...
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
+    t = 1649053032.947709
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

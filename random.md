@@ -563,7 +563,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 [^8]: For integers, this problem also occurs, but is generally limited to the question of rounding after an integer division or remainder, which different programming languages answer differently.
 
-[^9]: _Fixed-point numbers_ are integers that store multiples of 1/_n_ (for example, 1/10000, 1/256, or 1/65536).  Their resolution doesn't vary depending on the number, unlike with floating-point numbers. "[**The Butterfly Effect - Deterministic Physics in The Incredible Machine and Contraption Maker**](https://www.moddb.com/members/kevryan/blogs/the-butterfly-effect-deterministic-physics-in-the-incredible-machine-and-contraption-maker)" is one use case showing how fixed-point numbers aid reproducibility.  I have written a sample [**Python implementation**](https://peteroupc.github.io/fixed.py) of fixed-point numbers.
+[^9]: _Fixed-point numbers_ are integers that store multiples of 1/_n_, where _n_ is an integer greater than 0 (for example, 1/10000, 1/256, or 1/65536).  Their resolution doesn't vary depending on the number, unlike with floating-point numbers. "[**The Butterfly Effect - Deterministic Physics in The Incredible Machine and Contraption Maker**](https://www.moddb.com/members/kevryan/blogs/the-butterfly-effect-deterministic-physics-in-the-incredible-machine-and-contraption-maker)" is one use case showing how fixed-point numbers aid reproducibility.
 
 [^10]: Leierson, C.E., et al., "Deterministic Parallel Random-Number Generation for Dynamic Multithreading Platforms", 2012.
 

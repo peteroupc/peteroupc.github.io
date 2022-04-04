@@ -1,3 +1,9 @@
+#
+#  Written by Peter O. Any copyright to this file is released to the Public Domain.
+#  In case this is not possible, this file is also licensed under Creative Commons Zero
+#  (https://creativecommons.org/publicdomain/zero/1.0/).
+#
+
 import random
 import bernoulli
 import randomgen
@@ -937,7 +943,7 @@ def geobagcompare(bag, f):
                 pk = int(((fvstart + fvend) / 2) * prec)
                 # Compare
                 v = (v << 1) | rg.randbit()
-                if pk + 1 <= v:
+                if pk + 2 <= v:
                     return 0
                 if pk - 2 >= v:
                     return 1
@@ -1580,7 +1586,7 @@ class RealPi(Real):
         while True:
             # Do calculation (BBP formula)
             upper += (
-                self.fraction
+                self.fraction  # Multiple of pi
                 * (
                     Fraction(4, 8 * k + 1)
                     - Fraction(2, 8 * k + 4)
@@ -1631,7 +1637,7 @@ class RealArcTan2(Real):
         else:
             if x == 0:
                 if realIsNegative(self.y):
-                    self.r = RealNegate(REALHALFPI)
+                    self.r = -REALHALFPI
                 else:
                     self.r = REALHALFPI
             else:
@@ -1847,7 +1853,6 @@ class RealErf(Real):
     def __init__(self, a):
         self.a = a
         self.r = _RealErfHelper(self.a) * 2 / RealSqrt(REALPI)
-        self.r2 = _RealErfHelper(self.a)
 
     def __repr__(self):
         return "RealErf(%s)" % (self.a)
@@ -1863,14 +1868,14 @@ class _RealErfHelper(Real):
         if isinstance(a, Real):
             self.a = a
             if realIsNegative(self.a):
-                self.r = RealNegate(_RealErfHelper(RealNegate(self.a)))
+                self.r = RealNegate(_RealErfHelper(-self.a))
         else:
             self.a = RealFraction(a)
             # print("--- %s ---"%(a))
             if a == 0:
                 self.r = RealFraction(0)
             elif a < 0:
-                self.r = RealNegate(_RealErfHelper(RealNegate(self.a)))
+                self.r = RealNegate(_RealErfHelper(-self.a))
 
     def __repr__(self):
         return "RealErf(%s)" % (self.a)
@@ -1960,14 +1965,14 @@ class RealArcTan(Real):
         if isinstance(a, Real):
             self.a = a
             if realIsNegative(self.a):
-                self.r = RealNegate(RealArcTan(RealNegate(self.a)))
+                self.r = RealNegate(RealArcTan(-self.a))
             elif realIsLess(RealFraction(1), self.a):
                 self.r = REALHALFPI - RealArcTan(1 / self.a)
             elif realIsLess(RealFraction(Fraction(1, 4)), self.a):
                 # Further argument reduction (eq. 36 in MathWorld
                 # article on inverse tangent).
                 self.r = RealArcTan(Fraction(1, 4)) + RealArcTan(
-                    RealDivide(4 * self.a - 1, self.a + 4)
+                    (4 * self.a - 1) / (self.a + 4)
                 )
         else:
             self.a = RealFraction(a)
@@ -1979,7 +1984,7 @@ class RealArcTan(Real):
             elif a == -1:
                 self.r = RealNegate(RealPi(Fraction(1, 4)))
             elif a < 0:
-                self.r = RealNegate(RealArcTan(RealNegate(self.a)))
+                self.r = RealNegate(RealArcTan(-self.a))
             elif a > 1:
                 self.r = REALHALFPI - RealArcTan(Fraction(1) / a)
             elif a > Fraction(1, 4):
@@ -2091,28 +2096,28 @@ def fracAreClose(a, b, n):
     return fracAreCloseND(an, ad, bn, bd, n)
 
 def fracEV(sn, sd, n):
-    sh = 2
-    shv = 4
-    sn = sn << (n + sh) if sn >= 0 else sn * (1 << (n + sh))
+    sn = sn << (n + 2) if sn >= 0 else sn * (1 << (n + 2))
     ret = abs(sn) // sd
     if sn < 0:
         ret = -ret
     # if ret != int(Fraction(self.num, self.den) * (1 << (n + sh))):
     #    raise ValueError
-    ret2 = (ret // shv) + 1 if ret % shv >= (shv >> 1) else (ret // shv)
+    if ret >= 0:
+        ret2 = (ret >> 2) + 1 if (ret & 3) >= 2 else (ret >> 2)
+    else:
+        ret2 = (ret // 4) + 1 if ret % 4 >= 2 else (ret // 4)
     return ret2
 
 def fracAreCloseND(an, ad, bn, bd, n):
     if ad < 0 or bd < 0:
         raise ValueError
-    onen = 1 << n
     # (b-a)>=1/2^n
     if ad == bd:
-        if onen * (bn - an) >= ad:
+        if ((bn - an) << n) >= ad:
             # print(["too far (easy)",an,ad,bn,bd])
             return None
     else:
-        if onen * (ad * bn - an * bd) >= ad * bd:
+        if ((ad * bn - an * bd) << n) >= ad * bd:
             # print(["too far",an,ad,bn,bd])
             return None
     ra = fracEV(an, ad, n)
@@ -2121,7 +2126,7 @@ def fracAreCloseND(an, ad, bn, bd, n):
         return ra
     if ra != rb - 1:
         return None
-    if an * onen > ad * ra and bn * onen < bd * rb:  # a>ra/2^n  # b<rb/2^n
+    if (an << n) > ad * ra and (bn << n) < bd * rb:  # a>ra/2^n  # b<rb/2^n
         return ra
     return None
 
@@ -2131,7 +2136,7 @@ class RealCos(Real):
         self.is_zero = False
         if isinstance(a, Real):
             if realIsNegative(a):
-                self.a = RealNegate(a)
+                self.a = -a
             else:
                 self.a = a
         else:
@@ -2472,30 +2477,36 @@ class RealDivide(Real):
         while True:
             av = self.a.ev(nv)  # div
             bv = self.b.ev(nv)  # div
+            # print(["divide",nv,n,self.b])
             if abs(bv) < 2:
                 nv += 4
                 continue
             # a's interval is weakly within 1/2^nv
             # of the exact value of a
             onenv = 1 << nv
-            ainf = Fraction(av - 1, onenv)
-            asup = Fraction(av + 1, onenv)
-            newsup = Fraction(onenv, bv - 1)
-            newinf = Fraction(onenv, bv + 1)
             if av > 1 and bv > 1:
-                a = ainf * newinf
-                b = asup * newsup
+                an = av - 1
+                ad = bv + 1
+                bn = av + 1
+                bd = bv - 1
                 # Calculate n-bit approximation of
                 # the two bounds
-                cinf = fracAreClose(a, b, n)
+                cinf = fracAreCloseND(an, ad, bn, bd, n)
             elif av < -1 and bv > 1:
-                b = ainf * newsup
-                c = asup * newinf
+                an = av - 1
+                ad = bv - 1
+                bn = av + 1
+                bd = bv + 1
                 # Calculate n-bit approximation of
                 # the two bounds
-                cinf = fracAreClose(b, c, n)
+                cinf = fracAreCloseND(an, ad, bn, bd, n)
             else:
                 # Do calculation
+                # print([n,nv,av,bv])
+                ainf = Fraction(av - 1, onenv)
+                asup = Fraction(av + 1, onenv)
+                newsup = Fraction(onenv, bv - 1)
+                newinf = Fraction(onenv, bv + 1)
                 a = ainf * newinf
                 b = ainf * newsup
                 c = asup * newinf
@@ -2567,10 +2578,10 @@ class RandUniform(Real):
             self.bits = (self.bits << diff) + random.randint(0, (1 << diff) - 1)
             self.count = n1
         ret = self.bits >> (self.count - n)
-        # Rounding to ensure result has error strictly less
-        # than 1 ulp (with probability one)
-        if (self.bits >> (self.count - n - 1)) & 1 == 1:
-            ret += 1
+        # At this point, with probability one, ret/2^n is accurate
+        # to strictly less than 1 ulp
+        # if (self.bits >> (self.count - n - 1)) & 1 == 1:
+        #    ret += 1
         return ret
 
 class RealFraction(Real):
@@ -2597,7 +2608,62 @@ class RealFraction(Real):
     def __repr__(self):
         return "RealFraction(%s)" % (Fraction(self.num, self.den))
 
+    def __neg__(self):
+        return RealFraction(-self.num, self.den)
+
+    def __add__(self, b):
+        if isinstance(b, RealFraction):
+            return RealFraction(self.num * b.den + self.den * b.num, self.den * b.den)
+        if isinstance(b, int):
+            return RealFraction(self.num + self.den * b, self.den)
+        return RealAdd(self, b)
+
+    def __radd__(self, b):
+        return RealFraction.__add__(self, b)
+
+    def __sub__(self, b):
+        if isinstance(b, RealFraction):
+            return RealFraction(self.num * b.den - self.den * b.num, self.den * b.den)
+        if isinstance(b, int):
+            return RealFraction(self.num - self.den * b, self.den)
+        return RealSubtract(self, b)
+
+    def __rsub__(self, b):
+        if isinstance(b, RealFraction):
+            return RealFraction(
+                (-self.num) * b.den + self.den * b.num, self.den * b.den
+            )
+        if isinstance(b, int):
+            return RealFraction((-self.num) + self.den * b, self.den)
+        return RealSubtract(b, self)
+
+    def __mul__(self, b):
+        if isinstance(b, RealFraction):
+            return RealFraction(self.num * b.num, self.den * b.den)
+        if isinstance(b, int):
+            return RealFraction(self.num * b, self.den)
+        return RealMultiply(self, b)
+
+    def __rmul__(self, b):
+        return RealFraction.__mul__(self, b)
+
+    def __truediv__(self, b):
+        if isinstance(b, RealFraction):
+            return RealFraction(self.num * b.den, self.den * b.num)
+        if isinstance(b, int):
+            return RealFraction(self.num, self.den * b)
+        return RealDivide(self, b)
+
+    def __rtruediv__(self, b):
+        if isinstance(b, RealFraction):
+            return RealFraction(self.den * b.num, self.num * b.den)
+        if isinstance(b, int):
+            return RealFraction(self.den * b, self.num)
+        return RealDivide(b, self)
+
     def ev(self, n):
+        if self.den == 1:
+            return self.num << n
         return fracEV(self.num, self.den, n)
 
 class RealNegate(Real):
@@ -2704,34 +2770,36 @@ def logsmall(av, n):
     avminus = (av - 1) << (16 - n)
     avplus = (av + 1) << (16 - n)
     # Calculate crude log
-    infcr = crudelog(avminus)
-    supcr = crudelog(avplus)
+    infcr = CRUDELOG[avminus]  # crudelog(avminus)
+    supcr = CRUDELOG[avplus]  # crudelog(avplus)
     # Tolerance adjustment
     infcr = infcr - 2 if avminus <= 271 else infcr - 1
     supcr = supcr + 2 if avplus <= 271 else supcr + 1
     return (infcr, 65536, supcr, 65536)
+
+CRUDELOG_BITS = 16
+CRUDELOG_LOGMIN = (1 << CRUDELOG_BITS) * 15 // 100
+CRUDELOG_LOG2BITS = 45426
+CRUDELOG_ARCTANFRAC = 29
+CRUDELOG_ARCTANBITDIFF = CRUDELOG_ARCTANFRAC - CRUDELOG_BITS
 
 def crudelog(av):
     # The CORDIC way to
     # calculate an approximation of the natural logarithm of av/2^_bits.
     # When _bits=16, crudelog is accurate to 2/2^16 for av in [1, 271],
     # and to 1/2^16 in [272, 65536].
-    _bits = 16
-    _logmin = (1 << _bits) * 15 // 100
-    _log2bits = 45426
-    _arcTanFrac = 29
-    _arcTanBitDiff = _arcTanFrac - _bits
     if av <= 0:
         raise ValueError
-    if av == 1 << _bits:
+    onebits = 1 << CRUDELOG_BITS
+    if av == onebits:
         return 0
-    if av >= 1 << (_bits):
-        return crudelog(av // 2) + _log2bits + 1
-    if av < _logmin:
-        return crudelog(av * 2) - _log2bits
-    avx = av << _arcTanBitDiff
-    rx = avx + (1 << _arcTanFrac)
-    ry = avx - (1 << _arcTanFrac)
+    if av >= onebits:
+        return crudelog(av // 2) + CRUDELOG_LOG2BITS + 1
+    if av < CRUDELOG_LOGMIN:
+        return crudelog(av * 2) - CRUDELOG_LOG2BITS
+    avx = av << CRUDELOG_ARCTANBITDIFF
+    rx = avx + (1 << CRUDELOG_ARCTANFRAC)
+    ry = avx - (1 << CRUDELOG_ARCTANFRAC)
     rz = 0
     for i in range(1, len(ArcTanHTable)):
         iters = 2 if i > 1 and ((i - 1) % 3) == 0 else 1
@@ -2746,52 +2814,59 @@ def crudelog(av):
                 rx -= y
                 ry -= x
                 rz += ArcTanHTable[i]
-    return _roundedshiftraw(rz, _arcTanBitDiff - 1)
+    return _roundedshiftraw(rz, CRUDELOG_ARCTANBITDIFF - 1)
+
+import time
+
+t = time.time()
+CRUDELOG = [0 if i == 0 else crudelog(i) for i in range(0, 65536 + 1)]
+# print(len(CRUDELOG))
+# print(time.time()-t);exit()
 
 # 10-degree Chebyshev approximation of ln(x) on [1, 1.0625].
 # Absolute error is bounded by 1.82e-21 (about 68.9 bits precision).
 LNPOLY2 = [
-    Fraction(
+    (
         -28986367995118693560815763349978591117027361355259,
         10000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         9701016418120346375490548765948153643195749510911,
         1000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -5293428508298339461585286804118193022153079502429,
         250000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         9128341044462277537616148366082205992474798520103,
         250000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -46484540308997630146456595253831770558539480110741,
         1000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         2164149239176768949706401740647716834310320723931,
         50000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -2277520101777210216624487352491152051412991187863,
         78125000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         2769586135136842854366433064949899687141147754863,
         200000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -44065812906678733229734775796033610611955924744053,
         10000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         84410095422382073563181466894198558528831751957027,
         100000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -18416818573462270724777988103011973623809120390977,
         250000000000000000000000000000000000000000000000000,
     ),
@@ -2800,47 +2875,47 @@ LNPOLY2 = [
 # 10-degree Chebyshev approximation of ln(x) on [1.0625, 1.5].
 # Absolute error is bounded by 4.06e-13 (about 41.16 bits precision).
 LNPOLY3 = [
-    Fraction(
+    (
         -13476514299119388971296440703878263005361644498323,
         5000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         15820733263963548106665347826303069139616369891289,
         2000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -7029078737135890255291720562034247383719826974047,
         500000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         19710989671687628739846760093774990941573432177053,
         1000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -2037344716536559494732584191745116420299873890067,
         100000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         15379705006556301361866459699897448308337323964407,
         1000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -16771998524807928238167265926685172122201488243649,
         2000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         32203139826896968401066009824960024757623226380369,
         10000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -41361557800270845393100269272356411667051919216251,
         50000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         3193410719912744872038076912214453914545530974751,
         25000000000000000000000000000000000000000000000000,
     ),
-    Fraction(
+    (
         -44869015578168616384361695335469706981160439395793,
         5000000000000000000000000000000000000000000000000000,
     ),
@@ -2872,8 +2947,8 @@ class FPInterval:
     def _truncate(self):
         if self.infd.bit_length() > self.prec or self.supd.bit_length() > self.prec:
             # NOTE: Python's "//" does a floor division
-            self.infn = (self.infn * self.oneprec) // self.infd  # Floor division
-            self.supn = -((-self.supn * self.oneprec) // self.infd)  # Ceiling division
+            self.infn = (self.infn << self.prec) // self.infd  # Floor division
+            self.supn = -(((-self.supn) << self.prec) // self.infd)  # Ceiling division
             self.infd = self.oneprec
             self.supd = self.oneprec
 
@@ -2976,26 +3051,27 @@ class RealLn(Real):
         ):  # ... and (num/den)<=threshold
             if True and num * 16 <= den * 17 and bits <= 68:  # (num/den)<=1.0625 ...
                 poly = LNPOLY2
-                fpi = FPInterval(poly[10].numerator, poly[10].denominator, bits)
+                fpi = FPInterval(poly[10][0], poly[10][1], bits)
                 i = 9
                 while i >= 0:
                     fpi.mulnumden(num, den)
-                    fpi.addnumden(poly[i].numerator, poly[i].denominator)
+                    fpi.addnumden(poly[i][0], poly[i][1])
                     i -= 1
                 if fpi.infn == fpi.supn and fpi.infd == fpi.supd:
                     raise ValueError
                 return (max(0, fpi.infn), fpi.infd, fpi.supn, fpi.supd)
             elif True and bits <= 41:
                 poly = LNPOLY3
-                fpi = FPInterval(poly[10].numerator, poly[10].denominator, bits)
+                fpi = FPInterval(poly[10][0], poly[10][1], bits)
                 i = 9
                 while i >= 0:
                     fpi.mulnumden(num, den)
-                    fpi.addnumden(poly[i].numerator, poly[i].denominator)
+                    fpi.addnumden(poly[i][0], poly[i][1])
                     i -= 1
                 if fpi.infn == fpi.supn and fpi.infd == fpi.supd:
                     raise ValueError
                 return (max(0, fpi.infn), fpi.infd, fpi.supn, fpi.supd)
+            # print([num,den,bits])
             fpi = FPInterval(num - den, den, bits)
             fppow = FPInterval(num - den, den, bits)
             i = 2
@@ -3033,21 +3109,29 @@ class RealLn(Real):
             m += 1
             xn *= threshden  # Denominator of threshold
             xd *= threshnum  # Numerator of threshold
-        # print("m=%d n=%d"%(m,n))
+        # print("m=%d n=%d xn/xd=%s/%s"%(m,bits,num,den))
         if not (bits in RealLn._logboundscache):
             # Find logbounds for threshold and given accuracy level
             lbc = RealLn._logbounds(threshnum, threshden, bits)
             # print(["logbounds",n,bits,lbc])
             l2inf = Fraction(lbc[0], lbc[1])
             l2sup = Fraction(lbc[2], lbc[3])
-            RealLn._logboundscache[bits] = (l2inf, l2sup)
+            # print([bits,l2inf,l2sup])
+            RealLn._logboundscache[bits] = (
+                l2inf.numerator,
+                l2inf.denominator,
+                l2sup.numerator,
+                l2sup.denominator,
+            )
         l2 = RealLn._logboundscache[bits]
         ly = RealLn._logbounds(xn, xd, bits)
-        lyinf = Fraction(ly[0], ly[1])
-        lysup = Fraction(ly[2], ly[3])
-        lower = m * l2[0] + lyinf
-        upper = m * l2[1] + lysup
-        return (lower.numerator, lower.denominator, upper.numerator, upper.denominator)
+        # m*l2+ly
+        return (
+            l2[0] * m * ly[1] + ly[0] * l2[1],
+            l2[1] * ly[1],
+            l2[2] * m * ly[3] + ly[2] * l2[3],
+            l2[3] * ly[3],
+        )
 
     def _truncateNumDen(infnum, infden, bittol, vtrunc):
         if infnum.bit_length() > bittol:
@@ -3148,18 +3232,19 @@ def realCeiling(a):
     if isinstance(a, RealFraction):
         # NOTE: Python's "//" operator does floor division
         return -((-a.num) // a.den)
-    return -realFloor(RealNegate(a))
+    return -realFloor(-a)
 
 def realIsLess(a, b):
-    n = 8
+    n = 4
     while True:
         aa = a.ev(n)
         bb = b.ev(n)
-        if bb + 1 <= aa:
+        # print([n,a,b,aa,bb])
+        if bb + 2 <= aa:
             return False
         if bb - 2 >= aa:
             return True
-        n += 8
+        n += 4
 
 def realIsNegative(a):
     try:
@@ -3169,16 +3254,11 @@ def realIsNegative(a):
     n = 3
     while True:
         aa = a.ev(n)
-        if 1 <= aa:
+        if 2 <= aa:
             return False
         if -2 >= aa:
             return True
         n += 2
-
-def _truncatesup(sup, bits):
-    nsup = sup * 2 ** bits
-    nsup = int(nsup) if nsup < 0 else int(nsup) + 1
-    return Fraction(nsup, 2 ** bits)
 
 class RealSqrt(Real):
     def __init__(self, a):
@@ -3222,6 +3302,7 @@ class RealMultiply(Real):
                 continue
             # a's interval is weakly within 1/2^nv
             # of the exact value of a
+            # print([av,bv])
             if av >= 2 and bv >= 2:
                 a = (av - 1) * (bv - 1)
                 b = (av + 1) * (bv + 1)
@@ -3414,12 +3495,31 @@ if __name__ == "__main__":
     ru = RealCos(RealMultiply(ru, RealPi(2)))
     ru.ev(17)
 
+    def parsum(a):
+        ret = 0
+        if len(a) > 1:
+            ret += parsum([a[i * 2] + a[i * 2 + 1] for i in range(len(a) // 2)])
+        if len(a) % 2 == 1:
+            ret += a[len(a) - 1]
+        return ret
+
     def routest():
-        rou = [realGamma(2).ev(52) / 2 ** 52 for i in range(10000)]
+        # rou = [realGamma(2).ev(52) / 2 ** 52 for i in range(10000)]
+        global _realbits
+        _realbits = 0
+        # rou = [(sum(realGamma(2) for j in range(50))/50).ev(52) / 2 ** 52 for i in range(6000)]
+        rou = [
+            (parsum([realNormalROU() for j in range(50)]) / 50).ev(52) / 2 ** 52
+            for i in range(6000)
+        ]
+        print(_realbits)
         dobucket(rou)
 
     def routest2():
-        rou = [random.gammavariate(2, 1) for i in range(10000)]
+        # rou = [random.gammavariate(2, 1) for i in range(10000)]
+        rou = [
+            sum(random.gammavariate(2, 1) for j in range(50)) / 50 for i in range(6000)
+        ]
         dobucket(rou)
 
     def routest3(rg):
@@ -3467,13 +3567,20 @@ if __name__ == "__main__":
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
 
-    for i in range(10):
-        r = random.random() * 6 - 3
-        print([r, RealErf(r).disp(), math.erf(r)])
-
-    exit()
-    # exit()
-    # cpr();exit()
+    def logconcave(f, m, c):  # Devroye 1986, p. 291
+        # f is a density function, m is the mode,
+        # and c = f(m).
+        while True:
+            if random.randint(0, 1):
+                x = RandUniform()
+                z = RandUniform()
+            else:
+                u = RandUniform()
+                x = 1 - RealLn(u)
+                z = RandUniform() * u
+            x = m + x / c
+            if z <= f(x) / c:
+                return x
 
     ###################
 
@@ -3548,7 +3655,7 @@ if __name__ == "__main__":
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
                 raise ValueError("%d/%d, n=%d, ret=%d" % (num, den, n, ret))
         frac = -Fraction(num, den)
-        rr = RealNegate(Fraction(num, den))
+        rr = RealFraction(-Fraction(num, den))
         for n in list(range(0, 60)) + list(range(0, 60)):
             ret = rr.ev(n)
             if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
@@ -3609,15 +3716,21 @@ if __name__ == "__main__":
         ru = RandUniform()
         ru.bits = bits
         ru.count = count
-        if ru.ev(2) != ev2:
-            raise ValueError(ru.ev(2))
-        if ru.ev(3) != ev3:
-            raise ValueError(ru.ev(3))
+        frinf = Fraction(bits - 1, 2 ** count)
+        frsup = Fraction(bits + 1, 2 ** count)
+        for prec in [2, 3, 8, 20]:
+            ev = ru.ev(prec)
+            if not realIsLess(RealFraction(Fraction(ev - 1, 2 ** prec)), ru):
+                raise ValueError([ru, prec])
+            if not realIsLess(ru, RealFraction(Fraction(ev + 1, 2 ** prec))):
+                raise ValueError([ru, prec])
         ru = RealFraction(Fraction(bits, 2 ** count))
-        if ru.ev(2) != ev2:
-            raise ValueError(ru.ev(2))
-        if ru.ev(3) != ev3:
-            raise ValueError(ru.ev(3))
+        for prec in [2, 3]:
+            ev = ru.ev(prec)
+            if not realIsLess(RealFraction(Fraction(ev - 1, 2 ** prec)), ru):
+                raise ValueError([ru, prec])
+            if not realIsLess(ru, RealFraction(Fraction(ev + 1, 2 ** prec))):
+                raise ValueError([ru, prec])
 
     try:
         from sympy import log, sin, cos, exp, tan, atan, atan2, sqrt
@@ -3694,7 +3807,6 @@ if __name__ == "__main__":
         print("ended randomrealtest")
 
     randomrealtest()
-    exit()
 
     ###################
 
