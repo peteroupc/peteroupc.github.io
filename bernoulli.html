@@ -741,7 +741,7 @@ functions, or functions in general.</p>
 <ol>
 <li>Set <code>u</code> to 0 and <code>k</code> to 1.</li>
 <li>Set <code>u</code> to <code>(u * BASE) + v</code>, where <code>v</code> is a uniform random integer in the interval [0, <code>BASE</code>) (if <code>BASE</code> is 2, then <code>v</code> is simply an unbiased random bit).  Calculate <code>pa</code>, which is an approximation to <code>p</code> such that abs(<code>p</code>&minus;<code>pa</code>) &le; <code>BASE</code><sup>&minus;<code>k</code></sup>.  Set <code>pk</code> to <code>pa</code>&#39;s digit expansion up to the <code>k</code> digits after the point.  Example: If <code>p</code> is <em>&pi;</em>/4, <code>BASE</code> is 10, and <code>k</code> is 5, then <code>pk = 78539</code>.</li>
-<li>If <code>pk + 2 &lt;= u</code>, return 0.  If <code>pk - 2 &gt;= u</code>, return 1.  If neither is the case, add 1 to <code>k</code> and go to step 2.</li>
+<li>If <code>pk + 1 &lt;= u</code>, return 0.[^61] If <code>pk - 2 &gt;= u</code>, return 1.  If neither is the case, add 1 to <code>k</code> and go to step 2.</li>
 </ol>
 
 <p><a id=Continued_Fractions></a></p>
@@ -2704,6 +2704,8 @@ kind of irrational number.</p>
 <p>[^59]: Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</p>
 
 <p>[^60]: Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</p>
+
+<p>[^61]: Note that <code>u * BASE</code><sup>&minus;<code>k</code></sup> is not just within <code>BASE</code><sup>&minus;<code>k</code></sup> of its &quot;true&quot; result, but also not more than that result.  Hence <code>pk + 1 &lt;= u</code> rather than <code>pk + 2 &lt;= u</code>.</p>
 
 <p><a id=Appendix></a></p>
 

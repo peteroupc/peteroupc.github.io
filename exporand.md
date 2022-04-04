@@ -448,7 +448,7 @@ An alternative version of steps 6 through 9 in the algorithm above are as follow
 - (6.) Calculate _bp_, which is an approximation to **b** such that abs(**b** &minus; _bp_) <= _&beta;_<sup>&minus;_i_ &minus; 1</sup>, and such that _bp_ has the same sign as **b**.  Let _bk_ be _bp_'s digit expansion up to the _i_ + 1 digits after the point (ignoring its sign).  For example, if **b** is &pi; or &minus;&pi;, _&beta;_ is 10, and _i_ is 4, one possibility is _bp_ = 3.14159 and _bk_ = 314159.
 - (7.) Let _ak_ be **a**'s digit expansion up to the _i_ + 1 digits after the point (ignoring its sign).
 - (8.) If _ak_ <= _bk_ &minus; 2, return either 1 if **a**'s sign is positive or 0 otherwise.
-- (9.) If _ak_ >= _bk_ + 1, return either 1 if **a**'s sign is negative or 0 otherwise.
+- (9.) If _ak_ >= _bk_ + 1, return either 1 if **a**'s sign is negative or 0 otherwise.[^35]
 
 **URandLessThanReal** is a version of **RandLessThanReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessThanReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
@@ -1569,6 +1569,8 @@ The following are some additional articles I have written on the topic of random
 [^33]: George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .
 
 [^34]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.
+
+[^35]: Note that _ak_ \* _&beta;_<sup>&minus;(_i_ + 1)</sup> is not just within _&beta;_<sup>&minus;(_i_ + 1)</sup> of its "true" result's absolute value, but also not more than that value.  Hence _ak_ >= _bk_ + 1 rather than _ak_ >= _bk_ + 2.
 
 <a id=Appendix></a>
 ## Appendix

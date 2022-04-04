@@ -504,7 +504,7 @@ In the algorithm (see also (Brassard et al., 2019\)[^22], (Devroye 1986, p. 769\
 
 1. Set `u` to 0 and `k` to 1.
 2. Set `u` to `(u * BASE) + v`, where `v` is a uniform random integer in the interval [0, `BASE`) (if `BASE` is 2, then `v` is simply an unbiased random bit).  Calculate `pa`, which is an approximation to `p` such that abs(`p`&minus;`pa`) &le; `BASE`<sup>&minus;`k`</sup>.  Set `pk` to `pa`'s digit expansion up to the `k` digits after the point.  Example: If `p` is _&pi;_/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
-3. If `pk + 2 <= u`, return 0.  If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
+3. If `pk + 1 <= u`, return 0.[^61] If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
 
 <a id=Continued_Fractions></a>
 #### Continued Fractions
@@ -1871,6 +1871,8 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 [^59]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
 
 [^60]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
+
+[^61]: Note that `u * BASE`<sup>&minus;`k`</sup> is not just within `BASE`<sup>&minus;`k`</sup> of its "true" result, but also not more than that result.  Hence `pk + 1 <= u` rather than `pk + 2 <= u`.
 
 <a id=Appendix></a>
 ## Appendix

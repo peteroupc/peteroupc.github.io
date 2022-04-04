@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1649053030.6506462
+    t = 1649071544.185942
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -3873,7 +3873,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1649053032.947709
+    t = 1649071546.4165587
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

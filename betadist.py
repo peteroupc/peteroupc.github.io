@@ -943,7 +943,9 @@ def geobagcompare(bag, f):
                 pk = int(((fvstart + fvend) / 2) * prec)
                 # Compare
                 v = (v << 1) | rg.randbit()
-                if pk + 2 <= v:
+                # NOTE: v*2**prec is a lower bound, while pk*2**prec
+                # is not; hence pk+1 rather than pk+2.
+                if pk + 1 <= v:
                     return 0
                 if pk - 2 >= v:
                     return 1
