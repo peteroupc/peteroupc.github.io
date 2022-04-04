@@ -3256,7 +3256,8 @@ def realIsNegative(a):
     n = 3
     while True:
         aa = a.ev(n)
-        if 2 <= aa:
+        # 'bb' gives a lower bound; hence 1 rather than 2
+        if 1 <= aa:
             return False
         if -2 >= aa:
             return True
@@ -3583,6 +3584,9 @@ if __name__ == "__main__":
             x = m + x / c
             if z <= f(x) / c:
                 return x
+
+    cpr()
+    exit()
 
     ###################
 
