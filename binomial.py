@@ -1,23 +1,29 @@
 import random
-import interval
+import randomgen
+import math
+from fractions import Fraction
+from betadist import (
+    logbinco,
+    psrnexpo,
+    RealLn,
+    RealExp,
+    RandPSRN,
+    RealNegate,
+    realIsLess,
+)
 
 class BinomialSampler:
     def __init__(self, rg=None):
-        self.rg = rg
+        self.rg = randomgen.RandomGen() if rg == None else rg
         self.logcache = {}
         self.binomialinfo = {}
         self.bits = 0
         self.curbit = -1
 
-    def _logint(self, n, v):
+    def _logint(self, n):
         if not n in self.logcache:
-            self.logcache[n] = [None, 0]
-        c = self.logcache[n]
-        if c[1] >= v and c[0] != None:
-            return c[0]
-        c[0] = interval.FInterval(n).log(v)
-        c[1] = v
-        return c[0]
+            self.logcache[n] = RealLn(n)
+        return self.logcache[n]
 
     def _randbit(self):
         if self.rg != None:
@@ -78,41 +84,87 @@ class BinomialSampler:
             k = 0
             while self._randbit() == 0:
                 k += 1
-            r = k * m + rg.rndint(m - 1)
+            r = k * m + (
+                self.rg.rndint(m - 1) if self.rg != None else random.randint(0, m - 1)
+            )
             rv = halfn + r if pos else halfn - r - 1
             if rv >= 0 and rv <= n2:
-                psrn = psrnexpo()
-                psrn[0] = -1  # Turn the PSRN negative
-                success = 0
+                psrn = psrnexpo(self.rg)
+                psrn[0] = -1  # Negate
                 if not (rv in bincos):
-                    bincos[rv] = [None, 4]
-                if bincos[rv][0] == None:
+                    bincos[rv] = None
+                if bincos[rv] == None:
                     # Calculate log of acceptance probability on demand
-                    v = 4
-                    bincos[rv][0] = (
-                        interval.logbinco(n2, rv, v)
-                        + self._logint(m, v)
-                        + self._logint(2, v) * ((k - n2) + 2)
-                    ).truncate()
-                    # print([rv,v,bincos[rv][0]])
-                    bincos[rv][1] = v
-                while True:
-                    if psrn_less_than_rational(psrn, bincos[rv][0].inf) == 1:
-                        # Less than log of acceptance probability
-                        success = 1
-                        break
-                    if psrn_less_than_rational(psrn, bincos[rv][0].sup) == 0:
-                        # Greater than log of acceptance probability
-                        success = 0
-                        break
-                    # Calculate more precise bounds for the log of acceptance probability
-                    bincos[rv][1] += 2
-                    v = bincos[rv][1]
-                    bc = (
-                        interval.logbinco(n2, rv, v)
-                        + self._logint(m, v)
-                        + self._logint(2, v) * ((k - n2) + 2)
-                    ).truncate()
-                    bincos[rv][0] = bc
-                if success:
+                    bincos[rv] = (
+                        logbinco(n2, rv)
+                        + self._logint(m)
+                        + self._logint(2) * (k - n2 - 2)
+                    )
+                h = RandPSRN(psrn)
+                if realIsLess(h, bincos[rv]):
                     return rv
+
+def dobucket(v, bounds=None, allints=None):
+    a = Fraction(min(v))
+    b = Fraction(max(v))
+    if bounds != None:
+        a, b = bounds
+    size = int(max(30, math.ceil(b - a)))
+    if allints != True and allints != False:
+        allints = True
+        if size == 30:
+            for x in v:
+                if int(x) != x:
+                    allints = False
+                    break
+            if allints:
+                size = int(b - a)
+        else:
+            allints = False
+    if allints:
+        ls = [int(a + (b - a) * x / size) for x in range(size + 1)]
+    else:
+        ls = [a + (b - a) * (x / size) for x in range(size + 1)]
+    buckets = [0 for i in range(size)]
+    for x in v:
+        for i in range(len(buckets)):
+            if x >= ls[i] and x < ls[i + 1]:
+                buckets[i] += 1
+                break
+    showbuckets(ls, buckets)
+    return buckets
+
+def showbuckets(ls, buckets):
+    mx = max(0.00000001, max(buckets))
+    sumbuckets = max(0.00000001, sum(buckets))
+    if mx == 0:
+        return
+    labels = [
+        ("%0.5f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+        if int(buckets[i]) == buckets[i]
+        else ("%0.5f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+        for i in range(len(buckets))
+    ]
+    maxlen = max([len(x) for x in labels])
+    i = 0
+    while i < (len(buckets)):
+        print(
+            labels[i]
+            + " " * (1 + (maxlen - len(labels[i])))
+            + ("*" * int(buckets[i] * 40 / mx))
+        )
+        if (
+            buckets[i] == 0
+            and i + 2 < len(buckets)
+            and buckets[i + 1] == 0
+            and buckets[i + 2] == 0
+        ):
+            print(" ... ")
+            while (
+                buckets[i] == 0
+                and i + 2 < len(buckets)
+                and buckets[i + 1] == 0
+                and buckets[i + 2] == 0
+            ):
+                i += 1
+        i += 1

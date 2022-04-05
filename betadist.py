@@ -2531,12 +2531,10 @@ class RandPSRN(Real):
     # that takes a positive uniform PSRN with base-2
     # fractional digits as input.
     def __init__(self, a):
-        if a[0] < 0:
-            raise NotImplementedError("Negative PSRN not supported")
         self.psrn = a
 
-    def isNegative():
-        return True
+    def isNegative():  # NOTE: Negative with probability 1
+        return a[0] < 0
 
     def __repr__(self):
         return "RandPSRN(%s)" % (self.psrn)
@@ -2545,16 +2543,12 @@ class RandPSRN(Real):
         bits = self.psrn[1]
         while len(self.psrn[2]) < n + 1:
             self.psrn[2].append(random.randint(0, 1))
-        for i in range(n + 1):
+        for i in range(n):
             if self.psrn[2][i] == None:
                 self.psrn[2][i] = random.randint(0, 1)
             bits = (bits << 1) | self.psrn[2][i]
-        if bits & 1 == 1:
-            # Rounding to ensure result has error strictly less
-            # than 1 ulp (with probability one)
-            bits = (bits >> 1) + 1
-        else:
-            bits = bits >> 1
+        if self.psrn[0] < 0:
+            bits = -bits
         return bits
 
 _realbits = 0
