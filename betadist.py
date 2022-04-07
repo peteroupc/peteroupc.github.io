@@ -1761,23 +1761,27 @@ def loggammahelper(n, precision):
     return (result.infn, result.infd, errintv.supn, errintv.supd)
 
 class RealLogGammaInt(Real):
+
+    _logPi = None
+
     def __init__(self, a):
         self.a = a
         if a < 1 or int(a) != a:
             raise ValueError
         a -= 1
-        logn = RealLn(a)
         if a < 10:
             # Schumacher's convergent series converges
             # slowly for small 'a'; just use ln((a-1)!) instead
             # (subtraction by 1 already happened above)
             self.r = RealLn(math.factorial(a))
         else:
+            if RealLogGammaInt._logPi == None:
+                RealLogGammaInt._logPi = RealLn(RealPi(2))
+            logn = RealLn(a)
             self.r = (
                 a * logn
                 - a
-                + RealLn(RealPi(2)) / 2
-                + logn / 2
+                + (RealLogGammaInt._logPi + logn) / 2
                 + _RealLogGammaIntHelper(a)
             )
 
@@ -2540,6 +2544,8 @@ class RandPSRN(Real):
         return "RandPSRN(%s)" % (self.psrn)
 
     def ev(self, n):
+        # NOTE: Strictly within 1 ulp with probability 1,
+        # rather than always
         bits = self.psrn[1]
         while len(self.psrn[2]) < n + 1:
             self.psrn[2].append(random.randint(0, 1))
@@ -2559,13 +2565,15 @@ class RandUniform(Real):
         self.bits = 0
         self.count = 0
 
-    def isNegative(self):
+    def isNegative(self):  # NOTE: Negative with probability 1
         return False
 
     def __repr__(self):
         return "RandUniform(%s,%s)" % (self.bits, self.count)
 
     def ev(self, n):
+        # NOTE: Strictly within 1 ulp with probability 1,
+        # rather than always
         global _realbits
         n1 = n + 1
         if n1 > self.count:
@@ -2576,8 +2584,6 @@ class RandUniform(Real):
         ret = self.bits >> (self.count - n)
         # At this point, with probability one, ret/2^n is accurate
         # to strictly less than 1 ulp
-        # if (self.bits >> (self.count - n - 1)) & 1 == 1:
-        #    ret += 1
         return ret
 
 class RealFraction(Real):
@@ -2958,14 +2964,22 @@ class FPInterval:
         )
 
     def addintv(self, intv):
-        infn = self.infn * intv.infd + self.infd * intv.infn
-        infd = self.infd * intv.infd
-        supn = self.supn * intv.supd + self.supd * intv.supn
-        supd = self.supd * intv.supd
-        if infd == 0:
-            raise ValueError
-        if supd == 0:
-            raise ValueError
+        if self.infd == intv.infd:
+            infn = self.infn + intv.infn
+            infd = self.infd
+        else:
+            infn = self.infn * intv.infd + self.infd * intv.infn
+            infd = self.infd * intv.infd
+            if infd == 0:
+                raise ValueError
+        if self.supd == intv.supd:
+            supn = self.supn + intv.supn
+            supd = self.supd
+        else:
+            supn = self.supn * intv.supd + self.supd * intv.supn
+            supd = self.supd * intv.supd
+            if supd == 0:
+                raise ValueError
         self.infn = infn
         self.infd = infd
         self.supn = supn
@@ -2973,10 +2987,23 @@ class FPInterval:
         self._truncate()
 
     def subintv(self, intv):
-        infn = self.infn * intv.supd - self.infd * intv.supn
-        infd = self.infd * intv.supd
-        supn = self.supn * intv.infd - self.supd * intv.infn
-        supd = self.supd * intv.infd
+        if self.infd == intv.infd:
+            # print(intv)
+            infn = self.infn - intv.infn
+            infd = self.infd
+        else:
+            infn = self.infn * intv.infd - self.infd * intv.infn
+            infd = self.infd * intv.infd
+            if infd == 0:
+                raise ValueError
+        if self.supd == intv.supd:
+            supn = self.supn - intv.supn
+            supd = self.supd
+        else:
+            supn = self.supn * intv.supd - self.supd * intv.supn
+            supd = self.supd * intv.supd
+            if supd == 0:
+                raise ValueError
         if infd == 0:
             raise ValueError
         if supd == 0:
@@ -3013,7 +3040,7 @@ class FPInterval:
             self.infd = bd
             self.supn = an
             self.supd = ad
-        # print(["mul0",self.infn/self.infd,self.supn/self.supd])
+        # print(["mul0",self])
         self._truncate()
         # print(["mul1",self.infn/self.infd,self.supn/self.supd])
 
@@ -3160,7 +3187,7 @@ class RealLn(Real):
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
         nv = n + 4
-        # print("--ln nv=%s--" % (nv))
+        # print("--ln nv=%s %s--" % (nv,self.a))
         while True:
             av = self.a.ev(nv)
             if av < 2:

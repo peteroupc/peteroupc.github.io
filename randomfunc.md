@@ -1837,7 +1837,7 @@ Miscellaneous:
 - **Cosine distribution**&#x2b26;: `atan2(x, sqrt(1 - x * x)) / pi`, where `x = (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 1)` (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **CUB distribution** (Piccolo 2003)[^107]: `if ZeroOrOne(px,py)==1: return 1+BinomialInt(m-1, zy-zx, zy); else: return RNDINTRANGE(1, m)`, where `m>3`, `px/py` is in [0, 1], and `zx/zy` is in [0, 1].
 - **Dagum distribution**: See beta prime distribution.
-- **Dirichlet distribution**: Suppose we (1) generate _n_+1 random [**gamma-distributed**](https://peteroupc.github.io/randomfunc.md#Gamma_Distribution) variates, each with separate parameters; (2) take their sum; (3) divide each of them by that sum; then (4) multiply each of them by a real number `x` greater than 0.  Then:
+- **Dirichlet distribution**: Suppose we (1) generate _n_+1 random [**gamma-distributed**](https://peteroupc.github.io/randomnotes.md#Gamma_Distribution) variates, each with separate parameters; (2) take their sum; (3) divide each of them by that sum; then (4) multiply each of them by a real number `x` greater than 0.  Then:
     - After step (4), if `x` was 1, the [**Dirichlet distribution**](https://en.wikipedia.org/wiki/Dirichlet_distribution) \(for example, (Devroye 1986\)[^23], p. 593-594) models the first _n_ of those numbers.
     - If the numbers at step (1) were each generated as `Expo(1)` (a special case of the gamma distribution), the result after step (4) is a uniformly distributed sum of _n_+1 numbers that sum to `x` (see also linked article above).
 - **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 0.5) * RNDRANGEMinMaxExc(0, 1))` (see also Saucier 2000, p. 15, which shows the wrong X axes).

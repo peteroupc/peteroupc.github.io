@@ -9,6 +9,7 @@ from betadist import (
     RealExp,
     RandPSRN,
     RealNegate,
+    RandUniform,
     realIsLess,
 )
 
@@ -89,8 +90,8 @@ class BinomialSampler:
             )
             rv = halfn + r if pos else halfn - r - 1
             if rv >= 0 and rv <= n2:
-                psrn = psrnexpo(self.rg)
-                psrn[0] = -1  # Negate
+                # psrn = psrnexpo(self.rg)
+                # psrn[0] = -1  # Negate
                 if not (rv in bincos):
                     bincos[rv] = None
                 if bincos[rv] == None:
@@ -100,71 +101,7 @@ class BinomialSampler:
                         + self._logint(m)
                         + self._logint(2) * (k - n2 - 2)
                     )
-                h = RandPSRN(psrn)
+                h = RealLn(RandUniform())
+                # h = RandPSRN(psrn)
                 if realIsLess(h, bincos[rv]):
                     return rv
-
-def dobucket(v, bounds=None, allints=None):
-    a = Fraction(min(v))
-    b = Fraction(max(v))
-    if bounds != None:
-        a, b = bounds
-    size = int(max(30, math.ceil(b - a)))
-    if allints != True and allints != False:
-        allints = True
-        if size == 30:
-            for x in v:
-                if int(x) != x:
-                    allints = False
-                    break
-            if allints:
-                size = int(b - a)
-        else:
-            allints = False
-    if allints:
-        ls = [int(a + (b - a) * x / size) for x in range(size + 1)]
-    else:
-        ls = [a + (b - a) * (x / size) for x in range(size + 1)]
-    buckets = [0 for i in range(size)]
-    for x in v:
-        for i in range(len(buckets)):
-            if x >= ls[i] and x < ls[i + 1]:
-                buckets[i] += 1
-                break
-    showbuckets(ls, buckets)
-    return buckets
-
-def showbuckets(ls, buckets):
-    mx = max(0.00000001, max(buckets))
-    sumbuckets = max(0.00000001, sum(buckets))
-    if mx == 0:
-        return
-    labels = [
-        ("%0.5f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
-        if int(buckets[i]) == buckets[i]
-        else ("%0.5f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
-        for i in range(len(buckets))
-    ]
-    maxlen = max([len(x) for x in labels])
-    i = 0
-    while i < (len(buckets)):
-        print(
-            labels[i]
-            + " " * (1 + (maxlen - len(labels[i])))
-            + ("*" * int(buckets[i] * 40 / mx))
-        )
-        if (
-            buckets[i] == 0
-            and i + 2 < len(buckets)
-            and buckets[i + 1] == 0
-            and buckets[i + 2] == 0
-        ):
-            print(" ... ")
-            while (
-                buckets[i] == 0
-                and i + 2 < len(buckets)
-                and buckets[i + 1] == 0
-                and buckets[i + 2] == 0
-            ):
-                i += 1
-        i += 1

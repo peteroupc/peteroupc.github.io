@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/04/05"><meta name="citation_online_date" content="2022/04/05"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/04/07"><meta name="citation_online_date" content="2022/04/07"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -350,7 +350,7 @@
 </tr>
 <tr>
 <td>Bell&ndash;Touchard(<em>a</em>, <em>b</em>) (Castellares et al. 2020)[^38].</td>
-<td>Sum of <em>N</em> zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is Poisson with parameter <em>b</em>*exp(<em>a</em>)&minus;<em>b</em>.</td>
+<td>Sum of <em>N</em> zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is Poisson with parameter <em>b</em>*exp(<em>a</em>)&minus;<em>b</em>.[^49]</td>
 <td><em>a</em>&gt;0, <em>b</em>&gt;0.</td>
 </tr>
 <tr>
@@ -462,7 +462,15 @@
 
 <h2>ExpoExact</h2>
 
-<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2022)[^45]; Canonne et al. (2020)[^46].  In this section, <code>RNDINT(1)</code> generates an independent unbiased random bit.  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this section.</p>
+<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2022)[^45]; Canonne et al. (2020)[^46].  In this section:</p>
+
+<ul>
+<li><code>RNDINT(1)</code> generates an independent unbiased random bit.</li>
+<li><code>ZeroOrOne(x, y)</code> returns 1 with probability <code>x</code>/<code>y</code>, and 0 otherwise.  For example, ZeroOrOne could generate a uniform random integer in the interval [0, <code>y</code>) and output either 1 if that integer is less than x, or 0 otherwise.</li>
+<li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this section.</li>
+</ul>
+
+<hr>
 
 <pre>METHOD ZeroOrOneExpMinus(x, y)
   if y==0 or y&lt;0 or x&lt;0: return error
@@ -476,11 +484,6 @@
   r = 1
   oy = y
   while true
-    // ZeroOrOne(x, y) returns 1 with probability
-    // x/y, and 0 otherwise.  For example, ZeroOrOne
-    // could generate a uniform random integer
-    // in [0, y) and output either 1 if that integer
-    // is less than x, or 0 otherwise.
     if ZeroOrOne(x, y) == 0: return r
     r=1-r; y = y + oy
   end
@@ -677,6 +680,8 @@ END METHOD
 <p>[^47]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
 <p>[^48]: Chewi, S., Gerber, P., et al., &quot;<a href="https://arxiv.org/abs/2105.14166"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>&quot;, arXiv:2105.14166, 2021</p>
+
+<p>[^49]: The similar Bell&ndash;Touchard process is the sum of the first <em>N</em> variates from an infinite sequence of Poisson(<em>a</em>) random variates, where <em>N</em> is the number of events of a Poisson process with rate <em>b</em>*exp(<em>a</em>)&minus;<em>b</em> (Freud, T., Rodriguez, P.M., &quot;<a href="https://arxiv.org/abs/2203.16737v2">The Bell-Touchard counting process</a>&quot;, arXiv:2203.16737v2 [math.PR], 2022).</p>
 
 <p><a id=License></a></p>
 

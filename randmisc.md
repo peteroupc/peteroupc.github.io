@@ -235,7 +235,7 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | Lomax(_&alpha;_). | (1&minus;_U_)<sup>&minus;1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016\)[^37]. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
 | Topp&ndash;Leone(_&alpha;_) | 1&minus;sqrt(1&minus;_U_<sup>1/_&alpha;_</sup>). | _&alpha;_ > 0. |
-| Bell&ndash;Touchard(_a_, _b_) (Castellares et al. 2020)[^38]. | Sum of _N_ zero-truncated Poisson(_a_) random variates, where _N_ is Poisson with parameter _b_\*exp(_a_)&minus;_b_. | _a_>0, _b_>0. |
+| Bell&ndash;Touchard(_a_, _b_) (Castellares et al. 2020)[^38]. | Sum of _N_ zero-truncated Poisson(_a_) random variates, where _N_ is Poisson with parameter _b_\*exp(_a_)&minus;_b_.[^49] | _a_>0, _b_>0. |
 | Bell(_a_) (Castellares et al. 2020)[^38]. | Bell&ndash;Touchard(_a_, 0). | _a_>0. |
 | Neyman type A(_&delta_, _&tau;_) (Batsidis and Lemonte 2021)[^39]| Bell&ndash;Touchard(_&tau;_, _&delta;_\*exp(&minus;_&tau;_)). | _&delta;_>0, _&tau;_>0. |
 
@@ -315,7 +315,13 @@ Here is a sketch of how this rejection sampler might work:
 <a id=ExpoExact></a>
 ## ExpoExact
 
-This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2022\)[^45]; Canonne et al. (2020\)[^46].  In this section, `RNDINT(1)` generates an independent unbiased random bit.  The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this section.
+This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2022\)[^45]; Canonne et al. (2020\)[^46].  In this section:
+
+- `RNDINT(1)` generates an independent unbiased random bit.
+- `ZeroOrOne(x, y)` returns 1 with probability `x`/`y`, and 0 otherwise.  For example, ZeroOrOne could generate a uniform random integer in the interval [0, `y`) and output either 1 if that integer is less than x, or 0 otherwise.
+- The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this section.
+
+-----
 
     METHOD ZeroOrOneExpMinus(x, y)
       if y==0 or y<0 or x<0: return error
@@ -329,11 +335,6 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
       r = 1
       oy = y
       while true
-        // ZeroOrOne(x, y) returns 1 with probability
-        // x/y, and 0 otherwise.  For example, ZeroOrOne
-        // could generate a uniform random integer
-        // in [0, y) and output either 1 if that integer
-        // is less than x, or 0 otherwise.
         if ZeroOrOne(x, y) == 0: return r
         r=1-r; y = y + oy
       end
@@ -501,6 +502,8 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 [^47]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
 [^48]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+
+[^49]: The similar Bell&ndash;Touchard process is the sum of the first _N_ variates from an infinite sequence of Poisson(_a_) random variates, where _N_ is the number of events of a Poisson process with rate _b_\*exp(_a_)&minus;_b_ (Freud, T., Rodriguez, P.M., "[The Bell-Touchard counting process](https://arxiv.org/abs/2203.16737v2)", arXiv:2203.16737v2 [math.PR], 2022).
 
 <a id=License></a>
 ## License

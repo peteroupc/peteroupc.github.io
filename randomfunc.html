@@ -2328,7 +2328,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Cosine distribution</strong>&#x2b26;: <code>atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 1)</code> (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
 <li><strong>CUB distribution</strong> (Piccolo 2003)[^107]: <code>if ZeroOrOne(px,py)==1: return 1+BinomialInt(m-1, zy-zx, zy); else: return RNDINTRANGE(1, m)</code>, where <code>m&gt;3</code>, <code>px/py</code> is in [0, 1], and <code>zx/zy</code> is in [0, 1].</li>
 <li><strong>Dagum distribution</strong>: See beta prime distribution.</li>
-<li><strong>Dirichlet distribution</strong>: Suppose we (1) generate <em>n</em>+1 random <a href="https://peteroupc.github.io/randomfunc.md#Gamma_Distribution"><strong>gamma-distributed</strong></a> variates, each with separate parameters; (2) take their sum; (3) divide each of them by that sum; then (4) multiply each of them by a real number <code>x</code> greater than 0.  Then:
+<li><strong>Dirichlet distribution</strong>: Suppose we (1) generate <em>n</em>+1 random <a href="https://peteroupc.github.io/randomnotes.md#Gamma_Distribution"><strong>gamma-distributed</strong></a> variates, each with separate parameters; (2) take their sum; (3) divide each of them by that sum; then (4) multiply each of them by a real number <code>x</code> greater than 0.  Then:
 
 <ul>
 <li>After step (4), if <code>x</code> was 1, the <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution"><strong>Dirichlet distribution</strong></a> (for example, (Devroye 1986)[^23], p. 593-594) models the first <em>n</em> of those numbers.</li>
