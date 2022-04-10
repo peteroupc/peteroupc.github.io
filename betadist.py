@@ -1494,6 +1494,43 @@ def addto1(rg):
 
 ########################
 
+def recordcount(n):
+    if n == 1:
+        return 1
+    ret = 0
+    for i in range(n):
+        if random.randint(0, i) == 0:
+            ret += 1
+    return ret
+
+def lah(n, k):
+    # Lah distribution.
+    # Kabluchko, Zakhar, and Alexander Marynych.
+    # "Lah distribution: Stirling numbers, records on
+    # compositions, and convex hulls of high-dimensional
+    # random walks", arXiv:2105.11365v1 [math.PR], 2021.
+    if k > n or n <= 0 or k <= 0:
+        raise ValueError
+    if n == k:
+        return 1
+    if k == 1:
+        return recordcount(n)
+    edges = [i for i in range(n - 1)]
+    random.shuffle(edges)
+    edges2 = [1 for i in range(n - 1)]
+    for i in range(k - 1):
+        edges2[edges[i]] = 0
+    record = 0
+    run = 1
+    ret = 0
+    for i in range(n):
+        if i == n - 1 or edges2[i] == 0:
+            ret += recordcount(run)
+            run = 1
+        else:
+            run += 1
+    return ret
+
 # Random real numbers.  Uses ideas from H.J. Boehm's
 # concept of "constructive reals".
 # Essentially, each operation on real numbers has
@@ -1505,7 +1542,7 @@ def addto1(rg):
 #
 # Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
 # Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
-# Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "A Domain-Theoretic Approach to Statistical Programming Languages." arXiv preprint arXiv:2106.16190 (2021) (especially sec. 12.3).
+# Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "A Domain-Theoretic Approach to Statistical Programming Languages." arXiv:2106.16190 (2021) (especially sec. 12.3).
 # See also Daumas, M., Lester, D., Muñoz, C., "Verified Real Number Calculations:
 # A Library for Interval Arithmetic", arXiv:0708.3721 [cs.MS], 2007, which presents
 # an interval arithmetic involving rational numbers.  The approximation

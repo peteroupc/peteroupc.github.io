@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1649331753.0332835
+    t = 1649624602.940134
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -3771,6 +3771,8 @@ FUNCTIONS
           rational or floating-point numbers rather than the fixed-precision
           'float' type of Python, which usually has 53 bits of precision.
 
+    lah(n, k)
+
     logbinco(n, k)
 
     logbinprob(n, k)
@@ -3858,6 +3860,8 @@ FUNCTIONS
 
     realNormalROU()
 
+    recordcount(n)
+
     stirling1(n, k)
 
 DATA
@@ -3873,7 +3877,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1649331755.3181071
+    t = 1649624605.2887104
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
