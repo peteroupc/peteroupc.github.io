@@ -175,36 +175,43 @@ A family very similar to the "transformed&ndash;transformer" family uses a _decr
 - Pérez-Casany et al. (2016\)[^23] calls a distribution of minimums or of maximums a _random-stopped extreme distribution_.
 - A distribution of sums can be called a _stopped-sum distribution_ (Johnson et al. 2005\)[^24]. (In this case, _N_ can be 0 so that _N_ &ge; 0 is an integer distributed as _Y_.)
 
-> **Example:** The "geometric zero-truncated Poisson distribution" is a distribution of maximums where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020\)[^25].
-
-A variate following a distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021\)[^26]\:
+A variate following a distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021\)[^25]\:
 
 1. Generate a uniform random variate in (0, 1). (Or generate a uniform PSRN with integer part 0, positive sign, and empty fractional part.)  Call the number _x_.
-2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile.[^27] \(If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.  _Y_'s probability generating function is _W_(_x_) = _a_\[0]\*_x_<sup>0</sup> + _a_\[1]\*_x_<sup>1</sup> + ..., where 0 &lt; _x_ &lt; 1 and _a_\[_i_] is the probability that a _Y_-distributed variate equals _i_.)
+2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile.[^26] \(If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.  _Y_'s probability generating function is _W_(_x_) = _a_\[0]\*_x_<sup>0</sup> + _a_\[1]\*_x_<sup>1</sup> + ..., where 0 &lt; _x_ &lt; 1 and _a_\[_i_] is the probability that a _Y_-distributed variate equals _i_.)
 3. For maximums, calculate the quantile for _X_ of _W_<sup>&minus;1</sup>(_x_), and return that quantile.
 
-**Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982\)[^28] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter _&theta;_ > 0.
+> **Examples:**
+>
+> | This distribution: | Is a distribution of: | Where _X_ is: | And _Y_ is: |
+>  ---- | --- | --- | --- |
+> | Geometric zero-truncated Poisson (Akdoğan et al., 2020\)[^27] | Maximums. | 1 plus the number of failures before the first success, with each success having the same probability. | Zero-truncated Poisson. |
+> | Exponential Poisson (Kuş 2007)[^50] Minimums. | Exponential. | Zero-truncated Poisson. |
+> | Poisson exponential (Cancho et al. 2011)[^51] Maximums. | Exponential. | Zero-truncated Poisson. |
+> | Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020\)[^28] \(_a_, _b_, and _c_ are greater than 0). | Minimums. | Power function(_b_, _c_). | Zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). |
+
+**Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982\)[^29] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter _&theta;_ > 0.
 
 **Weighted distributions.** A _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47\)[^3]):
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. With probability _w_(_x_), return _x_.  Otherwise, go to step 1.
 
-Some weighted distributions allow any weight function _w_(_x_) whose values are non-negative everywhere in X's support (Rao 1985\)[^29].  (If _w_(_x_) = _x_, the distribution is often called a _length-biased_ or _size-biased distribution_; if _w_(_x_) = _x_<sup>2</sup>, _area-biased_.)  Their PDFs are proportional to the original PDFs multiplied by _w_(_x_).
+Some weighted distributions allow any weight function _w_(_x_) whose values are non-negative everywhere in X's support (Rao 1985\)[^30].  (If _w_(_x_) = _x_, the distribution is often called a _length-biased_ or _size-biased distribution_; if _w_(_x_) = _x_<sup>2</sup>, _area-biased_.)  Their PDFs are proportional to the original PDFs multiplied by _w_(_x_).
 
 **Inflated distributions.** To generate an _inflated X_ (also called _c-inflated X_ or _c-adjusted X_) random variate with parameters _c_ and _&alpha;_, generate&mdash;
 
 - _c_ with probability _&alpha;_, and
 - a random variate distributed as X otherwise.
 
-For example, a _zero-inflated beta_ random variate is 0 with probability _&alpha;_ and a beta random variate otherwise (the parameter _c_ is 0) (Ospina and Ferrari 2010\)[^30]  A zero-and-one inflated X distribution is 0 or 1 with probability _&alpha;_ and distributed as X otherwise.  For example, to generate a _zero-and-one-inflated unit Lindley_ random variate (with parameters _&alpha;_, _&theta;_, and _p_) (Chakraborty and Bhattacharjee 2021\)[^31]\:
+For example, a _zero-inflated beta_ random variate is 0 with probability _&alpha;_ and a beta random variate otherwise (the parameter _c_ is 0) (Ospina and Ferrari 2010\)[^31]  A zero-and-one inflated X distribution is 0 or 1 with probability _&alpha;_ and distributed as X otherwise.  For example, to generate a _zero-and-one-inflated unit Lindley_ random variate (with parameters _&alpha;_, _&theta;_, and _p_) (Chakraborty and Bhattacharjee 2021\)[^32]\:
 
 1. With probability _&alpha;_, return a number that is 0 with probability _p_ and 1 otherwise.
 2. Generate a unit Lindley(_&theta;_) random variate, that is, generate _x_/(1+_x_) where _x_ is a [**Lindley(_&theta;_) random variate**](https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures).
 
-> **Note:** A zero-inflated X distribution where X takes on 0 with probability 0 is also called a _hurdle distribution_ (Mullahy 1986)[^32].
+> **Note:** A zero-inflated X distribution where X takes on 0 with probability 0 is also called a _hurdle distribution_ (Mullahy 1986)[^33].
 
-**Unit distributions.** To generate a _unit X_ random variate (where X is a distribution whose support is the positive real line), generate a random variate distributed as X, call it _x_, then return exp(&minus;_x_) or 1 &minus;exp(&minus;_x_) (also known as "Type I" or "Type II", respectively).  For example, a unit gamma distribution is also known as the _Grassia distribution_ (Grassia 1977)[^33].
+**Unit distributions.** To generate a _unit X_ random variate (where X is a distribution whose support is the positive real line), generate a random variate distributed as X, call it _x_, then return exp(&minus;_x_) or 1 &minus;exp(&minus;_x_) (also known as "Type I" or "Type II", respectively).  For example, a unit gamma distribution is also known as the _Grassia distribution_ (Grassia 1977)[^34].
 
 **CDF&ndash;quantile family.** Given two distributions X and Y (which can be the same), a location parameter _&mu;_ &ge; 0, and a dispersion parameter _&sigma;_>0, a variate from this family of distributions can be generated as follows (Smithson and Shou 2019\)[^42]:
 
@@ -229,15 +236,14 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | This distribution: |  Is distributed as: | And uses these parameters: |
  --- | --- | --- |
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
-| Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020\)[^34]. | Minimum of _N_ power function(_b_, _c_) random variates, where _N_ is zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). | _a_, _b_, _c_ > 0. |
 | Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020\)[^35]. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential with rate _&beta;_. |
 | Marshall&ndash;Olkin(_&alpha;_) (Marshall and Olkin 1997\)[^36] | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
 | Lomax(_&alpha;_). | (1&minus;_U_)<sup>&minus;1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016\)[^37]. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
-| Topp&ndash;Leone(_&alpha;_) | 1&minus;sqrt(1&minus;_U_<sup>1/_&alpha;_</sup>). | _&alpha;_ > 0. |
+| Topp&ndash;Leone(_&alpha;_). | 1&minus;sqrt(1&minus;_U_<sup>1/_&alpha;_</sup>). | _&alpha;_ > 0. |
 | Bell&ndash;Touchard(_a_, _b_) (Castellares et al. 2020)[^38]. | Sum of _N_ zero-truncated Poisson(_a_) random variates, where _N_ is Poisson with parameter _b_\*exp(_a_)&minus;_b_.[^39] | _a_>0, _b_>0. |
 | Bell(_a_) (Castellares et al. 2020)[^38]. | Bell&ndash;Touchard(_a_, 0). | _a_>0. |
-| Neyman type A(_&delta_, _&tau;_) (Batsidis and Lemonte 2021)[^40]| Bell&ndash;Touchard(_&tau;_, _&delta;_\*exp(&minus;_&tau;_)). | _&delta;_>0, _&tau;_>0. |
+| Neyman type A(_&delta;_, _&tau;_) (Batsidis and Lemonte 2021)[^40]| Bell&ndash;Touchard(_&tau;_, _&delta;_\*exp(&minus;_&tau;_)). | _&delta;_>0, _&tau;_>0. |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
 ## Batching Random Samples via Randomness Extraction
@@ -454,25 +460,25 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 
 [^24]: Johnson, N. L., Kemp, A. W., and Kotz, S. (2005). Univariate discrete distributions.
 
-[^25]: Akdoğan, Y., Kus, C., et al., "Geometric-Zero Truncated Poisson Distribution: Properties and Applications", _Gazi University Journal of Science_ 32(4), 2019.
+[^25]: Duarte-López, A., Pérez-Casany, M. and Valero, J., 2021. Randomly stopped extreme Zipf extensions. Extremes, pp.1-34.
 
-[^26]: Duarte-López, A., Pérez-Casany, M. and Valero, J., 2021. Randomly stopped extreme Zipf extensions. Extremes, pp.1-34.
+[^26]: This is simplified from the paper because _Y_ can take on only values greater than 0 so that the probability of getting 0 is 0.
 
-[^27]: This is simplified from the paper because _Y_ can take on only values greater than 0 so that the probability of getting 0 is 0.
+[^27]: Akdoğan, Y., Kus, C., et al., "Geometric-Zero Truncated Poisson Distribution: Properties and Applications", _Gazi University Journal of Science_ 32(4), 2019.
 
-[^28]: Keller, A.Z., Kamath A.R., "Reliability analysis of CNC machine tools", _Reliability Engineering_ 3 (1982).
+[^28]: Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.
 
-[^29]: Rao, C.R., "Weighted distributions arising out of methods of ascertainment", 1985.
+[^29]: Keller, A.Z., Kamath A.R., "Reliability analysis of CNC machine tools", _Reliability Engineering_ 3 (1982).
 
-[^30]: Ospina, R., Ferrari, S.L.P., "Inflated Beta Distributions", 2010.
+[^30]: Rao, C.R., "Weighted distributions arising out of methods of ascertainment", 1985.
 
-[^31]: Chakraborty, S., Bhattacharjee, S., "[**Modeling proportion of success in high school leaving examination- A comparative study of Inflated Unit Lindley and Inflated Beta distribution**](https://arxiv.org/abs/2103.08916)", arXiv:2103.08916 [stat.ME], 2021.
+[^31]: Ospina, R., Ferrari, S.L.P., "Inflated Beta Distributions", 2010.
 
-[^32]: Mullahy, J., "Specification and testing of some modified count data models", 1986.
+[^32]: Chakraborty, S., Bhattacharjee, S., "[**Modeling proportion of success in high school leaving examination- A comparative study of Inflated Unit Lindley and Inflated Beta distribution**](https://arxiv.org/abs/2103.08916)", arXiv:2103.08916 [stat.ME], 2021.
 
-[^33]: Grassia, A., "On a family of distributions with argument between 0 and 1 obtained by transformation of the gamma and derived compound distributions", _Australian Journal of Statistics_, 1977.
+[^33]: Mullahy, J., "Specification and testing of some modified count data models", 1986.
 
-[^34]: Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.
+[^34]: Grassia, A., "On a family of distributions with argument between 0 and 1 obtained by transformation of the gamma and derived compound distributions", _Australian Journal of Statistics_, 1977.
 
 [^35]: Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling." Stat., Optim. Inf. Comput., Vol.8, December 2020.
 
@@ -504,6 +510,10 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 [^48]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
 [^49]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+
+[^50]: Kuş, C., "A new lifetime distribution", _Computational Statistics & Data Analysis_ 51 (2007).
+
+[^51]: Cancho, Vicente G., Franscisco Louzada-Neto, and Gladys DC Barriga. "The Poisson-exponential lifetime distribution." Computational Statistics & Data Analysis 55, no. 1 (2011): 677-686.
 
 <a id=License></a>
 ## License
