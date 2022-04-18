@@ -11,7 +11,7 @@ import math
 from fractions import Fraction
 
 def exchangeable_bernoulli(p, d, lamda=None):
-    # p=expected value; d=dimension; lamda=weights for
+    # p=expected value (in [0, 1]); d=dimension; lamda=weights for
     #   each ray density
     # Fontana, Roberto, and Patrizia Semeraro.
     # "Exchangeable Bernoulli distributions: high dimensional
@@ -3718,9 +3718,22 @@ if __name__ == "__main__":
         ra = timedOutRun(rr_ev_n, rr, timeout=30)
         if ra == None:
             raise ValueError("%s" % (msg))
+        # Quick approximation
+        evf = int(floor((2 ** 72) * frac))
+        evf2 = evf + 1
         for n, ret in ra:
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("%s, n=%d, ret=%d" % (msg, n, ret))
+            if Fraction(evf, 2 ** 72) > Fraction(ret - 1, 1 << n) and Fraction(
+                evf2, 2 ** 72
+            ) < Fraction(ret + 1, 1 << n):
+                continue
+            # print([n,ret,evf])
+            frsub = S(Fraction(ret, 1 << n)) - frac
+            if frsub > 0:
+                if frsub >= Fraction(1, 1 << n):
+                    raise ValueError("%s, n=%d, ret=%d" % (msg, n, ret))
+            else:
+                if frsub <= -S(Fraction(1, 1 << n)):
+                    raise ValueError("%s, n=%d, ret=%d" % (msg, n, ret))
 
     def lnsqrttest(num, den):
         global _havesympy
@@ -3769,7 +3782,7 @@ if __name__ == "__main__":
         global _havesympy
         if not _havesympy:
             return
-        frac = atan(Fraction(num, den))
+        frac = atan(S(Fraction(num, den)))
         rr = RealArcTan(Fraction(num, den))
         evcheck(rr, frac, "atan %d/%d" % (num, den))
 
@@ -3821,7 +3834,7 @@ if __name__ == "__main__":
                 raise ValueError([ru, prec])
 
     try:
-        from sympy import log, sin, cos, exp, tan, atan, atan2, sqrt, loggamma
+        from sympy import log, sin, cos, exp, tan, atan, atan2, sqrt, S, floor, loggamma
 
         _havesympy = True
     except:
