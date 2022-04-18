@@ -240,7 +240,7 @@
 
 <ol>
 <li>Generate a uniform random variate in (0, 1). (Or generate a uniform PSRN with integer part 0, positive sign, and empty fractional part.)  Call the number <em>x</em>.</li>
-<li>For minimums, calculate the quantile for <em>X</em> of 1&minus;<em>W</em><sup>&minus;1</sup>(<em>x</em>) (where <em>W</em><sup>&minus;1</sup>(.) is the inverse of <em>Y</em>&#39;s probability generating function), and return that quantile.[^26] (If <em>x</em> is a uniform PSRN, see &quot;Random Variate Generation via Quantiles&quot;, later.  <em>Y</em>&#39;s probability generating function is <em>W</em>(<em>x</em>) = <em>a</em>[0]*<em>x</em><sup>0</sup> + <em>a</em>[1]*<em>x</em><sup>1</sup> + ..., where 0 &lt; <em>x</em> &lt; 1 and <em>a</em>[<em>i</em>] is the probability that a <em>Y</em>-distributed variate equals <em>i</em>.  See example below.)</li>
+<li>For minimums, calculate the quantile for <em>X</em> of 1&minus;<em>W</em><sup>&minus;1</sup>(<em>x</em>) (where <em>W</em><sup>&minus;1</sup>(.) is the inverse of <em>Y</em>&#39;s probability generating function), and return that quantile.[^26] (If <em>x</em> is a uniform PSRN, see &quot;Random Variate Generation via Quantiles&quot;, later.  <em>Y</em>&#39;s probability generating function is <em>W</em>(<em>z</em>) = <em>a</em>[0]*<em>z</em><sup>0</sup> + <em>a</em>[1]*<em>z</em><sup>1</sup> + ..., where 0 &lt; <em>z</em> &lt; 1 and <em>a</em>[<em>i</em>] is the probability that a <em>Y</em>-distributed variate equals <em>i</em>.  See example below.)</li>
 <li>For maximums, calculate the quantile for <em>X</em> of <em>W</em><sup>&minus;1</sup>(<em>x</em>), and return that quantile.</li>
 </ol>
 
@@ -281,7 +281,7 @@
 </tr>
 </tbody></table>
 
-<p><strong>Example:</strong> If <em>Y</em> is zero-truncated Poisson with parameter <em>&lambda;</em>, its probability generating function is $W(x)=\frac{1-\exp(x\lambda)}{1-\exp(\lambda)}$, and solving for <em>x</em> leads to its inverse: $W^{-1}(x)=\ln(1-t+t\times\exp(\lambda))/\lambda$.</p>
+<p><strong>Example:</strong> If <em>Y</em> is zero-truncated Poisson with parameter <em>&lambda;</em>, its probability generating function is $W(z)=\frac{1-\exp(z\lambda)}{1-\exp(\lambda)}$, and solving for <em>x</em> leads to its inverse: $W^{-1}(x)=\ln(1-x+x\times\exp(\lambda))/\lambda$.</p>
 </blockquote>
 
 <p><strong>Inverse distributions.</strong> An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of 1 divided by a random variate distributed as <em>X</em>.  For example, an <em>inverse exponential</em> random variate (Keller and Kamath 1982)[^31] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(<em>U</em>) where <em>U</em> is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter <em>&theta;</em> &gt; 0.</p>

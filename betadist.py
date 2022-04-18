@@ -10,6 +10,40 @@ import randomgen
 import math
 from fractions import Fraction
 
+def exchangeable_bernoulli(p, d, lamda=None):
+    # p=expected value; d=dimension; lamda=weights for
+    #   each ray density
+    # Fontana, Roberto, and Patrizia Semeraro.
+    # "Exchangeable Bernoulli distributions: high dimensional
+    # simulation, estimate and testing." arXiv preprint
+    # arXiv:2101.07693 (2021).
+    pd_is_integer = p * d == floor(p * d)
+    floorpd = p * d - 1 if pd_is_integer else int(p * d)
+    ceilpd = p * d + 1 if pd_is_integer else int(p * d) + 1
+    j1count = floorpd + 1
+    j2count = (d - ceilpd) + 1
+    densitycount = j1count * j2count
+    if pd_is_integer:
+        densitycount += 1
+    if lamda == None:
+        # Uniform selection of ray density
+        rj = random.randint(0, densitycount - 1)
+    else:
+        rj = random.choices([i for i in range(len(lamda))], weights=lamda)[0]
+    # print([j1count,j2count])
+    jstar = None
+    if pd_is_integer and rj == densitycount - 1:
+        jstar = int(p * d)
+    else:
+        j1 = rj % j1count
+        j2 = ceilpd + rj // j1count
+        # print([j1,j2, "---",(j2-p*d)/(j2-j1),(p*d-j1)/(j2-j1)])
+        jstar = random.choices([j1, j2], weights=[j2 - p * d, p * d - j1])[0]
+    ret = [1 if i < jstar else 0 for i in range(d)]
+    if jstar > 0 and jstar < d:
+        random.shuffle(ret)
+    return ret
+
 ###################
 
 def psrn_complement(x):
@@ -1770,6 +1804,8 @@ def loggammahelper(n, precision):
             num += Fraction((-1) ** l * bn * sn, l * (l + 1))
         sden *= n + k
         term = Fraction(num, sden) * (-1) ** k
+        if term < 0:
+            raise ValueError
         c = FPInterval(term.numerator, term.denominator, precision)
         c.setprec(precision)
         result.addintv(c)
@@ -1784,6 +1820,8 @@ def loggammahelper(n, precision):
         num += Fraction((-1) ** l * bn * sn, l * (l + 1))
     sden *= n + k
     term1 = Fraction(num, sden) * (-1) ** k
+    if term1 < 0:
+        raise ValueError
     k += 1
     num = Fraction(0)
     for l in range(1, k + 1):
@@ -1792,6 +1830,8 @@ def loggammahelper(n, precision):
         num += Fraction((-1) ** l * bn * sn, l * (l + 1))
     sden *= n + k
     term2 = Fraction(num, sden) * (-1) ** k
+    if term1 < 0:
+        raise ValueError
     err = abs(term1 ** 2 / (term2 - term1))
     errintv = FPInterval(err.numerator, err.denominator, precision)
     errintv.addnumden(result.supn, result.supd)
@@ -3306,6 +3346,9 @@ def realIsLess(a, b):
             return True
         n += 4
 
+def realIsGreater(a, b):
+    return realIsLess(b, a)
+
 def realIsNegative(a):
     try:
         return a.isNegative()
@@ -3643,12 +3686,41 @@ if __name__ == "__main__":
             if z <= f(x) / c:
                 return x
 
-    cpr()
-    exit()
+    # cpr()
+    # exit()
 
     ###################
 
     _havesympy = False
+
+    import multiprocessing as mp
+    from queue import Empty
+
+    def timedOutRun(func, args, timeout=20, defaultResult=None):
+        qu = mp.Queue(1)
+        pr = mp.Process(target=func, args=(qu, args))
+        pr.start()
+        try:
+            return qu.get(True, timeout)
+        except Empty:
+            return defaultResult
+        finally:
+            pr.terminate()
+
+    def rr_ev_n(queue, args):
+        ret = []
+        for n in list(range(0, 60)) + list(range(0, 60)):
+            ret.append([n, args.ev(n)])
+        queue.put(ret)
+        queue.close()
+
+    def evcheck(rr, frac, msg):
+        ra = timedOutRun(rr_ev_n, rr, timeout=30)
+        if ra == None:
+            raise ValueError("%s" % (msg))
+        for n, ret in ra:
+            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
+                raise ValueError("%s, n=%d, ret=%d" % (msg, n, ret))
 
     def lnsqrttest(num, den):
         global _havesympy
@@ -3656,16 +3728,10 @@ if __name__ == "__main__":
             return
         frac = log(Fraction(num, den))
         rr = RealLn(Fraction(num, den))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("ln %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        evcheck(rr, frac, "ln %d/%d" % (num, den))
         frac = sqrt(Fraction(num, den))
         rr = RealSqrt(Fraction(num, den))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("sqrt %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        evcheck(rr, frac, "sqrt %d/%d" % (num, den))
 
     def exptest(num, den):
         global _havesympy
@@ -3673,10 +3739,7 @@ if __name__ == "__main__":
             return
         frac = exp(Fraction(num, den))
         rr = RealExp(Fraction(num, den))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("exp %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        evcheck(rr, frac, "exp %d/%d" % (num, den))
 
     TWOPI = RealPi(2)
 
@@ -3686,44 +3749,21 @@ if __name__ == "__main__":
             return
         frac = sin(Fraction(num, den))
         rr = RealSin(Fraction(num, den))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("sin %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        evcheck(rr, frac, "sin %d/%d" % (num, den))
         frac = cos(Fraction(num, den))
         rr = RealCos(Fraction(num, den))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            try:
-                ret = rr.ev(n)
-            except:
-                print("cos %d/%d, n=%d, ret=%d" % (num, den, n, ret))
-                raise
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("cos %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        evcheck(rr, frac, "cos %d/%d" % (num, den))
         frac = tan(Fraction(num, den))
         rr = RealTan(Fraction(num, den))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            try:
-                ret = rr.ev(n)
-            except:
-                print("tan %d/%d, n=%d, ret=%d" % (num, den, n, ret))
-                raise
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("tan %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        evcheck(rr, frac, "tan %d/%d" % (num, den))
 
     def rationaltest(num, den):
         frac = Fraction(num, den)
         rr = RealFraction(Fraction(num, den))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("%d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        evcheck(rr, frac, "%d/%d" % (num, den))
         frac = -Fraction(num, den)
         rr = RealFraction(-Fraction(num, den))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("-%d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        evcheck(rr, frac, "-%d/%d" % (num, den))
 
     def atantest(num, den):
         global _havesympy
@@ -3731,10 +3771,15 @@ if __name__ == "__main__":
             return
         frac = atan(Fraction(num, den))
         rr = RealArcTan(Fraction(num, den))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError("atan %d/%d, n=%d, ret=%d" % (num, den, n, ret))
+        evcheck(rr, frac, "atan %d/%d" % (num, den))
+
+    def lgtest(v):
+        global _havesympy
+        if not _havesympy:
+            return
+        frac = loggamma(v)
+        rr = RealLogGammaInt(v)
+        evcheck(rr, frac, "loggamma %d" % (v))
 
     def atan2test(num, den, num2, den2):
         global _havesympy
@@ -3742,39 +3787,18 @@ if __name__ == "__main__":
             return
         frac = atan2(Fraction(num, den), Fraction(num2, den2))
         rr = RealArcTan2(Fraction(num, den), Fraction(num2, den2))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError(
-                    "atan2 %d/%d, %d/%d, n=%d, ret=%d" % (num, den, num2, den2, n, ret)
-                )
+        evcheck(rr, frac, "atan2 %d/%d, %d/%d" % (num, den, num2, den2))
 
     def addmultiplytest(num, den, num2, den2):
         frac = Fraction(num, den) + Fraction(num2, den2)
         rr = RealAdd(Fraction(num, den), Fraction(num2, den2))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError(
-                    "add(%d/%d, %d/%d) n=%d, ret=%d" % (num, den, num2, den2, n, ret)
-                )
+        evcheck(rr, frac, "add %d/%d, %d/%d" % (num, den, num2, den2))
         frac = Fraction(num, den) - Fraction(num2, den2)
         rr = RealSubtract(Fraction(num, den), Fraction(num2, den2))
-
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError(
-                    "sub(%d/%d, %d/%d) n=%d, ret=%d" % (num, den, num2, den2, n, ret)
-                )
+        evcheck(rr, frac, "sub %d/%d, %d/%d" % (num, den, num2, den2))
         frac = Fraction(num, den) * Fraction(num2, den2)
         rr = RealMultiply(Fraction(num, den), Fraction(num2, den2))
-        for n in list(range(0, 60)) + list(range(0, 60)):
-            ret = rr.ev(n)
-            if abs(Fraction(ret, 1 << n) - frac) >= Fraction(1, 1 << n):
-                raise ValueError(
-                    "mul(%d/%d, %d/%d) n=%d, ret=%d" % (num, den, num2, den2, n, ret)
-                )
+        evcheck(rr, frac, "mul %d/%d, %d/%d" % (num, den, num2, den2))
 
     def rutest(bits, count, ev2, ev3):
         ru = RandUniform()
@@ -3797,7 +3821,7 @@ if __name__ == "__main__":
                 raise ValueError([ru, prec])
 
     try:
-        from sympy import log, sin, cos, exp, tan, atan, atan2, sqrt
+        from sympy import log, sin, cos, exp, tan, atan, atan2, sqrt, loggamma
 
         _havesympy = True
     except:
@@ -3867,6 +3891,9 @@ if __name__ == "__main__":
             num = random.randint(-100000000, 100000000)
             den = 10000000
             exptest(num, den)
+        print("lgtest")
+        for i in range(1, 100):
+            lgtest(i)
         print("other")
         print("ended randomrealtest")
 

@@ -178,7 +178,7 @@ A family very similar to the "transformed&ndash;transformer" family uses a _decr
 A variate following a distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021\)[^25]\:
 
 1. Generate a uniform random variate in (0, 1). (Or generate a uniform PSRN with integer part 0, positive sign, and empty fractional part.)  Call the number _x_.
-2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile.[^26] \(If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.  _Y_'s probability generating function is _W_(_x_) = _a_\[0]\*_x_<sup>0</sup> + _a_\[1]\*_x_<sup>1</sup> + ..., where 0 &lt; _x_ &lt; 1 and _a_\[_i_] is the probability that a _Y_-distributed variate equals _i_.  See example below.)
+2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile.[^26] \(If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.  _Y_'s probability generating function is _W_(_z_) = _a_\[0]\*_z_<sup>0</sup> + _a_\[1]\*_z_<sup>1</sup> + ..., where 0 &lt; _z_ &lt; 1 and _a_\[_i_] is the probability that a _Y_-distributed variate equals _i_.  See example below.)
 3. For maximums, calculate the quantile for _X_ of _W_<sup>&minus;1</sup>(_x_), and return that quantile.
 
 > **Examples:**
@@ -190,7 +190,7 @@ A variate following a distribution of minimums or of maximums can be generated a
 > | Poisson exponential (Cancho et al. 2011)[^29]. | Maximums. | Exponential. | Zero-truncated Poisson. |
 > | Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020\)[^30] \(_a_, _b_, and _c_ are greater than 0). | Minimums. | Power function(_b_, _c_). | Zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). |
 >
-> **Example:** If _Y_ is zero-truncated Poisson with parameter _&lambda;_, its probability generating function is $W(x)=\frac{1-\exp(x\lambda)}{1-\exp(\lambda)}$, and solving for _x_ leads to its inverse: $W^{-1}(x)=\ln(1-t+t\times\exp(\lambda))/\lambda$.
+> **Example:** If _Y_ is zero-truncated Poisson with parameter _&lambda;_, its probability generating function is $W(z)=\frac{1-\exp(z\lambda)}{1-\exp(\lambda)}$, and solving for _x_ leads to its inverse: $W^{-1}(x)=\ln(1-x+x\times\exp(\lambda))/\lambda$.
 
 **Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982\)[^31] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter _&theta;_ > 0.
 
