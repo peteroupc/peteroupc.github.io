@@ -3641,15 +3641,10 @@ if __name__ == "__main__":
 
     def ccos():
         return RandUniform() ** (3.01)
-        # while True:
-        #    r = RandUniform()
-        #    if realIsLess(RandUniform(), RealCos(r)):
-        #        return r
 
     def routest_():
         rou = []
         for i in range(10000):
-            # print("--routest %d--"%(i))
             rou.append(ccos().ev(52) / 2 ** 52)
         dobucket(rou)
 
@@ -3675,7 +3670,7 @@ if __name__ == "__main__":
         # f is a density function, m is the mode,
         # and c = f(m).
         while True:
-            if random.randint(0, 1):
+            if random.randint(0, 1) == 0:
                 x = RandUniform()
                 z = RandUniform()
             else:
@@ -3732,7 +3727,7 @@ if __name__ == "__main__":
                 if frsub >= Fraction(1, 1 << n):
                     raise ValueError("%s, n=%d, ret=%d" % (msg, n, ret))
             else:
-                if frsub <= -S(Fraction(1, 1 << n)):
+                if frsub <= -Fraction(1, 1 << n):
                     raise ValueError("%s, n=%d, ret=%d" % (msg, n, ret))
 
     def lnsqrttest(num, den):
