@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/04/19"><meta name="citation_online_date" content="2022/04/19"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/04/20"><meta name="citation_online_date" content="2022/04/20"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -199,7 +199,7 @@
 <li>The <em>exponentiated</em> family (Mudholkar and Srivastava 1993)[^13]. The family uses a shape parameter <em>a</em> &gt; 1; step 1 is modified to read: &quot;Generate <em>u</em>, a uniform random variate in the interval [0, 1], then set <em>x</em> to <em>u</em><sup>1/<em>a</em></sup>.&quot;</li>
 <li>The <em>transmuted-G</em> family (Shaw and Buckley 2007)[^14]. The family uses a shape parameter <em>&eta;</em> in the interval [&minus;1, 1]; step 1 is modified to read: &quot;Generate a piecewise linear random variate in [0, 1] with weight 1&minus;<em>&eta;</em> at 0 and weight 1+<em>&eta;</em> at 1, call the number <em>x</em>. (It can be generated as follows, see also (Devroye 1986, p. 71-72)[^3]: With probability min(1&minus;<em>&eta;</em>, 1+<em>&eta;</em>), generate <em>x</em>, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set <em>x</em> to the higher of the two, then if <em>&eta;</em> is less than 0, set <em>x</em> to 1&minus;<em>x</em>.)&quot;. ((Granzotto et al. 2017)[^15] mentions the same distribution, but with a parameter <em>&lambda;</em> = <em>&eta;</em> + 1 lying in the interval [0, 2].)</li>
 <li>A <em>cubic rank transmuted</em> distribution (Granzotto et al. 2017)[^15] uses parameters <em>&lambda;</em><sub>0</sub> and <em>&lambda;</em><sub>1</sub> in the interval [0, 1]; step 1 is modified to read: &quot;Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: [<em>&lambda;</em><sub>0</sub>, <em>&lambda;</em><sub>1</sub>, 3&minus;<em>&lambda;</em><sub>0</sub>&minus;<em>&lambda;</em><sub>1</sub>].  Then set <em>x</em> to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively.&quot;</li>
-<li>Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: &quot;Generate a uniform random variate <em>X</em> in [0, 1], then accept <em>X</em> with probability (1&minus;<em>X</em><sup>2</sup>)<sup>2</sup>, or repeat this process otherwise&quot;; or &quot;Generate a uniform PSRN <em>X</em> in [0, 1], then run <strong>SampleGeometricBag</strong> on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, accept <em>X</em>; otherwise, repeat this process.&quot;</li>
+<li>Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: &quot;Generate a uniform random variate <em>x</em> in [0, 1], then with probability (1&minus;<em>x</em><sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process.&quot;; or &quot;Create a uniform PSRN <em>x</em> with positive sign and integer part 0, then run <strong>SampleGeometricBag</strong> on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process.&quot;</li>
 </ul>
 
 <p><strong>Transformed&ndash;transformer family.</strong> In fact, the &quot;X-G&quot; families are a special case of the so-called &quot;transformed&ndash;transformer&quot; family of distributions introduced by Alzaatreh et al. (2013)[^16] that uses two distributions, X and G, where X (the &quot;transformed&quot;) is an arbitrary distribution with a PDF; G (the &quot;transformer&quot;) is a distribution with an easy-to-compute quantile function; and <em>W</em> is a nondecreasing function that, among other conditions, maps a number in [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:</p>
@@ -234,6 +234,7 @@
 <ul>
 <li>Tahir and Cordeiro (2016)[^22] calls a distribution of minimums a <em>compound distribution</em>, and a distribution of maximums a <em>complementary compound distribution</em>.</li>
 <li>Pérez-Casany et al. (2016)[^23] calls a distribution of minimums or of maximums a <em>random-stopped extreme distribution</em>.</li>
+<li>Let <em>S</em> be a sum of <em>N</em> variates as described above.  Then Amponsah et al. (2021)[^52] describe the distribution of (<em>S</em>, <em>N</em>), a two-variable random variate often called an <em>episode</em>.</li>
 <li>A distribution of sums can be called a <em>stopped-sum distribution</em> (Johnson et al. 2005)[^24]. (In this case, <em>N</em> can be 0 so that <em>N</em> &ge; 0 is an integer distributed as <em>Y</em>.)</li>
 </ul>
 
@@ -263,6 +264,18 @@
 <td>Zero-truncated Poisson.</td>
 </tr>
 <tr>
+<td>GMDP (Amponsah et al. 2021)[^53]</td>
+<td>(<em>S</em>, <em>N</em>) episodes.</td>
+<td>Gamma(<em>&alpha;</em>) divided by <em>&beta;</em>.</td>
+<td>Discrete Pareto(<em>&delta;</em>, <em>p</em>) (see next section).</td>
+</tr>
+<tr>
+<td>Bivariate gamma geometric (Barreto-Souza 2012)[^54]</td>
+<td>(<em>S</em>, <em>N</em>) episodes.</td>
+<td>Gamma(<em>&alpha;</em>) divided by <em>&beta;</em>. (See note.)</td>
+<td>1 plus the number of failures before the first success, with each success having the same probability.</td>
+</tr>
+<tr>
 <td>Exponential Poisson (Kuş 2007)[^28].</td>
 <td>Minimums.</td>
 <td>Exponential.</td>
@@ -283,6 +296,8 @@
 </tbody></table>
 
 <p><strong>Example:</strong> If <em>Y</em> is zero-truncated Poisson with parameter <em>&lambda;</em>, its probability generating function is $W(z)=\frac{1-\exp(z\lambda)}{1-\exp(\lambda)}$, and solving for <em>x</em> leads to its inverse: $W^{-1}(x)=\ln(1-x+x\times\exp(\lambda))/\lambda$.</p>
+
+<p><strong>Note:</strong> Bivariate exponential geometric (Barreto-Souza 2012)[^55] is a special case of bivariate gamma geometric with <em>&alpha;</em>=1.</p>
 </blockquote>
 
 <p><strong>Inverse distributions.</strong> An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of 1 divided by a random variate distributed as <em>X</em>.  For example, an <em>inverse exponential</em> random variate (Keller and Kamath 1982)[^31] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(<em>U</em>) where <em>U</em> is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter <em>&theta;</em> &gt; 0.</p>
@@ -389,6 +404,11 @@
 <td>Bell(<em>a</em>) (Castellares et al. 2020)[^40].</td>
 <td>Bell&ndash;Touchard(<em>a</em>, 0).</td>
 <td><em>a</em>&gt;0.</td>
+</tr>
+<tr>
+<td>Discrete Pareto(<em>&delta;</em>, <em>p</em>) (Buddana and Kozubowski 2014)[^56]</td>
+<td>1 plus the number of failures before the first success, with each success having probability 1&minus;exp(&minus;<em>Z</em>), where <em>Z</em> is a gamma(1/<em>&delta;</em>) variate times &minus;<em>&delta;</em>*ln(1&minus;<em>p</em>).</td>
+<td><em>&delta;</em> &gt; 0, and 0&lt;<em>p</em>&lt;1.</td>
 </tr>
 <tr>
 <td>Neyman type A(<em>&delta;</em>, <em>&tau;</em>) (Batsidis and Lemonte 2021)[^42]</td>
@@ -719,7 +739,15 @@ END METHOD
 
 <p>[^51]: Chewi, S., Gerber, P., et al., &quot;<a href="https://arxiv.org/abs/2105.14166"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>&quot;, arXiv:2105.14166, 2021</p>
 
-<p>[^52]: Al-Khazaleh, A.M.H., Alzoubi, L., &quot;<a href="https://doi.org/10.28919/jmcs/6082"><strong>New compound probability distribution using biweight kernel function and exponential distribution</strong></a>&quot;, J. Math. Comput. Sci. 11 (2021), No. 5, 5878-5896.  Note that the paper&#39;s two graphs are erroneous.</p>
+<p>[^52]: Amponsah, C.K., Kozubowski, T.J. &amp; Panorska, A.K. A general stochastic model for bivariate episodes driven by a gamma sequence. J Stat Distrib App 8, 7 (2021). <a href="https://doi.org/10.1186/s40488-021-00120-5">https://doi.org/10.1186/s40488-021-00120-5</a></p>
+
+<p>[^53]: Amponsah, C.K., Kozubowski, T.J. &amp; Panorska, A.K. A general stochastic model for bivariate episodes driven by a gamma sequence. J Stat Distrib App 8, 7 (2021). <a href="https://doi.org/10.1186/s40488-021-00120-5">https://doi.org/10.1186/s40488-021-00120-5</a></p>
+
+<p>[^54]: Barreto-Souza, W.: &quot;Bivariate gamma-geometric law and its induced Lévy process&quot;, Journal of Multivariate Analysis 109 (2012).</p>
+
+<p>[^55]: Barreto-Souza, W.: &quot;Bivariate gamma-geometric law and its induced Lévy process&quot;, Journal of Multivariate Analysis 109 (2012).</p>
+
+<p>[^56]: Buddana, Amrutha, and Tomasz J. Kozubowski. &quot;Discrete Pareto distributions.&quot; Economic Quality Control 29, no. 2 (2014): 143-156.</p>
 
 <p><a id=License></a></p>
 

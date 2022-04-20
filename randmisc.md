@@ -150,7 +150,7 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 - The _exponentiated_ family (Mudholkar and Srivastava 1993\)[^13]. The family uses a shape parameter _a_ > 1; step 1 is modified to read: "Generate _u_, a uniform random variate in the interval [0, 1], then set _x_ to _u_<sup>1/_a_</sup>."
 - The _transmuted-G_ family (Shaw and Buckley 2007\)[^14]. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^3]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^15] mentions the same distribution, but with a parameter _&lambda;_ = _&eta;_ + 1 lying in the interval [0, 2].)
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^15] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
-- Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: "Generate a uniform random variate _X_ in [0, 1], then accept _X_ with probability (1&minus;_X_<sup>2</sup>)<sup>2</sup>, or repeat this process otherwise"; or "Generate a uniform PSRN _X_ in [0, 1], then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, accept _X_; otherwise, repeat this process."
+- Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: "Generate a uniform random variate _x_ in [0, 1], then with probability (1&minus;_x_<sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process."; or "Create a uniform PSRN _x_ with positive sign and integer part 0, then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process."
 
 **Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^16] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a PDF; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nondecreasing function that, among other conditions, maps a number in [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:
 
@@ -174,6 +174,7 @@ A family very similar to the "transformed&ndash;transformer" family uses a _decr
 
 - Tahir and Cordeiro (2016\)[^22] calls a distribution of minimums a _compound distribution_, and a distribution of maximums a _complementary compound distribution_.
 - Pérez-Casany et al. (2016\)[^23] calls a distribution of minimums or of maximums a _random-stopped extreme distribution_.
+- Let _S_ be a sum of _N_ variates as described above.  Then Amponsah et al. (2021)[^52] describe the distribution of (_S_, _N_), a two-variable random variate often called an _episode_.
 - A distribution of sums can be called a _stopped-sum distribution_ (Johnson et al. 2005\)[^24]. (In this case, _N_ can be 0 so that _N_ &ge; 0 is an integer distributed as _Y_.)
 
 A variate following a distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021\)[^25]\:
@@ -187,11 +188,15 @@ A variate following a distribution of minimums or of maximums can be generated a
 > | This distribution: | Is a distribution of: | Where _X_ is: | And _Y_ is: |
 >  ---- | --- | --- | --- |
 > | Geometric zero-truncated Poisson (Akdoğan et al., 2020\)[^27]. | Maximums. | 1 plus the number of failures before the first success, with each success having the same probability. | Zero-truncated Poisson. |
+> | GMDP (Amponsah et al. 2021)[^53] | (_S_, _N_) episodes. | Gamma(_&alpha;_) divided by _&beta;_. | Discrete Pareto(_&delta;_, _p_) (see next section). |
+> | Bivariate gamma geometric (Barreto-Souza 2012)[^54] | (_S_, _N_) episodes. | Gamma(_&alpha;_) divided by _&beta;_. (See note.) | 1 plus the number of failures before the first success, with each success having the same probability. |
 > | Exponential Poisson (Kuş 2007)[^28]. | Minimums. | Exponential. | Zero-truncated Poisson. |
 > | Poisson exponential (Cancho et al. 2011)[^29]. | Maximums. | Exponential. | Zero-truncated Poisson. |
 > | Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020\)[^30] \(_a_, _b_, and _c_ are greater than 0). | Minimums. | Power function(_b_, _c_). | Zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). |
 >
 > **Example:** If _Y_ is zero-truncated Poisson with parameter _&lambda;_, its probability generating function is $W(z)=\frac{1-\exp(z\lambda)}{1-\exp(\lambda)}$, and solving for _x_ leads to its inverse: $W^{-1}(x)=\ln(1-x+x\times\exp(\lambda))/\lambda$.
+>
+> **Note:** Bivariate exponential geometric (Barreto-Souza 2012)[^55] is a special case of bivariate gamma geometric with _&alpha;_=1.
 
 **Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982\)[^31] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter _&theta;_ > 0.
 
@@ -246,6 +251,7 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | Topp&ndash;Leone(_&alpha;_). | 1&minus;sqrt(1&minus;_U_<sup>1/_&alpha;_</sup>). | _&alpha;_ > 0. |
 | Bell&ndash;Touchard(_a_, _b_) (Castellares et al. 2020)[^40]. | Sum of _N_ zero-truncated Poisson(_a_) random variates, where _N_ is Poisson with parameter _b_\*exp(_a_)&minus;_b_.[^41] | _a_>0, _b_>0. |
 | Bell(_a_) (Castellares et al. 2020)[^40]. | Bell&ndash;Touchard(_a_, 0). | _a_>0. |
+| Discrete Pareto(_&delta;_, _p_) (Buddana and Kozubowski 2014)[^56] | 1 plus the number of failures before the first success, with each success having probability 1&minus;exp(&minus;_Z_), where _Z_ is a gamma(1/_&delta;_) variate times &minus;_&delta;_\*ln(1&minus;_p_). | _&delta;_ > 0, and 0&lt;_p_&lt;1. |
 | Neyman type A(_&delta;_, _&tau;_) (Batsidis and Lemonte 2021)[^42]| Bell&ndash;Touchard(_&tau;_, _&delta;_\*exp(&minus;_&tau;_)). | _&delta;_>0, _&tau;_>0. |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
@@ -518,7 +524,15 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 
 [^51]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
 
-[^52]: Al-Khazaleh, A.M.H., Alzoubi, L., "[**New compound probability distribution using biweight kernel function and exponential distribution**](https://doi.org/10.28919/jmcs/6082)", J. Math. Comput. Sci. 11 (2021), No. 5, 5878-5896.  Note that the paper's two graphs are erroneous.
+[^52]: Amponsah, C.K., Kozubowski, T.J. & Panorska, A.K. A general stochastic model for bivariate episodes driven by a gamma sequence. J Stat Distrib App 8, 7 (2021). [https://doi.org/10.1186/s40488-021-00120-5](https://doi.org/10.1186/s40488-021-00120-5)
+
+[^53]: Amponsah, C.K., Kozubowski, T.J. & Panorska, A.K. A general stochastic model for bivariate episodes driven by a gamma sequence. J Stat Distrib App 8, 7 (2021). [https://doi.org/10.1186/s40488-021-00120-5](https://doi.org/10.1186/s40488-021-00120-5)
+
+[^54]: Barreto-Souza, W.: "Bivariate gamma-geometric law and its induced Lévy process", Journal of Multivariate Analysis 109 (2012).
+
+[^55]: Barreto-Souza, W.: "Bivariate gamma-geometric law and its induced Lévy process", Journal of Multivariate Analysis 109 (2012).
+
+[^56]: Buddana, Amrutha, and Tomasz J. Kozubowski. "Discrete Pareto distributions." Economic Quality Control 29, no. 2 (2014): 143-156.
 
 <a id=License></a>
 ## License

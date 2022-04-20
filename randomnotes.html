@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/04/02"><meta name="citation_online_date" content="2022/04/02"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/04/20"><meta name="citation_online_date" content="2022/04/20"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -389,6 +389,12 @@ END METHOD
 END METHOD
 
 METHOD MultivariateNormal(mu, cov)
+  vars=NewList()
+  for j in 0...mulen: AddItem(vars, Normal(0, 1))
+  return MultivariateCov(mu,cov,vars)
+END METHOD
+
+METHOD MultivariateCov(mu, cov, vars)
   mulen=size(cov)
   if mu != nothing
     mulen = size(mu)
@@ -403,8 +409,6 @@ METHOD MultivariateNormal(mu, cov)
   cho=Decompose(cov)
   i=0
   ret=NewList()
-  vars=NewList()
-  for j in 0...mulen: AddItem(vars, Normal(0, 1))
   while i&lt;mulen
     nv=Normal(0,1)
     msum = 0
@@ -431,6 +435,7 @@ method for generating multiple random vectors in one call.</p>
 <li><strong>Rice&ndash;Norton distribution</strong>: Generate <code>vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])</code> (where <code>v = a/sqrt(m*2)</code>, <code>w = b*b/m</code>, and <code>a</code>, <code>b</code>, and <code>m</code> are the parameters to the Rice&ndash;Norton distribution), then apply <code>Norm(vec)</code> to that vector.</li>
 <li>A <strong>standard</strong> <a href="https://en.wikipedia.org/wiki/Complex_normal_distribution"><strong>complex normal distribution</strong></a> is a binormal distribution in which the binormal random pair is generated with <code>s1 = s2 = sqrt(0.5)</code> and <code>mu1 = mu2 = 0</code> and treated as the real and imaginary parts of a complex number.</li>
 <li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000)[^16].</li>
+<li><strong>Multivariate exponential power distribution</strong> (Solaro 2004)[^27]: <code>MultivariateCov(mu, cov, vec)</code>, where <code>vec = RandomPointInHypersphere(m, pow(Gamma(m/s,1)*2,1.0/s))</code>, <code>m</code> is the dimension, <code>s &gt; 0</code> is a shape parameter, <code>mu</code> is the mean as an <code>m</code>-dimensional vector (<code>m</code>-item list), and <code>cov</code> is a covariance matrix.</li>
 </ol>
 </blockquote>
 
@@ -569,6 +574,8 @@ END METHOD
 
 <p>[^26]: Massey, J.L., &quot;On the entropy of integer-valued random variables&quot;, 1988.</p>
 
+<p>[^27]: Solaro, N., &quot;Random variate generation from multivariate exponential power distribution&quot; Statistica ed Applicazioni 2 (2004).</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -648,7 +655,7 @@ END METHOD
 <li>Examples of <em>approximate algorithms</em> include sampling from a Gaussian-like distribution via a sum of <code>RNDRANGEMinMaxExc(0, 1)</code>, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N"><strong>RNDINT</strong></a>&quot;).</li>
 </ol>
 
-<p><strong>Note:</strong> A discrete distribution can be sampled in finite time on average if and only if its <em>Shannon entropy</em> is finite (Knuth and Yao 1976)[^23]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^21].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^24] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution&#39;s Shannon entropy is finite whenever&mdash;</p>
+<p><strong>Note:</strong> A discrete distribution can be sampled in finite time on average if and only if its so-called <em>Shannon entropy</em> is finite (Knuth and Yao 1976)[^23]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^21].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^24] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution&#39;s Shannon entropy is finite whenever&mdash;</p>
 
 <ul>
 <li>it takes on only integers 0 or greater and has a finite mean (&quot;long-run average&quot;) (Rioul 2022)[^25], or</li>

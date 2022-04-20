@@ -333,6 +333,12 @@ The following pseudocode calculates a random vector (list of numbers) that follo
     END METHOD
 
     METHOD MultivariateNormal(mu, cov)
+      vars=NewList()
+      for j in 0...mulen: AddItem(vars, Normal(0, 1))
+      return MultivariateCov(mu,cov,vars)
+    END METHOD
+
+    METHOD MultivariateCov(mu, cov, vars)
       mulen=size(cov)
       if mu != nothing
         mulen = size(mu)
@@ -347,8 +353,6 @@ The following pseudocode calculates a random vector (list of numbers) that follo
       cho=Decompose(cov)
       i=0
       ret=NewList()
-      vars=NewList()
-      for j in 0...mulen: AddItem(vars, Normal(0, 1))
       while i<mulen
         nv=Normal(0,1)
         msum = 0
@@ -372,6 +376,7 @@ The following pseudocode calculates a random vector (list of numbers) that follo
 > 5. **Rice&ndash;Norton distribution**: Generate `vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])` (where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution), then apply `Norm(vec)` to that vector.
 > 6. A **standard** [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution) is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
 > 7. **Multivariate Linnik distribution**: Generate a multinormal random vector, then multiply each component by `GeometricStable(alpha/2.0, 1, 1)`, where `alpha` is a parameter in (0, 2] (Kozubowski 2000\)[^16].
+> 8. **Multivariate exponential power distribution** (Solaro 2004)[^27]: `MultivariateCov(mu, cov, vec)`, where `vec = RandomPointInHypersphere(m, pow(Gamma(m/s,1)*2,1.0/s))`, `m` is the dimension, `s > 0` is a shape parameter, `mu` is the mean as an `m`-dimensional vector (`m`-item list), and `cov` is a covariance matrix.
 
 <a id=Gaussian_and_Other_Copulas></a>
 #### Gaussian and Other Copulas
@@ -493,6 +498,8 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 
 [^26]: Massey, J.L., "On the entropy of integer-valued random variables", 1988.
 
+[^27]: Solaro, N., "Random variate generation from multivariate exponential power distribution" Statistica ed Applicazioni 2 (2004).
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -560,7 +567,7 @@ There are many ways to describe closeness between two distributions.  One sugges
 > 2. Sampling from the exponential distribution using the `ExpoExact` method in the page "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html#ExpoExact)" is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2016\)[^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018\)[^22].
 > 3. Examples of _approximate algorithms_ include sampling from a Gaussian-like distribution via a sum of `RNDRANGEMinMaxExc(0, 1)`, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section "[**RNDINT**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)").
 >
-> **Note:** A discrete distribution can be sampled in finite time on average if and only if its _Shannon entropy_ is finite (Knuth and Yao 1976)[^23]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^21].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^24] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution's Shannon entropy is finite whenever&mdash;
+> **Note:** A discrete distribution can be sampled in finite time on average if and only if its so-called _Shannon entropy_ is finite (Knuth and Yao 1976)[^23]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^21].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^24] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution's Shannon entropy is finite whenever&mdash;
 >
 > - it takes on only integers 0 or greater and has a finite mean ("long-run average") (Rioul 2022\)[^25], or
 > - it takes on only integers and has a finite variance ("long-run average" of squared deviation from the mean) (Massey 1988\)[^26].
