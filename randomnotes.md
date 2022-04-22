@@ -498,8 +498,6 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 
 [^26]: Massey, J.L., "On the entropy of integer-valued random variables", 1988.
 
-[^27]: Solaro, N., "Random variate generation from multivariate exponential power distribution" Statistica ed Applicazioni 2 (2004).
-
 <a id=Appendix></a>
 ## Appendix
 
