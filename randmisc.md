@@ -253,6 +253,7 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | Bell(_a_) (Castellares et al. 2020)[^42]. | Bell&ndash;Touchard(_a_, 0). | _a_>0. |
 | Discrete Pareto(_&delta;_, _p_) (Buddana and Kozubowski 2014)[^44] | 1 plus the number of failures before the first success, with each success having probability 1&minus;exp(&minus;_Z_), where _Z_ is a gamma(1/_&delta;_) variate times &minus;_&delta;_\*ln(1&minus;_p_). | _&delta;_ > 0, and 0&lt;_p_&lt;1. |
 | Neyman type A(_&delta;_, _&tau;_) (Batsidis and Lemonte 2021)[^45]| Bell&ndash;Touchard(_&tau;_, _&delta;_\*exp(&minus;_&tau;_)). | _&delta;_>0, _&tau;_>0. |
+| Gamma exponential (Kudryavtsev 2019)[^55]. | _&delta;_\*Gamma(_t_)<sup>1/_&nu;_</sup>/Gamma(_s_)<sup>_r_/_&nu;_</sup>. | 0 &le; _r_ &lt; 1; _&nu;_ &ne; 0; _s_>0; _t_>0; _&delta;_>0. |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
 ## Batching Random Samples via Randomness Extraction
@@ -529,6 +530,8 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 [^53]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
 [^54]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+
+[^55]: Kudryavtsev, A.A., "On the representation of gamma-exponential and generalized negative binomial distributions", Inform. Appl. 13 (2019)
 
 <a id=License></a>
 ## License
