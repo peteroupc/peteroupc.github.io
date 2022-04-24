@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650687177.414165
+    t = 1650784438.7492392
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -3740,6 +3740,8 @@ FUNCTIONS
 
     exchangeable_bernoulli(p, d, lamda=None)
 
+    expopower(beta, mu=0, alpha=1)
+
     fpNormalROU()
 
     fracAreClose(a, b, n)
@@ -3778,6 +3780,8 @@ FUNCTIONS
     logbinco(n, k)
 
     logbinprob(n, k)
+
+    logconcave(f)
 
     loggammahelper(n, precision)
 
@@ -3881,7 +3885,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650687179.6971364
+    t = 1650784441.0705953
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

@@ -3481,6 +3481,43 @@ def fpNormalROU():
                 return -b / a
             return b / a
 
+def logconcave(f):  # Devroye 1986, chapter 7
+    # Samples a random variate from an absolutely
+    # continuous log-concave distribution.
+    # f is a concave nonincreasing log-density function
+    # such that f(0)=0
+    while True:
+        if random.randint(0, 1) == 0:
+            x = RandUniform()
+            z = RealLn(RandUniform())
+        else:
+            es = -RealLn(RandUniform())
+            x = 1 + es
+            z = RealLn(RandUniform()) - es
+        if realIsLess(z, f(x)):
+            return x
+
+def expopower(beta, mu=0, alpha=1):
+    # Exponential power distribution, also with location
+    # and scale parameters mu and alpha. Beta is greater than 0.
+    if beta <= 0:
+        raise ValueError
+    if beta < 1:
+        # See Devroye 1986, p. 174-175.
+        r = RealUniform()
+        r *= realGamma(1 + Fraction(1) / beta) ** (RealFraction(1) / beta)
+    else:
+        # If beta is 1 or greater,
+        # then the distribution is log-concave.
+        r = logconcave(lambda x: -(x ** beta))
+    if random.randint(0, 1) == 0:
+        r = -r
+    if mu == 0:
+        if alpha == 1:
+            return r
+        return alpha * r
+    return alpha * r + mu
+
 def realGamma(ml):
     # Generates a gamma random variate
     # using the Marsaglia--Tsang (2000) algorithm.
@@ -3665,21 +3702,6 @@ if __name__ == "__main__":
         routest2()
         t2 = time.time() - tm
         print([t1, t2, "times slower:", t1 / t2])
-
-    def logconcave(f, m, c):  # Devroye 1986, p. 291
-        # f is a density function, m is the mode,
-        # and c = f(m).
-        while True:
-            if random.randint(0, 1) == 0:
-                x = RandUniform()
-                z = RandUniform()
-            else:
-                u = RandUniform()
-                x = 1 - RealLn(u)
-                z = RandUniform() * u
-            x = m + x / c
-            if z <= f(x) / c:
-                return x
 
     # cpr()
     # exit()

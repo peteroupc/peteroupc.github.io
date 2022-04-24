@@ -808,8 +808,8 @@ Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the 
 
 **Algorithm 1.** (Flajolet et al., 2010\)[^1] showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the probability&mdash;
 
-- (1/_&lambda;_) \* &int;<sub>\[0, _&lambda;_\]</sub> _f_(_u_) _du_, or equivalently,
-- &int;<sub>\[0, 1\]</sub> _f_(_u_ * _&lambda;_) _du_ (an integral),
+- $\frac{1}{\lambda} \int_0^\lambda f(u) du$, or equivalently,
+- $\int_0^1 f(\lambda u) du$ (the integral of $f(\lambda u)$ on $[0, 1]$),
 
 namely the following algorithm:
 
@@ -817,17 +817,13 @@ namely the following algorithm:
 2. Create an input coin that does the following: "Flip the original input coin, then [**sample from the number _u_**](#Implementation_Notes).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
-**Algorithm 2.** A special case of Algorithm 1 is the integral &int;<sub>\[0, 1\]</sub> _f_(_u_) _du_, when the original input coin always returns 1:
+**Algorithm 2.** A special case of Algorithm 1 is the integral $\int_0^1 f(u) du$, when the original input coin always returns 1:
 
 1. Generate a uniform(0, 1) random variate _u_.
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
-**Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash;
-
-- &int;<sub>\[_a_, _b_\]</sub> _f_(_u_) _du_,
-
-where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using the following algorithm:
+**Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash; $$\int_a^b f(\lambda u) du,$$ where $0\le a\lt b\le 1$, using the following algorithm:
 
 1. Generate a uniform(0, 1) random variate _u_.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
