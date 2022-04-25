@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650898667.8736143
+    t = 1650908734.9348958
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -3754,6 +3754,8 @@ FUNCTIONS
 
     genscore(psi, rho, m=5)
 
+    genscore_mean_var(mean, vari, m=5)
+
     genshape(rg, inshape)
         Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
         inshape is a function that takes three parameters (x, y, s) and
@@ -3891,7 +3893,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650898670.1110578
+    t = 1650908737.477611
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

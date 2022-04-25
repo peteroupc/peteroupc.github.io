@@ -18,16 +18,37 @@ def betabin(k, psi, rho, cpsi, m=5):
         ret *= (m - psi) * rho / (m - 1) + j * (cpsi - rho)
     return ret
 
-def genscore(psi, rho, m=5):
-    if m // 1 != m or m < 2:
+def genscore_mean_var(mean, vari, m=5):
+    # Generalized score distribution, parameterized by mean and variance
+    psi = mean
+    vmin = (-((-psi) // 1) - psi) * (psi - psi // 1)  # Minimum possible variance
+    vmax = (psi - 1) * (m - psi)  # Maximum possible variance
+    if vari < vmin or vari > vmax:
         raise ValueError
-    # psi = mean; rho = confidence parameter in [0, 1].
+    if vmin == vmax:
+        return genscore(psi, 0, m=m)
+    else:
+        return genscore(psi, 1 - (vari - vmin) / (vmax - vmin), m=m)
+
+def genscore(psi, rho, m=5):
+    # Generalized score distribution (GSD).
+    # Return value is an integer in [1, m].
+    # psi = mean; rho = confidence parameter in [0, 1], where the higher
+    #   rho is, the smaller the variance; m = maximum integer.
     # Reference:
     # Bogdan Ćmiel, Nawała, Jakub, Lucjan Janowski, and Krzysztof Rusek. "Generalised Score Distribution: Underdispersed Continuation of the Beta-Binomial Distribution" arXiv preprint arXiv:2204.10565v1 [stat.AP] (2022).
     # Designed to cover all possibilities of mean and variance for distributions
     # taking values in {1, 2, ..., m}.
-    vmin = (-((-psi) // 1) - psi) * (psi - psi // 1)
-    vmax = (psi - 1) * (m * psi)
+    if rho < 0 or rho > 1 or psi < 1 or psi > m:
+        raise ValueError
+    if m == 2:
+        # Bernoulli distribution, not formally part of the GSD.
+        return 2 if random.random() < psi - 1 else 1
+    if m // 1 != m or m < 2:
+        raise ValueError
+    vmin = (-((-psi) // 1) - psi) * (psi - psi // 1)  # Minimum possible variance
+    vmax = (psi - 1) * (m - psi)  # Maximum possible variance
+    # Then the return value's variance is rho*vmin+(1-rho)*vmax.
     cpsi = ((m - 2) * vmax) / ((m - 1) * (vmax - vmin))
     if rho < cpsi:
         a = (psi - 1) * rho / ((m - 1) * (cpsi - rho))
