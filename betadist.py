@@ -10,6 +10,65 @@ import randomgen
 import math
 from fractions import Fraction
 
+def betabin(k, psi, rho, cpsi):
+    ret = math.comb(4, k - 1)
+    for i in range(k - 1):
+        ret *= (psi - 1) * rho / 4 + i * (cpsi - rho)
+    for j in range(5 - k):
+        ret *= (5 - psi) * rho / 4 + j * (cpsi - rho)
+    return ret
+
+def genscore(psi, rho):
+    # Reference:
+    # Nawała, Jakub, Lucjan Janowski, Bogdan Ćmiel, Krzysztof Rusek, and Pablo Pérez. "Generalised Score Distribution: A Two-Parameter Discrete Distribution Accurately Describing Responses from Quality of Experience Subjective Experiments." arXiv preprint arXiv:2202.02177 (2022).
+    vmin = (-((-psi) // 1) - psi) * (psi - psi // 1)
+    vmax = (psi - 1) * (5 * psi)
+    cpsi = (3 * vmax) / (4 * (vmax - vmin))
+    if rho < cpsi:
+        weights = [betabin(i, psi, rho, cpsi) for i in [1, 2, 3, 4, 5]]
+        return random.choices([1, 2, 3, 4, 5], weights=weights)[0]
+    else:
+        if random.random() < (rho - cpsi) / (1 - cpsi):
+            if psi == math.floor(psi):
+                return psi
+            prob = math.ceil(psi) - psi
+            if random.random() < prob:
+                return math.floor(psi)
+            else:
+                return math.ceil(psi)
+        else:
+            return 1 + sum(
+                1 if random.random() < (psi - 1) / 4 else 0 for i in range(4)
+            )
+
+def tulap(m, b, q):
+    # Tulap(m, b, q). ("truncated uniform Laplace")
+    # Discrete Laplace(b) is Tulap(0,b,0) rounded to nearest integer.
+    # Awan, Jordan, and Aleksandra Slavković. "Differentially private inference for binomial data." arXiv:1904.00459 (2019).
+    while True:
+        g1 = 0
+        while random.random() > 1 - b:
+            g1 += 1
+        g2 = 0
+        while random.random() > 1 - b:
+            g2 += 1
+        nint = g1 - g2
+        n = nint + random.uniform(-1 / 2, 1 / 2)
+        if q == 0:
+            # No truncation necessary
+            return n + m
+        # Truncate between two quantiles.  Since
+        # Tulap(m,b,0) = m + Tulap(0,b,0), just assume
+        # m=0 in the truncation check.
+        if n < 0:
+            fn = (1 / (b ** (nint) * (1 + b))) * (b + (n - nint + 1 / 2) * (1 - b))
+        else:
+            fn = 1 - (b ** nint / (1 + b)) * (b + (nint - n + 1 / 2) * (1 - b))
+        if fn < 0 or fn > 1:
+            raise ValueError
+        if fn > q / 2 and fn < 1 - q / 2:
+            return n + m
+
 def exchangeable_bernoulli(p, d, lamda=None):
     # p=expected value (in [0, 1]); d=dimension; lamda=weights for
     #   each ray density

@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650784438.7492392
+    t = 1650868852.9926026
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -3724,6 +3724,8 @@ FUNCTIONS
 
     bernoullinum(n)
 
+    betabin(k, psi, rho, cpsi)
+
     betadist(b, ax=1, ay=1, bx=1, by=1, precision=53)
 
     betadist_geobag(b, ax=1, ay=1, bx=1, by=1)
@@ -3749,6 +3751,8 @@ FUNCTIONS
     fracAreCloseND(an, ad, bn, bd, n)
 
     fracEV(sn, sd, n)
+
+    genscore(psi, rho)
 
     genshape(rg, inshape)
         Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
@@ -3872,6 +3876,8 @@ FUNCTIONS
 
     stirling1(n, k)
 
+    tulap(m, b, q)
+
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
     CRUDELOG = [0, -726816, -681390, -654818, -635964, -621340, -609392, -...
@@ -3885,7 +3891,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650784441.0705953
+    t = 1650868855.4671645
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
