@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650868852.9926026
+    t = 1650898667.8736143
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -3724,7 +3724,7 @@ FUNCTIONS
 
     bernoullinum(n)
 
-    betabin(k, psi, rho, cpsi)
+    betabin(k, psi, rho, cpsi, m=5)
 
     betadist(b, ax=1, ay=1, bx=1, by=1, precision=53)
 
@@ -3752,7 +3752,7 @@ FUNCTIONS
 
     fracEV(sn, sd, n)
 
-    genscore(psi, rho)
+    genscore(psi, rho, m=5)
 
     genshape(rg, inshape)
         Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
@@ -3891,7 +3891,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650868855.4671645
+    t = 1650898670.1110578
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

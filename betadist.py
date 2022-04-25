@@ -10,23 +10,33 @@ import randomgen
 import math
 from fractions import Fraction
 
-def betabin(k, psi, rho, cpsi):
-    ret = math.comb(4, k - 1)
+def betabin(k, psi, rho, cpsi, m=5):
+    ret = math.comb(m - 1, k - 1)
     for i in range(k - 1):
-        ret *= (psi - 1) * rho / 4 + i * (cpsi - rho)
-    for j in range(5 - k):
-        ret *= (5 - psi) * rho / 4 + j * (cpsi - rho)
+        ret *= (psi - 1) * rho / (m - 1) + i * (cpsi - rho)
+    for j in range(m - k):
+        ret *= (m - psi) * rho / (m - 1) + j * (cpsi - rho)
     return ret
 
-def genscore(psi, rho):
+def genscore(psi, rho, m=5):
+    if m // 1 != m or m < 2:
+        raise ValueError
+    # psi = mean; rho = confidence parameter in [0, 1].
     # Reference:
-    # Nawała, Jakub, Lucjan Janowski, Bogdan Ćmiel, Krzysztof Rusek, and Pablo Pérez. "Generalised Score Distribution: A Two-Parameter Discrete Distribution Accurately Describing Responses from Quality of Experience Subjective Experiments." arXiv preprint arXiv:2202.02177 (2022).
+    # Bogdan Ćmiel, Nawała, Jakub, Lucjan Janowski, and Krzysztof Rusek. "Generalised Score Distribution: Underdispersed Continuation of the Beta-Binomial Distribution" arXiv preprint arXiv:2204.10565v1 [stat.AP] (2022).
+    # Designed to cover all possibilities of mean and variance for distributions
+    # taking values in {1, 2, ..., m}.
     vmin = (-((-psi) // 1) - psi) * (psi - psi // 1)
-    vmax = (psi - 1) * (5 * psi)
-    cpsi = (3 * vmax) / (4 * (vmax - vmin))
+    vmax = (psi - 1) * (m * psi)
+    cpsi = ((m - 2) * vmax) / ((m - 1) * (vmax - vmin))
     if rho < cpsi:
-        weights = [betabin(i, psi, rho, cpsi) for i in [1, 2, 3, 4, 5]]
-        return random.choices([1, 2, 3, 4, 5], weights=weights)[0]
+        a = (psi - 1) * rho / ((m - 1) * (cpsi - rho))
+        b = (m - psi) * rho / ((m - 1) * (cpsi - rho))
+        p = random.betavariate(a, b)
+        return 1 + sum(1 if random.random() < p else 0 for i in range(m - 1))
+        # Alternative implementation:
+        # weights = [betabin(i, psi, rho, cpsi) for i in range(1,m+1)]
+        # return random.choices(range(1,m+1), weights=weights)[0]
     else:
         if random.random() < (rho - cpsi) / (1 - cpsi):
             if psi == math.floor(psi):
@@ -38,7 +48,7 @@ def genscore(psi, rho):
                 return math.ceil(psi)
         else:
             return 1 + sum(
-                1 if random.random() < (psi - 1) / 4 else 0 for i in range(4)
+                1 if random.random() < (psi - 1) / (m - 1) else 0 for i in range(m - 1)
             )
 
 def tulap(m, b, q):
