@@ -39,11 +39,13 @@ def genscore(psi, rho, m=5):
     # Bogdan Ćmiel, Nawała, Jakub, Lucjan Janowski, and Krzysztof Rusek. "Generalised Score Distribution: Underdispersed Continuation of the Beta-Binomial Distribution" arXiv preprint arXiv:2204.10565v1 [stat.AP] (2022).
     # Designed to cover all possibilities of mean and variance for distributions
     # taking values in {1, 2, ..., m}.
+    psi = Fraction(psi)
+    rho = Fraction(rho)
     if rho < 0 or rho > 1 or psi < 1 or psi > m:
         raise ValueError
     if m == 2:
         # Bernoulli distribution, not formally part of the GSD.
-        return 2 if random.random() < psi - 1 else 1
+        return 1 + randBernoulli(psi - 1)
     if m // 1 != m or m < 2:
         raise ValueError
     vmin = (-((-psi) // 1) - psi) * (psi - psi // 1)  # Minimum possible variance
@@ -51,53 +53,71 @@ def genscore(psi, rho, m=5):
     # Then the return value's variance is rho*vmin+(1-rho)*vmax.
     cpsi = ((m - 2) * vmax) / ((m - 1) * (vmax - vmin))
     if rho < cpsi:
-        a = (psi - 1) * rho / ((m - 1) * (cpsi - rho))
-        b = (m - psi) * rho / ((m - 1) * (cpsi - rho))
-        p = random.betavariate(a, b)
-        return 1 + sum(1 if random.random() < p else 0 for i in range(m - 1))
-        # Alternative implementation:
-        # weights = [betabin(i, psi, rho, cpsi) for i in range(1,m+1)]
-        # return random.choices(range(1,m+1), weights=weights)[0]
+        # Alternative implementation (which relies on
+        # floating point numbers due to random.betavariate):
+        # a = (psi - 1) * rho / ((m - 1) * (cpsi - rho))
+        # b = (m - psi) * rho / ((m - 1) * (cpsi - rho))
+        # p = random.betavariate(a, b)
+        # return 1 + sum(randBernoulli(p) for i in range(m - 1))
+        weights = [betabin(i, psi, rho, cpsi) for i in range(1, m + 1)]
+        maxweight = max(weights)
+        while True:
+            ret = random.randint(0, len(weights) - 1)
+            if randBernoulli(weights[ret] / maxweight) == 1:
+                return ret + 1
     else:
-        if random.random() < (rho - cpsi) / (1 - cpsi):
-            if psi == math.floor(psi):
+        if randBernoulli((rho - cpsi) / (1 - cpsi)) == 1:
+            if psi == psi // 1:  # psi//1 = floor(psi)
                 return psi
-            prob = math.ceil(psi) - psi
-            if random.random() < prob:
-                return math.floor(psi)
+            prob = -((-psi) // 1) - psi
+            if randBernoulli(prob) == 1:
+                return psi // 1
             else:
-                return math.ceil(psi)
+                return -((-psi) // 1)  # -((-psi)//1) = ceil(psi)
         else:
-            return 1 + sum(
-                1 if random.random() < (psi - 1) / (m - 1) else 0 for i in range(m - 1)
-            )
+            return 1 + sum(randBernoulli((psi - 1) / (m - 1)) for i in range(m - 1))
+
+def randBernoulli(f):
+    if f == 1:
+        return 1
+    if f == 0:
+        return 0
+    if isinstance(f, Fraction):
+        return random.randint(0, f.denominator) < f.numerator
+    if isinstance(f, Real):
+        return 1 if realIsLess(RandUniform(), f) else 0
+    return 1 if realIsLess(RandUniform(), RealFraction(f)) else 0
 
 def tulap(m, b, q):
-    # Tulap(m, b, q). ("truncated uniform Laplace")
+    # Tulap(m, b, q). ("truncated uniform Laplace"), m real, b in (0, 1), q in [0, 1).
     # Discrete Laplace(b) is Tulap(0,b,0) rounded to nearest integer.
     # Awan, Jordan, and Aleksandra Slavković. "Differentially private inference for binomial data." arXiv:1904.00459 (2019).
+    b = RealAdd(b, 0)
+    q_is_zero = q == 0
+    q = RealAdd(q, 0)
     while True:
         g1 = 0
-        while random.random() > 1 - b:
+        while randBernoulli(b) == 1:
             g1 += 1
         g2 = 0
-        while random.random() > 1 - b:
+        while randBernoulli(b) == 1:
             g2 += 1
         nint = g1 - g2
-        n = nint + random.uniform(-1 / 2, 1 / 2)
-        if q == 0:
+        n = nint + RandUniform() * 2 - Fraction(1, 2)
+        if q_is_zero:
             # No truncation necessary
             return n + m
         # Truncate between two quantiles.  Since
         # Tulap(m,b,0) = m + Tulap(0,b,0), just assume
         # m=0 in the truncation check.
         if n < 0:
-            fn = (1 / (b ** (nint) * (1 + b))) * (b + (n - nint + 1 / 2) * (1 - b))
+            fn = (1 / (b ** nint * (1 + b))) * (
+                b + (n - nint + Fraction(1, 2)) * (1 - b)
+            )
         else:
-            fn = 1 - (b ** nint / (1 + b)) * (b + (nint - n + 1 / 2) * (1 - b))
-        if fn < 0 or fn > 1:
-            raise ValueError
-        if fn > q / 2 and fn < 1 - q / 2:
+            fn = 1 - (b ** nint / (1 + b)) * (b + (nint - n + Fraction(1, 2)) * (1 - b))
+        # if fn < 0 or fn > 1: raise ValueError
+        if realIsLess(q / 2, fn) and realIsLess(fn, 1 - q / 2):
             return n + m
 
 def exchangeable_bernoulli(p, d, lamda=None):
@@ -107,6 +127,10 @@ def exchangeable_bernoulli(p, d, lamda=None):
     # "Exchangeable Bernoulli distributions: high dimensional
     # simulation, estimate and testing." arXiv preprint
     # arXiv:2101.07693 (2021).
+    if d <= 0 or int(d) != d:
+        raise ValueError
+    if p < 0 or p > 1:
+        raise ValueError
     pd_is_integer = p * d == floor(p * d)
     floorpd = p * d - 1 if pd_is_integer else int(p * d)
     ceilpd = p * d + 1 if pd_is_integer else int(p * d) + 1
@@ -125,6 +149,8 @@ def exchangeable_bernoulli(p, d, lamda=None):
     if pd_is_integer and rj == densitycount - 1:
         jstar = int(p * d)
     else:
+        if rj < 0 or j1count < 0:
+            raise ValueError
         j1 = rj % j1count
         j2 = ceilpd + rj // j1count
         # print([j1,j2, "---",(j2-p*d)/(j2-j1),(p*d-j1)/(j2-j1)])

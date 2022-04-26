@@ -1195,7 +1195,7 @@ END METHOD
 <a id=Hypergeometric_Distribution></a>
 ### Hypergeometric Distribution
 
-The following method generates a random integer that follows a _hypergeometric distribution_.  When a given number of items are drawn at random without replacement from a collection of items each labeled either `1` or `0`,  the random integer expresses the number of items drawn this way that are labeled `1`.  In the method below, `trials` is the number of items drawn at random, `ones` is the number of items labeled `1` in the set, and `count` is the number of items labeled `1` or `0` in that set.
+The following method generates a random integer that follows a _hypergeometric distribution_.  When a given number of items are drawn at random without replacement from a collection of items each labeled either `1` or `0`,  the random integer expresses the number of items drawn this way that are labeled `1`.  In the method below, `trials` is the number of items drawn at random, `ones` is the number of items labeled `1` in the collection, and `count` is the number of items labeled `1` or `0` in that collection.
 
     METHOD Hypergeometric(trials, ones, count)
         if ones < 0 or count < 0 or trials < 0 or

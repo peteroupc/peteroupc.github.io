@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650908734.9348958
+    t = 1651017576.6258109
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -3860,6 +3860,8 @@ FUNCTIONS
 
     psrnexpo(rg)
 
+    randBernoulli(f)
+
     realCeiling(a)
 
     realFloor(a)
@@ -3893,7 +3895,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1650908737.477611
+    t = 1651017578.864576
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

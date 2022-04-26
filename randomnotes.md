@@ -12,6 +12,7 @@
         - [**Beta Distribution**](#Beta_Distribution)
         - [**Uniform Partition with a Positive Sum**](#Uniform_Partition_with_a_Positive_Sum)
         - [**Noncentral Hypergeometric Distributions**](#Noncentral_Hypergeometric_Distributions)
+        - [**Negative Hypergeometric Distribution**](#Negative_Hypergeometric_Distribution)
         - [**von Mises Distribution**](#von_Mises_Distribution)
         - [**Stable Distribution**](#Stable_Distribution)
         - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
@@ -193,6 +194,30 @@ For both distributions, if there are two colors, there are four parameters: _m_,
 - for the first color, there are _ones_ many balls each with weight _weight_;
 - for the second color, there are (_m_&minus;_ones_) many balls each with weight 1; and
 - the random variate is the number of chosen balls of the first color.
+
+<a id=Negative_Hypergeometric_Distribution></a>
+#### Negative Hypergeometric Distribution
+
+When items are drawn at random without replacement from a collection of items each labeled either `1` or `0`, until `successes` many items labeled `1` are drawn this way, the negative hypergeometric distribution expresses the number of items drawn this way that are labeled `0`.  In the method below, `ones` is the number of items labeled `1` in the collection, and `count` is the number of items labeled `1` or `0` in that collection.
+
+```
+METHOD NegativeHypergeometric(successes, ones, count)
+    if successes<0 or ones<0 or count<0 or
+       successes>ones or ones>count: return error
+    if ones==0: return 0
+    i = 0
+    currentCount = count
+    currentOnes = ones
+    while currentOnes > ones - successes
+      if random.random()<currentOnes/currentCount
+        currentOnes = currentOnes - 1
+      end
+      currentCount = currentCount - 1
+      i = i + 1
+    end
+    return i - successes
+END METHOD
+```
 
 <a id=von_Mises_Distribution></a>
 #### von Mises Distribution
