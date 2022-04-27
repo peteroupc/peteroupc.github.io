@@ -973,14 +973,20 @@ This is similar to an algorithm mentioned in an appendix in Li (2021\)[^25], in 
 
 A random variate that follows the Lindley distribution (Lindley 1958\)[^26] with parameter _&theta;_ (a real number greater than 0) can be generated as follows:
 
-1. With probability _w_ = _&theta;_/(1+_&theta;_), generate an exponential random variate with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs) and return that number.
-2. Otherwise, generate two exponential random variates with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
+Let _A_ be 1 and let _B_ be 2.  Then:
 
-For the Garima distribution (Shanker 2016\)[^27], _w_ = (1+_&theta;_)/(2+_&theta;_).
+1. With probability _w_ = _&theta;_/(1+_&theta;_), generate _A_ exponential random variates with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs), then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
+2. Otherwise, generate _B_ exponential random variates with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
 
-For the i-Garima distribution (Singh and Das 2020\)[^28], _w_ = (2+_&theta;_)/(3+_&theta;_).
+The table below describes other Lindley-like mixtures:
 
-For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020\)[^29], two exponential random variates (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.
+| Distribution | _w_ is: | _A_ is: | _B_ is: |
+ --- | --- | --- | --- |
+| Garima (Shanker 2016\)[^27]. | (1+_&theta;_)/(2+_&theta;_). | 1. | 2. |
+| i-Garima (Singh and Das 2020\)[^28]. | (2+_&theta;_)/(3+_&theta;_). | 1. | 2. |
+| Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020\)[^29]. | _&theta;_/(1+_&theta;_). | 2. | 3. |
+| Xgamma (Sen et al. 2016)[^55]. | _&theta;_/(1+_&theta;_). | 1. | 3. |
+| Mirra (Sen et al. 2021)[^56]. | _&theta;_<sup>2</sup>/(_&alpha;_+_&theta;_<sup>2</sup>) where _&alpha;_>0. | 1. | 3. |
 
 > **Note:** If _&theta;_ is a uniform PSRN, then the check "With probability  _w_ = _&theta;_/(1+_&theta;_)" can be implemented by running the Bernoulli factory algorithm for **(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**, where _c_ is 1; _&lambda;_ represents an input coin that always returns 0; _d_ is _&theta;_'s integer part, and _&mu;_ is an input coin that runs **SampleGeometricBag** on _&theta;_'s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.
 
@@ -1150,6 +1156,10 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 [^53]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^54]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^55]: Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.
+
+[^56]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. "The Mirra distribution for modeling time-to-event data sets." In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.
 
 <a id=Appendix></a>
 ## Appendix

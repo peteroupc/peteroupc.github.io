@@ -9,6 +9,7 @@
 import math
 from decimal import Decimal
 from fractions import Fraction
+from betadist import *
 
 #
 #  Implements interval numbers and interval arithmetic, backed

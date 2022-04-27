@@ -3613,6 +3613,26 @@ def logconcave(f):  # Devroye 1986, chapter 7
         if realIsLess(z, f(x)):
             return x
 
+def c2a(r=None):
+    # Generates a uniform random point on the unit circle
+    # with radius r (default is 1).
+    # Devroye 1986, p. 235
+    while True:
+        x1 = RandUniform()
+        if random.randint(0, 1) == 0:
+            x1 = -x1
+        x2 = RandUniform()
+        if random.randint(0, 1) == 0:
+            x2 = -x2
+        y1 = x1 ** 2
+        y2 = x2 ** 2
+        s = y1 + y2
+        if realIsLess(s, RealFraction(1)):
+            if r != None:
+                return [(y1 - y2) * r / s, 2 * r * x1 * x2 / s]
+            else:
+                [(y1 - y2) / s, 2 * x1 * x2 / s]
+
 def expopower(beta, mu=0, alpha=1):
     # Exponential power distribution, also with location
     # and scale parameters mu and alpha. Beta is greater than 0.

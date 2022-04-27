@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1651017576.6258109
+    t = 1651041691.7771854
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -2325,6 +2325,21 @@ CLASSES
      |
      |  __weakref__
      |      list of weak references to the object (if defined)
+
+DATA
+    ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
+    CRUDELOG = [0, -726816, -681390, -654818, -635964, -621340, -609392, -...
+    CRUDELOG_ARCTANBITDIFF = 13
+    CRUDELOG_ARCTANFRAC = 29
+    CRUDELOG_BITS = 16
+    CRUDELOG_LOG2BITS = 45426
+    CRUDELOG_LOGMIN = 9830
+    LNPOLY2 = [(-28986367995118693...8591117027361355259, 1000000000000000...
+    LNPOLY3 = [(-13476514299119388...8263005361644498323, 5000000000000000...
+    REALHALFPI = RealPi(1/2)
+    REALPI = RealPi(1)
+    REAL_858_1000 = RealFraction(429/500)
+    t = 1651041692.952782
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
@@ -3738,6 +3753,8 @@ FUNCTIONS
         - bx, by: Numerator and denominator of second shape parameter.
         - precision: Number of bits after the point that the result will contain.
 
+    c2a(r=None)
+
     crudelog(av)
 
     exchangeable_bernoulli(p, d, lamda=None)
@@ -3895,7 +3912,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1651017578.864576
+    t = 1651041695.0680044
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
