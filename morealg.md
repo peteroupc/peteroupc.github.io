@@ -985,8 +985,8 @@ The table below describes other Lindley-like mixtures:
 | Garima (Shanker 2016\)[^27]. | (1+_&theta;_)/(2+_&theta;_). | 1. | 2. |
 | i-Garima (Singh and Das 2020\)[^28]. | (2+_&theta;_)/(3+_&theta;_). | 1. | 2. |
 | Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020\)[^29]. | _&theta;_/(1+_&theta;_). | 2. | 3. |
-| Xgamma (Sen et al. 2016)[^55]. | _&theta;_/(1+_&theta;_). | 1. | 3. |
-| Mirra (Sen et al. 2021)[^56]. | _&theta;_<sup>2</sup>/(_&alpha;_+_&theta;_<sup>2</sup>) where _&alpha;_>0. | 1. | 3. |
+| Xgamma (Sen et al. 2016)[^30]. | _&theta;_/(1+_&theta;_). | 1. | 3. |
+| Mirra (Sen et al. 2021)[^31]. | _&theta;_<sup>2</sup>/(_&alpha;_+_&theta;_<sup>2</sup>) where _&alpha;_>0. | 1. | 3. |
 
 > **Note:** If _&theta;_ is a uniform PSRN, then the check "With probability  _w_ = _&theta;_/(1+_&theta;_)" can be implemented by running the Bernoulli factory algorithm for **(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**, where _c_ is 1; _&lambda;_ represents an input coin that always returns 0; _d_ is _&theta;_'s integer part, and _&mu;_ is an input coin that runs **SampleGeometricBag** on _&theta;_'s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.
 
@@ -1001,7 +1001,7 @@ The following arbitrary-precision sampler generates the sum of _n_ independent e
 <a id=One_Dimensional_Epanechnikov_Kernel></a>
 ### One-Dimensional Epanechnikov Kernel
 
-Adapted from Devroye and Györfi (1985, p. 236\)[^30].
+Adapted from Devroye and Györfi (1985, p. 236\)[^32].
 
 1. Generate three empty PSRNs _a_, _b_, and _c_, with a positive sign, an integer part of 0, and an empty fractional part.
 2. Run **URandLess** on _a_ and _c_ in that order, then run **URandLess** on _b_ and _c_ in that order.  If both runs return 1, set _c_ to point to _b_.
@@ -1107,59 +1107,59 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 
 [^29]: Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.
 
-[^30]: Devroye, L., Györfi, L., _Nonparametric Density Estimation: The L1 View_, 1985.
+[^30]: Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.
 
-[^31]: Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.
+[^31]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. "The Mirra distribution for modeling time-to-event data sets." In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.
 
-[^32]: Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.
+[^32]: Devroye, L., Györfi, L., _Nonparametric Density Estimation: The L1 View_, 1985.
 
-[^33]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
+[^33]: Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.
 
-[^34]: I thank D. Eisenstat from the _Stack Overflow_ community for leading me to this insight.
+[^34]: Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.
 
-[^35]: Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), [**https://doi.org/10.3390/e21010092**](https://doi.org/10.3390/e21010092) .
+[^35]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
-[^36]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6 [cs.IT], 2020.
+[^36]: I thank D. Eisenstat from the _Stack Overflow_ community for leading me to this insight.
 
-[^37]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^37]: Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), [**https://doi.org/10.3390/e21010092**](https://doi.org/10.3390/e21010092) .
 
-[^38]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+[^38]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6 [cs.IT], 2020.
 
-[^39]: Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.
+[^39]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^40]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
+[^40]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
 
-[^41]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
+[^41]: Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.
 
-[^42]: Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308.
+[^42]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
 
-[^43]: Etessami, K. and Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009.
+[^43]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
-[^44]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
+[^44]: Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308.
 
-[^45]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In _Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science_, 2004. (pp. 12-21). IEEE.
+[^45]: Etessami, K. and Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009.
 
-[^46]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. "Permutations generated by a depth 2 stack and an infinite stack in series are algebraic." _Electronic Journal of Combinatorics_ 22(1), 2015.
+[^46]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
 
-[^47]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^47]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In _Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science_, 2004. (pp. 12-21). IEEE.
 
-[^48]: Vatan, F., "Distribution functions of probabilistic automata", in _Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01)_, pp. 684-693, 2001.
+[^48]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. "Permutations generated by a depth 2 stack and an infinite stack in series are algebraic." _Electronic Journal of Combinatorics_ 22(1), 2015.
 
-[^49]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," _SIAM Journal on Discrete Mathematics_ 17 (2004): 624-633.
+[^49]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^50]: Vatan (2001) claims that a finite-state generator has a continuous `CDF` (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.
+[^50]: Vatan, F., "Distribution functions of probabilistic automata", in _Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01)_, pp. 684-693, 2001.
 
-[^51]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
+[^51]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," _SIAM Journal on Discrete Mathematics_ 17 (2004): 624-633.
 
-[^52]: Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines", in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.
+[^52]: Vatan (2001) claims that a finite-state generator has a continuous `CDF` (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.
 
-[^53]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
+[^53]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
 
-[^54]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+[^54]: Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines", in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.
 
-[^55]: Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.
+[^55]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
-[^56]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. "The Mirra distribution for modeling time-to-event data sets." In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.
+[^56]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
 <a id=Appendix></a>
 ## Appendix
@@ -1169,7 +1169,7 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 <a id=Ratio_of_Uniforms></a>
 ### Ratio of Uniforms
 
-The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique for sampling a distribution (Kinderman and Monahan 1977\)[^31].  It involves transforming the distribution's density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007\)[^32], is less elegant than, say, the normal distribution sampler by Karney (2014\)[^33], which doesn't require calculating logarithms or other transcendental functions.
+The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique for sampling a distribution (Kinderman and Monahan 1977\)[^33].  It involves transforming the distribution's density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007\)[^34], is less elegant than, say, the normal distribution sampler by Karney (2014\)[^35], which doesn't require calculating logarithms or other transcendental functions.
 
 This algorithm works for any univariate (one-variable) distribution as long as&mdash;
 
@@ -1210,7 +1210,7 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
     - _MAYBE_ in any other case, or if the function is unsure.
 
     In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.
-3. If the shape is given as an inequality of the form _f_(_t1_, ..., _tN_) &le; 0, **InShape** should use rational interval arithmetic (such as the one given in (Daumas et al., 2007\)[^32]), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, **InShape** should build one interval for each dimension of the box and evaluate _f_ using those intervals[^34] with an accuracy that increases as _S_ increases.  Then, **InShape** can return&mdash;
+3. If the shape is given as an inequality of the form _f_(_t1_, ..., _tN_) &le; 0, **InShape** should use rational interval arithmetic (such as the one given in (Daumas et al., 2007\)[^34]), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, **InShape** should build one interval for each dimension of the box and evaluate _f_ using those intervals[^36] with an accuracy that increases as _S_ increases.  Then, **InShape** can return&mdash;
     - _YES_ if the interval result of _f_ has an upper bound less than or equal to 0;
     - _NO_ if the interval result of _f_ has a lower bound greater than 0; and
     - _MAYBE_ in any other case.
@@ -1238,11 +1238,11 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
 <a id=Probability_Transformations></a>
 ### Probability Transformations
 
-The following algorithm takes a uniform partially-sampled random number (PSRN) as a "coin" and flips that "coin" using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)).  Given that "coin" and a function _f_ as described below, the algorithm returns 1 with probability _f_(_U_), where _U_ is the number built up by the uniform PSRN (see also (Brassard et al., 2019\)[^35], (Devroye 1986, p. 769\)[^20], (Devroye and Gravel 2020\)[^36].  In the algorithm:
+The following algorithm takes a uniform partially-sampled random number (PSRN) as a "coin" and flips that "coin" using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)).  Given that "coin" and a function _f_ as described below, the algorithm returns 1 with probability _f_(_U_), where _U_ is the number built up by the uniform PSRN (see also (Brassard et al., 2019\)[^37], (Devroye 1986, p. 769\)[^20], (Devroye and Gravel 2020\)[^38].  In the algorithm:
 
 -  The uniform PSRN's sign must be positive and its integer part must be 0.
 - For correctness, _f_(_U_) must meet the following conditions:
-    - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be continuous and polynomially bounded on the open interval (0, 1) (polynomially bounded means that both _f_(_U_) and 1&minus;_f_(_U_) are bounded from below by min(_U_<sup>_n_</sup>, (1&minus;_U_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^37]).
+    - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be continuous and polynomially bounded on the open interval (0, 1) (polynomially bounded means that both _f_(_U_) and 1&minus;_f_(_U_) are bounded from below by min(_U_<sup>_n_</sup>, (1&minus;_U_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^39]).
     - Otherwise, _f_(_U_) must map the interval \[0, 1] to \[0, 1] and be continuous everywhere or "almost everywhere".
 
     The first set of conditions is the same as those for the Bernoulli factory problem (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011\)[^3].
@@ -1367,12 +1367,12 @@ revealing that the function is a [**convex combination**](https://peteroupc.gith
 - _g_(_k_) = choose(2\*_k_,_k_)/((2\*_k_&minus;1)\*2<sup>2*_k_</sup>), and
 - _h_<sub>_k_</sub>(_&lambda;_) = (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> / 2 = (_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> * 4<sup>_k_</sup> / 2
 
-(see also Wästlund (1999\)[^38]; Dale et al. (2015\)[^39]).  The right-hand side of _h_, which is the polynomial built in step 3 of the algorithm, is a polynomial of degree _k_\*2 with Bernstein coefficients&mdash;
+(see also Wästlund (1999\)[^40]; Dale et al. (2015\)[^41]).  The right-hand side of _h_, which is the polynomial built in step 3 of the algorithm, is a polynomial of degree _k_\*2 with Bernstein coefficients&mdash;
 
 - _z_ = (4<sup>_v_</sup>/2) / choose(_v_*2,_v_) at _v_=_k_, and
 - 0 elsewhere.
 
-Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be simulated, as is, using the Bernoulli factory algorithm for [**polynomials in Bernstein form**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form).  Fortunately, the polynomial's degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001\)[^40]).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree _d_ as well as _z_ (as defined above), the degree elevation is as follows:
+Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be simulated, as is, using the Bernoulli factory algorithm for [**polynomials in Bernstein form**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form).  Fortunately, the polynomial's degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001\)[^42]).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree _d_ as well as _z_ (as defined above), the degree elevation is as follows:
 
 1. Set _r_ to floor(_d_/3) + 1. (This starting value is because when this routine finishes, _r_/_d_ appears to converge to 1/3 as _d_ gets large, for the polynomial in question.)  Let _c_ be choose(_d_,_d_/2).
 2. Create a list of _d_+_r_+1 Bernstein coefficients, all zeros.
@@ -1409,17 +1409,17 @@ As given above, each term $w_n(\mu)$ is a polynomial in $\mu$, and is monotone i
 - _f_ is bounded from above and below on its domain, and
 - the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0.
 
-The algorithm to achieve this goal follows (see Lee et al. 2014\)[^41]\:
+The algorithm to achieve this goal follows (see Lee et al. 2014\)[^43]\:
 
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
-> **Example:** An example from Lee et al. (2014\)[^41].  Say the oracle produces uniform random variates in [0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce non-negative random variates whose expected value ("long-run average") is that mean.
+> **Example:** An example from Lee et al. (2014\)[^43].  Say the oracle produces uniform random variates in [0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce non-negative random variates whose expected value ("long-run average") is that mean.
 >
 > **Notes:**
 >
 > 1. Averaging to the mean of _f_(_X_) (that is, **E**\[_f_(_X_)] where **E**\[.] means expected or average value) is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers (that is, _f_(**E**\[_X_])).  For example, if _X_ is 0 or 1 with equal probability, and _f_(_&nu;_) = exp(&minus;_&nu;_), then **E**\[_f_(_X_)] = exp(0) + (exp(&minus;1) &minus; exp(0))\*(1/2), and _f_(**E**\[_X_]) = _f_(1/2) = exp(&minus;1/2).
-> 2. (Lee et al. 2014, Corollary 4\)[^41]\: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
+> 2. (Lee et al. 2014, Corollary 4\)[^43]\: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
 >
 >     - Use _f_(_&nu;_) = _f_(_&nu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
 >     - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).
@@ -1481,9 +1481,9 @@ The following definitions are used in this section:
 > **Notes:**
 >
 > 1. Mossel and Peres (2005\)[^12] defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.
-> 2. Pushdown automata, as defined here, are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020\)[^42] and can be translated to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009\)[^43], as long as those grammars and systems use only transition probabilities that are rational numbers.
+> 2. Pushdown automata, as defined here, are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020\)[^44] and can be translated to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009\)[^45], as long as those grammars and systems use only transition probabilities that are rational numbers.
 
-**Proposition 0** (Mossel and Peres 2005[^42], Theorem 1.2): _A full-domain pushdown automaton can simulate a function that maps (0, 1) to (0, 1) only if the function is in class **ALGRAT**._
+**Proposition 0** (Mossel and Peres 2005[^44], Theorem 1.2): _A full-domain pushdown automaton can simulate a function that maps (0, 1) to (0, 1) only if the function is in class **ALGRAT**._
 
 It is not known whether **ALGRAT** and **PDA** are equal, but the following can be established about **PDA**:
 
@@ -1566,9 +1566,9 @@ add another state S&prime; (with a name that differs from all other states) and 
 (S&prime;, HEADS, _stacksymbol_) &rarr; (T, _newstack_), and<br/>
 (S&prime;, TAILS, _stacksymbol_) &rarr; (FAILURE, {}).
 
-Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By (Dughmi et al. 2021\)[^44], the machine now simulates the distribution's probability generating function.  Moreover, the function is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^12] because the machine is a full-domain pushdown automaton.  &#x25a1;
+Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By (Dughmi et al. 2021\)[^46], the machine now simulates the distribution's probability generating function.  Moreover, the function is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^12] because the machine is a full-domain pushdown automaton.  &#x25a1;
 
-Define a _stochastic context-free grammar_ as follows.  The grammar consists of a finite set of _nonterminals_ and a finite set of _letters_, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009\)[^43]):
+Define a _stochastic context-free grammar_ as follows.  The grammar consists of a finite set of _nonterminals_ and a finite set of _letters_, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009\)[^45]):
 
 - _X_ &rarr; _a_ (rewrite _X_ to the letter _a_).
 - _X_ &rarr;<sub>_p_</sub> (_a_, _Y_) (with rational probability _p_, rewrite _X_ to the letter _a_ followed by the nonterminal _Y_).  For the same left-hand side, all the _p_ must sum to 1.
@@ -1590,7 +1590,7 @@ Here, _X_ is the stack symbol EMPTY if _X_ is the grammar's starting nonterminal
 - For each nonterminal _X_, all _n_ rules of the form _X_ &rarr;<sub>_p_<sub>_i_</sub></sub> (_a_<sub>_i_</sub>, _Y_<sub>_i_</sub>) become the equation _X_ = _p_<sub>1</sub>\*_&lambda;_<sub>1</sub>\*_Y_<sub>1</sub> + _p_<sub>2</sub>\*_&lambda;_<sub>2</sub>\*_Y_<sub>2</sub> + ... + _p_<sub>_n_</sub>\*_&lambda;_<sub>_n_</sub>\*_Y_<sub>_n_</sub>, where _&lambda;_<sub>_i_</sub> is either 1 if _a_<sub>_i_</sub> is _&epsilon;_, or _&lambda;_ otherwise.
 - _X_ &rarr; (_Y_, _Z_) becomes _X_ = _Y_\*_Z_.
 
-Solving this system for the grammar's starting nonterminal, and applying Proposition 4, leads to the _probability generating function_ for the grammar's word distribution.  (See also Flajolet et al. 2010[^13], Icard 2020[^42].) &#x25a1;
+Solving this system for the grammar's starting nonterminal, and applying Proposition 4, leads to the _probability generating function_ for the grammar's word distribution.  (See also Flajolet et al. 2010[^13], Icard 2020[^44].) &#x25a1;
 
 > **Example:** The stochastic context-free grammar&mdash;<br>_X_ &rarr;<sub>1/2</sub> (_a_, _X1_),<br>_X1_ &rarr; (_X_, _X2_),<br>_X2_ &rarr; (_X_, _X_),<br>_X_ &rarr;<sub>1/2</sub> (_a_, _X3_),<br>_X3_ &rarr; _&epsilon;_,<br>which encodes ternary trees (Flajolet et al. 2010\)[^13], corresponds to the equation _X_ = (1/2) \* _&lambda;_\*_X_\*_X_\*_X_ + (1/2)\*_&lambda;_\*1, and solving this equation for _X_ leads to the probability generating function for such trees, which is a complicated expression.
 >
@@ -1598,7 +1598,7 @@ Solving this system for the grammar's starting nonterminal, and applying Proposi
 >
 > 1. A stochastic context-free grammar in which all the probabilities are 1/2 is called a _binary stochastic grammar_ (Flajolet et al. 2010[^13]).  If the starting nonterminal has _n_ rules of probability 1/_n_, then the grammar can be called an "_n_-ary stochastic grammar".  It is even possible for a nonterminal to have two rules of probability _&lambda;_ and (1&minus; _&lambda;_), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.
 >
-> 2. If a pushdown automaton simulates the function _f_(_&lambda;_), then _f_ corresponds to a special system of equations, built as follows (Mossel and Peres 2005\)[^12]; see also (Esparza et al. 2004\)[^45].  For each state of the automaton (call the state _en_), include the following equations in the system based on the automaton's transition rules:
+> 2. If a pushdown automaton simulates the function _f_(_&lambda;_), then _f_ corresponds to a special system of equations, built as follows (Mossel and Peres 2005\)[^12]; see also (Esparza et al. 2004\)[^47].  For each state of the automaton (call the state _en_), include the following equations in the system based on the automaton's transition rules:
 >
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {}) becomes either _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ if _s2_ is _en_, or _&alpha;_<sub>_st_,_sy_,_en_</sub> = 0 otherwise.
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_}) becomes _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ \* _&alpha;_<sub>_s2_,_sy1_,_en_</sub>.
@@ -1611,7 +1611,7 @@ Solving this system for the grammar's starting nonterminal, and applying Proposi
 >     2. For each pair (_state_, _stacksymbol_) for _F_, add a set of rules that generate one of the input letters (each letter _i_ generated with probability _f_<sub> _i_</sub>(_&lambda;_), which must be a function in **PDA**), then use the generated letter to perform the transition stated in the corresponding rule for _F_.  If there is no such transition, transition to the FAILURE state instead.
 >     3. When the stack is empty, output 0 if _G_ is in the FAILURE state, or 1 otherwise.
 >
->     Then _G_ returns 1 with the same probability as _F_ accepts an input word with letters randomly generated as in the second step.  Also, one of the _N_ letters can be a so-called "end-of-string" symbol, so that a pushdown automaton can be built that accepts "empty strings"; an example is (Elder et al. 2015\)[^46].
+>     Then _G_ returns 1 with the same probability as _F_ accepts an input word with letters randomly generated as in the second step.  Also, one of the _N_ letters can be a so-called "end-of-string" symbol, so that a pushdown automaton can be built that accepts "empty strings"; an example is (Elder et al. 2015\)[^48].
 
 **Proposition 6:** _If a full-domain pushdown automaton can generate a distribution of words with the same letter, there is a full-domain pushdown automaton that can generate a distribution of such words conditioned on&mdash;_
 
@@ -1632,7 +1632,7 @@ A _continued fraction_ is one way to write a real number.  For purposes of the f
 
 _Proof:_  By Lagrange's continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last "few" of which repeat forever.  The following example describes a periodic continued fraction expansion: \[0; 1, 2, (5, 4, 3)\], which is the same as \[0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, ...\].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (`(5, 4, 3)`) is 3; and the size of the non-period (`1, 2`) is 2.
 
-Given a periodic expansion, and with the aid of an algorithm for simulating [**continued fractions**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions), a recursive Markov chain for the expansion (Etessami and Yannakakis 2009\)[^43] can be described as follows.  The chain's components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one _call port_ as well as two _return ports_ B0 and B1.
+Given a periodic expansion, and with the aid of an algorithm for simulating [**continued fractions**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions), a recursive Markov chain for the expansion (Etessami and Yannakakis 2009\)[^45] can be described as follows.  The chain's components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one _call port_ as well as two _return ports_ B0 and B1.
 
 - From E: Go to N with probability _x_, or to the box's call port with probability 1 &minus; _x_.
 - From N: Go to X1 with probability _y_, or to X0 with probability 1 &minus; _y_.
@@ -1643,7 +1643,7 @@ Let _p_ be the period size, and let _n_ be the non-period size.  Now the recursi
 
 - For each _i_ in \[1, _n_+1\], there is a component labeled _i_.  It is the same as the template component, except _x_ = _a_\[_i_\]/(1 + _a_\[_i_\]), and _y_ = 1/_a_\[_i_\].  The component's single box goes to the component labeled _i_+1, _except_ that for component _n_+_p_, the component's single box goes to the component labeled _n_+1.
 
-According to Etessami and Yannakakis (2009\)[^43], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that's left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component is never more likely than not to recurse, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;
+According to Etessami and Yannakakis (2009\)[^45], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that's left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component is never more likely than not to recurse, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;
 
 **Lemma 1:** _The square root function sqrt(&lambda;) is in class **PDA**._
 
@@ -1671,7 +1671,7 @@ The "output" of the machine is now a real number _X_ in the interval [0, 1], in 
 - `CDF(z)` is the cumulative distribution function of _X_, or the probability that _X_ is _z_ or less.
 - `PDF(z)` is the probability density function of _X_, or the "slope" function of `CDF(z)`, or the relative probability of choosing a number "close" to _z_ at random.
 
-A _finite-state generator_ (Knuth and Yao 1976\)[^47] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` has infinitely many "slope" functions on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001\)[^48], (Kindler and Romik 2004\)[^49], and it can be shown that the mean of _X_ must be a rational number.  [^50]
+A _finite-state generator_ (Knuth and Yao 1976\)[^49] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` has infinitely many "slope" functions on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001\)[^50], (Kindler and Romik 2004\)[^51], and it can be shown that the mean of _X_ must be a rational number.  [^52]
 
 **Proposition 8.** _Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:_
 
@@ -1682,7 +1682,7 @@ A real number is _transcendental_ if it can't be a root of a nonzero polynomial 
 
 Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:
 
-**Lemma 2.** _A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020\)[^51] section 5.3), for some k equal to 2 or greater._
+**Lemma 2.** _A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020\)[^53] section 5.3), for some k equal to 2 or greater._
 
 _Proof Sketch:_ There are two cases.
 
@@ -1691,15 +1691,15 @@ Case 1: If every transition rule of the generator outputs a digit, then _k_ is t
 1. A _configuration_ of the finite-state generator consists of its current state together with either the last coin flip result or, if the coin wasn't flipped yet, the empty string.
 2. The _output function_ takes a configuration described above and returns a digit.  If the coin wasn't flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).
 
-Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001\)[^48].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator's rules output only one digit as desired.  Now at this point the generator's probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size _k_, where _k_ is the product of those probabilities, by adding additional rules as desired.  &#x25a1;
+Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001\)[^50].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator's rules output only one digit as desired.  Now at this point the generator's probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size _k_, where _k_ is the product of those probabilities, by adding additional rules as desired.  &#x25a1;
 
-_Proof of Proposition 8:_ Let _n_ be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of _n_ finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13\)[^42].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020\)[^42].  The _n_ sub-generators are special; each of them generates the binary expansion of a single real number in [0, 1] with probability 1.
+_Proof of Proposition 8:_ Let _n_ be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of _n_ finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13\)[^44].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020\)[^44].  The _n_ sub-generators are special; each of them generates the binary expansion of a single real number in [0, 1] with probability 1.
 
-To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020\)[^51], the generator can generate a real number's binary expansion only if that number is rational or transcendental (see also Cobham (1968\)[^52]; Adamczewski and Bugeaud (2007\)[^53]).</s>  &#x25a1;
+To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020\)[^53], the generator can generate a real number's binary expansion only if that number is rational or transcendental (see also Cobham (1968\)[^54]; Adamczewski and Bugeaud (2007\)[^55]).</s>  &#x25a1;
 
 **Proposition 9.** _If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function._
 
-The proof follows from combining Kindler and Romik (2004, Theorem 2\)[^49] and Knuth and Yao (1976\)[^47] with Richman (2012\)[^54], who proved that a continuous algebraic function on an open interval is piecewise analytic ("analytic" is a stronger statement than having infinitely many "slope" functions).
+The proof follows from combining Kindler and Romik (2004, Theorem 2\)[^51] and Knuth and Yao (1976\)[^49] with Richman (2012\)[^56], who proved that a continuous algebraic function on an open interval is piecewise analytic ("analytic" is a stronger statement than having infinitely many "slope" functions).
 
 <a id=License></a>
 ## License
