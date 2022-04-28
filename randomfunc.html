@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2022/04/27"><meta name="citation_online_date" content="2022/04/27"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2022/04/28"><meta name="citation_online_date" content="2022/04/28"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -119,7 +119,7 @@
 <li><a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a></li>
 <li><a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a></li>
 <li><a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a></li>
-<li><a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a></li>
+<li><a href="#P_lya_ndash_Eggenberger_Distribution"><strong>Pólya&ndash;Eggenberger Distribution</strong></a></li>
 <li><a href="#Random_Integers_with_a_Given_Positive_Sum"><strong>Random Integers with a Given Positive Sum</strong></a></li>
 <li><a href="#Multinomial_Distribution"><strong>Multinomial Distribution</strong></a></li>
 </ul></li>
@@ -632,7 +632,7 @@ END METHOD
 <li><p><strong>Otherwise (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup>, or if <code>n</code> is otherwise very large):</strong></p>
 
 <ul>
-<li>If the items have to be chosen <strong>in relative (index) order</strong>: Let <code>n2 = floor(n/2)</code>.  Generate <code>h = Hypergeometric(k, n2, n)</code>.  Sample <code>h</code> integers in relative order from the list <code>[0, 1, ..., n2 - 1]</code> by doing a recursive run of this algorithm (items 1 to 5), then sample <code>k - h</code> integers in relative order from the list <code>[n2, n2 + 1, ..., n - 1]</code> by running this algorithm recursively.  The integers chosen this way are the indices to the desired items in relative (index) order (Sanders et al. 2019)[^15].</li>
+<li>If the items have to be chosen <strong>in relative (index) order</strong>: Let <code>n2 = floor(n/2)</code>.  Generate <code>h = PolyaEggenberger(k, n2, n, -1)</code>.  Sample <code>h</code> integers in relative order from the list <code>[0, 1, ..., n2 - 1]</code> by doing a recursive run of this algorithm (items 1 to 5), then sample <code>k - h</code> integers in relative order from the list <code>[n2, n2 + 1, ..., n - 1]</code> by running this algorithm recursively.  The integers chosen this way are the indices to the desired items in relative (index) order (Sanders et al. 2019)[^15].</li>
 <li><p>Otherwise, create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it&#39;s not already there, or if it is, choose a new random index.  Repeat this process until <code>k</code> indices were added to the data structure this way.  Examples of suitable data structures are&mdash;</p>
 
 <ul>
@@ -1568,36 +1568,61 @@ END METHOD
 <p><strong>Note:</strong> To generate a sum of <code>n</code> independent Poisson random variates with separate means, generate a Poisson random variate whose mean is the sum of those means (see (Devroye 1986)[^19], p. 501).  For example, to generate a sum of 1000 independent Poisson random variates with a mean of 1/1000000, simply generate <code>PoissonInt(1, 1000)</code> (because 1/1000000 * 1000 = 1/1000).</p>
 </blockquote>
 
-<p><a id=Hypergeometric_Distribution></a></p>
+<p><a id=P_lya_ndash_Eggenberger_Distribution></a></p>
 
-<h3>Hypergeometric Distribution</h3>
+<h3>Pólya&ndash;Eggenberger Distribution</h3>
 
-<p>The following method generates a random integer that follows a <em>hypergeometric distribution</em>.  When a given number of items are drawn at random without replacement from a collection of items each labeled either <code>1</code> or <code>0</code>,  the random integer expresses the number of items drawn this way that are labeled <code>1</code>.  In the method below, <code>trials</code> is the number of items drawn at random, <code>ones</code> is the number of items labeled <code>1</code> in the collection, and <code>count</code> is the number of items labeled <code>1</code> or <code>0</code> in that collection.</p>
+<p>Suppose items are drawn at random from a collection of items each labeled either <code>1</code> or <code>0</code>, and after drawing an item, it&#39;s put back and <code>m</code> more items of the same label are added.  Then:</p>
 
-<pre>METHOD Hypergeometric(trials, ones, count)
+<ul>
+<li>The <em>Pólya&ndash;Eggenberger distribution</em> models the number of items drawn this way that are labeled <code>1</code>.</li>
+<li>The <em>inverse Pólya&ndash;Eggenberger distribution</em> models the number of <code>0</code>-labeled items drawn before <code>n</code> many <code>1</code>-labeled items are drawn.</li>
+</ul>
+
+<p>In the methods below, <code>trials</code> is the number of items drawn at random, <code>ones</code> is the number of items labeled <code>1</code> in the collection, <code>count</code> is the number of items labeled <code>1</code> or <code>0</code> in that collection, <code>m</code> is the number of items added after each draw (or &minus;1 for sampling <em>without replacement</em>), and <code>successes</code> is the number of <code>1</code>-labeled items drawn.</p>
+
+<pre>METHOD PolyaEggenberger(trials, ones, count, m)
     if ones &lt; 0 or count &lt; 0 or trials &lt; 0 or
        ones &gt; count or trials &gt; count
       return error
     end
     if ones == 0: return 0
-    successes = 0
-    i = 0
-    currentCount = count
-    currentOnes = ones
-    while i &lt; trials and currentOnes &gt; 0
-      if ZeroOrOne(currentOnes, currentCount) == 1
-        currentOnes = currentOnes - 1
-        successes = successes + 1
-      end
-      currentCount = currentCount - 1
-      i = i + 1
+    zeros=count-ones
+    ret=0
+    for i in 0...trials
+       if zeros==0 or ZeroOrOne(ones,zeros)==1
+          ones=ones+m
+          ret=ret+1
+       else: zeros=zeros+m
     end
-    return successes
+    return ret
+END METHOD
+
+METHOD InversePolyaEggenberger(successes, ones, count, m)
+    if ones &lt;= 0 or count &lt; 0 or successes &lt; 0 or
+       ones &gt; count or successes &gt; count
+      return error
+    end
+    zeros=count-ones
+    ret=0; trials=0
+    while ret&lt;successes
+       if zeros==0 or ZeroOrOne(ones,zeros)==1
+          ones=ones+m
+          ret=ret+1
+       else: zeros=zeros+m
+       trials=trials+1
+    end
+    return trials-successes
 END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Example:</strong> In a 52-card deck of Anglo-American playing cards, 12 of the cards are face cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number of face cards drawn this way follows a hypergeometric distribution where <code>trials</code> is 7, <code>ones</code> is 12, and <code>count</code> is 52.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>A <strong>hypergeometric distribution</strong> is a Pólya&ndash;Eggenberger distribution with <code>m=-1</code>.  For example, in a 52-card deck of Anglo-American playing cards, 12 of the cards are face cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number of face cards drawn this way follows a hypergeometric distribution where <code>trials</code> is 7, <code>ones</code> is 12, <code>count</code> is 52, and <code>m</code> is &minus;1.</li>
+<li>A <strong>negative hypergeometric distribution</strong> is an inverse Pólya&ndash;Eggenberger distribution with <code>m=-1</code>.</li>
+</ol>
 </blockquote>
 
 <p><a id=Random_Integers_with_a_Given_Positive_Sum></a></p>
@@ -2280,27 +2305,27 @@ above for returning more than one random variate in one call.</p>
 <li><strong>Binomial distribution</strong>: See <a href="#Binomial_Distribution"><strong>Binomial Distribution</strong></a>.</li>
 <li><strong>Binormal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  <code>Stable(1, 0)</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975)[^88]: Generate <code>x = RNDRANGEMinMaxExc(0,1)</code> and <code>y = RNDRANGEMinMaxExc(0,1)</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>(RNDINT(1) * 2 - 1) * y / x</code>.</li>
-<li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
+<li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5))*2</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
 <li><strong>Dice</strong>: See <a href="#Dice"><strong>Dice</strong></a>.</li>
 <li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.  The na&iuml;ve implementation <code>-ln(1-RNDRANGEMinMaxExc(0, 1)) / lamda</code> has several problems, such as being ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018) [^1]. An application can reduce some of these problems by applying Pedersen&#39;s suggestion of using either <code>-ln(RNDRANGEMinMaxExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinMaxExc(0, 0.5))</code> (rather than <code>-ln(1-RNDRANGEMinMaxExc(0, 1))</code>), chosen uniformly at random each time; an alternative is <code>ln(1/RNDRANGEMinMaxExc(0,1))</code> mentioned in (Devroye 2006)[^82].</li>
 <li><strong>Extreme value distribution</strong>: See generalized extreme value distribution.</li>
-<li><strong>Gamma distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Gamma_Distribution"><strong>Gamma Distribution</strong></a>. Generalized gamma distributions include the <strong>Stacy distribution</strong> (<code>pow(GammaDist(a, 1), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter) and the <strong>Amoroso distribution</strong> (Crooks 2015)[^89], (<code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value).</li>
+<li><strong>Gamma distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Gamma_Distribution"><strong>Gamma Distribution</strong></a>. Generalized gamma distributions include the <strong>Stacy distribution</strong> (<code>pow(GammaDist(a), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter) and the <strong>Amoroso distribution</strong> (Crooks 2015)[^89], (<code>pow(GammaDist(a), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value).</li>
 <li><strong>Gaussian distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
 <li><strong>Geometric distribution</strong>: See <a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a>.  The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers: <code>floor(-Expo(1)/ln(1-p))</code> (Devroye 1986, p. 500)[^19] (ceil replaced with floor because this page defines geometric distribution differently).</li>
 <li><strong>Gumbel distribution</strong>: See generalized extreme value distribution.</li>
-<li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a, 1)</code>, where <code>a</code> and <code>b</code> have the
-same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
+<li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a)</code>, where <code>a</code> and <code>b</code> have the
+same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
 <li><strong>Laplace (double exponential) distribution</strong>&dagger;: <code>(Expo(1) - Expo(1))</code>.  Also, <code>Normal(0,1) * Normal(0, 1) - Normal(0, 1) * Normal(0, 1)</code> (Kotz et al. 2012)[^90].</li>
 <li><strong>Logarithmic distribution</strong>&#x2b26;: <code>RNDRANGEMinMaxExc(0, 1) * RNDRANGEMinMaxExc(0, 1)</code> (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code> are the underlying normal distribution&#39;s parameters.</li>
 <li><strong>Multinormal distribution</strong>: See multivariate normal distribution.</li>
 <li><strong>Multivariate normal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Normal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Poisson distribution</strong>: See &quot;<a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot;. The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers (Devroye 1986, p. 504)[^19]: <code>c = 0; s = 0; while true; sum = sum + Expo(1); if sum&gt;=mean: return c; else: c = c + 1; end</code>; and in addition the following optimization from (Devroye 1991)[^91] can be used: <code>while mean &gt; 20; n=ceil(mean-pow(mean,0.7)); g=GammaDist(n, 1); if g&gt;=mean: return c+(n-1-Binomial(n-1,(g-mean)/g)); mean = mean - g; c = c + n; end</code>.  For <code>mean</code> greater than 50, the following <em>approximation</em> was suggested in (Giammatteo and Di Mascio 2020)[^92]: <code>floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))</code>.</li>
+<li><strong>Poisson distribution</strong>: See &quot;<a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot;. The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers (Devroye 1986, p. 504)[^19]: <code>c = 0; s = 0; while true; sum = sum + Expo(1); if sum&gt;=mean: return c; else: c = c + 1; end</code>; and in addition the following optimization from (Devroye 1991)[^91] can be used: <code>while mean &gt; 20; n=ceil(mean-pow(mean,0.7)); g=GammaDist(n); if g&gt;=mean: return c+(n-1-Binomial(n-1,(g-mean)/g)); mean = mean - g; c = c + n; end</code>.  For <code>mean</code> greater than 50, the following <em>approximation</em> was suggested in (Giammatteo and Di Mascio 2020)[^92]: <code>floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))</code>.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDRANGEMinMaxExc(0, 1), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
 <li><strong>Rayleigh distribution</strong>&dagger;: <code>sqrt(Expo(0.5))</code>.  If the scale parameter (<code>sigma</code>) follows a logarithmic normal distribution, the result is a <em>Suzuki distribution</em>.</li>
 <li><strong>Standard normal distribution</strong>&dagger;: <code>Normal(0, 1)</code>.  See also <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random variate.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.  Alternatively, <code>cos(RNDRANGEMinMaxExc(0, pi * 2)) * sqrt((pow(RNDRANGEMinMaxExc(0, 1),-2.0/df)-1) * df)</code> (Bailey 1994)[^92].</li>
+<li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5)*2 / df)</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random variate.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.  Alternatively, <code>cos(RNDRANGEMinMaxExc(0, pi * 2)) * sqrt((pow(RNDRANGEMinMaxExc(0, 1),-2.0/df)-1) * df)</code> (Bailey 1994)[^92].</li>
 <li><strong>Triangular distribution</strong>&dagger; (Stein and Keblis 2009)[^93]: <code>(1-alpha) * min(a, b) + alpha * max(a, b)</code>, where <code>alpha</code> is in [0, 1], <code>a = RNDRANGEMinMaxExc(0, 1)</code>, and <code>b = RNDRANGEMinMaxExc(0, 1)</code>.</li>
 <li><strong>Weibull distribution</strong>: See generalized extreme value distribution.</li>
 </ul>
@@ -2320,7 +2345,7 @@ same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(Gamm
 the two parameters of the beta distribution, and <code>trials</code> is a parameter of the binomial distribution.</li>
 <li><strong>Beta negative binomial distribution</strong>: <code>NegativeBinomial(successes, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are the two parameters of the beta distribution, and <code>successes</code> is a parameter of the negative binomial distribution. If <em>successes</em> is 1, the result is a <em>Waring&ndash;Yule distribution</em>. A <em>Yule&ndash;Simon distribution</em> results if <em>successes</em> and <em>b</em> are both 1 (for example, in <em>Mathematica</em>) or if <em>successes</em> and <em>a</em> are both 1 (in other works).</li>
 <li><strong>Beta-PERT distribution</strong>: <code>startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)</code>. The distribution starts  at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>, <code>size</code> is <code>endpt - startpt</code>, and <code>shape</code> is a shape parameter that&#39;s 0 or greater, but usually 4.  If the mean (<code>mean</code>) is known rather than the peak, <code>midpt = 3 * mean / 2 - (startpt + endpt) / 4</code>.</li>
-<li><strong>Beta prime distribution</strong>&dagger;: <code>pow(GammaDist(a, 1), 1.0 / alpha) / pow(GammaDist(b, 1), 1.0 / alpha)</code>, where <code>a</code>, <code>b</code>, and <code>alpha</code> are shape parameters. If <em>a</em> is 1, the result is a <em>Singh&ndash;Maddala distribution</em>; if <em>b</em> is 1, a <em>Dagum distribution</em>; if <em>a</em> and <em>b</em> are both 1, a <em>logarithmic logistic distribution</em>.</li>
+<li><strong>Beta prime distribution</strong>&dagger;: <code>pow(GammaDist(a), 1.0 / alpha) / pow(GammaDist(b), 1.0 / alpha)</code>, where <code>a</code>, <code>b</code>, and <code>alpha</code> are shape parameters. If <em>a</em> is 1, the result is a <em>Singh&ndash;Maddala distribution</em>; if <em>b</em> is 1, a <em>Dagum distribution</em>; if <em>a</em> and <em>b</em> are both 1, a <em>logarithmic logistic distribution</em>.</li>
 <li><strong>Birnbaum&ndash;Saunders distribution</strong>: <code>pow(sqrt(4+x*x)+x,2)/(4.0*lamda)</code>, where <code>x = Normal(0,gamma)</code>, <code>gamma</code> is a shape parameter, and <code>lamda</code> is a scale parameter.</li>
 <li><strong>Borel distribution</strong> (Borel 1942)[^108]: <code>r=0; q=1; while q&gt;=1; q+=Poisson(la); q-=1; r+=1; end; return r</code>.  <code>la</code>, the mean number of arrivals, should be in the interval (0, 1).</li>
 <li><strong>Chi distribution</strong>: Square root of a chi-squared random variate.  See chi-squared distribution.</li>
@@ -2335,9 +2360,9 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li>If the numbers at step (1) were each generated as <code>Expo(1)</code> (a special case of the gamma distribution), the result after step (4) is a uniformly distributed sum of <em>n</em>+1 numbers that sum to <code>x</code> (see also linked article above).</li>
 </ul></li>
 <li><strong>Double logarithmic distribution</strong>&#x2b26;: <code>(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 0.5) * RNDRANGEMinMaxExc(0, 1))</code> (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
-<li><strong>Erlang distribution</strong>: <code>GammaDist(n, 1.0 / lamda)</code>, where <code>n</code> is an integer greater than 0.  Returns a number that simulates a sum of <code>n</code> exponential random variates with the given <code>lamda</code> parameter.</li>
+<li><strong>Erlang distribution</strong>: <code>GammaDist(n)/lamda</code>, where <code>n</code> is an integer greater than 0.  Returns a number that simulates a sum of <code>n</code> exponential random variates with the given <code>lamda</code> parameter.</li>
 <li><strong>Estoup distribution</strong>: See zeta distribution.</li>
-<li><strong>Exponential power distribution</strong> (generalized normal distribution version 1): <code>(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a, 1), a)</code>, where <code>a</code> is a shape parameter.</li>
+<li><strong>Exponential power distribution</strong> (generalized normal distribution version 1): <code>(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a), a)</code>, where <code>a</code> is a shape parameter.</li>
 <li><strong>Fr&eacute;chet distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong>: See <a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>.</li>
 <li><strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong>: See <a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>.</li>
@@ -2358,32 +2383,32 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li>MATLAB: <code>abs(Normal(mu, sigma)))</code>, where <code>mu</code> and <code>sigma</code> are the underlying normal distribution&#39;s parameters.</li>
 </ul></li>
 <li><strong>Hyperexponential distribution</strong>: See <a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>.</li>
-<li><strong>Hypergeometric distribution</strong>: See <a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a>.</li>
+<li><strong>Hypergeometric distribution</strong>: See <a href="#Polya_ndash_Eggenberger_Distribution"><strong>Polya&ndash;Eggenberger Distribution</strong></a>.</li>
 <li><strong>Hypoexponential distribution</strong>: See <a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Variates</strong></a>.</li>
-<li><strong>Inverse chi-squared distribution</strong>&dagger;: <code>df / (GammaDist(df * 0.5, 2))</code>, where <code>df</code> is the number of degrees of freedom.  The scale parameter (<code>sigma</code>) is usually <code>1.0 / df</code>.</li>
+<li><strong>Inverse chi-squared distribution</strong>&dagger;: <code>df / (GammaDist(df * 0.5)*2)</code>, where <code>df</code> is the number of degrees of freedom.  The scale parameter (<code>sigma</code>) is usually <code>1.0 / df</code>.</li>
 <li><strong>Inverse Gaussian distribution (Wald distribution)</strong>: Generate <code>n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)</code>, where <code>y = pow(Normal(0, 1), 2)</code>, then return <code>n</code> with probability <code>mu / (mu + n)</code> (for example, if <code>RNDRANGEMinMaxExc(0, 1) &lt;= mu / (mu + n)</code>), or <code>mu * mu / n</code> otherwise. <code>mu</code> is the mean and <code>lamda</code> is the scale; both parameters are greater than 0. Based on method published in (Devroye 1986)[^19].</li>
 <li><strong><code>k</code>th-order statistic</strong>: <code>BetaDist(k, n+1-k)</code>. Returns the <code>k</code>th smallest out of <code>n</code> uniform random variates in [**0, 1). See also (Devroye 1986, p. 210)[^19].</li>
 <li><strong>Kumaraswamy distribution</strong>&#x2b26;: <code>pow(BetaDist(1, b), 1.0 / a)</code>, where <code>a</code> and <code>b</code> are shape parameters.</li>
 <li><strong>Landau distribution</strong>: See stable distribution.</li>
-<li><strong>L&eacute;vy distribution</strong>&dagger;: <code>0.5 / GammaDist(0.5, 1)</code>.  The scale parameter (<code>sigma</code>) is also called dispersion.</li>
+<li><strong>L&eacute;vy distribution</strong>&dagger;: <code>0.5 / GammaDist(0.5)</code>.  The scale parameter (<code>sigma</code>) is also called dispersion.</li>
 <li><strong>Logarithmic logistic distribution</strong>: See beta prime distribution.</li>
 <li><strong>Logarithmic series distribution</strong>: Generate <code>n = NegativeBinomialInt(1, py - px, py)+1</code> (where <code>px</code>/<code>py</code> is a parameter in (0,1)), then return <code>n</code> if <code>ZeroOrOne(1, n) == 1</code>, or repeat this process otherwise (Flajolet et al., 2010)[^94].  The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers: <code>floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDRANGEMinMaxExc(0, 1)))))</code>, where <code>p</code> is the parameter in (0, 1); see (Devroye 1986)[^19].</li>
 <li><strong>Logistic distribution</strong>&dagger;: <code>(ln(x)-log1p(-x))</code> (<a href="http://timvieira.github.io/blog/post/2016/07/04/fast-sigmoid-sampling/"><strong><em>logit function</em></strong></a>), where <code>x</code> is <code>RNDRANGEMinMaxExc(0, 1)</code>.</li>
 <li><strong>Log-multinormal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Max-of-uniform distribution</strong>: <code>BetaDist(n, 1)</code>.  Returns a number that simulates the largest out of <code>n</code> uniform random variates in [**0, 1).  See also (Devroye 1986, p. 675)[^19].</li>
-<li><strong>Maxwell distribution</strong>&dagger;: <code>sqrt(GammaDist(1.5, 2))</code>.</li>
+<li><strong>Maxwell distribution</strong>&dagger;: <code>sqrt(GammaDist(1.5)*2)</code>.</li>
 <li><strong>Min-of-uniform distribution</strong>: <code>BetaDist(1, n)</code>.  Returns a number that simulates the smallest out of <code>n</code> uniform random variates in [**0, 1).  See also (Devroye 1986, p. 210)[^19].</li>
 <li><strong>Moyal distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Multinomial distribution</strong>: See <a href="#Multinomial_Distribution"><strong>Multinomial Distribution</strong></a>.</li>
 <li><strong>Multivariate Poisson distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Multivariate <em>t</em>-copula</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Multivariate <em>t</em>-distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
-<li><strong>Negative binomial distribution</strong> (<code>NegativeBinomial(successes, p)</code>): See <a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a>.  The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers: <code>Poisson(GammaDist(successes, (1 - p) / p))</code> (works even if <code>successes</code> is not an integer).</li>
+<li><strong>Negative binomial distribution</strong> (<code>NegativeBinomial(successes, p)</code>): See <a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a>.  The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers: <code>Poisson(GammaDist(successes)*(1 - p) / p)</code> (works even if <code>successes</code> is not an integer).</li>
 <li><strong>Negative multinomial distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Noncentral beta distribution</strong>&#x2b26;: <code>BetaDist(a + Poisson(nc), b)</code>, where <code>nc</code> (a noncentrality), <code>a</code>, and <code>b</code> are greater than 0.</li>
 <li><strong>Parabolic distribution</strong>&#x2b26;: <code>BetaDist(2, 2)</code> (Saucier 2000, p. 30).</li>
 <li><strong>Pascal distribution</strong>: <code>NegativeBinomial(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution, except <code>successes</code> is always an integer.</li>
-<li><strong>Pearson VI distribution</strong>: <code>GammaDist(v, 1) / GammaDist(w, 1)</code>, where <code>v</code> and <code>w</code> are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional <code>b</code> parameter is defined, but that parameter is canceled out in the source code).</li>
+<li><strong>Pearson VI distribution</strong>: <code>GammaDist(v) / GammaDist(w)</code>, where <code>v</code> and <code>w</code> are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional <code>b</code> parameter is defined, but that parameter is canceled out in the source code).</li>
 <li><strong>Piecewise constant distribution</strong>: See <a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>.</li>
 <li><strong>Piecewise linear distribution</strong>: See <a href="#Piecewise_Linear_Distribution"><strong>Piecewise Linear Distribution</strong></a>.</li>
 <li><strong>P&oacute;lya&ndash;Aeppli distribution</strong>: See <a href="#Transformations_of_Random_Numbers_Additional_Examples"><strong>Transformations of Random Variates: Additional Examples</strong></a>.</li>
@@ -2398,7 +2423,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>sin^k distribution</strong>: Generate <code>x = BetaDist(k+1, k+1) * pi</code>, then return <code>x</code> if <code>0-Expo(k) &lt;= ln(pi*pi*sin(x) / ((4*x*(pi - x)))</code>, or repeat this process otherwise (Makalic and Schmidt 2018)[^95].</li>
 <li><strong>Skellam distribution</strong>: <code>Poisson(mean1) - Poisson(mean2)</code>, where <code>mean1</code> and <code>mean2</code> are the means used in the <code>Poisson</code> method.</li>
 <li><strong>Skew normal distribution</strong>&dagger; (Ghorbanzadeh et al. 2014)[^96]: Generate <code>c*max(a, b) + (1-c)*min(a, b)</code>, where a = <code>Normal(0, 1)</code> and independently, <code>b = Normal(0, 1)</code>, and <code>c = (1+th)/sqrt(2.0*(1+th))</code>, and <code>th</code> is a real number in [0, 1].  Special cases: If <code>th=0</code>, generate <code>Normal(0, 1)</code>; if <code>th=1</code>, generate <code>max(a, b)</code>; if <code>th=1</code>, generate <code>min(a, b)</code>.</li>
-<li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random variates with a chi-squared distribution, and if <code>sms</code> is other than 0, one of those distributions is <em>noncentral</em> with sum of mean squares equal to <code>sms</code>.</li>
+<li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5)*n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random variates with a chi-squared distribution, and if <code>sms</code> is other than 0, one of those distributions is <em>noncentral</em> with sum of mean squares equal to <code>sms</code>.</li>
 <li><strong>Stable distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Stable_Distribution"><strong>Stable Distribution</strong></a>. <em>Four-parameter stable distribution</em>: <code>Stable(alpha, beta) * sigma + mu</code>, where <code>mu</code> is the mean and <code>sigma</code> is the scale; if <code>alpha</code> and <code>beta</code> are 1, the result is a <em>Landau distribution</em>.  <em>&quot;Type 0&quot; stable distribution</em>: <code>Stable(alpha, beta) * sigma + (mu - sigma * beta * x)</code>, where <code>x</code> is <code>ln(sigma)*2.0/pi</code> if <code>alpha</code> is 1, and <code>tan(pi*0.5*alpha)</code> otherwise.</li>
 <li><strong>Standard complex normal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Suzuki distribution</strong>: See Rayleigh distribution.</li>

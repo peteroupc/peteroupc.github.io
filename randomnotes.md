@@ -12,7 +12,6 @@
         - [**Beta Distribution**](#Beta_Distribution)
         - [**Uniform Partition with a Positive Sum**](#Uniform_Partition_with_a_Positive_Sum)
         - [**Noncentral Hypergeometric Distributions**](#Noncentral_Hypergeometric_Distributions)
-        - [**Negative Hypergeometric Distribution**](#Negative_Hypergeometric_Distribution)
         - [**von Mises Distribution**](#von_Mises_Distribution)
         - [**Stable Distribution**](#Stable_Distribution)
         - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
@@ -89,14 +88,14 @@ The following method samples a number from a _gamma distribution_ and is based o
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
 
-Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale` is a scaling parameter that is greater than 0, but usually 1 (the random gamma number is multiplied by `scale`).
+Here, `meanLifetime` must be an integer or noninteger greater than 0.
 
-    METHOD GammaDist(meanLifetime, scale)
+    METHOD GammaDist(meanLifetime)
         // Needs to be greater than 0
-        if meanLifetime <= 0 or scale <= 0: return error
+        if meanLifetime <= 0: return error
         // Exponential distribution special case if
         // `meanLifetime` is 1 (see also (Devroye 1986), p. 405)
-        if meanLifetime == 1: return Expo(1.0 / scale)
+        if meanLifetime == 1: return Expo(1)
         if meanLifetime < 0.3 // Liu, Martin, Syring 2015
            lamda = (1.0/meanLifetime) - 1
            w = meanLifetime / (1-meanLifetime) * exp(1)
@@ -110,7 +109,7 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
                 eta = 0
                 if z>=0: eta=exp(-z)
                 else: eta=w*lamda*exp(lamda*z)
-                if RNDRANGEMinMaxExc(0, eta) < exp(-ret-z): return ret * scale
+                if RNDRANGEMinMaxExc(0, eta) < exp(-ret-z): return ret
            end
         end
         d = meanLifetime
@@ -135,10 +134,13 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
         if meanLifetime < 1
            ret = ret * pow(RNDRANGEMinMaxExc(0, 1), 1.0 / meanLifetime)
         end
-        return ret * scale
+        return ret
     END METHOD
 
-> **Note:** The following is a useful identity for the gamma distribution: `GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)` (Stuart 1962\)[^12].
+> **Notes:**
+>
+> 1. The following is a useful identity for the gamma distribution: `GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)` (Stuart 1962\)[^12].
+> 2. The gamma distribution is usually defined to have a second parameter (called `theta` here), which is unfortunately defined differently in different works.  For example, the gamma variate can be either multiplied or divided by `theta` depending on the work.
 
 <a id=Beta_Distribution></a>
 #### Beta Distribution
@@ -155,8 +157,8 @@ The following method samples a number from a _beta distribution_, in the interva
       // avoid accuracy problems, as pointed out
       // by Devroye 1986, p. 675.
       if b==1 and a < 10: return pow(RNDRANGEMinMaxExc(0, 1),1.0/a)
-      x=GammaDist(a,1)
-      return x/(x+GammaDist(b,1))
+      x=GammaDist(a)
+      return x/(x+GammaDist(b))
     END METHOD
 
 I give an [**error-bounded sampler**](https://peteroupc.github.io/exporand.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
@@ -194,30 +196,6 @@ For both distributions, if there are two colors, there are four parameters: _m_,
 - for the first color, there are _ones_ many balls each with weight _weight_;
 - for the second color, there are (_m_&minus;_ones_) many balls each with weight 1; and
 - the random variate is the number of chosen balls of the first color.
-
-<a id=Negative_Hypergeometric_Distribution></a>
-#### Negative Hypergeometric Distribution
-
-When items are drawn at random without replacement from a collection of items each labeled either `1` or `0`, until `successes` many items labeled `1` are drawn this way, the negative hypergeometric distribution expresses the number of items drawn this way that are labeled `0`.  In the method below, `ones` is the number of items labeled `1` in the collection, and `count` is the number of items labeled `1` or `0` in that collection.
-
-```
-METHOD NegativeHypergeometric(successes, ones, count)
-    if successes<0 or ones<0 or count<0 or
-       successes>ones or ones>count: return error
-    if ones==0: return 0
-    i = 0
-    currentCount = count
-    currentOnes = ones
-    while currentOnes > ones - successes
-      if random.random()<currentOnes/currentCount
-        currentOnes = currentOnes - 1
-      end
-      currentCount = currentCount - 1
-      i = i + 1
-    end
-    return i - successes
-END METHOD
-```
 
 <a id=von_Mises_Distribution></a>
 #### von Mises Distribution

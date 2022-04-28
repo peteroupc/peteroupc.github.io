@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/04/26"><meta name="citation_online_date" content="2022/04/26"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/04/28"><meta name="citation_online_date" content="2022/04/28"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -24,7 +24,6 @@
 <li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
 <li><a href="#Uniform_Partition_with_a_Positive_Sum"><strong>Uniform Partition with a Positive Sum</strong></a></li>
 <li><a href="#Noncentral_Hypergeometric_Distributions"><strong>Noncentral Hypergeometric Distributions</strong></a></li>
-<li><a href="#Negative_Hypergeometric_Distribution"><strong>Negative Hypergeometric Distribution</strong></a></li>
 <li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
 <li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
 <li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
@@ -125,14 +124,14 @@ END METHOD
 <li>a random amount of time (in days, hours, or other fixed units) that passes until as many events as <code>meanLifetime</code> happen.</li>
 </ul>
 
-<p>Here, <code>meanLifetime</code> must be an integer or noninteger greater than 0, and <code>scale</code> is a scaling parameter that is greater than 0, but usually 1 (the random gamma number is multiplied by <code>scale</code>).</p>
+<p>Here, <code>meanLifetime</code> must be an integer or noninteger greater than 0.</p>
 
-<pre>METHOD GammaDist(meanLifetime, scale)
+<pre>METHOD GammaDist(meanLifetime)
     // Needs to be greater than 0
-    if meanLifetime &lt;= 0 or scale &lt;= 0: return error
+    if meanLifetime &lt;= 0: return error
     // Exponential distribution special case if
     // `meanLifetime` is 1 (see also (Devroye 1986), p. 405)
-    if meanLifetime == 1: return Expo(1.0 / scale)
+    if meanLifetime == 1: return Expo(1)
     if meanLifetime &lt; 0.3 // Liu, Martin, Syring 2015
        lamda = (1.0/meanLifetime) - 1
        w = meanLifetime / (1-meanLifetime) * exp(1)
@@ -146,7 +145,7 @@ END METHOD
             eta = 0
             if z&gt;=0: eta=exp(-z)
             else: eta=w*lamda*exp(lamda*z)
-            if RNDRANGEMinMaxExc(0, eta) &lt; exp(-ret-z): return ret * scale
+            if RNDRANGEMinMaxExc(0, eta) &lt; exp(-ret-z): return ret
        end
     end
     d = meanLifetime
@@ -171,12 +170,17 @@ END METHOD
     if meanLifetime &lt; 1
        ret = ret * pow(RNDRANGEMinMaxExc(0, 1), 1.0 / meanLifetime)
     end
-    return ret * scale
+    return ret
 END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> The following is a useful identity for the gamma distribution: <code>GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)</code> (Stuart 1962)[^12].</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>The following is a useful identity for the gamma distribution: <code>GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)</code> (Stuart 1962)[^12].</li>
+<li>The gamma distribution is usually defined to have a second parameter (called <code>theta</code> here), which is unfortunately defined differently in different works.  For example, the gamma variate can be either multiplied or divided by <code>theta</code> depending on the work.</li>
+</ol>
 </blockquote>
 
 <p><a id=Beta_Distribution></a></p>
@@ -195,8 +199,8 @@ END METHOD
   // avoid accuracy problems, as pointed out
   // by Devroye 1986, p. 675.
   if b==1 and a &lt; 10: return pow(RNDRANGEMinMaxExc(0, 1),1.0/a)
-  x=GammaDist(a,1)
-  return x/(x+GammaDist(b,1))
+  x=GammaDist(a)
+  return x/(x+GammaDist(b))
 END METHOD
 </pre>
 
@@ -240,30 +244,6 @@ END METHOD
 <li>for the second color, there are (<em>m</em>&minus;<em>ones</em>) many balls each with weight 1; and</li>
 <li>the random variate is the number of chosen balls of the first color.</li>
 </ul>
-
-<p><a id=Negative_Hypergeometric_Distribution></a></p>
-
-<h4>Negative Hypergeometric Distribution</h4>
-
-<p>When items are drawn at random without replacement from a collection of items each labeled either <code>1</code> or <code>0</code>, until <code>successes</code> many items labeled <code>1</code> are drawn this way, the negative hypergeometric distribution expresses the number of items drawn this way that are labeled <code>0</code>.  In the method below, <code>ones</code> is the number of items labeled <code>1</code> in the collection, and <code>count</code> is the number of items labeled <code>1</code> or <code>0</code> in that collection.</p>
-
-<pre>METHOD NegativeHypergeometric(successes, ones, count)
-    if successes&lt;0 or ones&lt;0 or count&lt;0 or
-       successes&gt;ones or ones&gt;count: return error
-    if ones==0: return 0
-    i = 0
-    currentCount = count
-    currentOnes = ones
-    while currentOnes &gt; ones - successes
-      if random.random()&lt;currentOnes/currentCount
-        currentOnes = currentOnes - 1
-      end
-      currentCount = currentCount - 1
-      i = i + 1
-    end
-    return i - successes
-END METHOD
-</pre>
 
 <p><a id=von_Mises_Distribution></a></p>
 
