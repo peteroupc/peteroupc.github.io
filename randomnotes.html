@@ -26,6 +26,10 @@
 <li><a href="#Noncentral_Hypergeometric_Distributions"><strong>Noncentral Hypergeometric Distributions</strong></a></li>
 <li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
 <li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
+</ul></li>
+<li><a href="#Phase_Type_Distributions"><strong>Phase-Type Distributions</strong></a>
+
+<ul>
 <li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
 <li><a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a></li>
 </ul></li>
@@ -343,6 +347,55 @@ METHOD GeneralGeoStable(alpha, beta, mu, sigma)
 END METHOD
 </pre>
 
+<p><a id=Phase_Type_Distributions></a></p>
+
+<h3>Phase-Type Distributions</h3>
+
+<p>A <em>phase-type distribution</em> models a sum of exponential random variates driven by a <a href="https://peteroupc.github.io/randomnotes.html"><strong>Markov chain</strong></a>.  The Markov chain has <code>n</code> normal states and one &quot;absorbing&quot; or terminating state.  This distribution has two parameters:</p>
+
+<ul>
+<li><code>alpha</code>, an <code>n</code>-item array showing the probabilities of starting the chain at each normal state.</li>
+<li><code>s</code>, an <code>n</code>&times;<code>n</code> <em>subgenerator matrix</em>, a list of <code>n</code> lists of <code>n</code> values each.  The values in each list (each state of the Markov chain) must sum to 0 or less, and for each state <code>i</code>, <code>s[i][i]</code> is 0 minus the rate of that state&#39;s exponential random variate.</li>
+</ul>
+
+<p>The method <code>PhaseType</code>, given below, samples from a phase-type distribution given the two parameters above.</p>
+
+<pre>METHOD GenToTrans(s)
+  // Converts a subgenerator matrix to a
+  // more intuitive transition matrix.
+  m=[];
+  for j in 0...size(s)
+     m[j]=[]; for i in 0...size(s)+1: AddItem(m[j],0)
+  end
+  for i in 0...size(s)
+      isum=Sum(s[i])
+      if isum&lt;0: m[i][size(s)]=isum/s[i][i]
+      for j in 0...size(s)
+         if j!=i: m[i][j]=-s[i][j]/s[i][i]
+      end
+   end
+   return m
+END METHOD
+
+METHOD PhaseType(alpha, s)
+   // Setup
+   trans=GenToTrans(s)
+   rates=[]; for i in 0...size(s): AddItem(rates,-s[i][i])
+   // Sampling
+   state=WeightedChoice(alpha)
+   ret=0
+   while state&lt;size(s)
+     ret=ret+Expo(rates[state])
+     state=WeightedChoice(trans[state])
+   end
+   return ret
+END METHOD
+</pre>
+
+<blockquote>
+<p><strong>Note:</strong> An <strong>inhomogeneous phase-type</strong> random variate has the form <code>G(PhaseType(alpha, s))</code>, where <code>G(x)</code> is a function designed to control the heaviness of the distribution&#39;s tail (Bladt 2021)[^27].  For example, <code>G(x) = pow(x, 1.0/beta)</code>, where <code>beta&gt;0</code>, leads to a tail as heavy as a Weibull distribution.</p>
+</blockquote>
+
 <p><a id=Multivariate_Normal_Multinormal_Distribution></a></p>
 
 <h4>Multivariate Normal (Multinormal) Distribution</h4>
@@ -578,6 +631,8 @@ END METHOD
 <p>[^25]: O. Rioul, &quot;Variations on a Theme by Massey,&quot; in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.</p>
 
 <p>[^26]: Massey, J.L., &quot;On the entropy of integer-valued random variables&quot;, 1988.</p>
+
+<p>[^27]: Bladt, Martin. &quot;Phase-type distributions for claim severity regression modeling.&quot; ASTIN Bulletin: The Journal of the IAA (2021): 1-32.</p>
 
 <p><a id=Appendix></a></p>
 

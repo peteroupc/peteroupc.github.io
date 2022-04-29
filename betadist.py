@@ -83,7 +83,7 @@ def randBernoulli(f):
     if f == 0:
         return 0
     if isinstance(f, Fraction):
-        return random.randint(0, f.denominator) < f.numerator
+        return random.randint(0, f.denominator - 1) < f.numerator
     if isinstance(f, Real):
         return 1 if realIsLess(RandUniform(), f) else 0
     return 1 if realIsLess(RandUniform(), RealFraction(f)) else 0
@@ -119,6 +119,39 @@ def tulap(m, b, q):
         # if fn < 0 or fn > 1: raise ValueError
         if realIsLess(q / 2, fn) and realIsLess(fn, 1 - q / 2):
             return n + m
+
+def gen_to_transition(s):
+    size = len(s)
+    m = [[0 for i in range(size + 1)] for j in range(size)]
+    for i in range(size):
+        isum = sum(s[i])
+        if isum < 0:
+            m[i][size] = isum / s[i][i]
+        for j in range(size):
+            if j != i:
+                m[i][j] = -s[i][j] / s[i][i]
+    return m
+
+class PhaseType:
+    # Samples from a continuous phase-type distribution.
+    #    N is the number of states (other than the
+    #    "absorbing" or terminating state).
+    # alpha - Probabilities to start in each state. N items.
+    # s - Sub-generator matrix.  List of N lists with N items each.
+    def __init__(self, alpha, s):
+        self.n = len(s)
+        self.alpha = alpha
+        self.trans = gen_to_transition(s)
+        # NOTE: Diagonal elements of 's' must each be 0 or less.
+        self.rates = [-s[i][i] for i in range(len(s))]
+
+    def sample(self):
+        state = random.choices(range(self.n), weights=self.alpha)[0]
+        ret = RealFraction(0)
+        while state < self.n:
+            ret -= RealLn(RandUniform()) / self.rates[state]
+            state = random.choices(range(self.n + 1), weights=self.trans[state])[0]
+        return ret
 
 def exchangeable_bernoulli(p, d, lamda=None):
     # p=expected value (in [0, 1]); d=dimension; lamda=weights for

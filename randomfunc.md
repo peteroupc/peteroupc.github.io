@@ -1198,9 +1198,9 @@ END METHOD
 Suppose items are drawn at random from a collection of items each labeled either `1` or `0`, and after drawing an item, it's put back and `m` more items of the same label are added.  Then:
 
 - The _Pólya&ndash;Eggenberger distribution_ models the number of items drawn this way that are labeled `1`.
-- The _inverse Pólya&ndash;Eggenberger distribution_ models the number of `0`-labeled items drawn before `n` many `1`-labeled items are drawn.
+- The _inverse Pólya&ndash;Eggenberger distribution_ models the number of `0`-labeled items drawn before `successes` many `1`-labeled items are drawn.
 
-In the methods below, `trials` is the number of items drawn at random, `ones` is the number of items labeled `1` in the collection, `count` is the number of items labeled `1` or `0` in that collection, `m` is the number of items added after each draw (or &minus;1 for sampling _without replacement_), and `successes` is the number of `1`-labeled items drawn.
+(Johnson and Kotz 1969)[^106].  In the methods below, `trials` is the number of items drawn at random, `ones` is the number of items labeled `1` in the collection, `count` is the number of items labeled `1` or `0` in that collection, `m` is the number of items added after each draw (or &minus;1 for sampling _without replacement_), and `successes` is the number of `1`-labeled items drawn.
 
     METHOD PolyaEggenberger(trials, ones, count, m)
         if ones < 0 or count < 0 or trials < 0 or
@@ -2271,6 +2271,8 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 [^104]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965.)", arXiv:2108.00965.
 
 [^105]: For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
+
+[^106]: Johnson and Kotz, "Discrete Distributions", 1969.
 
 <a id=Appendix></a>
 ## Appendix

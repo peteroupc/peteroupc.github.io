@@ -14,6 +14,7 @@
         - [**Noncentral Hypergeometric Distributions**](#Noncentral_Hypergeometric_Distributions)
         - [**von Mises Distribution**](#von_Mises_Distribution)
         - [**Stable Distribution**](#Stable_Distribution)
+    - [**Phase-Type Distributions**](#Phase_Type_Distributions)
         - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
         - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
 - [**Notes**](#Notes)
@@ -288,6 +289,51 @@ Methods implementing the strictly geometric stable and general geometric stable 
               Stable(alpha, beta)*sigma*pow(z, 1.0/alpha)
     END METHOD
 
+<a id=Phase_Type_Distributions></a>
+### Phase-Type Distributions
+
+A _phase-type distribution_ models a sum of exponential random variates driven by a [**Markov chain**](https://peteroupc.github.io/randomnotes.html).  The Markov chain has `n` normal states and one "absorbing" or terminating state.  This distribution has two parameters:
+
+- `alpha`, an `n`-item array showing the probabilities of starting the chain at each normal state.
+- `s`, an `n`&times;`n` _subgenerator matrix_, a list of `n` lists of `n` values each.  The values in each list (each state of the Markov chain) must sum to 0 or less, and for each state `i`, `s[i][i]` is 0 minus the rate of that state's exponential random variate.
+
+The method `PhaseType`, given below, samples from a phase-type distribution given the two parameters above.
+
+```
+METHOD GenToTrans(s)
+  // Converts a subgenerator matrix to a
+  // more intuitive transition matrix.
+  m=[];
+  for j in 0...size(s)
+     m[j]=[]; for i in 0...size(s)+1: AddItem(m[j],0)
+  end
+  for i in 0...size(s)
+      isum=Sum(s[i])
+      if isum<0: m[i][size(s)]=isum/s[i][i]
+      for j in 0...size(s)
+         if j!=i: m[i][j]=-s[i][j]/s[i][i]
+      end
+   end
+   return m
+END METHOD
+
+METHOD PhaseType(alpha, s)
+   // Setup
+   trans=GenToTrans(s)
+   rates=[]; for i in 0...size(s): AddItem(rates,-s[i][i])
+   // Sampling
+   state=WeightedChoice(alpha)
+   ret=0
+   while state<size(s)
+     ret=ret+Expo(rates[state])
+     state=WeightedChoice(trans[state])
+   end
+   return ret
+END METHOD
+```
+
+> **Note:** An **inhomogeneous phase-type** random variate has the form `G(PhaseType(alpha, s))`, where `G(x)` is a function designed to control the heaviness of the distribution's tail (Bladt 2021)[^27].  For example, `G(x) = pow(x, 1.0/beta)`, where `beta>0`, leads to a tail as heavy as a Weibull distribution.
+
 <a id=Multivariate_Normal_Multinormal_Distribution></a>
 #### Multivariate Normal (Multinormal) Distribution
 
@@ -500,6 +546,8 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 [^25]: O. Rioul, "Variations on a Theme by Massey," in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.
 
 [^26]: Massey, J.L., "On the entropy of integer-valued random variables", 1988.
+
+[^27]: Bladt, Martin. "Phase-type distributions for claim severity regression modeling." ASTIN Bulletin: The Journal of the IAA (2021): 1-32.
 
 <a id=Appendix></a>
 ## Appendix

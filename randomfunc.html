@@ -1576,10 +1576,10 @@ END METHOD
 
 <ul>
 <li>The <em>Pólya&ndash;Eggenberger distribution</em> models the number of items drawn this way that are labeled <code>1</code>.</li>
-<li>The <em>inverse Pólya&ndash;Eggenberger distribution</em> models the number of <code>0</code>-labeled items drawn before <code>n</code> many <code>1</code>-labeled items are drawn.</li>
+<li>The <em>inverse Pólya&ndash;Eggenberger distribution</em> models the number of <code>0</code>-labeled items drawn before <code>successes</code> many <code>1</code>-labeled items are drawn.</li>
 </ul>
 
-<p>In the methods below, <code>trials</code> is the number of items drawn at random, <code>ones</code> is the number of items labeled <code>1</code> in the collection, <code>count</code> is the number of items labeled <code>1</code> or <code>0</code> in that collection, <code>m</code> is the number of items added after each draw (or &minus;1 for sampling <em>without replacement</em>), and <code>successes</code> is the number of <code>1</code>-labeled items drawn.</p>
+<p>(Johnson and Kotz 1969)[^106].  In the methods below, <code>trials</code> is the number of items drawn at random, <code>ones</code> is the number of items labeled <code>1</code> in the collection, <code>count</code> is the number of items labeled <code>1</code> or <code>0</code> in that collection, <code>m</code> is the number of items added after each draw (or &minus;1 for sampling <em>without replacement</em>), and <code>successes</code> is the number of <code>1</code>-labeled items drawn.</p>
 
 <pre>METHOD PolyaEggenberger(trials, ones, count, m)
     if ones &lt; 0 or count &lt; 0 or trials &lt; 0 or
@@ -2804,6 +2804,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p>[^104]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. &quot;<a href="https://arxiv.org/abs/2108.00965."><strong>Privacy-Aware Rejection Sampling</strong></a>&quot;, arXiv:2108.00965.</p>
 
 <p>[^105]: For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</p>
+
+<p>[^106]: Johnson and Kotz, &quot;Discrete Distributions&quot;, 1969.</p>
 
 <p><a id=Appendix></a></p>
 

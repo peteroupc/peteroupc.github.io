@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1651137180.2513485
+    t = 1651200574.3998263
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -2339,7 +2339,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1651137181.4420602
+    t = 1651200575.5936215
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
@@ -2460,6 +2460,7 @@ DESCRIPTION
 CLASSES
     builtins.object
         FPInterval
+        PhaseType
         Real
             RandPSRN
             RandUniform
@@ -2506,6 +2507,25 @@ CLASSES
      |  setprec(self, prec)
      |
      |  subintv(self, intv)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class PhaseType(builtins.object)
+     |  PhaseType(alpha, s)
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, alpha, s)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  sample(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
@@ -3769,6 +3789,8 @@ FUNCTIONS
 
     fracEV(sn, sd, n)
 
+    gen_to_transition(s)
+
     genscore(psi, rho, m=5)
 
     genscore_mean_var(mean, vari, m=5)
@@ -3912,7 +3934,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1651137183.5668716
+    t = 1651200577.7556658
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
