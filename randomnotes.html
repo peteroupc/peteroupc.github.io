@@ -603,7 +603,7 @@ END METHOD
 
 <ol>
 <li>In general, an MPH* random vector can be zero with positive probability, so MPH* is not an absolutely continuous distribution in general.</li>
-<li>An inhomogeneous version of MPH* can be as follows: <code>[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]</code>, where <code>mph</code> is a <code>d</code>-dimensional MPH* vector and <code>G1</code>, <code>G2</code>, ..., <code>GD</code> are strictly increasing functions whose domain and range are the positive real line and whose &quot;slope&quot; is defined on the whole domain (Albrecher et al. 2022)[^28].</li>
+<li>An inhomogeneous version of MPH* can be as follows: <code>[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]</code>, where <code>mph</code> is a <code>d</code>-dimensional MPH* vector and <code>G1</code>, <code>G2</code>, ..., <code>GD</code> are strictly increasing functions whose domain and range are the positive real line and whose &quot;slope&quot; is defined on the whole domain (Albrecher et al. 2022)[^21].</li>
 </ol>
 </blockquote>
 
@@ -651,21 +651,21 @@ END METHOD
 
 <p>[^20]: Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  <em>Journal of Statistical Software</em> 39(9), 2011, pp. 1-20.</p>
 
-<p>[^21]: Boehm, Hans-J. &quot;Towards an API for the real numbers.&quot; In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.</p>
+<p>[^21]: Albrecher, Hansjörg, Mogens Bladt, and Jorge Yslas. &quot;Fitting inhomogeneous phase‐type distributions to data: the univariate and the multivariate case.&quot; Scandinavian Journal of Statistics 49, no. 1 (2022): 44-77.</p>
 
-<p>[^22]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
+<p>[^22]: Boehm, Hans-J. &quot;Towards an API for the real numbers.&quot; In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.</p>
 
-<p>[^23]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
+<p>[^23]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
 
-<p>[^24]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^24]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
 
-<p>[^25]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, &quot;<a href="https://arxiv.org/abs/2001.04555v1"><strong>Optimal Approximate Sampling From Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</p>
+<p>[^25]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^26]: O. Rioul, &quot;Variations on a Theme by Massey,&quot; in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.</p>
+<p>[^26]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, &quot;<a href="https://arxiv.org/abs/2001.04555v1"><strong>Optimal Approximate Sampling From Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</p>
 
-<p>[^27]: Massey, J.L., &quot;On the entropy of integer-valued random variables&quot;, 1988.</p>
+<p>[^27]: O. Rioul, &quot;Variations on a Theme by Massey,&quot; in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.</p>
 
-<p>[^28]: Albrecher, Hansjörg, Mogens Bladt, and Jorge Yslas. &quot;Fitting inhomogeneous phase‐type distributions to data: the univariate and the multivariate case.&quot; Scandinavian Journal of Statistics 49, no. 1 (2022): 44-77.</p>
+<p>[^28]: Massey, J.L., &quot;On the entropy of integer-valued random variables&quot;, 1988.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -720,7 +720,7 @@ END METHOD
 <li>can generate independent uniform random real numbers</li>
 </ul>
 
-<p>(Devroye 1986, p. 1-2)[^15].  However, an exact algorithm implemented on real-life computers can incur error due to the use of fixed precision, such as rounding and cancellations, especially when floating-point numbers are involved. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)[^15]. All methods given on this page are exact unless otherwise noted.  Note that the <code>RNDRANGEMinMaxExc</code> method is exact in theory, but has no required implementation.</p></li>
+<p>(Devroye 1986, p. 1-2)[^15].  However, an exact algorithm implemented on real-life computers can incur error due to the use of fixed precision (especially floating-point numbers), such as rounding and cancellations. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)[^15]. All methods given on this page are exact unless otherwise noted.  Note that the <code>RNDRANGEMinMaxExc</code> method is exact in theory, but has no required implementation.</p></li>
 <li><p>An <em>error-bounded algorithm</em> is a sampling algorithm with the following requirements:</p>
 
 <ul>
@@ -733,24 +733,24 @@ END METHOD
 <li>An <em>inexact</em>, <em>approximate</em>, or <em>biased algorithm</em> is neither exact nor error-bounded; it uses &quot;a mathematical approximation of sorts&quot; to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2)[^15].  An application should use this kind of algorithm only if it&#39;s willing to trade accuracy for speed.</li>
 </ol>
 
-<p>Most algorithms on this page, though, are not <em>error-bounded</em> when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as &quot;constructive reals&quot; or &quot;recursive reals&quot; that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^21].)</p>
+<p>Most algorithms on this page, though, are not <em>error-bounded</em> when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as &quot;constructive reals&quot; or &quot;recursive reals&quot; that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^22].)</p>
 
-<p>There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020)[^22] is Wasserstein distance (or &quot;earth-mover distance&quot;).  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.</p>
+<p>There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020)[^23] is Wasserstein distance (or &quot;earth-mover distance&quot;).  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
 
 <ol>
 <li>Sampling from the exponential distribution via <code>-ln(RNDRANGEMinMaxExc(0, 1))</code> is an <em>exact algorithm</em> (in theory), but not an <em>error-bounded</em> one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.</li>
-<li>Sampling from the exponential distribution using the <code>ExpoExact</code> method in the page &quot;<a href="https://peteroupc.github.io/randmisc.html#ExpoExact"><strong>Miscellaneous Observations on Randomization</strong></a>&quot; is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2016)[^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018)[^23].</li>
+<li>Sampling from the exponential distribution using the <code>ExpoExact</code> method in the page &quot;<a href="https://peteroupc.github.io/randmisc.html#ExpoExact"><strong>Miscellaneous Observations on Randomization</strong></a>&quot; is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2016)[^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018)[^24].</li>
 <li>Examples of <em>approximate algorithms</em> include sampling from a Gaussian-like distribution via a sum of <code>RNDRANGEMinMaxExc(0, 1)</code>, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N"><strong>RNDINT</strong></a>&quot;).</li>
 </ol>
 
-<p><strong>Note:</strong> A discrete distribution can be sampled in finite time on average if and only if its so-called <em>Shannon entropy</em> is finite (Knuth and Yao 1976)[^24]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^22].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^25] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution&#39;s Shannon entropy is finite whenever&mdash;</p>
+<p><strong>Note:</strong> A discrete distribution can be sampled in finite time on average if and only if its so-called <em>Shannon entropy</em> is finite (Knuth and Yao 1976)[^25]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^23].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^26] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution&#39;s Shannon entropy is finite whenever&mdash;</p>
 
 <ul>
-<li>it takes on only integers 0 or greater and has a finite mean (&quot;long-run average&quot;) (Rioul 2022)[^26], or</li>
-<li>it takes on only integers and has a finite variance (&quot;long-run average&quot; of squared deviation from the mean) (Massey 1988)[^27].</li>
+<li>it takes on only integers 0 or greater and has a finite mean (&quot;long-run average&quot;) (Rioul 2022)[^27], or</li>
+<li>it takes on only integers and has a finite variance (&quot;long-run average&quot; of squared deviation from the mean) (Massey 1988)[^28].</li>
 </ul>
 </blockquote>
 
