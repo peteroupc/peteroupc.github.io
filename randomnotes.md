@@ -14,9 +14,10 @@
         - [**Noncentral Hypergeometric Distributions**](#Noncentral_Hypergeometric_Distributions)
         - [**von Mises Distribution**](#von_Mises_Distribution)
         - [**Stable Distribution**](#Stable_Distribution)
-    - [**Phase-Type Distributions**](#Phase_Type_Distributions)
+        - [**Phase-Type Distributions**](#Phase_Type_Distributions)
         - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
         - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
+        - [**Multivariate Phase-Type Distributions**](#Multivariate_Phase_Type_Distributions)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
@@ -290,7 +291,7 @@ Methods implementing the strictly geometric stable and general geometric stable 
     END METHOD
 
 <a id=Phase_Type_Distributions></a>
-### Phase-Type Distributions
+#### Phase-Type Distributions
 
 A _phase-type distribution_ models a sum of exponential random variates driven by a [**Markov chain**](https://peteroupc.github.io/randomnotes.html).  The Markov chain has `n` normal states and one "absorbing" or terminating state.  This distribution has two parameters:
 
@@ -332,12 +333,12 @@ METHOD PhaseType(alpha, s)
 END METHOD
 ```
 
-> **Note:** An **inhomogeneous phase-type** random variate has the form `G(PhaseType(alpha, s))`, where `G(x)` is a function designed to control the heaviness of the distribution's tail (Bladt 2021)[^27].  For example, `G(x) = pow(x, 1.0/beta)`, where `beta>0`, leads to a tail as heavy as a Weibull distribution.
+> **Note:** An **inhomogeneous phase-type** random variate has the form `G(PhaseType(alpha, s))`, where `G(x)` is a function designed to control the heaviness of the distribution's tail (Bladt 2021)[^17].  For example, `G(x) = pow(x, 1.0/beta)`, where `beta>0`, leads to a tail as heavy as a Weibull distribution.
 
 <a id=Multivariate_Normal_Multinormal_Distribution></a>
 #### Multivariate Normal (Multinormal) Distribution
 
-The following pseudocode calculates a random vector (list of numbers) that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
+The following pseudocode generates a random vector (list of numbers) that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
 
 - A list, `mu` (&mu;), which indicates the means to add to the random vector's components. `mu` can be `nothing`, in which case each component will have a mean of zero.
 - A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite N&times;N matrix, where N is the number of components of the random vector).
@@ -449,7 +450,7 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
        return mvn
     END METHOD
 
-Each of the resulting uniform random values will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ or _marginal_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997\)[^17].)
+Each of the resulting uniform random values will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ or _marginal_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997\)[^18].)
 
 > **Note:** The Gaussian copula is also known as the _normal-to-anything_ method.
 >
@@ -466,7 +467,7 @@ Each of the resulting uniform random values will be in the interval [0, 1], and 
 >              -log1p(-copula[1]) / rate2]
 >         END METHOD
 >
-> 3. The _**T**&ndash;Poisson hierarchy_ (Knudson et al. 2021\)[^18] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with&mdash;
+> 3. The _**T**&ndash;Poisson hierarchy_ (Knudson et al. 2021\)[^19] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with&mdash;
 >
 >     - a parameter `lamda`, and
 >     - a marginal distribution that may not be discrete and takes on only non-negative values.
@@ -490,7 +491,36 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (for example, `[x, x]`), where `x = RNDRANGEMinMaxExc(0, 1)`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDRANGEMinMaxExc(0, 1)`,
 - the **product copula**, where each number is a separately generated `RNDRANGEMinMaxExc(0, 1)` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011\)[^19].
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011\)[^20].
+
+<a id=Multivariate_Phase_Type_Distributions></a>
+#### Multivariate Phase-Type Distributions
+
+The following pseudocode generates a random vector (of `d` coordinates) following a _multivariate phase-type distribution_ called MPH\*.  In addition to parameters `alpha` and `s`, there is also a _reward matrix_ `r`, such that `r[i][j]` is the probability of adding to coordinate `j` when state `i` is visited.
+
+```
+METHOD MPH(alpha, s, r)
+   if len(r[0])<1 or len(r)!=len(s): return error
+   // Setup
+   trans=GenToTrans(s)
+   rates=[]; for i in 0...size(s): AddItem(rates,-s[i][i])
+   ret=[]; for i in 0...size(r[0]): AddItem(ret,0)
+   // Sampling
+   state=WeightedChoice(alpha)
+   ret=0
+   while state<size(s)
+     rs=WeightedChoice(reward[state])
+     ret[rs]=ret[rs]+Expo(rates[state])
+     state=WeightedChoice(trans[state])
+   end
+   return ret
+END METHOD
+```
+
+> **Notes:**
+>
+> 1. In general, an MPH\* random vector can be zero with positive probability, so MPH\* is not an absolutely continuous distribution in general.
+> 2. An inhomogeneous version of MPH\* can be as follows: `[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]`, where `mph` is a `d`-dimensional MPH\* vector and `G1`, `G2`, ..., `GD` are strictly increasing functions whose domain and range are the positive real line and whose "slope" is defined on the whole domain (Albrecher et al. 2022)[^28].
 
 <a id=Notes></a>
 ## Notes
@@ -527,27 +557,29 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 
 [^16]: Tomasz J. Kozubowski, "[**Computer simulation of geometric stable distributions**](https://www.sciencedirect.com/science/article/pii/S0377042799003180)", _Journal of Computational and Applied Mathematics_ 116(2), pp. 221-229, 2000. [**https://doi.org/10.1016/S0377-0427(99)00318-0**](https://doi.org/10.1016/S0377-0427%2899%2900318-0)
 
-[^17]: Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.
+[^17]: Bladt, Martin. "Phase-type distributions for claim severity regression modeling." ASTIN Bulletin: The Journal of the IAA (2021): 1-32.
 
-[^18]: Knudson, A.D., Kozubowski, T.J., et al., "A flexible multivariate model for high-dimensional correlated count data", _Journal of Statistical Distributions and Applications_ 8:6, 2021.
+[^18]: Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.
 
-[^19]: Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.
+[^19]: Knudson, A.D., Kozubowski, T.J., et al., "A flexible multivariate model for high-dimensional correlated count data", _Journal of Statistical Distributions and Applications_ 8:6, 2021.
 
-[^20]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
+[^20]: Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.
 
-[^21]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
+[^21]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
 
-[^22]: Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.
+[^22]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
-[^23]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^23]: Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.
 
-[^24]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
+[^24]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^25]: O. Rioul, "Variations on a Theme by Massey," in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.
+[^25]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
 
-[^26]: Massey, J.L., "On the entropy of integer-valued random variables", 1988.
+[^26]: O. Rioul, "Variations on a Theme by Massey," in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.
 
-[^27]: Bladt, Martin. "Phase-type distributions for claim severity regression modeling." ASTIN Bulletin: The Journal of the IAA (2021): 1-32.
+[^27]: Massey, J.L., "On the entropy of integer-valued random variables", 1988.
+
+[^28]: Albrecher, Hansjörg, Mogens Bladt, and Jorge Yslas. "Fitting inhomogeneous phase‐type distributions to data: the univariate and the multivariate case." Scandinavian Journal of Statistics 49, no. 1 (2022): 44-77.
 
 <a id=Appendix></a>
 ## Appendix
@@ -605,21 +637,21 @@ There are three kinds of randomization algorithms:
     Many error-bounded algorithms use random bits as their only source of randomness. An application should use error-bounded algorithms whenever possible.
 3. An _inexact_, _approximate_, or _biased algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2\)[^15].  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
-Most algorithms on this page, though, are not _error-bounded_ when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as "constructive reals" or "recursive reals" that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^20].)
+Most algorithms on this page, though, are not _error-bounded_ when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as "constructive reals" or "recursive reals" that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^21].)
 
-There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020\)[^21] is Wasserstein distance (or "earth-mover distance").  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.
+There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020\)[^22] is Wasserstein distance (or "earth-mover distance").  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.
 
 >
 > **Examples:**
 >
 > 1. Sampling from the exponential distribution via `-ln(RNDRANGEMinMaxExc(0, 1))` is an _exact algorithm_ (in theory), but not an _error-bounded_ one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.
-> 2. Sampling from the exponential distribution using the `ExpoExact` method in the page "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html#ExpoExact)" is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2016\)[^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018\)[^22].
+> 2. Sampling from the exponential distribution using the `ExpoExact` method in the page "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html#ExpoExact)" is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2016\)[^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018\)[^23].
 > 3. Examples of _approximate algorithms_ include sampling from a Gaussian-like distribution via a sum of `RNDRANGEMinMaxExc(0, 1)`, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section "[**RNDINT**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)").
 >
-> **Note:** A discrete distribution can be sampled in finite time on average if and only if its so-called _Shannon entropy_ is finite (Knuth and Yao 1976)[^23]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^21].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^24] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution's Shannon entropy is finite whenever&mdash;
+> **Note:** A discrete distribution can be sampled in finite time on average if and only if its so-called _Shannon entropy_ is finite (Knuth and Yao 1976)[^24]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^22].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^25] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution's Shannon entropy is finite whenever&mdash;
 >
-> - it takes on only integers 0 or greater and has a finite mean ("long-run average") (Rioul 2022\)[^25], or
-> - it takes on only integers and has a finite variance ("long-run average" of squared deviation from the mean) (Massey 1988\)[^26].
+> - it takes on only integers 0 or greater and has a finite mean ("long-run average") (Rioul 2022\)[^26], or
+> - it takes on only integers and has a finite variance ("long-run average" of squared deviation from the mean) (Massey 1988\)[^27].
 
 <a id=License></a>
 ## License
