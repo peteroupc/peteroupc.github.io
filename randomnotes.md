@@ -296,7 +296,7 @@ Methods implementing the strictly geometric stable and general geometric stable 
 A _phase-type distribution_ models a sum of exponential random variates driven by a [**Markov chain**](https://peteroupc.github.io/randomnotes.html).  The Markov chain has `n` normal states and one "absorbing" or terminating state.  This distribution has two parameters:
 
 - `alpha`, an `n`-item array showing the probabilities of starting the chain at each normal state.
-- `s`, an `n`&times;`n` _subgenerator matrix_, a list of `n` lists of `n` values each.  The values in each list (each state of the Markov chain) must sum to 0 or less, and for each state `i`, `s[i][i]` is 0 minus the rate of that state's exponential random variate.
+- `s`, an `n`&times;`n` _subgenerator matrix_, a list of `n` lists of `n` values each.  The values in each list (each state of the Markov chain) must sum to 0 or less, and for each state `i`, `s[i][i]` is 0 minus the rate of that state's exponential random variate, and each entry `s[i][j]` with `i!=j` is the relative probability for moving to state `j`.
 
 The method `PhaseType`, given below, samples from a phase-type distribution given the two parameters above.
 
@@ -341,7 +341,7 @@ END METHOD
 The following pseudocode generates a random vector (list of numbers) that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
 
 - A list, `mu` (&mu;), which indicates the means to add to the random vector's components. `mu` can be `nothing`, in which case each component will have a mean of zero.
-- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite N&times;N matrix, where N is the number of components of the random vector).
+- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;), a symmetric positive definite N&times;N matrix, where N is the number of components of the random vector.  (An N&times;N matrix is _positive definite_ if its determinant [overall scale] is greater than 0 and if either the matrix is 1&times;1 or a smaller matrix formed by removing the last row and column is positive definite.)
 
 &nbsp;
 
@@ -517,10 +517,7 @@ METHOD MPH(alpha, s, r)
 END METHOD
 ```
 
-> **Notes:**
->
-> 1. In general, an MPH\* random vector can be zero with positive probability, so MPH\* is not an absolutely continuous distribution in general.
-> 2. An inhomogeneous version of MPH\* can be as follows: `[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]`, where `mph` is a `d`-dimensional MPH\* vector and `G1`, `G2`, ..., `GD` are strictly increasing functions whose domain and range are the positive real line and whose "slope" is defined on the whole domain (Albrecher et al. 2022)[^21].
+> **Note:** An inhomogeneous version of MPH\* can be as follows: `[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]`, where `mph` is a `d`-dimensional MPH\* vector and `G1`, `G2`, ..., `GD` are strictly increasing functions whose domain and range are the positive real line and whose "slope" is defined on the whole domain (Albrecher et al. 2022)[^21].
 
 <a id=Notes></a>
 ## Notes

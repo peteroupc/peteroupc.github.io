@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/04/29"><meta name="citation_online_date" content="2022/04/29"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/04/30"><meta name="citation_online_date" content="2022/04/30"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -353,7 +353,7 @@ END METHOD
 
 <ul>
 <li><code>alpha</code>, an <code>n</code>-item array showing the probabilities of starting the chain at each normal state.</li>
-<li><code>s</code>, an <code>n</code>&times;<code>n</code> <em>subgenerator matrix</em>, a list of <code>n</code> lists of <code>n</code> values each.  The values in each list (each state of the Markov chain) must sum to 0 or less, and for each state <code>i</code>, <code>s[i][i]</code> is 0 minus the rate of that state&#39;s exponential random variate.</li>
+<li><code>s</code>, an <code>n</code>&times;<code>n</code> <em>subgenerator matrix</em>, a list of <code>n</code> lists of <code>n</code> values each.  The values in each list (each state of the Markov chain) must sum to 0 or less, and for each state <code>i</code>, <code>s[i][i]</code> is 0 minus the rate of that state&#39;s exponential random variate, and each entry <code>s[i][j]</code> with <code>i!=j</code> is the relative probability for moving to state <code>j</code>.</li>
 </ul>
 
 <p>The method <code>PhaseType</code>, given below, samples from a phase-type distribution given the two parameters above.</p>
@@ -402,7 +402,7 @@ END METHOD
 
 <ul>
 <li>A list, <code>mu</code> (&mu;), which indicates the means to add to the random vector&#39;s components. <code>mu</code> can be <code>nothing</code>, in which case each component will have a mean of zero.</li>
-<li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (&Sigma;, a symmetric positive definite N&times;N matrix, where N is the number of components of the random vector).</li>
+<li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (&Sigma;), a symmetric positive definite N&times;N matrix, where N is the number of components of the random vector.  (An N&times;N matrix is <em>positive definite</em> if its determinant [overall scale] is greater than 0 and if either the matrix is 1&times;1 or a smaller matrix formed by removing the last row and column is positive definite.)</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -599,12 +599,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li>In general, an MPH* random vector can be zero with positive probability, so MPH* is not an absolutely continuous distribution in general.</li>
-<li>An inhomogeneous version of MPH* can be as follows: <code>[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]</code>, where <code>mph</code> is a <code>d</code>-dimensional MPH* vector and <code>G1</code>, <code>G2</code>, ..., <code>GD</code> are strictly increasing functions whose domain and range are the positive real line and whose &quot;slope&quot; is defined on the whole domain (Albrecher et al. 2022)[^21].</li>
-</ol>
+<p><strong>Note:</strong> An inhomogeneous version of MPH* can be as follows: <code>[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]</code>, where <code>mph</code> is a <code>d</code>-dimensional MPH* vector and <code>G1</code>, <code>G2</code>, ..., <code>GD</code> are strictly increasing functions whose domain and range are the positive real line and whose &quot;slope&quot; is defined on the whole domain (Albrecher et al. 2022)[^21].</p>
 </blockquote>
 
 <p><a id=Notes></a></p>

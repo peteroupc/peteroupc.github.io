@@ -1459,7 +1459,7 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
     - The (biased) **sample variance**, the second sample central moment.
     - The **sample probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
 
-    There are two sources of error in Monte Carlo estimators: bias and variance. An estimator is _unbiased_ (has bias 0) if multiple independent samples of any fixed size `k` (from the same distribution) are expected to average to the true expected value (Halmos 1946\)[^67].  For example, any `n`th sample _raw_ moment is an unbiased estimator provided `k` >= `n`, but the sample variance is not unbiased, and neither is one for any sample _central_ moment other than the first (Halmos 1946\)[^67]. ("Variance reduction" methods are outside the scope of this document.) An estimator's _mean squared error_ equals variance plus square of bias.
+    There are two sources of error in Monte Carlo estimators: bias and variance. An estimator is _unbiased_ (has bias 0) if its expected value equals the distribution's expected value.  For example, any `n`th sample _raw_ moment is an unbiased estimator provided the sample size is at least `n`, but the sample variance is not unbiased, and neither is one for any sample _central_ moment other than the first (Halmos 1946\)[^67]. ("Variance reduction" methods are outside the scope of this document.) An estimator's _mean squared error_ equals variance plus square of bias.
 
     For Monte Carlo estimators with accuracy guarantees, see "[**Randomized Estimation Algorithms**](https://peteroupc.github.io/estimation.html)".
 
