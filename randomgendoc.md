@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1651305445.0097911
+    t = 1651451147.710415
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -2339,7 +2339,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1651305446.203321
+    t = 1651451148.8797166
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
@@ -3826,7 +3826,7 @@ FUNCTIONS
 
     logbinprob(n, k)
 
-    logconcave(f)
+    logconcave(f, c)
 
     loggammahelper(n, precision)
 
@@ -3934,7 +3934,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1651305448.280303
+    t = 1651451151.1834679
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

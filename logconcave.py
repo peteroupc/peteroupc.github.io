@@ -247,7 +247,7 @@ class LogConcaveSampler:
          distribution's mode (peak location) and psi(0) = 0 (and thus
          exp(psi(0)) = 1).
       - s, t - Each must be greater than 0 and chosen such that
-         psi(-s) == psi(t) > 0. Optional; if not given, these two parameters
+         psi(-s) == psi(t) < 0. Optional; if not given, these two parameters
          will be chosen through numerical root finding, with the assumptions
          given earlier.
 
@@ -489,7 +489,7 @@ class LogConcaveSamplerMonotone:
     """
     Generates a random variate that follows a distribution
     whose probability density function (PDF) is log-concave, monotonically
-    nonincreasing, and has a positive domain.  Specifically
+    decreasing, and has a positive domain.  Specifically
     the PDF is proportional to exp(psi), where psi is a continuous concave
     function. (A log-concave PDF necessarily has a single mode, or peak,
     and its range is bounded from above by a finite value.
@@ -497,7 +497,7 @@ class LogConcaveSamplerMonotone:
       - psi - A function that takes one number and
          outputs one number.  For this sampler to work, psi must be a
          continuous concave function, monotonically
-         nonincreasing, and have a positive domain (informally, a
+         decreasing, and have a positive domain (informally, a
          function is concave if its slope does not increase on its domain),
          and 0 must be the distribution's mode (peak location) and thus
          the peak of psi must be at 0.

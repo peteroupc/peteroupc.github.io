@@ -3630,11 +3630,12 @@ def fpNormalROU():
                 return -b / a
             return b / a
 
-def logconcave(f):  # Devroye 1986, chapter 7
+def logconcave(f, c):  # Devroye 1986, chapter 7
     # Samples a random variate from an absolutely
     # continuous log-concave distribution.
     # f is a concave nonincreasing log-density function
-    # such that f(0)=0
+    # such that f(0)=0; c is the maximum
+    # value of the (normalized) density.
     while True:
         if random.randint(0, 1) == 0:
             x = RandUniform()
@@ -3643,6 +3644,7 @@ def logconcave(f):  # Devroye 1986, chapter 7
             es = -RealLn(RandUniform())
             x = 1 + es
             z = RealLn(RandUniform()) - es
+        x /= c
         if realIsLess(z, f(x)):
             return x
 
@@ -3678,7 +3680,9 @@ def expopower(beta, mu=0, alpha=1):
     else:
         # If beta is 1 or greater,
         # then the distribution is log-concave.
-        r = logconcave(lambda x: -(x ** beta))
+        # TODO: Set second parameter to
+        #    z/(z*gamma(1+1/z)) = z/gamma(1/z)
+        r = logconcave(lambda x: -(x ** beta), 1)
     if random.randint(0, 1) == 0:
         r = -r
     if mu == 0:

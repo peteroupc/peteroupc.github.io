@@ -86,7 +86,7 @@ In the methods below, _&lambda;_ is the unknown probability of heads of the coin
 <a id=cosh___lambda___minus_1_and_Certain_Other_Convex_Functions></a>
 ### cosh(_&lambda;_) &minus; 1, and Certain Other Convex Functions
 
-The following algorithm, which takes advantage of the [**convex combination method**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), samples the probability cosh(_&lambda;_) &minus; 1, and can serve as a framework for sampling probabilities equal to certain other functions.
+The following algorithm, which takes advantage of the [**convex combination method**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), samples the probability cosh(_&lambda;_) &minus; 1, and can serve as a framework for sampling probabilities equal to certain other "smooth" convex functions (see note 1 at the end of this section).
 
 1. (The first two steps generate a number _n_ that equals _i_ with probability _g_(_i_), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set _n_ to the number of ones generated this way.
 2. Set _n_ to 2\*_n_ + 2.
@@ -127,7 +127,7 @@ The functions have similar derivations as follows:
 
 > **Notes:**
 >
-> 1. All target functions in this section are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(\lambda)=a_0 \lambda^0 + ... + a_i \lambda^i + ..., $$ where the _coefficients_ $a_i$ are 0 or greater. (This way of writing the function is called a _Taylor series expansion at 0_.)<br>This kind of function&mdash;
+> 1. All target functions in this section map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(\lambda)=a_0 \lambda^0 + ... + a_i \lambda^i + ..., $$ where the _coefficients_ $a_i$ are 0 or greater. (This way of writing the function is called a _Taylor series expansion at 0_, a kind of series with infinitely many terms.)<br>This kind of function&mdash;
 >
 >     - is non-negative for every _&lambda;_,
 >     - is either constant or monotone increasing, and
