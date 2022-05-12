@@ -90,13 +90,15 @@ The following algorithm, which takes advantage of the [**convex combination meth
 
 1. (The first two steps generate a number _n_ that equals _i_ with probability _g_(_i_), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set _n_ to the number of ones generated this way.
 2. Set _n_ to 2\*_n_ + 2.
-3. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  Let _P_ be 2<sup>_n_/2</sup>/(_n_!).  With probability _P_, go to the next step.  Otherwise, return 0.
+3. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  Let _P_ be 2<sup>_n_/2</sup>/(_n_!). (Equals _w_<sub>_n_</sub>(1)/_g_(_n_).)  With probability _P_, go to the next step.  Otherwise, return 0.
 4. (At this point, _n_ equals _i_ with probability _w_<sub>_i_</sub>(1).) Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1 (or if _n_ is 0).  Otherwise, return 0.
 
 Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where:
 
-- _g_(_n_) is (1/2)\*(1/2)<sup>(_n_&minus;2)/2</sup> if _n_&gt;0 and _n_ is even, or 1 otherwise.  This serves to send nonzero probabilities to terms in the series with nonzero coefficients.  For example, in the case of cosh(_&lambda;_) &minus; 1, the nonzero terms are at 2, 4, 6, 8, and so on, so these terms are assigned the probabilities 1/2, 1/4, 1/8, 1/16, and so on, respectively.
 - _w_<sub>_n_</sub>(_&lambda;_) is _&lambda;_<sup>_n_</sup>/(_n_!) if _n_&gt;0 and _n_ is even, or 0 otherwise.  This is a term of the Taylor series expansion at 0.
+- _g_(_n_) is (1/2)\*(1/2)<sup>(_n_&minus;2)/2</sup> if _n_&gt;0 and _n_ is even, or 1 otherwise.  This is an upper bound on _w_<sup>_n_</sup>(1), and it serves to send nonzero probabilities to terms in the series with nonzero coefficients.  For example, in the case of cosh(_&lambda;_) &minus; 1, the nonzero terms are at 2, 4, 6, 8, and so on, so these terms are assigned the probabilities 1/2, 1/4, 1/8, 1/16, and so on, respectively.
+
+Then _P_ in step 3 equals _w_<sub>_n_</sub>(1)/_g_(_n_).
 
 Additional functions can be simulated using this algorithm, by modifying it as in the following table.  For convenience, the table also includes cosh(_&lambda;_)&minus;1. (Note 1 at the end of this section describes what these functions have in common.)
 
@@ -111,7 +113,7 @@ Additional functions can be simulated using this algorithm, by modifying it as i
 | cosh(_&lambda;_)/2 | 2\*_n_. | 2<sup>_n_/2</sup>/(_n_!) |
 | cosh(_&lambda;_)&minus;1 | 2\*_n_ + 2. | 2<sup>_n_/2</sup>/(_n_!) |
 
-The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number in the interval [0, _&phi;_(0)], where _&phi;_(.) is the original function.
+The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number such that 0 &le; _D_ &le; _&phi;_(0), where _&phi;_(.) is the original function.
 
 | Original function (_&phi;_(_&lambda;_)) | Target function _f_(_&lambda;_) | Step 2 reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- | --- |
@@ -122,8 +124,8 @@ The table below shows functions shifted downward and shows the algorithm changes
 
 The functions have similar derivations as follows:
 
-- _g_(_n_) is (1/2)\*(1/2)<sup>_h_(_n_)</sup>, where _h_(_n_) is the inverse of the "Step 2" columns above. If a certain value for _n_, call it _i_, can't occur in the algorithm after step 2 is complete, then _g_(_i_) is 1 instead.  (For example, if the column reads "2\*_n_ + 1", then _h_(_n_) is (_n_&minus;1)/2.)
 - _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for n in the target function's Taylor series expansion at 0.  If a certain value for _n_, call it _i_, can't occur in the algorithm after step 2 is complete, then _w_<sub>_i_</sub>(_&lambda;_) is 0 instead.
+- _g_(_n_) is (1/2)\*(1/2)<sup>_h_(_n_)</sup>, where _h_(_n_) is the inverse of the "Step 2" columns above. If a certain value for _n_, call it _i_, can't occur in the algorithm after step 2 is complete, then _g_(_i_) is 1 instead.  (For example, if the column reads "2\*_n_ + 1", then _h_(_n_) is (_n_&minus;1)/2.)
 
 > **Notes:**
 >
@@ -239,7 +241,7 @@ The code in the [**appendix**](#Appendix) uses the computer algebra library SymP
 1. Set _i_ to 1.
 2. Run `calc_linear_func(eps, mult, i)` and get the degree and _Y parameter_ for the last listed item, call them _n_ and _y_, respectively.
 3. Set _x_ to &minus;((_y_&minus;(1&minus;_&epsilon;_))/_&epsilon;_)<sup>5</sup>/_mult_ + _y_/_mult_.  (This exact formula doesn't appear in the Thomas and Blanchet paper; rather it comes from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.
-4. For degree _n_, **fbelow(_n_, _k_)** is min((_k_/_n_)\*_mult_, 1&minus;_&epsilon;_), and **fabove(_n_, _k_)** is min((_k_/_n_)\*_y_/_x_,_y_).  (**fbelow** matches _f_ because _f_ is _concave_ in the interval [0, 1], which roughly means that its rate of growth there never goes up.)
+4. For degree _n_, **fbelow(_n_, _k_)** is min((_k_/_n_)\*_mult_, 1&minus;_&epsilon;_), and **fabove(_n_, _k_)** is min((_k_/_n_)\*_y_/_x_,_y_).  (**fbelow** matches _f_ because _f_ is _concave_ on the interval [0, 1], which roughly means that its rate of growth there never goes up.)
 5. Add 1 to _i_ and go to step 2.
 
 It would be interesting to find general formulas to find the appropriate polynomials (degrees and _Y parameters_) given only the values for _mult_ and _&epsilon;_, rather than find them "the hard way" via `calc_linear_func`.  For this procedure, the degrees and _Y parameters_ can be upper bounds, as long as the sequence of degrees is monotone increasing and the sequence of Y parameters is nonincreasing.

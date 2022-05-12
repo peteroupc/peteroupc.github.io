@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/03/18"><meta name="citation_online_date" content="2022/03/18"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/05/02"><meta name="citation_online_date" content="2022/05/02"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -46,7 +46,7 @@
 <p>The algorithm for <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory functions</strong></a>, described in my main article on Bernoulli factory algorithms, works by building randomized upper and lower bounds for a function <em>f</em>(<em>&lambda;</em>), based on flips of the input coin.  Roughly speaking, the algorithm works as follows:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random variate, <em>U</em>.</li>
+<li>Generate a random variate, <em>U</em>, uniformly distributed, greater than 0 and less than 1.</li>
 <li>Flip the input coin, then build an upper and lower bound for <em>f</em>(<em>&lambda;</em>), based on the outcomes of the flips so far.</li>
 <li>If <em>U</em> is less than or equal to the lower bound, return 1. If <em>U</em> is greater than the upper bound, return 0.  Otherwise, go to step 2.</li>
 </ol>
@@ -188,7 +188,7 @@
 <li><em>f&prime;</em>(<em>&lambda;</em>), the &quot;slope&quot; function of <em>f</em>, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,</li>
 </ul>
 
-<p>then step 2 can be implemented by taking <em>g</em> as <em>f&prime;</em>, except: (A) a uniform(0, 1) random variate <em>u</em> is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>. Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;<br/>This is the &quot;<strong>integral method</strong>&quot; of Flajolet et al. (2010)[^4] (the modified step 2 simulates 1/<em>&lambda;</em> times the <em>integral</em> of <em>f</em>.).</p></li>
+<p>then step 2 can be implemented by taking <em>g</em> as <em>f&prime;</em>, except: (A) a uniform random variate, greater than 0 and less than 1, is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>. Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;<br/>This is the &quot;<strong>integral method</strong>&quot; of Flajolet et al. (2010)[^4] (the modified step 2 simulates 1/<em>&lambda;</em> times the <em>integral</em> of <em>f</em>.).</p></li>
 </ol>
 
 <p><strong>Examples:</strong></p>
@@ -896,7 +896,7 @@
 
 <p>[^2]: A Lipschitz continuous function on [0, 1], with constant <em>L</em> is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are in [0, 1] and no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot; in [0, 1], and that slope is bounded wherever it&#39;s defined.</p>
 
-<p>[^3]: Specifically, the constant <em>m</em> is a number equal to or greater than abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1] such that <em>x</em> != <em>y</em>.  However, <em>m</em> can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</p>
+<p>[^3]: Specifically, the constant <em>m</em> is a number equal to or greater than abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1] such that <em>x</em> != <em>y</em>.  However, <em>m</em> can&#39;t directly be calculated as it would involve checking infinitely many <em>x</em>, <em>y</em> pairs.</p>
 
 <p>[^4]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560 [math.PR], 2010.</p>
 
@@ -1001,7 +1001,7 @@
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
 <li>If 0 is in the domain of <em>f</em> and if <em>j</em> is 0, return <em>f</em>(0). (By condition 3, <em>f</em>(0) must be either 0 or 1.)</li>
 <li>If 1 is in the domain of <em>f</em> and if <em>j</em> is <em>n</em>, return <em>f</em>(1). (By condition 4, <em>f</em>(1) must be either 0 or 1.)</li>
-<li>Generate a uniform(0, 1) random variate, then return 1 if that variate is less than <em>a</em>[<em>j</em>] (<em>a</em>[<em>j</em>] is the coefficient <em>j</em> of the polynomial written in Bernstein form), or 0 otherwise.</li>
+<li>With probability <em>a</em>[<em>j</em>], return 1.  Otherwise, return 0. (For example, generate a uniformly distributed random variate, greater than 0 and less than 1, then return 1 if that variate is less than <em>a</em>[<em>j</em>], or 0 otherwise.  <em>a</em>[<em>j</em>] is the coefficient <em>j</em> of the polynomial written in Bernstein form), or 0 otherwise.</li>
 </ol>
 
 <p>(By the properties of the Bernstein form, <em>a</em>[0] will equal <em>f</em>(0) and <em>a</em>[<em>n</em>] will equal <em>f</em>(1) whenever 0 or 1 is in the domain of <em>f</em>, respectively.)</p>
@@ -1056,7 +1056,7 @@
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
 <li>If 0 is in the domain of <em>f</em> and if <em>j</em> is 0, return <em>g</em>(0) = <em>&omega;</em>(0) = 0.</li>
 <li>If 1 is in the domain of <em>f</em> and if <em>j</em> is <em>n</em>, return <em>g</em>(1) = <em>&omega;</em>(1) = 0.</li>
-<li>Generate a uniform(0, 1) random variate, then return 1 if that variate is less than <em>&omega;</em>[<em>j</em>], or return 0 if that variate is greater than <em>g</em>[<em>j</em>].  This step is carried out via the von Neumann method, as in Proposition 1.</li>
+<li>Generate a uniformly distributed random variate, greater than 0 and less than 1, then return 1 if that variate is less than <em>&omega;</em>[<em>j</em>], or return 0 if that variate is greater than <em>g</em>[<em>j</em>].  This step is carried out via the von Neumann method, as in Proposition 1.</li>
 </ol>
 
 <p>If the algorithm didn&#39;t return a value, then by now we know that the input coin&#39;s probability of heads is neither 0 nor 1, since step 2 returned a value (either 0 or 1), which can only happen if the input coin didn&#39;t return all zeros or all ones.</p>

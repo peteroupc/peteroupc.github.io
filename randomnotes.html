@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/04/30"><meta name="citation_online_date" content="2022/04/30"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/05/08"><meta name="citation_online_date" content="2022/05/08"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -108,7 +108,7 @@ END METHOD
 
 <ul>
 <li>The sum of twelve <code>RNDRANGEMinMaxExc(0, sigma)</code> numbers, subtracted by 6 * <code>sigma</code>, to generate an approximate normal variate with mean 0 and standard deviation <code>sigma</code>. (Kabal 2000/2019)[^6] &quot;warps&quot; this sum in the following way (before adding the mean <code>mu</code>) to approximate the normal distribution better: <code>ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum</code>. See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot;</strong></a>, namely the sum of <code>n</code> many <code>RNDRANGEMinMaxExc(0, 1)</code> numbers, on Wikipedia.  D. Thomas (2014)[^7], describes a more general approximation called CLT<sub>k</sub>, which combines <code>k</code> numbers in [0, 1] sampled from the uniform distribution as follows: <code>RNDRANGEMinMaxExc(0, 1) - RNDRANGEMinMaxExc(0, 1) + RNDRANGEMinMaxExc(0, 1) - ...</code>.</li>
-<li>Numerical <a href="#Inverse_Transform_Sampling"><strong>inversions</strong></a> of the normal distribution&#39;s cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)[^8].  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.  Notice that the normal distribution&#39;s inverse CDF has no closed form.</li>
+<li>Numerical <a href="#Inverse_Transform_Sampling"><strong>inversions</strong></a> of the normal distribution&#39;s cumulative distribution function (CDF, or the probability of getting X or less at random), including those by Wichura, by Acklam, and by Luu (Luu 2016)[^8].  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
 </ul></li>
 <li>A pair of <em>q-Gaussian</em> random variates with parameter <code>q</code> less than 3 can be generated using the Box&ndash;Muller transformation, except <code>radius</code> is <code>radius=sqrt(-2*(pow(u,1-qp)-1)/(1-qp))</code> (where <code>qp=(1+q)/(3-q)</code> and <code>u=RNDRANGEMinMaxExc(0, 1)</code>), and the two variates are not statistically independent (Thistleton et al. 2007)[^9].</li>
 <li>A well-known result says that adding <code>n</code> many <code>Normal(0, 1)</code> variates, and dividing by <code>sqrt(n)</code>, results in a new <code>Normal(0, 1)</code> variate.</li>
@@ -378,12 +378,11 @@ END METHOD
 METHOD PhaseType(alpha, s)
    // Setup
    trans=GenToTrans(s)
-   rates=[]; for i in 0...size(s): AddItem(rates,-s[i][i])
    // Sampling
    state=WeightedChoice(alpha)
    ret=0
    while state&lt;size(s)
-     ret=ret+Expo(rates[state])
+     ret=ret+Expo(-s[state][state])
      state=WeightedChoice(trans[state])
    end
    return ret
@@ -468,7 +467,7 @@ METHOD MultivariateCov(mu, cov, vars)
   while i&lt;mulen
     nv=Normal(0,1)
     msum = 0
-    if mu == nothing: msum=mu[i]
+    if mu != nothing: msum=mu[i]
     for j in 0...mulen: msum=msum+vars[j]*cho[j][i]
     AddItem(ret, msum)
     i=i+1
@@ -490,7 +489,7 @@ method for generating multiple random vectors in one call.</p>
 <li>A <strong>Rice (Rician) distribution</strong> is a Beckmann distribution in which the binormal random pair is generated with <code>m1 = m2 = a / sqrt(2)</code>, <code>rho = 0</code>, and <code>s1 = s2 = b</code>, where <code>a</code> and <code>b</code> are the parameters to the Rice distribution.</li>
 <li><strong>Rice&ndash;Norton distribution</strong>: Generate <code>vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])</code> (where <code>v = a/sqrt(m*2)</code>, <code>w = b*b/m</code>, and <code>a</code>, <code>b</code>, and <code>m</code> are the parameters to the Rice&ndash;Norton distribution), then apply <code>Norm(vec)</code> to that vector.</li>
 <li>A <strong>standard</strong> <a href="https://en.wikipedia.org/wiki/Complex_normal_distribution"><strong>complex normal distribution</strong></a> is a binormal distribution in which the binormal random pair is generated with <code>s1 = s2 = sqrt(0.5)</code> and <code>mu1 = mu2 = 0</code> and treated as the real and imaginary parts of a complex number.</li>
-<li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000)[^16].</li>
+<li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>x</code>, where <code>x = GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000)[^16].</li>
 <li><strong>Multivariate exponential power distribution</strong> (Solaro 2004)[^27]: <code>MultivariateCov(mu, cov, vec)</code>, where <code>vec = RandomPointInHypersphere(m, pow(Gamma(m/s,1)*2,1.0/s))</code>, <code>m</code> is the dimension, <code>s &gt; 0</code> is a shape parameter, <code>mu</code> is the mean as an <code>m</code>-dimensional vector (<code>m</code>-item list), and <code>cov</code> is a covariance matrix.</li>
 </ol>
 </blockquote>
@@ -584,14 +583,13 @@ END METHOD
    if len(r[0])&lt;1 or len(r)!=len(s): return error
    // Setup
    trans=GenToTrans(s)
-   rates=[]; for i in 0...size(s): AddItem(rates,-s[i][i])
    ret=[]; for i in 0...size(r[0]): AddItem(ret,0)
    // Sampling
    state=WeightedChoice(alpha)
    ret=0
    while state&lt;size(s)
      rs=WeightedChoice(reward[state])
-     ret[rs]=ret[rs]+Expo(rates[state])
+     ret[rs]=ret[rs]+Expo(-s[state][state])
      state=WeightedChoice(trans[state])
    end
    return ret
@@ -599,7 +597,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> An inhomogeneous version of MPH* can be as follows: <code>[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]</code>, where <code>mph</code> is a <code>d</code>-dimensional MPH* vector and <code>G1</code>, <code>G2</code>, ..., <code>GD</code> are strictly increasing functions whose domain and range are the positive real line and whose &quot;slope&quot; is defined on the whole domain (Albrecher et al. 2022)[^21].</p>
+<p><strong>Note:</strong> An inhomogeneous version of MPH* can be as follows: <code>[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]</code>, where <code>mph</code> is a <code>d</code>-dimensional MPH* vector and <code>G1</code>, <code>G2</code>, ..., <code>GD</code> are monotone increasing functions whose domain and range are the positive real line and whose &quot;slope&quot; is defined on the whole domain (Albrecher et al. 2022)[^21].</p>
 </blockquote>
 
 <p><a id=Notes></a></p>

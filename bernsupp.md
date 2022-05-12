@@ -29,7 +29,7 @@ As a reminder, the _Bernoulli factory problem_ is: We're given a coin that shows
 
 The algorithm for [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions), described in my main article on Bernoulli factory algorithms, works by building randomized upper and lower bounds for a function _f_(_&lambda;_), based on flips of the input coin.  Roughly speaking, the algorithm works as follows:
 
-1. Generate a uniform(0, 1) random variate, _U_.
+1. Generate a random variate, _U_, uniformly distributed, greater than 0 and less than 1.
 2. Flip the input coin, then build an upper and lower bound for _f_(_&lambda;_), based on the outcomes of the flips so far.
 3. If _U_ is less than or equal to the lower bound, return 1. If _U_ is greater than the upper bound, return 0.  Otherwise, go to step 2.
 
@@ -132,7 +132,7 @@ then _f_ can be simulated using the following algorithm:
 >     - _h_(_&lambda;_) = _&lambda;_, and
 >     - _f&prime;_(_&lambda;_), the "slope" function of _f_, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,
 >
->     then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform(0, 1) random variate _u_ is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010\)[^4] \(the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
+>     then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform random variate, greater than 0 and less than 1, is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010\)[^4] \(the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
 >
 > **Examples:**
 >
@@ -531,7 +531,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
 
 [^2]: A Lipschitz continuous function on [0, 1], with constant _L_ is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are in [0, 1] and no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere" in [0, 1], and that slope is bounded wherever it's defined.
 
-[^3]: Specifically, the constant _m_ is a number equal to or greater than abs(_f_(_x_)&minus;_f_(_y_))/(abs(_x_&minus;_y_)<sup>_&alpha;_</sup>) for every _x_ in \[0, 1\] and every _y_ in \[0, 1\] such that _x_ != _y_.  However, _m_ can't directly be calculated as it would involve checking an infinite number of _x_, _y_ pairs.
+[^3]: Specifically, the constant _m_ is a number equal to or greater than abs(_f_(_x_)&minus;_f_(_y_))/(abs(_x_&minus;_y_)<sup>_&alpha;_</sup>) for every _x_ in \[0, 1\] and every _y_ in \[0, 1\] such that _x_ != _y_.  However, _m_ can't directly be calculated as it would involve checking infinitely many _x_, _y_ pairs.
 
 [^4]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.
 
@@ -626,7 +626,7 @@ Otherwise: Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0). (By condition 3, _f_(0) must be either 0 or 1.)
 3. If 1 is in the domain of _f_ and if _j_ is _n_, return _f_(1). (By condition 4, _f_(1) must be either 0 or 1.)
-4. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _a_\[_j_\] (_a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
+4. With probability _a_\[_j_\], return 1.  Otherwise, return 0. (For example, generate a uniformly distributed random variate, greater than 0 and less than 1, then return 1 if that variate is less than _a_\[_j_\], or 0 otherwise.  _a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
 
 (By the properties of the Bernstein form, _a_\[0\] will equal _f_(0) and _a_\[_n_\] will equal _f_(1) whenever 0 or 1 is in the domain of _f_, respectively.)
 
@@ -672,7 +672,7 @@ Now, let _g_\[_j_\] and _&omega;_\[_j_\] be the _j_<sup>th</sup> coefficient of 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If 0 is in the domain of _f_ and if _j_ is 0, return _g_(0) = _&omega;_(0) = 0.
 3. If 1 is in the domain of _f_ and if _j_ is _n_, return _g_(1) = _&omega;_(1) = 0.
-4. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _&omega;_\[_j_\], or return 0 if that variate is greater than _g_\[_j_\].  This step is carried out via the von Neumann method, as in Proposition 1.
+4. Generate a uniformly distributed random variate, greater than 0 and less than 1, then return 1 if that variate is less than _&omega;_\[_j_\], or return 0 if that variate is greater than _g_\[_j_\].  This step is carried out via the von Neumann method, as in Proposition 1.
 
 If the algorithm didn't return a value, then by now we know that the input coin's probability of heads is neither 0 nor 1, since step 2 returned a value (either 0 or 1), which can only happen if the input coin didn't return all zeros or all ones.
 

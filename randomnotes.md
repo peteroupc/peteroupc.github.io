@@ -78,7 +78,7 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007\)[^2], and (Malik and 
 > 2. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2016\)[^1], an improved version in (Du et al. 2021\)[^4], as well as so-called "constant-time" methods such as (Micciancio and Walter 2017\)[^5] that are used above all in _lattice-based cryptography_.
 > 3. The following are some approximations to the normal distribution that papers have suggested:
 >    - The sum of twelve `RNDRANGEMinMaxExc(0, sigma)` numbers, subtracted by 6 * `sigma`, to generate an approximate normal variate with mean 0 and standard deviation `sigma`. (Kabal 2000/2019\)[^6] "warps" this sum in the following way (before adding the mean `mu`) to approximate the normal distribution better: `ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum`. See also [**"Irwin&ndash;Hall distribution"**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution), namely the sum of `n` many `RNDRANGEMinMaxExc(0, 1)` numbers, on Wikipedia.  D. Thomas (2014\)[^7], describes a more general approximation called CLT<sub>k</sub>, which combines `k` numbers in [0, 1] sampled from the uniform distribution as follows: `RNDRANGEMinMaxExc(0, 1) - RNDRANGEMinMaxExc(0, 1) + RNDRANGEMinMaxExc(0, 1) - ...`.
->    - Numerical [**inversions**](#Inverse_Transform_Sampling) of the normal distribution's cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016\)[^8].  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
+>    - Numerical [**inversions**](#Inverse_Transform_Sampling) of the normal distribution's cumulative distribution function (CDF, or the probability of getting X or less at random), including those by Wichura, by Acklam, and by Luu (Luu 2016\)[^8].  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
 > 4. A pair of _q-Gaussian_ random variates with parameter `q` less than 3 can be generated using the Box&ndash;Muller transformation, except `radius` is `radius=sqrt(-2*(pow(u,1-qp)-1)/(1-qp))` (where `qp=(1+q)/(3-q)` and `u=RNDRANGEMinMaxExc(0, 1)`), and the two variates are not statistically independent (Thistleton et al. 2007\)[^9].
 > 5. A well-known result says that adding `n` many `Normal(0, 1)` variates, and dividing by `sqrt(n)`, results in a new `Normal(0, 1)` variate.
 
@@ -321,12 +321,11 @@ END METHOD
 METHOD PhaseType(alpha, s)
    // Setup
    trans=GenToTrans(s)
-   rates=[]; for i in 0...size(s): AddItem(rates,-s[i][i])
    // Sampling
    state=WeightedChoice(alpha)
    ret=0
    while state<size(s)
-     ret=ret+Expo(rates[state])
+     ret=ret+Expo(-s[state][state])
      state=WeightedChoice(trans[state])
    end
    return ret
@@ -406,7 +405,7 @@ The following pseudocode generates a random vector (list of numbers) that follow
       while i<mulen
         nv=Normal(0,1)
         msum = 0
-        if mu == nothing: msum=mu[i]
+        if mu != nothing: msum=mu[i]
         for j in 0...mulen: msum=msum+vars[j]*cho[j][i]
         AddItem(ret, msum)
         i=i+1
@@ -425,7 +424,7 @@ The following pseudocode generates a random vector (list of numbers) that follow
 > 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
 > 5. **Rice&ndash;Norton distribution**: Generate `vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])` (where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution), then apply `Norm(vec)` to that vector.
 > 6. A **standard** [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution) is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
-> 7. **Multivariate Linnik distribution**: Generate a multinormal random vector, then multiply each component by `GeometricStable(alpha/2.0, 1, 1)`, where `alpha` is a parameter in (0, 2] (Kozubowski 2000\)[^16].
+> 7. **Multivariate Linnik distribution**: Generate a multinormal random vector, then multiply each component by `x`, where `x = GeometricStable(alpha/2.0, 1, 1)`, where `alpha` is a parameter in (0, 2] (Kozubowski 2000\)[^16].
 > 8. **Multivariate exponential power distribution** (Solaro 2004)[^27]: `MultivariateCov(mu, cov, vec)`, where `vec = RandomPointInHypersphere(m, pow(Gamma(m/s,1)*2,1.0/s))`, `m` is the dimension, `s > 0` is a shape parameter, `mu` is the mean as an `m`-dimensional vector (`m`-item list), and `cov` is a covariance matrix.
 
 <a id=Gaussian_and_Other_Copulas></a>
@@ -503,21 +502,20 @@ METHOD MPH(alpha, s, r)
    if len(r[0])<1 or len(r)!=len(s): return error
    // Setup
    trans=GenToTrans(s)
-   rates=[]; for i in 0...size(s): AddItem(rates,-s[i][i])
    ret=[]; for i in 0...size(r[0]): AddItem(ret,0)
    // Sampling
    state=WeightedChoice(alpha)
    ret=0
    while state<size(s)
      rs=WeightedChoice(reward[state])
-     ret[rs]=ret[rs]+Expo(rates[state])
+     ret[rs]=ret[rs]+Expo(-s[state][state])
      state=WeightedChoice(trans[state])
    end
    return ret
 END METHOD
 ```
 
-> **Note:** An inhomogeneous version of MPH\* can be as follows: `[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]`, where `mph` is a `d`-dimensional MPH\* vector and `G1`, `G2`, ..., `GD` are strictly increasing functions whose domain and range are the positive real line and whose "slope" is defined on the whole domain (Albrecher et al. 2022)[^21].
+> **Note:** An inhomogeneous version of MPH\* can be as follows: `[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]`, where `mph` is a `d`-dimensional MPH\* vector and `G1`, `G2`, ..., `GD` are monotone increasing functions whose domain and range are the positive real line and whose "slope" is defined on the whole domain (Albrecher et al. 2022)[^21].
 
 <a id=Notes></a>
 ## Notes
