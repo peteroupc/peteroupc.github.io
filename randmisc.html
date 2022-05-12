@@ -36,13 +36,13 @@
 <p>Take the following sampler of a binomial(<em>n</em>, 1/2) distribution (where <em>n</em> is even), which is equivalent to the one that appeared in (Bringmann et al. 2014)[^1], and adapted to be more programmer-friendly.</p>
 
 <ol>
-<li>If <em>n</em> is less than 4, generate <em>n</em> unbiased random bits (zeros or ones) and return their sum.  Otherwise, if <em>n</em> is odd, set <em>ret</em> to the result of this algorithm with <em>n</em> = <em>n</em> &minus; 1, then add an unbiased random bit&#39;s value to <em>ret</em>, then return <em>ret</em>.</li>
+<li>If <em>n</em> is less than 4, generate <em>n</em> unbiased random bits (zeros or ones) and return their sum.  Otherwise, if <em>n</em> is odd[^2], set <em>ret</em> to the result of this algorithm with <em>n</em> = <em>n</em> &minus; 1, then add an unbiased random bit&#39;s value to <em>ret</em>, then return <em>ret</em>.</li>
 <li>Set <em>m</em> to floor(sqrt(<em>n</em>)) + 1.</li>
 <li>(First, sample from an envelope of the binomial curve.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
 <li>Set <em>s</em> to an integer in [0, <em>m</em>) chosen uniformly at random, then set <em>i</em> to <em>k</em>*<em>m</em> + <em>s</em>.</li>
 <li>Generate an unbiased random bit.  If that bit is 0, set <em>ret</em> to (<em>n</em>/2)+<em>i</em>.  Otherwise, set <em>ret</em> to (<em>n</em>/2)&minus;<em>i</em>&minus;1.</li>
 <li>(Second, accept or reject <em>ret</em>.) If <em>ret</em> &lt; 0 or <em>ret</em> &gt; <em>n</em>, go to step 3.</li>
-<li>With probability choose(<em>n</em>, <em>ret</em>)*<em>m</em>*2<sup><em>k</em>&minus;<em>n</em>&minus;2</sup>, return <em>ret</em>.  Otherwise, go to step 3. (Here, choose(<em>n</em>, <em>k</em>) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.[^2])</li>
+<li>With probability choose(<em>n</em>, <em>ret</em>)*<em>m</em>*2<sup><em>k</em>&minus;<em>n</em>&minus;2</sup>, return <em>ret</em>.  Otherwise, go to step 3. (Here, choose(<em>n</em>, <em>k</em>) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.[^3])</li>
 </ol>
 
 <p>This algorithm has an acceptance rate of 1/16 regardless of the value of <em>n</em>.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as <em>n</em> gets larger, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge&#39;s approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated, then an exponential random variate can be generated, negated, and compared with that logarithm to determine whether the step succeeds.</p>
@@ -52,10 +52,10 @@
 <ul>
 <li>(7.) Let <em>p</em> be loggamma(<em>n</em>+1)&minus;loggamma(<em>ret</em>+1)&minus;loggamma((<em>n</em>&minus;<em>ret</em>)+1)+ln(<em>m</em>)+ln(2)*(<em>k</em>&minus;<em>n</em>&minus;2) (where loggamma(<em>x</em>) is the logarithm of the gamma function).</li>
 <li>(7a.) Generate an exponential random variate with rate 1 (which is the negative natural logarithm of a uniform(0,1) random variate).  Set <em>h</em> to 0 minus that number.</li>
-<li>(7b.) If <em>h</em> is greater than <em>p</em>, go to step 3.  Otherwise, return <em>ret</em>. (This step can be replaced by calculating lower and upper bounds that converge to <em>p</em>.  In that case, go to step 3 if <em>h</em> is greater than the upper bound, or return <em>ret</em> if <em>h</em> is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)[^3].)</li>
+<li>(7b.) If <em>h</em> is greater than <em>p</em>, go to step 3.  Otherwise, return <em>ret</em>. (This step can be replaced by calculating lower and upper bounds that converge to <em>p</em>.  In that case, go to step 3 if <em>h</em> is greater than the upper bound, or return <em>ret</em> if <em>h</em> is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)[^4].)</li>
 </ul>
 
-<p>My implementation of loggamma and the natural logarithm (<a href="https://peteroupc.github.io/betadist.py"><strong>betadist.py</strong></a>) relies on so-called &quot;constructive reals&quot; as well as a fast converging version of Stirling&#39;s formula for the factorial&#39;s natural logarithm (Schumacher 2016)[^4].</p>
+<p>My implementation of loggamma and the natural logarithm (<a href="https://peteroupc.github.io/betadist.py"><strong>betadist.py</strong></a>) relies on so-called &quot;constructive reals&quot; as well as a fast converging version of Stirling&#39;s formula for the factorial&#39;s natural logarithm (Schumacher 2016)[^5].</p>
 
 <p>Also, according to the Bringmann paper, <em>m</em> can be set such that <em>m</em> is in the interval [sqrt(<em>n</em>), sqrt(<em>n</em>)+3], so I implement step 1 by starting with <em>u</em> = 2<sup>floor((1+<em>&beta;</em>(<em>n</em>))/2)</sup>, then calculating <em>v</em> = floor((<em>u</em>+floor(<em>n</em>/<em>u</em>))/2), <em>w</em> = <em>u</em>, <em>u</em> = <em>v</em>  until <em>v</em> &ge; <em>w</em>, then setting <em>m</em> to <em>w</em> + 1.  Here, <em>&beta;</em>(<em>n</em>) = ceil(ln(<em>n</em>+1)/ln(2)), or alternatively the minimum number of bits needed to store <em>n</em> (with <em>&beta;</em>(0) = 0).</p>
 
@@ -63,8 +63,8 @@
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>A binomial(<em>n</em>, 1/2) random variate, where <em>n</em> is odd, can be generated by adding an unbiased random bit&#39;s value (either zero or one with equal probability) to a binomial(<em>n</em>&minus;1, 1/2) random variate.</li>
-<li>As pointed out by Farach-Colton and Tsai (2015)[^5], a binomial(<em>n</em>, <em>p</em>) random variate, where <em>p</em> is in the interval (0, 1), can be generated using binomial(<em>n</em>, 1/2) numbers using a procedure equivalent to the following:
+<li>A binomial(<em>n</em>, 1/2) random variate, where <em>n</em> is odd[^2], can be generated by adding an unbiased random bit&#39;s value (either zero or one with equal probability) to a binomial(<em>n</em>&minus;1, 1/2) random variate.</li>
+<li>As pointed out by Farach-Colton and Tsai (2015)[^6], a binomial(<em>n</em>, <em>p</em>) random variate, where <em>p</em> is in the interval (0, 1), can be generated using binomial(<em>n</em>, 1/2) numbers using a procedure equivalent to the following:
 
 <ol>
 <li>Set <em>k</em> to 0 and <em>ret</em> to 0.</li>
@@ -78,7 +78,7 @@
 
 <h2>On a Geometric Sampler</h2>
 
-<p>The following algorithm is equivalent to the geometric(<em>px</em>/<em>py</em>) sampler that appeared in (Bringmann and Friedrich 2013)[^6], but adapted to be more programmer-friendly.  As used in that paper, a geometric(<em>p</em>) random variate expresses the number of failing trials before the first success, where each trial is independent and has success probability <em>p</em>. (Note that the terminology &quot;geometric random variate&quot; has conflicting meanings in academic works.  Note also that the algorithm uses the rational number <em>px</em>/<em>py</em>, not an arbitrary real number <em>p</em>; some of the notes in this section indicate how to adapt the algorithm to an arbitrary <em>p</em>.)</p>
+<p>The following algorithm is equivalent to the geometric(<em>px</em>/<em>py</em>) sampler that appeared in (Bringmann and Friedrich 2013)[^7], but adapted to be more programmer-friendly.  As used in that paper, a geometric(<em>p</em>) random variate expresses the number of failing trials before the first success, where each trial is independent and has success probability <em>p</em>. (Note that the terminology &quot;geometric random variate&quot; has conflicting meanings in academic works.  Note also that the algorithm uses the rational number <em>px</em>/<em>py</em>, not an arbitrary real number <em>p</em>; some of the notes in this section indicate how to adapt the algorithm to an arbitrary <em>p</em>.)</p>
 
 <ol>
 <li>Set <em>pn</em> to <em>px</em>, <em>k</em> to 0, and <em>d</em> to 0.</li>
@@ -92,7 +92,7 @@
 <ol>
 <li>Set <em>pnum</em>, <em>pden</em>, and <em>j</em>  to 1, then set <em>r</em> to 0, then set <em>qnum</em> to <em>px</em>, and <em>qden</em> to <em>py</em>, then set <em>i</em> to 2.</li>
 <li>If <em>j</em> is greater than <em>n</em>, go to step 5.</li>
-<li>If <em>j</em> is even, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> + <em>pden</em>*<em>qnum</em>*choose(<em>n</em>,<em>j</em>). Otherwise, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> &minus; <em>pden</em>*<em>qnum</em>*choose(<em>n</em>,<em>j</em>).</li>
+<li>If <em>j</em> is even[^8], set <em>pnum</em> to <em>pnum</em>*<em>qden</em> + <em>pden</em>*<em>qnum</em>*choose(<em>n</em>,<em>j</em>). Otherwise, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> &minus; <em>pden</em>*<em>qnum</em>*choose(<em>n</em>,<em>j</em>).</li>
 <li>Multiply <em>pden</em> by <em>qden</em>, then multiply <em>qnum</em> by <em>px</em>, then multiply <em>qden</em> by <em>py</em>, then add 1 to <em>j</em>.</li>
 <li>If <em>j</em> is less than or equal to 2 and less than or equal to <em>n</em>, go to step 2.</li>
 <li>Multiply <em>r</em> by 2, then add an unbiased random bit&#39;s value (either 0 or 1 with equal probability) to <em>r</em>.</li>
@@ -109,7 +109,7 @@
 <li>(Sum <em>b</em>+2 summands of the binomial equivalent of the desired probability.  First, append an additional bit to <em>m</em>, from most to least significant.) Generate an unbiased random bit (either 0 or 1 with equal probability).  If that bit is 1, add 2<sup><em>k</em>&minus;<em>b</em></sup> to <em>m</em>.</li>
 <li>(Now build up the binomial probability.) Set <em>pnum</em>, <em>pden</em>, and <em>j</em>  to 1, then set <em>qnum</em> to <em>px</em>, and <em>qden</em> to <em>py</em>.</li>
 <li>If <em>j</em> is greater than <em>m</em> or greater than <em>b</em> + 2, go to the sixth substep.</li>
-<li>If <em>j</em> is even, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> + <em>pden</em>*<em>qnum</em>*choose(<em>m</em>,<em>j</em>). Otherwise, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> &minus; <em>pden</em>*<em>qnum</em>*choose(<em>m</em>,<em>j</em>).</li>
+<li>If <em>j</em> is even[^8], set <em>pnum</em> to <em>pnum</em>*<em>qden</em> + <em>pden</em>*<em>qnum</em>*choose(<em>m</em>,<em>j</em>). Otherwise, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> &minus; <em>pden</em>*<em>qnum</em>*choose(<em>m</em>,<em>j</em>).</li>
 <li>Multiply <em>pden</em> by <em>qden</em>, then multiply <em>qnum</em> by <em>px</em>, then multiply <em>qden</em> by <em>py</em>, then add 1 to <em>j</em>, then go to the third substep.</li>
 <li>(Now check the probability.) Multiply <em>r</em> by 2, then add an unbiased random bit&#39;s value (either 0 or 1 with equal probability) to <em>r</em>.</li>
 <li>If <em>r</em> &le; floor((<em>pnum</em>*2<sup><em>b</em></sup>)/<em>pden</em>) &minus; 2, add a uniform random integer in [0, 2<sup><em>k</em>*<em>b</em></sup>) to <em>m</em> and return <em>m</em> (and, if requested, the number <em>k</em>&minus;<em>b</em>&minus;1). If <em>r</em> &ge; floor((<em>pnum</em>*2<sup><em>b</em></sup>)/<em>pden</em>) + 1, return &minus;1 (and, if requested, an arbitrary value).  If neither is the case, add 1 to <em>b</em>.</li>
@@ -158,7 +158,7 @@
 
 <p>It is relatively straightforward to adapt this algorithm for monotonically increasing PDFs with the unbounded peak at 1, or to PDFs with a different domain than [0, 1].</p>
 
-<p>This algorithm is similar to the &quot;inversion&ndash;rejection&quot; algorithm mentioned in section 4.4 of chapter 7 of Devroye&#39;s <em>Non-Uniform Random Variate Generation</em> (1986)[^3].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution has support [0, 1] (&quot;support&quot; is defined later), while the algorithm presented in this article doesn&#39;t make that assumption (for example, the interval [0, 1] can cover only part of the distribution&#39;s support).</p>
+<p>This algorithm is similar to the &quot;inversion&ndash;rejection&quot; algorithm mentioned in section 4.4 of chapter 7 of Devroye&#39;s <em>Non-Uniform Random Variate Generation</em> (1986)[^4].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution has support [0, 1] (&quot;support&quot; is defined later), while the algorithm presented in this article doesn&#39;t make that assumption (for example, the interval [0, 1] can cover only part of the distribution&#39;s support).</p>
 
 <p>By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random variate, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>.  Even so, the algorithm I have come up with in this note may be of independent interest.</p>
 
@@ -168,7 +168,7 @@
 
 <h2>Certain Families of Distributions</h2>
 
-<p>This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019)[^7], Jones (2015)[^8].</p>
+<p>This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019)[^9], Jones (2015)[^10].</p>
 
 <p>The following definitions are used:</p>
 
@@ -178,7 +178,7 @@
 <li>The <em>zero-truncated Poisson</em> distribution: To generate a random variate that follows this distribution (with parameter <em>&lambda;</em> &gt; 0), generate Poisson variates with parameter <em>&lambda;</em> until a variate other than 0 is generated this way, then take the last generated variate.</li>
 </ul>
 
-<p><strong>G families.</strong> In general, families of the form &quot;X-G&quot; (such as &quot;beta-G&quot; (Eugene et al., 2002)[^9]) use two distributions, X and G, where&mdash;</p>
+<p><strong>G families.</strong> In general, families of the form &quot;X-G&quot; (such as &quot;beta-G&quot; (Eugene et al., 2002)[^11]) use two distributions, X and G, where&mdash;</p>
 
 <ul>
 <li>X is a distribution whose support is the closed interval [0, 1], and</li>
@@ -195,14 +195,14 @@
 <p>Certain special cases of the &quot;X-G&quot; families, such as the following, use a specially designed distribution for X:</p>
 
 <ul>
-<li>The <em>exp-G</em> family (Barreto-Souza and Simas 2010/2013)[^10], where X is an exponential distribution, truncated to the interval [0, 1], with parameter <em>&lambda;</em> &ge; 0; step 1 is modified to read: &quot;Generate <em>U</em>, a uniform random variate in the interval [0, 1], then set <em>x</em> to &minus;ln((exp(&minus;<em>&lambda;</em>)&minus;1)*<em>U</em> + 1)/<em>&lambda;</em> if <em>&lambda;</em> != 0, and <em>U</em> otherwise.&quot; (The <em>alpha power</em> or <em>alpha power transformed</em> family (Mahdavi and Kundu 2017)[^11] uses the same distribution for X, but with <em>&lambda;</em>=&minus;ln(<em>&alpha;</em>) where <em>&alpha;</em> is in (0, 1]; see also Jones (2018)[^12].)</li>
-<li>The <em>exponentiated</em> family (Mudholkar and Srivastava 1993)[^13]. The family uses a shape parameter <em>a</em> &gt; 1; step 1 is modified to read: &quot;Generate <em>u</em>, a uniform random variate in the interval [0, 1], then set <em>x</em> to <em>u</em><sup>1/<em>a</em></sup>.&quot;</li>
-<li>The <em>transmuted-G</em> family (Shaw and Buckley 2007)[^14]. The family uses a shape parameter <em>&eta;</em> in the interval [&minus;1, 1]; step 1 is modified to read: &quot;Generate a piecewise linear random variate in [0, 1] with weight 1&minus;<em>&eta;</em> at 0 and weight 1+<em>&eta;</em> at 1, call the number <em>x</em>. (It can be generated as follows, see also (Devroye 1986, p. 71-72)[^3]: With probability min(1&minus;<em>&eta;</em>, 1+<em>&eta;</em>), generate <em>x</em>, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set <em>x</em> to the higher of the two, then if <em>&eta;</em> is less than 0, set <em>x</em> to 1&minus;<em>x</em>.)&quot;. ((Granzotto et al. 2017)[^15] mentions the same distribution, but with a parameter <em>&lambda;</em> = <em>&eta;</em> + 1 lying in the interval [0, 2].)</li>
-<li>A <em>cubic rank transmuted</em> distribution (Granzotto et al. 2017)[^15] uses parameters <em>&lambda;</em><sub>0</sub> and <em>&lambda;</em><sub>1</sub> in the interval [0, 1]; step 1 is modified to read: &quot;Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: [<em>&lambda;</em><sub>0</sub>, <em>&lambda;</em><sub>1</sub>, 3&minus;<em>&lambda;</em><sub>0</sub>&minus;<em>&lambda;</em><sub>1</sub>].  Then set <em>x</em> to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively.&quot;</li>
+<li>The <em>exp-G</em> family (Barreto-Souza and Simas 2010/2013)[^12], where X is an exponential distribution, truncated to the interval [0, 1], with parameter <em>&lambda;</em> &ge; 0; step 1 is modified to read: &quot;Generate <em>U</em>, a uniform random variate in the interval [0, 1], then set <em>x</em> to &minus;ln((exp(&minus;<em>&lambda;</em>)&minus;1)*<em>U</em> + 1)/<em>&lambda;</em> if <em>&lambda;</em> != 0, and <em>U</em> otherwise.&quot; (The <em>alpha power</em> or <em>alpha power transformed</em> family (Mahdavi and Kundu 2017)[^13] uses the same distribution for X, but with <em>&lambda;</em>=&minus;ln(<em>&alpha;</em>) where <em>&alpha;</em> is in (0, 1]; see also Jones (2018)[^14].)</li>
+<li>The <em>exponentiated</em> family (Mudholkar and Srivastava 1993)[^15]. The family uses a shape parameter <em>a</em> &gt; 1; step 1 is modified to read: &quot;Generate <em>u</em>, a uniform random variate in the interval [0, 1], then set <em>x</em> to <em>u</em><sup>1/<em>a</em></sup>.&quot;</li>
+<li>The <em>transmuted-G</em> family (Shaw and Buckley 2007)[^16]. The family uses a shape parameter <em>&eta;</em> in the interval [&minus;1, 1]; step 1 is modified to read: &quot;Generate a piecewise linear random variate in [0, 1] with weight 1&minus;<em>&eta;</em> at 0 and weight 1+<em>&eta;</em> at 1, call the number <em>x</em>. (It can be generated as follows, see also (Devroye 1986, p. 71-72)[^4]: With probability min(1&minus;<em>&eta;</em>, 1+<em>&eta;</em>), generate <em>x</em>, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set <em>x</em> to the higher of the two, then if <em>&eta;</em> is less than 0, set <em>x</em> to 1&minus;<em>x</em>.)&quot;. ((Granzotto et al. 2017)[^17] mentions the same distribution, but with a parameter <em>&lambda;</em> = <em>&eta;</em> + 1 lying in the interval [0, 2].)</li>
+<li>A <em>cubic rank transmuted</em> distribution (Granzotto et al. 2017)[^17] uses parameters <em>&lambda;</em><sub>0</sub> and <em>&lambda;</em><sub>1</sub> in the interval [0, 1]; step 1 is modified to read: &quot;Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: [<em>&lambda;</em><sub>0</sub>, <em>&lambda;</em><sub>1</sub>, 3&minus;<em>&lambda;</em><sub>0</sub>&minus;<em>&lambda;</em><sub>1</sub>].  Then set <em>x</em> to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively.&quot;</li>
 <li>Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: &quot;Generate a uniform random variate <em>x</em> in [0, 1], then with probability (1&minus;<em>x</em><sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process.&quot;; or &quot;Create a uniform PSRN <em>x</em> with positive sign and integer part 0, then run <strong>SampleGeometricBag</strong> on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process.&quot;</li>
 </ul>
 
-<p><strong>Transformed&ndash;transformer family.</strong> In fact, the &quot;X-G&quot; families are a special case of the so-called &quot;transformed&ndash;transformer&quot; family of distributions introduced by Alzaatreh et al. (2013)[^16] that uses two distributions, X and G, where X (the &quot;transformed&quot;) is an arbitrary distribution with a PDF; G (the &quot;transformer&quot;) is a distribution with an easy-to-compute quantile function; and <em>W</em> is a nondecreasing function that, among other conditions, maps a number in [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:</p>
+<p><strong>Transformed&ndash;transformer family.</strong> In fact, the &quot;X-G&quot; families are a special case of the so-called &quot;transformed&ndash;transformer&quot; family of distributions introduced by Alzaatreh et al. (2013)[^18] that uses two distributions, X and G, where X (the &quot;transformed&quot;) is an arbitrary distribution with a PDF; G (the &quot;transformer&quot;) is a distribution with an easy-to-compute quantile function; and <em>W</em> is a nondecreasing function that, among other conditions, maps a number in [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:</p>
 
 <ol>
 <li>Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
@@ -212,37 +212,37 @@
 <p>The following are special cases of the &quot;transformed&ndash;transformer&quot; family:</p>
 
 <ul>
-<li>The &quot;T-R{<em>Y</em>}&quot; family (Aljarrah et al., 2014)[^17], in which <em>T</em> is an arbitrary distribution with a PDF (X in the algorithm above), <em>R</em> is a distribution with an easy-to-compute quantile function (G in the algorithm above), and <em>W</em> is the quantile function for the distribution <em>Y</em>, whose support must contain the support of <em>T</em> (so that <em>W</em><sup>&minus;1</sup>(<em>x</em>) is the cumulative distribution function for <em>Y</em>, or the probability that a <em>Y</em>-distributed number is <em>x</em> or less).</li>
+<li>The &quot;T-R{<em>Y</em>}&quot; family (Aljarrah et al., 2014)[^19], in which <em>T</em> is an arbitrary distribution with a PDF (X in the algorithm above), <em>R</em> is a distribution with an easy-to-compute quantile function (G in the algorithm above), and <em>W</em> is the quantile function for the distribution <em>Y</em>, whose support must contain the support of <em>T</em> (so that <em>W</em><sup>&minus;1</sup>(<em>x</em>) is the cumulative distribution function for <em>Y</em>, or the probability that a <em>Y</em>-distributed number is <em>x</em> or less).</li>
 <li>Several versions of <em>W</em> have been proposed for the case when distribution X&#39;s support is [0, &infin;), such as the Rayleigh and gamma distributions.  They include:
 
 <ul>
 <li><em>W</em>(<em>x</em>) = &minus;ln(1&minus;<em>x</em>) (<em>W</em><sup>&minus;1</sup>(<em>x</em>) = 1&minus;exp(&minus;<em>x</em>)).  Suggested in the original paper by Alzaatreh et al.</li>
-<li><em>W</em>(<em>x</em>) = <em>x</em>/(1&minus;<em>x</em>) (<em>W</em><sup>&minus;1</sup>(<em>x</em>) = <em>x</em>/(1+<em>x</em>)).  Suggested in the original paper by Alzaatreh et al.  This choice forms the so-called &quot;odd X G&quot; family, and one example is the &quot;odd log-logistic G&quot; family (Gleaton and Lynch 2006)[^18].</li>
+<li><em>W</em>(<em>x</em>) = <em>x</em>/(1&minus;<em>x</em>) (<em>W</em><sup>&minus;1</sup>(<em>x</em>) = <em>x</em>/(1+<em>x</em>)).  Suggested in the original paper by Alzaatreh et al.  This choice forms the so-called &quot;odd X G&quot; family, and one example is the &quot;odd log-logistic G&quot; family (Gleaton and Lynch 2006)[^20].</li>
 </ul></li>
 </ul>
 
-<p>Many special cases of the &quot;transformed&ndash;transformer&quot; family have been proposed in many papers, and usually their names suggest the distributions that make up this family.  Some members of the &quot;odd X G&quot; family have names that begin with the word &quot;generalized&quot;, and in most such cases this corresponds to <em>W</em><sup>&minus;1</sup>(<em>x</em>) = (<em>x</em>/(1+<em>x</em>))<sup>1/<em>a</em></sup>, where <em>a</em> &gt; 0 is a shape parameter; examples include the &quot;generalized odd gamma-G&quot; family (Hosseini et al. 2018)[^19].</p>
+<p>Many special cases of the &quot;transformed&ndash;transformer&quot; family have been proposed in many papers, and usually their names suggest the distributions that make up this family.  Some members of the &quot;odd X G&quot; family have names that begin with the word &quot;generalized&quot;, and in most such cases this corresponds to <em>W</em><sup>&minus;1</sup>(<em>x</em>) = (<em>x</em>/(1+<em>x</em>))<sup>1/<em>a</em></sup>, where <em>a</em> &gt; 0 is a shape parameter; examples include the &quot;generalized odd gamma-G&quot; family (Hosseini et al. 2018)[^21].</p>
 
 <p>A family very similar to the &quot;transformed&ndash;transformer&quot; family uses a <em>decreasing</em> <em>W</em>.</p>
 
 <ul>
-<li>When distribution X&#39;s support is [0, &infin;), one such <em>W</em> that has been proposed is <em>W</em>(<em>x</em>) = &minus;ln(<em>x</em>) (<em>W</em><sup>&minus;1</sup>(<em>x</em>) = exp(&minus;<em>x</em>); examples include the &quot;Rayleigh-G&quot; family or &quot;Rayleigh&ndash;Rayleigh&quot; distribution (Al Noor and Assi 2020)[^20], as well as the &quot;generalized gamma-G&quot; family, where &quot;generalized gamma&quot; refers to the Stacy distribution (Boshi et al. 2020)[^21]).</li>
+<li>When distribution X&#39;s support is [0, &infin;), one such <em>W</em> that has been proposed is <em>W</em>(<em>x</em>) = &minus;ln(<em>x</em>) (<em>W</em><sup>&minus;1</sup>(<em>x</em>) = exp(&minus;<em>x</em>); examples include the &quot;Rayleigh-G&quot; family or &quot;Rayleigh&ndash;Rayleigh&quot; distribution (Al Noor and Assi 2020)[^22], as well as the &quot;generalized gamma-G&quot; family, where &quot;generalized gamma&quot; refers to the Stacy distribution (Boshi et al. 2020)[^23]).</li>
 </ul>
 
 <p><strong>Minimums, maximums, and sums.</strong> Some distributions are described as a minimum, maximum, or sum of <em>N</em> independent random variates distributed as <em>X</em>, where <em>N</em> &ge; 1 is an independent integer distributed as the discrete distribution <em>Y</em>.</p>
 
 <ul>
-<li>Tahir and Cordeiro (2016)[^22] calls a distribution of minimums a <em>compound distribution</em>, and a distribution of maximums a <em>complementary compound distribution</em>.</li>
-<li>Pérez-Casany et al. (2016)[^23] calls a distribution of minimums or of maximums a <em>random-stopped extreme distribution</em>.</li>
-<li>Let <em>S</em> be a sum of <em>N</em> variates as described above.  Then Amponsah et al. (2021)[^24] describe the distribution of (<em>S</em>, <em>N</em>), a two-variable random variate often called an <em>episode</em>.</li>
-<li>A distribution of sums can be called a <em>stopped-sum distribution</em> (Johnson et al. 2005)[^25]. (In this case, <em>N</em> can be 0 so that <em>N</em> &ge; 0 is an integer distributed as <em>Y</em>.)</li>
+<li>Tahir and Cordeiro (2016)[^24] calls a distribution of minimums a <em>compound distribution</em>, and a distribution of maximums a <em>complementary compound distribution</em>.</li>
+<li>Pérez-Casany et al. (2016)[^25] calls a distribution of minimums or of maximums a <em>random-stopped extreme distribution</em>.</li>
+<li>Let <em>S</em> be a sum of <em>N</em> variates as described above.  Then Amponsah et al. (2021)[^26] describe the distribution of (<em>S</em>, <em>N</em>), a two-variable random variate often called an <em>episode</em>.</li>
+<li>A distribution of sums can be called a <em>stopped-sum distribution</em> (Johnson et al. 2005)[^27]. (In this case, <em>N</em> can be 0 so that <em>N</em> &ge; 0 is an integer distributed as <em>Y</em>.)</li>
 </ul>
 
-<p>A variate following a distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021)[^26]:</p>
+<p>A variate following a distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021)[^28]:</p>
 
 <ol>
 <li>Generate a uniform random variate in (0, 1). (Or generate a uniform PSRN with integer part 0, positive sign, and empty fractional part.)  Call the number <em>x</em>.</li>
-<li>For minimums, calculate the quantile for <em>X</em> of 1&minus;<em>W</em><sup>&minus;1</sup>(<em>x</em>) (where <em>W</em><sup>&minus;1</sup>(.) is the inverse of <em>Y</em>&#39;s probability generating function), and return that quantile.[^27] (If <em>x</em> is a uniform PSRN, see &quot;Random Variate Generation via Quantiles&quot;, later.  <em>Y</em>&#39;s probability generating function is <em>W</em>(<em>z</em>) = <em>a</em>[0]*<em>z</em><sup>0</sup> + <em>a</em>[1]*<em>z</em><sup>1</sup> + ..., where 0 &lt; <em>z</em> &lt; 1 and <em>a</em>[<em>i</em>] is the probability that a <em>Y</em>-distributed variate equals <em>i</em>.  See example below.)</li>
+<li>For minimums, calculate the quantile for <em>X</em> of 1&minus;<em>W</em><sup>&minus;1</sup>(<em>x</em>) (where <em>W</em><sup>&minus;1</sup>(.) is the inverse of <em>Y</em>&#39;s probability generating function), and return that quantile.[^29] (If <em>x</em> is a uniform PSRN, see &quot;Random Variate Generation via Quantiles&quot;, later.  <em>Y</em>&#39;s probability generating function is <em>W</em>(<em>z</em>) = <em>a</em>[0]*<em>z</em><sup>0</sup> + <em>a</em>[1]*<em>z</em><sup>1</sup> + ..., where 0 &lt; <em>z</em> &lt; 1 and <em>a</em>[<em>i</em>] is the probability that a <em>Y</em>-distributed variate equals <em>i</em>.  See example below.)</li>
 <li>For maximums, calculate the quantile for <em>X</em> of <em>W</em><sup>&minus;1</sup>(<em>x</em>), and return that quantile.</li>
 </ol>
 
@@ -258,37 +258,37 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Geometric zero-truncated Poisson (Akdoğan et al., 2020)[^28].</td>
+<td>Geometric zero-truncated Poisson (Akdoğan et al., 2020)[^30].</td>
 <td>Maximums.</td>
 <td>1 plus the number of failures before the first success, with each success having the same probability.</td>
 <td>Zero-truncated Poisson.</td>
 </tr>
 <tr>
-<td>GMDP(<em>&alpha;</em>, <em>&beta;</em>, <em>&delta;</em>, <em>p</em>) (Amponsah et al. 2021)[^24] (<em>&alpha;</em>&gt;0, <em>&beta;</em>&gt;0, <em>&delta;</em>&gt;0, 0&lt;<em>p</em>&lt;1).</td>
+<td>GMDP(<em>&alpha;</em>, <em>&beta;</em>, <em>&delta;</em>, <em>p</em>) (Amponsah et al. 2021)[^26] (<em>&alpha;</em>&gt;0, <em>&beta;</em>&gt;0, <em>&delta;</em>&gt;0, 0&lt;<em>p</em>&lt;1).</td>
 <td>(<em>S</em>, <em>N</em>) episodes.</td>
 <td>Gamma(<em>&alpha;</em>) variate divided by <em>&beta;</em>.</td>
 <td>Discrete Pareto(<em>&delta;</em>, <em>p</em>) (see &quot;Certain Distributions&quot;).</td>
 </tr>
 <tr>
-<td>Bivariate gamma geometric(<em>&alpha;</em>, <em>&beta;</em>, <em>p</em>) (Barreto-Souza 2012)[^29] (<em>&alpha;</em>&gt;0, <em>&beta;</em>&gt;0, 0&lt;<em>p</em>&lt;1).</td>
+<td>Bivariate gamma geometric(<em>&alpha;</em>, <em>&beta;</em>, <em>p</em>) (Barreto-Souza 2012)[^31] (<em>&alpha;</em>&gt;0, <em>&beta;</em>&gt;0, 0&lt;<em>p</em>&lt;1).</td>
 <td>(<em>S</em>, <em>N</em>) episodes.</td>
 <td>Gamma(<em>&alpha;</em>) variate divided by <em>&beta;</em>.</td>
 <td>1 plus the number of failures before the first success, with each success having probability <em>p</em>.</td>
 </tr>
 <tr>
-<td>Exponential Poisson (Kuş 2007)[^30].</td>
+<td>Exponential Poisson (Kuş 2007)[^32].</td>
 <td>Minimums.</td>
 <td>Exponential.</td>
 <td>Zero-truncated Poisson.</td>
 </tr>
 <tr>
-<td>Poisson exponential (Cancho et al. 2011)[^31].</td>
+<td>Poisson exponential (Cancho et al. 2011)[^33].</td>
 <td>Maximums.</td>
 <td>Exponential.</td>
 <td>Zero-truncated Poisson.</td>
 </tr>
 <tr>
-<td>Right-truncated Weibull(<em>a</em>, <em>b</em>, <em>c</em>) (Jodrá 2020)[^32] (<em>a</em>, <em>b</em>, and <em>c</em> are greater than 0).</td>
+<td>Right-truncated Weibull(<em>a</em>, <em>b</em>, <em>c</em>) (Jodrá 2020)[^34] (<em>a</em>, <em>b</em>, and <em>c</em> are greater than 0).</td>
 <td>Minimums.</td>
 <td>Power function(<em>b</em>, <em>c</em>).</td>
 <td>Zero-truncated Poisson(<em>a</em>*<em>c</em><sup><em>b</em></sup>).</td>
@@ -297,19 +297,19 @@
 
 <p><strong>Example:</strong> If <em>Y</em> is zero-truncated Poisson with parameter <em>&lambda;</em>, its probability generating function is $W(z)=\frac{1-\exp(z\lambda)}{1-\exp(\lambda)}$, and solving for <em>x</em> leads to its inverse: $W^{-1}(x)=\ln(1-x+x\times\exp(\lambda))/\lambda$.</p>
 
-<p><strong>Note:</strong> Bivariate exponential geometric (Barreto-Souza 2012)[^29] is a special case of bivariate gamma geometric with <em>&alpha;</em>=1.</p>
+<p><strong>Note:</strong> Bivariate exponential geometric (Barreto-Souza 2012)[^31] is a special case of bivariate gamma geometric with <em>&alpha;</em>=1.</p>
 </blockquote>
 
-<p><strong>Inverse distributions.</strong> An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of 1 divided by a random variate distributed as <em>X</em>.  For example, an <em>inverse exponential</em> random variate (Keller and Kamath 1982)[^33] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(<em>U</em>) where <em>U</em> is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter <em>&theta;</em> &gt; 0.</p>
+<p><strong>Inverse distributions.</strong> An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of 1 divided by a random variate distributed as <em>X</em>.  For example, an <em>inverse exponential</em> random variate (Keller and Kamath 1982)[^35] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(<em>U</em>) where <em>U</em> is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter <em>&theta;</em> &gt; 0.</p>
 
-<p><strong>Weighted distributions.</strong> A <em>weighted X distribution</em> uses a distribution X and a weight function <em>w</em>(<em>x</em>) whose values lie in [0, 1] everywhere in X&#39;s support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)[^3]):</p>
+<p><strong>Weighted distributions.</strong> A <em>weighted X distribution</em> uses a distribution X and a weight function <em>w</em>(<em>x</em>) whose values lie in [0, 1] everywhere in X&#39;s support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)[^4]):</p>
 
 <ol>
 <li>Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
 <li>With probability <em>w</em>(<em>x</em>), return <em>x</em>.  Otherwise, go to step 1.</li>
 </ol>
 
-<p>Some weighted distributions allow any weight function <em>w</em>(<em>x</em>) whose values are non-negative everywhere in X&#39;s support (Rao 1985)[^34].  (If <em>w</em>(<em>x</em>) = <em>x</em>, the distribution is often called a <em>length-biased</em> or <em>size-biased distribution</em>; if <em>w</em>(<em>x</em>) = <em>x</em><sup>2</sup>, <em>area-biased</em>.)  Their PDFs are proportional to the original PDFs multiplied by <em>w</em>(<em>x</em>).</p>
+<p>Some weighted distributions allow any weight function <em>w</em>(<em>x</em>) whose values are non-negative everywhere in X&#39;s support (Rao 1985)[^36].  (If <em>w</em>(<em>x</em>) = <em>x</em>, the distribution is often called a <em>length-biased</em> or <em>size-biased distribution</em>; if <em>w</em>(<em>x</em>) = <em>x</em><sup>2</sup>, <em>area-biased</em>.)  Their PDFs are proportional to the original PDFs multiplied by <em>w</em>(<em>x</em>).</p>
 
 <p><strong>Inflated distributions.</strong> To generate an <em>inflated X</em> (also called <em>c-inflated X</em> or <em>c-adjusted X</em>) random variate with parameters <em>c</em> and <em>&alpha;</em>, generate&mdash;</p>
 
@@ -318,7 +318,7 @@
 <li>a random variate distributed as X otherwise.</li>
 </ul>
 
-<p>For example, a <em>zero-inflated beta</em> random variate is 0 with probability <em>&alpha;</em> and a beta random variate otherwise (the parameter <em>c</em> is 0) (Ospina and Ferrari 2010)[^35]  A zero-and-one inflated X distribution is 0 or 1 with probability <em>&alpha;</em> and distributed as X otherwise.  For example, to generate a <em>zero-and-one-inflated unit Lindley</em> random variate (with parameters <em>&alpha;</em>, <em>&theta;</em>, and <em>p</em>) (Chakraborty and Bhattacharjee 2021)[^36]:</p>
+<p>For example, a <em>zero-inflated beta</em> random variate is 0 with probability <em>&alpha;</em> and a beta random variate otherwise (the parameter <em>c</em> is 0) (Ospina and Ferrari 2010)[^37]  A zero-and-one inflated X distribution is 0 or 1 with probability <em>&alpha;</em> and distributed as X otherwise.  For example, to generate a <em>zero-and-one-inflated unit Lindley</em> random variate (with parameters <em>&alpha;</em>, <em>&theta;</em>, and <em>p</em>) (Chakraborty and Bhattacharjee 2021)[^38]:</p>
 
 <ol>
 <li>With probability <em>&alpha;</em>, return a number that is 0 with probability <em>p</em> and 1 otherwise.</li>
@@ -326,10 +326,10 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> A zero-inflated X distribution where X takes on 0 with probability 0 is also called a <em>hurdle distribution</em> (Mullahy 1986)[^37].</p>
+<p><strong>Note:</strong> A zero-inflated X distribution where X takes on 0 with probability 0 is also called a <em>hurdle distribution</em> (Mullahy 1986)[^39].</p>
 </blockquote>
 
-<p><strong>Unit distributions.</strong> To generate a <em>unit X</em> random variate (where X is a distribution whose support is the positive real line), generate a random variate distributed as X, call it <em>x</em>, then return exp(&minus;<em>x</em>) or 1 &minus;exp(&minus;<em>x</em>) (also known as &quot;Type I&quot; or &quot;Type II&quot;, respectively).  For example, a unit gamma distribution is also known as the <em>Grassia distribution</em> (Grassia 1977)[^38].</p>
+<p><strong>Unit distributions.</strong> To generate a <em>unit X</em> random variate (where X is a distribution whose support is the positive real line), generate a random variate distributed as X, call it <em>x</em>, then return exp(&minus;<em>x</em>) or 1 &minus;exp(&minus;<em>x</em>) (also known as &quot;Type I&quot; or &quot;Type II&quot;, respectively).  For example, a unit gamma distribution is also known as the <em>Grassia distribution</em> (Grassia 1977)[^40].</p>
 
 <p><strong>CDF&ndash;quantile family.</strong> Given two distributions X and Y (which can be the same), a location parameter <em>&mu;</em> &ge; 0, and a dispersion parameter <em>&sigma;</em>&gt;0, a variate from this family of distributions can be generated as follows (Smithson and Shou 2019)[^42]:</p>
 
@@ -371,12 +371,12 @@
 <td><em>a</em> &gt; 0, <em>c</em> &gt; 0.</td>
 </tr>
 <tr>
-<td>Lehmann Weibull(<em>a1</em>, <em>a2</em>, <em>&beta;</em>) (Elgohari and Yousof 2020)[^39].</td>
+<td>Lehmann Weibull(<em>a1</em>, <em>a2</em>, <em>&beta;</em>) (Elgohari and Yousof 2020)[^41].</td>
 <td>(ln(1/<em>U</em>)/<em>&beta;</em>)<sup>1/<em>a1</em></sup>/<em>a2</em> or <em>E</em><sup>1/<em>a1</em></sup>/<em>a2</em></td>
 <td><em>a1</em>, <em>a2</em>, <em>&beta;</em> &gt; 0. <em>E</em> is exponential with rate <em>&beta;</em>.</td>
 </tr>
 <tr>
-<td>Marshall&ndash;Olkin(<em>&alpha;</em>) (Marshall and Olkin 1997)[^40]</td>
+<td>Marshall&ndash;Olkin(<em>&alpha;</em>) (Marshall and Olkin 1997)[^42]</td>
 <td>(1&minus;<em>U</em>)/(<em>U</em>*(<em>&alpha;</em>&minus;1) + 1).</td>
 <td><em>&alpha;</em> in [0, 1].</td>
 </tr>
@@ -386,7 +386,7 @@
 <td><em>&alpha;</em> &gt; 0.</td>
 </tr>
 <tr>
-<td>Power Lomax(<em>&alpha;</em>, <em>&beta;</em>) (Rady et al. 2016)[^41].</td>
+<td>Power Lomax(<em>&alpha;</em>, <em>&beta;</em>) (Rady et al. 2016)[^43].</td>
 <td><em>L</em><sup>1/<em>&beta;</em></sup></td>
 <td><em>&beta;</em> &gt; 0; <em>L</em> is Lomax(<em>&alpha;</em>).</td>
 </tr>
@@ -396,37 +396,37 @@
 <td><em>&alpha;</em> &gt; 0.</td>
 </tr>
 <tr>
-<td>Bell&ndash;Touchard(<em>a</em>, <em>b</em>) (Castellares et al. 2020)[^42].</td>
-<td>Sum of <em>N</em> zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is Poisson with parameter <em>b</em>*exp(<em>a</em>)&minus;<em>b</em>.[^43]</td>
+<td>Bell&ndash;Touchard(<em>a</em>, <em>b</em>) (Castellares et al. 2020)[^44].</td>
+<td>Sum of <em>N</em> zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is Poisson with parameter <em>b</em>*exp(<em>a</em>)&minus;<em>b</em>.[^45]</td>
 <td><em>a</em>&gt;0, <em>b</em>&gt;0.</td>
 </tr>
 <tr>
-<td>Bell(<em>a</em>) (Castellares et al. 2020)[^42].</td>
+<td>Bell(<em>a</em>) (Castellares et al. 2020)[^44].</td>
 <td>Bell&ndash;Touchard(<em>a</em>, 0).</td>
 <td><em>a</em>&gt;0.</td>
 </tr>
 <tr>
-<td>Discrete Pareto(<em>&delta;</em>, <em>p</em>) (Buddana and Kozubowski 2014)[^44]</td>
+<td>Discrete Pareto(<em>&delta;</em>, <em>p</em>) (Buddana and Kozubowski 2014)[^46]</td>
 <td>1 plus the number of failures before the first success, with each success having probability 1&minus;exp(&minus;<em>Z</em>), where <em>Z</em> is a gamma(1/<em>&delta;</em>) variate times &minus;<em>&delta;</em>*ln(1&minus;<em>p</em>).</td>
 <td><em>&delta;</em> &gt; 0, and 0&lt;<em>p</em>&lt;1.</td>
 </tr>
 <tr>
-<td>Neyman type A(<em>&delta;</em>, <em>&tau;</em>) (Batsidis and Lemonte 2021)[^45]</td>
+<td>Neyman type A(<em>&delta;</em>, <em>&tau;</em>) (Batsidis and Lemonte 2021)[^47]</td>
 <td>Bell&ndash;Touchard(<em>&tau;</em>, <em>&delta;</em>*exp(&minus;<em>&tau;</em>)).</td>
 <td><em>&delta;</em>&gt;0, <em>&tau;</em>&gt;0.</td>
 </tr>
 <tr>
-<td>Gamma exponential (Kudryavtsev 2019)[^46].</td>
+<td>Gamma exponential (Kudryavtsev 2019)[^48].</td>
 <td><em>&delta;</em>*Gamma(<em>t</em>)<sup>1/<em>&nu;</em></sup>/Gamma(<em>s</em>)<sup><em>r</em>/<em>&nu;</em></sup>, where Gamma(<em>x</em>) is a gamma(<em>x</em>) variate.</td>
 <td>0 &le; <em>r</em> &lt; 1; <em>&nu;</em> &ne; 0; <em>s</em>&gt;0; <em>t</em>&gt;0; <em>&delta;</em>&gt;0.</td>
 </tr>
 <tr>
-<td>Extended xgamma (Saha et al. 2019)[^47]</td>
+<td>Extended xgamma (Saha et al. 2019)[^49]</td>
 <td>Gamma(<em>&alpha;</em> + <em>c</em>) variate divided by <em>&theta;</em>, where <em>c</em> is either 0 with probability <em>&theta;</em>/(<em>&theta;</em>+<em>&beta;</em>), or 2 otherwise.</td>
 <td><em>&theta;</em>&gt;0, <em>&alpha;</em>&gt;0, <em>&beta;</em> &ge; 0.</td>
 </tr>
 <tr>
-<td>Generalized Pareto(<em>a</em>, <em>b</em>) (McNeil et al. 2010)[^48]</td>
+<td>Generalized Pareto(<em>a</em>, <em>b</em>) (McNeil et al. 2010)[^50]</td>
 <td><em>a</em>*((1/(1&minus;<em>U</em>))<sup><em>b</em></sup>&minus;1)/<em>b</em>.</td>
 <td><em>a</em>&gt;0; <em>b</em>&gt;0.</td>
 </tr>
@@ -436,7 +436,7 @@
 
 <h2>Batching Random Samples via Randomness Extraction</h2>
 
-<p>Devroye and Gravel (2020)[^49] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits to produce a specific output <em>Y</em> (or <em>P</em>(<em>X</em> | <em>Y</em>) for short):</p>
+<p>Devroye and Gravel (2020)[^51] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits to produce a specific output <em>Y</em> (or <em>P</em>(<em>X</em> | <em>Y</em>) for short):</p>
 
 <ol>
 <li>Start with the interval [0, 1].</li>
@@ -446,7 +446,7 @@
 
 <p>After a sampling method produces an output <em>Y</em>, both <em>X</em> (the number of random bits the sampler consumed) and <em>Y</em> (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Notice that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)</p>
 
-<p>The issue of finding <em>P</em>(<em>X</em> | <em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)[^50], <em>P</em>(<em>X</em> | <em>Y</em>) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled <em>Y</em> up to depth <em>X</em> (where the weight for depth <em>z</em> is 1/2<sup><em>z</em></sup>), then divide it by a weighted count of all leaves labeled <em>Y</em> at all depths (for instance, if the tree has two leaves labeled <em>Y</em> at <em>z</em>=2, three at <em>z</em>=3, and three at <em>z</em>=4, and <em>X</em> is 3, then <em>P</em>(<em>X</em> | <em>Y</em>) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled <em>Y</em> at every depth, this is implemented by finding <em>P</em>(<em>Y</em>), or the probability to output <em>Y</em>, then chopping <em>P</em>(<em>Y</em>) up to the <em>X</em><sup>th</sup> binary digit after the point and dividing by the original <em>P</em>(<em>Y</em>) (for instance, if <em>X</em> is 4 and P(<em>Y</em>) is 0.101011..., then <em>P</em>(<em>X</em> | <em>Y</em>) is 0.1010 / 0.101011...).</p>
+<p>The issue of finding <em>P</em>(<em>X</em> | <em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)[^52], <em>P</em>(<em>X</em> | <em>Y</em>) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled <em>Y</em> up to depth <em>X</em> (where the weight for depth <em>z</em> is 1/2<sup><em>z</em></sup>), then divide it by a weighted count of all leaves labeled <em>Y</em> at all depths (for instance, if the tree has two leaves labeled <em>Y</em> at <em>z</em>=2, three at <em>z</em>=3, and three at <em>z</em>=4, and <em>X</em> is 3, then <em>P</em>(<em>X</em> | <em>Y</em>) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled <em>Y</em> at every depth, this is implemented by finding <em>P</em>(<em>Y</em>), or the probability to output <em>Y</em>, then chopping <em>P</em>(<em>Y</em>) up to the <em>X</em><sup>th</sup> binary digit after the point and dividing by the original <em>P</em>(<em>Y</em>) (for instance, if <em>X</em> is 4 and P(<em>Y</em>) is 0.101011..., then <em>P</em>(<em>X</em> | <em>Y</em>) is 0.1010 / 0.101011...).</p>
 
 <p>Unfortunately, <em>P</em>(<em>X</em> | <em>Y</em>) is not easy to calculate when the number of values <em>Y</em> can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes <em>bits</em> as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor (see &quot;<a href="https://peteroupc.github.io/randextract.html"><strong>Notes on Randomness Extraction</strong></a>&quot;).  The algorithm counts the number of bits it consumes (<em>X</em>) to produce an output, then feeds <em>X</em> to the extractor as follows.</p>
 
@@ -471,7 +471,7 @@
 <li>Let <em>&beta;</em> be the digit base of digits in <em>x</em>&#39;s fractional part (such as 2 for binary).</li>
 </ul>
 
-<p>Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of <em>&epsilon;</em> with probability 1 (see (Devroye and Gravel 2020)[^49]):</p>
+<p>Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of <em>&epsilon;</em> with probability 1 (see (Devroye and Gravel 2020)[^51]):</p>
 
 <ol>
 <li>Generate additional digits of <em>x</em> uniformly at random&mdash;thus shortening the interval [<em>a</em>, <em>b</em>]&mdash;until a lower bound of <em>Q</em>(<em>f</em>(<em>a</em>)) and an upper bound of <em>Q</em>(<em>f</em>(<em>b</em>)) differ by no more than 2*<em>&epsilon;</em>.  Call the two bounds <em>low</em> and <em>high</em>, respectively.</li>
@@ -480,7 +480,7 @@
 
 <p>In some cases, it may be possible to calculate the needed digit size in advance.</p>
 
-<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> on the interval [<em>a</em>, <em>b</em>][^51], then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
+<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> on the interval [<em>a</em>, <em>b</em>][^53], then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
 
 <ol>
 <li>Let <em>d</em> be ceil((ln(max(1,<em>L</em>)) &minus; ln(<em>&epsilon;</em>)) / ln(<em>&beta;</em>)), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>). For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
@@ -488,7 +488,7 @@
 <li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>)/2.</li>
 </ol>
 
-<p>This algorithm chooses a random interval of size equal to <em>&beta;</em><sup><em>d</em></sup>, and because the quantile function is Lipschitz continuous, the values at the interval&#39;s bounds are guaranteed to vary by no more than 2*<em>&epsilon;</em> (actually <em>&epsilon;</em>, but the calculation in step 2 adds an additional error of at most <em>&epsilon;</em>), which is needed to meet the tolerance <em>&epsilon;</em> (see also Devroye and Gravel 2020[^49]).</p>
+<p>This algorithm chooses a random interval of size equal to <em>&beta;</em><sup><em>d</em></sup>, and because the quantile function is Lipschitz continuous, the values at the interval&#39;s bounds are guaranteed to vary by no more than 2*<em>&epsilon;</em> (actually <em>&epsilon;</em>, but the calculation in step 2 adds an additional error of at most <em>&epsilon;</em>), which is needed to meet the tolerance <em>&epsilon;</em> (see also Devroye and Gravel 2020[^51]).</p>
 
 <p>A similar algorithm can exist even if the quantile function <em>Q</em> is not Lipschitz continuous on the interval [<em>a</em>, <em>b</em>].</p>
 
@@ -500,7 +500,7 @@
 <li><em>Q</em> on [<em>a</em>, <em>b</em>] admits a continuous and monotone increasing function <em>&omega;</em>(<em>&delta;</em>) as a <em>modulus of continuity</em>,</li>
 </ul>
 
-<p>then <em>d</em> in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(<em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>))/ln(<em>&beta;</em>))),<br/>where <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) gives the quantile function&#39;s maximum range in a window of size <em>&delta;</em>, and the inverse modulus <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) finds a window small enough that the quantile function differs by no more than <em>&epsilon;</em> in the window.[^52]).[^53]</p>
+<p>then <em>d</em> in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(<em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>))/ln(<em>&beta;</em>))),<br/>where <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) gives the quantile function&#39;s maximum range in a window of size <em>&delta;</em>, and the inverse modulus <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) finds a window small enough that the quantile function differs by no more than <em>&epsilon;</em> in the window.[^54]).[^55]</p>
 
 <p>For example&mdash;</p>
 
@@ -513,7 +513,7 @@
 
 <ul>
 <li>The target distribution must have a probability density function (PDF), as is the case with the normal and exponential distributions.</li>
-<li>That PDF, or a function proportional to it, must be known, must be bounded from above, and must be continuous &quot;almost everywhere&quot; (the set of discontinuous points is &quot;zero-volume&quot;, that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020)[^49]).</li>
+<li>That PDF, or a function proportional to it, must be known, must be bounded from above, and must be continuous &quot;almost everywhere&quot; (the set of discontinuous points is &quot;zero-volume&quot;, that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020)[^51]).</li>
 </ul>
 
 <p>Here is a sketch of how this rejection sampler might work:</p>
@@ -529,7 +529,7 @@
 
 <h2>ExpoExact</h2>
 
-<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2022)[^54]; Canonne et al. (2020)[^55].  In this section:</p>
+<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2022)[^56]; Canonne et al. (2020)[^57].  In this section:</p>
 
 <ul>
 <li><code>RNDINT(1)</code> generates an independent unbiased random bit.</li>
@@ -574,14 +574,14 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random variate, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the precision given in <code>precision</code> (see also Karney 2016)[^56].</p>
+<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random variate, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the precision given in <code>precision</code> (see also Karney 2016)[^58].</p>
 </blockquote>
 
 <p><a id=A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights></a></p>
 
 <h2>A sampler for distributions with nonincreasing or nondecreasing weights</h2>
 
-<p>An algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to weights listed in <em>nonincreasing</em> order (example: [10, 3, 2, 1, 1] when <em>a</em> = 0 and <em>b</em> = 5) can be implemented as follows (Chewi et al. 2021)[^57].  It has a logarithmic time complexity in terms of setup and sampling.</p>
+<p>An algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to weights listed in <em>nonincreasing</em> order (example: [10, 3, 2, 1, 1] when <em>a</em> = 0 and <em>b</em> = 5) can be implemented as follows (Chewi et al. 2021)[^59].  It has a logarithmic time complexity in terms of setup and sampling.</p>
 
 <ul>
 <li>Setup:  Let <em>w</em>[<em>i</em>] be the weight for integer <em>i</em> (with <em>i</em> starting at <em>a</em>).
@@ -621,7 +621,7 @@ END METHOD
 
 <h2>A sampler for unimodal distributions of weights</h2>
 
-<p>The following is an algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to a <em>unimodal distribution</em> of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2021)[^57].  It assumes the mode (the point with the highest weight) is known.  An example is [1, 3, 9, 4, 4] when <em>a</em> = 0 and <em>b</em> = 5, and the <em>mode</em> is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.</p>
+<p>The following is an algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to a <em>unimodal distribution</em> of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2021)[^59].  It assumes the mode (the point with the highest weight) is known.  An example is [1, 3, 9, 4, 4] when <em>a</em> = 0 and <em>b</em> = 5, and the <em>mode</em> is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.</p>
 
 <ul>
 <li>Setup:
@@ -653,118 +653,122 @@ END METHOD
 
 <p>[^1]: K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</p>
 
-<p>[^2]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in the interval [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</p>
+<p>[^2]: &quot;<em>x</em> is odd&quot; means that <em>x</em> is an integer and not divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 1, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 1.</p>
 
-<p>[^3]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^3]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in the interval [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</p>
 
-<p>[^4]: R. Schumacher, &quot;<a href="https://arxiv.org/abs/1602.00336v1"><strong>Rapidly Convergent Summation Formulas involving Stirling Series</strong></a>&quot;, arXiv:1602.00336v1 [math.NT], 2016.</p>
+<p>[^4]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
 
-<p>[^5]: Farach-Colton, M. and Tsai, M.T., 2015. Exact sublinear binomial sampling. <em>Algorithmica</em> 73(4), pp. 637-651.</p>
+<p>[^5]: R. Schumacher, &quot;<a href="https://arxiv.org/abs/1602.00336v1"><strong>Rapidly Convergent Summation Formulas involving Stirling Series</strong></a>&quot;, arXiv:1602.00336v1 [math.NT], 2016.</p>
 
-<p>[^6]: Bringmann, K., and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</p>
+<p>[^6]: Farach-Colton, M. and Tsai, M.T., 2015. Exact sublinear binomial sampling. <em>Algorithmica</em> 73(4), pp. 637-651.</p>
 
-<p>[^7]: Ahmad, Z. et al. &quot;Recent Developments in Distribution Theory: A Brief Survey and Some New Generalized Classes of distributions.&quot; Pakistan Journal of Statistics and Operation Research 15 (2019): 87-110.</p>
+<p>[^7]: Bringmann, K., and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</p>
 
-<p>[^8]: Jones, M. C. &quot;On families of distributions with shape parameters.&quot; International Statistical Review 83, no. 2 (2015): 175-192.</p>
+<p>[^8]: &quot;<em>x</em> is even&quot; means that <em>x</em> is an integer and divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 0, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 0.</p>
 
-<p>[^9]: Eugene, N., Lee, C., Famoye, F., &quot;Beta-normal distribution and its applications&quot;, <em>Commun. Stat. Theory Methods</em> 31, 2002.</p>
+<p>[^9]: Ahmad, Z. et al. &quot;Recent Developments in Distribution Theory: A Brief Survey and Some New Generalized Classes of distributions.&quot; Pakistan Journal of Statistics and Operation Research 15 (2019): 87-110.</p>
 
-<p>[^10]: Barreto-Souza, Wagner and Alexandre B. Simas. &quot;The exp-G family of probability distributions.&quot; <em>Brazilian Journal of Probability and Statistics</em> 27, 2013.  Also in arXiv:1003.1727v1 [stat.ME], 2010.</p>
+<p>[^10]: Jones, M. C. &quot;On families of distributions with shape parameters.&quot; International Statistical Review 83, no. 2 (2015): 175-192.</p>
 
-<p>[^11]: Mahdavi, Abbas, and Debasis Kundu. &quot;A new method for generating distributions with an application to exponential distribution.&quot; <em>Communications in Statistics -- Theory and Methods</em> 46, no. 13 (2017): 6543-6557.</p>
+<p>[^11]: Eugene, N., Lee, C., Famoye, F., &quot;Beta-normal distribution and its applications&quot;, <em>Commun. Stat. Theory Methods</em> 31, 2002.</p>
 
-<p>[^12]: M. C. Jones. Letter to the Editor concerning “A new method for generating distributions with an application to exponential distribution” and “Alpha power Weibull distribution: Properties and applications”, <em>Communications in Statistics - Theory and Methods</em> 47 (2018).</p>
+<p>[^12]: Barreto-Souza, Wagner and Alexandre B. Simas. &quot;The exp-G family of probability distributions.&quot; <em>Brazilian Journal of Probability and Statistics</em> 27, 2013.  Also in arXiv:1003.1727v1 [stat.ME], 2010.</p>
 
-<p>[^13]: Mudholkar, G. S., Srivastava, D. K., &quot;Exponentiated Weibull family for analyzing bathtub failure-rate data&quot;, <em>IEEE Transactions on Reliability</em> 42(2), 299-302, 1993.</p>
+<p>[^13]: Mahdavi, Abbas, and Debasis Kundu. &quot;A new method for generating distributions with an application to exponential distribution.&quot; <em>Communications in Statistics -- Theory and Methods</em> 46, no. 13 (2017): 6543-6557.</p>
 
-<p>[^14]: Shaw, W.T., Buckley, I.R.C., &quot;The alchemy of probability distributions: Beyond Gram-Charlier expansions, and a skew-kurtotic-normal distribution from a rank transmutation map&quot;, 2007.</p>
+<p>[^14]: M. C. Jones. Letter to the Editor concerning “A new method for generating distributions with an application to exponential distribution” and “Alpha power Weibull distribution: Properties and applications”, <em>Communications in Statistics - Theory and Methods</em> 47 (2018).</p>
 
-<p>[^15]: Granzotto, D.C.T., Louzada, F., et al., &quot;Cubic rank transmuted distributions: inferential issues and applications&quot;, <em>Journal of Statistical Computation and Simulation</em>, 2017.</p>
+<p>[^15]: Mudholkar, G. S., Srivastava, D. K., &quot;Exponentiated Weibull family for analyzing bathtub failure-rate data&quot;, <em>IEEE Transactions on Reliability</em> 42(2), 299-302, 1993.</p>
 
-<p>[^16]: Alzaatreh, A., Famoye, F., Lee, C., &quot;A new method for generating families of continuous distributions&quot;, <em>Metron</em> 71:63–79 (2013).</p>
+<p>[^16]: Shaw, W.T., Buckley, I.R.C., &quot;The alchemy of probability distributions: Beyond Gram-Charlier expansions, and a skew-kurtotic-normal distribution from a rank transmutation map&quot;, 2007.</p>
 
-<p>[^17]: Aljarrah, M.A., Lee, C. and Famoye, F., &quot;On generating T-X family of distributions using quantile functions&quot;, Journal of Statistical Distributions and Applications,1(2), 2014.</p>
+<p>[^17]: Granzotto, D.C.T., Louzada, F., et al., &quot;Cubic rank transmuted distributions: inferential issues and applications&quot;, <em>Journal of Statistical Computation and Simulation</em>, 2017.</p>
 
-<p>[^18]: Gleaton, J.U., Lynch, J. D., &quot;Properties of generalized log-logistic families of lifetime distributions&quot;, <em>Journal of Probability and Statistical Science</em> 4(1), 2006.</p>
+<p>[^18]: Alzaatreh, A., Famoye, F., Lee, C., &quot;A new method for generating families of continuous distributions&quot;, <em>Metron</em> 71:63–79 (2013).</p>
 
-<p>[^19]: Hosseini, B., Afshari, M., &quot;The Generalized Odd Gamma-G Family of Distributions:  Properties and Application&quot;, <em>Austrian Journal of Statistics</em> vol. 47, Feb. 2018.</p>
+<p>[^19]: Aljarrah, M.A., Lee, C. and Famoye, F., &quot;On generating T-X family of distributions using quantile functions&quot;, Journal of Statistical Distributions and Applications,1(2), 2014.</p>
 
-<p>[^20]: N.H. Al Noor and N.K. Assi, &quot;Rayleigh-Rayleigh Distribution: Properties and Applications&quot;, <em>Journal of Physics: Conference Series</em> 1591, 012038 (2020).  The underlying Rayleigh distribution uses a parameter <em>&theta;</em> (or <em>&lambda;</em>), which is different from <em>Mathematica</em>&#39;s parameterization with <em>&sigma;</em> = sqrt(1/<em>&theta;</em><sup>2</sup>) = sqrt(1/<em>&lambda;</em><sup>2</sup>).  The first Rayleigh distribution uses <em>&theta;</em> and the second, <em>&lambda;</em>.</p>
+<p>[^20]: Gleaton, J.U., Lynch, J. D., &quot;Properties of generalized log-logistic families of lifetime distributions&quot;, <em>Journal of Probability and Statistical Science</em> 4(1), 2006.</p>
 
-<p>[^21]: Boshi, M.A.A., et al., &quot;Generalized Gamma – Generalized Gompertz Distribution&quot;, <em>Journal of Physics: Conference Series</em> 1591, 012043 (2020).</p>
+<p>[^21]: Hosseini, B., Afshari, M., &quot;The Generalized Odd Gamma-G Family of Distributions:  Properties and Application&quot;, <em>Austrian Journal of Statistics</em> vol. 47, Feb. 2018.</p>
 
-<p>[^22]: Tahir, M.H., Cordeiro, G.M., &quot;Compounding of distributions: a survey and new generalized classes&quot;, <em>Journal of Statistical Distributions and Applications</em> 3(13), 2016.</p>
+<p>[^22]: N.H. Al Noor and N.K. Assi, &quot;Rayleigh-Rayleigh Distribution: Properties and Applications&quot;, <em>Journal of Physics: Conference Series</em> 1591, 012038 (2020).  The underlying Rayleigh distribution uses a parameter <em>&theta;</em> (or <em>&lambda;</em>), which is different from <em>Mathematica</em>&#39;s parameterization with <em>&sigma;</em> = sqrt(1/<em>&theta;</em><sup>2</sup>) = sqrt(1/<em>&lambda;</em><sup>2</sup>).  The first Rayleigh distribution uses <em>&theta;</em> and the second, <em>&lambda;</em>.</p>
 
-<p>[^23]: Pérez-Casany, M., Valero, J., and Ginebra, J. (2016). Random-Stopped Extreme distributions. International Conference on Statistical Distributions and Applications.</p>
+<p>[^23]: Boshi, M.A.A., et al., &quot;Generalized Gamma – Generalized Gompertz Distribution&quot;, <em>Journal of Physics: Conference Series</em> 1591, 012043 (2020).</p>
 
-<p>[^24]: Amponsah, C.K., Kozubowski, T.J. &amp; Panorska, A.K. A general stochastic model for bivariate episodes driven by a gamma sequence. J Stat Distrib App 8, 7 (2021). <a href="https://doi.org/10.1186/s40488-021-00120-5"><strong>https://doi.org/10.1186/s40488-021-00120-5</strong></a></p>
+<p>[^24]: Tahir, M.H., Cordeiro, G.M., &quot;Compounding of distributions: a survey and new generalized classes&quot;, <em>Journal of Statistical Distributions and Applications</em> 3(13), 2016.</p>
 
-<p>[^25]: Johnson, N. L., Kemp, A. W., and Kotz, S. (2005). Univariate discrete distributions.</p>
+<p>[^25]: Pérez-Casany, M., Valero, J., and Ginebra, J. (2016). Random-Stopped Extreme distributions. International Conference on Statistical Distributions and Applications.</p>
 
-<p>[^26]: Duarte-López, A., Pérez-Casany, M. and Valero, J., 2021. Randomly stopped extreme Zipf extensions. Extremes, pp.1-34.</p>
+<p>[^26]: Amponsah, C.K., Kozubowski, T.J. &amp; Panorska, A.K. A general stochastic model for bivariate episodes driven by a gamma sequence. J Stat Distrib App 8, 7 (2021). <a href="https://doi.org/10.1186/s40488-021-00120-5"><strong>https://doi.org/10.1186/s40488-021-00120-5</strong></a></p>
 
-<p>[^27]: This is simplified from the paper because <em>Y</em> can take on only values greater than 0 so that the probability of getting 0 is 0.</p>
+<p>[^27]: Johnson, N. L., Kemp, A. W., and Kotz, S. (2005). Univariate discrete distributions.</p>
 
-<p>[^28]: Akdoğan, Y., Kus, C., et al., &quot;Geometric-Zero Truncated Poisson Distribution: Properties and Applications&quot;, <em>Gazi University Journal of Science</em> 32(4), 2019.</p>
+<p>[^28]: Duarte-López, A., Pérez-Casany, M. and Valero, J., 2021. Randomly stopped extreme Zipf extensions. Extremes, pp.1-34.</p>
 
-<p>[^29]: Barreto-Souza, W.: &quot;Bivariate gamma-geometric law and its induced Lévy process&quot;, Journal of Multivariate Analysis 109 (2012).</p>
+<p>[^29]: This is simplified from the paper because <em>Y</em> can take on only values greater than 0 so that the probability of getting 0 is 0.</p>
 
-<p>[^30]: Kuş, C., &quot;A new lifetime distribution&quot;, <em>Computational Statistics &amp; Data Analysis</em> 51 (2007).</p>
+<p>[^30]: Akdoğan, Y., Kus, C., et al., &quot;Geometric-Zero Truncated Poisson Distribution: Properties and Applications&quot;, <em>Gazi University Journal of Science</em> 32(4), 2019.</p>
 
-<p>[^31]: Cancho, Vicente G., Franscisco Louzada-Neto, and Gladys DC Barriga. &quot;The Poisson-exponential lifetime distribution.&quot; Computational Statistics &amp; Data Analysis 55, no. 1 (2011): 677-686.</p>
+<p>[^31]: Barreto-Souza, W.: &quot;Bivariate gamma-geometric law and its induced Lévy process&quot;, Journal of Multivariate Analysis 109 (2012).</p>
 
-<p>[^32]: Jodrá, P., &quot;A note on the right truncated Weibull distribution and the minimum of power function distributions&quot;, 2020.</p>
+<p>[^32]: Kuş, C., &quot;A new lifetime distribution&quot;, <em>Computational Statistics &amp; Data Analysis</em> 51 (2007).</p>
 
-<p>[^33]: Keller, A.Z., Kamath A.R., &quot;Reliability analysis of CNC machine tools&quot;, <em>Reliability Engineering</em> 3 (1982).</p>
+<p>[^33]: Cancho, Vicente G., Franscisco Louzada-Neto, and Gladys DC Barriga. &quot;The Poisson-exponential lifetime distribution.&quot; Computational Statistics &amp; Data Analysis 55, no. 1 (2011): 677-686.</p>
 
-<p>[^34]: Rao, C.R., &quot;Weighted distributions arising out of methods of ascertainment&quot;, 1985.</p>
+<p>[^34]: Jodrá, P., &quot;A note on the right truncated Weibull distribution and the minimum of power function distributions&quot;, 2020.</p>
 
-<p>[^35]: Ospina, R., Ferrari, S.L.P., &quot;Inflated Beta Distributions&quot;, 2010.</p>
+<p>[^35]: Keller, A.Z., Kamath A.R., &quot;Reliability analysis of CNC machine tools&quot;, <em>Reliability Engineering</em> 3 (1982).</p>
 
-<p>[^36]: Chakraborty, S., Bhattacharjee, S., &quot;<a href="https://arxiv.org/abs/2103.08916"><strong>Modeling proportion of success in high school leaving examination- A comparative study of Inflated Unit Lindley and Inflated Beta distribution</strong></a>&quot;, arXiv:2103.08916 [stat.ME], 2021.</p>
+<p>[^36]: Rao, C.R., &quot;Weighted distributions arising out of methods of ascertainment&quot;, 1985.</p>
 
-<p>[^37]: Mullahy, J., &quot;Specification and testing of some modified count data models&quot;, 1986.</p>
+<p>[^37]: Ospina, R., Ferrari, S.L.P., &quot;Inflated Beta Distributions&quot;, 2010.</p>
 
-<p>[^38]: Grassia, A., &quot;On a family of distributions with argument between 0 and 1 obtained by transformation of the gamma and derived compound distributions&quot;, <em>Australian Journal of Statistics</em>, 1977.</p>
+<p>[^38]: Chakraborty, S., Bhattacharjee, S., &quot;<a href="https://arxiv.org/abs/2103.08916"><strong>Modeling proportion of success in high school leaving examination- A comparative study of Inflated Unit Lindley and Inflated Beta distribution</strong></a>&quot;, arXiv:2103.08916 [stat.ME], 2021.</p>
 
-<p>[^39]: Elgohari, Hanaa, and Haitham Yousof. &quot;New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling.&quot; Stat., Optim. Inf. Comput., Vol.8, December 2020.</p>
+<p>[^39]: Mullahy, J., &quot;Specification and testing of some modified count data models&quot;, 1986.</p>
 
-<p>[^40]: Marshall, A.W. and Olkin, I., 1997. A new method for adding a parameter to a family of distributions with application to the exponential and Weibull families. Biometrika, 84(3), pp.641-652.</p>
+<p>[^40]: Grassia, A., &quot;On a family of distributions with argument between 0 and 1 obtained by transformation of the gamma and derived compound distributions&quot;, <em>Australian Journal of Statistics</em>, 1977.</p>
 
-<p>[^41]: Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., &quot;The power Lomax distribution with an application to bladder cancer data&quot;, (2016).</p>
+<p>[^41]: Elgohari, Hanaa, and Haitham Yousof. &quot;New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling.&quot; Stat., Optim. Inf. Comput., Vol.8, December 2020.</p>
 
-<p>[^42]: Castellares, F., Lemonte, A.J., Moreno, G., &quot;On the two-parameter Bell-Touchard discrete distribution&quot;, <em>Communications in Statistics
+<p>[^42]: Marshall, A.W. and Olkin, I., 1997. A new method for adding a parameter to a family of distributions with application to the exponential and Weibull families. Biometrika, 84(3), pp.641-652.</p>
+
+<p>[^43]: Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., &quot;The power Lomax distribution with an application to bladder cancer data&quot;, (2016).</p>
+
+<p>[^44]: Castellares, F., Lemonte, A.J., Moreno, G., &quot;On the two-parameter Bell-Touchard discrete distribution&quot;, <em>Communications in Statistics
     - Theory and Methods</em> 4, (2020).</p>
 
-<p>[^43]: The similar Bell&ndash;Touchard process is the sum of the first <em>N</em> variates from an infinite sequence of zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is the number of events of a Poisson process with rate <em>b</em>*exp(<em>a</em>)&minus;<em>b</em> (Freud, T., Rodriguez, P.M., &quot;<a href="https://arxiv.org/abs/2203.16737v2"><strong>The Bell-Touchard counting process</strong></a>&quot;, arXiv:2203.16737v2 [math.PR], 2022).</p>
+<p>[^45]: The similar Bell&ndash;Touchard process is the sum of the first <em>N</em> variates from an infinite sequence of zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is the number of events of a Poisson process with rate <em>b</em>*exp(<em>a</em>)&minus;<em>b</em> (Freud, T., Rodriguez, P.M., &quot;<a href="https://arxiv.org/abs/2203.16737v2"><strong>The Bell-Touchard counting process</strong></a>&quot;, arXiv:2203.16737v2 [math.PR], 2022).</p>
 
-<p>[^44]: Buddana, Amrutha, and Tomasz J. Kozubowski. &quot;Discrete Pareto distributions.&quot; Economic Quality Control 29, no. 2 (2014): 143-156.</p>
+<p>[^46]: Buddana, Amrutha, and Tomasz J. Kozubowski. &quot;Discrete Pareto distributions.&quot; Economic Quality Control 29, no. 2 (2014): 143-156.</p>
 
-<p>[^45]: Batsidis, A., Lemonte, A.J., &quot;On Goodness-of-Fit Tests for the Neyman Type A Distribution&quot;, REVSTAT-Statistical Journal (accepted Nov. 2021).</p>
+<p>[^47]: Batsidis, A., Lemonte, A.J., &quot;On Goodness-of-Fit Tests for the Neyman Type A Distribution&quot;, REVSTAT-Statistical Journal (accepted Nov. 2021).</p>
 
-<p>[^46]: Kudryavtsev, A.A., &quot;On the representation of gamma-exponential and generalized negative binomial distributions&quot;, Inform. Appl. 13 (2019)</p>
+<p>[^48]: Kudryavtsev, A.A., &quot;On the representation of gamma-exponential and generalized negative binomial distributions&quot;, Inform. Appl. 13 (2019)</p>
 
-<p>[^47]: Saha, M., et al., &quot;<a href="https://arxiv.org/abs/1909.01103"><strong>The extended xgamma distribution</strong></a>&quot;, arXiv:1909.01103 [math.ST], 2019.</p>
+<p>[^49]: Saha, M., et al., &quot;<a href="https://arxiv.org/abs/1909.01103"><strong>The extended xgamma distribution</strong></a>&quot;, arXiv:1909.01103 [math.ST], 2019.</p>
 
-<p>[^48]: McNeil, et al., &quot;Quantitative risk management&quot;, 2010.</p>
+<p>[^50]: McNeil, et al., &quot;Quantitative risk management&quot;, 2010.</p>
 
-<p>[^49]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
+<p>[^51]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
 
-<p>[^50]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^52]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^51]: A Lipschitz continuous function, with constant <em>L</em>, is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot;, and that slope is bounded wherever it&#39;s defined.</p>
+<p>[^53]: A Lipschitz continuous function, with constant <em>L</em>, is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot;, and that slope is bounded wherever it&#39;s defined.</p>
 
-<p>[^52]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, &quot;Computational complexity of roots of real functions.&quot; In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989.</p>
+<p>[^54]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, &quot;Computational complexity of roots of real functions.&quot; In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989.</p>
 
-<p>[^53]: Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it&#39;s uniformly continuous there.  For this reason, there is a positive function <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) such that <em>Q</em>(<em>x</em>) is less than <em>&epsilon;</em>-away from <em>Q</em>(<em>y</em>) whenever <em>x</em> is less than <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>)-away from <em>y</em>, for every <em>&epsilon;</em>&gt;0 and for any <em>x</em> and <em>y</em> in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and monotone increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(<em>z</em>)/ln(<em>&beta;</em>))) is an upper bound on the number of base-<em>&beta;</em> fractional digits needed to store 1/<em>z</em> with an error of at most <em>&epsilon;</em>.</p>
+<p>[^55]: Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it&#39;s uniformly continuous there.  For this reason, there is a positive function <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) such that <em>Q</em>(<em>x</em>) is less than <em>&epsilon;</em>-away from <em>Q</em>(<em>y</em>) whenever <em>x</em> is less than <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>)-away from <em>y</em>, for every <em>&epsilon;</em>&gt;0 and for any <em>x</em> and <em>y</em> in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and monotone increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(<em>z</em>)/ln(<em>&beta;</em>))) is an upper bound on the number of base-<em>&beta;</em> fractional digits needed to store 1/<em>z</em> with an error of at most <em>&epsilon;</em>.</p>
 
-<p>[^54]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. &quot;From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains.&quot; Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. <a href="https://doi.org/10.1214/21-AAP1679"><strong>https://doi.org/10.1214/21-AAP1679</strong></a></p>
+<p>[^56]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. &quot;From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains.&quot; Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. <a href="https://doi.org/10.1214/21-AAP1679"><strong>https://doi.org/10.1214/21-AAP1679</strong></a></p>
 
-<p>[^55]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
+<p>[^57]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
 
-<p>[^56]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+<p>[^58]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
-<p>[^57]: Chewi, S., Gerber, P., et al., &quot;<a href="https://arxiv.org/abs/2105.14166"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>&quot;, arXiv:2105.14166, 2021</p>
+<p>[^59]: Chewi, S., Gerber, P., et al., &quot;<a href="https://arxiv.org/abs/2105.14166"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>&quot;, arXiv:2105.14166, 2021</p>
 
 <p><a id=License></a></p>
 

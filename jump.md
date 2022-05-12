@@ -66,7 +66,7 @@ A multiple recursive generator with a modulus of 1449 has the following transiti
 
 To calculate the 3&times;3 jump matrix to jump 100 steps from this MRG, raise this matrix to the power of 100 then reduce the result's elements mod 1449.  One way to do this is the "square-and-multiply" method, described by D. Knuth in _The Art of Computer Programming_: Set J to the identity matrix, N to 100, and M to a copy of the transition matrix, then while N is greater than 0:
 
-1. If N is odd, multiply J by M then reduce J's elements mod 1449.
+1. If N is odd[^6], multiply J by M then reduce J's elements mod 1449.
 2. Divide N by 2 and round down, then multiply M by M then reduce M's elements mod 1449.
 
 The resulting J is a _jump matrix_ as follows:
@@ -82,7 +82,7 @@ Transforming the MRG's state with J (and reducing mod 1449) will transform the s
 
 A _linear congruential generator_ (LCG) generates numbers by transforming its state using the following formula: `x(k) = (x(k-1)*a + c) mod modulus`, where `a` is the _multiplier_, `c` is the additive constant, and `modulus` is the _modulus_.
 
-An efficient way to jump an LCG ahead is described in (Brown 1994\)[^6]. This also applies to LCGs that transform each `x(k)` before outputting it, such as M.O'Neill's PCG32 and PCG64.
+An efficient way to jump an LCG ahead is described in (Brown 1994\)[^7]. This also applies to LCGs that transform each `x(k)` before outputting it, such as M.O'Neill's PCG32 and PCG64.
 
 An MRG with only one multiplier expresses the special case of an LCG with `c = 0` (also known as a _multiplicative_ LCG).  For `c` other than 0, the following matrix describes the state transition `[x(k-1), 1]` to `[x(k), 1]` (mod `modulus`):
 
@@ -139,4 +139,6 @@ Sebastiano Vigna reviewed this page and gave comments.
 
 [^5]: L'Ecuyer, Simard, Chen, Kelton, "An Object-Oriented Random-Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.
 
-[^6]: Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.
+[^6]: "_x_ is odd" means that _x_ is an integer and not divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 1, or if _x_ is an integer and the least significant bit of abs(_x_) is 1.
+
+[^7]: Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.
