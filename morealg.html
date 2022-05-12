@@ -131,8 +131,9 @@
 <p>Derivation: Follows from rewriting cosh(<em>&lambda;</em>)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where:</p>
 
 <ul>
-<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) is <em>&lambda;</em><sup><em>n</em></sup>/(<em>n</em>!) if <em>n</em>&gt;0 and <em>n</em> is even, or 0 otherwise.  This is a term of the Taylor series expansion at 0.</li>
-<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup>(<em>n</em>&minus;2)/2</sup> if <em>n</em>&gt;0 and <em>n</em> is even, or 1 otherwise.  This is an upper bound on <em>w</em><sup><em>n</em></sup>(1), and it serves to send nonzero probabilities to terms in the series with nonzero coefficients.  For example, in the case of cosh(<em>&lambda;</em>) &minus; 1, the nonzero terms are at 2, 4, 6, 8, and so on, so these terms are assigned the probabilities 1/2, 1/4, 1/8, 1/16, and so on, respectively.</li>
+<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) is <em>&lambda;</em><sup><em>n</em></sup>/(<em>n</em>!) if <em>n</em>&gt;0 and <em>n</em> is even, or 0 otherwise.  This is a term of the Taylor series expansion at 0 (see note 1 below).</li>
+<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup>(<em>n</em>&minus;2)/2</sup> if <em>n</em>&gt;0 and <em>n</em> is even, or 0 otherwise (in which case $\frac{w_n(\lambda)}{g(n)}$ is 0 for that value of <em>n</em>).  This serves to send nonzero probabilities to terms in the series with nonzero coefficients.  For example, in the case of cosh(<em>&lambda;</em>) &minus; 1, the nonzero terms are at 2, 4, 6, 8, and so on, so these terms are assigned the probabilities 1/2, 1/4, 1/8, 1/16, and so on, respectively.</li>
+<li><em>g</em>(2) + <em>g</em>(4) + <em>g</em>(6) + ... = 1.</li>
 </ul>
 
 <p>Then <em>P</em> in step 3 equals <em>w</em><sub><em>n</em></sub>(1)/<em>g</em>(<em>n</em>).</p>
@@ -224,11 +225,13 @@
 </tr>
 </tbody></table>
 
-<p>The functions have similar derivations as follows:</p>
+<p>The functions have similar derivations as cosh(<em>&lambda;</em>) and can be rewritten as&mdash; $$\sum_n w_n(\lambda) = \sum_n g(n) \frac{w_n(\lambda)}{g(n)},$$ where:</p>
 
 <ul>
-<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) is the appropriate term for n in the target function&#39;s Taylor series expansion at 0.  If a certain value for <em>n</em>, call it <em>i</em>, can&#39;t occur in the algorithm after step 2 is complete, then <em>w</em><sub><em>i</em></sub>(<em>&lambda;</em>) is 0 instead.</li>
-<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup><em>h</em>(<em>n</em>)</sup>, where <em>h</em>(<em>n</em>) is the inverse of the &quot;Step 2&quot; columns above. If a certain value for <em>n</em>, call it <em>i</em>, can&#39;t occur in the algorithm after step 2 is complete, then <em>g</em>(<em>i</em>) is 1 instead.  (For example, if the column reads &quot;2*<em>n</em> + 1&quot;, then <em>h</em>(<em>n</em>) is (<em>n</em>&minus;1)/2.)</li>
+<li>Each sum given above is taken over all values of <em>n</em> &ge; 0 that can occur in the algorithm after step 2 is complete.</li>
+<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) is the appropriate term for <em>n</em> in the target function&#39;s Taylor series expansion at 0 (see note 1 below).</li>
+<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup><em>h</em>(<em>n</em>)</sup>, where <em>h</em>(<em>n</em>) is the inverse of the &quot;Step 2&quot; columns above. (For example, if the column reads &quot;2*<em>n</em> + 1&quot;, then <em>h</em>(<em>n</em>) is (<em>n</em>&minus;1)/2.)</li>
+<li>$\sum_n <em>g</em>(<em>n</em>) = 1$ (the sum is taken over the same values of <em>n</em> as in the two sums above), so that <em>g</em>(<em>n</em>) is the probability of getting <em>n</em> after step 2 is complete.</li>
 </ul>
 
 <blockquote>

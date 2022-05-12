@@ -73,6 +73,8 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 
 - The inverse sine, in radians, of `a` is equivalent to `atan2(a, sqrt(1.0 - a * a))`.
 - The inverse cosine, in radians, of `a` is equivalent to `atan2(sqrt(1.0 - a * a), a)`.
+- An integer `n` is _odd_ if `rem(n, 2)` is 1.
+- An integer `n` is _even_ if `rem(n, 2)` is 0.
 
 <a id=Pseudocode_Notes></a>
 ## Pseudocode Notes
