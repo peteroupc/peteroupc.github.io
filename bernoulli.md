@@ -221,8 +221,6 @@ In the following algorithms:
 - Where a step in the algorithm says "with probability _x_" to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
     - Generate a uniform(0, 1) random variate _v_ (see above). The event occurs if _v_ is less than _x_ (see above).
     - Convert _x_ to a rational number _y_/_z_, then call `ZeroOrOne(y, z)`.  The event occurs if the call returns 1. For example, if an instruction says "With probability 3/5, return 1", then implement it as "Call `ZeroOrOne(3, 5)`. If the call returns 1, return 1."  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).  If _x_ is not a rational number, then rounding error will result, however.
-- "_x_ is even" means that _x_ is an integer and divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 0, or if _x_ is an integer and the least significant bit of abs(_x_) is 0.
-- "_x_ is odd" means that _x_ is an integer and not divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 1, or if _x_ is an integer and the least significant bit of abs(_x_) is 1.
 - For best results, the algorithms should be implemented using exact rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby).  Floating-point arithmetic is discouraged because it can introduce errors due to fixed-precision calculations, such as rounding and cancellations.
 
 <a id=Algorithms_for_General_Functions_of___lambda></a>
@@ -472,7 +470,7 @@ The algorithm implements the reverse-time martingale framework (Algorithm 4) in 
     1. Define **FB**(_a_, _b_) as follows: Let _c_ be choose(_a_, _b_). (Optionally, multiply _c_ by 2<sup>_a_</sup>; see note 3.)  Calculate **fbelow**(_a_, _b_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_c_) = floor(_UB_\*_c_), then return floor(_LB_\*_c_)/_c_.
     2. Define **FA**(_a_, _b_) as follows: Let _c_ be choose(_a_, _b_). (Optionally, multiply _c_ by 2<sup>_a_</sup>; see note 3.)  Calculate **fabove**(_a_, _b_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that ceil(_LB_\*_c_) = ceil(_UB_\*_c_), then return ceil(_LB_\*_c_)/_c_.
     3. Set _&#x2113;_ to **FB**(_degree_, _ones_) and set _u_ to **FA**(_degree_, _ones_).
-7. (This step and the next find the expected values of the previous _&#x2113;_ and _u_ given the current coin flips.) If _degree_ equals _startdegree_, set _&#x2113;s_ to 0 and _us_ to 1. (Algorithm I of Flegal and Herbei 2012 doesn't take this into account.)
+7. (This step and the next find the means of the previous _&#x2113;_ and of _u_ given the current coin flips.) If _degree_ equals _startdegree_, set _&#x2113;s_ to 0 and _us_ to 1. (Algorithm I of Flegal and Herbei 2012 doesn't take this into account.)
 8. If _degree_ is greater than _startdegree_:
     1. Let _nh_ be choose(_degree_, _ones_), and let _k_ be min(_lastdegree_, _ones_).
     2. Set _&#x2113;s_ to &sum;<sub>_j_=0,...,_k_</sub> **FB**(_lastdegree_,_j_)\*choose(_degree_&minus;_lastdegree_, _ones_&minus;_j_)\*choose(_lastdegree_,_j_)/_nh_.
@@ -680,7 +678,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 > 3. Generate _X_, a Poisson random variate with mean _&mu;_, run the **algorithm for exp(&minus;_z_)** with _z_ = _X_, and return the result.  The probability of returning 1 this way is **E**\[exp(&minus;_X_)\], or exp(_&mu;_\*exp(&minus;1)&minus;_&mu;_).  The following Python code uses the computer algebra library SymPy to find this probability: `from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()`.
 > 4. _Bernoulli Race_ (Dughmi et al. 2017\)[^32]\: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to _g_(_i_) being 1/_n_ and _h_<sub>_i_</sub>() being the probability for the corresponding coin _i_.
 > 5. Multivariate Bernoulli factory (Huber 2016\)[^33] of the form _R_ = _C_<sub>0</sub>\*_&lambda;_<sub>0</sub> + _C_<sub>1</sub>\*_&lambda;_<sub>1</sub> + ... + _C_<sub>_m_&minus;1</sub>\*_&lambda;_<sub>_m_&minus;1</sub>, where _C_<sub>_i_</sub> are known constants greater than 0, and _R_ &le; 1 &minus; _&#x03F5;_ for any _&#x03F5;_ > 0: Choose an integer in [0, _m_) uniformly at random, call it _i_, then run a linear Bernoulli factory for (_m_\*_C_<sub>_i_</sub>)\*_&lambda;_<sub>_i_</sub>.  This differs from Huber's suggestion of "thinning" a Poisson process driven by multiple input coins.
-> 6. **Probability generating function** (PGF) (Dughmi et al. 2017\)[^32]. Generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected value of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the PGF for the distribution of _X_.  The algorithm follows: (1) Generate a random integer _X_ in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
+> 6. **Probability generating function** (PGF) (Dughmi et al. 2017\)[^32]. Generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected value ("long-run average") of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the PGF for the distribution of _X_.  The algorithm follows: (1) Generate a random integer _X_ in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
 > 7. Assume _X_ is the number of unbiased random bits that show 0 before the first 1 is generated.  Then _g_(_n_) = 1/(2<sup>_n_+1</sup>).
 
 <a id=Generalized_Bernoulli_Race></a>
@@ -1711,7 +1709,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
     - For irrational constants:
         - Simple [**continued fraction**](#Continued_Fractions) expansions.
         - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/morealg.html#pi___4)
-        - Generate a uniform point in (_x_, _y_) inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
+        - Generate a uniform point in (_x_, _y_) inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value ("long-run average") of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
         - Functions that map [0, 1] to [0, 1] whose integral (area under curve) is an irrational number.
     - For Bernoulli factory functions:
         - Functions with any of the following series expansions, using rational arithmetic only:
@@ -1938,7 +1936,7 @@ Then it's clear that with probability 1, for every $n\ge 1$&mdash;
 - $U_n$ is 0 or greater and $L_n$ is 1 or less, and
 - $L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.
 
-Moreover, if there are infinitely many nonzero coefficients, the _U_ and _L_ sequences have expected values converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values equal to $f(\lambda)$ for large enough $n$.  These conditions are required for the paper's Algorithm 3 (and thus the algorithm given above) to be valid.
+Moreover, if there are infinitely many nonzero coefficients, the _U_ and _L_ sequences have expected values ("long-run averages") converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values that approach $f(\lambda)$ as $n$ gets large.  These conditions are required for the paper's Algorithm 3 (and thus the algorithm given above) to be valid.
 
 <a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a>
 ### Correctness Proof for the Continued Logarithm Simulation Algorithm

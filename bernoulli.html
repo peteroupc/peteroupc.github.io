@@ -333,8 +333,6 @@
 <li>Generate a uniform(0, 1) random variate <em>v</em> (see above). The event occurs if <em>v</em> is less than <em>x</em> (see above).</li>
 <li>Convert <em>x</em> to a rational number <em>y</em>/<em>z</em>, then call <code>ZeroOrOne(y, z)</code>.  The event occurs if the call returns 1. For example, if an instruction says &quot;With probability 3/5, return 1&quot;, then implement it as &quot;Call <code>ZeroOrOne(3, 5)</code>. If the call returns 1, return 1.&quot;  <code>ZeroOrOne</code> is described in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>.  If <em>x</em> is not a rational number, then rounding error will result, however.</li>
 </ul></li>
-<li>&quot;<em>x</em> is even&quot; means that <em>x</em> is an integer and divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 0, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 0.</li>
-<li>&quot;<em>x</em> is odd&quot; means that <em>x</em> is an integer and not divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 1, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 1.</li>
 <li>For best results, the algorithms should be implemented using exact rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby).  Floating-point arithmetic is discouraged because it can introduce errors due to fixed-precision calculations, such as rounding and cancellations.</li>
 </ul>
 
@@ -698,7 +696,7 @@
 <li>Define <strong>FA</strong>(<em>a</em>, <em>b</em>) as follows: Let <em>c</em> be choose(<em>a</em>, <em>b</em>). (Optionally, multiply <em>c</em> by 2<sup><em>a</em></sup>; see note 3.)  Calculate <strong>fabove</strong>(<em>a</em>, <em>b</em>) as lower and upper bounds <em>LB</em> and <em>UB</em> that are accurate enough that ceil(<em>LB</em>*<em>c</em>) = ceil(<em>UB</em>*<em>c</em>), then return ceil(<em>LB</em>*<em>c</em>)/<em>c</em>.</li>
 <li>Set <em>&#x2113;</em> to <strong>FB</strong>(<em>degree</em>, <em>ones</em>) and set <em>u</em> to <strong>FA</strong>(<em>degree</em>, <em>ones</em>).</li>
 </ol></li>
-<li>(This step and the next find the expected values of the previous <em>&#x2113;</em> and <em>u</em> given the current coin flips.) If <em>degree</em> equals <em>startdegree</em>, set <em>&#x2113;s</em> to 0 and <em>us</em> to 1. (Algorithm I of Flegal and Herbei 2012 doesn&#39;t take this into account.)</li>
+<li>(This step and the next find the means of the previous <em>&#x2113;</em> and of <em>u</em> given the current coin flips.) If <em>degree</em> equals <em>startdegree</em>, set <em>&#x2113;s</em> to 0 and <em>us</em> to 1. (Algorithm I of Flegal and Herbei 2012 doesn&#39;t take this into account.)</li>
 <li>If <em>degree</em> is greater than <em>startdegree</em>:
 
 <ol>
@@ -998,7 +996,7 @@
 <li>Generate <em>X</em>, a Poisson random variate with mean <em>&mu;</em>, run the <strong>algorithm for exp(&minus;<em>z</em>)</strong> with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
 <li><em>Bernoulli Race</em> (Dughmi et al. 2017)[^32]: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to <em>g</em>(<em>i</em>) being 1/<em>n</em> and <em>h</em><sub><em>i</em></sub>() being the probability for the corresponding coin <em>i</em>.</li>
 <li>Multivariate Bernoulli factory (Huber 2016)[^33] of the form <em>R</em> = <em>C</em><sub>0</sub>*<em>&lambda;</em><sub>0</sub> + <em>C</em><sub>1</sub>*<em>&lambda;</em><sub>1</sub> + ... + <em>C</em><sub><em>m</em>&minus;1</sub>*<em>&lambda;</em><sub><em>m</em>&minus;1</sub>, where <em>C</em><sub><em>i</em></sub> are known constants greater than 0, and <em>R</em> &le; 1 &minus; <em>&#x03F5;</em> for any <em>&#x03F5;</em> &gt; 0: Choose an integer in [0, <em>m</em>) uniformly at random, call it <em>i</em>, then run a linear Bernoulli factory for (<em>m</em>*<em>C</em><sub><em>i</em></sub>)*<em>&lambda;</em><sub><em>i</em></sub>.  This differs from Huber&#39;s suggestion of &quot;thinning&quot; a Poisson process driven by multiple input coins.</li>
-<li><strong>Probability generating function</strong> (PGF) (Dughmi et al. 2017)[^32]. Generates heads with probability <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>], that is, the expected value of <em>&lambda;</em><sup><em>X</em></sup>.  <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>] is the PGF for the distribution of <em>X</em>.  The algorithm follows: (1) Generate a random integer <em>X</em> in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
+<li><strong>Probability generating function</strong> (PGF) (Dughmi et al. 2017)[^32]. Generates heads with probability <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>], that is, the expected value (&quot;long-run average&quot;) of <em>&lambda;</em><sup><em>X</em></sup>.  <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>] is the PGF for the distribution of <em>X</em>.  The algorithm follows: (1) Generate a random integer <em>X</em> in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
 <li>Assume <em>X</em> is the number of unbiased random bits that show 0 before the first 1 is generated.  Then <em>g</em>(<em>n</em>) = 1/(2<sup><em>n</em>+1</sup>).</li>
 </ol>
 </blockquote>
@@ -2524,7 +2522,7 @@ kind of irrational number.</p>
 <ul>
 <li>Simple <a href="#Continued_Fractions"><strong>continued fraction</strong></a> expansions.</li>
 <li>Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    <a href="https://peteroupc.github.io/morealg.html#pi___4"><strong>Example.</strong></a></li>
-<li>Generate a uniform point in (<em>x</em>, <em>y</em>) inside a closed shape, then return 1 with probability <em>x</em>.  For what shapes is the expected value of <em>x</em> an irrational number?  <a href="https://peteroupc.github.io/morealg.html#4_3___pi"><strong>Example.</strong></a></li>
+<li>Generate a uniform point in (<em>x</em>, <em>y</em>) inside a closed shape, then return 1 with probability <em>x</em>.  For what shapes is the expected value (&quot;long-run average&quot;) of <em>x</em> an irrational number?  <a href="https://peteroupc.github.io/morealg.html#4_3___pi"><strong>Example.</strong></a></li>
 <li>Functions that map [0, 1] to [0, 1] whose integral (area under curve) is an irrational number.</li>
 </ul></li>
 <li>For Bernoulli factory functions:
@@ -2788,7 +2786,7 @@ kind of irrational number.</p>
 <li>$L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.</li>
 </ul>
 
-<p>Moreover, if there are infinitely many nonzero coefficients, the <em>U</em> and <em>L</em> sequences have expected values converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values equal to $f(\lambda)$ for large enough $n$.  These conditions are required for the paper&#39;s Algorithm 3 (and thus the algorithm given above) to be valid.</p>
+<p>Moreover, if there are infinitely many nonzero coefficients, the <em>U</em> and <em>L</em> sequences have expected values (&quot;long-run averages&quot;) converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values that approach $f(\lambda)$ as $n$ gets large.  These conditions are required for the paper&#39;s Algorithm 3 (and thus the algorithm given above) to be valid.</p>
 
 <p><a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a></p>
 

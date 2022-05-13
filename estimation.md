@@ -258,7 +258,7 @@ The estimate will come within _&epsilon;_ of the true integral with probability 
 - The _q_<sup>th</sup> c.a.m. for _h_(**z**) is finite.  That is, **E**\[abs(_h_(**z**)&minus;**E**\[_h_(**z**)\])<sup>_q_</sup>\] is finite.
 - The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.
 
-Unfortunately, these conditions may be hard to verify in practice, especially when the distribution _h_(**z**) is not known.  (In fact, **E**\[_h_(**z**)\], as seen above, is the unknown integral that we seek to estimate.)
+Unfortunately, these conditions may be hard to verify in practice, especially when the distribution _h_(**z**) is not known.  (In fact, **E**\[_h_(**z**)\], as seen above, is the unknown integral to be estimated.)
 
 For this purpose, each number in the stream of random variates is generated as follows (see also Kunsch et al.):
 

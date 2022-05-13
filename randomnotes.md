@@ -143,6 +143,7 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0.
 >
 > 1. The following is a useful identity for the gamma distribution: `GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)` (Stuart 1962\)[^12].
 > 2. The gamma distribution is usually defined to have a second parameter (called `theta` here), which is unfortunately defined differently in different works.  For example, the gamma variate can be either multiplied or divided by `theta` depending on the work.
+> 3. For other algorithms to sample from the gamma distribution, see Luengo (2022)[^29]
 
 <a id=Beta_Distribution></a>
 #### Beta Distribution
@@ -575,6 +576,8 @@ END METHOD
 [^27]: O. Rioul, "Variations on a Theme by Massey," in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.
 
 [^28]: Massey, J.L., "On the entropy of integer-valued random variables", 1988.
+
+[^29]: Luengo, E.A., "[**Gamma Pseudo Random Number Generators**](https://dl.acm.org/doi/abs/10.1145/3527157)", _ACM Computing Surveys_, 2022.
 
 <a id=Appendix></a>
 ## Appendix

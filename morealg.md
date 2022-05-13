@@ -93,10 +93,11 @@ The following algorithm, which takes advantage of the [**convex combination meth
 3. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  Let _P_ be 2<sup>_n_/2</sup>/(_n_!). (Equals _w_<sub>_n_</sub>(1)/_g_(_n_).)  With probability _P_, go to the next step.  Otherwise, return 0.
 4. (At this point, _n_ equals _i_ with probability _w_<sub>_i_</sub>(1).) Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1 (or if _n_ is 0).  Otherwise, return 0.
 
-Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where:
+Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: $$f(\lambda)=cosh(\lambda)-1 = \sum_{n} w_n(\lambda) = \sum_{n} g(n) \frac{w_n(\lambda)}{g(n)},$$ where:
 
-- _w_<sub>_n_</sub>(_&lambda;_) is _&lambda;_<sup>_n_</sup>/(_n_!) if _n_&gt;0 and _n_ is even[^1], or 0 otherwise.  This is a term of the Taylor series expansion at 0 (see note 1 below).
-- _g_(_n_) is (1/2)\*(1/2)<sup>(_n_&minus;2)/2</sup> if _n_&gt;0 and _n_ is even[^1], or 0 otherwise (in which case $\frac{w_n(\lambda)}{g(n)}$ is 0 for that value of _n_).  This serves to send nonzero probabilities to terms in the series with nonzero coefficients.  For example, in the case of cosh(_&lambda;_) &minus; 1, the nonzero terms are at 2, 4, 6, 8, and so on, so these terms are assigned the probabilities 1/2, 1/4, 1/8, 1/16, and so on, respectively.
+- Each sum given above is taken over all values of _n_ that are even and greater than 0.
+- _w_<sub>_n_</sub>(_&lambda;_) is _&lambda;_<sup>_n_</sup>/(_n_!).  This is a term of the Taylor series expansion at 0 (see note 1 below).
+- _g_(_n_) is (1/2)\*(1/2)<sup>(_n_&minus;2)/2</sup> if _n_&gt;0 and _n_ is even[^1], or 0 otherwise.  This serves to send nonzero probabilities to terms in the series with nonzero coefficients.  For example, in the case of cosh(_&lambda;_) &minus; 1, the nonzero terms are at 2, 4, 6, 8, and so on, so these terms are assigned the probabilities 1/2, 1/4, 1/8, 1/16, and so on, respectively.
 - _g_(2) + _g_(4) + _g_(6) + ... = 1.
 
 Then _P_ in step 3 equals _w_<sub>_n_</sub>(1)/_g_(_n_).
@@ -123,12 +124,12 @@ The table below shows functions shifted downward and shows the algorithm changes
 | exp(_&lambda;_/2)/2  | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. |
 | cosh(_&lambda;_)/4 | _&phi;_(_&lambda;_) &minus; _D_. | 2\*_n_. | (1/4&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_/2</sup>/(2\*(_n_!)) otherwise. |
 
-The functions have similar derivations as cosh(_&lambda;_) and can be rewritten as&mdash; $$\sum_n w_n(\lambda) = \sum_n g(n) \frac{w_n(\lambda)}{g(n)},$$ where:
+The functions have similar derivations as cosh(_&lambda;_) and can be rewritten as&mdash; $$f(\lambda) = \sum_n w_n(\lambda) = \sum_n g(n) \frac{w_n(\lambda)}{g(n)},$$ where:
 
 - Each sum given above is taken over all values of _n_ &ge; 0 that can occur in the algorithm after step 2 is complete.
 - _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for _n_ in the target function's Taylor series expansion at 0 (see note 1 below).
 - _g_(_n_) is (1/2)\*(1/2)<sup>_h_(_n_)</sup>, where _h_(_n_) is the inverse of the "Step 2" columns above. (For example, if the column reads "2\*_n_ + 1", then _h_(_n_) is (_n_&minus;1)/2.)
-- $\sum_n _g_(_n_) = 1$ (the sum is taken over the same values of _n_ as in the two sums above), so that _g_(_n_) is the probability of getting _n_ after step 2 is complete.
+- $\sum_n g(n) = 1$ (the sum is taken over the same values of _n_ as in the two sums above), so that _g_(_n_) is the probability of getting _n_ after step 2 is complete.
 
 > **Notes:**
 >
