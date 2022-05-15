@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/05/12"><meta name="citation_online_date" content="2022/05/12"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/05/15"><meta name="citation_online_date" content="2022/05/15"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -173,7 +173,7 @@
 <p>The following definitions are used:</p>
 
 <ul>
-<li>A distribution&#39;s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nondecreasing function that maps uniform random variates in the closed interval [0, 1] to numbers that follow the distribution.</li>
+<li>A distribution&#39;s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nondecreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.</li>
 <li>A distribution&#39;s <em>support</em> is the set of values the distribution can take on, plus that set&#39;s endpoints.  For example, the beta distribution&#39;s support is the closed interval [0, 1], and the normal distribution&#39;s support is the entire real line.</li>
 <li>The <em>zero-truncated Poisson</em> distribution: To generate a random variate that follows this distribution (with parameter <em>&lambda;</em> &gt; 0), generate Poisson variates with parameter <em>&lambda;</em> until a variate other than 0 is generated this way, then take the last generated variate.</li>
 </ul>
@@ -372,8 +372,8 @@
 </tr>
 <tr>
 <td>Lehmann Weibull(<em>a1</em>, <em>a2</em>, <em>&beta;</em>) (Elgohari and Yousof 2020)[^41].</td>
-<td>(ln(1/<em>U</em>)/<em>&beta;</em>)<sup>1/<em>a1</em></sup>/<em>a2</em> or <em>E</em><sup>1/<em>a1</em></sup>/<em>a2</em></td>
-<td><em>a1</em>, <em>a2</em>, <em>&beta;</em> &gt; 0. <em>E</em> is exponential with rate <em>&beta;</em>.</td>
+<td>(ln(1/<em>U</em>)/<em>&beta;</em>)<sup>1/<em>a1</em></sup>/<em>a2</em> or (<em>E</em>/<em>&beta;</em>)<sup>1/<em>a1</em></sup>/<em>a2</em></td>
+<td><em>a1</em>, <em>a2</em>, <em>&beta;</em> &gt; 0. <em>E</em> is exponential with rate 1.</td>
 </tr>
 <tr>
 <td>Marshall&ndash;Olkin(<em>&alpha;</em>) (Marshall and Olkin 1997)[^42]</td>
@@ -595,7 +595,7 @@ END METHOD
 
 <ol>
 <li>Choose an integer in [0, <em>s</em>) with probability proportional to the weights in <em>r</em>, where <em>s</em> is the number of items in <em>r</em>.  Call the chosen integer <em>k</em>.</li>
-<li>Set <em>x</em> to an integer chosen uniformly at random in the half-open interval [<em>D</em>[<em>k</em>][0], <em>D</em>[<em>k</em>][1]).</li>
+<li>Set <em>x</em> to an integer chosen uniformly at random, in the half-open interval [<em>D</em>[<em>k</em>][0], <em>D</em>[<em>k</em>][1]).</li>
 <li>With probability <em>w</em>[<em>x</em>] / <em>q</em>[<em>k</em>], return <em>x</em>.  Otherwise, go to step 1.</li>
 </ol></li>
 </ul>
@@ -614,7 +614,7 @@ END METHOD
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The weights can be base-<em>&beta;</em> logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace &quot;<em>q</em>[<em>m</em>]*min((<em>b</em>&minus;<em>a</em>)&quot; with &quot;<em>q</em>[<em>m</em>]+ln(min((<em>b</em>&minus;<em>a</em>))/ln(<em>&beta;</em>)&quot; (which is generally inexact unless <em>&beta;</em> is 2); in sampling step 1, use an algorithm that takes base-<em>&beta;</em> logarithms as weights; and replace sampling step 3 with &quot;Generate an exponential random variate with rate ln(<em>&beta;</em>).  If that variate is greater than <em>q</em>[<em>k</em>] minus <em>w</em>[<em>x</em>], return <em>x</em>.  Otherwise, go to step 1.&quot;  These modifications can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).</p>
+<p><strong>Note:</strong> The weights can be base-<em>&beta;</em> logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace &quot;<em>q</em>[<em>m</em>]*min((<em>b</em>&minus;<em>a</em>)&quot; with &quot;<em>q</em>[<em>m</em>]+ln(min((<em>b</em>&minus;<em>a</em>))/ln(<em>&beta;</em>)&quot; (which is generally inexact unless <em>&beta;</em> is 2); in sampling step 1, use an algorithm that takes base-<em>&beta;</em> logarithms as weights; and replace sampling step 3 with &quot;Generate an exponential random variate with rate ln(<em>&beta;</em>) (that is, the variate is <em>E</em>/ln(<em>&beta;</em>) where <em>E</em> is exponential with rate 1).  If that variate is greater than <em>q</em>[<em>k</em>] minus <em>w</em>[<em>x</em>], return <em>x</em>.  Otherwise, go to step 1.&quot;  These modifications can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).</p>
 </blockquote>
 
 <p><a id=A_sampler_for_unimodal_distributions_of_weights></a></p>
@@ -640,7 +640,7 @@ END METHOD
 <p>Samples from the so-called &quot;log uniform distribution&quot; as used by the Abseil programming library.  This algorithm takes a maximum <em>mx</em> and a logarithmic base <em>b</em>, and chooses an integer in [0, <em>mx</em>] such that two values are equally likely to be chosen if their base-<em>b</em> logarithms are equal in their integer parts (which roughly means that lower numbers are exponentially more likely to occur).  Although this algorithm works, in principle, for any <em>b</em> &gt; 0, Abseil supports only integer bases <em>b</em>.</p>
 
 <ol>
-<li>Let <em>L</em> be ceil(ln(<em>mx</em>+1)/ln(<em>b</em>)). Choose a uniform random integer in the closed interval [0, <em>l</em>], call it <em>u</em>.</li>
+<li>Let <em>L</em> be ceil(ln(<em>mx</em>+1)/ln(<em>b</em>)). Choose a uniform random integer in the closed interval [0, <em>L</em>], call it <em>u</em>.</li>
 <li>If <em>u</em> is 0, return 0.</li>
 <li>Set <em>st</em> to min(<em>mx</em>, ceil(<em>b</em><sup><em>u</em>&minus;1</sup>)).</li>
 <li>Set <em>en</em> to min(<em>mx</em>, ceil(<em>b</em><sup><em>u</em></sup>) &minus; 1).</li>

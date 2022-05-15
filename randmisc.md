@@ -130,7 +130,7 @@ This section is a note on certain families of univariate (one-variable) probabil
 
 The following definitions are used:
 
-- A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nondecreasing function that maps uniform random variates in the closed interval [0, 1] to numbers that follow the distribution.
+- A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nondecreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.
 - A distribution's _support_ is the set of values the distribution can take on, plus that set's endpoints.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
 - The _zero-truncated Poisson_ distribution: To generate a random variate that follows this distribution (with parameter _&lambda;_ > 0), generate Poisson variates with parameter _&lambda;_ until a variate other than 0 is generated this way, then take the last generated variate.
 
@@ -244,7 +244,7 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | This distribution: |  Is distributed as: | And uses these parameters: |
  --- | --- | --- |
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
-| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020\)[^41]. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential with rate _&beta;_. |
+| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020\)[^41]. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or (_E_/_&beta;_)<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential with rate 1. |
 | Marshall&ndash;Olkin(_&alpha;_) (Marshall and Olkin 1997\)[^42] | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
 | Lomax(_&alpha;_). | (1&minus;_U_)<sup>&minus;1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016\)[^43]. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
@@ -387,7 +387,7 @@ An algorithm for sampling an integer in the interval \[_a_, _b_) with probabilit
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_a_, _a_+1\], then set _j_ to 1, then while _j_ &lt; _n_, append the list \[_j_, _j_ + min((_b_&minus;_a_) &minus; _j_, _j_)\] and multiply _j_ by 2.
 - Sampling:
     1. Choose an integer in [0, _s_) with probability proportional to the weights in _r_, where _s_ is the number of items in _r_.  Call the chosen integer _k_.
-    2. Set _x_ to an integer chosen uniformly at random in the half-open interval \[_D_\[_k_\]\[0\], _D_\[_k_\]\[1\]).
+    2. Set _x_ to an integer chosen uniformly at random, in the half-open interval \[_D_\[_k_\]\[0\], _D_\[_k_\]\[1\]).
     3. With probability _w_\[_x_\] / _q_\[_k_\], return _x_.  Otherwise, go to step 1.
 
 For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follows instead:
@@ -398,7 +398,7 @@ For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follo
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_b_&minus;1, _b_\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append the list \[(_b_&minus;_j_) &minus; min((_b_&minus;_a_) &minus; _j_, _j_), _b_&minus;_j_\] and multiply _j_ by 2.
 - The sampling is the same as for the previous algorithm.
 
-> **Note:** The weights can be base-_&beta;_ logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace "_q_\[_m_\]\*min((_b_&minus;_a_)" with "_q_\[_m_\]+ln(min((_b_&minus;_a_))/ln(_&beta;_)" (which is generally inexact unless _&beta;_ is 2); in sampling step 1, use an algorithm that takes base-_&beta;_ logarithms as weights; and replace sampling step 3 with "Generate an exponential random variate with rate ln(_&beta;_).  If that variate is greater than _q_\[_k_\] minus _w_\[_x_\], return _x_.  Otherwise, go to step 1."  These modifications can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).
+> **Note:** The weights can be base-_&beta;_ logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace "_q_\[_m_\]\*min((_b_&minus;_a_)" with "_q_\[_m_\]+ln(min((_b_&minus;_a_))/ln(_&beta;_)" (which is generally inexact unless _&beta;_ is 2); in sampling step 1, use an algorithm that takes base-_&beta;_ logarithms as weights; and replace sampling step 3 with "Generate an exponential random variate with rate ln(_&beta;_) (that is, the variate is _E_/ln(_&beta;_) where _E_ is exponential with rate 1).  If that variate is greater than _q_\[_k_\] minus _w_\[_x_\], return _x_.  Otherwise, go to step 1."  These modifications can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).
 
 <a id=A_sampler_for_unimodal_distributions_of_weights></a>
 ## A sampler for unimodal distributions of weights
@@ -415,7 +415,7 @@ The following is an algorithm for sampling an integer in the interval \[_a_, _b_
 
 Samples from the so-called "log uniform distribution" as used by the Abseil programming library.  This algorithm takes a maximum _mx_ and a logarithmic base _b_, and chooses an integer in \[0, _mx_\] such that two values are equally likely to be chosen if their base-_b_ logarithms are equal in their integer parts (which roughly means that lower numbers are exponentially more likely to occur).  Although this algorithm works, in principle, for any _b_ > 0, Abseil supports only integer bases _b_.
 
-1. Let _L_ be ceil(ln(_mx_+1)/ln(_b_)). Choose a uniform random integer in the closed interval \[0, _l_\], call it _u_.
+1. Let _L_ be ceil(ln(_mx_+1)/ln(_b_)). Choose a uniform random integer in the closed interval \[0, _L_\], call it _u_.
 2. If _u_ is 0, return 0.
 3. Set _st_ to min(_mx_, ceil(_b_<sup>_u_&minus;1</sup>)).
 4. Set _en_ to min(_mx_, ceil(_b_<sup>_u_</sup>) &minus; 1).
