@@ -575,9 +575,7 @@ END METHOD
 
 [^27]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
 
-[^28]: O. Rioul, "Variations on a Theme by Massey," in IEEE Transactions on Information Theory, doi: 10.1109/TIT.2022.3141264.
-
-[^29]: Massey, J.L., "On the entropy of integer-valued random variables", 1988.
+[^28]: Baccetti, Valentina, and Matt Visser. "Infinite Shannon entropy." Journal of Statistical Mechanics: Theory and Experiment 2013, no. 04 (2013): P04010, also in arXiv:1212.5630.
 
 <a id=Appendix></a>
 ## Appendix
@@ -648,8 +646,9 @@ There are many ways to describe closeness between two distributions.  One sugges
 >
 > **Note:** A discrete distribution can be sampled in finite time on average if and only if its so-called _Shannon entropy_ is finite (Knuth and Yao 1976)[^26]  Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^24].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^27] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution's Shannon entropy is finite whenever&mdash;
 >
-> - it takes on only integers 0 or greater and has a finite mean ("long-run average") (Rioul 2022\)[^28], or
-> - it takes on only integers and has a finite variance ("long-run average" of squared deviation from the mean) (Massey 1988\)[^29].
+> - it takes on only integers 1 or greater and has a finite _t_<sup>th</sup> moment for some _t_ > 0 ("long-run average" of values raised to _t_<sup>th</sup> power) (Baccetti and Visser 2013)[^28], or as a special case,
+> - it takes on only integers 1 or greater and has a finite mean ("long-run average"), or
+> - it has the form _X_ + _n_, where _n_ is a constant and _X_ is a random variate whose distribution has finite Shannon entropy.
 
 <a id=License></a>
 ## License
