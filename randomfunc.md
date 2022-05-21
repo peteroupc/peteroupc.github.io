@@ -443,7 +443,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
 <a id=Shuffling></a>
 #### Shuffling
 
-The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007\)[^16].  The following pseudocode is designed to shuffle a list's contents.
+The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list occur with the same probability.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007\)[^16].  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -733,7 +733,7 @@ In general, sorting random variates is no different from sorting any other data.
 <a id=General_Non_Uniform_Distributions></a>
 ## General Non-Uniform Distributions
 
-Some applications need to choose random values such that some of them are more likely to be chosen than others (a _non-uniform_ distribution). Most of the techniques in this section show how to use the [**uniform random integer methods**](#Uniform_Random_Integers) to generate such random values.
+Some applications need to choose random values such that some of them have a greater chance to be chosen than others (a _non-uniform_ distribution). Most of the techniques in this section show how to use the [**uniform random integer methods**](#Uniform_Random_Integers) to generate such random values.
 
 <a id=Weighted_Choice></a>
 ### Weighted Choice
@@ -745,7 +745,7 @@ The weighted choice method generates a random item or value from among a collect
 
 The first kind is called weighted choice _with replacement_ (which can be thought of as drawing a ball, then putting it back) or a _categorical distribution_, where the probability of choosing each item doesn't change as items are chosen.  In the following pseudocode:
 
-- `WeightedChoice` takes a single list `weights` of weights (integers 0 or greater) and returns the _index_ of a weight from that list.  The greater the weight, the more likely its index will be chosen.
+- `WeightedChoice` takes a single list `weights` of weights (integers 0 or greater) and returns the _index_ of a weight from that list.  The greater the weight, the greater the chance its index will be chosen.
 - `CumulativeWeightedChoice` takes a single list `weights` of N _cumulative weights_; they start at 0 and the next weight is not less than the previous.  Returns a number in the interval [0, N - 1).
 - `NormalizeRatios` calculates a list of integers with the same proportions as the given list of rational numbers (numbers of the form `x/y`).  This is useful for converting rational weights to integer weights for use in `WeightedChoice`.
 - `gcd(a, b)` is the greatest common divisor between two numbers (where `gcd(0, a) = gcd(a, 0) = a` whenever `a >= 0`).
@@ -824,7 +824,7 @@ The following are various ways to implement `WeightedChoice`. Many of them requi
 >
 > **Examples:**
 >
-> 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following idiom implements how to get a randomly chosen item from the list with that method: `item = list[WeightedChoice(weights)]`.
+> 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) has a greater probability of being chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following idiom implements how to get a randomly chosen item from the list with that method: `item = list[WeightedChoice(weights)]`.
 > 2. Example 1 can be implemented with `CumulativeWeightedChoice` instead of `WeightedChoice` if `weights` is the following list of cumulative weights: `[0, 3, 18, 19, 21]`.
 > 3. **Piecewise constant distribution.** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four intervals: \[0, 5), \[5, 10), and so on.  Choose a random index (and thus interval) with `index = WeightedChoice(weights)`.  Then independently, choose a number in the chosen interval uniformly at random (for example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(list[index], list[index + 1])`).
 
@@ -855,7 +855,7 @@ Alternatively, if all the weights are integers 0 or greater and their sum is rel
 <a id=Weighted_Choice_Without_Replacement_Single_Copies></a>
 #### Weighted Choice Without Replacement (Single Copies)
 
-The following are ways to implement weighted choice without replacement, where each item **can be chosen no more than once** at random.  The weights have the property that higher-weighted items are more likely to appear first.
+The following are ways to implement weighted choice without replacement, where each item **can be chosen no more than once** at random.  The weights have the property that higher-weighted items have a greater chance to appear first.
 
 - Use `WeightedChoice` to choose random indices.  Each time an index is chosen, set the weight for the chosen index to 0 to keep it from being chosen again.  Or...
 - Assign each index a random exponentially-distributed number (with a rate equal to that index's weight, which must be an integer 1 or greater), make a list of pairs assigning each number to an index, then sort that list in ascending order by those numbers.  Example: `v=[]; for i in 0...size(weights): AddItem(v, [ExpoNew(weights[i]), i]); Sort(v)` (see the next section for `ExpoNew`).  The sorted list of indices will then correspond to a weighted choice without replacement.  See "[**Algorithms for sampling without replacement**](https://timvieira.github.io/blog/post/2019/09/16/algorithms-for-sampling-without-replacement/)".
@@ -995,13 +995,13 @@ Generate one or more random variates (numbers), each with a separate probability
 8. **Mean:** Add all generated variates, then divide the sum by the number of variates.
 9. **Geometric transformation:** Treat the variates as an _n_-dimensional point, then apply a geometric transformation, such as a rotation or other _affine transformation_[^50], to that point.
 
-If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.
+If the probability distributions are the same, then strategies 1 to 3 give higher numbers a greater probability, and strategies 4 to 6, lower numbers.
 
 > **Note:** Variants of strategy 4 &mdash; for example, choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-**order statistics distributions**, respectively.
 >
 > **Examples:**
 >
-> 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.
+> 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 has a greater chance of occurring than 6.
 > 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)") (strategy 7).
 > 3. A **binomial distribution** models the sum of `n` numbers each generated by `ZeroOrOne(px,py)` (strategy 7) (see "[**Binomial Distribution**](#Binomial_Distribution)").
 > 4. A [**Poisson binomial distribution**](https://en.wikipedia.org/wiki/Poisson_binomial_distribution) models the sum of `n` numbers each with a separate probability of being 1 as opposed to 0 (strategy 7). Given `probs`, a list of the `n` probabilities as rational numbers, the pseudocode is: `for i in 0...n: x=x+ZeroOrOne(probs[i][0],probs[i][1]); return x`.
@@ -1476,7 +1476,7 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
 
 Various methods have been developed for selecting a uniform-behaving sample of points, especially for Monte Carlo methods.
 
-Among these methods, a [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that behave like uniformly distributed numbers in the interval [0, 1], but are _dependent_ on each other, in that they are less likely to form "clumps" than if they were independent.  The following are examples:
+Among these methods, a [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that behave like uniformly distributed numbers in the interval [0, 1], but are _dependent_ on each other, in that they have a smaller chance to form "clumps" than if they were independent.  The following are examples:
 
 - A base-N _van der Corput sequence_ is generated as follows:  For each non-negative integer index in the sequence, take the index as a base-N number, then divide the least significant base-N digit by N, the next digit by N<sup>2</sup>, the next by N<sup>3</sup>, and so on, and add together these results of division.
 - A _Halton sequence_ is a set of two or more van der Corput sequences with different prime bases; a Halton point at a given index has coordinates equal to the points for that index in the van der Corput sequences.
@@ -1523,7 +1523,7 @@ Other methods that likewise produce a uniform-behaving point sample include the 
 
 Generating random data points based on how a list of data points is distributed involves the field of **machine learning**: _fit a data model_ to the data points, then _predict_ a new data point based on that model, with randomness added to the mix.  Three kinds of data models, described below, serve this purpose. (How fitting works is outside the scope of this page.)
 
-1. **Density estimation models.** [**Density estimation**](http://scikit-learn.org/stable/modules/density.html) models seek to describe the distribution of data points in a given data set, where areas with more points are more likely to be sampled.[^75] The following are examples.
+1. **Density estimation models.** [**Density estimation**](http://scikit-learn.org/stable/modules/density.html) models seek to describe the distribution of data points in a given data set, where areas with more points have a greater chance to be sampled.[^75] The following are examples.
 
     - **Histograms** are sets of one or more non-overlapping _bins_, which are generally of equal size.  Histograms are [**_mixtures_**](#Mixtures_of_Distributions), where each bin's weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).
     - **Gaussian** [**mixture models**](https://en.wikipedia.org/wiki/Mixture_model) are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
@@ -1754,7 +1754,7 @@ MCMC algorithms[^85] include _Metropolis&ndash;Hastings_, _slice sampling_, and 
 A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution) describes an absolutely continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The `PiecewiseLinear` method (in the pseudocode below) takes two lists as follows (see also (Kscischang 2019\)[^86]):
 
 - `values` is a list of rational numbers. If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
-- `weights` is a list of rational-valued weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
+- `weights` is a list of rational-valued weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the greater the probability that a number close to that number will be chosen.  Each weight should be 0 or greater.
 
 &nbsp;
 
@@ -1787,7 +1787,7 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
 > **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant to the method
 > above for returning more than one random variate in one call.
 >
-> **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `PiecewiseLinear` method.
+> **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 have a greater probability of being chosen than numbers near 2.5 with the `PiecewiseLinear` method.
 
 <a id=Specific_Distributions></a>
 ### Specific Distributions
@@ -1823,7 +1823,7 @@ Most commonly used:
 - **Inverse gamma distribution**: `b / GammaDist(a)`, where `a` and `b` have the
  same meaning as in the gamma distribution.  Alternatively, `1.0 / (pow(GammaDist(a), 1.0 / c) / b + d)`, where `c` and `d` are shape and location parameters, respectively.
 - **Laplace (double exponential) distribution**&dagger;: `(Expo(1) - Expo(1))`.  Also, `Normal(0,1) * Normal(0, 1) - Normal(0, 1) * Normal(0, 1)` (Kotz et al. 2012\)[^91].
-- **Logarithmic distribution**&#x2b26;: `RNDRANGEMinMaxExc(0, 1) * RNDRANGEMinMaxExc(0, 1)` (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.
+- **Logarithmic distribution**&#x2b26;: `RNDRANGEMinMaxExc(0, 1) * RNDRANGEMinMaxExc(0, 1)` (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more probable than higher numbers.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma` are the underlying normal distribution's parameters.
 - **Multinormal distribution**: See multivariate normal distribution.
 - **Multivariate normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution).

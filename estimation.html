@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2022/05/12"><meta name="citation_online_date" content="2022/05/12"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2022/05/21"><meta name="citation_online_date" content="2022/05/21"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -24,7 +24,7 @@
 
 <p>The following concepts are used in this document.</p>
 
-<p>Each algorithm takes a stream of independent random variates (numbers).  These variates follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.</p>
+<p>Each algorithm takes a stream of independent random variates (numbers).  These variates follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers have greater probability of occurring than others.  A distribution has the following properties.</p>
 
 <ul>
 <li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the &quot;long-run average&quot; value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  If we take independent random samples and then take their average, then with probability 1, the average will approach the expected value as <em>n</em> gets large (the <em>law of large numbers</em>).</li>
@@ -411,12 +411,12 @@ pprint(Max(1,kappa))
 
 <h2>Finding Coins with Maximum Success Probabilities</h2>
 
-<p>Given <em>m</em> coins each with unknown probability of heads, the following algorithm finds the <em>k</em> coins that are most likely to show heads, such that the algorithm correctly finds them with probability at least 1 &minus; <em>&delta;</em>.  It uses the following parameters:</p>
+<p>Given <em>m</em> coins each with unknown probability of heads, the following algorithm finds the <em>k</em> coins with the greatest probability of showing heads, such that the algorithm correctly finds them with probability at least 1 &minus; <em>&delta;</em>.  It uses the following parameters:</p>
 
 <ul>
 <li><em>k</em> is the number of coins to return.</li>
-<li><em>&delta;</em> is the confidence level; the algorithm correctly finds the coins most likely to show heads with probability at least 1 &minus; <em>&delta;</em>.</li>
-<li><em>D</em> is a <em>gap parameter</em> or a lesser number, but must be greater than 0.  The <em>gap parameter</em> is the difference between the <em>k</em><sup>th</sup> most likely coin to show heads and the (<em>k</em>+1)<sup>th</sup> most likely coin to show heads.  Practically speaking, <em>D</em> is the smallest possible difference between one probability of heads and another.</li>
+<li><em>&delta;</em> is the confidence level; the algorithm correctly finds the coins with the greatest probability of showing heads with probability at least 1 &minus; <em>&delta;</em>.</li>
+<li><em>D</em> is a <em>gap parameter</em> or a lesser number, but must be greater than 0.  The <em>gap parameter</em> is the difference between the <em>k</em><sup>th</sup> most probable coin to show heads and the (<em>k</em>+1)<sup>th</sup> most probable coin to show heads.  Practically speaking, <em>D</em> is the smallest possible difference between one probability of heads and another.</li>
 <li><em>r</em> is the number of rounds to run the algorithm and must be an integer 1 or greater.</li>
 </ul>
 

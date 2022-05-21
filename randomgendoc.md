@@ -878,7 +878,7 @@ CLASSES
      |      function for discrete distributions.  The random integers
      |      will be in the interval [mn, mx].  `n` random integers will be
      |      generated. `pdf` is the PDF; it takes one parameter and returns,
-     |      for that parameter, a weight indicating the relative likelihood
+     |      for that parameter, a weight indicating the relative probability
      |      that a random integer will equal that parameter.
      |      The area under the "curve" of the PDF need not be 1.
      |      By default, `n` is 1.
@@ -1107,7 +1107,7 @@ CLASSES
      |      function (PDF).  The random number
      |      will be in the interval [mn, mx].  `n` random numbers will be
      |      generated. `pdf` is the PDF; it takes one parameter and returns,
-     |      for that parameter, a weight indicating the relative likelihood
+     |      for that parameter, a weight indicating the relative probability
      |       that a random number will be close to that parameter. `steps`
      |      is the number of subintervals between sample points of the PDF.
      |      The area under the curve of the PDF need not be 1.
@@ -1526,7 +1526,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1653130689.8849773
+    t = 1653136479.1352468
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
@@ -2339,7 +2339,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1653130691.0296624
+    t = 1653136480.3430743
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
@@ -3934,7 +3934,7 @@ DATA
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
     REAL_858_1000 = RealFraction(429/500)
-    t = 1653130693.0994663
+    t = 1653136482.5484235
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py

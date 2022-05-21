@@ -16,7 +16,7 @@ Not yet covered are unbiased mean estimation algorithms that take a sequence of 
 
 The following concepts are used in this document.
 
-Each algorithm takes a stream of independent random variates (numbers).  These variates follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.
+Each algorithm takes a stream of independent random variates (numbers).  These variates follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers have greater probability of occurring than others.  A distribution has the following properties.
 
 - The _expectation_, _expected value_, or _mean_ is the "long-run average" value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  If we take independent random samples and then take their average, then with probability 1, the average will approach the expected value as _n_ gets large (the _law of large numbers_).
 - An _n<sup>th</sup> moment_ is the expected value of _X_<sup>_n_</sup>.  In other words, take random samples, raise them to the power _n_, then take their average.  Then with probability 1, the average approaches the _n_<sup>th</sup> moment as _n_ gets large.
@@ -296,11 +296,11 @@ pprint(Max(1,kappa))
 <a id=Finding_Coins_with_Maximum_Success_Probabilities></a>
 ## Finding Coins with Maximum Success Probabilities
 
-Given _m_ coins each with unknown probability of heads, the following algorithm finds the _k_ coins that are most likely to show heads, such that the algorithm correctly finds them with probability at least 1 &minus; _&delta;_.  It uses the following parameters:
+Given _m_ coins each with unknown probability of heads, the following algorithm finds the _k_ coins with the greatest probability of showing heads, such that the algorithm correctly finds them with probability at least 1 &minus; _&delta;_.  It uses the following parameters:
 
 - _k_ is the number of coins to return.
-- _&delta;_ is the confidence level; the algorithm correctly finds the coins most likely to show heads with probability at least 1 &minus; _&delta;_.
-- _D_ is a _gap parameter_ or a lesser number, but must be greater than 0.  The _gap parameter_ is the difference between the _k_<sup>th</sup> most likely coin to show heads and the (_k_+1)<sup>th</sup> most likely coin to show heads.  Practically speaking, _D_ is the smallest possible difference between one probability of heads and another.
+- _&delta;_ is the confidence level; the algorithm correctly finds the coins with the greatest probability of showing heads with probability at least 1 &minus; _&delta;_.
+- _D_ is a _gap parameter_ or a lesser number, but must be greater than 0.  The _gap parameter_ is the difference between the _k_<sup>th</sup> most probable coin to show heads and the (_k_+1)<sup>th</sup> most probable coin to show heads.  Practically speaking, _D_ is the smallest possible difference between one probability of heads and another.
 - _r_ is the number of rounds to run the algorithm and must be an integer 1 or greater.
 
 In this section, ilog(_a_, _r_) means either _a_ if _r_ is 0, or max(ln(ilog(_a_, _r_&minus;1)), 1) otherwise.

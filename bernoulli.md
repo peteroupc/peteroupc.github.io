@@ -691,7 +691,7 @@ The Bernoulli factory approach, which simulates a coin with unknown heads probab
 where:
 
 - _r_ is an integer greater than 0.  There are _r_+1 values this algorithm can choose from.
-- _g_(_i_) takes an integer _i_ and returns a number 0 or greater.  This serves as a _weight_ for the "coin" labeled _i_; the higher the weight, the more likely the "coin" will be "flipped".
+- _g_(_i_) takes an integer _i_ and returns a number 0 or greater.  This serves as a _weight_ for the "coin" labeled _i_; the higher the weight, the greater the probability the "coin" will be "flipped".
 - _h_<sub>_i_</sub>(**_&lambda;_**) takes in a number _i_ and the probabilities of heads of one or more input coins, and returns a number in the interval [0, 1].  This represents the "coin" for one of the _r_+1 choices.
 
 The algorithm follows.
@@ -1957,7 +1957,7 @@ Since both conditions of Huber's theorem are satisfied, this completes the proof
 
 _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the proof of correctness.
 
-- The algorithm finishes with probability 1 because with each recursion, the method is never more likely to do a recursive run than not to do so; observe that _a_\[_i_\] can never be more than 1, so that _a_\[_i_\]/(1+_a_\[_i_\]), that is, the probability of finishing the run in each iteration, is always 1/2 or greater.
+- The algorithm finishes with probability 1 because with each recursion, the method does a recursive run with no greater probability than not; observe that _a_\[_i_\] can never be more than 1, so that _a_\[_i_\]/(1+_a_\[_i_\]), that is, the probability of finishing the run in each iteration, is always 1/2 or greater.
 - If the recursive call in the loop is replaced with a "black box" that simulates the correct "sub-fraction", the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability _b_\[_i_\] / (_a_\[_i_\] + _x_), where _x_ is the "continued sub-fraction" and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to _h_ = _a_\[_i_\]/(_a_\[_i_\] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to _x_ * (1 &minus; _h_)), and the last piece is the "rejection piece".  The algorithm will pass at the first substep with probability _p_ = (_b_\[_i_\] / _a_\[_pos_\]) * _h_ and fail either at the first substep of the loop with probability _f1_ = (1 &minus; _b_\[_i_\] / _a_\[_pos_\]) * _h_, or at the second substep with probability _f2_ = _x_ * (1 &minus; _h_) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to _b_\[_i_\] / (_a_\[_i_\] + _x_), which is the probability we wanted, so that both of Huber's conditions are satisfied and we are done.  &#x25a1;
 
 <a id=Probabilities_Arising_from_Certain_Permutations></a>

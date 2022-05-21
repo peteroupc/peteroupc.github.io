@@ -3554,7 +3554,7 @@ class RandomGen:
         function for discrete distributions.  The random integers
         will be in the interval [mn, mx].  `n` random integers will be
         generated. `pdf` is the PDF; it takes one parameter and returns,
-        for that parameter, a weight indicating the relative likelihood
+        for that parameter, a weight indicating the relative probability
         that a random integer will equal that parameter.
         The area under the "curve" of the PDF need not be 1.
         By default, `n` is 1."""
@@ -3811,7 +3811,7 @@ class RandomGen:
         function (PDF).  The random number
         will be in the interval [mn, mx].  `n` random numbers will be
         generated. `pdf` is the PDF; it takes one parameter and returns,
-        for that parameter, a weight indicating the relative likelihood
+        for that parameter, a weight indicating the relative probability
          that a random number will be close to that parameter. `steps`
         is the number of subintervals between sample points of the PDF.
         The area under the curve of the PDF need not be 1.

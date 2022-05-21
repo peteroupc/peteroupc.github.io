@@ -40,7 +40,7 @@ An algorithm found in (Morina et al. 2022\)[^6] \(called **Algorithm M** in this
 
 Algorithm M in fact works in a surprisingly broad range of cases; for more, see the [**appendix**](#Appendix).
 
-Pae (2005\)[^7] and (Pae and Loui 2006\)[^8] characterize _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input's probability of zero or one.[^9]  Among others, von Neumann's extractor and the one by Peres (1992\)[^10] are extracting functions.  The Peres extractor takes a list of bits (zeros and ones generated from a "coin" with a given probability of heads) as input and is described as follows:
+Pae (2005\)[^7] and (Pae and Loui 2006\)[^8] characterize _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length occurs with the same probability as every other output bit-string of that length, regardless of the input's probability of zero or one.[^9]  Among others, von Neumann's extractor and the one by Peres (1992\)[^10] are extracting functions.  The Peres extractor takes a list of bits (zeros and ones generated from a "coin" with a given probability of heads) as input and is described as follows:
 
 1. Create two empty lists named U and V. Then, while two or more bits remain in the input:
     1. If the next two bits are 0/0, append 0 to U and 0 to V.

@@ -137,7 +137,7 @@ For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](h
 
 The pseudocode shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  They include rejection sampling, Vose's version of the alias method (`VoseAlias`; see "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information), and the Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020\)[^3].
 
-Weighted choice _without replacement_ is a choice where each item can be chosen no more than once.  If the weights have the property that higher-weighted items are more likely to appear first, then:
+Weighted choice _without replacement_ is a choice where each item can be chosen no more than once.  If the weights have the property that higher-weighted items have a greater chance of appearing first, then:
 
 - The simplest way to implement this is to use weighted choice with replacement, except that after an index is chosen, that index's weight is set to 0 to keep the index from being chosen again.
 - Other options are given in "[**Weighted Choice Without Replacement (Single Copies)**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_Single_Copies)" and "[**Weighted Choice Without Replacement (List of Unknown Size)**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_List_of_Unknown_Size)".

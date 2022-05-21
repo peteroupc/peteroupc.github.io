@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2022/05/02"><meta name="citation_online_date" content="2022/05/02"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2022/05/21"><meta name="citation_online_date" content="2022/05/21"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -649,7 +649,7 @@ END METHOD
 
 <h4>Shuffling</h4>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle method</strong></a> shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007)[^16].  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle method</strong></a> shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list occur with the same probability.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007)[^16].  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
 
 <pre>METHOD Shuffle(list)
    // NOTE: Check size of the list early to prevent
@@ -995,7 +995,7 @@ END METHOD
 
 <h2>General Non-Uniform Distributions</h2>
 
-<p>Some applications need to choose random values such that some of them are more likely to be chosen than others (a <em>non-uniform</em> distribution). Most of the techniques in this section show how to use the <a href="#Uniform_Random_Integers"><strong>uniform random integer methods</strong></a> to generate such random values.</p>
+<p>Some applications need to choose random values such that some of them have a greater chance to be chosen than others (a <em>non-uniform</em> distribution). Most of the techniques in this section show how to use the <a href="#Uniform_Random_Integers"><strong>uniform random integer methods</strong></a> to generate such random values.</p>
 
 <p><a id=Weighted_Choice></a></p>
 
@@ -1010,7 +1010,7 @@ END METHOD
 <p>The first kind is called weighted choice <em>with replacement</em> (which can be thought of as drawing a ball, then putting it back) or a <em>categorical distribution</em>, where the probability of choosing each item doesn&#39;t change as items are chosen.  In the following pseudocode:</p>
 
 <ul>
-<li><code>WeightedChoice</code> takes a single list <code>weights</code> of weights (integers 0 or greater) and returns the <em>index</em> of a weight from that list.  The greater the weight, the more likely its index will be chosen.</li>
+<li><code>WeightedChoice</code> takes a single list <code>weights</code> of weights (integers 0 or greater) and returns the <em>index</em> of a weight from that list.  The greater the weight, the greater the chance its index will be chosen.</li>
 <li><code>CumulativeWeightedChoice</code> takes a single list <code>weights</code> of N <em>cumulative weights</em>; they start at 0 and the next weight is not less than the previous.  Returns a number in the interval [0, N - 1).</li>
 <li><code>NormalizeRatios</code> calculates a list of integers with the same proportions as the given list of rational numbers (numbers of the form <code>x/y</code>).  This is useful for converting rational weights to integer weights for use in <code>WeightedChoice</code>.</li>
 <li><code>gcd(a, b)</code> is the greatest common divisor between two numbers (where <code>gcd(0, a) = gcd(a, 0) = a</code> whenever <code>a &gt;= 0</code>).</li>
@@ -1142,7 +1142,7 @@ END METHOD
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following idiom implements how to get a randomly chosen item from the list with that method: <code>item = list[WeightedChoice(weights)]</code>.</li>
+<li>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) has a greater probability of being chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following idiom implements how to get a randomly chosen item from the list with that method: <code>item = list[WeightedChoice(weights)]</code>.</li>
 <li>Example 1 can be implemented with <code>CumulativeWeightedChoice</code> instead of <code>WeightedChoice</code> if <code>weights</code> is the following list of cumulative weights: <code>[0, 3, 18, 19, 21]</code>.</li>
 <li><strong>Piecewise constant distribution.</strong> Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four intervals: [0, 5), [5, 10), and so on.  Choose a random index (and thus interval) with <code>index = WeightedChoice(weights)</code>.  Then independently, choose a number in the chosen interval uniformly at random (for example, code like the following chooses a random integer this way: <code>number = RNDINTEXCRANGE(list[index], list[index + 1])</code>).</li>
 </ol>
@@ -1180,7 +1180,7 @@ end
 
 <h4>Weighted Choice Without Replacement (Single Copies)</h4>
 
-<p>The following are ways to implement weighted choice without replacement, where each item <strong>can be chosen no more than once</strong> at random.  The weights have the property that higher-weighted items are more likely to appear first.</p>
+<p>The following are ways to implement weighted choice without replacement, where each item <strong>can be chosen no more than once</strong> at random.  The weights have the property that higher-weighted items have a greater chance to appear first.</p>
 
 <ul>
 <li>Use <code>WeightedChoice</code> to choose random indices.  Each time an index is chosen, set the weight for the chosen index to 0 to keep it from being chosen again.  Or...</li>
@@ -1341,7 +1341,7 @@ END METHOD
 <li><strong>Geometric transformation:</strong> Treat the variates as an <em>n</em>-dimensional point, then apply a geometric transformation, such as a rotation or other <em>affine transformation</em>[^50], to that point.</li>
 </ol>
 
-<p>If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.</p>
+<p>If the probability distributions are the same, then strategies 1 to 3 give higher numbers a greater probability, and strategies 4 to 6, lower numbers.</p>
 
 <blockquote>
 <p><strong>Note:</strong> Variants of strategy 4 &mdash; for example, choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-<strong>order statistics distributions</strong>, respectively.</p>
@@ -1349,7 +1349,7 @@ END METHOD
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.</li>
+<li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 has a greater chance of occurring than 6.</li>
 <li>The idiom <code>RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)</code> takes the result of two six-sided dice (see also &quot;<a href="#Dice"><strong>Dice</strong></a>&quot;) (strategy 7).</li>
 <li>A <strong>binomial distribution</strong> models the sum of <code>n</code> numbers each generated by <code>ZeroOrOne(px,py)</code> (strategy 7) (see &quot;<a href="#Binomial_Distribution"><strong>Binomial Distribution</strong></a>&quot;).</li>
 <li>A <a href="https://en.wikipedia.org/wiki/Poisson_binomial_distribution"><strong>Poisson binomial distribution</strong></a> models the sum of <code>n</code> numbers each with a separate probability of being 1 as opposed to 0 (strategy 7). Given <code>probs</code>, a list of the <code>n</code> probabilities as rational numbers, the pseudocode is: <code>for i in 0...n: x=x+ZeroOrOne(probs[i][0],probs[i][1]); return x</code>.</li>
@@ -1897,7 +1897,7 @@ END METHOD
 
 <p>Various methods have been developed for selecting a uniform-behaving sample of points, especially for Monte Carlo methods.</p>
 
-<p>Among these methods, a <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequence</em></strong></a> (or <em>quasirandom sequence</em>) is a sequence of numbers that behave like uniformly distributed numbers in the interval [0, 1], but are <em>dependent</em> on each other, in that they are less likely to form &quot;clumps&quot; than if they were independent.  The following are examples:</p>
+<p>Among these methods, a <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequence</em></strong></a> (or <em>quasirandom sequence</em>) is a sequence of numbers that behave like uniformly distributed numbers in the interval [0, 1], but are <em>dependent</em> on each other, in that they have a smaller chance to form &quot;clumps&quot; than if they were independent.  The following are examples:</p>
 
 <ul>
 <li>A base-N <em>van der Corput sequence</em> is generated as follows:  For each non-negative integer index in the sequence, take the index as a base-N number, then divide the least significant base-N digit by N, the next digit by N<sup>2</sup>, the next by N<sup>3</sup>, and so on, and add together these results of division.</li>
@@ -1960,7 +1960,7 @@ END METHOD
 <p>Generating random data points based on how a list of data points is distributed involves the field of <strong>machine learning</strong>: <em>fit a data model</em> to the data points, then <em>predict</em> a new data point based on that model, with randomness added to the mix.  Three kinds of data models, described below, serve this purpose. (How fitting works is outside the scope of this page.)</p>
 
 <ol>
-<li><p><strong>Density estimation models.</strong> <a href="http://scikit-learn.org/stable/modules/density.html"><strong>Density estimation</strong></a> models seek to describe the distribution of data points in a given data set, where areas with more points are more likely to be sampled.[^75] The following are examples.</p>
+<li><p><strong>Density estimation models.</strong> <a href="http://scikit-learn.org/stable/modules/density.html"><strong>Density estimation</strong></a> models seek to describe the distribution of data points in a given data set, where areas with more points have a greater chance to be sampled.[^75] The following are examples.</p>
 
 <ul>
 <li><strong>Histograms</strong> are sets of one or more non-overlapping <em>bins</em>, which are generally of equal size.  Histograms are <a href="#Mixtures_of_Distributions"><strong><em>mixtures</em></strong></a>, where each bin&#39;s weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).</li>
@@ -2240,7 +2240,7 @@ END METHOD
 
 <ul>
 <li><code>values</code> is a list of rational numbers. If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.</li>
-<li><code>weights</code> is a list of rational-valued weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number&#39;s weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
+<li><code>weights</code> is a list of rational-valued weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number&#39;s weight, the greater the probability that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -2276,7 +2276,7 @@ END METHOD
 <p><strong>Note:</strong> The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a variant to the method
 above for returning more than one random variate in one call.</p>
 
-<p><strong>Example</strong>: Assume <code>values</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the <code>PiecewiseLinear</code> method.</p>
+<p><strong>Example</strong>: Assume <code>values</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 have a greater probability of being chosen than numbers near 2.5 with the <code>PiecewiseLinear</code> method.</p>
 </blockquote>
 
 <p><a id=Specific_Distributions></a></p>
@@ -2316,7 +2316,7 @@ above for returning more than one random variate in one call.</p>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
 <li><strong>Laplace (double exponential) distribution</strong>&dagger;: <code>(Expo(1) - Expo(1))</code>.  Also, <code>Normal(0,1) * Normal(0, 1) - Normal(0, 1) * Normal(0, 1)</code> (Kotz et al. 2012)[^91].</li>
-<li><strong>Logarithmic distribution</strong>&#x2b26;: <code>RNDRANGEMinMaxExc(0, 1) * RNDRANGEMinMaxExc(0, 1)</code> (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.</li>
+<li><strong>Logarithmic distribution</strong>&#x2b26;: <code>RNDRANGEMinMaxExc(0, 1) * RNDRANGEMinMaxExc(0, 1)</code> (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more probable than higher numbers.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code> are the underlying normal distribution&#39;s parameters.</li>
 <li><strong>Multinormal distribution</strong>: See multivariate normal distribution.</li>
 <li><strong>Multivariate normal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
