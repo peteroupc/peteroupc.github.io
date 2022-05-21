@@ -10,7 +10,7 @@ Some pseudorandom number generators (PRNGs) have an efficient way to advance the
 
 For some PRNGs, each bit of the PRNG's state can be described as a linear recurrence on its entire state.  These PRNGs are called _F<sub>2</sub>-linear PRNGs_, and they include the following:
 
-- LCGs with a power-of-two modulus.
+- Linear congruential generators (LCGs) with a power-of-two modulus.
 - Xorshift PRNGs.
 - PRNGs in the xoroshiro and xoshiro families.
 - Linear or generalized feedback shift register generators, including Mersenne Twister.

@@ -44,6 +44,8 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 
 [**https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
 
+A polynomial $f(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$f(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_k$ are the polynomial's _Bernstein coefficients_.
+
 An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) simulates a factory function via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
 
 1. Generate U, a uniform random variate in $[0, 1]$.

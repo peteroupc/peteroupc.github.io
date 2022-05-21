@@ -147,7 +147,7 @@ The following algorithm samples a random variate following a distribution from t
 Certain special cases of the "X-G" families, such as the following, use a specially designed distribution for X:
 
 - The _exp-G_ family (Barreto-Souza and Simas 2010/2013)[^12], where X is an exponential distribution, truncated to the interval [0, 1], with parameter _&lambda;_ &ge; 0; step 1 is modified to read: "Generate _U_, a uniform random variate in the interval [0, 1], then set _x_ to &minus;ln((exp(&minus;_&lambda;_)&minus;1)\*_U_ + 1)/_&lambda;_ if _&lambda;_ != 0, and _U_ otherwise." (The _alpha power_ or _alpha power transformed_ family (Mahdavi and Kundu 2017\)[^13] uses the same distribution for X, but with _&lambda;_=&minus;ln(_&alpha;_) where _&alpha;_ is in \(0, 1\]; see also Jones (2018)[^14].)
-- The _exponentiated_ family (Mudholkar and Srivastava 1993\)[^15]. The family uses a shape parameter _a_ > 1; step 1 is modified to read: "Generate _u_, a uniform random variate in the interval [0, 1], then set _x_ to _u_<sup>1/_a_</sup>."
+- One family uses a shape parameter _a_ > 0; step 1 is modified to read: "Generate _u_, a uniform random variate in the interval [0, 1], then set _x_ to _u_<sup>1/_a_</sup>."  This family is mentioned in Lehmann (1953)[^60], Durrans (1992)[^61], and Mudholkar and Srivastava (1993\)[^15], which called it _exponentiated_.
 - The _transmuted-G_ family (Shaw and Buckley 2007\)[^16]. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^4]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^17] mentions the same distribution, but with a parameter _&lambda;_ = _&eta;_ + 1 lying in the interval [0, 2].)
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^17] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
 - Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: "Generate a uniform random variate _x_ in [0, 1], then with probability (1&minus;_x_<sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process."; or "Create a uniform PSRN _x_ with positive sign and integer part 0, then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process."
@@ -164,7 +164,7 @@ The following are special cases of the "transformed&ndash;transformer" family:
     - _W_(_x_) = &minus;ln(1&minus;_x_) (_W_<sup>&minus;1</sup>(_x_) = 1&minus;exp(&minus;_x_)).  Suggested in the original paper by Alzaatreh et al.
     - _W_(_x_) = _x_/(1&minus;_x_) (_W_<sup>&minus;1</sup>(_x_) = _x_/(1+_x_)).  Suggested in the original paper by Alzaatreh et al.  This choice forms the so-called "odd X G" family, and one example is the "odd log-logistic G" family (Gleaton and Lynch 2006\)[^20].
 
-Many special cases of the "transformed&ndash;transformer" family have been proposed in many papers, and usually their names suggest the distributions that make up this family.  Some members of the "odd X G" family have names that begin with the word "generalized", and in most such cases this corresponds to _W_<sup>&minus;1</sup>(_x_) = (_x_/(1+_x_))<sup>1/_a_</sup>, where _a_ > 0 is a shape parameter; examples include the "generalized odd gamma-G" family (Hosseini et al. 2018\)[^21].
+> **Example:** For the "generalized odd gamma-G" family (Hosseini et al. 2018\)[^21], X is the gamma(_&alpha;_) distribution, _W_<sup>&minus;1</sup>(_x_) = (_x_/(1+_x_))<sup>1/_&beta;_</sup>, G is arbitrary, _&alpha;_>0, and _&beta;_>0.
 
 A family very similar to the "transformed&ndash;transformer" family uses a _decreasing_ _W_.
 
@@ -464,7 +464,7 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 
 [^20]: Gleaton, J.U., Lynch, J. D., "Properties of generalized log-logistic families of lifetime distributions", _Journal of Probability and Statistical Science_ 4(1), 2006.
 
-[^21]: Hosseini, B., Afshari, M., "The Generalized Odd Gamma-G Family of Distributions:  Properties and Application", _Austrian Journal of Statistics_ vol. 47, Feb. 2018.
+[^21]: Hosseini, B., Afshari, M., "The Generalized Odd Gamma-G Family of Distributions:  Properties and Applications", _Austrian Journal of Statistics_ vol. 47, Feb. 2018.
 
 [^22]: N.H. Al Noor and N.K. Assi, "Rayleigh-Rayleigh Distribution: Properties and Applications", _Journal of Physics: Conference Series_ 1591, 012038 (2020).  The underlying Rayleigh distribution uses a parameter _&theta;_ (or _&lambda;_), which is different from _Mathematica_'s parameterization with _&sigma;_ = sqrt(1/_&theta;_<sup>2</sup>) = sqrt(1/_&lambda;_<sup>2</sup>).  The first Rayleigh distribution uses _&theta;_ and the second, _&lambda;_.
 
@@ -542,6 +542,10 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 [^58]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
 [^59]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+
+[^60]: Lehmann, E.L., "The power of rank tests", Annals of Mathematical Statistics 24(1), March 1953.
+
+[^61]: Durrans, S.R., "Distributions of fractional order statistics in hydrology", Water Resources Research 28 (1992).
 
 <a id=License></a>
 ## License
