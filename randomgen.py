@@ -5489,3 +5489,4 @@ if __name__ == "__main__":
     print(expect(nums, efunc))
     print(condexpect1(nums, efunc, epred))
     print(condexpect2(nums, efunc, epred))
+    t = None
