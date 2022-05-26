@@ -516,7 +516,7 @@ METHOD MPH(alpha, s, r)
 END METHOD
 ```
 
-> **Note:** An inhomogeneous version of MPH\* can be as follows: `[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]`, where `mph` is a `d`-dimensional MPH\* vector and `G1`, `G2`, ..., `GD` are monotone increasing functions whose domain and range are the positive real line and whose "slope" is defined on the whole domain (Albrecher et al. 2022)[^22].
+> **Note:** An inhomogeneous version of MPH\* can be as follows: `[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]`, where `mph` is a `d`-dimensional MPH\* vector and `G1`, `G2`, ..., `GD` are strictly increasing functions whose domain and range are the positive real line and whose "slope" is defined on the whole domain (Albrecher et al. 2022)[^22].
 
 <a id=Notes></a>
 ## Notes

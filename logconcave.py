@@ -488,7 +488,7 @@ class LogConcaveSampler2:
 class LogConcaveSamplerMonotone:
     """
     Generates a random variate that follows a distribution
-    whose probability density function (PDF) is log-concave, monotonically
+    whose probability density function (PDF) is log-concave, strictly
     decreasing, and has a positive domain.  Specifically
     the PDF is proportional to exp(psi), where psi is a continuous concave
     function. (A log-concave PDF necessarily has a single mode, or peak,
@@ -496,7 +496,7 @@ class LogConcaveSamplerMonotone:
     See Devroye, 1986, "Non-Uniform Random Variate Generation".)
       - psi - A function that takes one number and
          outputs one number.  For this sampler to work, psi must be a
-         continuous concave function, monotonically
+         continuous concave function, strictly
          decreasing, and have a positive domain (informally, a
          function is concave if its slope does not increase on its domain),
          and 0 must be the distribution's mode (peak location) and thus

@@ -128,7 +128,7 @@ then _f_ can be simulated using the following algorithm:
 > 1. It may happen that _g_(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new _g_ and _h_ functions that are found based on the current _g_ function.  See the second example below.
 > 2. If&mdash;
 >
->     - _f_ is monotonically increasing,
+>     - _f_ is strictly increasing,
 >     - _h_(_&lambda;_) = _&lambda;_, and
 >     - _f&prime;_(_&lambda;_), the "slope" function of _f_, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,
 >
@@ -838,11 +838,11 @@ _Proof._
 > 3. Parts 1 and 2 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively\)[^1].  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
 > 5. All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple _&omega;_ that satisfies the lemma:
->     1. If _f_ is monotone increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990\)[^22]; (Gal 1995\)[^23].
->     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990\)[^22]; (Gal 1995\)[^23].
->     3. If _f_ is monotone increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
->     4. If _f_ is monotone decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
->     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^24].
+>     1. If _f_ is strictly increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990\)[^22]; (Gal 1995\)[^23].
+>     2. If _f_ is strictly decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990\)[^22]; (Gal 1995\)[^23].
+>     3. If _f_ is strictly increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
+>     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
+>     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^24].
 
 **Theorem 1.** _Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a strictly bounded factory function. Let&mdash;_
 
@@ -952,7 +952,7 @@ Where &Phi;(.) is a function called the _Lerch transcendent_, and **fabove** is 
 
 Notice that the function _f_ is not Hölder continuous; its slope is exponentially steep at the point 0.
 
-The first step is to find a concave modulus of continuity of _f_ (called _&omega;_(_h_)).  Because _f_ is monotone increasing and concave, and because _f_(0) = 0, we can take _&omega;_(_h_) = _f_(_h_).
+The first step is to find a concave modulus of continuity of _f_ (called _&omega;_(_h_)).  Because _f_ is strictly increasing and concave, and because _f_(0) = 0, we can take _&omega;_(_h_) = _f_(_h_).
 
 Now, by plugging sqrt(1/(7\*_n_)) into _&omega;_, we get the following for Theorem 2 (assuming _n_&ge;0):
 
@@ -969,7 +969,7 @@ the following code in Python that uses the SymPy computer algebra library is an 
 ```
 px=Piecewise((0,Eq(x,0)),((ln(x/exp(3))**-2),True))
 # omega is modulus of continuity.  Since
-# px is monotone increasing, concave, and px(0)=0,
+# px is strictly increasing, concave, and px(0)=0,
 # we can take omega as px
 omega=px
 omega=piecewise_fold(omega.rewrite(Piecewise)).simplify()

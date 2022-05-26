@@ -1087,7 +1087,7 @@ def geobagcompare(bag, f):
        An item can contain the value None, which indicates an
        unsampled bit.
     - f: Function to run, which takes one parameter, namely a 'float'.
-      Currently, this method assumes f is monotonic.
+      Currently, this method assumes f is strictly increasing or strictly decreasing.
       Note that this may suffer rounding and other approximation
       errors as a result.  A more robust implementation would require
       the method to return an interval (as in interval arithmetic)
@@ -1118,7 +1118,8 @@ def geobagcompare(bag, f):
             fvend = lastfvend if lastfvend != None else f(vnext / iprec)
             lastfvstart = fvstart
             lastfvend = fvend
-            # NOTE: Assumes f is monotonic, so we don't check
+            # NOTE: Assumes f is strictly increasing or strictly
+            # decreasing, so we don't check
             # if fvstart and fvend are the true min/max
             if abs(fvstart - fvend) <= 2 * prectol:
                 # Within desired tolerance; calculate the
@@ -1933,7 +1934,7 @@ def loggammahelper(n, precision):
     # Usually, Stirling's approximation diverges, which however is inappropriate for
     # use in exact sampling algorithms, where series expansions must converge
     # in order for the algorithm to halt with probability 1.
-    # Unfortunately, the formula from the paper is monotonically increasing and
+    # Unfortunately, the formula from the paper is strictly increasing and
     # that paper didn't specify the exact rate of convergence or
     # an upper bound on the error incurred when truncating the series (a bound required
     # for our purposes of exact sampling).  For this reason, this method

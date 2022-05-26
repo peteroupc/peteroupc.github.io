@@ -877,7 +877,8 @@ def roundLowerCoeffs(lower):
     # that suffices for the Bernoulli factory problem
     # (when coin is not one-sided).
     # NOTE: Merely using the fractional intervals's
-    # sup or inf is not guaranteed to form monotonic polynomials
+    # sup or inf is not guaranteed to form nondecreasing or
+    # nonincreasing polynomials
     # that satisfy Bernoulli factory requirements, even if the full-precision
     # values do.  This is because interval arithmetic might produce
     # looser bounds than desired in some cases.

@@ -105,7 +105,7 @@ As used in the Bringmann paper, a bounded geometric(_p_, _n_) random variate is 
 This section shows a preprocessing algorithm to generate a random variate in the closed interval [0, 1] from a distribution whose probability density function (PDF)&mdash;
 
 - is continuous in the interval [0, 1],
-- is monotonically decreasing in [0, 1], and
+- is strictly decreasing in [0, 1], and
 - has an unbounded peak at 0.
 
 The trick here is to sample the peak in such a way that the result is either forced to be 0 or forced to belong to the bounded part of the PDF.  This algorithm does not require the area under the curve of the PDF in [0, 1] to be 1; in other words, this algorithm works even if the PDF is known up to a normalizing constant.  The algorithm is as follows.
@@ -113,9 +113,9 @@ The trick here is to sample the peak in such a way that the result is either for
 1. Set _i_ to 1.
 2. Calculate the cumulative probability of the interval [0, 2<sup>&minus;_i_</sup>] and that of [0, 2<sup>&minus;(_i_ &minus; 1)</sup>], call them _p_ and _t_, respectively.
 3. With probability _p_/_t_, add 1 to _i_ and go to step 2. (Alternatively, if _i_ is equal to or higher than the desired number of fractional bits in the result, return 0 instead of adding 1 and going to step 2.)
-4. At this point, the PDF at [2<sup>&minus;_i_</sup>, 2<sup>&minus;(_i_ &minus; 1)</sup>) is bounded from above, so sample a random variate in this interval using any appropriate algorithm, including rejection sampling.  Because the PDF is monotonically decreasing, the peak of the PDF at this interval is located at 2<sup>&minus;_i_</sup>, so that rejection sampling becomes trivial.
+4. At this point, the PDF at [2<sup>&minus;_i_</sup>, 2<sup>&minus;(_i_ &minus; 1)</sup>) is bounded from above, so sample a random variate in this interval using any appropriate algorithm, including rejection sampling.  Because the PDF is strictly decreasing, the peak of the PDF at this interval is located at 2<sup>&minus;_i_</sup>, so that rejection sampling becomes trivial.
 
-It is relatively straightforward to adapt this algorithm for monotonically increasing PDFs with the unbounded peak at 1, or to PDFs with a different domain than \[0, 1\].
+It is relatively straightforward to adapt this algorithm for strictly increasing PDFs with the unbounded peak at 1, or to PDFs with a different domain than \[0, 1\].
 
 This algorithm is similar to the "inversion&ndash;rejection" algorithm mentioned in section 4.4 of chapter 7 of Devroye's _Non-Uniform Random Variate Generation_ (1986\)[^4].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution has support \[0, 1\] ("support" is defined later), while the algorithm presented in this article doesn't make that assumption (for example, the interval [0, 1] can cover only part of the distribution's support).
 
@@ -256,13 +256,13 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | Gamma exponential (Kudryavtsev 2019)[^50]. | _&delta;_\*Gamma(_t_)<sup>1/_&nu;_</sup>/Gamma(_s_)<sup>_r_/_&nu;_</sup>, where Gamma(_x_) is a gamma(_x_) variate. | 0 &le; _r_ &lt; 1; _&nu;_ &ne; 0; _s_>0; _t_>0; _&delta;_>0. |
 | Extended xgamma (Saha et al. 2019)[^51] | Gamma(_&alpha;_ + _c_) variate divided by _&theta;_, where _c_ is either 0 with probability _&theta;_/(_&theta;_+_&beta;_), or 2 otherwise. | _&theta;_>0, _&alpha;_>0, _&beta;_ &ge; 0. |
 | Generalized Pareto(_a_, _b_) (McNeil et al. 2010)[^52] | _a_\*((1/(1&minus;_U_))<sup>_b_</sup>&minus;1)/_b_. | _a_>0; _b_>0. |
-| Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^62], (Azzalini 2022)[^63]. | _Z_ if _T_ < _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows the same or another. _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
-| Skew normal (Azzalini 1985)[^64]. | Skew symmetric with _Z_ and _T_ both separate Normal(0, 1) variates, and _w_(_x_) = _x_\*_&alpha;_. | _&alpha;_ is a real number. |
+| Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^53], (Azzalini 2022)[^54]. | _Z_ if _T_ < _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows the same or another. _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
+| Skew normal (Azzalini 1985)[^55]. | Skew symmetric with _Z_ and _T_ both separate Normal(0, 1) variates, and _w_(_x_) = _x_\*_&alpha;_. | _&alpha;_ is a real number. |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
 ## Batching Random Samples via Randomness Extraction
 
-Devroye and Gravel (2020\)[^53] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits to produce a specific output _Y_ (or _P_(_X_ | _Y_) for short):
+Devroye and Gravel (2020\)[^56] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits to produce a specific output _Y_ (or _P_(_X_ | _Y_) for short):
 
 1. Start with the interval [0, 1].
 2. For each pair (_X_, _Y_) in the batch, the interval shrinks from below by _P_(_X_&minus;1 | _Y_) and from above by _P_(_X_ | _Y_). (For example, if \[0.2, 0.8\] \(range 0.6) shrinks from below by 0.1 and from above by 0.8, the new interval is \[0.2+0.1\*0.6, 0.2+0.8\*0.6] = [0.26, 0.68].  For correctness, though, the interval is not allowed to shrink to a single point, since otherwise step 3 would run forever.)
@@ -270,7 +270,7 @@ Devroye and Gravel (2020\)[^53] suggest the following randomness extractor to re
 
 After a sampling method produces an output _Y_, both _X_ (the number of random bits the sampler consumed) and _Y_ (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Notice that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)
 
-The issue of finding _P_(_X_ | _Y_) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976\)[^54], _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to output _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
+The issue of finding _P_(_X_ | _Y_) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976\)[^57], _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to output _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
 
 Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values _Y_ can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor (see "[**Notes on Randomness Extraction**](https://peteroupc.github.io/randextract.html)").  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
 
@@ -290,20 +290,20 @@ Take the following situation:
 - Let _x_ be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval \[_a_, _b_\].  If _f_(_t_) = _t_ (the identity function), the PSRN _x_ must have a positive sign and an integer part of 0, so that the interval \[_a_, _b_\] is either the interval \[0, 1\] or a closed interval in \[0, 1\], depending on the PSRN's fractional part.  For example, if the PSRN is 2.147..., then the interval is \[2.147, 2.148\].
 - Let _&beta;_ be the digit base of digits in _x_'s fractional part (such as 2 for binary).
 
-Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020\)[^53]):
+Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020\)[^56]):
 
 1. Generate additional digits of _x_ uniformly at random&mdash;thus shortening the interval \[_a_, _b_\]&mdash;until a lower bound of _Q_(_f_(_a_)) and an upper bound of _Q_(_f_(_b_)) differ by no more than 2\*_&epsilon;_.  Call the two bounds _low_ and _high_, respectively.
 2. Return _low_+(_high_&minus;_low_)/2.
 
 In some cases, it may be possible to calculate the needed digit size in advance.
 
-As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ on the interval \[_a_, _b_\][^55], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
+As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ on the interval \[_a_, _b_\][^58], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
 
 1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(_&epsilon;_)) / ln(_&beta;_)), where _L_ is an upper bound of the quantile function's maximum slope (also known as the _Lipschitz constant_). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
 2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of _Q_(_a_) and _Q_(_b_), respectively, that are within _&epsilon;_/2 of the true quantiles, call the bounds _low_ and _high_, respectively.
 3. Return _low_+(_high_&minus;_low_)/2.
 
-This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020[^53]).
+This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020[^56]).
 
 A similar algorithm can exist even if the quantile function _Q_ is not Lipschitz continuous on the interval \[_a_, _b_\].
 
@@ -311,9 +311,9 @@ Specifically, if&mdash;
 
 - _f_(_t_) = _t_ (the identity function),
 - _Q_ on the interval \[_a_, _b_\] is continuous and has a minimum and maximum, and
-- _Q_ on \[_a_, _b_\] admits a continuous and monotone increasing function _&omega;_(_&delta;_) as a _modulus of continuity_,
+- _Q_ on \[_a_, _b_\] admits a continuous and strictly increasing function _&omega;_(_&delta;_) as a _modulus of continuity_,
 
-then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) gives the quantile function's maximum range in a window of size _&delta;_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.[^56]).[^57]
+then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) gives the quantile function's maximum range in a window of size _&delta;_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.[^59]).[^60]
 
 For example&mdash;
 
@@ -323,7 +323,7 @@ For example&mdash;
 The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
 - The target distribution must have a probability density function (PDF), as is the case with the normal and exponential distributions.
-- That PDF, or a function proportional to it, must be known, must be bounded from above, and must be continuous "almost everywhere" (the set of discontinuous points is "zero-volume", that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020\)[^53]).
+- That PDF, or a function proportional to it, must be known, must be bounded from above, and must be continuous "almost everywhere" (the set of discontinuous points is "zero-volume", that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020\)[^56]).
 
 Here is a sketch of how this rejection sampler might work:
 
@@ -335,7 +335,7 @@ Here is a sketch of how this rejection sampler might work:
 <a id=ExpoExact></a>
 ## ExpoExact
 
-This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2022\)[^58]; Canonne et al. (2020\)[^59].  In this section:
+This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2022\)[^61]; Canonne et al. (2020\)[^62].  In this section:
 
 - `RNDINT(1)` generates an independent unbiased random bit.
 - `ZeroOrOne(x, y)` returns 1 with probability `x`/`y`, and 0 otherwise.  For example, ZeroOrOne could generate a uniform random integer in the interval [0, `y`) and output either 1 if that integer is less than x, or 0 otherwise.
@@ -376,12 +376,12 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
        return ret
     END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the precision given in `precision` (see also Karney 2016\)[^60].
+> **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the precision given in `precision` (see also Karney 2016\)[^63].
 
 <a id=A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights></a>
 ## A sampler for distributions with nonincreasing or nondecreasing weights
 
-An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nonincreasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2021\)[^61].  It has a logarithmic time complexity in terms of setup and sampling.
+An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nonincreasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2021\)[^64].  It has a logarithmic time complexity in terms of setup and sampling.
 
 - Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
     1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
@@ -405,7 +405,7 @@ For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follo
 <a id=A_sampler_for_unimodal_distributions_of_weights></a>
 ## A sampler for unimodal distributions of weights
 
-The following is an algorithm for sampling an integer in the interval \[_a_, _b_\) with probability proportional to a _unimodal distribution_ of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2021\)[^61].  It assumes the mode (the point with the highest weight) is known.  An example is \[1, 3, 9, 4, 4\] when _a_ = 0 and _b_ = 5, and the _mode_ is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.
+The following is an algorithm for sampling an integer in the interval \[_a_, _b_\) with probability proportional to a _unimodal distribution_ of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2021\)[^64].  It assumes the mode (the point with the highest weight) is known.  An example is \[1, 3, 9, 4, 4\] when _a_ = 0 and _b_ = 5, and the _mode_ is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.
 
 - Setup:
     1. Find the point with the highest weight, such as via binary search.  Call this point _mode_.
@@ -531,29 +531,29 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 
 [^52]: McNeil, et al., "Quantitative risk management", 2010.
 
-[^53]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
+[^53]: Azzalini, A., Capitanio, A., "Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t‐distribution." Journal of the Royal Statistical Society: Series B (Statistical Methodology) 65, no. 2 (2003): 367-389.
 
-[^54]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^54]: Azzalini, A., "An overview on the progeny of the skew-normal family&mdash; A personal perspective", Journal of Multivariate Analysis 188, March 2022.
 
-[^55]: A Lipschitz continuous function, with constant _L_, is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere", and that slope is bounded wherever it's defined.
+[^55]: Azzalini, Adelchi. "A class of distributions which includes the normal ones." Scandinavian journal of statistics (1985): 171-178.
 
-[^56]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
+[^56]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
-[^57]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  For this reason, there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_) whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_, for every _&epsilon;_&gt;0 and for any _x_ and _y_ in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and monotone increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
+[^57]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^58]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [**https://doi.org/10.1214/21-AAP1679**](https://doi.org/10.1214/21-AAP1679)
+[^58]: A Lipschitz continuous function, with constant _L_, is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere", and that slope is bounded wherever it's defined.
 
-[^59]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
+[^59]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
 
-[^60]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
+[^60]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  For this reason, there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_) whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_, for every _&epsilon;_&gt;0 and for any _x_ and _y_ in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
 
-[^61]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
+[^61]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [**https://doi.org/10.1214/21-AAP1679**](https://doi.org/10.1214/21-AAP1679)
 
-[^62]: Azzalini, A., Capitanio, A., "Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t‐distribution." Journal of the Royal Statistical Society: Series B (Statistical Methodology) 65, no. 2 (2003): 367-389.
+[^62]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
-[^63]: Azzalini, A., "An overview on the progeny of the skew-normal family&mdash; A personal perspective", Journal of Multivariate Analysis 188, March 2022.
+[^63]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
-[^64]: Azzalini, Adelchi. "A class of distributions which includes the normal ones." Scandinavian journal of statistics (1985): 171-178.
+[^64]: Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021
 
 <a id=License></a>
 ## License

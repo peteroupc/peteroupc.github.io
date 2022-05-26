@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/05/02"><meta name="citation_online_date" content="2022/05/02"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/05/26"><meta name="citation_online_date" content="2022/05/26"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -183,7 +183,7 @@
 <li><p>If&mdash;</p>
 
 <ul>
-<li><em>f</em> is monotonically increasing,</li>
+<li><em>f</em> is strictly increasing,</li>
 <li><em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and</li>
 <li><em>f&prime;</em>(<em>&lambda;</em>), the &quot;slope&quot; function of <em>f</em>, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,</li>
 </ul>
@@ -1274,11 +1274,11 @@
 <li>All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>&omega;</em>(0) &gt; 0, because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple <em>&omega;</em> that satisfies the lemma:
 
 <ol>
-<li>If <em>f</em> is monotone increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)[^22]; (Gal 1995)[^23].</li>
-<li>If <em>f</em> is monotone decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)[^22]; (Gal 1995)[^23].</li>
-<li>If <em>f</em> is monotone increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
-<li>If <em>f</em> is monotone decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
-<li>If <em>f</em> is concave and is monotone increasing then monotone decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)[^24].</li>
+<li>If <em>f</em> is strictly increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)[^22]; (Gal 1995)[^23].</li>
+<li>If <em>f</em> is strictly decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)[^22]; (Gal 1995)[^23].</li>
+<li>If <em>f</em> is strictly increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
+<li>If <em>f</em> is strictly decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
+<li>If <em>f</em> is concave and is strictly increasing then strictly decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)[^24].</li>
 </ol></li>
 </ol>
 </blockquote>
@@ -1418,7 +1418,7 @@
 
 <p>Notice that the function <em>f</em> is not Hölder continuous; its slope is exponentially steep at the point 0.</p>
 
-<p>The first step is to find a concave modulus of continuity of <em>f</em> (called <em>&omega;</em>(<em>h</em>)).  Because <em>f</em> is monotone increasing and concave, and because <em>f</em>(0) = 0, we can take <em>&omega;</em>(<em>h</em>) = <em>f</em>(<em>h</em>).</p>
+<p>The first step is to find a concave modulus of continuity of <em>f</em> (called <em>&omega;</em>(<em>h</em>)).  Because <em>f</em> is strictly increasing and concave, and because <em>f</em>(0) = 0, we can take <em>&omega;</em>(<em>h</em>) = <em>f</em>(<em>h</em>).</p>
 
 <p>Now, by plugging sqrt(1/(7*<em>n</em>)) into <em>&omega;</em>, we get the following for Theorem 2 (assuming <em>n</em>&ge;0):</p>
 
@@ -1438,7 +1438,7 @@
 
 <pre>px=Piecewise((0,Eq(x,0)),((ln(x/exp(3))**-2),True))
 # omega is modulus of continuity.  Since
-# px is monotone increasing, concave, and px(0)=0,
+# px is strictly increasing, concave, and px(0)=0,
 # we can take omega as px
 omega=px
 omega=piecewise_fold(omega.rewrite(Piecewise)).simplify()

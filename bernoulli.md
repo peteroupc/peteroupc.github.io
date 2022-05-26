@@ -828,7 +828,7 @@ namely the following algorithm:
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform(0, 1) random variate _v_ and return a number that is 0 if _v_ is less than _a_ or is greater than _b_, or 1 otherwise.
 
-> **Note**: If _a_ is 0 and _b_ is 1, the probability simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
+> **Note**: If _a_ is 0 and _b_ is 1, the probability simulated by this algorithm will be strictly increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
 
 <a id=Algorithms_for_Specific_Functions_of___lambda></a>
 ### Algorithms for Specific Functions of _&lambda;_

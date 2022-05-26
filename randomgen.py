@@ -3615,7 +3615,7 @@ class RandomGen:
         - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
            and returns a number within base^-digitplaces of the True inverse
            CDF (inverse cumulative distribution function, or quantile function)
-           of u/base^ubits, and is monotonic for a given value of `digitplaces`.
+           of u/base^ubits, and is nondecreasing for a given value of `digitplaces`.
         - 'digitplaces' is an accuracy expressed as a number of digits after the
            point. Each random number will be a multiple of base^-digitplaces,
            or have a smaller granularity. Default is 53.
@@ -3852,7 +3852,7 @@ class RandomGen:
         for that parameter, the probability that a random number will
         be less than or equal to that parameter. Optional if a PDF is given.
         For best results, the CDF should be
-        monotonically increasing everywhere in the
+        strictly increasing everywhere in the
         interval [xmin, xmax] and must output values in [0, 1];
         for best results, the CDF should
         be increasing everywhere in [xmin, xmax].
@@ -4053,8 +4053,7 @@ class RandomGen:
           This method takes as input a list
           containing N coordinates describing a point in space, and returns the probability
           density of that point as a single number.  If this parameter is given, however:
-          - This method assumes the PDF is unimodal and monotone at all points
-            away from the mode, and may return incorrect results if that is not the case.
+          - This method assumes the PDF is unimodal and strictly decreasing in every direction away from the PDF's mode, and may return incorrect results if that is not the case.
           - If the given PDF outputs floating-point numbers, the resulting
             dyadic decomposition code may be inaccurate due to rounding errors.
         - pdfbounds: A function that returns the lower and upper bounds of the PDF's value
@@ -5060,7 +5059,7 @@ class PrefixDistributionSampler:
     density function) could incur rounding errors.
     - pdf: PDF, which takes a value in [0, 1] and returns a probability
       density at that value (which is 0 or greater).  Currently,
-      the PDF must be monotone (either increasing or decreasing).
+      the PDF must be strictly increasing or strictly decreasing.
     Reference: Oberhoff, Sebastian, "Exact Sampling and Prefix
     Distributions", Theses and Dissertations, University of
     Wisconsin Milwaukee, 2018.
@@ -5125,7 +5124,7 @@ class KVectorSampler:
         Parameters:
         - cdf: Cumulative distribution function (CDF) of the
            distribution.  The CDF must be
-           monotonically increasing everywhere in the
+           strictly increasing everywhere in the
            interval [xmin, xmax] and must output values in [0, 1];
            for best results, the CDF should
            be increasing everywhere in [xmin, xmax].
@@ -5205,9 +5204,9 @@ class KVectorSampler:
         [0, 1].  For best results, this sampler's range
         (xmin and xmax in the constructor)
         should cover all or almost all of the desired distribution and
-        the distribution's CDF should be monotonically
-        increasing everywhere (every number in the distribution's
-        range has nonzero probability of occurring), since
+        the distribution's CDF should be strictly
+        increasing everywhere (every number that can be taken on
+        by the distribution has nonzero probability of occurring), since
         among other things,
         this method maps each uniform value to the
         range of CDFs covered by this distribution (that is,
