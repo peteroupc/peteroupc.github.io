@@ -3045,12 +3045,7 @@ def crudelog(av):
                 rz += ArcTanHTable[i]
     return _roundedshiftraw(rz, CRUDELOG_ARCTANBITDIFF - 1)
 
-import time
-
-t = time.time()
 CRUDELOG = [0 if i == 0 else crudelog(i) for i in range(0, 65536 + 1)]
-# print(len(CRUDELOG))
-# print(time.time()-t);exit()
 
 # 10-degree Chebyshev approximation of ln(x) on [1, 1.0625].
 # Absolute error is bounded by 1.82e-21 (about 68.9 bits precision).
