@@ -296,8 +296,8 @@ Methods implementing the strictly geometric stable and general geometric stable 
 
 A _phase-type distribution_ models a sum of exponential random variates driven by a [**Markov chain**](https://peteroupc.github.io/randomnotes.html).  The Markov chain has `n` normal states and one "absorbing" or terminating state.  This distribution has two parameters:
 
-- `alpha`, an `n`-item array showing the probabilities of starting the chain at each normal state.
-- `s`, an `n`&times;`n` _subgenerator matrix_, a list of `n` lists of `n` values each.  The values in each list (each state of the Markov chain) must sum to 0 or less, and for each state `i`, `s[i][i]` is 0 minus the rate of that state's exponential random variate, and each entry `s[i][j]` with `i!=j` is the relative probability for moving to state `j`.
+- `alpha`, an `n`-item array showing the probability of starting the chain at each normal state.
+- `s`, an `n`&times;`n` _subgenerator matrix_, a list of `n` lists of `n` values each.  The values in each list (each normal state of the Markov chain) must sum to 0 or less, and for each state `i`, `s[i][i]` is 0 minus the rate of that state's exponential random variate, and each entry `s[i][j]` with `i!=j` is the relative probability for moving to state `j`.
 
 The method `PhaseType`, given below, samples from a phase-type distribution given the two parameters above.
 
