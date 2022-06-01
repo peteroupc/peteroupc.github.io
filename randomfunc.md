@@ -118,7 +118,6 @@ In addition, this page is not focused on sampling methods used for computer grap
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Sources of Random Numbers**](#Sources_of_Random_Numbers)
-    - [**Norm Calculation**](#Norm_Calculation)
     - [**Implementation Considerations**](#Implementation_Considerations)
     - [**Security Considerations**](#Security_Considerations)
 - [**License**](#License)
@@ -1990,11 +1989,25 @@ The following pseudocode shows how to generate a random point uniformly on a sph
 
 - `dims`, the number of dimensions of the sphere (and of the random point).
 - `radius`, the sphere's radius (if `radius` is 1, the result can also serve as a unit vector in `dims`-dimensional space).
-- `p` describes the ball's shape (if `p` is 2, the sphere is the usual one).
+- `p` is greater than 0 and describes the sphere's shape (if `p` is 2, the sphere is the usual one).
 
-See Schechtmann and Zinn (1990)[^100]. Here, `PNorm` is given in the appendix, and EPD generates an _exponential power_ random variate (Devroye 1986, pp. 174-175)[^19].
+See Schechtmann and Zinn (1990)[^100]. Here, EPD generates an _exponential power_ random variate (Devroye 1986, pp. 174-175)[^19].
+
+    METHOD PNorm(vec, p)
+       ret=0
+       if p==infinity
+          for i in 0...size(vec): ret=max(ret,vec[i])
+          return ret
+       else
+          for i in 0...size(vec): ret=ret+pow(vec[i],p)
+          return pow(ret,1.0/p)
+       end
+    END METHOD
 
     METHOD EPD(p)
+       # Infinity case is uniform in (-1,1) to be
+       # appropriate for this section's purposes
+       if p==infinity: return RNDRANGEMinMaxExc(-1,1)
        if p==2: return Normal(0,1)
        return (RNDINT(1) * 2 - 1)*pow(Gamma(1/p),1/p)
     END METHOD
@@ -2011,9 +2024,12 @@ See Schechtmann and Zinn (1990)[^100]. Here, `PNorm` is given in the appendix, a
       return ret
     END METHOD
 
-> **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains an optimized method for points on the edge of a circle.
+> **Notes:**
 >
-> **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the edge of a circle (2-dimensional hypersphere) and generate a random Z coordinate by `RNDRANGEMinMaxExc(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
+> 1. `PNorm(vec, p)`, also known as &#x2113;<sub>`p`</sub> norm, is a generalized notion of distance. `PNorm(vec, 2)` is the "usual" distance and, for instance, forms the "usual" versions of spheres. `p` can be any number 0 or greater, or can be infinity.
+> 2. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains an optimized method for points on a circle (2-dimensional sphere, `p=2`).
+>
+> **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on a circle and generate a random Z coordinate by `RNDRANGEMinMaxExc(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 
 <a id=Random_Points_Inside_a_Box_Ball_Shell_or_Cone></a>
 #### Random Points Inside a Box, Ball, Shell, or Cone
@@ -2310,27 +2326,6 @@ The randomization methods in this document are deterministic (that is, they prod
 
 - The methods do not "know" what numbers will be produced next by the "source of random numbers" (or by whatever is simulating that source).
 - A few methods read lines from files of unknown size; they won't "know" the contents of those lines before reading them.
-
-<a id=Norm_Calculation></a>
-### Norm Calculation
-
-The following method calculates the norm of a vector (list of numbers), more specifically the &#x2113;<sub>2</sub> norm of that vector.
-
-    METHOD Norm(vec)
-      ret=0
-      rc=0
-      for i in 0...size(vec)
-        rc=vec[i]*vec[i]-rc
-        rt=rc+ret
-        rc=(rt-ret)-rc
-        ret=rt
-      end
-      return sqrt(ret)
-    END METHOD
-
-There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More generally, the &#x2113;<sub>_p_</sub> norm, where _p_ is 1 or greater or is &infin; (infinity), is the _p_<sup>th</sup> root of the sum of _p_<sup>th</sup> powers of a vector's components' absolute values (or, if _p_ is &infin;, the highest absolute value among those components).  In this document, `PNorm(vec, p)` is the &#x2113;<sub>`p`</sub> norm of the vector `vec`.
-
-An &#x2113;<sub>_p_</sub> ball or sphere of a given radius is a ball or sphere that is bounded by or traces, respectively, all points with an &#x2113;<sub>_p_</sub> norm equal to that radius.  (An &#x2113;<sub>&infin;</sub> ball or sphere is box-shaped.)
 
 <a id=Implementation_Considerations></a>
 ### Implementation Considerations
