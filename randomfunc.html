@@ -158,7 +158,7 @@
 
 <ul>
 <li><a href="#Random_Points_Inside_a_Simplex"><strong>Random Points Inside a Simplex</strong></a></li>
-<li><a href="#Random_Points_on_the_Surface_of_a_Hypersphere"><strong>Random Points on the Surface of a Hypersphere</strong></a></li>
+<li><a href="#Random_Points_on_a_Sphere"><strong>Random Points on a Sphere</strong></a></li>
 <li><a href="#Random_Points_Inside_a_Box_Ball_Shell_or_Cone"><strong>Random Points Inside a Box, Ball, Shell, or Cone</strong></a></li>
 <li><a href="#Random_Latitude_and_Longitude"><strong>Random Latitude and Longitude</strong></a></li>
 </ul></li>
@@ -2491,26 +2491,26 @@ METHOD RandomPointInSimplex(points):
 END METHOD
 </pre>
 
-<p><a id=Random_Points_on_the_Surface_of_a_Hypersphere></a></p>
+<p><a id=Random_Points_on_a_Sphere></a></p>
 
-<h4>Random Points on the Surface of a Hypersphere</h4>
+<h4>Random Points on a Sphere</h4>
 
-<p>The following pseudocode shows how to generate a random point uniformly on the surface of a ball centered at the origin, with the following parameters:</p>
+<p>The following pseudocode shows how to generate a random point uniformly on a sphere (surface of a ball) centered at the origin, with the following parameters:</p>
 
 <ul>
-<li><code>dims</code>, the number of dimensions of the ball (and of the random point).</li>
-<li><code>radius</code>, the ball&#39;s radius (if <code>radius</code> is 1, the result can also serve as a unit vector in <code>dims</code>-dimensional space).</li>
-<li><code>p</code> describes the ball&#39;s shape (if <code>p</code> is 2, the ball is the usual hypersphere).</li>
+<li><code>dims</code>, the number of dimensions of the sphere (and of the random point).</li>
+<li><code>radius</code>, the sphere&#39;s radius (if <code>radius</code> is 1, the result can also serve as a unit vector in <code>dims</code>-dimensional space).</li>
+<li><code>p</code> describes the ball&#39;s shape (if <code>p</code> is 2, the sphere is the usual one).</li>
 </ul>
 
-<p>See Schechtmann and Zinn (1990)[^105]. Here, <code>PNorm</code> is given in the appendix, and EPD generates an <em>exponential power</em> random variate (Devroye 1986, pp. 174-175)[^19].</p>
+<p>See Schechtmann and Zinn (1990)[^100]. Here, <code>PNorm</code> is given in the appendix, and EPD generates an <em>exponential power</em> random variate (Devroye 1986, pp. 174-175)[^19].</p>
 
 <pre>METHOD EPD(p)
    if p==2: return Normal(0,1)
    return (RNDINT(1) * 2 - 1)*pow(Gamma(1/p),1/p)
 END METHOD
 
-METHOD RandomPointInPHypersphere(dims, radius, p)
+METHOD RandomPointOnSphere(dims, radius, p)
   x=0
   while x==0
     ret=[]
@@ -2542,9 +2542,9 @@ END METHOD
 <li>to generate a random point inside a rectangle bounded in [0, 2) along the X axis and [3, 6) along the Y axis, generate <code>[RNDRANGEMinMaxExc(0,2), RNDRANGEMinMaxExc(3,6)]</code>, and</li>
 <li>to generate a <em>complex number</em> with real and imaginary parts bounded in [0, 1], generate <code>[RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code>.</li>
 </ul></li>
-<li>an <strong>N-dimensional ball</strong>, centered at the origin, with a given radius, follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>PNorm(ret, p)</code> with <code>pow(pow(PNorm(ret, p),p)+Expo(1),1.0/p)</code> (Barthe et al. 2005)[^106]. [^107]</li>
-<li>an <strong>N-dimensional spherical shell</strong> (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional hypersphere with radius equal to <code>pow(RNDRANGEMinMaxExc(pow(A, N), pow(B, N)), 1.0 / N)</code>[^100].</li>
-<li>a <strong>cone</strong> with height <code>H</code> and radius <code>R</code> at its base, running along the Z axis, generate a random Z coordinate by <code>Z = max(max(RNDRANGEMinMaxExc(0, H), RNDRANGEMinMaxExc(0, H)), RNDRANGEMinMaxExc(0, H))</code>, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to <code>max(RNDRANGEMinMaxExc(0,Z*(R/H)), RNDRANGEMinMaxExc(0,Z*(R/H)))</code>[^101].</li>
+<li>an <strong>N-dimensional ball</strong>, centered at the origin, with a given radius, follow the pseudocode in <code>RandomPointOnSphere</code>, except replace <code>PNorm(ret, p)</code> with <code>pow(pow(PNorm(ret, p),p)+Expo(1),1.0/p)</code> (Barthe et al. 2005)[^101]. [^102]</li>
+<li>an <strong>N-dimensional spherical shell</strong> (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional ball with radius equal to <code>pow(RNDRANGEMinMaxExc(pow(A, N), pow(B, N)), 1.0 / N)</code>[^103].</li>
+<li>a <strong>cone</strong> with height <code>H</code> and radius <code>R</code> at its base, running along the Z axis, generate a random Z coordinate by <code>Z = max(max(RNDRANGEMinMaxExc(0, H), RNDRANGEMinMaxExc(0, H)), RNDRANGEMinMaxExc(0, H))</code>, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to <code>max(RNDRANGEMinMaxExc(0,Z*(R/H)), RNDRANGEMinMaxExc(0,Z*(R/H)))</code>[^104].</li>
 </ul>
 
 <blockquote>
@@ -2554,7 +2554,7 @@ END METHOD
 
 <ol>
 <li>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.</li>
-<li>Sampling a half-ball, half-shell, or half-hypersphere can be done by sampling a full ball, shell, or hypersphere and replacing one of the dimensions of the result with its absolute value.</li>
+<li>Sampling a half-ball, half-sphere, half-shell can be done by sampling a full ball or shell and replacing one of the dimensions of the result with its absolute value.</li>
 </ol>
 </blockquote>
 
@@ -2562,7 +2562,7 @@ END METHOD
 
 <h4>Random Latitude and Longitude</h4>
 
-<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)[^102]&mdash;</p>
+<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)[^105]&mdash;</p>
 
 <ul>
 <li>generate the longitude <code>RNDRANGEMinMaxExc(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
@@ -2801,21 +2801,21 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p>[^99]: Osada, R., Funkhouser, T., et al., &quot;Shape Distributions&quot;, _ACM Transactions on Graphics 21(4), Oct. 2002.</p>
 
-<p>[^100]: See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</p>
+<p>[^100]: Schechtman, G., Zinn, J., On the volume of intersection of two Lp^n balls. 1990.</p>
 
-<p>[^101]: See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>. Square and cube roots replaced with maximums.</p>
+<p>[^101]: Barthe, F., Guédon, O., et al., &quot;A probabilistic approach to the geometry of the lP^N-ball&quot;, Annals of Probability 33(2), 2005.</p>
 
-<p>[^102]: Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</p>
+<p>[^102]: Alternatively, if <code>p</code> is an integer greater than 0, generate a random point on the surface of an ball with <code>N+p</code> dimensions and the given radius (for example, using <code>RandomPointOnSphere(N+p,radius,p)</code>), then discard the last <code>p</code> coordinates of that point (Corollary 1 of Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951).</p>
 
-<p>[^103]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. &quot;<a href="https://arxiv.org/abs/2108.00965."><strong>Privacy-Aware Rejection Sampling</strong></a>&quot;, arXiv:2108.00965.</p>
+<p>[^103]: See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</p>
 
-<p>[^104]: For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</p>
+<p>[^104]: See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>. Square and cube roots replaced with maximums.</p>
 
-<p>[^105]: Schechtman, G., Zinn, J., On the volume of intersection of two Lp^n balls. 1990.</p>
+<p>[^105]: Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</p>
 
-<p>[^106]: Barthe, F., Guédon, O., et al., &quot;A probabilistic approach to the geometry of the lP^N-ball&quot;, Annals of Probability 33(2), 2005.</p>
+<p>[^106]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. &quot;<a href="https://arxiv.org/abs/2108.00965."><strong>Privacy-Aware Rejection Sampling</strong></a>&quot;, arXiv:2108.00965.</p>
 
-<p>[^107]: Alternatively, if <code>p</code> is 2, generate a random point on the surface of an ball with <code>N+2</code> dimensions and the given radius (for example, using <code>RandomPointInHypersphere(N+2,radius,2)</code>), then discard the last two coordinates of that point (Harman, R., Lacko, V., &quot;On decompositional algorithms for uniform sampling from n-spheres and n-balls,&quot; Journal of Multivariate Analysis 101(10), 2010).  It is suspected that this also works for any positive <code>p</code>, not just 2.</p>
+<p>[^107]: For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</p>
 
 <p><a id=Appendix></a></p>
 
@@ -2892,9 +2892,9 @@ END METHOD
 
 <ol>
 <li><strong>&quot;Cryptographic generators&quot;.</strong> The application has to use a device or program that generates random-behaving numbers that are hard to guess for information security purposes (a so-called &quot;cryptographic generator&quot;).  Choosing such a device or program is outside the scope of this document.</li>
-<li><strong>Timing attacks.</strong>  Certain security and privacy attacks have exploited timing and other differences to recover cleartext, encryption keys, or other secret or private data.  Thus, security algorithms have been developed to have no timing differences, including memory access patterns, that reveal anything about any secret or private inputs, such as keys, passwords, or &quot;seeds&quot; for pseudorandom number generators.  (Such algorithms include so-called &quot;constant-time&quot; algorithms.)  But even if an algorithm has variable running time (for example, <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets[^103].</li>
+<li><strong>Timing attacks.</strong>  Certain security and privacy attacks have exploited timing and other differences to recover cleartext, encryption keys, or other secret or private data.  Thus, security algorithms have been developed to have no timing differences, including memory access patterns, that reveal anything about any secret or private inputs, such as keys, passwords, or &quot;seeds&quot; for pseudorandom number generators.  (Such algorithms include so-called &quot;constant-time&quot; algorithms.)  But even if an algorithm has variable running time (for example, <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets[^106].</li>
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
-<li><strong>Floating-point numbers.</strong>  Numbers chosen at random for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even in the few security applications where those numbers are floating-point numbers (notably differential privacy and lattice-based cryptography), there are ways to avoid such floating-point numbers[^104].</li>
+<li><strong>Floating-point numbers.</strong>  Numbers chosen at random for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even in the few security applications where those numbers are floating-point numbers (notably differential privacy and lattice-based cryptography), there are ways to avoid such floating-point numbers[^107].</li>
 </ol>
 
 <p><a id=License></a></p>
