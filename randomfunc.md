@@ -1985,11 +1985,11 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
 <a id=Random_Points_on_a_Sphere></a>
 #### Random Points on a Sphere
 
-The following pseudocode shows how to generate a random point uniformly on a sphere (surface of a ball) centered at the origin, with the following parameters:
+The following pseudocode shows how to generate a random point on a sphere (surface of a ball) centered at the origin, with the following parameters:
 
 - `dims`, the number of dimensions of the sphere (and of the random point).
 - `radius`, the sphere's radius (if `radius` is 1, the result can also serve as a unit vector in `dims`-dimensional space).
-- `p` is greater than 0 and describes the sphere's shape (if `p` is 2, the sphere is the usual one).
+- `p` is greater than 0, or is infinity, and describes the sphere's shape (if `p` is 2, the sphere is the usual one).
 
 See Schechtmann and Zinn (1990)[^100]. Here, EPD generates an _exponential power_ random variate (Devroye 1986, pp. 174-175)[^19].
 
@@ -2009,7 +2009,7 @@ See Schechtmann and Zinn (1990)[^100]. Here, EPD generates an _exponential power
        # appropriate for this section's purposes
        if p==infinity: return RNDRANGEMinMaxExc(-1,1)
        if p==2: return Normal(0,1)
-       return (RNDINT(1) * 2 - 1)*pow(Gamma(1/p),1/p)
+       return (RNDINT(1) * 2 - 1)*pow(GammaDist(1/p),1/p)
     END METHOD
 
     METHOD RandomPointOnSphere(dims, radius, p)
@@ -2034,7 +2034,7 @@ See Schechtmann and Zinn (1990)[^100]. Here, EPD generates an _exponential power
 <a id=Random_Points_Inside_a_Box_Ball_Shell_or_Cone></a>
 #### Random Points Inside a Box, Ball, Shell, or Cone
 
-To generate a random point on or inside&mdash;
+To generate a random point inside&mdash;
 
 - an **N-dimensional box**, generate `RNDRANGEMinMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
     - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMinMaxExc(0,2), RNDRANGEMinMaxExc(3,6)]`, and
@@ -2049,6 +2049,7 @@ To generate a random point on or inside&mdash;
 >
 > 1. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.
 > 2. Sampling a half-ball, half-sphere, half-shell can be done by sampling a full ball or shell and replacing one of the dimensions of the result with its absolute value.
+> 3. Lacko and Harman (2012)[^108] defined a family of _non-uniform_ distributions of points inside a ball: generate `RandomPointOnSphere(dims, r*pow(BetaDist(dims/p, d/p), 1.0/p),p)` where `r>0` is the radius, `dims` and `p` are as in `RandomPointOnSphere`, and `d>=0` is a shape parameter.  If `d = p`, the distribution is uniform in the ball.
 
 <a id=Random_Latitude_and_Longitude></a>
 #### Random Latitude and Longitude
@@ -2300,6 +2301,8 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 [^106]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965.)", arXiv:2108.00965.
 
 [^107]: For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
+
+[^108]: Lacko, V., & Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. _Metrika_, 75(7), 939-951.
 
 <a id=Appendix></a>
 ## Appendix

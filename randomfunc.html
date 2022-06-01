@@ -2494,12 +2494,12 @@ END METHOD
 
 <h4>Random Points on a Sphere</h4>
 
-<p>The following pseudocode shows how to generate a random point uniformly on a sphere (surface of a ball) centered at the origin, with the following parameters:</p>
+<p>The following pseudocode shows how to generate a random point on a sphere (surface of a ball) centered at the origin, with the following parameters:</p>
 
 <ul>
 <li><code>dims</code>, the number of dimensions of the sphere (and of the random point).</li>
 <li><code>radius</code>, the sphere&#39;s radius (if <code>radius</code> is 1, the result can also serve as a unit vector in <code>dims</code>-dimensional space).</li>
-<li><code>p</code> is greater than 0 and describes the sphere&#39;s shape (if <code>p</code> is 2, the sphere is the usual one).</li>
+<li><code>p</code> is greater than 0, or is infinity, and describes the sphere&#39;s shape (if <code>p</code> is 2, the sphere is the usual one).</li>
 </ul>
 
 <p>See Schechtmann and Zinn (1990)[^100]. Here, EPD generates an <em>exponential power</em> random variate (Devroye 1986, pp. 174-175)[^19].</p>
@@ -2520,7 +2520,7 @@ METHOD EPD(p)
    # appropriate for this section&#39;s purposes
    if p==infinity: return RNDRANGEMinMaxExc(-1,1)
    if p==2: return Normal(0,1)
-   return (RNDINT(1) * 2 - 1)*pow(Gamma(1/p),1/p)
+   return (RNDINT(1) * 2 - 1)*pow(GammaDist(1/p),1/p)
 END METHOD
 
 METHOD RandomPointOnSphere(dims, radius, p)
@@ -2551,7 +2551,7 @@ END METHOD
 
 <h4>Random Points Inside a Box, Ball, Shell, or Cone</h4>
 
-<p>To generate a random point on or inside&mdash;</p>
+<p>To generate a random point inside&mdash;</p>
 
 <ul>
 <li>an <strong>N-dimensional box</strong>, generate <code>RNDRANGEMinMaxExc(mn, mx)</code> for each coordinate, where <code>mn</code> and <code>mx</code> are the lower and upper bounds for that coordinate.  For example&mdash;
@@ -2573,6 +2573,7 @@ END METHOD
 <ol>
 <li>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.</li>
 <li>Sampling a half-ball, half-sphere, half-shell can be done by sampling a full ball or shell and replacing one of the dimensions of the result with its absolute value.</li>
+<li>Lacko and Harman (2012)[^108] defined a family of <em>non-uniform</em> distributions of points inside a ball: generate <code>RandomPointOnSphere(dims, r*pow(BetaDist(dims/p, d/p), 1.0/p),p)</code> where <code>r&gt;0</code> is the radius, <code>dims</code> and <code>p</code> are as in <code>RandomPointOnSphere</code>, and <code>d&gt;=0</code> is a shape parameter.  If <code>d = p</code>, the distribution is uniform in the ball.</li>
 </ol>
 </blockquote>
 
@@ -2834,6 +2835,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p>[^106]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. &quot;<a href="https://arxiv.org/abs/2108.00965."><strong>Privacy-Aware Rejection Sampling</strong></a>&quot;, arXiv:2108.00965.</p>
 
 <p>[^107]: For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</p>
+
+<p>[^108]: Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951.</p>
 
 <p><a id=Appendix></a></p>
 
