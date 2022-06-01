@@ -2573,7 +2573,7 @@ END METHOD
 <ol>
 <li>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.</li>
 <li>Sampling a half-ball, half-sphere, half-shell can be done by sampling a full ball or shell and replacing one of the dimensions of the result with its absolute value.</li>
-<li>Lacko and Harman (2012)[^108] defined a family of <em>non-uniform</em> distributions of points inside a ball: generate <code>RandomPointOnSphere(dims, r*pow(BetaDist(dims/p, d/p), 1.0/p),p)</code> where <code>r&gt;0</code> is the radius, <code>dims</code> and <code>p</code> are as in <code>RandomPointOnSphere</code>, and <code>d&gt;=0</code> is a shape parameter.  If <code>d = p</code>, the distribution is uniform in the ball.</li>
+<li>Lacko and Harman (2012)[^105] defined a family of <em>non-uniform</em> distributions of points inside a ball: generate <code>RandomPointOnSphere(dims, r*pow(BetaDist(dims/p, d/p), 1.0/p),p)</code> where <code>r&gt;0</code> is the radius, <code>dims</code> and <code>p</code> are as in <code>RandomPointOnSphere</code>, and <code>d&gt;=0</code> is a shape parameter.  If <code>d = p</code>, the distribution is uniform in the ball.</li>
 </ol>
 </blockquote>
 
@@ -2581,7 +2581,7 @@ END METHOD
 
 <h4>Random Latitude and Longitude</h4>
 
-<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)[^105]&mdash;</p>
+<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)[^106]&mdash;</p>
 
 <ul>
 <li>generate the longitude <code>RNDRANGEMinMaxExc(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
@@ -2830,13 +2830,13 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p>[^104]: See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>. Square and cube roots replaced with maximums.</p>
 
-<p>[^105]: Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</p>
+<p>[^105]: Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951.</p>
 
-<p>[^106]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. &quot;<a href="https://arxiv.org/abs/2108.00965."><strong>Privacy-Aware Rejection Sampling</strong></a>&quot;, arXiv:2108.00965.</p>
+<p>[^106]: Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</p>
 
-<p>[^107]: For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</p>
+<p>[^107]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. &quot;<a href="https://arxiv.org/abs/2108.00965."><strong>Privacy-Aware Rejection Sampling</strong></a>&quot;, arXiv:2108.00965.</p>
 
-<p>[^108]: Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951.</p>
+<p>[^108]: For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</p>
 
 <p><a id=Appendix></a></p>
 
@@ -2890,9 +2890,9 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <ol>
 <li><strong>&quot;Cryptographic generators&quot;.</strong> The application has to use a device or program that generates random-behaving numbers that are hard to guess for information security purposes (a so-called &quot;cryptographic generator&quot;).  Choosing such a device or program is outside the scope of this document.</li>
-<li><strong>Timing attacks.</strong>  Certain security and privacy attacks have exploited timing and other differences to recover cleartext, encryption keys, or other secret or private data.  Thus, security algorithms have been developed to have no timing differences, including memory access patterns, that reveal anything about any secret or private inputs, such as keys, passwords, or &quot;seeds&quot; for pseudorandom number generators.  (Such algorithms include so-called &quot;constant-time&quot; algorithms.)  But even if an algorithm has variable running time (for example, <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets[^106].</li>
+<li><strong>Timing attacks.</strong>  Certain security and privacy attacks have exploited timing and other differences to recover cleartext, encryption keys, or other secret or private data.  Thus, security algorithms have been developed to have no timing differences, including memory access patterns, that reveal anything about any secret or private inputs, such as keys, passwords, or &quot;seeds&quot; for pseudorandom number generators.  (Such algorithms include so-called &quot;constant-time&quot; algorithms.)  But even if an algorithm has variable running time (for example, <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets[^107].</li>
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
-<li><strong>Floating-point numbers.</strong>  Numbers chosen at random for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even in the few security applications where those numbers are floating-point numbers (notably differential privacy and lattice-based cryptography), there are ways to avoid such floating-point numbers[^107].</li>
+<li><strong>Floating-point numbers.</strong>  Numbers chosen at random for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even in the few security applications where those numbers are floating-point numbers (notably differential privacy and lattice-based cryptography), there are ways to avoid such floating-point numbers[^108].</li>
 </ol>
 
 <p><a id=License></a></p>
