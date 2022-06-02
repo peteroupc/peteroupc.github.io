@@ -98,7 +98,7 @@ It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all 
 
 Now, we focus on a **specific approximation scheme**, the one **presented by [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly"**.
 
-The scheme involves building polynomials that are shifted upward and downward to approximate $f$ from above and below.
+The scheme involves building polynomials that are shifted upward and downward to approximate $f$ from above and below so that the polynomials meet the [**Formal Statement**](#Formal_Statement) given earlier.
 
 The scheme achieves a convergence rate that generally depends on the smoothness of $f$; in fact, it can achieve the highest convergence rate possible for functions with that smoothness.
 
@@ -191,7 +191,7 @@ If $f$ is a concave factory function, there is a simple way to approximate that 
 
 $$a(n,k) = f(k/n).$$
 
-Then the lower polynomials $g_{n}(\lambda)$ will meet all the requirements of the formal statement above. Indeed:
+Then the lower polynomials $g_{n}(\lambda)$ will meet all the requirements of the [**formal statement**](#Formal_Statement) above. Indeed:
 
 $$g_{n}(\lambda)=\sum_{k=0}^{n}f(k/n){n \choose k}\lambda^{k}(1-\lambda)^{n-k}.$$
 

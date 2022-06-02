@@ -1996,10 +1996,10 @@ See Schechtmann and Zinn (1990)[^100]. Here, EPD generates an _exponential power
     METHOD PNorm(vec, p)
        ret=0
        if p==infinity
-          for i in 0...size(vec): ret=max(ret,vec[i])
+          for i in 0...size(vec): ret=max(ret,abs(vec[i]))
           return ret
        else
-          for i in 0...size(vec): ret=ret+pow(vec[i],p)
+          for i in 0...size(vec): ret=ret+pow(abs(vec[i]),p)
           return pow(ret,1.0/p)
        end
     END METHOD
@@ -2048,7 +2048,7 @@ To generate a random point inside&mdash;
 > **Notes:**
 >
 > 1. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.
-> 2. Sampling a half-ball, half-sphere, half-shell can be done by sampling a full ball or shell and replacing one of the dimensions of the result with its absolute value.
+> 2. Sampling a half-ball, half-sphere, or half-shell can be done by sampling a full ball or shell and replacing one of the dimensions of the result with its absolute value.
 > 3. Lacko and Harman (2012)[^105] defined a family of _non-uniform_ distributions of points inside a ball: generate `RandomPointOnSphere(dims, r*pow(BetaDist(dims/p, d/p), 1.0/p),p)` where `r>0` is the radius, `dims` and `p` are as in `RandomPointOnSphere`, and `d>=0` is a shape parameter.  If `d = p`, the distribution is uniform in the ball.
 
 <a id=Random_Latitude_and_Longitude></a>

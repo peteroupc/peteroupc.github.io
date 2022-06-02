@@ -165,8 +165,8 @@ class PiecewiseBernsteinPoly:
         self.pieces2 = []
 
     def fromcoeffs(coeffs):
-        """ Creates a PiecewiseBernsteinPoly given a
-             polynomial's Bernstein coefficients.  """
+        """Creates a PiecewiseBernsteinPoly given a
+        polynomial's Bernstein coefficients."""
         return PiecewiseBernsteinPoly().piece(coeffs, 0, 1)
 
     def _ensure_homogen(self):
@@ -909,17 +909,17 @@ def roundUpperCoeffs(upper):
     return ret
 
 def _sqrtbounds(x, n):
-  upper = x + 1
-  for i in range(0, n):
-            upper = (upper + x / upper) / 2
-  lower = x / upper
-  if lower > upper:
-            raise ValueError
-  return FInterval(min(lower, upper), max(lower, upper))
+    upper = x + 1
+    for i in range(0, n):
+        upper = (upper + x / upper) / 2
+    lower = x / upper
+    if lower > upper:
+        raise ValueError
+    return FInterval(min(lower, upper), max(lower, upper))
 
 def intervalsqrt(x, n):
-   x=FInterval(x)
-   return FInterval(_sqrtbounds(x.inf,n).inf, _sqrtbounds(x.sup,n).sup)
+    x = FInterval(x)
+    return FInterval(_sqrtbounds(x.inf, n).inf, _sqrtbounds(x.sup, n).sup)
 
 def polyshift(nrcoeffs, theta, d, alpha=2):
     # Upward and downward shift of polynomial according to step 5
@@ -932,13 +932,16 @@ def polyshift(nrcoeffs, theta, d, alpha=2):
     if theta < 1:
         raise ValueError("disallowed theta")
     alpha = r
-    if r < 1 or int(r) != r or (r!=1 and r % 2 != 0):
+    if r < 1 or int(r) != r or (r != 1 and r % 2 != 0):
         raise ValueError("disallowed r")
     n = len(nrcoeffs) - 1 - r  # n+r+1 coefficients
     phi = [
-        Frac(theta) / (n ** alpha) + (\
-            intervalsqrt(Frac(i, n) * (1 - Frac(i, n)) / n, 10) if alpha==1 else \
-            (Frac(i, n) * (1 - Frac(i, n)) / n) ** (alpha // 2)) \
+        Frac(theta) / (n ** alpha)
+        + (
+            intervalsqrt(Frac(i, n) * (1 - Frac(i, n)) / n, 10)
+            if alpha == 1
+            else (Frac(i, n) * (1 - Frac(i, n)) / n) ** (alpha // 2)
+        )
         for i in range(n + 1)
     ]
     phi = elevate(phi, r)
@@ -1011,24 +1014,25 @@ def example1():
     return pwp2
 
 class C4PiecewisePoly:
-        """ This is an algorithm to toss heads with probability equal to
-            a piecewise polynomial function (defined on the closed interval [0, 1])
-            that is four times differentiable. (Necessary condition is: third derivative is in Zygmund class.)
+    """This is an algorithm to toss heads with probability equal to
+     a piecewise polynomial function (defined on the closed interval [0, 1])
+     that is four times differentiable. (Necessary condition is: third derivative is in Zygmund class.)
 
-           The algorithm implements the method of Holtz et al. 2011,
-           using polynomials that converge from above and below to the
-           target function.  The polynomials approximate the target function
-           via a so-called Lorentz operator of degree 4.
+    The algorithm implements the method of Holtz et al. 2011,
+    using polynomials that converge from above and below to the
+    target function.  The polynomials approximate the target function
+    via a so-called Lorentz operator of degree 4.
 
-           Generally, the algorithm converges at a rate near O(1/n^2) if the input coin
-           is close to fair, and near O(1/n^4) if the coin leans heavily towards heads
-           or tails.  However, the algorithm relies on Conjecture 34, which is not yet proved.
+    Generally, the algorithm converges at a rate near O(1/n^2) if the input coin
+    is close to fair, and near O(1/n^4) if the coin leans heavily towards heads
+    or tails.  However, the algorithm relies on Conjecture 34, which is not yet proved.
 
-           pwp is a PiecewiseBernsteinPoly, PolySum, or PolyDiff.
+    pwp is a PiecewiseBernsteinPoly, PolySum, or PolyDiff.
 
-           Reference: Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).
+    Reference: Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).
 
-           """
+    """
+
     def __init__(self, pwp):
         self.pwp = pwp
         self.concave = False
@@ -1106,23 +1110,23 @@ class C4PiecewisePoly:
 
 class C2PiecewisePoly:
     def __init__(self, pwp):
-        """ This is an algorithm to toss heads with probability equal to
-            a piecewise polynomial function (defined on the closed interval [0, 1])
-            that is twice differentiable. (Necessary condition is: derivative is in Zygmund class.)
+        """This is an algorithm to toss heads with probability equal to
+         a piecewise polynomial function (defined on the closed interval [0, 1])
+         that is twice differentiable. (Necessary condition is: derivative is in Zygmund class.)
 
-           The algorithm implements the method of Holtz et al. 2011,
-           using polynomials that converge from above and below to the
-           target function.  The polynomials approximate the target function
-           via a so-called Lorentz operator of degree 2.
+        The algorithm implements the method of Holtz et al. 2011,
+        using polynomials that converge from above and below to the
+        target function.  The polynomials approximate the target function
+        via a so-called Lorentz operator of degree 2.
 
-           Generally, the algorithm converges at a rate near O(1/n) if the input coin
-           is close to fair, and near O(1/n^2) if the coin leans heavily towards heads
-           or tails. However, the algorithm relies on Conjecture 34, which is not yet proved.
+        Generally, the algorithm converges at a rate near O(1/n) if the input coin
+        is close to fair, and near O(1/n^2) if the coin leans heavily towards heads
+        or tails. However, the algorithm relies on Conjecture 34, which is not yet proved.
 
-           pwp is a PiecewiseBernsteinPoly, PolySum, or PolyDiff.
+        pwp is a PiecewiseBernsteinPoly, PolySum, or PolyDiff.
 
-           Reference: Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).
-           """
+        Reference: Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).
+        """
         self.pwp = pwp
         self.initialdeg = 4
         self.nextdegree = lambda n: max(self.initialdeg + 2, (n - 2) * 2 + 2)
