@@ -2583,9 +2583,13 @@ class RealPow(Real):
             fr = Fraction(a)
             if fr.numerator == fr.denominator:
                 self.baseint = int(fr)
+            elif fr.denominator == 1:
+                self.baseint = fr.numerator
             self.a = RealFraction(fr)
         if isinstance(b, int) and b >= 0:
             self.powint = b
+        elif isinstance(b, Fraction) and b.denominator == 1 and b.numerator >= 0:
+            self.powint = b.numerator
         elif isinstance(b, Fraction) and b == Fraction(1, 2):
             self.is_sqrt = True
             self.b = b
