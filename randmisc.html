@@ -655,24 +655,24 @@ END METHOD
 <p><strong>Weighted choice with the Gumbel max trick.</strong> Let <em>C</em>&gt;0 be an unknown number.  Then, given&mdash;</p>
 
 <ul>
-<li>a vector of the form [<em>u</em><sub>0</sub>, <em>u</em><sub>1</sub>, ..., <em>u</em><sub><em>n</em></sub>], where <em>p</em><sub><em>i</em></sub> is a so-called &quot;unnormalized log probability&quot; of the form ln(<em>x</em>)+<em>C</em> (where <em>x</em> is the probability of getting <em>i</em>),</li>
+<li>a vector of the form [<em>p</em><sub>0</sub>, <em>p</em><sub>1</sub>, ..., <em>p</em><sub><em>n</em></sub>], where <em>p</em><sub><em>i</em></sub> is a so-called &quot;unnormalized log probability&quot; of the form ln(<em>x</em>)+<em>C</em> (where <em>x</em> is the probability of getting <em>i</em>),</li>
 </ul>
 
 <p>an integer in the closed interval [0, <em>n</em>] can be sampled as follows:</p>
 
 <ol>
-<li>(&quot;Gumbel&quot;.) For each probability <em>p</em><sub><em>i</em></sub>, generate a &quot;Gumbel variate&quot; <em>G</em>, then set <em>q</em><sub><em>i</em></sub> to <em>p</em><sub><em>i</em></sub>+<em>G</em>.  (A so-called &quot;Gumbel variate&quot; is distributed as &minus;ln(&minus;ln(<em>U</em>)), where <em>U</em> is a uniform random variate greater than 0 and less than 1.[^66])</li>
+<li>(&quot;Gumbel&quot;.) For each <em>p</em><sub><em>i</em></sub>, generate a &quot;Gumbel variate&quot; <em>G</em>, then set <em>q</em><sub><em>i</em></sub> to <em>p</em><sub><em>i</em></sub>+<em>G</em>.  (A so-called &quot;Gumbel variate&quot; is distributed as &minus;ln(&minus;ln(<em>U</em>)), where <em>U</em> is a uniform random variate greater than 0 and less than 1.[^66])</li>
 <li>(&quot;Max&quot;.) Return the integer <em>i</em> corresponding to the highest <em>q</em><sub><em>i</em></sub> value.</li>
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> To sample <em>k</em> items without replacement according to their &quot;unnormalized log probabilities&quot;, do step 1, then choose the <em>k</em> integers corresponding to the <em>k</em> highest <em>q</em><sub><em>i</em></sub> values.  This is also known as &quot;Gumbel top <em>k</em> sampling&quot;; see Fig. 7 of Huijben et al. (2022)[^67].</p>
+<p><strong>Note:</strong> To sample <em>k</em> items without replacement according to their &quot;unnormalized log probabilities&quot;, do step 1, then choose the <em>k</em> integers corresponding to the <em>k</em> highest <em>q</em><sub><em>i</em></sub> values.  This is also known as &quot;Gumbel top <em>k</em> sampling&quot;; see Fig. 7 of Huijben et al. (2022)[^65].</p>
 </blockquote>
 
-<p><strong>Weighted choice with the Gumbel softmax trick.</strong> Given a vector described above as well as a &quot;temperature&quot; parameter _&lambda; &gt; 0, a &quot;continuous relaxation&quot; or &quot;concrete distribution&quot; (which transforms the vector to a new one) can be sampled as follows:</p>
+<p><strong>Weighted choice with the Gumbel softmax trick.</strong> Given a vector described above as well as a &quot;temperature&quot; parameter <em>&lambda;</em> &gt; 0, a &quot;continuous relaxation&quot; or &quot;concrete distribution&quot; (which transforms the vector to a new one) can be sampled as follows:</p>
 
 <ol>
-<li>(&quot;Gumbel&quot;.) For each probability <em>p</em><sub><em>i</em></sub>, generate a &quot;Gumbel variate&quot; <em>G</em>, then set <em>q</em><sub><em>i</em></sub> to <em>p</em><sub><em>i</em></sub>+<em>G</em>.</li>
+<li>(&quot;Gumbel&quot;.) For each <em>p</em><sub><em>i</em></sub>, generate a &quot;Gumbel variate&quot; <em>G</em>, then set <em>q</em><sub><em>i</em></sub> to <em>p</em><sub><em>i</em></sub>+<em>G</em>.</li>
 <li>(&quot;Softmax&quot;.) For each <em>q</em><sub><em>i</em></sub>, set it to exp(<em>p</em>/<em>&lambda;</em>).</li>
 <li>Set <em>d</em> to the sum of all values of <em>q</em><sub><em>i</em></sub>.</li>
 <li>For each <em>q</em><sub><em>i</em></sub>, divide it by <em>d</em>.</li>
@@ -830,8 +830,6 @@ END METHOD
 <p>[^65]: Huijben, I.A., Kool, W., Paulus, M.B. and Van Sloun, R.J., 2022. A Review of the Gumbel-max Trick and its Extensions for Discrete Stochasticity in Machine Learning. IEEE Transactions on Pattern Analysis and Machine Intelligence.  Also in <a href="https://arxiv.org/pdf/2110.01515"><strong>https://arxiv.org/pdf/2110.01515</strong></a></p>
 
 <p>[^66]: Or as &minus;ln(<em>E</em>), where <em>E</em> is an exponential random variate with rate 1.</p>
-
-<p>[^67]: Huijben, I.A., Kool, W., Paulus, M.B. and Van Sloun, R.J., 2022. A Review of the Gumbel-max Trick and its Extensions for Discrete Stochasticity in Machine Learning. IEEE Transactions on Pattern Analysis and Machine Intelligence.  Also in <a href="https://arxiv.org/pdf/2110.01515"><strong>https://arxiv.org/pdf/2110.01515</strong></a></p>
 
 <p><a id=License></a></p>
 

@@ -1778,7 +1778,9 @@ class Real:
         raise NotImplementedError
 
     def disp(a):
-        return a.ev(30) / 2 ** 30
+        prec = 30
+        r = a.ev(prec + 2)
+        return (r // 4) + 1 if r % 4 >= 2 else (r // 4)
 
     def __repr__(a):
         return "Real"

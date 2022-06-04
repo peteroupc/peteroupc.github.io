@@ -420,18 +420,18 @@ Huijben et al. (2022)[^65] reviews the Gumbel max trick and Gumbel softmax distr
 
 **Weighted choice with the Gumbel max trick.** Let _C_>0 be an unknown number.  Then, given&mdash;
 
-- a vector of the form [_u_<sub>0</sub>, _u_<sub>1</sub>, ..., _u_<sub>_n_</sub>], where _p_<sub>_i_</sub> is a so-called "unnormalized log probability" of the form ln(_x_)+_C_ (where _x_ is the probability of getting _i_),
+- a vector of the form [_p_<sub>0</sub>, _p_<sub>1</sub>, ..., _p_<sub>_n_</sub>], where _p_<sub>_i_</sub> is a so-called "unnormalized log probability" of the form ln(_x_)+_C_ (where _x_ is the probability of getting _i_),
 
 an integer in the closed interval [0, _n_] can be sampled as follows:
 
-1. ("Gumbel".) For each probability _p_<sub>_i_</sub>, generate a "Gumbel variate" _G_, then set _q_<sub>_i_</sub> to _p_<sub>_i_</sub>+_G_.  (A so-called "Gumbel variate" is distributed as &minus;ln(&minus;ln(_U_)), where _U_ is a uniform random variate greater than 0 and less than 1.[^66])
+1. ("Gumbel".) For each _p_<sub>_i_</sub>, generate a "Gumbel variate" _G_, then set _q_<sub>_i_</sub> to _p_<sub>_i_</sub>+_G_.  (A so-called "Gumbel variate" is distributed as &minus;ln(&minus;ln(_U_)), where _U_ is a uniform random variate greater than 0 and less than 1.[^66])
 2. ("Max".) Return the integer _i_ corresponding to the highest _q_<sub>_i_</sub> value.
 
-> **Note:** To sample _k_ items without replacement according to their "unnormalized log probabilities", do step 1, then choose the _k_ integers corresponding to the _k_ highest _q_<sub>_i_</sub> values.  This is also known as "Gumbel top _k_ sampling"; see Fig. 7 of Huijben et al. (2022)[^67].
+> **Note:** To sample _k_ items without replacement according to their "unnormalized log probabilities", do step 1, then choose the _k_ integers corresponding to the _k_ highest _q_<sub>_i_</sub> values.  This is also known as "Gumbel top _k_ sampling"; see Fig. 7 of Huijben et al. (2022)[^65].
 
-**Weighted choice with the Gumbel softmax trick.** Given a vector described above as well as a "temperature" parameter _&lambda; > 0, a "continuous relaxation" or "concrete distribution" (which transforms the vector to a new one) can be sampled as follows:
+**Weighted choice with the Gumbel softmax trick.** Given a vector described above as well as a "temperature" parameter _&lambda;_ > 0, a "continuous relaxation" or "concrete distribution" (which transforms the vector to a new one) can be sampled as follows:
 
-1. ("Gumbel".) For each probability _p_<sub>_i_</sub>, generate a "Gumbel variate" _G_, then set _q_<sub>_i_</sub> to _p_<sub>_i_</sub>+_G_.
+1. ("Gumbel".) For each _p_<sub>_i_</sub>, generate a "Gumbel variate" _G_, then set _q_<sub>_i_</sub> to _p_<sub>_i_</sub>+_G_.
 2. ("Softmax".) For each _q_<sub>_i_</sub>, set it to exp(_p_/_&lambda;_).
 3. Set _d_ to the sum of all values of _q_<sub>_i_</sub>.
 4. For each _q_<sub>_i_</sub>, divide it by _d_.
@@ -584,8 +584,6 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 [^65]: Huijben, I.A., Kool, W., Paulus, M.B. and Van Sloun, R.J., 2022. A Review of the Gumbel-max Trick and its Extensions for Discrete Stochasticity in Machine Learning. IEEE Transactions on Pattern Analysis and Machine Intelligence.  Also in [**https://arxiv.org/pdf/2110.01515**](https://arxiv.org/pdf/2110.01515)
 
 [^66]: Or as &minus;ln(_E_), where _E_ is an exponential random variate with rate 1.
-
-[^67]: Huijben, I.A., Kool, W., Paulus, M.B. and Van Sloun, R.J., 2022. A Review of the Gumbel-max Trick and its Extensions for Discrete Stochasticity in Machine Learning. IEEE Transactions on Pattern Analysis and Machine Intelligence.  Also in [**https://arxiv.org/pdf/2110.01515**](https://arxiv.org/pdf/2110.01515)
 
 <a id=License></a>
 ## License
