@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/05/28"><meta name="citation_online_date" content="2022/05/28"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/06/04"><meta name="citation_online_date" content="2022/06/04"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -24,6 +24,7 @@
 <li><a href="#ExpoExact"><strong>ExpoExact</strong></a></li>
 <li><a href="#A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights"><strong>A sampler for distributions with nonincreasing or nondecreasing weights</strong></a></li>
 <li><a href="#A_sampler_for_unimodal_distributions_of_weights"><strong>A sampler for unimodal distributions of weights</strong></a></li>
+<li><a href="#Weighted_Choice_with_Log_Probabilities"><strong>Weighted Choice with Log Probabilities</strong></a></li>
 <li><a href="#Log_Uniform_Distribution"><strong>Log-Uniform Distribution</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -645,6 +646,40 @@ END METHOD
 <li>The sampling is the same as for the algorithms in the previous section.</li>
 </ul>
 
+<p><a id=Weighted_Choice_with_Log_Probabilities></a></p>
+
+<h2>Weighted Choice with Log Probabilities</h2>
+
+<p>Huijben et al. (2022)[^65] reviews the Gumbel max trick and Gumbel softmax distributions.</p>
+
+<p><strong>Weighted choice with the Gumbel max trick.</strong> Let <em>C</em>&gt;0 be an unknown number.  Then, given&mdash;</p>
+
+<ul>
+<li>a vector of the form [<em>u</em><sub>0</sub>, <em>u</em><sub>1</sub>, ..., <em>u</em><sub><em>n</em></sub>], where <em>p</em><sub><em>i</em></sub> is a so-called &quot;unnormalized log probability&quot; of the form ln(<em>x</em>)+<em>C</em> (where <em>x</em> is the probability of getting <em>i</em>),</li>
+</ul>
+
+<p>an integer in the closed interval [0, <em>n</em>] can be sampled as follows:</p>
+
+<ol>
+<li>(&quot;Gumbel&quot;.) For each probability <em>p</em><sub><em>i</em></sub>, generate a &quot;Gumbel variate&quot; <em>G</em>, then set <em>q</em><sub><em>i</em></sub> to <em>p</em><sub><em>i</em></sub>+<em>G</em>.  (A so-called &quot;Gumbel variate&quot; is distributed as &minus;ln(&minus;ln(<em>U</em>)), where <em>U</em> is a uniform random variate greater than 0 and less than 1.[^66])</li>
+<li>(&quot;Max&quot;.) Return the integer <em>i</em> corresponding to the highest <em>q</em><sub><em>i</em></sub> value.</li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> To sample <em>k</em> items without replacement according to their &quot;unnormalized log probabilities&quot;, do step 1, then choose the <em>k</em> integers corresponding to the <em>k</em> highest <em>q</em><sub><em>i</em></sub> values.  This is also known as &quot;Gumbel top <em>k</em> sampling&quot;; see Fig. 7 of Huijben et al. (2022)[^67].</p>
+</blockquote>
+
+<p><strong>Weighted choice with the Gumbel softmax trick.</strong> Given a vector described above as well as a &quot;temperature&quot; parameter _&lambda; &gt; 0, a &quot;continuous relaxation&quot; or &quot;concrete distribution&quot; (which transforms the vector to a new one) can be sampled as follows:</p>
+
+<ol>
+<li>(&quot;Gumbel&quot;.) For each probability <em>p</em><sub><em>i</em></sub>, generate a &quot;Gumbel variate&quot; <em>G</em>, then set <em>q</em><sub><em>i</em></sub> to <em>p</em><sub><em>i</em></sub>+<em>G</em>.</li>
+<li>(&quot;Softmax&quot;.) For each <em>q</em><sub><em>i</em></sub>, set it to exp(<em>p</em>/<em>&lambda;</em>).</li>
+<li>Set <em>d</em> to the sum of all values of <em>q</em><sub><em>i</em></sub>.</li>
+<li>For each <em>q</em><sub><em>i</em></sub>, divide it by <em>d</em>.</li>
+</ol>
+
+<p>The algorithm&#39;s result is a vector <em>q</em>, which can be used only once to sample <em>i</em> with probability proportional to <em>q</em><sub><em>i</em></sub> (which is not a &quot;log probability&quot;). (In this case, steps 3 and 4 above can be omitted if that sampling method can work with weights that need not sum to 1.)</p>
+
 <p><a id=Log_Uniform_Distribution></a></p>
 
 <h2>Log-Uniform Distribution</h2>
@@ -791,6 +826,12 @@ END METHOD
 <p>[^63]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
 <p>[^64]: Chewi, Sinho, Patrik R. Gerber, Chen Lu, Thibaut Le Gouic, and Philippe Rigollet. &quot;<a href="https://proceedings.mlr.press/v151/chewi22a.html"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>.&quot; In International Conference on Artificial Intelligence and Statistics, pp. 2249-2265. PMLR, 2022.</p>
+
+<p>[^65]: Huijben, I.A., Kool, W., Paulus, M.B. and Van Sloun, R.J., 2022. A Review of the Gumbel-max Trick and its Extensions for Discrete Stochasticity in Machine Learning. IEEE Transactions on Pattern Analysis and Machine Intelligence.  Also in <a href="https://arxiv.org/pdf/2110.01515"><strong>https://arxiv.org/pdf/2110.01515</strong></a></p>
+
+<p>[^66]: Or as &minus;ln(<em>E</em>), where <em>E</em> is an exponential random variate with rate 1.</p>
+
+<p>[^67]: Huijben, I.A., Kool, W., Paulus, M.B. and Van Sloun, R.J., 2022. A Review of the Gumbel-max Trick and its Extensions for Discrete Stochasticity in Machine Learning. IEEE Transactions on Pattern Analysis and Machine Intelligence.  Also in <a href="https://arxiv.org/pdf/2110.01515"><strong>https://arxiv.org/pdf/2110.01515</strong></a></p>
 
 <p><a id=License></a></p>
 
