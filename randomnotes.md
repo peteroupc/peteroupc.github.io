@@ -426,7 +426,7 @@ The following pseudocode generates a random vector (list of numbers) that follow
 > 5. **Rice&ndash;Norton distribution**: Generate `vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])` (where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution), then apply `PNorm(vec, 2)` to that vector.
 > 6. A **standard** [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution) is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
 > 7. **Multivariate Linnik distribution**: Generate a multinormal random vector, then multiply each component by `x`, where `x = GeometricStable(alpha/2.0, 1, 1)`, where `alpha` is a parameter in (0, 2] (Kozubowski 2000\)[^17].
-> 8. **Multivariate exponential power distribution** (Solaro 2004)[^27]: `MultivariateCov(mu, cov, vec)`, where `vec = RandomPointInHypersphere(m, pow(Gamma(m/s,1)*2,1.0/s))`, `m` is the dimension, `s > 0` is a shape parameter, `mu` is the mean as an `m`-dimensional vector (`m`-item list), and `cov` is a covariance matrix.
+> 8. **Multivariate exponential power distribution** (Solaro 2004)[^27]: `MultivariateCov(mu, cov, vec)`, where `vec = RandomPointOnSphere(m, pow(Gamma(m/s,1)*2,1.0/s), 2)`, `m` is the dimension, `s > 0` is a shape parameter, `mu` is the mean as an `m`-dimensional vector (`m`-item list), and `cov` is a covariance matrix.
 
 <a id=Gaussian_and_Other_Copulas></a>
 #### Gaussian and Other Copulas
