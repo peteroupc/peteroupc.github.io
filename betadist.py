@@ -1732,6 +1732,33 @@ def lah(n, k):
 # an interval arithmetic involving rational numbers.  The approximation
 # parameter 'n', given there, means the interval returned by the operator is closer to the true result the closer 'n' is; however, this specification is too loose for our purposes, since
 # it doesn't relate consistently to precision from one operator to another.
+#
+# REPRODUCIBILITY NOTE:
+#
+# There is a potential issue involved if an application
+# uses pseudorandom number generators (PRNGs)
+# together with the Rand* and Real* classes in this
+# script.
+#
+# The Rand* and Real* classes calculate a
+# number within less than 1/2^p of the true
+# value given the precision parameter p (the Rand*
+# classes do so with probability 1).
+# In general, there are two correct answers to
+# this calculation (e.g., if the real number is pi, the two
+# answers that are correct to 1/10 are 3.1 and 3.2),
+# and this can lead to non-reproducible results if
+# the application uses Rand* and Real* classes
+# together with PRNGs.  (This issue is similar to
+# the issue with different rounding behaviors in
+# floating-point number implementations.)
+#
+# In this case, for best results, the application
+# should not share instances of Rand* and Real*
+# classes across tasks (a task is a part of the
+# application that has its own PRNG that's not
+# shared across tasks).
+#
 
 class Real:
     def ev(self, n):
@@ -1786,12 +1813,13 @@ class Real:
         return "Real"
 
 class RealPi(Real):
-    def __init__(self, fraction=1):
+    def __init__(self, fraction=1, consistent=False):
         self.fraction = Fraction(fraction)
         if self.fraction < 0:
             raise ValueError
         self.ev_n = -1
         self.ev_v = 0
+        self.consistent = consistent
 
     def __repr__(self):
         return "RealPi(%s)" % (self.fraction)
@@ -1799,12 +1827,13 @@ class RealPi(Real):
     def ev(self, n):
         if self.fraction == 0:
             return 0
-        if self.ev_n == n:
-            # print(["fast",self.ev_n,self.ev_v])
-            return self.ev_v
-        if n < self.ev_n:
-            # print(["faster",self.ev_n,self.ev_v])
-            return self.ev_v >> (self.ev_n - n)
+        if not self.consistent:
+            if self.ev_n == n:
+                # print(["fast",self.ev_n,self.ev_v])
+                return self.ev_v
+            if n < self.ev_n:
+                # print(["faster",self.ev_n,self.ev_v])
+                return self.ev_v >> (self.ev_n - n)
         k = 0
         lower = Fraction(0)
         upper = lower
@@ -1831,8 +1860,8 @@ class RealPi(Real):
             lower = upper
             k += 1
 
-REALPI = RealPi()
-REALHALFPI = RealPi(Fraction(1, 2))
+REALPI = RealPi(consistent=True)
+REALHALFPI = RealPi(Fraction(1, 2), consistent=True)
 
 class RealTan(Real):
     def __init__(self, a):

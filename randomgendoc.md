@@ -3359,7 +3359,7 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class RealPi(Real)
-     |  RealPi(fraction=1)
+     |  RealPi(fraction=1, consistent=False)
      |
      |  Method resolution order:
      |      RealPi
@@ -3368,7 +3368,7 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __init__(self, fraction=1)
+     |  __init__(self, fraction=1, consistent=False)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  __repr__(self)
