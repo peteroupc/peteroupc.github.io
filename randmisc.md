@@ -14,9 +14,10 @@
 - [**Batching Random Samples via Randomness Extraction**](#Batching_Random_Samples_via_Randomness_Extraction)
 - [**Random Variate Generation via Quantiles**](#Random_Variate_Generation_via_Quantiles)
 - [**ExpoExact**](#ExpoExact)
-- [**A sampler for distributions with nonincreasing or nondecreasing weights**](#A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights)
-- [**A sampler for unimodal distributions of weights**](#A_sampler_for_unimodal_distributions_of_weights)
-- [**Weighted Choice with Log Probabilities**](#Weighted_Choice_with_Log_Probabilities)
+- [**Weighted Choice for Special Distributions**](#Weighted_Choice_for_Special_Distributions)
+    - [**Distributions with nonincreasing or nondecreasing weights**](#Distributions_with_nonincreasing_or_nondecreasing_weights)
+    - [**Unimodal distributions of weights**](#Unimodal_distributions_of_weights)
+    - [**Weighted Choice with Log Probabilities**](#Weighted_Choice_with_Log_Probabilities)
 - [**Log-Uniform Distribution**](#Log_Uniform_Distribution)
 - [**Notes**](#Notes)
 - [**License**](#License)
@@ -379,8 +380,13 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 
 > **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the precision given in `precision` (see also Karney 2016\)[^63].
 
-<a id=A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights></a>
-## A sampler for distributions with nonincreasing or nondecreasing weights
+<a id=Weighted_Choice_for_Special_Distributions></a>
+## Weighted Choice for Special Distributions
+
+The following are algorithms to sample items whose probabilities (or "weights") are given in a special way.  They supplement the section "[**Weighted Choice**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice)" in my article "Randomization and Sampling Methods".
+
+<a id=Distributions_with_nonincreasing_or_nondecreasing_weights></a>
+### Distributions with nonincreasing or nondecreasing weights
 
 An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nonincreasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2022\)[^64].  It has a logarithmic time complexity in terms of setup and sampling.
 
@@ -403,8 +409,8 @@ For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follo
 
 > **Note:** The weights can be base-_&beta;_ logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace "_q_\[_m_\]\*min((_b_&minus;_a_)" with "_q_\[_m_\]+ln(min((_b_&minus;_a_))/ln(_&beta;_)" (which is generally inexact unless _&beta;_ is 2); in sampling step 1, use an algorithm that takes base-_&beta;_ logarithms as weights; and replace sampling step 3 with "Generate an exponential random variate with rate ln(_&beta;_) (that is, the variate is _E_/ln(_&beta;_) where _E_ is exponential with rate 1).  If that variate is greater than _q_\[_k_\] minus _w_\[_x_\], return _x_.  Otherwise, go to step 1."  These modifications can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).
 
-<a id=A_sampler_for_unimodal_distributions_of_weights></a>
-## A sampler for unimodal distributions of weights
+<a id=Unimodal_distributions_of_weights></a>
+### Unimodal distributions of weights
 
 The following is an algorithm for sampling an integer in the interval \[_a_, _b_\) with probability proportional to a _unimodal distribution_ of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2022\)[^64].  It assumes the mode (the point with the highest weight) is known.  An example is \[1, 3, 9, 4, 4\] when _a_ = 0 and _b_ = 5, and the _mode_ is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.
 
@@ -414,7 +420,7 @@ The following is an algorithm for sampling an integer in the interval \[_a_, _b_
 - The sampling is the same as for the algorithms in the previous section.
 
 <a id=Weighted_Choice_with_Log_Probabilities></a>
-## Weighted Choice with Log Probabilities
+### Weighted Choice with Log Probabilities
 
 Huijben et al. (2022)[^65] reviews the Gumbel max trick and Gumbel softmax distributions.
 
