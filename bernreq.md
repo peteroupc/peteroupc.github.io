@@ -34,6 +34,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Pushdown Automata**](#Pushdown_Automata)
     - [**Algebraic Functions**](#Algebraic_Functions)
     - [**Questions**](#Questions_5)
+- [**Explicit Error Bounds for Polynomial Approximation**](#Explicit_Error_Bounds_for_Polynomial_Approximation)
 - [**Other Questions**](#Other_Questions)
 - [**Remarks**](#Remarks)
 - [**My Attempt**](#My_Attempt)
@@ -359,6 +360,37 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 1. For every function in class $\mathcal{C}$, is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
 2. In particular, is min($\lambda$, $1-\lambda$) in class $\mathcal{D}$? What about $\lambda^{1/p}$ for some prime $p\ge 3$?
 
+<a id=Explicit_Error_Bounds_for_Polynomial_Approximation></a>
+## Explicit Error Bounds for Polynomial Approximation
+
+The _Bernstein polynomial_ of $f(x)$ is written as&mdash; $$\sum_{k=0}^n f(k/n) {n \choose k} x^k (1-x)^{n-k}.$$
+
+As is known since Voronovskaya (1932), the Bernstein polynomials of $f$ converge uniformly to $f(x)$ at a rate no faster than $O(1/n)$, meaning that it won't converge in a finite expected running time.
+
+But Lorentz (1966) has shown that if $f(x)$ is positive and has $k$ continuous derivatives on $[0, 1]$, there are polynomials that converge to $f$ at the rate $O(1/n^{k/2})$ (and thus can be faster than the $O(1/n^{2+\epsilon})$ needed for a finite expected running time, depending on $f$).
+
+Thus, people have developed alternatives, including _iterated Bernstein polynomials_, to improve the convergence rate.  These include:
+
+- Micchelli, C. (1973). The saturation class and iterates of the Bernstein polynomials. Journal of Approximation Theory, 8(1), 1-18.
+- Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/pdf/0909.0684)." arXiv preprint arXiv:0909.0684 (2009).
+- Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)" arXiv preprint arXiv:2112.09183 (2021).
+- The "Lorentz operator" (Holtz et al. 2011).
+- Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.
+
+Usually, papers like those express a bound on the error when approximating a function with polynomials as follows: $$| f(x) - P_n(f)(x) | \le c_n \epsilon(f, n, x),$$ where $\epsilon(f, n, x)$ is a fully determined function, $c_n>0$ is a constant that may depend on $n$, and $P_n(f)(x)$ is an approximating polynomial of degree $n$.
+
+There are results where the error bound $\epsilon(.)$ is in $O(1/n^{k/2})$, but in all those results I've seen so far (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li), $c_n$ is unknown, and no upper bound for $c_n$ is given by the results in the papers above, so that the error bound is unimplementable and there is no way of knowing beforehand whether $P_n$ will come close to $f$ within a user-specified error tolerance.
+
+Hence: **Are there results that give a sequence of polynomials $P_n$ with the following error bound?**
+
+$$| f(x) - P_n(f)(x) | \le c_n \epsilon(f, n, x),$$ where:
+
+1. $\epsilon(f, n, x)$ is a fully determined function.
+2. $\epsilon(f, n, x) = O(1/n^{k/2})$ where $k$ is the number of continuous derivatives of $f$.
+3. $c_n>0$ is a constant that may depend on $n$ and has a **known exact value or upper bound**.
+4. $P_n(f)(x)$ is an approximating polynomial of degree $n$ that can be readily rewritten to its Bernstein form.
+5. (Optional:) For every $n>1$, $(P_{n+1} - P_{n})$ has non-negative coefficients once $P_{n+1}$ and $P_{n}$ are rewritten as degree-$(n+1)$ polynomials in Bernstein form (see "[**New coins from old, smoothly**](#New_coins_from_old_smoothly)", earlier).
+
 <a id=Other_Questions></a>
 ## Other Questions
 
@@ -451,3 +483,4 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science, 2004. (pp. 12-21). IEEE.
 - Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2 [math.PR], 2010.
 - von Neumann, J., "Various techniques used in connection with random digits", 1951.
+- G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966.

@@ -1827,6 +1827,10 @@ class RealPi(Real):
     def ev(self, n):
         if self.fraction == 0:
             return 0
+        if n <= 72 and self.fraction == 1:
+            return 14835751850141947581203 >> (72 - n)
+        if n <= 72 and self.fraction.numerator == 1 and self.fraction.denominator == 2:
+            return 7417875925070973790601 >> (72 - n)
         if not self.consistent:
             if self.ev_n == n:
                 # print(["fast",self.ev_n,self.ev_v])
