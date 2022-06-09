@@ -365,9 +365,9 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 
 The _Bernstein polynomial_ of $f(x)$ is written as&mdash; $$\sum_{k=0}^n f(k/n) {n \choose k} x^k (1-x)^{n-k}.$$
 
-As is known since Voronovskaya (1932), the Bernstein polynomials of $f$ converge uniformly to $f(x)$ at a rate no faster than $O(1/n)$, meaning that it won't converge in a finite expected running time.
+As is known since Voronovskaya (1932), the Bernstein polynomials of $f(x)$ converge to $f$ at a rate no faster than $O(1/n)$, meaning that it won't converge in a finite expected running time.
 
-But Lorentz (1966) has shown that if $f(x)$ is positive and has $k$ continuous derivatives on $[0, 1]$, there are polynomials that converge to $f$ at the rate $O(1/n^{k/2})$ (and thus can be faster than the $O(1/n^{2+\epsilon})$ needed for a finite expected running time, depending on $f$).
+But Lorentz (1966) has shown that if $f(x)$ is positive and has $k$ continuous derivatives on $[0, 1]$, there are polynomials that converge to $f$ at the rate $O(1/n^{k/2})$ (and thus can be faster than the $O(1/n^{2+\epsilon})$ needed for a finite expected running time, if $f$ is "smooth" enough).
 
 Thus, people have developed alternatives, including _iterated Bernstein polynomials_, to improve the convergence rate.  These include:
 
@@ -389,7 +389,7 @@ $$| f(x) - P_n(f)(x) | \le c_n \epsilon(f, n, x),$$ where:
 2. $\epsilon(f, n, x) = O(1/n^{k/2})$ where $k$ is the number of continuous derivatives of $f$.
 3. $c_n>0$ is a constant that may depend on $n$ and has a **known exact value or upper bound**.
 4. $P_n(f)(x)$ is an approximating polynomial of degree $n$ that can be readily rewritten to its Bernstein form.
-5. (Optional:) For every $n>1$, $(P_{n+1} - P_{n})$ has non-negative coefficients once $P_{n+1}$ and $P_{n}$ are rewritten as degree-$(n+1)$ polynomials in Bernstein form (see "[**New coins from old, smoothly**](#New_coins_from_old_smoothly)", earlier).
+5. (Optional:) For every $n>0$, $(P_{n+1} - P_{n})$ has non-negative coefficients once $P_{n+1}$ and $P_{n}$ are rewritten as degree-$(n+1)$ polynomials in Bernstein form (see "[**New coins from old, smoothly**](#New_coins_from_old_smoothly)", earlier).
 
 <a id=Other_Questions></a>
 ## Other Questions
