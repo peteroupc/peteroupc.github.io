@@ -18,7 +18,8 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Contents**](#Contents)
 - [**Polynomials that approach a factory function**](#Polynomials_that_approach_a_factory_function)
     - [**Formal Statement**](#Formal_Statement)
-    - [**Questions**](#Questions)
+    - [**A Question of Efficiency**](#A_Question_of_Efficiency)
+- [**Questions**](#Questions)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
     - [**Questions**](#Questions_2)
 - [**Reverse-time martingales**](#Reverse_time_martingales)
@@ -55,14 +56,7 @@ An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Fu
 
 The result of the algorithm is 1 with probability _exactly_ equal to $f(\lambda)$, or 0 otherwise.
 
-However, the algorithm requires the polynomial sequences to meet certain requirements: Roughly speaking, the sequences must be of Bernstein-form polynomials that converge from above and below to a factory function as follows:
-
-- Each sequence's polynomials must have coefficients lying in [0, 1], and be of increasing degree.
-- The degree-n polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree n).
-
-See below for a formal statement of these polynomials.
-
-The [**answer to my StackExchange question**](https://math.stackexchange.com/a/3945261/721857) and my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but **none of them ensure a finite expected number of coin flips in general**, and it is suspected that an expected finite number of flips isn't possible for every probability of heads unless the factory function has a Hölder continuous fourth derivative. (Indeed, see related results by Holtz et al. (2011) that only functions with a Hölder continuous fourth derivative can be approximated by polynomials at a rate of $O(1/n^{2+\epsilon})$ or better, for $\epsilon>0$ and for every $\lambda$ in [0, 1].)
+However, the algorithm requires the polynomial sequences to meet certain requirements; among them, the sequences must be of Bernstein-form polynomials that converge from above and below to a factory function.  See the formal statement, next.
 
 <a id=Formal_Statement></a>
 ### Formal Statement
@@ -82,13 +76,24 @@ where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 
 
 It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.
 
-<a id=Questions></a>
-### Questions
+<a id=A_Question_of_Efficiency></a>
+### A Question of Efficiency
 
-1. Given a function with a Hölder continuous fourth derivative, are there practical formulas to compute polynomials that&mdash;
+However, ordinary Bernstein polynomials can't in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also the answer below and my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
+
+But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if $f$ is "smooth" enough).
+
+Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the Lorentz operator in Holtz et al. (2011), and Draganov (2014).  These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but these results have hidden constants with no upper bounds given, making them unimplementable.
+
+<a id=Questions></a>
+## Questions
+
+Thus the questions are:
+
+1. Are there practical formulas to compute polynomials that&mdash;
 
     - meet the formal statement above, and
-    - can be used to simulate that function with a finite expected running time?
+    - meet the following error bound? $|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2})$ where $P_n(f)(x)$ is an approximating polynomial of degree $n$, $k$ is the number of continuous derivatives, and $\epsilon(f,n,x)$ is fully determined with all constants having a known exact value or upper bound.
 
 2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
 
@@ -369,21 +374,13 @@ As is known since Voronovskaya (1932), the Bernstein polynomials of $f(x)$ conve
 
 But Lorentz (1966) has shown that if $f(x)$ is positive and has $k$ continuous derivatives on $[0, 1]$, there are polynomials that converge to $f$ at the rate $O(1/n^{k/2})$ (and thus can be faster than the $O(1/n^{2+\epsilon})$ needed for a finite expected running time, if $f$ is "smooth" enough).
 
-Thus, people have developed alternatives, including _iterated Bernstein polynomials_, to improve the convergence rate.  These include:
+Thus, people have developed alternatives, including _iterated Bernstein polynomials_, to improve the convergence rate.  These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the "Lorentz operator" in Holtz et al. (2011), and Draganov (2014).
 
-- Micchelli, C. (1973). The saturation class and iterates of the Bernstein polynomials. Journal of Approximation Theory, 8(1), 1-18.
-- Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/pdf/0909.0684)." arXiv preprint arXiv:0909.0684 (2009).
-- Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)" arXiv preprint arXiv:2112.09183 (2021).
-- The "Lorentz operator" (Holtz et al. 2011).
-- Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.
-
-Usually, papers like those express a bound on the error when approximating a function with polynomials as follows: $$| f(x) - P_n(f)(x) | \le c_n \epsilon(f, n, x),$$ where $\epsilon(f, n, x)$ is a fully determined function, $c_n>0$ is a constant that may depend on $n$, and $P_n(f)(x)$ is an approximating polynomial of degree $n$.
+Usually, papers like those express a bound on the error when approximating a function with polynomials as follows: $$| f(x) - P_n(f)(x) | \le c_n \epsilon(f, n, x), \tag{3}$$ where $\epsilon(f, n, x)$ is a fully determined function, $c_n>0$ is a constant that may depend on $n$, and $P_n(f)(x)$ is an approximating polynomial of degree $n$.
 
 There are results where the error bound $\epsilon(.)$ is in $O(1/n^{k/2})$, but in all those results I've seen so far (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li), $c_n$ is unknown, and no upper bound for $c_n$ is given by the results in the papers above, so that the error bound is unimplementable and there is no way of knowing beforehand whether $P_n$ will come close to $f$ within a user-specified error tolerance.
 
-Hence: **Are there results that give a sequence of polynomials $P_n$ with the following error bound?**
-
-$$| f(x) - P_n(f)(x) | \le c_n \epsilon(f, n, x),$$ where:
+Hence: **Are there results that give a sequence of polynomials $P_n$ with the following error bound?** The bound (3) given above, where:
 
 1. $\epsilon(f, n, x)$ is a fully determined function.
 2. $\epsilon(f, n, x) = O(1/n^{k/2})$ where $k$ is the number of continuous derivatives of $f$.
@@ -484,3 +481,7 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2 [math.PR], 2010.
 - von Neumann, J., "Various techniques used in connection with random digits", 1951.
 - G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966.
+- Micchelli, C. (1973). The saturation class and iterates of the Bernstein polynomials. Journal of Approximation Theory, 8(1), 1-18.
+- Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/pdf/0909.0684)." arXiv preprint arXiv:0909.0684 (2009).
+- Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)" arXiv preprint arXiv:2112.09183 (2021).
+- Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.
