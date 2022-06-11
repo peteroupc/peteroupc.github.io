@@ -16,7 +16,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 
 - [**Background**](#Background)
 - [**Contents**](#Contents)
-- [**Polynomials that approach a factory function**](#Polynomials_that_approach_a_factory_function)
+- [**Polynomials that approach a factory function "fast"**](#Polynomials_that_approach_a_factory_function_fast)
     - [**Formal Statement**](#Formal_Statement)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**Questions**](#Questions)
@@ -35,16 +35,17 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Pushdown Automata**](#Pushdown_Automata)
     - [**Algebraic Functions**](#Algebraic_Functions)
     - [**Questions**](#Questions_5)
-- [**Explicit Error Bounds for Polynomial Approximation**](#Explicit_Error_Bounds_for_Polynomial_Approximation)
 - [**Other Questions**](#Other_Questions)
 - [**Remarks**](#Remarks)
 - [**My Attempt**](#My_Attempt)
 - [**References**](#References)
 
-<a id=Polynomials_that_approach_a_factory_function></a>
-## Polynomials that approach a factory function
+<a id=Polynomials_that_approach_a_factory_function_fast></a>
+## Polynomials that approach a factory function "fast"
 
 [**https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
+
+[https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation](https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation)
 
 A polynomial $f(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$f(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_k$ are the polynomial's _Bernstein coefficients_.
 
@@ -83,7 +84,7 @@ However, ordinary Bernstein polynomials can't in general converge to a function 
 
 But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
 
-Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the "Lorentz operator" in Holtz et al. (2011) (see also "New coins from old, smoothly"), and Draganov (2014).
+Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the "Lorentz operator" in Holtz et al. (2011) (see also "[**New coins from old, smoothly**](#New_coins_from_old_smoothly)"), and Draganov (2014).
 
 These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).
 
@@ -99,7 +100,7 @@ Thus the questions are:
 
 2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
 
-3. Are there practical formulas to compute polynomials that simply meet the error bound given in question 1?
+3. Are there practical formulas to compute polynomials that meet the error bound given in question 1?
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
@@ -368,29 +369,6 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 
 1. For every function in class $\mathcal{C}$, is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
 2. In particular, is min($\lambda$, $1-\lambda$) in class $\mathcal{D}$? What about $\lambda^{1/p}$ for some prime $p\ge 3$?
-
-<a id=Explicit_Error_Bounds_for_Polynomial_Approximation></a>
-## Explicit Error Bounds for Polynomial Approximation
-
-The _Bernstein polynomial_ of $f(x)$ is written as&mdash; $$\sum_{k=0}^n f(k/n) {n \choose k} x^k (1-x)^{n-k}.$$
-
-As is known since Voronovskaya (1932), the Bernstein polynomials of $f(x)$ converge to $f$ at a rate no faster than $O(1/n)$, meaning that it won't converge in a finite expected running time.
-
-But Lorentz (1966) has shown that if $f(x)$ is positive and has $k$ continuous derivatives on $[0, 1]$, there are polynomials that converge to $f$ at the rate $O(1/n^{k/2})$ (and thus can be faster than the $O(1/n^{2+\epsilon})$ needed for a finite expected running time, if $f$ is "smooth" enough).
-
-Thus, people have developed alternatives, including _iterated Bernstein polynomials_, to improve the convergence rate.  These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the "Lorentz operator" in Holtz et al. (2011), and Draganov (2014).
-
-Usually, papers like those express a bound on the error when approximating a function with polynomials as follows: $$| f(x) - P_n(f)(x) | \le c_n \epsilon(f, n, x), \tag{3}$$ where $\epsilon(f, n, x)$ is a fully determined function, $c_n>0$ is a constant that may depend on $n$, and $P_n(f)(x)$ is an approximating polynomial of degree $n$.
-
-There are results where the error bound $\epsilon(.)$ is in $O(1/n^{k/2})$, but in all those results I've seen so far (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li), $c_n$ is unknown, and no upper bound for $c_n$ is given by the results in the papers above, so that the error bound is unimplementable and there is no way of knowing beforehand whether $P_n$ will come close to $f$ within a user-specified error tolerance.
-
-Hence: **Are there results that give a sequence of polynomials $P_n$ with the following error bound?** The bound (3) given above, where:
-
-1. $\epsilon(f, n, x)$ is a fully determined function.
-2. $\epsilon(f, n, x) = O(1/n^{k/2})$ where $k$ is the number of continuous derivatives of $f$.
-3. $c_n>0$ is a constant that may depend on $n$ and has a **known exact value or upper bound**.
-4. $P_n(f)(x)$ is an approximating polynomial of degree $n$ that can be readily rewritten to its Bernstein form.
-5. (Optional:) For every $n>0$, $(P_{n+1} - P_{n})$ has non-negative coefficients once $P_{n+1}$ and $P_{n}$ are rewritten as degree-$(n+1)$ polynomials in Bernstein form (see "[**New coins from old, smoothly**](#New_coins_from_old_smoothly)", earlier).
 
 <a id=Other_Questions></a>
 ## Other Questions
