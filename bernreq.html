@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/06/09"><meta name="citation_online_date" content="2022/06/09"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/06/10"><meta name="citation_online_date" content="2022/06/10"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -29,9 +29,9 @@
 
 <ul>
 <li><a href="#Formal_Statement"><strong>Formal Statement</strong></a></li>
-<li><a href="#A_Question_of_Efficiency"><strong>A Question of Efficiency</strong></a></li>
-</ul></li>
+<li><a href="#A_Matter_of_Efficiency"><strong>A Matter of Efficiency</strong></a></li>
 <li><a href="#Questions"><strong>Questions</strong></a></li>
+</ul></li>
 <li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>
 
 <ul>
@@ -109,19 +109,21 @@
 
 <p>It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.</p>
 
-<p><a id=A_Question_of_Efficiency></a></p>
+<p><a id=A_Matter_of_Efficiency></a></p>
 
-<h3>A Question of Efficiency</h3>
+<h3>A Matter of Efficiency</h3>
 
 <p>However, ordinary Bernstein polynomials can&#39;t in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an <strong>infinite expected number of coin flips in general</strong>.  (See also the answer below and my <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental notes</strong></a>.)</p>
 
-<p>But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials that converge at the rate $O(1/n^{k/2})$ (and thus can enable a <strong>finite expected number of coin flips</strong> if $f$ is &quot;smooth&quot; enough).</p>
+<p>But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials that converge at the rate $O(1/n^{k/2})$ (and thus can enable a <strong>finite expected number of coin flips</strong> if the function is &quot;smooth&quot; enough).</p>
 
-<p>Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the Lorentz operator in Holtz et al. (2011), and Draganov (2014).  These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but these results have hidden constants with no upper bounds given, making them unimplementable.</p>
+<p>Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the &quot;Lorentz operator&quot; in Holtz et al. (2011) (see also &quot;New coins from old, smoothly&quot;), and Draganov (2014).</p>
+
+<p>These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can&#39;t be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).</p>
 
 <p><a id=Questions></a></p>
 
-<h2>Questions</h2>
+<h3>Questions</h3>
 
 <p>Thus the questions are:</p>
 
@@ -130,9 +132,10 @@
 
 <ul>
 <li>meet the formal statement above, and</li>
-<li>meet the following error bound? $|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2})$ where $P_n(f)(x)$ is an approximating polynomial of degree $n$, $k$ is the number of continuous derivatives, and $\epsilon(f,n,x)$ is fully determined with all constants having a known exact value or upper bound.</li>
+<li>meet the following error bound? $|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2})$ where $P_n(f)(x)$ is an approximating polynomial of degree $n$, $k$ is the number of continuous derivatives, and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a <strong>known exact value or upper bound</strong>.</li>
 </ul></li>
 <li><p>Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?</p></li>
+<li><p>Are there practical formulas to compute polynomials that simply meet the error bound given in question 1?</p></li>
 </ol>
 
 <p><a id=New_coins_from_old_smoothly></a></p>

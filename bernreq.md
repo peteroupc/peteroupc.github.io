@@ -18,8 +18,8 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Contents**](#Contents)
 - [**Polynomials that approach a factory function**](#Polynomials_that_approach_a_factory_function)
     - [**Formal Statement**](#Formal_Statement)
-    - [**A Question of Efficiency**](#A_Question_of_Efficiency)
-- [**Questions**](#Questions)
+    - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
+    - [**Questions**](#Questions)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
     - [**Questions**](#Questions_2)
 - [**Reverse-time martingales**](#Reverse_time_martingales)
@@ -76,26 +76,30 @@ where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 
 
 It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.
 
-<a id=A_Question_of_Efficiency></a>
-### A Question of Efficiency
+<a id=A_Matter_of_Efficiency></a>
+### A Matter of Efficiency
 
 However, ordinary Bernstein polynomials can't in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also the answer below and my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
 
-But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if $f$ is "smooth" enough).
+But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
 
-Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the Lorentz operator in Holtz et al. (2011), and Draganov (2014).  These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but these results have hidden constants with no upper bounds given, making them unimplementable.
+Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the "Lorentz operator" in Holtz et al. (2011) (see also "New coins from old, smoothly"), and Draganov (2014).
+
+These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).
 
 <a id=Questions></a>
-## Questions
+### Questions
 
 Thus the questions are:
 
 1. Are there practical formulas to compute polynomials that&mdash;
 
     - meet the formal statement above, and
-    - meet the following error bound? $|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2})$ where $P_n(f)(x)$ is an approximating polynomial of degree $n$, $k$ is the number of continuous derivatives, and $\epsilon(f,n,x)$ is fully determined with all constants having a known exact value or upper bound.
+    - meet the following error bound? $|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2})$ where $P_n(f)(x)$ is an approximating polynomial of degree $n$, $k$ is the number of continuous derivatives, and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a **known exact value or upper bound**.
 
 2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
+
+3. Are there practical formulas to compute polynomials that simply meet the error bound given in question 1?
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
