@@ -45,7 +45,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 
 [**https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
 
-[https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation](https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation)
+[**https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation**](https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation)
 
 A polynomial $f(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$f(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_k$ are the polynomial's _Bernstein coefficients_.
 
@@ -77,6 +77,8 @@ where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 
 
 It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.
 
+Alternatively, find a way to rewrite $f(x)$ as&mdash; $$f(x) = \sum_n P_n(x) = 1 - \sum_n Q_n(x),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with non-negative Bernstein coefficients.
+
 <a id=A_Matter_of_Efficiency></a>
 ### A Matter of Efficiency
 
@@ -100,7 +102,7 @@ Thus the questions are:
 
 2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
 
-3. Are there practical formulas to compute polynomials that meet the error bound given in question 1?
+3. Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form?
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
