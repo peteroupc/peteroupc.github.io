@@ -75,16 +75,16 @@ for every integer $n\ge1$, such that—
 
 where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.
 
-It is allowed for $a(n, k)\lt0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.
+It is allowed for $a(n, k)\lt 0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt 1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.
 
-Alternatively, find a way to rewrite $f(x)$ as&mdash; $$f(x) = \sum_n P_n(x) = 1 - \sum_n Q_n(x),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with non-negative Bernstein coefficients.
+Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_{n\ge 1} P_n(\lambda) = 1 - \sum_{n\ge 1} Q_n(\lambda),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with non-negative Bernstein coefficients.
 
 <a id=A_Matter_of_Efficiency></a>
 ### A Matter of Efficiency
 
 However, ordinary Bernstein polynomials can't in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also the answer below and my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
 
-But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
+But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials with non-negative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
 
 Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the "Lorentz operator" in Holtz et al. (2011) (see also "[**New coins from old, smoothly**](#New_coins_from_old_smoothly)"), and Draganov (2014).
 
@@ -102,7 +102,7 @@ Thus the questions are:
 
 2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
 
-3. Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form?
+3. Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form with non-negative Bernstein coefficients?
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
