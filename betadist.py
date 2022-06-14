@@ -1805,7 +1805,9 @@ class Real:
         raise NotImplementedError
 
     def disp(a):
-        prec = 30
+        return a.evstable(30) / 2 ** 30
+
+    def evstable(a, prec):
         r = a.ev(prec + 2)
         return (r // 4) + 1 if r % 4 >= 2 else (r // 4)
 
@@ -2625,7 +2627,7 @@ class RealPow(Real):
             self.powint = b
         elif isinstance(b, Fraction) and b.denominator == 1 and b.numerator >= 0:
             self.powint = b.numerator
-        elif isinstance(b, Fraction) and b == Fraction(1, 2):
+        elif (isinstance(b, Fraction) and b == Fraction(1, 2)) or b == 0.5:
             self.is_sqrt = True
             self.b = b
             self.r = None
@@ -2642,17 +2644,17 @@ class RealPow(Real):
         if self.is_sqrt:
             # Square root special case
             if self.ev_n == n:
-                # print(["fast",self.ev_n,self.ev_v])
+                print(["fast", self.ev_n, self.ev_v])
                 return self.ev_v
             if n < self.ev_n:
-                # print(["faster",self.ev_n,self.ev_v])
+                print(["faster", self.ev_n, self.ev_v])
                 return self.ev_v >> (self.ev_n - n)
             if self.baseint != None:
                 if self.baseint < 0:
                     raise ValueError
                 if self.baseint == 0:
                     return 0
-                self.ev_v = math.isqrt(self.baseint << n)
+                self.ev_v = math.isqrt(self.baseint << (n * 2))
                 self.ev_n = n
                 return self.ev_v
             nv = n + 2
@@ -3755,6 +3757,13 @@ def realGamma(ml):
         ret = ret * RealPow(RandUniform(), Fraction(1, ml))
     return ret
 
+rp = RealPow(10, 0.5)
+print(rp)
+print(rp.is_sqrt)
+print(rp.baseint)
+print(rp.disp())
+print(math.sqrt(10))
+exit()
 ######################
 
 if __name__ == "__main__":
