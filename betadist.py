@@ -3705,29 +3705,6 @@ def c2a(r=None):
             else:
                 [(y1 - y2) / s, 2 * x1 * x2 / s]
 
-def expopower(beta, mu=0, alpha=1):
-    # Exponential power distribution, also with location
-    # and scale parameters mu and alpha. Beta is greater than 0.
-    if beta <= 0:
-        raise ValueError
-    if beta < 1:
-        # See Devroye 1986, p. 174-175.
-        r = RealUniform()
-        r *= realGamma(1 + Fraction(1) / beta) ** (RealFraction(1) / beta)
-    else:
-        # If beta is 1 or greater,
-        # then the distribution is log-concave.
-        # TODO: Set second parameter to
-        #    z/(z*gamma(1+1/z)) = z/gamma(1/z)
-        r = logconcave(lambda x: -(x ** beta), 1)
-    if random.randint(0, 1) == 0:
-        r = -r
-    if mu == 0:
-        if alpha == 1:
-            return r
-        return alpha * r
-    return alpha * r + mu
-
 def realGamma(ml):
     # Generates a gamma random variate
     # using the Marsaglia--Tsang (2000) algorithm.
@@ -3757,13 +3734,6 @@ def realGamma(ml):
         ret = ret * RealPow(RandUniform(), Fraction(1, ml))
     return ret
 
-rp = RealPow(10, 0.5)
-print(rp)
-print(rp.is_sqrt)
-print(rp.baseint)
-print(rp.disp())
-print(math.sqrt(10))
-exit()
 ######################
 
 if __name__ == "__main__":

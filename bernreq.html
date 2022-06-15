@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/06/14"><meta name="citation_online_date" content="2022/06/14"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/06/15"><meta name="citation_online_date" content="2022/06/15"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -120,7 +120,7 @@
 
 <p>But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials with non-negative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a <strong>finite expected number of coin flips</strong> if the function is &quot;smooth&quot; enough).</p>
 
-<p>Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021), the &quot;Lorentz operator&quot; in Holtz et al. (2011) (see also &quot;<a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>&quot;), and Draganov (2014).</p>
+<p>Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021a, 2021b), the &quot;Lorentz operator&quot; in Holtz et al. (2011) (see also &quot;<a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>&quot;), and Draganov (2014).</p>
 
 <p>These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can&#39;t be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).</p>
 
@@ -135,10 +135,10 @@
 
 <ul>
 <li>meet the formal statement above, and</li>
-<li>meet the following error bound? $|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2})$ where $P_n(f)(x)$ is an approximating polynomial of degree $n$, $k$ is the number of continuous derivatives, and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a <strong>known exact value or upper bound</strong>.</li>
+<li>meet the following error bound? $|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2})$ where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form with coefficients in $[0,1]$; $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a <strong>known exact value or upper bound</strong>.</li>
 </ul></li>
 <li><p>Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?</p></li>
-<li><p>Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form with non-negative Bernstein coefficients?</p></li>
+<li><p>Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in $[0,1]$?</p></li>
 </ol>
 
 <p><a id=New_coins_from_old_smoothly></a></p>
@@ -589,7 +589,8 @@ above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
 <li>G.G. Lorentz, &quot;The degree of approximation by polynomials with positive coefficients&quot;, 1966.</li>
 <li>Micchelli, C. (1973). The saturation class and iterates of the Bernstein polynomials. Journal of Approximation Theory, 8(1), 1-18.</li>
 <li>Guan, Zhong. &quot;<a href="https://arxiv.org/pdf/0909.0684"><strong>Iterated Bernstein polynomial approximations</strong></a>.&quot; arXiv preprint arXiv:0909.0684 (2009).</li>
-<li>Güntürk, C. Sinan, and Weilin Li. &quot;<a href="https://arxiv.org/pdf/2112.09183"><strong>Approximation with one-bit polynomials in Bernstein form</strong></a>&quot; arXiv preprint arXiv:2112.09183 (2021).</li>
+<li>Güntürk, C. Sinan, and Weilin Li. &quot;<a href="https://arxiv.org/pdf/2112.09183"><strong>Approximation with one-bit polynomials in Bernstein form</strong></a>&quot;, arXiv:2112.09183 (2021).</li>
+<li>Güntürk, C. Sinan, and Weilin Li. &quot;<a href="https://arxiv.org/abs/2112.09181">Approximation of functions with one-bit neural networks</a>&quot;, arXiv:2112.09181 (2021).</li>
 <li>Draganov, Borislav R. &quot;On simultaneous approximation by iterated Boolean sums of Bernstein operators.&quot; Results in Mathematics 66, no. 1 (2014): 21-41.</li>
 </ul>
 </div><nav id="navigation"><ul>
