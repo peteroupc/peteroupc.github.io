@@ -104,6 +104,8 @@ Thus the questions are:
 
 3. Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in $[0,1]$?
 
+One example worth pondering is $f(\lambda)=sin(\lambda\pi/2)=cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.
+
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
 
@@ -468,5 +470,5 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Micchelli, C. (1973). The saturation class and iterates of the Bernstein polynomials. Journal of Approximation Theory, 8(1), 1-18.
 - Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/pdf/0909.0684)." arXiv preprint arXiv:0909.0684 (2009).
 - Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021).
-- Güntürk, C. Sinan, and Weilin Li. "[Approximation of functions with one-bit neural networks](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 (2021).
+- Güntürk, C. Sinan, and Weilin Li. "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 (2021).
 - Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.

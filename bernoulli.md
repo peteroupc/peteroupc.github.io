@@ -1699,39 +1699,25 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-1. Besides the algorithms on this page, what simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
-    - Should use only uniform random integers (or bits) and integer arithmetic.
-    - Does not use floating-point arithmetic or make direct use of square root or transcendental functions.
-    - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
+See my page "[**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)" for open questions, answers to which will greatly improve my articles on Bernoulli factories.  These questions include:
 
-    See also Flajolet et al. (2010\)[^1].  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:
+- [**Polynomials that approach a factory function "fast"**](https://peteroupc.github.io/bernreq.html#Polynomials_that_approach_a_factory_function_fast).
+- [**New coins from old, smoothly**](https://peteroupc.github.io/bernreq.html#New_coins_from_old_smoothly).
+- [**Reverse-time martingales**](https://peteroupc.github.io/bernreq.html#Reverse_time_martingales).
+- [**Tossing Heads According to a Concave Function**](https://peteroupc.github.io/bernreq.html#Tossing_Heads_According_to_a_Concave_Function).
+- [**Simulable and strongly simulable functions**](https://peteroupc.github.io/bernreq.html#Simulable_and_strongly_simulable_functions).
+- [**Multiple-Output Bernoulli Factories**](https://peteroupc.github.io/bernreq.html#Multiple_Output_Bernoulli_Factories).
+- [**From coin flips to algebraic functions via pushdown automata**](https://peteroupc.github.io/bernreq.html#From_coin_flips_to_algebraic_functions_via_pushdown_automata).
 
-    - For irrational constants:
-        - Simple [**continued fraction**](#Continued_Fractions) expansions.
-        - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/morealg.html#pi___4)
-        - Generate a uniform point in (_x_, _y_) inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value ("long-run average") of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
-        - Functions that map [0, 1] to [0, 1] whose integral (area under curve) is an irrational number.
-    - For Bernoulli factory functions:
-        - Functions with any of the following series expansions, using rational arithmetic only:
-            - Series with non-negative terms where _f_(0) is 0 and _f_(1) is rational or vice versa (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
-            - Series with non-negative terms that can be "tucked" under a discrete probability mass function (see "[**Convex Combinations**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations)").
-            - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
-            - Series with non-negative terms and bounds on the error when cutting off the series expansion (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
-        - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  For a formal statement of these polynomials, see my [**question on MathOverflow**](https://mathoverflow.net/questions/379858).<br><br>The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn't possible unless the factory function has four or more continuous derivatives ("slope functions") that are "nice" enough.  Thus one question is: Given such a factory function, are there practical algorithms for building polynomials described here, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?  One example worth pondering is sin(_&lambda;_ \* _&pi;_/2) = cos((1&minus;_&lambda;_)\* _&pi;_/2), which equals 0 at 0 and 1 at 1.
-2. Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way minus 1.  In this case:
+Other questions:
+
+- Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way minus 1.  In this case:
     1. What is the probability that _n_ is returned?
     2. What is the probability that _n_ is odd or even or belongs to a certain class of numbers?
     3. For each _x_, what is the probability that the first generated number is _x_ or less given that _n_ is odd? ...given that _n_ is even? the last generated number?
 
     Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_. See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
-3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
-4. Part of the reverse-time martingale algorithm of Łatuszyński et al. (2009/2011\)[^20] \(see "[**General Factory Functions**](#General_Factory_Functions)") to simulate a factory function _f_(_&lambda;_) is as follows.  For each _n_ starting with 1:
-    1. Flip the input coin, and compute the _n_<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L_ and _U_.
-    2. Compute the (_n_&minus;1)<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L&prime;_ and _U&prime;_.  (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [_L&prime;_, _U&prime;_] must equal or entirely contain the interval [_L_, _U_].)
-
-    These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to _f_, where _L_ or _L&prime;_ and _U_ or _U&prime;_ are their lower and upper bound approximations.  The section on general factory functions shows how this algorithm can be implemented for polynomials.  But how do these steps work when the approximating functions (the functions that converge to _f_) are rational functions whose coefficients are integers? Rational functions whose coefficients are rational numbers? Arbitrary approximating functions?
-5. A _pushdown automaton_ is a state machine that holds a stack of symbols.  Mossel and Peres (2005\)[^3] investigated which functions (_f_(_&lambda;_)) can be simulated by these machines when they're given an infinite "tape" of flips of a coin that shows heads with probability _&lambda;_.  They showed that pushdown automata can simulate only _algebraic functions_, but perhaps not all of them. (See "[**Certain Algebraic Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Algebraic_Functions)".)  The question is: What is the exact class of algebraic functions a pushdown automaton can simulate?  Can it simulate the functions min(_&lambda;_, 1&minus;_&lambda;_) and _&lambda;_<sup>1/_p_</sup> where _p_>2 is a prime number?  I have written an [**article appendix**](https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions) showing my progress, but are there other results on this question?
-6. A factory function _f_(_&lambda;_) is _strongly simulable_ if there is an algorithm to toss heads with probability _f_(_&lambda;_) using only a coin that shows heads with probability _&lambda;_ and no other randomness.  Keane and O'Brien (1994) showed already that _f_(_&lambda;_) is strongly simulable if neither 0 nor 1 is in _f_'s domain.  It's also easy to show that if _f_ is strongly simulable, then _f_(0) and _f_(1) must each be 0, 1, or undefined.  Is this a _sufficient condition_ to be strongly simulable?  I have written an [**article appendix**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) showing my progress, but are there other results on this question?
+- Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
