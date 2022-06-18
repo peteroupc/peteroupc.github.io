@@ -12,6 +12,7 @@
     - [**Distributions with nonincreasing or nondecreasing weights**](#Distributions_with_nonincreasing_or_nondecreasing_weights)
     - [**Unimodal distributions of weights**](#Unimodal_distributions_of_weights)
     - [**Weighted Choice with Log Probabilities**](#Weighted_Choice_with_Log_Probabilities)
+- [**Bit Vectors with Random Bit Flips**](#Bit_Vectors_with_Random_Bit_Flips)
 - [**Log-Uniform Distribution**](#Log_Uniform_Distribution)
 - [**Sampling Unbounded Monotone Density Functions**](#Sampling_Unbounded_Monotone_Density_Functions)
 - [**Certain Families of Distributions**](#Certain_Families_of_Distributions)
@@ -164,6 +165,20 @@ an integer in the closed interval [0, _n_] can be sampled as follows:
 4. For each _q_<sub>_i_</sub>, divide it by _d_.
 
 The algorithm's result is a vector _q_, which can be used only once to sample _i_ with probability proportional to _q_<sub>_i_</sub> (which is not a "log probability"). (In this case, steps 3 and 4 above can be omitted if that sampling method can work with weights that need not sum to 1.)
+
+<a id=Bit_Vectors_with_Random_Bit_Flips></a>
+## Bit Vectors with Random Bit Flips
+
+Chakraborty and Vardeman (2021)[^67] describes ways to generate bit vectors with a random number of bit flips. Given three parameters &mdash; _&mu;_ is a _p_-item vector (list) with only zeros and/or ones; _p_ is the size of _&mu;_; and _&alpha;_ is a spread parameter in (0, 1) &mdash; do the following:
+
+1. Generate a random integer _c_ in \[0, _p_] in some way.
+2. Create a _p_-item list _&nu;_, where the first _c_ items are ones and the rest are zeros.  [**Shuffle**](https://peteroupc.github.io/randomfunc.html#Shuffling) the list.
+3. Create a copy of _&mu;_, call it _M_.  Then for each _i_ where _&nu;_\[_i_\] = 1, set _M_\[_i_\] to 1 &minus; _M_\[_i_\].  Then return _M_.
+
+The paper describes two ways to generate _c_ in step 1 (there are others as well):
+
+- Generate _c_ with probability proportional to the following weights: [_&alpha;_<sup>0</sup>, _&alpha;_<sup>1</sup>, ..., _&alpha;_<sup>_p_</sup>].  (For example, generate a uniform random integer in \[0, _p_\], call it _d_, then flip a coin that shows heads with probability _&alpha;_, _d_ times, then either return _d_ if _d_ is 0 or all the flips are heads, or repeat this process otherwise.)
+- Generate _c_ with probability proportional to the following weights: [_&alpha;_<sup>0</sup>\*choose(_p_,0), _&alpha;_<sup>1</sup>\*choose(_p_,1), ..., _&alpha;_<sup>_p_</sup>\*choose(_p_,_p_)].
 
 <a id=Log_Uniform_Distribution></a>
 ## Log-Uniform Distribution
@@ -333,7 +348,7 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | Gamma exponential (Kudryavtsev 2019)[^53]. | _&delta;_\*Gamma(_t_)<sup>1/_&nu;_</sup>/Gamma(_s_)<sup>_r_/_&nu;_</sup>, where Gamma(_x_) is a gamma(_x_) variate. | 0 &le; _r_ &lt; 1; _&nu;_ &ne; 0; _s_>0; _t_>0; _&delta;_>0. |
 | Extended xgamma (Saha et al. 2019)[^54] | Gamma(_&alpha;_ + _c_) variate divided by _&theta;_, where _c_ is either 0 with probability _&theta;_/(_&theta;_+_&beta;_), or 2 otherwise. | _&theta;_>0, _&alpha;_>0, _&beta;_ &ge; 0. |
 | Generalized Pareto(_a_, _b_) (McNeil et al. 2010)[^55] | _a_\*((1/(1&minus;_U_))<sup>_b_</sup>&minus;1)/_b_. | _a_>0; _b_>0. |
-| Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^56], (Azzalini 2022)[^57]. | _Z_ if _T_ < _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows the same or another. _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
+| Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^56], (Azzalini 2022)[^57]. | _Z_ if _T_ < _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows a symmetric distribution (not necessarily around 0). _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
 | Skew normal (Azzalini 1985)[^58]. | Skew symmetric with _Z_ and _T_ both separate Normal(0, 1) variates, and _w_(_x_) = _x_\*_&alpha;_. | _&alpha;_ is a real number. |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
@@ -590,6 +605,8 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 [^65]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
 [^66]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
+
+[^67]: Chakraborty, A., Vardeman, S. B., Modeling and inference for mixtures of simple symmetric exponential families of p-dimensional distributions for vectors with binary coordinates, Stat Anal Data Min: The ASA Data Sci Journal. 2021; 14: 352– 365. [**https://doi.org/10.1002/sam.11528**](https://doi.org/10.1002/sam.11528)
 
 <a id=License></a>
 ## License

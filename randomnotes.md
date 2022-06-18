@@ -382,6 +382,16 @@ The following pseudocode generates a random vector (list of numbers) that follow
       return ret
     END METHOD
 
+    METHOD VecAdd(a, b)
+      c=[]; for j in 0...size(a): c[j]=a[j]+b[j]
+      return c
+    END METHOD
+
+    METHOD VecScale(a, scalar)
+      c=[]; for j in 0...size(a): c[j]=a[j]*scalar
+      return c
+    END METHOD
+
     METHOD MultivariateNormal(mu, cov)
       vars=NewList()
       for j in 0...mulen: AddItem(vars, Normal(0, 1))
@@ -404,13 +414,12 @@ The following pseudocode generates a random vector (list of numbers) that follow
       i=0
       ret=NewList()
       while i<mulen
-        nv=Normal(0,1)
         msum = 0
-        if mu != nothing: msum=mu[i]
-        for j in 0...mulen: msum=msum+vars[j]*cho[j][i]
+        for j in 0...mulen: msum=vars[j]*cho[j][i]
         AddItem(ret, msum)
         i=i+1
       end
+      if mu!=nothing: ret=VecAdd(ret, mu)
       return ret
     end
 

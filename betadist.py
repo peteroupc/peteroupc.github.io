@@ -1746,18 +1746,29 @@ def lah(n, k):
 # classes do so with probability 1).
 # In general, there are two correct answers to
 # this calculation (e.g., if the real number is pi, the two
-# answers that are correct to 1/10 are 3.1 and 3.2),
-# and this can lead to non-reproducible results if
-# the application uses Rand* and Real* classes
-# together with PRNGs.  (This issue is similar to
-# the issue with different rounding behaviors in
-# floating-point number implementations.)
+# answers that are correct to 1/10 are 3.1 and 3.2).
 #
-# In this case, for best results, the application
-# should not share instances of Rand* and Real*
-# classes across tasks (a task is a part of the
+# For performance reasons, some of the Real* classes
+# may cache the output of `ev(n)` and may use the
+# cached output to answer requests for `ev(m)` where
+# `m<=n`.  However, since there are two correct answers
+# for `ev()`, the `ev(m)` result using the
+# cached output may differ from the `ev(m)` without
+# a cache.  And this can make the `ev()` method
+# non-deterministic (it doesn't always return the same
+# value for the same input).
+# And this is why non-reproducibility can happen
+# if the application uses Rand* and Real* classes
+# together with PRNGs.  (This issue is similar to
+# the issue with doing parallel sums of floating-point
+# numbers since adding floating-point numbers in
+# a different order can change the outcome.)
+#
+# In this case, if an application cares about
+# reproducibility, it should not share instances of Rand*
+# and Real* classes across tasks (a task is a part of the
 # application that has its own PRNG that's not
-# shared across tasks).
+# shared with other tasks).
 #
 
 class Real:
@@ -1834,6 +1845,8 @@ class RealPi(Real):
         if n <= 72 and self.fraction.numerator == 1 and self.fraction.denominator == 2:
             return 7417875925070973790601 >> (72 - n)
         if not self.consistent:
+            # Use caching only if consistent results
+            # are not important.  See reproducibility note.
             if self.ev_n == n:
                 # print(["fast",self.ev_n,self.ev_v])
                 return self.ev_v
@@ -1860,8 +1873,11 @@ class RealPi(Real):
                 # In this case, cinf*ulp is strictly within 1 ulp of
                 # both bounds, and thus strictly within 1 ulp
                 # of the exact result
-                self.ev_n = n
-                self.ev_v = cinf
+                if not self.consistent:
+                    # Use caching only if consistent results
+                    # are not important.  See reproducibility note.
+                    self.ev_n = n
+                    self.ev_v = cinf
                 return cinf
             lower = upper
             k += 1

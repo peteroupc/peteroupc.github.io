@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/06/05"><meta name="citation_online_date" content="2022/06/05"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/06/18"><meta name="citation_online_date" content="2022/06/18"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -23,6 +23,7 @@
 <li><a href="#Unimodal_distributions_of_weights"><strong>Unimodal distributions of weights</strong></a></li>
 <li><a href="#Weighted_Choice_with_Log_Probabilities"><strong>Weighted Choice with Log Probabilities</strong></a></li>
 </ul></li>
+<li><a href="#Bit_Vectors_with_Random_Bit_Flips"><strong>Bit Vectors with Random Bit Flips</strong></a></li>
 <li><a href="#Log_Uniform_Distribution"><strong>Log-Uniform Distribution</strong></a></li>
 <li><a href="#Sampling_Unbounded_Monotone_Density_Functions"><strong>Sampling Unbounded Monotone Density Functions</strong></a></li>
 <li><a href="#Certain_Families_of_Distributions"><strong>Certain Families of Distributions</strong></a></li>
@@ -235,6 +236,25 @@
 </ol>
 
 <p>The algorithm&#39;s result is a vector <em>q</em>, which can be used only once to sample <em>i</em> with probability proportional to <em>q</em><sub><em>i</em></sub> (which is not a &quot;log probability&quot;). (In this case, steps 3 and 4 above can be omitted if that sampling method can work with weights that need not sum to 1.)</p>
+
+<p><a id=Bit_Vectors_with_Random_Bit_Flips></a></p>
+
+<h2>Bit Vectors with Random Bit Flips</h2>
+
+<p>Chakraborty and Vardeman (2021)[^67] describes ways to generate bit vectors with a random number of bit flips. Given three parameters &mdash; <em>&mu;</em> is a <em>p</em>-item vector (list) with only zeros and/or ones; <em>p</em> is the size of <em>&mu;</em>; and <em>&alpha;</em> is a spread parameter in (0, 1) &mdash; do the following:</p>
+
+<ol>
+<li>Generate a random integer <em>c</em> in [0, <em>p</em>] in some way.</li>
+<li>Create a <em>p</em>-item list <em>&nu;</em>, where the first <em>c</em> items are ones and the rest are zeros.  <a href="https://peteroupc.github.io/randomfunc.html#Shuffling"><strong>Shuffle</strong></a> the list.</li>
+<li>Create a copy of <em>&mu;</em>, call it <em>M</em>.  Then for each <em>i</em> where <em>&nu;</em>[<em>i</em>] = 1, set <em>M</em>[<em>i</em>] to 1 &minus; <em>M</em>[<em>i</em>].  Then return <em>M</em>.</li>
+</ol>
+
+<p>The paper describes two ways to generate <em>c</em> in step 1 (there are others as well):</p>
+
+<ul>
+<li>Generate <em>c</em> with probability proportional to the following weights: [<em>&alpha;</em><sup>0</sup>, <em>&alpha;</em><sup>1</sup>, ..., <em>&alpha;</em><sup><em>p</em></sup>].  (For example, generate a uniform random integer in [0, <em>p</em>], call it <em>d</em>, then flip a coin that shows heads with probability <em>&alpha;</em>, <em>d</em> times, then either return <em>d</em> if <em>d</em> is 0 or all the flips are heads, or repeat this process otherwise.)</li>
+<li>Generate <em>c</em> with probability proportional to the following weights: [<em>&alpha;</em><sup>0</sup>*choose(<em>p</em>,0), <em>&alpha;</em><sup>1</sup>*choose(<em>p</em>,1), ..., <em>&alpha;</em><sup><em>p</em></sup>*choose(<em>p</em>,<em>p</em>)].</li>
+</ul>
 
 <p><a id=Log_Uniform_Distribution></a></p>
 
@@ -550,7 +570,7 @@
 <tr>
 <td>Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^56], (Azzalini 2022)[^57].</td>
 <td><em>Z</em> if <em>T</em> &lt; <em>w</em>(<em>Z</em>), or &minus;<em>Z</em> otherwise.</td>
-<td><em>Z</em> follows a symmetric distribution around 0; <em>T</em> follows the same or another. <em>w</em>(<em>x</em>) satisfies &minus;<em>w</em>(<em>x</em>) = <em>w</em>(&minus;<em>x</em>).</td>
+<td><em>Z</em> follows a symmetric distribution around 0; <em>T</em> follows a symmetric distribution (not necessarily around 0). <em>w</em>(<em>x</em>) satisfies &minus;<em>w</em>(<em>x</em>) = <em>w</em>(&minus;<em>x</em>).</td>
 </tr>
 <tr>
 <td>Skew normal (Azzalini 1985)[^58].</td>
@@ -840,6 +860,8 @@ END METHOD
 <p>[^65]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
 
 <p>[^66]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+
+<p>[^67]: Chakraborty, A., Vardeman, S. B., Modeling and inference for mixtures of simple symmetric exponential families of p-dimensional distributions for vectors with binary coordinates, Stat Anal Data Min: The ASA Data Sci Journal. 2021; 14: 352– 365. <a href="https://doi.org/10.1002/sam.11528"><strong>https://doi.org/10.1002/sam.11528</strong></a></p>
 
 <p><a id=License></a></p>
 
