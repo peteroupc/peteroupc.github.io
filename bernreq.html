@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/06/18"><meta name="citation_online_date" content="2022/06/18"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/06/20"><meta name="citation_online_date" content="2022/06/20"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -60,7 +60,7 @@
 <li><a href="#Questions_5"><strong>Questions</strong></a></li>
 </ul></li>
 <li><a href="#Other_Questions"><strong>Other Questions</strong></a></li>
-<li><a href="#Remarks"><strong>Remarks</strong></a></li>
+<li><a href="#End_Notes"><strong>End Notes</strong></a></li>
 <li><a href="#My_Attempt"><strong>My Attempt</strong></a></li>
 <li><a href="#References"><strong>References</strong></a></li>
 </ul>
@@ -122,7 +122,7 @@
 
 <p>Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021a, 2021b), the &quot;Lorentz operator&quot; in Holtz et al. (2011) (see also &quot;<a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>&quot;), and Draganov (2014).</p>
 
-<p>These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can&#39;t be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).</p>
+<p>These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but nearly all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can&#39;t be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance). (<strong>See note 4 in &quot;End Notes&quot;.</strong>)</p>
 
 <p><a id=Questions></a></p>
 
@@ -329,6 +329,8 @@
 <li>Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(1)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz&#39;s results.</li>
 </ol>
 
+<p><strong>See also Note 1.</strong></p>
+
 <p><a id=Simulable_and_strongly_simulable_functions></a></p>
 
 <h2>Simulable and strongly simulable functions</h2>
@@ -472,6 +474,8 @@
 <li>In particular, is min($\lambda$, $1-\lambda$) in class $\mathcal{D}$? What about $\lambda^{1/p}$ for some prime $p\ge 3$?</li>
 </ol>
 
+<p><strong>See also Notes 2 and 3.</strong></p>
+
 <p><a id=Other_Questions></a></p>
 
 <h2>Other Questions</h2>
@@ -509,21 +513,17 @@
 </ul></li>
 </ul>
 
-<p><a id=Remarks></a></p>
+<p><a id=End_Notes></a></p>
 
-<h2>Remarks</h2>
+<h2>End Notes</h2>
 
-<ul>
-<li>Besides the questions on concave functions given above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu &amp; Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it&#39;s not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given earlier.</li>
-<li>A practical solution to the questions on concave functions might require more sophisticated methods than simply using $f$&#39;s Bernstein polynomials, since I am aware that the plain Bernstein approximation doesn&#39;t improve in convergence rate if a function has two or more continuous derivatives (as opposed to just one), at least without further knowledge of $f$.</li>
-</ul>
+<p><strong>Note 1</strong>: Besides the questions on concave functions given above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu &amp; Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it&#39;s not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given earlier.</p>
 
-<p>The following remarks relate to the questions on pushdown automata:</p>
+<p><strong>Note 2</strong>: On pushdown automata: Etessami and Yannakakis (2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn&#39;t deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.</p>
 
-<ul>
-<li>Etessami and Yannakakis (2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn&#39;t deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.</li>
-<li>Banderier and Drmota (2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called &quot;critical exponent&quot; is not dyadic. But the result seems not to apply to <em>piecewise</em> power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.</li>
-</ul>
+<p><strong>Note 3</strong>: On pushdown automata: Banderier and Drmota (2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called &quot;critical exponent&quot; is not dyadic. But the result seems not to apply to <em>piecewise</em> power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.</p>
+
+<p><strong>Note 4</strong>: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include so-called &quot;iterated Bernstein&quot; polynomials and &quot;one-bit&quot; polynomials).</p>
 
 <p><a id=My_Attempt></a></p>
 

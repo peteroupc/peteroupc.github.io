@@ -36,7 +36,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Algebraic Functions**](#Algebraic_Functions)
     - [**Questions**](#Questions_5)
 - [**Other Questions**](#Other_Questions)
-- [**Remarks**](#Remarks)
+- [**End Notes**](#End_Notes)
 - [**My Attempt**](#My_Attempt)
 - [**References**](#References)
 
@@ -88,7 +88,7 @@ But Lorentz (1966) showed that if the function is positive and $C^k$ continuous,
 
 Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021a, 2021b), the "Lorentz operator" in Holtz et al. (2011) (see also "[**New coins from old, smoothly**](#New_coins_from_old_smoothly)"), and Draganov (2014).
 
-These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).
+These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but nearly all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance). (**See note 4 in "End Notes".**)
 
 <a id=Questions></a>
 ### Questions
@@ -260,6 +260,8 @@ for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except tha
 2. Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?
 3. Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(1)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz's results.
 
+**See also Note 1.**
+
 <a id=Simulable_and_strongly_simulable_functions></a>
 ## Simulable and strongly simulable functions
 
@@ -374,6 +376,8 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 1. For every function in class $\mathcal{C}$, is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
 2. In particular, is min($\lambda$, $1-\lambda$) in class $\mathcal{D}$? What about $\lambda^{1/p}$ for some prime $p\ge 3$?
 
+**See also Notes 2 and 3.**
+
 <a id=Other_Questions></a>
 ## Other Questions
 
@@ -397,16 +401,16 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
         - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
         - Series with non-negative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
 
-<a id=Remarks></a>
-## Remarks
+<a id=End_Notes></a>
+## End Notes
 
-- Besides the questions on concave functions given above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu & Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it's not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given earlier.
-- A practical solution to the questions on concave functions might require more sophisticated methods than simply using $f$'s Bernstein polynomials, since I am aware that the plain Bernstein approximation doesn't improve in convergence rate if a function has two or more continuous derivatives (as opposed to just one), at least without further knowledge of $f$.
+**Note 1**: Besides the questions on concave functions given above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu & Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it's not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given earlier.
 
-The following remarks relate to the questions on pushdown automata:
+**Note 2**: On pushdown automata: Etessami and Yannakakis (2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.
 
-- Etessami and Yannakakis (2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.
-- Banderier and Drmota (2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
+**Note 3**: On pushdown automata: Banderier and Drmota (2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
+
+**Note 4**: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include so-called "iterated Bernstein" polynomials and "one-bit" polynomials).
 
 <a id=My_Attempt></a>
 ## My Attempt

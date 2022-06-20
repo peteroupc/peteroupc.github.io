@@ -662,6 +662,8 @@ The following alternative version of the previous algorithm (called **ExpRand2**
 7. If _accept_ is 1, add _highpart_ to _val_ via the **UniformAddRational** algorithm given earlier, then return _val_.
 8. Add **_recip_/2** to _highpart_ and go to step 2.
 
+> **Note:** A Laplace (double exponential) random variate is then implemented by giving the PSRN returned by **ExpRand** or **ExpRand2** a random sign (with equal probability, the PSRN's sign is either positive or negative).
+
 <a id=Sampler_Code></a>
 ## Sampler Code
 

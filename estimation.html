@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2022/06/19"><meta name="citation_online_date" content="2022/06/19"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2022/06/20"><meta name="citation_online_date" content="2022/06/20"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -235,6 +235,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
+<li>The interval $[\hat{\mu} - \epsilon, \hat{\mu} + \epsilon]$ is also known as a <em>confidence interval</em> for the mean, with <em>confidence level</em> at least 1 &minus; <em>&delta;</em> (where $\hat{\mu}$ is an estimate of the mean returned by <em>Algorithm C</em>).</li>
 <li>If the stream of random variates meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.</li>
 <li>Theorem 3.4 of Kunsch et al. (2019)[^6] shows that there is no mean estimation algorithm that&mdash;
 
@@ -242,6 +243,7 @@
 <li>produces an estimate within a user-specified error tolerance (in terms of <em>absolute error</em>, as opposed to <em>relative error</em>) with probability greater than a user-specified value, and</li>
 <li>works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).</li>
 </ul></li>
+<li>There is also a mean estimation algorithm for very high dimensions, which works if the stream of multidimensional variates has a finite variance (Lee and Valiant 2022)[^10], but this algorithm is impractical &mdash; it requires millions of samples at best.</li>
 </ol>
 
 <p><strong>Examples:</strong></p>
@@ -251,15 +253,13 @@
 <li>The kurtosis of a Poisson distribution with mean <em>&mu;</em> is (3 + 1/<em>&mu;</em>).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>&nu;</em> or greater but otherwise unknown, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (3 + 1/<em>&nu;</em>)<sup>1/4</sup>.</li>
 <li>The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; 9<sup>1/4</sup> = sqrt(3).</li>
 </ol>
-
-<p><strong>Note:</strong> There is also a mean estimation algorithm for very high dimensions, which works if the stream of multidimensional variates has a finite variance (Lee and Valiant 2022)[^14], but this algorithm is impractical &mdash; it requires millions of samples at best.</p>
 </blockquote>
 
 <p><a id=Estimating_the_Mode></a></p>
 
 <h2>Estimating the Mode</h2>
 
-<p>Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the <em>mode</em>.(Dutta and Goswami 2010)[^10]  This assumes the following are known:</p>
+<p>Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the <em>mode</em>.(Dutta and Goswami 2010)[^11]  This assumes the following are known:</p>
 
 <ul>
 <li>Exactly one item must occur more frequently than the others.</li>
@@ -308,7 +308,7 @@
 <li>Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
-<p>A simpler version of <em>Algorithm D</em> was given as an answer to the linked-to question; see also Jiang and Hickernell (2014)[^11].  As with <em>Algorithm D</em>, this algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].  The algorithm, called <strong>Algorithm E</strong> in this document, follows.</p>
+<p>A simpler version of <em>Algorithm D</em> was given as an answer to the linked-to question; see also Jiang and Hickernell (2014)[^12].  As with <em>Algorithm D</em>, this algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].  The algorithm, called <strong>Algorithm E</strong> in this document, follows.</p>
 
 <ol>
 <li>Calculate <em>&gamma;</em> as given in step 1 of <em>Algorithm D</em>.</li>
@@ -397,7 +397,7 @@ pprint(Max(1,kappa))
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)[^12], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
+<p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)[^13], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
 
 <ol>
 <li>For a sample size <em>n</em>, set <em>m</em> to floor(<em>n</em><sup>1/<em>d</em></sup>), where <em>d</em> is the number of dimensions in the sampling domain (number of components of each point).  Set <em>s</em> to 0.</li>
@@ -428,7 +428,7 @@ pprint(Max(1,kappa))
 
 <p>In this section, ilog(<em>a</em>, <em>r</em>) means either <em>a</em> if <em>r</em> is 0, or max(ln(ilog(<em>a</em>, <em>r</em>&minus;1)), 1) otherwise.</p>
 
-<p>Agarwal et al. (2017)[^13] called this algorithm &quot;aggressive elimination&quot;, and it can be described as follows.</p>
+<p>Agarwal et al. (2017)[^14] called this algorithm &quot;aggressive elimination&quot;, and it can be described as follows.</p>
 
 <ol>
 <li>Let <em>t</em> be ceil((ilog(<em>m</em>, <em>r</em>) + ln(8*<em>k</em>/<em>&delta;</em>)) * 2/(<em>D</em>*<em>D</em>)).</li>
@@ -483,15 +483,15 @@ pprint(Max(1,kappa))
 
 <p>[^9]: &quot;<em>k</em> is even&quot; means that <em>k</em> is divisible by 2.  This is true if <em>k</em> &minus; 2*floor(<em>k</em>/2) equals 0, or if the least significant bit of abs(<em>x</em>) is 0.</p>
 
-<p>[^10]: Dutta, Santanu, and Alok Goswami. &quot;Mode estimation for discrete distributions.&quot; Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.</p>
+<p>[^10]: Lee, J.C. and Valiant, P., 2022. <a href="https://drops.dagstuhl.de/opus/volltexte/2022/15694/"><strong>Optimal Sub-Gaussian Mean Estimation in Very High Dimensions</strong></a>. In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik.</p>
 
-<p>[^11]: Jiang, L., Hickernell, F.J., &quot;<a href="https://arxiv.org/abs/1411.1151"><strong>Guaranteed Monte Carlo Methods for Bernoulli Random Variables</strong></a>&quot;, arXiv:1411.1151 [math.NA], 2014.</p>
+<p>[^11]: Dutta, Santanu, and Alok Goswami. &quot;Mode estimation for discrete distributions.&quot; Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.</p>
 
-<p>[^12]: Kunsch, R.J., Rudolf, D., &quot;<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>&quot;, arXiv:1809.09890, 2018.</p>
+<p>[^12]: Jiang, L., Hickernell, F.J., &quot;<a href="https://arxiv.org/abs/1411.1151"><strong>Guaranteed Monte Carlo Methods for Bernoulli Random Variables</strong></a>&quot;, arXiv:1411.1151 [math.NA], 2014.</p>
 
-<p>[^13]: Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</p>
+<p>[^13]: Kunsch, R.J., Rudolf, D., &quot;<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>&quot;, arXiv:1809.09890, 2018.</p>
 
-<p>[^14]: Lee, J.C. and Valiant, P., 2022. <a href="https://drops.dagstuhl.de/opus/volltexte/2022/15694/"><strong>Optimal Sub-Gaussian Mean Estimation in Very High Dimensions</strong></a>. In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik.</p>
+<p>[^14]: Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</p>
 
 <p><a id=License></a></p>
 
