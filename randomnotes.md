@@ -436,6 +436,9 @@ The following pseudocode generates a random vector (list of numbers) that follow
 > 6. A **standard** [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution) is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
 > 7. **Multivariate Linnik distribution**: Generate a multinormal random vector, then multiply each component by `x`, where `x = GeometricStable(alpha/2.0, 1, 1)`, where `alpha` is a parameter in (0, 2] (Kozubowski 2000\)[^17].
 > 8. **Multivariate exponential power distribution** (Solaro 2004)[^27]: `MultivariateCov(mu, cov, vec)`, where `vec = RandomPointOnSphere(m, pow(Gamma(m/s,1)*2,1.0/s), 2)`, `m` is the dimension, `s > 0` is a shape parameter, `mu` is the mean as an `m`-dimensional vector (`m`-item list), and `cov` is a covariance matrix.
+> 9. **Elliptical distribution**: `MultivariateCov(mu, cov, RandomPointOnSphere(dims, z, 2))`, where `z` is an arbitrary random variate,`dims` is the number of dimensions, `mu` is a `dims`-dimensional location vector, and `cov` is a `dims`&times;`dims` covariance matrix.  See, e.g., Fang et al. (1990)[^29]
+> 10. **Mean-variance mixture of normal distributions** (Barndorff-Nielsen et al. 1982)[^3]: `VecAdd(mu, VecAdd(VecScale(delta,v), VecScale(MultivariateNormal(nothing, cov), sqrt(z))))`, where `mu` and `delta` are`n`-dimensional vectors, `cov` is a covariance matrix, and `v` is an arbitrary random variate 0 or greater.
+> 11. **Mean mixture of normal distributions** (Bhagwat and Marchand 2022)[^4]: `MultivariateNormal(VecAdd(theta,VecScale(a,v)), cov)` where `theta` is an `n`-dimensional location vector, `a` is an `n`-dimensional "perturbation vector", `cov` is a covariance matrix, and `v` is an arbitrary random variate.
 
 <a id=Gaussian_and_Other_Copulas></a>
 #### Gaussian and Other Copulas
@@ -585,6 +588,8 @@ END METHOD
 [^27]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
 
 [^28]: Baccetti, Valentina, and Matt Visser. "Infinite Shannon entropy." Journal of Statistical Mechanics: Theory and Experiment 2013, no. 04 (2013): P04010, also in arXiv:1212.5630.
+
+[^29]: Fang et al., Symmetric multivariate and related distributions, 1990.
 
 <a id=Appendix></a>
 ## Appendix
