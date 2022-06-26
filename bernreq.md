@@ -98,7 +98,7 @@ Thus the questions are:
 1. Are there practical formulas to compute polynomials that&mdash;
 
     - meet the formal statement above, and
-    - meet the following error bound? $|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2})$ where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form with coefficients in $[0,1]$; $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a **known exact value or upper bound**.
+    - meet the following error bound? $$|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2}),$$ for every $n\ge 1$, where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form with coefficients in $[0,1]$; $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a **known exact value or upper bound**.
 
 2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
 

@@ -350,6 +350,12 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | Generalized Pareto(_a_, _b_) (McNeil et al. 2010)[^56] | _a_\*((1/(1&minus;_U_))<sup>_b_</sup>&minus;1)/_b_. | _a_>0; _b_>0. |
 | Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^57], (Azzalini 2022)[^58]. | _Z_ if _T_ < _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows a symmetric distribution (not necessarily around 0). _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
 | Skew normal (Azzalini 1985)[^59]. | Skew symmetric with _Z_ and _T_ both separate Normal(0, 1) variates, and _w_(_x_) = _x_\*_&alpha;_. | _&alpha;_ is a real number. |
+| Logarithmic skew normal (Gómez-Déniz et al. 2020)[^68] | exp(SNE(_&lambda;_,_&lambda;_)\*_&sigma;_+_&mu;_). | _&mu;_ and _&lambda;_ are real numbers; _&sigma;_ > 0. SNE is described later. |
+
+| This distribution: | Can be sampled with the following algorithms: | And uses these parameters: |
+ --- | --- | --- |
+| Offset-symmetric Gaussian (Sadeghi and Korki 2021)[^69] | (1) Generate an unbiased random bit _b_ (either 0 or 1 with equal probability); (2) generate _n_, Normal(0, _&sigma;_) random variates (standard deviation _&sigma;_), and if _n_ < _m_, repeat this step; (3) return (_n_ &minus; _m_)\*(_b_\*2 &minus; 1). | _m_>0; _&sigma;_>0. |
+| Generalized skew normal (SNE(_&lambda;_,_&xi;_)) (Henze 1986)[^70] | **First algorithm:** (1) Generate _Y_ and _Z_, two Normal(0,1) variates; (2) if _Z_<_Y_\*_&lambda;_+_&xi;_, return _Y_; else go to 1. **Second algorithm:** (1) Let _il_=1/sqrt(1+_&lambda;_<sup>2</sup>); (2) Generate _Y_ and _Z_, two Normal(0,1) variates; (3) if _Y_>&minus;_&xi;_\*_il_, return _Y_\*_&lambda;_\*_il_ + _Z_; else go to 2. | _&lambda;_ and _&xi;_ are real numbers. |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
 ## Batching Random Samples via Randomness Extraction
@@ -607,6 +613,12 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 [^66]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
 [^67]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
+
+[^68]: Gómez-Déniz, Emilio, and E. Calderín-Ojeda. "[**On the usefulness of the logarithmic skew normal distribution for describing claims size data**](https://www.hindawi.com/journals/mpe/2020/1420618/)." Mathematical Problems in Engineering 2020 (2020). Lin and Stoyanov (2009, "The logarithmic skew-normal distributions are moment-indeterminate", _Journal of Applied Probability_ 46) studied the logarithmic skew normal distribution with _&mu;_=0 and _&sigma;_=1.
+
+[^69]: Sadeghi, Parastoo, and Mehdi Korki. "Offset-Symmetric Gaussians for Differential Privacy." arXiv preprint arXiv:2110.06412 (2021).
+
+[^70]: Henze, Norbert. "A probabilistic representation of the 'skew-normal' distribution." Scandinavian journal of statistics (1986): 271-275. SNE(_&lambda;_,0) is distributed as Azzalini's skew normal distribution.
 
 <a id=License></a>
 ## License

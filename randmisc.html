@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/06/19"><meta name="citation_online_date" content="2022/06/19"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/06/25"><meta name="citation_online_date" content="2022/06/25"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -577,6 +577,30 @@
 <td>Skew symmetric with <em>Z</em> and <em>T</em> both separate Normal(0, 1) variates, and <em>w</em>(<em>x</em>) = <em>x</em>*<em>&alpha;</em>.</td>
 <td><em>&alpha;</em> is a real number.</td>
 </tr>
+<tr>
+<td>Logarithmic skew normal (Gómez-Déniz et al. 2020)[^68]</td>
+<td>exp(SNE(<em>&lambda;</em>,<em>&lambda;</em>)*<em>&sigma;</em>+<em>&mu;</em>).</td>
+<td><em>&mu;</em> and <em>&lambda;</em> are real numbers; <em>&sigma;</em> &gt; 0. SNE is described later.</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>This distribution:</th>
+<th>Can be sampled with the following algorithms:</th>
+<th>And uses these parameters:</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Offset-symmetric Gaussian (Sadeghi and Korki 2021)[^69]</td>
+<td>(1) Generate an unbiased random bit <em>b</em> (either 0 or 1 with equal probability); (2) generate <em>n</em>, Normal(0, <em>&sigma;</em>) random variates (standard deviation <em>&sigma;</em>), and if <em>n</em> &lt; <em>m</em>, repeat this step; (3) return (<em>n</em> &minus; <em>m</em>)*(<em>b</em>*2 &minus; 1).</td>
+<td><em>m</em>&gt;0; <em>&sigma;</em>&gt;0.</td>
+</tr>
+<tr>
+<td>Generalized skew normal (SNE(<em>&lambda;</em>,<em>&xi;</em>)) (Henze 1986)[^70]</td>
+<td><strong>First algorithm:</strong> (1) Generate <em>Y</em> and <em>Z</em>, two Normal(0,1) variates; (2) if <em>Z</em>&lt;<em>Y</em>*<em>&lambda;</em>+<em>&xi;</em>, return <em>Y</em>; else go to 1. <strong>Second algorithm:</strong> (1) Let <em>il</em>=1/sqrt(1+<em>&lambda;</em><sup>2</sup>); (2) Generate <em>Y</em> and <em>Z</em>, two Normal(0,1) variates; (3) if <em>Y</em>&gt;&minus;<em>&xi;</em>*<em>il</em>, return <em>Y</em>*<em>&lambda;</em>*<em>il</em> + <em>Z</em>; else go to 2.</td>
+<td><em>&lambda;</em> and <em>&xi;</em> are real numbers.</td>
+</tr>
 </tbody></table>
 
 <p><a id=Batching_Random_Samples_via_Randomness_Extraction></a></p>
@@ -862,6 +886,12 @@ END METHOD
 <p>[^66]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
 
 <p>[^67]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+
+<p>[^68]: Gómez-Déniz, Emilio, and E. Calderín-Ojeda. &quot;<a href="https://www.hindawi.com/journals/mpe/2020/1420618/"><strong>On the usefulness of the logarithmic skew normal distribution for describing claims size data</strong></a>.&quot; Mathematical Problems in Engineering 2020 (2020). Lin and Stoyanov (2009, &quot;The logarithmic skew-normal distributions are moment-indeterminate&quot;, <em>Journal of Applied Probability</em> 46) studied the logarithmic skew normal distribution with <em>&mu;</em>=0 and <em>&sigma;</em>=1.</p>
+
+<p>[^69]: Sadeghi, Parastoo, and Mehdi Korki. &quot;Offset-Symmetric Gaussians for Differential Privacy.&quot; arXiv preprint arXiv:2110.06412 (2021).</p>
+
+<p>[^70]: Henze, Norbert. &quot;A probabilistic representation of the &#39;skew-normal&#39; distribution.&quot; Scandinavian journal of statistics (1986): 271-275. SNE(<em>&lambda;</em>,0) is distributed as Azzalini&#39;s skew normal distribution.</p>
 
 <p><a id=License></a></p>
 
