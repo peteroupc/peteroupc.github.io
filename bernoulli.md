@@ -74,7 +74,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**expit(_m_ + _&lambda;_) or 1&minus;1/(1+exp(_m_ + _&lambda;_)) or exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_)) or 1/(1+exp(&minus;(_m_ + _&lambda;_)))**](#expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda___or_1_1_exp_minus__m____lambda)
         - [**expit((_m_ + _&lambda;_)\*_&mu;_)**](#expit__m____lambda_____mu)
         - [**expit(_m_ + _&lambda;_)\*2 &minus; 1 or tanh((_m_ + _&lambda;_)/2)**](#expit__m____lambda___2_minus_1_or_tanh__m____lambda___2)
-        - [**_&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_))**](#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda)
+        - [**_&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_m_ + _&nu;_) / (1 + _&lambda;_\*(exp(_m_ + _&nu;_) &minus; 1))**](#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda___or___lambda___exp__m____nu___1___lambda___exp__m____nu___minus_1)
         - [**1 / (1 + (_x_/_y_)\*_&lambda;_)**](#1_1__x___y____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
         - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
@@ -1074,12 +1074,12 @@ In this algorithm, _m_ is an integer 0 or greater, and _&lambda;_ is the probabi
 
 > **Note:** Follows from observing that tanh((_m_+_&lambda;_)/2) = (_d_ + (1 &minus; _&mu;_)) / (_c_ + _&mu;_), where _&mu;_ = exp(&minus;(_m_+_&lambda;_)), _d_ = 0, and _c_ = 1.
 
-<a id=lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda></a>
-#### _&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_))
+<a id=lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda___or___lambda___exp__m____nu___1___lambda___exp__m____nu___minus_1></a>
+#### _&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_m_ + _&nu;_) / (1 + _&lambda;_\*(exp(_m_ + _&nu;_) &minus; 1))
 
 In this algorithm:
 
-- _m_ + _&nu;_ is an "exponential shift" (Peres et al. 2021\)[^48], where _m_ is an integer and _&nu;_ is a coin that shows heads with probability equal to the shift minus _m_.
+- _m_ + _&nu;_ is an "exponential shift" (Peres et al. 2021\)[^48] or "exponential twist" (Sadowsky and Bucklew 1990)[^64], where _m_ is an integer and _&nu;_ is a coin that shows heads with probability equal to the shift minus _m_.
 - _&lambda;_ is a coin that shows heads with probability equal to the probability to be shifted.
 
 The algorithm follows:
@@ -1858,6 +1858,9 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 [^62]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
 
 [^63]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
+
+[^64]: Sadowsky, Bucklew, On large deviations theory and asymptotically efficient Monte Carlo
+estimation, IEEE Transactions on Information Theory 36 (1990)
 
 <a id=Appendix></a>
 ## Appendix
