@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2022/06/27"><meta name="citation_online_date" content="2022/06/27"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2022/06/28"><meta name="citation_online_date" content="2022/06/28"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1896,7 +1896,7 @@ END METHOD
 
 <p>Various methods have been developed for selecting a uniform-behaving sample of points, especially for Monte Carlo methods.</p>
 
-<p>Among these methods, a <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequence</em></strong></a> (or <em>quasirandom sequence</em>) is a sequence of numbers that behave like uniformly distributed numbers in the interval [0, 1], but are <em>dependent</em> on each other, in that they have a smaller chance to form &quot;clumps&quot; than if they were independent.  The following are examples:</p>
+<p>Among these methods, a <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequence</em></strong></a> (or <em>quasirandom sequence</em>) is a deterministic sequence of numbers that, together, are designed to be close to uniformly distributed numbers in the interval [0, 1], in terms of <em>low discrepancy</em>.  The following are examples:</p>
 
 <ul>
 <li>A base-N <em>van der Corput sequence</em> is generated as follows:  For each non-negative integer index in the sequence, take the index as a base-N number, then divide the least significant base-N digit by N, the next digit by N<sup>2</sup>, the next by N<sup>3</sup>, and so on, and add together these results of division.</li>
@@ -1914,7 +1914,7 @@ END METHOD
 <li><em>Latin hypercube sampling</em> can be implemented using the following pseudocode for an <code>n</code>-number sequence: <code>lhs = []; for i in 0...n: AddItem(RNDRANGEMinMaxExc(i*1.0/n,(i+1)*1.0/n)); lhs = Shuffle(lhs)</code>.</li>
 <li>Special versions of pseudorandom number generators.  One example is linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is then <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval [1, <code>m</code>] (L&#39;Ecuyer 1999)[^70].  One example is <code>MLCG(seed)</code>: <code>rem(92717*seed,262139)/262139.0</code>.  Another example is certain linear feedback shift register generators (Harase 2020)[^71].</li>
 <li>If a low-discrepancy sequence outputs numbers in the interval [0, 1], the <a href="http://en.wikipedia.org/wiki/Baker&#x27;s_map"><strong>Baker&#39;s map</strong></a> of the sequence is <code>2 * (MakeRatio(1,2)-abs(x - MakeRatio(1,2)))</code>, where <code>x</code> is each number in the sequence.</li>
-<li>Other random point sampling methods, including Poisson disk sampling, the &quot;best candidate algorithm&quot;, and N-farthest-points, are described in Kamath (2022)[^109].</li>
+<li>Other random point sampling methods, including Poisson disk sampling, the &quot;best candidate algorithm&quot;, and N-farthest-points, are described in Kamath (2022)[^72].</li>
 </ul>
 
 <p><a id=Notes_on_Randomization_Involving_Real_Numbers></a></p>
@@ -1933,8 +1933,8 @@ END METHOD
 <li>A <strong>continuous-time process</strong> models random behavior at every moment, not just at discrete times.  There are two popular examples:
 
 <ul>
-<li>A <em>Wiener process</em> (also known as <em>Brownian motion</em>) has random states and jumps that are normally distributed. For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the drift (or average value per time unit), <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.  A <em>Brownian bridge</em> (Revuz and Yor 1999)[^72] modifies a Wiener process as follows: For each time X, calculate <code>W(X) - W(E) * (X - S) / (E - S)</code>, where <code>S</code> and <code>E</code> are the starting and ending times of the process, respectively, and <code>W(X)</code> and <code>W(E)</code> are the state at times X and E, respectively.</li>
-<li>In a <em>Poisson point process</em>, the time between each event is its own exponential random variate with its own rate parameter (for example, <code>Expo(rate)</code>) (see &quot;<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot;), and sorting N random <code>RNDRANGEMinMaxExc(x, y)</code> expresses N arrival times in the interval <code>[x, y]</code>. The process is <em>homogeneous</em> if all the rates are the same, and <em>inhomogeneous</em> if the rate is a function of the &quot;timestamp&quot; before each event jump (the <em>hazard rate function</em>); to generate arrival times here, potential arrival times are generated at the maximum possible rate (<code>maxrate</code>) and each one is accepted if <code>RNDRANGEMinMaxExc(0, maxrate) &lt; thisrate</code>, where <code>thisrate</code> is the rate for the given arrival time (Lewis and Shedler 1979)[^73].</li>
+<li>A <em>Wiener process</em> (also known as <em>Brownian motion</em>) has random states and jumps that are normally distributed. For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the drift (or average value per time unit), <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.  A <em>Brownian bridge</em> (Revuz and Yor 1999)[^73] modifies a Wiener process as follows: For each time X, calculate <code>W(X) - W(E) * (X - S) / (E - S)</code>, where <code>S</code> and <code>E</code> are the starting and ending times of the process, respectively, and <code>W(X)</code> and <code>W(E)</code> are the state at times X and E, respectively.</li>
+<li>In a <em>Poisson point process</em>, the time between each event is its own exponential random variate with its own rate parameter (for example, <code>Expo(rate)</code>) (see &quot;<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot;), and sorting N random <code>RNDRANGEMinMaxExc(x, y)</code> expresses N arrival times in the interval <code>[x, y]</code>. The process is <em>homogeneous</em> if all the rates are the same, and <em>inhomogeneous</em> if the rate is a function of the &quot;timestamp&quot; before each event jump (the <em>hazard rate function</em>); to generate arrival times here, potential arrival times are generated at the maximum possible rate (<code>maxrate</code>) and each one is accepted if <code>RNDRANGEMinMaxExc(0, maxrate) &lt; thisrate</code>, where <code>thisrate</code> is the rate for the given arrival time (Lewis and Shedler 1979)[^74].</li>
 </ul></li>
 </ul>
 
@@ -1944,7 +1944,7 @@ END METHOD
 
 <ol>
 <li><strong>Bates distribution</strong>: Find the mean of <em>n</em> uniform random variates in a given range (such as variates generated by <code>RNDRANGEMinMaxExc(minimum, maximum)</code>) (strategy 8, mean).</li>
-<li>A random point (<code>x</code>, <code>y</code>) can be transformed (strategy 9, geometric transformation) to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)[^74], sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent numbers chosen at random in the same way, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, <code>x</code> and <code>y</code> are uncorrelated).</li>
+<li>A random point (<code>x</code>, <code>y</code>) can be transformed (strategy 9, geometric transformation) to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)[^75], sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent numbers chosen at random in the same way, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, <code>x</code> and <code>y</code> are uncorrelated).</li>
 <li>It is reasonable to talk about sampling the sum or mean of N random variates, where N has a fractional part.  In this case, <code>ceil(N)</code> random variates are generated and the last variate is multiplied by that fractional part.  For example, to sample the sum of 2.5 random variates, generate three random variates, multiply the last by 0.5 (the fractional part of 2.5), then add together all three variates.</li>
 <li>A <strong>hypoexponential distribution</strong> models the sum of <em>n</em> random variates that follow an exponential distribution and each have a separate rate parameter (see &quot;<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot;).</li>
 <li>The <strong>maximal coupling</strong> method mentioned by <a href="https://statisfaction.wordpress.com/2017/09/06/sampling-from-a-maximal-coupling/"><strong>P. Jacob</strong></a> generates correlated random variates from two distributions, <em>P</em> and <em>Q</em>, with known probability density functions or PDFs (<code>PPDF</code> and <code>QPDF</code>, respectively); this works only if the area under each PDF is 1: Sample a number <code>x</code> at random from distribution <em>P</em>, and if <code>RNDRANGEMinMaxExc(0, PPDF(x)) &lt; QPDF(x)</code>, return <code>[x, x]</code>.  Otherwise, sample a number <code>y</code> at random from distribution <em>Q</em> until <code>PPDF(y) &lt; RNDRANGEMinMaxExc(0, QPDF(y))</code>, then return <code>[x, y]</code>.</li>
@@ -1959,7 +1959,7 @@ END METHOD
 <p>Generating random data points based on how a list of data points is distributed involves the field of <strong>machine learning</strong>: <em>fit a data model</em> to the data points, then <em>predict</em> a new data point based on that model, with randomness added to the mix.  Three kinds of data models, described below, serve this purpose. (How fitting works is outside the scope of this page.)</p>
 
 <ol>
-<li><p><strong>Density estimation models.</strong> <a href="http://scikit-learn.org/stable/modules/density.html"><strong>Density estimation</strong></a> models seek to describe the distribution of data points in a given data set, where areas with more points have a greater chance to be sampled.[^75] The following are examples.</p>
+<li><p><strong>Density estimation models.</strong> <a href="http://scikit-learn.org/stable/modules/density.html"><strong>Density estimation</strong></a> models seek to describe the distribution of data points in a given data set, where areas with more points have a greater chance to be sampled.[^76] The following are examples.</p>
 
 <ul>
 <li><strong>Histograms</strong> are sets of one or more non-overlapping <em>bins</em>, which are generally of equal size.  Histograms are <a href="#Mixtures_of_Distributions"><strong><em>mixtures</em></strong></a>, where each bin&#39;s weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).</li>
@@ -1968,9 +1968,9 @@ END METHOD
 
 <ol>
 <li>Choose one of the numbers or points in the list uniformly at random <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>with replacement</strong></a>.</li>
-<li>Add a randomized &quot;jitter&quot; to the chosen number or point; for example, add a separately generated <code>Normal(0, sigma)</code> to the chosen number or each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em>[^76].</li>
+<li>Add a randomized &quot;jitter&quot; to the chosen number or point; for example, add a separately generated <code>Normal(0, sigma)</code> to the chosen number or each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em>[^77].</li>
 </ol></li>
-<li><strong>Stochastic interpolation</strong> is described in (Saucier 2000)[^74], sec. 5.3.4.</li>
+<li><strong>Stochastic interpolation</strong> is described in (Saucier 2000)[^75], sec. 5.3.4.</li>
 <li><strong>Fitting a known distribution</strong> (such as the normal distribution), with unknown parameters, to data can be done by <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation"><strong>maximum likelihood estimation</strong></a>, among other ways.</li>
 </ul></li>
 <li><p><strong>Regression models.</strong> A <em>regression model</em> is a model that summarizes data as a formula and an error term.  If an application has data in the form of inputs and outputs (for example, monthly sales figures) and wants to sample a random but plausible output given a known input point (for example, sales for a future month), then the application can fit and sample a regression model for that data.  For example, a <em>linear regression model</em>, which simulates the value of <code>y</code> given known inputs <code>a</code> and <code>b</code>, can be sampled as follows: <code>y = c1 * a + c2 * b + c3 + Normal(0, sqrt(mse))</code>, where <code>mse</code> is the mean squared error and <code>c1</code>, <code>c2</code>, and <code>c3</code> are the coefficients of the model.  (Here, <code>Normal(0, sqrt(mse))</code> is the error term.)</p></li>
@@ -2002,7 +2002,7 @@ END METHOD
 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, <code>CDF(x)</code>, is the probability of choosing a number less than or equal to <code>x</code> at random.  The probabilities are in the interval [0, 1].</li>
-<li><em>Discrete distributions</em>[^77] have a <em>probability mass function</em>, or <em>PMF</em>, which gives the probability that each number is randomly chosen.</li>
+<li><em>Discrete distributions</em>[^78] have a <em>probability mass function</em>, or <em>PMF</em>, which gives the probability that each number is randomly chosen.</li>
 <li><em>Absolutely continuous distributions</em> have a <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, <code>PDF(x)</code>, which is the &quot;slope&quot; function of the CDF, or the relative probability of choosing a number &quot;close&quot; to <code>x</code> at random. The relative probabilities are 0 or greater, and the area under the PDF is 1.</li>
 <li>The <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) maps numbers in the interval (0, 1) to numbers in the distribution, from low to high.</li>
 </ul>
@@ -2069,12 +2069,12 @@ END METHOD
 <p>In other cases, the discrete distribution can still be approximately sampled.  The following cases will lead to an approximate sampler unless the values of the CDF or PDF-like function cover all the distribution and are calculated exactly (without error).</p>
 
 <ul>
-<li>If the values of the CDF or PDF-like function are calculated as <strong>floating-point numbers</strong> of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>)[^78], there are various ways to turn these numbers to rational numbers or integers.
+<li>If the values of the CDF or PDF-like function are calculated as <strong>floating-point numbers</strong> of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>)[^79], there are various ways to turn these numbers to rational numbers or integers.
 
 <ol>
 <li>One way is to use <code>FPRatio(x)</code> (in the pseudocode below), which is lossless and calculates the rational number for the given floating-point number <code>x</code>.</li>
 <li>Another way is to scale and round the values to integers (for example, <code>floor(x * mult)</code> if <code>floor(x * mult) &lt; 0.5</code> and <code>ceil(x * mult)</code> otherwise, where <code>mult</code> is a large integer); this is not lossless.</li>
-<li>A third way is to approximate the values of the PDF-like function to integers in a way that bounds the error, such as given in (Saad et al., 2020)[^79]; this is not lossless and works only for PDF-like functions.</li>
+<li>A third way is to approximate the values of the PDF-like function to integers in a way that bounds the error, such as given in (Saad et al., 2020)[^80]; this is not lossless and works only for PDF-like functions.</li>
 </ol></li>
 <li>If the values of the CDF or PDF-like function are calculated as <strong>rational numbers</strong>, these numbers can be turned into integer weights using either <code>NormalizeRatios</code>, which is lossless, or (2) or (3) above, which are not.</li>
 <li>If the distribution takes on an <strong>infinite number of values</strong>, an appropriate interval [<code>mini</code>, <code>maxi</code>] can be chosen that covers almost all of the distribution.</li>
@@ -2139,8 +2139,8 @@ end
 <p>In addition, the following methods approximate the quantile:</p>
 
 <ul>
-<li>Distribution is <strong>discrete, with known PDF-like function</strong> (and the distribution takes on integers): If the interval [a, b] covers all or almost all the distribution, then the application can store the PDF-like function&#39;s values in that interval in a list and call <code>WChoose</code>: <code>wsum = 0; for i in a..b: wsum=wsum+PDF(i); for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * wsum)</code>.  However, finding the quantile based on the <strong>CDF</strong> instead of a PDF-like function can introduce more error (Walter 2019)[^80].  See also <code>integers_from_u01</code> in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
-<li>Distribution is <strong>absolutely continuous, with known PDF-like function</strong>: <code>ICDFFromContPDF(u01, mini, maxi, step)</code>, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [<code>mini</code>, <code>maxi</code>], with pieces up to <code>step</code> wide. (Devroye and Gravel 2020)[^11]. See also <code>DensityInversionSampler</code>, <code>numbers_from_u01</code>, and <code>numbers_from_dist_inversion</code> (Derflinger et al. 2010)[^81], (Devroye and Gravel 2020)[^11] in the Python sample code [^82].</li>
+<li>Distribution is <strong>discrete, with known PDF-like function</strong> (and the distribution takes on integers): If the interval [a, b] covers all or almost all the distribution, then the application can store the PDF-like function&#39;s values in that interval in a list and call <code>WChoose</code>: <code>wsum = 0; for i in a..b: wsum=wsum+PDF(i); for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * wsum)</code>.  However, finding the quantile based on the <strong>CDF</strong> instead of a PDF-like function can introduce more error (Walter 2019)[^81].  See also <code>integers_from_u01</code> in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
+<li>Distribution is <strong>absolutely continuous, with known PDF-like function</strong>: <code>ICDFFromContPDF(u01, mini, maxi, step)</code>, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [<code>mini</code>, <code>maxi</code>], with pieces up to <code>step</code> wide. (Devroye and Gravel 2020)[^11]. See also <code>DensityInversionSampler</code>, <code>numbers_from_u01</code>, and <code>numbers_from_dist_inversion</code> (Derflinger et al. 2010)[^82], (Devroye and Gravel 2020)[^11] in the Python sample code [^83].</li>
 <li>Distribution is <strong>absolutely continuous, with known CDF</strong>: See <code>numbers_from_u01</code> in the Python sample code.</li>
 </ul>
 
@@ -2185,7 +2185,7 @@ END METHOD
 
 <ol>
 <li>If only percentiles of data (such as the median or 50th percentile, the minimum or 0th percentile, or the maximum or 100th percentile) are available, the quantile function can be approximated via those percentiles.  The Nth percentile corresponds to the quantile for <code>N/100.0</code>.  Missing values for the quantile function can then be filled in by interpolation (such as spline fitting).  If the raw data points are available, see &quot;<a href="#Sampling_from_a_Distribution_of_Data_Points"><strong>Sampling from a Distribution of Data Points</strong></a>&quot; instead.</li>
-<li>Taking the <code>k</code>th smallest of <code>n</code> random variates distributed the same way is the same as taking the <code>k</code>th smallest of <code>n</code> <em>uniform</em> random variates in the interval [0, 1) (also known as the <code>k</code>th <em>order statistic</em>; for example, <code>BetaDist(k, n+1-k)</code>) and finding its quantile (Devroye 2006)[^83]; (Devroye 1986, p. 30)[^19].</li>
+<li>Taking the <code>k</code>th smallest of <code>n</code> random variates distributed the same way is the same as taking the <code>k</code>th smallest of <code>n</code> <em>uniform</em> random variates in the interval [0, 1) (also known as the <code>k</code>th <em>order statistic</em>; for example, <code>BetaDist(k, n+1-k)</code>) and finding its quantile (Devroye 2006)[^84]; (Devroye 1986, p. 30)[^19].</li>
 </ol>
 </blockquote>
 
@@ -2208,14 +2208,14 @@ END METHOD
 <li>The normal distribution&#39;s upside-down bell curve has the PDF-like function <code>1-exp(-(x*x))</code>, and the highest point for this function is <code>peak = max(1-exp(-(low*low)), 1-exp(-(high*high)))</code>. Sampling this distribution then uses the algorithm in example 1.</li>
 </ol>
 
-<p><strong>Note:</strong> In the Python sample code, <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/moore.py"><strong>moore.py</strong></a> and <code>numbers_from_dist</code> sample from a distribution via rejection sampling (Devroye and Gravel 2020)[^11], (Sainudiin and York 2013)[^84].</p>
+<p><strong>Note:</strong> In the Python sample code, <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/moore.py"><strong>moore.py</strong></a> and <code>numbers_from_dist</code> sample from a distribution via rejection sampling (Devroye and Gravel 2020)[^11], (Sainudiin and York 2013)[^85].</p>
 </blockquote>
 
 <p><a id=Alternating_Series></a></p>
 
 <h4>Alternating Series</h4>
 
-<p>If a PDF-like function for the target distribution is not known exactly, but can be approximated from above and below by two series expansions that converge to that function as more terms are added, the  <em>alternating series method</em> can be used.  This still requires a &quot;dominating&quot; PDF-like function (<code>PDF2(x)</code>) to serve as the &quot;easy-to-sample&quot; distribution.  Call the series expansions <code>UPDF(x, n)</code> and <code>LPDF(x, n)</code>, respectively, where <code>n</code> is the number of terms in the series to add.  To sample the distribution using this method (Devroye 2006)[^83]: (1) Sample from the &quot;dominating&quot; distribution, and let <code>x</code> be the sampled number; (2) set <code>n</code> to 0; (3) accept <code>x</code> if <code>r &lt; LPDF(x, n)</code>, or go to step 1 if <code>r &gt;= UPDF(x, n)</code>, or repeat this step with <code>n</code> increased by 1 if neither is the case, where <code>r = RNDRANGEMinMaxExc(0, PDF2(n))</code>.</p>
+<p>If a PDF-like function for the target distribution is not known exactly, but can be approximated from above and below by two series expansions that converge to that function as more terms are added, the  <em>alternating series method</em> can be used.  This still requires a &quot;dominating&quot; PDF-like function (<code>PDF2(x)</code>) to serve as the &quot;easy-to-sample&quot; distribution.  Call the series expansions <code>UPDF(x, n)</code> and <code>LPDF(x, n)</code>, respectively, where <code>n</code> is the number of terms in the series to add.  To sample the distribution using this method (Devroye 2006)[^84]: (1) Sample from the &quot;dominating&quot; distribution, and let <code>x</code> be the sampled number; (2) set <code>n</code> to 0; (3) accept <code>x</code> if <code>r &lt; LPDF(x, n)</code>, or go to step 1 if <code>r &gt;= UPDF(x, n)</code>, or repeat this step with <code>n</code> increased by 1 if neither is the case, where <code>r = RNDRANGEMinMaxExc(0, PDF2(n))</code>.</p>
 
 <p><a id=Markov_Chain_Monte_Carlo></a></p>
 
@@ -2223,7 +2223,7 @@ END METHOD
 
 <p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> (MCMC) is a family of algorithms for sampling many random variates from a probability distribution by building a <em>Markov chain</em> of random values that build on each other until they converge to the given distribution.  In general, however, a given chain&#39;s random values will have a statistical <em>dependence</em> on each other, and it takes an unknown time for the chain to converge (which is why techniques such as &quot;thinning&quot; &mdash; keeping only every Nth sample &mdash; or &quot;burn-in&quot; &mdash; skipping iterations before sampling &mdash; are often employed). MCMC can also estimate the distribution&#39;s sampling domain for other samplers, such as rejection sampling (above).</p>
 
-<p>MCMC algorithms[^85] include <em>Metropolis&ndash;Hastings</em>, <em>slice sampling</em>, and <em>Gibbs sampling</em> (see also the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  The latter is special in that it uses not a PDF-like function, but two or more distributions, each of which uses a number sampled at random from the previous distribution (<em>conditional distributions</em>), that converge to a <em>joint distribution</em>.</p>
+<p>MCMC algorithms[^86] include <em>Metropolis&ndash;Hastings</em>, <em>slice sampling</em>, and <em>Gibbs sampling</em> (see also the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  The latter is special in that it uses not a PDF-like function, but two or more distributions, each of which uses a number sampled at random from the previous distribution (<em>conditional distributions</em>), that converge to a <em>joint distribution</em>.</p>
 
 <blockquote>
 <p><strong>Example:</strong> In one Gibbs sampler, an initial value for <code>y</code> is chosen, then multiple <code>x</code>, <code>y</code> pairs of random variates are generated, where <code>x = BetaDist(y, 5)</code> then <code>y = Poisson(x * 10)</code>.</p>
@@ -2235,10 +2235,10 @@ END METHOD
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>A <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a> describes an absolutely continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The <code>PiecewiseLinear</code> method (in the pseudocode below) takes two lists as follows (see also (Kscischang 2019)[^86]):</p>
+<p>A <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a> describes an absolutely continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The <code>PiecewiseLinear</code> method (in the pseudocode below) takes two lists as follows (see also (Kscischang 2019)[^87]):</p>
 
 <ul>
-<li><code>values</code> is a list of rational numbers. If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.</li>
+<li><code>values</code> is a list of rational numbers. The numbers should be arranged in ascending order.</li>
 <li><code>weights</code> is a list of rational-valued weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number&#39;s weight, the greater the probability that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
 </ul>
 
@@ -2294,7 +2294,7 @@ above for returning more than one random variate in one call.</p>
 
 <p>A &#x2b26; symbol next to a distribution means the sample can be scaled to any range, which is given with the minimum and maximum values <code>mini</code> and <code>maxi</code>.  Example: <code>mini + (maxi - mini) * num</code>.</p>
 
-<p>For further examples and distributions, see (Devroye 1996)[^87] and (Crooks 2019)[^88].</p>
+<p>For further examples and distributions, see (Devroye 1996)[^88] and (Crooks 2019)[^89].</p>
 
 <p>Most commonly used:
 <small></p>
@@ -2303,29 +2303,29 @@ above for returning more than one random variate in one call.</p>
 <li><strong>Beta distribution</strong>&#x2b26;: See <a href="https://peteroupc.github.io/randomnotes.html#Beta_Distribution"><strong>Beta Distribution</strong></a>.</li>
 <li><strong>Binomial distribution</strong>: See <a href="#Binomial_Distribution"><strong>Binomial Distribution</strong></a>.</li>
 <li><strong>Binormal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
-<li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  <code>Stable(1, 0)</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975)[^89]: Generate <code>x = RNDRANGEMinMaxExc(0,1)</code> and <code>y = RNDRANGEMinMaxExc(0,1)</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>(RNDINT(1) * 2 - 1) * y / x</code>.</li>
+<li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  <code>Stable(1, 0)</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975)[^90]: Generate <code>x = RNDRANGEMinMaxExc(0,1)</code> and <code>y = RNDRANGEMinMaxExc(0,1)</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>(RNDINT(1) * 2 - 1) * y / x</code>.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5))*2</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
 <li><strong>Dice</strong>: See <a href="#Dice"><strong>Dice</strong></a>.</li>
-<li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.  The na&iuml;ve implementation <code>-ln(1-RNDRANGEMinMaxExc(0, 1)) / lamda</code> has several problems, such as being ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018) [^1]. An application can reduce some of these problems by applying Pedersen&#39;s suggestion of using either <code>-ln(RNDRANGEMinMaxExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinMaxExc(0, 0.5))</code> (rather than <code>-ln(1-RNDRANGEMinMaxExc(0, 1))</code>), chosen uniformly at random each time; an alternative is <code>ln(1/RNDRANGEMinMaxExc(0,1))</code> mentioned in (Devroye 2006)[^83].</li>
+<li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.  The na&iuml;ve implementation <code>-ln(1-RNDRANGEMinMaxExc(0, 1)) / lamda</code> has several problems, such as being ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018) [^1]. An application can reduce some of these problems by applying Pedersen&#39;s suggestion of using either <code>-ln(RNDRANGEMinMaxExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinMaxExc(0, 0.5))</code> (rather than <code>-ln(1-RNDRANGEMinMaxExc(0, 1))</code>), chosen uniformly at random each time; an alternative is <code>ln(1/RNDRANGEMinMaxExc(0,1))</code> mentioned in (Devroye 2006)[^84].</li>
 <li><strong>Extreme value distribution</strong>: See generalized extreme value distribution.</li>
-<li><strong>Gamma distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Gamma_Distribution"><strong>Gamma Distribution</strong></a>. Generalized gamma distributions include the <strong>Stacy distribution</strong> (<code>pow(GammaDist(a), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter) and the <strong>Amoroso distribution</strong> (Crooks 2015)[^90], (<code>pow(GammaDist(a), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value).</li>
+<li><strong>Gamma distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Gamma_Distribution"><strong>Gamma Distribution</strong></a>. Generalized gamma distributions include the <strong>Stacy distribution</strong> (<code>pow(GammaDist(a), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter) and the <strong>Amoroso distribution</strong> (Crooks 2015)[^91], (<code>pow(GammaDist(a), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value).</li>
 <li><strong>Gaussian distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
 <li><strong>Geometric distribution</strong>: See <a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a>.  The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers: <code>floor(-Expo(1)/ln(1-p))</code> (Devroye 1986, p. 500)[^19] (ceil replaced with floor because this page defines geometric distribution differently).</li>
 <li><strong>Gumbel distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
-<li><strong>Laplace (double exponential) distribution</strong>&dagger;: <code>(Expo(1) - Expo(1))</code>.  Also, <code>Normal(0,1) * Normal(0, 1) - Normal(0, 1) * Normal(0, 1)</code> (Kotz et al. 2012)[^91].</li>
+<li><strong>Laplace (double exponential) distribution</strong>&dagger;: <code>(Expo(1) - Expo(1))</code>.  Also, <code>Normal(0,1) * Normal(0, 1) - Normal(0, 1) * Normal(0, 1)</code> (Kotz et al. 2012)[^92].</li>
 <li><strong>Logarithmic distribution</strong>&#x2b26;: <code>RNDRANGEMinMaxExc(0, 1) * RNDRANGEMinMaxExc(0, 1)</code> (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more probable than higher numbers.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code> are the underlying normal distribution&#39;s parameters.</li>
 <li><strong>Multinormal distribution</strong>: See multivariate normal distribution.</li>
 <li><strong>Multivariate normal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Normal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Poisson distribution</strong>: See &quot;<a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot;. The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers (Devroye 1986, p. 504)[^19]: <code>c = 0; s = 0; while true; sum = sum + Expo(1); if sum&gt;=mean: return c; else: c = c + 1; end</code>; and in addition the following optimization from (Devroye 1991)[^92] can be used: <code>while mean &gt; 20; n=ceil(mean-pow(mean,0.7)); g=GammaDist(n); if g&gt;=mean: return c+(n-1-Binomial(n-1,(g-mean)/g)); mean = mean - g; c = c + n; end</code>.  For <code>mean</code> greater than 50, the following <em>approximation</em> was suggested in (Giammatteo and Di Mascio 2020)[^92]: <code>floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))</code>.</li>
+<li><strong>Poisson distribution</strong>: See &quot;<a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot;. The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers (Devroye 1986, p. 504)[^19]: <code>c = 0; s = 0; while true; sum = sum + Expo(1); if sum&gt;=mean: return c; else: c = c + 1; end</code>; and in addition the following optimization from (Devroye 1991)[^93] can be used: <code>while mean &gt; 20; n=ceil(mean-pow(mean,0.7)); g=GammaDist(n); if g&gt;=mean: return c+(n-1-Binomial(n-1,(g-mean)/g)); mean = mean - g; c = c + n; end</code>.  For <code>mean</code> greater than 50, the following <em>approximation</em> was suggested in (Giammatteo and Di Mascio 2020)[^92]: <code>floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))</code>.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDRANGEMinMaxExc(0, 1), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
 <li><strong>Rayleigh distribution</strong>&dagger;: <code>sqrt(Expo(0.5))</code>.  If the scale parameter (<code>sigma</code>) follows a logarithmic normal distribution, the result is a <em>Suzuki distribution</em>.</li>
 <li><strong>Standard normal distribution</strong>&dagger;: <code>Normal(0, 1)</code>.  See also <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5)*2 / df)</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random variate.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.  Alternatively, <code>cos(RNDRANGEMinMaxExc(0, pi * 2)) * sqrt((pow(RNDRANGEMinMaxExc(0, 1),-2.0/df)-1) * df)</code> (Bailey 1994)[^93].</li>
-<li><strong>Triangular distribution</strong>&dagger; (Stein and Keblis 2009)[^94]: <code>(1-alpha) * min(a, b) + alpha * max(a, b)</code>, where <code>alpha</code> is in [0, 1], <code>a = RNDRANGEMinMaxExc(0, 1)</code>, and <code>b = RNDRANGEMinMaxExc(0, 1)</code>.</li>
+<li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5)*2 / df)</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random variate.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.  Alternatively, <code>cos(RNDRANGEMinMaxExc(0, pi * 2)) * sqrt((pow(RNDRANGEMinMaxExc(0, 1),-2.0/df)-1) * df)</code> (Bailey 1994)[^94].</li>
+<li><strong>Triangular distribution</strong>&dagger; (Stein and Keblis 2009)[^95]: <code>(1-alpha) * min(a, b) + alpha * max(a, b)</code>, where <code>alpha</code> is in [0, 1], <code>a = RNDRANGEMinMaxExc(0, 1)</code>, and <code>b = RNDRANGEMinMaxExc(0, 1)</code>.</li>
 <li><strong>Weibull distribution</strong>: See generalized extreme value distribution.</li>
 </ul>
 
@@ -2391,7 +2391,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Landau distribution</strong>: See stable distribution.</li>
 <li><strong>L&eacute;vy distribution</strong>&dagger;: <code>0.5 / GammaDist(0.5)</code>.  The scale parameter (<code>sigma</code>) is also called dispersion.</li>
 <li><strong>Logarithmic logistic distribution</strong>: See beta prime distribution.</li>
-<li><strong>Logarithmic series distribution</strong>: Generate <code>n = NegativeBinomialInt(1, py - px, py)+1</code> (where <code>px</code>/<code>py</code> is a parameter in (0,1)), then return <code>n</code> if <code>ZeroOrOne(1, n) == 1</code>, or repeat this process otherwise (Flajolet et al., 2010)[^95].  The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers: <code>floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDRANGEMinMaxExc(0, 1)))))</code>, where <code>p</code> is the parameter in (0, 1); see (Devroye 1986)[^19].</li>
+<li><strong>Logarithmic series distribution</strong>: Generate <code>n = NegativeBinomialInt(1, py - px, py)+1</code> (where <code>px</code>/<code>py</code> is a parameter in (0,1)), then return <code>n</code> if <code>ZeroOrOne(1, n) == 1</code>, or repeat this process otherwise (Flajolet et al., 2010)[^96].  The following is &quot;exact&quot; assuming computers can operate &quot;exactly&quot; on real numbers: <code>floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDRANGEMinMaxExc(0, 1)))))</code>, where <code>p</code> is the parameter in (0, 1); see (Devroye 1986)[^19].</li>
 <li><strong>Logistic distribution</strong>&dagger;: <code>(ln(x)-log1p(-x))</code> (<a href="http://timvieira.github.io/blog/post/2016/07/04/fast-sigmoid-sampling/"><strong><em>logit function</em></strong></a>), where <code>x</code> is <code>RNDRANGEMinMaxExc(0, 1)</code>.</li>
 <li><strong>Log-multinormal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Max-of-uniform distribution</strong>: <code>BetaDist(n, 1)</code>.  Returns a number that simulates the largest out of <code>n</code> uniform random variates in [**0, 1).  See also (Devroye 1986, p. 675)[^19].</li>
@@ -2419,15 +2419,15 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Rice distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Rice&ndash;Norton distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Singh&ndash;Maddala distribution</strong>: See beta prime distribution.</li>
-<li><strong>sin^k distribution</strong>: Generate <code>x = BetaDist(k+1, k+1) * pi</code>, then return <code>x</code> if <code>0-Expo(k) &lt;= ln(pi*pi*sin(x) / ((4*x*(pi - x)))</code>, or repeat this process otherwise (Makalic and Schmidt 2018)[^96].</li>
+<li><strong>sin^k distribution</strong>: Generate <code>x = BetaDist(k+1, k+1) * pi</code>, then return <code>x</code> if <code>0-Expo(k) &lt;= ln(pi*pi*sin(x) / ((4*x*(pi - x)))</code>, or repeat this process otherwise (Makalic and Schmidt 2018)[^97].</li>
 <li><strong>Skellam distribution</strong>: <code>Poisson(mean1) - Poisson(mean2)</code>, where <code>mean1</code> and <code>mean2</code> are the means used in the <code>Poisson</code> method.</li>
-<li><strong>Skew normal distribution</strong>&dagger; (Ghorbanzadeh et al. 2014)[^97]: Generate <code>c*max(a, b) + (1-c)*min(a, b)</code>, where a = <code>Normal(0, 1)</code> and independently, <code>b = Normal(0, 1)</code>, and <code>c = (1+th)/sqrt(2.0*(1+th))</code>, and <code>th</code> is a real number in [0, 1].  Special cases: If <code>th=0</code>, generate <code>Normal(0, 1)</code>; if <code>th=1</code>, generate <code>max(a, b)</code>; if <code>th=1</code>, generate <code>min(a, b)</code>.</li>
+<li><strong>Skew normal distribution</strong>&dagger; (Ghorbanzadeh et al. 2014)[^98]: Generate <code>c*max(a, b) + (1-c)*min(a, b)</code>, where a = <code>Normal(0, 1)</code> and independently, <code>b = Normal(0, 1)</code>, and <code>c = (1+th)/sqrt(2.0*(1+th))</code>, and <code>th</code> is a real number in [0, 1].  Special cases: If <code>th=0</code>, generate <code>Normal(0, 1)</code>; if <code>th=1</code>, generate <code>max(a, b)</code>; if <code>th=1</code>, generate <code>min(a, b)</code>.</li>
 <li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5)*n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random variates with a chi-squared distribution, and if <code>sms</code> is other than 0, one of those distributions is <em>noncentral</em> with sum of mean squares equal to <code>sms</code>.</li>
 <li><strong>Stable distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Stable_Distribution"><strong>Stable Distribution</strong></a>. <em>Four-parameter stable distribution</em>: <code>Stable(alpha, beta) * sigma + mu</code>, where <code>mu</code> is the mean and <code>sigma</code> is the scale; if <code>alpha</code> and <code>beta</code> are 1, the result is a <em>Landau distribution</em>.  <em>&quot;Type 0&quot; stable distribution</em>: <code>Stable(alpha, beta) * sigma + (mu - sigma * beta * x)</code>, where <code>x</code> is <code>ln(sigma)*2.0/pi</code> if <code>alpha</code> is 1, and <code>tan(pi*0.5*alpha)</code> otherwise.</li>
 <li><strong>Standard complex normal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Suzuki distribution</strong>: See Rayleigh distribution.</li>
 <li><strong>Tukey lambda distribution</strong>: <code>(pow(x, lamda)-pow(1.0-x,lamda))/lamda</code>, where <code>x</code> is <code>RNDRANGEMinMaxExc(0, 1)</code> and <code>lamda</code> is a shape parameter.</li>
-<li><strong>Twin-<em>t</em> distribution</strong> (Baker and Jackson 2018)[^98]: Generate <code>x</code>, a random Student&#39;s <em>t</em>-distributed number (not a noncentral one).  Accept <code>x</code> with probability <code>z = pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)</code> (for example, if <code>RNDRANGEMinMaxExc(0, 1) &lt; z</code>), where <code>y = x * x / df</code> and <code>df</code> is the degrees of freedom used to generate the number; repeat this process otherwise.</li>
+<li><strong>Twin-<em>t</em> distribution</strong> (Baker and Jackson 2018)[^99]: Generate <code>x</code>, a random Student&#39;s <em>t</em>-distributed number (not a noncentral one).  Accept <code>x</code> with probability <code>z = pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)</code> (for example, if <code>RNDRANGEMinMaxExc(0, 1) &lt; z</code>), where <code>y = x * x / df</code> and <code>df</code> is the degrees of freedom used to generate the number; repeat this process otherwise.</li>
 <li><strong>von Mises distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#von_Mises_Distribution"><strong>von Mises Distribution</strong></a>.</li>
 <li><strong>Waring&ndash;Yule distribution</strong>: See beta negative binomial distribution.</li>
 <li><strong>Wigner (semicircle) distribution</strong>&dagger;: <code>(BetaDist(1.5, 1.5)*2-1)</code>.  The scale parameter (<code>sigma</code>) is the semicircular radius.</li>
@@ -2450,7 +2450,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 
 <h4>Random Points Inside a Simplex</h4>
 
-<p>The following pseudocode generates a random point inside an <em>n</em>-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, <em>points</em>, a list consisting of the <em>n</em> plus one vertices of the simplex, all of a single dimension <em>n</em> or greater. The special case of 3 points came from Osada et al. (2002)[^99].</p>
+<p>The following pseudocode generates a random point inside an <em>n</em>-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, <em>points</em>, a list consisting of the <em>n</em> plus one vertices of the simplex, all of a single dimension <em>n</em> or greater. The special case of 3 points came from Osada et al. (2002)[^100].</p>
 
 <pre>METHOD VecAddProd(a, b, c)
   for j in 0...size(a): a[j]=a[j]+b[j]*c
@@ -2502,7 +2502,7 @@ END METHOD
 <li><code>p</code> is greater than 0, or is infinity, and describes the sphere&#39;s shape (if <code>p</code> is 2, the sphere is the usual one).</li>
 </ul>
 
-<p>See Schechtmann and Zinn (1990)[^100]. Here, EPD generates an <em>exponential power</em> random variate (Devroye 1986, pp. 174-175)[^19].</p>
+<p>See Schechtmann and Zinn (1990)[^101]. Here, EPD generates an <em>exponential power</em> random variate (Devroye 1986, pp. 174-175)[^19].</p>
 
 <pre>METHOD PNorm(vec, p)
    ret=0
@@ -2560,9 +2560,9 @@ END METHOD
 <li>to generate a random point inside a rectangle bounded in [0, 2) along the X axis and [3, 6) along the Y axis, generate <code>[RNDRANGEMinMaxExc(0,2), RNDRANGEMinMaxExc(3,6)]</code>, and</li>
 <li>to generate a <em>complex number</em> with real and imaginary parts bounded in [0, 1], generate <code>[RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code>.</li>
 </ul></li>
-<li>an <strong>N-dimensional ball</strong>, centered at the origin, with a given radius, follow the pseudocode in <code>RandomPointOnSphere</code>, except replace <code>PNorm(ret, p)</code> with <code>pow(pow(PNorm(ret, p),p)+Expo(1),1.0/p)</code> (Barthe et al. 2005)[^101]. [^102]</li>
-<li>an <strong>N-dimensional spherical shell</strong> (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional ball with radius equal to <code>pow(RNDRANGEMinMaxExc(pow(A, N), pow(B, N)), 1.0 / N)</code>[^103].</li>
-<li>a <strong>cone</strong> with height <code>H</code> and radius <code>R</code> at its base, running along the Z axis, generate a random Z coordinate by <code>Z = max(max(RNDRANGEMinMaxExc(0, H), RNDRANGEMinMaxExc(0, H)), RNDRANGEMinMaxExc(0, H))</code>, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to <code>max(RNDRANGEMinMaxExc(0,Z*(R/H)), RNDRANGEMinMaxExc(0,Z*(R/H)))</code>[^104].</li>
+<li>an <strong>N-dimensional ball</strong>, centered at the origin, with a given radius, follow the pseudocode in <code>RandomPointOnSphere</code>, except replace <code>PNorm(ret, p)</code> with <code>pow(pow(PNorm(ret, p),p)+Expo(1),1.0/p)</code> (Barthe et al. 2005)[^102]. [^103]</li>
+<li>an <strong>N-dimensional spherical shell</strong> (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional ball with radius equal to <code>pow(RNDRANGEMinMaxExc(pow(A, N), pow(B, N)), 1.0 / N)</code>[^104].</li>
+<li>a <strong>cone</strong> with height <code>H</code> and radius <code>R</code> at its base, running along the Z axis, generate a random Z coordinate by <code>Z = max(max(RNDRANGEMinMaxExc(0, H), RNDRANGEMinMaxExc(0, H)), RNDRANGEMinMaxExc(0, H))</code>, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to <code>max(RNDRANGEMinMaxExc(0,Z*(R/H)), RNDRANGEMinMaxExc(0,Z*(R/H)))</code>[^105].</li>
 </ul>
 
 <blockquote>
@@ -2573,7 +2573,7 @@ END METHOD
 <ol>
 <li>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.</li>
 <li>Sampling a half-ball, half-sphere, or half-shell can be done by sampling a full ball or shell and replacing one of the dimensions of the result with its absolute value.</li>
-<li>Lacko and Harman (2012)[^105] defined a family of <em>non-uniform</em> distributions of points inside a ball: generate <code>RandomPointOnSphere(dims, r*pow(BetaDist(dims/p, d/p), 1.0/p),p)</code> where <code>r&gt;0</code> is the radius, <code>dims</code> and <code>p</code> are as in <code>RandomPointOnSphere</code>, and <code>d&gt;=0</code> is a shape parameter.  If <code>d = p</code>, the distribution is uniform in the ball.</li>
+<li>Lacko and Harman (2012)[^106] defined a family of <em>non-uniform</em> distributions of points inside a ball: generate <code>RandomPointOnSphere(dims, r*pow(BetaDist(dims/p, d/p), 1.0/p),p)</code> where <code>r&gt;0</code> is the radius, <code>dims</code> and <code>p</code> are as in <code>RandomPointOnSphere</code>, and <code>d&gt;=0</code> is a shape parameter.  If <code>d = p</code>, the distribution is uniform in the ball.</li>
 </ol>
 </blockquote>
 
@@ -2581,7 +2581,7 @@ END METHOD
 
 <h4>Random Latitude and Longitude</h4>
 
-<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)[^106]&mdash;</p>
+<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)[^107]&mdash;</p>
 
 <ul>
 <li>generate the longitude <code>RNDRANGEMinMaxExc(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
@@ -2762,83 +2762,83 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p>[^71]: Harase, S., &quot;<a href="https://arxiv.org/abs/2002.09006"><strong>A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo</strong></a>&quot;, arXiv:2002.09006 [math.NA], 2020.</p>
 
-<p>[^72]: D. Revuz, M. Yor, &quot;Continuous Martingales and Brownian Motion&quot;, 1999.</p>
+<p>[^72]: Kamath, Chandrika. &quot;Intelligent sampling for surrogate modeling, hyperparameter optimization, and data analysis.&quot; Machine Learning with Applications (2022): 100373, <a href="https://doi.org/10.1016/j.mlwa.2022.100373."><strong>https://doi.org/10.1016/j.mlwa.2022.100373.</strong></a></p>
 
-<p>[^73]: Lewis, P.W., Shedler, G.S., &quot;Simulation of nonhomogeneous Poisson processes by thinning&quot;, <em>Naval Research Logistics Quarterly</em> 26(3), 1979.</p>
+<p>[^73]: D. Revuz, M. Yor, &quot;Continuous Martingales and Brownian Motion&quot;, 1999.</p>
 
-<p>[^74]: Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</p>
+<p>[^74]: Lewis, P.W., Shedler, G.S., &quot;Simulation of nonhomogeneous Poisson processes by thinning&quot;, <em>Naval Research Logistics Quarterly</em> 26(3), 1979.</p>
 
-<p>[^75]: Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="https://web.archive.org/web/20160501200206/http://mark-kay.net/2013/12/24/kernel-density-estimation"><strong>blog post by M. Kay</strong></a>.</p>
+<p>[^75]: Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</p>
 
-<p>[^76]: &quot;Jitter&quot;, as used in this step, follows a distribution formally called a <em>kernel</em>, of which the normal distribution is one example.  <em>Bandwidth</em> should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multinormal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>.  &quot;Jitter&quot; and bandwidth are not further discussed in this document.</p>
+<p>[^76]: Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="https://web.archive.org/web/20160501200206/http://mark-kay.net/2013/12/24/kernel-density-estimation"><strong>blog post by M. Kay</strong></a>.</p>
 
-<p>[^77]: A <em>discrete distribution</em> is a distribution that associates a countable number of items with a separate probability per item. These items are usually integers, but they need not be.  For example, the items can be non-integer values (for example, <code>x/y</code> with probability <code>x/(1+y)</code>) as long as the values can be converted to and from integers. Two examples:
+<p>[^77]: &quot;Jitter&quot;, as used in this step, follows a distribution formally called a <em>kernel</em>, of which the normal distribution is one example.  <em>Bandwidth</em> should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multinormal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>.  &quot;Jitter&quot; and bandwidth are not further discussed in this document.</p>
+
+<p>[^78]: A <em>discrete distribution</em> is a distribution that associates a countable number of items with a separate probability per item. These items are usually integers, but they need not be.  For example, the items can be non-integer values (for example, <code>x/y</code> with probability <code>x/(1+y)</code>) as long as the values can be converted to and from integers. Two examples:
     - A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
     - Integer-quantized numbers (popular in &quot;deep-learning&quot; neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a &quot;look-up table&quot; that maps 256 integers to real numbers.</p>
 
-<p>[^78]: This includes integers if <code>FPExponent</code> is limited to 0, and fixed-point numbers if <code>FPExponent</code> is limited to a single exponent less than 0.</p>
+<p>[^79]: This includes integers if <code>FPExponent</code> is limited to 0, and fixed-point numbers if <code>FPExponent</code> is limited to a single exponent less than 0.</p>
 
-<p>[^79]: Saad, F.A., et al., &quot;<a href="https://arxiv.org/abs/2001.04555"><strong>Optimal Approximate Sampling from Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555 [cs.DS], 2020.  See also the <a href="https://github.com/probcomp/optimal-approximate-sampling"><strong>associated source code</strong></a>.</p>
+<p>[^80]: Saad, F.A., et al., &quot;<a href="https://arxiv.org/abs/2001.04555"><strong>Optimal Approximate Sampling from Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555 [cs.DS], 2020.  See also the <a href="https://github.com/probcomp/optimal-approximate-sampling"><strong>associated source code</strong></a>.</p>
 
-<p>[^80]: Walter, M., &quot;Sampling the Integers with Low Relative Error&quot;, in <em>International Conference on Cryptology in Africa</em>, Jul. 2019, pp. 157-180.</p>
+<p>[^81]: Walter, M., &quot;Sampling the Integers with Low Relative Error&quot;, in <em>International Conference on Cryptology in Africa</em>, Jul. 2019, pp. 157-180.</p>
 
-<p>[^81]: Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold, &quot;Random variate generation by numerical inversion when only the density is known&quot;, ACM Transactions on Modeling and Computer Simulation 20(4) article 18, October 2010.</p>
+<p>[^82]: Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold, &quot;Random variate generation by numerical inversion when only the density is known&quot;, ACM Transactions on Modeling and Computer Simulation 20(4) article 18, October 2010.</p>
 
-<p>[^82]: Part of <code>numbers_from_u01</code> uses algorithms described in Arnas, D., Leake, C., Mortari, D., &quot;Random Sampling using k-vector&quot;, <em>Computing in Science &amp; Engineering</em> 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., &quot;k-Vector Range Searching Techniques&quot;.</p>
+<p>[^83]: Part of <code>numbers_from_u01</code> uses algorithms described in Arnas, D., Leake, C., Mortari, D., &quot;Random Sampling using k-vector&quot;, <em>Computing in Science &amp; Engineering</em> 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., &quot;k-Vector Range Searching Techniques&quot;.</p>
 
-<p>[^83]: Devroye, L., &quot;Non-Uniform Random Variate Generation&quot;.  In <em>Handbooks in Operations Research and Management Science: Simulation</em>, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.</p>
+<p>[^84]: Devroye, L., &quot;Non-Uniform Random Variate Generation&quot;.  In <em>Handbooks in Operations Research and Management Science: Simulation</em>, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.</p>
 
-<p>[^84]: Sainudiin, Raazesh, and Thomas L. York. &quot;An Auto-Validating, Trans-Dimensional, Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions,&quot; <em>Reliable Computing</em> 18 (2013): 15-54.</p>
+<p>[^85]: Sainudiin, Raazesh, and Thomas L. York. &quot;An Auto-Validating, Trans-Dimensional, Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions,&quot; <em>Reliable Computing</em> 18 (2013): 15-54.</p>
 
-<p>[^85]: Tran, K.H., &quot;<a href="https://arxiv.org/abs/1607.01985v5"><strong>A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets</strong></a>&quot;, arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</p>
+<p>[^86]: Tran, K.H., &quot;<a href="https://arxiv.org/abs/1607.01985v5"><strong>A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets</strong></a>&quot;, arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</p>
 
-<p>[^86]: Kschischang, Frank R. &quot;A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates.&quot; (2019).</p>
+<p>[^87]: Kschischang, Frank R. &quot;A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates.&quot; (2019).</p>
 
-<p>[^87]: Devroye, L., 1996, December, &quot;Random variate generation in one line of code&quot; In <em>Proceedings Winter Simulation Conference</em> (pp. 265-272). IEEE.</p>
+<p>[^88]: Devroye, L., 1996, December, &quot;Random variate generation in one line of code&quot; In <em>Proceedings Winter Simulation Conference</em> (pp. 265-272). IEEE.</p>
 
-<p>[^88]: Crooks, G.E., <a href="https://threeplusone.com/pubs/FieldGuide.pdf"><strong><em>Field Guide to Continuous Probability Distributions</em></strong></a>, 2019.</p>
+<p>[^89]: Crooks, G.E., <a href="https://threeplusone.com/pubs/FieldGuide.pdf"><strong><em>Field Guide to Continuous Probability Distributions</em></strong></a>, 2019.</p>
 
-<p>[^89]: McGrath, E.J., Irving, D.C., &quot;Techniques for Efficient Monte Carlo Simulation, Volume II&quot;, Oak Ridge National Laboratory, April 1975.</p>
+<p>[^90]: McGrath, E.J., Irving, D.C., &quot;Techniques for Efficient Monte Carlo Simulation, Volume II&quot;, Oak Ridge National Laboratory, April 1975.</p>
 
-<p>[^90]: Crooks, G.E., &quot;<a href="https://arxiv.org/abs/1005.3274v2"><strong>The Amoroso Distribution</strong></a>&quot;, arXiv:1005.3274v2 [math.ST], 2015.</p>
+<p>[^91]: Crooks, G.E., &quot;<a href="https://arxiv.org/abs/1005.3274v2"><strong>The Amoroso Distribution</strong></a>&quot;, arXiv:1005.3274v2 [math.ST], 2015.</p>
 
-<p>[^91]: Kotz, Samuel, Tomasz Kozubowski, and Krzystof Podgorski. The Laplace distribution and generalizations: a revisit with applications to communications, economics, engineering, and finance. Springer Science &amp; Business Media, 2012.</p>
+<p>[^92]: Kotz, Samuel, Tomasz Kozubowski, and Krzystof Podgorski. The Laplace distribution and generalizations: a revisit with applications to communications, economics, engineering, and finance. Springer Science &amp; Business Media, 2012.</p>
 
-<p>[^92]: Devroye, L., &quot;Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator&quot;, <em>Computing</em> 46, pp. 165-173, 1991.</p>
+<p>[^93]: Devroye, L., &quot;Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator&quot;, <em>Computing</em> 46, pp. 165-173, 1991.</p>
 
-<p>[^93]: Bailey, R.W., &quot;Polar generation of random variates with the t distribution&quot;, <em>Mathematics of Computation</em> 62 (1994).</p>
+<p>[^94]: Bailey, R.W., &quot;Polar generation of random variates with the t distribution&quot;, <em>Mathematics of Computation</em> 62 (1994).</p>
 
-<p>[^94]: Stein, W.E. and Keblis, M.F., &quot;A new method to simulate the triangular distribution&quot;, <em>Mathematical and Computer Modelling</em> 49(5-6), 2009, pp.1143-1147.</p>
+<p>[^95]: Stein, W.E. and Keblis, M.F., &quot;A new method to simulate the triangular distribution&quot;, <em>Mathematical and Computer Modelling</em> 49(5-6), 2009, pp.1143-1147.</p>
 
-<p>[^95]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</p>
+<p>[^96]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</p>
 
-<p>[^96]: Makalic, E., Schmidt, D.F., &quot;<a href="https://arxiv.org/abs/1809.05212v2"><strong>An efficient algorithm for sampling from sin^k(x) for generating random correlation matrices</strong></a>&quot;, arXiv:1809.05212v2 [stat.CO], 2018.</p>
+<p>[^97]: Makalic, E., Schmidt, D.F., &quot;<a href="https://arxiv.org/abs/1809.05212v2"><strong>An efficient algorithm for sampling from sin^k(x) for generating random correlation matrices</strong></a>&quot;, arXiv:1809.05212v2 [stat.CO], 2018.</p>
 
-<p>[^97]: Ghorbanzadeh, D., Jaupi, L., Durand, P., &quot;<a href="https://www.scirp.org/html/24-7402277_47986.htm"><strong>A Method to Simulate the Skew Normal Distribution</strong></a>&quot;, <em>Applied Mathematics</em> 5(13), 2014.</p>
+<p>[^98]: Ghorbanzadeh, D., Jaupi, L., Durand, P., &quot;<a href="https://www.scirp.org/html/24-7402277_47986.htm"><strong>A Method to Simulate the Skew Normal Distribution</strong></a>&quot;, <em>Applied Mathematics</em> 5(13), 2014.</p>
 
-<p>[^98]: Baker, R., Jackson, D., &quot;<a href="https://arxiv.org/abs/1408.3237"><strong>A new distribution for robust least squares</strong></a>&quot;, arXiv:1408.3237 [stat.ME], 2018.</p>
+<p>[^99]: Baker, R., Jackson, D., &quot;<a href="https://arxiv.org/abs/1408.3237"><strong>A new distribution for robust least squares</strong></a>&quot;, arXiv:1408.3237 [stat.ME], 2018.</p>
 
-<p>[^99]: Osada, R., Funkhouser, T., et al., &quot;Shape Distributions&quot;, _ACM Transactions on Graphics 21(4), Oct. 2002.</p>
+<p>[^100]: Osada, R., Funkhouser, T., et al., &quot;Shape Distributions&quot;, _ACM Transactions on Graphics 21(4), Oct. 2002.</p>
 
-<p>[^100]: Schechtman, G., Zinn, J., On the volume of intersection of two Lp^n balls. 1990.</p>
+<p>[^101]: Schechtman, G., Zinn, J., On the volume of intersection of two Lp^n balls. 1990.</p>
 
-<p>[^101]: Barthe, F., Guédon, O., et al., &quot;A probabilistic approach to the geometry of the lP^N-ball&quot;, Annals of Probability 33(2), 2005.</p>
+<p>[^102]: Barthe, F., Guédon, O., et al., &quot;A probabilistic approach to the geometry of the lP^N-ball&quot;, Annals of Probability 33(2), 2005.</p>
 
-<p>[^102]: Alternatively, if <code>p</code> is an integer greater than 0, generate a random point on the surface of an ball with <code>N+p</code> dimensions and the given radius (for example, using <code>RandomPointOnSphere(N+p,radius,p)</code>), then discard the last <code>p</code> coordinates of that point (Corollary 1 of Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951).</p>
+<p>[^103]: Alternatively, if <code>p</code> is an integer greater than 0, generate a random point on the surface of an ball with <code>N+p</code> dimensions and the given radius (for example, using <code>RandomPointOnSphere(N+p,radius,p)</code>), then discard the last <code>p</code> coordinates of that point (Corollary 1 of Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951).</p>
 
-<p>[^103]: See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</p>
+<p>[^104]: See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</p>
 
-<p>[^104]: See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>. Square and cube roots replaced with maximums.</p>
+<p>[^105]: See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>. Square and cube roots replaced with maximums.</p>
 
-<p>[^105]: Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951.</p>
+<p>[^106]: Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951.</p>
 
-<p>[^106]: Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</p>
+<p>[^107]: Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</p>
 
-<p>[^107]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. &quot;<a href="https://arxiv.org/abs/2108.00965."><strong>Privacy-Aware Rejection Sampling</strong></a>&quot;, arXiv:2108.00965.</p>
+<p>[^108]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. &quot;<a href="https://arxiv.org/abs/2108.00965."><strong>Privacy-Aware Rejection Sampling</strong></a>&quot;, arXiv:2108.00965.</p>
 
-<p>[^108]: For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</p>
-
-<p>[^109]: Kamath, Chandrika. &quot;Intelligent sampling for surrogate modeling, hyperparameter optimization, and data analysis.&quot; Machine Learning with Applications (2022): 100373, <a href="https://doi.org/10.1016/j.mlwa.2022.100373">https://doi.org/10.1016/j.mlwa.2022.100373</a>.</p>
+<p>[^109]: For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</p>
 
 <p><a id=Appendix></a></p>
 
@@ -2892,9 +2892,9 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <ol>
 <li><strong>&quot;Cryptographic generators&quot;.</strong> The application has to use a device or program that generates random-behaving numbers that are hard to guess for information security purposes (a so-called &quot;cryptographic generator&quot;).  Choosing such a device or program is outside the scope of this document.</li>
-<li><strong>Timing attacks.</strong>  Certain security and privacy attacks have exploited timing and other differences to recover cleartext, encryption keys, or other secret or private data.  Thus, security algorithms have been developed to have no timing differences, including memory access patterns, that reveal anything about any secret or private inputs, such as keys, passwords, or &quot;seeds&quot; for pseudorandom number generators.  (Such algorithms include so-called &quot;constant-time&quot; algorithms.)  But even if an algorithm has variable running time (for example, <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets[^107].</li>
+<li><strong>Timing attacks.</strong>  Certain security and privacy attacks have exploited timing and other differences to recover cleartext, encryption keys, or other secret or private data.  Thus, security algorithms have been developed to have no timing differences, including memory access patterns, that reveal anything about any secret or private inputs, such as keys, passwords, or &quot;seeds&quot; for pseudorandom number generators.  (Such algorithms include so-called &quot;constant-time&quot; algorithms.)  But even if an algorithm has variable running time (for example, <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets[^108].</li>
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
-<li><strong>Floating-point numbers.</strong>  Numbers chosen at random for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even in the few security applications where those numbers are floating-point numbers (notably differential privacy and lattice-based cryptography), there are ways to avoid such floating-point numbers[^108].</li>
+<li><strong>Floating-point numbers.</strong>  Numbers chosen at random for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even in the few security applications where those numbers are floating-point numbers (notably differential privacy and lattice-based cryptography), there are ways to avoid such floating-point numbers[^109].</li>
 </ol>
 
 <p><a id=License></a></p>

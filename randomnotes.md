@@ -144,6 +144,8 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0.
 > 1. The following is a useful identity for the gamma distribution: `GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)` (Stuart 1962\)[^12].
 > 2. The gamma distribution is usually defined to have a second parameter (called `theta` here), which is unfortunately defined differently in different works.  For example, the gamma variate can be either multiplied or divided by `theta` depending on the work.
 > 3. For other algorithms to sample from the gamma distribution, see Luengo (2022)[^13]
+>
+> **Example:** **Moment exponential** distribution (Dara and Ahmad 2012)[^30]: `GammaDist(2)*beta` (or `(Expo(1)+Expo(1))*beta`, where `beta > 0`.
 
 <a id=Beta_Distribution></a>
 #### Beta Distribution
@@ -399,6 +401,7 @@ The following pseudocode generates a random vector (list of numbers) that follow
     END METHOD
 
     METHOD MultivariateCov(mu, cov, vars)
+      // Returns mu + cov^(1/2)*vars
       mulen=size(cov)
       if mu != nothing
         mulen = size(mu)
@@ -415,7 +418,7 @@ The following pseudocode generates a random vector (list of numbers) that follow
       ret=NewList()
       while i<mulen
         msum = 0
-        for j in 0...mulen: msum=vars[j]*cho[j][i]
+        for j in 0...mulen: msum=cho[j][i]*vars[j]
         AddItem(ret, msum)
         i=i+1
       end
@@ -590,6 +593,8 @@ END METHOD
 [^28]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
 
 [^29]: Baccetti, Valentina, and Matt Visser. "Infinite Shannon entropy." Journal of Statistical Mechanics: Theory and Experiment 2013, no. 04 (2013): P04010, also in arXiv:1212.5630.
+
+[^30]: S.T. Dara, M. Ahmad, Recent advances in moment distribution and their hazard rates, 2012.
 
 <a id=Appendix></a>
 ## Appendix

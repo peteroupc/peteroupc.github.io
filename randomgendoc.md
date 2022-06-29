@@ -3826,6 +3826,8 @@ FUNCTIONS
 
     fracEV(sn, sd, n)
 
+    gammaDist2()
+
     gen_to_transition(s)
 
     genscore(psi, rho, m=5)

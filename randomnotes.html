@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/06/20"><meta name="citation_online_date" content="2022/06/20"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/06/28"><meta name="citation_online_date" content="2022/06/28"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -184,6 +184,8 @@ END METHOD
 <li>The gamma distribution is usually defined to have a second parameter (called <code>theta</code> here), which is unfortunately defined differently in different works.  For example, the gamma variate can be either multiplied or divided by <code>theta</code> depending on the work.</li>
 <li>For other algorithms to sample from the gamma distribution, see Luengo (2022)[^13]</li>
 </ol>
+
+<p><strong>Example:</strong> <strong>Moment exponential</strong> distribution (Dara and Ahmad 2012)[^30]: <code>GammaDist(2)*beta</code> (or <code>(Expo(1)+Expo(1))*beta</code>, where <code>beta &gt; 0</code>.</p>
 </blockquote>
 
 <p><a id=Beta_Distribution></a></p>
@@ -461,6 +463,7 @@ METHOD MultivariateNormal(mu, cov)
 END METHOD
 
 METHOD MultivariateCov(mu, cov, vars)
+  // Returns mu + cov^(1/2)*vars
   mulen=size(cov)
   if mu != nothing
     mulen = size(mu)
@@ -477,7 +480,7 @@ METHOD MultivariateCov(mu, cov, vars)
   ret=NewList()
   while i&lt;mulen
     msum = 0
-    for j in 0...mulen: msum=vars[j]*cho[j][i]
+    for j in 0...mulen: msum=cho[j][i]*vars[j]
     AddItem(ret, msum)
     i=i+1
   end
@@ -674,6 +677,8 @@ END METHOD
 <p>[^28]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, &quot;<a href="https://arxiv.org/abs/2001.04555v1"><strong>Optimal Approximate Sampling From Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</p>
 
 <p>[^29]: Baccetti, Valentina, and Matt Visser. &quot;Infinite Shannon entropy.&quot; Journal of Statistical Mechanics: Theory and Experiment 2013, no. 04 (2013): P04010, also in arXiv:1212.5630.</p>
+
+<p>[^30]: S.T. Dara, M. Ahmad, Recent advances in moment distribution and their hazard rates, 2012.</p>
 
 <p><a id=Appendix></a></p>
 

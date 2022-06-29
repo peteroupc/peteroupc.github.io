@@ -3701,6 +3701,23 @@ def logconcave(f, c):  # Devroye 1986, chapter 7
         if realIsLess(z, f(x)):
             return x
 
+def gammaDist2():
+    # Gamma distribution with parameter 2,
+    # using Devroye's algorithm for log concave densities
+    c = RealExp(-1)
+    zero = RealFraction(0)
+    while True:
+        if random.randint(0, 1) == 0:
+            x = RandUniform()
+            z = RealLn(RandUniform())
+        else:
+            es = -RealLn(RandUniform())
+            x = 1 + es
+            z = RealLn(RandUniform()) - es
+        x = 1 + x * (random.randint(0, 1) * 2 - 1) / c
+        if realIsLess(zero, x) and z <= RealLn(x) - x + 1:
+            return x
+
 def c2a(r=None):
     # Generates a uniform random point on the unit circle
     # with radius r (default is 1).
