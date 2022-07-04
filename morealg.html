@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/06/28"><meta name="citation_online_date" content="2022/06/28"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/07/04"><meta name="citation_online_date" content="2022/07/04"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1528,8 +1528,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <p>Let <em>A</em> be 1 and let <em>B</em> be 2.  Then:</p>
 
 <ol>
-<li>With probability <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>), generate <em>A</em> exponential random variates with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong> (described in my article on PSRNs), then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
-<li>Otherwise, generate <em>B</em> exponential random variates with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
+<li>With probability <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>), generate <em>A</em> exponential random variates with a rate of <em>r</em> = <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong> (described in my article on PSRNs), then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
+<li>Otherwise, generate <em>B</em> exponential random variates with a rate of <em>r</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
 </ol>
 
 <p>The table below describes other Lindley-like mixtures:</p>
@@ -1538,39 +1538,45 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <tr>
 <th>Distribution</th>
 <th><em>w</em> is:</th>
-<th><em>A</em> is:</th>
+<th><em>r</em> is: <em>A</em> is:</th>
 <th><em>B</em> is:</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>Garima (Shanker 2016)[^29].</td>
 <td>(1+<em>&theta;</em>)/(2+<em>&theta;</em>).</td>
+<td><em>&theta;</em>.</td>
 <td>1.</td>
-<td>2.</td>
 </tr>
 <tr>
 <td>i-Garima (Singh and Das 2020)[^30].</td>
 <td>(2+<em>&theta;</em>)/(3+<em>&theta;</em>).</td>
+<td><em>&theta;</em>.</td>
 <td>1.</td>
-<td>2.</td>
 </tr>
 <tr>
 <td>Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020)[^31].</td>
 <td><em>&theta;</em>/(1+<em>&theta;</em>).</td>
+<td><em>&theta;</em>.</td>
 <td>2.</td>
-<td>3.</td>
 </tr>
 <tr>
 <td>Xgamma (Sen et al. 2016)[^32].</td>
 <td><em>&theta;</em>/(1+<em>&theta;</em>).</td>
+<td><em>&theta;</em>.</td>
 <td>1.</td>
-<td>3.</td>
 </tr>
 <tr>
 <td>Mirra (Sen et al. 2021)[^33].</td>
 <td><em>&theta;</em><sup>2</sup>/(<em>&alpha;</em>+<em>&theta;</em><sup>2</sup>) where <em>&alpha;</em>&gt;0.</td>
+<td><em>&theta;</em>.</td>
 <td>1.</td>
-<td>3.</td>
+</tr>
+<tr>
+<td>Sushila (Shanker et al. 2013)[^59].</td>
+<td><em>&theta;</em>/(1+<em>&theta;</em>) with <em>&alpha;</em>&gt;0.</td>
+<td><em>&theta;</em>/<em>&alpha;</em>.</td>
+<td>1.</td>
 </tr>
 </tbody></table>
 
@@ -1778,6 +1784,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <p>[^57]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
 <p>[^58]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+
+<p>[^59]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. &quot;Sushila distribution and its application to waiting times data.&quot; International Journal of Business Management 3, no. 2 (2013): 1-11.</p>
 
 <p><a id=Appendix></a></p>
 

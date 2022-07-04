@@ -594,8 +594,6 @@ END METHOD
 
 [^29]: Baccetti, Valentina, and Matt Visser. "Infinite Shannon entropy." Journal of Statistical Mechanics: Theory and Experiment 2013, no. 04 (2013): P04010, also in arXiv:1212.5630.
 
-[^30]: S.T. Dara, M. Ahmad, Recent advances in moment distribution and their hazard rates, 2012.
-
 <a id=Appendix></a>
 ## Appendix
 

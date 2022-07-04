@@ -1783,10 +1783,7 @@ CLASSES
      |  polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
      |  Article 12 (March 2012), 5 pages.
      |  -  Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [https://doi.org/10.1214/21-AAP1679](https://doi.org/10.1214/21-AAP1679)
-     |  - Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh.
-     |  2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design.
-     |  In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory
-     |  of Computing_, Montreal, Canada, June 2017 (STOC’17).
+     |  - Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli factories and black-box reductions in mechanism design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
      |  - Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte
      |  Carlo likelihood-based inference for jump-diffusion processes.
      |  - Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient
@@ -1812,7 +1809,7 @@ CLASSES
      |      Simulates numerator/(intpart+bag).
      |
      |  add(self, f1, f2, eps=Fraction(1, 20))
-     |      Addition Bernoulli factory: B(p), B(q) => B(p+q) (Dughmi et al. 2017)
+     |      Addition Bernoulli factory: B(p), B(q) => B(p+q) (Dughmi et al. 2021)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
      |      - eps: A Fraction in (0, 1). eps must be chosen so that p+q <= 1 - eps,
      |        where p and q are the probability of heads for f1 and f2, respectively.
@@ -1982,11 +1979,11 @@ CLASSES
      |
      |  probgenfunc(self, f, rng)
      |      Probability generating function Bernoulli factory: B(p) => B(E[p^x]), where x is rng()
-     |       (Dughmi et al. 2017). E[p^x] is the expected value of p^x and is also known
+     |       (Dughmi et al. 2021). E[p^x] is the expected value of p^x and is also known
      |       as the probability generating function.
      |      - f: Function that returns 1 if heads and 0 if tails.
      |      - rng: Function that returns a non-negative integer at random.
-     |        Example (Dughmi et al. 2017): if 'rng' is Poisson(lamda) we have
+     |        Example (Dughmi et al. 2021): if 'rng' is Poisson(lamda) we have
      |        an "exponentiation" Bernoulli factory as follows:
      |        B(p) => B(exp(p*lamda-lamda))
      |

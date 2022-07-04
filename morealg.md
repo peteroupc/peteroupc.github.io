@@ -983,18 +983,19 @@ A random variate that follows the Lindley distribution (Lindley 1958\)[^28] with
 
 Let _A_ be 1 and let _B_ be 2.  Then:
 
-1. With probability _w_ = _&theta;_/(1+_&theta;_), generate _A_ exponential random variates with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs), then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
-2. Otherwise, generate _B_ exponential random variates with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
+1. With probability _w_ = _&theta;_/(1+_&theta;_), generate _A_ exponential random variates with a rate of _r_ = _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs), then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
+2. Otherwise, generate _B_ exponential random variates with a rate of _r_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
 
 The table below describes other Lindley-like mixtures:
 
-| Distribution | _w_ is: | _A_ is: | _B_ is: |
+| Distribution | _w_ is: | _r_ is: _A_ is: | _B_ is: |
  --- | --- | --- | --- |
-| Garima (Shanker 2016\)[^29]. | (1+_&theta;_)/(2+_&theta;_). | 1. | 2. |
-| i-Garima (Singh and Das 2020\)[^30]. | (2+_&theta;_)/(3+_&theta;_). | 1. | 2. |
-| Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020\)[^31]. | _&theta;_/(1+_&theta;_). | 2. | 3. |
-| Xgamma (Sen et al. 2016)[^32]. | _&theta;_/(1+_&theta;_). | 1. | 3. |
-| Mirra (Sen et al. 2021)[^33]. | _&theta;_<sup>2</sup>/(_&alpha;_+_&theta;_<sup>2</sup>) where _&alpha;_>0. | 1. | 3. |
+| Garima (Shanker 2016\)[^29]. | (1+_&theta;_)/(2+_&theta;_). | _&theta;_. | 1. | 2. |
+| i-Garima (Singh and Das 2020\)[^30]. | (2+_&theta;_)/(3+_&theta;_). | _&theta;_. | 1. | 2. |
+| Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020\)[^31]. | _&theta;_/(1+_&theta;_). | _&theta;_. | 2. | 3. |
+| Xgamma (Sen et al. 2016)[^32]. | _&theta;_/(1+_&theta;_). | _&theta;_. | 1. | 3. |
+| Mirra (Sen et al. 2021)[^33]. | _&theta;_<sup>2</sup>/(_&alpha;_+_&theta;_<sup>2</sup>) where _&alpha;_>0. | _&theta;_. | 1. | 3. |
+| Sushila (Shanker et al. 2013)[^59]. | _&theta;_/(1+_&theta;_) with _&alpha;_>0. | _&theta;_/_&alpha;_. | 1. | 2. |
 
 > **Note:** If _&theta;_ is a uniform PSRN, then the check "With probability  _w_ = _&theta;_/(1+_&theta;_)" can be implemented by running the Bernoulli factory algorithm for **(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**, where _c_ is 1; _&lambda;_ represents an input coin that always returns 0; _d_ is _&theta;_'s integer part, and _&mu;_ is an input coin that runs **SampleGeometricBag** on _&theta;_'s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.
 
@@ -1172,6 +1173,8 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 [^57]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^58]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^59]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. "Sushila distribution and its application to waiting times data." International Journal of Business Management 3, no. 2 (2013): 1-11.
 
 <a id=Appendix></a>
 ## Appendix
