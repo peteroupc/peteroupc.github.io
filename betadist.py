@@ -92,6 +92,7 @@ def tulap(m, b, q):
     # Tulap(m, b, q). ("truncated uniform Laplace"), m real, b in (0, 1), q in [0, 1).
     # Discrete Laplace(b) is Tulap(0,b,0) rounded to nearest integer.
     # Awan, Jordan, and Aleksandra Slavković. "Differentially private inference for binomial data." arXiv:1904.00459 (2019).
+    # Awan, Jordan, and Salil Vadhan. "Canonical Noise Distributions and Private Hypothesis Tests." arXiv preprint arXiv:2108.04303 (2021/2022).
     b = RealAdd(b, 0)
     q_is_zero = q == 0
     q = RealAdd(q, 0)
@@ -103,22 +104,25 @@ def tulap(m, b, q):
         while randBernoulli(b) == 1:
             g2 += 1
         nint = g1 - g2
-        n = nint + RandUniform() * 2 - Fraction(1, 2)
+        # Add a random uniform variate in (-1/2, 1/2)
+        nreal = nint + (RandUniform() - Fraction(1, 2))
         if q_is_zero:
             # No truncation necessary
-            return n + m
+            return nreal + m
         # Truncate between two quantiles.  Since
         # Tulap(m,b,0) = m + Tulap(0,b,0), just assume
         # m=0 in the truncation check.
-        if n < 0:
+        if realIsLess(nreal, 0):
             fn = (1 / (b ** nint * (1 + b))) * (
-                b + (n - nint + Fraction(1, 2)) * (1 - b)
+                b + (nreal - nint + Fraction(1, 2)) * (1 - b)
             )
         else:
-            fn = 1 - (b ** nint / (1 + b)) * (b + (nint - n + Fraction(1, 2)) * (1 - b))
+            fn = 1 - (b ** nint / (1 + b)) * (
+                b + (nint - nreal + Fraction(1, 2)) * (1 - b)
+            )
         # if fn < 0 or fn > 1: raise ValueError
         if realIsLess(q / 2, fn) and realIsLess(fn, 1 - q / 2):
-            return n + m
+            return nreal + m
 
 def gen_to_transition(s):
     size = len(s)
