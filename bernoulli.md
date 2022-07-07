@@ -807,7 +807,7 @@ Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the 
 
 **Algorithm 1.** (Flajolet et al., 2010\)[^1] showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the probability&mdash;
 
-- $\frac{1}{\lambda} \int_0^\lambda f(u) du$, or equivalently,
+- $\frac{1}{\lambda} \int_0^\lambda f(u) du$ ($\frac{1}{\lambda}$ times the integral of $f(u)$ on $[0, \lambda]$, or equivalently,
 - $\int_0^1 f(\lambda u) du$ (the integral of $f(\lambda u)$ on $[0, 1]$),
 
 namely the following algorithm:

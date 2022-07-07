@@ -3742,6 +3742,30 @@ def c2a(r=None):
             else:
                 [(y1 - y2) / s, 2 * x1 * x2 / s]
 
+def muth(mu):
+    # Ratio-of-uniforms sampler for the Muth distribution
+    # Irshad, M. R., Maya, R., & Arun, S. P. (2021). Muth distribution
+    # and estimation of a parameter using order statistics. Statistica, 81(1), 93-119.
+    # mu is in (0, 1]
+    mu = RealAdd(mu, 0)
+    while True:
+        # x*sqrt(pdf(x)) is **empirically** upper bounded by 120/100
+        # over all values of mu
+        u = RandUniform() * Fraction(120, 100)
+        # sqrt(pdf(x)) is **empirically** upper bounded by 1
+        # over all values of mu
+        v = RandUniform()
+        x = u / v
+        # print([x])
+        try:
+            logpdf = (
+                RealLn(-mu + RealExp(x * mu)) + (x * mu ** 2 - RealExp(x * y) + 1) / y
+            )
+        except:
+            continue
+        if realIsLess(RealLn(v) * 2, logpdf):
+            return x
+
 def realGamma(ml):
     # Generates a gamma random variate
     # using the Marsaglia--Tsang (2000) algorithm.

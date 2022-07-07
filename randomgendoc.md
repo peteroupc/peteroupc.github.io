@@ -3870,6 +3870,8 @@ FUNCTIONS
 
     logsmall(av, n)
 
+    muth(mu)
+
     powerOfUniform(b, px, py, precision=53)
         Generates a power of a uniform random number.
         - px, py - Numerator and denominator of desired exponent for the uniform
