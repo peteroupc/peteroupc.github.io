@@ -3131,6 +3131,8 @@ CLASSES
      |
      |  ev(self, n)
      |
+     |  isDefinitelyZero(self)
+     |
      |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
@@ -3170,6 +3172,8 @@ CLASSES
      |      Return repr(self).
      |
      |  ev(self, n)
+     |
+     |  isDefinitelyZero(self)
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
@@ -3286,6 +3290,8 @@ CLASSES
      |      Return repr(self).
      |
      |  ev(self, n)
+     |
+     |  isDefinitelyZero(self)
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
@@ -3869,6 +3875,8 @@ FUNCTIONS
     logpoisson(lamda, n)
 
     logsmall(av, n)
+
+    monoSecondMoment(secondMoment, pdf)
 
     muth(mu)
 

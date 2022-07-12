@@ -15,7 +15,7 @@ class TConcaveDiscreteSampler:
     Specifically, the PMF is proportional to a function f for
     which -1/sqrt(f(x)) is a concave function.
     T-concave functions include log-concave functions (those
-    for which log(f(x)) is concave).  (A T-concave PMF
+    for which ln(f(x)) is concave).  (A T-concave PMF
     necessarily has a single mode, or peak,
     and its range is bounded from above by a finite value.
     Informally, a function is concave if
@@ -106,7 +106,7 @@ class TConcaveSampler:
     Specifically, the PDF is proportional to a function f for
     which -1/sqrt(f(x)) is a continuous concave function.
     T-concave functions include log-concave functions (those
-    for which log(f(x)) is concave).  (A T-concave PDF
+    for which ln(f(x)) is concave).  (A T-concave PDF
     necessarily has a single mode, or peak,
     and its range is bounded from above by a finite value.
     Informally, a function is concave

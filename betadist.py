@@ -2606,7 +2606,7 @@ class RealExp(Real):
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
         nv = n
-        # print("--exp nv=%s--" % (nv))
+        # print("--exp nv=%s %s--" % (nv, self.a))
         while True:
             av = self.a.ev(nv)
             # a's interval is weakly within 1/2^nv
@@ -2633,8 +2633,15 @@ class RealPow(Real):
         self.powint = None
         self.baseint = None
         self.r = None
+        self.b = None
         self.is_sqrt = False
-        if isinstance(a, Real):
+        if isinstance(a, RealFraction):
+            self.a = a
+            if a.num == a.den:
+                self.baseint = int(Fraction(a.num, a.den))
+            elif a.den == 1:
+                self.baseint = a.num
+        elif isinstance(a, Real):
             self.a = a
         else:
             fr = Fraction(a)
@@ -2656,9 +2663,13 @@ class RealPow(Real):
             self.r = RealExp(RealLn(self.a) * self.b)
         self.ev_n = -1
         self.ev_v = 0
+        # print([self.powint,self.baseint,a,b,isinstance(a, RealFraction)])
 
     def __repr__(self):
-        return "RealPow(%s,%s)" % (self.a, self.b)
+        if self.powint != None:
+            return "RealPow(%s,%s)" % (self.a, self.powint)
+        else:
+            return "RealPow(%s,%s)" % (self.a, self.b)
 
     def ev(self, n):
         if self.is_sqrt:
@@ -2891,6 +2902,9 @@ class RealFraction(Real):
             a = Fraction(a)
             self.num = a.numerator
             self.den = a.denominator
+
+    def isDefinitelyZero(self):
+        return self.num == 0
 
     def isNegative(self):
         return self.num < 0
@@ -3333,6 +3347,9 @@ class RealLn(Real):
         self.ev_n = -1
         self.ev_v = 0
         self.nv_last = -1
+        self.one = False
+        if isinstance(a, RealFraction) and a.num == a.den:
+            self.one = True
 
     def __repr__(self):
         return "RealLn(%s)" % (self.a)
@@ -3343,6 +3360,9 @@ class RealLn(Real):
         return (inf[0], inf[1], sup[2], sup[3])
 
     _logboundscache = {}
+
+    def isDefinitelyZero(self):
+        return self.one
 
     def _logbounds(num, den, bits):
         threshnum = 5
@@ -3469,10 +3489,14 @@ class RealLn(Real):
         if n < self.ev_n:
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
+        if self.one:
+            return 0
         nv = n + 4
         # print("--ln nv=%s %s--" % (nv,self.a))
         while True:
             av = self.a.ev(nv)
+            # if nv>100:
+            #   print("--ln nv=%s %s--" % (nv,self.a))
             if av < 2:
                 nv += 2
                 continue
@@ -3584,8 +3608,21 @@ class RealMultiply(Real):
     def __init__(self, a, b):
         self.a = a if isinstance(a, Real) else RealFraction(a)
         self.b = b if isinstance(b, Real) else RealFraction(b)
+        self.a_zero = False
+        self.b_zero = False
+        try:
+            self.a_zero = self.a.isDefinitelyZero()
+        except:
+            pass
+        try:
+            self.b_zero = self.b.isDefinitelyZero()
+        except:
+            pass
         self.ev_n = -1
         self.ev_v = 0
+
+    def isDefinitelyZero(self):
+        return self.a_zero or self.b_zero
 
     def __repr__(self):
         return "RealMultiply(%s,%s)" % (self.a, self.b)
@@ -3603,6 +3640,8 @@ class RealMultiply(Real):
             return self.ev_v
         if n < self.ev_n:
             return self.ev_v >> (self.ev_n - n)
+        if self.a_zero or self.b_zero:
+            return 0
         nv = n + 4
         while True:
             av = self.a.ev(nv)  # mul
@@ -3795,12 +3834,48 @@ def realGamma(ml):
         ret = ret * RealPow(RandUniform(), Fraction(1, ml))
     return ret
 
+def monoSecondMoment(secondMoment, pdf):
+    # For distributions on the positive real line
+    # with:
+    # - continuous, bounded, and nonincreasing
+    #    density function.
+    # - a finite second moment.
+    #
+    # secondMoment - Integral of pdf(x)*x^2 over
+    #    the positive real line, or a greater number.
+    # pdf - Density function or a function proportional
+    #    to it.  This function need not integrate to 1.
+    #
+    # This method works because, for any density
+    # function of this kind:
+    #   pdf(x)*c <= c*min(pdf(x), secondMoment*3/x^3)
+    #            = min(c*pdf(x), c*secondMoment*3/x^3),
+    #
+    # where c>0 is a constant factor that makes 'pdf'
+    # integrate to 1 (and thus be a density function).
+    # See Devroye, L., "Non-Uniform Random Variate
+    # Generation", 1986, pp. 314-316. (There, pdf(x)
+    # is assumed to integrate to 1, but it can be
+    # shown that the algorithm works even if 'pdf'
+    # doesn't integrate to 1.)
+    m = pdf(0)
+    bigA = RealFraction(3) * secondMoment
+    smallA = RealFraction(3)
+    while True:
+        y = m * RandUniform() ** (smallA / (smallA - 1))
+        x = RandUniform() * (bigA / y) ** (1 / smallA)
+        # print([y.disp(),x.disp(),pdf(x).disp()])
+        if realIsLess(y, pdf(x)):
+            return x
+
 ######################
 
 if __name__ == "__main__":
 
     # The following code tests some of the methods in this module.
 
+    import time
+    import cProfile
     import scipy.stats as st
 
     def dobucket(v, bounds=None, allints=None):
@@ -3868,6 +3943,22 @@ if __name__ == "__main__":
                     i += 1
             i += 1
 
+    def mpdf(x, alpha, v):
+        return v * (2 * alpha * x + 1) ** (-v - 1)
+
+    def mpdfrun():
+        alpha = RealFraction(Fraction(4, 10))
+        v = RealFraction(Fraction(21, 10))
+        secondmoment = 1 / (4 * alpha ** 3 * (v - 2) * (v - 1))
+        bucket = [
+            monoSecondMoment(secondmoment, lambda x: mpdf(x, alpha, v)).disp()
+            for i in range(2000)
+        ]
+        dobucket(bucket)
+
+    cProfile.run("mpdfrun()")
+    exit()
+
     ru = RandUniform()
     ru.bits = 13316137426883106017001167244436327878983283970967943792329288895
     ru.count = 215
@@ -3920,9 +4011,6 @@ if __name__ == "__main__":
         for i in range(300):
             g = realGamma(1.3)
             print(g.ev(30) / 2 ** 30)
-
-    import time
-    import cProfile
 
     def ccos():
         return RandUniform() ** (3.01)
