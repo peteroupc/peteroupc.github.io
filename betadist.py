@@ -3864,7 +3864,6 @@ def monoSecondMoment(secondMoment, pdf):
     while True:
         y = m * RandUniform() ** (smallA / (smallA - 1))
         x = RandUniform() * (bigA / y) ** (1 / smallA)
-        # print([y.disp(),x.disp(),pdf(x).disp()])
         if realIsLess(y, pdf(x)):
             return x
 
@@ -3952,7 +3951,7 @@ if __name__ == "__main__":
         secondmoment = 1 / (4 * alpha ** 3 * (v - 2) * (v - 1))
         bucket = [
             monoSecondMoment(secondmoment, lambda x: mpdf(x, alpha, v)).disp()
-            for i in range(2000)
+            for i in range(10000)
         ]
         dobucket(bucket)
 
