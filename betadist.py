@@ -1791,6 +1791,27 @@ class Real:
     def __pow__(a, b):
         if b == 2:
             return RealMultiply(a, a)
+        # print([a,isinstance(b,RealFraction)])
+        if (
+            isinstance(a, RealFraction)
+            and isinstance(b, RealFraction)
+            and b.num % b.den == 0
+            and b.num > 0
+            and b.den > 0
+        ):
+            # print([a,b])
+            return RealFraction(Fraction(a.num, a.den) ** (b.num // b.den))
+        if (
+            isinstance(a, RealFraction)
+            and isinstance(b, Fraction)
+            and b > 0
+            and b == int(b)
+        ):
+            # print([a,b])
+            return RealFraction(Fraction(a.num, a.den) ** int(b))
+        if isinstance(a, RealFraction) and isinstance(b, int):
+            # print([a,b])
+            return RealFraction(Fraction(a.num, a.den) ** b)
         return RealPow(a, b)
 
     def __rpow__(b, a):
@@ -2628,6 +2649,22 @@ class RealExp(Real):
                 return cinf
             nv += 2
 
+def randMax(n=2):  # rand()^(1/n)
+    u = RandUniform()
+    for i in range(1, n):
+        v = RandUniform()
+        if realIsLess(u, v):
+            u = v
+    return u
+
+def randMin(n=2):  # 1-rand()^(1/n)
+    u = RandUniform()
+    for i in range(1, n):
+        v = RandUniform()
+        if realIsLess(v, u):
+            u = v
+    return u
+
 class RealPow(Real):
     def __init__(self, a, b):
         self.powint = None
@@ -2658,8 +2695,18 @@ class RealPow(Real):
             self.is_sqrt = True
             self.b = b
             self.r = None
+        elif isinstance(b, Fraction) and b.numerator != 1 and b.denominator > 0:
+            self.b = RealFraction(b)
+            # print(self.b)
+            if b.numerator < 0:
+                self.r = 1 / RealPow(self.a, Fraction(1, b.denominator)) ** abs(
+                    b.numerator
+                )
+            else:
+                self.r = RealPow(self.a, Fraction(1, b.denominator)) ** b.numerator
         else:
             self.b = b if isinstance(b, Real) else RealFraction(b)
+            # print(self.b)
             self.r = RealExp(RealLn(self.a) * self.b)
         self.ev_n = -1
         self.ev_v = 0
@@ -2675,10 +2722,10 @@ class RealPow(Real):
         if self.is_sqrt:
             # Square root special case
             if self.ev_n == n:
-                print(["fast", self.ev_n, self.ev_v])
+                # print(["fast", self.ev_n, self.ev_v])
                 return self.ev_v
             if n < self.ev_n:
-                print(["faster", self.ev_n, self.ev_v])
+                # print(["faster", self.ev_n, self.ev_v])
                 return self.ev_v >> (self.ev_n - n)
             if self.baseint != None:
                 if self.baseint < 0:
@@ -3565,7 +3612,7 @@ def realCeiling(a):
     return -realFloor(-a)
 
 def realIsLess(a, b):
-    n = 4
+    n = 3
     while True:
         aa = a.ev(n)
         bb = b.ev(n)
@@ -3574,7 +3621,7 @@ def realIsLess(a, b):
             return False
         if bb - 2 >= aa:
             return True
-        n += 4
+        n += 3
 
 def realIsGreater(a, b):
     return realIsLess(b, a)
@@ -3834,6 +3881,67 @@ def realGamma(ml):
         ret = ret * RealPow(RandUniform(), Fraction(1, ml))
     return ret
 
+class RandUniformIntFrac(Real):
+    def __init__(self, i, f):
+        if i < 0:
+            raise ValueError
+        self.i = i
+        self.f = f  # Assumes RandUniform
+
+    def __repr__(self):
+        return "RandUniformIntFrac(%s,%s)" % (self.i, self.f)
+
+    def ev(self, n):
+        return (self.i << n) + self.f.ev(n)
+
+class RandUniformNegIntFrac(Real):
+    def __init__(self, i, f):
+        if i < 0:
+            raise ValueError
+        self.i = i
+        self.f = f  # Assumes RandUniform
+
+    def __repr__(self):
+        return "RandUniformNegIntFrac(%s,%s)" % (self.i, self.f)
+
+    def ev(self, n):
+        return -((self.i << n) + self.f.ev(n))
+
+def randLnUniform():
+    count = 0
+    while True:
+        # von Neumann's algorithm for the
+        # exponential distribution
+        y1 = RandUniform()
+        y = y1
+        accept = True
+        while True:
+            z = RandUniform()
+            if not realIsLess(y, z):
+                accept = not accept
+                y = z
+                continue
+            break
+        if accept:
+            return RandUniformNegIntFrac(count, y1)
+        count += 1
+
+def randUniformLessThan(val):
+    # NOTE: Assumes 'val' is greater than 0
+    tev = val.ev(0) + 1
+    while True:
+        x = RandUniformIntFrac(random.randint(0, tev - 1), RandUniform())
+        if realIsLess(x, val):
+            return x
+
+def randUniformPower(pwr):
+    if isinstance(pwr, RealFraction) and pwr.den > 0:
+        if pwr.num < 0:
+            return 1 / randMax(pwr.den) ** abs(pwr.num)
+        else:
+            return randMax(pwr.den) ** abs(pwr.num)
+    return RandUniform() ** pwr
+
 def monoSecondMoment(secondMoment, pdf):
     # For distributions on the positive real line
     # with:
@@ -3861,10 +3969,14 @@ def monoSecondMoment(secondMoment, pdf):
     m = pdf(0)
     bigA = RealFraction(3) * secondMoment
     smallA = RealFraction(3)
+    yexp = smallA / (smallA - 1)
+    iters = 0
     while True:
-        y = m * RandUniform() ** (smallA / (smallA - 1))
-        x = RandUniform() * (bigA / y) ** (1 / smallA)
+        y = m * randUniformPower(yexp)
+        x = randUniformLessThan((bigA / y) ** (1 / smallA))
+        iters += 1
         if realIsLess(y, pdf(x)):
+            # print(iters)
             return x
 
 ######################
@@ -3943,20 +4055,27 @@ if __name__ == "__main__":
             i += 1
 
     def mpdf(x, alpha, v):
+        if x == 0:
+            return v
         return v * (2 * alpha * x + 1) ** (-v - 1)
 
     def mpdfrun():
         alpha = RealFraction(Fraction(4, 10))
         v = RealFraction(Fraction(21, 10))
         secondmoment = 1 / (4 * alpha ** 3 * (v - 2) * (v - 1))
+        t = time.time()
         bucket = [
-            monoSecondMoment(secondmoment, lambda x: mpdf(x, alpha, v)).disp()
-            for i in range(10000)
+            monoSecondMoment(secondmoment, lambda x: mpdf(x, alpha, v))
+            for i in range(1000)
         ]
+        print(time.time() - t)
+        # print(bucket[0:10])
+        t = time.time()
+        bucket = [r.disp() for r in bucket]
+        print(time.time() - t)
         dobucket(bucket)
 
-    cProfile.run("mpdfrun()")
-    exit()
+    # cProfile.run("mpdfrun()"); exit()
 
     ru = RandUniform()
     ru.bits = 13316137426883106017001167244436327878983283970967943792329288895

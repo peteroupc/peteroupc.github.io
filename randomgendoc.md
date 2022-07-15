@@ -2458,6 +2458,8 @@ CLASSES
         Real
             RandPSRN
             RandUniform
+            RandUniformIntFrac
+            RandUniformNegIntFrac
             RealAdd
             RealArcTan
             RealArcTan2
@@ -2634,6 +2636,122 @@ CLASSES
      |  disp(a)
      |
      |  evstable(a, prec)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RandUniformIntFrac(Real)
+     |  RandUniformIntFrac(i, f)
+     |
+     |  Method resolution order:
+     |      RandUniformIntFrac
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, i, f)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __pow__(a, b)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  evstable(a, prec)
+     |
+     |  isNegative(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Real:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class RandUniformNegIntFrac(Real)
+     |  RandUniformNegIntFrac(i, f)
+     |
+     |  Method resolution order:
+     |      RandUniformNegIntFrac
+     |      Real
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, i, f)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  ev(self, n)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Real:
+     |
+     |  __add__(a, b)
+     |
+     |  __mul__(a, b)
+     |
+     |  __neg__(a)
+     |
+     |  __pow__(a, b)
+     |
+     |  __radd__(a, b)
+     |
+     |  __rmul__(a, b)
+     |
+     |  __rpow__(b, a)
+     |
+     |  __rsub__(a, b)
+     |
+     |  __rtruediv__(a, b)
+     |
+     |  __sub__(a, b)
+     |
+     |  __truediv__(a, b)
+     |
+     |  disp(a)
+     |
+     |  evstable(a, prec)
+     |
+     |  isNegative(self)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from Real:
@@ -3946,6 +4064,16 @@ FUNCTIONS
     psrnexpo(rg)
 
     randBernoulli(f)
+
+    randLnUniform()
+
+    randMax(n=2)
+
+    randMin(n=2)
+
+    randUniformLessThan(val)
+
+    randUniformPower(pwr)
 
     realCeiling(a)
 
