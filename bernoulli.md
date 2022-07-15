@@ -200,7 +200,7 @@ In the following algorithms:
 
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads of the input coin.
 -  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002\)[^5].  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
-- _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial.
+- _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
 - The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating a uniform random variate in the open interval (0, 1) (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
@@ -660,14 +660,14 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 > **Notes:**
 >
 > 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sub>(_&lambda;_), where _w_<sub>_n_</sub> are continuous functions whose maximum values in the domain [0, 1] sum to 1 or less.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=\sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ but this works only if the following conditions are met for each integer _n_&ge;0:
->     - $g(n) \ge w_n(\lambda) \ge 0$ for every $\lambda$ in the interval \[0, 1\] (which roughly means that $w_n$ is no greater than $g(n)$).
+>     - $1 \ge g(n) \ge w_n(\lambda) \ge 0$ for every $\lambda$ in the interval \[0, 1\] (which roughly means that $w_n$ is no greater than $g(n)$).
 >     - The function $w_n(\lambda)/g(n)$ admits a Bernoulli factory (which it won't if it touches 0 or 1 inside the interval (0, 1), but isn't constant, for example).
 >
 >     See also Mendo (2019\)[^19].
 > 2. **Constants with non-negative series expansions.** A special case of note 1.  Let _g_ be as in note 1.  Assume we have a constant with the following series expansion: $$c=a_0+a_1+a_2+...,$$ where&mdash;
 >
 >     - $a_n$ are each 0 or greater and sum to 1 or less, and
->     - $g(n) \ge a_n \ge 0$ for each integer $n\ge 0$.
+>     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 0$.
 >
 >     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash; $$c=\sum_{n\ge 0} g(n) \frac{a_n}{g(n)}.$$
 >
