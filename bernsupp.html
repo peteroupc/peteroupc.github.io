@@ -47,14 +47,13 @@
 
 <h2>Definitions</h2>
 
-<p>This section describes certain math terms used on this page, in case programmers don&#39;t know them.</p>
+<p>This section describes certain math terms used on this page for programmers to understand.</p>
 
-<p>The following terms can describe a function $f(x)$.</p>
+<p>The following terms can describe a function $f(x)$, specifically how &quot;well-behaved&quot; $f$ is &mdash; which can be important when designing Bernoulli factory algorithms.</p>
 
 <ul>
 <li>If $f$ is continuous, its <em>derivative</em> is, roughly speaking, its &quot;slope&quot; function.  The derivative (or <em>first derivative</em>) is denoted as $f\prime$.  The <em>second derivative</em> (&quot;slope-of-slope&quot;) of $f$, denoted $f\prime\prime$, is the derivative of $f\prime$; the <em>third derivative</em> is the derivative of $f\prime\prime$; and so on.</li>
-<li>A function is <em>C</em><sup><em>n</em></sup> <em>continuous</em> if its <em>n</em>-th derivative is continuous.</li>
-<li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function on <a href="with%20_M_%20being%20the%20_H%C3%B6lder%20constant_%20and%20_&amp;alpha;_%20being%20the%20_H%C3%B6lder%20exponent_">0, 1</a> is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&epsilon;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in [0, 1] and no more than <em>&epsilon;</em> apart.<br>Roughly speaking, the &quot;steepness&quot; of <em>f</em> is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup> there.<br>The function also admits a Hölder exponent <em>&beta;</em> such that 0 &lt; <em>&beta; &lt; _&alpha;</em>.</li>
+<li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function on the interval [0, 1] (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&epsilon;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in [0, 1] and no more than <em>&epsilon;</em> apart.<br>Roughly speaking, the &quot;steepness&quot; of <em>f</em> is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup> there.<br>The function also admits a Hölder exponent <em>&beta;</em> such that 0 &lt; <em>&beta;</em> &lt; <em>&alpha;</em>.</li>
 <li>A <em>Lipschitz continuous</em> function on [0, 1], with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the &quot;steepness&quot; of <em>f</em> is no greater than that of <em>M</em>*<em>x</em>.<br>If <em>f</em> has a derivative on [0, 1], <em>L</em> is the maximum absolute value of that derivative.</li>
 </ul>
 
@@ -138,7 +137,7 @@
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on [0, 1], with Hölder constant <em>&alpha;</em> and Hölder exponent <em>m</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;)[^2], and</li>
+<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on [0, 1], with Hölder constant <em>m</em> and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;)[^2], and</li>
 <li>in the interval [0, 1]&mdash;
 
 <ul>
@@ -297,7 +296,7 @@
 
 <p>The following are approximation schemes with counterexamples to consistency.</p>
 
-<p><strong>First scheme.</strong> In this scheme (Powell 1981)[^4], let <em>f</em> be a C<sup>2</sup> continuous function (a function with continuous first and second derivatives) in [0, 1].  Then for every <em>n</em>&ge;1:</p>
+<p><strong>First scheme.</strong> In this scheme (Powell 1981)[^4], let <em>f</em> have a continuous second derivative on [0, 1].  Then for every <em>n</em>&ge;1:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
@@ -306,7 +305,7 @@
 
 <p>Where <em>M</em> is not less than the maximum absolute value of <em>f</em>&#39;s second derivative, and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
-<p>The counterexample involves the C<sup>2</sup> continuous function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2.</p>
+<p>The counterexample involves the function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, which has a continuous second derivative.</p>
 
 <p>For <em>g</em>, the coefficients for&mdash;</p>
 
@@ -394,7 +393,7 @@
 <p>For example:</p>
 
 <ul>
-<li>The first scheme works for C<sup>2</sup> continuous functions, where <em>M</em> is the second derivative&#39;s maximum absolute value on [0, 1].
+<li>The first scheme works for functions with a continuous second derivative, where <em>M</em> is the second derivative&#39;s maximum absolute value on [0, 1].
 
 <ul>
 <li>The error bound is <em>&epsilon;</em> = <em>M</em>/(8*<em>n</em>).</li>
@@ -463,15 +462,15 @@
 </tr>
 <tr>
 <td>Number of flips required, raised to power of <em>r</em>, is finite on average and has a tail that drops off uniformly for every <em>&lambda;</em>.</td>
-<td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous (Nacu and Peres 2005)[^1].</td>
+<td>Only if <em>f</em> has continuous <em>r</em>-th derivative (Nacu and Peres 2005)[^1].</td>
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and every <em>&lambda;</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
-<td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)[^13].</td>
+<td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (has no vertical slope) (Holtz et al. 2011)[^13].</td>
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and every <em>&lambda;</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
-<td>If and only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is Hölder continuous with exponent (<em>&alpha;</em> &minus; <em>r</em>)-, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)[^13]. Assumes <em>f</em> is bounded away from 0 and 1.</td>
+<td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with exponent (<em>&alpha;</em> &minus; <em>r</em>), where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)[^13]. Assumes <em>f</em> is bounded away from 0 and 1.</td>
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)[^3].</td>

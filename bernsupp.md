@@ -28,13 +28,12 @@
 <a id=Definitions></a>
 ## Definitions
 
-This section describes certain math terms used on this page, in case programmers don't know them.
+This section describes certain math terms used on this page for programmers to understand.
 
-The following terms can describe a function $f(x)$.
+The following terms can describe a function $f(x)$, specifically how "well-behaved" $f$ is &mdash; which can be important when designing Bernoulli factory algorithms.
 
 - If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" function.  The derivative (or _first derivative_) is denoted as $f\prime$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f\prime\prime$, is the derivative of $f\prime$; the _third derivative_ is the derivative of $f\prime\prime$; and so on.
-- A function is _C_<sup>_n_</sup> _continuous_ if its _n_-th derivative is continuous.
-- A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function on [0, 1] (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&epsilon;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in [0, 1] and no more than _&epsilon;_ apart.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_<sup>_&alpha;_</sup> there.<br>The function also admits a Hölder exponent _&beta;_ such that 0 &lt; _&beta; &lt; _&alpha;_.
+- A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function on the interval \[0, 1\] (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&epsilon;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in [0, 1] and no more than _&epsilon;_ apart.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_<sup>_&alpha;_</sup> there.<br>The function also admits a Hölder exponent _&beta;_ such that 0 &lt; _&beta;_ &lt; _&alpha;_.
 - A _Lipschitz continuous_ function on [0, 1], with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_.<br>If _f_ has a derivative on [0, 1], _L_ is the maximum absolute value of that derivative.
 
 <a id=General_Factory_Functions></a>
@@ -96,7 +95,7 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on [0, 1], with Hölder constant _&alpha;_ and Hölder exponent _m_ (see "[**Definitions**](#Definitions)")[^2], and
+- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on [0, 1], with Hölder constant _m_ and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)")[^2], and
 - in the interval \[0, 1\]&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
@@ -197,14 +196,14 @@ In the academic literature (papers and books), there are many approximation meth
 
 The following are approximation schemes with counterexamples to consistency.
 
-**First scheme.** In this scheme (Powell 1981\)[^4], let _f_ be a C<sup>2</sup> continuous function (a function with continuous first and second derivatives) in [0, 1].  Then for every _n_&ge;1:
+**First scheme.** In this scheme (Powell 1981\)[^4], let _f_ have a continuous second derivative on [0, 1].  Then for every _n_&ge;1:
 
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; _M_ / (8*_n_).
 
 Where _M_ is not less than the maximum absolute value of _f_'s second derivative, and where _k_ is an integer in the interval [0, _n_].
 
-The counterexample involves the C<sup>2</sup> continuous function _g_(_&lambda;_) = sin(_&pi;_\*_&lambda;_)/4 + 1/2.
+The counterexample involves the function _g_(_&lambda;_) = sin(_&pi;_\*_&lambda;_)/4 + 1/2, which has a continuous second derivative.
 
 For _g_, the coefficients for&mdash;
 
@@ -276,7 +275,7 @@ The two schemes in the previous section give an upper bound on the error on appr
 
 For example:
 
-- The first scheme works for C<sup>2</sup> continuous functions, where _M_ is the second derivative's maximum absolute value on \[0, 1\].
+- The first scheme works for functions with a continuous second derivative, where _M_ is the second derivative's maximum absolute value on \[0, 1\].
     - The error bound is _&epsilon;_ = _M_/(8\*_n_).
     - Solving for _n_ and taking ceil(_n_) leads to _n_ = ceil(_M_/(8\*_&epsilon;_)).
 - The second scheme works for the larger class of Lipschitz continuous functions with constant _L_, but produces a bigger polynomial degree in general.
@@ -320,9 +319,9 @@ The following table summarizes the rate of simulation (in terms of the number of
   ------------- |  ------------------------
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012\)[^11]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^3]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^12].  |
-| Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly for every _&lambda;_.  | Only if _f_ is _C_<sup>_r_</sup> continuous (Nacu and Peres 2005\)[^1]. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011\)[^13]. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is Hölder continuous with exponent (_&alpha;_ &minus; _r_)-, where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^13]. Assumes _f_ is bounded away from 0 and 1. |
+| Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly for every _&lambda;_.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (has no vertical slope) (Holtz et al. 2011\)[^13]. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with exponent (_&alpha;_ &minus; _r_), where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^13]. Assumes _f_ is bounded away from 0 and 1. |
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^3]. | If and only if _f_ is real analytic (writable as $f(\lambda)=a_0 \lambda^0 + a_1 \lambda^1 + ...$ for real constants $a_i$) (Nacu and Peres 2005\)[^1].   |
 | Average number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^12]. |
 
