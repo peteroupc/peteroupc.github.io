@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/05"><meta name="citation_online_date" content="2022/07/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/17"><meta name="citation_online_date" content="2022/07/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -20,7 +20,12 @@
 <li><a href="#Approximation_Schemes"><strong>Approximation Schemes</strong></a></li>
 <li><a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a></li>
 </ul></li>
-<li><a href="#Approximate_Bernoulli_Factories"><strong>Approximate Bernoulli Factories</strong></a></li>
+<li><a href="#Approximate_Bernoulli_Factories"><strong>Approximate Bernoulli Factories</strong></a>
+
+<ul>
+<li><a href="#Approximate_Bernoulli_Factories_for_Certain_Functions"><strong>Approximate Bernoulli Factories for Certain Functions</strong></a></li>
+<li><a href="#Approximate_Bernoulli_Factories_for_Linear_Functions"><strong>Approximate Bernoulli Factories for Linear Functions</strong></a></li>
+</ul></li>
 <li><a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a></li>
 <li><a href="#Complexity"><strong>Complexity</strong></a></li>
 <li><a href="#Examples_of_Bernoulli_Factory_Approximation_Schemes"><strong>Examples of Bernoulli Factory Approximation Schemes</strong></a></li>
@@ -304,14 +309,14 @@
 
 <p><em>The rest of this section will note counterexamples involving other functions and schemes, without demonstrating them in detail.</em></p>
 
-<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1][^2]  Then for every <em>n</em>&ge;2:</p>
+<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1][^2], and let <em>S</em> be the Sikkema constant, equal to (4306+837*sqrt(6))/5832, or slightly less than 1.09 (Sikkema 1961)[^6].  Then for every <em>n</em>&ge;2:</p>
 
 <ul>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>L</em>*(5/4) / sqrt(<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>L</em>*<em>S</em> / sqrt(<em>n</em>).</li>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus;  <em>L</em>*(5/4) / sqrt(<em>n</em>).</li>
 </ul>
 
-<p>Where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)[^6], (Popoviciu 1935)[^7].</p>
+<p>Where L is the Lipschitz constant (the maximum absolute value of the &quot;slope&quot; function if it&#39;s continuous), , and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)[^7].</p>
 
 <p>There are two counterexamples here; together they show that this scheme can fail to ensure consistency, even if the set of functions is restricted to &quot;smooth&quot; functions (not just Lipschitz continuous functions):</p>
 
@@ -320,7 +325,7 @@
 <li>The function <em>f</em> = sin(4*<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, a &quot;smooth&quot; function with Lipschitz constant <em>&pi;</em>.  The counterexample involves the degree-3 and degree-4 lower polynomials (<strong>fbelow</strong>(3, <em>k</em>) and <strong>fbelow</strong>(4, <em>k</em>)).</li>
 </ol>
 
-<p><strong>Third scheme.</strong> Same as the second scheme, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)[^6], (Sikkema 1961)[^8], which is slightly less than 1.09.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
+<p>By extension, these counterexamples also appliy to the looser Popoviciu constant <em>S</em> = 5/4 (Popoviciu 1935)[^8].</p>
 
 <p><strong>Note on &quot;clamping&quot;.</strong> For any approximation scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.</p>
 
@@ -356,49 +361,55 @@
 <li><p>Then, use one of the algorithms in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; to toss heads with probability equal to that polynomial, given its coefficients.</p></li>
 </ol>
 
-<p><strong>Examples of approximate Bernoulli factories.</strong> The schemes in the previous section give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> polynomial in Bernstein form.  For example, the third scheme does this when <em>f</em> is a Lipschitz continuous function (with Lipschitz constant <em>L</em>).  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, the following equation is solved for <em>n</em>:</p>
+<blockquote>
+<p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</p>
+</blockquote>
+
+<p><a id=Approximate_Bernoulli_Factories_for_Certain_Functions></a></p>
+
+<h3>Approximate Bernoulli Factories for Certain Functions</h3>
+
+<p>The two schemes in the previous section give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> polynomial in Bernstein form.  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, it&#39;s enough to solve the error bound&#39;s equation for <em>n</em>, then take <em>n</em> = ceil(<em>n</em>) to get the solution if it&#39;s an integer, or the nearest integer that&#39;s bigger than the solution.</p>
+
+<p>For example:</p>
 
 <ul>
-<li><em>&epsilon;</em> = <em>L</em>*((4306+837*sqrt(6))/5832) / sqrt(<em>n</em>).</li>
-</ul>
-
-<p>This has the following solution:</p>
+<li>The first scheme works for C<sup>2</sup> continuous functions with maximum &quot;slope-of-slope&quot; of <em>M</em>.
 
 <ul>
-<li><em>n</em> = <em>L</em><sup>2</sup>*(3604122*sqrt(6) + 11372525)/(17006112*<em>&epsilon;</em><sup>2</sup>).</li>
+<li>The error bound is <em>&epsilon;</em> = <em>M</em>/(8*<em>n</em>).</li>
+<li>Solving for <em>n</em> and taking ceil(<em>n</em>) leads to <em>n</em> = ceil(<em>M</em>/(8*<em>&epsilon;</em>)).</li>
+</ul></li>
+<li>The second scheme works for the larger class of Lipschitz continuous functions with constant <em>L</em>, but produces a bigger polynomial degree in general.
+
+<ul>
+<li>The error bound is <em>&epsilon;</em> = <em>L</em>*((4306+837*sqrt(6))/5832) / sqrt(<em>n</em>), where <em>n</em> is the polynomial&#39;s degree.</li>
+<li>Solving for <em>n</em> and taking ceil(<em>n</em>) leads to <em>n</em> = ceil(<em>L</em><sup>2</sup>*(3604122*sqrt(6) + 11372525)/(17006112*<em>&epsilon;</em><sup>2</sup>)).</li>
+<li>This solution can be simplified further to_n_ = ceil(59393*<em>L</em><sup>2</sup>/(50000*<em>&epsilon;</em><sup>2</sup>)), which is slightly bigger.</li>
+</ul></li>
 </ul>
 
-<p>This is generally not an integer, so use <em>n</em> = ceil(<em>n</em>) to get the solution if it&#39;s an integer, or the nearest integer that&#39;s bigger than the solution.  This solution can be simplified further to <em>n</em> = ceil(59393*<em>L</em><sup>2</sup>/(50000*<em>&epsilon;</em><sup>2</sup>)), which bounds the previous solution from above.</p>
+<p>(Other methods similar to this one can give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function <em>f</em> to be approximated.)</p>
 
-<p>Now, if <em>f</em> is a Lipschitz continuous factory function with Lipschitz constant <em>L</em>, the following algorithm (adapted from &quot;Certain Polynomials&quot;) simulates a polynomial that approximates <em>f</em> with a maximum error of <em>&epsilon;</em>:</p>
+<p>Now, if <em>f</em> belongs to either class given above, the following algorithm (adapted from &quot;Certain Polynomials&quot;) simulates a polynomial that approximates <em>f</em> with a maximum error of <em>&epsilon;</em>:</p>
 
 <ol>
-<li>Calculate <em>n</em> as ceil(59393*<em>L</em><sup>2</sup>/(50000*<em>&epsilon;</em><sup>2</sup>)).</li>
+<li>Calculate <em>n</em> as described above for the given class.</li>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
 <li>With probability <em>f</em>(<em>j</em>/<em>n</em>), return 1.  Otherwise, return 0. (If <em>f</em>(<em>j</em>/<em>n</em>) can be an irrational number, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants"><strong>Algorithms for General Irrational Constants</strong></a>&quot; for ways to sample this irrational probability exactly.)</li>
 </ol>
 
-<p>As another example, the first scheme in the previous section is used to get the following approximate algorithm for C<sup>2</sup> continuous functions with maximum &quot;slope-of-slope&quot; of <em>M</em>:</p>
+<p><a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a></p>
 
-<ol>
-<li>Calculate <em>n</em> as ceil(<em>M</em>/(8*<em>&epsilon;</em>)) (upper bound of the solution to the equation <em>&epsilon;</em> = <em>M</em>/(8*<em>n</em>)).</li>
-<li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
-<li>With probability <em>f</em>(<em>j</em>/<em>n</em>), return 1.  Otherwise, return 0.</li>
-</ol>
+<h3>Approximate Bernoulli Factories for Linear Functions</h3>
 
-<p>Other methods similar to this one can give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function <em>f</em> to be approximated.</p>
-
-<p><strong>Approximate methods for linear functions.</strong> There are a number of approximate methods to simulate <em>&lambda;</em>*<em>c</em>, where <em>c</em> &gt; 1 and <em>&lambda;</em> lies in [0, 1/<em>c</em>).  (&quot;Approximate&quot; because this function touches 1 at 1/<em>c</em>, so it can&#39;t be a factory function.) Since the methods use only up to <em>n</em> flips, where <em>n</em> is an integer greater than 0, the approximation will be a polynomial of degree <em>n</em>.</p>
+<p>There are a number of approximate methods to simulate <em>&lambda;</em>*<em>c</em>, where <em>c</em> &gt; 1 and <em>&lambda;</em> lies in [0, 1/<em>c</em>).  (&quot;Approximate&quot; because this function touches 1 at 1/<em>c</em>, so it can&#39;t be a factory function.) Since the methods use only up to <em>n</em> flips, where <em>n</em> is an integer greater than 0, the approximation will be a polynomial of degree <em>n</em>.</p>
 
 <ul>
 <li><p>Henderson and Glynn (2003, Remark 4)[^9] approximates the function <em>&lambda;</em>*2 using a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</p></li>
 <li><p>I found the following approximation for <em>&lambda;</em>*<em>c</em>[^10]: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/<em>c</em>).</p></li>
 <li><p>The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)[^1], which approximates <em>&lambda;</em>*2.</p></li>
 </ul>
-
-<blockquote>
-<p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</p>
-</blockquote>
 
 <p><a id=Achievable_Simulation_Rates></a></p>
 
@@ -902,11 +913,11 @@
 
 <p>[^5]: Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981</p>
 
-<p>[^6]: G. G. Lorentz. Bernstein polynomials. 1986.</p>
+<p>[^6]: Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</p>
 
-<p>[^7]: Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</p>
+<p>[^7]: G. G. Lorentz. Bernstein polynomials. 1986.</p>
 
-<p>[^8]: Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</p>
+<p>[^8]: Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</p>
 
 <p>[^9]: Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</p>
 

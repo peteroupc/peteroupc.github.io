@@ -10,6 +10,8 @@
     - [**Approximation Schemes**](#Approximation_Schemes)
     - [**Schemes That Don't Work**](#Schemes_That_Don_t_Work)
 - [**Approximate Bernoulli Factories**](#Approximate_Bernoulli_Factories)
+    - [**Approximate Bernoulli Factories for Certain Functions**](#Approximate_Bernoulli_Factories_for_Certain_Functions)
+    - [**Approximate Bernoulli Factories for Linear Functions**](#Approximate_Bernoulli_Factories_for_Linear_Functions)
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Complexity**](#Complexity)
 - [**Examples of Bernoulli Factory Approximation Schemes**](#Examples_of_Bernoulli_Factory_Approximation_Schemes)
@@ -204,19 +206,19 @@ As can be seen, the elevated polynomial's coefficient 0.8208... is less than the
 
 _The rest of this section will note counterexamples involving other functions and schemes, without demonstrating them in detail._
 
-**Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\][^2]  Then for every _n_&ge;2:
+**Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\][^2], and let _S_ be the Sikkema constant, equal to (4306+837*sqrt(6))/5832, or slightly less than 1.09 (Sikkema 1961\)[^6].  Then for every _n_&ge;2:
 
-- **fabove**(_n_, _k_) = _f_(_k_/_n_) + _L_\*(5/4) / sqrt(_n_).
+- **fabove**(_n_, _k_) = _f_(_k_/_n_) + _L_\*_S_ / sqrt(_n_).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus;  _L_\*(5/4) / sqrt(_n_).
 
-Where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval \[0, _n_\] (Lorentz 1986\)[^6], (Popoviciu 1935\)[^7].
+Where L is the Lipschitz constant (the maximum absolute value of the "slope" function if it's continuous), , and where _k_ is an integer in the interval \[0, _n_\] (Lorentz 1986\)[^7].
 
 There are two counterexamples here; together they show that this scheme can fail to ensure consistency, even if the set of functions is restricted to "smooth" functions (not just Lipschitz continuous functions):
 
 1. The function _f_(_&lambda;_) = min(_&lambda;_, 1&minus;_&lambda;_)/2 is Lipschitz continuous with Lipschitz constant 1/2.  (In addition, _f_ has a kink at 1/2, so that it's not differentiable, but this is not essential for the counterexample.)  The counterexample involves the degree-5 and degree-6 upper polynomials (**fabove**(5, _k_) and **fabove**(6, _k_)).
 2. The function _f_ = sin(4\*_&pi;_\*_&lambda;_)/4 + 1/2, a "smooth" function with Lipschitz constant _&pi;_.  The counterexample involves the degree-3 and degree-4 lower polynomials (**fbelow**(3, _k_) and **fbelow**(4, _k_)).
 
-**Third scheme.** Same as the second scheme, but replacing (5/4) with the Sikkema constant, _S_ = (4306+837*sqrt(6))/5832 (Lorentz 1986\)[^6], (Sikkema 1961\)[^8], which is slightly less than 1.09.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to _f_.
+By extension, these counterexamples also appliy to the looser Popoviciu constant _S_ = 5/4 (Popoviciu 1935)[^8].
 
 **Note on "clamping".** For any approximation scheme, "clamping" the values of **fbelow** and **fabove** to fit the interval [0, 1] won't necessarily preserve the consistency requirement, even if the original scheme met that requirement.
 
@@ -248,39 +250,41 @@ To build an approximate Bernoulli factory:
 
 2. Then, use one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" to toss heads with probability equal to that polynomial, given its coefficients.
 
-**Examples of approximate Bernoulli factories.** The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, the following equation is solved for _n_:
+> **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)). ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 
-- _&epsilon;_ = _L_\*((4306+837*sqrt(6))/5832) / sqrt(_n_).
+<a id=Approximate_Bernoulli_Factories_for_Certain_Functions></a>
+### Approximate Bernoulli Factories for Certain Functions
 
-This has the following solution:
+The two schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, it's enough to solve the error bound's equation for _n_, then take _n_ = ceil(_n_) to get the solution if it's an integer, or the nearest integer that's bigger than the solution.
 
-- _n_ = _L_<sup>2</sup>\*(3604122\*sqrt(6) + 11372525)/(17006112\*_&epsilon;_<sup>2</sup>).
+For example:
 
-This is generally not an integer, so use _n_ = ceil(_n_) to get the solution if it's an integer, or the nearest integer that's bigger than the solution.  This solution can be simplified further to _n_ = ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)), which bounds the previous solution from above.
+- The first scheme works for C<sup>2</sup> continuous functions with maximum "slope-of-slope" of _M_.
+    - The error bound is _&epsilon;_ = _M_/(8\*_n_).
+    - Solving for _n_ and taking ceil(_n_) leads to _n_ = ceil(_M_/(8\*_&epsilon;_)).
+- The second scheme works for the larger class of Lipschitz continuous functions with constant _L_, but produces a bigger polynomial degree in general.
+    - The error bound is _&epsilon;_ = _L_\*((4306+837*sqrt(6))/5832) / sqrt(_n_), where _n_ is the polynomial's degree.
+    - Solving for _n_ and taking ceil(_n_) leads to _n_ = ceil(_L_<sup>2</sup>\*(3604122\*sqrt(6) + 11372525)/(17006112\*_&epsilon;_<sup>2</sup>)).
+    - This solution can be simplified further to_n_ = ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)), which is slightly bigger.
 
-Now, if _f_ is a Lipschitz continuous factory function with Lipschitz constant _L_, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
+(Other methods similar to this one can give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function _f_ to be approximated.)
 
-1. Calculate _n_ as ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)).
+Now, if _f_ belongs to either class given above, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
+
+1. Calculate _n_ as described above for the given class.
 2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0. (If _f_(_j_/_n_) can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to sample this irrational probability exactly.)
 
-As another example, the first scheme in the previous section is used to get the following approximate algorithm for C<sup>2</sup> continuous functions with maximum "slope-of-slope" of _M_:
+<a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a>
+### Approximate Bernoulli Factories for Linear Functions
 
-1. Calculate _n_ as ceil(_M_/(8\*_&epsilon;_)) (upper bound of the solution to the equation _&epsilon;_ = _M_/(8\*_n_)).
-2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
-3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0.
-
-Other methods similar to this one can give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function _f_ to be approximated.
-
-**Approximate methods for linear functions.** There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_ > 1 and _&lambda;_ lies in \[0, 1/_c_).  ("Approximate" because this function touches 1 at 1/_c_, so it can't be a factory function.) Since the methods use only up to _n_ flips, where _n_ is an integer greater than 0, the approximation will be a polynomial of degree _n_.
+There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_ > 1 and _&lambda;_ lies in \[0, 1/_c_).  ("Approximate" because this function touches 1 at 1/_c_, so it can't be a factory function.) Since the methods use only up to _n_ flips, where _n_ is an integer greater than 0, the approximation will be a polynomial of degree _n_.
 
 - Henderson and Glynn (2003, Remark 4\)[^9] approximates the function _&lambda;_\*2 using a polynomial where the _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*2, 1&minus;1/_n_).  If _g_(_&lambda;_) is that polynomial, then the error in approximating _f_ is no greater than 1&minus;_g_(1/2).  _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
 
 - I found the following approximation for _&lambda;_\*_c_[^10]\: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where the _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*_c_, 1).  If _g_(_&lambda;_) is that polynomial, then the error in approximating _f_ is no greater than 1&minus;_g_(1/_c_).
 
 - The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005\)[^1], which approximates _&lambda;_\*2.
-
-> **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)). ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 
 <a id=Achievable_Simulation_Rates></a>
 ## Achievable Simulation Rates
@@ -537,11 +541,11 @@ The following are approximation schemes and hints to simulate a coin of probabil
 
 [^5]: Powell, M.J.D., _Approximation Theory and Methods_, 1981
 
-[^6]: G. G. Lorentz. Bernstein polynomials. 1986.
+[^6]: Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).
 
-[^7]: Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.
+[^7]: G. G. Lorentz. Bernstein polynomials. 1986.
 
-[^8]: Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).
+[^8]: Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.
 
 [^9]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).
 

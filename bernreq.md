@@ -71,7 +71,7 @@ for every integer $n\ge1$, such that—
 
 1. $0\le a(n, k)\le b(n, k)\le1$,
 2. $\lim_{n}g_{n}(\lambda)=\lim_{n}h_{n}(\lambda)=f(\lambda)$ for every $\lambda\in[0,1]$, and
-3. For every $m<n$, both $(g_{n} - g_{m})$ and $(h_{m} - h_{n})$ have non-negative coefficients once $g_{n}$, $g_{m}$, $h_{n}$, and $h_{m}$ are rewritten as degree-$n$ polynomials in Bernstein form,
+3. for every $m<n$, both $(g_{n} - g_{m})$ and $(h_{m} - h_{n})$ have non-negative coefficients once $g_{n}$, $g_{m}$, $h_{n}$, and $h_{m}$ are rewritten as degree-$n$ polynomials in Bernstein form,
 
 where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.
 
@@ -98,7 +98,7 @@ Thus the questions are:
 1. Are there practical formulas to compute polynomials that&mdash;
 
     - meet the formal statement above, and
-    - meet the following error bound? $$|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2}),$$ for every $n\ge 1$, where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form with coefficients in $[0,1]$; $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a **known exact value or upper bound**.
+    - meet the following error bound? $$|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2}),$$ for every $n\ge 1$, where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form (ideally with coefficients in $[0,1]$); $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a **known exact value or upper bound**.
 
 2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
 
@@ -157,7 +157,7 @@ And I seek ways to make this solution implementable.
 <a id=Questions_2></a>
 ### Questions
 
-1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as smoothness and/or concavity requirements on $f$ and/or its derivatives)?
+1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as smoothness or concavity requirements on $f$ and/or its derivatives, or bounds on the derivatives such as in Gevrey's hierarchy)?
 2. Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the "New coins from old, smoothly" method valid in the following cases?  (Note that the method as written doesn't apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)
 
     - With $\alpha=1, r=0$, when $f$ is Lipschitz continuous and/or differentiable.
@@ -410,7 +410,7 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 
 **Note 3**: On pushdown automata: Banderier and Drmota (2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
-**Note 4**: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include so-called "iterated Bernstein" polynomials and "one-bit" polynomials).
+**Note 4**: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include so-called "iterated Bernstein" polynomials and "one-bit" polynomials).  Indeed, unlike with rational arithmetic (where arbitrary precision is trivial), transcendental functions require special measures to support arbitrary accuracy, such as constructive/recursive reals &mdash; floating-point numbers won't do for purposes of these open questions.
 
 <a id=My_Attempt></a>
 ## My Attempt

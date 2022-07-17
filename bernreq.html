@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/06/21"><meta name="citation_online_date" content="2022/06/21"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/07/17"><meta name="citation_online_date" content="2022/07/17"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -103,7 +103,7 @@
 <ol>
 <li>$0\le a(n, k)\le b(n, k)\le1$,</li>
 <li>$\lim_{n}g_{n}(\lambda)=\lim_{n}h_{n}(\lambda)=f(\lambda)$ for every $\lambda\in[0,1]$, and</li>
-<li>For every $m&lt;n$, both $(g_{n} - g_{m})$ and $(h_{m} - h_{n})$ have non-negative coefficients once $g_{n}$, $g_{m}$, $h_{n}$, and $h_{m}$ are rewritten as degree-$n$ polynomials in Bernstein form,</li>
+<li>for every $m&lt;n$, both $(g_{n} - g_{m})$ and $(h_{m} - h_{n})$ have non-negative coefficients once $g_{n}$, $g_{m}$, $h_{n}$, and $h_{m}$ are rewritten as degree-$n$ polynomials in Bernstein form,</li>
 </ol>
 
 <p>where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.</p>
@@ -135,7 +135,7 @@
 
 <ul>
 <li>meet the formal statement above, and</li>
-<li>meet the following error bound? $$|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2}),$$ for every $n\ge 1$, where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form with coefficients in $[0,1]$; $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a <strong>known exact value or upper bound</strong>.</li>
+<li>meet the following error bound? $$|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2}),$$ for every $n\ge 1$, where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form (ideally with coefficients in $[0,1]$); $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a <strong>known exact value or upper bound</strong>.</li>
 </ul></li>
 <li><p>Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?</p></li>
 <li><p>Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in $[0,1]$?</p></li>
@@ -205,7 +205,7 @@
 <h3>Questions</h3>
 
 <ol>
-<li>What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the &quot;New coins from old, smoothly&quot; method, given a factory function $f$, with or without additional assumptions on $f$ (such as smoothness and/or concavity requirements on $f$ and/or its derivatives)?</li>
+<li>What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the &quot;New coins from old, smoothly&quot; method, given a factory function $f$, with or without additional assumptions on $f$ (such as smoothness or concavity requirements on $f$ and/or its derivatives, or bounds on the derivatives such as in Gevrey&#39;s hierarchy)?</li>
 <li><p>Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the &quot;New coins from old, smoothly&quot; method valid in the following cases?  (Note that the method as written doesn&#39;t apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)</p>
 
 <ul>
@@ -523,7 +523,7 @@
 
 <p><strong>Note 3</strong>: On pushdown automata: Banderier and Drmota (2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called &quot;critical exponent&quot; is not dyadic. But the result seems not to apply to <em>piecewise</em> power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.</p>
 
-<p><strong>Note 4</strong>: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include so-called &quot;iterated Bernstein&quot; polynomials and &quot;one-bit&quot; polynomials).</p>
+<p><strong>Note 4</strong>: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include so-called &quot;iterated Bernstein&quot; polynomials and &quot;one-bit&quot; polynomials).  Indeed, unlike with rational arithmetic (where arbitrary precision is trivial), transcendental functions require special measures to support arbitrary accuracy, such as constructive/recursive reals &mdash; floating-point numbers won&#39;t do for purposes of these open questions.</p>
 
 <p><a id=My_Attempt></a></p>
 
