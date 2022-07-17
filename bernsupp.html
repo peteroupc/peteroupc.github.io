@@ -355,7 +355,7 @@
 <ol>
 <li><p>First, find a polynomial in Bernstein form of degree <em>n</em> that is close to the desired function <em>f</em>.</p>
 
-<p>The simplest choice for this polynomial has <em>n</em>+1 coefficients and its <em>j</em><sup>th</sup> coefficient (starting at 0) is found as <em>f</em>(<em>j</em>/<em>n</em>), and this is used in the examples below.  For this choice, if <em>f</em> is continuous, the polynomial can be brought arbitrarily close to <em>f</em> by choosing <em>n</em> high enough.</p>
+<p>The simplest choice for this polynomial, known simply as a <em>Bernstein polynomial</em>, has <em>n</em>+1 coefficients and its <em>j</em><sup>th</sup> coefficient (starting at 0) is found as <em>f</em>(<em>j</em>/<em>n</em>).  For this choice, if <em>f</em> is continuous, the polynomial can be brought arbitrarily close to <em>f</em> by choosing <em>n</em> high enough.</p>
 
 <p>Whatever polynomial is used, the polynomial&#39;s coefficients must all lie in [0, 1].</p></li>
 <li><p>Then, use one of the algorithms in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; to toss heads with probability equal to that polynomial, given its coefficients.</p></li>
@@ -369,7 +369,9 @@
 
 <h3>Approximate Bernoulli Factories for Certain Functions</h3>
 
-<p>The two schemes in the previous section give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> polynomial in Bernstein form.  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, it&#39;s enough to solve the error bound&#39;s equation for <em>n</em>, then take <em>n</em> = ceil(<em>n</em>) to get the solution if it&#39;s an integer, or the nearest integer that&#39;s bigger than the solution.</p>
+<p>This section first discusses approximating $f$ with a <em>Bernstein polynomial</em> (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\ge k\ge n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials converge slowly, on the order of $1/n$ (Voronovskaya 1932)[^25].</p>
+
+<p>The two schemes in the previous section give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> Bernstein polynomial.  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, solve the error bound&#39;s equation for <em>n</em>, then take <em>n</em> = ceil(<em>n</em>) to get the solution if it&#39;s an integer, or the nearest integer that&#39;s bigger than the solution.</p>
 
 <p>For example:</p>
 
@@ -385,11 +387,9 @@
 <ul>
 <li>The error bound is <em>&epsilon;</em> = <em>L</em>*((4306+837*sqrt(6))/5832) / sqrt(<em>n</em>), where <em>n</em> is the polynomial&#39;s degree.</li>
 <li>Solving for <em>n</em> and taking ceil(<em>n</em>) leads to <em>n</em> = ceil(<em>L</em><sup>2</sup>*(3604122*sqrt(6) + 11372525)/(17006112*<em>&epsilon;</em><sup>2</sup>)).</li>
-<li>This solution can be simplified further to_n_ = ceil(59393*<em>L</em><sup>2</sup>/(50000*<em>&epsilon;</em><sup>2</sup>)), which is slightly bigger.</li>
+<li>This solution can be simplified further to <em>n</em> = ceil(59393*<em>L</em><sup>2</sup>/(50000*<em>&epsilon;</em><sup>2</sup>)), which is slightly bigger.</li>
 </ul></li>
 </ul>
-
-<p>(Other methods similar to this one can give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function <em>f</em> to be approximated.)</p>
 
 <p>Now, if <em>f</em> belongs to either class given above, the following algorithm (adapted from &quot;Certain Polynomials&quot;) simulates a polynomial that approximates <em>f</em> with a maximum error of <em>&epsilon;</em>:</p>
 
@@ -398,6 +398,10 @@
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
 <li>With probability <em>f</em>(<em>j</em>/<em>n</em>), return 1.  Otherwise, return 0. (If <em>f</em>(<em>j</em>/<em>n</em>) can be an irrational number, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants"><strong>Algorithms for General Irrational Constants</strong></a>&quot; for ways to sample this irrational probability exactly.)</li>
 </ol>
+
+<hr>
+
+<p>Alternatively, polynomials of other forms than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  For example, Chebyshev interpolation offers such a bound, and perhaps other schemes do as well, but such explicit bounds are hard to find and I leave this as an <a href="https://mathoverflow.net/questions/424272"><strong>open question</strong></a>.</p>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a></p>
 
@@ -453,7 +457,7 @@
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)[^4].</td>
-<td>If and only if <em>f</em> is real analytic (is <em>C</em><sup>&infin;</sup> continuous, or has continuous <em>k</em><sup>th</sup> derivative for every <em>k</em>, and equals its Taylor series at every point) (Nacu and Peres 2005)[^1].</td>
+<td>If and only if <em>f</em> is real analytic (writable as $f(\lambda)=a_0 \lambda^0 + a_1 \lambda^1 + ...$ for real constants $a_i$) (Nacu and Peres 2005)[^1].</td>
 </tr>
 <tr>
 <td>Average number of flips bounded from below by (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
@@ -950,6 +954,8 @@
 <p>[^23]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</p>
 
 <p>[^24]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
+
+<p>[^25]: E. Voronovskaya, &quot;Détermination de la forme asymptotique d&#39;approximation des fonctions par les polynômes de M. Bernstein&quot;, 1932.</p>
 
 <p><a id=Appendix></a></p>
 
