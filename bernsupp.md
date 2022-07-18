@@ -30,11 +30,11 @@
 
 This section describes certain math terms used on this page for programmers to understand.
 
-The following terms can describe a function $f(x)$, specifically how "well-behaved" $f$ is &mdash; which can be important when designing Bernoulli factory algorithms.
+The following terms can describe a function $f(x)$, specifically how "well-behaved" $f$ is &mdash; which can be important when designing Bernoulli factory algorithms.  This page mostly cares how $f$ behaves when its domain is the interval \[0, 1\], that is, when $0 \le x \le 1$.
 
-- If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" function.  The derivative (or _first derivative_) is denoted as $f\prime$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f\prime\prime$, is the derivative of $f\prime$; the _third derivative_ is the derivative of $f\prime\prime$; and so on.
-- A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function on the interval \[0, 1\] (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&epsilon;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in [0, 1] and no more than _&epsilon;_ apart.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_<sup>_&alpha;_</sup> there.<br>The function also admits a Hölder exponent _&beta;_ such that 0 &lt; _&beta;_ &lt; _&alpha;_.
-- A _Lipschitz continuous_ function on [0, 1], with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_.<br>If _f_ has a derivative on [0, 1], _L_ is the maximum absolute value of that derivative.
+- If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" or "velocity" function.  The derivative (or _first derivative_) is denoted as $f\prime$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f\prime\prime$, is the derivative of $f\prime$; the _third derivative_ is the derivative of $f\prime\prime$; and so on.
+- A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&epsilon;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in $f$'s domain and no more than _&epsilon;_ apart.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.<br>The function also admits a Hölder exponent _&beta;_ such that 0 &lt; _&beta;_ &lt; _&alpha;_.
+- A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_.<br>If _f_ has a derivative on its domain, _L_ is the maximum absolute value of that derivative.
 
 <a id=General_Factory_Functions></a>
 ## General Factory Functions
@@ -66,9 +66,9 @@ In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup
 
 A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli factory problem can be solved (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)"). The following are approximation schemes for _f_ if it belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function _f_ using a computer algebra system to see if it belongs to any of the classes of functions described below.
 
-**Concave functions.** If _f_ is known to be _concave_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes up), then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
+**Concave functions.** If _f_ is known to be _concave_ on the interval \[0, 1\] (which roughly means that its rate of growth there never goes up), then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
 
-**Convex functions.** If _f_ is known to be _convex_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes down), then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
+**Convex functions.** If _f_ is known to be _convex_ on the interval \[0, 1\] (which roughly means that its rate of growth there never goes down), then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
 
 **Twice differentiable functions.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
