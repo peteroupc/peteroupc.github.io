@@ -19,7 +19,6 @@
 
 <ul>
 <li><a href="#Approximation_Schemes"><strong>Approximation Schemes</strong></a></li>
-<li><a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a></li>
 </ul></li>
 <li><a href="#Approximate_Bernoulli_Factories"><strong>Approximate Bernoulli Factories</strong></a>
 
@@ -35,6 +34,7 @@
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
+<li><a href="#Failures_of_the_Consistency_Requirement"><strong>Failures of the Consistency Requirement</strong></a></li>
 <li><a href="#Which_functions_admit_a_Bernoulli_factory"><strong>Which functions admit a Bernoulli factory?</strong></a></li>
 <li><a href="#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>Which functions don&#39;t require outside randomness to simulate?</strong></a></li>
 <li><a href="#Multiple_Output_Bernoulli_Factory"><strong>Multiple-Output Bernoulli Factory</strong></a></li>
@@ -87,7 +87,7 @@
 <p>must have non-negative coefficients, once the polynomials are rewritten in Bernstein form and elevated to degree <em>n</em>.</p></li>
 </ol>
 
-<p>The consistency requirement ensures that the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot;.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not ensure the consistency requirement by itself.  Examples of this fact are shown in the section &quot;<a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a>&quot; later in this document.</p>
+<p>The consistency requirement ensures that the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot;.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not ensure the consistency requirement by itself.  Examples of this fact are shown in the section &quot;<a href="#Failures_of_the_Consistency_Requirement"><strong>Failures of the Consistency Requirement</strong></a>&quot; in the appendix.</p>
 
 <p>In this document, <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) mean the <em>k</em><sup>th</sup> coefficient for the lower or upper degree-<em>n</em> polynomial in Bernstein form, respectively, where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
@@ -289,55 +289,6 @@
 
 <p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial approximation scheme for certain factory functions.</p>
 
-<p><a id=Schemes_That_Don_t_Work></a></p>
-
-<h3>Schemes That Don&#39;t Work</h3>
-
-<p>In the academic literature (papers and books), there are many approximation methods that involve polynomials that converge from above and below to a function.  Unfortunately, most of them cannot be used as is to simulate a function <em>f</em> in the Bernoulli Factory setting, because they don&#39;t ensure the consistency requirement described earlier.</p>
-
-<p>The following is an approximation scheme with a counterexample to consistency.</p>
-
-<p>In this scheme (Powell 1981)[^4], let <em>f</em> have a continuous second derivative on [0, 1].  Then for every <em>n</em>&ge;1:</p>
-
-<ul>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>M</em> / (8*<em>n</em>).</li>
-</ul>
-
-<p>Where <em>M</em> is not less than the maximum absolute value of <em>f</em>&#39;s second derivative, and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
-
-<p>The counterexample involves the function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, which has a continuous second derivative.</p>
-
-<p>For <em>g</em>, the coefficients for&mdash;</p>
-
-<ul>
-<li>the degree-2 upper polynomial in Bernstein form (<strong>fabove</strong>(5, <em>k</em>)) are [0.6542..., 0.9042..., 0.6542...], and</li>
-<li>the degree-4 upper polynomial in Bernstein form (<strong>fabove</strong>(6, <em>k</em>)) are [0.5771..., 0.7538..., 0.8271..., 0.7538..., 0.5771...].</li>
-</ul>
-
-<p>The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-2 polynomial, once elevated to degree 4 and rewritten in Bernstein form, must have coefficients that are greater than or equal to those of the degree-4 polynomial.</p>
-
-<ul>
-<li>Once elevated to degree 4, the degree-2 polynomial&#39;s coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].</li>
-</ul>
-
-<p>As can be seen, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
-
-<p><strong>Note on &quot;clamping&quot;.</strong> For any approximation scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.</p>
-
-<p>Here is a counterexample that applies to any approximation scheme.</p>
-
-<p>Let <em>g</em> and <em>h</em> be two polynomials in Bernstein form as follows:</p>
-
-<ul>
-<li><em>g</em> has degree 5 and coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000].</li>
-<li><em>h</em> has degree 6 and coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].</li>
-</ul>
-
-<p>After elevating <em>g</em>&#39;s degree, <em>g</em>&#39;s coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.</p>
-
-<p>However, by clamping coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.</p>
-
 <p><a id=Approximate_Bernoulli_Factories></a></p>
 
 <h2>Approximate Bernoulli Factories</h2>
@@ -367,9 +318,9 @@
 
 <h3>Approximate Bernoulli Factories for Certain Functions</h3>
 
-<p>This section first discusses approximating $f$ with a <em>Bernstein polynomial</em> (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials converge no faster than the order of $1/n$ in general (Voronovskaya 1932)[^5].</p>
+<p>This section first discusses approximating $f$ with a <em>Bernstein polynomial</em> (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials converge no faster than the order of $1/n$ in general (Voronovskaya 1932)[^4].</p>
 
-<p>The two schemes in the previous section give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> Bernstein polynomial.  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, solve the error bound&#39;s equation for <em>n</em>, then take <em>n</em> = ceil(<em>n</em>) to get the solution if it&#39;s an integer, or the nearest integer that&#39;s bigger than the solution.</p>
+<p>There are results that give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> Bernstein polynomial.  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, solve the error bound&#39;s equation for <em>n</em>, then take <em>n</em> = ceil(<em>n</em>) to get the solution if it&#39;s an integer, or the nearest integer that&#39;s bigger than the solution.</p>
 
 <p>For example:</p>
 
@@ -385,7 +336,7 @@
 <td>Has continuous second derivative</td>
 <td><em>&epsilon;</em> = <em>M</em>/(8*<em>n</em>).</td>
 <td><em>n</em> = ceil(<em>M</em>/(8*<em>&epsilon;</em>)).</td>
-<td>First scheme in previous section. <em>M</em> is the second derivative&#39;s maximum absolute value on [0, 1].</td>
+<td>Powell (1981)[^5]. <em>M</em> is the second derivative&#39;s maximum absolute value on [0, 1].</td>
 </tr>
 <tr>
 <td>Hölder continuous with constant <em>M</em> and exponent <em>&alpha;</em></td>
@@ -937,9 +888,9 @@
 
 <p>[^3]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560 [math.PR], 2010.</p>
 
-<p>[^4]: Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981</p>
+<p>[^4]: E. Voronovskaya, &quot;Détermination de la forme asymptotique d&#39;approximation des fonctions par les polynômes de M. Bernstein&quot;, 1932.</p>
 
-<p>[^5]: E. Voronovskaya, &quot;Détermination de la forme asymptotique d&#39;approximation des fonctions par les polynômes de M. Bernstein&quot;, 1932.</p>
+<p>[^5]: Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981</p>
 
 <p>[^6]: Mathé, Peter. “Approximation of Hölder Continuous Functions by Bernstein Polynomials.” The American Mathematical Monthly 106, no. 6 (1999): 568–74. <a href="https://doi.org/10.2307/2589469."><strong>https://doi.org/10.2307/2589469.</strong></a></p>
 
@@ -984,6 +935,51 @@
 <h2>Appendix</h2>
 
 <p>&nbsp;</p>
+
+<p><a id=Failures_of_the_Consistency_Requirement></a></p>
+
+<h3>Failures of the Consistency Requirement</h3>
+
+<p>In the academic literature (papers and books), there are many results showing that a polynomial comes within a given error bound of a function <em>f</em>(<em>&lambda;</em>), when <em>f</em> meets certain conditions.  Unfortunately, these error bounds don&#39;t necessarily obey the consistency requirement, which is needed to simulate <em>f</em> in the Bernoulli factory setting.</p>
+
+<p>Here is one such error bound. Let <em>f</em> have a continuous second derivative on [0, 1], and let <em>M</em> be not less than the maximum absolute value of <em>f</em>&#39;s second derivative.  Then the Bernstein polynomial for <em>f</em> of degree <em>n</em> is within <em>M</em>/(8*<em>n</em>) of <em>f</em>  (Powell 1981)[^5]. Thus, for every <em>n</em>&ge;1:</p>
+
+<ul>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>M</em> / (8*<em>n</em>).</li>
+</ul>
+
+<p>Where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
+
+<p>The counterexample involves the function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, which has a continuous second derivative.</p>
+
+<p>For <em>g</em>, the coefficients for&mdash;</p>
+
+<ul>
+<li>the degree-2 upper polynomial in Bernstein form (<strong>fabove</strong>(5, <em>k</em>)) are [0.6542..., 0.9042..., 0.6542...], and</li>
+<li>the degree-4 upper polynomial in Bernstein form (<strong>fabove</strong>(6, <em>k</em>)) are [0.5771..., 0.7538..., 0.8271..., 0.7538..., 0.5771...].</li>
+</ul>
+
+<p>The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-2 polynomial, once elevated to degree 4 and rewritten in Bernstein form, must have coefficients that are greater than or equal to those of the degree-4 polynomial.</p>
+
+<ul>
+<li>Once elevated to degree 4, the degree-2 polynomial&#39;s coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].</li>
+</ul>
+
+<p>As can be seen, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
+
+<p><strong>Note on &quot;clamping&quot;.</strong> In addition, for any approximation scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.  Here is a counterexample that applies to any approximation scheme.</p>
+
+<p>Let <em>g</em> and <em>h</em> be two polynomials in Bernstein form as follows:</p>
+
+<ul>
+<li><em>g</em> has degree 5 and coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000].</li>
+<li><em>h</em> has degree 6 and coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].</li>
+</ul>
+
+<p>After elevating <em>g</em>&#39;s degree, <em>g</em>&#39;s coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.</p>
+
+<p>However, by clamping coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.</p>
 
 <p><a id=Which_functions_admit_a_Bernoulli_factory></a></p>
 
