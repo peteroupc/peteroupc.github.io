@@ -12,6 +12,7 @@
     - [**Schemes That Don't Work**](#Schemes_That_Don_t_Work)
 - [**Approximate Bernoulli Factories**](#Approximate_Bernoulli_Factories)
     - [**Approximate Bernoulli Factories for Certain Functions**](#Approximate_Bernoulli_Factories_for_Certain_Functions)
+    - [**Approximate Bernoulli Factories for Power Series**](#Approximate_Bernoulli_Factories_for_Power_Series)
     - [**Approximate Bernoulli Factories for Linear Functions**](#Approximate_Bernoulli_Factories_for_Linear_Functions)
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Complexity**](#Complexity)
@@ -33,7 +34,7 @@ This section describes certain math terms used on this page for programmers to u
 The following terms can describe a function $f(x)$, specifically how "well-behaved" $f$ is &mdash; which can be important when designing Bernoulli factory algorithms.  This page mostly cares how $f$ behaves when its domain is the interval \[0, 1\], that is, when $0 \le x \le 1$.
 
 - If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" or "velocity" function.  The derivative (or _first derivative_) is denoted as $f\prime$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f\prime\prime$, is the derivative of $f\prime$; the _third derivative_ is the derivative of $f\prime\prime$; and so on.
-- A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&epsilon;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in $f$'s domain and no more than _&epsilon;_ apart.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.<br>The function also admits a Hölder exponent _&beta;_ such that 0 &lt; _&beta;_ &lt; _&alpha;_.
+- A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in $f$'s domain and no more than _&delta;_ apart.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.<br>The function also admits a Hölder exponent _&beta;_ such that 0 &lt; _&beta;_ &lt; _&alpha;_.
 - A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_.<br>If _f_ has a derivative on its domain, _L_ is the maximum absolute value of that derivative.
 
 <a id=General_Factory_Functions></a>
@@ -292,6 +293,17 @@ Now, if _f_ belongs to either class given above, the following algorithm (adapte
 -------------------
 
 Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  For example, Chebyshev interpolation offers such a bound, and perhaps other schemes do as well, but such explicit bounds are hard to find and I leave this as an [**open question**](https://mathoverflow.net/questions/424272).
+
+<a id=Approximate_Bernoulli_Factories_for_Power_Series></a>
+### Approximate Bernoulli Factories for Power Series
+
+Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_0 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the _coefficients_, are constant real numbers.
+
+To simulate an approximation of $f$ that comes within $\epsilon$ of $f$, it's enough to:
+
+1. Find the first $n$+1 coefficients such that the polynomial $P(\lambda) = a_0 \lambda^0 + ... + a_n\lambda^n$ is within $\epsilon$ of $f$.  This is relatively easy to do if the coefficients are all 0 or greater and meet the so-called "ratio test"; see Carvalho and Moreira (2022)[^25] for details, especially Algorithm 1 there.  Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor's theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le epsilon$, where $M$ is equal to or greater than the maximum absolute value of $f$'s $n$-th derivative on [0, 1].
+2. Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  Let $b_0, ..., b_n$ be the Bernstein-form polynomial's coefficients.
+3. Flip the input coin _n_ times, then let _j_ be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.
 
 <a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a>
 ### Approximate Bernoulli Factories for Linear Functions
@@ -596,6 +608,8 @@ The following are approximation schemes and hints to simulate a coin of probabil
 [^23]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.
 
 [^24]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
+
+[^25]: Carvalho, Luiz Max, and Guido A. Moreira. "Adaptive truncation of infinite sums: applications to Statistics." arXiv preprint arXiv:2202.06121 (2022)
 
 <a id=Appendix></a>
 ## Appendix

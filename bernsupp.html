@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/17"><meta name="citation_online_date" content="2022/07/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/18"><meta name="citation_online_date" content="2022/07/18"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -25,6 +25,7 @@
 
 <ul>
 <li><a href="#Approximate_Bernoulli_Factories_for_Certain_Functions"><strong>Approximate Bernoulli Factories for Certain Functions</strong></a></li>
+<li><a href="#Approximate_Bernoulli_Factories_for_Power_Series"><strong>Approximate Bernoulli Factories for Power Series</strong></a></li>
 <li><a href="#Approximate_Bernoulli_Factories_for_Linear_Functions"><strong>Approximate Bernoulli Factories for Linear Functions</strong></a></li>
 </ul></li>
 <li><a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a></li>
@@ -53,7 +54,7 @@
 
 <ul>
 <li>If $f$ is continuous, its <em>derivative</em> is, roughly speaking, its &quot;slope&quot; or &quot;velocity&quot; function.  The derivative (or <em>first derivative</em>) is denoted as $f\prime$.  The <em>second derivative</em> (&quot;slope-of-slope&quot;) of $f$, denoted $f\prime\prime$, is the derivative of $f\prime$; the <em>third derivative</em> is the derivative of $f\prime\prime$; and so on.</li>
-<li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&epsilon;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in $f$&#39;s domain and no more than <em>&epsilon;</em> apart.<br>Roughly speaking, the &quot;steepness&quot; of <em>f</em> is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.<br>The function also admits a Hölder exponent <em>&beta;</em> such that 0 &lt; <em>&beta;</em> &lt; <em>&alpha;</em>.</li>
+<li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in $f$&#39;s domain and no more than <em>&delta;</em> apart.<br>Roughly speaking, the &quot;steepness&quot; of <em>f</em> is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.<br>The function also admits a Hölder exponent <em>&beta;</em> such that 0 &lt; <em>&beta;</em> &lt; <em>&alpha;</em>.</li>
 <li>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the &quot;steepness&quot; of <em>f</em> is no greater than that of <em>M</em>*<em>x</em>.<br>If <em>f</em> has a derivative on its domain, <em>L</em> is the maximum absolute value of that derivative.</li>
 </ul>
 
@@ -419,6 +420,20 @@
 <hr>
 
 <p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  For example, Chebyshev interpolation offers such a bound, and perhaps other schemes do as well, but such explicit bounds are hard to find and I leave this as an <a href="https://mathoverflow.net/questions/424272"><strong>open question</strong></a>.</p>
+
+<p><a id=Approximate_Bernoulli_Factories_for_Power_Series></a></p>
+
+<h3>Approximate Bernoulli Factories for Power Series</h3>
+
+<p>Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_0 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the <em>coefficients</em>, are constant real numbers.</p>
+
+<p>To simulate an approximation of $f$ that comes within $\epsilon$ of $f$, it&#39;s enough to:</p>
+
+<ol>
+<li>Find the first $n$+1 coefficients such that the polynomial $P(\lambda) = a_0 \lambda^0 + ... + a_n\lambda^n$ is within $\epsilon$ of $f$.  This is relatively easy to do if the coefficients are all 0 or greater and meet the so-called &quot;ratio test&quot;; see Carvalho and Moreira (2022)[^25] for details, especially Algorithm 1 there.  Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor&#39;s theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le epsilon$, where $M$ is equal to or greater than the maximum absolute value of $f$&#39;s $n$-th derivative on [0, 1].</li>
+<li>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.</li>
+<li>Flip the input coin <em>n</em> times, then let <em>j</em> be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.</li>
+</ol>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a></p>
 
@@ -971,6 +986,8 @@
 <p>[^23]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</p>
 
 <p>[^24]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
+
+<p>[^25]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;Adaptive truncation of infinite sums: applications to Statistics.&quot; arXiv preprint arXiv:2202.06121 (2022)</p>
 
 <p><a id=Appendix></a></p>
 
