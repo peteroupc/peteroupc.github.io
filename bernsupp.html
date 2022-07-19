@@ -378,6 +378,8 @@
 <li>Flip the input coin <em>n</em> times, then let <em>j</em> be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.</li>
 </ol>
 
+<p>In fact, if $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative&#39;s absolute value is bounded above by $Bl^n n^{\gamma n}$ for every $n$), which includes power series as a special case ($\gamma=1$), it&#39;s possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^25]; see also (Gevrey 1918)[^26]).</p>
+
 <p><a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a></p>
 
 <h3>Approximate Bernoulli Factories for Linear Functions</h3>
@@ -930,6 +932,10 @@
 
 <p>[^24]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
 
+<p>[^25]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. &quot;<a href="https://doi.org/10.1016/j.jco.2015.05.001"><strong>Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy</strong></a>.&quot; Journal of Complexity 31, no. 5 (2015): 689-714.</p>
+
+<p>[^26]: M. Gevrey, &quot;Sur la nature analytique des solutions des équations aux dérivées partielles&quot;, 1918.</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -942,7 +948,7 @@
 
 <p>In the academic literature (papers and books), there are many results showing that a polynomial comes within a given error bound of a function <em>f</em>(<em>&lambda;</em>), when <em>f</em> meets certain conditions.  Unfortunately, these error bounds don&#39;t necessarily mean that a sequence of polynomials far from these bounds will obey the consistency requirement, a requirement for simulating <em>f</em> in the Bernoulli factory setting.</p>
 
-<p>Here is one such error bound. Let <em>f</em> have a continuous second derivative on [0, 1], and let <em>M</em> be not less than the maximum absolute value of <em>f</em>&#39;s second derivative.  Then the Bernstein polynomial for <em>f</em> of degree <em>n</em> is within <em>M</em>/(8*<em>n</em>) of <em>f</em>  (Powell 1981)[^5]. Thus, for every <em>n</em>&ge;1:</p>
+<p>Here is one such error bound. Let <em>f</em> have a continuous second derivative on [0, 1], and let <em>M</em> be not less than the maximum absolute value of <em>f</em>&#39;s second derivative.  Then the <em>Bernstein polynomial</em> for <em>f</em> of degree <em>n</em> (which is in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$) is within <em>M</em>/(8*<em>n</em>) of <em>f</em>  (Powell 1981)[^5]. Thus, for every <em>n</em>&ge;1:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>

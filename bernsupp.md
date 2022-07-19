@@ -247,6 +247,8 @@ To simulate an approximation of $f$ that comes within $\epsilon$ of $f$, it's en
 2. Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the coefficients $a_0, ..., a_n$, is the so-called "matrix method" from Ray and Nataraj (2012)[^8].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial's coefficients.
 3. Flip the input coin _n_ times, then let _j_ be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.
 
+In fact, if $f(\lambda)$ belongs in _Gevrey's hierarchy_ (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative's absolute value is bounded above by $Bl^n n^{\gamma n}$ for every $n$), which includes power series as a special case ($\gamma=1$), it's possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^25]; see also (Gevrey 1918)[^26]).
+
 <a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a>
 ### Approximate Bernoulli Factories for Linear Functions
 
@@ -551,6 +553,10 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^24]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
 
+[^25]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. "[**Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy**](https://doi.org/10.1016/j.jco.2015.05.001)." Journal of Complexity 31, no. 5 (2015): 689-714.
+
+[^26]: M. Gevrey, "Sur la nature analytique des solutions des équations aux dérivées partielles", 1918.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -561,7 +567,7 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 In the academic literature (papers and books), there are many results showing that a polynomial comes within a given error bound of a function _f_(_&lambda;_), when _f_ meets certain conditions.  Unfortunately, these error bounds don't necessarily mean that a sequence of polynomials far from these bounds will obey the consistency requirement, a requirement for simulating _f_ in the Bernoulli factory setting.
 
-Here is one such error bound. Let _f_ have a continuous second derivative on [0, 1], and let _M_ be not less than the maximum absolute value of _f_'s second derivative.  Then the Bernstein polynomial for _f_ of degree _n_ is within _M_/(8\*_n_) of _f_  (Powell 1981\)[^5]. Thus, for every _n_&ge;1:
+Here is one such error bound. Let _f_ have a continuous second derivative on [0, 1], and let _M_ be not less than the maximum absolute value of _f_'s second derivative.  Then the _Bernstein polynomial_ for _f_ of degree _n_ (which is in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$) is within _M_/(8\*_n_) of _f_  (Powell 1981\)[^5]. Thus, for every _n_&ge;1:
 
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; _M_ / (8*_n_).
