@@ -126,18 +126,18 @@ For this particular function:
 - Step 1 can read: "(1a.) Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way, then set _n_ to the number of ones generated this way; (1b.) Set _n_ to 2\*_n_ + 2."
 - The _P_ in step 2 is $a_n/g(n) = \frac{1}{n!} / \frac{1}{2^{n-2}} = \frac{2^{n/2}}{n!}$ for each allowed $n$.
 
-cosh(_&lambda;_)&minus;1 and additional target functions are shown in the following table.  (All these functions use the same $g(n)$.)
+cosh(_&lambda;_)&minus;1 and additional target functions are shown in the following table.  (In the table below, $g(n)=1/(2^{h(n)+1})$ where $h(n)$ is the inverse of the "Step 1b" column.)
 
-| Target function _f_(_&lambda;_) | Step 1b reads "Set _n_ to ..." | Value of _P_ |
-  ------- | -------- | --- |
-| cosh(_&lambda;_)&minus;1 | 2\*_n_ + 2. | 2<sup>_n_/2</sup>/(_n_!) |
-| exp(_&lambda;_/4)/2. | _n_. |  1/(2<sup>_n_</sup>\*(_n_!)) |
-| exp(_&lambda;_)/4. | _n_. |  2<sup>_n_&minus;1</sup>/(_n_!) |
-| exp(_&lambda;_)/6. | _n_. |  2<sup>_n_</sup>/(3\*(_n_!)) |
-| exp(_&lambda;_/2)/2. | _n_. | 1/(_n_!) |
-| (exp(_&lambda;_)&minus;1)/2. | _n_ + 1. | 2<sup>_n_&minus;1</sup>/(_n_!) |
-| sinh(_&lambda;_)/2 | 2\*_n_ + 1. | 2<sup>(_n_&minus;1)/2</sup>/(_n_!) |
-| cosh(_&lambda;_)/2 | 2\*_n_. | 2<sup>_n_/2</sup>/(_n_!) |
+| Target function _f_(_&lambda;_) | Step 1b reads "Set _n_ to ..." | $a_n$ | $g(n)$ | Value of _P_ |
+  ------- | -------- | --- | --- | --- |
+| cosh(_&lambda;_)&minus;1 | 2\*_n_ + 2. | 1/(_n_!) | 1/(2<sup>(n&minus;2)/2+1</sup>). | 2<sup>_n_/2</sup>/(_n_!) |
+| exp(_&lambda;_/4)/2. | _n_. | 1/(_n_!\*2\*4<sup>n</sup>) | 1/(2<sup>_n_+1</sup>). |  1/(2<sup>_n_</sup>\*(_n_!)) |
+| exp(_&lambda;_)/4. | _n_. | 1/(_n_!\*4). | 1/(2<sup>_n_+1</sup>). | 2<sup>_n_&minus;1</sup>/(_n_!) |
+| exp(_&lambda;_)/6. | _n_. | 1/(_n_!\*6). | 1/(2<sup>_n_+1</sup>). | 2<sup>_n_</sup>/(3\*(_n_!)) |
+| exp(_&lambda;_/2)/2. | _n_. | 1/(_n_!\*2\*2<sup>n</sup>) | 1/(2<sup>_n_+1</sup>). |1/(_n_!) |
+| (exp(_&lambda;_)&minus;1)/2. | _n_ + 1. | 1/((_n_+1)!\*4). | 1/(2<sup>_n_</sup>). |2<sup>_n_&minus;1</sup>/(_n_!) |
+| sinh(_&lambda;_)/2 | 2\*_n_ + 1. | 1/(_n_!\*2). | 1/(2<sup>(_n_&minus;1)/2+1</sup>). | 2<sup>(_n_&minus;1)/2</sup>/(_n_!) |
+| cosh(_&lambda;_)/2 | 2\*_n_. | 1/(_n_!\*2). | 1/(2<sup>_n_/2+1</sup>). |2<sup>_n_/2</sup>/(_n_!) |
 
 The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number such that 0 &le; _D_ &le; _&phi;_(0), where _&phi;_(.) is the original function.
 
