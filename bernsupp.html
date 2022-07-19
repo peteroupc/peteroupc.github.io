@@ -18,7 +18,7 @@
 <li><a href="#General_Factory_Functions"><strong>General Factory Functions</strong></a>
 
 <ul>
-<li><a href="#Approximation_Schemes"><strong>Approximation Schemes</strong></a></li>
+<li><a href="#Building_the_Lower_and_Upper_Polynomials"><strong>Building the Lower and Upper Polynomials</strong></a></li>
 </ul></li>
 <li><a href="#Approximate_Bernoulli_Factories"><strong>Approximate Bernoulli Factories</strong></a>
 
@@ -29,7 +29,7 @@
 </ul></li>
 <li><a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a></li>
 <li><a href="#Complexity"><strong>Complexity</strong></a></li>
-<li><a href="#Examples_of_Bernoulli_Factory_Approximation_Schemes"><strong>Examples of Bernoulli Factory Approximation Schemes</strong></a></li>
+<li><a href="#Examples_of_Bernoulli_Factory_Polynomial_Building_Schemes"><strong>Examples of Bernoulli Factory Polynomial-Building Schemes</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
@@ -38,8 +38,8 @@
 <li><a href="#Which_functions_admit_a_Bernoulli_factory"><strong>Which functions admit a Bernoulli factory?</strong></a></li>
 <li><a href="#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>Which functions don&#39;t require outside randomness to simulate?</strong></a></li>
 <li><a href="#Multiple_Output_Bernoulli_Factory"><strong>Multiple-Output Bernoulli Factory</strong></a></li>
-<li><a href="#Proofs_for_Function_Approximation_Schemes"><strong>Proofs for Function Approximation Schemes</strong></a></li>
-<li><a href="#Example_of_Approximation_Scheme"><strong>Example of Approximation Scheme</strong></a></li>
+<li><a href="#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial-Building Schemes</strong></a></li>
+<li><a href="#Example_of_Polynomial_Building_Scheme"><strong>Example of Polynomial-Building Scheme</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -91,11 +91,11 @@
 
 <p>In this document, <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) mean the <em>k</em><sup>th</sup> coefficient for the lower or upper degree-<em>n</em> polynomial in Bernstein form, respectively, where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
-<p><a id=Approximation_Schemes></a></p>
+<p><a id=Building_the_Lower_and_Upper_Polynomials></a></p>
 
-<h3>Approximation Schemes</h3>
+<h3>Building the Lower and Upper Polynomials</h3>
 
-<p>A <em>factory function</em> <em>f</em>(<em>&lambda;</em>) is a function for which the Bernoulli factory problem can be solved (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;). The following are approximation schemes for <em>f</em> if it belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function <em>f</em> using a computer algebra system to see if it belongs to any of the classes of functions described below.</p>
+<p>A <em>factory function</em> <em>f</em>(<em>&lambda;</em>) is a function for which the Bernoulli factory problem can be solved (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;). The following are ways to build sequences of polynomials that appropriately converge to <em>f</em> if <em>f</em> belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function <em>f</em> using a computer algebra system to see if it belongs to any of the classes of functions described below.</p>
 
 <p><strong>Concave functions.</strong> If <em>f</em> is known to be <em>concave</em> on the interval [0, 1] (which roughly means that its rate of growth there never goes up), then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.</p>
 
@@ -166,7 +166,7 @@
 </ol>
 </blockquote>
 
-<p><strong>Certain functions that equal 0 at 0.</strong> This approach involves transforming the function <em>f</em> so that it no longer equals 0 at the point 0.  This can be done by dividing <em>f</em> by a function (<em>h</em>(<em>&lambda;</em>)) that &quot;dominates&quot; <em>f</em> at every point in the interval [0, 1].  Unlike for the original function, there might be an approximation scheme described earlier in this section for the transformed function.</p>
+<p><strong>Certain functions that equal 0 at 0.</strong> This approach involves transforming the function <em>f</em> so that it no longer equals 0 at the point 0.  This can be done by dividing <em>f</em> by a function (<em>h</em>(<em>&lambda;</em>)) that &quot;dominates&quot; <em>f</em> at every point in the interval [0, 1].  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.</p>
 
 <p>More specifically, <em>h</em>(<em>&lambda;</em>) must meet the following requirements:</p>
 
@@ -256,7 +256,7 @@
 <p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and from below by <em>&omega;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: <code>fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
 </blockquote>
 
-<p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit an approximation scheme under the convex, concave, twice differentiable, and Hölder classes:</p>
+<p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit an polynomial-building scheme under the convex, concave, twice differentiable, and Hölder classes:</p>
 
 <table><thead>
 <tr>
@@ -287,7 +287,7 @@
 </tr>
 </tbody></table>
 
-<p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial approximation scheme for certain factory functions.</p>
+<p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial-building scheme for certain factory functions.</p>
 
 <p><a id=Approximate_Bernoulli_Factories></a></p>
 
@@ -348,7 +348,7 @@
 <td>Lipschitz continuous with constant <em>L</em></td>
 <td><em>&epsilon;</em> = <em>L</em>*sqrt(1/(4*<em>n</em>)).</td>
 <td><em>n</em> = ceil(x<sup>2</sup>/(4*<em>&epsilon;</em><sup>2</sup>)).</td>
-<td>Special case of previous scheme.</td>
+<td>Special case of previous entry.</td>
 </tr>
 </tbody></table>
 
@@ -362,7 +362,7 @@
 
 <hr>
 
-<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  For example, Chebyshev interpolation offers such a bound, and perhaps other schemes do as well, but such explicit bounds are hard to find and I leave this as an <a href="https://mathoverflow.net/questions/424272"><strong>open question</strong></a>.</p>
+<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  For example, Chebyshev interpolation offers such a bound, and perhaps other schemes do as well, but such explicit bounds are hard to find and I leave this as an <a href="https://mathoverflow.net/questions/424272"><strong>open question</strong></a>.  As another alternative, rational functions (ratios of two polynomials) can serve as the functions that approximate $f$.</p>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Power_Series></a></p>
 
@@ -469,11 +469,11 @@
 
 <p>A similar analysis to the one above can be used to find the expected (&quot;long-run average&quot;) time complexity of many Bernoulli factory algorithms.</p>
 
-<p><a id=Examples_of_Bernoulli_Factory_Approximation_Schemes></a></p>
+<p><a id=Examples_of_Bernoulli_Factory_Polynomial_Building_Schemes></a></p>
 
-<h2>Examples of Bernoulli Factory Approximation Schemes</h2>
+<h2>Examples of Bernoulli Factory Polynomial-Building Schemes</h2>
 
-<p>The following are approximation schemes and hints to simulate a coin of probability <em>f</em>(<em>&lambda;</em>) given an input coin with probability of heads of <em>&lambda;</em>.  The schemes were generated automatically using <code>approxscheme2</code> and have not been rigorously verified for correctness.</p>
+<p>The following are polynomial-building schemes and hints to simulate a coin of probability <em>f</em>(<em>&lambda;</em>) given an input coin with probability of heads of <em>&lambda;</em>.  The schemes were generated automatically using <code>approxscheme2</code> and have not been rigorously verified for correctness.</p>
 
 <ul>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>min(1/2, <em>&lambda;</em>)</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
@@ -940,7 +940,7 @@
 
 <h3>Failures of the Consistency Requirement</h3>
 
-<p>In the academic literature (papers and books), there are many results showing that a polynomial comes within a given error bound of a function <em>f</em>(<em>&lambda;</em>), when <em>f</em> meets certain conditions.  Unfortunately, these error bounds don&#39;t necessarily obey the consistency requirement, which is needed to simulate <em>f</em> in the Bernoulli factory setting.</p>
+<p>In the academic literature (papers and books), there are many results showing that a polynomial comes within a given error bound of a function <em>f</em>(<em>&lambda;</em>), when <em>f</em> meets certain conditions.  Unfortunately, these error bounds don&#39;t necessarily mean that a sequence of polynomials far from these bounds will obey the consistency requirement, a requirement for simulating <em>f</em> in the Bernoulli factory setting.</p>
 
 <p>Here is one such error bound. Let <em>f</em> have a continuous second derivative on [0, 1], and let <em>M</em> be not less than the maximum absolute value of <em>f</em>&#39;s second derivative.  Then the Bernstein polynomial for <em>f</em> of degree <em>n</em> is within <em>M</em>/(8*<em>n</em>) of <em>f</em>  (Powell 1981)[^5]. Thus, for every <em>n</em>&ge;1:</p>
 
@@ -951,7 +951,7 @@
 
 <p>Where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
-<p>The counterexample involves the function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, which has a continuous second derivative.</p>
+<p>The example against the consistency requirement involves the function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, which has a continuous second derivative.</p>
 
 <p>For <em>g</em>, the coefficients for&mdash;</p>
 
@@ -968,7 +968,7 @@
 
 <p>As can be seen, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
 
-<p><strong>Note on &quot;clamping&quot;.</strong> In addition, for any approximation scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.  Here is a counterexample that applies to any approximation scheme.</p>
+<p><strong>Note on &quot;clamping&quot;.</strong> In addition, for any polynomial-building scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.  Here is an example that applies to any scheme.</p>
 
 <p>Let <em>g</em> and <em>h</em> be two polynomials in Bernstein form as follows:</p>
 
@@ -979,7 +979,7 @@
 
 <p>After elevating <em>g</em>&#39;s degree, <em>g</em>&#39;s coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.</p>
 
-<p>However, by clamping coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.</p>
+<p>However, by clamping coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistency property.</p>
 
 <p><a id=Which_functions_admit_a_Bernoulli_factory></a></p>
 
@@ -987,7 +987,7 @@
 
 <p>Let <em>f</em>(<em>&lambda;</em>) be a function whose domain is the <em>closed</em> interval [0, 1] or a subset of it, and that maps its domain to [0, 1].  The domain of <em>f</em> gives the allowable values of <em>&lambda;</em>, which is the input coin&#39;s probability of heads.</p>
 
-<p><em>f</em> admits a Bernoulli factory if and only if <em>f</em> is constant on its domain, or is continuous and <em>polynomially bounded</em> on its domain, as defined in the section &quot;Proofs for Function Approximation Schemes&quot; (Keane and O&#39;Brien 1994)[^14].</p>
+<p><em>f</em> admits a Bernoulli factory if and only if <em>f</em> is constant on its domain, or is continuous and <em>polynomially bounded</em> on its domain, as defined later in the section &quot;Proofs for Polynomial-Building Schemes&quot; (Keane and O&#39;Brien 1994)[^14].</p>
 
 <p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory:</p>
 
@@ -1242,11 +1242,11 @@
 
 <p><small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)[^19].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>&lambda;</em>.</small></p>
 
-<p><a id=Proofs_for_Function_Approximation_Schemes></a></p>
+<p><a id=Proofs_for_Polynomial_Building_Schemes></a></p>
 
-<h3>Proofs for Function Approximation Schemes</h3>
+<h3>Proofs for Polynomial-Building Schemes</h3>
 
-<p>This section shows mathematical proofs for some of the approximation schemes of this page.</p>
+<p>This section shows mathematical proofs for some of the polynomial-building schemes of this page.</p>
 
 <p>In the following results:</p>
 
@@ -1328,7 +1328,7 @@
 <li><em>&omega;(sqrt(1/(2*n))).</em></li>
 </ul>
 
-<p><em>If the infinite series &eta;(n) converges, then the following approximation scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)[^1], for every integer n&ge;1 that&#39;s a power of 2, by defining <strong>fabove</strong> and <strong>fbelow</strong> as follows:</em></p>
+<p><em>If the infinite series &eta;(n) converges, then the following scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)[^1], for every integer n&ge;1 that&#39;s a power of 2, by defining <strong>fabove</strong> and <strong>fbelow</strong> as follows:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &eta;(n).</em></li>
@@ -1355,7 +1355,7 @@
 <p><strong>Note:</strong> There is only one solution <em>&eta;</em>(<em>n</em>) in the case at hand.  Unlike so-called <a href="https://math.stackexchange.com/questions/3993739"><strong><em>functional equations</em></strong></a> and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in the case at hand, namely the solution that makes the series converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(4 * <em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(8 * <em>n</em>) &minus; <em>&phi;</em>(4*<em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = ...</p>
 </blockquote>
 
-<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; in the interval (0, 1], then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; in the interval (0, 1], then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &delta;(n).</em></li>
@@ -1370,7 +1370,7 @@
 <p><strong>Note:</strong> For specific values of <em>&alpha;</em>, the equation <em>D</em>(<em>n</em>) = <em>D</em>(2 * <em>n</em>) + <em>&phi;</em>(<em>n</em>) can be solved via linear recurrences; an example for <em>&alpha;</em> = 1/2 is the following code in Python that uses the SymPy computer algebra library: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()</code>.  Trying different values of <em>&alpha;</em> suggested the following formula for Hölder continuous functions with <em>&alpha;</em> of 1/<em>j</em> or greater: (<em>M</em>* &sum;<sub><em>i</em> = 0,...,(<em>j</em>*2)&minus;1</sub> 2<sup><em>i</em>/(2*<em>j</em>)</sup>)/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>&minus;1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>
 </blockquote>
 
-<p><strong>Corollary 2.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Corollary 2.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
@@ -1393,7 +1393,7 @@
 
 <p><em>Proof.</em>  Follows from Theorem 1 and part 1 of Lemma 2 above, as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the <em>&phi;</em> given in this theorem, the series <em>&eta;</em>(<em>n</em>) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1&#39;s assumption that the series converges, so that <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
 
-<p><strong>Corollary 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If f is Hölder  continuous with Hölder constant M and with Hölder exponent &alpha; in the interval (0, 1], then the following approximation scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Corollary 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If f is Hölder  continuous with Hölder constant M and with Hölder exponent &alpha; in the interval (0, 1], then the following scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; &eta;(n).</em></li>
@@ -1404,7 +1404,7 @@
 
 <p><em>Proof.</em> Follows from Theorem 2 by using the <em>&omega;</em> given in part 2 of Lemma 2. &#x25a1;</p>
 
-<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the following approximation scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the following scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M/(7*n).</em></li>
@@ -1420,8 +1420,8 @@
 <p><strong>Proposition 1.</strong></p>
 
 <ol>
-<li><em>Let f be as given in any of Theorems 1 through 4, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the approximation scheme of that theorem remains valid if <strong>fbelow</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
-<li><em>Let f be as given in any of Theorems 1 through 4, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the approximation scheme of that theorem remains valid if <strong>fabove</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
+<li><em>Let f be as given in any of Theorems 1 through 4, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the scheme of that theorem remains valid if <strong>fbelow</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
+<li><em>Let f be as given in any of Theorems 1 through 4, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the scheme of that theorem remains valid if <strong>fabove</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
 <li><p><em>Theorems 1 through 4 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;</em></p>
 
 <ul>
@@ -1432,15 +1432,15 @@
 <p><em>for every integer n&ge;1 other than a power of 2. Parts 1 and 2 of this proposition still apply to the modified scheme.</em></p></li>
 </ol>
 
-<p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein approximations of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)[^1]. &#x25a1;</p>
+<p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein polynomials of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)[^1]. &#x25a1;</p>
 
-<p><a id=Example_of_Approximation_Scheme></a></p>
+<p><a id=Example_of_Polynomial_Building_Scheme></a></p>
 
-<h3>Example of Approximation Scheme</h3>
+<h3>Example of Polynomial-Building Scheme</h3>
 
-<p>The following example uses the results above to build an approximation scheme for a factory function.</p>
+<p>The following example uses the results above to build an polynomial-building scheme for a factory function.</p>
 
-<p>Let <em>f</em>(<em>&lambda;</em>) = 0 if <em>&lambda;</em> is 0, and (ln(<em>&lambda;</em>/exp(3)))<sup>&minus;2</sup> otherwise.  Then the following approximation scheme is valid in the sense of Theorem 1:</p>
+<p>Let <em>f</em>(<em>&lambda;</em>) = 0 if <em>&lambda;</em> is 0, and (ln(<em>&lambda;</em>/exp(3)))<sup>&minus;2</sup> otherwise.  Then the following scheme is valid in the sense of Theorem 1:</p>
 
 <ul>
 <li><em>&eta;</em>(<em>k</em>) = &Phi;(1, 2, (ln(<em>k</em>)+ln(7)+6)/ln(2))*4/ln(2)<sup>2</sup>.</li>
@@ -1468,7 +1468,7 @@
 
 <p>where &Phi;(.) is the Lerch transcendent.  This <em>&eta;</em> matches the <em>&eta;</em> given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because <em>f</em> is concave.</p>
 
-<p>the following code in Python that uses the SymPy computer algebra library is an example of finding the parameters for this approximation scheme.</p>
+<p>the following code in Python that uses the SymPy computer algebra library is an example of finding the parameters for this polynomial-building scheme.</p>
 
 <pre>px=Piecewise((0,Eq(x,0)),((ln(x/exp(3))**-2),True))
 # omega is modulus of continuity.  Since
