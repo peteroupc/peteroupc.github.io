@@ -106,7 +106,7 @@ Then the key to simulating these functions is to "tuck" the values $a_n$ under a
 >
 > 1. Assuming $f(1) \ne 0$, an appropriate $g(n)$ is trivial to find &mdash; $g(n)=a_n/f(1)$ (because $a_n \le f(1)$ for every allowed $n$).  But in general, this can make $g(n)$ an irrational number and thus harder to handle with arbitrary precision.
 > 2. If the coefficients $a_n$ sum to 1, then $g(n)$ can equal $a_n$.  In this case, $f(\lambda)$ is what's called the _probability generating function_ for getting $X$ with probability $a_X$ (or $g(X)$).  See also (Dughmi et al. 2021)[^1].  The expected value ("long-run average") of $X$ equals the "slope" of $f(\lambda)$ at 1.
-> 3. Assuming $f(1)$ is an irrational number, $g(n)$ can equal $a_n + c_n/2^n$, where $c_n$ is the $n$-th base-2 digit after the point in the binary expansion of $1 - f(1)$ (or 0 if $n=0$).  Here, a number's _binary expansion_ is written as `0.bbbbb` in base 2, where `b` is a base-2 digit (either 0 or 1).  See my [**Stack Exchange question**](https://math.stackexchange.com/questions/4495216).
+> 3. Assuming $f(1)$ is an irrational number, $g(n)$ can equal $a_n + c_n/2^n$, where $c_n$ is the $n$-th base-2 digit after the point in the binary expansion of $1 - f(1)$ (or 0 if $n=0$).  Here, a number's _binary expansion_ is written as `0.bbbbb...` in base 2, where each `b` is a base-2 digit (either 0 or 1).  See my [**Stack Exchange question**](https://math.stackexchange.com/questions/4495216).
 
 Once $a_n$ and $g(n)$ are found, the function $f(\lambda)$ can be simulated using the following algorithm, which takes advantage of the [**convex combination method**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations).
 
@@ -118,7 +118,7 @@ And now for examples.
 
 cosh(_&lambda;_)&minus;1 can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} g(n) \frac{a_n \lambda^n}{g(n)},$$ where:
 
-- Each sum given above is taken over all values of _n_ that can occur after sstep 1 is complete (in this case, all values of _n_ that are even and greater than 0).
+- Each sum given above is taken over all values of _n_ that can occur after step 1 is complete (in this case, all values of _n_ that are even and greater than 0).
 - $a_n$ is $1/(n!)$.[^2]
 - The coefficients $a_n$ are tucked under a function $g(n)$, which in this case is $\frac{1}{2^{n-2}}$ if _n_&gt;0 and _n_ is even[^3], or 0 otherwise.
 
