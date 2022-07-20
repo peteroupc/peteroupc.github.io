@@ -104,8 +104,9 @@ Then the key to simulating these functions is to "tuck" the values $a_n$ under a
 
 > **Notes:**
 >
-> 1. Unless $f(1)=0$, an appropriate $g(n)$ is trivial to find &mdash; $g(n)=a_n/f(1)$ (because $a_n \le f(1)$ for every allowed $n$).  But in general, this can make $g(n)$ an irrational number and thus harder to handle with arbitrary precision.  Thus, a rational-only $g(n)$ would be nice to have.
+> 1. Assuming $f(1) \ne 0$, an appropriate $g(n)$ is trivial to find &mdash; $g(n)=a_n/f(1)$ (because $a_n \le f(1)$ for every allowed $n$).  But in general, this can make $g(n)$ an irrational number and thus harder to handle with arbitrary precision.
 > 2. If the coefficients $a_n$ sum to 1, then $g(n)$ can equal $a_n$.  In this case, $f(\lambda)$ is what's called the _probability generating function_ for getting $X$ with probability $a_X$ (or $g(X)$).  See also (Dughmi et al. 2021)[^1].  The expected value ("long-run average") of $X$ equals the "slope" of $f(\lambda)$ at 1.
+> 3. Assuming $f(1)$ is an irrational number, $g(n)$ can equal $a_n + c_n/2^n$, where $c_n$ is the $n$-th base-2 digit after the point in the binary expansion of $1 - f(1)$ (or 0 if $n=0$).  Here, a number's _binary expansion_ is written as `0.bbbbb` in base 2, where `b` is a base-2 digit (either 0 or 1).  See my [**Stack Exchange question**](https://math.stackexchange.com/questions/4495216).
 
 Once $a_n$ and $g(n)$ are found, the function $f(\lambda)$ can be simulated using the following algorithm, which takes advantage of the [**convex combination method**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations).
 
@@ -117,9 +118,9 @@ And now for examples.
 
 cosh(_&lambda;_)&minus;1 can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} g(n) \frac{a_n \lambda^n}{g(n)},$$ where:
 
-- Each sum given above is taken over all values of _n_ that are even and greater than 0.
+- Each sum given above is taken over all values of _n_ that can occur after sstep 1 is complete (in this case, all values of _n_ that are even and greater than 0).
 - $a_n$ is $1/(n!)$.[^2]
-- The coefficients $a_n$ are tucked under a function $g(n)$, which is $\frac{1}{2^{n-2}}$ if _n_&gt;0 and _n_ is even[^3], or 0 otherwise.
+- The coefficients $a_n$ are tucked under a function $g(n)$, which in this case is $\frac{1}{2^{n-2}}$ if _n_&gt;0 and _n_ is even[^3], or 0 otherwise.
 
 For this particular function:
 
@@ -130,23 +131,23 @@ cosh(_&lambda;_)&minus;1 and additional target functions are shown in the follow
 
 | Target function _f_(_&lambda;_) | Step 1b reads "Set _n_ to ..." | $a_n$ | $g(n)$ | Value of _P_ |
   ------- | -------- | --- | --- | --- |
-| cosh(_&lambda;_)&minus;1 | 2\*_n_ + 2. | 1/(_n_!) | 1/(2<sup>(n&minus;2)/2+1</sup>). | 2<sup>_n_/2</sup>/(_n_!) |
-| exp(_&lambda;_/4)/2. | _n_. | 1/(_n_!\*2\*4<sup>n</sup>) | 1/(2<sup>_n_+1</sup>). |  1/(2<sup>_n_</sup>\*(_n_!)) |
-| exp(_&lambda;_)/4. | _n_. | 1/(_n_!\*4). | 1/(2<sup>_n_+1</sup>). | 2<sup>_n_&minus;1</sup>/(_n_!) |
-| exp(_&lambda;_)/6. | _n_. | 1/(_n_!\*6). | 1/(2<sup>_n_+1</sup>). | 2<sup>_n_</sup>/(3\*(_n_!)) |
-| exp(_&lambda;_/2)/2. | _n_. | 1/(_n_!\*2\*2<sup>n</sup>) | 1/(2<sup>_n_+1</sup>). |1/(_n_!) |
-| (exp(_&lambda;_)&minus;1)/2. | _n_ + 1. | 1/((_n_+1)!\*4). | 1/(2<sup>_n_</sup>). |2<sup>_n_&minus;1</sup>/(_n_!) |
-| sinh(_&lambda;_)/2 | 2\*_n_ + 1. | 1/(_n_!\*2). | 1/(2<sup>(_n_&minus;1)/2+1</sup>). | 2<sup>(_n_&minus;1)/2</sup>/(_n_!) |
-| cosh(_&lambda;_)/2 | 2\*_n_. | 1/(_n_!\*2). | 1/(2<sup>_n_/2+1</sup>). |2<sup>_n_/2</sup>/(_n_!) |
+| cosh(_&lambda;_)&minus;1. | 2\*_n_ + 2. | 1/(_n_!). | 1/(2<sup>(n&minus;2)/2+1</sup>). | 2<sup>_n_/2</sup>/(_n_!). |
+| exp(_&lambda;_/4)/2. | _n_. | 1/(_n_!\*2\*4<sup>_n_</sup>) | 1/(2<sup>_n_+1</sup>). |  1/(2<sup>_n_</sup>\*(_n_!)). |
+| exp(_&lambda;_)/4. | _n_. | 1/(_n_!\*4). | 1/(2<sup>_n_+1</sup>). | 2<sup>_n_&minus;1</sup>/(_n_!). |
+| exp(_&lambda;_)/6. | _n_. | 1/(_n_!\*6). | 1/(2<sup>_n_+1</sup>). | 2<sup>_n_</sup>/(3\*(_n_!)). |
+| exp(_&lambda;_/2)/2. | _n_. | 1/(_n_!\*2\*2<sup>_n_</sup>) | 1/(2<sup>_n_+1</sup>). |1/(_n_!). |
+| (exp(_&lambda;_)&minus;1)/2. | _n_ + 1. | 1/((_n_+1)!\*4). | 1/(2<sup>_n_</sup>). |2<sup>_n_&minus;1</sup>/(_n_!). |
+| sinh(_&lambda;_)/2 | 2\*_n_ + 1. | 1/(_n_!\*2). | 1/(2<sup>(_n_&minus;1)/2+1</sup>). | 2<sup>(_n_&minus;1)/2</sup>/(_n_!). |
+| cosh(_&lambda;_)/2 | 2\*_n_. | 1/(_n_!\*2). | 1/(2<sup>_n_/2+1</sup>). |2<sup>_n_/2</sup>/(_n_!). |
 
 The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number such that 0 &le; _D_ &le; _&phi;_(0), where _&phi;_(.) is the original function.
 
 | Original function (_&phi;_(_&lambda;_)) | Target function _f_(_&lambda;_) | Step 1b reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- | --- |
-| exp(_&lambda;_)/4 | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/4&minus;_D_)\*2 or (_&phi;_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. |
-| exp(_&lambda;_)/6  | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. |
-| exp(_&lambda;_/2)/2  | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. |
-| cosh(_&lambda;_)/4 | _&phi;_(_&lambda;_) &minus; _D_. | 2\*_n_. | (1/4&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_/2</sup>/(2\*(_n_!)) otherwise. |
+| exp(_&lambda;_)/4. | _&phi;_(_&lambda;_) &minus; _D_. | _n_. | (1/4&minus;_D_)\*2 or (_&phi;_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. |
+| exp(_&lambda;_)/6.  | _&phi;_(_&lambda;_) &minus; _D_. | _n_. | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. |
+| exp(_&lambda;_/2)/2.  | _&phi;_(_&lambda;_) &minus; _D_. | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. |
+| cosh(_&lambda;_)/4. | _&phi;_(_&lambda;_) &minus; _D_. | 2\*_n_. | (1/4&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_/2</sup>/(2\*(_n_!)) otherwise. |
 
 > **Note:**
 >
