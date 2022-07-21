@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2022/07/18"><meta name="citation_online_date" content="2022/07/18"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2022/07/21"><meta name="citation_online_date" content="2022/07/21"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -889,7 +889,7 @@
 
 <h4>Certain Converging Series</h4>
 
-<p>A general-purpose algorithm was given by Mendo (2020)[^28] that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;</p>
+<p>A general-purpose algorithm was given by Mendo (2020/2021)[^28] that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;</p>
 
 <ul>
 <li>that has the form <em>a</em>[0] + <em>a</em>[1] + ..., where <em>a</em>[<em>n</em>] are all rational numbers greater than 0 and sum to <em>p</em> (in other words, the series <em>converges</em> to <em>p</em>), and</li>
@@ -941,6 +941,8 @@
 </ol>
 
 <blockquote>
+<p><strong>Note:</strong> Mendo (2020/2021)[^28] as well as Carvalho and Moreira (2022)[^65] discuss how to find error bounds on &quot;cutting off&quot; a series that work for many infinite series.  This can be helpful in finding the appropriate sequences <em>a</em> and <em>err</em> needed for the first algorithm in this section.</p>
+
 <p><strong>Examples</strong>:</p>
 
 <ul>
@@ -2451,7 +2453,7 @@ kind of irrational number.</p>
 
 <h4>Euler&ndash;Mascheroni constant <em>&gamma;</em></h4>
 
-<p>The following algorithm to simulate the Euler&ndash;Mascheroni constant <em>&gamma;</em> (about 0.5772) is due to Mendo (2020)[^28].  This solves an open question given in (Flajolet et al., 2010)[^1].   The series used was given by Sondow (2005)[^60]. An algorithm for <em>&gamma;</em> appears here even though it is not yet known whether this constant is irrational.</p>
+<p>The following algorithm to simulate the Euler&ndash;Mascheroni constant <em>&gamma;</em> (about 0.5772) is due to Mendo (2020/2021)[^28].  This solves an open question given in (Flajolet et al., 2010)[^1].   The series used was given by Sondow (2005)[^60]. An algorithm for <em>&gamma;</em> appears here even though it is not yet known whether this constant is irrational.</p>
 
 <ol>
 <li>Set <em>&#x03F5;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, <em>k</em>, and <em>prev</em> to 0 each.</li>
@@ -2469,7 +2471,7 @@ kind of irrational number.</p>
 
 <h4>exp(&minus;<em>x</em>/<em>y</em>) * <em>z</em>/<em>t</em></h4>
 
-<p>This algorithm is again based on an algorithm due to Mendo (2020)[^28].  In this algorithm, <em>x</em>, <em>y</em>, <em>z</em>, and <em>t</em> are integers greater than 0, except <em>x</em> and/or <em>z</em> may be 0, and must be such that exp(&minus;<em>x</em>/<em>y</em>) * <em>z</em>/<em>t</em> is in the interval [0, 1].</p>
+<p>This algorithm is again based on an algorithm due to Mendo (2020/2021)[^28].  In this algorithm, <em>x</em>, <em>y</em>, <em>z</em>, and <em>t</em> are integers greater than 0, except <em>x</em> and/or <em>z</em> may be 0, and must be such that exp(&minus;<em>x</em>/<em>y</em>) * <em>z</em>/<em>t</em> is in the interval [0, 1].</p>
 
 <ol>
 <li>If <em>z</em> is 0, return 0.  If <em>x</em> is 0, return a number that is 1 with probability <em>z</em>/<em>t</em> and 0 otherwise.</li>
@@ -2603,7 +2605,7 @@ kind of irrational number.</p>
 
 <p>[^27]: Penaud, J.G., Roques, O., &quot;Tirage à pile ou face de mots de Fibonacci&quot;, <em>Discrete Mathematics</em> 256, 2002.</p>
 
-<p>[^28]: Mendo, L., &quot;<a href="https://arxiv.org/abs/2010.14901"><strong>Simulating a coin with irrational bias using rational arithmetic</strong></a>&quot;, arXiv:2010.14901 [math.PR], 2020.</p>
+<p>[^28]: Mendo, L., &quot;<a href="https://arxiv.org/abs/2010.14901"><strong>Simulating a coin with irrational bias using rational arithmetic</strong></a>&quot;, arXiv:2010.14901 [math.PR], 2020/2021.</p>
 
 <p>[^29]: The error term, which follows from the so-called Lagrange remainder for Taylor series, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that <em>f</em>&#39;s slope, slope-of-slope, etc. functions can achieve.</p>
 
@@ -2677,6 +2679,8 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <p>[^63]: Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</p>
 
 <p>[^64]: Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</p>
+
+<p>[^65]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
 
 <p><a id=Appendix></a></p>
 

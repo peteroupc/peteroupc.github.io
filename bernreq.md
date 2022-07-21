@@ -20,6 +20,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Formal Statement**](#Formal_Statement)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**Questions**](#Questions)
+    - [**Key Problems**](#Key_Problems)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
     - [**Questions**](#Questions_2)
 - [**Reverse-time martingales**](#Reverse_time_martingales)
@@ -105,6 +106,24 @@ Thus the questions are:
 3. Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in $[0,1]$?
 
 One example worth pondering is $f(\lambda)=sin(\lambda\pi/2)=cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.
+
+<a id=Key_Problems></a>
+### Key Problems
+
+1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:**
+    - **A reasonably small integer $n>0$ such that there is a polynomial $P(x)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(x) - f(x)| \le \epsilon$.**
+    - **The Bernstein coefficients of P(x).**
+2. **Same as problem 1, except that $P(x)$ is a rational function.**
+3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the Formal Statement above, together with their Bernstein coefficients.**
+
+Assumptions on $f(\lambda)$ can include any combination of the following:
+
+- $f(\lambda)$ has $k$ continuous derivatives for some fixed $k$ (possibly with a known bound on those derivatives).
+- $f(\lambda)$ is real analytic.
+- $f(\lambda)$ is concave.
+- $f(\lambda)$ is strictly increasing.
+- $f(\lambda)$ has a Lipschitz-continuous $k$ derivative for some fixed $k$.
+- $f(\lambda)$ belongs to Gevrey's hierarchy (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
@@ -474,3 +493,4 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021).
 - Güntürk, C. Sinan, and Weilin Li. "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 (2021).
 - Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.
+- Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. "[**Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy**](https://doi.org/10.1016/j.jco.2015.05.001)." Journal of Complexity 31, no. 5 (2015): 689-714.

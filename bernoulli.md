@@ -601,7 +601,7 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series
 
-A general-purpose algorithm was given by Mendo (2020\)[^28] that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;
+A general-purpose algorithm was given by Mendo (2020/2021\)[^28] that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;
 
 - that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all rational numbers greater than 0 and sum to _p_ (in other words, the series _converges_ to _p_), and
 - for which a sequence of rational numbers _err_\[0\], _err_\[1\], ... is available that is nonincreasing and has a limit of 0 (_converges_ to 0), where _err_\[_n_\] equals or is greater than the error from "cutting off" the series _a_ after summing the first _n_+1 terms.
@@ -638,6 +638,8 @@ The case when the sequence _a_ converges to a _natural logarithm_ rather than a 
     2. If _E_ is less than _inf_+_intinf_, return 0.  If _E_ is less than _sup_+_intinf_, go to the next step.  If  neither is the case, return 1.
     3. Set _n_ to 1.
 
+> **Note:** Mendo (2020/2021\)[^28] as well as Carvalho and Moreira (2022)[^65] discuss how to find error bounds on "cutting off" a series that work for many infinite series.  This can be helpful in finding the appropriate sequences _a_ and _err_ needed for the first algorithm in this section.
+>
 > **Examples**:
 >
 > - Let _f_(_&lambda;_) = cosh(1)&minus;1.  This function can be rewritten as a series required by the first algorithm in this section, namely _f_'s _Taylor series_ at 0.  Then this algorithm can be used with _a_\[_i_] = 1/(((_i_+1)\*2)!) and _err_\[_i_] = 2/((((_i_+1)\*2)+1)!). [^29]
@@ -1657,7 +1659,7 @@ See "More Algorithms for Arbitrary-Precision Sampling" for another way to sample
 <a id=Euler_ndash_Mascheroni_constant___gamma></a>
 #### Euler&ndash;Mascheroni constant _&gamma;_
 
-The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;_ (about 0.5772) is due to Mendo (2020\)[^28].  This solves an open question given in (Flajolet et al., 2010\)[^1].   The series used was given by Sondow (2005\)[^60]. An algorithm for _&gamma;_ appears here even though it is not yet known whether this constant is irrational.
+The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;_ (about 0.5772) is due to Mendo (2020/2021\)[^28].  This solves an open question given in (Flajolet et al., 2010\)[^1].   The series used was given by Sondow (2005\)[^60]. An algorithm for _&gamma;_ appears here even though it is not yet known whether this constant is irrational.
 
 1. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, _k_, and _prev_ to 0 each.
 2. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
@@ -1672,7 +1674,7 @@ The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;
 <a id=exp_minus__x___y___z___t></a>
 #### exp(&minus;_x_/_y_) \* _z_/_t_
 
-This algorithm is again based on an algorithm due to Mendo (2020\)[^28].  In this algorithm, _x_, _y_, _z_, and _t_ are integers greater than 0, except _x_ and/or _z_ may be 0, and must be such that exp(&minus;_x_/_y_) \* _z_/_t_ is in the interval [0, 1].
+This algorithm is again based on an algorithm due to Mendo (2020/2021\)[^28].  In this algorithm, _x_, _y_, _z_, and _t_ are integers greater than 0, except _x_ and/or _z_ may be 0, and must be such that exp(&minus;_x_/_y_) \* _z_/_t_ is in the interval [0, 1].
 
 1. If _z_ is 0, return 0.  If _x_ is 0, return a number that is 1 with probability _z_/_t_ and 0 otherwise.
 2. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, and _k_ to 0 each.
@@ -1787,7 +1789,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^27]: Penaud, J.G., Roques, O., "Tirage à pile ou face de mots de Fibonacci", _Discrete Mathematics_ 256, 2002.
 
-[^28]: Mendo, L., "[**Simulating a coin with irrational bias using rational arithmetic**](https://arxiv.org/abs/2010.14901)", arXiv:2010.14901 [math.PR], 2020.
+[^28]: Mendo, L., "[**Simulating a coin with irrational bias using rational arithmetic**](https://arxiv.org/abs/2010.14901)", arXiv:2010.14901 [math.PR], 2020/2021.
 
 [^29]: The error term, which follows from the so-called Lagrange remainder for Taylor series, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that _f_'s slope, slope-of-slope, etc. functions can achieve.
 
@@ -1861,6 +1863,8 @@ estimation, IEEE Transactions on Information Theory 36 (1990)
 [^63]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
 
 [^64]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
+
+[^65]: Carvalho, Luiz Max, and Guido A. Moreira. "[**Adaptive truncation of infinite sums: applications to Statistics**](https://arxiv.org/abs/2202.06121)", arXiv:2202.06121 (2022).
 
 <a id=Appendix></a>
 ## Appendix

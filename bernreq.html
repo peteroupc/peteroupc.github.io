@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/07/20"><meta name="citation_online_date" content="2022/07/20"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/07/21"><meta name="citation_online_date" content="2022/07/21"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -31,6 +31,7 @@
 <li><a href="#Formal_Statement"><strong>Formal Statement</strong></a></li>
 <li><a href="#A_Matter_of_Efficiency"><strong>A Matter of Efficiency</strong></a></li>
 <li><a href="#Questions"><strong>Questions</strong></a></li>
+<li><a href="#Key_Problems"><strong>Key Problems</strong></a></li>
 </ul></li>
 <li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>
 
@@ -142,6 +143,32 @@
 </ol>
 
 <p>One example worth pondering is $f(\lambda)=sin(\lambda\pi/2)=cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.</p>
+
+<p><a id=Key_Problems></a></p>
+
+<h3>Key Problems</h3>
+
+<ol>
+<li><strong>Given $\epsilon &gt; 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:</strong>
+
+<ul>
+<li><strong>A reasonably small integer $n&gt;0$ such that there is a polynomial $P(x)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(x) - f(x)| \le \epsilon$.</strong></li>
+<li><strong>The Bernstein coefficients of P(x).</strong></li>
+</ul></li>
+<li><strong>Same as problem 1, except that $P(x)$ is a rational function.</strong></li>
+<li><strong>Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the Formal Statement above, together with their Bernstein coefficients.</strong></li>
+</ol>
+
+<p>Assumptions on $f(\lambda)$ can include any combination of the following:</p>
+
+<ul>
+<li>$f(\lambda)$ has $k$ continuous derivatives for some fixed $k$ (possibly with a known bound on those derivatives).</li>
+<li>$f(\lambda)$ is real analytic.</li>
+<li>$f(\lambda)$ is concave.</li>
+<li>$f(\lambda)$ is strictly increasing.</li>
+<li>$f(\lambda)$ has a Lipschitz-continuous $k$ derivative for some fixed $k$.</li>
+<li>$f(\lambda)$ belongs to Gevrey&#39;s hierarchy (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).</li>
+</ul>
 
 <p><a id=New_coins_from_old_smoothly></a></p>
 
@@ -592,6 +619,7 @@ above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
 <li>Güntürk, C. Sinan, and Weilin Li. &quot;<a href="https://arxiv.org/pdf/2112.09183"><strong>Approximation with one-bit polynomials in Bernstein form</strong></a>&quot;, arXiv:2112.09183 (2021).</li>
 <li>Güntürk, C. Sinan, and Weilin Li. &quot;<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>&quot;, arXiv:2112.09181 (2021).</li>
 <li>Draganov, Borislav R. &quot;On simultaneous approximation by iterated Boolean sums of Bernstein operators.&quot; Results in Mathematics 66, no. 1 (2014): 21-41.</li>
+<li>Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. &quot;<a href="https://doi.org/10.1016/j.jco.2015.05.001"><strong>Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy</strong></a>.&quot; Journal of Complexity 31, no. 5 (2015): 689-714.</li>
 </ul>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
