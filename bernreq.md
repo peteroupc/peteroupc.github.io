@@ -47,12 +47,12 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 The following summarizes most of the problems raised by these open questions.
 
 1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:**
-    - **A reasonably small integer $n>0$ such that there is a polynomial $P(x)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(x) - f(x)| \le \epsilon$.**
-    - **The Bernstein coefficients of $P(x)$.**
-2. **Same as problem 1, except that $P(x)$ is a rational function rather than a polynomial.**
+    - **A reasonably small integer $n>0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.**
+    - **The Bernstein coefficients of $P(\lambda)$.**
+2. **Same as problem 1, except that $P(\lambda)$ is a rational function rather than a polynomial.**
 3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the [**Formal Statement**](#Formal_Statement) given later, together with their Bernstein coefficients.**
 4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
-5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips, rather than just one.  Describe those Bernoulli factories.**
+5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
 6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
 7. **Describe how Algorithm 4 of Łatuszyński et al. (2009/2011) works when the randomized lower and upper bounds of $f(\lambda)$ given the number of heads are formed by functions other than polynomials. (Proposition 3.1 there describes the case of polynomials.)**
 
@@ -63,7 +63,7 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 - $f(\lambda)$ is concave.
 - $f(\lambda)$ is strictly increasing and continuous.
 - $f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.
-- $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $max |f(\lambda)| \le Bl^n n^{\gamma n}$ for every $n$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
+- $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f(\lambda)| \le Bl^n n^{\gamma n}$ for every $n$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
 
 <a id=Polynomials_that_approach_a_factory_function_fast></a>
 ## Polynomials that approach a factory function "fast"
