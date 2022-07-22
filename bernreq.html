@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/07/21"><meta name="citation_online_date" content="2022/07/21"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/07/22"><meta name="citation_online_date" content="2022/07/22"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -25,13 +25,17 @@
 <ul>
 <li><a href="#Background"><strong>Background</strong></a></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#Key_Problems"><strong>Key Problems</strong></a>
+
+<ul>
+<li><a href="#Key_Problems_2"><strong>Key Problems</strong></a></li>
+</ul></li>
 <li><a href="#Polynomials_that_approach_a_factory_function_fast"><strong>Polynomials that approach a factory function &quot;fast&quot;</strong></a>
 
 <ul>
 <li><a href="#Formal_Statement"><strong>Formal Statement</strong></a></li>
 <li><a href="#A_Matter_of_Efficiency"><strong>A Matter of Efficiency</strong></a></li>
 <li><a href="#Questions"><strong>Questions</strong></a></li>
-<li><a href="#Key_Problems"><strong>Key Problems</strong></a></li>
 </ul></li>
 <li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>
 
@@ -64,6 +68,41 @@
 <li><a href="#End_Notes"><strong>End Notes</strong></a></li>
 <li><a href="#My_Attempt"><strong>My Attempt</strong></a></li>
 <li><a href="#References"><strong>References</strong></a></li>
+</ul>
+
+<p><a id=Key_Problems></a></p>
+
+<h2>Key Problems</h2>
+
+<p><a id=Key_Problems_2></a></p>
+
+<h3>Key Problems</h3>
+
+<p>The following summarizes many of the problems raised by these open questions.</p>
+
+<ol>
+<li><strong>Given $\epsilon &gt; 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:</strong>
+
+<ul>
+<li><strong>A reasonably small integer $n&gt;0$ such that there is a polynomial $P(x)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(x) - f(x)| \le \epsilon$.</strong></li>
+<li><strong>The Bernstein coefficients of $P(x)$.</strong></li>
+</ul></li>
+<li><strong>Same as problem 1, except that $P(x)$ is a rational function rather than a polynomial.</strong></li>
+<li><strong>Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the <a href="#Formal_Statement"><strong>Formal Statement</strong></a> given below, together with their Bernstein coefficients.</strong></li>
+<li><strong>Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time, and when 0 and/or 1 are in the domain of $f$.</strong></li>
+<li><strong>Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips, rather than just one.  Describe those Bernoulli factories.</strong></li>
+<li><strong>Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.</strong></li>
+</ol>
+
+<p>Assumptions on $f(\lambda)$ can include any combination of the following:</p>
+
+<ul>
+<li>$f(\lambda)$ has $k$ continuous derivatives for some fixed $k\ge 0$ (possibly with a known bound on those derivatives).</li>
+<li>$f(\lambda)$ is real analytic.</li>
+<li>$f(\lambda)$ is concave.</li>
+<li>$f(\lambda)$ is strictly increasing and continuous.</li>
+<li>$f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.</li>
+<li>$f(\lambda)$ belongs to Gevrey&#39;s hierarchy (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).</li>
 </ul>
 
 <p><a id=Polynomials_that_approach_a_factory_function_fast></a></p>
@@ -143,32 +182,6 @@
 </ol>
 
 <p>One example worth pondering is $f(\lambda)=sin(\lambda\pi/2)=cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.</p>
-
-<p><a id=Key_Problems></a></p>
-
-<h3>Key Problems</h3>
-
-<ol>
-<li><strong>Given $\epsilon &gt; 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:</strong>
-
-<ul>
-<li><strong>A reasonably small integer $n&gt;0$ such that there is a polynomial $P(x)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(x) - f(x)| \le \epsilon$.</strong></li>
-<li><strong>The Bernstein coefficients of P(x).</strong></li>
-</ul></li>
-<li><strong>Same as problem 1, except that $P(x)$ is a rational function.</strong></li>
-<li><strong>Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the Formal Statement above, together with their Bernstein coefficients.</strong></li>
-</ol>
-
-<p>Assumptions on $f(\lambda)$ can include any combination of the following:</p>
-
-<ul>
-<li>$f(\lambda)$ has $k$ continuous derivatives for some fixed $k$ (possibly with a known bound on those derivatives).</li>
-<li>$f(\lambda)$ is real analytic.</li>
-<li>$f(\lambda)$ is concave.</li>
-<li>$f(\lambda)$ is strictly increasing.</li>
-<li>$f(\lambda)$ has a Lipschitz-continuous $k$ derivative for some fixed $k$.</li>
-<li>$f(\lambda)$ belongs to Gevrey&#39;s hierarchy (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).</li>
-</ul>
 
 <p><a id=New_coins_from_old_smoothly></a></p>
 
@@ -264,16 +277,16 @@
 
 <ol>
 <li>Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,</li>
-<li>Compute $L^{\star}<em>{n}$ = $\mathbb{E}(L</em>{n-1} | \mathcal{F}<em>{n})$ and $U^{\star}</em>{n}$ = $\mathbb{E}(U_{n-1} | \mathcal{F}_{n})$,</li>
+<li>Compute $L_n^s$ = $\mathbb{E}(L_{n-1} | \mathcal{F}<em>{n})$ and $U_n^s$ = $\mathbb{E}(U</em>{n-1} | \mathcal{F}_{n})$,</li>
 </ol>
 
 <p>where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.</p>
 
-<p>Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^\star$ and $U$ or $U^\star$ are their lower and upper bound approximations. An example for <a href="https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con"><strong>polynomials</strong></a> follows:</p>
+<p>Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^s$ and $U$ or $U^s$ are their lower and upper bound approximations. An example for <a href="#Polynomials_that_approach_a_factory_function_fast"><strong>polynomials</strong></a> follows:</p>
 
 <ol>
 <li>Given the number of heads $H_n$, $L_n$ is the $H_n$th Bernstein coefficient of the $n$th lower approximating polynomial, and $U_n$ is the $H_n$th Bernstein coefficient of the $n$th upper approximating polynomial.</li>
-<li>$L^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.</li>
+<li>$L^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.</li>
 </ol>
 
 <p>But how do these steps work when the <strong>approximating functions (the functions that converge to <em>f</em>) are other than polynomials?</strong> Specifically, what if the approximating functions are rational functions with integer coefficients? rational functions with rational coefficients? arbitrary approximating functions?</p>

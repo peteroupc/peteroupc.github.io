@@ -16,11 +16,12 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 
 - [**Background**](#Background)
 - [**Contents**](#Contents)
+- [**Key Problems**](#Key_Problems)
+    - [**Key Problems**](#Key_Problems_2)
 - [**Polynomials that approach a factory function "fast"**](#Polynomials_that_approach_a_factory_function_fast)
     - [**Formal Statement**](#Formal_Statement)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**Questions**](#Questions)
-    - [**Key Problems**](#Key_Problems)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
     - [**Questions**](#Questions_2)
 - [**Reverse-time martingales**](#Reverse_time_martingales)
@@ -40,6 +41,32 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**End Notes**](#End_Notes)
 - [**My Attempt**](#My_Attempt)
 - [**References**](#References)
+
+<a id=Key_Problems></a>
+## Key Problems
+
+<a id=Key_Problems_2></a>
+### Key Problems
+
+The following summarizes many of the problems raised by these open questions.
+
+1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:**
+    - **A reasonably small integer $n>0$ such that there is a polynomial $P(x)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(x) - f(x)| \le \epsilon$.**
+    - **The Bernstein coefficients of $P(x)$.**
+2. **Same as problem 1, except that $P(x)$ is a rational function rather than a polynomial.**
+3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the [**Formal Statement**](#Formal_Statement) given below, together with their Bernstein coefficients.**
+4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time, and when 0 and/or 1 are in the domain of $f$.**
+5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips, rather than just one.  Describe those Bernoulli factories.**
+6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
+
+Assumptions on $f(\lambda)$ can include any combination of the following:
+
+- $f(\lambda)$ has $k$ continuous derivatives for some fixed $k\ge 0$ (possibly with a known bound on those derivatives).
+- $f(\lambda)$ is real analytic.
+- $f(\lambda)$ is concave.
+- $f(\lambda)$ is strictly increasing and continuous.
+- $f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.
+- $f(\lambda)$ belongs to Gevrey's hierarchy (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
 
 <a id=Polynomials_that_approach_a_factory_function_fast></a>
 ## Polynomials that approach a factory function "fast"
@@ -106,24 +133,6 @@ Thus the questions are:
 3. Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in $[0,1]$?
 
 One example worth pondering is $f(\lambda)=sin(\lambda\pi/2)=cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.
-
-<a id=Key_Problems></a>
-### Key Problems
-
-1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:**
-    - **A reasonably small integer $n>0$ such that there is a polynomial $P(x)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(x) - f(x)| \le \epsilon$.**
-    - **The Bernstein coefficients of P(x).**
-2. **Same as problem 1, except that $P(x)$ is a rational function.**
-3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the Formal Statement above, together with their Bernstein coefficients.**
-
-Assumptions on $f(\lambda)$ can include any combination of the following:
-
-- $f(\lambda)$ has $k$ continuous derivatives for some fixed $k$ (possibly with a known bound on those derivatives).
-- $f(\lambda)$ is real analytic.
-- $f(\lambda)$ is concave.
-- $f(\lambda)$ is strictly increasing.
-- $f(\lambda)$ has a Lipschitz-continuous $k$ derivative for some fixed $k$.
-- $f(\lambda)$ belongs to Gevrey's hierarchy (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
@@ -202,14 +211,14 @@ Part of the _reverse-time martingale algorithm_ of Łatuszyński et al. (2009/20
 More technically (Algorithm 4):
 
 1. Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,
-2. Compute $L^{\star}_{n}$ = $\mathbb{E}(L_{n-1} | \mathcal{F}_{n})$ and $U^{\star}_{n}$ = $\mathbb{E}(U_{n-1} | \mathcal{F}_{n})$,
+2. Compute $L_n^s$ = $\mathbb{E}(L_{n-1} | \mathcal{F}_{n})$ and $U_n^s$ = $\mathbb{E}(U_{n-1} | \mathcal{F}_{n})$,
 
 where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.
 
-Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^\star$ and $U$ or $U^\star$ are their lower and upper bound approximations. An example for [**polynomials**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con) follows:
+Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^s$ and $U$ or $U^s$ are their lower and upper bound approximations. An example for [**polynomials**](#Polynomials_that_approach_a_factory_function_fast) follows:
 
 1. Given the number of heads $H_n$, $L_n$ is the $H_n$th Bernstein coefficient of the $n$th lower approximating polynomial, and $U_n$ is the $H_n$th Bernstein coefficient of the $n$th upper approximating polynomial.
-2. $L^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^\star_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.
+2. $L^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.
 
 But how do these steps work when the **approximating functions (the functions that converge to _f_) are other than polynomials?** Specifically, what if the approximating functions are rational functions with integer coefficients? rational functions with rational coefficients? arbitrary approximating functions?
 
