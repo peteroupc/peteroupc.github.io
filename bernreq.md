@@ -208,7 +208,7 @@ Part of the _reverse-time martingale algorithm_ of Łatuszyński et al. (2009/20
 More technically (Algorithm 4):
 
 1. Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,
-2. Compute $L_n^s$ = $E(L_{n-1} | \mathcal{F}_{n})$ and $U_n^s$ = $E(U_{n-1} | \mathcal{F}_{n})$,
+2. Compute $L_n^s$ = $E(L_{n-1}$ \| $\mathcal{F}_{n})$ and $U_n^s$ = $E(U_{n-1}$ \| $\mathcal{F}_{n})$,
 
 where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.
 
