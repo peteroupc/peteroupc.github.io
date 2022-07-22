@@ -17,7 +17,6 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Background**](#Background)
 - [**Contents**](#Contents)
 - [**Key Problems**](#Key_Problems)
-    - [**Key Problems**](#Key_Problems_2)
 - [**Polynomials that approach a factory function "fast"**](#Polynomials_that_approach_a_factory_function_fast)
     - [**Formal Statement**](#Formal_Statement)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
@@ -45,19 +44,17 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 <a id=Key_Problems></a>
 ## Key Problems
 
-<a id=Key_Problems_2></a>
-### Key Problems
-
-The following summarizes many of the problems raised by these open questions.
+The following summarizes most of the problems raised by these open questions.
 
 1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:**
     - **A reasonably small integer $n>0$ such that there is a polynomial $P(x)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(x) - f(x)| \le \epsilon$.**
     - **The Bernstein coefficients of $P(x)$.**
 2. **Same as problem 1, except that $P(x)$ is a rational function rather than a polynomial.**
-3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the [**Formal Statement**](#Formal_Statement) given below, together with their Bernstein coefficients.**
-4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time, and when 0 and/or 1 are in the domain of $f$.**
+3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the [**Formal Statement**](#Formal_Statement) given later, together with their Bernstein coefficients.**
+4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
 5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips, rather than just one.  Describe those Bernoulli factories.**
 6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
+7. **Describe how Algorithm 4 of Łatuszyński et al. (2009/2011) works when the randomized lower and upper bounds of $f(\lambda)$ given the number of heads are formed by functions other than polynomials. (Proposition 3.1 there describes the case of polynomials.)**
 
 Assumptions on $f(\lambda)$ can include any combination of the following:
 
@@ -66,7 +63,7 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 - $f(\lambda)$ is concave.
 - $f(\lambda)$ is strictly increasing and continuous.
 - $f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.
-- $f(\lambda)$ belongs to Gevrey's hierarchy (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
+- $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $max |f(\lambda)| \le Bl^n n^{\gamma n}$ for every $n$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
 
 <a id=Polynomials_that_approach_a_factory_function_fast></a>
 ## Polynomials that approach a factory function "fast"
@@ -185,7 +182,7 @@ And I seek ways to make this solution implementable.
 <a id=Questions_2></a>
 ### Questions
 
-1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as smoothness or concavity requirements on $f$ and/or its derivatives, or bounds on the derivatives such as in Gevrey's hierarchy)?
+1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as assumptions given in the section "Key Problems")?
 2. Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the "New coins from old, smoothly" method valid in the following cases?  (Note that the method as written doesn't apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)
 
     - With $\alpha=1, r=0$, when $f$ is Lipschitz continuous and/or differentiable.
@@ -211,7 +208,7 @@ Part of the _reverse-time martingale algorithm_ of Łatuszyński et al. (2009/20
 More technically (Algorithm 4):
 
 1. Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,
-2. Compute $L_n^s$ = $\mathbb{E}(L_{n-1} | \mathcal{F}_{n})$ and $U_n^s$ = $\mathbb{E}(U_{n-1} | \mathcal{F}_{n})$,
+2. Compute $L_n^s$ = $E(L_{n-1} | \mathcal{F}_{n})$ and $U_n^s$ = $E(U_{n-1} | \mathcal{F}_{n})$,
 
 where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.
 
