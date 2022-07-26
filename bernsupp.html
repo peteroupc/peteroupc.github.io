@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/25"><meta name="citation_online_date" content="2022/07/25"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/26"><meta name="citation_online_date" content="2022/07/26"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -162,7 +162,7 @@
 
 <ol>
 <li>Some functions <em>f</em> are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that&#39;s steeper than every &quot;nth&quot; root, and can&#39;t be handled by this method.  One example is <em>f</em>(<em>&lambda;</em>) = 1/10 if <em>&lambda;</em> is 0 and &minus;1/(2*ln(<em>&lambda;</em>/2)) + 1/10 otherwise, which has a slope near 0 that&#39;s steeper than every &quot;nth&quot; root.</li>
-<li>If <em>f</em>&#39;s Hölder exponent is 1 (and so is Lipschitz continuous), <em>D</em>(<em>n</em>) can be <em>m</em>*322613/(250000*sqrt(<em>n</em>)), which is an upper bound.</li>
+<li>If <em>f</em> has a Hölder exponent of 1 (and so is Lipschitz continuous), <em>D</em>(<em>n</em>) can be <em>m</em>*322613/(250000*sqrt(<em>n</em>)), which is an upper bound.</li>
 <li>If <em>f</em>&#39;s Hölder exponent is 1/2 or greater, <em>D</em>(<em>n</em>) can be <em>m</em>*154563/(40000*<em>n</em><sup>1/4</sup>), which is an upper bound.</li>
 </ol>
 </blockquote>
@@ -339,19 +339,19 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Has Lipschitz continuous derivative (see &quot;Definitions&quot;)</td>
+<td>Has Lipschitz continuous derivative (see &quot;Definitions&quot;).</td>
 <td><em>&epsilon;</em> = <em>M</em>/(8*n).</td>
 <td><em>n</em> = ceil(<em>M</em>/(8*<em>&epsilon;</em>)).</td>
 <td>Micchelli (1973)[^4]. <em>M</em> is the derivative&#39;s Lipschitz constant.</td>
 </tr>
 <tr>
-<td>Hölder continuous with constant <em>M</em> and exponent <em>&alpha;</em></td>
+<td>Hölder continuous with constant <em>M</em> and exponent <em>&alpha;</em>.</td>
 <td><em>&epsilon;</em> = <em>M</em>*(1/(4*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.</td>
 <td><em>n</em> = ceil(1/(4<sup><em>&alpha;</em></sup>*<em>&epsilon;</em><sup>2</sup>/<em>M</em><sup>2</sup>)<sup>1/<em>&alpha;</em></sup>).</td>
 <td>Mathé (1999)[^5]. 0 &lt; <em>&alpha;</em> &le; 1.</td>
 </tr>
 <tr>
-<td>Lipschitz continuous with constant <em>L</em></td>
+<td>Lipschitz continuous with constant <em>L</em>.</td>
 <td><em>&epsilon;</em> = <em>L</em>*sqrt(1/(4*<em>n</em>)).</td>
 <td><em>n</em> = ceil(<em>L</em><sup>2</sup>/(4*<em>&epsilon;</em><sup>2</sup>)).</td>
 <td>Special case of previous entry.</td>
@@ -368,7 +368,17 @@
 
 <hr>
 
-<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  For example, Chebyshev interpolation offers such a bound, and perhaps other schemes do as well, but such explicit bounds are hard to find and I leave this as an <a href="https://mathoverflow.net/questions/424272"><strong>open question</strong></a>.  As another alternative, rational functions (ratios of two polynomials) can serve as the functions that approximate $f$.</p>
+<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available. See my <a href="https://mathoverflow.net/questions/424272"><strong>question on MathOverflow</strong></a>.</p>
+
+<p>An example is given by the iterated Bernstein polynomial construction discussed in Micchelli (1973)[^27] and Guan (2009)[^28]. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Then the order-2 iterated Bernstein polynomial is found as: $$U_{n,2} = B_n( 2 f(\lambda) - B_n(f(\lambda))$$ (Güntürk and Li 2021, sec. 3.3)[^29].  The goal is now to find a value of <em>n</em> such that $U_{n,2}$ is within $\epsilon$ of $f(\lambda)$.  By analyzing the proof of Theorem 3.3 of the paper just cited, it&#39;s possible to prove the following error bound:</p>
+
+<p>| Property of $f$ |  Error Bound  |   Solution   |  Notes |
+ --- | --- | --- |
+| Has continuous fourth derivative. | <em>&epsilon;</em> = 0.275*<em>M</em>/<em>n</em><sup>2</sup>. | <em>n</em>=ceil((sqrt(110)/20)*sqrt(<em>M</em>/<em>&epsilon;</em>)) &lt; ceil((52441/100000)*sqrt(<em>M</em>/<em>&epsilon;</em>)). | <em>M</em> is the maximum of $f(\lambda)$ and its fourth derivative over the domain $[0, 1]$. |</p>
+
+<p>Let $M_n$ be the maximum of $f$ and its $n$-th derivative over the domain $[0, 1]$.  Let $T_{n,s}$ be what is called the $s$-th central moment of the binomial distribution (distribution of the number of heads after tossing a biased coin $n$ times).  The proof requires finding upper bounds on $T_{n,s}$.  If $s\lt 44$ is even, then $T_{n,s}\lt $\frac{s!}{(s/2)!8^{s/2}}  n^{s/2}$ (Molteni 2022)[^30].</p>
+
+<p>According to the proof of Theorem 2.3, the error of Bernstein polynomials can be written as&mdash; $$\sum_{i=2}^r \frac{f^{(i)}}{n^i i!} T_{n,s} + G_{n,r+1},$$ where $G_{n,r+1}$ is bounded above by&mdash; $$\frac{M_{r+1}}{n^{r+1}} \frac{(T_{n,2(r+1)})^{1/2}}{(r+1)!}.$$</p>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Power_Series></a></p>
 
@@ -945,6 +955,14 @@
 <p>[^25]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</p>
 
 <p>[^26]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
+
+<p>[^27]: Micchelli, C. (1973). The saturation class and iterates of the Bernstein polynomials. Journal of Approximation Theory, 8(1), 1-18.</p>
+
+<p>[^28]: Guan, Zhong. &quot;<a href="https://arxiv.org/abs/0909.0684">Iterated Bernstein polynomial approximations</a>&quot;, arXiv:0909.0684 (2009).</p>
+
+<p>[^29]: Güntürk, C.S., Li, W., &quot;<a href="https://arxiv.org/abs/2112.09181">Approximation of functions with one-bit neural networks</a>&quot;, arXiv:2112.09181 [cs.LG], 2021.</p>
+
+<p>[^30]: Molteni, Giuseppe. &quot;Explicit bounds for even moments of Bernstein&#39;s polynomials.&quot; Journal of Approximation Theory 273 (2022): 105658.</p>
 
 <p><a id=Appendix></a></p>
 

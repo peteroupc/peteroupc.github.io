@@ -2453,8 +2453,10 @@ DESCRIPTION
 
 CLASSES
     builtins.object
+        BernsteinPoly
         FPInterval
         PhaseType
+        PiecewiseBernstein
         Real
             RandPSRN
             RandUniform
@@ -2480,6 +2482,28 @@ CLASSES
             RealTan
         ShapeSampler
         ShapeSampler2
+        SinFunction
+
+    class BernsteinPoly(builtins.object)
+     |  BernsteinPoly(coeffs)
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, coeffs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  fromFunc(func, n)
+     |
+     |  value(self, pt)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
 
     class FPInterval(builtins.object)
      |  FPInterval(n, d, prec)
@@ -2522,6 +2546,31 @@ CLASSES
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  sample(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class PiecewiseBernstein(builtins.object)
+     |  Methods defined here:
+     |
+     |  __init__(self)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  fromcoeffs(coeffs)
+     |      Creates a PiecewiseBernsteinPoly given a
+     |      polynomial's Bernstein coefficients.
+     |
+     |  get_coeffs(self)
+     |
+     |  piece(self, coeffs, mn, mx)
+     |
+     |  value(self, x)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
@@ -3916,6 +3965,20 @@ CLASSES
      |
      |  YES = 1
 
+    class SinFunction(builtins.object)
+     |  Methods defined here:
+     |
+     |  value(self, pt)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
 FUNCTIONS
     addto1(rg)
 
@@ -3936,6 +3999,8 @@ FUNCTIONS
         - precision: Number of bits after the point that the result will contain.
 
     c2a(r=None)
+
+    c4example()
 
     crudelog(av)
 
@@ -3982,6 +4047,10 @@ FUNCTIONS
           rational or floating-point numbers rather than the fixed-precision
           'float' type of Python, which usually has 53 bits of precision.
 
+    iteratedPoly2(func, n)
+
+    iteratedPolyExample()
+
     lah(n, k)
 
     logbinco(n, k)
@@ -3995,6 +4064,8 @@ FUNCTIONS
     logpoisson(lamda, n)
 
     logsmall(av, n)
+
+    minDegree(maxValue, maxDeriv4, epsilon)
 
     monoSecondMoment(secondMoment, pdf)
 

@@ -112,7 +112,7 @@ Finding _m_ and _&alpha;_ is non-trivial in general.  But assuming _m_ and _&alp
 > **Note:**
 >
 > 1. Some functions _f_ are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that's steeper than every "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than every "nth" root.
-> 2. If _f_'s Hölder exponent is 1 (and so is Lipschitz continuous), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
+> 2. If _f_ has a Hölder exponent of 1 (and so is Lipschitz continuous), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
 > 3. If _f_'s Hölder exponent is 1/2 or greater, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
 
 **Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (_h_(_&lambda;_)) that "dominates" _f_ at every point in the interval [0, 1].  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.
@@ -226,9 +226,9 @@ For example:
 
 | Property of $f$ |  Error Bound  |   Solution   |  Notes |
  --- | --- | --- | --- |
-| Has Lipschitz continuous derivative (see "Definitions") | _&epsilon;_ = _M_/(8*n). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Micchelli (1973)[^4]. _M_ is the derivative's Lipschitz constant. |
-| Hölder continuous with constant _M_ and exponent _&alpha;_ | _&epsilon;_ = _M_\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil(1/(4<sup>_&alpha;_</sup>\*_&epsilon;_<sup>2</sup>/_M_<sup>2</sup>)<sup>1/_&alpha;_</sup>). | Mathé (1999)[^5]. 0 &lt; _&alpha;_ &le; 1. |
-| Lipschitz continuous with constant _L_ | _&epsilon;_ = _L_\*sqrt(1/(4\*_n_)). | _n_ = ceil(_L_<sup>2</sup>/(4\*_&epsilon;_<sup>2</sup>)). | Special case of previous entry. |
+| Has Lipschitz continuous derivative (see "Definitions"). | _&epsilon;_ = _M_/(8*n). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Micchelli (1973)[^4]. _M_ is the derivative's Lipschitz constant. |
+| Hölder continuous with constant _M_ and exponent _&alpha;_. | _&epsilon;_ = _M_\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil(1/(4<sup>_&alpha;_</sup>\*_&epsilon;_<sup>2</sup>/_M_<sup>2</sup>)<sup>1/_&alpha;_</sup>). | Mathé (1999)[^5]. 0 &lt; _&alpha;_ &le; 1. |
+| Lipschitz continuous with constant _L_. | _&epsilon;_ = _L_\*sqrt(1/(4\*_n_)). | _n_ = ceil(_L_<sup>2</sup>/(4\*_&epsilon;_<sup>2</sup>)). | Special case of previous entry. |
 
 Now, if _f_ belongs to any of the classes given above, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
 
@@ -238,7 +238,17 @@ Now, if _f_ belongs to any of the classes given above, the following algorithm (
 
 -------------------
 
-Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  For example, Chebyshev interpolation offers such a bound, and perhaps other schemes do as well, but such explicit bounds are hard to find and I leave this as an [**open question**](https://mathoverflow.net/questions/424272).  As another alternative, rational functions (ratios of two polynomials) can serve as the functions that approximate $f$.
+Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available. See my [**question on MathOverflow**](https://mathoverflow.net/questions/424272).
+
+An example is given by the iterated Bernstein polynomial construction discussed in Micchelli (1973)[^27] and Guan (2009)[^28]. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Then the order-2 iterated Bernstein polynomial is found as: $$U_{n,2} = B_n( 2 f(\lambda) - B_n(f(\lambda))$$ (Güntürk and Li 2021, sec. 3.3)[^29].  The goal is now to find a value of _n_ such that $U_{n,2}$ is within $\epsilon$ of $f(\lambda)$.  By analyzing the proof of Theorem 3.3 of the paper just cited, it's possible to prove the following error bound:
+
+| Property of $f$ |  Error Bound  |   Solution   |  Notes |
+ --- | --- | --- |
+| Has continuous fourth derivative. | _&epsilon;_ = 0.275\*_M_/_n_<sup>2</sup>. | _n_=ceil((sqrt(110)/20)\*sqrt(_M_/_&epsilon;_)) &lt; ceil((52441/100000)\*sqrt(_M_/_&epsilon;_)). | _M_ is the maximum of $f(\lambda)$ and its fourth derivative over the domain $[0, 1]$. |
+
+Let $M_n$ be the maximum of $f$ and its $n$-th derivative over the domain $[0, 1]$.  Let $T_{n,s}$ be what is called the $s$-th central moment of the binomial distribution (distribution of the number of heads after tossing a biased coin $n$ times).  The proof requires finding upper bounds on $T_{n,s}$.  If $s\lt 44$ is even, then $T_{n,s}\lt $\frac{s!}{(s/2)!8^{s/2}}  n^{s/2}$ (Molteni 2022)[^30].
+
+According to the proof of Theorem 2.3, the error of Bernstein polynomials can be written as&mdash; $$\sum_{i=2}^r \frac{f^{(i)}}{n^i i!} T_{n,s} + G_{n,r+1},$$ where $G_{n,r+1}$ is bounded above by&mdash; $$\frac{M_{r+1}}{n^{r+1}} \frac{(T_{n,2(r+1)})^{1/2}}{(r+1)!}.$$
 
 <a id=Approximate_Bernoulli_Factories_for_Power_Series></a>
 ### Approximate Bernoulli Factories for Power Series
@@ -564,6 +574,14 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 [^25]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.
 
 [^26]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
+
+[^27]: Micchelli, C. (1973). The saturation class and iterates of the Bernstein polynomials. Journal of Approximation Theory, 8(1), 1-18.
+
+[^28]: Guan, Zhong. "[Iterated Bernstein polynomial approximations](https://arxiv.org/abs/0909.0684)", arXiv:0909.0684 (2009).
+
+[^29]: Güntürk, C.S., Li, W., "[Approximation of functions with one-bit neural networks](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
+
+[^30]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein's polynomials." Journal of Approximation Theory 273 (2022): 105658.
 
 <a id=Appendix></a>
 ## Appendix

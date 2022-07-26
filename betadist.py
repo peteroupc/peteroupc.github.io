@@ -3992,6 +3992,141 @@ def monoSecondMoment(secondMoment, pdf):
             # print(iters)
             return x
 
+class SinFunction:
+    def value(self, pt):
+        return (
+            RealFraction(0)
+            if (pt == 0 or (isinstance(pt, Real) and pt.isDefinitelyZero()))
+            else RealSin(pt)
+        )
+
+class BernsteinPoly:
+    def __init__(self, coeffs):
+        self.coeffs = coeffs
+        self.d = len(coeffs) - 1
+        if self.d <= 0:
+            raise ValueError
+        self.bincos = [math.comb(self.d, k) for k in range(0, (self.d // 2) + 1)]
+
+    def fromFunc(func, n):
+        if n <= 0:
+            raise ValueError
+        return BernsteinPoly([func.value(RealFraction(i, n)) for i in range(n + 1)])
+
+    def value(self, pt):
+        ret = None
+        for i in range(0, self.d + 1):
+            bc = self.bincos[self.d - i] if i >= len(self.bincos) else self.bincos[i]
+            r = self.coeffs[i] * (bc * pt ** i * (1 - pt) ** (self.d - i))
+            if ret == None:
+                ret = r
+            else:
+                ret += r
+        return ret
+
+def minDegree(maxValue, maxDeriv4, epsilon):
+    # Minimum degree for iteratedPoly2 needed to achieve
+    # an error not more than epsilon
+    if not isinstance(maxValue, Real):
+        maxValue = RealFraction(maxValue)
+    if not isinstance(maxDeriv4, Real):
+        maxDeriv4 = RealFraction(maxDeriv4)
+    if not isinstance(epsilon, Real):
+        epsilon = RealFraction(epsilon)
+    if realIsLess(maxValue, maxDeriv4):
+        maxValue = maxDeriv4
+    return realCeiling(Fraction(52441, 100000) * RealSqrt(maxValue / epsilon))
+
+def iteratedPoly2(func, n):
+    # Bernstein coefficients for the
+    # Micchelli-Felbecker iterated Bernstein polynomial of order 2
+    ret = []
+    bp = BernsteinPoly.fromFunc(func, n)
+    for i in range(0, n + 1):
+        rf = RealFraction(i, n)
+        ret.append(func.value(rf) * 2 - bp.value(rf))
+    return ret
+
+class PiecewiseBernstein:
+    def __init__(self):
+        self.pieces = []
+        self.valueAtime = 0
+        self.valueBtime = 0
+        self.pieces2 = []
+
+    def fromcoeffs(coeffs):
+        """Creates a PiecewiseBernsteinPoly given a
+        polynomial's Bernstein coefficients."""
+        return PiecewiseBernsteinPoly().piece(coeffs, 0, 1)
+
+    def piece(self, coeffs, mn, mx):
+        if len(coeffs) == 0:
+            raise ValueError
+        # Bernstein coefficients
+        self.pieces.append([coeffs, RealFraction(mn), RealFraction(mx)])
+        return self
+
+    def value(self, x):  # Value of piecewise polynomial
+        for coeffs, mn, mx in self.pieces:
+            if realIsLessOrEqual(mn, x) and realIsLessOrEqual(x, mx):
+                n = len(coeffs) - 1
+                ret = sum(
+                    coeffs[i] * math.comb(n, i) * x ** i * (1 - x) ** (n - i)
+                    for i in range(0, len(coeffs))
+                )
+                return ret
+        return RealFraction(0)
+
+    def get_coeffs(self):
+        if len(self.pieces) != 1:
+            raise ValueError("likely not a polynomial")
+        return [v for v in self.pieces[0][0]]
+
+def c4example():
+    # Example function: A C4 continuous piecewise polynomial
+    pwp2 = PiecewiseBernstein()
+    pwp2.piece(
+        [
+            Fraction(1, 384) + Fraction(1, 10),
+            Fraction(953, 9600) + Fraction(1, 10),
+            Fraction(2681, 9600) + Fraction(1, 10),
+            Fraction(4409, 9600) + Fraction(1, 10),
+            Fraction(6137, 9600) + Fraction(1, 10),
+            Fraction(1573, 1920) + Fraction(1, 10),
+        ],
+        Fraction(1, 2),
+        1,
+    )
+    pwp2.piece(
+        [
+            Fraction(0, 1) + Fraction(1, 10),
+            Fraction(163, 1280) + Fraction(1, 10),
+            Fraction(2167, 5760) + Fraction(1, 10),
+            Fraction(2267, 3840) + Fraction(1, 10),
+            Fraction(263, 320) + Fraction(1, 10),
+        ],
+        0,
+        Fraction(1, 2),
+    )
+    return pwp2
+
+def iteratedPolyExample():
+    # Example of a Bernoulli factory that simulates
+    # a polynomial that is close to a C4 continuous function
+    # with a given error tolerance.
+    sinf = c4example()
+    epsilon = Fraction(1, 1000)  # Max. error tolerance
+    deg = minDegree(1, 5, epsilon)
+    print(deg)  # Polynomial degree for this example
+    ip = iteratedPoly2(sinf, deg)
+    coin = lambda: 1 if random.random() < 0.3 else 0
+    r = 0
+    for i in range(10000):
+        heads = sum(coin() for i in range(deg))
+        r += 1 if realIsLess(RandUniform(), ip[heads]) else 0
+    print(r / 10000)
+    print(sinf.value(RealFraction(0.3)).disp())
+
 ######################
 
 if __name__ == "__main__":
