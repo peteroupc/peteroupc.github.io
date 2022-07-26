@@ -2388,15 +2388,21 @@ class RealArcTan(Real):
 class RealSin(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
-        self.a = RealCos(REALHALFPI - self.a)
+        self.isZero = self.a.isDefinitelyZero()
+        self.c = RealCos(REALHALFPI - self.a)
         self.ev_n = -1
         self.ev_v = 0
+
+    def isDefinitelyZero(self):
+        return self.isZero
 
     def __repr__(self):
         return "RealSin(%s)" % (self.a)
 
     def ev(self, n):
-        return self.a.ev(n)
+        if self.isZero:
+            return 0
+        return self.c.ev(n)
 
 def fracAreClose(a, b, n):
     # if a>b: raise ValueError
@@ -3611,7 +3617,14 @@ def realCeiling(a):
         return -((-a.num) // a.den)
     return -realFloor(-a)
 
+def realIsLessOrEqual(a, b):
+    if isinstance(a, RealFraction) and isinstance(b, RealFraction):
+        return Fraction(a.num, a.den) <= Fraction(b.num, b.den)
+    return realIsLess(a, b)
+
 def realIsLess(a, b):
+    if isinstance(a, RealFraction) and isinstance(b, RealFraction):
+        return Fraction(a.num, a.den) < Fraction(b.num, b.den)
     n = 3
     while True:
         aa = a.ev(n)

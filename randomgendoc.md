@@ -3643,6 +3643,8 @@ CLASSES
      |
      |  ev(self, n)
      |
+     |  isDefinitelyZero(self)
+     |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
      |
@@ -4084,6 +4086,8 @@ FUNCTIONS
     realIsGreater(a, b)
 
     realIsLess(a, b)
+
+    realIsLessOrEqual(a, b)
 
     realIsNegative(a)
 
