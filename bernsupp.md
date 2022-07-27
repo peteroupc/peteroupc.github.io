@@ -19,6 +19,7 @@
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Proofs on Cutting Off a Power Series**](#Proofs_on_Cutting_Off_a_Power_Series)
+    - [**Results Used in Approximate Bernoulli Factories**](#Results_Used_in_Approximate_Bernoulli_Factories)
     - [**Failures of the Consistency Requirement**](#Failures_of_the_Consistency_Requirement)
     - [**Which functions admit a Bernoulli factory?**](#Which_functions_admit_a_Bernoulli_factory)
     - [**Which functions don't require outside randomness to simulate?**](#Which_functions_don_t_require_outside_randomness_to_simulate)
@@ -232,7 +233,7 @@ For example:
 
 Now, if _f_ belongs to any of the classes given above, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
 
-1. Calculate _n_ as described above for the given class (under the column "Solution").
+1. Calculate _n_ as described in the table above for the given class.
 2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0. (If _f_(_j_/_n_) can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to sample this irrational probability exactly.)
 
@@ -242,20 +243,34 @@ Alternatively, polynomials other than Bernstein polynomials, but written in Bern
 
 An example is given by the iterated Bernstein polynomial construction discussed in Micchelli (1973)[^4] and Guan (2009)[^6]. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Then&mdash;
 
-- the order-2 iterated Bernstein polynomial of degree $n$ is found as $U_{n,2} = B_n( 2 f(\lambda) - B_n(f(\lambda)))$, and
-- the order-3 iterated Bernstein polynomial of degree $n$ is found as $U_{n,3} = B_n( B_n(B_n(f(\lambda))) + 3 (f(\lambda) - B_n(f(\lambda))) )$
+- the order-2 iterated Bernstein polynomial of degree $n$ is $U_{n,2} = B_n(W_{n,2})$, where $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$, and
+- the order-3 iterated Bernstein polynomial of degree $n$ is $U_{n,3} = B_n(W_{n,3})$, where $W_{n,3} = B_n(B_n(f(\lambda))) + 3 (f(\lambda) - B_n(f(\lambda)))$
 
-(Güntürk and Li 2021, sec. 3.3)[^7].  (The _k_-th Bernstein coefficient of $U_{n,2}$ is $2 f(k/n) - B_n(f(\lambda))(k/n)$.)  The goal is now to find a degree $n$ such that the iterated polynomial is within $\epsilon$ of $f(\lambda)$.
+(Güntürk and Li 2021, sec. 3.3)[^7]. The goal is now to find a degree $n$ such that&mdash;
+
+1. the iterated polynomial is within $\epsilon$ of $f(\lambda)$, and
+2. the polynomial $W_{n,i}$ is not less than 0 or greater than 1.
 
 By analyzing the proof of Theorem 3.3 of the paper just cited, it's possible to prove the following error bounds.  In the table below, _M_<sub>_n_</sub> is not less than the maximum absolute value of $f(\lambda)$ and its _n_-th derivative over the domain $[0, 1]$.
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  |
  --- | --- | --- | --- |
-| Has continuous fourth derivative. | $U_{n,2}$ | _&epsilon;_ = 0.275\*_M_<sub>4</sub>/_n_<sup>2</sup>. | _n_=ceil((sqrt(110)/20)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)) &lt; ceil((52441/100000)\*sqrt(_M_/_&epsilon;_)). |
-| Has continuous fifth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.7284\*_M_<sub>5</sub>/_n_<sup>5/2</sup>. | _n_=ceil((0.7284)<sup>2/5</sup>\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>) &lt; ceil((88095/100000)\*(_M_/_&epsilon;_)<sup>2/5</sup>). |
+| Has continuous fourth derivative. | $U_{n,2}$ | _&epsilon;_ = 0.275\*_M_<sub>4</sub>/_n_<sup>2</sup>. | _n_=ceil(sqrt(0.275)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)) &lt; ceil((52441/100000)\*sqrt(_M_/_&epsilon;_)). |
 | Has continuous sixth derivative. | $U_{n,3}$ | _&epsilon;_ = 1.0025\*_M_<sub>6</sub>/_n_<sup>3</sup>. | _n_=ceil((1.0025)<sup>1/3</sup>\*(_M_<sub>6</sub>/_&epsilon;_)<sup>1/3</sup>) &lt; ceil((100084/100000)\*(_M_/_&epsilon;_)<sup>1/3</sup>). |
 
-Providing the full proof for these error bounds is a bit tedious, so here is a sketch.  The proof involves finding upper bounds for so-called "central moments" of the binomial distribution (the distribution of the number of heads after tossing a biased coin $n$ times), as used in Theorem 3.3 of Güntürk and Li (2021)[^7], then plugging them in to various estimates mentioned in that theorem's proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.  (Bounds for even binomial central moments up to the 44th are given in Molteni (2022)[^8], and looser bounds for other moments in Adell et al. (2015)[^9].)
+However, unlike with ordinary Bernstein polynomials, the polynomial $W$ (and thus $U$) is not necessarily bounded by 0 and 1.  The following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$.
+
+1. Determine whether $f$ is described in the table above.  Let _A_ be the minimum of $f$ on [0, 1] and let _B_ be the maximum of $f$ there.
+2. If $f$ is concave and _B_ is less than 1, calculate $n$ as given in the table above, but with $\epsilon=min(\epsilon, 1-B)$, and stop.  Then $W$ will be bounded by 0 and 1; see Proposition B1 in the appendix.
+3. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=min(\epsilon, A, 1-B)$, and stop.
+4. Calculate $n$ as given in the table above.  Then, if $W(j/n)\lt 0$ or $W(j/n)\gt 1$ for some $0\le j\le n$, double the value of $n$ unless this condition is no longer true.
+
+Once _n_ is found, simulating the iterated polynomial is as follows:
+
+1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
+2. With probability $W_{n,2}(j/n)$ or $W_{n,3}(j/n)$ (as the case may be), return 1.  Otherwise, return 0.
+
+> **Note:** Providing the full proof for the error bounds shown in the table is a bit tedious, so here is a sketch.  The proof involves finding upper bounds for so-called "central moments" of the binomial distribution (the distribution of the number of heads after tossing a biased coin $n$ times), as used in Theorem 3.3 of Güntürk and Li (2021)[^7], then plugging them in to various estimates mentioned in that theorem's proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.  (Bounds for even binomial central moments up to the 44th are given in Molteni (2022)[^8], and looser bounds for other moments in Adell et al. (2015)[^9].)
 
 <a id=Approximate_Bernoulli_Factories_for_Power_Series></a>
 ### Approximate Bernoulli Factories for Power Series
@@ -590,6 +605,8 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^30]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
 
+[^31]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. "Uniform approximation and Bernstein polynomials with coefficients in the unit interval." European Journal of Combinatorics 32, no. 3 (2011): 448-463.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -611,6 +628,15 @@ Now, since the second derivative is non-negative on the positive real line, and 
 _Proof:_ $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with non-negative coefficients, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;
 
 For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$'s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^11] &mdash; which apply to infinite sums &mdash; can be used to "cut off" $f$ at a certain number of terms and do so with a controlled error.
+
+<a id=Results_Used_in_Approximate_Bernoulli_Factories></a>
+### Results Used in Approximate Bernoulli Factories
+
+**Proposition B1**: Let $f$ map [0, 1] to [0, 1] and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in "Approximate Bernoulli Factories for Certain Functions") are non-negative on [0, 1].
+
+Proof: For $W_{n,2}$ it's enough to prove that $B_n(f)\le f$ for every $n\le 1$.  This is the case because of Jensen's inequality and because $f$ is concave.
+
+For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is non-negative.  For this, $B_n(f)$ will have Bernstein coefficients in \[0, 1\] (each coefficient is a value of $f$) and so will map [0, 1] to [0, 1] (Qian et al. 2011)[^31].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is non-negative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is non-negative as well.  Thus, $W_{n,3}$ is non-negative on [0, 1]. &#x25a1;
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
