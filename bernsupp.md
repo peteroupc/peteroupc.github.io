@@ -238,7 +238,7 @@ Now, if _f_ belongs to any of the classes given above, the following algorithm (
 
 -------------------
 
-Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available. See my [**question on MathOverflow**](https://mathoverflow.net/questions/424272).
+Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my [**question on MathOverflow**](https://mathoverflow.net/questions/424272).
 
 An example is given by the iterated Bernstein polynomial construction discussed in Micchelli (1973)[^4] and Guan (2009)[^6]. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Then the order-2 iterated Bernstein polynomial is found as: $$U_{n,2} = B_n( 2 f(\lambda) - B_n(f(\lambda)))$$ (Güntürk and Li 2021, sec. 3.3)[^7].  The goal is now to find a value of _n_ such that $U_{n,2}$ is within $\epsilon$ of $f(\lambda)$.  By analyzing the proof of Theorem 3.3 of the paper just cited, it's possible to prove the following error bound:
 
@@ -246,9 +246,9 @@ An example is given by the iterated Bernstein polynomial construction discussed 
  --- | --- | --- | --- |
 | Has continuous fourth derivative. | _&epsilon;_ = 0.275\*_M_/_n_<sup>2</sup>. | _n_=ceil((sqrt(110)/20)\*sqrt(_M_/_&epsilon;_)) &lt; ceil((52441/100000)\*sqrt(_M_/_&epsilon;_)). | _M_ is the maximum of $f(\lambda)$ and its fourth derivative over the domain $[0, 1]$. |
 
-Let $M_n$ be the maximum of $f$ and its $n$-th derivative over the domain $[0, 1]$.  Let $T_{n,s}$ be what is called the $s$-th central moment of the binomial distribution (distribution of the number of heads after tossing a biased coin $n$ times).  The proof requires finding upper bounds on $T_{n,s}$.  If $1 \le s\le 44$ and $s$ is even, then $T_{n,s}\lt \frac{s!}{(s/2)!8^{s/2}}  n^{s/2}$ (Molteni 2022)[^8].
+Let $M_n(f(\lambda))$ be the maximum of $f$ and its $n$-th derivative over the domain $[0, 1]$.  Let $T_{n,s}$ be what is called the $s$-th central moment of the binomial distribution (distribution of the number of heads after tossing a biased coin $n$ times).  The proof requires finding upper bounds on $T_{n,s}$.  If $0 \le s\le 44$ and $s$ is even, then $T_{n,s}\le \frac{s!}{(s/2)!8^{s/2}}  n^{s/2}$ (Molteni 2022)[^8].
 
-According to the proof of Theorem 2.3, the error of Bernstein polynomials can be written as&mdash; $$G_{n,r+1} + \sum_{i=1}^r \frac{f^{(i)}}{n^i i!} T_{n,s},$$ where $G_{n,r+1}$ is bounded above by&mdash; $$\frac{M_{r+1}}{n^{r+1}} \frac{(T_{n,2(r+1)})^{1/2}}{(r+1)!}.$$
+According to the proof of Theorem 2.3, the error of Bernstein polynomials can be written as&mdash; $$G_{n,r+1} + \sum_{i=1}^r \frac{f^{(i)}}{n^i i!} T_{n,s},$$ where $G_{n,r+1}$ is bounded above by&mdash; $$\frac{M_{r+1}(f(\lambda))}{n^{r+1}} \frac{(T_{n,2(r+1)})^{1/2}}{(r+1)!}.$$
 
 <a id=Approximate_Bernoulli_Factories_for_Power_Series></a>
 ### Approximate Bernoulli Factories for Power Series
