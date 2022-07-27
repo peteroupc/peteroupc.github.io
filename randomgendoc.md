@@ -4049,6 +4049,8 @@ FUNCTIONS
 
     iteratedPoly2(func, n)
 
+    iteratedPoly3(func, n)
+
     iteratedPolyExample()
 
     lah(n, k)
@@ -4065,7 +4067,7 @@ FUNCTIONS
 
     logsmall(av, n)
 
-    minDegree(maxValue, maxDeriv4, epsilon)
+    minDegree(maxValue, maxDeriv, epsilon, deriv=4)
 
     monoSecondMoment(secondMoment, pdf)
 

@@ -4024,18 +4024,29 @@ class BernsteinPoly:
                 ret += r
         return ret
 
-def minDegree(maxValue, maxDeriv4, epsilon):
-    # Minimum degree for iteratedPoly2 needed to achieve
+def minDegree(maxValue, maxDeriv, epsilon, deriv=4):
+    # Minimum degree for iteratedPoly2 (for deriv=4) or
+    # iteratedPoly3 (for deriv=5 or 6) needed to achieve
     # an error not more than epsilon
-    if not isinstance(maxValue, Real):
+    if not isinstance(maxValue, Real):  # max. abs. value of function
         maxValue = RealFraction(maxValue)
-    if not isinstance(maxDeriv4, Real):
-        maxDeriv4 = RealFraction(maxDeriv4)
+    if not isinstance(maxDeriv, Real):  # max. abs. value of 'deriv'-th derivative
+        maxDeriv = RealFraction(maxDeriv)
     if not isinstance(epsilon, Real):
         epsilon = RealFraction(epsilon)
-    if realIsLess(maxValue, maxDeriv4):
-        maxValue = maxDeriv4
-    return realCeiling(Fraction(52441, 100000) * RealSqrt(maxValue / epsilon))
+    if realIsLess(maxValue, maxDeriv):
+        maxValue = maxDeriv
+    if deriv == 4:
+        return realCeiling(Fraction(52441, 100000) * RealSqrt(maxValue / epsilon))
+    if deriv == 5:
+        return realCeiling(
+            Fraction(88095, 100000) * RealPow(maxValue / epsilon, Fraction(2, 5))
+        )
+    if deriv == 6:
+        return realCeiling(
+            Fraction(89976, 100000) * RealPow(maxValue / epsilon, Fraction(1, 3))
+        )
+    raise ValueError("'deriv' value not supported")
 
 def iteratedPoly2(func, n):
     # Bernstein coefficients for the
@@ -4045,6 +4056,17 @@ def iteratedPoly2(func, n):
     for i in range(0, n + 1):
         rf = RealFraction(i, n)
         ret.append(func.value(rf) * 2 - bp.value(rf))
+    return ret
+
+def iteratedPoly3(func, n):
+    # Bernstein coefficients for the
+    # Micchelli-Felbecker iterated Bernstein polynomial of order 3
+    ret = []
+    bp = BernsteinPoly.fromFunc(func, n)
+    bprec = BernsteinPoly.fromFunc(bp, n)
+    for i in range(0, n + 1):
+        rf = RealFraction(i, n)
+        ret.append(bprec.value(rf) + 3 * (func.value(rf) - bp.value(rf)))
     return ret
 
 class PiecewiseBernstein:
