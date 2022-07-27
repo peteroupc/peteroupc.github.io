@@ -246,9 +246,7 @@ An example is given by the iterated Bernstein polynomial construction discussed 
  --- | --- | --- | --- |
 | Has continuous fourth derivative. | _&epsilon;_ = 0.275\*_M_/_n_<sup>2</sup>. | _n_=ceil((sqrt(110)/20)\*sqrt(_M_/_&epsilon;_)) &lt; ceil((52441/100000)\*sqrt(_M_/_&epsilon;_)). | _M_ is the maximum of $f(\lambda)$ and its fourth derivative over the domain $[0, 1]$. |
 
-Let $M_n(f(\lambda))$ be the maximum of $f$ and its $n$-th derivative over the domain $[0, 1]$.  Let $T_{n,s}$ be what is called the $s$-th central moment of the binomial distribution (distribution of the number of heads after tossing a biased coin $n$ times).  The proof requires finding upper bounds on $T_{n,s}$.  If $0 \le s\le 44$ and $s$ is even, then $T_{n,s}\le \frac{s!}{(s/2)!8^{s/2}}  n^{s/2}$ (Molteni 2022)[^8].
-
-According to the proof of Theorem 2.3, the error of Bernstein polynomials can be written as&mdash; $$G_{n,r+1} + \sum_{i=1}^r \frac{f^{(i)}}{n^i i!} T_{n,s},$$ where $G_{n,r+1}$ is bounded above by&mdash; $$\frac{M_{r+1}(f(\lambda))}{n^{r+1}} \frac{(T_{n,2(r+1)})^{1/2}}{(r+1)!}.$$
+Providing the full proof for this error bound is a bit tedious, so here is a sketch.  The proof involves finding upper bounds for so-called "central moments" of the binomial distribution (the distribution of the number of heads after tossing a biased coin $n$ times), as used in Theorem 3.3 of Güntürk and Li (2021)[^7], then plugging them in to various estimates mentioned in that theorem's proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case ($r=3$) is the error when approximating $f$ using an order-2 iterated Bernstein polynomial, when $f$ has a continuous fourth derivative.  (Bounds for even binomial central moments up to the 44th are given in Molteni (2022)[^8], and looser bounds for other moments in Adell et al. (2015)[^30].)
 
 <a id=Approximate_Bernoulli_Factories_for_Power_Series></a>
 ### Approximate Bernoulli Factories for Power Series
@@ -580,6 +578,8 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 [^28]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.
 
 [^29]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
+
+[^30]: Adell, J.A., Bustamante, J., Quesada, J.M., "Estimates for the moments of Bernstein polynomials" J. Math. Anal. Appl. 432 (2015).
 
 <a id=Appendix></a>
 ## Appendix
