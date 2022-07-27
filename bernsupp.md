@@ -224,7 +224,7 @@ There are results that give an upper bound on the error on approximating _f_ wit
 
 For example:
 
-| Property of $f$ |  Error Bound  |   Solution   |  Notes |
+| If _f_(_&lambda;_): |  Then the degree-_n_ Bernstein polynomial is close to $f$ with the following error bound: |   Where _n_ is:  |  Notes |
  --- | --- | --- | --- |
 | Has Lipschitz continuous derivative (see "Definitions"). | _&epsilon;_ = _M_/(8*n). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Micchelli (1973)[^4]. _M_ is the derivative's Lipschitz constant. |
 | Hölder continuous with constant _M_ and exponent _&alpha;_. | _&epsilon;_ = _M_\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil(1/(4<sup>_&alpha;_</sup>\*_&epsilon;_<sup>2</sup>/_M_<sup>2</sup>)<sup>1/_&alpha;_</sup>). | Mathé (1999)[^5]. 0 &lt; _&alpha;_ &le; 1. |
@@ -249,7 +249,7 @@ An example is given by the iterated Bernstein polynomial construction discussed 
 
 By analyzing the proof of Theorem 3.3 of the paper just cited, it's possible to prove the following error bounds.  In the table below, _M_<sub>_n_</sub> is not less than the maximum absolute value of $f(\lambda)$ and its _n_-th derivative over the domain $[0, 1]$.
 
-| Property of $f$ |  Polynomial |  Error Bound  |   Solution   |
+| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  |
  --- | --- | --- | --- |
 | Has continuous fourth derivative. | $U_{n,2}$ | _&epsilon;_ = 0.275\*_M_<sub>4</sub>/_n_<sup>2</sup>. | _n_=ceil((sqrt(110)/20)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)) &lt; ceil((52441/100000)\*sqrt(_M_/_&epsilon;_)). |
 | Has continuous fifth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.7284\*_M_<sub>5</sub>/_n_<sup>5/2</sup>. | _n_=ceil((0.7284)<sup>2/5</sup>\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>) &lt; ceil((88095/100000)\*(_M_/_&epsilon;_)<sup>2/5</sup>). |
