@@ -317,7 +317,7 @@
 
 <ol>
 <li>Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</li>
-<li>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt delta\le 1$) by setting $c$=floor($c/\delta$) * $\delta$ for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</li>
+<li>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting $c$=floor($c/\delta$) * $\delta$ for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</li>
 </ol>
 </blockquote>
 
@@ -426,7 +426,7 @@
 <ol>
 <li>Determine whether $f$ is described in the table above.  Let <em>A</em> be the minimum of $f$ on [0, 1] and let <em>B</em> be the maximum of $f$ there.</li>
 <li>If 0 &lt; <em>A</em> &le; <em>B</em> &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.</li>
-<li>Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be non-negative.  If <em>B</em> is less than 1, and any of those conditions are met, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to min($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.</li>
+<li>Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be non-negative.  If <em>B</em> is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.</li>
 <li>Calculate $n$ as given in the table above.  Then, if $W_{n,i}(j/n)\lt 0$ or $W_{n,i}(j/n)\gt 1$ for some $0\le j\le n$, double the value of $n$ until this condition is no longer true.</li>
 </ol>
 
@@ -559,24 +559,6 @@
 <p>The following are polynomial-building schemes and hints to simulate a coin of probability <em>f</em>(<em>&lambda;</em>) given an input coin with probability of heads of <em>&lambda;</em>.  The schemes were generated automatically using <code>approxscheme2</code> and have not been rigorously verified for correctness.</p>
 
 <ul>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>min(1/2, <em>&lambda;</em>)</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 9563/10000 if <em>n</em>&lt;8; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 322613/(250000*sqrt(n)).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 371/500 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 967839/(2000000*sqrt(n)).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-</ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>) &minus; 3/4</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>

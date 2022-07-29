@@ -214,7 +214,7 @@ To build an approximate Bernoulli factory with a polynomial:
 > **Note:**
 >
 > 1. Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)). ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
-> 2. A polynomial's Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt delta\le 1$) by setting $c$=floor($c/\delta$) \* $\delta$ for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial's coefficients as given here.)
+> 2. A polynomial's Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting $c$=floor($c/\delta$) \* $\delta$ for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial's coefficients as given here.)
 
 <a id=Approximate_Bernoulli_Factories_for_Certain_Functions></a>
 ### Approximate Bernoulli Factories for Certain Functions
@@ -264,7 +264,7 @@ However, unlike with ordinary Bernstein polynomials, the polynomial $W$ (and thu
 
 1. Determine whether $f$ is described in the table above.  Let _A_ be the minimum of $f$ on [0, 1] and let _B_ be the maximum of $f$ there.
 2. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.
-3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be non-negative.  If _B_ is less than 1, and any of those conditions are met, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to min($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.
+3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be non-negative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.
 4. Calculate $n$ as given in the table above.  Then, if $W_{n,i}(j/n)\lt 0$ or $W_{n,i}(j/n)\gt 1$ for some $0\le j\le n$, double the value of $n$ until this condition is no longer true.
 
 Once _n_ is found, simulating the iterated polynomial is as follows:
@@ -350,15 +350,6 @@ A similar analysis to the one above can be used to find the expected ("long-run 
 
 The following are polynomial-building schemes and hints to simulate a coin of probability _f_(_&lambda;_) given an input coin with probability of heads of _&lambda;_.  The schemes were generated automatically using `approxscheme2` and have not been rigorously verified for correctness.
 
-* Let _f_(_&lambda;_) = **min(1/2, _&lambda;_)**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-        * **fabove**(_n_, _k_) = 9563/10000 if _n_&lt;8; otherwise, _f_(_k_/_n_) + 322613/(250000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-        * **fabove**(_n_, _k_) = 371/500 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 967839/(2000000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **cosh(_&lambda;_) &minus; 3/4**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * The function was detected to be convex and twice differentiable, leading to:
         * **fbelow**(_n_, _k_) = 487/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 154309/(700000\*n).

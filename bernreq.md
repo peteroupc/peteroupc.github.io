@@ -144,7 +144,7 @@ The scheme achieves a convergence rate that generally depends on the smoothness 
 
 Specifically, Holtz et al. proved the following results:
 
-1. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ is $\lfloor\beta\rfloor$ times differentiable and has a ($\beta-\lfloor\beta\rfloor$)-Hölder continuous $\lfloor\beta\rfloor$-th derivative, where $\beta>0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)
+1. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ is $\lfloor\beta\rfloor$ times differentiable and has a Hölder continuous $\lfloor\beta\rfloor$-th derivative with Hölder exponent $\beta-\lfloor\beta\rfloor$, where $\beta>0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)
 
 2. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^{r+1})$ only if the $r$th derivative of $f$ is in the Zygmund class, where $r\ge 0$ is an integer.
 
@@ -153,7 +153,7 @@ The scheme is as follows:
 Let $f$ be a function&mdash;
 
 - that maps [0, 1] to the open interval (0, 1), and
-- whose $r$th derivative is $\beta$-Hölder continuous, where $\beta$ is in (0, 1).
+- whose $r$th derivative is Hölder continuous with exponent $\beta$, where $\beta$ is in (0, 1).
 
 Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\ge0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ (see the paper for details on the Lorentz operator). Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
 
@@ -194,8 +194,6 @@ And I seek ways to make this solution implementable.
 
 <a id=Reverse_time_martingales></a>
 ## Reverse-time martingales
-
-[**https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions**](https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions)
 
 One way to toss heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ is to build randomized upper and lower bounds that converge to $f$ on average. These bounds serve as an unbiased estimator of $f(\lambda)$; the algorithm returns 1 with probability equal to the estimate, and 0 otherwise.
 
@@ -351,7 +349,7 @@ Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-out
 In any case, I believe that not all factory functions admit an optimal factory described here; especially because&mdash;
 
 - the question may depend on $f$'s range, and
-- the efficiency of even a _single-output_ Bernoulli factory depends on $f$'s smoothness (e.g., $O(1/n^{(r+\alpha)/2})$ only if $f$'s $r$th derivative is $\alpha$-Hölder continuous for some $\alpha \in (0, 1)$; Holtz et al. 2011).
+- the efficiency of even a _single-output_ Bernoulli factory depends on $f$'s smoothness (e.g., $O(1/n^{(r+\alpha)/2})$ only if $f$'s $r$th derivative is Hölder continuous with Hölder exponent $\alpha$; Holtz et al. 2011).
 
 See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp.html#Multiple_Output_Bernoulli_Factory) for more information on my progress on the problem.
 
