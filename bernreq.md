@@ -438,9 +438,9 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 <a id=My_Attempt></a>
 ## My Attempt
 
-The Python script [**lorentz.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/lorentz.py) shows my attempt to implement the Holtz approximation scheme. It implements an algorithm to toss heads with probability equal to a C2 or C4 continuous piecewise polynomial factory function.  However, it relies on an unproven conjecture (Conjecture 34) in the Holtz paper.
+The Python script [**lorentz.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/lorentz.py) shows my attempt to implement the Holtz approximation scheme. It implements an algorithm to toss heads with probability equal to a piecewise polynomial factory function with continuous second or fourth derivative.  However, it relies on an unproven conjecture (Conjecture 34) in the Holtz paper.
 
-Based on this attempt, the C4 continuous case is efficient enough for my purposes, but the case of functions with lesser regularity is not so efficient (such as Lipschitz or C2).
+Based on this attempt, the case of four continuous derivatives is efficient enough for my purposes, but the case of functions with lesser regularity is not so efficient (such as Lipschitz or two continuous derivatives).
 
 -----
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/28"><meta name="citation_online_date" content="2022/07/28"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/29"><meta name="citation_online_date" content="2022/07/29"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -398,7 +398,7 @@
 <tr>
 <td>Has continuous third derivative.</td>
 <td>$U_{n,2}$</td>
-<td><em>&epsilon;</em> = 0.3489*<em>M</em><sub>4</sub>/<em>n</em><sup>3/2</sup>.</td>
+<td><em>&epsilon;</em> = 0.3489*<em>M</em><sub>3</sub>/<em>n</em><sup>3/2</sup>.</td>
 <td><em>n</em>=ceil((0.3489)<sup>2/3</sup>*(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)<sup>2/3</sup>) &lt; ceil((49561/100000)*(<em>M</em>/<em>&epsilon;</em>)<sup>2/3</sup>).</td>
 </tr>
 <tr>
@@ -426,7 +426,7 @@
 <ol>
 <li>Determine whether $f$ is described in the table above.  Let <em>A</em> be the minimum of $f$ on [0, 1] and let <em>B</em> be the maximum of $f$ there.</li>
 <li>If 0 &lt; <em>A</em> &le; <em>B</em> &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.</li>
-<li>If <em>B</em> is less than 1, and if $f$ is such that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be non-negative, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$, and stop.  Then $W$ will be bounded by 0 and 1.  See Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> for conditions on $f$ that work.</li>
+<li>Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be non-negative.  If <em>B</em> is less than 1, and any of those conditions are met, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to min($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.</li>
 <li>Calculate $n$ as given in the table above.  Then, if $W_{n,i}(j/n)\lt 0$ or $W_{n,i}(j/n)\gt 1$ for some $0\le j\le n$, double the value of $n$ until this condition is no longer true.</li>
 </ol>
 
@@ -887,42 +887,6 @@
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 8710551/(5000000*sqrt(n)).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>min(<em>&lambda;</em>, 1 &minus; <em>&lambda;</em>)</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 9563/10000 if <em>n</em>&lt;8; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 322613/(250000*sqrt(n)).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 123/125 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 967839/(1000000*sqrt(n)).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-</ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 1/2 &minus; <em>&lambda;</em>/2 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 5727/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 322613/(500000*sqrt(n)).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 123/250 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 967839/(2000000*sqrt(n)).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-</ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>19*<em>&lambda;</em>/20 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 19/20 &minus; 19*<em>&lambda;</em>/20 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
@@ -1065,17 +1029,17 @@
 
 <p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is non-negative.  For this, using only the fact that $f$ maps [0, 1] to [0, 1], $B_n(f)$ will have Bernstein coefficients in [0, 1] (each coefficient is a value of $f$) and so will likewise map [0, 1] to [0, 1] (Qian et al. 2011)[^21].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is non-negative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is non-negative as well.  Thus, $W_{n,3}$ is non-negative on [0, 1]. &#x25a1;</p>
 
-<p><strong>Proposition B2</strong>: Let $f(\lambda)$ map [0, 1] to [0, 1], be continuous, nondecreasing, and semiadditive, and equal 0 at 0. Then $W_{n,2}$ is non-negative on [0, 1].</p>
+<p><strong>Proposition B2</strong>: Let $f(\lambda)$ map [0, 1] to [0, 1], be continuous, nondecreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is non-negative on [0, 1].</p>
 
 <p><em>Proof:</em> The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^22], showing that $W_{n,2}$ is non-negative on [0, 1].  &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> A semiadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$&#39;s domain.</p>
+<p><strong>Note:</strong> A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$&#39;s domain.</p>
 </blockquote>
 
-<p><strong>Proposition B3</strong>: Let $f(\lambda)$ map [0, 1] to [0, 1] and have a Lipschitz continuous derivative on [0, 1] with Lipschitz constant $M$.  If $f(\lambda) \ge \frac{M \lambda(1-\lambda)}{2m}$ on $f$&#39;s domain, for some $m\ge 1$, then $W_{n,2}$ is non-negative there, for every $n\ge m$.</p>
+<p><strong>Proposition B3</strong>: Let $f(\lambda)$ map [0, 1] to [0, 1] and have a Lipschitz continuous derivative on [0, 1] with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$&#39;s domain, for some $m\ge 1$, then $W_{n,2}$ is non-negative there, for every $n\ge m$.</p>
 
-<p><em>Proof</em>: Let $E(\lambda, n) = \frac{M \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases with $n$. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)= 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;</p>
+<p><em>Proof</em>: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases with $n$. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)= 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;</p>
 
 <p><a id=Failures_of_the_Consistency_Requirement></a></p>
 
@@ -1083,7 +1047,7 @@
 
 <p>In the academic literature (papers and books), there are many results showing that a polynomial comes within a given error bound of a function <em>f</em>(<em>&lambda;</em>), when <em>f</em> meets certain conditions.  Unfortunately, these error bounds don&#39;t necessarily mean that a sequence of polynomials far from these bounds will obey the consistency requirement, a requirement for simulating <em>f</em> in the Bernoulli factory setting.</p>
 
-<p>Here is one such error bound. Let <em>f</em> have a Lipschitz continuous derivative on [0, 1] with Lipschitz constant <em>M</em>.  Then the <em>Bernstein polynomial</em> for <em>f</em> of degree <em>n</em> (which is in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$) is within <em>M</em>*<em>x</em>*(1&minus;<em>x</em>)/(2*<em>n</em>) of <em>f</em> (and thus within <em>M</em>/(8*<em>n</em>) of <em>f</em>) whenever $0\le x\le 1$ (Micchelli 1973)[^6]. Thus, for every <em>n</em>&ge;1:</p>
+<p>Here is one such error bound. Let <em>f</em> have a Lipschitz continuous derivative on [0, 1] with Lipschitz constant <em>M</em>.  Then the <em>Bernstein polynomial</em> for <em>f</em> of degree <em>n</em> (which is in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$) is within <em>M</em>*<em>x</em>*(1&minus;<em>x</em>)/(2*<em>n</em>) of <em>f</em> (and thus within <em>M</em>/(8*<em>n</em>) of <em>f</em>) whenever $0\le x\le 1$ (Lorentz 1966)[^4]. Thus, for every <em>n</em>&ge;1:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
