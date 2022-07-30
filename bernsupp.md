@@ -1019,6 +1019,12 @@ _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ g
 
 _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein polynomials of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005\)[^1]. &#x25a1;
 
+**Conjecture.** _Let $f(\lambda)$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose $g_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(g_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.  Then Theorem 1 remains valid with the following versions of &phi;(n), **fbelow**, and **fabove**, rather than as given in that theorem, subject to the bounding note:_
+
+- _&phi;(n) = $\epsilon(f,n)$._
+- _**fbelow**(n, k) = $g_n(k/n) - \eta(n)$._
+- _**fabove**(n, k) = $g_n(k/n) + \eta(n)$._
+
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme
 
