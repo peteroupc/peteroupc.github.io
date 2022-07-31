@@ -72,7 +72,7 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 
 [**https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation**](https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation)
 
-[https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form](https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form)
+[**https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form**](https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form)
 
 A polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_k$ are the polynomial's _Bernstein coefficients_.
 

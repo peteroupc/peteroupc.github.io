@@ -38,6 +38,8 @@ The following terms can describe a function $f(x)$, specifically how "well-behav
 - If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" or "velocity" function.  The derivative (or _first derivative_) is denoted as $f\prime$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f\prime\prime$, is the derivative of $f\prime$; the _third derivative_ is the derivative of $f\prime\prime$; and so on.
 - A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in $f$'s domain and no more than _&delta;_ apart.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.<br>The function also admits a Hölder exponent _&beta;_ such that 0 &lt; _&beta;_ &lt; _&alpha;_.
 - A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_.<br>If _f_ has a derivative on its domain, _L_ is the maximum absolute value of that derivative.
+- A function $f$ is _convex_ if $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the domain of $f$.<br>Roughly speaking, if $f$'s "slope" never goes down, then it's convex.
+- A function $f$ is _concave_ if $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the domain of $f$.<br>Roughly speaking, if $f$'s "slope" never goes up, then it's concave.
 
 <a id=General_Factory_Functions></a>
 ## General Factory Functions
@@ -69,9 +71,9 @@ In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup
 
 A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli factory problem can be solved (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)"). The following are ways to build sequences of polynomials that appropriately converge to _f_ if _f_ belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function _f_ using a computer algebra system to see if it belongs to any of the classes of functions described below.
 
-**Concave functions.** If _f_ is known to be _concave_ on the interval \[0, 1\] (which roughly means that its rate of growth there never goes up), then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
+**Concave functions.** If _f_ is known to be _concave_ on the interval \[0, 1\], then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality. One example is _f_(_&lambda;_) = 1&minus; _&lambda;_<sup>2</sup>.
 
-**Convex functions.** If _f_ is known to be _convex_ on the interval \[0, 1\] (which roughly means that its rate of growth there never goes down), then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
+**Convex functions.** If _f_ is known to be _convex_ on the interval \[0, 1\], then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
 
 **Twice differentiable functions.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -586,6 +588,8 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^33]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
 
+[^34]: Skorski, Maciej. "[Handy formulas for binomial moments](https://arxiv.org/abs/2012.06270)", arXiv:2012.06270 (2020).
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -626,6 +630,14 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^22], showi
 **Proposition B3**: Let $f(\lambda)$ map [0, 1] to [0, 1] and have a Lipschitz continuous derivative on [0, 1] with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is non-negative there, for every $n\ge m$.
 
 _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases with $n$. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)= 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
+
+**Proposition B4**: Let&mdash; $$T(n, r, p) = \sum_{k\ge0} (k-np)^s{n \choose k}p^k (1-p)^{n-k},$$ be the $r$-th central moment of the binomial distribution.  For every integer $n\ge 1$&mdash; $$|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$
+
+> **Note:** The binomial distribution is the distribution of the number of heads shown after $n$ independent flips of a coin that shows heads with probability $p$.
+
+_Proof_: The critical points of $T(n, 3, p)$ are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T(n, r, p)$ is antisymmetric whenever $r$ is odd, and is non-negative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^34], it's enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T(n, 3, p)|$ on either side.  By inspection, the moment at that critical point is decreasing for every $n\ge 1$. &#x25a1;
+
+**Corollary B5**:  For every integer $n_0\ge 1$, $|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n_0}} n^{3/2}$ whenever $n\ge n0$.
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement

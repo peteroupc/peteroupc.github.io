@@ -4006,6 +4006,18 @@ FUNCTIONS
 
     exchangeable_bernoulli(p, d, lamda=None)
 
+    exp_minus_x2y(rg, f, y, pwr=2)
+        B(x) -> B(exp(-x*x*y))
+
+    exp_minus_xy(rg, f, y)
+        B(x) -> B(exp(-x*y))
+
+    forsythe_prob(rg, m, n)
+
+    forsythe_prob2(rg, x)
+
+    forsythe_prob3(rg, x)
+
     fpNormalROU()
 
     fracAreClose(a, b, n)
@@ -4150,6 +4162,8 @@ FUNCTIONS
 
     randUniformPower(pwr)
 
+    rayleighpsrn(rg, s=1)
+
     realCeiling(a)
 
     realFloor(a)
@@ -4168,7 +4182,18 @@ FUNCTIONS
 
     recordcount(n)
 
+    sampleIntPlusBag(rg, psrn, k)
+        Return 1 with probability (x+k)/2^bitlength(k).
+        Ignores PSRN's integer part and sign.
+
+    size_biased_poisson_ailamujia(rg, eta=1)
+        Hassan, A., Dar, S.A., et al., "On size biased Poisson Ailamujia distribution and its applications",
+        Pak. J. Statistics 37(1), 19-38, 2021.
+
     stirling1(n, k)
+
+    truncated_gamma(rg, bern, ax, ay, precision=53)
+        #####################
 
     tulap(m, b, q)
 

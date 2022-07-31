@@ -102,6 +102,5 @@ class BinomialSampler:
                         + self._logint(2) * (k - n2 - 2)
                     )
                 h = RealLn(RandUniform())
-                # h = RandPSRN(psrn)
                 if realIsLess(h, bincos[rv]):
                     return rv

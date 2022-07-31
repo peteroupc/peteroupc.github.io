@@ -12,8 +12,7 @@ from fractions import Fraction
 from betadist import *
 
 #
-#  Implements interval numbers and interval arithmetic, backed
-#  by Fractions.  Builds on the concept of "constructive reals"
+#  Implements interval numbers and interval arithmetic.  Builds on the concept of "constructive reals"
 #  or "recursive reals", which provide a function that outputs a value
 #  strictly within 1/2^n of the true result, where n is a user-specified
 #  precision in bits.
