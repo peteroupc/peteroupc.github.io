@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/30"><meta name="citation_online_date" content="2022/07/30"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/07/31"><meta name="citation_online_date" content="2022/07/31"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -116,7 +116,7 @@
 </ul></li>
 </ul>
 
-<p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is the second derivative of <em>f</em>.  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
+<p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) over the domain [0, 1], where <em>f&prime;&prime;</em> is the second derivative of <em>f</em>.  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
@@ -989,7 +989,7 @@
 
 <p><strong>Lemma A1:</strong> Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and have a finite sum and where $0\le x\le 1$ (the domain is the interval [0, 1]). Then $f$ is convex and has a maximum at 1.</p>
 
-<p><em>Proof:</em> By inspection, $f$ is a power series and is non-negative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for any $n\ge 0$, and multiplying that by a non-negative constant doesn&#39;t change whether it&#39;s increasing.  Since all of these terms have a maximum at 1 on its domain, so does their sum.</p>
+<p><em>Proof:</em> By inspection, $f$ is a power series and is non-negative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for every $n\ge 0$, and multiplying that by a non-negative constant doesn&#39;t change whether it&#39;s increasing.  Since all of these terms have a maximum at 1 on its domain, so does their sum.</p>
 
 <p>The derivative of $f$ is&mdash; $$f\prime(x) = a_1 x^0 + ... + a_i x^{i-1} + ...,$$ which is still a power series with non-negative coefficients, so the proof so far applies to $f\prime$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.</p>
 
@@ -1038,7 +1038,7 @@
 
 <p>Where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
-<p>The example against the consistency requirement involves the function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, which has a continuous second derivative.</p>
+<p>The example against the consistency requirement involves the function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, which has a Lipschitz continuous derivative.</p>
 
 <p>For <em>g</em>, the coefficients for&mdash;</p>
 
@@ -1055,7 +1055,7 @@
 
 <p>As can be seen, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
 
-<p><strong>Note on &quot;clamping&quot;.</strong> In addition, for any polynomial-building scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.  Here is an example that applies to any scheme.</p>
+<p><strong>Note on &quot;clamping&quot;.</strong> In addition, for a polynomial-building scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.  Here is an example that applies to any scheme.</p>
 
 <p>Let <em>g</em> and <em>h</em> be two polynomials in Bernstein form as follows:</p>
 
@@ -1272,7 +1272,7 @@
 </ol></li>
 </ol>
 
-<p>Inspired by Peres&#39;s result with <em>&lambda;</em>/2, the following algorithm is proposed.  It works for any rational function of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
+<p>Inspired by Peres&#39;s result with <em>&lambda;</em>/2, the following algorithm is proposed.  It works for every rational function of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
 
 <ul>
 <li><em>D</em>(<em>&lambda;</em>) = &sum;<sub><em>i</em> = 0, ..., <em>k</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>k</em> &minus; <em>i</em></sup> * <em>d</em>[<em>i</em>],</li>
@@ -1521,11 +1521,13 @@
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein polynomials of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)[^1]. &#x25a1;</p>
 
-<p><strong>Conjecture.</strong> <em>Let $f(\lambda)$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose $g_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(g_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.  Then Theorem 1 remains valid with the following versions of &phi;(n), <strong>fbelow</strong>, and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note:</em></p>
+<p>The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
+
+<p><strong>Conjecture.</strong> <em>Let $f(\lambda)$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that&#39;s a power of 2, $g_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(g_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.  Then Theorem 1 remains valid with the following versions of &phi;(n), <strong>fbelow</strong>, and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note:</em></p>
 
 <ul>
 <li><em>&phi;(n) = $\epsilon(f,n)$.</em></li>
-<li><em><strong>fbelow</strong>(n, k) = $g_n(k/n) - \eta(n)$.</em></li>
+<li><em><strong>fbelow</strong>(n, k) = $g_n(k/n) - \eta(n)$ ($\eta(n)$ derives from &phi;(n) as in Theorem 1).</em></li>
 <li><em><strong>fabove</strong>(n, k) = $g_n(k/n) + \eta(n)$.</em></li>
 </ul>
 

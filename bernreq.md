@@ -72,6 +72,8 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 
 [**https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation**](https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation)
 
+[https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form](https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form)
+
 A polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_k$ are the polynomial's _Bernstein coefficients_.
 
 An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) simulates a factory function $f(\lambda)$ via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
@@ -125,9 +127,14 @@ Thus the questions are:
     - meet the formal statement above, and
     - meet the following error bound? $$|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2}),$$ for every $n\ge 1$, where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form (ideally with coefficients in $[0,1]$); $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a **known exact value or upper bound**.
 
-2. Are there other practical formulas to approximate specific factory functions with polynomials that meet the formal statement above?
+2. Is the following conjecture true?
 
-3. Are there practical formulas to compute polynomials that meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in $[0,1]$?
+    _Let $f(\lambda):[0,1]\to(0,1)$ be continuous, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that's a power of 2, $W_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.  Then the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that's a power of 2, and for each other $n\gt 1$, $g_n=g_m$ and $h_n=h_m$ where $m=2^{\lfloor\log_2(n)\rfloor}$:_
+
+    - $a(n,k)=W_n(k/n) - \sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$.
+    - $b(n,k)=W_n(k/n) + \sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$.
+
+3. Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?
 
 One example worth pondering is $f(\lambda)=sin(\lambda\pi/2)=cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.
 

@@ -124,7 +124,7 @@ More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relations
 
 **Proposition 1.** _Let X and Y be real-valued non-degenerate random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent._
 
-_Proof._ For any _X_ and _Y_ there are only three mutually exclusive possibilities, _X_>_Y_, _Y_>_X_, and _X_=_Y_. Because both random variables are nondegenerate, P(_X_>_Y_) or P(_Y_>_X_) or both are nonzero, and P(_X_=_Y_) < 1.   For the algorithm to return 0, _X_ must be less than _Y_, and for it to return 1, _X_ must be greater than _Y_.
+_Proof._ For every _X_ and every _Y_ there are only three mutually exclusive possibilities, _X_>_Y_, _Y_>_X_, and _X_=_Y_. Because both random variables are nondegenerate, P(_X_>_Y_) or P(_Y_>_X_) or both are nonzero, and P(_X_=_Y_) < 1.   For the algorithm to return 0, _X_ must be less than _Y_, and for it to return 1, _X_ must be greater than _Y_.
 
 For the "only if" part: For the algorithm to return 0 or 1 with equal probability, it must be that P(_X_>_Y_) = P(_Y_>_X_).  But this necessarily means that P(_X_>_Y_) and P(_Y_>_X_) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(_X_=_Y_)) to each probability, we get&mdash;
 

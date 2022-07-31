@@ -81,7 +81,7 @@ A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli facto
     - is convex and has a minimum of greater than 0, or
     - is concave and has a maximum of less than 1.
 
-Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is the second derivative of _f_.  Then for every integer _n_ that's a power of 2:
+Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) over the domain [0, 1], where _f&prime;&prime;_ is the second derivative of _f_.  Then for every integer _n_ that's a power of 2:
 
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise,  _f_(_k_/_n_) &minus; _m_/(7\*_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _m_/(7\*_n_).
@@ -596,7 +596,7 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 **Lemma A1:** Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and have a finite sum and where $0\le x\le 1$ (the domain is the interval [0, 1]). Then $f$ is convex and has a maximum at 1.
 
-_Proof:_ By inspection, $f$ is a power series and is non-negative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for any $n\ge 0$, and multiplying that by a non-negative constant doesn't change whether it's increasing.  Since all of these terms have a maximum at 1 on its domain, so does their sum.
+_Proof:_ By inspection, $f$ is a power series and is non-negative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for every $n\ge 0$, and multiplying that by a non-negative constant doesn't change whether it's increasing.  Since all of these terms have a maximum at 1 on its domain, so does their sum.
 
 The derivative of $f$ is&mdash; $$f\prime(x) = a_1 x^0 + ... + a_i x^{i-1} + ...,$$ which is still a power series with non-negative coefficients, so the proof so far applies to $f\prime$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.
 
@@ -639,7 +639,7 @@ Here is one such error bound. Let _f_ have a Lipschitz continuous derivative on 
 
 Where _k_ is an integer in the interval [0, _n_].
 
-The example against the consistency requirement involves the function _g_(_&lambda;_) = sin(_&pi;_\*_&lambda;_)/4 + 1/2, which has a continuous second derivative.
+The example against the consistency requirement involves the function _g_(_&lambda;_) = sin(_&pi;_\*_&lambda;_)/4 + 1/2, which has a Lipschitz continuous derivative.
 
 For _g_, the coefficients for&mdash;
 
@@ -652,7 +652,7 @@ The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].
 
 As can be seen, the elevated polynomial's coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.
 
-**Note on "clamping".** In addition, for any polynomial-building scheme, "clamping" the values of **fbelow** and **fabove** to fit the interval [0, 1] won't necessarily preserve the consistency requirement, even if the original scheme met that requirement.  Here is an example that applies to any scheme.
+**Note on "clamping".** In addition, for a polynomial-building scheme, "clamping" the values of **fbelow** and **fabove** to fit the interval [0, 1] won't necessarily preserve the consistency requirement, even if the original scheme met that requirement.  Here is an example that applies to any scheme.
 
 Let _g_ and _h_ be two polynomials in Bernstein form as follows:
 
@@ -833,7 +833,7 @@ This algorithm, though, doesn't count as an _optimal factory_, and Peres describ
     4. If _fc_ and _bc_ are both 0, append 1 then 1 to extractor 2's input bits.
     5. If _fc_ is 1 and _bc_ is 0, append 1 then 0 to extractor 2's input bits.
 
-Inspired by Peres's result with _&lambda;_/2, the following algorithm is proposed.  It works for any rational function of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
+Inspired by Peres's result with _&lambda;_/2, the following algorithm is proposed.  It works for every rational function of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
 - _D_(_&lambda;_) = &sum;<sub>_i_ = 0, ..., _k_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_k_ &minus; _i_</sup> * _d_\[_i_\],
 - _E_(_&lambda;_) = &sum;<sub>_i_ = 0, ..., _k_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_k_ &minus; _i_</sup> * _e_\[_i_\],
@@ -1019,10 +1019,12 @@ _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ g
 
 _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein polynomials of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005\)[^1]. &#x25a1;
 
-**Conjecture.** _Let $f(\lambda)$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose $g_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(g_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.  Then Theorem 1 remains valid with the following versions of &phi;(n), **fbelow**, and **fabove**, rather than as given in that theorem, subject to the bounding note:_
+The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.
+
+**Conjecture.** _Let $f(\lambda)$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that's a power of 2, $g_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(g_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.  Then Theorem 1 remains valid with the following versions of &phi;(n), **fbelow**, and **fabove**, rather than as given in that theorem, subject to the bounding note:_
 
 - _&phi;(n) = $\epsilon(f,n)$._
-- _**fbelow**(n, k) = $g_n(k/n) - \eta(n)$._
+- _**fbelow**(n, k) = $g_n(k/n) - \eta(n)$ ($\eta(n)$ derives from &phi;(n) as in Theorem 1)._
 - _**fabove**(n, k) = $g_n(k/n) + \eta(n)$._
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
