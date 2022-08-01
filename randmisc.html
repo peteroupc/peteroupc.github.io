@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/07/31"><meta name="citation_online_date" content="2022/07/31"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/08/01"><meta name="citation_online_date" content="2022/08/01"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -587,6 +587,16 @@
 <td>Binomial(<em>n</em>, Tilted-beta(<em>&theta;</em>, <em>v</em>, <em>&alpha;</em>, <em>&beta;</em>)) variate.</td>
 <td>0 &le; <em>&theta;</em> &le; 1;  0 &le; <em>v</em> &le; 1; <em>&alpha;</em>&gt;0, <em>&beta;</em>&gt;0; <em>n</em> &ge; 0 is an integer.</td>
 </tr>
+<tr>
+<td>Two-piece distribution (Rubio and Steel 2020)[^76].</td>
+<td><em>&mu;</em> &minus; abs(<em>Z</em>)*<em>sigma1</em> with probability <em>sigma1</em>/(<em>sigma1</em>+<em>sigma2</em>), or <em>&mu;</em> + abs(<em>Z</em>)*<em>sigma2</em> otherwise.</td>
+<td><em>&mu;</em> is a real number; <em>sigma1</em>&gt;0; <em>sigma2&gt;0; _Z</em> follows a symmetric distribution around 0.</td>
+</tr>
+<tr>
+<td>Asymmetric generalized Gaussian (Tesei and Regazzoni 1996)[^77]</td>
+<td>Two-piece distribution where <em>Z</em> is exponential-power(<em>&alpha;</em>).</td>
+<td><em>&alpha;</em>&gt;0; <em>&mu;</em> is a real number; <em>sigma1</em>&gt;0; _sigma2&gt;0.</td>
+</tr>
 </tbody></table>
 
 <table><thead>
@@ -922,6 +932,10 @@ END METHOD
 <p>[^74]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
 
 <p>[^75]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+
+<p>[^76]: Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. <a href="https://doi.org/10.1111/j.1740-9713.2020.01352.x">https://doi.org/10.1111/j.1740-9713.2020.01352.x</a></p>
+
+<p>[^77]: A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213</p>
 
 <p><a id=License></a></p>
 

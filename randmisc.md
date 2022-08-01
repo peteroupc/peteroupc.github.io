@@ -352,6 +352,8 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | Skew normal (Azzalini 1985)[^59]. | Skew symmetric with _Z_ and _T_ both separate Normal(0, 1) variates, and _w_(_x_) = _x_\*_&alpha;_. | _&alpha;_ is a real number. |
 | Logarithmic skew normal (Gómez-Déniz et al. 2020)[^60] | exp(SNE(_&lambda;_,_&lambda;_)\*_&sigma;_+_&mu;_). | _&mu;_ and _&lambda;_ are real numbers; _&sigma;_ > 0. SNE is described later. |
 | Tilted beta binomial (Hahn 2022)[^61] | Binomial(_n_, Tilted-beta(_&theta;_, _v_, _&alpha;_, _&beta;_)) variate. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0, _&beta;_>0; _n_ &ge; 0 is an integer. |
+| Two-piece distribution (Rubio and Steel 2020)[^76]. | _&mu;_ &minus; abs(_Z_)\*_sigma1_ with probability _sigma1_/(_sigma1_+_sigma2_), or _&mu;_ + abs(_Z_)\*_sigma2_ otherwise. | _&mu;_ is a real number; _sigma1_>0; _sigma2>0; _Z_ follows a symmetric distribution around 0. |
+| Asymmetric generalized Gaussian (Tesei and Regazzoni 1996)[^77] | Two-piece distribution where _Z_ is exponential-power(_&alpha;_). | _&alpha;_>0; _&mu;_ is a real number; _sigma1_>0; _sigma2>0. |
 
 | This distribution: | Can be sampled with the following algorithms: | And uses these parameters: |
  --- | --- | --- |
@@ -633,6 +635,10 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 [^74]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
 [^75]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
+
+[^76]: Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. [https://doi.org/10.1111/j.1740-9713.2020.01352.x](https://doi.org/10.1111/j.1740-9713.2020.01352.x)
+
+[^77]: A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213
 
 <a id=License></a>
 ## License
