@@ -134,6 +134,8 @@ Thus the questions are:
     - $a(n,k)=W_n(k/n) - \sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$.
     - $b(n,k)=W_n(k/n) + \sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$.
 
+    _If $\frac{\epsilon(f,2n)}{\epsilon(f,n)} \le 1/3$ for every integer $n\ge 1$ that's a power of 2, then $a(n,k)$ and $b(n,k)$ can be as follows instead for each such integer: $a(n,k)=W_n(k/n) - 2\epsilon(f, n)$ and $b(n,k)=W_n(k/n) + 2\epsilon(f, n)$._
+
 3. Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?
 
 One example worth pondering is $f(\lambda)=sin(\lambda\pi/2)=cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.
