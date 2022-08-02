@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/08/01"><meta name="citation_online_date" content="2022/08/01"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/08/02"><meta name="citation_online_date" content="2022/08/02"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -588,14 +588,14 @@
 <td>0 &le; <em>&theta;</em> &le; 1;  0 &le; <em>v</em> &le; 1; <em>&alpha;</em>&gt;0, <em>&beta;</em>&gt;0; <em>n</em> &ge; 0 is an integer.</td>
 </tr>
 <tr>
-<td>Two-piece distribution (Rubio and Steel 2020)[^76].</td>
+<td>Two-piece distribution (Rubio and Steel 2020)[^62].</td>
 <td><em>&mu;</em> &minus; abs(<em>Z</em>)*<em>sigma1</em> with probability <em>sigma1</em>/(<em>sigma1</em>+<em>sigma2</em>), or <em>&mu;</em> + abs(<em>Z</em>)*<em>sigma2</em> otherwise.</td>
-<td><em>&mu;</em> is a real number; <em>sigma1</em>&gt;0; <em>sigma2&gt;0; _Z</em> follows a symmetric distribution around 0.</td>
+<td><em>&mu;</em> is a real number; <em>sigma1</em>&gt;0; <em>sigma2</em>&gt;0; <em>Z</em> follows a symmetric distribution around 0.</td>
 </tr>
 <tr>
-<td>Asymmetric generalized Gaussian (Tesei and Regazzoni 1996)[^77]</td>
+<td>Asymmetric generalized Gaussian (Tesei and Regazzoni 1996)[^63]</td>
 <td>Two-piece distribution where <em>Z</em> is exponential-power(<em>&alpha;</em>).</td>
-<td><em>&alpha;</em>&gt;0; <em>&mu;</em> is a real number; <em>sigma1</em>&gt;0; _sigma2&gt;0.</td>
+<td><em>&alpha;</em>&gt;0; <em>&mu;</em> is a real number; <em>sigma1</em>&gt;0; <em>sigma2</em>&gt;0.</td>
 </tr>
 </tbody></table>
 
@@ -607,27 +607,27 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Offset-symmetric Gaussian (Sadeghi and Korki 2021)[^62]</td>
+<td>Offset-symmetric Gaussian (Sadeghi and Korki 2021)[^64]</td>
 <td>(1) Generate an unbiased random bit <em>b</em> (either 0 or 1 with equal probability); (2) generate <em>Y</em>, a Normal(0, <em>&sigma;</em>) random variate (standard deviation <em>&sigma;</em>), and if <em>Y</em> &lt; <em>m</em>, repeat this step; (3) return (<em>Y</em> &minus; <em>m</em>)*(<em>b</em>*2 &minus; 1).</td>
 <td><em>m</em>&gt;0; <em>&sigma;</em>&gt;0.</td>
 </tr>
 <tr>
-<td>Generalized skew normal (SNE(<em>&lambda;</em>,<em>&xi;</em>)) (Henze 1986)[^63]</td>
+<td>Generalized skew normal (SNE(<em>&lambda;</em>,<em>&xi;</em>)) (Henze 1986)[^65]</td>
 <td><strong>First algorithm:</strong> (1) Generate <em>Y</em> and <em>Z</em>, two Normal(0,1) variates; (2) if <em>Z</em>&lt;<em>Y</em>*<em>&lambda;</em>+<em>&xi;</em>, return <em>Y</em>; else go to 1. <strong>Second algorithm:</strong> (1) Let <em>il</em>=1/sqrt(1+<em>&lambda;</em><sup>2</sup>); (2) Generate <em>Y</em> and <em>Z</em>, two Normal(0,1) variates; (3) if <em>Y</em>&gt;&minus;<em>&xi;</em>*<em>il</em>, return <em>Y</em>*<em>&lambda;</em>*<em>il</em> + <em>Z</em>; else go to 2.</td>
 <td><em>&lambda;</em> and <em>&xi;</em> are real numbers.</td>
 </tr>
 <tr>
-<td>Generalized geometric (Francis-Staite and White 2022)[^64]</td>
+<td>Generalized geometric (Francis-Staite and White 2022)[^66]</td>
 <td>(1) Set <em>ret</em> to 1; (2) with probability <em>&rho;</em>(<em>ret</em>), add 1 to <em>ret</em> and repeat this step; otherwise, return <em>ret</em>.</td>
 <td>0 &le; <em>&rho;</em>(<em>k</em>) &le; 1 for each <em>k</em>.</td>
 </tr>
 <tr>
-<td>Generalized Sibuya (Kozubowski and Podgórski 2018)[^65]</td>
+<td>Generalized Sibuya (Kozubowski and Podgórski 2018)[^67]</td>
 <td>(1) Set <em>ret</em> to 1; (2) with probability <em>&alpha;</em>/(<em>&nu;</em>+<em>ret</em>), return <em>ret</em>; otherwise, add 1 to <em>ret</em> and repeat this step.</td>
-<td><em>&alpha;</em> &lt; <em>&nu;</em> + 1, and <em>&nu;</em> &ge; 0.[^66]</td>
+<td><em>&alpha;</em> &lt; <em>&nu;</em> + 1, and <em>&nu;</em> &ge; 0.[^68]</td>
 </tr>
 <tr>
-<td>Tilted beta (Hahn and López Martín 2005)[^67]</td>
+<td>Tilted beta (Hahn and López Martín 2005)[^69]</td>
 <td>(1) With probability <em>&theta;</em>, return a beta(<em>&alpha;</em>, <em>&beta;</em>) variate; (2) Generate a uniform variate in (0, 1), call it <em>x</em>; (3) Flip coin that returns 1 with probability <em>x</em>, and another that returns 1 with probability <em>v</em>; (4) If both coins return 1 or both return 0, return <em>x</em>; otherwise go to step 2.</td>
 <td>0 &le; <em>&theta;</em> &le; 1;  0 &le; <em>v</em> &le; 1; <em>&alpha;</em>&gt;0; <em>&beta;</em>&gt;0.</td>
 </tr>
@@ -637,7 +637,7 @@
 
 <h2>Batching Random Samples via Randomness Extraction</h2>
 
-<p>Devroye and Gravel (2020)[^68] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits to produce a specific output <em>Y</em> (or <em>P</em>(<em>X</em> | <em>Y</em>) for short):</p>
+<p>Devroye and Gravel (2020)[^70] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits to produce a specific output <em>Y</em> (or <em>P</em>(<em>X</em> | <em>Y</em>) for short):</p>
 
 <ol>
 <li>Start with the interval [0, 1].</li>
@@ -647,7 +647,7 @@
 
 <p>After a sampling method produces an output <em>Y</em>, both <em>X</em> (the number of random bits the sampler consumed) and <em>Y</em> (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Notice that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)</p>
 
-<p>The issue of finding <em>P</em>(<em>X</em> | <em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)[^69], <em>P</em>(<em>X</em> | <em>Y</em>) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled <em>Y</em> up to depth <em>X</em> (where the weight for depth <em>z</em> is 1/2<sup><em>z</em></sup>), then divide it by a weighted count of all leaves labeled <em>Y</em> at all depths (for instance, if the tree has two leaves labeled <em>Y</em> at <em>z</em>=2, three at <em>z</em>=3, and three at <em>z</em>=4, and <em>X</em> is 3, then <em>P</em>(<em>X</em> | <em>Y</em>) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled <em>Y</em> at every depth, this is implemented by finding <em>P</em>(<em>Y</em>), or the probability to output <em>Y</em>, then chopping <em>P</em>(<em>Y</em>) up to the <em>X</em><sup>th</sup> binary digit after the point and dividing by the original <em>P</em>(<em>Y</em>) (for instance, if <em>X</em> is 4 and P(<em>Y</em>) is 0.101011..., then <em>P</em>(<em>X</em> | <em>Y</em>) is 0.1010 / 0.101011...).</p>
+<p>The issue of finding <em>P</em>(<em>X</em> | <em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)[^71], <em>P</em>(<em>X</em> | <em>Y</em>) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled <em>Y</em> up to depth <em>X</em> (where the weight for depth <em>z</em> is 1/2<sup><em>z</em></sup>), then divide it by a weighted count of all leaves labeled <em>Y</em> at all depths (for instance, if the tree has two leaves labeled <em>Y</em> at <em>z</em>=2, three at <em>z</em>=3, and three at <em>z</em>=4, and <em>X</em> is 3, then <em>P</em>(<em>X</em> | <em>Y</em>) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled <em>Y</em> at every depth, this is implemented by finding <em>P</em>(<em>Y</em>), or the probability to output <em>Y</em>, then chopping <em>P</em>(<em>Y</em>) up to the <em>X</em><sup>th</sup> binary digit after the point and dividing by the original <em>P</em>(<em>Y</em>) (for instance, if <em>X</em> is 4 and P(<em>Y</em>) is 0.101011..., then <em>P</em>(<em>X</em> | <em>Y</em>) is 0.1010 / 0.101011...).</p>
 
 <p>Unfortunately, <em>P</em>(<em>X</em> | <em>Y</em>) is not easy to calculate when the number of values <em>Y</em> can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes <em>bits</em> as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor (see &quot;<a href="https://peteroupc.github.io/randextract.html"><strong>Notes on Randomness Extraction</strong></a>&quot;).  The algorithm counts the number of bits it consumes (<em>X</em>) to produce an output, then feeds <em>X</em> to the extractor as follows.</p>
 
@@ -672,7 +672,7 @@
 <li>Let <em>&beta;</em> be the digit base of digits in <em>x</em>&#39;s fractional part (such as 2 for binary).</li>
 </ul>
 
-<p>Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of <em>&epsilon;</em> with probability 1 (see (Devroye and Gravel 2020)[^68]):</p>
+<p>Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of <em>&epsilon;</em> with probability 1 (see (Devroye and Gravel 2020)[^70]):</p>
 
 <ol>
 <li>Generate additional digits of <em>x</em> uniformly at random&mdash;thus shortening the interval [<em>a</em>, <em>b</em>]&mdash;until a lower bound of <em>Q</em>(<em>f</em>(<em>a</em>)) and an upper bound of <em>Q</em>(<em>f</em>(<em>b</em>)) differ by no more than 2*<em>&epsilon;</em>.  Call the two bounds <em>low</em> and <em>high</em>, respectively.</li>
@@ -681,7 +681,7 @@
 
 <p>In some cases, it may be possible to calculate the needed digit size in advance.</p>
 
-<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> on the interval [<em>a</em>, <em>b</em>][^70], then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
+<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> on the interval [<em>a</em>, <em>b</em>][^72], then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
 
 <ol>
 <li>Let <em>d</em> be ceil((ln(max(1,<em>L</em>)) &minus; ln(<em>&epsilon;</em>)) / ln(<em>&beta;</em>)), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>). For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
@@ -689,7 +689,7 @@
 <li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>)/2.</li>
 </ol>
 
-<p>This algorithm chooses a random interval of size equal to <em>&beta;</em><sup><em>d</em></sup>, and because the quantile function is Lipschitz continuous, the values at the interval&#39;s bounds are guaranteed to vary by no more than 2*<em>&epsilon;</em> (actually <em>&epsilon;</em>, but the calculation in step 2 adds an additional error of at most <em>&epsilon;</em>), which is needed to meet the tolerance <em>&epsilon;</em> (see also Devroye and Gravel 2020[^68]).</p>
+<p>This algorithm chooses a random interval of size equal to <em>&beta;</em><sup><em>d</em></sup>, and because the quantile function is Lipschitz continuous, the values at the interval&#39;s bounds are guaranteed to vary by no more than 2*<em>&epsilon;</em> (actually <em>&epsilon;</em>, but the calculation in step 2 adds an additional error of at most <em>&epsilon;</em>), which is needed to meet the tolerance <em>&epsilon;</em> (see also Devroye and Gravel 2020[^70]).</p>
 
 <p>A similar algorithm can exist even if the quantile function <em>Q</em> is not Lipschitz continuous on the interval [<em>a</em>, <em>b</em>].</p>
 
@@ -701,7 +701,7 @@
 <li><em>Q</em> on [<em>a</em>, <em>b</em>] admits a continuous and strictly increasing function <em>&omega;</em>(<em>&delta;</em>) as a <em>modulus of continuity</em>,</li>
 </ul>
 
-<p>then <em>d</em> in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(<em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>))/ln(<em>&beta;</em>))),<br/>where <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) gives the quantile function&#39;s maximum range in a window of size <em>&delta;</em>, and the inverse modulus <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) finds a window small enough that the quantile function differs by no more than <em>&epsilon;</em> in the window.[^71]).[^72]</p>
+<p>then <em>d</em> in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(<em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>))/ln(<em>&beta;</em>))),<br/>where <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) gives the quantile function&#39;s maximum range in a window of size <em>&delta;</em>, and the inverse modulus <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) finds a window small enough that the quantile function differs by no more than <em>&epsilon;</em> in the window.[^73]).[^74]</p>
 
 <p>For example&mdash;</p>
 
@@ -714,7 +714,7 @@
 
 <ul>
 <li>The target distribution must have a probability density function (PDF), as is the case with the normal and exponential distributions.</li>
-<li>That PDF, or a function proportional to it, must be known, must be bounded from above, and must be continuous &quot;almost everywhere&quot; (the set of discontinuous points is &quot;zero-volume&quot;, that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020)[^68]).</li>
+<li>That PDF, or a function proportional to it, must be known, must be bounded from above, and must be continuous &quot;almost everywhere&quot; (the set of discontinuous points is &quot;zero-volume&quot;, that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020)[^70]).</li>
 </ul>
 
 <p>Here is a sketch of how this rejection sampler might work:</p>
@@ -730,7 +730,7 @@
 
 <h2>ExpoExact</h2>
 
-<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2022)[^73]; Canonne et al. (2020)[^74].  In this section:</p>
+<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2022)[^75]; Canonne et al. (2020)[^76].  In this section:</p>
 
 <ul>
 <li><code>RNDINT(1)</code> generates an independent unbiased random bit.</li>
@@ -775,7 +775,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random variate, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the precision given in <code>precision</code> (see also Karney 2016)[^75].</p>
+<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random variate, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the precision given in <code>precision</code> (see also Karney 2016)[^77].</p>
 </blockquote>
 
 <p><a id=Notes></a></p>
@@ -905,37 +905,37 @@ END METHOD
 
 <p>[^61]: Hahn, Eugene D. &quot;The Tilted Beta-Binomial Distribution in Overdispersed Data: Maximum Likelihood and Bayesian Estimation.&quot; Journal of Statistical Theory and Practice 16, no. 3 (2022): 1-22.</p>
 
-<p>[^62]: Sadeghi, Parastoo, and Mehdi Korki. &quot;Offset-Symmetric Gaussians for Differential Privacy.&quot; arXiv preprint arXiv:2110.06412 (2021).</p>
+<p>[^62]: Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. <a href="https://doi.org/10.1111/j.1740-9713.2020.01352.x"><strong>https://doi.org/10.1111/j.1740-9713.2020.01352.x</strong></a></p>
 
-<p>[^63]: Henze, Norbert. &quot;A probabilistic representation of the &#39;skew-normal&#39; distribution.&quot; Scandinavian journal of statistics (1986): 271-275. SNE(<em>&lambda;</em>,0) is distributed as Azzalini&#39;s skew normal distribution.</p>
+<p>[^63]: A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213</p>
 
-<p>[^64]: Francis-Staite, Kelli, and Langford White. &quot;<a href="https://arxiv.org/abs/2206.10865"><strong>Analysis of sojourn time distributions for semi-Markov models</strong></a>&quot;, arXiv:2206.10865 (2022).</p>
+<p>[^64]: Sadeghi, Parastoo, and Mehdi Korki. &quot;Offset-Symmetric Gaussians for Differential Privacy.&quot; arXiv preprint arXiv:2110.06412 (2021).</p>
 
-<p>[^65]: Kozubowski, Tomasz J., and Krzysztof Podgórski. &quot;A generalized Sibuya distribution.&quot; Annals of the Institute of Statistical Mathematics 70, no. 4 (2018): 855-887.</p>
+<p>[^65]: Henze, Norbert. &quot;A probabilistic representation of the &#39;skew-normal&#39; distribution.&quot; Scandinavian journal of statistics (1986): 271-275. SNE(<em>&lambda;</em>,0) is distributed as Azzalini&#39;s skew normal distribution.</p>
 
-<p>[^66]: If <em>&nu;</em> = 0, this is the ordinary Sibuya distribution.</p>
+<p>[^66]: Francis-Staite, Kelli, and Langford White. &quot;<a href="https://arxiv.org/abs/2206.10865"><strong>Analysis of sojourn time distributions for semi-Markov models</strong></a>&quot;, arXiv:2206.10865 (2022).</p>
 
-<p>[^67]: Hahn, E.D., López Martín, M.d.M., &quot;Robust project management with the tilted beta distribution&quot;, 2015.</p>
+<p>[^67]: Kozubowski, Tomasz J., and Krzysztof Podgórski. &quot;A generalized Sibuya distribution.&quot; Annals of the Institute of Statistical Mathematics 70, no. 4 (2018): 855-887.</p>
 
-<p>[^68]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
+<p>[^68]: If <em>&nu;</em> = 0, this is the ordinary Sibuya distribution.</p>
 
-<p>[^69]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^69]: Hahn, E.D., López Martín, M.d.M., &quot;Robust project management with the tilted beta distribution&quot;, 2015.</p>
 
-<p>[^70]: A Lipschitz continuous function, with constant <em>L</em>, is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot;, and that slope is bounded wherever it&#39;s defined.</p>
+<p>[^70]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
 
-<p>[^71]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, &quot;Computational complexity of roots of real functions.&quot; In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989.</p>
+<p>[^71]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^72]: Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it&#39;s uniformly continuous there.  For this reason, there is a positive function <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) such that <em>Q</em>(<em>x</em>) is less than <em>&epsilon;</em>-away from <em>Q</em>(<em>y</em>), for every <em>&epsilon;</em>&gt;0, whenever <em>x</em> and <em>y</em> lie in that interval and whenever <em>x</em> is less than <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>)-away from <em>y</em>.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(<em>z</em>)/ln(<em>&beta;</em>))) is an upper bound on the number of base-<em>&beta;</em> fractional digits needed to store 1/<em>z</em> with an error of at most <em>&epsilon;</em>.</p>
+<p>[^72]: A Lipschitz continuous function, with constant <em>L</em>, is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot;, and that slope is bounded wherever it&#39;s defined.</p>
 
-<p>[^73]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. &quot;From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains.&quot; Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. <a href="https://doi.org/10.1214/21-AAP1679"><strong>https://doi.org/10.1214/21-AAP1679</strong></a></p>
+<p>[^73]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, &quot;Computational complexity of roots of real functions.&quot; In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989.</p>
 
-<p>[^74]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
+<p>[^74]: Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it&#39;s uniformly continuous there.  For this reason, there is a positive function <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) such that <em>Q</em>(<em>x</em>) is less than <em>&epsilon;</em>-away from <em>Q</em>(<em>y</em>), for every <em>&epsilon;</em>&gt;0, whenever <em>x</em> and <em>y</em> lie in that interval and whenever <em>x</em> is less than <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>)-away from <em>y</em>.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(<em>z</em>)/ln(<em>&beta;</em>))) is an upper bound on the number of base-<em>&beta;</em> fractional digits needed to store 1/<em>z</em> with an error of at most <em>&epsilon;</em>.</p>
 
-<p>[^75]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+<p>[^75]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. &quot;From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains.&quot; Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. <a href="https://doi.org/10.1214/21-AAP1679"><strong>https://doi.org/10.1214/21-AAP1679</strong></a></p>
 
-<p>[^76]: Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. <a href="https://doi.org/10.1111/j.1740-9713.2020.01352.x">https://doi.org/10.1111/j.1740-9713.2020.01352.x</a></p>
+<p>[^76]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
 
-<p>[^77]: A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213</p>
+<p>[^77]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
 <p><a id=License></a></p>
 

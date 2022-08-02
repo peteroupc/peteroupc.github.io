@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/01"><meta name="citation_online_date" content="2022/08/01"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/02"><meta name="citation_online_date" content="2022/08/02"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -186,7 +186,7 @@
 
 <p>The algorithm is now described.</p>
 
-<p>Let <em>g</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>f</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>) (in other words, the value that <em>f</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>) approaches as <em>&nu;</em> approaches <em>&lambda;</em>.) If&mdash;</p>
+<p>Let <em>g</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>f</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>) (roughly speaking, the value that <em>f</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>) approaches as <em>&nu;</em> approaches <em>&lambda;</em>.) If&mdash;</p>
 
 <ul>
 <li><em>f</em>(0) = 0 and <em>f</em>(1) &lt; 1, and</li>
@@ -981,8 +981,6 @@
 
 <p>[^34]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
 
-<p>[^35]: Molteni, Giuseppe. &quot;Explicit bounds for even moments of Bernstein’s polynomials.&quot; Journal of Approximation Theory 273 (2022): 105658.</p>
-
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1029,15 +1027,19 @@
 
 <p><em>Proof</em>: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases with $n$. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)= 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;</p>
 
-<p>The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathcal{E}[(X-\mathcal{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathcal{E}[.]$ is the expected value (&quot;long-run average&quot;).</p>
+<p>The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value (&quot;long-run average&quot;).  The following results bound the absolute value of $T$.</p>
 
-<p><strong>Proposition B4</strong>: For every integer $n\ge 1$, the following is true: $$|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$</p>
+<p><strong>Result B4</strong> (Molteni 2022)[^35]: If $r$ is an even integer such that $0\le r\le 44$, then $|T(n, r, p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ for every $n\ge 1$.</p>
+
+<p><strong>Proposition B5</strong>: For every integer $n\ge 1$, the following is true: $$|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$</p>
 
 <p><em>Proof</em>: The critical points of $T(n, 3, p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T(n, r, p)$ is antisymmetric whenever $r$ is odd, and is non-negative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^23], it&#39;s enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T(n, 3, p)|$ on either side.  By inspection, the moment at that critical point is decreasing for every $n\ge 1$. &#x25a1;</p>
 
-<p><strong>Corollary B5</strong>:  For every integer $n_0\ge 1$, $|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n_0}} n^{3/2} &lt; (963/1000)\frac{1}{\sqrt{n_0}} n^{3/2}$ whenever $n\ge n_0$.</p>
+<p><strong>Corollary B6</strong>:  For every integer $n_0\ge 1$, $|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n_0}} n^{3/2} &lt; (963/1000)\frac{1}{\sqrt{n_0}} n^{3/2}$ whenever $n\ge n_0$.</p>
 
-<p><strong>Result B6</strong> (Molteni 2022)[^35]: If $r$ is an even integer such that $0\le r\le 44$, then $|T(n, r, p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ for every $n\ge 1$.</p>
+<p><strong>Proposition B7</strong>:  For every integer $n\ge 1$, $|T(n, 5, p)| \le 0.083 n^{5/2}.$  For every integer $n\ge 304$, $|T(n, 5, p)| \le n^2 \le 0.05736/n^{5/2}.$</p>
+
+<p><em>Proof</em>: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| &lt; 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| = n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it&#39;s enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 &lt; 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;</p>
 
 <p><a id=Failures_of_the_Consistency_Requirement></a></p>
 

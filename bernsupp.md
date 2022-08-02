@@ -132,7 +132,7 @@ Also, _h_ should be a function with a simple Bernoulli factory algorithm.  For e
 
 The algorithm is now described.
 
-Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;_) (in other words, the value that _f_(_&nu;_)/_h_(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
+Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;_) (roughly speaking, the value that _f_(_&nu;_)/_h_(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
 
 - _f_(0) = 0 and _f_(1) < 1, and
 - _g_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classes of functions given earlier,
@@ -590,8 +590,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^34]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
 
-[^35]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
-
 <a id=Appendix></a>
 ## Appendix
 
@@ -633,15 +631,19 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^22], showi
 
 _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases with $n$. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)= 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
-The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathcal{E}[(X-\mathcal{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathcal{E}[.]$ is the expected value ("long-run average").
+The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value ("long-run average").  The following results bound the absolute value of $T$.
 
-**Proposition B4**: For every integer $n\ge 1$, the following is true: $$|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$
+**Result B4** (Molteni 2022)[^35]: If $r$ is an even integer such that $0\le r\le 44$, then $|T(n, r, p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ for every $n\ge 1$.
+
+**Proposition B5**: For every integer $n\ge 1$, the following is true: $$|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$
 
 _Proof_: The critical points of $T(n, 3, p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T(n, r, p)$ is antisymmetric whenever $r$ is odd, and is non-negative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^23], it's enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T(n, 3, p)|$ on either side.  By inspection, the moment at that critical point is decreasing for every $n\ge 1$. &#x25a1;
 
-**Corollary B5**:  For every integer $n_0\ge 1$, $|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n_0}} n^{3/2} < (963/1000)\frac{1}{\sqrt{n_0}} n^{3/2}$ whenever $n\ge n_0$.
+**Corollary B6**:  For every integer $n_0\ge 1$, $|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n_0}} n^{3/2} < (963/1000)\frac{1}{\sqrt{n_0}} n^{3/2}$ whenever $n\ge n_0$.
 
-**Result B6** (Molteni 2022)[^35]: If $r$ is an even integer such that $0\le r\le 44$, then $|T(n, r, p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ for every $n\ge 1$.
+**Proposition B7**:  For every integer $n\ge 1$, $|T(n, 5, p)| \le 0.083 n^{5/2}.$  For every integer $n\ge 304$, $|T(n, 5, p)| \le n^2 \le 0.05736/n^{5/2}.$
+
+_Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| < 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| = n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it's enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 < 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
