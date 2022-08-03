@@ -393,7 +393,7 @@ Let $\mathcal{D} \subseteq \mathcal{C}$ be the class of functions that a pushdow
 
 I don't yet know whether $\mathcal{D}=\mathcal{C}$ (and that was also a question of Mossel and Peres).
 
-The following section of my open-source page, [**https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions,**](https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions,) contains information on the question. As that section shows, I could establish the following about the class $\mathcal{D}$:
+The following section of my open-source page, [**https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions**](https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions), contains information on the question. As that section shows, I could establish the following about the class $\mathcal{D}$:
 
 - $\sqrt{\lambda}$ is in $\mathcal{D}$, and so is every rational function in $\mathcal{C}$.
 - If $f(\lambda)$ and $g(\lambda)$ are in $\mathcal{D}$, then so are their product and composition.
