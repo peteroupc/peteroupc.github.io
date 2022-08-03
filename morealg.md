@@ -224,7 +224,7 @@ The following examples show how this method leads to algorithms for simulating c
 >
 > | Function $f(\lambda)$ | Coefficients | Value of $d_0$ |
 >  --- | --- | --- |
-> | $\lambda/(\exp(\lambda)-1)$ |  $a_i = B(i)/(i!)$ |  1. |
+> | $\lambda/(\exp(\lambda)-1)$ |  $a_i = -1/2$ if $i=1$, or $B(i)/(i!)$ otherwise. |  1. |
 > | $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd[^8], or 0 otherwise. |  1. |
 > | $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
 > | $\sum_{i\ge 0} a_i x^i$ ([**source**](https://math.stackexchange.com/questions/855517)) | $a_i = \frac{(-1)^i 4^i}{(2i+1)^2 {2i \choose i}}$. | 1. |
@@ -233,7 +233,7 @@ The following examples show how this method leads to algorithms for simulating c
 >
 > **Note:** Bernoulli numbers can be computed with the following algorithm, namely **Get the _m_<sup>th</sup> Bernoulli number**:
 >
-> 1. If _m_ is 0, 1, 2, 3, or 4, return 1, &minus;1/2, 1/6, 0, or &minus;1/30, respectively.  Otherwise, if _m_ is odd[^8], return 0.
+> 1. If _m_ is 0, 1, 2, 3, or 4, return 1, 1/2, 1/6, 0, or &minus;1/30, respectively.  Otherwise, if _m_ is odd[^8], return 0.
 > 2. Set _i_ to 2 and _v_ to 1 &minus; (_m_+1)/2.
 > 3. While _i_ is less than _m_:
 >     1. **Get the _i_<sup>th</sup> Bernoulli number**, call it _b_.  Add _b_\*choose(_m_+1, _i_) to _v_.[^9]

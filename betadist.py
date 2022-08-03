@@ -2172,7 +2172,7 @@ class RealArcTan2(Real):
 
 _BERNNUMBERS = [
     Fraction(1),
-    Fraction(-1, 2),
+    Fraction(1, 2),
     Fraction(1, 6),
     0,
     Fraction(-1, 30),
@@ -2200,7 +2200,7 @@ def bernoullinum(n):
     v += Fraction(-(n + 1), 2)
     i = 2
     while i < n:
-        v += math.comb(n + 1, i) * bernoullinum(i)
+        v += math.comb(n + 1, i) * bernoullinum(i)  # NOTE: i>=2
         i += 2
     ret = -v / (n + 1)
     _extrabernnumbers[n] = ret
@@ -2242,7 +2242,7 @@ def loggammahelper(n, precision):
     while True:
         num = Fraction(0)
         for l in range(1, k + 1):
-            bn = bernoullinum(l + 1)
+            bn = bernoullinum(l + 1)  # NOTE: l>=2
             sn = stirling1(k, l)
             num += Fraction((-1) ** l * bn * sn, l * (l + 1))
         sden *= n + k
@@ -2258,7 +2258,7 @@ def loggammahelper(n, precision):
     # Get neglected terms
     num = Fraction(0)
     for l in range(1, k + 1):
-        bn = bernoullinum(l + 1)
+        bn = bernoullinum(l + 1)  # NOTE: l>=2
         sn = stirling1(k, l)
         num += Fraction((-1) ** l * bn * sn, l * (l + 1))
     sden *= n + k
@@ -2268,7 +2268,7 @@ def loggammahelper(n, precision):
     k += 1
     num = Fraction(0)
     for l in range(1, k + 1):
-        bn = bernoullinum(l + 1)
+        bn = bernoullinum(l + 1)  # NOTE: l>=2
         sn = stirling1(k, l)
         num += Fraction((-1) ** l * bn * sn, l * (l + 1))
     sden *= n + k
