@@ -1039,11 +1039,20 @@ _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  Fo
 
 The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.
 
-**Conjecture.** _Let $f(\lambda)$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that's a power of 2, $g_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(g_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.  Then Theorem 1 remains valid with the following versions of &phi;(n), **fbelow**, and **fabove**, rather than as given in that theorem, subject to the bounding note:_
+**Conjecture.**
 
-- _&phi;(n) = $\epsilon(f,n)$._
-- _**fbelow**(n, k) = $g_n(k/n) - \eta(n)$ ($\eta(n)$ derives from &phi;(n) as in Theorem 1)._
-- _**fabove**(n, k) = $g_n(k/n) + \eta(n)$._
+Let $f$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that's a power of 2, $W_n(\lambda)$ is a function with a known Bernstein polynomial such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.
+
+Then, for some $C>0$, Theorem 1 remains valid with the following versions of **fbelow** and **fabove**, rather than as given in that theorem, subject to the bounding note: **fbelow**$(n,k)=W_n(k/n) - C \epsilon(f,n)$ and **fabove**$(n,k)=W_n(k/n) + C \epsilon(f,n)$.
+
+It is conjectured as follows:
+
+1. If $W_n = f$ (the ordinary Bernstein polynomial case), then $C=2$.
+2. If $W_n = f$, then $C \epsilon(f,n)$ can be $\sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$ instead.
+3. If $W_n = 2 f - B_n(f)$, then $C=3$.  This corresponds to the iterated Bernstein polynomial of order 2.
+4. If $W_n$ is arbitrary, then $C=3$.
+
+Items 3 and 4 are false for $C\le 2.045$; a counterexample is $f(x)=\frac{259 x^{2}}{2500} + \frac{27 x \left(1 - x\right)}{50}$, a degree-2 polynomial with Bernstein coefficients (0, 27/100, 259/2500).
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme

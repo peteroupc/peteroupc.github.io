@@ -72,8 +72,6 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 
 [**https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation**](https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation)
 
-[**https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form**](https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form)
-
 A polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_k$ are the polynomial's _Bernstein coefficients_.
 
 An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) simulates a factory function $f(\lambda)$ via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
@@ -127,14 +125,23 @@ Thus the questions are:
     - meet the formal statement above, and
     - meet the following error bound? $$|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2}),$$ for every $n\ge 1$, where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form (ideally with coefficients in $[0,1]$); $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a **known exact value or upper bound**.
 
-2. Is the following conjecture true?
+2. The following is a technical question that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-    _Let $f(\lambda):[0,1]\to(0,1)$ be continuous, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that's a power of 2, $W_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.  Then the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that's a power of 2, and for each other $n\gt 1$, $g_n=g_m$ and $h_n=h_m$ where $m=2^{\lfloor\log_2(n)\rfloor}$:_
+    Let $f(\lambda):[0,1]\to(0,1)$ be continuous, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that's a power of 2, $W_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.
 
-    - $a(n,k)=W_n(k/n) - \sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$.
-    - $b(n,k)=W_n(k/n) + \sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$.
+     Suppose that for each integer $n\gt 1$ other than a power of 2, $g_n=g_m$ and $h_n=h_m$ where $m=2^{\lfloor\log_2(n)\rfloor}$.
 
-    _If $\frac{\epsilon(f,2n)}{\epsilon(f,n)} \le 1/3$ for every integer $n\ge 1$ that's a power of 2, then $a(n,k)$ and $b(n,k)$ can be as follows instead for each such integer: $a(n,k)=W_n(k/n) - 2\epsilon(f, n)$ and $b(n,k)=W_n(k/n) + 2\epsilon(f, n)$._
+     Then, for some $C>0$, the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that's a power of 2: $a(n,k)=W_n(k/n) - C \epsilon(f,n)$ and $b(n,k)=W_n(k/n) + C \epsilon(f,n)$.
+
+    1. Is it true that if $W_n = f$ (the ordinary Bernstein polynomial case), then $C=2$?
+
+    2. For what value of $C$ is the statement true when $W_n = 2 f - B_n(f)$? (\*\*\*)  In this case, $C$ must be greater than 2.  I conjecture $C=3$; interesting functions $f$ to test are quadratic polynomials.
+
+    3. For what value of $C$ is the statement true when $W_n$ is arbitrary?
+
+    4. Is it true that if $W_n = f$, then $C \epsilon(f,n)$ can be $\sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$ instead?
+
+    Note that $W_n$ is a function that approximates $f$ and has a known Bernstein polynomial.  $W_n$ can but need not equal $f$.
 
 3. Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?
 
