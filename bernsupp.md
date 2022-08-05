@@ -1037,22 +1037,24 @@ _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ g
 
 _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein polynomials of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005\)[^1]. &#x25a1;
 
-The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.
+The following conjectures suggest there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.
 
 **Conjecture.**
 
-Let $f$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that's a power of 2, $W_n(\lambda)$ is a function with a known Bernstein polynomial such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.
+Let $f$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.
 
-Then, for some $C>0$, Theorem 1 remains valid with the following versions of **fbelow** and **fabove**, rather than as given in that theorem, subject to the bounding note: **fbelow**$(n,k)=W_n(k/n) - C \epsilon(f,n)$ and **fabove**$(n,k)=W_n(k/n) + C \epsilon(f,n)$.
+For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial.
 
-It is conjectured as follows:
+For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.
 
-1. If $W_n = f$ (the ordinary Bernstein polynomial case), then $C=2$.
-2. If $W_n = f$, then $C \epsilon(f,n)$ can be $\sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$ instead.
-3. If $W_n = 2 f - B_n(f)$, then $C=3$.  This corresponds to the iterated Bernstein polynomial of order 2.
-4. If $W_n$ is arbitrary, then $C=3$.
+Then, for some $C\ge D$, Theorem 1 remains valid with the following versions of **fbelow** and **fabove**, rather than as given in that theorem, subject to the bounding note: **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$ and **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$.
 
-Items 3 and 4 are false for $C\le 2.045$; a counterexample is $f(x)=\frac{259 x^{2}}{2500} + \frac{27 x \left(1 - x\right)}{50}$, a degree-2 polynomial with Bernstein coefficients (0, 27/100, 259/2500).
+It is further conjectured that any $C\le 2$ suffices.
+
+> **Note:** If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2), this statement is false when&mdash;
+>
+> - $r=3$ and $D\le 1.1$, or
+> - $r=4$ and $D\le 1$.
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme

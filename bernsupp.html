@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/04"><meta name="citation_online_date" content="2022/08/04"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/05"><meta name="citation_online_date" content="2022/08/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1539,24 +1539,28 @@
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein polynomials of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)[^1]. &#x25a1;</p>
 
-<p>The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
+<p>The following conjectures suggest there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
 
 <p><strong>Conjecture.</strong></p>
 
-<p>Let $f$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that&#39;s a power of 2, $W_n(\lambda)$ is a function with a known Bernstein polynomial such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.</p>
+<p>Let $f$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.</p>
 
-<p>Then, for some $C&gt;0$, Theorem 1 remains valid with the following versions of <strong>fbelow</strong> and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note: <strong>fbelow</strong>$(n,k)=W_n(k/n) - C \epsilon(f,n)$ and <strong>fabove</strong>$(n,k)=W_n(k/n) + C \epsilon(f,n)$.</p>
+<p>For each integer $n\ge1$ that&#39;s a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial.</p>
 
-<p>It is conjectured as follows:</p>
+<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.</p>
 
-<ol>
-<li>If $W_n = f$ (the ordinary Bernstein polynomial case), then $C=2$.</li>
-<li>If $W_n = f$, then $C \epsilon(f,n)$ can be $\sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$ instead.</li>
-<li>If $W_n = 2 f - B_n(f)$, then $C=3$.  This corresponds to the iterated Bernstein polynomial of order 2.</li>
-<li>If $W_n$ is arbitrary, then $C=3$.</li>
-</ol>
+<p>Then, for some $C\ge D$, Theorem 1 remains valid with the following versions of <strong>fbelow</strong> and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note: <strong>fbelow</strong>$(n,k)=W_n(k/n) - CM/n^{r/2}$ and <strong>fabove</strong>$(n,k)=W_n(k/n) + CM/n^{r/2}$.</p>
 
-<p>Items 3 and 4 are false for $C\le 2.045$; a counterexample is $f=\frac{259 x^{2}}{2500} + \frac{27 x \left(1 - x\right)}{50}$, a degree-2 polynomial with Bernstein coefficients (0, 27/100, 259/2500).</p>
+<p>It is further conjectured that any $C\le 2$ suffices.</p>
+
+<blockquote>
+<p><strong>Note:</strong> If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2), this statement is false when&mdash;</p>
+
+<ul>
+<li>$r=3$ and $D\le 1.1$, or</li>
+<li>$r=4$ and $D\le 1$.</li>
+</ul>
+</blockquote>
 
 <p><a id=Example_of_Polynomial_Building_Scheme></a></p>
 

@@ -127,21 +127,15 @@ Thus the questions are:
 
 2. The following is a technical question that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-    Let $f(\lambda):[0,1]\to(0,1)$ be continuous, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that's a power of 2, $W_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.
+    Let $f(\lambda):[0,1]\to(0,1)$ be continuous, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
 
-     Suppose that for each integer $n\gt 1$ other than a power of 2, $g_n=g_m$ and $h_n=h_m$ where $m=2^{\lfloor\log_2(n)\rfloor}$.
+     For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.
 
-     Then, for some $C>0$, the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that's a power of 2: $a(n,k)=W_n(k/n) - C \epsilon(f,n)$ and $b(n,k)=W_n(k/n) + C \epsilon(f,n)$.
+    Then, a conjecture is that for some $C\ge D$, the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that's a power of 2. $a(n,k)=W_n(k/n) - CM/n^{r/2}$ and $b(n,k)=W_n(k/n) + CM/n^{r/2}$.
 
-    1. Is it true that if $W_n = f$ (the ordinary Bernstein polynomial case), then $C=2$?
+    1. For what value of $C$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4? (\*\*\*)  In this case, $C$ must be greater than 1.1 for $r=3$ and 1 if $r=4$.  Interesting functions $f$ to test are quadratic polynomials.
 
-    2. For what value of $C$ is the statement true when $W_n = 2 f - B_n(f)$? (\*\*\*)  In this case, $C$ must be greater than 2.  I conjecture $C=3$; interesting functions $f$ to test are quadratic polynomials.
-
-    3. For what value of $C$ is the statement true when $W_n$ is arbitrary?
-
-    4. Is it true that if $W_n = f$, then $C \epsilon(f,n)$ can be $\sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$ instead?
-
-    Note that $W_n$ is a function that approximates $f$ and has a known Bernstein polynomial.  $W_n$ can but need not equal $f$.
+    2. For what value of $C$ is the statement true when $W_n$ is arbitrary?  I conjecture $C = 2$.
 
 3. Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?
 

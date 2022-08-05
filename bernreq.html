@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/08/04"><meta name="citation_online_date" content="2022/08/04"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/08/05"><meta name="citation_online_date" content="2022/08/05"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -172,20 +172,16 @@
 </ul></li>
 <li><p>The following is a technical question that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.</p>
 
-<p>Let $f(\lambda):[0,1]\to(0,1)$ be continuous, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge1$ that&#39;s a power of 2, $W_n(\lambda)$ is a function such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le \epsilon(f, n),$$ whenever $0\le \lambda\le 1$.</p>
+<p>Let $f(\lambda):[0,1]\to(0,1)$ be continuous, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. For each integer $n\ge1$ that&#39;s a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)</p>
 
-<p>Suppose that for each integer $n\gt 1$ other than a power of 2, $g_n=g_m$ and $h_n=h_m$ where $m=2^{\lfloor\log_2(n)\rfloor}$.</p>
+<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.</p>
 
-<p>Then, for some $C&gt;0$, the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that&#39;s a power of 2: $a(n,k)=W_n(k/n) - C \epsilon(f,n)$ and $b(n,k)=W_n(k/n) + C \epsilon(f,n)$.</p>
+<p>Then, a conjecture is that for some $C\ge D$, the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that&#39;s a power of 2. $a(n,k)=W_n(k/n) - CM/n^{r/2}$ and $b(n,k)=W_n(k/n) + CM/n^{r/2}$.</p>
 
 <ol>
-<li><p>Is it true that if $W_n = f$ (the ordinary Bernstein polynomial case), then $C=2$?</p></li>
-<li><p>For what value of $C$ is the statement true when $W_n = 2 f - B_n(f)$? (***)  In this case, $C$ must be greater than 2.  I conjecture $C=3$; interesting functions $f$ to test are quadratic polynomials.</p></li>
-<li><p>For what value of $C$ is the statement true when $W_n$ is arbitrary?</p></li>
-<li><p>Is it true that if $W_n = f$, then $C \epsilon(f,n)$ can be $\sum_{m\ge\log_2(n)}\epsilon(f, 2^m)$ instead?</p></li>
-</ol>
-
-<p>Note that $W_n$ is a function that approximates $f$ and has a known Bernstein polynomial.  $W_n$ can but need not equal $f$.</p></li>
+<li><p>For what value of $C$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4? (***)  In this case, $C$ must be greater than 1.1 for $r=3$ and 1 if $r=4$.  Interesting functions $f$ to test are quadratic polynomials.</p></li>
+<li><p>For what value of $C$ is the statement true when $W_n$ is arbitrary?  I conjecture $C = 2$.</p></li>
+</ol></li>
 <li><p>Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?</p></li>
 </ol>
 
