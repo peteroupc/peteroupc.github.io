@@ -1539,7 +1539,7 @@
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein polynomials of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)[^1]. &#x25a1;</p>
 
-<p>The following conjectures suggest there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
+<p>The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
 
 <p><strong>Conjecture.</strong></p>
 
@@ -1547,18 +1547,23 @@
 
 <p>For each integer $n\ge1$ that&#39;s a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial.</p>
 
-<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.</p>
+<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.</p>
 
 <p>Then, for some $C\ge D$, Theorem 1 remains valid with the following versions of <strong>fbelow</strong> and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note: <strong>fbelow</strong>$(n,k)=W_n(k/n) - CM/n^{r/2}$ and <strong>fabove</strong>$(n,k)=W_n(k/n) + CM/n^{r/2}$.</p>
 
-<p>It is further conjectured that any $C\le 2$ suffices.</p>
+<p>It is further conjectured that&mdash;</p>
+
+<ol>
+<li>any $C\ge \max(2,D)$ suffices, and</li>
+<li>the same value of $C$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $f$ and that derivative&#39;s Lipschitz constant.</li>
+</ol>
 
 <blockquote>
 <p><strong>Note:</strong> If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2), this statement is false when&mdash;</p>
 
 <ul>
-<li>$r=3$ and $D\le 1.1$, or</li>
-<li>$r=4$ and $D\le 1$.</li>
+<li>$r=3$ and $C\le 1.1$, or</li>
+<li>$r=4$ and $C\le 1$.</li>
 </ul>
 </blockquote>
 

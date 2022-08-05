@@ -174,13 +174,14 @@
 
 <p>Let $f(\lambda):[0,1]\to(0,1)$ be continuous, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. For each integer $n\ge1$ that&#39;s a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)</p>
 
-<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.</p>
+<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.</p>
 
 <p>Then, a conjecture is that for some $C\ge D$, the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that&#39;s a power of 2. $a(n,k)=W_n(k/n) - CM/n^{r/2}$ and $b(n,k)=W_n(k/n) + CM/n^{r/2}$.</p>
 
 <ol>
 <li><p>For what value of $C$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4? (***)  In this case, $C$ must be greater than 1.1 for $r=3$ and 1 if $r=4$.  Interesting functions $f$ to test are quadratic polynomials.</p></li>
-<li><p>For what value of $C$ is the statement true when $W_n$ is arbitrary?  I conjecture $C = 2$.</p></li>
+<li><p>For what value of $C$ is the statement true when $W_n$ is arbitrary?  I conjecture $C = \max(2,D)$.</p></li>
+<li><p>Does the same value of $C$ suffice when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $f$ and that derivative&#39;s Lipschitz constant?</p></li>
 </ol></li>
 <li><p>Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?</p></li>
 </ol>
