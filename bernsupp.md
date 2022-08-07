@@ -1042,15 +1042,17 @@ _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  Fo
 
 The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.
 
-**Lemma 3.** _Let **fabove**(n,k) = $W_n(k/n) - \epsilon_n(f)$ and **fbelow**(n,k) = $W_n(k/n) + \epsilon_n(f)$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge 1$, **fabove**(_n_,_k_) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and **fbelow**(_n_,_k_) is the $k$-th Bernstein coefficient of the polynomial $h_n$, and the polynomials $g_n$ and $h_n$ satisfy **fabove**(_n_,_k_)&le;**fbelow**(_n_,_k_) and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] \(discussed in the proof of Theorem 1 above\).  Then for every $n\le 1$&mdash; $|f(x) - B_n(W_n(x))| \le \epsilon_n(f)$ whenever $0\le x\le 1$._
+**Lemma 3.** _Suppose that for each integer $n\ge 1$ and for a strictly bounded factory function $f(\lambda)$, **fabove**($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and **fbelow**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$, and the polynomials $g_n$ and $h_n$ satisfy **fabove**($n$,$k$)&le;**fbelow**(_n_,_k_) and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] \(discussed in the proof of Theorem 1 above\)._
 
-_Proof:_ $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(x))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, condition (iv) of Nacu and Peres (2005)[^1] implies that $g_{n+1}(x)\ge g_n(x)\ge f(x)$ (the lower polynomials "increase") and $h_{n+1}(x)\le h_n\le f(x)$ (the upper polynomials "decrease") for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].
+_If **fabove**(n,k) = $W_n(k/n) - \epsilon_n(f)$ and **fbelow**(n,k) = $W_n(k/n) + \epsilon_n(f)$ for some $n\le 1$, then for that $n$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 
-Then if $B_n(W_n(x)) < f(x)$ for some $x$ in [0, 1]$, shifting the left-hand side upward by $\epsilon_n(f)$ means that $h_n = B_n(W_n(x))+\epsilon_n(f) \ge f(x)$, and rearranging this expression leads to $f(x) - B_n(W_n(x)) \le \epsilon_n(f)$.
+_Proof:_ $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, condition (iv) of Nacu and Peres (2005)[^1] implies that $g_{n}(\lambda)\le g_{n+1}(\lambda)\le f(\lambda)$ (the lower polynomials "increase") and $h_{n}(\lambda)\ge h_{n+1}\ge f(\lambda)$ (the upper polynomials "decrease") for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].
 
-Likewise, if $B_n(W_n(x)) > f(x)$ for some $x$ in [0, 1]$, shifting the left-hand side downward by $\epsilon_n(f)$ means that $g_n = B_n(W_n(x))-\epsilon_n(f) \ge f(x)$, and rearranging this expression leads to $B_n(W_n(x)) - f(x) \le \epsilon_n(f)$.
+Then if $B_n(W_n(\lambda)) < f(\lambda)$ for some $\lambda$ in [0, 1], shifting the left-hand side upward by $\epsilon_n(f)$ means that $h_n = B_n(W_n(\lambda))+\epsilon_n(f) \ge f(\lambda)$, and rearranging this expression leads to $f(\lambda) - B_n(W_n(\lambda)) \le \epsilon_n(f)$.
 
-This combined means that $|f(x) - B_n(W_n(x))| \le \epsilon_n(f)$ whenever $0\le x\le 1$.  &#x25a1;
+Likewise, if $B_n(W_n(\lambda)) > f(\lambda)$ for some $\lambda$ in [0, 1], shifting the left-hand side downward by $\epsilon_n(f)$ means that $g_n = B_n(W_n(\lambda))-\epsilon_n(f) \ge f(\lambda)$, and rearranging this expression leads to $B_n(W_n(\lambda)) - f(\lambda) \le \epsilon_n(f)$.
+
+This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$.  &#x25a1;
 
 **Corollary 4**.  _If $f(\lambda)$ satisfies the scheme given in Theorem 1, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge 1$ that's a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$._
 
