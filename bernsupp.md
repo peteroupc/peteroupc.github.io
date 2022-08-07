@@ -1042,9 +1042,13 @@ _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  Fo
 
 The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.
 
-**Lemma 3.** _Suppose that for each integer $n\ge 1$ and for a strictly bounded factory function $f(\lambda)$, **fabove**($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and **fbelow**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$, and the polynomials $g_n$ and $h_n$ satisfy **fabove**($n$,$k$)&le;**fbelow**(_n_,_k_) and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] \(discussed in the proof of Theorem 1 above\)._
+**Lemma 3.** _Suppose that for each integer $n\ge 1$ and for a strictly bounded factory function $f(\lambda)$:_
 
-_If **fabove**(n,k) = $W_n(k/n) - \epsilon_n(f)$ and **fbelow**(n,k) = $W_n(k/n) + \epsilon_n(f)$ for some $n\le 1$, then for that $n$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
+- _**fbelow**($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and **fabove**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$._
+- **fbelow**($n$,$k$)&le;**fabove**($n$,$k$).
+- _The polynomials $g_n$ and $h_n$ satisfy  and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] \(discussed in the proof of Theorem 1 above\)._
+
+_If **fbelow**(n,k) = $W_n(k/n) - \epsilon_n(f)$ and **fabove**(n,k) = $W_n(k/n) + \epsilon_n(f)$ for some $n\ge 1$, then for that $n$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 
 _Proof:_ $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, condition (iv) of Nacu and Peres (2005)[^1] implies that $g_{n}(\lambda)\le g_{n+1}(\lambda)\le f(\lambda)$ (the lower polynomials "increase") and $h_{n}(\lambda)\ge h_{n+1}\ge f(\lambda)$ (the upper polynomials "decrease") for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].
 

@@ -1544,9 +1544,15 @@
 
 <p>The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.</p>
 
-<p><strong>Lemma 3.</strong> <em>Suppose that for each integer $n\ge 1$ and for a strictly bounded factory function $f(\lambda)$, <strong>fabove</strong>($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and <strong>fbelow</strong>($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$, and the polynomials $g_n$ and $h_n$ satisfy <strong>fabove</strong>($n$,$k$)&le;<strong>fbelow</strong>(_n</em>,<em>k</em>) and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] (discussed in the proof of Theorem 1 above)._</p>
+<p><strong>Lemma 3.</strong> <em>Suppose that for each integer $n\ge 1$ and for a strictly bounded factory function $f(\lambda)$:</em></p>
 
-<p><em>If <strong>fabove</strong>(n,k) = $W_n(k/n) - \epsilon_n(f)$ and <strong>fbelow</strong>(n,k) = $W_n(k/n) + \epsilon_n(f)$ for some $n\le 1$, then for that $n$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$.</em></p>
+<ul>
+<li><em><strong>fbelow</strong>($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and <strong>fabove</strong>($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$.</em></li>
+<li><strong>fbelow</strong>($n$,$k$)&le;<strong>fabove</strong>($n$,$k$).</li>
+<li><em>The polynomials $g_n$ and $h_n$ satisfy  and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] (discussed in the proof of Theorem 1 above).</em></li>
+</ul>
+
+<p><em>If <strong>fbelow</strong>(n,k) = $W_n(k/n) - \epsilon_n(f)$ and <strong>fabove</strong>(n,k) = $W_n(k/n) + \epsilon_n(f)$ for some $n\ge 1$, then for that $n$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$.</em></p>
 
 <p><em>Proof:</em> $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, condition (iv) of Nacu and Peres (2005)[^1] implies that $g_{n}(\lambda)\le g_{n+1}(\lambda)\le f(\lambda)$ (the lower polynomials &quot;increase&quot;) and $h_{n}(\lambda)\ge h_{n+1}\ge f(\lambda)$ (the upper polynomials &quot;decrease&quot;) for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].</p>
 
