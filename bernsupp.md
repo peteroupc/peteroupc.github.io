@@ -253,7 +253,7 @@ An example is given by the iterated Bernstein polynomial construction discussed 
 1. the iterated polynomial is within $\epsilon$ of $f(\lambda)$, and
 2. the polynomial $W_{n,i}$ is not less than 0 or greater than 1.
 
-By analyzing the proof of Theorem 3.3 of the paper just cited, it's possible to prove the following error bounds.  In the table below, _M_<sub>_n_</sub> is not less than the maximum absolute value of $f(\lambda)$ and its _n_-th derivative over the domain $[0, 1]$.
+By analyzing the proof of Theorem 3.3 of the paper just cited, it's possible to prove the following error bounds (when $f$ is not a polynomial).  In the table below, _M_<sub>_n_</sub> is not less than the maximum absolute value of $f(\lambda)$ and its _n_-th derivative over the domain $[0, 1]$.
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  |
  --- | --- | --- | --- |
@@ -320,7 +320,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012\)[^18]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^2]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^19].  |
 | Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly for every _&lambda;_.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (has no vertical slope) (Holtz et al. 2011\)[^20]. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note 3) (Holtz et al. 2011\)[^20]. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with exponent (_&alpha;_ &minus; _r_), where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^20]. Assumes _f_ is bounded away from 0 and 1. |
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^2]. | If and only if _f_ is real analytic (writable as $f(\lambda)=a_0 \lambda^0 + a_1 \lambda^1 + ...$ for real constants $a_i$) (Nacu and Peres 2005\)[^1].   |
 | Average number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^19]. |
@@ -329,6 +329,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 >
 > 1. By the results of Holtz et al., it is suspected that the target function _f_ can't be simulated using a finite number of flips on average for every probability of heads unless _f_'s fourth derivative is Hölder continuous.
 > 2. If a function is constant on some non-empty open interval in its domain, but is not constant on the whole domain, then it can't be real analytic.
+> 3. A function in the _Zygmund class_, roughly speaking, has no vertical slope.  The Zygmund class includes the smaller class of Lipschitz continuous functions.
 
 <a id=Complexity></a>
 ## Complexity
@@ -1045,34 +1046,34 @@ Let $f$ be a strictly bounded factory function, and denote the Bernstein polynom
 
 For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial.
 
-For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.
+For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum of $f$ and its derivatives up to the $r$-th derivative.
 
-Then, for some $C\ge D$, Theorem 1 remains valid with the following versions of **fbelow** and **fabove**, rather than as given in that theorem, subject to the bounding note: **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$ and **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$.
+Then there is $C_0\ge D$ such that for every $C\ge C_0$, Theorem 1 remains valid with the following versions of **fbelow** and **fabove**, rather than as given in that theorem, subject to the bounding note: **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$ and **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$.
 
-It is further conjectured that&mdash;
+It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
-1. any $C\ge \max(2,D)$ suffices, and
-2. the same value of $C$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $f$ and that derivative's Lipschitz constant.
-
-> **Note:** If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2), this statement is false when&mdash;
+> **Note:** If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2) this statement is false when&mdash;
 >
-> - $r=3$ and $C\le 1.1$, or
-> - $r=4$ and $C\le 1$.
+> - $M$ is the maximum of $f$ and its $r$-th derivative, and&mdash;
+>     - $r=3$ and $C_0\le 2.25$ (counterexample is the polynomial $2\lambda(1-\lambda)$), or
+>     - $r=3$ and $C_0\le 0.65$, when $n\ge 4$ (same counterexample), or
+>     - $r=4$ and $C_0\le 39/20$.
+> - $M$ is the maximum of $f$ and its derivatives up to the $r$-th derivative, and&mdash;
+>     - $r=3$ and $C_0\le 59/100$ (counterexample is the polynomial $x^{2} + 2 x \left(1 - x\right)$), or
+>     - $r=4$ and $C_0\le 6/25$ (counterexample is $\frac{167 x^{2}}{50000} + \frac{19943 x\left(1 - x\right)}{10000} + \frac{89 \left(1 - x\right)^{2}}{20000}$).
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme
 
-The following example uses the results above to build an polynomial-building scheme for a factory function.
+The following example uses the results above to build a polynomial-building scheme for a factory function.
 
-Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and (ln(_&lambda;_/exp(3)))<sup>&minus;2</sup> otherwise.  Then the following scheme is valid in the sense of Theorem 1:
+Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and (ln(_&lambda;_/exp(3)))<sup>&minus;2</sup> otherwise. (This function is not Hölder continuous; its slope is exponentially steep at the point 0.)  Then the following scheme is valid in the sense of Theorem 1, subject to that theorem's bounding note:
 
 - _&eta;_(_k_) = &Phi;(1, 2, (ln(_k_)+ln(7)+6)/ln(2))\*4/ln(2)<sup>2</sup>.
 - **fbelow**(n, k) = f(_k_/_n_).
 - **fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(_k_/_n_) +  _&eta;_(_n_).
 
-Where &Phi;(.) is a function called the _Lerch transcendent_, and **fabove** is subject to Theorem 1's bounding note.
-
-Notice that the function _f_ is not Hölder continuous; its slope is exponentially steep at the point 0.
+Where &Phi;(.) is a function called the _Lerch transcendent_.
 
 The first step is to find a concave modulus of continuity of _f_ (called _&omega;_(_h_)).  Because _f_ is strictly increasing and concave, and because _f_(0) = 0, we can take _&omega;_(_h_) = _f_(_h_).
 

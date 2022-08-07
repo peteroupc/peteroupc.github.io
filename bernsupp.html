@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/05"><meta name="citation_online_date" content="2022/08/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/06"><meta name="citation_online_date" content="2022/08/06"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -387,7 +387,7 @@
 <li>the polynomial $W_{n,i}$ is not less than 0 or greater than 1.</li>
 </ol>
 
-<p>By analyzing the proof of Theorem 3.3 of the paper just cited, it&#39;s possible to prove the following error bounds.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the maximum absolute value of $f(\lambda)$ and its <em>n</em>-th derivative over the domain $[0, 1]$.</p>
+<p>By analyzing the proof of Theorem 3.3 of the paper just cited, it&#39;s possible to prove the following error bounds (when $f$ is not a polynomial).  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the maximum absolute value of $f(\lambda)$ and its <em>n</em>-th derivative over the domain $[0, 1]$.</p>
 
 <table><thead>
 <tr>
@@ -509,7 +509,7 @@
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and every <em>&lambda;</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
-<td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (has no vertical slope) (Holtz et al. 2011)[^20].</td>
+<td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (see note 3) (Holtz et al. 2011)[^20].</td>
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and every <em>&lambda;</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
@@ -531,6 +531,7 @@
 <ol>
 <li>By the results of Holtz et al., it is suspected that the target function <em>f</em> can&#39;t be simulated using a finite number of flips on average for every probability of heads unless <em>f</em>&#39;s fourth derivative is Hölder continuous.</li>
 <li>If a function is constant on some non-empty open interval in its domain, but is not constant on the whole domain, then it can&#39;t be real analytic.</li>
+<li>A function in the <em>Zygmund class</em>, roughly speaking, has no vertical slope.  The Zygmund class includes the smaller class of Lipschitz continuous functions.</li>
 </ol>
 </blockquote>
 
@@ -1547,23 +1548,29 @@
 
 <p>For each integer $n\ge1$ that&#39;s a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial.</p>
 
-<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum of $f$ and its $r$-th derivative.</p>
+<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum of $f$ and its derivatives up to the $r$-th derivative.</p>
 
-<p>Then, for some $C\ge D$, Theorem 1 remains valid with the following versions of <strong>fbelow</strong> and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note: <strong>fbelow</strong>$(n,k)=W_n(k/n) - CM/n^{r/2}$ and <strong>fabove</strong>$(n,k)=W_n(k/n) + CM/n^{r/2}$.</p>
+<p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, Theorem 1 remains valid with the following versions of <strong>fbelow</strong> and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note: <strong>fbelow</strong>$(n,k)=W_n(k/n) - CM/n^{r/2}$ and <strong>fabove</strong>$(n,k)=W_n(k/n) + CM/n^{r/2}$.</p>
 
-<p>It is further conjectured that&mdash;</p>
-
-<ol>
-<li>any $C\ge \max(2,D)$ suffices, and</li>
-<li>the same value of $C$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $f$ and that derivative&#39;s Lipschitz constant.</li>
-</ol>
+<p>It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 
 <blockquote>
-<p><strong>Note:</strong> If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2), this statement is false when&mdash;</p>
+<p><strong>Note:</strong> If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2) this statement is false when&mdash;</p>
 
 <ul>
-<li>$r=3$ and $C\le 1.1$, or</li>
-<li>$r=4$ and $C\le 1$.</li>
+<li>$M$ is the maximum of $f$ and its $r$-th derivative, and&mdash;
+
+<ul>
+<li>$r=3$ and $C_0\le 2.25$ (counterexample is the polynomial $2\lambda(1-\lambda)$), or</li>
+<li>$r=3$ and $C_0\le 0.65$, when $n\ge 4$ (same counterexample), or</li>
+<li>$r=4$ and $C_0\le 39/20$.</li>
+</ul></li>
+<li>$M$ is the maximum of $f$ and its derivatives up to the $r$-th derivative, and&mdash;
+
+<ul>
+<li>$r=3$ and $C_0\le 59/100$ (counterexample is the polynomial $x^{2} + 2 x \left(1 - x\right)$), or</li>
+<li>$r=4$ and $C_0\le 6/25$ (counterexample is $\frac{167 x^{2}}{50000} + \frac{19943 x\left(1 - x\right)}{10000} + \frac{89 \left(1 - x\right)^{2}}{20000}$).</li>
+</ul></li>
 </ul>
 </blockquote>
 
@@ -1571,9 +1578,9 @@
 
 <h3>Example of Polynomial-Building Scheme</h3>
 
-<p>The following example uses the results above to build an polynomial-building scheme for a factory function.</p>
+<p>The following example uses the results above to build a polynomial-building scheme for a factory function.</p>
 
-<p>Let <em>f</em>(<em>&lambda;</em>) = 0 if <em>&lambda;</em> is 0, and (ln(<em>&lambda;</em>/exp(3)))<sup>&minus;2</sup> otherwise.  Then the following scheme is valid in the sense of Theorem 1:</p>
+<p>Let <em>f</em>(<em>&lambda;</em>) = 0 if <em>&lambda;</em> is 0, and (ln(<em>&lambda;</em>/exp(3)))<sup>&minus;2</sup> otherwise. (This function is not Hölder continuous; its slope is exponentially steep at the point 0.)  Then the following scheme is valid in the sense of Theorem 1, subject to that theorem&#39;s bounding note:</p>
 
 <ul>
 <li><em>&eta;</em>(<em>k</em>) = &Phi;(1, 2, (ln(<em>k</em>)+ln(7)+6)/ln(2))*4/ln(2)<sup>2</sup>.</li>
@@ -1581,9 +1588,7 @@
 <li><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(<em>k</em>/<em>n</em>) +  <em>&eta;</em>(<em>n</em>).</li>
 </ul>
 
-<p>Where &Phi;(.) is a function called the <em>Lerch transcendent</em>, and <strong>fabove</strong> is subject to Theorem 1&#39;s bounding note.</p>
-
-<p>Notice that the function <em>f</em> is not Hölder continuous; its slope is exponentially steep at the point 0.</p>
+<p>Where &Phi;(.) is a function called the <em>Lerch transcendent</em>.</p>
 
 <p>The first step is to find a concave modulus of continuity of <em>f</em> (called <em>&omega;</em>(<em>h</em>)).  Because <em>f</em> is strictly increasing and concave, and because <em>f</em>(0) = 0, we can take <em>&omega;</em>(<em>h</em>) = <em>f</em>(<em>h</em>).</p>
 
