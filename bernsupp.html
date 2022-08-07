@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/06"><meta name="citation_online_date" content="2022/08/06"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/07"><meta name="citation_online_date" content="2022/08/07"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -387,7 +387,7 @@
 <li>the polynomial $W_{n,i}$ is not less than 0 or greater than 1.</li>
 </ol>
 
-<p>By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the so-called $C^k$ norm.  Unfortunately, the $C^k$ norm is defined differently in different academic works, and the bounds are very sensitive to how that norm is defined.[^35]</p>
+<p>By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^9]</p>
 
 <table><thead>
 <tr>
@@ -440,28 +440,28 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> Providing the full proof for the error bounds shown in the table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 3.3 of Güntürk and Li (2021)[^8], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.  (Bounds for even binomial central moments up to the 44th are given in Molteni (2022)[^9], and looser bounds for other moments in Adell et al. (2015)[^10].)</p>
+<p><strong>Note:</strong> Providing the full proof for the error bounds shown in the table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 3.3 of Güntürk and Li (2021)[^8], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.  (Bounds for even binomial central moments up to the 44th are given in Molteni (2022)[^10], and looser bounds for other moments in Adell et al. (2015)[^11].)</p>
 </blockquote>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Power_Series></a></p>
 
 <h3>Approximate Bernoulli Factories for Power Series</h3>
 
-<p>Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the <em>coefficients</em>, are constant rational numbers[^11].</p>
+<p>Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the <em>coefficients</em>, are constant rational numbers[^12].</p>
 
 <p>To simulate an approximation of $f$ that comes within $\epsilon$ of $f$:</p>
 
 <ol>
 <li><p>Find the first $n$+1 coefficients such that the polynomial $P(\lambda) = a_0 \lambda^0 + ... + a_n\lambda^n$ is within $\epsilon$ of $f$ on the interval [0, 1].</p>
 
-<p>If $f$&#39;s coefficients are each greater than 0, form a non-increasing sequence, and meet the so-called &quot;ratio test&quot;, the algorithms in Carvalho and Moreira (2022)[^12] can be used here (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p>
+<p>If $f$&#39;s coefficients are each greater than 0, form a non-increasing sequence, and meet the so-called &quot;ratio test&quot;, the algorithms in Carvalho and Moreira (2022)[^13] can be used here (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p>
 
 <p>Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor&#39;s theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the maximum absolute value of $f$&#39;s ($n$+1)-th derivative on [0, 1].</p></li>
-<li>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^13].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.</li>
+<li>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^14].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.</li>
 <li>Flip the input coin <em>n</em> times, then let <em>j</em> be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.</li>
 </ol>
 
-<p>In fact, if $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$), which includes functions equaling power series as a special case ($\gamma=1$), it&#39;s possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^14]; see also (Gevrey 1918)[^15]).</p>
+<p>In fact, if $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$), which includes functions equaling power series as a special case ($\gamma=1$), it&#39;s possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^15]; see also (Gevrey 1918)[^16]).</p>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a></p>
 
@@ -470,8 +470,8 @@
 <p>There are a number of approximate methods to simulate <em>&lambda;</em>*<em>c</em>, where <em>c</em> &gt; 1 and <em>&lambda;</em> lies in [0, 1/<em>c</em>).  (&quot;Approximate&quot; because this function touches 1 at 1/<em>c</em>, so it can&#39;t be a factory function.) Since the methods use only up to <em>n</em> flips, where <em>n</em> is an integer greater than 0, the approximation will be a polynomial of degree <em>n</em>.</p>
 
 <ul>
-<li><p>Henderson and Glynn (2003, Remark 4)[^16] approximates the function <em>&lambda;</em>*2 using a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</p></li>
-<li><p>I found the following approximation for <em>&lambda;</em>*<em>c</em>[^17]: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/<em>c</em>).</p></li>
+<li><p>Henderson and Glynn (2003, Remark 4)[^17] approximates the function <em>&lambda;</em>*2 using a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</p></li>
+<li><p>I found the following approximation for <em>&lambda;</em>*<em>c</em>[^18]: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/<em>c</em>).</p></li>
 <li><p>The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)[^1], which approximates <em>&lambda;</em>*2.</p></li>
 </ul>
 
@@ -497,11 +497,11 @@
 </thead><tbody>
 <tr>
 <td>Requires no more than <em>n</em> input coin flips.</td>
-<td>If and only if <em>f</em> can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in [0, 1] (Goyal and Sigman 2012)[^18].</td>
+<td>If and only if <em>f</em> can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in [0, 1] (Goyal and Sigman 2012)[^19].</td>
 </tr>
 <tr>
 <td>Requires a finite number of flips on average. Also known as &quot;realizable&quot; by Flajolet et al. (2010)[^2].</td>
-<td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)[^1].<br/>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^19].</td>
+<td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)[^1].<br/>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^20].</td>
 </tr>
 <tr>
 <td>Number of flips required, raised to power of <em>r</em>, is finite on average and has a tail that drops off uniformly for every <em>&lambda;</em>.</td>
@@ -509,11 +509,11 @@
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and every <em>&lambda;</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
-<td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (see note 3) (Holtz et al. 2011)[^20].</td>
+<td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (see note 3) (Holtz et al. 2011)[^21].</td>
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and every <em>&lambda;</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
-<td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with exponent (<em>&alpha;</em> &minus; <em>r</em>), where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)[^20]. Assumes <em>f</em> is bounded away from 0 and 1.</td>
+<td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with exponent (<em>&alpha;</em> &minus; <em>r</em>), where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)[^21]. Assumes <em>f</em> is bounded away from 0 and 1.</td>
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)[^2].</td>
@@ -521,7 +521,7 @@
 </tr>
 <tr>
 <td>Average number of flips bounded from below by (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
-<td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^19].</td>
+<td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^20].</td>
 </tr>
 </tbody></table>
 
@@ -930,59 +930,59 @@
 
 <p>[^8]: Güntürk, C.S., Li, W., &quot;<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>&quot;, arXiv:2112.09181 [cs.LG], 2021.</p>
 
-<p>[^9]: Molteni, Giuseppe. &quot;Explicit bounds for even moments of Bernstein&#39;s polynomials.&quot; Journal of Approximation Theory 273 (2022): 105658.</p>
+<p>[^9]: Güntürk and Li 2021 defines the $C^n$ norm as the maximum absolute value of $f(\lambda)$ and its <em>n</em>-th derivative over the domain $[0, 1]$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.</p>
 
-<p>[^10]: Adell, J.A., Bustamante, J., Quesada, J.M., &quot;Estimates for the moments of Bernstein polynomials&quot; J. Math. Anal. Appl. 432 (2015).</p>
+<p>[^10]: Molteni, Giuseppe. &quot;Explicit bounds for even moments of Bernstein&#39;s polynomials.&quot; Journal of Approximation Theory 273 (2022): 105658.</p>
 
-<p>[^11]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.</p>
+<p>[^11]: Adell, J.A., Bustamante, J., Quesada, J.M., &quot;Estimates for the moments of Bernstein polynomials&quot; J. Math. Anal. Appl. 432 (2015).</p>
 
-<p>[^12]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
+<p>[^12]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.</p>
 
-<p>[^13]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, Reliable Computing 17(1), 2012.</p>
+<p>[^13]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
 
-<p>[^14]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. &quot;<a href="https://doi.org/10.1016/j.jco.2015.05.001"><strong>Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy</strong></a>.&quot; Journal of Complexity 31, no. 5 (2015): 689-714.</p>
+<p>[^14]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, Reliable Computing 17(1), 2012.</p>
 
-<p>[^15]: M. Gevrey, &quot;Sur la nature analytique des solutions des équations aux dérivées partielles&quot;, 1918.</p>
+<p>[^15]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. &quot;<a href="https://doi.org/10.1016/j.jco.2015.05.001"><strong>Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy</strong></a>.&quot; Journal of Complexity 31, no. 5 (2015): 689-714.</p>
 
-<p>[^16]: Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</p>
+<p>[^16]: M. Gevrey, &quot;Sur la nature analytique des solutions des équations aux dérivées partielles&quot;, 1918.</p>
 
-<p>[^17]: For this approximation, if <em>n</em> were infinity, the method would return 1 with probability 1 and so would not approximate <em>&lambda;</em>*<em>c</em>, of course.</p>
+<p>[^17]: Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</p>
 
-<p>[^18]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
+<p>[^18]: For this approximation, if <em>n</em> were infinity, the method would return 1 with probability 1 and so would not approximate <em>&lambda;</em>*<em>c</em>, of course.</p>
 
-<p>[^19]: Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</p>
+<p>[^19]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
 
-<p>[^20]: Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, <em>Constructive Approximation</em> 33 (2011).</p>
+<p>[^20]: Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</p>
 
-<p>[^21]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. &quot;Uniform approximation and Bernstein polynomials with coefficients in the unit interval.&quot; European Journal of Combinatorics 32, no. 3 (2011): 448-463.</p>
+<p>[^21]: Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, <em>Constructive Approximation</em> 33 (2011).</p>
 
-<p>[^22]: Li, Zhongkai. &quot;Bernstein polynomials and modulus of continuity.&quot; Journal of Approximation Theory 102, no. 1 (2000): 171-174.</p>
+<p>[^22]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. &quot;Uniform approximation and Bernstein polynomials with coefficients in the unit interval.&quot; European Journal of Combinatorics 32, no. 3 (2011): 448-463.</p>
 
-<p>[^23]: Skorski, Maciej. &quot;<a href="https://arxiv.org/abs/2012.06270"><strong>Handy formulas for binomial moments</strong></a>&quot;, arXiv:2012.06270 (2020).</p>
+<p>[^23]: Li, Zhongkai. &quot;Bernstein polynomials and modulus of continuity.&quot; Journal of Approximation Theory 102, no. 1 (2000): 171-174.</p>
 
-<p>[^24]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
+<p>[^24]: Skorski, Maciej. &quot;<a href="https://arxiv.org/abs/2012.06270"><strong>Handy formulas for binomial moments</strong></a>&quot;, arXiv:2012.06270 (2020).</p>
 
-<p>[^25]: von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</p>
+<p>[^25]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
 
-<p>[^26]: Peres, Y., &quot;<a href="https://projecteuclid.org/euclid.aos/1176348543"><strong>Iterating von Neumann&#39;s procedure for extracting random bits</strong></a>&quot;, Annals of Statistics 1992,20,1, p. 590-597.</p>
+<p>[^26]: von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</p>
 
-<p>[^27]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^27]: Peres, Y., &quot;<a href="https://projecteuclid.org/euclid.aos/1176348543"><strong>Iterating von Neumann&#39;s procedure for extracting random bits</strong></a>&quot;, Annals of Statistics 1992,20,1, p. 590-597.</p>
 
-<p>[^28]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</p>
+<p>[^28]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^29]: S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS], 2018.</p>
+<p>[^29]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</p>
 
-<p>[^30]: Levy, H., <em>Stochastic dominance</em>, 1998.</p>
+<p>[^30]: S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS], 2018.</p>
 
-<p>[^31]: Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</p>
+<p>[^31]: Levy, H., <em>Stochastic dominance</em>, 1998.</p>
 
-<p>[^32]: Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</p>
+<p>[^32]: Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</p>
 
-<p>[^33]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</p>
+<p>[^33]: Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</p>
 
-<p>[^34]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
+<p>[^34]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</p>
 
-<p>[^35]: Güntürk and Li 2021 defines the $C^k$ norm as the maximum absolute value of $f(\lambda)$ and its <em>n</em>-th derivative over the domain $[0, 1]$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.</p>
+<p>[^35]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -1006,7 +1006,7 @@
 
 <p><em>Proof:</em> $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with non-negative coefficients, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;</p>
 
-<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^12] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
+<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^13] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
 
 <p><a id=Results_Used_in_Approximate_Bernoulli_Factories></a></p>
 
@@ -1016,11 +1016,11 @@
 
 <p><em>Proof:</em> For $W_{n,2}$ it&#39;s enough to prove that $B_n(f)\le f$ for every $n\le 1$.  This is the case because of Jensen&#39;s inequality and because $f$ is concave.</p>
 
-<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is non-negative.  For this, using only the fact that $f$ maps [0, 1] to [0, 1], $B_n(f)$ will have Bernstein coefficients in [0, 1] (each coefficient is a value of $f$) and so will likewise map [0, 1] to [0, 1] (Qian et al. 2011)[^21].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is non-negative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is non-negative as well.  Thus, $W_{n,3}$ is non-negative on [0, 1]. &#x25a1;</p>
+<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is non-negative.  For this, using only the fact that $f$ maps [0, 1] to [0, 1], $B_n(f)$ will have Bernstein coefficients in [0, 1] (each coefficient is a value of $f$) and so will likewise map [0, 1] to [0, 1] (Qian et al. 2011)[^22].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is non-negative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is non-negative as well.  Thus, $W_{n,3}$ is non-negative on [0, 1]. &#x25a1;</p>
 
 <p><strong>Proposition B2</strong>: Let $f(\lambda)$ map [0, 1] to [0, 1], be continuous, nondecreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is non-negative on [0, 1].</p>
 
-<p><em>Proof:</em> The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^22], showing that $W_{n,2}$ is non-negative on [0, 1].  &#x25a1;</p>
+<p><em>Proof:</em> The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^23], showing that $W_{n,2}$ is non-negative on [0, 1].  &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$&#39;s domain.</p>
@@ -1036,7 +1036,7 @@
 
 <p><strong>Proposition B5</strong>: For every integer $n\ge 1$, the following is true: $$|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$</p>
 
-<p><em>Proof</em>: The critical points of $T(n, 3, p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T(n, r, p)$ is antisymmetric whenever $r$ is odd, and is non-negative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^23], it&#39;s enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T(n, 3, p)|$ on either side.  By inspection, the moment at that critical point is decreasing for every $n\ge 1$. &#x25a1;</p>
+<p><em>Proof</em>: The critical points of $T(n, 3, p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T(n, r, p)$ is antisymmetric whenever $r$ is odd, and is non-negative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^24], it&#39;s enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T(n, 3, p)|$ on either side.  By inspection, the moment at that critical point is decreasing for every $n\ge 1$. &#x25a1;</p>
 
 <p><strong>Corollary B6</strong>:  For every integer $n_0\ge 1$, $|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n_0}} n^{3/2} &lt; (963/1000)\frac{1}{\sqrt{n_0}} n^{3/2}$ whenever $n\ge n_0$.</p>
 
@@ -1095,7 +1095,7 @@
 
 <p>Let <em>f</em>(<em>&lambda;</em>) be a function whose domain is the <em>closed</em> interval [0, 1] or a subset of it, and that maps its domain to [0, 1].  The domain of <em>f</em> gives the allowable values of <em>&lambda;</em>, which is the input coin&#39;s probability of heads.</p>
 
-<p><em>f</em> admits a Bernoulli factory if and only if <em>f</em> is constant on its domain, or is continuous and <em>polynomially bounded</em> on its domain, as defined later in the section &quot;Proofs for Polynomial-Building Schemes&quot; (Keane and O&#39;Brien 1994)[^24].</p>
+<p><em>f</em> admits a Bernoulli factory if and only if <em>f</em> is constant on its domain, or is continuous and <em>polynomially bounded</em> on its domain, as defined later in the section &quot;Proofs for Polynomial-Building Schemes&quot; (Keane and O&#39;Brien 1994)[^25].</p>
 
 <p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory:</p>
 
@@ -1119,7 +1119,7 @@
 
 <h3>Which functions don&#39;t require outside randomness to simulate?</h3>
 
-<p>The function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O&#39;Brien 1994)[^24].  See &quot;<a href="https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a>&quot;.</p>
+<p>The function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O&#39;Brien 1994)[^25].  See &quot;<a href="https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a>&quot;.</p>
 
 <p><strong>Strong Simulability Statement.</strong> A function <em>f</em>(<em>&lambda;</em>) is strongly simulable only if&mdash;</p>
 
@@ -1138,7 +1138,7 @@
 
 <p><em>Proof:</em> If <em>f</em> is the constant 0 or 1, the proof is trivial: simply return 0 or 1, respectively.</p>
 
-<p>Otherwise: Let <em>a</em>[<em>j</em>] be the <em>j</em><sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012)[^18].</p>
+<p>Otherwise: Let <em>a</em>[<em>j</em>] be the <em>j</em><sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012)[^19].</p>
 
 <ol>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
@@ -1149,7 +1149,7 @@
 
 <p>(By the properties of the Bernstein form, <em>a</em>[0] will equal <em>f</em>(0) and <em>a</em>[<em>n</em>] will equal <em>f</em>(1) whenever 0 or 1 is in the domain of <em>f</em>, respectively.)</p>
 
-<p>Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)[^25]), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
+<p>Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)[^26]), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
 
 <p><strong>Proposition 2.</strong> <em>If f(&lambda;) is described in the strong simulability statement, and if either f is constant on its domain or f meets the additional conditions below, then f is strongly simulable.</em></p>
 
@@ -1267,14 +1267,14 @@
 
 <ul>
 <li>The functions <em>&lambda;</em> and 1 &minus; <em>&lambda;</em>.</li>
-<li>Constants in [0, 1].  As Nacu and Peres (2005)[^1] already showed, any such constant <em>c</em> admits an optimal factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)[^26], then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)[^27].</li>
+<li>Constants in [0, 1].  As Nacu and Peres (2005)[^1] already showed, any such constant <em>c</em> admits an optimal factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)[^27], then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)[^28].</li>
 </ul>
 
 <p>It is easy to see that if an <em>optimal factory</em> exists for <em>f</em>(<em>&lambda;</em>), then one also exists for 1 &minus; <em>f</em>(<em>&lambda;</em>): simply change all ones returned by the <em>f</em>(<em>&lambda;</em>) factory into zeros and vice versa.</p>
 
-<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>&lambda;</em>) = <em>&lambda;</em>/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)[^19], then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0.</p>
+<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>&lambda;</em>) = <em>&lambda;</em>/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)[^20], then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0.</p>
 
-<p>This algorithm, though, doesn&#39;t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)[^26].  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
+<p>This algorithm, though, doesn&#39;t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)[^27].  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
 
 <ol>
 <li>If the number of outputs generated so far is divisible by 20, do the following:
@@ -1302,7 +1302,7 @@
 <li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is a non-negative integer.</li>
 </ul>
 
-<p>The algorithm is a modified version of the &quot;block simulation&quot; in Mossel and Peres (2005, Proposition 2.5)[^28], which also &quot;extracts&quot; residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
+<p>The algorithm is a modified version of the &quot;block simulation&quot; in Mossel and Peres (2005, Proposition 2.5)[^29], which also &quot;extracts&quot; residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
 
 <ol>
 <li>Set <em>iter</em> to 0.</li>
@@ -1348,7 +1348,7 @@
 
 <p>While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if <em>f</em>(<em>&lambda;</em>) maps the interval <em>J</em> to a small range of values, so that the algorithm could, for example, generate a uniform random variate in [0, 1] using unbiased random bits and see whether it lies outside that range of values &mdash; and thus produce a sample from <em>f</em>(<em>&lambda;</em>) without flipping the input coin again.</p>
 
-<p><small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)[^29].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>&lambda;</em>.</small></p>
+<p><small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)[^30].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>&lambda;</em>.</small></p>
 
 <p><a id=Proofs_for_Polynomial_Building_Schemes></a></p>
 
@@ -1360,13 +1360,13 @@
 
 <ul>
 <li>A <em>strictly bounded factory function</em> means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.</li>
-<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^24].</li>
+<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^25].</li>
 <li>A <em>modulus of continuity</em> of a function <em>f</em> means a non-negative and nondecreasing function <em>&omega;</em> on the interval [0, 1], for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1].  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is bounded below by <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
 </ul>
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2*n] .  Then the expected value of f(X<sub>k</sub>/n) is nondecreasing as k increases.</em></p>
 
-<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &quot;dominates&quot; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &quot;dominates&quot; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)[^30].   This means that the probability that (<em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community[^31]. &#x25a1;</p>
+<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &quot;dominates&quot; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &quot;dominates&quot; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)[^31].   This means that the probability that (<em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community[^32]. &#x25a1;</p>
 
 <p>Lemma 6(i) of Nacu and Peres (2005)[^1] can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes the larger class of <em>Hölder continuous</em> functions (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;).</p>
 
@@ -1416,11 +1416,11 @@
 <li>All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>&omega;</em>(0) &gt; 0, because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple <em>&omega;</em> that satisfies the lemma:
 
 <ol>
-<li>If <em>f</em> is strictly increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)[^32]; (Gal 1995)[^33].</li>
-<li>If <em>f</em> is strictly decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)[^32]; (Gal 1995)[^33].</li>
+<li>If <em>f</em> is strictly increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)[^33]; (Gal 1995)[^34].</li>
+<li>If <em>f</em> is strictly decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)[^33]; (Gal 1995)[^34].</li>
 <li>If <em>f</em> is strictly increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
 <li>If <em>f</em> is strictly decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
-<li>If <em>f</em> is concave and is strictly increasing then strictly decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)[^34].</li>
+<li>If <em>f</em> is concave and is strictly increasing then strictly decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)[^35].</li>
 </ol></li>
 </ol>
 </blockquote>
@@ -1548,7 +1548,7 @@
 
 <p>Let $f$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.</p>
 
-<p>For each integer $n\ge1$ that&#39;s a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial.</p>
+<p>For each integer $n\ge1$ that&#39;s a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)</p>
 
 <p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.</p>
 
@@ -1556,25 +1556,65 @@
 
 <p>It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 
-<blockquote>
-<p><strong>Note:</strong> If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2) this statement is false when&mdash;</p>
+<hr>
+
+<p>The following lower bounds on $C_0$ can be shown.  In the table:</p>
 
 <ul>
-<li>$M$ is the maximum absolute value of $f$ and its $r$-th derivative, and&mdash;
-
-<ul>
-<li>$r=3$ and $C_0\le 2.25$ (counterexample is the polynomial $2\lambda(1-\lambda)$), or</li>
-<li>$r=3$ and $C_0\le 0.65$, when $n\ge 4$ (same counterexample), or</li>
-<li>$r=4$ and $C_0\le 39/20$.</li>
-</ul></li>
-<li>$M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative, and&mdash;
-
-<ul>
-<li>$r=3$ and $C_0\le 59/100$ (counterexample is the polynomial $x^{2} + 2 x \left(1 - x\right)$), or</li>
-<li>$r=4$ and $C_0\le 6/25$ (counterexample is $\frac{167 x^{2}}{50000} + \frac{19943 x\left(1 - x\right)}{10000} + \frac{89 \left(1 - x\right)^{2}}{20000}$).</li>
-</ul></li>
+<li>$M_0$ is the maximum absolute value of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].</li>
+<li>$M_1$ is the maximum absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_1\ge M_0$.</li>
+<li>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</li>
 </ul>
-</blockquote>
+
+<p>&nbsp;</p>
+
+<table><thead>
+<tr>
+<th>If $r$ is...</th>
+<th>And...</th>
+<th>And $W_n$ is...</th>
+<th>Then $C_0$ must be greater than:</th>
+<th>Because of this counterexample:</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>3</td>
+<td>$M=M_0$</td>
+<td>$2 f - B_n(f)$*</td>
+<td>2.25</td>
+<td>$2\lambda(1-\lambda)$</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$M=M_0$, $n\ge 4$</td>
+<td>$2 f - B_n(f)$</td>
+<td>0.65</td>
+<td>$2\lambda(1-\lambda)$</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$M=M_0$</td>
+<td>$2 f - B_n(f)$</td>
+<td>2.7</td>
+<td>$\frac{21297 \lambda^{2} \cdot \left(1 - \lambda\right)}{31250}$</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$M=M_1$</td>
+<td>$2 f - B_n(f)$</td>
+<td>0.59</td>
+<td>$x^{2} + 2 \lambda \left(1 - \lambda\right)$</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$M=M_1$</td>
+<td>$2 f - B_n(f)$</td>
+<td>0.24</td>
+<td>$\frac{167 \lambda^{2}}{50000} + \frac{19943 \lambda\left(1 - \lambda\right)}{10000} + \frac{89 \left(1 - \lambda\right)^{2}}{20000}$</td>
+</tr>
+</tbody></table>
+
+<p>* Corresponds to the iterated Bernstein polynomial of order 2.</p>
 
 <p><a id=Example_of_Polynomial_Building_Scheme></a></p>
 
