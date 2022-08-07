@@ -260,7 +260,7 @@
 <p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and from below by <em>&omega;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: <code>fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
 </blockquote>
 
-<p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit an polynomial-building scheme under the convex, concave, twice differentiable, and Hölder classes:</p>
+<p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit a polynomial-building scheme under the convex, concave, twice differentiable, and Hölder classes:</p>
 
 <table><thead>
 <tr>
@@ -387,7 +387,7 @@
 <li>the polynomial $W_{n,i}$ is not less than 0 or greater than 1.</li>
 </ol>
 
-<p>By analyzing the proof of Theorem 3.3 of the paper just cited, it&#39;s possible to prove the following error bounds (when $f$ is not a polynomial).  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the maximum absolute value of $f(\lambda)$ and its <em>n</em>-th derivative over the domain $[0, 1]$.</p>
+<p>By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the so-called $C^k$ norm.  Unfortunately, the $C^k$ norm is defined differently in different academic works, and the bounds are very sensitive to how that norm is defined.[^35]</p>
 
 <table><thead>
 <tr>
@@ -982,6 +982,8 @@
 
 <p>[^34]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
 
+<p>[^35]: Güntürk and Li 2021 defines the $C^k$ norm as the maximum absolute value of $f(\lambda)$ and its <em>n</em>-th derivative over the domain $[0, 1]$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1548,24 +1550,24 @@
 
 <p>For each integer $n\ge1$ that&#39;s a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial.</p>
 
-<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum of $f$ and its derivatives up to the $r$-th derivative.</p>
+<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.</p>
 
 <p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, Theorem 1 remains valid with the following versions of <strong>fbelow</strong> and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note: <strong>fbelow</strong>$(n,k)=W_n(k/n) - CM/n^{r/2}$ and <strong>fabove</strong>$(n,k)=W_n(k/n) + CM/n^{r/2}$.</p>
 
-<p>It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
+<p>It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 
 <blockquote>
 <p><strong>Note:</strong> If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2) this statement is false when&mdash;</p>
 
 <ul>
-<li>$M$ is the maximum of $f$ and its $r$-th derivative, and&mdash;
+<li>$M$ is the maximum absolute value of $f$ and its $r$-th derivative, and&mdash;
 
 <ul>
 <li>$r=3$ and $C_0\le 2.25$ (counterexample is the polynomial $2\lambda(1-\lambda)$), or</li>
 <li>$r=3$ and $C_0\le 0.65$, when $n\ge 4$ (same counterexample), or</li>
 <li>$r=4$ and $C_0\le 39/20$.</li>
 </ul></li>
-<li>$M$ is the maximum of $f$ and its derivatives up to the $r$-th derivative, and&mdash;
+<li>$M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative, and&mdash;
 
 <ul>
 <li>$r=3$ and $C_0\le 59/100$ (counterexample is the polynomial $x^{2} + 2 x \left(1 - x\right)$), or</li>

@@ -183,7 +183,7 @@ Now, if _r_(_&lambda;_) is continuous on [0, 1], then _f_ can be simulated using
 >
 > **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, and from below by _&omega;_(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = _&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: `fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)`.
 
-**Other functions that equal 0 or 1 at the endpoints 0 and/or 1.** If _f_ does not fully admit an polynomial-building scheme under the convex, concave, twice differentiable, and Hölder classes:
+**Other functions that equal 0 or 1 at the endpoints 0 and/or 1.** If _f_ does not fully admit a polynomial-building scheme under the convex, concave, twice differentiable, and Hölder classes:
 
 | If _f_(0) = | And _f_(1) = |      Method |
  --- | --- | --- |
@@ -253,7 +253,7 @@ An example is given by the iterated Bernstein polynomial construction discussed 
 1. the iterated polynomial is within $\epsilon$ of $f(\lambda)$, and
 2. the polynomial $W_{n,i}$ is not less than 0 or greater than 1.
 
-By analyzing the proof of Theorem 3.3 of the paper just cited, it's possible to prove the following error bounds (when $f$ is not a polynomial).  In the table below, _M_<sub>_n_</sub> is not less than the maximum absolute value of $f(\lambda)$ and its _n_-th derivative over the domain $[0, 1]$.
+By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds _appear_ to be true.  In the table below, _M_<sub>_n_</sub> is not less than the so-called $C^k$ norm.  Unfortunately, the $C^k$ norm is defined differently in different academic works, and the bounds are very sensitive to how that norm is defined.[^35]
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  |
  --- | --- | --- | --- |
@@ -590,6 +590,8 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 [^33]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.
 
 [^34]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
+
+[^35]: Güntürk and Li 2021 defines the $C^k$ norm as the maximum absolute value of $f(\lambda)$ and its _n_-th derivative over the domain $[0, 1]$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.
 
 <a id=Appendix></a>
 ## Appendix
@@ -1046,19 +1048,19 @@ Let $f$ be a strictly bounded factory function, and denote the Bernstein polynom
 
 For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial.
 
-For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum of $f$ and its derivatives up to the $r$-th derivative.
+For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
 Then there is $C_0\ge D$ such that for every $C\ge C_0$, Theorem 1 remains valid with the following versions of **fbelow** and **fabove**, rather than as given in that theorem, subject to the bounding note: **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$ and **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$.
 
-It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
+It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
 > **Note:** If $W_n = 2 f - B_n(f)$ (corresponding to the iterated Bernstein polynomial of order 2) this statement is false when&mdash;
 >
-> - $M$ is the maximum of $f$ and its $r$-th derivative, and&mdash;
+> - $M$ is the maximum absolute value of $f$ and its $r$-th derivative, and&mdash;
 >     - $r=3$ and $C_0\le 2.25$ (counterexample is the polynomial $2\lambda(1-\lambda)$), or
 >     - $r=3$ and $C_0\le 0.65$, when $n\ge 4$ (same counterexample), or
 >     - $r=4$ and $C_0\le 39/20$.
-> - $M$ is the maximum of $f$ and its derivatives up to the $r$-th derivative, and&mdash;
+> - $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative, and&mdash;
 >     - $r=3$ and $C_0\le 59/100$ (counterexample is the polynomial $x^{2} + 2 x \left(1 - x\right)$), or
 >     - $r=4$ and $C_0\le 6/25$ (counterexample is $\frac{167 x^{2}}{50000} + \frac{19943 x\left(1 - x\right)}{10000} + \frac{89 \left(1 - x\right)^{2}}{20000}$).
 
