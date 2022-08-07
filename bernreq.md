@@ -131,7 +131,7 @@ Thus the questions are:
 
      For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
-    Then, a conjecture is that there is $C_0\ge D$ such that for every $C\ge C_0$, the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that's a power of 2: $a(n,k)=W_n(k/n) - CM/n^{r/2}$ and $b(n,k)=W_n(k/n) + CM/n^{r/2}$ (and the polynomials for each other $n$ are defined in the "natural" way).
+    Then, a conjecture is that there is $C_0$ greater than 0 such that for every $C\ge C_0$, the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that's a power of 2: $a(n,k)=W_n(k/n) - CM/n^{r/2}$ and $b(n,k)=W_n(k/n) + CM/n^{r/2}$ (and the polynomials for each other $n$ are defined in the "natural" way).
 
     1. For what value of $C_0$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4? In this case, $C_0$ must be greater than 59/100 for $r=3$ and 6/25 if $r=4$.  Interesting functions $f$ to test are quadratic polynomials.
 

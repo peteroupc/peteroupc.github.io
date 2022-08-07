@@ -1542,6 +1542,20 @@
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein polynomials of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)[^1]. &#x25a1;</p>
 
+<p>The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.</p>
+
+<p><strong>Lemma 3.</strong> <em>Let <strong>fabove</strong>(n,k) = $W_n(k/n) - \epsilon_n(f)$ and <strong>fbelow</strong>(n,k) = $W_n(k/n) + \epsilon_n(f)$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge 1$, <strong>fabove</strong>(_n</em>,<em>k</em>) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and <strong>fbelow</strong>(<em>n</em>,<em>k</em>) is the $k$-th Bernstein coefficient of the polynomial $h_n$, and the polynomials $g_n$ and $h_n$ satisfy <strong>fabove</strong>(<em>n</em>,<em>k</em>)&le;<strong>fbelow</strong>(<em>n</em>,<em>k</em>) and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] (discussed in the proof of Theorem 1 above).  Then for every $n\le 1$&mdash; $|f(x) - B_n(W_n(x))| \le \epsilon_n(f)$ whenever $0\le x\le 1$._</p>
+
+<p><em>Proof:</em> $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(x))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, condition (iv) of Nacu and Peres (2005)[^1] implies that $g_{n+1}(x)\ge g_n(x)\ge f(x)$ (the lower polynomials &quot;increase&quot;) and $h_{n+1}(x)\le h_n\le f(x)$ (the upper polynomials &quot;decrease&quot;) for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].</p>
+
+<p>Then if $B_n(W_n(x)) &lt; f(x)$ for some $x$ in [0, 1]$, shifting the left-hand side upward by $\epsilon_n(f)$ means that $h_n = B_n(W_n(x))+\epsilon_n(f) \ge f(x)$, and rearranging this expression leads to $f(x) - B_n(W_n(x)) \le \epsilon_n(f)$.</p>
+
+<p>Likewise, if $B_n(W_n(x)) &gt; f(x)$ for some $x$ in [0, 1]$, shifting the left-hand side downward by $\epsilon_n(f)$ means that $g_n = B_n(W_n(x))-\epsilon_n(f) \ge f(x)$, and rearranging this expression leads to $B_n(W_n(x)) - f(x) \le \epsilon_n(f)$.</p>
+
+<p>This combined means that $|f(x) - B_n(W_n(x))| \le \epsilon_n(f)$ whenever $0\le x\le 1$.  &#x25a1;</p>
+
+<p><strong>Corollary 4</strong>.  <em>If $f(\lambda)$ satisfies the scheme given in Theorem 1, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge 1$ that&#39;s a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$.</em></p>
+
 <p>The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
 
 <p><strong>Conjecture.</strong></p>
@@ -1552,9 +1566,13 @@
 
 <p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.</p>
 
-<p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, Theorem 1 remains valid with the following versions of <strong>fbelow</strong> and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note: <strong>fbelow</strong>$(n,k)=W_n(k/n) - CM/n^{r/2}$ and <strong>fabove</strong>$(n,k)=W_n(k/n) + CM/n^{r/2}$.</p>
+<p>Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, Theorem 1 remains valid with the following versions of <strong>fbelow</strong> and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note: <strong>fbelow</strong>$(n,k)=W_n(k/n) - CM/n^{r/2}$ and <strong>fabove</strong>$(n,k)=W_n(k/n) + CM/n^{r/2}$.</p>
 
 <p>It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
+
+<blockquote>
+<p><strong>Note:</strong> By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.</p>
+</blockquote>
 
 <hr>
 
@@ -1574,6 +1592,7 @@
 <th>And...</th>
 <th>And $W_n$ is...</th>
 <th>Then $C_0$ must be greater than:</th>
+<th>And $C_0$ is conjectured to be:</th>
 <th>Because of this counterexample:</th>
 </tr>
 </thead><tbody>
@@ -1581,36 +1600,65 @@
 <td>3</td>
 <td>$M=M_0$</td>
 <td>$2 f - B_n(f)$*</td>
-<td>2.25</td>
-<td>$2\lambda(1-\lambda)$</td>
+<td>4.64</td>
+<td>4.65</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
 </tr>
 <tr>
 <td>3</td>
 <td>$M=M_0$, $n\ge 4$</td>
 <td>$2 f - B_n(f)$</td>
-<td>0.65</td>
+<td>1.32</td>
+<td>1.33</td>
 <td>$2\lambda(1-\lambda)$</td>
 </tr>
 <tr>
 <td>4</td>
 <td>$M=M_0$</td>
 <td>$2 f - B_n(f)$</td>
-<td>2.7</td>
-<td>$\frac{21297 \lambda^{2} \cdot \left(1 - \lambda\right)}{31250}$</td>
+<td>4</td>
+<td>4.01</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$M=M_0$, $n\ge 4$</td>
+<td>$2 f - B_n(f)$</td>
+<td>3.52</td>
+<td>3.53</td>
+<td>$\lambda^{2} \cdot \left(1 - \lambda\right)$</td>
 </tr>
 <tr>
 <td>3</td>
 <td>$M=M_1$</td>
 <td>$2 f - B_n(f)$</td>
-<td>0.59</td>
-<td>$x^{2} + 2 \lambda \left(1 - \lambda\right)$</td>
+<td>0.29</td>
+<td>0.3</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$M=M_1$, $n\ge 4$</td>
+<td>$2 f - B_n(f)$</td>
+<td>0.08</td>
+<td>0.09</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
 </tr>
 <tr>
 <td>4</td>
 <td>$M=M_1$</td>
 <td>$2 f - B_n(f)$</td>
 <td>0.24</td>
-<td>$\frac{167 \lambda^{2}}{50000} + \frac{19943 \lambda\left(1 - \lambda\right)}{10000} + \frac{89 \left(1 - \lambda\right)^{2}}{20000}$</td>
+<td>0.25</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$M=M_1$, $n\ge 4$</td>
+<td>$2 f - B_n(f)$</td>
+<td>0.14</td>
+<td>0.15</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
 </tr>
 </tbody></table>
 

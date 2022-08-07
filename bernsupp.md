@@ -1040,6 +1040,20 @@ _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ g
 
 _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein polynomials of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005\)[^1]. &#x25a1;
 
+The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.
+
+**Lemma 3.** _Let **fabove**(n,k) = $W_n(k/n) - \epsilon_n(f)$ and **fbelow**(n,k) = $W_n(k/n) + \epsilon_n(f)$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Suppose that for each integer $n\ge 1$, **fabove**(_n_,_k_) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and **fbelow**(_n_,_k_) is the $k$-th Bernstein coefficient of the polynomial $h_n$, and the polynomials $g_n$ and $h_n$ satisfy **fabove**(_n_,_k_)&le;**fbelow**(_n_,_k_) and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] \(discussed in the proof of Theorem 1 above\).  Then for every $n\le 1$&mdash; $|f(x) - B_n(W_n(x))| \le \epsilon_n(f)$ whenever $0\le x\le 1$._
+
+_Proof:_ $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(x))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, condition (iv) of Nacu and Peres (2005)[^1] implies that $g_{n+1}(x)\ge g_n(x)\ge f(x)$ (the lower polynomials "increase") and $h_{n+1}(x)\le h_n\le f(x)$ (the upper polynomials "decrease") for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].
+
+Then if $B_n(W_n(x)) < f(x)$ for some $x$ in [0, 1]$, shifting the left-hand side upward by $\epsilon_n(f)$ means that $h_n = B_n(W_n(x))+\epsilon_n(f) \ge f(x)$, and rearranging this expression leads to $f(x) - B_n(W_n(x)) \le \epsilon_n(f)$.
+
+Likewise, if $B_n(W_n(x)) > f(x)$ for some $x$ in [0, 1]$, shifting the left-hand side downward by $\epsilon_n(f)$ means that $g_n = B_n(W_n(x))-\epsilon_n(f) \ge f(x)$, and rearranging this expression leads to $B_n(W_n(x)) - f(x) \le \epsilon_n(f)$.
+
+This combined means that $|f(x) - B_n(W_n(x))| \le \epsilon_n(f)$ whenever $0\le x\le 1$.  &#x25a1;
+
+**Corollary 4**.  _If $f(\lambda)$ satisfies the scheme given in Theorem 1, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge 1$ that's a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$._
+
 The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.
 
 **Conjecture.**
@@ -1050,9 +1064,11 @@ For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function w
 
 For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
-Then there is $C_0\ge D$ such that for every $C\ge C_0$, Theorem 1 remains valid with the following versions of **fbelow** and **fabove**, rather than as given in that theorem, subject to the bounding note: **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$ and **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$.
+Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, Theorem 1 remains valid with the following versions of **fbelow** and **fabove**, rather than as given in that theorem, subject to the bounding note: **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$ and **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$.
 
 It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
+
+> **Note:** By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.
 
 ---------------------
 
@@ -1064,13 +1080,16 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 
 &nbsp;
 
-| If $r$ is... | And... | And $W_n$ is... | Then $C_0$ must be greater than: | Because of this counterexample: |
+| If $r$ is... | And... | And $W_n$ is... | Then $C_0$ must be greater than: | And $C_0$ is conjectured to be: | Because of this counterexample: |
  --- | --- | --- | --- | --- | --- |
-| 3 | $M=M_0$ | $2 f - B_n(f)$\* | 2.25 | $2\lambda(1-\lambda)$ |
-| 3 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 0.65 | $2\lambda(1-\lambda)$ |
-| 4 | $M=M_0$ | $2 f - B_n(f)$ | 2.7 | $\frac{21297 \lambda^{2} \cdot \left(1 - \lambda\right)}{31250}$ |
-| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.59 | $x^{2} + 2 \lambda \left(1 - \lambda\right)$ |
-| 4 | $M=M_1$ | $2 f - B_n(f)$ | 0.24 | $\frac{167 \lambda^{2}}{50000} + \frac{19943 \lambda\left(1 - \lambda\right)}{10000} + \frac{89 \left(1 - \lambda\right)^{2}}{20000}$ |
+| 3 | $M=M_0$ | $2 f - B_n(f)$\* | 4.64 | 4.65 | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 1.32 | 1.33 | $2\lambda(1-\lambda)$ |
+| 4 | $M=M_0$ | $2 f - B_n(f)$ | 4 | 4.01 | $2 \lambda \left(1 - \lambda\right)$ |
+| 4 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 3.52 | 3.53 | $\lambda^{2} \cdot \left(1 - \lambda\right)$ |
+| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | 0.3 | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.08 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
+| 4 | $M=M_1$ | $2 f - B_n(f)$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
+| 4 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
 
 \* Corresponds to the iterated Bernstein polynomial of order 2.
 
