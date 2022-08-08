@@ -1044,11 +1044,12 @@ The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials u
 
 **Lemma 3.** _Suppose that for each integer $n\ge 1$ and for a strictly bounded factory function $f(\lambda)$:_
 
-- _**fbelow**($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and **fabove**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$._
-- **fbelow**($n$,$k$)&le;**fabove**($n$,$k$).
-- _The polynomials $g_n$ and $h_n$ satisfy  and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] \(discussed in the proof of Theorem 1 above\)._
+- _**fbelow**($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$.
+- **fabove**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$._
+- **fbelow**($n$,$k$) &le; **fabove**($n$,$k$).
+- _The polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005)[^1] \(discussed in the proof of Theorem 1 above\)._
 
-_If **fbelow**(n,k) = $W_n(k/n) - \epsilon_n(f)$ and **fabove**(n,k) = $W_n(k/n) + \epsilon_n(f)$ for some $n\ge 1$, then for that $n$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
+_Suppose **fbelow**(n,k) = $W_n(k/n) - \epsilon_n(f)$ and **fabove**(n,k) = $W_n(k/n) + \epsilon_n(f)$ for each $n$ in a set of positive integers. Then for each $n$ in that set, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 
 _Proof:_ $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, condition (iv) of Nacu and Peres (2005)[^1] implies that $g_{n}(\lambda)\le g_{n+1}(\lambda)\le f(\lambda)$ (the lower polynomials "increase") and $h_{n}(\lambda)\ge h_{n+1}\ge f(\lambda)$ (the upper polynomials "decrease") for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].
 
@@ -1088,11 +1089,11 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 
 | If $r$ is... | And... | And $W_n$ is... | Then $C_0$ must be greater than: | And $C_0$ is conjectured to be: | Because of this counterexample: |
  --- | --- | --- | --- | --- | --- |
-| 3 | $M=M_0$ | $2 f - B_n(f)$\* | 4.64 | 4.65 | $2 \lambda \left(1 - \lambda\right)$ |
-| 3 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 1.32 | 1.33 | $2\lambda(1-\lambda)$ |
-| 4 | $M=M_0$ | $2 f - B_n(f)$ | 4 | 4.01 | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_0$ | $2 f - B_n(f)$\* | 2.62 | 2.63 | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 0.66 | 0.67 | $2\lambda(1-\lambda)$ |
+| 4 | $M=M_0$ | $2 f - B_n(f)$ | 3.58 | 3.59 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 | 4 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 3.52 | 3.53 | $\lambda^{2} \cdot \left(1 - \lambda\right)$ |
-| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | 0.3 | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | \frac{3}{4 \cdot \left(4 - \sqrt{2}\right)} &lt; 0.3 | $2 \lambda \left(1 - \lambda\right)$ |
 | 3 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.08 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_1$ | $2 f - B_n(f)$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/07"><meta name="citation_online_date" content="2022/08/07"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/08"><meta name="citation_online_date" content="2022/08/08"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1547,12 +1547,13 @@
 <p><strong>Lemma 3.</strong> <em>Suppose that for each integer $n\ge 1$ and for a strictly bounded factory function $f(\lambda)$:</em></p>
 
 <ul>
-<li><em><strong>fbelow</strong>($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$ and <strong>fabove</strong>($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$.</em></li>
-<li><strong>fbelow</strong>($n$,$k$)&le;<strong>fabove</strong>($n$,$k$).</li>
-<li><em>The polynomials $g_n$ and $h_n$ satisfy  and conditions (iii) and (iv) of Nacu and Peres (2005)[^1] (discussed in the proof of Theorem 1 above).</em></li>
+<li>_<strong>fbelow</strong>($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$.</li>
+<li><strong>fabove</strong>($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$._</li>
+<li><strong>fbelow</strong>($n$,$k$) &le; <strong>fabove</strong>($n$,$k$).</li>
+<li><em>The polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005)[^1] (discussed in the proof of Theorem 1 above).</em></li>
 </ul>
 
-<p><em>If <strong>fbelow</strong>(n,k) = $W_n(k/n) - \epsilon_n(f)$ and <strong>fabove</strong>(n,k) = $W_n(k/n) + \epsilon_n(f)$ for some $n\ge 1$, then for that $n$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$.</em></p>
+<p><em>Suppose <strong>fbelow</strong>(n,k) = $W_n(k/n) - \epsilon_n(f)$ and <strong>fabove</strong>(n,k) = $W_n(k/n) + \epsilon_n(f)$ for each $n$ in a set of positive integers. Then for each $n$ in that set, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$.</em></p>
 
 <p><em>Proof:</em> $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, condition (iv) of Nacu and Peres (2005)[^1] implies that $g_{n}(\lambda)\le g_{n+1}(\lambda)\le f(\lambda)$ (the lower polynomials &quot;increase&quot;) and $h_{n}(\lambda)\ge h_{n+1}\ge f(\lambda)$ (the upper polynomials &quot;decrease&quot;) for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].</p>
 
@@ -1608,25 +1609,25 @@
 <td>3</td>
 <td>$M=M_0$</td>
 <td>$2 f - B_n(f)$*</td>
-<td>4.64</td>
-<td>4.65</td>
+<td>2.62</td>
+<td>2.63</td>
 <td>$2 \lambda \left(1 - \lambda\right)$</td>
 </tr>
 <tr>
 <td>3</td>
 <td>$M=M_0$, $n\ge 4$</td>
 <td>$2 f - B_n(f)$</td>
-<td>1.32</td>
-<td>1.33</td>
+<td>0.66</td>
+<td>0.67</td>
 <td>$2\lambda(1-\lambda)$</td>
 </tr>
 <tr>
 <td>4</td>
 <td>$M=M_0$</td>
 <td>$2 f - B_n(f)$</td>
-<td>4</td>
-<td>4.01</td>
-<td>$2 \lambda \left(1 - \lambda\right)$</td>
+<td>3.58</td>
+<td>3.59</td>
+<td>$3 \lambda^{2} \cdot \left(1 - \lambda\right)$</td>
 </tr>
 <tr>
 <td>4</td>
@@ -1641,7 +1642,7 @@
 <td>$M=M_1$</td>
 <td>$2 f - B_n(f)$</td>
 <td>0.29</td>
-<td>0.3</td>
+<td>\frac{3}{4 \cdot \left(4 - \sqrt{2}\right)} &lt; 0.3</td>
 <td>$2 \lambda \left(1 - \lambda\right)$</td>
 </tr>
 <tr>
