@@ -593,7 +593,9 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^35]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
 
-[^36]: Fefferman, Charles. "Whitney’s extension problems and interpolation of data." Bulletin of the American Mathematical Society 46, no. 2 (2009): 207-220.
+[^36]: Le Gruyer, Erwan. "Minimal Lipschitz extensions to differentiable functions defined on a Hilbert space." Geometric and Functional Analysis 19, no. 4 (2009): 1101-1118.
+
+[^37]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. "Computing minimal interpolants in C1, 1 (Rd)." Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.
 
 <a id=Appendix></a>
 ## Appendix
@@ -1046,8 +1048,8 @@ The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials u
 
 **Lemma 3.** _Suppose that for each integer $n\ge 1$ and for a strictly bounded factory function $f(\lambda)$:_
 
-- _**fbelow**($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$.
-- **fabove**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$._
+- _**fbelow**($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$._
+- _**fabove**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$._
 - **fbelow**($n$,$k$) &le; **fabove**($n$,$k$).
 - _The polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005)[^1] \(discussed in the proof of Theorem 1 above\)._
 
@@ -1095,7 +1097,7 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 3 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 0.66 | 0.67 | $2\lambda(1-\lambda)$ |
 | 4 | $M=M_0$ | $2 f - B_n(f)$ | 3.58 | 3.59 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 | 4 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 3.52 | 3.53 | $\lambda^{2} \cdot \left(1 - \lambda\right)$ |
-| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | $\frac{3}{16-4 \sqrt{2}}$ \lt 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | $\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
 | 3 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.08 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_1$ | $2 f - B_n(f)$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
@@ -1104,10 +1106,19 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 
 \*\* The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.
 
-Suppose $f(0) = f(1) = \beta$, then $W_1(f)$ will equal $\beta$.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal $\beta$.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|\beta - (2f(1/2) - B_2(f)(1/2))| = |3\beta/2 - 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_1$ for $r=3$. To get the minimum $C_0$ that works, solve $C_0 y/1^{3/2} - C_0*y/2^{3/2}$ = z for C_0.  The solution is $C_0=4z/(y(4-\sqrt{2}))$.
+Suppose $f(0) = f(1) = \beta$, then $W_1(f)$ will equal $\beta$.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal $\beta$.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|\beta - (2f(1/2) - B_2(f)(1/2))| = |3\beta/2 - 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_1$ for $r=3$. To get the minimum $C_0$ that works, solve $C_0 y/1^{3/2} - C_0 y/2^{3/2}$ = z for $C_0$.  The solution is $C_0=\frac{z}{y} \frac{4}{4-\sqrt{2}}$.
 
 Now, the goal is to find a tight upper bound on the least possible value of $M_1$ for
-$r=3$ such that $f(0)=f(1)=0$ and $f(1/2)$ is arbitrarily close to 1.  In this case Fefferman and colleagues devised an algorithm to find this bound, but the papers describing it are dense, suggesting that the algorithm is highly non-trivial (Fefferman 2009)[^36].  In the meantime, the function $f(x)=2x(1-x)$ has at least three continuous derivatives, satisfies $f(0)=f(1)=0$ and $f(1/2)=1/2$, and has an $M_1$ of 4, so $y=4$ and $z=|3\cdot 0/2 - 3f(1/2)/2|=3/4$, so $C_0=3/(16-4\sqrt{2})$, which is the conjectured lower bound for $C_0$.
+$r=3$ such that:
+
+1. $f(\lambda)$ has at least three continuous derivatives.
+2. $f(0)=f(1)=0$ and $f(1/2)$ is known.
+
+Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(1/2)=1/2$, and has an $M_1$ of 4.  Now the goal is to see whether any function satisfying (1) and (2) has a lower $M_1$.
+
+To aid in this goal, there is a formula to find the least value for max(abs($f\prime$)), where $f\prime$ is the first derivative of $f$, given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^36]; see also (Herbert-Voss et al. 2017)[^37].  Only values of $f$ in $[0, 1]$ have to be checked, and since $g$ has an $M_1$ of 4 (which bounds the derivatives of $f$), only $f\prime$ values in $[-4, 4]$ have to be checked.  If no result less than 4 is found, that means that $M_1=4$ is the least possible value a function satisfying (1) and (2) can have.
+
+Assuming that the lowest $M_1$ is 4, then $y=4$ and $z=|3\cdot 0/2 - 3f(1/2)/2|=3/4$, so $C_0=3/(16-4\sqrt{2})$, which is the conjectured lower bound for $C_0$.
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme
