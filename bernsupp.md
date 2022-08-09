@@ -597,6 +597,8 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^37]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. "Computing minimal interpolants in C1, 1 (Rd)." Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.
 
+[^38]: This formula applies to functions with Lipschitz-continuous derivative (a weaker assumption than having three continuous derivatives), but that derivative's Lipschitz constant is a lower bound on the second derivative's absolute value, so that formula is useful here.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -1113,11 +1115,11 @@ The solution shows that if $y = M_1$ can come arbitrarily close to 0, then no va
 1. $f(\lambda)$ has at least three continuous derivatives.
 2. $f(0)=f(1)=0$ and $0 < f(1/2) < 1$.
 
-Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(1/2)=1/2$, and has an $M_1$ of 4.  Now the goal is to see whether any function satisfying those conditions has a lower $M_1$.
+Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(1/2)=1/2$, and has an $M_1$ of 4.  Given that $\frac{|\beta-g(1/2)|}{y}=\frac{|0-1/2|}{y}=1/8$, the goal is now to see whether any function $f$ satisfying (1) and (2) has $max(\beta, g(1/2)) < M_1 < 8\cdot |\beta-g(1/2)|$.
 
-To aid in this goal, there is a formula to find the least value for max(abs($f\prime$)), where $f\prime$ is the first derivative of $f$, given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^36]; see also (Herbert-Voss et al. 2017)[^37].  Only values of $f$ in $[0, 1]$ have to be checked, and since $g$ has an $M_1$ of 4 (which bounds the derivatives of $f$), only $f\prime$ values in $[-4, 4]$ have to be checked.  If no result less than 4 is found, that means that $M_1=4$ is the least possible value a function satisfying (1) and (2) and $f(1/2)=1/2$ can have.
+To aid in this goal, there is a formula to find the least value for the maximum absolute value of the first derivative's Lipschitz constant (see "Definitions")[^38], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^36]; see also (Herbert-Voss et al. 2017)[^37].  Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in $[0, 1]$ have to be checked and only $f\prime$ values in $[-H, H]$ have to be checked.
 
-Assuming that the lowest $M_1$ is 4 and $\beta=0$, then $y=4$, so&mdash; $$C_0=\frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{1/2}{4} \frac{12}{2\cdot (4-\sqrt{2})}=8 \frac{12}{2\cdot (4-\sqrt{2})}3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.
+Assuming that $\beta=0$ and no $M_1$ less than $H$ is found, so&mdash; $$C_0=\frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{|\beta-f(1/2)|}{H} \frac{12}{2\cdot (4-\sqrt{2})}=(1/8) \frac{12}{2\cdot (4-\sqrt{2})}$$ $$=3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme
