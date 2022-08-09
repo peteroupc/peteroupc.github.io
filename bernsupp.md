@@ -1095,7 +1095,7 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 3 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 0.66 | 0.67 | $2\lambda(1-\lambda)$ |
 | 4 | $M=M_0$ | $2 f - B_n(f)$ | 3.58 | 3.59 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 | 4 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 3.52 | 3.53 | $\lambda^{2} \cdot \left(1 - \lambda\right)$ |
-| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | $\frac{3}{16-4 \cdot \left(4 - \sqrt{2}\right)}$ \lt 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | $\frac{3}{16-4 \sqrt{2}}$ \lt 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
 | 3 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.08 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_1$ | $2 f - B_n(f)$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
@@ -1104,10 +1104,10 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 
 \*\* The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.
 
-Suppose $f(0) = f(1) = \beta$, $W_1(f)$ will equal $\beta$.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal $\beta$.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|\beta - (2f(1/2) - B_2(f)(1/2))| = |3\beta/2 - 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_1$ for $r=3$. To get the minimum $C_0$ that works, solve $C_0 y/sqrt(1^3) - C_0*y/sqrt(2^3)$ = z for C_0.  The solution is $C_0=4z/(y(4-sqrt(2)))$.
+Suppose $f(0) = f(1) = \beta$, then $W_1(f)$ will equal $\beta$.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal $\beta$.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|\beta - (2f(1/2) - B_2(f)(1/2))| = |3\beta/2 - 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_1$ for $r=3$. To get the minimum $C_0$ that works, solve $C_0 y/1^{3/2} - C_0*y/2^{3/2}$ = z for C_0.  The solution is $C_0=4z/(y(4-\sqrt{2}))$.
 
 Now, the goal is to find a tight upper bound on the least possible value of $M_1$ for
-$r=3$ such that $f(0)=f(1)=0$ and $f(1/2)$ is arbitrarily close to 1.  In this case Fefferman and colleagues devised an algorithm to find this bound, but the papers describing it are dense, suggesting that the algorithm is highly non-trivial (Fefferman 2009)[^36].  In the meantime, the function $f(x)=2x(1-x)$ satisfies $f(0)=f(1)=1$ and $f(1/2)=1/2$, and has an $M_1$ of 4, so $y=4$ and $z=|3\cdot 0/2 - 3f(1/2)/2|=3/4$, so $C_0=3/(16-4\sqrt{2})$, which is the conjectured lower bound for $C_0$.
+$r=3$ such that $f(0)=f(1)=0$ and $f(1/2)$ is arbitrarily close to 1.  In this case Fefferman and colleagues devised an algorithm to find this bound, but the papers describing it are dense, suggesting that the algorithm is highly non-trivial (Fefferman 2009)[^36].  In the meantime, the function $f(x)=2x(1-x)$ has at least three continuous derivatives, satisfies $f(0)=f(1)=0$ and $f(1/2)=1/2$, and has an $M_1$ of 4, so $y=4$ and $z=|3\cdot 0/2 - 3f(1/2)/2|=3/4$, so $C_0=3/(16-4\sqrt{2})$, which is the conjectured lower bound for $C_0$.
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme
