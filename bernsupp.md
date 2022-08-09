@@ -1106,19 +1106,18 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 
 \*\* The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.
 
-Suppose $f(0) = f(1) = \beta$, then $W_1(f)$ will equal $\beta$.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal $\beta$.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|\beta - (2f(1/2) - B_2(f)(1/2))| = |3\beta/2 - 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_1$ for $r=3$. To get the minimum $C_0$ that works, solve $C_0 y/1^{3/2} - C_0 y/2^{3/2}$ = z for $C_0$.  The solution is $C_0=\frac{z}{y} \frac{4}{4-\sqrt{2}}$.
+Suppose $f(0) = f(1) = \beta$, then $W_1(f)$ will equal $\beta$.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal $\beta$.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|\beta - (2f(1/2) - B_2(f)(1/2))| = |3\beta/2 - 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_1$ for $r=3$. To get the minimum $C_0$ that works, solve $C_0 y/1^{3/2} - C_0 y/2^{3/2}$ = z for $C_0$.  The solution is&mdash; $$C_0=\frac{z}{y} \frac{4}{4-\sqrt{2}} = \frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}.$$
 
-Now, the goal is to find a tight upper bound on the least possible value of $M_1$ for
-$r=3$ such that:
+The solution shows that if $y = M_1$ can come arbitrarily close to 0, then no value for $C_0$ will work.  Which is why the goal is now to find a tight upper bound on the least possible value of $M_1$ for $r=3$ such that:
 
 1. $f(\lambda)$ has at least three continuous derivatives.
-2. $f(0)=f(1)=0$ and $f(1/2)$ is known.
+2. $f(0)=f(1)=0$ and $0 < f(1/2) < 1$.
 
-Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(1/2)=1/2$, and has an $M_1$ of 4.  Now the goal is to see whether any function satisfying (1) and (2) has a lower $M_1$.
+Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(1/2)=1/2$, and has an $M_1$ of 4.  Now the goal is to see whether any function satisfying those conditions has a lower $M_1$.
 
-To aid in this goal, there is a formula to find the least value for max(abs($f\prime$)), where $f\prime$ is the first derivative of $f$, given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^36]; see also (Herbert-Voss et al. 2017)[^37].  Only values of $f$ in $[0, 1]$ have to be checked, and since $g$ has an $M_1$ of 4 (which bounds the derivatives of $f$), only $f\prime$ values in $[-4, 4]$ have to be checked.  If no result less than 4 is found, that means that $M_1=4$ is the least possible value a function satisfying (1) and (2) can have.
+To aid in this goal, there is a formula to find the least value for max(abs($f\prime$)), where $f\prime$ is the first derivative of $f$, given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^36]; see also (Herbert-Voss et al. 2017)[^37].  Only values of $f$ in $[0, 1]$ have to be checked, and since $g$ has an $M_1$ of 4 (which bounds the derivatives of $f$), only $f\prime$ values in $[-4, 4]$ have to be checked.  If no result less than 4 is found, that means that $M_1=4$ is the least possible value a function satisfying (1) and (2) and $f(1/2)=1/2$ can have.
 
-Assuming that the lowest $M_1$ is 4, then $y=4$ and $z=|3\cdot 0/2 - 3f(1/2)/2|=3/4$, so $C_0=3/(16-4\sqrt{2})$, which is the conjectured lower bound for $C_0$.
+Assuming that the lowest $M_1$ is 4 and $\beta=0$, then $y=4$, so&mdash; $$C_0=\frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{1/2}{4} \frac{12}{2\cdot (4-\sqrt{2})}=8 \frac{12}{2\cdot (4-\sqrt{2})}3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme
