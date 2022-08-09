@@ -1095,7 +1095,7 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 3 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 0.66 | 0.67 | $2\lambda(1-\lambda)$ |
 | 4 | $M=M_0$ | $2 f - B_n(f)$ | 3.58 | 3.59 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 | 4 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 3.52 | 3.53 | $\lambda^{2} \cdot \left(1 - \lambda\right)$ |
-| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | \frac{3}{16-4 \cdot \left(4 - \sqrt{2}\right)} &lt; 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | $\frac{3}{16-4 \cdot \left(4 - \sqrt{2}\right)}$ \lt 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
 | 3 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.08 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_1$ | $2 f - B_n(f)$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
