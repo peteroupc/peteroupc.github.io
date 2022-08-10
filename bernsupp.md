@@ -1100,7 +1100,7 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 4 | $M=M_1$ | $2 f - B_n(f)$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
 | 5 | $M=M_1$ | $B_n(B_n(f))+3(f-B_n(f))$\*** | 0.26 | 0.27 | $2 \lambda \left(1 - \lambda\right)$ |
-| 5 | $M=M_1$, $n\ge 4$ | $B_n(B_n(f))+3(f-B_n(f))$\*** | 0.10 | 0.11 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
+| 5 | $M=M_1$, $n\ge 4$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.10 | 0.11 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 | 6 | $M=M_1$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 6 | $M=M_1$, $n\ge 4$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.22 | 0.23 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 
@@ -1119,9 +1119,11 @@ The solution shows that if $y = M_1$ can come arbitrarily close to 0, then no va
 
 Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(0)=g(1)=0$ and $g(1/2)=1/2$, and has an $M_1$ of 4.  Given that $\frac{|\beta-g(1/2)|}{y}=\frac{|0-1/2|}{y}=1/8$, the goal is now to see whether any function $f$ satisfying (1) and (2) has $\max(\beta, g(1/2)) < M_1 < 8\cdot |\beta-g(1/2)|$.
 
-To aid in this goal, there is a formula to find the least value for the maximum absolute value of the first derivative's Lipschitz constant (see "Definitions")[^34], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^35]; see also (Herbert-Voss et al. 2017)[^36].  Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in $[0, 1]$ have to be checked and only $f\prime$ values in $[-H, H]$ have to be checked.
+To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$'s first derivative's Lipschitz constant (see "Definitions")[^34], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^35]; see also (Herbert-Voss et al. 2017)[^36]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [\beta, \beta+t, \beta], [z_1, z_2, z_3]) = \max\left(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|, \sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|, 2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|\right)$$ $$=L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3])$$ (where $t$ is greater than 0 and less than 1), so $L$ no longer depends on $\beta$; thus $\beta$ can equal 0 without loss of generality.  Moreover, only $f\prime$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.
 
-Assuming that $\beta=0$ and no $M_1$ less than $H$ is found, so&mdash; $$C_0=\frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{|\beta-f(1/2)|}{H} \frac{12}{2\cdot (4-\sqrt{2})}=(1/8) \frac{12}{2\cdot (4-\sqrt{2})}$$ $$=3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.
+Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in $[0, 1]$ have to be checked and only $f\prime$ values in $[-H, H]$ have to be checked.
+
+Assuming that no $M_1$ less than $8\cdot |\beta-f(1/2)|$ is found, then&mdash; $$C_0=\frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{|\beta-f(1/2)|}{H} \frac{12}{2\cdot (4-\sqrt{2})}=(1/8) \frac{12}{2\cdot (4-\sqrt{2})}$$ $$=3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme
