@@ -634,7 +634,7 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^21], showi
 
 **Proposition B3**: Let $f(\lambda)$ map [0, 1] to [0, 1] and have a Lipschitz continuous derivative on [0, 1] with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is non-negative there, for every $n\ge m$.
 
-_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases with $n$. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)= 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
+_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)= 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
 The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value ("long-run average").  The following results bound the absolute value of $T$.
 
@@ -1049,7 +1049,7 @@ The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials u
 - _**fbelow**($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$._
 - _**fabove**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$._
 - **fbelow**($n$,$k$) &le; **fabove**($n$,$k$).
-- _The polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005)[^1] \(discussed in the proof of Theorem 1 above\)._
+- _The polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005, Proposition 3)[^1] \(discussed in the proof of Theorem 1 above\)._
 
 _Suppose **fbelow**(n,k) = $W_n(k/n) - \epsilon_n(f)$ and **fabove**(n,k) = $W_n(k/n) + \epsilon_n(f)$ for each $n$ in a set of positive integers. Then for each $n$ in that set, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 
@@ -1067,13 +1067,22 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 **Conjecture.**
 
-Let $f$ be a strictly bounded factory function, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.
+Let $f$ be a strictly bounded factory function.
+
+For each $n\ge 1$, let $g_n$ and $h_n$ be polynomials in Bernstein form; let **fbelow**($n$, $k$) be the $k$-th Bernstein coefficient of the polynomial $g_n$; and let **fabove**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$.
+
+Denote the Bernstein polynomial of degree $n$ of a function $f$ as $B_n(f)$.
 
 For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
 
 For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
-Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, Theorem 1 remains valid with the following versions of **fbelow** and **fabove**, rather than as given in that theorem, subject to the bounding note: **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$ and **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$.
+Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, if&mdash;
+
+- **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$, and
+- **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$,
+
+for each integer $n\ge1$ that's a power of 2, and if $g_n = g_{2^{floor(log_2(n))}}$ and $h_n = h_{2^{floor(log_2(n))}}$ for each other integer $n\gt 1$, then the polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005, Proposition 3)[^1] \(discussed in the proof of Theorem 1 above\).
 
 It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
@@ -1117,9 +1126,9 @@ The solution shows that if $y = M_1$ can come arbitrarily close to 0, then no va
 1. $f(\lambda)$ has at least three continuous derivatives.
 2. $f(0)=f(1)$ and $0 < f(1/2) < 1$.
 
-Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(0)=g(1)=0$ and $g(1/2)=1/2$, and has an $M_1$ of 4.  Given that $\frac{|\beta-g(1/2)|}{y}=\frac{|0-1/2|}{y}=1/8$, the goal is now to see whether any function $f$ satisfying (1) and (2) has $\max(\beta, g(1/2)) < M_1 < 8\cdot |\beta-g(1/2)|$.
+Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(0)=g(1)=0$ and $g(1/2)=1/2$, and has an $M_1$ of 4.  Given that $\frac{|\beta-g(1/2)|}{y}=\frac{|0-1/2|}{y}=1/8$, the goal is now to see whether any function $f$ satisfying (1) and (2) has $\max(\beta, f(1/2)) < M_1 < 8\cdot |\beta-f(1/2)|$.
 
-To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$'s first derivative's Lipschitz constant (see "Definitions")[^34], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^35]; see also (Herbert-Voss et al. 2017)[^36]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [\beta, \beta+t, \beta], [z_1, z_2, z_3]) = \max\left(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|, \sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|, 2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|\right)$$ $$=L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3])$$ (where $t$ is greater than 0 and less than 1), so $L$ no longer depends on $\beta$; thus $\beta$ can equal 0 without loss of generality.  Moreover, only $f\prime$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.
+To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$'s first derivative (see "Definitions")[^34], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^35]; see also (Herbert-Voss et al. 2017)[^36]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [\beta, \beta+t, \beta], [z_1, z_2, z_3]) = \max\left(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|,$$ $$\sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|,$$ $$2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|\right)$$ $$=L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3])$$ (where $t$ is greater than 0 and less than 1), so $L$ no longer depends on $\beta$; thus $\beta$ can equal 0 without loss of generality.  Moreover, only $f\prime$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.
 
 Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in $[0, 1]$ have to be checked and only $f\prime$ values in $[-H, H]$ have to be checked.
 
