@@ -25,6 +25,7 @@
     - [**Which functions don't require outside randomness to simulate?**](#Which_functions_don_t_require_outside_randomness_to_simulate)
     - [**Multiple-Output Bernoulli Factory**](#Multiple_Output_Bernoulli_Factory)
     - [**Proofs for Polynomial-Building Schemes**](#Proofs_for_Polynomial_Building_Schemes)
+    - [**A Conjecture on Polynomial Approximation**](#A_Conjecture_on_Polynomial_Approximation)
     - [**Example of Polynomial-Building Scheme**](#Example_of_Polynomial_Building_Scheme)
 - [**License**](#License)
 
@@ -1063,26 +1064,31 @@ This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever
 
 **Corollary 4**.  _If $f(\lambda)$ satisfies the scheme given in Theorem 1, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge 1$ that's a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$._
 
+<a id=A_Conjecture_on_Polynomial_Approximation></a>
+### A Conjecture on Polynomial Approximation
+
 The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.
 
 **Conjecture.**
 
 Let $f$ be a strictly bounded factory function.
 
-For each $n\ge 1$, let $g_n$ and $h_n$ be polynomials in Bernstein form; let **fbelow**($n$, $k$) be the $k$-th Bernstein coefficient of the polynomial $g_n$; and let **fabove**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$.
+For each $n\ge 1$:
 
-Denote the Bernstein polynomial of degree $n$ of a function $f$ as $B_n(f)$.
+- Denote the Bernstein polynomial of degree $n$ of a function $f$ as $B_n(f)$.
+- Let $g_n$ and $h_n$ be polynomials in Bernstein form.
+- Let **fbelow**($n$, $k$) be the $k$-th Bernstein coefficient of the polynomial $g_n$.
+- Let **fabove**($n$,$k$) be the $k$-th Bernstein coefficient of the polynomial $h_n$.
+- Let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
 
-For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
-
-For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
+For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
 Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, if&mdash;
 
 - **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$, and
 - **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$,
 
-for each integer $n\ge1$ that's a power of 2, and if $g_n = g_{2^{floor(log_2(n))}}$ and $h_n = h_{2^{floor(log_2(n))}}$ for each other integer $n\gt 1$, then the polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005, Proposition 3)[^1] \(discussed in the proof of Theorem 1 above\).
+for each integer $n\ge1$ that's a power of 2, and if $g_n = g_{2^{floor(log_2(n))}}$ and $h_n = h_{2^{floor(log_2(n))}}$ for each other integer $n\gt 1$, then the polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005, Proposition 3)[^1] \(discussed in the proof of Theorem 1 in the previous section\).
 
 It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
@@ -1113,9 +1119,9 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 6 | $M=M_1$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 6 | $M=M_1$, $n\ge 4$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.22 | 0.23 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 
-\* Corresponds to the iterated Bernstein polynomial of order 2.
+\* Corresponds to the iterated Bernstein polynomial of order 2 (Güntürk and Li 2021)[^8].
 
-\*\*\* Corresponds to the iterated Bernstein polynomial of order 3.
+\*\*\* Corresponds to the iterated Bernstein polynomial of order 3 (Güntürk and Li 2021)[^8].
 
 \*\* The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.
 

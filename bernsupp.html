@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/11"><meta name="citation_online_date" content="2022/08/11"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/13"><meta name="citation_online_date" content="2022/08/13"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -41,6 +41,7 @@
 <li><a href="#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>Which functions don&#39;t require outside randomness to simulate?</strong></a></li>
 <li><a href="#Multiple_Output_Bernoulli_Factory"><strong>Multiple-Output Bernoulli Factory</strong></a></li>
 <li><a href="#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial-Building Schemes</strong></a></li>
+<li><a href="#A_Conjecture_on_Polynomial_Approximation"><strong>A Conjecture on Polynomial Approximation</strong></a></li>
 <li><a href="#Example_of_Polynomial_Building_Scheme"><strong>Example of Polynomial-Building Scheme</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -1567,19 +1568,27 @@
 
 <p><strong>Corollary 4</strong>.  <em>If $f(\lambda)$ satisfies the scheme given in Theorem 1, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge 1$ that&#39;s a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$.</em></p>
 
+<p><a id=A_Conjecture_on_Polynomial_Approximation></a></p>
+
+<h3>A Conjecture on Polynomial Approximation</h3>
+
 <p>The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
 
 <p><strong>Conjecture.</strong></p>
 
 <p>Let $f$ be a strictly bounded factory function.</p>
 
-<p>For each $n\ge 1$, let $g_n$ and $h_n$ be polynomials in Bernstein form; let <strong>fbelow</strong>($n$, $k$) be the $k$-th Bernstein coefficient of the polynomial $g_n$; and let <strong>fabove</strong>($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$.</p>
+<p>For each $n\ge 1$:</p>
 
-<p>Denote the Bernstein polynomial of degree $n$ of a function $f$ as $B_n(f)$.</p>
+<ul>
+<li>Denote the Bernstein polynomial of degree $n$ of a function $f$ as $B_n(f)$.</li>
+<li>Let $g_n$ and $h_n$ be polynomials in Bernstein form.</li>
+<li>Let <strong>fbelow</strong>($n$, $k$) be the $k$-th Bernstein coefficient of the polynomial $g_n$.</li>
+<li>Let <strong>fabove</strong>($n$,$k$) be the $k$-th Bernstein coefficient of the polynomial $h_n$.</li>
+<li>Let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)</li>
+</ul>
 
-<p>For each integer $n\ge1$ that&#39;s a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)</p>
-
-<p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.</p>
+<p>For each integer $n\ge1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.</p>
 
 <p>Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, if&mdash;</p>
 
@@ -1588,7 +1597,7 @@
 <li><strong>fabove</strong>$(n,k)=W_n(k/n) + CM/n^{r/2}$,</li>
 </ul>
 
-<p>for each integer $n\ge1$ that&#39;s a power of 2, and if $g_n = g_{2^{floor(log_2(n))}}$ and $h_n = h_{2^{floor(log_2(n))}}$ for each other integer $n\gt 1$, then the polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005, Proposition 3)[^1] (discussed in the proof of Theorem 1 above).</p>
+<p>for each integer $n\ge1$ that&#39;s a power of 2, and if $g_n = g_{2^{floor(log_2(n))}}$ and $h_n = h_{2^{floor(log_2(n))}}$ for each other integer $n\gt 1$, then the polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005, Proposition 3)[^1] (discussed in the proof of Theorem 1 in the previous section).</p>
 
 <p>It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 
@@ -1716,9 +1725,9 @@
 </tr>
 </tbody></table>
 
-<p>* Corresponds to the iterated Bernstein polynomial of order 2.</p>
+<p>* Corresponds to the iterated Bernstein polynomial of order 2 (Güntürk and Li 2021)[^8].</p>
 
-<p>*** Corresponds to the iterated Bernstein polynomial of order 3.</p>
+<p>*** Corresponds to the iterated Bernstein polynomial of order 3 (Güntürk and Li 2021)[^8].</p>
 
 <p>** The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.</p>
 

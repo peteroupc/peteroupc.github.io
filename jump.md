@@ -25,8 +25,8 @@ For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (
     Note that for a linear feedback shift register (LFSR) generator, the characteristic polynomial's coefficients are 1 for each of its "taps" (and "tap" 0), and 0 elsewhere.  For example, an LFSR generator with taps 6 and 8 has the characteristic polynomial x<sup>8</sup> + x<sup>6</sup> + 1.
 
     The section "Jump Parameters for Some PRNGs" shows characteristic polynomials for some PRNGs and one way their coefficients can be represented.
-3. Calculate `powmodf2(2, N, CP)`, where `powmodf2` is a modular power function that calculates `2^N mod CP` in the field F<sub>2</sub>, and `CP` is the characteristic polynomial.  Regular modular power functions, such as BigInteger's `modPow` method, won't work here, even if the polynomial is represented in the manner described in "Jump Parameters for Some PRNGs".
-4. The result is a _jump polynomial_ for jumping the PRNG ahead N steps.
+3. Calculate `powmodf2(2, N, CP)`, where `powmodf2` is a modular power function that calculates `2^N mod CP` in the field F<sub>2</sub>, and `CP` is the characteristic polynomial. (`N` is the number of PRNG outputs to discard.)  Regular modular power functions, such as BigInteger's `modPow` method, won't work here, even if the polynomial is represented in the manner described in "Jump Parameters for Some PRNGs".
+4. The result is a _jump polynomial_ for jumping the PRNG ahead N steps, that is, for discarding N outputs of the PRNG.
 
     An example of its use is found in the `jump` and `long_jump` functions in the [**`xoroshiro128plus` source code**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), which are identical except for the jump polynomial.  In both functions, the jump polynomial's coefficients are packed into a 128-bit integer (as described in "Jump Parameters for Some PRNGs"), which is then split into the lower 64 bits and the upper 64 bits, in that order.
 
@@ -108,7 +108,9 @@ A combined PRNG can be jumped ahead N steps by jumping each of its components ah
 
 The following table shows the characteristic polynomial and jump polynomials for some PRNG families.  In the table:
 
+- Each number before the colon in the jump polynomial column is the number of PRNG outputs discarded when the corresponding jump polynomial is used.
 - Each polynomial's coefficients are zeros and ones, so the table shows them as a base-16 integer that stores the coefficients as individual bits: the least significant bit is the degree-0 coefficient, the next bit is the degree-1 coefficient, and so on.  For example, the integer 0x23 stores the coefficients of the polynomial x<sup>5</sup> + x + 1.
+- Each characteristic polynomial's highest coefficient is x<sup>n</sup>, where n is the PRNG's state size.  Thus, the table shows it as a base-16 integer with n plus one bits.
 - "'Period'/&phi;" means the PRNG's maximum cycle length divided by the golden ratio, and rounded to the closest odd integer; this jump parameter is chosen to avoid overlapping number sequences as much as possible (see also [**NumPy documentation**](https://docs.scipy.org/doc/numpy/reference/random/parallel.html)).
 
 &nbsp;
