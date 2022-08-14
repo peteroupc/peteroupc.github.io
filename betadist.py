@@ -1998,14 +1998,15 @@ class Real:
         return RealNegate(a)
 
     def __mul__(a, b):
-        return RealMultiply(a, b)
+        return RealMultiply.mul(a, b)
 
     def __rmul__(a, b):
-        return RealMultiply(b, a)
+        # print([type(a),type(b)])
+        return RealMultiply.mul(b, a)
 
     def __pow__(a, b):
         if b == 2:
-            return RealMultiply(a, a)
+            return RealMultiply.mul(a, a)
         # print([a,isinstance(b,RealFraction)])
         if (
             isinstance(a, RealFraction)
@@ -2031,7 +2032,7 @@ class Real:
 
     def __rpow__(b, a):
         if a == 2:
-            return RealMultiply(b, b)
+            return RealMultiply.mul(b, b)
         return RealPow(b, a)
 
     def __truediv__(a, b):
@@ -3155,6 +3156,8 @@ class RandUniform(Real):
 
 class RealFraction(Real):
     def __init__(self, a, b=None):
+        if isinstance(a, Real):
+            raise ValueError
         if b != None:
             self.num = a
             self.den = b
@@ -3170,6 +3173,11 @@ class RealFraction(Real):
             a = Fraction(a)
             self.num = a.numerator
             self.den = a.denominator
+        if self.num == 0:
+            self.den = 1
+
+    def toFraction(self):
+        return Fraction(self.num, self.den)
 
     def isDefinitelyZero(self):
         return self.num == 0
@@ -3185,9 +3193,20 @@ class RealFraction(Real):
 
     def __add__(self, b):
         if isinstance(b, RealFraction):
-            return RealFraction(self.num * b.den + self.den * b.num, self.den * b.den)
+            cn = self.num * b.den + self.den * b.num
+            cd = self.den * b.den
+            # print(cd)
+            r = RealFraction(Fraction(cn, cd))
+            return r
+        if isinstance(b, Fraction):
+            cn = self.num * b.denominator + self.den * b.numerator
+            cd = self.den * b.denominator
+            # print(cd)
+            r = RealFraction(Fraction(cn, cd))
+            return r
         if isinstance(b, int):
-            return RealFraction(self.num + self.den * b, self.den)
+            r = RealFraction(self.num + self.den * b, self.den)
+            return r
         return RealAdd(self, b)
 
     def __radd__(self, b):
@@ -3195,9 +3214,19 @@ class RealFraction(Real):
 
     def __sub__(self, b):
         if isinstance(b, RealFraction):
-            return RealFraction(self.num * b.den - self.den * b.num, self.den * b.den)
+            return RealFraction(
+                Fraction(self.num * b.den - self.den * b.num, self.den * b.den)
+            )
+        if isinstance(b, Fraction):
+            return RealFraction(
+                Fraction(
+                    self.num * b.denominator - self.den * b.numerator,
+                    self.den * b.denominator,
+                )
+            )
         if isinstance(b, int):
             return RealFraction(self.num - self.den * b, self.den)
+        # print(["sub",type(self),type(b)])
         return RealSubtract(self, b)
 
     def __rsub__(self, b):
@@ -3205,23 +3234,38 @@ class RealFraction(Real):
             return RealFraction(
                 (-self.num) * b.den + self.den * b.num, self.den * b.den
             )
+        if isinstance(b, Fraction):
+            return RealFraction(
+                (-self.num) * b.denominator + self.den * b.numerator,
+                self.den * b.denominator,
+            )
         if isinstance(b, int):
             return RealFraction((-self.num) + self.den * b, self.den)
+        # print(["rsub",type(self),type(b)])
         return RealSubtract(b, self)
 
     def __mul__(self, b):
         if isinstance(b, RealFraction):
-            return RealFraction(self.num * b.num, self.den * b.den)
+            return RealFraction(Fraction(self.num * b.num, self.den * b.den))
+        if isinstance(b, Fraction):
+            return RealFraction(
+                Fraction(self.num * b.numerator, self.den * b.denominator)
+            )
         if isinstance(b, int):
             return RealFraction(self.num * b, self.den)
-        return RealMultiply(self, b)
+        return RealMultiply.mul(self, b)
 
     def __rmul__(self, b):
+        # print([type(self),type(b)])
         return RealFraction.__mul__(self, b)
 
     def __truediv__(self, b):
         if isinstance(b, RealFraction):
-            return RealFraction(self.num * b.den, self.den * b.num)
+            return RealFraction(Fraction(self.num * b.den, self.den * b.num))
+        if isinstance(b, Fraction):
+            return RealFraction(
+                Fraction(self.num * b.denominator, self.den * b.numerator)
+            )
         if isinstance(b, int):
             return RealFraction(self.num, self.den * b)
         return RealDivide(self, b)
@@ -3229,6 +3273,8 @@ class RealFraction(Real):
     def __rtruediv__(self, b):
         if isinstance(b, RealFraction):
             return RealFraction(self.den * b.num, self.num * b.den)
+        if isinstance(b, Fraction):
+            return RealFraction(self.den * b.numerator, self.num * b.denominator)
         if isinstance(b, int):
             return RealFraction(self.den * b, self.num)
         return RealDivide(b, self)
@@ -3817,6 +3863,9 @@ def realFloor(a):
     if isinstance(a, RealFraction):
         # NOTE: Python's "//" operator does floor division
         return a.num // a.den
+    if isinstance(a, Fraction):
+        # NOTE: Python's "//" operator does floor division
+        return a.numerator // a.denominator
     n = 2
     while True:
         av = a.ev(n)
@@ -3838,9 +3887,20 @@ def realIsLessOrEqual(a, b):
     return realIsLess(a, b)
 
 def realIsLess(a, b):
+    if isinstance(a, Fraction) and isinstance(b, Fraction):
+        return a < b
+    if isinstance(a, RealFraction) and isinstance(b, Fraction):
+        return Fraction(a.num, a.den) < b
+    if isinstance(a, Fraction) and isinstance(b, RealFraction):
+        return Fraction(b.num, b.den) > a
     if isinstance(a, RealFraction) and isinstance(b, RealFraction):
         return Fraction(a.num, a.den) < Fraction(b.num, b.den)
+    a = a if isinstance(a, Real) else RealFraction(a)
+    b = b if isinstance(b, Real) else RealFraction(b)
     n = 3
+    # print(["a",a])
+    # print(["b",b])
+    # print([a.disp(),b.disp()])
     while True:
         aa = a.ev(n)
         bb = b.ev(n)
@@ -3901,6 +3961,22 @@ class RealMultiply(Real):
 
     def __repr__(self):
         return "RealMultiply(%s,%s)" % (self.a, self.b)
+
+    def mul(a, b):
+        # if isinstance(a,RealMultiply):
+        #   print([type(a.a),type(a.b)])
+        if isinstance(a, RealFraction) and isinstance(b, RealFraction):
+            return Fraction(a.num, a.den) * Fraction(b.num, b.den)
+        if (
+            isinstance(a, RealMultiply)
+            and isinstance(a.a, RealFraction)
+            and isinstance(a.b, RealFraction)
+        ):
+            print(Fraction(a.a.num, a.a.den) * Fraction(a.b.num, a.b.den))
+            return RealMultiply(
+                Fraction(a.a.num, a.a.den) * Fraction(a.b.num, a.b.den), b
+            )
+        return RealMultiply(a, b)
 
     def ev(self, n):
         # Use best approximation calculated so far
@@ -4215,13 +4291,33 @@ class SinFunction:
             else RealSin(pt)
         )
 
+def bernsteinDiff(coeffs, diff):
+    # Gets the Bernstein coefficients of the 'diff'-th derivative of
+    # a polynomial given its Bernstein coefficients.
+    # The coefficients are ordered 0th order, 1st order, and
+    # so on.
+    if len(coeffs) == 0:
+        raise ValueError("no coeffs")
+    if diff < 0:
+        raise ValueError("invalid value for diff (diff<0)")
+    if diff == 0:
+        return coeffs
+    n = len(coeffs) - 1
+    if diff > n:
+        return [0]
+    for i in range(diff):
+        coeffs = [(coeffs[i + 1] - coeffs[i]) * n for i in range(n)]
+        n -= 1
+    return coeffs
+
 class BernsteinPoly:
     def __init__(self, coeffs):
         self.coeffs = coeffs
         self.d = len(coeffs) - 1
-        if self.d <= 0:
-            raise ValueError
+        if self.d < 0:
+            raise ValueError("d=%d" % (self.d))
         self.bincos = [math.comb(self.d, k) for k in range(0, (self.d // 2) + 1)]
+        self.diffs = {}
 
     def fromFunc(func, n):
         if n <= 0:
@@ -4229,6 +4325,8 @@ class BernsteinPoly:
         return BernsteinPoly([func.value(RealFraction(i, n)) for i in range(n + 1)])
 
     def value(self, pt):
+        if self.d == 0:
+            return self.coeffs[0]
         ret = None
         for i in range(0, self.d + 1):
             bc = self.bincos[self.d - i] if i >= len(self.bincos) else self.bincos[i]
@@ -4239,13 +4337,23 @@ class BernsteinPoly:
                 ret += r
         return ret
 
+    def diff(self, pt, d=1):
+        if d <= 0:
+            raise ValueError
+        if not d in self.diffs:
+            bd = bernsteinDiff(self.coeffs, d)
+            self.diffs[d] = BernsteinPoly(bd)
+        return self.diffs[d].value(pt)
+
 def minDegree(maxValue, maxDeriv, epsilon, deriv=4):
     # Minimum degree for iteratedPoly2 (for deriv=4) or
     # iteratedPoly3 (for deriv=5 or 6) needed to achieve
     # an error not more than epsilon
     if not isinstance(maxValue, Real):  # max. abs. value of function
         maxValue = RealFraction(maxValue)
-    if not isinstance(maxDeriv, Real):  # max. abs. value of 'deriv'-th derivative
+    if not isinstance(
+        maxDeriv, Real
+    ):  # max. abs. value of derivatives up to 'deriv'-th derivative
         maxDeriv = RealFraction(maxDeriv)
     if not isinstance(epsilon, Real):
         epsilon = RealFraction(epsilon)
@@ -4300,18 +4408,23 @@ class PiecewiseBernstein:
         if len(coeffs) == 0:
             raise ValueError
         # Bernstein coefficients
-        self.pieces.append([coeffs, RealFraction(mn), RealFraction(mx)])
+        self.pieces.append(
+            [coeffs, BernsteinPoly(coeffs), RealFraction(mn), RealFraction(mx)]
+        )
         return self
 
     def value(self, x):  # Value of piecewise polynomial
-        for coeffs, mn, mx in self.pieces:
+        for _, poly, mn, mx in self.pieces:
             if realIsLessOrEqual(mn, x) and realIsLessOrEqual(x, mx):
-                n = len(coeffs) - 1
-                ret = sum(
-                    coeffs[i] * math.comb(n, i) * x ** i * (1 - x) ** (n - i)
-                    for i in range(0, len(coeffs))
-                )
-                return ret
+                return poly.value(x)
+        return RealFraction(0)
+
+    def diff(self, x, d=1):  # Derivative of piecewise polynomial
+        if d <= 0:
+            raise ValueError
+        for _, poly, mn, mx in self.pieces:
+            if realIsLessOrEqual(mn, x) and realIsLessOrEqual(x, mx):
+                return poly.diff(x, d=d)
         return RealFraction(0)
 
     def get_coeffs(self):

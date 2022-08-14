@@ -2492,6 +2492,8 @@ CLASSES
      |  __init__(self, coeffs)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  diff(self, pt, d=1)
+     |
      |  fromFunc(func, n)
      |
      |  value(self, pt)
@@ -2561,6 +2563,8 @@ CLASSES
      |
      |  __init__(self)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  diff(self, x, d=1)
      |
      |  fromcoeffs(coeffs)
      |      Creates a PiecewiseBernsteinPoly given a
@@ -3302,6 +3306,8 @@ CLASSES
      |
      |  isNegative(self)
      |
+     |  toFraction(self)
+     |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
      |
@@ -3459,6 +3465,8 @@ CLASSES
      |  ev(self, n)
      |
      |  isDefinitelyZero(self)
+     |
+     |  mul(a, b)
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
@@ -3983,6 +3991,8 @@ FUNCTIONS
     addto1(rg)
 
     bernoullinum(n)
+
+    bernsteinDiff(coeffs, diff)
 
     betabin(k, psi, rho, cpsi, m=5)
 
