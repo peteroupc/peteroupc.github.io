@@ -176,7 +176,6 @@ def lorentz4poly(pwpoly, n):
     vals = [REALZERO for i in range(n + r + 1)]
     for k in range(0, n + 1):
         kdivn = Fraction(k, n)
-        # print([n,k,"value"])
         f0v = pwpoly.value(kdivn)  # Value
         # print([n,k,"diff2"])
         f2v = pwpoly.diff(kdivn, d=2)  # Second derivative
@@ -353,7 +352,7 @@ class C4Function:
             d = self.lastdegree
             while d <= n:
                 d = self.nextdegree(d)
-                print("nextdegree %d [to %d]" % (d, deg))
+                # print("nextdegree %d [to %d]" % (d, deg))
                 # t=time.time()
                 lastfn_coeffs = None
                 if self.lastfn == None:
@@ -400,25 +399,24 @@ class C4Function:
                     if len(up) != d + 1:
                         raise ValueError
                     up = [simplify(v) for v in up]
-                    print([v.disp() for v in up])
                     lo = [simplify(v) for v in lo]
                     for v in lo:
                         if realIsLess(v, Fraction(0)):
                             lo = [REALZERO for i in range(deg + 1)]
                             break
-                    self.lopolys[deg] = lo
+                    self.lopolys[d] = lo
                     for v in up:
                         if realIsLess(Fraction(1), v):
                             up = [REALONE for i in range(deg + 1)]
                             break
-                    self.hipolys[deg] = up
+                    self.hipolys[d] = up
             if n not in self.lopolys:
                 raise ValueError
             if n not in self.hipolys:
                 raise ValueError
             if len(self.lopolys[n]) != n + 1:
                 raise ValueError
-            if len(self.lopolys[n]) != n + 1:
+            if len(self.hipolys[n]) != n + 1:
                 raise ValueError
             return [self.lopolys[deg], self.hipolys[deg]]
 
@@ -570,10 +568,9 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
         degree = nextdegree(degree) if nextdegree != None else degree * 2
 
 def cc():
-    f = C4Function(c4example(), 5, lorentz=True)
+    ce = c4example()
+    f = C4Function(ce, 5, lorentz=True)
     coin = lambda: 1 if random.random() < 0.3 else 0
     print(sum(f.simulate(coin) for i in range(5000)) / 5000)
 
-import cProfile
-
-cProfile.run("cc()")
+cc()

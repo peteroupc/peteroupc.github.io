@@ -3882,11 +3882,17 @@ def realCeiling(a):
     return -realFloor(-a)
 
 def realIsLessOrEqual(a, b):
+    a = a if isinstance(a, Real) else RealFraction(a)
+    b = b if isinstance(b, Real) else RealFraction(b)
     if isinstance(a, RealFraction) and isinstance(b, RealFraction):
         return Fraction(a.num, a.den) <= Fraction(b.num, b.den)
     return realIsLess(a, b)
 
 def realIsLess(a, b):
+    if isinstance(a, int):
+        a = Fraction(a)
+    if isinstance(b, int):
+        b = Fraction(b)
     if isinstance(a, Fraction) and isinstance(b, Fraction):
         return a < b
     if isinstance(a, RealFraction) and isinstance(b, Fraction):
