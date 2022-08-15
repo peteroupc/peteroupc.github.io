@@ -608,9 +608,9 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 **Lemma A1:** Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and have a finite sum and where $0\le x\le 1$ (the domain is the interval [0, 1]). Then $f$ is convex and has a maximum at 1.
 
-_Proof:_ By inspection, $f$ is a power series and is non-negative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for every $n\ge 0$, and multiplying that by a non-negative constant doesn't change whether it's increasing.  Since all of these terms have a maximum at 1 on its domain, so does their sum.
+_Proof:_ By inspection, $f$ is a power series and is non-negative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for every $n\ge 0$, and multiplying that by a non-negative constant doesn't change whether it's increasing.  Since all of these terms have a maximum at 1 on the domain, so does their sum.
 
-The derivative of $f$ is&mdash; $$f\prime(x) = a_1 x^0 + ... + a_i x^{i-1} + ...,$$ which is still a power series with non-negative coefficients, so the proof so far applies to $f\prime$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.
+The derivative of $f$ is&mdash; $$f\prime(x) = a_1 x^0 + ... + a_i x^{i-1} + ...,$$ which is still a power series with non-negative values of $a_n$, so the proof so far applies to $f\prime$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.
 
 Now, since the second derivative is non-negative on the positive real line, and thus on its domain, $f$ is convex, which completes the proof. &#x25a1;
 
@@ -625,7 +625,7 @@ For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + 
 
 **Proposition B1**: Let $f(\lambda)$ map [0, 1] to [0, 1] and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in "Approximate Bernoulli Factories for Certain Functions") are non-negative on [0, 1].
 
-_Proof:_ For $W_{n,2}$ it's enough to prove that $B_n(f)\le f$ for every $n\le 1$.  This is the case because of Jensen's inequality and because $f$ is concave.
+_Proof:_ For $W_{n,2}$ it's enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen's inequality and because $f$ is concave.
 
 For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is non-negative.  For this, using only the fact that $f$ maps [0, 1] to [0, 1], $B_n(f)$ will have Bernstein coefficients in \[0, 1\] (each coefficient is a value of $f$) and so will likewise map [0, 1] to \[0, 1\] (Qian et al. 2011)[^20].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is non-negative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is non-negative as well.  Thus, $W_{n,3}$ is non-negative on [0, 1]. &#x25a1;
 
@@ -637,7 +637,7 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^21], showi
 
 **Proposition B3**: Let $f(\lambda)$ map [0, 1] to [0, 1] and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is non-negative there, for every $n\ge m$.
 
-_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)= 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
+_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
 The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value ("long-run average").  The following results bound the absolute value of $T$.
 
@@ -651,7 +651,7 @@ _Proof_: The critical points of $T(n, 3, p)$ (the points where the maximum might
 
 **Proposition B7**:  For every integer $n\ge 1$, $|T(n, 5, p)| \le 0.083 n^{5/2}.$  For every integer $n\ge 304$, $|T(n, 5, p)| \le n^2 \le 0.05736 n^{5/2}.$
 
-_Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| < 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| = n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it's enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 < 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;
+_Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| < 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it's enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 < 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
@@ -1073,30 +1073,25 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 **Conjecture.**
 
-Let $f$ be a strictly bounded factory function with at least one continuous derivative.
+Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $r$ continuous derivatives.
 
 For each $n\ge 1$:
 
 - Denote the Bernstein polynomial of degree $n$ of a function $f$ as $B_n(f)$.
-- Let $r$ be the number of continuous derivatives of $f$.
 - Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
-- Let $g_n$ and $h_n$ be polynomials in Bernstein form.
-- Let **fbelow**($n$, $k$) be the $k$-th Bernstein coefficient of the polynomial $g_n$.
-- Let **fabove**($n$,$k$) be the $k$-th Bernstein coefficient of the polynomial $h_n$.
 - Let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.
 
-Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, if&mdash;
+Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows:
 
-- **fbelow**$(n,k)=W_n(k/n) - CM/n^{r/2}$, and
-- **fabove**$(n,k)=W_n(k/n) + CM/n^{r/2}$,
-
-for each integer $n\ge1$ that's a power of 2, and if $g_n = g_{2^{floor(log_2(n))}}$ and $h_n = h_{2^{floor(log_2(n))}}$ for each other integer $n\gt 1$, then the polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005, Proposition 3)[^1] \(discussed in the proof of Theorem 1 in the previous section\).
+1. $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise.
+2. $lim_n g_n =lim_n h_n=f$.
+3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.
 
 It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
-> **Note:** By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.
+> **Note:** By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
 
 ---------------------
 
@@ -1163,7 +1158,7 @@ Now, by plugging sqrt(1/(7\*_n_)) into _&omega;_, we get the following for Theor
 
 - _&phi;_(_n_) = 1/(ln(sqrt(7/_n_)/7)&minus;3)<sup>2</sup>.
 
-Now, by applying Theorem 1, we compute _&eta;_(_k_) by substituting _n_ with 2<sup>_n_</sup>, summing over [_k_, &infin;), and substituting _k_ with log2(_k_).  _&eta;_ converges, resulting in:
+Now, by applying Theorem 1, we compute _&eta;_(_k_) by substituting _n_ with 2<sup>_n_</sup>, summing over [_k_, &infin;), and substituting _k_ with ln(_k_)/ln(2).  _&eta;_ converges, resulting in:
 
 - _&eta;_(_k_) = &Phi;(1, 2, (ln(_k_)+ln(7)+6)/ln(2))\*4/ln(2)<sup>2</sup>,
 
@@ -1183,11 +1178,12 @@ phi=omega.subs(x,sqrt(1/(7*n)))
 pprint(phi)
 # compute eta
 eta=summation(phi.subs(n,2**n),(n,k,oo)).simplify()
+eta=eta.subs(k,log(k,2)) # Replace k with ln(k)/ln(2)
 pprint(eta)
 for i in range(20):
   # Calculate upper bounds for eta at certain points.
   try:
-    print("eta(2^%d) ~= %s" % (i,ceiling(eta.subs(k,i)*10000000).n()/10000000))
+    print("eta(2^%d) ~= %s" % (i,ceiling(eta.subs(k,2**i)*10000000).n()/10000000))
   except:
     print("eta(2^%d) ~= [FAILED]" % (i))
 ```

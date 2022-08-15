@@ -96,7 +96,7 @@ for every integer $n\ge1$, such that—
 
 1. $0\le a(n, k)\le b(n, k)\le1$,
 2. $\lim_{n}g_{n}(\lambda)=\lim_{n}h_{n}(\lambda)=f(\lambda)$ for every $\lambda\in[0,1]$, and
-3. for every $m<n$, both $(g_{n} - g_{m})$ and $(h_{m} - h_{n})$ have non-negative coefficients once $g_{n}$, $g_{m}$, $h_{n}$, and $h_{m}$ are rewritten as degree-$n$ polynomials in Bernstein form,
+3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients,
 
 where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.
 
@@ -127,13 +127,13 @@ Thus the questions are:
 
 2. The following is a technical question that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-    Let $f(\lambda):[0,1]\to(0,1)$ be continuous, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
+    Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
 
-     For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, $f$ has $r\ge 1$ continuous derivatives, and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
+     For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$ and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
-    Then, a conjecture is that there is $C_0$ greater than 0 such that for every $C\ge C_0$, the following values of $a(n,k)$ and $b(n,k)$ satisfy the Formal Statement above for each integer $n\ge1$ that's a power of 2: $a(n,k)=W_n(k/n) - CM/n^{r/2}$ and $b(n,k)=W_n(k/n) + CM/n^{r/2}$ (and the polynomials for each other $n$ are defined in the "natural" way).
+    Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0$ greater than 0 such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $lim_n g_n =lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.
 
-    1. For what value of $C_0$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4? In this case, $C_0$ must be greater than 59/100 for $r=3$ and 6/25 if $r=4$.  Interesting functions $f$ to test are quadratic polynomials.
+    1. For what value of $C_0$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4?  Interesting functions $f$ to test are quadratic polynomials.
 
     2. For what value of $C_0$ is the statement true when $W_n$ is arbitrary?
 

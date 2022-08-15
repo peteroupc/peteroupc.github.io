@@ -77,7 +77,8 @@ def polyshift(nrcoeffs, theta, d, alpha=2):
     return upper, lower
 
 def example1():
-    # Example function: A concave piecewise polynomial
+    # Example function: A concave piecewise
+    # polynomial with three continuous derivatives
     pwp2 = PiecewiseBernstein()
     pwp2.piece(
         [
@@ -315,22 +316,30 @@ def simplify(r):
     return r
 
 class C4Function:
-    def __init__(self, func, norm, lorentz=False):
+    # func must map [0, 1] to (0, 1) and have at least
+    # four continuous derivatives.
+    def __init__(self, func, norm, lorentz=False, concave=False, contderivs=4):
         self.func = func
+        self.contderivs = min(4, contderivs)
+        if self.contderivs <= 2 and not lorentz:
+            raise ValueError("this value of contderivs not supported for lorentz=False")
+        if self.contderivs < 2 and lorentz:
+            raise ValueError("this value of contderivs not supported for lorentz=True")
         self.norm = norm
         self.lopolys = {}
         self.hipolys = {}
+        self.concave = concave
         self.nextdegree = None  # Use default for nextdegree
         # Whether to use Lorentz operator of order
-        # 2 or the Micchelli--Felbecker iterated Bernstein
+        # 4 or the Micchelli--Felbecker iterated Bernstein
         # polynomial of order 2.
         self.lorentz = lorentz
         if self.lorentz:
-            # Lorentz operator of order 4.
+            # Lorentz operator of order 2 or 4.
             # NOTE: 'func' should have at least 'lorentz_r' many
             # continuous derivatives.  Necessary condition: derivative
             # of order ('lorentz_r'-1) is in Zygmund class.
-            self.lorentz_r = 4
+            self.lorentz_r = 4 if self.contderivs >= 4 else 2
             self.initialdeg = 4
             self.lastfn = None
             self.nextdegree = lambda n: max(
@@ -399,11 +408,17 @@ class C4Function:
                     if len(up) != d + 1:
                         raise ValueError
                     up = [simplify(v) for v in up]
-                    lo = [simplify(v) for v in lo]
-                    for v in lo:
-                        if realIsLess(v, Fraction(0)):
-                            lo = [REALZERO for i in range(deg + 1)]
-                            break
+                    if self.concave:
+                        lo = [
+                            simplify(self.func.value(Fraction(i, d)))
+                            for i in range(d + 1)
+                        ]
+                    else:
+                        lo = [simplify(v) for v in lo]
+                        for v in lo:
+                            if realIsLess(v, Fraction(0)):
+                                lo = [REALZERO for i in range(deg + 1)]
+                                break
                     self.lopolys[d] = lo
                     for v in up:
                         if realIsLess(Fraction(1), v):
@@ -425,17 +440,25 @@ class C4Function:
             return [self.lopolys[deg], self.hipolys[deg]]
         if self.lorentz:
             return self._ensurelorentz(deg)
-        # WARNING: 11/100 is conjectured bound
-        incr = Fraction(11, 100) * self.norm / deg ** 2
+        # WARNING: Conjectured bounds
+        if self.contderivs >= 4:
+            incr = Fraction(25, 100) * self.norm / deg ** 2
+        elif self.contderivs >= 3:
+            incr = (Fraction(9, 100) * self.norm) / RealFraction(deg) ** Fraction(3, 2)
+        else:
+            print("Unsupported")
         ipol = iteratedPoly2(self.func, deg)
         # NOTE: Can return a Fraction (rather than Real*)
         # in some cases, but this is only used in realIsLess
         # and realFloor, which both accept Fractions
-        pol = [simplify(v - incr) for v in ipol]
-        for v in pol:
-            if realIsLess(v, Fraction(0)):
-                pol = [REALZERO for i in range(deg + 1)]
-                break
+        if self.concave:
+            pol = [simplify(self.func.value(Fraction(i, deg))) for i in range(deg + 1)]
+        else:
+            pol = [simplify(v - incr) for v in ipol]
+            for v in pol:
+                if realIsLess(v, Fraction(0)):
+                    pol = [REALZERO for i in range(deg + 1)]
+                    break
         self.lopolys[deg] = pol
         pol = [simplify(v + incr) for v in ipol]
         for v in pol:
@@ -468,8 +491,12 @@ def _fa2(fabove, a, b, v=1):
     return Fraction(imv, v) if mv == imv else Fraction(imv + 1, v)
 
 def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
-    """Simulates a general factory function defined by two
-    sequences of polynomials that converge from above and below.
+    """A Bernoulli factory for a continuous function f(x) that maps [0, 1]
+     to [0, 1] (and where f(x) is polynomially bounded).  Returns either 1
+     with probability f(x) (where x is the probability that the given coin
+     outputs 1) and 0 otherwise.  The function f(x) is defined by two
+    sequences of polynomials in Bernstein form that converge to f(x)
+    from above and below and meet consistency requirements on their coefficients.
     - coin(): Function that returns 1 or 0 with a fixed probability.
     - fbelow(n, k): A lambda that calculates the kth Bernstein coefficient (not the value),
       or a lower bound thereof, for the degree-n lower polynomial (k starts at 0).
@@ -496,17 +523,12 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
             break
         degree = nextdegree(degree) if nextdegree != None else degree * 2
     startdegree = degree
-    fba = {}
-    faa = {}
     ret = RandUniform()
+    correctness = False
+    if correctness:
+        fba = {}
+        faa = {}
     while True:
-        # The following condition should not be present for exact
-        # simulation, but is here in order to keep simulation
-        # times reasonable
-        # print(["degree",degree])
-        if degree >= 8192:
-            print("skipped")
-            return 0
         for i in range(degree - lastdegree):
             if coin() == 1:
                 ones += 1
@@ -514,8 +536,9 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
         md = degree
         l = _fb2(fbelow, degree, ones, c << md)
         u = _fa2(fabove, degree, ones, c << md)
-        # fba[(degree, ones)] = l
-        # faa[(degree, ones)] = u
+        if correctness:
+            fba[(degree, ones)] = l
+            faa[(degree, ones)] = u
         ls = Fraction(0)
         us = Fraction(1)
         if degree > startdegree:
@@ -528,7 +551,7 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
                 )
                 for j in range(0, min(lastdegree, ones) + 1)
             ]
-            if False:  # Correctness check
+            if correctness:  # Correctness check
                 for j in range(0, min(lastdegree, ones) + 1):
                     fb = _fb2(
                         fbelow, lastdegree, j, (1 * math.comb(lastdegree, j)) << md
@@ -554,6 +577,10 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
                 * combs[j]
                 for j in range(0, min(lastdegree, ones) + 1)
             )
+            if l < ls:
+                raise ValueError
+            if us < u:
+                raise ValueError
         m = (ut - lt) / (us - ls)
         lt = lt + (l - ls) * m
         ut = ut - (us - u) * m
@@ -568,9 +595,12 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
         degree = nextdegree(degree) if nextdegree != None else degree * 2
 
 def cc():
-    ce = c4example()
-    f = C4Function(ce, 5, lorentz=True)
-    coin = lambda: 1 if random.random() < 0.3 else 0
-    print(sum(f.simulate(coin) for i in range(5000)) / 5000)
+    # ce = c4example()
+    # f = C4Function(ce, 5, lorentz=False,contderivs=4)
+    ce = example1()
+    f = C4Function(ce, 5, lorentz=False, concave=True, contderivs=3)
+    coin = lambda: 1 if random.random() < 0.9 else 0
+    print(ce.value(0.9))
+    print(sum(f.simulate(coin) for i in range(50000)) / 50000)
 
 cc()
