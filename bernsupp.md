@@ -1047,22 +1047,22 @@ _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  Fo
 
 The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.
 
-**Lemma 3.** _Suppose that for each integer $n\ge 1$ and for a strictly bounded factory function $f(\lambda)$:_
+**Lemma 3.** _Let $f$ be a strictly bounded factory function. Let $N$ be a set of positive integers.  For each integer $n\ge 1$, let $W_n(\lambda)$ be a function, and let $\epsilon_n(f,\lambda)$ be a non-negative function.  Suppose that there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows:_
 
-- _**fbelow**($n$, $k$) is the $k$-th Bernstein coefficient of the polynomial $g_n$._
-- _**fabove**($n$,$k$) is the $k$-th Bernstein coefficient of the polynomial $h_n$._
-- **fbelow**($n$,$k$) &le; **fabove**($n$,$k$).
-- _The polynomials $g_n$ and $h_n$ satisfy conditions (iii) and (iv) of Nacu and Peres (2005, Proposition 3)[^1] \(discussed in the proof of Theorem 1 above\)._
+1. _For each $n$ in $N$, $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f,\lambda)$ and $W_n(k/n) + \epsilon_n(f,\lambda)$, respectively ($0\le k\le n$)._
+2. _$g_n \le h_n$._
+3. _$g_n$ and $h_n$ converge to $f$ as $n$ gets large._
+4. _(Consistency requirement.) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients._
 
-_Suppose **fbelow**(n,k) = $W_n(k/n) - \epsilon_n(f)$ and **fabove**(n,k) = $W_n(k/n) + \epsilon_n(f)$ for each $n$ in a set of positive integers. Then for each $n$ in that set, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
+_Then for each $n$ in $N$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f,\lambda)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 
-_Proof:_ $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, condition (iv) of Nacu and Peres (2005)[^1] implies that $g_{n}(\lambda)\le g_{n+1}(\lambda)\le f(\lambda)$ (the lower polynomials "increase") and $h_{n}(\lambda)\ge h_{n+1}\ge f(\lambda)$ (the upper polynomials "decrease") for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].
+_Proof:_ $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f,\lambda)$.  Moreover, property 4 in the lemma corresponds to condition (iv) of Nacu and Peres (2005)[^1], which implies that $g_{n}(\lambda)\le g_{n+1}(\lambda)\le f(\lambda)$ (the lower polynomials "increase") and $h_{n}(\lambda)\ge h_{n+1}\ge f(\lambda)$ (the upper polynomials "decrease") for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].
 
-Then if $B_n(W_n(\lambda)) < f(\lambda)$ for some $\lambda$ in [0, 1], shifting the left-hand side upward by $\epsilon_n(f)$ means that $h_n = B_n(W_n(\lambda))+\epsilon_n(f) \ge f(\lambda)$, and rearranging this expression leads to $f(\lambda) - B_n(W_n(\lambda)) \le \epsilon_n(f)$.
+Then if $B_n(W_n(\lambda)) < f(\lambda)$ for some $\lambda$ in [0, 1], shifting the left-hand side upward by $\epsilon_n(f,\lambda)$ (a non-negative function) means that $h_n = B_n(W_n(\lambda))+\epsilon_n(f,\lambda) \ge f(\lambda)$, and rearranging this expression leads to $f(\lambda) - B_n(W_n(\lambda)) \le \epsilon_n(f,\lambda)$.
 
-Likewise, if $B_n(W_n(\lambda)) > f(\lambda)$ for some $\lambda$ in [0, 1], shifting the left-hand side downward by $\epsilon_n(f)$ means that $g_n = B_n(W_n(\lambda))-\epsilon_n(f) \ge f(\lambda)$, and rearranging this expression leads to $B_n(W_n(\lambda)) - f(\lambda) \le \epsilon_n(f)$.
+Likewise, if $B_n(W_n(\lambda)) > f(\lambda)$ for some $\lambda$ in [0, 1], shifting the left-hand side downward by $\epsilon_n(f,\lambda)$ means that $g_n = B_n(W_n(\lambda))-\epsilon_n(f,\lambda) \ge f(\lambda)$, and rearranging this expression leads to $B_n(W_n(\lambda)) - f(\lambda) \le \epsilon_n(f,\lambda)$.
 
-This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$.  &#x25a1;
+This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f,\lambda)$ whenever $0\le \lambda\le 1$.  &#x25a1;
 
 **Corollary 4**.  _If $f(\lambda)$ satisfies the scheme given in Theorem 1, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge 1$ that's a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$._
 
@@ -1073,20 +1073,16 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 **Conjecture.**
 
-Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $r$ continuous derivatives.
+Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $r$ continuous derivatives.  Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
-For each $n\ge 1$:
+For each $n\ge 1$, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
 
-- Denote the Bernstein polynomial of degree $n$ of a function $f$ as $B_n(f)$.
-- Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
-- Let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
-
-For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.
+For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
 Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows:
 
 1. $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise.
-2. $lim_n g_n =lim_n h_n=f$.
+2. $g_n$ and $h_n$ converge to $f$ as $n$ gets large.
 3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.
 
 It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
@@ -1097,26 +1093,26 @@ It is further conjectured that the same value of $C_0$ suffices when $f$ has a L
 
 The following lower bounds on $C_0$ can be shown.  In the table:
 
-- $M_0$ is the maximum absolute value of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].
-- $M_1$ is the maximum absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_1\ge M_0$.
+- $M_{0,r}$ is the maximum absolute value of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].
+- $M_{1,r}$ is the maximum absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.
 - The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.
 
 &nbsp;
 
 | If $r$ is... | And... | And $W_n$ is... | Then $C_0$ must be greater than: | And $C_0$ is conjectured to be: | Because of this counterexample: |
  --- | --- | --- | --- | --- | --- |
-| 3 | $M=M_0$ | $2 f - B_n(f)$\* | 2.62 | 2.63 | $2 \lambda \left(1 - \lambda\right)$ |
-| 3 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 0.66 | 0.67 | $2\lambda(1-\lambda)$ |
-| 4 | $M=M_0$ | $2 f - B_n(f)$ | 3.58 | 3.59 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
-| 4 | $M=M_0$, $n\ge 4$ | $2 f - B_n(f)$ | 3.52 | 3.53 | $\lambda^{2} \cdot \left(1 - \lambda\right)$ |
-| 3 | $M=M_1$ | $2 f - B_n(f)$ | 0.29 | $\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
-| 3 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.08 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
-| 4 | $M=M_1$ | $2 f - B_n(f)$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
-| 4 | $M=M_1$, $n\ge 4$ | $2 f - B_n(f)$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
-| 5 | $M=M_1$ | $B_n(B_n(f))+3(f-B_n(f))$\*** | 0.26 | 0.27 | $2 \lambda \left(1 - \lambda\right)$ |
-| 5 | $M=M_1$, $n\ge 4$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.10 | 0.11 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
-| 6 | $M=M_1$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
-| 6 | $M=M_1$, $n\ge 4$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.22 | 0.23 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
+| 3 | $M=M_{0,3}$ | $2 f - B_n(f)$\* | 2.62 | 2.63 | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_{0,3}$, $n\ge 4$ | $2 f - B_n(f)$ | 0.66 | 0.67 | $2\lambda(1-\lambda)$ |
+| 4 | $M=M_{0,4}$ | $2 f - B_n(f)$ | 3.58 | 3.59 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
+| 4 | $M=M_{0,4}$, $n\ge 4$ | $2 f - B_n(f)$ | 3.52 | 3.53 | $\lambda^{2} \cdot \left(1 - \lambda\right)$ |
+| 3 | $M=M_{1,3}$ | $2 f - B_n(f)$ | 0.29 | $\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_{1,3}$, $n\ge 4$ | $2 f - B_n(f)$ | 0.08 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
+| 4 | $M=M_{1,4}$ | $2 f - B_n(f)$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
+| 4 | $M=M_{1,4}$, $n\ge 4$ | $2 f - B_n(f)$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
+| 5 | $M=M_{1,5}$ | $B_n(B_n(f))+3(f-B_n(f))$\*** | 0.26 | 0.27 | $2 \lambda \left(1 - \lambda\right)$ |
+| 5 | $M=M_{1,5}$, $n\ge 4$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.10 | 0.11 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
+| 6 | $M=M_{1,6}$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
+| 6 | $M=M_{1,6}$, $n\ge 4$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.22 | 0.23 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 
 \* Corresponds to the iterated Bernstein polynomial of order 2 (Güntürk and Li 2021)[^8].
 
@@ -1124,20 +1120,20 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 
 \*\* The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.
 
-Suppose $f(0) = f(1) = \beta$, then $W_1(f)$ will equal $\beta$.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal $\beta$.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|\beta - (2f(1/2) - B_2(f)(1/2))| = |3\beta/2 - 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_1$ for $r=3$. To get the minimum $C_0$ that works, solve $C_0 y/1^{3/2} - C_0 y/2^{3/2}$ = z for $C_0$.  The solution is&mdash; $$C_0=\frac{z}{y} \frac{4}{4-\sqrt{2}} = \frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}.$$
+Suppose $f(0) = f(1) = \beta$, then $W_1(f)$ will equal $\beta$.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal $\beta$.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|\beta - (2f(1/2) - B_2(f)(1/2))| = |3\beta/2 - 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_{1,3}$. To get the minimum $C_0$ that works, solve $C_0 y/1^{3/2} - C_0 y/2^{3/2}$ = z for $C_0$.  The solution is&mdash; $$C_0=\frac{z}{y} \frac{4}{4-\sqrt{2}} = \frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}.$$
 
-The solution shows that if $y = M_1$ can come arbitrarily close to 0, then no value for $C_0$ will work.  Which is why the goal is now to find a tight upper bound on the least possible value of $M_1$ for $r=3$ such that:
+The solution shows that if $y = M_{1,3}$ can come arbitrarily close to 0, then no value for $C_0$ will work.  Which is why the goal is now to find a tight upper bound on the least possible value of $M_{1,3}$ for $r=3$ such that:
 
 1. $f(\lambda)$ has at least three continuous derivatives.
 2. $f(0)=f(1)$ and $0 < f(1/2) < 1$.
 
-Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(0)=g(1)=0$ and $g(1/2)=1/2$, and has an $M_1$ of 4.  Given that $\frac{|\beta-g(1/2)|}{y}=\frac{|0-1/2|}{y}=1/8$, the goal is now to see whether any function $f$ satisfying (1) and (2) has $\max(\beta, f(1/2)) < M_1 < 8\cdot |\beta-f(1/2)|$.
+Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(0)=g(1)=0$ and $g(1/2)=1/2$, and has an $M_{1,3}$ of 4.  Given that $\frac{|\beta-g(1/2)|}{y}=\frac{|0-1/2|}{y}=1/8$, the goal is now to see whether any function $f$ satisfying (1) and (2) has $\max(\beta, f(1/2)) < M_{1,3} < 8\cdot |\beta-f(1/2)|$.
 
 To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$'s first derivative (see "Definitions")[^34], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f\prime$ at those points (Le Gruyer 2009)[^35]; see also (Herbert-Voss et al. 2017)[^36]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [\beta, \beta+t, \beta], [z_1, z_2, z_3]) = \max(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|,$$ $$\sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|,$$ $$2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|)$$ $$=L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3])$$ (where $t$ is greater than 0 and less than 1), so $L$ no longer depends on $\beta$; thus $\beta$ can equal 0 without loss of generality.  Moreover, only $f\prime$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.
 
 Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in $[0, 1]$ have to be checked and only $f\prime$ values in $[-H, H]$ have to be checked.
 
-Assuming that no $M_1$ less than $8\cdot |\beta-f(1/2)|$ is found, then&mdash; $$C_0=\frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{|\beta-f(1/2)|}{H} \frac{12}{2\cdot (4-\sqrt{2})}=(1/8) \frac{12}{2\cdot (4-\sqrt{2})}$$ $$=3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.
+Assuming that no $M_{1,3}$ less than $8\cdot |\beta-f(1/2)|$ is found, then&mdash; $$C_0=\frac{|\beta-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{|\beta-f(1/2)|}{H} \frac{12}{2\cdot (4-\sqrt{2})}=(1/8) \frac{12}{2\cdot (4-\sqrt{2})}$$ $$=3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 ### Example of Polynomial-Building Scheme
