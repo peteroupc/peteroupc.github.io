@@ -1052,7 +1052,7 @@ The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials u
 1. _For each $n$ in $N$, $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f,\lambda)$ and $W_n(k/n) + \epsilon_n(f,\lambda)$, respectively ($0\le k\le n$)._
 2. _$g_n \le h_n$._
 3. _$g_n$ and $h_n$ converge to $f$ as $n$ gets large._
-4. _$(g_{n+1}-g_n)$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients. (This is the consistency requirement.)_
+4. $(g_{n+1}-g_n)$ _and_ $(h_{n}-h_{n+1})$ _can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients. (This is the consistency requirement.)_
 
 _Then for each $n$ in $N$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f,\lambda)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 
@@ -1077,7 +1077,7 @@ Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $
 
 For each $n\ge 1$, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
 
-For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
+For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
 Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows:
 
