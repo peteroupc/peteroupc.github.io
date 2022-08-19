@@ -157,6 +157,8 @@ def lorentz2iter(func, coeffs, nPlusR):
         raise ValueError
     l4 = lorentz2poly(PolyDiff(func, BernsteinPoly(coeffs)), nPlusR - 2)
     coeffs2 = elevate(coeffs, nPlusR - existingNPlusR)
+    if len(coeffs) != len(l4):
+        raise ValueError
     return [simplify(v + w) for v, w in zip(coeffs2, l4)]
 
 def lorentz4iter(func, coeffs, nPlusR):
@@ -165,13 +167,13 @@ def lorentz4iter(func, coeffs, nPlusR):
         raise ValueError
     l4 = lorentz4poly(PolyDiff(func, BernsteinPoly(coeffs)), nPlusR - 4)
     coeffs2 = elevate(coeffs, nPlusR - existingNPlusR)
+    if len(coeffs) != len(l4):
+        raise ValueError
     return [simplify(v + w) for v, w in zip(coeffs2, l4)]
 
 def lorentz4poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=4,
     # of degree n+r = n+4, given four times differentiable piecewise polynomial
-    # NOTE: Currently well-defined only if value and derivatives are
-    # rational whenever k/n is rational
     r = 4
     # Stores homogeneous coefficients for the degree n+4 polynomial.
     vals = [REALZERO for i in range(n + r + 1)]
@@ -252,8 +254,6 @@ def lorentz2polyB(func, n, r=2):
 def lorentz2poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=2,
     # of degree n+r = n+2, given twice differentiable piecewise polynomial
-    # NOTE: Currently well-defined only if value and diff2 are
-    # rational whenever k/n is rational
     r = 2
     # Stores homogeneous coefficients for the degree n+2 polynomial.
     vals = [REALZERO for i in range(n + r + 1)]
@@ -319,9 +319,14 @@ class C4Function:
     # func must map [0, 1] to (0, 1) and have at least
     # four continuous derivatives.
     def __init__(self, func, norm, lorentz=False, concave=False, contderivs=4):
+        # Norm is:
+        # contderivs=1 --> Lipschitz constant
+        # contderivs=2 --> max. abs. value of second derivative
+        # contderivs>2 --> max. abs. value of func, 1st, ..., and
+        #               'contderivs'-th derivative
         self.func = func
         self.contderivs = min(4, contderivs)
-        if self.contderivs <= 2 and not lorentz:
+        if self.contderivs < 1 and not lorentz:
             raise ValueError("this value of contderivs not supported for lorentz=False")
         if self.contderivs < 2 and lorentz:
             raise ValueError("this value of contderivs not supported for lorentz=True")
@@ -440,11 +445,20 @@ class C4Function:
             return [self.lopolys[deg], self.hipolys[deg]]
         if self.lorentz:
             return self._ensurelorentz(deg)
-        # WARNING: Conjectured bounds
         if self.contderivs >= 4:
+            # WARNING: Conjectured bound
             incr = Fraction(25, 100) * self.norm / deg ** 2
         elif self.contderivs >= 3:
+            # WARNING: Conjectured bound
             incr = (Fraction(9, 100) * self.norm) / RealFraction(deg) ** Fraction(3, 2)
+        elif self.contderivs >= 2:
+            # (Nacu & Peres 2005)
+            incr = (Fraction(1, 2) * self.norm) / RealFraction(deg)
+        elif self.contderivs >= 1:
+            # NOTE: Slightly bigger than 1+sqrt(2) (Nacu & Peres 2005)
+            incr = (Fraction(241422, 100000) * self.norm) / RealFraction(
+                deg
+            ) ** Fraction(1, 2)
         else:
             print("Unsupported")
         ipol = iteratedPoly2(self.func, deg)

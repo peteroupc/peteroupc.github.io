@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/08/16"><meta name="citation_online_date" content="2022/08/16"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/08/18"><meta name="citation_online_date" content="2022/08/18"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -84,7 +84,7 @@
 <li><strong>Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.</strong></li>
 <li><strong>Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.</strong></li>
 <li><strong>Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.</strong></li>
-<li><strong>Describe how Algorithm 4 of Łatuszyński et al. (2009/2011) works when the randomized lower and upper bounds of $f(\lambda)$ given the number of heads are formed by functions other than polynomials. (Proposition 3.1 there describes the case of polynomials.)</strong></li>
+<li><s><strong>Describe how Algorithm 4 of Łatuszyński et al. (2009/2011) works when the randomized lower and upper bounds of $f(\lambda)$ given the number of heads are formed by functions other than polynomials. (Proposition 3.1 there describes the case of polynomials.)</strong></s></li>
 </ol>
 
 <p>Assumptions on $f(\lambda)$ can include any combination of the following:</p>
@@ -176,7 +176,7 @@
 
 <p>For each such $n$, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$ and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.</p>
 
-<p>Then, a <a href="https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation"><strong>conjecture</strong></a> is that there is $C_0$ greater than 0 such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.</p>
+<p>Then, a <a href="https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation"><strong>conjecture</strong></a> is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.</p>
 
 <ol>
 <li><p>For what value of $C_0$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4?  Interesting functions $f$ to test are quadratic polynomials.</p></li>
@@ -267,32 +267,34 @@
 
 <h2>Reverse-time martingales</h2>
 
-<p>One way to toss heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ is to build randomized upper and lower bounds that converge to $f$ on average. These bounds serve as an unbiased estimator of $f(\lambda)$; the algorithm returns 1 with probability equal to the estimate, and 0 otherwise.</p>
+<p>This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).</p>
 
-<p>Part of the <em>reverse-time martingale algorithm</em> of Łatuszyński et al. (2009/2011) (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;) to simulate a factory function $f(\lambda)$ is as follows. For each <em>n</em> starting with 1:</p>
+<p><del>One way to toss heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ is to build randomized upper and lower bounds that converge to $f$ on average. These bounds serve as an unbiased estimator of $f(\lambda)$; the algorithm returns 1 with probability equal to the estimate, and 0 otherwise.</del></p>
 
-<ol>
-<li><p>Flip the input coin, and compute the <em>n</em><sup>th</sup> upper and lower bounds of <em>f</em> given the number of heads so far, call them <em>L</em> and <em>U</em>.</p></li>
-<li><p>Compute the $(n-1)$th upper and lower bounds of <em>f</em> given the number of heads so far, call them <em>L*</em> and <em>U*</em>. (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [<em>L*</em>, <em>U*</em>] must equal or entirely contain the interval [<em>L</em>, <em>U</em>].)</p></li>
-</ol>
-
-<p>More technically (Algorithm 4):</p>
+<p><del>Part of the <em>reverse-time martingale algorithm</em> of Łatuszyński et al. (2009/2011) (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;) to simulate a factory function $f(\lambda)$ is as follows. For each <em>n</em> starting with 1:</del></p>
 
 <ol>
-<li>Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,</li>
-<li>Compute $L_n^s$ = $E(L_{n-1}$ | $\mathcal{F}<em>{n})$ and $U_n^s$ = $E(U</em>{n-1}$ | $\mathcal{F}_{n})$,</li>
+<li><p><del>Flip the input coin, and compute the <em>n</em><sup>th</sup> upper and lower bounds of <em>f</em> given the number of heads so far, call them <em>L</em> and <em>U</em>.</del></p></li>
+<li><p><del>Compute the $(n-1)$th upper and lower bounds of <em>f</em> given the number of heads so far, call them <em>L*</em> and <em>U*</em>. (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [<em>L*</em>, <em>U*</em>] must equal or entirely contain the interval [<em>L</em>, <em>U</em>].)</del></p></li>
 </ol>
 
-<p>where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.</p>
-
-<p>Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^s$ and $U$ or $U^s$ are their lower and upper bound approximations. An example for <a href="#Polynomials_that_approach_a_factory_function_fast"><strong>polynomials</strong></a> follows:</p>
+<p><del>More technically (Algorithm 4):</del></p>
 
 <ol>
-<li>Given the number of heads $H_n$, $L_n$ is the $H_n$th Bernstein coefficient of the $n$th lower approximating polynomial, and $U_n$ is the $H_n$th Bernstein coefficient of the $n$th upper approximating polynomial.</li>
-<li>$L^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.</li>
+<li><del>Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,</del></li>
+<li><del>Compute $L_n^s$ = $E(L_{n-1}$ | $\mathcal{F}<em>{n})$ and $U_n^s$ = $E(U</em>{n-1}$ | $\mathcal{F}_{n})$,</del></li>
 </ol>
 
-<p>But how do these steps work when the <strong>approximating functions (the functions that converge to <em>f</em>) are other than polynomials?</strong> Specifically, what if the approximating functions are rational functions with integer coefficients? rational functions with rational coefficients? arbitrary approximating functions?</p>
+<p><del>where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.</del></p>
+
+<p><del>Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^s$ and $U$ or $U^s$ are their lower and upper bound approximations. An example for <a href="#Polynomials_that_approach_a_factory_function_fast"><strong>polynomials</strong></a> follows:</del></p>
+
+<ol>
+<li><del>Given the number of heads $H_n$, $L_n$ is the $H_n$th Bernstein coefficient of the $n$th lower approximating polynomial, and $U_n$ is the $H_n$th Bernstein coefficient of the $n$th upper approximating polynomial.</del></li>
+<li><del>$L^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.</del></li>
+</ol>
+
+<p><del>But how do these steps work when the <strong>approximating functions (the functions that converge to <em>f</em>) are other than polynomials?</strong> Specifically, what if the approximating functions are rational functions with integer coefficients? rational functions with rational coefficients? arbitrary approximating functions?</del></p>
 
 <p><a id=Tossing_Heads_According_to_a_Concave_Function></a></p>
 
@@ -636,6 +638,7 @@ above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
 <li>Güntürk, C. Sinan, and Weilin Li. &quot;<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>&quot;, arXiv:2112.09181 (2021).</li>
 <li>Draganov, Borislav R. &quot;On simultaneous approximation by iterated Boolean sums of Bernstein operators.&quot; Results in Mathematics 66, no. 1 (2014): 21-41.</li>
 <li>Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. &quot;<a href="https://doi.org/10.1016/j.jco.2015.05.001"><strong>Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy</strong></a>.&quot; Journal of Complexity 31, no. 5 (2015): 689-714.</li>
+<li>Borwein, P.B., &quot;Restricted Uniform Rational Approximations&quot;, dissertation, University of British Columbia, 1979.</li>
 </ul>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

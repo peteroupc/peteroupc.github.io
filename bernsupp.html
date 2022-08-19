@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/17"><meta name="citation_online_date" content="2022/08/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/18"><meta name="citation_online_date" content="2022/08/18"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -319,12 +319,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong></p>
-
-<ol>
-<li>Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</li>
-<li>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting $c$=floor($c/\delta$) * $\delta$ for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</li>
-</ol>
+<p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</p>
 </blockquote>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Certain_Functions></a></p>
@@ -446,7 +441,12 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> Providing the full proof for the error bounds shown in the table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 3.3 of Güntürk and Li (2021)[^8], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Providing the full proof for the error bounds shown in the table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 3.3 of Güntürk and Li (2021)[^8], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.</li>
+<li>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting $c$=floor($c/\delta$) * $\delta$ for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</li>
+</ol>
 </blockquote>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Power_Series></a></p>
@@ -1587,7 +1587,7 @@
 
 <p>For each integer $n\ge1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
 
-<p>Then there is $C_0$ greater than 0 such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows:</p>
+<p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows:</p>
 
 <ol>
 <li>$g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise.</li>

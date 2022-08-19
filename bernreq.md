@@ -54,7 +54,7 @@ The following summarizes most of the problems raised by these open questions.
 4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
 5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
 6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
-7. **Describe how Algorithm 4 of Łatuszyński et al. (2009/2011) works when the randomized lower and upper bounds of $f(\lambda)$ given the number of heads are formed by functions other than polynomials. (Proposition 3.1 there describes the case of polynomials.)**
+7. <s>**Describe how Algorithm 4 of Łatuszyński et al. (2009/2011) works when the randomized lower and upper bounds of $f(\lambda)$ given the number of heads are formed by functions other than polynomials. (Proposition 3.1 there describes the case of polynomials.)**</s>
 
 Assumptions on $f(\lambda)$ can include any combination of the following:
 
@@ -131,7 +131,7 @@ Thus the questions are:
 
      For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$ and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
-    Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0$ greater than 0 such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.
+    Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.
 
     1. For what value of $C_0$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4?  Interesting functions $f$ to test are quadratic polynomials.
 
@@ -207,27 +207,29 @@ And I seek ways to make this solution implementable.
 <a id=Reverse_time_martingales></a>
 ## Reverse-time martingales
 
-One way to toss heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ is to build randomized upper and lower bounds that converge to $f$ on average. These bounds serve as an unbiased estimator of $f(\lambda)$; the algorithm returns 1 with probability equal to the estimate, and 0 otherwise.
+This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).
 
-Part of the _reverse-time martingale algorithm_ of Łatuszyński et al. (2009/2011) (see "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)") to simulate a factory function $f(\lambda)$ is as follows. For each _n_ starting with 1:
+~~One way to toss heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ is to build randomized upper and lower bounds that converge to $f$ on average. These bounds serve as an unbiased estimator of $f(\lambda)$; the algorithm returns 1 with probability equal to the estimate, and 0 otherwise.~~
 
-1. Flip the input coin, and compute the _n_<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L_ and _U_.
+~~Part of the _reverse-time martingale algorithm_ of Łatuszyński et al. (2009/2011) (see "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)") to simulate a factory function $f(\lambda)$ is as follows. For each _n_ starting with 1:~~
 
-2. Compute the $(n-1)$th upper and lower bounds of _f_ given the number of heads so far, call them _L\*_ and _U\*_. (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [_L\*_, _U\*_] must equal or entirely contain the interval [_L_, _U_].)
+1. ~~Flip the input coin, and compute the _n_<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L_ and _U_.~~
 
-More technically (Algorithm 4):
+2. ~~Compute the $(n-1)$th upper and lower bounds of _f_ given the number of heads so far, call them _L\*_ and _U\*_. (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [_L\*_, _U\*_] must equal or entirely contain the interval [_L_, _U_].)~~
 
-1. Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,
-2. Compute $L_n^s$ = $E(L_{n-1}$ \| $\mathcal{F}_{n})$ and $U_n^s$ = $E(U_{n-1}$ \| $\mathcal{F}_{n})$,
+~~More technically (Algorithm 4):~~
 
-where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.
+1. ~~Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,~~
+2. ~~Compute $L_n^s$ = $E(L_{n-1}$ | $\mathcal{F}_{n})$ and $U_n^s$ = $E(U_{n-1}$ \| $\mathcal{F}_{n})$,~~
 
-Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^s$ and $U$ or $U^s$ are their lower and upper bound approximations. An example for [**polynomials**](#Polynomials_that_approach_a_factory_function_fast) follows:
+~~where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.~~
 
-1. Given the number of heads $H_n$, $L_n$ is the $H_n$th Bernstein coefficient of the $n$th lower approximating polynomial, and $U_n$ is the $H_n$th Bernstein coefficient of the $n$th upper approximating polynomial.
-2. $L^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.
+~~Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^s$ and $U$ or $U^s$ are their lower and upper bound approximations. An example for [**polynomials**](#Polynomials_that_approach_a_factory_function_fast) follows:~~
 
-But how do these steps work when the **approximating functions (the functions that converge to _f_) are other than polynomials?** Specifically, what if the approximating functions are rational functions with integer coefficients? rational functions with rational coefficients? arbitrary approximating functions?
+1. ~~Given the number of heads $H_n$, $L_n$ is the $H_n$th Bernstein coefficient of the $n$th lower approximating polynomial, and $U_n$ is the $H_n$th Bernstein coefficient of the $n$th upper approximating polynomial.~~
+2. ~~$L^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.~~
+
+~~But how do these steps work when the **approximating functions (the functions that converge to _f_) are other than polynomials?** Specifically, what if the approximating functions are rational functions with integer coefficients? rational functions with rational coefficients? arbitrary approximating functions?~~
 
 <a id=Tossing_Heads_According_to_a_Concave_Function></a>
 ## Tossing Heads According to a Concave Function
@@ -510,3 +512,4 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Güntürk, C. Sinan, and Weilin Li. "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 (2021).
 - Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.
 - Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. "[**Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy**](https://doi.org/10.1016/j.jco.2015.05.001)." Journal of Complexity 31, no. 5 (2015): 689-714.
+- Borwein, P.B., "Restricted Uniform Rational Approximations", dissertation, University of British Columbia, 1979.
