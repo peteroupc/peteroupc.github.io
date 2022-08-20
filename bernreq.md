@@ -19,6 +19,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Key Problems**](#Key_Problems)
 - [**Polynomials that approach a factory function "fast"**](#Polynomials_that_approach_a_factory_function_fast)
     - [**Formal Statement**](#Formal_Statement)
+    - [**On Condition 3**](#On_Condition_3)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**Questions**](#Questions)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
@@ -103,6 +104,21 @@ where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 
 It is allowed for $a(n, k)\lt 0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt 1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.
 
 Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_{n\ge 1} P_n(\lambda) = 1 - \sum_{n\ge 1} Q_n(\lambda),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with non-negative Bernstein coefficients.
+
+<a id=On_Condition_3></a>
+### On Condition 3
+
+Condition 3 is also known as a "consistency requirement"; it ensures that not only the upper and lower polynomials "decrease" and "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This requirement is crucial in the algorithm I mentioned above.
+
+Condition 3 is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n>=1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X)]$ and $b(2n, k)\le\mathbb{E}[b(n, X)]$, where $X$ is a hypergeometric($2n$, $k$, $n$) random variable.
+
+A useful technique is to bound&mdash; $$|\mathbb{E}(W_n(X/n)) - W_{2n}(k/(2n))| \le \phi(f, n),$$ for every integer $k\in[0,2n]$ and every integer $n>=1$ that's a power of 2 (Nacu and Peres 2005, especially (10) and (11)), where&mdash;
+
+- $W_n$ is a function whose Bernstein polynomial of degree $n$ approximates $f$ (and $W_n$ can equal $f$),
+- $X$ is a hypergeometric($2n$, $k$, $n$) random variable, and
+- $\phi$ is a function that depends on $f$ and $n$.
+
+Then, for certain choices of $\phi$, condition 3 will be met if the following series converges: $$\sum_{m\ge\log_2(n)}\phi(f, 2^m).$$  See Theorem 1 of "[**Proofs for Polynomial Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)" for details.
 
 <a id=A_Matter_of_Efficiency></a>
 ### A Matter of Efficiency
@@ -220,7 +236,7 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 ~~More technically (Algorithm 4):~~
 
 1. ~~Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,~~
-2. ~~Compute $L_n^s$ = $E(L_{n-1}$ | $\mathcal{F}_{n})$ and $U_n^s$ = $E(U_{n-1}$ \| $\mathcal{F}_{n})$,~~
+2. ~~Compute $L_n^s$ = $E(L_{n-1}$ | $\mathcal{F}_n)$ and $U_n^s$ = $E(U_{n-1}$ \| $\mathcal{F}_{n})$,~~
 
 ~~where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.~~
 
