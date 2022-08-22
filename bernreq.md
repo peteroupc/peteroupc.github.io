@@ -19,7 +19,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Key Problems**](#Key_Problems)
 - [**Polynomials that approach a factory function "fast"**](#Polynomials_that_approach_a_factory_function_fast)
     - [**Formal Statement**](#Formal_Statement)
-    - [**On Condition 3**](#On_Condition_3)
+        - [**On Condition 3**](#On_Condition_3)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**Questions**](#Questions)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
@@ -73,7 +73,9 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 
 [**https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation**](https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation)
 
-A polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_k$ are the polynomial's _Bernstein coefficients_.
+In this question, a polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.
+
+The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.
 
 An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) simulates a factory function $f(\lambda)$ via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
 
@@ -97,7 +99,7 @@ for every integer $n\ge1$, such that—
 
 1. $0\le a(n, k)\le b(n, k)\le1$,
 2. $\lim_{n}g_{n}(\lambda)=\lim_{n}h_{n}(\lambda)=f(\lambda)$ for every $\lambda\in[0,1]$, and
-3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients,
+3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$,
 
 where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.
 
@@ -106,16 +108,16 @@ It is allowed for $a(n, k)\lt 0$ for a given $n$ and some $k$, in which case all
 Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_{n\ge 1} P_n(\lambda) = 1 - \sum_{n\ge 1} Q_n(\lambda),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with non-negative Bernstein coefficients.
 
 <a id=On_Condition_3></a>
-### On Condition 3
+#### On Condition 3
 
 Condition 3 is also known as a "consistency requirement"; it ensures that not only the upper and lower polynomials "decrease" and "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This requirement is crucial in the algorithm I mentioned above.
 
-Condition 3 is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n>=1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X)]$ and $b(2n, k)\le\mathbb{E}[b(n, X)]$, where $X$ is a hypergeometric($2n$, $k$, $n$) random variable.
+Condition 3 is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.
 
-A useful technique is to bound&mdash; $$|\mathbb{E}(W_n(X/n)) - W_{2n}(k/(2n))| \le \phi(f, n),$$ for every integer $k\in[0,2n]$ and every integer $n>=1$ that's a power of 2 (Nacu and Peres 2005, especially (10) and (11)), where&mdash;
+A useful technique is to bound&mdash; $$|\mathbb{E}(W_n(X_{n,k}/n)) - W_{2n}(k/(2n))| \le \phi(f, n),$$ for every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2 (Nacu and Peres 2005, especially (10) and (11)), where&mdash;
 
-- $W_n$ is a function whose Bernstein polynomial of degree $n$ approximates $f$ (and $W_n$ can equal $f$),
-- $X$ is a hypergeometric($2n$, $k$, $n$) random variable, and
+- $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ is a sequence of functions on [0, 1] that converge uniformly to $f$,
+- $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable, and
 - $\phi$ is a function that depends on $f$ and $n$.
 
 Then, for certain choices of $\phi$, condition 3 will be met if the following series converges: $$\sum_{m\ge\log_2(n)}\phi(f, 2^m).$$  See Theorem 1 of "[**Proofs for Polynomial Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)" for details.
@@ -143,11 +145,11 @@ Thus the questions are:
 
 2. The following is a technical question that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-    Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. For each integer $n\ge1$ that's a power of 2, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
+    Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
 
-     For each such $n$, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$ and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
+     For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$ and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
-    Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.
+    Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
 
     1. For what value of $C_0$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4?  Interesting functions $f$ to test are quadratic polynomials.
 

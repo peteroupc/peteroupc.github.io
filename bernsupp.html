@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/18"><meta name="citation_online_date" content="2022/08/18"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/08/22"><meta name="citation_online_date" content="2022/08/22"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1558,7 +1558,7 @@
 <li><em>For each $n$ in $N$, $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f,\lambda)$ and $W_n(k/n) + \epsilon_n(f,\lambda)$, respectively ($0\le k\le n$).</em></li>
 <li><em>$g_n \le h_n$.</em></li>
 <li><em>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</em></li>
-<li>$(g_{n+1}-g_n)$ <em>and</em> $(h_{n}-h_{n+1})$ <em>can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients. (This is the consistency requirement.)</em></li>
+<li>$(g_{n+1}-g_n)$ <em>and</em> $(h_{n}-h_{n+1})$ <em>are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (This is the consistency requirement.)</em></li>
 </ol>
 
 <p><em>Then for each $n$ in $N$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f,\lambda)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$.</em></p>
@@ -1581,9 +1581,7 @@
 
 <p><strong>Conjecture.</strong></p>
 
-<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $r$ continuous derivatives.  Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.</p>
-
-<p>For each $n\ge 1$, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)</p>
+<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $r$ continuous derivatives.  Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.</p>
 
 <p>For each integer $n\ge1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
 
@@ -1592,7 +1590,7 @@
 <ol>
 <li>$g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise.</li>
 <li>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</li>
-<li>$(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.</li>
+<li>$(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.</li>
 </ol>
 
 <p>It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>

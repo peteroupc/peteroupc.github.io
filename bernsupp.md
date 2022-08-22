@@ -1052,7 +1052,7 @@ The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials u
 1. _For each $n$ in $N$, $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f,\lambda)$ and $W_n(k/n) + \epsilon_n(f,\lambda)$, respectively ($0\le k\le n$)._
 2. _$g_n \le h_n$._
 3. _$g_n$ and $h_n$ converge to $f$ as $n$ gets large._
-4. $(g_{n+1}-g_n)$ _and_ $(h_{n}-h_{n+1})$ _can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients. (This is the consistency requirement.)_
+4. $(g_{n+1}-g_n)$ _and_ $(h_{n}-h_{n+1})$ _are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (This is the consistency requirement.)_
 
 _Then for each $n$ in $N$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f,\lambda)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 
@@ -1073,9 +1073,7 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 **Conjecture.**
 
-Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $r$ continuous derivatives.  Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
-
-For each $n\ge 1$, let $W_n(\lambda)$ be a function with a known Bernstein polynomial. ($W_n$ can but need not equal $f$.)
+Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $r$ continuous derivatives.  Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
@@ -1083,7 +1081,7 @@ Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $
 
 1. $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise.
 2. $g_n$ and $h_n$ converge to $f$ as $n$ gets large.
-3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ can be rewritten as degree-$(n+1)$ polynomials with non-negative Bernstein coefficients.
+3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
 
 It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
