@@ -59,7 +59,7 @@ The following summarizes most of the problems raised by these open questions.
 
 Assumptions on $f(\lambda)$ can include any combination of the following:
 
-- $f(\lambda)$ has $k$ continuous derivatives for some fixed $k\ge 0$ (possibly with a known bound on those derivatives).
+- $f(\lambda)$ has a continuous $k$-th derivative for some fixed $k\ge 0$ (possibly with a known bound on it and those derivatives).
 - $f(\lambda)$ is real analytic.
 - $f(\lambda)$ is concave.
 - $f(\lambda)$ is strictly increasing and continuous.
@@ -72,6 +72,10 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 [**https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
 
 [**https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation**](https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation)
+
+[https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form](https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form)
+
+[https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable)
 
 In this question, a polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.
 
@@ -112,15 +116,7 @@ Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_
 
 Condition 3 is also known as a "consistency requirement"; it ensures that not only the upper and lower polynomials "decrease" and "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This requirement is crucial in the algorithm I mentioned above.
 
-Condition 3 is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.
-
-A useful technique is to bound&mdash; $$|\mathbb{E}(W_n(X_{n,k}/n)) - W_{2n}(k/(2n))| \le \phi(f, n),$$ for every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2 (Nacu and Peres 2005, especially (10) and (11)), where&mdash;
-
-- $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ is a sequence of functions on [0, 1] that converge uniformly to $f$,
-- $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable, and
-- $\phi$ is a function that depends on $f$ and $n$.
-
-Then, for certain choices of $\phi$, condition 3 will be met if the following series converges: $$\sum_{m\ge\log_2(n)}\phi(f, 2^m).$$  See Theorem 1 of "[**Proofs for Polynomial Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)" for details.
+Condition 3 is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
 <a id=A_Matter_of_Efficiency></a>
 ### A Matter of Efficiency
@@ -311,7 +307,7 @@ for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except tha
 <a id=Questions_3></a>
 ### Questions
 
-1. Given that a factory function $f(\lambda)$ is concave and $C^\alpha$ continuous, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.
+1. Given that a factory function $f(\lambda)$ is concave and has a continuous $\alpha$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.
 2. Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?
 3. Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(1)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz's results.
 

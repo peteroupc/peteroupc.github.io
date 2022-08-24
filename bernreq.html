@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/08/22"><meta name="citation_online_date" content="2022/08/22"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/08/24"><meta name="citation_online_date" content="2022/08/24"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -94,7 +94,7 @@
 <p>Assumptions on $f(\lambda)$ can include any combination of the following:</p>
 
 <ul>
-<li>$f(\lambda)$ has $k$ continuous derivatives for some fixed $k\ge 0$ (possibly with a known bound on those derivatives).</li>
+<li>$f(\lambda)$ has a continuous $k$-th derivative for some fixed $k\ge 0$ (possibly with a known bound on it and those derivatives).</li>
 <li>$f(\lambda)$ is real analytic.</li>
 <li>$f(\lambda)$ is concave.</li>
 <li>$f(\lambda)$ is strictly increasing and continuous.</li>
@@ -109,6 +109,10 @@
 <p><a href="https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con"><strong>https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con</strong></a></p>
 
 <p><a href="https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation"><strong>https://mathoverflow.net/questions/424272/explicit-and-fast-error-bounds-for-polynomial-approximation</strong></a></p>
+
+<p><a href="https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form">https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form</a></p>
+
+<p><a href="https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable">https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable</a></p>
 
 <p>In this question, a polynomial $P(x)$ is written in <em>Bernstein form of degree $n$</em> if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_n$ are the polynomial&#39;s <em>Bernstein coefficients</em>.</p>
 
@@ -157,17 +161,7 @@
 
 <p>Condition 3 is also known as a &quot;consistency requirement&quot;; it ensures that not only the upper and lower polynomials &quot;decrease&quot; and &quot;increase&quot; to $f(\lambda)$, but also their Bernstein coefficients do as well.  This requirement is crucial in the algorithm I mentioned above.</p>
 
-<p>Condition 3 is equivalent in practice to the following statement (Nacu &amp; Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that&#39;s a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.</p>
-
-<p>A useful technique is to bound&mdash; $$|\mathbb{E}(W_n(X_{n,k}/n)) - W_{2n}(k/(2n))| \le \phi(f, n),$$ for every integer $k\in[0,2n]$ and every integer $n\ge 1$ that&#39;s a power of 2 (Nacu and Peres 2005, especially (10) and (11)), where&mdash;</p>
-
-<ul>
-<li>$W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ is a sequence of functions on [0, 1] that converge uniformly to $f$,</li>
-<li>$X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable, and</li>
-<li>$\phi$ is a function that depends on $f$ and $n$.</li>
-</ul>
-
-<p>Then, for certain choices of $\phi$, condition 3 will be met if the following series converges: $$\sum_{m\ge\log_2(n)}\phi(f, 2^m).$$  See Theorem 1 of &quot;<a href="https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial Building Schemes</strong></a>&quot; for details.</p>
+<p>Condition 3 is equivalent in practice to the following statement (Nacu &amp; Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that&#39;s a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of &quot;good&quot; balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are &quot;good&quot;.  See also my <a href="https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable"><strong>MathOverflow question</strong></a> on finding bounds for hypergeometric variables.</p>
 
 <p><a id=A_Matter_of_Efficiency></a></p>
 
@@ -393,7 +387,7 @@
 <h3>Questions</h3>
 
 <ol>
-<li>Given that a factory function $f(\lambda)$ is concave and $C^\alpha$ continuous, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz&#39;s results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.</li>
+<li>Given that a factory function $f(\lambda)$ is concave and has a continuous $\alpha$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz&#39;s results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.</li>
 <li>Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?</li>
 <li>Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(1)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz&#39;s results.</li>
 </ol>

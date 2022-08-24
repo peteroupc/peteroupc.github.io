@@ -322,7 +322,7 @@ The following table summarizes the rate of simulation (in terms of the number of
   ------------- |  ------------------------
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012\)[^17]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^2]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^18].  |
-| Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly for every _&lambda;_.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
+| Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note 3) (Holtz et al. 2011\)[^19]. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with exponent (_&alpha;_ &minus; _r_), where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^19]. Assumes _f_ is bounded away from 0 and 1. |
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^2]. | If and only if _f_ is real analytic (writable as $f(\lambda)=a_0 \lambda^0 + a_1 \lambda^1 + ...$ for real constants $a_i$) (Nacu and Peres 2005\)[^1].   |
@@ -1073,7 +1073,7 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 **Conjecture.**
 
-Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $r$ continuous derivatives.  Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
+Let $r\ge 1$, and let $f$ be a strictly bounded factory function with at least $r$ continuous derivatives.  Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on [0, 1]).
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
