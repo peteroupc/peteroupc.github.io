@@ -162,7 +162,8 @@ Thus the questions are:
 The following are examples of functions worth pondering for these questions:
 
 - $f(\lambda)=\sin(\lambda\pi/2)=\cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.
-- Functions whose $k$-th derivative ($k\ge 0$) is continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha>0$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.
+- Functions whose $k$-th derivative ($k\ge 0$) is continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$, where $0<\alpha<1$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.
+- The function $(1-(1-2\lambda)^\alpha)/2$ if $\lambda<1/2$ and $(1+(2\lambda-1)^\alpha)/2$ otherwise, where $\alpha>0$.
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
