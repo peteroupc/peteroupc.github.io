@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/08/25"><meta name="citation_online_date" content="2022/08/25"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/09/04"><meta name="citation_online_date" content="2022/09/04"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -36,6 +36,7 @@
 </ul></li>
 <li><a href="#A_Matter_of_Efficiency"><strong>A Matter of Efficiency</strong></a></li>
 <li><a href="#Questions"><strong>Questions</strong></a></li>
+<li><a href="#Examples_of_Functions_to_Ponder"><strong>Examples of Functions to Ponder</strong></a></li>
 </ul></li>
 <li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>
 
@@ -161,7 +162,7 @@
 
 <p>Condition 3 is also known as a &quot;consistency requirement&quot;; it ensures that not only the upper and lower polynomials &quot;decrease&quot; and &quot;increase&quot; to $f(\lambda)$, but also their Bernstein coefficients do as well.  This requirement is crucial in the algorithm I mentioned above.</p>
 
-<p>Condition 3 is equivalent in practice to the following statement (Nacu &amp; Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that&#39;s a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of &quot;good&quot; balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are &quot;good&quot;.  See also my <a href="https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable"><strong>MathOverflow question</strong></a> on finding bounds for hypergeometric variables.</p>
+<p>Condition 3 is equivalent in practice to the following statement (Nacu &amp; Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that&#39;s a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of &quot;good&quot; balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are &quot;good&quot;.  See also my <a href="https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable"><strong>MathOverflow question</strong></a> on finding bounds for hypergeometric variables.</p>
 
 <p><a id=A_Matter_of_Efficiency></a></p>
 
@@ -169,7 +170,7 @@
 
 <p>However, ordinary Bernstein polynomials can&#39;t in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an <strong>infinite expected number of coin flips in general</strong>.  (See also my <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental notes</strong></a>.)</p>
 
-<p>But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials with non-negative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a <strong>finite expected number of coin flips</strong> if the function is &quot;smooth&quot; enough).</p>
+<p>But Lorentz (1966) showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with non-negative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a <strong>finite expected number of coin flips</strong> if the function is &quot;smooth&quot; enough).</p>
 
 <p>Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021a, 2021b), the &quot;Lorentz operator&quot; in Holtz et al. (2011) (see also &quot;<a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>&quot;), and Draganov (2014).</p>
 
@@ -204,7 +205,16 @@
 <li><p>Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?</p></li>
 </ol>
 
-<p>One example worth pondering is $f(\lambda)=sin(\lambda\pi/2)=cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.</p>
+<p><a id=Examples_of_Functions_to_Ponder></a></p>
+
+<h3>Examples of Functions to Ponder</h3>
+
+<p>The following are examples of functions worth pondering for these questions:</p>
+
+<ul>
+<li>$f(\lambda)=\sin(\lambda\pi/2)=\cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.</li>
+<li>Functions whose $k$-th derivative ($k\ge 0$) is continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha&gt;0$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.</li>
+</ul>
 
 <p><a id=New_coins_from_old_smoothly></a></p>
 

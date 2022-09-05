@@ -22,6 +22,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
         - [**On Condition 3**](#On_Condition_3)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**Questions**](#Questions)
+    - [**Examples of Functions to Ponder**](#Examples_of_Functions_to_Ponder)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
     - [**Questions**](#Questions_2)
 - [**Reverse-time martingales**](#Reverse_time_martingales)
@@ -116,14 +117,14 @@ Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_
 
 Condition 3 is also known as a "consistency requirement"; it ensures that not only the upper and lower polynomials "decrease" and "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This requirement is crucial in the algorithm I mentioned above.
 
-Condition 3 is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
+Condition 3 is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
 <a id=A_Matter_of_Efficiency></a>
 ### A Matter of Efficiency
 
 However, ordinary Bernstein polynomials can't in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
 
-But Lorentz (1966) showed that if the function is positive and $C^k$ continuous, there are polynomials with non-negative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
+But Lorentz (1966) showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with non-negative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
 
 Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021a, 2021b), the "Lorentz operator" in Holtz et al. (2011) (see also "[**New coins from old, smoothly**](#New_coins_from_old_smoothly)"), and Draganov (2014).
 
@@ -155,7 +156,13 @@ Thus the questions are:
 
 3. Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?
 
-One example worth pondering is $f(\lambda)=sin(\lambda\pi/2)=cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.
+<a id=Examples_of_Functions_to_Ponder></a>
+### Examples of Functions to Ponder
+
+The following are examples of functions worth pondering for these questions:
+
+- $f(\lambda)=\sin(\lambda\pi/2)=\cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.
+- Functions whose $k$-th derivative ($k\ge 0$) is continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha>0$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
