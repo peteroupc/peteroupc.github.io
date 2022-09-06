@@ -142,19 +142,23 @@ Thus the questions are:
 
 2. The following is a technical question that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-    Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
+    Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
 
-     For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$ and $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
+     For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.
 
     Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
 
-    1. For what value of $C_0$ is the statement true when $W_n$ is arbitrary?  Equivalently: For which $C_0$ does the following hold true when $f$ has a continuous $r$-th derivative? $|\left(\sum_{i=0}^k (W_n(f)(\frac{i}{n})) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}(f)(\frac{k}{2n})|\le \frac{C_0 M}{n^{r/2}}=\frac{C_0}{n^{r/2}}(\max_{0\le i\le r}|f^{(i)}|)$ ($0\le k\le 2n$; see also Nacu and Peres 2005).
+    1. For what value of $C_0$ is the statement true when $W_n$ is arbitrary?  Equivalently: For which $C_1>0$ does the following hold true when $f$ has a continuous $r$-th derivative? $|\left(\sum_{i=0}^k (W_n(\frac{i}{n})) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}(\frac{k}{2n})|\le \frac{C_1 M}{n^{r/2}}$ ($0\le k\le 2n$; see also Nacu and Peres 2005).
 
-    2. For what value of $C_0$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4?  Interesting functions $f$ to test are quadratic polynomials.
+    2. Same as question (a), except $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=0.3$. Interesting functions $f$ to test are quadratic polynomials.
 
-    3. Does the same value of $C_0$ suffice when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative?
+    3. Same as question (a), except $W_n = B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ is 5 or 6.
+
+    4. Does the same value of $C_0$ (or $C_1$) suffice when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative?
 
 3. Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?
+
+(***) Corresponds to the iterated Bernstein polynomials of order 2 and 3 [Güntürk and Li 2021].
 
 <a id=Examples_of_Functions_to_Ponder></a>
 ### Examples of Functions to Ponder
