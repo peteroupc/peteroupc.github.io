@@ -49,9 +49,9 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 The following summarizes most of the problems raised by these open questions.
 
 1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:**
-    - **A reasonably small integer $n>0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form (preferably with rational coefficients in $[0, 1]$) such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.**
+    - **A reasonably small integer $n>0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$'s coefficients are rational numbers in $[0,1]$ and $|P - f| = O(1/n^{r/2})$ whenever $f$ has a continuous $r$-th derivative.**
     - **The Bernstein coefficients of $P(\lambda)$.**
-2. **Same as problem 1, except that $P(\lambda)$ is a rational function rather than a polynomial.**
+2. **Same as problem 1, except that $P(\lambda)$ is a rational function (ratio of two polynomials) rather than a polynomial.**
 3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the [**Formal Statement**](#Formal_Statement) given later, together with their Bernstein coefficients.**
 4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
 5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
@@ -148,9 +148,9 @@ Thus the questions are:
 
     Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
 
-    1. For what value of $C_0$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4?  Interesting functions $f$ to test are quadratic polynomials.
+    1. For what value of $C_0$ is the statement true when $W_n$ is arbitrary?  Equivalently: For which $C_0$ does the following hold true when $f$ has a continuous $r$-th derivative? $|\left(\sum_{i=0}^k (W_n(f)(\frac{i}{n})) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}(f)(\frac{k}{2n})|\le \frac{C_0 M}{n^{r/2}}=\frac{C_0}{n^{r/2}}(\max_{0\le i\le r}|f^{(i)}|)$ ($0\le k\le 2n$; see also Nacu and Peres 2005).
 
-    2. For what value of $C_0$ is the statement true when $W_n$ is arbitrary?
+    2. For what value of $C_0$ is the statement true when $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4?  Interesting functions $f$ to test are quadratic polynomials.
 
     3. Does the same value of $C_0$ suffice when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative?
 
