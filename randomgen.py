@@ -3648,8 +3648,7 @@ class RandomGen:
         """
         Generates 'n' random numbers that follow a continuous
         distribution in an interval [mn, mx].  The distribution must have a
-        PDF (probability density function) and the PDF must be bounded from above
-        (have a finite value) and be continuous almost everywhere
+        PDF (probability density function) and the PDF must be less than or equal to a finite number and be continuous almost everywhere
         in the interval.  Implements section 4 of Devroye and Gravel,
         "The expected bit complexity of the von Neumann rejection
         algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
@@ -4454,7 +4453,7 @@ class RatioOfUniformsTiling:
        is only known up to a normalizing constant, and even if
        the distribution has infinitely extending tails to the left and/or right.
        However, for the ratio of uniforms method to work, both pdf(x) and
-       x*x*pdf(x) must be bounded from above (thus, if the distribution has
+       x*x*pdf(x) must be less than or equal to a finite number (thus, if the distribution has
        tails, they must drop off at a faster than quadratic rate).
     - mode: X-coordinate of the PDF's highest peak or one of them,
        or a location close to it.  Optional; default is 0.
@@ -4656,7 +4655,7 @@ class DensityTiling:
       number and outputs a single number. The area under
       the PDF need not equal 1 (this class tolerates the PDF even if
       it is only known up to a normalizing constant).  For best results,
-      the PDF should be bounded from above (that is, it should be free of _poles_, or points
+      the PDF should be less than or equal to a finite number  (thus, it should be free of _poles_, or points
       that approach infinity).  If the PDF does contain a pole, this class
       may accommodate the pole by sampling from a modified version of the PDF,
       so that points extremely close to the pole may be sampled
@@ -5053,7 +5052,7 @@ class DensityInversionSampler:
 
 class PrefixDistributionSampler:
     """An arbitrary-precision sampler for probability distributions
-    supported on [0, 1] and bounded from above.
+    supported on [0, 1] and less than or equal to a finite number.
     Note that this sampler currently relies on floating-point operations
     and thus the evaluations of the PDF (the distribution's probability
     density function) could incur rounding errors.

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/09/05"><meta name="citation_online_date" content="2022/09/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/09/06"><meta name="citation_online_date" content="2022/09/06"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -134,7 +134,7 @@
 <blockquote>
 <p><strong>Note:</strong> For this method, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).</p>
 
-<p><strong>Example:</strong> Take <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>).  This is a convex and twice differentiable function, and bounded below by 3321/10000.  Then it can be shown that the following scheme for <em>f</em> is valid:</p>
+<p><strong>Example:</strong> Take <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>).  This is a convex and twice differentiable function, and greater than or equal to 3321/10000.  Then it can be shown that the following scheme for <em>f</em> is valid:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 3321/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1/(7*n). (Observe that <em>f</em>(<em>k</em>/4) &minus; 1/(7*4) &ge; 3321/10000.)</li>
@@ -223,8 +223,8 @@
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>If <em>f</em>(<em>&lambda;</em>) = (sinh(<em>&lambda;</em>)+cosh(<em>&lambda;</em>)&minus;1)/4, then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 1/4 if <em>&lambda;</em> = 0, and (exp(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em>) otherwise.  The following code in Python that uses the SymPy computer algebra library computes this example: <code>fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))</code>.</li>
-<li><p>If <em>f</em>(<em>&lambda;</em>) = cosh(<em>&lambda;</em>) &minus; 1, then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 0 if <em>&lambda;</em> = 0, and (cosh(<em>&lambda;</em>)&minus;1)/<em>&lambda;</em> otherwise.  Now, since <em>g</em>(0) = 0, find new functions <em>g</em> and <em>h</em> based on the current <em>g</em>.  The current <em>g</em> is bounded from above by <em>H</em>(<em>&lambda;</em>) = <em>&lambda;</em>*3*(2&minus;<em>&lambda;</em>)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so <em>G</em>(<em>&lambda;</em>) = 5/12 if <em>&lambda;</em> = 0, and &minus;(5*cosh(<em>&lambda;</em>) &minus; 5)/(3*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em>&minus;2)) otherwise. <em>G</em> is bounded away from 0 and 1, resulting in the following algorithm:</p>
+<li>If <em>f</em>(<em>&lambda;</em>) = (sinh(<em>&lambda;</em>)+cosh(<em>&lambda;</em>)&minus;1)/4, then <em>f</em> is less than or equal to <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 1/4 if <em>&lambda;</em> = 0, and (exp(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em>) otherwise.  The following code in Python that uses the SymPy computer algebra library computes this example: <code>fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))</code>.</li>
+<li><p>If <em>f</em>(<em>&lambda;</em>) = cosh(<em>&lambda;</em>) &minus; 1, then <em>f</em> is less than or equal to <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 0 if <em>&lambda;</em> = 0, and (cosh(<em>&lambda;</em>)&minus;1)/<em>&lambda;</em> otherwise.  Now, since <em>g</em>(0) = 0, find new functions <em>g</em> and <em>h</em> based on the current <em>g</em>.  The current <em>g</em> is less than or equal to <em>H</em>(<em>&lambda;</em>) = <em>&lambda;</em>*3*(2&minus;<em>&lambda;</em>)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so <em>G</em>(<em>&lambda;</em>) = 5/12 if <em>&lambda;</em> = 0, and &minus;(5*cosh(<em>&lambda;</em>) &minus; 5)/(3*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em>&minus;2)) otherwise. <em>G</em> is bounded away from 0 and 1, resulting in the following algorithm:</p>
 
 <ol>
 <li>(Simulate <em>h</em>.) Flip the input coin.  If it returns 0, return 0.</li>
@@ -261,7 +261,7 @@
 <blockquote>
 <p><strong>Note:</strong> Quick proof: Rewrite $f=h\cdot(q\cdot1+(1-q)\cdot(1-r))+(1-h)\cdot0$.</p>
 
-<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and from below by <em>&omega;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: <code>fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
+<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is less than or equal to <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and greater than or equal to <em>&omega;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: <code>fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
 </blockquote>
 
 <p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit a polynomial-building scheme under the convex, concave, twice differentiable, and Hölder classes:</p>
@@ -492,7 +492,7 @@
 <ul>
 <li><em>&lambda;</em>, the unknown probability of heads, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.</li>
 <li>The simulation makes use of unbiased random bits in addition to input coin flips.</li>
-<li><em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere. (<em>O</em>(<em>h</em>(<em>n</em>)) roughly means &quot;bounded from above by <em>h</em>(<em>n</em>) times a constant, for every <em>n</em> large enough&quot;.)</li>
+<li><em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere. (<em>O</em>(<em>h</em>(<em>n</em>)) roughly means &quot;less than or equal to <em>h</em>(<em>n</em>) times a constant, for every <em>n</em> large enough&quot;.)</li>
 </ul>
 
 <table><thead>
@@ -526,7 +526,7 @@
 <td>If and only if <em>f</em> is real analytic (writable as $f(\lambda)=a_0 \lambda^0 + a_1 \lambda^1 + ...$ for real constants $a_i$) (Nacu and Peres 2005)[^1].</td>
 </tr>
 <tr>
-<td>Average number of flips bounded from below by (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
+<td>Average number of flips greater than or equal to (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
 <td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^18].</td>
 </tr>
 </tbody></table>
@@ -1368,8 +1368,8 @@
 
 <ul>
 <li>A <em>strictly bounded factory function</em> means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.</li>
-<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^23].</li>
-<li>A <em>modulus of continuity</em> of a function <em>f</em> means a non-negative and nondecreasing function <em>&omega;</em> on the interval [0, 1], for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1].  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is bounded below by <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
+<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^23].</li>
+<li>A <em>modulus of continuity</em> of a function <em>f</em> means a non-negative and nondecreasing function <em>&omega;</em> on the interval [0, 1], for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1].  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
 </ul>
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2*n] .  Then the expected value of f(X<sub>k</sub>/n) is nondecreasing as k increases.</em></p>
@@ -1381,7 +1381,7 @@
 <p><strong>Lemma 2.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2*n, k, n) random variable.</em></p>
 
 <ol>
-<li><em>Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave on [0, 1], then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;</em>
+<li><em>Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave on [0, 1], then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1)<br>is less than or equal to&mdash;</em>
 
 <ul>
 <li><em>&omega;(sqrt(1/(8*n&minus;4))), for every integer n&ge;1 that&#39;s a power of 2,</em></li>
@@ -1389,20 +1389,20 @@
 <li><em>&omega;(sqrt(1/(2*n))), for every integer n&ge;1 that&#39;s a power of 2, and</em></li>
 <li><em>&omega;(sqrt( (k/(2*n)) * (1&minus;k/(2*n)) / (2*n&minus;1) )), for every n&ge;1 that&#39;s a power of 2.</em></li>
 </ul></li>
-<li><em>If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; in the interval (0, 1], then the expression (1) is bounded from above by&mdash;</em>
+<li><em>If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; in the interval (0, 1], then the expression (1) is less than or equal to&mdash;</em>
 
 <ul>
 <li><em>M*(1/(2*n))<sup>&alpha;/2</sup>, for every integer n&ge;1 that&#39;s a power of 2,</em></li>
 <li><em>M*(1/(7*n))<sup>&alpha;/2</sup>, for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
 <li><em>M*(1/(8*n&minus;4))<sup>&alpha;/2</sup>, for every integer n&ge;1 that&#39;s a power of 2.</em></li>
 </ul></li>
-<li><em>If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the expression (1) is bounded from above by&mdash;</em>
+<li><em>If f has a second derivative whose absolute value is defined in all of [0, 1] and less than or equal to M, then the expression (1) is less than or equal to&mdash;</em>
 
 <ul>
 <li><em>(M/2)*(1/(7*n)), for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
 <li><em>(M/2)*(1/(8*n&minus;4)), for every integer n&ge;1 that&#39;s a power of 2.</em></li>
 </ul></li>
-<li><em>If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by <strong>E</strong>[f(Y/n)] for every integer n&ge;1 that&#39;s a power of 2, where Y is a hypergeometric(2*n, n, n) random variable.</em></li>
+<li><em>If f is convex, nondecreasing, and greater than or equal to 0, then the expression (1) is less than or equal to <strong>E</strong>[f(Y/n)] for every integer n&ge;1 that&#39;s a power of 2, where Y is a hypergeometric(2*n, n, n) random variable.</em></li>
 </ol>
 
 <p><em>Proof.</em></p>
@@ -1411,7 +1411,7 @@
 <li><em>&omega;</em> is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))] &le; <strong>E</strong>[<em>&omega;</em>(abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))] &le; <em>&omega;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]) (by Jensen&#39;s inequality and because <em>&omega;</em> is concave) &le; <em>&omega;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&omega;</em>(sqrt((<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for every <em>n</em>&ge;4 that&#39;s an integer power of 2, <em>&rho;</em> &le; <em>&omega;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&omega;</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1&minus;<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>&minus;1) )).</li>
 <li>By the definition of Hölder continuous functions, take <em>&omega;</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.  Because <em>&omega;</em> is a concave modulus of continuity on [0,1], the result follows from part 1.</li>
 <li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For every integer <em>n</em>&ge;4 that&#39;s a power of 2, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
-<li>Let <em>X</em><sub><em>m</em></sub> be a hypergeometric(2 * <em>n</em>, <em>m</em>, <em>n</em>) random variable.  By Lemma 1 and the assumption that <em>f</em> is nondecreasing, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nondecreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because <em>f</em> is convex and bounded by 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>)) &le; <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] (because <em>f</em> is bounded by 0) &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)]. &#x25a1;</li>
+<li>Let <em>X</em><sub><em>m</em></sub> be a hypergeometric(2 * <em>n</em>, <em>m</em>, <em>n</em>) random variable.  By Lemma 1 and the assumption that <em>f</em> is nondecreasing, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nondecreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because <em>f</em> is convex and not less than 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>)) &le; <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] (because <em>f</em> is not less than 0) &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)]. &#x25a1;</li>
 </ol>
 
 <blockquote>
@@ -1520,7 +1520,7 @@
 
 <p><em>Proof.</em> Follows from Theorem 2 by using the <em>&omega;</em> given in part 2 of Lemma 2. &#x25a1;</p>
 
-<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the following scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and less than or equal to M, then the following scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M/(7*n).</em></li>
@@ -1593,7 +1593,9 @@
 <li>$(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.</li>
 </ol>
 
-<p>It is further conjectured that the same value of $C_0$ suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
+<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},$$ whenever $0\le k\le 2n$.</p>
+
+<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 
 <blockquote>
 <p><strong>Note:</strong> By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3)[^1].</p>
