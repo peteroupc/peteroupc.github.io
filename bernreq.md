@@ -150,13 +150,12 @@ Thus the questions are:
 
     Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.$$
 
-    1. For what value of $C_0$ (or $C_1$) is the statement true when $W_n$ is arbitrary?
+    1. For what value of $C_0$ (or $C_1$) is the statement true in each of the following cases?
+        - $W_n$ is arbitrary.
+        - $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=0.3$. Interesting functions $f$ to test are quadratic polynomials.
+        - $W_n = B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ is 5 or 6.
 
-    2. Same as question (a), except $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=0.3$. Interesting functions $f$ to test are quadratic polynomials.
-
-    3. Same as question (a), except $W_n = B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ is 5 or 6.
-
-    4. Does the same value of $C_0$ (or $C_1$) suffice when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative?
+    2. Does the same value of $C_0$ (or $C_1$) suffice when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative?
 
 3. Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?
 
