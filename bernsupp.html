@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/09/06"><meta name="citation_online_date" content="2022/09/06"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/09/09"><meta name="citation_online_date" content="2022/09/09"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -109,40 +109,6 @@
 
 <p><strong>Convex functions.</strong> If <em>f</em> is <em>convex</em> on the interval [0, 1], then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.  One example is <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>/4).</p>
 
-<p><strong>Twice differentiable functions.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
-
-<ul>
-<li>has a second derivative defined on [0, 1] (that is, the function is <em>twice differentiable</em> there), and</li>
-<li>in the interval [0, 1]&mdash;
-
-<ul>
-<li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
-<li>is convex and has a minimum of greater than 0, or</li>
-<li>is concave and has a maximum of less than 1.</li>
-</ul></li>
-</ul>
-
-<p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) over the domain [0, 1], where <em>f&prime;&prime;</em> is the second derivative of <em>f</em>.  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; otherwise, max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(7*<em>n</em>).</li>
-</ul>
-
-<p>My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>c2params</code>, to calculate the necessary values for <em>m</em> and the bounds of these polynomials, given <em>f</em>.</p>
-
-<blockquote>
-<p><strong>Note:</strong> For this method, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).</p>
-
-<p><strong>Example:</strong> Take <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>).  This is a convex and twice differentiable function, and greater than or equal to 3321/10000.  Then it can be shown that the following scheme for <em>f</em> is valid:</p>
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 3321/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1/(7*n). (Observe that <em>f</em>(<em>k</em>/4) &minus; 1/(7*4) &ge; 3321/10000.)</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) (because <em>f</em> is convex).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul>
-</blockquote>
-
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
@@ -172,6 +138,38 @@
 <li>If <em>f</em> has a Hölder exponent of 1 (and so is Lipschitz continuous), <em>D</em>(<em>n</em>) can be <em>m</em>*322613/(250000*sqrt(<em>n</em>)), which is an upper bound.</li>
 <li>If <em>f</em>&#39;s Hölder exponent is 1/2 or greater, <em>D</em>(<em>n</em>) can be <em>m</em>*154563/(40000*<em>n</em><sup>1/4</sup>), which is an upper bound.</li>
 </ol>
+</blockquote>
+
+<p><strong>Functions with a Lipschitz continuous derivative.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
+
+<ul>
+<li>has a Lipschitz continuous derivative (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;), and</li>
+<li>in the interval [0, 1]&mdash;
+
+<ul>
+<li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
+<li>is convex and has a minimum of greater than 0, or</li>
+<li>is concave and has a maximum of less than 1.</li>
+</ul></li>
+</ul>
+
+<p>Let <em>m</em> be the Lipschitz constant of <em>f</em>&#39;s derivative, or a greater number than that constant (if <em>f</em> has a second derivative on the domain [0, 1], then <em>m</em> can be the maximum absolute value of that second derivative).  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; otherwise, max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(7*<em>n</em>).</li>
+</ul>
+
+<p>My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>c2params</code>, to calculate the necessary values for <em>m</em> and the bounds of these polynomials, given <em>f</em>.</p>
+
+<blockquote>
+<p><strong>Example:</strong> Take <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>).  This is a convex function with a Lipschitz continuous derivative, and greater than or equal to 3321/10000.  The derivative&#39;s Lipschitz constant is 1.  Then it can be shown that the following scheme for <em>f</em> is valid:</p>
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 3321/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1/(7*n). (Observe that <em>f</em>(<em>k</em>/4) &minus; 1/(7*4) &ge; 3321/10000.)</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) (because <em>f</em> is convex).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul>
 </blockquote>
 
 <p><strong>Certain functions that equal 0 at 0.</strong> This approach involves transforming the function <em>f</em> so that it no longer equals 0 at the point 0.  This can be done by dividing <em>f</em> by a function (<em>h</em>(<em>&lambda;</em>)) that &quot;dominates&quot; <em>f</em> at every point in the interval [0, 1].  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.</p>
@@ -229,7 +227,7 @@
 <ol>
 <li>(Simulate <em>h</em>.) Flip the input coin.  If it returns 0, return 0.</li>
 <li>(Simulate <em>H</em>.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.</li>
-<li>Run a Bernoulli factory algorithm for <em>G</em> (which might involve building polynomials that converge to <em>G</em>, noticing that <em>G</em> is twice differentiable) and return the result of that algorithm.</li>
+<li>Run a Bernoulli factory algorithm for <em>G</em> (which might involve building polynomials that converge to <em>G</em>, noticing that <em>G</em>&#39;s derivative is Lipschitz continuous) and return the result of that algorithm.</li>
 </ol></li>
 </ol>
 </blockquote>
@@ -264,7 +262,7 @@
 <p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is less than or equal to <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and greater than or equal to <em>&omega;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: <code>fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
 </blockquote>
 
-<p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit a polynomial-building scheme under the convex, concave, twice differentiable, and Hölder classes:</p>
+<p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit a polynomial-building scheme under the convex, concave, Lipschitz derivative, and Hölder classes:</p>
 
 <table><thead>
 <tr>
@@ -986,7 +984,7 @@
 
 <p>[^33]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
 
-<p>[^34]: This formula applies to functions with Lipschitz-continuous derivative (a weaker assumption than having three continuous derivatives), but that derivative&#39;s Lipschitz constant is a lower bound on the second derivative&#39;s absolute value, so that formula is useful here.</p>
+<p>[^34]: This formula applies to functions with Lipschitz-continuous derivative (a weaker assumption than having three continuous derivatives), but that derivative&#39;s Lipschitz constant is a lower bound on $M_{1,3}$, so that formula is useful here.</p>
 
 <p>[^35]: Le Gruyer, Erwan. &quot;Minimal Lipschitz extensions to differentiable functions defined on a Hilbert space.&quot; Geometric and Functional Analysis 19, no. 4 (2009): 1101-1118.</p>
 
@@ -1396,7 +1394,7 @@
 <li><em>M*(1/(7*n))<sup>&alpha;/2</sup>, for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
 <li><em>M*(1/(8*n&minus;4))<sup>&alpha;/2</sup>, for every integer n&ge;1 that&#39;s a power of 2.</em></li>
 </ul></li>
-<li><em>If f has a second derivative whose absolute value is defined in all of [0, 1] and less than or equal to M, then the expression (1) is less than or equal to&mdash;</em>
+<li><em>If f has a Lipschitz continuous derivative with Lipschitz constant M, then the expression (1) is less than or equal to&mdash;</em>
 
 <ul>
 <li><em>(M/2)*(1/(7*n)), for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
@@ -1410,7 +1408,7 @@
 <ol>
 <li><em>&omega;</em> is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))] &le; <strong>E</strong>[<em>&omega;</em>(abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))] &le; <em>&omega;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]) (by Jensen&#39;s inequality and because <em>&omega;</em> is concave) &le; <em>&omega;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&omega;</em>(sqrt((<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for every <em>n</em>&ge;4 that&#39;s an integer power of 2, <em>&rho;</em> &le; <em>&omega;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&omega;</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1&minus;<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>&minus;1) )).</li>
 <li>By the definition of Hölder continuous functions, take <em>&omega;</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.  Because <em>&omega;</em> is a concave modulus of continuity on [0,1], the result follows from part 1.</li>
-<li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For every integer <em>n</em>&ge;4 that&#39;s a power of 2, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
+<li>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) Let $X$ be a hypergeometric($2n$,$k$,$n$) random variate, so that the mean of $X$ is $E(X)=k/(2n)$. Since $E(X/n-k/(2n)) = 0$, it follows that $f&#39;(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f&#39;(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2), so&mdash; $$|E(f(X/n)-f(k/(2n))|=|E(f(X/n)-f(k/(2n))-f&#39;(k/(2n))(X/n-k/(2n)))|$$ $$\le (M/2)(X/n-k/(2n))^2$$ $$\le (M/2) Var(X/n)$.  By part 1&#39;s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For every integer <em>n</em>&ge;4 that&#39;s a power of 2, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
 <li>Let <em>X</em><sub><em>m</em></sub> be a hypergeometric(2 * <em>n</em>, <em>m</em>, <em>n</em>) random variable.  By Lemma 1 and the assumption that <em>f</em> is nondecreasing, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nondecreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because <em>f</em> is convex and not less than 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>)) &le; <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] (because <em>f</em> is not less than 0) &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)]. &#x25a1;</li>
 </ol>
 
@@ -1420,7 +1418,6 @@
 <ol>
 <li><strong>E</strong>[.] means expected value (&quot;long-run average&quot;), and <strong>Var</strong>[.] means variance.  A hypergeometric(2 * <em>n</em>, <em>k</em>, <em>n</em>) random variable is the number of &quot;good&quot; balls out of <em>n</em> balls taken uniformly at random, all at once, from a bag containing 2 * <em>n</em> balls, <em>k</em> of which are &quot;good&quot;.</li>
 <li>Parts 1 and 2 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)[^1].  However, for technical reasons, different bounds are proved for different ranges of integers <em>n</em>.</li>
-<li>For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).</li>
 <li>All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>&omega;</em>(0) &gt; 0, because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple <em>&omega;</em> that satisfies the lemma:
 
 <ol>
@@ -1520,7 +1517,7 @@
 
 <p><em>Proof.</em> Follows from Theorem 2 by using the <em>&omega;</em> given in part 2 of Lemma 2. &#x25a1;</p>
 
-<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and less than or equal to M, then the following scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f has a Lipschitz continuous derivative with Lipschitz constant M, then the following scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M/(7*n).</em></li>

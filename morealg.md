@@ -104,7 +104,7 @@ Then the key to simulating these functions is to "tuck" the values $a_n$ under a
 
 > **Notes:**
 >
-> 1. Assuming $f(1) \ne 0$, an appropriate $g(n)$ is trivial to find &mdash; $g(n)=a_n/f(1)$ (because $a_n \le f(1)$ for every allowed $n$).  But in general, this can make $g(n)$ an irrational number and thus harder to handle with arbitrary precision.
+> 1. Assuming $f(1)$ does not equal 0, an appropriate $g(n)$ is trivial to find &mdash; $g(n)=a_n/f(1)$ (because $a_n \le f(1)$ for every allowed $n$).  But in general, this can make $g(n)$ an irrational number and thus harder to handle with arbitrary precision.
 > 2. If the coefficients $a_n$ sum to 1, then $g(n)$ can equal $a_n$.  In this case, $f(\lambda)$ is what's called the _probability generating function_ for getting $X$ with probability $a_X$ (or $g(X)$).  See also (Dughmi et al. 2021)[^1].  The expected value ("long-run average") of $X$ equals the "slope" of $f(\lambda)$ at 1.
 > 3. Assuming $f(1)$ is an irrational number, $g(n)$ can equal $a_n + c_n/2^n$, where $c_n$ is the $n$-th base-2 digit after the point in the binary expansion of $1 - f(1)$ (or 0 if $n=0$).  Here, a number's _binary expansion_ is written as `0.bbbbb...` in base 2, where each `b` is a base-2 digit (either 0 or 1).  See my [**Stack Exchange question**](https://math.stackexchange.com/questions/4495216).
 
