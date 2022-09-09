@@ -113,17 +113,15 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 
 > **Examples:**
 >
-> 1. Take _f_(_&lambda;_) = exp(&minus;_&lambda;_).  This is a convex function with a Lipschitz continuous derivative.  The derivative's Lipschitz constant is 1.  Then it can be shown that the following scheme for _f_ is valid (the value 3321/10000 is slightly greater than _M_ &minus; 2/(7\*4), where _M_ is the minimum of _f_ on its domain):
+> 1. Take _f_(_&lambda;_) = exp(&minus;_&lambda;_).  This is a convex function, and its derivative is Lipschitz continuous with Lipschitz constant 1.  Then it can be shown that the following scheme for _f_ is valid (the value 3321/10000 is slightly greater than _M_ &minus; 2/(7\*4), where _M_ is the minimum of _f_ on its domain):
 >
 >     * **fbelow**(_n_, _k_) = 3321/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n). (Observe that _f_(_k_/4) &minus; 1/(7\*4) &ge; 3321/10000.)
 >     * **fabove**(_n_, _k_) = _f_(_k_/_n_) (because _f_ is convex).
->     * **fbound**(_n_) = [0, 1].
 >
-> 2. Let _f_(_&lambda;_) = **_&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise**.  This function is concave, and its derivative is Lipschitz continuous with Lipschitz constant 2.  Then it can be shown that the following scheme for _f_ is valid (the value 893/2000 is slightly greater than _M_ + 2/(7\*4), where _M_ is the maximum of _f_ on its domain):
+> 2. Take _f_(_&lambda;_) = _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise.  This function is concave, and its derivative is Lipschitz continuous with Lipschitz constant 2.  Then it can be shown that the following scheme for _f_ is valid (the value 893/2000 is slightly greater than _M_ + 2/(7\*4), where _M_ is the maximum of _f_ on its domain):
 >
 >     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
 >     * **fabove**(_n_, _k_) = 893/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*_n_).
->     * **fbound**(_n_) = [0, 1].
 
 **Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (_h_(_&lambda;_)) that "dominates" _f_ at every point in the interval [0, 1].  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.
 
@@ -366,11 +364,11 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * The function was detected to be convex and twice differentiable, leading to:
         * **fbelow**(_n_, _k_) = 487/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 154309/(700000\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 1043/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 462927/(2800000\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **3/4 &minus; sqrt(&minus;_&lambda;_\*(_&lambda;_ &minus; 1))**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
@@ -396,51 +394,51 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * Detected to be twice differentiable using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 523/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 11346621/(700000\*n).
         * **fabove**(_n_, _k_) = 1229/1250 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 11346621/(700000\*n).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 681/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 34039863/(4480000\*n).
         * **fabove**(_n_, _k_) = 4837/5000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 34039863/(4480000\*n).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **sin(4\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * The function was detected to be twice differentiable, leading to:
         * **fbelow**(_n_, _k_) = 737/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 1973921/(350000\*n).
         * **fabove**(_n_, _k_) = 9263/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 1973921/(350000\*n).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 1123/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 1973921/(448000\*n).
         * **fabove**(_n_, _k_) = 8877/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 1973921/(448000\*n).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **sin(6\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * The function was detected to be twice differentiable, leading to:
         * **fbelow**(_n_, _k_) = 517/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 2220661/(175000\*n).
         * **fabove**(_n_, _k_) = 9483/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 2220661/(175000\*n).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 1043/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 104371067/(11200000\*n).
         * **fabove**(_n_, _k_) = 8957/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 104371067/(11200000\*n).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **sin(4\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * The function was detected to be twice differentiable, leading to:
         * **fbelow**(_n_, _k_) = 737/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 1973921/(350000\*n).
         * **fabove**(_n_, _k_) = 9263/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 1973921/(350000\*n).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 1123/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 1973921/(448000\*n).
         * **fabove**(_n_, _k_) = 8877/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 1973921/(448000\*n).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 321/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 693/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 55/(448\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 4197/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 5/(28\*n).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **1/2 &minus; sqrt(1 &minus; 2\*_&lambda;_)/2 if _&lambda;_ < 1/2; sqrt(2\*_&lambda;_ &minus; 1)/2 + 1/2 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
@@ -455,7 +453,7 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 193/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) &minus; 5410786941/(12800000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = 4807/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) + 5410786941/(12800000000\*n<sup>1/4</sup>).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **_&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ < 0; _&lambda;_/2 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ &ge; 1/2; _&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 322613/(500000\*sqrt(n)).
@@ -470,34 +468,34 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 193/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) &minus; 5410786941/(12800000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = 4807/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) + 5410786941/(12800000000\*n<sup>1/4</sup>).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **1/2 &minus; sqrt(1 &minus; 2\*_&lambda;_)/8 if _&lambda;_ < 1/2; sqrt(2\*_&lambda;_ &minus; 1)/8 + 1/2 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 333/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 386562063/(400000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = 9667/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 386562063/(400000000\*n<sup>1/4</sup>).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 451/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 2705934441/(12800000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = 1549/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2705934441/(12800000000\*n<sup>1/4</sup>).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **_&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ < 0; _&lambda;_/4 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ &ge; 1/2; _&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 443/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 322613/(1000000\*sqrt(n)).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 1111/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3548743/(64000000\*sqrt(n)).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **3\*_&lambda;_/2 if _&lambda;_ &le; 1 &minus; _&lambda;_; 3/2 &minus; 3\*_&lambda;_/2 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 124/125 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 967839/(500000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 1863/2000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 2903517/(2000000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **9\*_&lambda;_/5 if _&lambda;_ &le; 1 &minus; _&lambda;_; 9/5 &minus; 9\*_&lambda;_/5 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
@@ -509,20 +507,19 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 1817/2000 if _n_&lt;8; otherwise, _f_(_k_/_n_) + 6129647/(5000000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 2337/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 18388941/(20000000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
+
 * Let _f_(_&lambda;_) = **min(1/8, 3\*_&lambda;_)**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 4047/5000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 967839/(250000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
+
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 171/400 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 967839/(1600000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
 
 <a id=Notes></a>
 ## Notes
@@ -952,81 +949,90 @@ _Proof._
 >     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^33].
 
-**Theorem 1.** _Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a strictly bounded factory function. Let&mdash;_
+**Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a non-negative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash; $$\eta(n)=\sum_{k\ge log_2(n)} \phi(2^k)$$, for every integer n&ge;1 that's a power of 2.  If the infinite series &eta;(n) converges, then the following scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form, for each integer $n\ge 1$ that's a power of 2, with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, with the exception given later, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005\)[^1], for each integer n&ge;1 that's a power of 2, by defining **fabove** and **fbelow** as follows:_
 
-_&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &phi;(2<sup>k</sup>),_
+_If $n_0 = 1$:_
 
-_for every integer n&ge;1 that's a power of 2 (with n=2<sup>m</sup>), where &phi;(n) is either&mdash;_
+- _**fbelow**(n, k) =_ $f(k/n)-\eta(n)$.
+- _**fabove**(n, k) =_ $f(k/n)+\eta(n)$.
 
-- _&omega;(sqrt(1/(8\*n&minus;4))), or_
-- _&omega;(sqrt(1/(2\*n)))._
+_If $n_0 > 1$:_
 
-_If the infinite series &eta;(n) converges, then the following scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005\)[^1], for every integer n&ge;1 that's a power of 2, by defining **fabove** and **fbelow** as follows:_
+- _**fbelow**(n, k) =_ min(**fbelow**($n_0$,0), **fbelow**($n_0$,1), ..., **fbelow**($n_0$,$n_0$)) if n < $n_0$; $f(k/n)-\eta(n)$ otherwise.
+- _**fabove**(n, k) =_ min(**fbelow**($n_0$,0), **fbelow**($n_0$,1), ..., **fbelow**($n_0$,$n_0$)) if n < $n_0$; $f(k/n)+\eta(n)$ otherwise.
 
-- _**fbelow**(n, k) = f(k/n) &minus; &eta;(n)._
-- _**fabove**(n, k) = f(k/n) + &eta;(n)._
+_The exception is that if **fabove**(n, k) > 1 for a given n and some k, the degree-$n$ upper polynomial's coefficients are all 1, and if **fbelow**(n, k) < 0 for a given n and some k, the degree-$n$ lower polynomial's coefficients are all 0._
 
-_Except that the following bounding note applies: If **fabove**(n, k) > 1 for a given n and some k, **fabove**(n, k) = 1 instead for that n, and if **fbelow**(n, k) < 0 for a given n and some k, **fbelow**(n, k) = 0 instead for that n._
-
-_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005\)[^1].
+_Proof._ Follows from Remark B and the proof of Proposition 10 of Nacu and Peres (2005\)[^1].  For simplicity, the proof assumes first that $n_0 = 1$.
 
 For the series _&eta;_(_n_) in the theorem, each term of the series is nonnegative making the series nonnegative and, by the assumption that the series converges, _&eta;_(_n_) is nonincreasing with increasing _n_.
 
-Condition (i) says that the coefficients **fbelow** and **fabove** must be bounded by 0 and 1.  This is ensured starting with a large enough value of _n_ greater than 0, call it _n_<sub>0</sub>, as shown next.
+Condition (i) says that each coefficient of the polynomials must be 0 or greater and 1 or less.  This is ensured starting with a large enough value of _n_ greater than 0, call it _n_<sub>1</sub>, as shown next.
 
-Let _&epsilon;_ be a positive distance between 0 and the minimum or between 1 and the maximum of _f_, whichever is smaller.  This _&epsilon;_ exists by the assumption that _f_ is bounded away from 0 and 1. Because the series _&eta;_ converges, _&eta;_(_n_) will eventually stay less than _&epsilon;_.  And the `f(k/n)` term is bounded by the minimum and maximum of _f_ by construction.  This combined means that the coefficients **fbelow** and **fabove** will eventually be bounded by 0 and 1 for every integer _n_ starting with _n_<sub>0</sub>.
+Let _&epsilon;_ be a positive distance between 0 and the minimum or between 1 and the maximum of _f_, whichever is smaller.  This _&epsilon;_ exists by the assumption that _f_ is bounded away from 0 and 1. Because the series _&eta;_ converges, _&eta;_(_n_) will eventually stay less than _&epsilon;_.  And the `f(k/n)` term is bounded by the minimum and maximum of _f_ by construction.  This combined means that the values **fbelow** and **fabove** will eventually be bounded by 0 and 1 for every integer _n_ starting with _n_<sub>1</sub>.
 
-For _n_ less than _n_<sub>0</sub>, condition (i) is ensured by setting **fbelow** and **fabove** to 0 or 1, respectively, whenever a coefficient of the degree-_n_ polynomial would otherwise be outside the bounds.
+For _n_ less than _n_<sub>1</sub>, condition (i) is ensured by setting the lower or upper polynomial's coefficient to 0 or 1, respectively, whenever a coefficient of the degree-_n_ polynomial would otherwise be outside the bounds.
 
-Condition (iii) says that the upper polynomials must converge to _f_ and so must the lower polynomials.  This is ensured in a similar way as in Proposition 10, as well as by the assumption that the series converges: as _n_ goes to infinity, _&eta;_(_n_) goes to 0 so that the coefficients, and thus the polynomials, converge to _f_.  For _n_ less than _n_<sub>0</sub>, the values of **fbelow** and **fabove** can be 0 or 1 without affecting convergence.
+Condition (iii) says that the upper polynomials must converge to _f_ and so must the lower polynomials.  This is ensured in a similar way as in Proposition 10, as well as by the assumption that the series converges: as _n_ goes to infinity, _&eta;_(_n_) goes to 0 so that the coefficients, and thus the polynomials, converge to _f_.  For _n_ less than _n_<sub>1</sub>, the values of **fbelow** and **fabove** can be treated as 0 or 1 without affecting convergence.
 
-Condition (iv) is the _consistency requirement_ described earlier in this page. This is ensured as in Proposition 10 by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is _&eta;_(_n_), a solution to the equation 0 = _&eta;_(_n_) &minus; _&eta;_(2 \* _n_) &minus; _&phi;_(_n_) (see note below), where _&phi;_ can take on either form given in the theorem. The solution given in the theorem is easy to prove by noting that this is a recursive process: we start by calculating the series for _n_ = 2\*_n_, then adding _&phi;_(_n_) to it, in effect working backwards and recursively, and we can easily see that we can calculate the series for _n_ = 2\*_n_ only if the series converges, hence the assumption of a converging series. For _n_<sub>0</sub>, the consistency requirement is maintained by noting that the degree-_n_<sub>0</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>0</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. &#x25a1;
+Condition (iv) is the _consistency requirement_ described earlier in this page. This is ensured as in Proposition 10 by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is _&eta;_(_n_), a solution to the equation 0 = _&eta;_(_n_) &minus; _&eta;_(2 \* _n_) &minus; _&phi;_(_n_) (see note below), where _&phi;_(_n_) is a function that takes on a non-negative value. The solution given in the theorem is easy to prove by noting that this is a recursive process: we start by calculating the series for _n_ = 2\*_n_, then adding _&phi;_(_n_) to it (which will be positive), in effect working backwards and recursively, and we can easily see that we can calculate the series for _n_ = 2\*_n_ only if the series converges, hence the assumption of a converging series. For _n_=_n_<sub>1</sub>, the consistency requirement is maintained by noting that the degree-_n_<sub>1</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients.
 
-> **Note:** There is only one solution _&eta;_(_n_) in the case at hand.  Unlike so-called [**_functional equations_**](https://math.stackexchange.com/questions/3993739) and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in the case at hand, namely the solution that makes the series converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = _&eta;_(_n_) &minus; _&eta;_(4 \* _n_) &minus; _&phi;_(2\*_n_) &minus; _&phi;_(_n_) = _&eta;_(_n_) &minus; _&eta;_(8 \* _n_) &minus; _&phi;_(4\*_n_) &minus; _&phi;_(2\*_n_) &minus; _&phi;_(_n_) = ...
+Now to prove the result assuming that $n_0 > 1$.
 
-**Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; in the interval (0, 1], then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1, subject to the bounding note:_
+Then we can take advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start the algorithm from any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 through $n_0$ above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in the theorem remains nonnegative.  Moreover, since _&eta;_ is assumed to converge, _&eta;_(_n_) still decreases with increasing _n_.
 
-- _**fbelow**(n, k) = f(k/n) &minus; &delta;(n)._
-- _**fabove**(n, k) = f(k/n) + &delta;(n)._
+&#x25a1;
 
-_Where D(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
+> **Notes:**
+>
+> 1. There is only one solution _&eta;_(_n_) in the case at hand.  Unlike so-called [**_functional equations_**](https://math.stackexchange.com/questions/3993739) and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in the case at hand, namely the solution that makes the series converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = _&eta;_(_n_) &minus; _&eta;_(4 \* _n_) &minus; _&phi;_(2\*_n_) &minus; _&phi;_(_n_) = _&eta;_(_n_) &minus; _&eta;_(8 \* _n_) &minus; _&phi;_(4\*_n_) &minus; _&phi;_(2\*_n_) &minus; _&phi;_(_n_) = ...
+> 2. $log_2(n)$ is the number $x$ such that $2^n = x$.
 
-_Proof._ Follows from Theorem 1 by using the _&omega;_ given in part 2 of Lemma 2, and by using _&phi;_(_n_) = _&omega;_(sqrt(1/(2\*_n_))). &#x25a1;
+**Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha;, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
-> **Note:** For specific values of _&alpha;_, the equation _D_(_n_) = _D_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following code in Python that uses the SymPy computer algebra library: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
+- _**fbelow**(n, k) = f(k/n) &minus; D(n)._
+- _**fabove**(n, k) = f(k/n) + D(n)._
 
-**Corollary 2.** _Let f(&lambda;) be a strictly bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1, subject to the bounding note:_
+_Where_ $D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$.
 
-- _**fbelow**(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)\*sqrt(n))._
-- _**fabove**(n, k) = f(k/n) + M/((sqrt(2)&minus;1)\*sqrt(n))._
-
-_Proof._ Because Lipschitz continuous functions are Hölder continuous with Hölder constant _M_ and exponent 1, the result follows from Corollary 1. &#x25a1;
-
-> **Note:** This special case of Theorem 1 was already found by Nacu and Peres (2005\)[^1].
-
-**Theorem 2.** _Let f(&lambda;) be a strictly bounded factory function, and let &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &phi;(n), **fbelow**, and **fabove**, rather than as given in that theorem, subject to the bounding note:_
-
-- _&phi;(n) = &omega;(sqrt(1/(7\*n)))._
-- _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
-- _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + &eta;(n)._
-
-_Proof._  Follows from Theorem 1 and part 1 of Lemma 2 above, as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1's assumption that the series converges, so that _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
-
-**Corollary 3.** _Let f(&lambda;) be a strictly bounded factory function. If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; in the interval (0, 1], then the following scheme is valid in the sense of Theorem 1, subject to the bounding note:_
+_Or:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + &eta;(n)._
 
 _Where &eta;(n) = M\*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
-_Proof._ Follows from Theorem 2 by using the _&omega;_ given in part 2 of Lemma 2. &#x25a1;
+_Proof._ Because $f$ is Hölder continuous, it admits the modulus of continuity $\omega(x)=Mx^{\alpha}$.  By part 1 of lemma 2:
 
-**Theorem 3.** _Let f(&lambda;) be a strictly bounded factory function.  If f has a Lipschitz continuous derivative with Lipschitz constant M, then the following scheme is valid in the sense of Theorem 1, subject to the bounding note:_
+- For each integer $n\ge 1$ that's a power of 2 ($n0=1$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(2n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$ (where $\eta(n)$ is as in Theorem 1).
+- For each integer $n\ge 4$ that's a power of 2 ($n0=4$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(7n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=$ M\*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>).
 
-- _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; M/(7\*n)._
-- _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + M/(7\*n)._
+The result then follows from Theorem 1. &#x25a1;
 
-_Proof._  Because (_M_/2)\*(1/(7\*_n_)) in part 3 of Lemma 2 is bounded the same way as the statement _&omega;_(sqrt(1/(7\*n))) in Theorem 2 and part 1 of Lemma 2, take _&omega;_(_n_) as (_M_/2)\*(1/(7\*_n_)).  Then the result follows from Theorem 2.  &#x25a1;
+> **Note:** For specific values of _&alpha;_, the equation _D_(_n_) = _D_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following code in Python that uses the SymPy computer algebra library: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
+
+**Corollary 2.** _Let f(&lambda;) be a strictly bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
+
+- _**fbelow**(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)\*sqrt(n))._
+- _**fabove**(n, k) = f(k/n) + M/((sqrt(2)&minus;1)\*sqrt(n))._
+
+_Or:_
+
+- _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; M\*sqrt(2/7)/((sqrt(2)&minus;1)\*sqrt(n))._
+- _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + M\*sqrt(2/7)/((sqrt(2)&minus;1)\*sqrt(n))._
+
+_Proof._ Because Lipschitz continuous functions are Hölder continuous with Hölder constant _M_ and exponent 1, the result follows from Corollary 1. &#x25a1;
+
+> **Note:** The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005\)[^1].
+
+**Corollary 3.** _Let f(&lambda;) be a strictly bounded factory function. If f has a Lipschitz continuous derivative with Lipschitz constant L, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
+
+- _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; L/(7\*n)._
+- _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + L/(7\*n)._
+
+_Proof._ By part 3 of lemma 2, for each integer $n\ge 4$ that's a power of 2 ($n0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1).  The result then follows from Theorem 1. &#x25a1;
+
+> **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the domain [0, 1] that is not greater than a constant \(a slightly stronger condition than having a Lipschitz continuous derivative on that domain).
 
 **Theorem 4.** _Let f(&lambda;) be a strictly bounded factory function.  If f is convex and nondecreasing, then Theorem 1 remains valid with &phi;(n) = **E**\[f(Y/n)\] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
 
@@ -1034,16 +1040,16 @@ _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ g
 
 **Proposition 1.**
 
-1. _Let f be as given in any of Theorems 1 through 4, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the scheme of that theorem remains valid if **fbelow**(n, k) = f(k/n), rather than as given in that theorem._
-2. _Let f be as given in any of Theorems 1 through 4, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the scheme of that theorem remains valid if **fabove**(n, k) = f(k/n), rather than as given in that theorem._
-3. _Theorems 1 through 4 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;_
+1. _Let f be as given in Theorem 1 or 2 or Corollary 1 to 3, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the schemes of those results remain valid if **fbelow**(n, k) = f(k/n), rather than as given in those results._
+2. _Let f be as given in Theorem 1 or 2 or Corollary 1 to 3, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the schemes of those results remain valid if **fabove**(n, k) = f(k/n), rather than as given in those results._
+3. _Theorems 1 and 2 and Corollaries 1 to 3 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;_
 
     - _**fbelow**(n, k) = (k/n)\***fbelow**(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)\***fbelow**(n&minus;1, min(n&minus;1, k)), and_
     - _**fabove**(n, k) = (k/n)\***fabove**(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)\***fabove**(n&minus;1, min(n&minus;1, k)),_
 
     _for every integer n&ge;1 other than a power of 2. Parts 1 and 2 of this proposition still apply to the modified scheme._
 
-_Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein polynomials of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005\)[^1]. &#x25a1;
+_Proof._ Parts 1 and 2 follow from Theorem 1 or 2 or Corollary 1 to 3, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein polynomials of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005\)[^1]. &#x25a1;
 
 The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.
 

@@ -144,7 +144,7 @@ def c2params(func, x, n):
     - `x`: Variable used by `func`.
     - `n`: A Sympy variable used in the symbolic expressions for the two bounds.  It indicates the degree of the polynomial for which the method should find upper and lower bounds.  Must be a power of 2 and must be 4 or greater.
 
-    The method returns a tuple containing three expressions in the following order: the absolute maximum "slope-of-slope" _m_ (`m`) and the two bounds for **fbound(_n_)** (`bound1` and `bound2`, respectively).  See the notes in the section on [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for more information.  This method will use symbolic computations whenever possible.  If it has to resort to numerical methods, it will print warnings, since in that case, the parameters found by this method are not guaranteed to be correct.
+    The method returns a tuple containing three expressions in the following order: the absolute maximum "slope-of-slope" _m_ (`m`) and the lower and upper bound for the function's value, respectively.  See the notes in the section on [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for more information.  This method will use symbolic computations whenever possible.  If it has to resort to numerical methods, it will print warnings, since in that case, the parameters found by this method are not guaranteed to be correct.
     """
     if n < 4:
         raise ValueError
@@ -699,7 +699,7 @@ def approxscheme2(
     - `double`: Whether to double the degree with each additional level (`True`, the default) or to increase that degree by 1 with each level (`False`).
     - `levels`: Number of polynomial levels to generate.  The first level will be the polynomial of degree 4 for the kinds "myc2", "mylipschitz", or "myhoelderhalf", and degree 1 otherwise.  Default is 9.
 
-    The method returns a string in Markdown format describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate the probability _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_.  It refers to the functions **fbelow**, **fabove**, and **fbound**.  **fbelow** and **fabove** mean the _k_<sup>th</sup> Bernstein coefficient for the lower or upper degree-_n_ polynomial, respectively, where _k_ is an integer in the interval \[0, _n_\]. **fbound** means the coefficients' lower and upper bounds for the polynomial of degree _n_.  If the method fails, it returns None.
+    The method returns a string in Markdown format describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate the probability _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_.  It refers to the functions **fbelow** and **fabove**.  **fbelow** and **fabove** mean the _k_<sup>th</sup> Bernstein coefficient for the lower or upper degree-_n_ polynomial, respectively, where _k_ is an integer in the interval \[0, _n_\]. If the method fails, it returns None.
     """
     # TODO:
     # - Special handling for polynomials
@@ -1053,14 +1053,6 @@ def approxscheme2(
         if conc != "convex":
             data += " + %s" % (funcstring(offsetn * ratio, x))
         data += ".\n"
-        if irdeg >= 0 or (upperbounded and lowerbounded):
-            if conc == "concave" or conc == "convex" or (upperbounded and lowerbounded):
-                data += "        * **fbound**(_n_) = [0, 1].\n"
-            else:
-                data += (
-                    "        * **fbound**(_n_) = [0, 1] if _n_&ge;%d, or [&minus;1, 2] otherwise.\n"
-                    % (irdeg)
-                )
     if not isdiff:
         print(data)
     return data
