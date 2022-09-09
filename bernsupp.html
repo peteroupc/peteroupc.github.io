@@ -1403,7 +1403,13 @@
 </ol>
 </blockquote>
 
-<p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a non-negative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash; $$\eta(n)=\sum</em>{k\ge log_2(n)} \phi(2^k)$$, for every integer n&ge;1 that&#39;s a power of 2.  If the infinite series &eta;(n) converges, then the following scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form, for each integer $n\ge 1$ that&#39;s a power of 2, with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, with the exception given later, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)[^1], for each integer n&ge;1 that&#39;s a power of 2, by defining <strong>fabove</strong> and <strong>fbelow</strong> as follows:_</p>
+<p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a non-negative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;</em></p>
+
+<p>$$\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),$$</p>
+
+<p><em>for every integer n&ge;1 that&#39;s a power of 2.  If the infinite series &eta;(n) converges to a finite value for every $n\ge 1$, and if it converges to 0 as $n$ gets large, then the following scheme for f(&lambda;) is valid in the following sense:</em></p>
+
+<p><em>There are polynomials $g_n$ and $h_n$ (where $n\ge 1$ is an integer power of 2) as follows. The $k$-th Bernstein coefficients of $g_n$ and $h_n$ are <strong>fbelow</strong>(n, k) and <strong>fabove</strong>(n, k), respectively ($0\le k\le n$).</em></p>
 
 <p><em>If $n_0 = 1$:</em></p>
 
@@ -1416,39 +1422,61 @@
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) =</em> min(<strong>fbelow</strong>($n_0$,0), <strong>fbelow</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) if n &lt; $n_0$; $f(k/n)-\eta(n)$ otherwise.</li>
-<li><em><strong>fabove</strong>(n, k) =</em> min(<strong>fbelow</strong>($n_0$,0), <strong>fbelow</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) if n &lt; $n_0$; $f(k/n)+\eta(n)$ otherwise.</li>
+<li><em><strong>fabove</strong>(n, k) =</em> max(<strong>fabove</strong>($n_0$,0), <strong>fabove</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) if n &lt; $n_0$; $f(k/n)+\eta(n)$ otherwise.</li>
 </ul>
 
-<p><em>The exception is that if <strong>fabove</strong>(n, k) &gt; 1 for a given n and some k, the degree-$n$ upper polynomial&#39;s coefficients are all 1, and if <strong>fbelow</strong>(n, k) &lt; 0 for a given n and some k, the degree-$n$ lower polynomial&#39;s coefficients are all 0.</em></p>
+<p><em>The polynomials $g_n$ and $h_n$ satisfy:</em></p>
 
-<p><em>Proof.</em> Follows from Remark B and the proof of Proposition 10 of Nacu and Peres (2005)[^1].  For simplicity, the proof assumes first that $n_0 = 1$.</p>
+<ol>
+<li><em>$g_n \le h_n$.</em></li>
+<li><em>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</em></li>
+<li>$(g_{n+1}-g_n)$ <em>and</em> $(h_{n}-h_{n+1})$ <em>are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (This is the consistency requirement.)</em></li>
+</ol>
 
-<p>For the series <em>&eta;</em>(<em>n</em>) in the theorem, each term of the series is nonnegative making the series nonnegative and, by the assumption that the series converges, <em>&eta;</em>(<em>n</em>) is nonincreasing with increasing <em>n</em>.</p>
+<p><em>Proof.</em> For simplicity, this proof assumes first that $n_0 = 1$.</p>
 
-<p>Condition (i) says that each coefficient of the polynomials must be 0 or greater and 1 or less.  This is ensured starting with a large enough value of <em>n</em> greater than 0, call it <em>n</em><sub>1</sub>, as shown next.</p>
+<p>For the series <em>&eta;</em>(<em>n</em>) in the theorem, because $\phi(n)$ is nonnegative, each term of the series is nonnegative making the series nonnegative and, by the assumption that the series converges, <em>&eta;</em>(<em>n</em>) is nonincreasing with increasing <em>n</em>.</p>
 
-<p>Let <em>&epsilon;</em> be a positive distance between 0 and the minimum or between 1 and the maximum of <em>f</em>, whichever is smaller.  This <em>&epsilon;</em> exists by the assumption that <em>f</em> is bounded away from 0 and 1. Because the series <em>&eta;</em> converges, <em>&eta;</em>(<em>n</em>) will eventually stay less than <em>&epsilon;</em>.  And the <code>f(k/n)</code> term is bounded by the minimum and maximum of <em>f</em> by construction.  This combined means that the values <strong>fbelow</strong> and <strong>fabove</strong> will eventually be bounded by 0 and 1 for every integer <em>n</em> starting with <em>n</em><sub>1</sub>.</p>
+<p>Item 1 is trivial.  If $n\ge n_0$, $g_n$ is simply the Bernstein polynomial of $f$ minus a non-negative value, and $h_n$ is the Bernstein polynomial of $f$ plus that same value, and if $n$ is less than $n_0$, $g_n$ is a constant value not less than the lowest point reachable by the lower polynomials, and $h_n$ is a constant value not less than the highest point reachable by the upper polynomials.</p>
 
-<p>For <em>n</em> less than <em>n</em><sub>1</sub>, condition (i) is ensured by setting the lower or upper polynomial&#39;s coefficient to 0 or 1, respectively, whenever a coefficient of the degree-<em>n</em> polynomial would otherwise be outside the bounds.</p>
+<p>Item 2 is likewise trivial. A well known result is that the Bernstein polynomials of $f$ converge to $f$ as their degree $n$ gets large.  And because the series <em>&eta;</em> (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, the upper and lower shifts will converge to 0 so that $g_n$ and $h_n$ converge to the degree-$n$ Bernstein polynomials and thus to $f$.</p>
 
-<p>Condition (iii) says that the upper polynomials must converge to <em>f</em> and so must the lower polynomials.  This is ensured in a similar way as in Proposition 10, as well as by the assumption that the series converges: as <em>n</em> goes to infinity, <em>&eta;</em>(<em>n</em>) goes to 0 so that the coefficients, and thus the polynomials, converge to <em>f</em>.  For <em>n</em> less than <em>n</em><sub>1</sub>, the values of <strong>fbelow</strong> and <strong>fabove</strong> can be treated as 0 or 1 without affecting convergence.</p>
+<p>Item 3 is the <em>consistency requirement</em> described earlier in this page. The is ensured as in Proposition 10 of Nacu and Peres (2005)[^1] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is <em>&eta;</em>(<em>n</em>), a solution to the equation 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(2 * <em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) (see note below), where <em>&phi;</em>(<em>n</em>) is a function that takes on a non-negative value.</p>
 
-<p>Condition (iv) is the <em>consistency requirement</em> described earlier in this page. This is ensured as in Proposition 10 by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is <em>&eta;</em>(<em>n</em>), a solution to the equation 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(2 * <em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) (see note below), where <em>&phi;</em>(<em>n</em>) is a function that takes on a non-negative value. The solution given in the theorem is easy to prove by noting that this is a recursive process: we start by calculating the series for <em>n</em> = 2*<em>n</em>, then adding <em>&phi;</em>(<em>n</em>) to it (which will be positive), in effect working backwards and recursively, and we can easily see that we can calculate the series for <em>n</em> = 2*<em>n</em> only if the series converges, hence the assumption of a converging series. For <em>n</em>=<em>n</em><sub>1</sub>, the consistency requirement is maintained by noting that the degree-<em>n</em><sub>1</sub> polynomial&#39;s coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients.</p>
+<p><em>&phi;</em>(<em>n</em>) is essentially the minimum distance between one polynomial and the next so that the consistency requirement is met between those two polynomials.  Compare the assumptions on <em>&phi;</em> in Theorem 1 with equations (10) and (11) in Nacu and Peres (2005).</p>
+
+<p>The solution for $\eta(n)$ given in the statement of the theorem is easy to prove by noting that this is a recursive process: we start by calculating the series for <em>n</em> = 2*<em>n</em>, then adding <em>&phi;</em>(<em>n</em>) to it (which will be positive), in effect working backwards and recursively, and we can easily see that we can calculate the series for <em>n</em> = 2*<em>n</em> only if the series converges, hence the assumption of a converging series.</p>
 
 <p>Now to prove the result assuming that $n_0 &gt; 1$.</p>
 
-<p>Then we can take advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start the algorithm from any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 through $n_0$ above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the <em>&phi;</em> given in this theorem, the series <em>&eta;</em>(<em>n</em>) in the theorem remains nonnegative.  Moreover, since <em>&eta;</em> is assumed to converge, <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>.</p>
-
-<p>&#x25a1;</p>
+<p>Then we can take advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start defining the polynomials at any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 or greater, but less than $n_0$, would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the <em>&phi;</em> given in this theorem, the series <em>&eta;</em>(<em>n</em>) in the theorem remains nonnegative.  Moreover, since <em>&eta;</em> is assumed to converge, <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
 
 <ol>
 <li>There is only one solution <em>&eta;</em>(<em>n</em>) in the case at hand.  Unlike so-called <a href="https://math.stackexchange.com/questions/3993739"><strong><em>functional equations</em></strong></a> and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in the case at hand, namely the solution that makes the series converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(4 * <em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(8 * <em>n</em>) &minus; <em>&phi;</em>(4*<em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = ...</li>
-<li>$log_2(n)$ is the number $x$ such that $2^n = x$.</li>
+<li>$\log_2(n)$ is the number $x$ such that $2^x = n$.</li>
 </ol>
 </blockquote>
+
+<p><strong>Proposition 1A.</strong> <em>If a scheme satisfies Theorem 1, the polynomials $g_n$ and $h_n$ in the scheme can be made to satisfy conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)[^1] as follows:</em></p>
+
+<ul>
+<li><em>$g_n = g</em>{n-1}$ and $h_n = h_{n-1}$ whenever $n$ is an integer greater than 1 and not a power of 2._</li>
+<li><em>If <strong>fabove</strong>(n, k) &gt; 1 for a given $n$ and some $k$, the coefficients of $h_n$ (the upper polynomial) are all 1.</em></li>
+<li><em>If <strong>fbelow</strong>(n, k) &lt; 0 for a given $n$ and some $k$, the coefficients of $h_n$ (the upper polynomial) are all 0.</em></li>
+</ul>
+
+<p><em>Proof:</em> Condition (i) of Proposition 3 says that each coefficient of the polynomials must be 0 or greater and 1 or less.  This is ensured starting with a large enough value of <em>n</em> greater than 0 that&#39;s a power of 2, call it <em>n</em><sub>1</sub>, as shown next.</p>
+
+<p>Let <em>&epsilon;</em> be a positive distance between 0 and the minimum or between 1 and the maximum of <em>f</em>, whichever is smaller.  This <em>&epsilon;</em> exists by the assumption that <em>f</em> is bounded away from 0 and 1. Because the series <em>&eta;</em> (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, <em>&eta;</em>(<em>n</em>) will eventually stay less than <em>&epsilon;</em>.  And if $n\ge n_0$ is a power of 2 (where $n_0$ is as in Theorem 1), the <code>f(k/n)</code> term is bounded by the minimum and maximum of <em>f</em> by construction. This combined means that the lower and upper polynomials&#39; Bernstein coefficients will eventually be bounded by 0 and 1 for every integer <em>n</em> starting with <em>n</em><sub>1</sub>.</p>
+
+<p>For <em>n</em> less than <em>n</em><sub>1</sub>, condition (i) is ensured by setting the lower or upper polynomial&#39;s coefficient to 0 or 1, respectively, whenever a coefficient of the degree-<em>n</em> polynomial would otherwise be less than 0 or greater than 1, respectively.</p>
+
+<p>Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The only thing to add is that for $n$ less than <em>n</em><sub>1</sub>, the lower and upper polynomials $g_n$ and $h_n$ can be treated as 0 or 1 without affecting convergence, and that for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iii) by Remark B of Nacu and Peres (2005)[^1].</p>
+
+<p>Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For <em>n</em>=<em>n</em><sub>1</sub>, condition (iv) is maintained by noting that the degree-<em>n</em><sub>1</sub> polynomial&#39;s coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;</p>
 
 <p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha;, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
 
@@ -1471,9 +1499,11 @@
 <p><em>Proof.</em> Because $f$ is Hölder continuous, it admits the modulus of continuity $\omega(x)=Mx^{\alpha}$.  By part 1 of lemma 2:</p>
 
 <ul>
-<li>For each integer $n\ge 1$ that&#39;s a power of 2 ($n0=1$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(2n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$ (where $\eta(n)$ is as in Theorem 1).</li>
-<li>For each integer $n\ge 4$ that&#39;s a power of 2 ($n0=4$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(7n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=$ M*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)*n<sup>&alpha;/2</sup>).</li>
+<li>For each integer $n\ge 1$ that&#39;s a power of 2 ($n_0=1$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(2n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$ (where $\eta(n)$ is as in Theorem 1).</li>
+<li>For each integer $n\ge 4$ that&#39;s a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(7n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=$ M*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)*n<sup>&alpha;/2</sup>).</li>
 </ul>
+
+<p>In both cases $\eta(n)$ is finite and converges to 0 as $n$ increases.</p>
 
 <p>The result then follows from Theorem 1. &#x25a1;</p>
 
@@ -1508,7 +1538,7 @@
 <li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + L/(7*n).</em></li>
 </ul>
 
-<p><em>Proof.</em> By part 3 of lemma 2, for each integer $n\ge 4$ that&#39;s a power of 2 ($n0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1).  The result then follows from Theorem 1. &#x25a1;</p>
+<p><em>Proof.</em> By part 3 of lemma 2, for each integer $n\ge 4$ that&#39;s a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1). $\eta(n)$ is finite and converges to 0 as $n$ increases. The result then follows from Theorem 1. &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> Nacu and Peres (2005)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the domain [0, 1] that is not greater than a constant (a slightly stronger condition than having a Lipschitz continuous derivative on that domain).</p>
