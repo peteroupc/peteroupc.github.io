@@ -1407,9 +1407,9 @@
 
 <p>$$\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),$$</p>
 
-<p><em>for every integer n&ge;1 that&#39;s a power of 2.  If the infinite series &eta;(n) converges to a finite value for every $n\ge 1$, and if it converges to 0 as $n$ gets large, then the following scheme for f(&lambda;) is valid in the following sense:</em></p>
+<p><em>for every integer n&ge;1 that&#39;s a power of 2.  If the infinite series &eta;(n) converges to a finite value for each such $n$, and if it converges to 0 as $n$ gets large, then the following scheme for f(&lambda;) is valid in the following sense:</em></p>
 
-<p><em>There are polynomials $g_n$ and $h_n$ (where $n\ge 1$ is an integer power of 2) as follows. The $k$-th Bernstein coefficients of $g_n$ and $h_n$ are <strong>fbelow</strong>(n, k) and <strong>fabove</strong>(n, k), respectively ($0\le k\le n$).</em></p>
+<p><em>There are polynomials $g_n$ and $h_n$ (where $n\ge 1$ is an integer power of 2) as follows. The $k$-th Bernstein coefficient of $g_n$ and $h_n$ is <strong>fbelow</strong>(n, k) and <strong>fabove</strong>(n, k), respectively (where $0\le k\le n$), where:</em></p>
 
 <p><em>If $n_0 = 1$:</em></p>
 
@@ -1421,8 +1421,8 @@
 <p><em>If $n_0 &gt; 1$:</em></p>
 
 <ul>
-<li><em><strong>fbelow</strong>(n, k) =</em> min(<strong>fbelow</strong>($n_0$,0), <strong>fbelow</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) if n &lt; $n_0$; $f(k/n)-\eta(n)$ otherwise.</li>
-<li><em><strong>fabove</strong>(n, k) =</em> max(<strong>fabove</strong>($n_0$,0), <strong>fabove</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) if n &lt; $n_0$; $f(k/n)+\eta(n)$ otherwise.</li>
+<li><em><strong>fbelow</strong>(n, k) =</em> min(<strong>fbelow</strong>($n_0$,0), <strong>fbelow</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) <em>if</em> $n &lt; n_0$; $f(k/n)-\eta(n)$ <em>otherwise.</em></li>
+<li><em><strong>fabove</strong>(n, k) =</em> max(<strong>fabove</strong>($n_0$,0), <strong>fabove</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) <em>if</em> $n &lt; n_0$; $f(k/n)+\eta(n)$ <em>otherwise.</em></li>
 </ul>
 
 <p><em>The polynomials $g_n$ and $h_n$ satisfy:</em></p>
@@ -1430,7 +1430,7 @@
 <ol>
 <li><em>$g_n \le h_n$.</em></li>
 <li><em>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</em></li>
-<li>$(g_{n+1}-g_n)$ <em>and</em> $(h_{n}-h_{n+1})$ <em>are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (This is the consistency requirement.)</em></li>
+<li>$(g_{n+1}-g_n)$ <em>and</em> $(h_{n}-h_{n+1})$ _are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.</li>
 </ol>
 
 <p><em>Proof.</em> For simplicity, this proof assumes first that $n_0 = 1$.</p>
@@ -1443,13 +1443,13 @@
 
 <p>Item 3 is the <em>consistency requirement</em> described earlier in this page. The is ensured as in Proposition 10 of Nacu and Peres (2005)[^1] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is <em>&eta;</em>(<em>n</em>), a solution to the equation 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(2 * <em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) (see note below), where <em>&phi;</em>(<em>n</em>) is a function that takes on a non-negative value.</p>
 
-<p><em>&phi;</em>(<em>n</em>) is essentially the minimum distance between one polynomial and the next so that the consistency requirement is met between those two polynomials.  Compare the assumptions on <em>&phi;</em> in Theorem 1 with equations (10) and (11) in Nacu and Peres (2005).</p>
+<p><em>&phi;</em>(<em>n</em>) is, roughly speaking, the minimum distance between one polynomial and the next so that the consistency requirement is met between those two polynomials.  Compare the assumptions on <em>&phi;</em> in Theorem 1 with equations (10) and (11) in Nacu and Peres (2005).</p>
 
 <p>The solution for $\eta(n)$ given in the statement of the theorem is easy to prove by noting that this is a recursive process: we start by calculating the series for <em>n</em> = 2*<em>n</em>, then adding <em>&phi;</em>(<em>n</em>) to it (which will be positive), in effect working backwards and recursively, and we can easily see that we can calculate the series for <em>n</em> = 2*<em>n</em> only if the series converges, hence the assumption of a converging series.</p>
 
 <p>Now to prove the result assuming that $n_0 &gt; 1$.</p>
 
-<p>Then we can take advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start defining the polynomials at any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 or greater, but less than $n_0$, would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the <em>&phi;</em> given in this theorem, the series <em>&eta;</em>(<em>n</em>) in the theorem remains nonnegative.  Moreover, since <em>&eta;</em> is assumed to converge, <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
+<p>Then we can take advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start defining the polynomials at any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 or greater, but less than $n_0$, would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal. The lower constants are no greater than $g_{n_0}$&#39;s lowest Bernstein coefficient, and the upper constants are no less than $g_{n_0}$&#39;s highest Bernstein coefficients; they meet Item 3 because these lower and upper constants, when elevated to degree $n_0$, have Bernstein coefficients that are still no greater or no less, respectively, than the corresponding degree-$n_0$ polynomial. With the <em>&phi;</em> given in this theorem, the series <em>&eta;</em>(<em>n</em>) in the theorem remains nonnegative.  Moreover, since <em>&eta;</em> is assumed to converge, <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1463,9 +1463,9 @@
 <p><strong>Proposition 1A.</strong> <em>If a scheme satisfies Theorem 1, the polynomials $g_n$ and $h_n$ in the scheme can be made to satisfy conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)[^1] as follows:</em></p>
 
 <ul>
-<li><em>$g_n = g</em>{n-1}$ and $h_n = h_{n-1}$ whenever $n$ is an integer greater than 1 and not a power of 2._</li>
+<li>$g_n$ = $g_{n-1}$ <em>and</em> $h_n$ = $h_{n-1}$ <em>whenever $n$ is an integer greater than 1 and not a power of 2.</em></li>
 <li><em>If <strong>fabove</strong>(n, k) &gt; 1 for a given $n$ and some $k$, the coefficients of $h_n$ (the upper polynomial) are all 1.</em></li>
-<li><em>If <strong>fbelow</strong>(n, k) &lt; 0 for a given $n$ and some $k$, the coefficients of $h_n$ (the upper polynomial) are all 0.</em></li>
+<li><em>If <strong>fbelow</strong>(n, k) &lt; 0 for a given $n$ and some $k$, the coefficients of $g_n$ (the lower polynomial) are all 0.</em></li>
 </ul>
 
 <p><em>Proof:</em> Condition (i) of Proposition 3 says that each coefficient of the polynomials must be 0 or greater and 1 or less.  This is ensured starting with a large enough value of <em>n</em> greater than 0 that&#39;s a power of 2, call it <em>n</em><sub>1</sub>, as shown next.</p>
@@ -1586,7 +1586,7 @@
 
 <p>This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f,\lambda)$ whenever $0\le \lambda\le 1$.  &#x25a1;</p>
 
-<p><strong>Corollary 4</strong>.  <em>If $f(\lambda)$ satisfies the scheme given in Theorem 1, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge 1$ that&#39;s a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$.</em></p>
+<p><strong>Corollary 4</strong>.  <em>If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that&#39;s a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$.</em></p>
 
 <p><a id=A_Conjecture_on_Polynomial_Approximation></a></p>
 
