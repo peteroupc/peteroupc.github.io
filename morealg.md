@@ -21,6 +21,7 @@ This page contains additional algorithms for arbitrary-precision sampling of dis
 - [**Contents**](#Contents)
 - [**Bernoulli Factories**](#Bernoulli_Factories)
     - [**Certain Power Series**](#Certain_Power_Series)
+        - [**Power Series Examples**](#Power_Series_Examples)
         - [**Series with Non-Negative Coefficients**](#Series_with_Non_Negative_Coefficients)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
@@ -118,9 +119,12 @@ Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (On
     1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m$ times.  Return 0 if any of the runs returns 0.
     2. Run a Bernoulli factory algorithm for $B(\lambda)$, and return the result.
 
--------
+> **Note:** The general martingale algorithm allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence's nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is less than or equal to $\lambda$.
 
-The following examples show how this method leads to algorithms for simulating certain factory functions.
+<a id=Power_Series_Examples></a>
+#### Power Series Examples
+
+The following examples show how the method just given leads to algorithms for simulating certain factory functions.
 
 **Example 1:** Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.
 
@@ -173,13 +177,11 @@ To simulate a function in the table, run the **general martingale algorithm** wi
 >     1. **Get the _i_<sup>th</sup> Bernoulli number**, call it _b_.  Add _b_\*choose(_m_+1, _i_) to _v_.[^4]
 >     2. Add 2 to _i_.
 > 4. Return &minus;_v_/(_m_+1).
->
-> **Note:** The general martingale algorithm allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence's nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is less than or equal to $\lambda$.
 
 <a id=Series_with_Non_Negative_Coefficients></a>
 #### Series with Non-Negative Coefficients
 
-Some factory functions with power series expansions can be written as follows:$$f(\lambda)=a_0 g(\lambda)^0 + ... + a_i g(\lambda)^i + ...$$ Here, the _coefficients_ $a_i$ are 0 or greater and their sum is 1 or less.
+Some factory functions with power series expansions can be written as follows:$$f(\lambda)=a_0 (g(\lambda))^0 + ... + a_i (g(\lambda))^i + ...,$$ where this time, the _coefficients_ $a_i$ are 0 or greater and their sum is 1 or less.
 
 If $g(\lambda) = \lambda$, this kind of function&mdash;
 

@@ -1060,7 +1060,7 @@ _Proof._ By part 3 of lemma 2, for each integer $n\ge 4$ that's a power of 2 ($n
 
 > **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the domain [0, 1] that is not greater than a constant \(a slightly stronger condition than having a Lipschitz continuous derivative on that domain).
 
-**Theorem 4.** _Let f(&lambda;) be a strictly bounded factory function.  If f is convex and nondecreasing, then Theorem 1 remains valid with &phi;(n) = **E**\[f(Y/n)\] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
+**Theorem 2.** _Let f(&lambda;) be a strictly bounded factory function.  If f is convex and nondecreasing, then Theorem 1 remains valid with &phi;(n) = **E**\[f(Y/n)\] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
 
 _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1's assumption that the series converges, so that _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
 
