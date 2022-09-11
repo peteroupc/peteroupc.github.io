@@ -36,8 +36,10 @@
 <li><a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>
 
 <ul>
+<li><a href="#General_Power_Series"><strong>General Power Series</strong></a></li>
 <li><a href="#Power_Series_Examples"><strong>Power Series Examples</strong></a></li>
-<li><a href="#Series_with_Non_Negative_Coefficients"><strong>Series with Non-Negative Coefficients</strong></a></li>
+<li><a href="#Series_with_Non_Negative_Coefficients_Summing_to_1"><strong>Series with Non-Negative Coefficients Summing to 1</strong></a></li>
+<li><a href="#Series_with_General_Non_Negative_Coefficients"><strong>Series with General Non-Negative Coefficients</strong></a></li>
 </ul></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
@@ -124,17 +126,35 @@
 
 <h3>Certain Power Series</h3>
 
-<p>Certain Bernoulli factory functions can be written as follows:</p>
+<p>A <em>power series</em> is a function written as&mdash; $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are <em>coefficients</em> and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this section do, and they must be factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function.</p>
 
-<p>$$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^1 + ...,$$</p>
+<p>Depending on the coefficients, different algorithms can be built to simulate a power series function:</p>
 
-<p>where $g(\lambda)$ is a Bernoulli factory function and each $a_i$ is called a <em>coefficient</em>.  This way of writing the function is called a <em>power series expansion</em>.  If all the coefficients are non-negative, see the section &quot;Series with Non-Negative Coefficients&quot;, later.</p>
+<ul>
+<li>The coefficients are arbitrary, but can be split into two parts.</li>
+<li>The coefficients are non-negative and sum to 1 or less.</li>
+<li>The coefficients are non-negative and may sum to 1 or greater.</li>
+</ul>
 
-<p>Suppose the following:</p>
+<blockquote>
+<p><strong>Note:</strong> Not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:</p>
+
+<ul>
+<li>Algorithms that handle power series with non-negative coefficients that are irrational numbers or sum to an irrational number.  (The series are technically covered in &quot;Series with Non-Negative Coefficients Summing to 1&quot; and &quot;Series with General Non-Negative Coefficients&quot;, but the resulting algorithms become inexact in practice.)</li>
+<li>Series with coefficients that alternate in sign, but do not satisfy the general martingale algorithm.  This includes nearly all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0. (An example is $\sin(\lambda\pi/2)$.)</li>
+<li>Series with negative and positive coefficients that do not eventually alternate in sign (ignoring zeros).</li>
+</ul>
+</blockquote>
+
+<p><a id=General_Power_Series></a></p>
+
+<h4>General Power Series</h4>
+
+<p>Suppose the following holds true for a power series function $f(\lambda)$:</p>
 
 <ul>
 <li>There is a rational number $Z$ defined as follows. For every $\lambda$ in $[0, 1]$, $f(\lambda) \le Z \lt 1$.</li>
-<li>There is an even integer $m$ defined as follows. The series above can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm.  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$&#39;s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence); such functions $C$ admit an algorithm given in Łatuszyński et al. (2019/2011)[^1]. ($C$ and $A$ admit a Bernoulli factory only if they map the interval [0, 1] to [0, 1], among other requirements.)</li>
+<li>There is an even integer $m$ defined as follows. The series above can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm.  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$&#39;s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence); such functions $C$ admit the so-called &quot;general martingale algorithm&quot;, described later. ($C$ and $A$ admit a Bernoulli factory only if they map the interval [0, 1] to [0, 1], among other requirements.)</li>
 </ul>
 
 <p>In addition, the algorithm will be simpler if each coefficient $a_i$ is a rational number.</p>
@@ -146,7 +166,7 @@
 <li>$B(\lambda) = C(\lambda) / (g(\lambda))^{m} = \sum_{i\ge m} a_{m+i} (g(\lambda))^i$.</li>
 </ul>
 
-<p>Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_{m-1}$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^2].)  Let $b_0, ..., b_{m-1}$ be the Bernstein-form polynomial&#39;s coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.</p>
+<p>Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_{m-1}$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^1].)  Let $b_0, ..., b_{m-1}$ be the Bernstein-form polynomial&#39;s coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.</p>
 
 <p><strong>Algorithm 1:</strong> Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a>, with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory &quot;flips the input coin&quot;, it runs the sub-algorithm below.</p>
 
@@ -166,15 +186,58 @@
 </ol></li>
 </ul>
 
+<hr>
+
+<p>Now suppose the following holds true for a power series function $f(\lambda)$:</p>
+
+<ul>
+<li>$f$ is written as in equation $(1)$.</li>
+<li>Suppose $(a_i)$ is the sequence formed from the coefficients of the series.</li>
+<li>Let $(d_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.  Then suppose that:
+
+<ul>
+<li>$d_0$ is greater than 0, and the elements in $(d_j)$ alternate in sign.</li>
+<li>The absolute values of $(d_j)$&#39;s elements are 1 or less and form a nonincreasing sequence that is finite or converges to 0.</li>
+</ul></li>
+</ul>
+
+<p>In addition, the coefficients should be rational numbers.</p>
+
 <blockquote>
-<p><strong>Note:</strong> The general martingale algorithm allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence&#39;s nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is less than or equal to $\lambda$.</p>
+<p><strong>Example:</strong> Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (for example, $a_0 = 1/2$) and deleting the zeros leads to $(d_i) = (1/2, -1/4, 1/8, ...)$  (for example, $d_0 = 1/2$), which meets the requirements above.</p>
+</blockquote>
+
+<p>Then the algorithm below, based on an algorithm by Łatuszyński et al. (2009/2011, especially section 3.1)[^2], simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$.</p>
+
+<p><strong>General martingale algorithm:</strong></p>
+
+<ol>
+<li>Set <em>u</em> to abs($d_0$) ($d_0$ is the value of the first nonzero coefficient in the sequence $(a_i)$), set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
+<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
+<li>If <em>w</em> is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ (if $g(\lambda) = \lambda$, this is done by flipping the input coin), then multiply <em>w</em> by the result of the run.</li>
+<li>If $a_n$ is greater than 0: Set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * $a_n$, then, if no further nonzero coefficients follow $a_n$, set <em>&#x2113;</em> to <em>u</em>.</li>
+<li>If $a_n$ is less than 0: Set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * abs($a_n$), then, if no further nonzero coefficients follow $a_n$, set <em>u</em> to <em>&#x2113;</em>.</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  Otherwise, if <em>ret</em> is less than <em>u</em>, add 1 to <em>n</em>.  Otherwise, return 0.  (If <em>ret</em> is a uniform partially-sampled random number [PSRN], these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+</ol></li>
+</ol>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>The <strong>general martingale algorithm</strong>, as it&#39;s called in this article, supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the general martingale algorithm uses that paper&#39;s framework.  A proof of its correctness is given in the appendix of &quot;Bernoulli Factory Algorithms&quot;.</li>
+<li>The <strong>general martingale algorithm</strong> allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence&#39;s nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is less than or equal to $\lambda$.</li>
+</ol>
 </blockquote>
 
 <p><a id=Power_Series_Examples></a></p>
 
 <h4>Power Series Examples</h4>
 
-<p>The following examples show how the method just given leads to algorithms for simulating certain factory functions.</p>
+<p>The following examples show how <strong>Algorithm 1</strong> leads to algorithms for simulating certain factory functions.</p>
 
 <p><strong>Example 1:</strong> Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.</p>
 
@@ -188,7 +251,7 @@
 <ul>
 <li>$g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.</li>
 <li>The coefficients $b_0, ..., b_{m-1}$, in order, are the Bernstein-form coefficients found for $A$.</li>
-<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) with $g(\lambda) = \lambda$ and $a_i = h_{m+i}$.</li>
+<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the <strong>general martingale algorithm</strong> with $g(\lambda) = \lambda$ and $a_i = h_{m+i}$.</li>
 </ul></li>
 </ul>
 
@@ -219,7 +282,7 @@
 
 <p><strong>Example 5:</strong> Take $f(\lambda) = 1/2 + \cos(\pi\lambda)/4$.  This is as in Example 3, except step 2 runs the algorithm for $1/2 + \cos(6\lambda)/4$ in Example 4.</p>
 
-<p><strong>More Examples:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;).  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table), and ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient.</p>
+<p><strong>More Examples:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong>.  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table), and ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient.</p>
 
 <table><thead>
 <tr>
@@ -268,11 +331,11 @@
 </ol>
 </blockquote>
 
-<p><a id=Series_with_Non_Negative_Coefficients></a></p>
+<p><a id=Series_with_Non_Negative_Coefficients_Summing_to_1></a></p>
 
-<h4>Series with Non-Negative Coefficients</h4>
+<h4>Series with Non-Negative Coefficients Summing to 1</h4>
 
-<p>Some factory functions with power series expansions can be written as follows:$$f(\lambda)=a_0 (g(\lambda))^0 + ... + a_i (g(\lambda))^i + ...,$$ where this time, the <em>coefficients</em> $a_i$ are 0 or greater and their sum is 1 or less.</p>
+<p>Now, suppose $f(\lambda)$ can be written as a power series in equation $(1)$, but this time, the <em>coefficients</em> $a_i$ are 0 or greater and their sum is 1 or less.</p>
 
 <p>If $g(\lambda) = \lambda$, this kind of function&mdash;</p>
 
@@ -303,6 +366,8 @@
 
 <p>Once $a_n$ and $w(n)$ are found, the function $f(\lambda)$ can be simulated using the following algorithm, which takes advantage of the <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination method</strong></a>.</p>
 
+<p><strong>Algorithm 2:</strong></p>
+
 <ol>
 <li>Generate a number <em>n</em> that equals <em>i</em> with probability $w(i)$.</li>
 <li>(The next two steps succeed with probability $\frac{a_n}{w(n)} \lambda^n$.) Let <em>P</em> be $a_n/w(n)$.  With probability <em>P</em>, go to the next step.  Otherwise, return 0.</li>
@@ -322,7 +387,7 @@
 <p>For this particular function:</p>
 
 <ul>
-<li>Step 1 can read: &quot;(1a.) Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way, then set <em>n</em> to the number of ones generated this way; (1b.) Set <em>n</em> to 2*<em>n</em> + 2.&quot;</li>
+<li>Step 1 of <strong>Algorithm 2</strong> can read: &quot;(1a.) Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way, then set <em>n</em> to the number of ones generated this way; (1b.) Set <em>n</em> to 2*<em>n</em> + 2.&quot;</li>
 <li>The <em>P</em> in step 2 is $a_n/w(n) = \frac{1}{n!} / \frac{1}{2^{n-2}} = \frac{2^{n/2}}{n!}$ for each allowed $n$.</li>
 <li>The $g(\lambda)$ in step 3 is simply $\lambda$.</li>
 </ul>
@@ -440,6 +505,81 @@
 <li>The algorithm above involves generating $X$ with probability $w(X)$, then doing $X$ coin flips.  Thus, the algorithm uses, on average, at least the number of unbiased random bits needed to generate $X$ on average (Knuth and Yao 1976)[^8], plus a number of coin flips depending on $\lambda$ and the expected value (&quot;long-run average&quot;) of $X$.</li>
 </ol>
 </blockquote>
+
+<p><strong>Algorithm 2</strong> covers an algorithm that was given by Luis Mendo (2019)[^62] for simulating certain power series, but works only if the coefficients sum to 1 or less and only if coefficient 0 ($a_0$) is 0.</p>
+
+<p>An algorithm equivalent to Mendo&#39;s can be achieved by modifying <strong>Algorithm 2</strong> as follows, which shows Mendo&#39;s algorithm is actually a special case of the <a href="#Convex_Combinations"><strong>convex combination algorithm</strong></a>.  Let <em>CS</em> be the sum of all coefficients $a_i$, starting with $i=1$.</p>
+
+<ul>
+<li>Step 1 of <strong>Algorithm 2</strong> becomes: &quot;(1a.) Set <em>dsum</em> to 0 and $n$ to 1; (1b.) With probability $a_n$/(<em>CS</em> &minus; <em>dsum</em>), go to step 2. Otherwise, add $a_n$ to <em>dsum</em>; (1c.) Add 1 to <em>i</em> and go to step 1b.&quot; (Generate $n$ with probability $a_n$/<em>CS</em>.)</li>
+<li>Step 2 becomes &quot;Go to step 3&quot;. (The <em>P</em> in <strong>Algorithm 2</strong> is not used &mdash; it&#39;s effectively $a_n/a_n = 1$; see note.)</li>
+<li>$g(\lambda)$ (in Step 3) is either $\lambda$ (flip the input coin) or $1-\lambda$ (flip the input coin and take 1 minus the flip).</li>
+</ul>
+
+<p>Mendo&#39;s algorithm and extensions of it mentioned by him cover several variations of power series as follows:</p>
+
+<table><thead>
+<tr>
+<th>No.</th>
+<th>Power Series</th>
+<th>Algorithm</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>$f(\lambda)=1-f_0(1-\lambda)$</td>
+<td>With probability <em>CS</em>, run the modified algorithm with $g(\lambda)=1-\lambda$ and return the result.  Otherwise, return 0.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>$f(\lambda)=f_0(1-\lambda)$</td>
+<td>With probability <em>CS</em>, run the modified algorithm with $g(\lambda)=1-\lambda$ and return 1 minus the result.  Otherwise, return 1.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$f(\lambda)=f_0(\lambda)$</td>
+<td>With probability <em>CS</em>, run the modified algorithm with $g(\lambda)=\lambda$ and return 1 minus the result.  Otherwise, return 0.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$f(\lambda)=1-f_0(\lambda)$</td>
+<td>With probability <em>CS</em>, run the modified algorithm with $g(\lambda)=\lambda$ and return the result.  Otherwise, return 1.</td>
+</tr>
+</tbody></table>
+
+<p>The conditions on $f$ given above mean that&mdash;</p>
+
+<ul>
+<li>for series 1 (the main form in the Mendo paper), <em>f</em>(0) = 1&minus;<em>CS</em> and <em>f</em>(1) = 1,</li>
+<li>for series 2, <em>f</em>(0) = <em>CS</em> and <em>f</em>(1) = 0,</li>
+<li>for series 3, <em>f</em>(0) = 0 and <em>f</em>(1) = <em>CS</em>, and</li>
+<li>for series 4, <em>f</em>(0) = 1 and <em>f</em>(1) = 1&minus;<em>CS</em>.</li>
+</ul>
+
+<p><a id=Series_with_General_Non_Negative_Coefficients></a></p>
+
+<h4>Series with General Non-Negative Coefficients</h4>
+
+<p>If $f$ is a power series written as equation (1), but&mdash;</p>
+
+<ul>
+<li>all of the coefficients are non-negative, and</li>
+<li>one or more of the coefficients are 1 or greater,</li>
+</ul>
+
+<p>Nacu and Peres (2005, proposition 16)[^2] gave an algorithm which takes the following parameters:</p>
+
+<ul>
+<li><em>t</em> is a rational number such that <em>B</em> &lt; <em>t</em> &le; 1 and  <em>f</em>(<em>t</em>) &lt; 1.</li>
+<li><em>&#x03F5;</em> is a rational number such that 0 &lt; <em>&#x03F5; &le; (_t</em> &minus; <em>B</em>)/2.</li>
+</ul>
+
+<p><em>B</em> is not a parameter, but is the maximum allowed value for <em>&lambda;</em> (probability of heads), and is greater than 0 and less than 1.  The following algorithm is based on that algorithm, but runs a Bernoulli factory for $g(\lambda)$ instead of flipping the input coin with probability of heads $\lambda$.</p>
+
+<ol>
+<li>Create a <em>&nu;</em> input coin that does the following: &quot;(1) Set <em>n</em> to 0. (2) With probability <em>&#x03F5;</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 &minus; $a_n\cdot t^n$, return 0. (4) Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> <em>n</em> times, <em>x</em>/<em>y</em> = 1/(<em>t</em> &minus; <em>&#x03F5;</em>), and <em>&#x03F5;</em> = <em>&#x03F5;</em>.  If the linear Bernoulli factory would flip the input coin, the coin is &#39;flipped&#39; by running a Bernoulli factory for $g(\lambda)$.  If any run of the linear Bernoulli factory returns 0, return 0.  Otherwise, return 1.&quot;</li>
+<li>Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> once, using the <em>&nu;</em> input coin described earlier, <em>x</em>/<em>y</em> = <em>t</em>/<em>&#x03F5;</em>, and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
+</ol>
 
 <p><a id=Certain_Piecewise_Linear_Functions></a></p>
 
@@ -1757,9 +1897,9 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <h2>Notes</h2>
 
-<p>[^1]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
+<p>[^1]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
 
-<p>[^2]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
+<p>[^2]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
 
 <p>[^3]: &quot;<em>x</em> is odd&quot; means that <em>x</em> is an integer and not divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 1, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 1.</p>
 
@@ -1878,6 +2018,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <p>[^60]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
 <p>[^61]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+
+<p>[^62]: Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -2005,7 +2147,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <li>Otherwise, <em>f</em>(<em>U</em>) must map the interval [0, 1] to [0, 1] and be continuous everywhere or &quot;almost everywhere&quot;.</li>
 </ul>
 
-<p>The first set of conditions is the same as those for the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011)[^1].</p></li>
+<p>The first set of conditions is the same as those for the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011)[^2].</p></li>
 </ul>
 
 <p>The algorithm follows.</p>

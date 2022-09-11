@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2022/07/31"><meta name="citation_online_date" content="2022/07/31"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2022/09/11"><meta name="citation_online_date" content="2022/09/11"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -526,140 +526,7 @@
 
 <p>A <em>power series</em> is a function written as&mdash; $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are <em>coefficients</em> and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this article do, and they must be factory functions.</p>
 
-<hr>
-
-<p>For certain power series with non-negative coefficients, Mendo (2019)[^19] gave the following algorithm.  The algorithm uses parameter <em>v</em> and is given below.  A table of supported power series will follow the algorithm.</p>
-
-<ol>
-<li>Set <em>dsum</em> to 0 and <em>i</em> to 1.</li>
-<li>Do the following process repeatedly, until this algorithm returns a value:
-
-<ol>
-<li>Flip the input coin.  If it returns <em>v</em>, return 1.</li>
-<li>If the power series has infinitely many coefficients, or if <em>i</em> is equal to or less than the number of coefficients:
-
-<ul>
-<li>With probability <em>c</em>[<em>i</em>]/(<em>CS</em> &minus; <em>dsum</em>), return 0.  Otherwise, add <em>c</em>[<em>i</em>] to <em>dsum</em>. (<em>CS</em> is defined later.)</li>
-</ul></li>
-<li>Add 1 to <em>i</em>.</li>
-</ol></li>
-</ol>
-
-<p>A table of supported power series follows:</p>
-
-<table><thead>
-<tr>
-<th>No.</th>
-<th>Power Series</th>
-<th>Algorithm</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>1</td>
-<td><em>f</em>(<em>&lambda;</em>) = 1 &minus; (<em>c</em>[1] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em></sup> + ...)</td>
-<td>With probability <em>CS</em>, run the algorithm above with <em>v</em>=1 and return the result.  Otherwise, return 0.</td>
-</tr>
-<tr>
-<td>2</td>
-<td><em>f</em>(<em>&lambda;</em>) = (<em>c</em>[1] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em></sup> + ...)</td>
-<td>With probability <em>CS</em>, run the algorithm above with <em>v</em>=1 and return 1 minus the result.  Otherwise, return 1.</td>
-</tr>
-<tr>
-<td>3</td>
-<td><em>f</em>(<em>&lambda;</em>) = (<em>c</em>[1] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em></sup> + ...)</td>
-<td>With probability <em>CS</em>, run the algorithm above with <em>v</em>=0 and return 1 minus the result.  Otherwise, return 0.</td>
-</tr>
-<tr>
-<td>4</td>
-<td><em>f</em>(<em>&lambda;</em>) = 1 &minus; (<em>c</em>[1] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em></sup> + ...)</td>
-<td>With probability <em>CS</em>, run the algorithm above with <em>v</em>=0 and return the result.  Otherwise, return 1.</td>
-</tr>
-</tbody></table>
-
-<p>In the table above, <em>c</em>[<em>i</em>] &ge; 0 are the coefficients of the series.  <em>CS</em> is the sum of all the coefficients, must be 1 or less, and should be a rational number.  This implies that&mdash;</p>
-
-<ul>
-<li>for series 1, <em>f</em>(0) = 1&minus;<em>CS</em> and <em>f</em>(1) = 1,</li>
-<li>for series 2, <em>f</em>(0) = <em>CS</em> and <em>f</em>(1) = 0,</li>
-<li>for series 3, <em>f</em>(0) = 0 and <em>f</em>(1) = <em>CS</em>, and</li>
-<li>for series 4, <em>f</em>(0) = 1 and <em>f</em>(1) = 1&minus;<em>CS</em>.</li>
-</ul>
-
-<blockquote>
-<p><strong>Note:</strong> For series 1 with <em>CS</em>=1 (the main form in the Mendo paper), a rewrite of this algorithm shows this is actually a special case of <a href="#Convex_Combinations"><strong>convex combinations</strong></a> &mdash; simply generate <em>X</em> with probability <em>c</em>[<em>X</em>], then flip a coin that shows heads with probability (1 &minus; <em>&lambda;</em>)<sup><em>X</em></sup>*<em>c</em>[<em>X</em>]/<em>c</em>[<em>X</em>] = (1 &minus; <em>&lambda;</em>)<sup><em>X</em></sup> (or flip the input coin <em>X</em> times and show heads only if all the flips return 0), then return either 0 if heads is shown, or 1 otherwise.</p>
-</blockquote>
-
-<hr>
-
-<p>For certain other power series with non-negative coefficients (especially those that equal 1 or greater somewhere in the interval [0, 1]), Nacu and Peres (2005, proposition 16)[^16] gave the following algorithm.  It works on functions of the form&mdash;</p>
-
-<p><em>f</em>(<em>&lambda;</em>) = <em>d[0]</em> + <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> + ...,</p>
-
-<p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes the following parameters:</p>
-
-<ul>
-<li><em>t</em> is a rational number in the interval (<em>B</em>, 1] such that <em>f</em>(<em>t</em>) &lt; 1.</li>
-<li><em>&#x03F5;</em> is a rational number in the interval (0, (<em>t</em> &minus; <em>B</em>)/2].</li>
-</ul>
-
-<p><em>B</em> is not a parameter, but is the maximum allowed value for <em>&lambda;</em> (probability of heads) and in the interval (0, 1).</p>
-
-<ol>
-<li>Create a <em>&nu;</em> input coin that does the following: &quot;(1) Set <em>n</em> to 0. (2) With probability <em>&#x03F5;</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 &minus; <em>d</em>[<em>n</em>]*<em>t</em><sup><em>n</em></sup>, return 0. (4) Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> <em>n</em> times, using the (<em>&lambda;</em>) input coin, <em>x</em>/<em>y</em> = 1/(<em>t</em> &minus; <em>&#x03F5;</em>), and <em>&#x03F5;</em> = <em>&#x03F5;</em>.  If any of these runs returns 0, return 0.  Otherwise, return 1.&quot;</li>
-<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> once, using the <em>&nu;</em> input coin described earlier, <em>x</em>/<em>y</em> = <em>t</em>/<em>&#x03F5;</em>, and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
-</ol>
-
-<hr>
-
-<p>(Łatuszyński et al. 2009/2011)[^20] gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.</p>
-
-<p>For example, suppose the following:</p>
-
-<ul>
-<li>$f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the <em>coefficients</em> of the series and form a sequence called $(a_i)$.</li>
-<li>The coefficients should be rational numbers.</li>
-<li>$g(\lambda)$ is a function that admits a Bernoulli factory.</li>
-<li>Let $(d_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.</li>
-<li>$d_0$ is greater than 0, and the elements in $(d_j)$ alternate in sign.</li>
-<li>The absolute values of $(d_j)$&#39;s elements are 1 or less and form a nonincreasing sequence that is finite or converges to 0.</li>
-</ul>
-
-<blockquote>
-<p><strong>Example:</strong> Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (for example, $a_0 = 1/2$) and deleting the zeros leads to $(d_i) = (1/2, -1/4, 1/8, ...)$  (for example, $d_0 = 1/2$), which meets the requirements above.</p>
-</blockquote>
-
-<p>Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$.</p>
-
-<p><strong>General martingale algorithm:</strong></p>
-
-<ol>
-<li>Set <em>u</em> to abs($d_0$) ($d_0$ is the first nonzero coefficient of the series), set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
-<li>Do the following process repeatedly, until this algorithm returns a value:
-
-<ol>
-<li>If <em>w</em> is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ (if $g(\lambda) = \lambda$, this is done by flipping the input coin), then multiply <em>w</em> by the result of the run.</li>
-<li>If $a_n$ is greater than 0: Set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * $a_n$, then, if no further nonzero coefficients follow $a_n$, set <em>&#x2113;</em> to <em>u</em>.</li>
-<li>If $a_n$ is less than 0: Set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * abs($a_n$), then, if no further nonzero coefficients follow $a_n$, set <em>u</em> to <em>&#x2113;</em>.</li>
-<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  Otherwise, if <em>ret</em> is less than <em>u</em>, add 1 to <em>n</em>.  Otherwise, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-</ol></li>
-</ol>
-
-<blockquote>
-<p><strong>Note:</strong>  This algorithm supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the algorithm above uses that paper&#39;s framework.  A proof of its correctness is given in the appendix.</p>
-</blockquote>
-
-<hr>
-
-<blockquote>
-<p><strong>Note:</strong> Not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:</p>
-
-<ul>
-<li>Algorithms that handle power series with non-negative coefficients that are irrational numbers or sum to an irrational number.  (The series are technically covered by Mendo&#39;s algorithm but they become inexact in practice.)</li>
-<li>Series with coefficients that alternate in sign, but do not satisfy the general martingale algorithm.  This includes nearly all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0. (An example is $\sin(\lambda\pi/2)$.)</li>
-<li>Series with negative and positive coefficients that do not alternate in sign (ignoring zeros).</li>
-</ul>
-</blockquote>
+<p>See &quot;<a href="https://peteroupc.github.io/morealg.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot; in &quot;More Algorithms for Arbitrary-Precision Sampling&quot;, which also describes the <strong>general martingale algorithm</strong> used in this article.</p>
 
 <p><a id=General_Factory_Functions></a></p>
 
@@ -681,7 +548,7 @@
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) is an upper bound of the <em>k</em><sup>th</sup> coefficient for a degree-<em>n</em> polynomial in Bernstein form  that comes close to <em>f</em> from above.  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) plus a constant that depends on <em>n</em>. (See note 1.)</li>
 </ul>
 
-<p>The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)[^20] and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)[^21], although an error in Algorithm I is noted below.  The first algorithm follows.</p>
+<p>The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)[^19] and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)[^20], although an error in Algorithm I is noted below.  The first algorithm follows.</p>
 
 <ol>
 <li>Generate a uniform(0, 1) random variate, call it <em>ret</em>.</li>
@@ -715,9 +582,9 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>The efficiency of this algorithm depends on many things, including how &quot;smooth&quot; <em>f</em> is (Holtz et al. 2011)[^22] and how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> for a given function <em>f</em> will require a deep mathematical analysis of that function.  For more information, see my <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes on Bernoulli Factories</strong></a>.</li>
+<li>The efficiency of this algorithm depends on many things, including how &quot;smooth&quot; <em>f</em> is (Holtz et al. 2011)[^21] and how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> for a given function <em>f</em> will require a deep mathematical analysis of that function.  For more information, see my <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes on Bernoulli Factories</strong></a>.</li>
 <li>In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not &quot;smooth&quot; enough.  An intriguing suggestion from Thomas and Blanchet (2012)[^11] is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.</li>
-<li>Normally, the algorithm works only if <em>&lambda;</em> is in the interval (0, 1), If <em>&lambda;</em> can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011)[^22], the <em>c</em> in <strong>FA</strong> and <strong>FB</strong> can be multiplied by 2<sup><em>a</em></sup> (as shown in step 6) to ensure correctness for every value of <em>&lambda;</em>.</li>
+<li>Normally, the algorithm works only if <em>&lambda;</em> is in the interval (0, 1), If <em>&lambda;</em> can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011)[^21], the <em>c</em> in <strong>FA</strong> and <strong>FB</strong> can be multiplied by 2<sup><em>a</em></sup> (as shown in step 6) to ensure correctness for every value of <em>&lambda;</em>.</li>
 </ol>
 </blockquote>
 
@@ -735,12 +602,12 @@
 
 <p>Probabilities can be expressed as a digit expansion (of the form <code>0.dddddd...</code>).  The following algorithm returns 1 with probability <code>p</code> and 0 otherwise, where <code>p</code> is a probability in the half-open interval [0, 1).  (The number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.)  Irrational numbers always have infinite digit expansions, which must be calculated &quot;on-the-fly&quot;.</p>
 
-<p>In the algorithm (see also (Brassard et al., 2019)[^22], (Devroye 1986, p. 769)[^23]), <code>BASE</code> is the digit base, such as 2 for binary or 10 for decimal.</p>
+<p>In the algorithm (see also (Brassard et al., 2019)[^21], (Devroye 1986, p. 769)[^22]), <code>BASE</code> is the digit base, such as 2 for binary or 10 for decimal.</p>
 
 <ol>
 <li>Set <code>u</code> to 0 and <code>k</code> to 1.</li>
 <li>Set <code>u</code> to <code>(u * BASE) + v</code>, where <code>v</code> is a uniform random integer in the interval [0, <code>BASE</code>) (if <code>BASE</code> is 2, then <code>v</code> is simply an unbiased random bit).  Calculate <code>pa</code>, which is an approximation to <code>p</code> such that abs(<code>p</code>&minus;<code>pa</code>) &le; <code>BASE</code><sup>&minus;<code>k</code></sup>.  Set <code>pk</code> to <code>pa</code>&#39;s digit expansion up to the <code>k</code> digits after the point.  Example: If <code>p</code> is <em>&pi;</em>/4, <code>BASE</code> is 10, and <code>k</code> is 5, then <code>pk = 78539</code>.</li>
-<li>If <code>pk + 1 &lt;= u</code>, return 0.[^24] If <code>pk - 2 &gt;= u</code>, return 1.  If neither is the case, add 1 to <code>k</code> and go to step 2.</li>
+<li>If <code>pk + 1 &lt;= u</code>, return 0.[^23] If <code>pk - 2 &gt;= u</code>, return 1.  If neither is the case, add 1 to <code>k</code> and go to step 2.</li>
 </ol>
 
 <p><a id=Continued_Fractions></a></p>
@@ -829,7 +696,7 @@
 
 <h4>Continued Logarithms</h4>
 
-<p>The <em>continued logarithm</em> (Gosper 1978)[^25], (Borwein et al., 2016)[^26] of a number in the open interval (0, 1) has the following continued fraction form: 0 + (1 / 2<sup><em>c</em>[1]</sup>) / (1 + (1 / 2<sup><em>c</em>[2]</sup>) / (1 + ...)), where <em>c</em>[<em>i</em>] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.</p>
+<p>The <em>continued logarithm</em> (Gosper 1978)[^24], (Borwein et al., 2016)[^25] of a number in the open interval (0, 1) has the following continued fraction form: 0 + (1 / 2<sup><em>c</em>[1]</sup>) / (1 + (1 / 2<sup><em>c</em>[2]</sup>) / (1 + ...)), where <em>c</em>[<em>i</em>] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
@@ -849,7 +716,7 @@
 
 <h4>Certain Algebraic Numbers</h4>
 
-<p>A method to sample a probability equal to a polynomial&#39;s root appears in a French-language article by Penaud and Roques (2002)[^27].  The following is an implementation of that method, using the discussion in the paper&#39;s section 1 and Algorithm 2, and incorporates a correction to Algorithm 2.  The algorithm takes a polynomial as follows:</p>
+<p>A method to sample a probability equal to a polynomial&#39;s root appears in a French-language article by Penaud and Roques (2002)[^26].  The following is an implementation of that method, using the discussion in the paper&#39;s section 1 and Algorithm 2, and incorporates a correction to Algorithm 2.  The algorithm takes a polynomial as follows:</p>
 
 <ul>
 <li>It has the form <em>P</em>(<em>x</em>) = <em>a</em>[0]*<em>x</em><sup>0</sup> + <em>a</em>[1]*<em>x</em><sup>1</sup> + ... + <em>a</em>[<em>n</em>]*<em>x</em><sup><em>n</em></sup>, where <em>a</em>[<em>i</em>], the <em>coefficients</em>, are all rational numbers.</li>
@@ -882,14 +749,14 @@
 </ol>
 
 <blockquote>
-<p><strong>Example</strong> (Penaud and Roques 2002)[^27]:  Let <em>P</em>(<em>x</em>) = 1 &minus; <em>x</em> &minus; <em>x</em><sup>2</sup>.  This is a polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/<em>&phi;</em> or about 0.618, and <em>P</em>(0) &gt; 0.  Then given <em>P</em>, the algorithm above samples the probability 1/<em>&phi;</em> exactly.</p>
+<p><strong>Example</strong> (Penaud and Roques 2002)[^26]:  Let <em>P</em>(<em>x</em>) = 1 &minus; <em>x</em> &minus; <em>x</em><sup>2</sup>.  This is a polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/<em>&phi;</em> or about 0.618, and <em>P</em>(0) &gt; 0.  Then given <em>P</em>, the algorithm above samples the probability 1/<em>&phi;</em> exactly.</p>
 </blockquote>
 
 <p><a id=Certain_Converging_Series></a></p>
 
 <h4>Certain Converging Series</h4>
 
-<p>A general-purpose algorithm was given by Mendo (2020/2021)[^28] that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;</p>
+<p>A general-purpose algorithm was given by Mendo (2020/2021)[^27] that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;</p>
 
 <ul>
 <li>that has the form <em>a</em>[0] + <em>a</em>[1] + ..., where <em>a</em>[<em>n</em>] are all rational numbers greater than 0 and sum to <em>p</em> (in other words, the series <em>converges</em> to <em>p</em>), and</li>
@@ -941,13 +808,13 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> Mendo (2020/2021)[^28] as well as Carvalho and Moreira (2022)[^29] discuss how to find error bounds on &quot;cutting off&quot; a series that work for many infinite series.  This can be helpful in finding the appropriate sequences <em>a</em> and <em>err</em> needed for the first algorithm in this section.</p>
+<p><strong>Note:</strong> Mendo (2020/2021)[^27] as well as Carvalho and Moreira (2022)[^28] discuss how to find error bounds on &quot;cutting off&quot; a series that work for many infinite series.  This can be helpful in finding the appropriate sequences <em>a</em> and <em>err</em> needed for the first algorithm in this section.</p>
 
 <p><strong>Examples</strong>:</p>
 
 <ul>
-<li>Let <em>f</em>(<em>&lambda;</em>) = cosh(1)&minus;1.  This function can be rewritten as a series required by the first algorithm in this section, namely <em>f</em>&#39;s <em>Taylor series</em> at 0.  Then this algorithm can be used with <em>a</em>[<em>i</em>] = 1/(((<em>i</em>+1)*2)!) and <em>err</em>[<em>i</em>] = 2/((((<em>i</em>+1)*2)+1)!). [^30]</li>
-<li>Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (for example, as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), a binomial coefficient, will generally require a growing amount of storage that depends on <em>n</em> and <em>k</em>. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)[^31].  Instead of calculating binomial coefficients directly, a series can be calculated that sums to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>.  A similar approach has been implemented (see <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700"><strong>betadist.py</strong></a>).  See also an appendix in (Bringmann et al. 2014)[^32].</li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = cosh(1)&minus;1.  This function can be rewritten as a series required by the first algorithm in this section, namely <em>f</em>&#39;s <em>Taylor series</em> at 0.  Then this algorithm can be used with <em>a</em>[<em>i</em>] = 1/(((<em>i</em>+1)*2)!) and <em>err</em>[<em>i</em>] = 2/((((<em>i</em>+1)*2)+1)!). [^29]</li>
+<li>Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (for example, as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), a binomial coefficient, will generally require a growing amount of storage that depends on <em>n</em> and <em>k</em>. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)[^30].  Instead of calculating binomial coefficients directly, a series can be calculated that sums to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>.  A similar approach has been implemented (see <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700"><strong>betadist.py</strong></a>).  See also an appendix in (Bringmann et al. 2014)[^31].</li>
 </ul>
 </blockquote>
 
@@ -979,7 +846,7 @@
 <li>The function $w_n(\lambda)/g(n)$ admits a Bernoulli factory (which it won&#39;t if it touches 0 or 1 inside the interval (0, 1), but isn&#39;t constant, for example).</li>
 </ul>
 
-<p>See also Mendo (2019)[^19].</p></li>
+<p>See also Mendo (2019)[^32].</p></li>
 <li><p><strong>Constants with non-negative series expansions.</strong> A special case of note 1.  Let <em>g</em> be as in note 1.  Assume we have a constant with the following series expansion: $$c=a_0+a_1+a_2+...,$$ where&mdash;</p>
 
 <ul>
@@ -1289,7 +1156,7 @@
 
 <ol>
 <li>Generate <em>N</em>, a Poisson random variate with mean 1.</li>
-<li>If <em>j</em> = <em>m</em>, flip the <em>&lambda;</em> input coin <em>N</em> times and set <em>N</em> to the number of flips that return 1 this way.  (This transforms a Poisson variate with mean 1 to one with mean <em>&lambda;</em>; see (Devroye 1986, p. 487)[^23].)</li>
+<li>If <em>j</em> = <em>m</em>, flip the <em>&lambda;</em> input coin <em>N</em> times and set <em>N</em> to the number of flips that return 1 this way.  (This transforms a Poisson variate with mean 1 to one with mean <em>&lambda;</em>; see (Devroye 1986, p. 487)[^22].)</li>
 <li>Flip the <em>&mu;</em> input coin until a flip returns 1 or the coin is flipped <em>N</em> times, whichever comes first.  Return 0 if any of the flips, including the last, returns 1.</li>
 <li>Add 1 to <em>j</em>.</li>
 </ol></li>
@@ -1679,7 +1546,7 @@
 
 <h4><em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></h4>
 
-<p>In the algorithm below, the case where <em>x</em>/<em>y</em> is in the open interval (0, 1) is due to Mendo (2019)[^19].  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
+<p>In the algorithm below, the case where <em>x</em>/<em>y</em> is in the open interval (0, 1) is due to Mendo (2019)[^32].  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
 
 <ol>
 <li>If <em>x</em>/<em>y</em> is 0, return 1.</li>
@@ -1706,7 +1573,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>When <em>x</em>/<em>y</em> is less than 1, the expected number of flips grows without bound as <em>&lambda;</em> approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on <em>&lambda;</em> (Mendo 2019)[^19].</li>
+<li>When <em>x</em>/<em>y</em> is less than 1, the expected number of flips grows without bound as <em>&lambda;</em> approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on <em>&lambda;</em> (Mendo 2019)[^32].</li>
 <li>Another algorithm is discussed in the online community <a href="https://stats.stackexchange.com/questions/50272"><strong>Cross Validated</strong></a>.</li>
 </ol>
 </blockquote>
@@ -2236,7 +2103,7 @@ kind of irrational number.</p>
 
 <h4>(<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></h4>
 
-<p>In the algorithm below, <em>a</em>, <em>b</em>, <em>x</em>, and <em>y</em> are integers, and the case where <em>x</em>/<em>y</em> is in the open interval (0, 1) is due to recent work by Mendo (2019)[^19].  This algorithm works only if&mdash;</p>
+<p>In the algorithm below, <em>a</em>, <em>b</em>, <em>x</em>, and <em>y</em> are integers, and the case where <em>x</em>/<em>y</em> is in the open interval (0, 1) is due to recent work by Mendo (2019)[^32].  This algorithm works only if&mdash;</p>
 
 <ul>
 <li> <em>x</em>/<em>y</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1], or</li>
@@ -2453,7 +2320,7 @@ kind of irrational number.</p>
 
 <h4>Euler&ndash;Mascheroni constant <em>&gamma;</em></h4>
 
-<p>The following algorithm to simulate the Euler&ndash;Mascheroni constant <em>&gamma;</em> (about 0.5772) is due to Mendo (2020/2021)[^28].  This solves an open question given in (Flajolet et al., 2010)[^1].   The series used was given by Sondow (2005)[^61]. An algorithm for <em>&gamma;</em> appears here even though it is not yet known whether this constant is irrational.</p>
+<p>The following algorithm to simulate the Euler&ndash;Mascheroni constant <em>&gamma;</em> (about 0.5772) is due to Mendo (2020/2021)[^27].  This solves an open question given in (Flajolet et al., 2010)[^1].   The series used was given by Sondow (2005)[^61]. An algorithm for <em>&gamma;</em> appears here even though it is not yet known whether this constant is irrational.</p>
 
 <ol>
 <li>Set <em>&#x03F5;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, <em>k</em>, and <em>prev</em> to 0 each.</li>
@@ -2471,7 +2338,7 @@ kind of irrational number.</p>
 
 <h4>exp(&minus;<em>x</em>/<em>y</em>) * <em>z</em>/<em>t</em></h4>
 
-<p>This algorithm is again based on an algorithm due to Mendo (2020/2021)[^28].  In this algorithm, <em>x</em>, <em>y</em>, <em>z</em>, and <em>t</em> are integers greater than 0, except <em>x</em> and/or <em>z</em> may be 0, and must be such that exp(&minus;<em>x</em>/<em>y</em>) * <em>z</em>/<em>t</em> is in the interval [0, 1].</p>
+<p>This algorithm is again based on an algorithm due to Mendo (2020/2021)[^27].  In this algorithm, <em>x</em>, <em>y</em>, <em>z</em>, and <em>t</em> are integers greater than 0, except <em>x</em> and/or <em>z</em> may be 0, and must be such that exp(&minus;<em>x</em>/<em>y</em>) * <em>z</em>/<em>t</em> is in the interval [0, 1].</p>
 
 <ol>
 <li>If <em>z</em> is 0, return 0.  If <em>x</em> is 0, return a number that is 1 with probability <em>z</em>/<em>t</em> and 0 otherwise.</li>
@@ -2587,33 +2454,33 @@ kind of irrational number.</p>
 
 <p>[^18]: Propp, J.G., Wilson, D.B., &quot;Exact sampling with coupled Markov chains and applications to statistical mechanics&quot;, 1996.</p>
 
-<p>[^19]: Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</p>
+<p>[^19]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
 
-<p>[^20]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
+<p>[^20]: Flegal, J.M., Herbei, R., &quot;Exact sampling from intractible probability distributions via a Bernoulli factory&quot;, <em>Electronic Journal of Statistics</em> 6, 10-37, 2012.</p>
 
-<p>[^21]: Flegal, J.M., Herbei, R., &quot;Exact sampling from intractible probability distributions via a Bernoulli factory&quot;, <em>Electronic Journal of Statistics</em> 6, 10-37, 2012.</p>
+<p>[^21]: Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092"><strong>https://doi.org/10.3390/e21010092</strong></a> .</p>
 
-<p>[^22]: Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092"><strong>https://doi.org/10.3390/e21010092</strong></a> .</p>
+<p>[^22]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
 
-<p>[^23]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^23]: Note that <code>u * BASE</code><sup>&minus;<code>k</code></sup> is not just within <code>BASE</code><sup>&minus;<code>k</code></sup> of its &quot;true&quot; result, but also not more than that result.  Hence <code>pk + 1 &lt;= u</code> rather than <code>pk + 2 &lt;= u</code>.</p>
 
-<p>[^24]: Note that <code>u * BASE</code><sup>&minus;<code>k</code></sup> is not just within <code>BASE</code><sup>&minus;<code>k</code></sup> of its &quot;true&quot; result, but also not more than that result.  Hence <code>pk + 1 &lt;= u</code> rather than <code>pk + 2 &lt;= u</code>.</p>
+<p>[^24]: Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</p>
 
-<p>[^25]: Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</p>
+<p>[^25]: Borwein, J. et al. “Continued Logarithms and Associated Continued Fractions.” <em>Experimental Mathematics</em> 26 (2017): 412 - 429.</p>
 
-<p>[^26]: Borwein, J. et al. “Continued Logarithms and Associated Continued Fractions.” <em>Experimental Mathematics</em> 26 (2017): 412 - 429.</p>
+<p>[^26]: Penaud, J.G., Roques, O., &quot;Tirage à pile ou face de mots de Fibonacci&quot;, <em>Discrete Mathematics</em> 256, 2002.</p>
 
-<p>[^27]: Penaud, J.G., Roques, O., &quot;Tirage à pile ou face de mots de Fibonacci&quot;, <em>Discrete Mathematics</em> 256, 2002.</p>
+<p>[^27]: Mendo, L., &quot;<a href="https://arxiv.org/abs/2010.14901"><strong>Simulating a coin with irrational bias using rational arithmetic</strong></a>&quot;, arXiv:2010.14901 [math.PR], 2020/2021.</p>
 
-<p>[^28]: Mendo, L., &quot;<a href="https://arxiv.org/abs/2010.14901"><strong>Simulating a coin with irrational bias using rational arithmetic</strong></a>&quot;, arXiv:2010.14901 [math.PR], 2020/2021.</p>
+<p>[^28]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
 
-<p>[^29]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
+<p>[^29]: The error term, which follows from the so-called Lagrange remainder for Taylor series, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that <em>f</em>&#39;s slope, slope-of-slope, etc. functions can achieve.</p>
 
-<p>[^30]: The error term, which follows from the so-called Lagrange remainder for Taylor series, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that <em>f</em>&#39;s slope, slope-of-slope, etc. functions can achieve.</p>
+<p>[^30]: Kozen, D., <a href="http://www.cs.cornell.edu/%7Ekozen/Papers/Coinflip.pdf"><strong>&quot;Optimal Coin Flipping&quot;</strong></a>, 2014.</p>
 
-<p>[^31]: Kozen, D., <a href="http://www.cs.cornell.edu/%7Ekozen/Papers/Coinflip.pdf"><strong>&quot;Optimal Coin Flipping&quot;</strong></a>, 2014.</p>
+<p>[^31]: K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</p>
 
-<p>[^32]: K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</p>
+<p>[^32]: Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</p>
 
 <p>[^33]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli factories and black-box reductions in mechanism design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</p>
 
@@ -2692,7 +2559,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 
 <h3>Using the Input Coin Alone for Randomness</h3>
 
-<p>A function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> (Keane and O&#39;Brien 1994)[^19] if there is a Bernoulli factory algorithm for that function that uses <em>only</em> the input coin as its source of randomness.</p>
+<p>A function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> (Keane and O&#39;Brien 1994)[^32] if there is a Bernoulli factory algorithm for that function that uses <em>only</em> the input coin as its source of randomness.</p>
 
 <p>If a Bernoulli factory algorithm uses a fair coin, it can often generate flips of the fair coin using the input coin instead, with the help of <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> techniques.</p>
 
@@ -2700,7 +2567,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <p><strong>Example:</strong> If a Bernoulli factory algorithm would generate an unbiased random bit, instead it could flip the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then take the result as 0 or 1, respectively (von Neumann 1951)[^62].  But this trick works only if the input coin&#39;s probability of heads is neither 0 nor 1.</p>
 </blockquote>
 
-<p>When Keane and O&#39;Brien (1994)[^19] introduced Bernoulli factories, they showed already that <em>f</em>(<em>&lambda;</em>) is strongly simulable whenever it admits a Bernoulli factory and its domain includes neither 0 nor 1 (so the input coin doesn&#39;t show heads every time or tails every time) &mdash; just use the von Neumann trick as in the example above.  But does <em>f</em> remain strongly simulable if its domain includes 0 and/or 1?  That&#39;s a complexer question; see the <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>supplemental notes</strong></a>.</p>
+<p>When Keane and O&#39;Brien (1994)[^32] introduced Bernoulli factories, they showed already that <em>f</em>(<em>&lambda;</em>) is strongly simulable whenever it admits a Bernoulli factory and its domain includes neither 0 nor 1 (so the input coin doesn&#39;t show heads every time or tails every time) &mdash; just use the von Neumann trick as in the example above.  But does <em>f</em> remain strongly simulable if its domain includes 0 and/or 1?  That&#39;s a complexer question; see the <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>supplemental notes</strong></a>.</p>
 
 <p><a id=The_Entropy_Bound></a></p>
 
@@ -2714,7 +2581,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 
 <p>For example, if <em>f</em>(<em>&lambda;</em>) is a constant, an algorithm whose only randomness comes from the input coin will require more coin flips to simulate that constant, the more strongly that coin leans towards heads or tails.  But this formula works only for such algorithms, even if <em>f</em> isn&#39;t a constant.</p>
 
-<p>For certain values of <em>&lambda;</em>, Kozen (2014)[^31] showed a tighter lower bound of this kind, but in general, this bound is not so easy to describe and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant <em>&tau;</em>, except when <em>&tau;</em> is a multiple of 1/(2<sup><em>n</em></sup>) for some integer <em>n</em>.</p>
+<p>For certain values of <em>&lambda;</em>, Kozen (2014)[^30] showed a tighter lower bound of this kind, but in general, this bound is not so easy to describe and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant <em>&tau;</em>, except when <em>&tau;</em> is a multiple of 1/(2<sup><em>n</em></sup>) for some integer <em>n</em>.</p>
 
 <p><a id=Bernoulli_Factories_and_Unbiased_Estimation></a></p>
 
@@ -2727,7 +2594,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <li>produces heads with a probability that depends on <em>&lambda;</em> (<em>f</em>(<em>&lambda;</em>)) and tails otherwise,</li>
 </ul>
 
-<p>the algorithm acts as an <em>unbiased estimator</em> of <em>f</em>(<em>&lambda;</em>) that produces estimates in [0, 1] with probability 1 (Łatuszyński et al. 2009/2011)[^20]. (And an estimator like this is possible only if <em>f</em> is a factory function; see Łatuszyński.) Because the algorithm is <em>unbiased</em>, its expected value (or mean or &quot;long-run average&quot;) is <em>f</em>(<em>&lambda;</em>).  Here&#39;s one result of unbiasedness: Take a sample of <em>n</em> independent outputs of the algorithm, sum them, then divide by <em>n</em>.  Then with probability 1, this <em>average</em> approaches <em>f</em>(<em>&lambda;</em>) as <em>n</em> gets <em>large</em>.  This is the <em>law of large numbers</em> in action.</p>
+<p>the algorithm acts as an <em>unbiased estimator</em> of <em>f</em>(<em>&lambda;</em>) that produces estimates in [0, 1] with probability 1 (Łatuszyński et al. 2009/2011)[^19]. (And an estimator like this is possible only if <em>f</em> is a factory function; see Łatuszyński.) Because the algorithm is <em>unbiased</em>, its expected value (or mean or &quot;long-run average&quot;) is <em>f</em>(<em>&lambda;</em>).  Here&#39;s one result of unbiasedness: Take a sample of <em>n</em> independent outputs of the algorithm, sum them, then divide by <em>n</em>.  Then with probability 1, this <em>average</em> approaches <em>f</em>(<em>&lambda;</em>) as <em>n</em> gets <em>large</em>.  This is the <em>law of large numbers</em> in action.</p>
 
 <p>On the other hand&mdash;</p>
 
@@ -2823,7 +2690,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Each arbitrary</td>
-<td>(&int;<sub>(&minus;&infin;,&infin;)</sub> DPDF(<em>z</em>) * ((ECDF(<em>z</em>))<sup><em>n</em>&minus;1</sup>/((<em>n</em>&minus;1)!) &minus; (ECDF(<em>z</em>))<sup><em>n</em></sup>/(<em>n</em>!)) <em>dz</em>), for every <em>n</em> &gt; 0 (see also proof of Theorem 2.1 of (Devroye 1986, Chapter IV)[^23]. DPDF and ECDF are defined later.</td>
+<td>(&int;<sub>(&minus;&infin;,&infin;)</sub> DPDF(<em>z</em>) * ((ECDF(<em>z</em>))<sup><em>n</em>&minus;1</sup>/((<em>n</em>&minus;1)!) &minus; (ECDF(<em>z</em>))<sup><em>n</em></sup>/(<em>n</em>!)) <em>dz</em>), for every <em>n</em> &gt; 0 (see also proof of Theorem 2.1 of (Devroye 1986, Chapter IV)[^22]. DPDF and ECDF are defined later.</td>
 <td>Odd is denominator of formula 1 below.</td>
 </tr>
 <tr>
@@ -2850,7 +2717,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Each arbitrary</td>
-<td>Odd is <em>&psi;</em>(<em>x</em>) = (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)[^23]; see also Forsythe 1972[^60]).  Here, DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function for <em>E</em>.<br>If <em>x</em> is uniform in (0, 1), this probability becomes &int;<sub>[0, 1]</sub> <em>&psi;</em>(<em>z</em>) <em>dz</em>.</td>
+<td>Odd is <em>&psi;</em>(<em>x</em>) = (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)[^22]; see also Forsythe 1972[^60]).  Here, DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function for <em>E</em>.<br>If <em>x</em> is uniform in (0, 1), this probability becomes &int;<sub>[0, 1]</sub> <em>&psi;</em>(<em>z</em>) <em>dz</em>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
