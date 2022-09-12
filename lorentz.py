@@ -461,12 +461,15 @@ class C4Function:
             ) ** Fraction(1, 2)
         else:
             print("Unsupported")
-        ipol = iteratedPoly2(self.func, deg)
+        overshifted = realIsLessOrEqual(Fraction(1), incr):
+        ipol = None if overshifted else iteratedPoly2(self.func, deg)
         # NOTE: Can return a Fraction (rather than Real*)
         # in some cases, but this is only used in realIsLess
         # and realFloor, which both accept Fractions
         if self.concave:
             pol = [simplify(self.func.value(Fraction(i, deg))) for i in range(deg + 1)]
+        elif overshifted:
+            pol = [REALZERO for i in range(deg + 1)]
         else:
             pol = [simplify(v - incr) for v in ipol]
             for v in pol:
@@ -474,9 +477,12 @@ class C4Function:
                     pol = [REALZERO for i in range(deg + 1)]
                     break
         self.lopolys[deg] = pol
-        pol = [simplify(v + incr) for v in ipol]
-        for v in pol:
-            if realIsLess(Fraction(1), v):
+        if overshifted:
+            pol = [REALONE for i in range(deg + 1)]
+        else:
+            pol = [simplify(v + incr) for v in ipol]
+            for v in pol:
+              if realIsLess(Fraction(1), v):
                 pol = [REALONE for i in range(deg + 1)]
                 break
         self.hipolys[deg] = pol
