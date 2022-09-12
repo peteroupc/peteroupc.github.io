@@ -135,6 +135,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
     - [**Correctness Proof for the Continued Logarithm Simulation Algorithm**](#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm)
     - [**Correctness Proof for Continued Fraction Simulation Algorithm 3**](#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3)
     - [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)
+    - [**Derivation of an Algorithm for _&pi;_ / 4**](#Derivation_of_an_Algorithm_for___pi___4)
     - [**Sketch of Derivation of the Algorithm for 1 / _&pi;_**](#Sketch_of_Derivation_of_the_Algorithm_for_1___pi)
     - [**Preparing Rational Functions**](#Preparing_Rational_Functions)
 - [**License**](#License)
@@ -471,7 +472,7 @@ See the appendix for a correctness proof of Algorithm 3.
 >     - after running the algorithm, 1 minus the result (rather than just the result) is taken.
 >
 > - These algorithms are designed to allow the partial numerators and denominators to be calculated "on the fly".
-> - The following is an alternative way to write Algorithm 1, which better shows the inspiration because it shows how the "even parity construction" (or the two-coin algorithm) as well as the "1 &minus; _x_" construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, _size_) is known in advance.
+> - The following is an alternative way to write Algorithm 1, which better shows the inspiration because it shows how the so-called "even-parity construction"[^66] (or the two-coin algorithm) as well as the "1 &minus; _x_" construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, _size_) is known in advance.
 >     1. Set _i_ to _size_.
 >     2. Create an input coin that does the following: "Return a number that is 1 with probability 1/_a_\[_size_\] or 0 otherwise".
 >     3. While _i_ is 1 or greater:
@@ -1180,7 +1181,7 @@ In this document, a **linear Bernoulli factory** refers to one of the following:
 <a id=arctan___lambda_____lambda></a>
 #### arctan(_&lambda;_) /_&lambda;_
 
-Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^54]
+Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^67][^54]
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
@@ -1242,7 +1243,7 @@ Equals the previous function times _&lambda;_, with _c_ = 1.
 <a id=ln_1___lambda></a>
 #### ln(1+_&lambda;_)
 
-Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^55]
+Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^68][^55]
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
@@ -1262,7 +1263,7 @@ In this algorithm, _d_ and _c_ are integers, 0 &lt; _c_ &lt; _d_, and _d_ &ge; 0
 <a id=arcsin___lambda___sqrt_1_minus___lambda__2_minus_1></a>
 #### arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1
 
-(Flajolet et al., 2010\)[^1].  The algorithm given here uses the two-coin algorithm rather than the even-parity construction.
+(Flajolet et al., 2010\)[^1].  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^69].
 
 1. Generate a uniform(0, 1) random variate _u_.
 2. Create a secondary coin _&mu;_ that does the following: "[**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
@@ -1379,7 +1380,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 4. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 0.
 5. [**Sample from the number _u_**](#Implementation_Notes) twice.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.
 
-Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin algorithm, which has bounded expected running time for all _&lambda;_ parameters, the algorithm above can be modified as follows:
+Observing that the even-parity construction used in the Flajolet paper[^70] is equivalent to the two-coin algorithm, which has bounded expected running time for all _&lambda;_ parameters, the algorithm above can be modified as follows:
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Generate a uniform(0, 1) random variate _u_, if it wasn't generated yet.
@@ -1501,7 +1502,7 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 <a id=zeta___3_3_4_and_Other_Zeta_Related_Constants></a>
 #### _&zeta;_(3) * 3 / 4 and Other Zeta-Related Constants
 
-(Flajolet et al., 2010\)[^1].  It can be seen as a triple integral of the function 1/(1 + _a_ * _b_ * _c_), where _a_, _b_, and _c_ are uniform(0, 1) random variates.  This algorithm is given below, but using the two-coin algorithm instead of the even-parity construction.  Here, _&zeta;_(_x_) is the Riemann zeta function.
+(Flajolet et al., 2010\)[^1].  It can be seen as a triple integral of the function 1/(1 + _a_ * _b_ * _c_), where _a_, _b_, and _c_ are uniform(0, 1) random variates.  This algorithm is given below, but using the two-coin algorithm instead of the even-parity construction[^71].  Here, _&zeta;_(_x_) is the Riemann zeta function.
 
 1. Generate three uniform(0, 1) random variates.
 2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
@@ -1539,7 +1540,7 @@ This algorithm takes advantage of formula 2 mentioned in the section "[**Probabi
 
 1. Generate an **exponential** random variate _ex_, then set _k_ to 1.
 2. Set _u_ to point to the same value as _ex_.
-3. Generate a **uniform(0,1)** random variate _v_.
+3. Generate a **uniform(0, 1)** random variate _v_.
 4. Set _stop_ to 1 if _u_ is less than _v_, and 0 otherwise.
 5. If _stop_ is 1 and _k_ **is even**, return a number that is 0 if _ex_ is **less than 1**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
 6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
@@ -1551,7 +1552,7 @@ This algorithm takes advantage of the theorem mentioned in the section "[**Proba
 
 1. Generate an **exponential** random variate _ex_, then set _k_ to 1.
 2. Set _u_ to point to the same value as _ex_.
-3. Generate a **uniform(0,1)** random variate _v_.
+3. Generate a **uniform(0, 1)** random variate _v_.
 4. Set _stop_ to 1 if _u_ is less than _v_, and 0 otherwise.
 5. If _stop_ is 1 and _k_ **is odd**, return a number that is 0 if _ex_ is **less than 1/2**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
 6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
@@ -1786,6 +1787,18 @@ estimation, IEEE Transactions on Information Theory 36 (1990)
 
 [^65]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
 
+[^66]: The "even-parity construction" (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.
+
+[^67]: The "even-parity construction" (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.
+
+[^68]: The "even-parity construction" (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.
+
+[^69]: The "even-parity construction" (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.
+
+[^70]: The "even-parity construction" (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.
+
+[^71]: The "even-parity construction" (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -1903,6 +1916,37 @@ Then the algorithm's behavior is given in the tables below.
 > 1. All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express what are called _cumulative distribution functions_, namely _F_<sub>_D_</sub>(_x_ given that _n_ is odd) or _F_<sub>_D_</sub>(_x_ given that _n_ is even), respectively.
 > 2. EGF(_z_) is the _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm.  For example, the class of _alternating permutations_ (permutations whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).  Other examples of EGFs were given in the section on the von Neumann schema.
 > 3. The results that point to this note have the special case that both _D_ and _E_ are uniform in (0, 1).  Indeed, if each variate _x_ in the sequence is transformed with _CDF_(_x_), where _CDF_ is _D_'s cumulative distribution function, then with probability 1, the variates become uniform in (0, 1), with the same numerical order as before.  See also [**this Stack Exchange question**](https://stats.stackexchange.com/questions/550847).
+
+<a id=Derivation_of_an_Algorithm_for___pi___4></a>
+### Derivation of an Algorithm for _&pi;_ / 4
+
+The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz generator `MGL()` for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  First, `MGL()` generates a uniform(0, 1) random variate, call it `U`, then it samples from the number `U` repeatedly until the sampling "fails" (returns 0).  Then `MGL()` returns either 1 if the number of "successes" it got has a remainder of 0 or 1 after division by 4, or 0 otherwise.
+
+The probability that `MGL()` samples from `U` $k+1$ times (or experiences
+$k$ "successes" before a failure), given that it generates the variate (success probability) $U$, is&mdash;
+
+$$P(k, U) = (1-U) U^k,$$ whose integral (area under the graph) over all possible success probabilities (with $0\le U\le 1$) is&mdash;
+
+$$C(k)=\int_0^1 P(k,U) dU = \int_0^1 (1-U)^k U dU = \int_0^1 (1-U) U^k dU = \frac{1}{k^2+3k+2},$$
+
+showing that $C(k)$ is the same whether $k$ is considered the number
+of successes before a failure or vice versa.
+
+The Madhava&ndash;Gregory&ndash;Leibniz series is then formed by&mdash;
+
+$$\pi/4 = 1/1-1/3+1/5-1/7+...=2/3+2/35+2/99+...$$
+
+$$=C(0)+C(1)+C(4)+C(5)+C(8)+C(9)+...$$
+
+$$=\sum_{k\ge 0} C(4k)+C(4k+1).$$
+
+In effect, `MGL()` returns 1 if it experiences 0, 1, 4, 5, 8, 9, ... successes before a failure.
+
+Given that `MGL()` generates the variate (success probability) $U$, `MGL()` returns 1 with probability&mdash; $$\sum_{k\ge 0} P(4k,U)+P(4k+1,U)=\frac{1}{U^2-2U+2}.$$
+
+But if `MGL()` is written so that it stops when it experiences a _success_ rather than a failure, then it returns 1 with the following probability instead:
+
+$$\sum_{k\ge 0} P(4k,1-U)+P(4k+1,1-U)=\frac{1}{U^2+1}.$$
 
 <a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
 ### Sketch of Derivation of the Algorithm for 1 / _&pi;_

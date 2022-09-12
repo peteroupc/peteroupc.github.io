@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2022/09/11"><meta name="citation_online_date" content="2022/09/11"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2022/09/12"><meta name="citation_online_date" content="2022/09/12"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -168,6 +168,7 @@
 <li><a href="#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm"><strong>Correctness Proof for the Continued Logarithm Simulation Algorithm</strong></a></li>
 <li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
 <li><a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a></li>
+<li><a href="#Derivation_of_an_Algorithm_for___pi___4"><strong>Derivation of an Algorithm for <em>&pi;</em> / 4</strong></a></li>
 <li><a href="#Sketch_of_Derivation_of_the_Algorithm_for_1___pi"><strong>Sketch of Derivation of the Algorithm for 1 / <em>&pi;</em></strong></a></li>
 <li><a href="#Preparing_Rational_Functions"><strong>Preparing Rational Functions</strong></a></li>
 </ul></li>
@@ -675,7 +676,7 @@
 <li>after running the algorithm, 1 minus the result (rather than just the result) is taken.</li>
 </ul></li>
 <li><p>These algorithms are designed to allow the partial numerators and denominators to be calculated &quot;on the fly&quot;.</p></li>
-<li>The following is an alternative way to write Algorithm 1, which better shows the inspiration because it shows how the &quot;even parity construction&quot; (or the two-coin algorithm) as well as the &quot;1 &minus; <em>x</em>&quot; construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, <em>size</em>) is known in advance.
+<li>The following is an alternative way to write Algorithm 1, which better shows the inspiration because it shows how the so-called &quot;even-parity construction&quot;<a href="or%20the%20two-coin%20algorithm">^66</a> as well as the &quot;1 &minus; <em>x</em>&quot; construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, <em>size</em>) is known in advance.
 
 <ol>
 <li>Set <em>i</em> to <em>size</em>.</li>
@@ -1718,7 +1719,7 @@
 
 <h4>arctan(<em>&lambda;</em>) /<em>&lambda;</em></h4>
 
-<p>Based on the algorithm from Flajolet et al. (2010)[^1], but uses the two-coin algorithm (which has bounded expected running time for every <em>&lambda;</em> parameter) rather than the even-parity construction (which is not).[^54]</p>
+<p>Based on the algorithm from Flajolet et al. (2010)[^1], but uses the two-coin algorithm (which has bounded expected running time for every <em>&lambda;</em> parameter) rather than the even-parity construction (which is not).[^67][^54]</p>
 
 <ul>
 <li>Do the following process repeatedly, until this algorithm returns a value:
@@ -1804,7 +1805,7 @@
 
 <h4>ln(1+<em>&lambda;</em>)</h4>
 
-<p>Based on the algorithm from Flajolet et al. (2010)[^1], but uses the two-coin algorithm (which has bounded expected running time for every <em>&lambda;</em> parameter) rather than the even-parity construction (which is not).[^55]</p>
+<p>Based on the algorithm from Flajolet et al. (2010)[^1], but uses the two-coin algorithm (which has bounded expected running time for every <em>&lambda;</em> parameter) rather than the even-parity construction (which is not).[^68][^55]</p>
 
 <ul>
 <li>Do the following process repeatedly, until this algorithm returns a value:
@@ -1836,7 +1837,7 @@
 
 <h4>arcsin(<em>&lambda;</em>) + sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1</h4>
 
-<p>(Flajolet et al., 2010)[^1].  The algorithm given here uses the two-coin algorithm rather than the even-parity construction.</p>
+<p>(Flajolet et al., 2010)[^1].  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^69].</p>
 
 <ol>
 <li>Generate a uniform(0, 1) random variate <em>u</em>.</li>
@@ -2051,7 +2052,7 @@ kind of irrational number.</p>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
-<p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin algorithm, which has bounded expected running time for all <em>&lambda;</em> parameters, the algorithm above can be modified as follows:</p>
+<p>Observing that the even-parity construction used in the Flajolet paper[^70] is equivalent to the two-coin algorithm, which has bounded expected running time for all <em>&lambda;</em> parameters, the algorithm above can be modified as follows:</p>
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
@@ -2213,7 +2214,7 @@ kind of irrational number.</p>
 
 <h4><em>&zeta;</em>(3) * 3 / 4 and Other Zeta-Related Constants</h4>
 
-<p>(Flajolet et al., 2010)[^1].  It can be seen as a triple integral of the function 1/(1 + <em>a</em> * <em>b</em> * <em>c</em>), where <em>a</em>, <em>b</em>, and <em>c</em> are uniform(0, 1) random variates.  This algorithm is given below, but using the two-coin algorithm instead of the even-parity construction.  Here, <em>&zeta;</em>(<em>x</em>) is the Riemann zeta function.</p>
+<p>(Flajolet et al., 2010)[^1].  It can be seen as a triple integral of the function 1/(1 + <em>a</em> * <em>b</em> * <em>c</em>), where <em>a</em>, <em>b</em>, and <em>c</em> are uniform(0, 1) random variates.  This algorithm is given below, but using the two-coin algorithm instead of the even-parity construction[^71].  Here, <em>&zeta;</em>(<em>x</em>) is the Riemann zeta function.</p>
 
 <ol>
 <li>Generate three uniform(0, 1) random variates.</li>
@@ -2264,7 +2265,7 @@ kind of irrational number.</p>
 <ol>
 <li>Generate an <strong>exponential</strong> random variate <em>ex</em>, then set <em>k</em> to 1.</li>
 <li>Set <em>u</em> to point to the same value as <em>ex</em>.</li>
-<li>Generate a <strong>uniform(0,1)</strong> random variate <em>v</em>.</li>
+<li>Generate a <strong>uniform(0, 1)</strong> random variate <em>v</em>.</li>
 <li>Set <em>stop</em> to 1 if <em>u</em> is less than <em>v</em>, and 0 otherwise.</li>
 <li>If <em>stop</em> is 1 and <em>k</em> <strong>is even</strong>, return a number that is 0 if <em>ex</em> is <strong>less than 1</strong>, and 1 otherwise.  Otherwise, if <em>stop</em> is 1, go to step 1.</li>
 <li>Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
@@ -2279,7 +2280,7 @@ kind of irrational number.</p>
 <ol>
 <li>Generate an <strong>exponential</strong> random variate <em>ex</em>, then set <em>k</em> to 1.</li>
 <li>Set <em>u</em> to point to the same value as <em>ex</em>.</li>
-<li>Generate a <strong>uniform(0,1)</strong> random variate <em>v</em>.</li>
+<li>Generate a <strong>uniform(0, 1)</strong> random variate <em>v</em>.</li>
 <li>Set <em>stop</em> to 1 if <em>u</em> is less than <em>v</em>, and 0 otherwise.</li>
 <li>If <em>stop</em> is 1 and <em>k</em> <strong>is odd</strong>, return a number that is 0 if <em>ex</em> is <strong>less than 1/2</strong>, and 1 otherwise.  Otherwise, if <em>stop</em> is 1, go to step 1.</li>
 <li>Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
@@ -2549,6 +2550,18 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 
 <p>[^65]: Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</p>
 
+<p>[^66]: The &quot;even-parity construction&quot; (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.</p>
+
+<p>[^67]: The &quot;even-parity construction&quot; (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.</p>
+
+<p>[^68]: The &quot;even-parity construction&quot; (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.</p>
+
+<p>[^69]: The &quot;even-parity construction&quot; (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.</p>
+
+<p>[^70]: The &quot;even-parity construction&quot; (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.</p>
+
+<p>[^71]: The &quot;even-parity construction&quot; (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -2745,6 +2758,38 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <li>The results that point to this note have the special case that both <em>D</em> and <em>E</em> are uniform in (0, 1).  Indeed, if each variate <em>x</em> in the sequence is transformed with <em>CDF</em>(<em>x</em>), where <em>CDF</em> is <em>D</em>&#39;s cumulative distribution function, then with probability 1, the variates become uniform in (0, 1), with the same numerical order as before.  See also <a href="https://stats.stackexchange.com/questions/550847"><strong>this Stack Exchange question</strong></a>.</li>
 </ol>
 </blockquote>
+
+<p><a id=Derivation_of_an_Algorithm_for___pi___4></a></p>
+
+<h3>Derivation of an Algorithm for <em>&pi;</em> / 4</h3>
+
+<p>The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz generator <code>MGL()</code> for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  First, <code>MGL()</code> generates a uniform(0, 1) random variate, call it <code>U</code>, then it samples from the number <code>U</code> repeatedly until the sampling &quot;fails&quot; (returns 0).  Then <code>MGL()</code> returns either 1 if the number of &quot;successes&quot; it got has a remainder of 0 or 1 after division by 4, or 0 otherwise.</p>
+
+<p>The probability that <code>MGL()</code> samples from <code>U</code> $k+1$ times (or experiences
+$k$ &quot;successes&quot; before a failure), given that it generates the variate (success probability) $U$, is&mdash;</p>
+
+<p>$$P(k, U) = (1-U) U^k,$$ whose integral (area under the graph) over all possible success probabilities (with $0\le U\le 1$) is&mdash;</p>
+
+<p>$$C(k)=\int_0^1 P(k,U) dU = \int_0^1 (1-U)^k U dU = \int_0^1 (1-U) U^k dU = \frac{1}{k^2+3k+2},$$</p>
+
+<p>showing that $C(k)$ is the same whether $k$ is considered the number
+of successes before a failure or vice versa.</p>
+
+<p>The Madhava&ndash;Gregory&ndash;Leibniz series is then formed by&mdash;</p>
+
+<p>$$\pi/4 = 1/1-1/3+1/5-1/7+...=2/3+2/35+2/99+...$$</p>
+
+<p>$$=C(0)+C(1)+C(4)+C(5)+C(8)+C(9)+...$$</p>
+
+<p>$$=\sum_{k\ge 0} C(4k)+C(4k+1).$$</p>
+
+<p>In effect, <code>MGL()</code> returns 1 if it experiences 0, 1, 4, 5, 8, 9, ... successes before a failure.</p>
+
+<p>Given that <code>MGL()</code> generates the variate (success probability) $U$, <code>MGL()</code> returns 1 with probability&mdash; $$\sum_{k\ge 0} P(4k,U)+P(4k+1,U)=\frac{1}{U^2-2U+2}.$$</p>
+
+<p>But if <code>MGL()</code> is written so that it stops when it experiences a <em>success</em> rather than a failure, then it returns 1 with the following probability instead:</p>
+
+<p>$$\sum_{k\ge 0} P(4k,1-U)+P(4k+1,1-U)=\frac{1}{U^2+1}.$$</p>
 
 <p><a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a></p>
 
