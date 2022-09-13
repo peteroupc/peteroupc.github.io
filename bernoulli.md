@@ -620,7 +620,8 @@ where:
 The algorithm follows.
 
 1. Choose an integer in \[0, _r_\] with probability proportional to the following weights: \[_g_(0), _g_(1), ..., _g_(_r_)\].  Call the chosen integer _i_.
-2. Run a Bernoulli factory algorithm for _h_<sub>_i_</sub>(**_&lambda;_**).  If the run returns 0 (_i_ is rejected), go to step 1.  Otherwise (_i_ is accepted), return _i_.
+2. Run a Bernoulli factory algorithm for _h_<sub>_i_</sub>(**_&lambda;_**).  If the run returns 0 (_i_ is rejected), go to step 1.
+3. _i_ is accepted, so return _i_.
 
 > **Notes:**
 >
@@ -643,6 +644,8 @@ Then both algorithms are now described as follows:
 | Generalized Bernoulli race | Integer _i_ with probability:<br>$\frac{g(i,\lambda) h_i(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}$ | (**_&mu;_** is the probabilities of heads of one or more input coins.)<br>(1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability proportional to _g_(_X_, _&lambda;_).<br>(2) Run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(**_&mu;_**).  If the run returns 0 (_X_ is rejected), go to step 1.  Otherwise (_X_ is accepted), return _X_. |
 
 > **Note:**  The probability that $r$ many values of $X$ are rejected by the generalized Bernoulli race is $p(1 − p)^r$, where&mdash; $$p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda)}.$$
+>
+> **Example:** The so-called "even-parity" construction[^24] is a special case of the convex combination algorithm.
 
 Now Flajolet's schemes are described.
 
@@ -1702,7 +1705,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^23]: Note that `u * BASE`<sup>&minus;`k`</sup> is not just within `BASE`<sup>&minus;`k`</sup> of its "true" result, but also not more than that result.  Hence `pk + 1 <= u` rather than `pk + 2 <= u`.
 
-[^24]: The "even-parity construction" (Flajolet et al. 2010) is so called because it involves flipping the input coin until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise.
+[^24]: The "even-parity" construction (Flajolet et al. 2010) is so called because it involves flipping the input coin repeatedly until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise. However, the number of flips needed by this method grows without bound as $\lambda$ (the probability the input coin returns 1) approaches 1. The "even-parity" construction can also be seen as a **convex combination** (see [**"Flajolet's Probability Simulation Schemes"**](#Flajolet_s_Probability_Simulation_Schemes)) with $g(k, \lambda) = \lambda^k (1-\lambda)$ and with $h_k(\lambda)$ = 1 if $k$ is even and 0 otherwise.  Thus, the probability of returning 1 is $\sum_{\text{even } k\ge 0} \lambda^k (1-\lambda)=\sum_{k\ge 0}\lambda^{2k} (1-\lambda)=1/(1+\lambda)$.
 
 [^25]: Bill Gosper, "Continued Fraction Arithmetic", 1978.
 
@@ -1906,12 +1909,12 @@ Then the algorithm's behavior is given in the tables below.
 <a id=Derivation_of_an_Algorithm_for___pi___4></a>
 ### Derivation of an Algorithm for _&pi;_ / 4
 
-The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz generator `MGL()` for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  First, `MGL()` generates a uniform(0, 1) random variate, call it `U`, then it samples from the number `U` repeatedly until the sampling "fails" (returns 0).  Then `MGL()` returns either 1 if the number of "successes" it got has a remainder of 0 or 1 after division by 4, or 0 otherwise.
+The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz generator `MGL()` for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  First, `MGL()` generates a uniform(0, 1) random variate, call it $U$, then it samples from the number $U$ repeatedly until the sampling "fails" (returns 0).  Then `MGL()` returns either 1 if the number of "successes" it got has a remainder of 0 or 1 after division by 4, or 0 otherwise.
 
-The probability that `MGL()` samples from `U` $k+1$ times (or experiences
+The probability that `MGL()` samples from $U$ $k+1$ times (or experiences
 $k$ "successes" before a failure), given that it generates the variate (success probability) $U$, is&mdash;
 
-$$P(k, U) = (1-U) U^k,$$ whose integral (area under the graph) over all possible success probabilities (with $0\le U\le 1$) is&mdash;
+$$P(k, U) = (1-U) U^k,$$ and $C(k)$, the probability that `MGL()` experiences $k$ successes before a failure, is the integral (area under the graph) of $P(k, U)$ over all possible success probabilities (with $0\le U\le 1$), namely&mdash;
 
 $$C(k)=\int_0^1 P(k,U) dU = \int_0^1 (1-U) U^k dU = \frac{1}{k^2+3k+2},$$
 
@@ -1928,7 +1931,9 @@ $$=\sum_{k\ge 0} C(4k)+C(4k+1).$$
 
 In effect, `MGL()` returns 1 if it experiences 0, 1, 4, 5, 8, 9, ... successes before a failure.
 
-Given that `MGL()` generates the variate (success probability) $U$, `MGL()` returns 1 with probability&mdash; $$\sum_{k\ge 0} P(4k,U)+P(4k+1,U)=\frac{1}{U^2+1}.$$
+> **Note:** This derivation leads to a way to generalize `MGL()`. Let $S$ be a set of integers 0 or greater.  If `MGL()` returns either 1 when the number of successes it gets is in $S$, and 0 otherwise, then it returns 1 with probability&mdash; $$\sum_{k in S} C(k) = \sum_{k in S}\int_0^1 (1-U) U^k dU.$$
+
+Given that `MGL()` generates the variate (success probability) $U$, `MGL()` returns 1 with probability&mdash; $$\sum_{k\ge 0} P(4k,U)+P(4k+1,U)=\frac{1}{U^2+1},$$ and the integral of the right hand side over all possible success probabilities (with $0\le U\le 1$) is&mdash; $$\int_0^1 \frac{1}{U^2+1} dU = \pi/4.$$
 
 But if `MGL()` is written so that it stops when it experiences a _success_ rather than a failure, then it returns 1 with the following probability instead:
 
