@@ -733,8 +733,8 @@ Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the 
 
 **Algorithm 1.** (Flajolet et al., 2010\)[^1] showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the probability&mdash;
 
-- $\frac{1}{\lambda} \int_0^\lambda f(u) du$ ($\frac{1}{\lambda}$ times the integral of $f(u)$ on $[0, \lambda]$, or equivalently,
-- $\int_0^1 f(\lambda u) du$ (the integral of $f(\lambda u)$ on $[0, 1]$),
+- $\frac{1}{\lambda} \int_0^\lambda f(u)\,du$ ($\frac{1}{\lambda}$ times the integral of $f(u)$ on $[0, \lambda]$, or equivalently,
+- $\int_0^1 f(\lambda u)\,du$ (the integral of $f(\lambda u)$ on $[0, 1]$),
 
 namely the following algorithm:
 
@@ -742,13 +742,13 @@ namely the following algorithm:
 2. Create an input coin that does the following: "Flip the original input coin, then [**sample from the number _u_**](#Implementation_Notes).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
-**Algorithm 2.** A special case of Algorithm 1 is the integral $\int_0^1 f(u) du$, when the original input coin always returns 1:
+**Algorithm 2.** A special case of Algorithm 1 is the integral $\int_0^1 f(u)\,du$, when the original input coin always returns 1:
 
 1. Generate a uniform(0, 1) random variate _u_.
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
-**Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash; $$\int_a^b f(\lambda u) du,$$ where $0\le a\lt b\le 1$, using the following algorithm:
+**Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash; $$\int_a^b f(\lambda u)\,du,$$ where $0\le a\lt b\le 1$, using the following algorithm:
 
 1. Generate a uniform(0, 1) random variate _u_.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
@@ -1406,6 +1406,8 @@ Two algorithms:
 1. Generate a random integer in the interval [0, 6), call it _n_.
 2. If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
 
+To see how a different algorithm for _&pi;_/4 works, see the appendix.
+
 <a id=1___pi></a>
 #### 1 / _&pi;_
 
@@ -1916,14 +1918,14 @@ $k$ "successes" before a failure), given that it generates the variate (success 
 
 $$P(k, U) = (1-U) U^k,$$ and $C(k)$, the probability that `MGL()` experiences $k$ successes before a failure, is the integral (area under the graph) of $P(k, U)$ over all possible success probabilities (with $0\le U\le 1$), namely&mdash;
 
-$$C(k)=\int_0^1 P(k,U) dU = \int_0^1 (1-U) U^k dU = \frac{1}{k^2+3k+2},$$
+$$C(k)=\int_0^1 P(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2},$$
 
-and also $C(k)= \int_0^1 (1-U)^k U dU$, showing that $C(k)$ is the same whether $k$ is considered the number
+and also $C(k)= \int_0^1 (1-U)^k U\,dU$, showing that $C(k)$ is the same whether $k$ is considered the number
 of successes before a failure or vice versa.
 
 The Madhava&ndash;Gregory&ndash;Leibniz series is then formed by&mdash;
 
-$$\pi/4 = 1/1-1/3+1/5-1/7+...=2/3+2/35+2/99+...$$
+$$\pi/4 = (1/1-1/3)+(1/5-1/7)+...=2/3+2/35+2/99+...$$
 
 $$=(C(0)+C(1))+(C(4)+C(5))+(C(8)+C(9))+...$$
 
@@ -1931,13 +1933,11 @@ $$=\sum_{k\ge 0} C(4k)+C(4k+1).$$
 
 In effect, `MGL()` returns 1 if it experiences 0, 1, 4, 5, 8, 9, ... successes before a failure.
 
-> **Note:** This derivation leads to a way to generalize `MGL()`. Let $S$ be a set of integers 0 or greater.  If `MGL()` returns either 1 when the number of successes it gets is in $S$, and 0 otherwise, then it returns 1 with probability&mdash; $$\sum_{k in S} C(k) = \sum_{k in S}\int_0^1 (1-U) U^k dU.$$
+> **Note:** This derivation leads to a way to generalize `MGL()`. Let $S$ be a set of integers 0 or greater.  If `MGL()` returns either 1 when the number of successes it gets is in $S$, and 0 otherwise, then it returns 1 with probability&mdash; $$\sum_{k \text{ in } S} C(k) = \sum_{k \text{ in } S}\int_0^1 (1-U) U^k\,dU = \int_0^1\sum_{k \text{ in } S} (1-U) U^k\,dU = \int_0^1\sum{k \text{ in } S}\sum{k \text{ in } S} P(k, U)\,dU,$$ where the sum-of-integral-equals-integral-of-sum property is used because $(1-U) U^k$ is continuous with $0\le U\le 1$.
 
-Given that `MGL()` generates the variate (success probability) $U$, `MGL()` returns 1 with probability&mdash; $$\sum_{k\ge 0} P(4k,U)+P(4k+1,U)=\frac{1}{U^2+1},$$ and the integral of the right hand side over all possible success probabilities (with $0\le U\le 1$) is&mdash; $$\int_0^1 \frac{1}{U^2+1} dU = \pi/4.$$
+Given that `MGL()` generates the variate (success probability) $U$, `MGL()` returns 1 with probability&mdash; $$\sum_{k\ge 0} P(4k,U)+P(4k+1,U)=\frac{1}{U^2+1},$$ and the integral of the right hand side over all possible success probabilities (with $0\le U\le 1$) is&mdash; $$\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4.$$
 
-But if `MGL()` is written so that it stops when it experiences a _success_ rather than a failure, then it returns 1 with the following probability instead:
-
-$$\sum_{k\ge 0} P(4k,1-U)+P(4k+1,1-U)=\frac{1}{U^2-2U+2}.$$
+> **Note:** If `MGL()` is written instead so that it stops when it experiences a _success_ rather than a failure, then given that it generates $U$, it returns 1 with the following probability: $\sum_{k\ge 0} P(4k,1-U)+P(4k+1,1-U)=\frac{1}{U^2-2U+2}$.
 
 <a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
 ### Sketch of Derivation of the Algorithm for 1 / _&pi;_
