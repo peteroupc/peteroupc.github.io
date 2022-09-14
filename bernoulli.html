@@ -2777,12 +2777,8 @@ of successes before a failure or vice versa.</p>
 <p>In effect, <code>MGL()</code> returns 1 if it experiences 0, 1, 4, 5, 8, 9, ... successes before a failure.</p>
 
 <blockquote>
-<p><strong>Note:</strong> This derivation leads to a way to generalize <code>MGL()</code>. Let $S$ be a set of integers 0 or greater.  If <code>MGL()</code> returns either 1 when the number of successes it gets is in $S$, and 0 otherwise, then it returns 1 with probability&mdash;</p>
+<p><strong>Note:</strong> This derivation leads to a way to generalize <code>MGL()</code>. Let $S$ be a set of integers 0 or greater.  If <code>MGL()</code> returns either 1 when the number of successes it gets is in $S$, and 0 otherwise, then it returns 1 with probability&mdash; $$\sum_{k \text{ in } S} C(k) = \sum_{k \text{ in } S}\int_0^1 (1-U) U^k\,dU = \int_0^1\sum_{k \text{ in } S} (1-U) U^k\,dU = \int_0^1\sum_{k \text{ in } S} P(k, U)\,dU,$$ where the sum-of-integral-equals-integral-of-sum property follows by the so-called Fubini&ndash;Tonelli theorem.</p>
 </blockquote>
-
-<p>$$\sum_{k \text{ in } S} C(k) = \sum_{k \text{ in } S}\int_0^1 (1-U) U^k\,dU = \int_0^1\overbrace{\sum_{k \text{ in } S} (1-U) U^k}^A\,dU = \int_0^1\sum_{k \text{ in } S} P(k, U)\,dU,$$</p>
-
-<p>where the sum-of-integral-equals-integral-of-sum property is used because the sum marked $A$ is finite whenever $0\le U\le 1$.</p>
 
 <p>Given that <code>MGL()</code> generates the variate (success probability) $U$, <code>MGL()</code> returns 1 with probability&mdash; $$\sum_{k\ge 0} P(4k,U)+P(4k+1,U)=\frac{1}{U^2+1},$$ and the integral of the right hand side over all possible success probabilities (with $0\le U\le 1$) is&mdash; $$\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4.$$</p>
 
