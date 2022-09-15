@@ -62,7 +62,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
     - &minus;&pi; divided by 2 if `y < 0 and x == 0`,
     - &pi; divided by 2 if `y > 0 and x == 0`, and
     - 0 if `y == 0 and x == 0`.
-* `abs(a)` is the absolute value of `a`; it makes negative numbers non-negative.
+* `abs(a)` is the absolute value of `a`; it makes negative numbers nonnegative.
 * `min(a, b)` is the smaller of `a` and `b`.
 * `max(a, b)` is the larger of `a` and `b`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.

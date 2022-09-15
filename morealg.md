@@ -97,8 +97,8 @@ Depending on the coefficients, different algorithms can be built to simulate a p
 
 - The coefficients are arbitrary, but can be split into two parts.
 - The coefficients alternate in sign, and their absolute values form a decreasing sequence.
-- The coefficients are non-negative and sum to 1 or less.
-- The coefficients are non-negative and may sum to 1 or greater.
+- The coefficients are nonnegative and sum to 1 or less.
+- The coefficients are nonnegative and may sum to 1 or greater.
 
 > **Note:** In theory, the power series can contain coefficients that are irrational numbers or sum to an irrational number, but the algorithms to simulate such series can be inexact in practice.  Also, not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:
 >
@@ -177,7 +177,7 @@ If $g(\lambda) = \lambda$, this kind of function&mdash;
 - is either constant or strictly increasing, and
 - is _convex_ (its "slope" or "velocity" doesn't decrease as _&lambda;_ increases)[^3].
 
-Suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash; $$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$ where each sum is taken over all non-negative values of $n$ where $a_n > 0$.
+Suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash; $$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$ where each sum is taken over all nonnegative values of $n$ where $a_n > 0$.
 
 Then the key to simulating $f(\lambda)$ is to "tuck" the values $a_n$ under a function $w(n)$ such that&mdash;
 
@@ -231,8 +231,8 @@ The conditions on $f$ given above mean that&mdash;
 
 If $f$ is a power series written as equation (1), but&mdash;
 
-- all of the coefficients are non-negative, and
-- one or more of the coefficients are 1 or greater,
+- all of the coefficients are nonnegative, and
+- the coefficients sum to greater than 1,
 
 Nacu and Peres (2005, proposition 16\)[^1] gave an algorithm which takes the following parameters:
 
@@ -301,7 +301,7 @@ To simulate a function in the table, run the **general martingale algorithm** wi
 >     2. Add 2 to _i_.
 > 4. Return &minus;_v_/(_m_+1).
 
-Examples 7 to 9 use **Algorithm 2** to simulate power series functions where the coefficients $a_0$ are non-negative.
+Examples 7 to 9 use **Algorithm 2** to simulate power series functions where the coefficients $a_0$ are nonnegative.
 
 **Example 7:** The hyperbolic cosine minus 1, denoted as cosh(_&lambda;_)&minus;1, can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},$$ where:
 
@@ -397,10 +397,10 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 
 The Bernoulli factory is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an _oracle_ (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a _coin that shows heads or tails where the probability of heads is unknown_.  The rest of this section deals with oracles that go beyond coins.
 
-**Algorithm 1.** Suppose there is an oracle that produces independent random variates in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random variates whose expected value ("long-run average") is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
+**Algorithm 1.** Suppose there is an oracle that produces independent random variates in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce nonnegative random variates whose expected value ("long-run average") is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
 - _f_ is continuous on \[_a_, _b_\], and
-- _f_(_&mu;_) is greater than or equal to _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is non-negative and neither touches 0 inside (_a_, _b_) nor moves away from 0 more slowly than a polynomial)
+- _f_(_&mu;_) is greater than or equal to _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is nonnegative and neither touches 0 inside (_a_, _b_) nor moves away from 0 more slowly than a polynomial)
 
 (Jacob and Thiery 2015\)[^14]. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
 
@@ -411,13 +411,13 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 
 > **Note:** The check "With probability (_x_&minus;_a_)/(_b_&minus;_a_)" is exact if the oracle produces only rational numbers.  If the oracle can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then the code for the oracle should use uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  In that case, the check can be implemented as follows.  Let _x_ be a uniform PSRN representing a number generated by the oracle.  Set _y_ to **RandUniformFromReal**(_b_&minus;_a_), then the check succeeds if **URandLess**(_y_, **UniformAddRational**(_x_, &minus;_a_)) returns 1, and fails otherwise.
 >
-> **Example:** Suppose an oracle produces random variates in the interval [3, 13] with unknown mean _&mu;_, and the goal is to use the oracle to produce non-negative random variates with mean _f_(_&mu;_) = &minus;319/100 + _&mu;_\*103/50 &minus; _&mu;_<sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of _f_ in that interval, _g_(_&lambda;_) is a degree-2 polynomial with Bernstein coefficients [2/8, 9/8, 5/8] in the interval [0, 1].  _g_ can't be simulated as is, though, but increasing _g_'s degree to 3 leads to the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so that the following algorithm can be used (see "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)"):
+> **Example:** Suppose an oracle produces random variates in the interval [3, 13] with unknown mean _&mu;_, and the goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_) = &minus;319/100 + _&mu;_\*103/50 &minus; _&mu;_<sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of _f_ in that interval, _g_(_&lambda;_) is a degree-2 polynomial with Bernstein coefficients [2/8, 9/8, 5/8] in the interval [0, 1].  _g_ can't be simulated as is, though, but increasing _g_'s degree to 3 leads to the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so that the following algorithm can be used (see "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)"):
 >
 > 1. Set _heads_ to 0.
 > 2. Generate three random variates from the oracle (which must produce random variates in the interval [3, 13]).  For each number _x_: With probability (_x_&minus;3)/(10&minus;3), add 1 to _heads_.
 > 3. Depending on _heads_, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: _heads_=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.
 
-**Algorithm 2.** This algorithm takes an oracle and produces non-negative random variates whose expected value ("long-run average") is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, _f_) to a potentially irrational number.
+**Algorithm 2.** This algorithm takes an oracle and produces nonnegative random variates whose expected value ("long-run average") is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, _f_) to a potentially irrational number.
 
 **Algorithm 3.** For this algorithm, see the appendix.
 
@@ -1194,7 +1194,7 @@ The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution
 
 [^2]: S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", _Reliable Computing_ 17(1), 2012.
 
-[^3]: To show the target function $f(\lambda)$ is convex, find the "slope-of-slope" function of _f_ and show it's non-negative for every _&lambda;_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term (with $i\ge 1$), replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
+[^3]: To show the target function $f(\lambda)$ is convex, find the "slope-of-slope" function of _f_ and show it's nonnegative for every _&lambda;_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term (with $i\ge 1$), replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
 
 [^4]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
 
@@ -1562,7 +1562,7 @@ As given above, each term $w_n(\mu)$ is a polynomial in $\mu$, and is strictly i
 <a id=Sampling_Distributions_Using_Incomplete_Information_Omitted_Algorithms></a>
 ### Sampling Distributions Using Incomplete Information: Omitted Algorithms
 
-**Algorithm 2.** Suppose there is an _oracle_ that produces independent random real numbers whose expected value ("long-run average") is a known or unknown mean. The goal is now to produce non-negative random variates whose expected value is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever&mdash;
+**Algorithm 2.** Suppose there is an _oracle_ that produces independent random real numbers whose expected value ("long-run average") is a known or unknown mean. The goal is now to produce nonnegative random variates whose expected value is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever&mdash;
 
 - _f_ has a finite lower bound and a finite upper bound on its domain, and
 - the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0.
@@ -1572,7 +1572,7 @@ The algorithm to achieve this goal follows (see Lee et al. 2014\)[^52]\:
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
-> **Example:** An example from Lee et al. (2014\)[^52].  Say the oracle produces uniform random variates in [0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce non-negative random variates whose expected value ("long-run average") is that mean.
+> **Example:** An example from Lee et al. (2014\)[^52].  Say the oracle produces uniform random variates in [0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value ("long-run average") is that mean.
 >
 > **Notes:**
 >
@@ -1584,7 +1584,7 @@ The algorithm to achieve this goal follows (see Lee et al. 2014\)[^52]\:
 >     - When Algorithm 2 finishes, add _b_ to its return value.
 > 3. The check "With probability abs(_f_(_x_))/_m_" is exact if the oracle produces only rational numbers _and_ if _f_(_x_) outputs only rational numbers.  If the oracle or _f_ can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then this check should be implemented using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
 
-**Algorithm 3.** Suppose there is an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown.  The goal is to use the oracle to produce non-negative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nondecreasing in that interval (Jacob and Thiery 2015\)[^14].  This can be done using the algorithm below.  In the algorithm:
+**Algorithm 3.** Suppose there is an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nondecreasing in that interval (Jacob and Thiery 2015\)[^14].  This can be done using the algorithm below.  In the algorithm:
 
 - _f_(_&mu;_) must be a function that can be written as the following infinite series expansion: _c_[0]\*_z_<sup>0</sup> + _c_[1]\*_z_<sup>1</sup> + ..., where _z_ = _&mu;_&minus;_a_ and all _c_\[_i_\] are 0 or greater.
 - _&psi;_ is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)

@@ -52,7 +52,7 @@ All the randomization methods presented on this page assume we have a source of 
 <a id=Uniform_Numbers_in_a_Range></a>
 ## Uniform Numbers in a Range
 
-For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most pseudorandom number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases to generate bits (zeros and ones) at random.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013\)[^1]:
+For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most pseudorandom number generators in common use output 32- or 64-bit nonnegative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases to generate bits (zeros and ones) at random.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013\)[^1]:
 
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1

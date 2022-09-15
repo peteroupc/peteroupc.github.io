@@ -485,7 +485,7 @@ Each of the resulting uniform random values will be in the interval [0, 1], and 
 > 3. The _**T**&ndash;Poisson hierarchy_ (Knudson et al. 2021\)[^21] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with&mdash;
 >
 >     - a parameter `lamda`, and
->     - a marginal distribution that may not be discrete and takes on only non-negative values.
+>     - a marginal distribution that may not be discrete and takes on only nonnegative values.
 >
 >     To sample from the **T**&ndash;Poisson hierarchy&mdash;
 >

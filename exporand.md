@@ -213,7 +213,7 @@ The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) tha
 > 2. The **RandUniform** algorithm is equivalent to generating the product of a random variate (**b**) and a uniform random variate in the interval [0, 1].
 > 3. If **b** is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the **RandUniform** algorithm is equivalent to generating the product of two uniform random variate in the interval [0, 1].
 
-The **RandUniformInRangePositive** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one non-negative real number **bmin** and less than another positive real number **bmax** with probability 1.  This algorithm works whether **bmin** or **bmax** is known to be a rational number or not (for example, either number can be the result of an expression such as `exp(-2)` or `ln(20)`), but the algorithm notes how it can be more efficiently implemented if **bmin** or **bmax** is known to be a rational number.
+The **RandUniformInRangePositive** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one nonnegative real number **bmin** and less than another positive real number **bmax** with probability 1.  This algorithm works whether **bmin** or **bmax** is known to be a rational number or not (for example, either number can be the result of an expression such as `exp(-2)` or `ln(20)`), but the algorithm notes how it can be more efficiently implemented if **bmin** or **bmax** is known to be a rational number.
 
 1. If **bmin** is greater than or equal to **bmax**, if **bmin** is less than 0, or if **bmax** is 0 or less, return an error.
 2. Create an empty uniform PSRN **a**.

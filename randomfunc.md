@@ -154,8 +154,8 @@ Specifically:
  --------- | ------ | ------ |
 | Non-uniform numbers[^3]. | The next bit from a new source formed by taking the underlying source's outputs as input to a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) technique to produce independent unbiased random bits (zeros or ones). | 2. |
 | Uniform numbers not described below. | Same as above. | 2<sup>_n_</sup>. | 2<sup>_n_</sup>. |
-| Uniform 32-bit non-negative integers. | The next number from the source. | 2<sup>32</sup>. |
-| Uniform 64-bit non-negative integers. | The next number from the source. | 2<sup>64</sup>. |
+| Uniform 32-bit nonnegative integers. | The next number from the source. | 2<sup>32</sup>. |
+| Uniform 64-bit nonnegative integers. | The next number from the source. | 2<sup>64</sup>. |
 | Uniform integers in the interval \[0, _n_\). | The next number from the source. | _n_. |
 | Uniform numbers in the interval \[0, 1\) known to be evenly spaced by a number _p_ (for example, dSFMT). | The next number from the source, multiplied by _p_. | 1/_p_. |
 | Uniform numbers in the interval \[0, 1\), where numbers in \[0, 0.5\) and those in \[0.5, 1\) are known to occur with equal probability (for example, Java's `Math.random()`). | 0 if the source outputs a number less than 0.5, or 1 otherwise. | 2. |
@@ -447,7 +447,7 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
        // `i` from being less than 0 if the list's size is 0 and
-       // `i` is implemented using an nonnegative integer
+       // `i` is implemented using a nonnegative integer
        // type available in certain programming languages.
        if size(list) >= 2
           // Set i to the last item's index
@@ -1477,7 +1477,7 @@ Various methods have been developed for selecting a uniform-behaving sample of p
 
 Among these methods, a [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom point set_ or _quasi-Monte Carlo point set_) is a deterministic sequence of points with a _low discrepancy_ to the uniform distribution on the box, as compared to independent points from that distribution.  The following are examples:
 
-- A base-N _van der Corput sequence_ is generated as follows:  For each non-negative integer index in the sequence, take the index as a base-N number, then divide the least significant base-N digit by N, the next digit by N<sup>2</sup>, the next by N<sup>3</sup>, and so on, and add together these results of division.
+- A base-N _van der Corput sequence_ is generated as follows:  For each nonnegative integer index in the sequence, take the index as a base-N number, then divide the least significant base-N digit by N, the next digit by N<sup>2</sup>, the next by N<sup>3</sup>, and so on, and add together these results of division.
 - A _Halton sequence_ is a set of two or more van der Corput sequences with different prime bases; a Halton point at a given index has coordinates equal to the points for that index in the van der Corput sequences.
 - Roberts, M., in "[**The Unreasonable Effectiveness of Quasirandom Sequences**](http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/)", presents a low-discrepancy sequence based on a "generalized" version of the golden ratio.
 - Sobol sequences are explained in "[**Sobol sequence generator**](https://web.maths.unsw.edu.au/~fkuo/sobol/)" by S. Joe and F. Kuo.

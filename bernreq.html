@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/09/06"><meta name="citation_online_date" content="2022/09/06"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/09/14"><meta name="citation_online_date" content="2022/09/14"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -147,14 +147,14 @@
 <ol>
 <li>$0\le a(n, k)\le b(n, k)\le1$,</li>
 <li>$\lim_{n}g_{n}(\lambda)=\lim_{n}h_{n}(\lambda)=f(\lambda)$ for every $\lambda\in[0,1]$, and</li>
-<li>$(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$,</li>
+<li>$(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$,</li>
 </ol>
 
 <p>where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.</p>
 
 <p>It is allowed for $a(n, k)\lt 0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt 1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.</p>
 
-<p>Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_{n\ge 1} P_n(\lambda) = 1 - \sum_{n\ge 1} Q_n(\lambda),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with non-negative Bernstein coefficients.</p>
+<p>Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_{n\ge 1} P_n(\lambda) = 1 - \sum_{n\ge 1} Q_n(\lambda),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with nonnegative Bernstein coefficients.</p>
 
 <p><a id=On_Condition_3></a></p>
 
@@ -170,7 +170,7 @@
 
 <p>However, ordinary Bernstein polynomials can&#39;t in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an <strong>infinite expected number of coin flips in general</strong>.  (See also my <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental notes</strong></a>.)</p>
 
-<p>But Lorentz (1966) showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with non-negative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a <strong>finite expected number of coin flips</strong> if the function is &quot;smooth&quot; enough).</p>
+<p>But Lorentz (1966) showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a <strong>finite expected number of coin flips</strong> if the function is &quot;smooth&quot; enough).</p>
 
 <p>Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021a, 2021b), the &quot;Lorentz operator&quot; in Holtz et al. (2011) (see also &quot;<a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>&quot;), and Draganov (2014).</p>
 
@@ -195,7 +195,7 @@
 
 <p>For each integer $n\ge 1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.</p>
 
-<p>Then, a <a href="https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation"><strong>conjecture</strong></a> is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.</p>
+<p>Then, a <a href="https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation"><strong>conjecture</strong></a> is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.</p>
 
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.$$</p>
 
@@ -368,11 +368,11 @@
 
 <ul>
 <li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,</li>
-<li>$\pi(a, p) = p (1-p)^a$ is the probability of getting a non-negative integer $a$ in step 1 of the following algorithm,</li>
+<li>$\pi(a, p) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,</li>
 <li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,</li>
 <li>$(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,</li>
 <li>$p$ is a rational number in $(0, 1)$, and</li>
-<li>$\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it&#39;s a constant.  In the case of concave functions, this polynomial will always be non-negative.</li>
+<li>$\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it&#39;s a constant.  In the case of concave functions, this polynomial will always be nonnegative.</li>
 </ul>
 
 <p>Then an algorithm to toss heads with probability equal to $f$ would be:</p>
@@ -589,7 +589,7 @@
 
 <ul>
 <li>Alternating power series (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;).</li>
-<li>Series with non-negative terms and bounds on the truncation error (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series"><strong>Certain Converging Series</strong></a>&quot;).</li>
+<li>Series with nonnegative terms and bounds on the truncation error (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series"><strong>Certain Converging Series</strong></a>&quot;).</li>
 </ul></li>
 </ul></li>
 </ul>

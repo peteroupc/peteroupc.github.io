@@ -104,13 +104,13 @@ for every integer $n\ge1$, such that—
 
 1. $0\le a(n, k)\le b(n, k)\le1$,
 2. $\lim_{n}g_{n}(\lambda)=\lim_{n}h_{n}(\lambda)=f(\lambda)$ for every $\lambda\in[0,1]$, and
-3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$,
+3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$,
 
 where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.
 
 It is allowed for $a(n, k)\lt 0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt 1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.
 
-Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_{n\ge 1} P_n(\lambda) = 1 - \sum_{n\ge 1} Q_n(\lambda),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with non-negative Bernstein coefficients.
+Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_{n\ge 1} P_n(\lambda) = 1 - \sum_{n\ge 1} Q_n(\lambda),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with nonnegative Bernstein coefficients.
 
 <a id=On_Condition_3></a>
 #### On Condition 3
@@ -124,7 +124,7 @@ Condition 3 is equivalent in practice to the following statement (Nacu & Peres 2
 
 However, ordinary Bernstein polynomials can't in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
 
-But Lorentz (1966) showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with non-negative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
+But Lorentz (1966) showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
 
 Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021a, 2021b), the "Lorentz operator" in Holtz et al. (2011) (see also "[**New coins from old, smoothly**](#New_coins_from_old_smoothly)"), and Draganov (2014).
 
@@ -146,7 +146,7 @@ Thus the questions are:
 
      For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.
 
-    Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
+    Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
 
     Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.$$
 
@@ -288,11 +288,11 @@ $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lam
 where&mdash;
 
 - $\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,
-- $\pi(a, p) = p (1-p)^a$ is the probability of getting a non-negative integer $a$ in step 1 of the following algorithm,
+- $\pi(a, p) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,
 - $g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,
 - $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,
 - $p$ is a rational number in $(0, 1)$, and
-- $\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it's a constant.  In the case of concave functions, this polynomial will always be non-negative.
+- $\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it's a constant.  In the case of concave functions, this polynomial will always be nonnegative.
 
 Then an algorithm to toss heads with probability equal to $f$ would be:
 
@@ -461,7 +461,7 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
         - Functions that map [0, 1] to [0, 1] whose integral (area under curve) is an irrational number.
     - Bernoulli factory functions with any of the following series expansions, using rational arithmetic only:
         - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
-        - Series with non-negative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
+        - Series with nonnegative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
 
 <a id=End_Notes></a>
 ## End Notes

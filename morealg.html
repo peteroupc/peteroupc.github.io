@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/09/12"><meta name="citation_online_date" content="2022/09/12"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/09/14"><meta name="citation_online_date" content="2022/09/14"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -134,8 +134,8 @@
 <ul>
 <li>The coefficients are arbitrary, but can be split into two parts.</li>
 <li>The coefficients alternate in sign, and their absolute values form a decreasing sequence.</li>
-<li>The coefficients are non-negative and sum to 1 or less.</li>
-<li>The coefficients are non-negative and may sum to 1 or greater.</li>
+<li>The coefficients are nonnegative and sum to 1 or less.</li>
+<li>The coefficients are nonnegative and may sum to 1 or greater.</li>
 </ul>
 
 <blockquote>
@@ -251,7 +251,7 @@
 <li>is <em>convex</em> (its &quot;slope&quot; or &quot;velocity&quot; doesn&#39;t decrease as <em>&lambda;</em> increases)[^3].</li>
 </ul>
 
-<p>Suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash; $$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$ where each sum is taken over all non-negative values of $n$ where $a_n &gt; 0$.</p>
+<p>Suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash; $$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$ where each sum is taken over all nonnegative values of $n$ where $a_n &gt; 0$.</p>
 
 <p>Then the key to simulating $f(\lambda)$ is to &quot;tuck&quot; the values $a_n$ under a function $w(n)$ such that&mdash;</p>
 
@@ -343,8 +343,8 @@
 <p>If $f$ is a power series written as equation (1), but&mdash;</p>
 
 <ul>
-<li>all of the coefficients are non-negative, and</li>
-<li>one or more of the coefficients are 1 or greater,</li>
+<li>all of the coefficients are nonnegative, and</li>
+<li>the coefficients sum to greater than 1,</li>
 </ul>
 
 <p>Nacu and Peres (2005, proposition 16)[^1] gave an algorithm which takes the following parameters:</p>
@@ -459,7 +459,7 @@
 </ol>
 </blockquote>
 
-<p>Examples 7 to 9 use <strong>Algorithm 2</strong> to simulate power series functions where the coefficients $a_0$ are non-negative.</p>
+<p>Examples 7 to 9 use <strong>Algorithm 2</strong> to simulate power series functions where the coefficients $a_0$ are nonnegative.</p>
 
 <p><strong>Example 7:</strong> The hyperbolic cosine minus 1, denoted as cosh(<em>&lambda;</em>)&minus;1, can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},$$ where:</p>
 
@@ -684,11 +684,11 @@
 
 <p>The Bernoulli factory is a special case of the problem of <strong>sampling a probability distribution with unknown parameters</strong>.  This problem can be described as sampling from a new distribution using an <em>oracle</em> (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a <em>coin that shows heads or tails where the probability of heads is unknown</em>.  The rest of this section deals with oracles that go beyond coins.</p>
 
-<p><strong>Algorithm 1.</strong> Suppose there is an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates whose expected value (&quot;long-run average&quot;) is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
+<p><strong>Algorithm 1.</strong> Suppose there is an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
 
 <ul>
 <li><em>f</em> is continuous on [<em>a</em>, <em>b</em>], and</li>
-<li><em>f</em>(<em>&mu;</em>) is greater than or equal to <em>&epsilon;</em>*min((<em>&mu;</em> &minus; <em>a</em>)<sup><em>n</em></sup>, (<em>b</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> and some <em>&epsilon;</em> greater than 0 (loosely speaking, <em>f</em> is non-negative and neither touches 0 inside (<em>a</em>, <em>b</em>) nor moves away from 0 more slowly than a polynomial)</li>
+<li><em>f</em>(<em>&mu;</em>) is greater than or equal to <em>&epsilon;</em>*min((<em>&mu;</em> &minus; <em>a</em>)<sup><em>n</em></sup>, (<em>b</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> and some <em>&epsilon;</em> greater than 0 (loosely speaking, <em>f</em> is nonnegative and neither touches 0 inside (<em>a</em>, <em>b</em>) nor moves away from 0 more slowly than a polynomial)</li>
 </ul>
 
 <p>(Jacob and Thiery 2015)[^14]. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
@@ -703,7 +703,7 @@
 <blockquote>
 <p><strong>Note:</strong> The check &quot;With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>)&quot; is exact if the oracle produces only rational numbers.  If the oracle can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then the code for the oracle should use uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  In that case, the check can be implemented as follows.  Let <em>x</em> be a uniform PSRN representing a number generated by the oracle.  Set <em>y</em> to <strong>RandUniformFromReal</strong>(<em>b</em>&minus;<em>a</em>), then the check succeeds if <strong>URandLess</strong>(<em>y</em>, <strong>UniformAddRational</strong>(<em>x</em>, &minus;<em>a</em>)) returns 1, and fails otherwise.</p>
 
-<p><strong>Example:</strong> Suppose an oracle produces random variates in the interval [3, 13] with unknown mean <em>&mu;</em>, and the goal is to use the oracle to produce non-negative random variates with mean <em>f</em>(<em>&mu;</em>) = &minus;319/100 + <em>&mu;</em>*103/50 &minus; <em>&mu;</em><sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of <em>f</em> in that interval, <em>g</em>(<em>&lambda;</em>) is a degree-2 polynomial with Bernstein coefficients [2/8, 9/8, 5/8] in the interval [0, 1].  <em>g</em> can&#39;t be simulated as is, though, but increasing <em>g</em>&#39;s degree to 3 leads to the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so that the following algorithm can be used (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;):</p>
+<p><strong>Example:</strong> Suppose an oracle produces random variates in the interval [3, 13] with unknown mean <em>&mu;</em>, and the goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>&mu;</em>) = &minus;319/100 + <em>&mu;</em>*103/50 &minus; <em>&mu;</em><sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of <em>f</em> in that interval, <em>g</em>(<em>&lambda;</em>) is a degree-2 polynomial with Bernstein coefficients [2/8, 9/8, 5/8] in the interval [0, 1].  <em>g</em> can&#39;t be simulated as is, though, but increasing <em>g</em>&#39;s degree to 3 leads to the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so that the following algorithm can be used (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;):</p>
 
 <ol>
 <li>Set <em>heads</em> to 0.</li>
@@ -712,7 +712,7 @@
 </ol>
 </blockquote>
 
-<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces non-negative random variates whose expected value (&quot;long-run average&quot;) is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
+<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces nonnegative random variates whose expected value (&quot;long-run average&quot;) is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
 
 <p><strong>Algorithm 3.</strong> For this algorithm, see the appendix.</p>
 
@@ -1902,7 +1902,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <p>[^2]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
 
-<p>[^3]: To show the target function $f(\lambda)$ is convex, find the &quot;slope-of-slope&quot; function of <em>f</em> and show it&#39;s non-negative for every <em>&lambda;</em> in the domain.  To do so, first find the &quot;slope&quot;: omit the first term and for each remaining term (with $i\ge 1$), replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting &quot;slope&quot; function is still an infinite series with coefficients 0 or greater.  Hence, so will the &quot;slope&quot; of this &quot;slope&quot; function, so the result follows by induction.</p>
+<p>[^3]: To show the target function $f(\lambda)$ is convex, find the &quot;slope-of-slope&quot; function of <em>f</em> and show it&#39;s nonnegative for every <em>&lambda;</em> in the domain.  To do so, first find the &quot;slope&quot;: omit the first term and for each remaining term (with $i\ge 1$), replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting &quot;slope&quot; function is still an infinite series with coefficients 0 or greater.  Hence, so will the &quot;slope&quot; of this &quot;slope&quot; function, so the result follows by induction.</p>
 
 <p>[^4]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</p>
 
@@ -2337,7 +2337,7 @@ calc_linear_func(count=8)
 
 <h3>Sampling Distributions Using Incomplete Information: Omitted Algorithms</h3>
 
-<p><strong>Algorithm 2.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers whose expected value (&quot;long-run average&quot;) is a known or unknown mean. The goal is now to produce non-negative random variates whose expected value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever&mdash;</p>
+<p><strong>Algorithm 2.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers whose expected value (&quot;long-run average&quot;) is a known or unknown mean. The goal is now to produce nonnegative random variates whose expected value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever&mdash;</p>
 
 <ul>
 <li><em>f</em> has a finite lower bound and a finite upper bound on its domain, and</li>
@@ -2352,7 +2352,7 @@ calc_linear_func(count=8)
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> An example from Lee et al. (2014)[^52].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
+<p><strong>Example:</strong> An example from Lee et al. (2014)[^52].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
 
 <p><strong>Notes:</strong></p>
 
@@ -2369,7 +2369,7 @@ calc_linear_func(count=8)
 </ol>
 </blockquote>
 
-<p><strong>Algorithm 3.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown.  The goal is to use the oracle to produce non-negative random variates with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nondecreasing in that interval (Jacob and Thiery 2015)[^14].  This can be done using the algorithm below.  In the algorithm:</p>
+<p><strong>Algorithm 3.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nondecreasing in that interval (Jacob and Thiery 2015)[^14].  This can be done using the algorithm below.  In the algorithm:</p>
 
 <ul>
 <li><em>f</em>(<em>&mu;</em>) must be a function that can be written as the following infinite series expansion: <em>c</em>[0]*<em>z</em><sup>0</sup> + <em>c</em>[1]*<em>z</em><sup>1</sup> + ..., where <em>z</em> = <em>&mu;</em>&minus;<em>a</em> and all <em>c</em>[<em>i</em>] are 0 or greater.</li>

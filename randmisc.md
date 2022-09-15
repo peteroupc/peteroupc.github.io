@@ -297,7 +297,7 @@ A variate following a distribution of minimums or of maximums can be generated a
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. With probability _w_(_x_), return _x_.  Otherwise, go to step 1.
 
-Some weighted distributions allow any weight function _w_(_x_) whose values are non-negative everywhere in X's support (Rao 1985\)[^42].  (If _w_(_x_) = _x_, the distribution is often called a _length-biased_ or _size-biased distribution_; if _w_(_x_) = _x_<sup>2</sup>, _area-biased_.)  Their PDFs are proportional to the original PDFs multiplied by _w_(_x_).
+Some weighted distributions allow any weight function _w_(_x_) whose values are nonnegative everywhere in X's support (Rao 1985\)[^42].  (If _w_(_x_) = _x_, the distribution is often called a _length-biased_ or _size-biased distribution_; if _w_(_x_) = _x_<sup>2</sup>, _area-biased_.)  Their PDFs are proportional to the original PDFs multiplied by _w_(_x_).
 
 **Inflated distributions.** To generate an _inflated X_ (also called _c-inflated X_ or _c-adjusted X_) random variate with parameters _c_ and _&alpha;_, generate&mdash;
 

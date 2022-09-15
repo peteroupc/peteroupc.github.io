@@ -61,7 +61,7 @@ These randomized upper and lower bounds come from two sequences of polynomials a
     - between the degree-(_n_&minus;1) upper polynomial and the degree-_n_ upper polynomial, and
     - between the degree-_n_ lower polynomial and the degree-(_n_&minus;1) lower polynomial,
 
-    must have non-negative coefficients, once the polynomials are rewritten in Bernstein form and elevated to degree _n_.
+    must have nonnegative coefficients, once the polynomials are rewritten in Bernstein form and elevated to degree _n_.
 
 The consistency requirement ensures that the upper polynomials "decrease" and the lower polynomials "increase".  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not ensure the consistency requirement by itself.  Examples of this fact are shown in the section "[**Failures of the Consistency Requirement**](#Failures_of_the_Consistency_Requirement)" in the appendix.
 
@@ -223,7 +223,7 @@ To build an approximate Bernoulli factory with a polynomial:
 <a id=Approximate_Bernoulli_Factories_for_Certain_Functions></a>
 ### Approximate Bernoulli Factories for Certain Functions
 
-This section first discusses approximating $f$ with a _Bernstein polynomial_ (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials converge no faster than the order of $1/n$ in general (Voronovskaya 1932)[^3].
+This section first discusses approximating $f$ with a _Bernstein polynomial_ (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials approach $f$ slowly in general, in the order of $1/n$ (Voronovskaya 1932)[^3].
 
 There are results that give an upper bound on the error on approximating _f_ with a degree-_n_ Bernstein polynomial.  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, solve the error bound's equation for _n_, then take _n_ = ceil(_n_) to get the solution if it's an integer, or the nearest integer that's bigger than the solution.
 
@@ -270,7 +270,7 @@ However, unlike with ordinary Bernstein polynomials, the polynomial $W$ (and thu
 
 1. Determine whether $f$ is described in the table above.  Let _A_ be the minimum of $f$ on [0, 1] and let _B_ be the maximum of $f$ there.
 2. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.
-3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be non-negative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.
+3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.
 4. Calculate $n$ as given in the table above.  Then, if $W_{n,i}(j/n)\lt 0$ or $W_{n,i}(j/n)\gt 1$ for some $0\le j\le n$, double the value of $n$ until this condition is no longer true.
 
 Once _n_ is found, simulating the iterated polynomial is as follows:
@@ -430,14 +430,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 321/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-
-    * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = 693/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 55/(448\*n).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-
-    * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-        * **fabove**(_n_, _k_) = 4197/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 5/(28\*n).
 
 * Let _f_(_&lambda;_) = **1/2 &minus; sqrt(1 &minus; 2\*_&lambda;_)/2 if _&lambda;_ < 1/2; sqrt(2\*_&lambda;_ &minus; 1)/2 + 1/2 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -606,34 +598,34 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 **Lemma A1:** Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and have a finite sum and where $0\le x\le 1$ (the domain is the interval [0, 1]). Then $f$ is convex and has a maximum at 1.
 
-_Proof:_ By inspection, $f$ is a power series and is non-negative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for every $n\ge 0$, and multiplying that by a non-negative constant doesn't change whether it's increasing.  Since all of these terms have a maximum at 1 on the domain, so does their sum.
+_Proof:_ By inspection, $f$ is a power series and is nonnegative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for every $n\ge 0$, and multiplying that by a nonnegative constant doesn't change whether it's increasing.  Since all of these terms have a maximum at 1 on the domain, so does their sum.
 
-The derivative of $f$ is&mdash; $$f'(x) = a_1 x^0 + ... + a_i x^{i-1} + ...,$$ which is still a power series with non-negative values of $a_n$, so the proof so far applies to $f'$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.
+The derivative of $f$ is&mdash; $$f'(x) = a_1 x^0 + ... + a_i x^{i-1} + ...,$$ which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f'$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.
 
-Now, since the second derivative is non-negative on the positive real line, and thus on its domain, $f$ is convex, which completes the proof. &#x25a1;
+Now, since the second derivative is nonnegative on the positive real line, and thus on its domain, $f$ is convex, which completes the proof. &#x25a1;
 
 **Proposition A2:** For a function $f(x)$ as in Lemma A1, let&mdash; $$g_n(x)=a_0 x^0 + ... + a_n x^n,$$ and have the same domain as $f$.  Then for every $n\ge 1$, $g_n(x)$ is within $\epsilon$ of $f(x)$, where $\epsilon = f(1) - g_n(1)$.
 
-_Proof:_ $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with non-negative coefficients, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;
+_Proof:_ $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative coefficients, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;
 
 For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$'s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^11] &mdash; which apply to infinite sums &mdash; can be used to "cut off" $f$ at a certain number of terms and do so with a controlled error.
 
 <a id=Results_Used_in_Approximate_Bernoulli_Factories></a>
 ### Results Used in Approximate Bernoulli Factories
 
-**Proposition B1**: Let $f(\lambda)$ map [0, 1] to [0, 1] and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in "Approximate Bernoulli Factories for Certain Functions") are non-negative on [0, 1].
+**Proposition B1**: Let $f(\lambda)$ map [0, 1] to [0, 1] and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in "Approximate Bernoulli Factories for Certain Functions") are nonnegative on [0, 1].
 
 _Proof:_ For $W_{n,2}$ it's enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen's inequality and because $f$ is concave.
 
-For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is non-negative.  For this, using only the fact that $f$ maps [0, 1] to [0, 1], $B_n(f)$ will have Bernstein coefficients in \[0, 1\] (each coefficient is a value of $f$) and so will likewise map [0, 1] to \[0, 1\] (Qian et al. 2011)[^20].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is non-negative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is non-negative as well.  Thus, $W_{n,3}$ is non-negative on [0, 1]. &#x25a1;
+For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is nonnegative.  For this, using only the fact that $f$ maps [0, 1] to [0, 1], $B_n(f)$ will have Bernstein coefficients in \[0, 1\] (each coefficient is a value of $f$) and so will likewise map [0, 1] to \[0, 1\] (Qian et al. 2011)[^20].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on [0, 1]. &#x25a1;
 
-**Proposition B2**: Let $f(\lambda)$ map [0, 1] to [0, 1], be continuous, nondecreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is non-negative on [0, 1].
+**Proposition B2**: Let $f(\lambda)$ map [0, 1] to [0, 1], be continuous, nondecreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is nonnegative on [0, 1].
 
-_Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^21], showing that $W_{n,2}$ is non-negative on [0, 1].  &#x25a1;
+_Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^21], showing that $W_{n,2}$ is nonnegative on [0, 1].  &#x25a1;
 
 > **Note:** A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$'s domain.
 
-**Proposition B3**: Let $f(\lambda)$ map [0, 1] to [0, 1] and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is non-negative there, for every $n\ge m$.
+**Proposition B3**: Let $f(\lambda)$ map [0, 1] to [0, 1] and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.
 
 _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
@@ -643,7 +635,7 @@ The following results deal with a useful quantity when discussing the error in a
 
 **Proposition B5**: For every integer $n\ge 1$, the following is true: $$|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$
 
-_Proof_: The critical points of $T(n, 3, p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T(n, r, p)$ is antisymmetric whenever $r$ is odd, and is non-negative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^22], it's enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T(n, 3, p)|$ on either side.  By inspection, the moment at that critical point is decreasing as $n$ increases, starting with $n=1$. &#x25a1;
+_Proof_: The critical points of $T(n, 3, p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T(n, r, p)$ is antisymmetric whenever $r$ is odd, and is nonnegative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^22], it's enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T(n, 3, p)|$ on either side.  By inspection, the moment at that critical point is decreasing as $n$ increases, starting with $n=1$. &#x25a1;
 
 **Corollary B6**:  For every integer $n_0\ge 1$, $|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n_0}} n^{3/2} < (963/1000)\frac{1}{\sqrt{n_0}} n^{3/2}$ whenever $n\ge n_0$.
 
@@ -862,7 +854,7 @@ Inspired by Peres's result with _&lambda;_/2, the following algorithm is propose
 - _D_(_&lambda;_) = &sum;<sub>_i_ = 0, ..., _k_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_k_ &minus; _i_</sup> * _d_\[_i_\],
 - _E_(_&lambda;_) = &sum;<sub>_i_ = 0, ..., _k_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_k_ &minus; _i_</sup> * _e_\[_i_\],
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
-- each _d_\[_i_\] and each _e_\[_i_\] is a non-negative integer.
+- each _d_\[_i_\] and each _e_\[_i_\] is a nonnegative integer.
 
 The algorithm is a modified version of the "block simulation" in Mossel and Peres (2005, Proposition 2.5\)[^27], which also "extracts" residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let _r_ be an integer such that, for every integer _i_ in \[0, _k_], _e_\[_i_\] < choose(_k_, _i_)\*choose(2\*_r_, _r_).
 
@@ -907,7 +899,7 @@ In the following results:
 
 - A _strictly bounded factory function_ means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^23].
-- A _modulus of continuity_ of a function _f_ means a non-negative and nondecreasing function _&omega;_ on the interval [0, 1], for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) for every _x_ in [0, 1] and every _y_ in [0, 1].  Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) is greater than or equal to _f_'s maximum range in a window of size _&delta;_.
+- A _modulus of continuity_ of a function _f_ means a nonnegative and nondecreasing function _&omega;_ on the interval [0, 1], for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) for every _x_ in [0, 1] and every _y_ in [0, 1].  Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) is greater than or equal to _f_'s maximum range in a window of size _&delta;_.
 
 **Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then the expected value of f(X<sub>k</sub>/n) is nondecreasing as k increases._
 
@@ -933,7 +925,7 @@ Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions 
 
 _Proof._
 
-1. _&omega;_ is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2 \* _n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2 \* _n_))] &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for every _n_&ge;4 that's an integer power of 2, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).  To prove the fourth bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt( (_k_/(2\*_n_)) \* (1&minus;_k_/(2\*_n_)) / (2\*_n_&minus;1) )).
+1. _&omega;_ is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2 \* _n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2 \* _n_))] &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for every _n_&ge;4 that's an integer power of 2, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).  To prove the fourth bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt( (_k_/(2\*_n_)) \* (1&minus;_k_/(2\*_n_)) / (2\*_n_&minus;1) )).
 2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on [0,1], the result follows from part 1.
 3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f'(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^6], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4 that's a power of 2, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
 4. Let _X_<sub>_m_</sub> be a hypergeometric(2 \* _n_, _m_, _n_) random variable.  By Lemma 1 and the assumption that _f_ is nondecreasing, **E**[_f_(_X_<sub>_k_</sub>/_n_)] is nondecreasing as _k_ increases, so take **E**[_f_(_X_<sub>_n_</sub>/_n_)] = **E**[_f_(_Y_</sub>/_n_)] as the upper bound.  Then, abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) = abs(**E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_])) = **E**[_f_(_X_/_n_)] &minus; _f_(**E**\[_X_/_n_\]) (by Jensen's inequality, because _f_ is convex and not less than 0) = **E**\[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_)) &le; **E**\[_f_(_X_/_n_)\] (because _f_ is not less than 0) &le; **E**[_f_(_Y_/_n_)]. &#x25a1;
@@ -949,7 +941,7 @@ _Proof._
 >     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^33].
 
-**Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a non-negative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
+**Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
 $$\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),$$
 
@@ -971,17 +963,17 @@ _The polynomials $g_n$ and $h_n$ satisfy:_
 
 1. _$g_n \le h_n$._
 2. _$g_n$ and $h_n$ converge to $f$ as $n$ gets large._
-3. $(g_{n+1}-g_n)$ _and_ $(h_{n}-h_{n+1})$ _are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$._
+3. $(g_{n+1}-g_n)$ _and_ $(h_{n}-h_{n+1})$ _are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$._
 
 _Proof._ For simplicity, this proof assumes first that $n_0 = 1$.
 
 For the series _&eta;_(_n_) in the theorem, because $\phi(n)$ is nonnegative, each term of the series is nonnegative making the series nonnegative and, by the assumption that the series converges, _&eta;_(_n_) is nonincreasing with increasing _n_.
 
-Item 1 is trivial.  If $n\ge n_0$, $g_n$ is simply the Bernstein polynomial of $f$ minus a non-negative value, and $h_n$ is the Bernstein polynomial of $f$ plus that same value, and if $n$ is less than $n_0$, $g_n$ is a constant value not less than the lowest point reachable by the lower polynomials, and $h_n$ is a constant value not less than the highest point reachable by the upper polynomials.
+Item 1 is trivial.  If $n\ge n_0$, $g_n$ is simply the Bernstein polynomial of $f$ minus a nonnegative value, and $h_n$ is the Bernstein polynomial of $f$ plus that same value, and if $n$ is less than $n_0$, $g_n$ is a constant value not less than the lowest point reachable by the lower polynomials, and $h_n$ is a constant value not less than the highest point reachable by the upper polynomials.
 
 Item 2 is likewise trivial. A well known result is that the Bernstein polynomials of $f$ converge to $f$ as their degree $n$ gets large.  And because the series _&eta;_ (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, the upper and lower shifts will converge to 0 so that $g_n$ and $h_n$ converge to the degree-$n$ Bernstein polynomials and thus to $f$.
 
-Item 3 is the _consistency requirement_ described earlier in this page. The is ensured as in Proposition 10 of Nacu and Peres (2005)[^1] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is _&eta;_(_n_), a solution to the equation 0 = _&eta;_(_n_) &minus; _&eta;_(2 \* _n_) &minus; _&phi;_(_n_) (see note below), where _&phi;_(_n_) is a function that takes on a non-negative value.
+Item 3 is the _consistency requirement_ described earlier in this page. The is ensured as in Proposition 10 of Nacu and Peres (2005)[^1] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is _&eta;_(_n_), a solution to the equation 0 = _&eta;_(_n_) &minus; _&eta;_(2 \* _n_) &minus; _&phi;_(_n_) (see note below), where _&phi;_(_n_) is a function that takes on a nonnegative value.
 
 _&phi;_(_n_) is, roughly speaking, the minimum distance between one polynomial and the next so that the consistency requirement is met between those two polynomials.  Compare the assumptions on _&phi;_ in Theorem 1 with equations (10) and (11) in Nacu and Peres (2005).
 
@@ -1079,18 +1071,18 @@ _Proof._ Parts 1 and 2 follow from Theorem 1 or 2 or Corollary 1 to 3, as the ca
 
 The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.
 
-**Lemma 3.** _Let $f$ be a strictly bounded factory function. Let $S$ be an infinite set of positive integers.  For each integer $n\ge 1$, let $W_n(\lambda)$ be a function, and let $\epsilon_n(f,\lambda)$ be a non-negative function.  Suppose that there are polynomials $g_n$ and $h_n$ (for each $n$ in $S$) as follows:_
+**Lemma 3.** _Let $f$ be a strictly bounded factory function. Let $S$ be an infinite set of positive integers.  For each integer $n\ge 1$, let $W_n(\lambda)$ be a function, and let $\epsilon_n(f,\lambda)$ be a nonnegative function.  Suppose that there are polynomials $g_n$ and $h_n$ (for each $n$ in $S$) as follows:_
 
 1. _$g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f,\lambda)$ and $W_n(k/n) + \epsilon_n(f,\lambda)$, respectively ($0\le k\le n$)._
 2. _$g_n \le h_n$._
 3. _$g_n$ and $h_n$ converge to $f$ as $n$ gets large._
-4. $(g_{m}-g_n)$ _and_ $(h_{n}-h_{m})$ _are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$. (This is the consistency requirement.)_
+4. $(g_{m}-g_n)$ _and_ $(h_{n}-h_{m})$ _are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$. (This is the consistency requirement.)_
 
 _Then for each $n$ in $S$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f,\lambda)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 
 _Proof:_ $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f,\lambda)$.  Moreover, property 4 in the lemma corresponds to condition (iv) of Nacu and Peres (2005)[^1], which implies that, for every $m>n$, $g_{n}(\lambda)\le g_{m}(\lambda)\le f(\lambda)$ (the lower polynomials "increase") and $h_{n}(\lambda)\ge h_{m}\ge f(\lambda)$ (the upper polynomials "decrease") for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].
 
-Then if $B_n(W_n(\lambda)) < f(\lambda)$ for some $\lambda$ in [0, 1], shifting the left-hand side upward by $\epsilon_n(f,\lambda)$ (a non-negative function) means that $h_n = B_n(W_n(\lambda))+\epsilon_n(f,\lambda) \ge f(\lambda)$, and rearranging this expression leads to $f(\lambda) - B_n(W_n(\lambda)) \le \epsilon_n(f,\lambda)$.
+Then if $B_n(W_n(\lambda)) < f(\lambda)$ for some $\lambda$ in [0, 1], shifting the left-hand side upward by $\epsilon_n(f,\lambda)$ (a nonnegative function) means that $h_n = B_n(W_n(\lambda))+\epsilon_n(f,\lambda) \ge f(\lambda)$, and rearranging this expression leads to $f(\lambda) - B_n(W_n(\lambda)) \le \epsilon_n(f,\lambda)$.
 
 Likewise, if $B_n(W_n(\lambda)) > f(\lambda)$ for some $\lambda$ in [0, 1], shifting the left-hand side downward by $\epsilon_n(f,\lambda)$ means that $g_n = B_n(W_n(\lambda))-\epsilon_n(f,\lambda) \le f(\lambda)$, and rearranging this expression leads to $B_n(W_n(\lambda)) - f(\lambda) \le \epsilon_n(f,\lambda)$.
 
@@ -1113,7 +1105,7 @@ Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $
 
 1. $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise.
 2. $g_n$ and $h_n$ converge to $f$ as $n$ gets large.
-3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
+3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.
 
