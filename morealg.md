@@ -212,7 +212,7 @@ To get to an algorithm equivalent to Mendo's, first **Algorithm 2** is modified 
 
 Mendo's algorithm and extensions of it mentioned by him cover several variations of power series as follows:
 
-| No. |   Power Series  |   Algorithm  |
+| Type |   Power Series  |   Algorithm  |
   --- | --- | --- |
 | 1 | $f(\lambda)=1-f_0(1-\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=1-\lambda$ and return 1 minus the result.  Otherwise, return 1. |
 | 2 | $f(\lambda)=f_0(1-\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=1-\lambda$ and return the result.  Otherwise, return 0. |
@@ -221,10 +221,10 @@ Mendo's algorithm and extensions of it mentioned by him cover several variations
 
 The conditions on $f$ given above mean that&mdash;
 
-- for series 1, _f_(0) = 1&minus;_CS_ and _f_(1) = 1 (series 1 with _CS_=1 is the main form in Mendo's paper),
-- for series 2, _f_(0) = _CS_ and _f_(1) = 0,
-- for series 3, _f_(0) = 0 and _f_(1) = _CS_, and
-- for series 4, _f_(0) = 1 and _f_(1) = 1&minus;_CS_.
+- for series of type 1, _f_(0) = 1&minus;_CS_ and _f_(1) = 1 (series of type 1 with _CS_=1 is the main form in Mendo's paper),
+- for series of type 2, _f_(0) = _CS_ and _f_(1) = 0,
+- for series of type 3, _f_(0) = 0 and _f_(1) = _CS_, and
+- for series of type 4, _f_(0) = 1 and _f_(1) = 1&minus;_CS_.
 
 <a id=Series_with_General_Non_Negative_Coefficients></a>
 #### Series with General Non-Negative Coefficients
@@ -336,6 +336,8 @@ For this particular function:
 | exp(_&lambda;_)/6.  | _&phi;_(_&lambda;_) &minus; _D_. | _n_. | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. |
 | exp(_&lambda;_/2)/2.  | _&phi;_(_&lambda;_) &minus; _D_. | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. |
 | cosh(_&lambda;_)/4. | _&phi;_(_&lambda;_) &minus; _D_. | 2\*_n_. | (1/4&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_/2</sup>/(2\*(_n_!)) otherwise. |
+
+**Example 10:** Let $f(\lambda)=exp(\lambda)\cdot (1-\lambda)$.  Run Mendo's algorithm for series of type 1, with $a_i = \frac{i-1}{i!}$ and $CS = 1$.
 
 <a id=Certain_Piecewise_Linear_Functions></a>
 ### Certain Piecewise Linear Functions
