@@ -65,7 +65,7 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 - $f(\lambda)$ is concave.
 - $f(\lambda)$ is strictly increasing and continuous.
 - $f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.
-- $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f(\lambda)| \le Bl^n n^{\gamma n}$ for every $n$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
+- $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
 
 <a id=Polynomials_that_approach_a_factory_function_fast></a>
 ## Polynomials that approach a factory function "fast"

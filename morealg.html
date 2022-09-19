@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/09/16"><meta name="citation_online_date" content="2022/09/16"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/09/19"><meta name="citation_online_date" content="2022/09/19"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -102,6 +102,7 @@
 <li><a href="#Ratio_of_Uniforms"><strong>Ratio of Uniforms</strong></a></li>
 <li><a href="#Implementation_Notes_for_Box_Shape_Intersection"><strong>Implementation Notes for Box/Shape Intersection</strong></a></li>
 <li><a href="#Probability_Transformations"><strong>Probability Transformations</strong></a></li>
+<li><a href="#Proof_of_the_General_Martingale_Algorithm"><strong>Proof of the General Martingale Algorithm</strong></a></li>
 <li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
 <li><a href="#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</strong></a></li>
 <li><a href="#Algorithm_for_sin___lambda_____pi___2"><strong>Algorithm for sin(<em>&lambda;</em>*<em>&pi;</em>/2)</strong></a></li>
@@ -191,7 +192,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>The <strong>general martingale algorithm</strong>, as it&#39;s called in this article, supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the general martingale algorithm uses that paper&#39;s framework.  A proof of its correctness is given in the appendix of &quot;Bernoulli Factory Algorithms&quot;.</li>
+<li>The <strong>general martingale algorithm</strong>, as it&#39;s called in this article, supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the general martingale algorithm uses that paper&#39;s framework.  A proof of its correctness is given in the appendix.</li>
 <li>The <strong>general martingale algorithm</strong> allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence&#39;s nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is less than or equal to $\lambda$.</li>
 </ol>
 </blockquote>
@@ -1263,7 +1264,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 </tr>
 <tr>
 <td><em>r</em>*<em>&lambda;</em> &minus; <em>r</em> + <em>r</em>*exp(&minus;<em>&lambda;</em>)</td>
-<td>(<em>r</em> is a rational number in half-open interval (0, 2].  <em>&lambda;</em> is the unknown heads probability of a coin.)<br>Run the <strong>general martingale algorithm</strong> in &quot;Bernoulli Factory Algorithms&quot; with $g(\lambda) = \lambda$, and with $d_0 = r/2$  and coefficients $a_i = \frac{r}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.</td>
+<td>(<em>r</em> is a rational number in half-open interval (0, 2].  <em>&lambda;</em> is the unknown heads probability of a coin.)<br>Run the <strong>general martingale algorithm</strong> with $g(\lambda) = \lambda$, and with $d_0 = r/2$  and coefficients $a_i = \frac{r}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.</td>
 </tr>
 <tr>
 <td><em>n</em>*exp(&minus;1) = <em>n</em>/exp(1)</td>
@@ -2179,6 +2180,28 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <li>This section appears in the appendix because this article is focused on algorithms that don&#39;t rely on calculations of irrational numbers.</li>
 </ol>
 </blockquote>
+
+<p><a id=Proof_of_the_General_Martingale_Algorithm></a></p>
+
+<h3>Proof of the General Martingale Algorithm</h3>
+
+<p>This proof of the <strong>general martingale algorithm</strong> is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^1], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences <em>U</em> and <em>L</em> as follows:</p>
+
+<ul>
+<li>$U_0=d_0$ and $L_0=0$.</li>
+<li>For each $n&gt;0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n &gt; 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if no nonzero coefficients follow $a_n$ and $a_n &lt; 0$, otherwise $U_{n-1}$.</li>
+<li>For each $n&gt;0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n &lt; 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if no nonzero coefficients follow $a_n$ and $a_n &gt; 0$, otherwise $L_{n-1}$.</li>
+</ul>
+
+<p>Then it&#39;s clear that with probability 1, for every $n\ge 1$&mdash;</p>
+
+<ul>
+<li>$L_n \le U_n$,</li>
+<li>$U_n$ is 0 or greater and $L_n$ is 1 or less, and</li>
+<li>$L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.</li>
+</ul>
+
+<p>Moreover, if there are infinitely many nonzero coefficients, the <em>U</em> and <em>L</em> sequences have expected values (&quot;long-run averages&quot;) converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values that approach $f(\lambda)$ as $n$ gets large.  These conditions are required for the paper&#39;s Algorithm 3 (and thus the <strong>general martingale algorithm</strong>) to be valid.</p>
 
 <p><a id=SymPy_Code_for_Piecewise_Linear_Factory_Functions></a></p>
 
