@@ -1186,7 +1186,7 @@ In this document, a **linear Bernoulli factory** refers to one of the following:
 
 arctan(_&lambda;_) is the inverse tangent of _&lambda;_.
 
-Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^24][^54]
+Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which does not).[^24][^54]
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
@@ -1248,7 +1248,7 @@ Equals the previous function times _&lambda;_, with _c_ = 1.
 <a id=ln_1___lambda></a>
 #### ln(1+_&lambda;_)
 
-Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^24][^55]
+Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which does not).[^24][^55]
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
@@ -1397,17 +1397,16 @@ Observing that the even-parity construction used in the Flajolet paper[^24] is e
 Two algorithms:
 
 - First algorithm: Use the algorithm for **arcsin(_&lambda;_) / 2**, but where the algorithm says to "flip the input coin", instead generate an unbiased random bit.
-- Second algorithm: With probability 2/3, return 0.  Otherwise, run the algorithm for **&pi; / 4** and return the result.
+- Second algorithm: With probability 2/3, return 0.  Otherwise, run an algorithm for **&pi; / 4** and return the result.
 
 <a id=pi___4></a>
 #### _&pi;_ / 4
 
-(Flajolet et al., 2010\)[^1]\:
+Three algorithms:
 
-1. Generate a random integer in the interval [0, 6), call it _n_.
-2. If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
-
-To see how a different algorithm for _&pi;_/4 works, see the appendix.
+- First algorithm (Flajolet et al., 2010\)[^1]\: Generate a random integer in the interval [0, 6), call it _n_.  If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
+- Second algorithm (since arctan(1) = _&pi;_ / 4): Run the second **algorithm for arctan(1/1) \* 1/1**.
+- Third algorithm: See the appendix.
 
 <a id=1___pi></a>
 #### 1 / _&pi;_

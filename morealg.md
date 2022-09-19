@@ -173,7 +173,7 @@ Now, suppose $f(\lambda)$ can be written as a power series in equation $(1)$, bu
 
 If $g(\lambda) = \lambda$, this kind of function&mdash;
 
-- lies in the closed interval [0, 1] whenever 0 &le; _&lambda;_ &le; 1,
+- satisfies $0\le f(\lambda)\le 1$ whenever 0 &le; _&lambda;_ &le; 1,
 - is either constant or strictly increasing, and
 - is _convex_ (its "slope" or "velocity" doesn't decrease as _&lambda;_ increases)[^3].
 
@@ -468,7 +468,7 @@ $$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda(g(\lambda))^2-1}} = (1-\lambda)\s
 
 and 0 otherwise, where:
 
-- _g_(_&lambda;_) is a continuous function that maps the closed interval \[0, 1\] to the half-open interval \[0, 1\) and admits a Bernoulli factory. If _g_ is a rational function (a ratio of two polynomials) with rational coefficients, then _f_ is algebraic and can be simulated by a _pushdown automaton_, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
+- _g_(_&lambda;_) is a Bernoulli factory function with the property $0\le g(\lambda)\lt 1$ whenever $0\le\lambda\le 1$. If _g_ is a rational function (a ratio of two polynomials) whose coefficients are rational numbers, then _f_ is algebraic and can be simulated by a _pushdown automaton_, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
 
 Equivalently&mdash; $$f(\lambda)=(1-\lambda) OGF(\lambda g(\lambda) (1-g(\lambda))),$$ where $OGF(x) = \sum_{n\ge 0} x^n {2n \choose n}$ is the algorithm's ordinary generating function (also known as counting generating function).
 

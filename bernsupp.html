@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/09/15"><meta name="citation_online_date" content="2022/09/15"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/09/18"><meta name="citation_online_date" content="2022/09/18"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -517,7 +517,7 @@
 <td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)[^1].<br/>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^18].</td>
 </tr>
 <tr>
-<td>Number of flips required, raised to power of <em>r</em>, is finite on average and has a tail that drops off uniformly over <em>f</em>&#39;s domain.</td>
+<td>Number of flips required, raised to power of <em>r</em>, is bounded by a finite number on average and has a tail that drops off uniformly over <em>f</em>&#39;s domain.</td>
 <td>Only if <em>f</em> has continuous <em>r</em>-th derivative (Nacu and Peres 2005)[^1].</td>
 </tr>
 <tr>
@@ -961,7 +961,7 @@
 
 <h3>Proofs on Cutting Off a Power Series</h3>
 
-<p><strong>Lemma A1:</strong> Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and have a finite sum and where $0\le x\le 1$ (the domain is the interval [0, 1]). Then $f$ is convex and has a maximum at 1.</p>
+<p><strong>Lemma A1:</strong> Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and sum to a finite value and where $0\le x\le 1$ (the domain is the interval [0, 1]). Then $f$ is convex and has a maximum at 1.</p>
 
 <p><em>Proof:</em> By inspection, $f$ is a power series and is nonnegative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for every $n\ge 0$, and multiplying that by a nonnegative constant doesn&#39;t change whether it&#39;s increasing.  Since all of these terms have a maximum at 1 on the domain, so does their sum.</p>
 
@@ -1429,7 +1429,7 @@
 
 <p>Item 2 is likewise trivial. A well known result is that the Bernstein polynomials of $f$ converge to $f$ as their degree $n$ gets large.  And because the series <em>&eta;</em> (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, the upper and lower shifts will converge to 0 so that $g_n$ and $h_n$ converge to the degree-$n$ Bernstein polynomials and thus to $f$.</p>
 
-<p>Item 3 is the <em>consistency requirement</em> described earlier in this page. The is ensured as in Proposition 10 of Nacu and Peres (2005)[^1] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is <em>&eta;</em>(<em>n</em>), a solution to the equation 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(2 * <em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) (see note below), where <em>&phi;</em>(<em>n</em>) is a function that takes on a nonnegative value.</p>
+<p>Item 3 is the <em>consistency requirement</em> described earlier in this page. This is ensured as in Proposition 10 of Nacu and Peres (2005)[^1] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is <em>&eta;</em>(<em>n</em>), a solution to the equation 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(2 * <em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) (see note below), where <em>&phi;</em>(<em>n</em>) is a function that takes on a nonnegative value.</p>
 
 <p><em>&phi;</em>(<em>n</em>) is, roughly speaking, the minimum distance between one polynomial and the next so that the consistency requirement is met between those two polynomials.  Compare the assumptions on <em>&phi;</em> in Theorem 1 with equations (10) and (11) in Nacu and Peres (2005).</p>
 

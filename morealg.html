@@ -246,7 +246,7 @@
 <p>If $g(\lambda) = \lambda$, this kind of function&mdash;</p>
 
 <ul>
-<li>lies in the closed interval [0, 1] whenever 0 &le; <em>&lambda;</em> &le; 1,</li>
+<li>satisfies $0\le f(\lambda)\le 1$ whenever 0 &le; <em>&lambda;</em> &le; 1,</li>
 <li>is either constant or strictly increasing, and</li>
 <li>is <em>convex</em> (its &quot;slope&quot; or &quot;velocity&quot; doesn&#39;t decrease as <em>&lambda;</em> increases)[^3].</li>
 </ul>
@@ -779,7 +779,7 @@
 <p>and 0 otherwise, where:</p>
 
 <ul>
-<li><em>g</em>(<em>&lambda;</em>) is a continuous function that maps the closed interval [0, 1] to the half-open interval [0, 1) and admits a Bernoulli factory. If <em>g</em> is a rational function (a ratio of two polynomials) with rational coefficients, then <em>f</em> is algebraic and can be simulated by a <em>pushdown automaton</em>, as in the algorithm below. But this algorithm will still work even if <em>g</em> is not a rational function.</li>
+<li><em>g</em>(<em>&lambda;</em>) is a Bernoulli factory function with the property $0\le g(\lambda)\lt 1$ whenever $0\le\lambda\le 1$. If <em>g</em> is a rational function (a ratio of two polynomials) whose coefficients are rational numbers, then <em>f</em> is algebraic and can be simulated by a <em>pushdown automaton</em>, as in the algorithm below. But this algorithm will still work even if <em>g</em> is not a rational function.</li>
 </ul>
 
 <p>Equivalently&mdash; $$f(\lambda)=(1-\lambda) OGF(\lambda g(\lambda) (1-g(\lambda))),$$ where $OGF(x) = \sum_{n\ge 0} x^n {2n \choose n}$ is the algorithm&#39;s ordinary generating function (also known as counting generating function).</p>

@@ -326,7 +326,7 @@ The following table summarizes the rate of simulation (in terms of the number of
   ------------- |  ------------------------
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012\)[^17]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^2]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^18].  |
-| Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
+| Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note 3) (Holtz et al. 2011\)[^19]. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with exponent (_&alpha;_ &minus; _r_), where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^19]. Assumes _f_ is bounded away from 0 and 1. |
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^2]. | If and only if _f_ is real analytic (writable as $f(\lambda)=a_0 \lambda^0 + a_1 \lambda^1 + ...$ for real constants $a_i$) (Nacu and Peres 2005\)[^1].   |
@@ -596,7 +596,7 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 <a id=Proofs_on_Cutting_Off_a_Power_Series></a>
 ### Proofs on Cutting Off a Power Series
 
-**Lemma A1:** Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and have a finite sum and where $0\le x\le 1$ (the domain is the interval [0, 1]). Then $f$ is convex and has a maximum at 1.
+**Lemma A1:** Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and sum to a finite value and where $0\le x\le 1$ (the domain is the interval [0, 1]). Then $f$ is convex and has a maximum at 1.
 
 _Proof:_ By inspection, $f$ is a power series and is nonnegative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for every $n\ge 0$, and multiplying that by a nonnegative constant doesn't change whether it's increasing.  Since all of these terms have a maximum at 1 on the domain, so does their sum.
 
@@ -973,7 +973,7 @@ Item 1 is trivial.  If $n\ge n_0$, $g_n$ is simply the Bernstein polynomial of $
 
 Item 2 is likewise trivial. A well known result is that the Bernstein polynomials of $f$ converge to $f$ as their degree $n$ gets large.  And because the series _&eta;_ (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, the upper and lower shifts will converge to 0 so that $g_n$ and $h_n$ converge to the degree-$n$ Bernstein polynomials and thus to $f$.
 
-Item 3 is the _consistency requirement_ described earlier in this page. The is ensured as in Proposition 10 of Nacu and Peres (2005)[^1] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is _&eta;_(_n_), a solution to the equation 0 = _&eta;_(_n_) &minus; _&eta;_(2 \* _n_) &minus; _&phi;_(_n_) (see note below), where _&phi;_(_n_) is a function that takes on a nonnegative value.
+Item 3 is the _consistency requirement_ described earlier in this page. This is ensured as in Proposition 10 of Nacu and Peres (2005)[^1] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is _&eta;_(_n_), a solution to the equation 0 = _&eta;_(_n_) &minus; _&eta;_(2 \* _n_) &minus; _&phi;_(_n_) (see note below), where _&phi;_(_n_) is a function that takes on a nonnegative value.
 
 _&phi;_(_n_) is, roughly speaking, the minimum distance between one polynomial and the next so that the consistency requirement is met between those two polynomials.  Compare the assumptions on _&phi;_ in Theorem 1 with equations (10) and (11) in Nacu and Peres (2005).
 
