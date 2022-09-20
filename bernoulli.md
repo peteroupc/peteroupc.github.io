@@ -605,10 +605,10 @@ The previous algorithm can be generalized further, so that an input coin that si
 
 This algorithm, called **Algorithm CC** in this document, is:
 
-1. Generate a random integer _X_ in some way, with the help of the input coin for _&lambda;_.
+1. Choose an integer 0 or greater at random with probability $g(k,\lambda)$ for integer $k$, with help of the input coin for $\lambda$. Call the chosen integer _X_.
 2. Flip the coin represented by _X_ and return the result.
 
-> **Note:** If we define _S_ to be a set of integers 0 or greater, and replace step 2 with "If _i_ is in the set _S_, return 1.  Otherwise, return 0", then the algorithm returns 1 with probability $\sum_{k\text{ in }S} g(k,\lambda)$ (because $h_k(\lambda)$ is either 1 if $k$ is in _S_, or 0 otherwise). Then the so-called "even-parity" construction[^24] is a special case of this algorithm, if _S_ is the even positive integers and zero and if the example below is used.
+> **Note:** If we define _S_ to be a set of integers 0 or greater, and replace step 2 with "If _X_ is in the set _S_, return 1.  Otherwise, return 0", then the algorithm returns 1 with probability $\sum_{k\text{ in }S} g(k,\lambda)$ (because $h_k(\lambda)$ is either 1 if $k$ is in _S_, or 0 otherwise). Then the so-called "even-parity" construction[^24] is a special case of this algorithm, if _S_ is the even positive integers and zero and if the example below is used.
 >
 > **Example:** Step 1 can read "Flip the input coin for _&lambda;_ repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way." Then step 1 generates _X_ with probability $\lambda^X (1-\lambda)$.[^36]
 
@@ -639,9 +639,9 @@ The algorithm follows.
 
 The previous algorithm can be generalized further, so that an input coin that simulates the probability _&lambda;_ helps generate the random integer in step 1.  Now, the overall algorithm generates an integer _i_ with probability&mdash; $$\frac{g(i,\lambda) h_i(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}.$$
 
-This algorithm, called **Algorithm BR** in this document, is:
+In addition, the set of integers to choose from can be infinite.  This algorithm, called **Algorithm BR** in this document, is:
 
-1. Generate a random integer _i_ in some way, with the help of the input coin for _&lambda;_, so that _i_ is generated with probability proportional to the following weights: \[_g_(0, _&lambda;_), _g_(1, _&lambda;_), ..., _g_(_r_, _&lambda;_)\]. (_r_ can be infinity.)
+1. Choose an integer 0 or greater at random with probability $g(k,\lambda)$ for integer $k$, with help of the input coin for $\lambda$. Call the chosen integer $i$.  (If the integer must be less than or equal to an integer _r_, then the integer will have probability proportional to the following weights: \[_g_(0, _&lambda;_), _g_(1, _&lambda;_), ..., _g_(_r_, _&lambda;_)\].)
 2. Run a Bernoulli factory algorithm for _h_<sub>_i_</sub>(**_&mu;_**).  If the run returns 0 (_i_ is rejected), go to step 1.
 3. _i_ is accepted, so return _i_.
 
@@ -1888,33 +1888,25 @@ Then the algorithm's behavior is given in the tables below.
 <a id=Derivation_of_an_Algorithm_for___pi___4></a>
 ### Derivation of an Algorithm for _&pi;_ / 4
 
-The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz generator `MGL()` for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  First, `MGL()` generates a uniform(0, 1) random variate, call it $U$, then it samples from the number $U$ repeatedly until the sampling "fails" (returns 0).  Then `MGL()` returns either 1 if the number of "successes" it got has a remainder of 0 or 1 after division by 4, or 0 otherwise.
+The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz (MGL) generator for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  It works as follows.  Let $S$ be a set of non-negative integers.  Then:
 
-The probability that `MGL()` samples from $U$ $k+1$ times (or experiences
-$k$ "successes" before a failure), given that it generates the variate (success probability) $U$, is&mdash;
+1. Generate a uniform(0, 1) random variate, call it $U$.
+2. Sample from the number $U$ repeatedly until the sampling "fails" (returns 0).  Set $k$ to the number of "successes".  (Thus, this step generates $k$ with probability $g(k,U) = (1-U) U^k$.)
+3. If $k$ is in $S$, return 1; otherwise, return 0.
 
-$$P(k, U) = (1-U) U^k,$$ and $C(k)$, the probability that `MGL()` experiences $k$ successes before a failure, is the integral (area under the graph) of $P(k, U)$ over all possible success probabilities (with $0\le U\le 1$), namely&mdash;
+This can be seen as running **Algorithm CC** with an input coin for a randomly generated probability (a uniform(0, 1) random variate).  Given that step 1 generates $U$, the probability this algorithm returns 1 is&mdash; $$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the "[**integral method**](#Integrals)", so that the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4) returns 1 with probability&mdash; $$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which in this case equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.
 
-$$C(k)=\int_0^1 P(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2},$$
+This probability satisfies&mdash; $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and non-negative; the sum $\sum_{k\text{ in }S} g(k,U)$ is finite whenever $0\le U\le 1$; and $S$ and the interval $[0, 1]$ have natural sigma-finite measures.
 
-and also $C(k)= \int_0^1 (1-U)^k U\,dU$, showing that $C(k)$ is the same whether $k$ is considered the number
-of successes before a failure or vice versa.
-
-The Madhava&ndash;Gregory&ndash;Leibniz series is then formed by&mdash;
+Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm's step 2 generates a number $k$, namely $$C(k)=\int_0^1 g(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2}.$$  Then the MGL series for $\pi/4$ is formed by&mdash;
 
 $$\pi/4 = (1/1-1/3)+(1/5-1/7)+...=2/3+2/35+2/99+...$$
 
 $$=(C(0)+C(1))+(C(4)+C(5))+(C(8)+C(9))+...$$
 
-$$=\sum_{k\ge 0} C(4k)+C(4k+1).$$
+$$=\sum_{k\ge 0} C(4k)+C(4k+1),$$
 
-In effect, `MGL()` returns 1 if it experiences 0, 1, 4, 5, 8, 9, ... successes before a failure.
-
-> **Note:** This derivation leads to a way to generalize `MGL()`. Let $S$ be a set of integers 0 or greater.  If `MGL()` returns either 1 when the number of successes it gets is in $S$, and 0 otherwise, then it returns 1 with probability&mdash; $$\sum_{k \text{ in } S} C(k) = \sum_{k \text{ in } S}\int_0^1 (1-U) U^k\,dU = \int_0^1\sum_{k \text{ in } S} (1-U) U^k\,dU = \int_0^1\sum_{k \text{ in } S} P(k, U)\,dU,$$ where the sum-of-integral-equals-integral-of-sum property follows by the so-called Fubini&ndash;Tonelli theorem.  For example, if $S$ is the positive integers divisible by 3 together with 0 (that is, 0, 3, 6, 9, ...), then the probability is $\pi\sqrt{3/81}$.
-
-Given that `MGL()` generates the variate (success probability) $U$, `MGL()` returns 1 with probability&mdash; $$\sum_{k\ge 0} P(4k,U)+P(4k+1,U)=\frac{1}{U^2+1},$$ and the integral of the right hand side over all possible success probabilities (with $0\le U\le 1$) is&mdash; $$\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4.$$
-
-> **Note:** If `MGL()` is written instead so that it stops when it experiences a _success_ rather than a failure, then given that it generates $U$, it returns 1 with the following probability: $\sum_{k\ge 0} P(4k,1-U)+P(4k+1,1-U)=\frac{1}{U^2-2U+2}$.
+where the last sum takes $C(k)$ for each $k$ in the set $S$ given earlier.
 
 <a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
 ### Sketch of Derivation of the Algorithm for 1 / _&pi;_
