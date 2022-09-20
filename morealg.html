@@ -368,6 +368,10 @@
 
 <p>Examples 1 to 4 show how <strong>Algorithm 1</strong> leads to algorithms for simulating certain factory functions.</p>
 
+<blockquote>
+<p><strong>Note:</strong> In the SymPy computer algebra library, the <code>series(func, n=20)</code> method computes the first 20 terms of a function&#39;s power series expansion.  An example is: <code>series(sin(x), n=20)</code>.</p>
+</blockquote>
+
 <p><strong>Example 1:</strong> Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.</p>
 
 <ul>
@@ -589,7 +593,7 @@
 
 <h3>Certain Piecewise Linear Functions</h3>
 
-<p>Let <em>f</em>(<em>&lambda;</em>) be a function of the form min(<em>&lambda;</em>*<em>mult</em>, 1&minus;<em>&epsilon;</em>). This is a piecewise linear function with two pieces: a rising linear part and a constant part.</p>
+<p>Let <em>f</em>(<em>&lambda;</em>) be a function of the form min(<em>&lambda;</em>*<em>mult</em>, 1&minus;<em>&epsilon;</em>). This is a <em>piecewise linear function</em>, a function made up of two linear pieces (in this case, the pieces are a rising linear part and a constant part).</p>
 
 <p>This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to <em>f</em>, based on Thomas and Blanchet (2012)[^11].  These polynomials can then be used to generate heads with probability <em>f</em>(<em>&lambda;</em>) using the algorithms given in &quot;<a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;.</p>
 
@@ -1905,7 +1909,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <p>[^2]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
 
-<p>[^3]: To show the target function $f(\lambda)$ is convex, find the &quot;slope-of-slope&quot; function of <em>f</em> and show it&#39;s nonnegative for every <em>&lambda;</em> in the domain.  To do so, first find the &quot;slope&quot;: omit the first term and for each remaining term (with $i\ge 1$), replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting &quot;slope&quot; function is still an infinite series with coefficients 0 or greater.  Hence, so will the &quot;slope&quot; of this &quot;slope&quot; function, so the result follows by induction.</p>
+<p>[^3]: To show the target function $f(\lambda)$ is convex, find the &quot;slope-of-slope&quot; function of <em>f</em> and show it&#39;s 0 or greater for every <em>&lambda;</em> in the domain.  To do so, first find the &quot;slope&quot;: omit the first term and for each remaining term (with $i\ge 1$), replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting &quot;slope&quot; function is still an infinite series with coefficients 0 or greater.  Hence, so will the &quot;slope&quot; of this &quot;slope&quot; function, so the result follows by induction.</p>
 
 <p>[^4]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</p>
 
