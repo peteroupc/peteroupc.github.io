@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2022/09/20"><meta name="citation_online_date" content="2022/09/20"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2022/09/21"><meta name="citation_online_date" content="2022/09/21"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -18,15 +18,16 @@
 
 <p>We&#39;re given a coin that shows heads with an unknown probability, <em>&lambda;</em>. The goal is to use that coin (and possibly also a fair coin) to build a &quot;new&quot; coin that shows heads with a probability that depends on <em>&lambda;</em>, call it <em>f</em>(<em>&lambda;</em>). This is the <em>Bernoulli factory problem</em>.</p>
 
-<p>And this page catalogs algorithms to solve this problem for a wide variety of functions, algorithms known as <em>Bernoulli factories</em>.</p>
+<p>This page:</p>
 
-<p>Many of these algorithms were suggested in (Flajolet et al., 2010)[^1], but without step-by-step instructions in many cases.  This page provides these instructions to help programmers implement the Bernoulli factories they describe.  The Python module <a href="https://peteroupc.github.io/bernoulli.py"><strong><em>bernoulli.py</em></strong></a> includes implementations of several Bernoulli factories.</p>
+<ul>
+<li>Catalogs algorithms to solve this problem for a wide variety of functions, algorithms known as <em>Bernoulli factories</em>.  For many of these algorithms, step-by-step instructions are provided.  (Many of these algorithms were suggested in (Flajolet et al., 2010)[^1], but without step-by-step instructions in many cases.)</li>
+<li>Contains algorithms to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An <em>irrational number</em> is a number that can&#39;t be written as a ratio of two integers.) Again, many of these algorithms were suggested in (Flajolet et al., 2010)[^1].</li>
+<li>Is directed to <strong>computer programmers with mathematics knowledge, but little or no familiarity with calculus</strong>.</li>
+<li>Is focused on methods that <em>exactly</em> sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that a source of independent and unbiased random bits is available).</li>
+</ul>
 
-<p>This page also contains algorithms to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An <em>irrational number</em> is a number that can&#39;t be written as a ratio of two integers.) Again, many of these algorithms were suggested in (Flajolet et al., 2010)[^1].</p>
-
-<p>This page is focused on methods that <em>exactly</em> sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of independent and unbiased random bits).</p>
-
-<p>For extra notes, see: <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a></p>
+<p>The Python module <a href="https://peteroupc.github.io/bernoulli.py"><strong><em>bernoulli.py</em></strong></a> includes implementations of several Bernoulli factories.  For extra notes, see: <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a></p>
 
 <p><a id=About_This_Document></a></p>
 
@@ -34,7 +35,17 @@
 
 <p><strong>This is an open-source document; for an updated version, see the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/raw/master/bernoulli.md"><strong>source code</strong></a> <strong>or its</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.md"><strong>rendering on GitHub</strong></a><strong>.  You can send comments on this document on the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a><strong>.  See</strong> &quot;<a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a>&quot; <strong>for a list of things about this document that I seek answers to.</strong></p>
 
-<p><strong>I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  This may help improve this page.</strong></p>
+<p>My audience for this article is <strong>computer programmers with mathematics knowledge, but little or no familiarity with calculus</strong>.</p>
+
+<p>I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, <a href="https://github.com/peteroupc/peteroupc.github.io/issues/18"><strong>I seek comments on the following aspects</strong></a>:</p>
+
+<ul>
+<li>Are the algorithms in the articles easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?</li>
+<li>Does this article have errors that should be corrected?</li>
+<li>Are there ways to make this article more useful to the target audience?</li>
+</ul>
+
+<p>Comments on other aspects of this document are welcome.</p>
 
 <p><a id=Contents></a></p>
 
@@ -1809,7 +1820,7 @@
 
 <h4>ln((<em>c</em> + <em>d</em> + <em>&lambda;</em>)/<em>c</em>)</h4>
 
-<p>In this algorithm, <em>d</em> and <em>c</em> are integers, 0 &lt; <em>c</em> &lt; <em>d</em>, and <em>d</em> &ge; 0, and (<em>c</em> + <em>d</em> + <em>&lambda;</em>)/<em>c</em> &le; exp(1).</p>
+<p>In this algorithm, <em>d</em> and <em>c</em> are integers, 0 &lt; <em>c</em>, and <em>c</em> &gt; <em>d</em> &ge; 0, and (<em>c</em> + <em>d</em> + <em>&lambda;</em>)/<em>c</em> &le; exp(1).</p>
 
 <ul>
 <li>Do the following process repeatedly, until this algorithm returns a value:
@@ -2717,13 +2728,13 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 
 <ol>
 <li>Generate a uniform(0, 1) random variate, call it $U$.</li>
-<li>Sample from the number $U$ repeatedly until the sampling &quot;fails&quot; (returns 0).  Set $k$ to the number of &quot;successes&quot;.  (Thus, this step generates $k$ with probability $g(k,U) = (1-U) U^k$.)</li>
+<li><a href="#Implementation_Notes"><strong>Sample from the number $U$</strong></a> repeatedly until the sampling &quot;fails&quot; (returns 0).  Set $k$ to the number of &quot;successes&quot;.  (Thus, this step generates $k$ with probability $g(k,U) = (1-U) U^k$.)</li>
 <li>If $k$ is in $S$, return 1; otherwise, return 0.</li>
 </ol>
 
 <p>This can be seen as running <strong>Algorithm CC</strong> with an input coin for a randomly generated probability (a uniform(0, 1) random variate).  Given that step 1 generates $U$, the probability this algorithm returns 1 is&mdash; $$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the &quot;<a href="#Integrals"><strong>integral method</strong></a>&quot;, so that the overall algorithm returns 1 with probability&mdash; $$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.</p>
 
-<p>This probability satisfies&mdash; $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli&#39;s theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the interval $[0, 1]$ have natural sigma-finite measures.</p>
+<p>The derivation below relies on the following fact: The probability satisfies&mdash; $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli&#39;s theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the interval $[0, 1]$ have natural sigma-finite measures.</p>
 
 <p>Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm&#39;s step 2 generates a number $k$, namely&mdash; $$C(k)=\int_0^1 g(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2}.$$  Then the MGL series for $\pi/4$ is formed by&mdash;</p>
 
@@ -2733,7 +2744,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 
 <p>$$=\sum_{k\ge 0} C(4k)+C(4k+1),$$</p>
 
-<p>where the last sum takes $C(k)$ for each $k$ in the set $S$ given earlier.</p>
+<p>where the last sum takes $C(k)$ for each $k$ in the set $S$ given for the MGL generator.</p>
 
 <p><a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a></p>
 

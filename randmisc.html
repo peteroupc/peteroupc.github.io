@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/09/14"><meta name="citation_online_date" content="2022/09/14"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/09/21"><meta name="citation_online_date" content="2022/09/21"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -14,6 +14,7 @@
 
 <ul>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#About_This_Document"><strong>About This Document</strong></a></li>
 <li><a href="#On_a_Binomial_Sampler"><strong>On a Binomial Sampler</strong></a></li>
 <li><a href="#On_a_Geometric_Sampler"><strong>On a Geometric Sampler</strong></a></li>
 <li><a href="#Weighted_Choice_for_Special_Distributions"><strong>Weighted Choice for Special Distributions</strong></a>
@@ -34,6 +35,24 @@
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
+
+<p><a id=About_This_Document></a></p>
+
+<h2>About This Document</h2>
+
+<p><strong>This is an open-source document; for an updated version, see the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/raw/master/randmisc.md"><strong>source code</strong></a> <strong>or its</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randmisc.md"><strong>rendering on GitHub</strong></a><strong>.  You can send comments on this document on the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a><strong>.</strong></p>
+
+<p>My audience for this article is <strong>computer programmers with mathematics knowledge, but little or no familiarity with calculus</strong>.</p>
+
+<p>I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, <a href="https://github.com/peteroupc/peteroupc.github.io/issues/18"><strong>I seek comments on the following aspects</strong></a>:</p>
+
+<ul>
+<li>Are the algorithms in this article easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?</li>
+<li>Does this article have errors that should be corrected?</li>
+<li>Are there ways to make this article more useful to the target audience?</li>
+</ul>
+
+<p>Comments on other aspects of this document are welcome.</p>
 
 <p><a id=On_a_Binomial_Sampler></a></p>
 
@@ -303,21 +322,21 @@
 
 <h2>Certain Families of Distributions</h2>
 
-<p>This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019)[^13], Jones (2015)[^14].</p>
+<p>This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on generating random variates from them.  Some of these families are described in Ahmad et al. (2019)[^13], Jones (2015)[^14].</p>
 
-<p>The following definitions are used:</p>
+<p>The following mathematical definitions are used:</p>
 
 <ul>
 <li>A distribution&#39;s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nondecreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.</li>
 <li>A distribution&#39;s <em>support</em> is the set of values the distribution can take on, plus that set&#39;s endpoints.  For example, the beta distribution&#39;s support is the closed interval [0, 1], and the normal distribution&#39;s support is the entire real line.</li>
-<li>The <em>zero-truncated Poisson</em> distribution: To generate a random variate that follows this distribution (with parameter <em>&lambda;</em> &gt; 0), generate Poisson variates with parameter <em>&lambda;</em> until a variate other than 0 is generated this way, then take the last generated variate.</li>
+<li>The <em>zero-truncated Poisson</em> distribution: To generate a random variate that follows this distribution (with parameter <em>&lambda;</em> &gt; 0), generate random variates from the <a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson distribution</strong></a> with parameter <em>&lambda;</em> until a variate other than 0 is generated this way, then take the last generated variate.</li>
 </ul>
 
 <p><strong>G families.</strong> In general, families of the form &quot;X-G&quot; (such as &quot;beta-G&quot; (Eugene et al., 2002)[^15]) use two distributions, X and G, where&mdash;</p>
 
 <ul>
-<li>X is a distribution whose support is the closed interval [0, 1], and</li>
-<li>G is a distribution with an easy-to-compute quantile function.</li>
+<li>X is a probability distribution whose support is the closed interval [0, 1], and</li>
+<li>G is a probability distribution with an easy-to-compute quantile function.</li>
 </ul>
 
 <p>The following algorithm samples a random variate following a distribution from this kind of family:</p>

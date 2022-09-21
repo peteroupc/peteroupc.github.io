@@ -6,6 +6,7 @@
 ## Contents
 
 - [**Contents**](#Contents)
+- [**About This Document**](#About_This_Document)
 - [**On a Binomial Sampler**](#On_a_Binomial_Sampler)
 - [**On a Geometric Sampler**](#On_a_Geometric_Sampler)
 - [**Weighted Choice for Special Distributions**](#Weighted_Choice_for_Special_Distributions)
@@ -22,6 +23,21 @@
 - [**ExpoExact**](#ExpoExact)
 - [**Notes**](#Notes)
 - [**License**](#License)
+
+<a id=About_This_Document></a>
+## About This Document
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/randmisc.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randmisc.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
+
+My audience for this article is **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.
+
+I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, [**I seek comments on the following aspects**](https://github.com/peteroupc/peteroupc.github.io/issues/18):
+
+- Are the algorithms in this article easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?
+- Does this article have errors that should be corrected?
+- Are there ways to make this article more useful to the target audience?
+
+Comments on other aspects of this document are welcome.
 
 <a id=On_a_Binomial_Sampler></a>
 ## On a Binomial Sampler
@@ -218,18 +234,18 @@ In the case of powers of a uniform random variate in the interval \[0, 1], call 
 <a id=Certain_Families_of_Distributions></a>
 ## Certain Families of Distributions
 
-This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019\)[^13], Jones (2015)[^14].
+This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on generating random variates from them.  Some of these families are described in Ahmad et al. (2019\)[^13], Jones (2015)[^14].
 
-The following definitions are used:
+The following mathematical definitions are used:
 
 - A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nondecreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.
 - A distribution's _support_ is the set of values the distribution can take on, plus that set's endpoints.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
-- The _zero-truncated Poisson_ distribution: To generate a random variate that follows this distribution (with parameter _&lambda;_ > 0), generate Poisson variates with parameter _&lambda;_ until a variate other than 0 is generated this way, then take the last generated variate.
+- The _zero-truncated Poisson_ distribution: To generate a random variate that follows this distribution (with parameter _&lambda;_ > 0), generate random variates from the [**Poisson distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution) with parameter _&lambda;_ until a variate other than 0 is generated this way, then take the last generated variate.
 
 **G families.** In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002\)[^15]) use two distributions, X and G, where&mdash;
 
-- X is a distribution whose support is the closed interval \[0, 1\], and
-- G is a distribution with an easy-to-compute quantile function.
+- X is a probability distribution whose support is the closed interval \[0, 1\], and
+- G is a probability distribution with an easy-to-compute quantile function.
 
 The following algorithm samples a random variate following a distribution from this kind of family:
 

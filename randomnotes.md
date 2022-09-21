@@ -6,6 +6,7 @@
 ## Contents
 
 - [**Contents**](#Contents)
+    - [**About This Document**](#About_This_Document)
     - [**Specific Distributions**](#Specific_Distributions)
         - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
         - [**Gamma Distribution**](#Gamma_Distribution)
@@ -23,6 +24,21 @@
     - [**Implementation of `erf`**](#Implementation_of_erf)
     - [**Exact, Error-Bounded, and Approximate Algorithms**](#Exact_Error_Bounded_and_Approximate_Algorithms)
 - [**License**](#License)
+
+<a id=About_This_Document></a>
+### About This Document
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/randomnotes.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
+
+My audience for this article is **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.
+
+I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, [**I seek comments on the following aspects**](https://github.com/peteroupc/peteroupc.github.io/issues/18):
+
+- Are the algorithms in this article (in conjunction with "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)") easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?
+- Does this article have errors that should be corrected?
+- Are there ways to make this article more useful to the target audience?
+
+Comments on other aspects of this document are welcome.
 
 <a id=Specific_Distributions></a>
 ### Specific Distributions

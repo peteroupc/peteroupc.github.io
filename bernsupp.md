@@ -7,6 +7,7 @@
 
 - [**Contents**](#Contents)
 - [**Definitions**](#Definitions)
+    - [**About This Document**](#About_This_Document)
 - [**General Factory Functions**](#General_Factory_Functions)
     - [**Building the Lower and Upper Polynomials**](#Building_the_Lower_and_Upper_Polynomials)
 - [**Approximate Bernoulli Factories**](#Approximate_Bernoulli_Factories)
@@ -41,6 +42,21 @@ The following terms can describe a function $f(x)$, specifically how "well-behav
 - A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _L_\*_x_.<br>If _f_ has a derivative on its domain, _L_ is the maximum absolute value of that derivative.
 - A _convex_ function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the domain of $f$.<br>Roughly speaking, if $f$'s "slope" never goes down, then it's convex.
 - A _concave_ function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the domain of $f$.<br>Roughly speaking, if $f$'s "slope" never goes up, then it's concave.
+
+<a id=About_This_Document></a>
+### About This Document
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/bernsupp.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernsupp.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.  See** "[**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)" **for a list of things about this document that I seek answers to.**
+
+My audience for this article is **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.  It should be read in conjunction with the article "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".
+
+I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, [**I seek comments on the following aspects**](https://github.com/peteroupc/peteroupc.github.io/issues/18):
+
+- Are the algorithms in this article (in conjunction with "Bernoulli Factory Algorithms") easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?
+- Does this article have errors that should be corrected?
+- Are there ways to make this article more useful to the target audience?
+
+Comments on other aspects of this document are welcome.
 
 <a id=General_Factory_Functions></a>
 ## General Factory Functions

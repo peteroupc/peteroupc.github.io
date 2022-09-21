@@ -12,6 +12,7 @@ The algorithms on this page work no matter what base the digits of the partially
 ## Contents
 
 - [**Contents**](#Contents)
+- [**About This Document**](#About_This_Document)
 - [**About the Uniform Sum Distribution**](#About_the_Uniform_Sum_Distribution)
 - [**Finding Parameters**](#Finding_Parameters)
 - [**Sum of Two Uniform Random Variates**](#Sum_of_Two_Uniform_Random_Variates)
@@ -20,6 +21,21 @@ The algorithms on this page work no matter what base the digits of the partially
 - [**Reciprocal of Uniform Random Variate**](#Reciprocal_of_Uniform_Random_Variate)
 - [**Notes**](#Notes)
 - [**License**](#License)
+
+<a id=About_This_Document></a>
+## About This Document
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/uniformsum.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/uniformsum.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
+
+My audience for this article is **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.
+
+I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, [**I seek comments on the following aspects**](https://github.com/peteroupc/peteroupc.github.io/issues/18):
+
+- Are the algorithms in this article easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?
+- Does this article have errors that should be corrected?
+- Are there ways to make this article more useful to the target audience?
+
+Comments on other aspects of this document are welcome.
 
 <a id=About_the_Uniform_Sum_Distribution></a>
 ## About the Uniform Sum Distribution

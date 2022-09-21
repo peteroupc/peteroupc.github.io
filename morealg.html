@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/09/19"><meta name="citation_online_date" content="2022/09/19"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2022/09/21"><meta name="citation_online_date" content="2022/09/21"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -38,7 +38,7 @@
 <ul>
 <li><a href="#Certain_Alternating_Series"><strong>Certain Alternating Series</strong></a></li>
 <li><a href="#General_Power_Series"><strong>General Power Series</strong></a></li>
-<li><a href="#Series_with_Non_Negative_Coefficients_Summing_to_1"><strong>Series with Non-Negative Coefficients Summing to 1</strong></a></li>
+<li><a href="#Series_with_Non_Negative_Coefficients_Summing_to_1_or_Less"><strong>Series with Non-Negative Coefficients Summing to 1 or Less</strong></a></li>
 <li><a href="#Series_with_General_Non_Negative_Coefficients"><strong>Series with General Non-Negative Coefficients</strong></a></li>
 <li><a href="#Power_Series_Examples"><strong>Power Series Examples</strong></a></li>
 </ul></li>
@@ -238,9 +238,9 @@
 </ol></li>
 </ul>
 
-<p><a id=Series_with_Non_Negative_Coefficients_Summing_to_1></a></p>
+<p><a id=Series_with_Non_Negative_Coefficients_Summing_to_1_or_Less></a></p>
 
-<h4>Series with Non-Negative Coefficients Summing to 1</h4>
+<h4>Series with Non-Negative Coefficients Summing to 1 or Less</h4>
 
 <p>Now, suppose $f(\lambda)$ can be written as a power series in equation $(1)$, but this time, the <em>coefficients</em> $a_i$ are 0 or greater and their sum is 1 or less.</p>
 
@@ -348,7 +348,7 @@
 <li>the coefficients sum to greater than 1,</li>
 </ul>
 
-<p>Nacu and Peres (2005, proposition 16)[^1] gave an algorithm which takes the following parameters:</p>
+<p>then Nacu and Peres (2005, proposition 16)[^1] gave an algorithm which takes the following parameters:</p>
 
 <ul>
 <li><em>t</em> is a rational number such that <em>B</em> &lt; <em>t</em> &le; 1 and  <em>f</em>(<em>t</em>) &lt; 1.</li>

@@ -23,6 +23,16 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 
 **This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/exporand.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/exporand.md)**.  You can send comments on this document either on** [**CodeProject**](https://www.codeproject.com/Articles/5272482/Partially-Sampled-Random-Numbers-for-Accurate-Samp) **or on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
 
+My audience for this article is **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.
+
+I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, [**I seek comments on the following aspects**](https://github.com/peteroupc/peteroupc.github.io/issues/18):
+
+- Are the algorithms in this article easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?
+- Does this article have errors that should be corrected?
+- Are there ways to make this article more useful to the target audience?
+
+Comments on other aspects of this document are welcome.
+
 <a id=Contents></a>
 ## Contents
 

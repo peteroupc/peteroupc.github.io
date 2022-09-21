@@ -11,22 +11,29 @@
 
 We're given a coin that shows heads with an unknown probability, _&lambda;_. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _&lambda;_, call it _f_(_&lambda;_). This is the _Bernoulli factory problem_.
 
-And this page catalogs algorithms to solve this problem for a wide variety of functions, algorithms known as _Bernoulli factories_.
+This page:
 
-Many of these algorithms were suggested in (Flajolet et al., 2010\)[^1], but without step-by-step instructions in many cases.  This page provides these instructions to help programmers implement the Bernoulli factories they describe.  The Python module [**_bernoulli.py_**](https://peteroupc.github.io/bernoulli.py) includes implementations of several Bernoulli factories.
+- Catalogs algorithms to solve this problem for a wide variety of functions, algorithms known as _Bernoulli factories_.  For many of these algorithms, step-by-step instructions are provided.  (Many of these algorithms were suggested in (Flajolet et al., 2010\)[^1], but without step-by-step instructions in many cases.)
+- Contains algorithms to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An _irrational number_ is a number that can't be written as a ratio of two integers.) Again, many of these algorithms were suggested in (Flajolet et al., 2010\)[^1].
+- Is directed to **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.
+- Is focused on methods that _exactly_ sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that a source of independent and unbiased random bits is available).
 
-This page also contains algorithms to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An _irrational number_ is a number that can't be written as a ratio of two integers.) Again, many of these algorithms were suggested in (Flajolet et al., 2010\)[^1].
-
-This page is focused on methods that _exactly_ sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of independent and unbiased random bits).
-
-For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)
+The Python module [**_bernoulli.py_**](https://peteroupc.github.io/bernoulli.py) includes implementations of several Bernoulli factories.  For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)
 
 <a id=About_This_Document></a>
 ### About This Document
 
 **This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/bernoulli.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.  See** "[**Requests and Open Questions**](#Requests_and_Open_Questions)" **for a list of things about this document that I seek answers to.**
 
-**I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  This may help improve this page.**
+My audience for this article is **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.
+
+I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, [**I seek comments on the following aspects**](https://github.com/peteroupc/peteroupc.github.io/issues/18):
+
+- Are the algorithms in the articles easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?
+- Does this article have errors that should be corrected?
+- Are there ways to make this article more useful to the target audience?
+
+Comments on other aspects of this document are welcome.
 
 <a id=Contents></a>
 ## Contents
@@ -1254,7 +1261,7 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 <a id=ln__c___d____lambda____c></a>
 #### ln((_c_ + _d_ + _&lambda;_)/_c_)
 
-In this algorithm, _d_ and _c_ are integers, 0 &lt; _c_ &lt; _d_, and _d_ &ge; 0, and (_c_ + _d_ + _&lambda;_)/_c_ &le; exp(1).
+In this algorithm, _d_ and _c_ are integers, 0 &lt; _c_, and _c_ &gt; _d_ &ge; 0, and (_c_ + _d_ + _&lambda;_)/_c_ &le; exp(1).
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the **algorithm for (_d_ + _&lambda;_) / _c_** with _d_ = _d_ and _c_ = _c_, and return the result.
@@ -1891,12 +1898,12 @@ Then the algorithm's behavior is given in the tables below.
 The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz (MGL) generator for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  It works as follows.  Let $S$ be a set of non-negative integers.  Then:
 
 1. Generate a uniform(0, 1) random variate, call it $U$.
-2. Sample from the number $U$ repeatedly until the sampling "fails" (returns 0).  Set $k$ to the number of "successes".  (Thus, this step generates $k$ with probability $g(k,U) = (1-U) U^k$.)
+2. [**Sample from the number $U$**](#Implementation_Notes) repeatedly until the sampling "fails" (returns 0).  Set $k$ to the number of "successes".  (Thus, this step generates $k$ with probability $g(k,U) = (1-U) U^k$.)
 3. If $k$ is in $S$, return 1; otherwise, return 0.
 
 This can be seen as running **Algorithm CC** with an input coin for a randomly generated probability (a uniform(0, 1) random variate).  Given that step 1 generates $U$, the probability this algorithm returns 1 is&mdash; $$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the "[**integral method**](#Integrals)", so that the overall algorithm returns 1 with probability&mdash; $$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.
 
-This probability satisfies&mdash; $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the interval $[0, 1]$ have natural sigma-finite measures.
+The derivation below relies on the following fact: The probability satisfies&mdash; $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the interval $[0, 1]$ have natural sigma-finite measures.
 
 Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm's step 2 generates a number $k$, namely&mdash; $$C(k)=\int_0^1 g(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2}.$$  Then the MGL series for $\pi/4$ is formed by&mdash;
 
@@ -1906,7 +1913,7 @@ $$=(C(0)+C(1))+(C(4)+C(5))+(C(8)+C(9))+...$$
 
 $$=\sum_{k\ge 0} C(4k)+C(4k+1),$$
 
-where the last sum takes $C(k)$ for each $k$ in the set $S$ given earlier.
+where the last sum takes $C(k)$ for each $k$ in the set $S$ given for the MGL generator.
 
 <a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
 ### Sketch of Derivation of the Algorithm for 1 / _&pi;_

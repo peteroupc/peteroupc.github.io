@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2022/09/14"><meta name="citation_online_date" content="2022/09/14"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2022/09/21"><meta name="citation_online_date" content="2022/09/21"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -21,6 +21,24 @@
 <ul>
 <li>Unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (for example, estimators that average an increasing number of sample points).  See, for example, Vihola (2018)[^1].</li>
 </ul>
+
+<p><a id=About_This_Document></a></p>
+
+<h3>About This Document</h3>
+
+<p><strong>This is an open-source document; for an updated version, see the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/raw/master/estimation.md"><strong>source code</strong></a> <strong>or its</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/estimation.md"><strong>rendering on GitHub</strong></a><strong>.  You can send comments on this document on the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a>**.</p>
+
+<p>My audience for this article is <strong>computer programmers with mathematics knowledge, but little or no familiarity with calculus</strong>.</p>
+
+<p>I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, <a href="https://github.com/peteroupc/peteroupc.github.io/issues/18"><strong>I seek comments on the following aspects</strong></a>:</p>
+
+<ul>
+<li>Are the algorithms in this article easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?</li>
+<li>Does this article have errors that should be corrected?</li>
+<li>Are there ways to make this article more useful to the target audience?</li>
+</ul>
+
+<p>Comments on other aspects of this document are welcome.</p>
 
 <p><a id=Concepts></a></p>
 

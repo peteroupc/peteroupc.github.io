@@ -23,7 +23,7 @@ This page contains additional algorithms for arbitrary-precision sampling of dis
     - [**Certain Power Series**](#Certain_Power_Series)
         - [**Certain Alternating Series**](#Certain_Alternating_Series)
         - [**General Power Series**](#General_Power_Series)
-        - [**Series with Non-Negative Coefficients Summing to 1**](#Series_with_Non_Negative_Coefficients_Summing_to_1)
+        - [**Series with Non-Negative Coefficients Summing to 1 or Less**](#Series_with_Non_Negative_Coefficients_Summing_to_1_or_Less)
         - [**Series with General Non-Negative Coefficients**](#Series_with_General_Non_Negative_Coefficients)
         - [**Power Series Examples**](#Power_Series_Examples)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
@@ -167,8 +167,8 @@ Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (On
     1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m$ times.  Return 0 if any of the runs returns 0.
     2. Run a Bernoulli factory algorithm for $B(\lambda)$, and return the result.
 
-<a id=Series_with_Non_Negative_Coefficients_Summing_to_1></a>
-#### Series with Non-Negative Coefficients Summing to 1
+<a id=Series_with_Non_Negative_Coefficients_Summing_to_1_or_Less></a>
+#### Series with Non-Negative Coefficients Summing to 1 or Less
 
 Now, suppose $f(\lambda)$ can be written as a power series in equation $(1)$, but this time, the _coefficients_ $a_i$ are 0 or greater and their sum is 1 or less.
 
@@ -235,7 +235,7 @@ If $f$ is a power series written as equation (1), but&mdash;
 - all of the coefficients are nonnegative, and
 - the coefficients sum to greater than 1,
 
-Nacu and Peres (2005, proposition 16\)[^1] gave an algorithm which takes the following parameters:
+then Nacu and Peres (2005, proposition 16\)[^1] gave an algorithm which takes the following parameters:
 
 - _t_ is a rational number such that _B_ &lt; _t_ &le; 1 and  _f_(_t_) < 1.
 - _&#x03F5;_ is a rational number such that 0 &lt; _&#x03F5;_ &le; (_t_ &minus; _B_)/2.
