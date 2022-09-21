@@ -2,6 +2,11 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
+This page should be read in conjunction with the following articles:
+
+- "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html).
+- "[**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html).
+
 <a id=Contents></a>
 ## Contents
 
@@ -382,7 +387,7 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
 ## Batching Random Samples via Randomness Extraction
 
-Devroye and Gravel (2020\)[^70] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits to produce a specific output _Y_ (or _P_(_X_ | _Y_) for short):
+Devroye and Gravel (2020\)[^70] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits given that it produces a specific output _Y_ (or _P_(_X_ | _Y_) for short):
 
 1. Start with the interval [0, 1].
 2. For each pair (_X_, _Y_) in the batch, the interval shrinks from below by _P_(_X_&minus;1 | _Y_) and from above by _P_(_X_ | _Y_). (For example, if \[0.2, 0.8\] \(range 0.6) shrinks from below by 0.1 and from above by 0.8, the new interval is \[0.2+0.1\*0.6, 0.2+0.8\*0.6] = [0.26, 0.68].  For correctness, though, the interval is not allowed to shrink to a single point, since otherwise step 3 would run forever.)

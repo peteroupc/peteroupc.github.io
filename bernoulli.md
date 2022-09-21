@@ -13,9 +13,9 @@ We're given a coin that shows heads with an unknown probability, _&lambda;_. The
 
 This page:
 
-- Catalogs algorithms to solve this problem for a wide variety of functions, algorithms known as _Bernoulli factories_.  For many of these algorithms, step-by-step instructions are provided.  (Many of these algorithms were suggested in (Flajolet et al., 2010\)[^1], but without step-by-step instructions in many cases.)
+- Catalogs algorithms to solve the Bernoulli factory problem for a wide variety of functions, algorithms known as _Bernoulli factories_.  For many of these algorithms, step-by-step instructions are provided.  (Many of these algorithms were suggested in (Flajolet et al., 2010\)[^1], but without step-by-step instructions in many cases.)
 - Contains algorithms to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An _irrational number_ is a number that can't be written as a ratio of two integers.) Again, many of these algorithms were suggested in (Flajolet et al., 2010\)[^1].
-- Is directed to **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.
+- Assumes knowledge of **computer programming and mathematics**, but **little or no familiarity with calculus**.
 - Is focused on methods that _exactly_ sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that a source of independent and unbiased random bits is available).
 
 The Python module [**_bernoulli.py_**](https://peteroupc.github.io/bernoulli.py) includes implementations of several Bernoulli factories.  For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)
@@ -592,7 +592,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 >     - The function $w_n(\lambda)/g(n)$ admits a Bernoulli factory (which it won't if it touches 0 or 1 inside the interval (0, 1), but isn't constant, for example).
 >
 >     See also Mendo (2019\)[^33].
-> 2. **Constants with nonnegative series expansions.** A special case of note 1.  Let _g_ be as in note 1.  Assume we have a constant with the following series expansion: $$c=a_0+a_1+a_2+...,$$ where&mdash;
+> 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1, and let $c$ be a constant written as&mdash; $$c=a_0+a_1+a_2+...,$$ where&mdash;
 >
 >     - $a_n$ are each 0 or greater and sum to 1 or less, and
 >     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 0$.
@@ -604,7 +604,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 > 1. Generate _X_, a Poisson random variate with mean _&mu;_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.  This corresponds to _g_(_i_) being the Poisson probabilities and the coin for _h_<sub>_i_</sub> returning 1 with probability 1/(1+_i_), and 0 otherwise.  The probability that this method returns 1 is **E**\[1/(1+_X_)\], or (exp(_&mu;_)&minus;1)/(exp(_&mu;_)\*_&mu;_).
 > 2. (Wästlund 1999\)[^8]\: Generate a Poisson random variate _X_ with mean 1, then flip the input coin _X_ times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(&minus;_&lambda;_), and corresponds to _g_(_i_) being the Poisson probabilities, namely 1/(_i_!\*exp(1)), and _h_<sub>_i_</sub>() being (1&minus;_&lambda;_)<sup>_i_</sup>.
 > 3. Generate _X_, a Poisson random variate with mean _&mu;_, run the **algorithm for exp(&minus;_z_)** with _z_ = _X_, and return the result.  The probability of returning 1 this way is **E**\[exp(&minus;_X_)\], or exp(_&mu;_\*exp(&minus;1)&minus;_&mu;_).  The following Python code uses the computer algebra library SymPy to find this probability: `from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()`.
-> 4. Multivariate Bernoulli factory (Huber 2016\)[^34] of the form _R_ = _C_<sub>0</sub>\*_&lambda;_<sub>0</sub> + _C_<sub>1</sub>\*_&lambda;_<sub>1</sub> + ... + _C_<sub>_m_&minus;1</sub>\*_&lambda;_<sub>_m_&minus;1</sub>, where _C_<sub>_i_</sub> are known constants greater than 0,  _&#x03F5;_ > 0, and _R_ &le; 1 &minus; _&#x03F5;_: Choose an integer in [0, _m_) uniformly at random, call it _i_, then run a linear Bernoulli factory for (_m_\*_C_<sub>_i_</sub>)\*_&lambda;_<sub>_i_</sub>.  This differs from Huber's suggestion of "thinning" a Poisson process driven by multiple input coins.
+> 4. Multivariate Bernoulli factory (Huber 2016\)[^34] of the form _R_ = _C_<sub>0</sub>\*_&lambda;_<sub>0</sub> + _C_<sub>1</sub>\*_&lambda;_<sub>1</sub> + ... + _C_<sub>_m_&minus;1</sub>\*_&lambda;_<sub>_m_&minus;1</sub>, where _C_<sub>_i_</sub> are known constants greater than 0,  _&#x03F5;_ > 0, and _R_ &le; 1 &minus; _&#x03F5;_: Choose an integer in [0, _m_) uniformly at random, call it _i_, then run a linear Bernoulli factory for (_m_\*_C_<sub>_i_</sub>)\*_&lambda;_<sub>_i_</sub>.  This differs from Huber's suggestion of "thinning" a random process driven by multiple input coins.
 > 5. **Probability generating function** (PGF) (Dughmi et al. 2021\)[^35]. Generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected value ("long-run average") of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the PGF for the distribution of _X_.  The algorithm follows: (1) Generate a random integer _X_ in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
 > 6. Assume _X_ is the number of unbiased random bits that show 0 before the first 1 is generated.  Then _g_(_n_) = 1/(2<sup>_n_+1</sup>).
 
@@ -1826,7 +1826,7 @@ If an algorithm&mdash;
 - takes flips of a coin with an unknown probability of heads (_&lambda;_), and
 - produces heads with a probability that depends on _&lambda;_ (_f_(_&lambda;_)) and tails otherwise,
 
-the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011\)[^19]. (And an estimator like this is possible only if _f_ is a factory function; see Łatuszyński.) Because the algorithm is _unbiased_, its expected value (or mean or "long-run average") is _f_(_&lambda;_).  Here's one result of unbiasedness: Take a sample of _n_ independent outputs of the algorithm, sum them, then divide by _n_.  Then with probability 1, this _average_ approaches _f_(_&lambda;_) as _n_ gets _large_.  This is the _law of large numbers_ in action.
+the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011\)[^19]. (And an estimator like this is possible only if _f_ is a factory function; see Łatuszyński.) Because the algorithm is _unbiased_, its expected value (or mean or "long-run average") is _f_(_&lambda;_). Since the algorithm is unbiased and outputs only 0 or 1, this leads to the following: If we take _n_ independent outputs of the algorithm, sum them, then divide by _n_, then with probability 1, this _average_ approaches _f_(_&lambda;_) as _n_ gets _large_ (the _law of large numbers_).
 
 On the other hand&mdash;
 

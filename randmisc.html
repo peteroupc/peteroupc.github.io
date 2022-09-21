@@ -8,6 +8,13 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
+<p>This page should be read in conjunction with the following articles:</p>
+
+<ul>
+<li>&quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a>.</li>
+<li>&quot;<a href="https://peteroupc.github.io/randomnotes.html"><strong>More Random Sampling Methods</strong></a>.</li>
+</ul>
+
 <p><a id=Contents></a></p>
 
 <h2>Contents</h2>
@@ -656,7 +663,7 @@
 
 <h2>Batching Random Samples via Randomness Extraction</h2>
 
-<p>Devroye and Gravel (2020)[^70] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits to produce a specific output <em>Y</em> (or <em>P</em>(<em>X</em> | <em>Y</em>) for short):</p>
+<p>Devroye and Gravel (2020)[^70] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits given that it produces a specific output <em>Y</em> (or <em>P</em>(<em>X</em> | <em>Y</em>) for short):</p>
 
 <ol>
 <li>Start with the interval [0, 1].</li>
