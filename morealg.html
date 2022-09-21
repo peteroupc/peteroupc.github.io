@@ -23,12 +23,34 @@
 <li><a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a></li>
 </ul>
 
+<p><a id=About_This_Document></a></p>
+
+<h3>About This Document</h3>
+
+<p><strong>This is an open-source document; for an updated version, see the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/raw/master/morealg.md"><strong>source code</strong></a> <strong>or its</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/morealg.md"><strong>rendering on GitHub</strong></a><strong>.  You can send comments on this document on the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a><strong>.</strong></p>
+
+<p>My audience for this article is <strong>computer programmers with mathematics knowledge, but little or no familiarity with calculus</strong>.</p>
+
+<p>I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, <a href="https://github.com/peteroupc/peteroupc.github.io/issues/18"><strong>I seek comments on the following aspects</strong></a>:</p>
+
+<ul>
+<li>Are the algorithms in this article easy to implement? Is each algorithm written so that someone could write code for that algorithm after reading the article?</li>
+<li>Does this article have errors that should be corrected?</li>
+<li>Are there ways to make this article more useful to the target audience?</li>
+</ul>
+
+<p>Comments on other aspects of this document are welcome.</p>
+
 <p><a id=Contents></a></p>
 
 <h2>Contents</h2>
 
 <ul>
-<li><a href="#Introduction"><strong>Introduction</strong></a></li>
+<li><a href="#Introduction"><strong>Introduction</strong></a>
+
+<ul>
+<li><a href="#About_This_Document"><strong>About This Document</strong></a></li>
+</ul></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#Bernoulli_Factories"><strong>Bernoulli Factories</strong></a>
 
@@ -193,7 +215,7 @@
 
 <ol>
 <li>The <strong>general martingale algorithm</strong>, as it&#39;s called in this article, supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the general martingale algorithm uses that paper&#39;s framework.  A proof of its correctness is given in the appendix.</li>
-<li>The <strong>general martingale algorithm</strong> allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence&#39;s nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is less than or equal to $\lambda$.</li>
+<li>The <strong>general martingale algorithm</strong> allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence&#39;s nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a nonincreasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is less than or equal to $\lambda$.</li>
 </ol>
 </blockquote>
 
