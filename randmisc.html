@@ -707,10 +707,10 @@
 
 <p>In some cases, it may be possible to calculate the needed digit size in advance.</p>
 
-<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> on the interval [<em>a</em>, <em>b</em>][^72], then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
+<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> with Lipschitz constant <em>L</em> on the interval [<em>a</em>, <em>b</em>][^72], then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
 
 <ol>
-<li>Let <em>d</em> be ceil((ln(max(1,<em>L</em>)) &minus; ln(<em>&epsilon;</em>)) / ln(<em>&beta;</em>)), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>). For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
+<li>Let <em>d</em> be ceil((ln(max(1,<em>L</em>)) &minus; ln(<em>&epsilon;</em>)) / ln(<em>&beta;</em>)). For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
 <li>The PSRN <em>x</em> now lies in the interval [<em>a</em>, <em>b</em>].  Calculate lower and upper bounds of <em>Q</em>(<em>a</em>) and <em>Q</em>(<em>b</em>), respectively, that are within <em>&epsilon;</em>/2 of the true quantiles, call the bounds <em>low</em> and <em>high</em>, respectively.</li>
 <li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>)/2.</li>
 </ol>
@@ -732,8 +732,8 @@
 <p>For example&mdash;</p>
 
 <ul>
-<li>if <em>Q</em> is Lipschitz continuous with Lipschitz constant <em>L</em> on [<em>a</em>, <em>b</em>], then the function is no &quot;steeper&quot; than <em>&omega;</em>(<em>&delta;</em>) = <em>L</em>*<em>&delta;</em>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>L</em>, and</li>
-<li>if <em>Q</em> is <em>&alpha;</em>-Hölder continuous with Hölder constant <em>M</em> on that interval, then the function is no &quot;steeper&quot; than <em>&omega;</em>(<em>&delta;</em>) = <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = (<em>&epsilon;</em>/<em>M</em>)<sup>1/<em>&alpha;</em></sup>.</li>
+<li>if <em>Q</em> is Lipschitz continuous[^72] with Lipschitz constant <em>L</em> on [<em>a</em>, <em>b</em>], then the function is no &quot;steeper&quot; than that of <em>&omega;</em>(<em>&delta;</em>) = <em>L</em>*<em>&delta;</em>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>L</em>, and</li>
+<li>if <em>Q</em> is <em>&alpha;</em>-Hölder continuous with Hölder constant <em>M</em> on that interval, then the function is no &quot;steeper&quot; than that of <em>&omega;</em>(<em>&delta;</em>) = <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = (<em>&epsilon;</em>/<em>M</em>)<sup>1/<em>&alpha;</em></sup>.</li>
 </ul>
 
 <p>The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:</p>
@@ -951,7 +951,7 @@ END METHOD
 
 <p>[^71]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^72]: A Lipschitz continuous function, with constant <em>L</em>, is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function has a defined slope at all points or &quot;almost everywhere&quot;, and that slope is bounded wherever it&#39;s defined.</p>
+<p>[^72]: A Lipschitz continuous function, with Lipschitz constant <em>L</em>, is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>&epsilon;</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>&epsilon;</em> apart.  Roughly speaking, the function&#39;s slope is no &quot;steeper&quot; than that of <em>L</em>*<em>x</em>.</p>
 
 <p>[^73]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, &quot;Computational complexity of roots of real functions.&quot; In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989.</p>
 

@@ -422,9 +422,9 @@ Then the following algorithm transforms that number to a random variate for the 
 
 In some cases, it may be possible to calculate the needed digit size in advance.
 
-As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ on the interval \[_a_, _b_\][^72], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
+As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ with Lipschitz constant _L_ on the interval \[_a_, _b_\][^72], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
 
-1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(_&epsilon;_)) / ln(_&beta;_)), where _L_ is an upper bound of the quantile function's maximum slope (also known as the _Lipschitz constant_). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
+1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(_&epsilon;_)) / ln(_&beta;_)). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
 2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of _Q_(_a_) and _Q_(_b_), respectively, that are within _&epsilon;_/2 of the true quantiles, call the bounds _low_ and _high_, respectively.
 3. Return _low_+(_high_&minus;_low_)/2.
 
@@ -442,8 +442,8 @@ then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil
 
 For example&mdash;
 
-- if _Q_ is Lipschitz continuous with Lipschitz constant _L_ on \[_a_, _b_\], then the function is no "steeper" than _&omega;_(_&delta;_) = _L_\*_&delta;_, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_, and
-- if _Q_ is _&alpha;_-Hölder continuous with Hölder constant _M_ on that interval, then the function is no "steeper" than _&omega;_(_&delta;_) = _M_\*_&delta;_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
+- if _Q_ is Lipschitz continuous[^72] with Lipschitz constant _L_ on \[_a_, _b_\], then the function is no "steeper" than that of _&omega;_(_&delta;_) = _L_\*_&delta;_, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_, and
+- if _Q_ is _&alpha;_-Hölder continuous with Hölder constant _M_ on that interval, then the function is no "steeper" than that of _&omega;_(_&delta;_) = _M_\*_&delta;_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
 
 The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
@@ -649,7 +649,7 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 
 [^71]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^72]: A Lipschitz continuous function, with constant _L_, is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function has a defined slope at all points or "almost everywhere", and that slope is bounded wherever it's defined.
+[^72]: A Lipschitz continuous function, with Lipschitz constant _L_, is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function's slope is no "steeper" than that of _L_\*_x_.
 
 [^73]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
 

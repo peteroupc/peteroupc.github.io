@@ -222,7 +222,7 @@ def find_control_points(n, scale_pieces=False):
 <p>If the areas of the PDF&#39;s pieces are known in advance (and SymPy makes them easy to find as the <code>find_areas</code> method shows), then the sampler could be modified as follows, since each piece is now chosen with probability proportional to the chance that a random variate there will be sampled:</p>
 
 <ul>
-<li>Step 2 is changed to read: &quot;An integer in [0, <em>n</em>) is chosen with probability proportional to the corresponding piece&#39;s area, call the integer <em>i</em>, then the piece identified by <em>i</em> is chosen.  There are many <a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>algorithms to choose an integer</strong></a> this way, but it&#39;s recommended to use one that takes integers rather than floating-point numbers as weights, and perhaps one that is economical in terms of the number of random bits it uses.  In this sense, the Fast Loaded Dice Roller (Saad et al. 2020)[^4] comes within 6 bits of the optimal number of random bits used on average.&quot;</li>
+<li>Step 2 is changed to read: &quot;An integer in [0, <em>n</em>) is chosen with probability proportional to the corresponding piece&#39;s area, call the integer <em>i</em>, then the piece identified by <em>i</em> is chosen.  There are many <a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>algorithms to choose an integer</strong></a> this way.&quot;</li>
 <li>The last sentence in step 6 is changed to read: &quot;If the PSRN is not accepted, the sampler starts over from step 3.&quot;  With this, the same piece is sampled again.</li>
 <li><p>The following are additional modifications that should be done to the sampler.  However, not applying them does not affect the sampler&#39;s correctness.</p>
 
@@ -478,8 +478,6 @@ def ratio_of_uniform(bern):
 <p>[^2]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
 
 <p>[^3]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
-
-<p>[^4]: Saad, F.A., Freer C.E., et al., &quot;<a href="https://arxiv.org/abs/2003.03830v2"><strong>The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions</strong></a>&quot;, arXiv:2003.03830v2 [stat.CO], also in AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research 108, Palermo, Sicily, Italy, 2020.</p>
 
 <p><a id=License></a></p>
 
