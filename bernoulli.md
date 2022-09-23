@@ -153,7 +153,7 @@ A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an algorithm that takes a
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads.
 - The Bernoulli factory's outputs are statistically independent, and so are those of the input coin.
 - Many Bernoulli factories also use a _fair coin_ in addition to the input coin.  A fair coin shows heads or tails with equal probability, and represents a source of randomness outside the input coin.
-- A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the _closed_ interval [0, 1] or a subset of that interval, and returns a probability in [0, 1].
+- A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the _closed_ interval [0, 1] or a subset of that interval, and maps an input in that interval to an output in that interval.
 
 > **Example:** A Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).  In this example, exp(&minus;_&lambda;_) is the factory function.
 
@@ -170,8 +170,8 @@ The following shows some functions that are factory functions and some that are 
 | 1 | [0, 1] | Yes; constant. |
 | 1/2 | (0, 1) | Yes; constant. |
 | 1/4 if _&lambda;_<1/2, and 3/4 elsewhere | (0, 1) | No; discontinuous. |
-| 2*_&lambda;_ | \[0,&nbsp;1\] or \[0,&nbsp;1/2\) | No; not polynomially bounded since its graph touches 1 somewhere in the interval (0,&nbsp;1) on its domain.[^3]. |
-| 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since its graph touches 0 somewhere in the interval (0, 1) on its domain. |
+| 2*_&lambda;_ | \[0,&nbsp;1\] or \[0,&nbsp;1/2\) | No; not polynomially bounded since its graph approaches 1 somewhere in (0,&nbsp;1) on the domain.[^3]. |
+| 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since its graph approaches 0 somewhere in (0,&nbsp;1) on the domain. |
 | 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994\)[^2]. |
 | min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0, 1] | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction\)[^4]. |
 | 0 if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) otherwise | (0, 1) | No; not polynomially bounded since it moves away from 0 more slowly than any polynomial. |
@@ -179,9 +179,9 @@ The following shows some functions that are factory functions and some that are 
 
 If _f_'s domain includes 0 and/or 1 (so that the input coin is allowed to return 0 every time or 1 every time, respectively), then _f_ can be a factory function only if&mdash;
 
-1. _f_ is constant on its domain, or is continuous and polynomially bounded on its domain, and
-2. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
-3. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_,
+1. the function is constant on its domain, or is continuous and polynomially bounded on its domain, and
+2. _f_(0) equals 0 or 1 whenever 0 is in the function's domain, and
+3. _f_(1) equals 0 or 1 whenever 1 is in the function's domain,
 
 unless outside randomness (besides the input coin) is available.
 
@@ -209,11 +209,11 @@ In the following algorithms:
 - _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
 - The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
-    - by generating a uniform random variate in the open interval (0, 1) (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
+    - by generating a uniform random variate greater than 0 and less than 1 (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
 - The instruction to "generate an exponential random variate" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
     - by getting the result of the **ExpRand** or **ExpRand2** algorithm (described in my article on PSRNs) with a rate of 1, or
-    - by generating `-ln(1/X)`, where `X` is a uniform random variate in the open interval (0, 1], (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Real_Numbers)") (less accurate).
+    - by generating `-ln(1/X)`, where `X` is a uniform random variate greater than 0 and less than 1, (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Real_Numbers)") (less accurate).
 - The instruction to "choose [integers] with probability proportional to [_weights_]" can be implemented in one of the following ways:
     - If the weights are rational numbers, take the result of **WeightedChoice**(**NormalizeRatios**(_weights_))), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
     - If the weights are uniform PSRNs, use the algorithm given in "[**Weighted Choice Involving PSRNs**](https://peteroupc.github.io/morealg.html)".
@@ -263,7 +263,7 @@ And here is another optimized algorithm:
 4. Flip the input coin.  If it returns 1, add 1 to _j_.
 5. Add 1 to _i_ and go to step 3.
 
-Because the coefficients _a_\[_i_\] must be in the interval [0, 1], some or all of them can themselves be coins with unknown probability of heads.  In that case, the first algorithm can read as follows:
+Because the coefficients _a_\[_i_\] must be 0 or greater, but not greater than 1, some or all of them can themselves be coins with unknown probability of heads.  In that case, the first algorithm can read as follows:
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If _a_\[_j_\] is a coin, flip it and return the result.  Otherwise, return a number that is 1 with probability _a_\[_j_\], or 0 otherwise.
@@ -272,7 +272,7 @@ Because the coefficients _a_\[_i_\] must be in the interval [0, 1], some or all 
 >
 > 1. Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where _&lambda;_ is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when _&lambda;_ = 0, and 0.6 when _&lambda;_ = 1.  (The curve, however, is not at 0.3 when _&lambda;_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 > 2. The problem of simulating polynomials in Bernstein form is related to _stochastic logic_, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and exclusive-OR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for further discussion see (Qian et al. 2011\)[^7], Qian and Riedel 2008[^10]).
-> 3. These algorithms can serve as an approximate way to simulate any function _f_ that maps the interval \[0, 1] to \[0, 1], whether continuous or not.  In this case, _a_\[_j_\] is calculated as _f_(_j_/_n_), so that the resulting polynomial closely approximates the function.  In fact, if _f_ is continuous, it's possible to choose _n_ high enough to achieve a given maximum error (this is a result of the so-called "Weierstrass approximation theorem").  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
+> 3. These algorithms can serve as an approximate way to simulate any function _f_ that maps the interval \[0, 1] to \[0, 1], whether continuous or not.  In this case, _a_\[_j_\] is calculated as _f_(_j_/_n_), so that the resulting polynomial closely approximates the function.  In fact, if the function is continuous, it's possible to choose the polynomial degree (_n_) high enough to achieve a given maximum error (this is a result of the so-called "Weierstrass approximation theorem").  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
 >
 > **Examples:**
 >
@@ -294,14 +294,14 @@ Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choo
 
 The following is a special case:
 
-- If there is only one coin, the polynomials _P_ are in Bernstein form if _c_\[_j_\] is _&alpha;_\[_j_\]\*choose(_k_&minus;1, _j_&minus;1) where _&alpha;_\[_j_\] is a coefficient in the interval [0, 1], and if _a_\[1\] = _j_&minus;1 and _b_\[1\] = _k_&minus;_j_ for each monomial _j_.
+- If there is only one coin, the polynomials _P_ are in Bernstein form if _c_\[_j_\] is _&alpha;_\[_j_\]\*choose(_k_&minus;1, _j_&minus;1) where _&alpha;_\[_j_\] is a coefficient 0 or greater, but not greater than 1, and if _a_\[1\] = _j_&minus;1 and _b_\[1\] = _k_&minus;_j_ for each monomial _j_.
 
 <a id=Certain_Rational_Functions></a>
 #### Certain Rational Functions
 
 A _rational function_ is a ratio of polynomials.
 
-According to Mossel and Peres (2005\)[^15], a function that maps the open interval (0, 1) to (0, 1) can be simulated by a finite-state machine if and only if the function can be written as a rational function whose coefficients are rational numbers.
+According to Mossel and Peres (2005\)[^15], a function that maps the open interval (0, 1) to itself can be simulated by a finite-state machine if and only if the function can be written as a rational function whose coefficients are rational numbers.
 
 The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012\)[^11].  It assumes the rational function is written as _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
@@ -310,7 +310,7 @@ The following algorithm is suggested from the Mossel and Peres paper and from (T
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
 - each _d_\[_i_\] and each _e_\[_i_\] is an integer or rational number in the interval [0, choose(_n_, _i_)], where the upper bound is the total number of _n_-bit words with _i_ ones.
 
-Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  (Because of the assumptions, _D_ and _E_ are polynomials that map the closed interval [0, 1] to [0, 1].)
+Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  (Because of the assumptions, _D_ and _E_ are polynomials that map the closed interval [0, 1] to itself.)
 
 The algorithm follows.
 
@@ -329,7 +329,7 @@ The algorithm follows.
 > 2. This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an _n_-bit word and looking up whether that word is "passing", "failing", or neither, among all _n_-bit words with _j_ ones, but this can be impractical (in general, a lookup table of size 2<sup>_n_</sup> first has to be built in a setup step; as _n_ grows, the table size grows exponentially).  Moreover, this approach works only if _d_\[_i_\] and _e_\[_i_\] are integers (or if _d_\[_i_\] is replaced with floor(_d_\[_i_\]) and _e_\[_i_\] with ceil(_e_\[_i_\]) (Nacu and Peres 2005\)[^16], but this, of course, suffers from rounding error when done in this algorithm).  See also (Thomas and Blanchet 2012\)[^11].
 > 3. As with polynomials, this algorithm (or the one given later) can serve as an approximate way to simulate any factory function, via a rational function that closely approximates that function.  The higher _n_ is, the better this approximation, and in general, a degree-_n_ rational function approximates a given function better than a degree-_n_ polynomial.  However, to achieve a given error tolerance with a rational function, the degree _n_ as well as _d_\[_i_\] and _e_\[_i_\] have to be optimized.  This is unlike the polynomial case where only the degree _n_ has to be optimized.
 >
-> **Example**: Take the function _f_(_&lambda;_) = 1/(_&lambda;_&minus;2)<sup>2</sup>.  This is a rational function, in this case a ratio of two polynomials that are both nonnegative on the interval \[0, 1].  One algorithm to simulate _f_ is:<br>(1) Flip the input coin twice, and let _heads_ be the number of times the coin returned 1 this way.<br>(2) Depending on _heads_, choose 0, 1, or 2 with probability proportional to the following weights: _heads_=0 &rarr; \[3, 1, 0], _heads_=1 &rarr; \[1, 1, 2], _heads_=2 &rarr; \[0, 1, 3]; if 0 or 1 is chosen this way, return it; otherwise, go to step 1.<br>Here is how _f_ was prepared to derive this algorithm:<br>(1) Take the numerator 1, and the denominator (_&lambda;_&minus;2)<sup>2</sup>.  Rewrite the denominator as 1\*_&lambda;_<sup>2</sup> &minus; 4\*_&lambda;_ + 4.<br>(2) Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree) of degree 2; see the "homogenizing" section in "[**Preparing Rational Functions**](#Preparing_Rational_Functions)".  The result is (1, 2, 1) and (4, 4, 1) respectively.<br>(3) Divide both polynomials (actually their coefficients) by the same value so that both polynomials are 1 or less.  An easy (but not always best) choice is to divide them by their maximum coefficient, which is 4 in this case.  The result is _d_ = (1/4, 1/2, 1/4), _e_ = (1, 1, 1/4).<br>(4) Prepare the weights as given in step 2 of the original algorithm.  The result is [3/4, 1/4, 0], [1/2, 1/2, 1], and [0, 1/4, 3/4], for different counts of heads.  Because the weights in this case are multiples of 1/4, they can be simplified to integers without affecting the algorithm: [3, 1, 0], [1, 1, 2], [0, 1, 3], respectively.
+> **Example**: Take the function _f_(_&lambda;_) = 1/(_&lambda;_&minus;2)<sup>2</sup>.  This is a rational function, in this case a ratio of two polynomials that are both nonnegative on the interval \[0, 1].  One algorithm to simulate this function is:<br>(1) Flip the input coin twice, and let _heads_ be the number of times the coin returned 1 this way.<br>(2) Depending on _heads_, choose 0, 1, or 2 with probability proportional to the following weights: _heads_=0 &rarr; \[3, 1, 0], _heads_=1 &rarr; \[1, 1, 2], _heads_=2 &rarr; \[0, 1, 3]; if 0 or 1 is chosen this way, return it; otherwise, go to step 1.<br>Here is how _f_ was prepared to derive this algorithm:<br>(1) Take the numerator 1, and the denominator (_&lambda;_&minus;2)<sup>2</sup>.  Rewrite the denominator as 1\*_&lambda;_<sup>2</sup> &minus; 4\*_&lambda;_ + 4.<br>(2) Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree) of degree 2; see the "homogenizing" section in "[**Preparing Rational Functions**](#Preparing_Rational_Functions)".  The result is (1, 2, 1) and (4, 4, 1) respectively.<br>(3) Divide both polynomials (actually their coefficients) by the same value so that both polynomials are 1 or less.  An easy (but not always best) choice is to divide them by their maximum coefficient, which is 4 in this case.  The result is _d_ = (1/4, 1/2, 1/4), _e_ = (1, 1, 1/4).<br>(4) Prepare the weights as given in step 2 of the original algorithm.  The result is [3/4, 1/4, 0], [1/2, 1/2, 1], and [0, 1/4, 3/4], for different counts of heads.  Because the weights in this case are multiples of 1/4, they can be simplified to integers without affecting the algorithm: [3, 1, 0], [1, 1, 2], [0, 1, 3], respectively.
 
 **"Dice Enterprise" special case.** The following algorithm implements a special case of the "Dice Enterprise" method of Morina et al. (2022\)[^17].  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)), where _&lambda;_ is the input coin's probability of heads and _m_ is 2 or greater.  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_k_</sub>(_&lambda;_) are in the form of polynomials as follows:
 - The polynomials are _homogeneous_, that is, they are written as &sum;<sub>_i_ = 0, ..., _n_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] is a coefficient.
@@ -489,7 +489,7 @@ See the appendix for a correctness proof of Algorithm 3.
 <a id=Continued_Logarithms></a>
 #### Continued Logarithms
 
-The _continued logarithm_ (Gosper 1978\)[^25], (Borwein et al., 2016\)[^26] of a number in the open interval (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.
+The _continued logarithm_ (Gosper 1978\)[^25], (Borwein et al., 2016\)[^26] of a number greater than 0 and less than 1 has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
@@ -506,7 +506,7 @@ For a correctness proof, see the appendix.
 A method to sample a probability equal to a polynomial's root appears in a French-language article by Penaud and Roques (2002\)[^27].  The following is an implementation of that method, using the discussion in the paper's section 1 and Algorithm 2, and incorporates a correction to Algorithm 2.  The algorithm takes a polynomial as follows:
 
 - It has the form _P_(_x_) = _a_\[0\]\*_x_<sup>0</sup> + _a_\[1\]\*_x_<sup>1</sup> + ... + _a_\[_n_\]\*_x_<sup>_n_</sup>, where _a_\[_i_\], the _coefficients_, are all rational numbers.
-- It equals 0 (has a _root_) at exactly one point on [0, 1].
+- It equals 0 (has a _root_) at exactly one point, and that point is greater than 0 and less than 1.
 
 And the algorithm returns 1 with probability equal to the root, and 0 otherwise.  The root _R_ is known as an _algebraic number_ because it satisfies the polynomial equation _P_(_R_) = 0.  The algorithm follows.
 
@@ -522,15 +522,16 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
         2. If _z_ is 0 and _P_(_t_) is less than 0, return 1.
     5. Set _r_ to _r_\*2+_z_, then multiply _d_ by 2.
 
-> **Example** (Penaud and Roques 2002\)[^27]\:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  This is a polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_ or about 0.618, and _P_(0) > 0.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
+> **Example** (Penaud and Roques 2002\)[^27]\:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  This is a polynomial whose only root on the closed interval [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_ or about 0.618, and _P_(0) > 0.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
 
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series
 
-A general-purpose algorithm was given by Mendo (2020/2021\)[^28] that can simulate any probability _p_, where 0 &lt; _p_ &lt; 1, as long as it can be rewritten as a series&mdash;
+A general-purpose algorithm was given by Mendo (2020/2021\)[^28] that can simulate any probability, as long as&mdash;
 
-- that has the form _p_ = _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all rational numbers greater than 0, and
-- for which a sequence of rational numbers _err_\[0\], _err_\[1\], ... is available that is nonincreasing and approaches 0 (_converges_ to 0), where _err_\[_n_\] equals or is greater than the error from "cutting off" the series _a_ after summing the first _n_+1 terms.
+- the probability is greater than 0 and less than 1,
+- the probability can be written as a sum of rational numbers greater than 0, that is, as _p_ = _a_\[0\] + _a_\[1\] + ..., and
+- a sequence of rational numbers _err_\[0\], _err_\[1\], ... is available that is nonincreasing and approaches 0 (_converges_ to 0), where _err_\[_n_\] is not less than the _p_ &minus; (_a_\[0] + ... + _a_\[_n_]).
 
 The algorithm follows.
 
@@ -544,7 +545,7 @@ The algorithm follows.
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ &le; _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
-If _a_, given above, is instead a sequence that converges to the _base-2 logarithm_ of a probability in the open interval (0, 1), the following algorithm I developed simulates that probability.  For simplicity's sake, even though logarithms for such probabilities are negative, all the _a_\[_i_\] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
+If _a_, given above, sums to the _base-2 logarithm_ of the probability rather than that probability, the following algorithm I developed simulates that probability.  For simplicity's sake, even though logarithms for such probabilities are negative, all the _a_\[_i_\] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
 
 1. Set _intinf_ to floor(max(0, abs(_a_\[0\]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)
 2. If _intinf_ is greater than 0, generate unbiased random bits until a zero bit or _intinf_ bits were generated this way.  If a zero was generated this way, return 0.
@@ -568,7 +569,7 @@ The case when the sequence _a_ converges to a _natural logarithm_ rather than a 
 >
 > **Examples**:
 >
-> - Let _f_(_&lambda;_) = cosh(1)&minus;1, namely, the hyperbolic cosine, minus 1, of 1.  This function can be rewritten as a series required by the first algorithm in this section, namely _f_'s _Taylor series_ at 0.  Then this algorithm can be used with _a_\[_i_] = 1/(((_i_+1)\*2)!) and _err_\[_i_] = 2/((((_i_+1)\*2)+1)!). [^30]
+> - Let _f_(_&lambda;_) = cosh(1)&minus;1, namely, the hyperbolic cosine, minus 1, of 1.  This function can be rewritten as a sum required by the first algorithm in this section, namely _f_'s _Taylor series_ at 0.  Then this algorithm can be used with _a_\[_i_] = 1/(((_i_+1)\*2)!) and _err_\[_i_] = 2/((((_i_+1)\*2)+1)!). [^30]
 > - Logarithms can form the basis of efficient algorithms to simulate the probability _z_ = choose(_n_, _k_)/2<sup>_n_</sup> when _n_ can be very large (for example, as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(_n_, _k_), a binomial coefficient, will generally require a growing amount of storage that depends on _n_ and _k_. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014\)[^31].  Instead of calculating binomial coefficients directly, a series can be calculated that sums to that coefficient's logarithm, such as ln(choose(_n_, _k_)), which is economical in space even for large _n_ and _k_.  Then the algorithm above can be used with that series to simulate the probability _z_.  A similar approach has been implemented (see [**betadist.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700)).  See also an appendix in (Bringmann et al. 2014\)[^32].
 
 <a id=Other_General_Algorithms></a>
@@ -589,7 +590,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 >
 > 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sub>(_&lambda;_), where _w_<sub>_n_</sub> are continuous functions whose maximum values in the domain [0, 1] sum to 1 or less.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=\sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ but this works only if the following conditions are met for each integer _n_&ge;0:
 >     - $1 \ge g(n) \ge w_n(\lambda) \ge 0$ for every $\lambda$ in the interval \[0, 1\] (which roughly means that $w_n$ is no greater than $g(n)$).
->     - The function $w_n(\lambda)/g(n)$ admits a Bernoulli factory (which it won't if it touches 0 or 1 inside the interval (0, 1), but isn't constant, for example).
+>     - The function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories").
 >
 >     See also Mendo (2019\)[^33].
 > 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1, and let $c$ be a constant written as&mdash; $$c=a_0+a_1+a_2+...,$$ where&mdash;
@@ -802,7 +803,7 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 
     2. Add 1 to _i_.
 4. Return 1.
 
-**Algorithm 2.**  The target function can be rewritten as a power series expansion.  However, the following algorithm works only when **_c_ is a rational number in the interval \[0, 1\]**.
+**Algorithm 2.**  The target function can be rewritten as a power series expansion.  However, the following algorithm works only when **_c_ is a rational number 0 or greater, but not greater than 1**.
 
 1. Special cases: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _c_, and return the result.
 2. Run the **general martingale algorithm** (see "[**Certain Power Series**](https://peteroupc.github.io/morealg.html#Certain_Power_Series)"), with $g(\lambda) = \lambda^k$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)
@@ -1121,7 +1122,7 @@ Huber has suggested several algorithms for this function over the years.
 The first algorithm in this document comes from Huber (2014\)[^4].  It uses three parameters:
 
 - _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
-- _&#x03F5;_ is a rational number in the open interval (0, 1).  If _x_/_y_ is greater than 1, _&#x03F5;_ must be such that 0 &lt; _&#x03F5;_ &le;1 &minus; _&lambda;_ * _x_/_y_, in order to bound the function away from 0 and 1.  The greater _&#x03F5;_ is, the more efficient.
+- _&#x03F5;_ is a rational number greater than 0 and less than 1.  If _x_/_y_ is greater than 1, _&#x03F5;_ must be such that 0 &lt; _&#x03F5;_ &le;1 &minus; _&lambda;_ * _x_/_y_, in order to bound the function away from 0 and 1.  The greater _&#x03F5;_ is, the more efficient.
 
 As a result, some knowledge of _&lambda;_ has to be available to the algorithm. The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.
 
@@ -1589,7 +1590,7 @@ See "More Algorithms for Arbitrary-Precision Sampling" for another way to sample
 <a id=Euler_ndash_Mascheroni_constant___gamma></a>
 #### Euler&ndash;Mascheroni constant _&gamma;_
 
-The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;_ (about 0.5772) is due to Mendo (2020/2021\)[^28].  This solves an open question given in (Flajolet et al., 2010\)[^1].  An algorithm for _&gamma;_ appears here even though it is not yet known whether this constant is irrational.  Sondow (2005\)[^59] described how the constant _&gamma;_ can be rewritten as an infinite sum, which is the form used in this algorithm.
+The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;_ (about 0.5772) is due to Mendo (2020/2021\)[^28].  This solves an open question given in (Flajolet et al., 2010\)[^1].  An algorithm for the Euler&ndash;Mascheroni constant appears here even though it is not yet known whether this constant is irrational.  Sondow (2005\)[^59] described how the Euler&ndash;Mascheroni constant can be rewritten as an infinite sum, which is the form used in this algorithm.
 
 1. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, _k_, and _prev_ to 0 each.
 2. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
@@ -1604,7 +1605,7 @@ The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;
 <a id=exp_minus__x___y___z___t></a>
 #### exp(&minus;_x_/_y_) \* _z_/_t_
 
-This algorithm is again based on an algorithm due to Mendo (2020/2021\)[^28].  In this algorithm, _x_, _y_, _z_, and _t_ are integers greater than 0, except _x_ and/or _z_ may be 0, and that 0 &le; exp(&minus;_x_/_y_) \* _z_/_t_ &le; 1.
+This algorithm is again based on an algorithm due to Mendo (2020/2021\)[^28].  The algorithm takes integers _x_ &ge; 0, _y_ &gt; 0, _z_ &ge; 0, and _t_ &gt; 0, such that 0 &le; exp(&minus;_x_/_y_) \* _z_/_t_ &le; 1.
 
 1. If _z_ is 0, return 0.  If _x_ is 0, return a number that is 1 with probability _z_/_t_ and 0 otherwise.
 2. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, and _k_ to 0 each.
@@ -1622,7 +1623,7 @@ This algorithm is again based on an algorithm due to Mendo (2020/2021\)[^28].  I
 
 See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _y_/_z_ is a rational number that is 0 or greater and 1 or less.  (Thus, the special case ln(2) results when _y_/_z_ = 1/1.)
 
-1. If _y_/_z_ is 0, return 0.
+1. If _y_ is 0, return 0.
 2. Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability _y_/_z_ and 0 otherwise.
     2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
@@ -1667,7 +1668,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^2]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^3]: There is an analogue to the Bernoulli factory problem called the _quantum Bernoulli factory_, with the same goal of simulating functions of unknown probabilities, but this time with algorithms that employ quantum-mechanical operations (unlike _classical_ algorithms that employ no such operations).  However, quantum-mechanical programming is far from being accessible to most programmers at the same level as classical programming, and will likely remain so for the foreseeable future.  For this reason, the _quantum Bernoulli factory_ is outside the scope of this document, but it should be noted that more factory functions can be "constructed" using quantum-mechanical operations than by classical algorithms.  For example, a factory function defined in \[0, 1\] has to meet the requirements proved by Keane and O'Brien except it can touch 0 and/or 1 at a finite number of points in the domain (Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4).
+[^3]: There is an analogue to the Bernoulli factory problem called the _quantum Bernoulli factory_, with the same goal of simulating functions of unknown probabilities, but this time with algorithms that employ quantum-mechanical operations (unlike _classical_ algorithms that employ no such operations).  However, quantum-mechanical programming is far from being accessible to most programmers at the same level as classical programming, and will likely remain so for the foreseeable future.  For this reason, the _quantum Bernoulli factory_ is outside the scope of this document, but it should be noted that more factory functions can be "constructed" using quantum-mechanical operations than by classical algorithms.  For example, a factory function whose domain is \[0, 1\] has to meet the requirements proved by Keane and O'Brien except it can touch 0 and/or 1 at a finite number of points in the domain (Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4).
 
 [^4]: Huber, M., "[**Nearly optimal Bernoulli factories for linear functions**](https://arxiv.org/abs/1308.1562v2)", arXiv:1308.1562v2  [math.PR], 2014.
 
@@ -1773,7 +1774,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)
 
 [^54]: One of the only implementations I could find of this, if not the only, was a [**Haskell implementation**](https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs).
 
-[^55]: There is another algorithm for tanh(_&lambda;_), based on Lambert's continued fraction for tanh(.), but it works only for _&lambda;_ in \[0, 1\].  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
+[^55]: There is another algorithm for tanh(_&lambda;_), based on Lambert's continued fraction for tanh(.), but it works only if 0 &le; _&lambda;_ &le; 1.  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
 
 [^56]: Another algorithm for this function uses the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$), but uses more bits on average as _&lambda;_ approaches 1.
 
@@ -1881,16 +1882,16 @@ Then the algorithm's behavior is given in the tables below.
 
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is _x_ or less given that _n_ is ... |
  --- | --- | --- | --- |
-| Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV\)[^22]; see also Forsythe 1972[^58]).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is uniform in (0, 1), this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
+| Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV\)[^22]; see also Forsythe 1972[^58]).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is a uniform random variate greater than 0 and less than 1, this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
 | Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979[^62]).  DPDF and ECDF are as above. |
-| Numbers sorted in descending order | Both uniform in (0,1) | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and "cut off" to the interval \[0, 1\] (von Neumann 1951\)[^60]. |
-| Numbers sorted in descending order | _D_ is uniform in (0,1); _E_ is max. of two uniform variates in (0,1). | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
+| Numbers sorted in descending order | Both uniform variates greater than 0 and less than 1 | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and "cut off" to the interval \[0, 1\] (von Neumann 1951\)[^60]. |
+| Numbers sorted in descending order | _D_ is a uniform variate greater than 0 and less than 1; _E_ is max. of two uniform variates in (0,1). | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 > **Notes:**
 >
 > 1. All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express what are called _cumulative distribution functions_, namely _F_<sub>_D_</sub>(_x_ given that _n_ is odd) or _F_<sub>_D_</sub>(_x_ given that _n_ is even), respectively.
 > 2. EGF(_z_) is the _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm.  For example, the class of _alternating permutations_ (permutations whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).  Other examples of EGFs were given in the section on the von Neumann schema.
-> 3. The results that point to this note have the special case that both _D_ and _E_ are uniform in (0, 1).  Indeed, if each variate _x_ in the sequence is transformed with _CDF_(_x_), where _CDF_ is _D_'s cumulative distribution function, then with probability 1, the variates become uniform in (0, 1), with the same numerical order as before.  See also [**this Stack Exchange question**](https://stats.stackexchange.com/questions/550847).
+> 3. The results that point to this note have the special case that both _D_ and _E_ are uniform random variates greater than 0 and less than 1.  Indeed, if each variate _x_ in the sequence is transformed with _CDF_(_x_), where _CDF_ is _D_'s cumulative distribution function, then with probability 1, _x_ becomes a uniform random variate greater than 0 and less than 1, with the same numerical order as before.  See also [**this Stack Exchange question**](https://stats.stackexchange.com/questions/550847).
 
 <a id=Derivation_of_an_Algorithm_for___pi___4></a>
 ### Derivation of an Algorithm for _&pi;_ / 4
@@ -1953,7 +1954,7 @@ then the function can be separated into two polynomials that sum to the denomina
 
 Suppose a polynomial&mdash;
 
-- is 0 or greater for every _&lambda;_ in the interval [0, 1],
+- is 0 or greater for every _&lambda;_ 0 or greater, but not greater than 1,
 - has degree _n_ or less, and
 - is written in form 1 as given above.
 

@@ -161,7 +161,7 @@ The algorithm that follows can be used to simulate a more general class of power
 
 - $f$ is written as in equation $(1)$.
 - There is a rational number $Z$ defined as follows. For every $\lambda$ in $[0, 1]$, $f(\lambda) \le Z \lt 1$.
-- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm.  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$'s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence); such functions $C$ admit the **general martingale algorithm**. ($C$ and $A$ admit a Bernoulli factory only if they map the interval [0, 1] to [0, 1], among other requirements.)
+- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm.  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$'s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence); such functions $C$ admit the **general martingale algorithm**. ($C$ and $A$ admit a Bernoulli factory only if they map the interval [0, 1] to itself and meet other requirements.)
 
 In addition, the algorithm will be simpler if each coefficient $a_i$ is a rational number.
 
@@ -418,14 +418,14 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 
 The Bernoulli factory is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an _oracle_ (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a _coin that shows heads or tails where the probability of heads is unknown_.  The rest of this section deals with oracles that go beyond coins.
 
-**Algorithm 1.** Suppose there is an oracle that produces independent random variates in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce nonnegative random variates whose expected value ("long-run average") is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
+**Algorithm 1.** Suppose there is an oracle that produces independent random variates on a closed interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce nonnegative random variates whose expected value ("long-run average") is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
-- _f_ is continuous on \[_a_, _b_\], and
-- _f_(_&mu;_) is greater than or equal to _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is nonnegative and neither touches 0 inside (_a_, _b_) nor moves away from 0 more slowly than a polynomial)
+- _f_ is continuous on the closed interval, and
+- _f_(_&mu;_) is greater than or equal to _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)
 
 (Jacob and Thiery 2015\)[^14]. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
 
-In the algorithm below, let _K_ be a rational number greater than the maximum value of _f_ in the interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_ + (_b_&minus;_a_)\*_&lambda;_)/_K_.
+In the algorithm below, let _K_ be a rational number greater than the maximum value of _f_ on the closed interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_ + (_b_&minus;_a_)\*_&lambda;_)/_K_.
 
 1. Create a _&lambda;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability (_x_&minus;_a_)/(_b_&minus;_a_) (see note below), return 1.  Otherwise, return 0."
 2. Run a Bernoulli factory algorithm for _g_(_&lambda;_), using the _&lambda;_ input coin.  Then return _K_ times the result.
@@ -442,7 +442,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 
 **Algorithm 3.** For this algorithm, see the appendix.
 
-**Algorithm 4.** Say there is an oracle in the form of an _n_-sided fair die (_n_&ge;2) with an unknown number of faces, where each face shows a different integer in the interval \[0, _n_).  The question arises: Which probability distributions based on _n_ can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2\)[^15], and the following are four of these distributions.
+**Algorithm 4.** Say there is an oracle in the form of a fair die.  The number of faces of the die, _n_, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than _n_.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2\)[^15], and the following are four of these distributions.
 
 **_Bernoulli 1/n._** It's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153\)[^15].
 
@@ -611,7 +611,7 @@ An application of the continued fraction algorithm is the following algorithm th
 <a id=Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1></a>
 ### Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).
 
-1. Set _ret_ to the result of **kthsmallest** with the two parameters _m_ and _m_.  (Thus, _ret_ is distributed as _u_<sup>1/_m_</sup> where _u_ is a uniform random variate in [0, 1]; although **kthsmallest** accepts only integers, this formula works for every _m_ greater than 0.)
+1. Set _ret_ to the result of **kthsmallest** with the two parameters _m_ and _m_.  (Thus, _ret_ is distributed as _u_<sup>1/_m_</sup> where _u_ is a uniform random variate greater than 0 and less than 1; although **kthsmallest** accepts only integers, this formula works for every _m_ greater than 0.)
 2. Set _k_ to 1, then set _u_ to point to the same value as _ret_.
 3. Generate a uniform(0, 1) random variate _v_.
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
@@ -619,7 +619,7 @@ An application of the continued fraction algorithm is the following algorithm th
 
 Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations)", where:
 
-- `ECDF(x)`  is the probability that a uniform random variate in [0, 1] is _x_ or less, namely _x_ if _x_ is in \[0, 1\], 0 if _x_ is less than 0, and 1 otherwise.
+- `ECDF(x)`  is the probability that a uniform random variate greater than 0 and less than 1 is _x_ or less, namely _x_ if _x_ is in \[0, 1\], 0 if _x_ is less than 0, and 1 otherwise.
 - `DPDF(x)` is the probability density function for the maximum of _m_ uniform random variates in [0, 1], namely _m_\*_x_<sup>_m_&minus;1</sup> if _x_ is in \[0, 1\], and 0 otherwise.
 
 <a id=1_exp_1__c__minus_2></a>
@@ -681,7 +681,7 @@ Follows the _&pi;_/4 algorithm, except it samples from a quarter disk with an ar
 
 Follows the _&pi;_/4 algorithm, except it samples from a quarter disk with enough boxes removed from it to total an area equal to 3/4.
 
-1. Set _S_ to 32.  Then set _c1_ to a uniform random integer in the half-open interval [0, _S_) and _c2_ to another uniform random integer in [0, _S_).
+1. Set _S_ to 32.  Then set _c1_ to a uniform random integer in the half-open interval [0, _S_) and _c2_ to another uniform random integer in that interval.
 2. (Retained boxes.) If _c1_ is 0 and _c2_ is 0, or if _c1_ is 0 and _c2_ is 1, return 1.
 3. (Removed boxes.) If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < 1024, return 0.
 4. Multiply _S_ by 2.
@@ -775,12 +775,12 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 |  1/(exp(1)&minus;1) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 1. |
 |  1/(1+exp(1)) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 3. |
 |  _n_/_&pi;_  |  (_n_ is 1, 2, or 3.)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=_n_ and _c_=3.  |
-|  _r_/_&pi;_  |  (_r_ is a rational number in open interval (0, 3).)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Create _&mu;_ coin that does: "With probability _r_ &minus; floor(_r_), return 1; otherwise return 0."<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=floor(_r_) and _c_=3.  |
+|  _r_/_&pi;_  |  (_r_ is a rational number greater than 0 and less than 3.)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Create _&mu;_ coin that does: "With probability _r_ &minus; floor(_r_), return 1; otherwise return 0."<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=floor(_r_) and _c_=3.  |
 |  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 |  exp(1)/4  |  Follow the algorithm for **exp(_&lambda;_/4)/2**, except the probability in step 2 is 2<sup>_n_&minus;1</sup>/(_n_!), _c_ is 0, and step 3 is replaced with "Return 1."  |
-|  _r_\*_&lambda;_ &minus; _r_ + _r_\*exp(&minus;_&lambda;_)  |  (_r_ is a rational number in half-open interval (0, 2].  _&lambda;_ is the unknown heads probability of a coin.)<br>Run the **general martingale algorithm** with $g(\lambda) = \lambda$, and with $d_0 = r/2$  and coefficients $a_i = \frac{r}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.  |
+|  _r_\*_&lambda;_ &minus; _r_ + _r_\*exp(&minus;_&lambda;_)  |  (_r_ is a rational number greater than 0, but not greater than 2.  _&lambda;_ is the unknown heads probability of a coin.)<br>Run the **general martingale algorithm** with $g(\lambda) = \lambda$, and with $d_0 = r/2$  and coefficients $a_i = \frac{r}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.  |
 |  _n_\*exp(&minus;1) = _n_/exp(1)  |  (_n_ is 1 or 2.)<br>Create _&lambda;_ coin for algorithm **exp(1) &minus; 2**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=_n_ and _c_=2.  |
-|  _r_\*exp(&minus;1) = _r_/exp(1)  |  (_r_ is a rational number in half-open interval (0, 2].)<br>Run algorithm for **_c_\*_&lambda;_ &minus; _c_ + _c_\*exp(&minus;_&lambda;_)** with _r_=_r_ and _&lambda;_ being a coin that always returns 1. |
+|  _r_\*exp(&minus;1) = _r_/exp(1)  |  (_r_ is a rational number greater than 0, but not less than 2.)<br>Run algorithm for **_c_\*_&lambda;_ &minus; _c_ + _c_\*exp(&minus;_&lambda;_)** with _r_=_r_ and _&lambda;_ being a coin that always returns 1. |
 | _&lambda;_/(2&minus;_&lambda;_) = (_&lambda;_/2)/(1&minus;(_&lambda;_/2)) | (_&lambda;_ is the unknown heads probability of a coin.)<br>(1) Flip _&lambda;_ coin; return 0 if it returns 0.<br>(2) Run algorithm for **1/(2&minus;_&lambda;_)**. |
 | (1&minus;_&lambda;_)/(1+_&lambda;_) | (_&lambda;_ is the unknown heads probability of a coin.)<br>(1) Flip _&lambda;_ coin; return 0 if it returns 1.<br>(2) Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=1 and _c_=1. |
 
@@ -948,7 +948,7 @@ The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1
 <a id=Reciprocal_of_Power_of_Uniform></a>
 ### Reciprocal of Power of Uniform
 
-The following algorithm generates a PSRN of the form 1/_U_<sup>1/_x_</sup>, where _U_ is a uniform random variate in [0, 1] and _x_ is an integer greater than 0.
+The following algorithm generates a PSRN of the form 1/_U_<sup>1/_x_</sup>, where _U_ is a uniform random variate greater than 0 and less than 1 and _x_ is an integer greater than 0.
 
 1. Set _intval_ to 1 and set _size_ to 1.
 2. With probability (4<sup>_x_</sup>&minus;2<sup>_x_</sup>)/4<sup>_x_</sup>, go to step 3.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
@@ -966,7 +966,7 @@ This algorithm uses the skeleton described earlier in "Building an Arbitrary-Pre
 <a id=Distribution_of__U__1_minus__U></a>
 ### Distribution of _U_/(1&minus;_U_)
 
-The following algorithm generates a PSRN distributed as _U_/(1&minus;_U_), where _U_ is a uniform random variate in [0, 1].
+The following algorithm generates a PSRN distributed as _U_/(1&minus;_U_), where _U_ is a uniform random variate greater than 0 and less than 1.
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set _intval_ to 0, then set _size_ to 1, then go to step 4.
 2. Set _intval_ to 1 and set _size_ to 1.
@@ -1241,7 +1241,7 @@ The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution
 
 [^15]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).
 
-[^16]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won't use the unknown _n_ in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
+[^16]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
 
 [^17]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
 
@@ -1249,7 +1249,7 @@ The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution
 
 [^19]: Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).
 
-[^20]: It can also be said that the area under the graph of _x_ &minus; floor(1/_x_), where _x_ is in the closed interval [0, 1], equals 1 minus _&gamma;_.  See, for example, Havil, J., _Gamma: Exploring Euler's Constant_, 2003.
+[^20]: It can also be said that the area under the graph of _x_ &minus; floor(1/_x_), where _x_ is 0 or greater but not greater than 1, equals 1 minus _&gamma;_.  See, for example, Havil, J., _Gamma: Exploring Euler's Constant_, 2003.
 
 [^21]: Citterio, M., Pavani, R., "A Fast Computation of the Best k-Digit Rational Approximation to a Real Number", Mediterranean Journal of Mathematics 13 (2016).
 
@@ -1429,7 +1429,7 @@ The following algorithm takes a uniform partially-sampled random number (PSRN) a
 The algorithm follows.
 
 1. Set _v_ to 0 and _k_ to 1.
-2. (_v_ acts as a uniform random variate in [0, 1] to compare with _f_(_U_).) Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the uniform PSRN's digits, and _d_ is a digit chosen uniformly at random.
+2. (_v_ acts as a uniform random variate greater than 0 and less than 1 to compare with _f_(_U_).) Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the uniform PSRN's digits, and _d_ is a digit chosen uniformly at random.
 3. Calculate an approximation of _f_(_U_) as follows:
     1. Set _n_ to the number of items (sampled and unsampled digits) in the uniform PSRN's fractional part.
     2. Of the first _n_ digits (sampled and unsampled) in the PSRN's fractional part, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the PSRN's digit expansion up to the first _n_ digits after the point.
@@ -1647,7 +1647,7 @@ This section has mathematical proofs showing which kinds of algebraic functions 
 The following summarizes what can be established about these algebraic functions:
 
 - sqrt(_&lambda;_) can be simulated.
-- Every rational function with rational coefficients that maps the open interval (0, 1) to (0, 1) can be simulated.
+- Every rational function with rational coefficients that maps the open interval (0, 1) to itself can be simulated.
 - If _f_(_&lambda;_) can be simulated, so can any Bernstein-form polynomial in the variable _f_(_&lambda;_) with coefficients that can be simulated.
 - If _f_(_&lambda;_) and _g_(_&lambda;_) can be simulated, so can _f_(_&lambda;_)\*_g_(_&lambda;_), _f_(_g_(_&lambda;_)), and _g_(_f_(_&lambda;_)).
 - If a full-domain pushdown automaton (defined later) can generate words of a given length with a given probability (a _probability distribution_ of word lengths), then the probability generating function for that distribution can be simulated, as well as for that distribution conditioned on a finite set or periodic infinite set of word lengths (for example, all odd word lengths only).
@@ -1669,9 +1669,9 @@ The following definitions are used in this section:
 
     When the stack is empty, the machine stops, and returns either 0 or 1 depending on the state it ends up at.  (Because each left-hand side has no more than one possible transition, the automaton is _deterministic_.)
 
-2. A _full-domain pushdown automaton_ means a pushdown automaton that terminates with probability 1 given a coin with probability of heads _&lambda;_, for every _&lambda;_ in the open interval (0, 1).
-3. **PDA** is the class of functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.  **PDA** also includes the constant functions 0 and 1.
-4. **ALGRAT** is the class of functions that map the open interval (0, 1) to (0, 1), are continuous, and are algebraic over the rational numbers (they satisfy a nonzero polynomial system whose coefficients are rational numbers). **ALGRAT** also includes the constant functions 0 and 1.
+2. A _full-domain pushdown automaton_ means a pushdown automaton that terminates with probability 1 given a coin with probability of heads _&lambda;_, for every _&lambda;_ greater than 0 and less than 1.
+3. **PDA** is the class of functions that map the open interval (0, 1) to itself and can be simulated by a full-domain pushdown automaton.  **PDA** also includes the constant functions 0 and 1.
+4. **ALGRAT** is the class of functions that map the open interval (0, 1) to itself, are continuous, and are algebraic over the rational numbers (they satisfy a nonzero polynomial system whose coefficients are rational numbers). **ALGRAT** also includes the constant functions 0 and 1.
 5. A _probability generating function_ has the form _p_<sub>0</sub>\*_&lambda;_<sup>0</sup> + _p_<sub>1</sub>\*_&lambda;_<sup>1</sup> + ..., where _p_<sub>_i_</sub> (a _coefficient_) is the probability of getting _i_.
 
 > **Notes:**
@@ -1679,7 +1679,7 @@ The following definitions are used in this section:
 > 1. Mossel and Peres (2005\)[^17] defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.
 > 2. Pushdown automata, as defined here, are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020\)[^53] and can be translated to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009\)[^54], as long as those grammars and systems use only transition probabilities that are rational numbers.
 
-**Proposition 0** (Mossel and Peres 2005[^53], Theorem 1.2): _A full-domain pushdown automaton can simulate a function that maps (0, 1) to (0, 1) only if the function is in class **ALGRAT**._
+**Proposition 0** (Mossel and Peres 2005[^53], Theorem 1.2): _A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class **ALGRAT**._
 
 It is not known whether **ALGRAT** and **PDA** are equal, but the following can be established about **PDA**:
 
@@ -1740,7 +1740,7 @@ _Proof:_ Special case of Proposition 1A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda
 
 _Proof:_ Let _F_ be the full-domain pushdown automaton for _f_. For each state/symbol pair among the left-hand sides of _F_'s rules, apply Lemma 1A to the automaton _F_, using the function _g_.  Then the new machine _F_ terminates with probability 1 because the original _F_ and the original automaton for _g_ do for every _&lambda;_ in (0, 1), and because the automaton for _g_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^17] because the machine is a full-domain pushdown automaton.  &#x25a1;
 
-**Proposition 3:** _Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class **PDA**._
+**Proposition 3:** _Every rational function with rational coefficients that maps (0, 1) to itself is in class **PDA**._
 
 _Proof:_ These functions can be simulated by a finite-state machine (Mossel and Peres 2005\)[^17].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;
 
@@ -1800,7 +1800,7 @@ Solving this system for the grammar's starting nonterminal, and applying Proposi
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_}) becomes _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ \* _&alpha;_<sub>_s2_,_sy1_,_en_</sub>.
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_, _sy2_}) becomes _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_\*_&alpha;_<sub>_s2_,_sy2_,_&sigma;[1]_</sub>\*_&alpha;_<sub>_&sigma;[1]_,_sy1_,_en_</sub> + ... + _p_\*_&alpha;_<sub>_s2_,_sy2_,_&sigma;[n]_</sub>\*_&alpha;_<sub>_&sigma;[n]_,_sy1_,_en_</sub>, where _&sigma;[i]_ is one of the machine's _n_ states.
 >
->     (Here, _p_ is the probability of using the given transition rule; the special value HEADS becomes _&lambda;_, and the special value TAILS becomes 1&minus;_&lambda;_.)  Now, each time multiple equations have the same left-hand side, combine them into one equation with the same left-hand side, but with the sum of their right-hand sides.  Then, for every variable of the form _&alpha;_<sub>_a_,_b_,_c_</sub> not yet present in the system, include the equation _&alpha;_<sub>_a_,_b_,_c_</sub> = 0.  Then, for each final state _fs_ that returns 1, solve the system for the variable _&alpha;_<sub>START,EMPTY,_fs_</sub> (where START is the automaton's starting state) to get a solution (a function) that maps (0, 1) to (0, 1). (Each solve can produce multiple solutions, but only one of them will map (0, 1) to (0, 1) assuming every _p_ is either HEADS or TAILS.) Finally, add all the solutions to get _f_(_&lambda;_).
+>     (Here, _p_ is the probability of using the given transition rule; the special value HEADS becomes _&lambda;_, and the special value TAILS becomes 1&minus;_&lambda;_.)  Now, each time multiple equations have the same left-hand side, combine them into one equation with the same left-hand side, but with the sum of their right-hand sides.  Then, for every variable of the form _&alpha;_<sub>_a_,_b_,_c_</sub> not yet present in the system, include the equation _&alpha;_<sub>_a_,_b_,_c_</sub> = 0.  Then, for each final state _fs_ that returns 1, solve the system for the variable _&alpha;_<sub>START,EMPTY,_fs_</sub> (where START is the automaton's starting state) to get a solution (a function) that maps (0, 1) to itself. (Each solve can produce multiple solutions, but only one of them will map (0, 1) to itself assuming every _p_ is either HEADS or TAILS.) Finally, add all the solutions to get _f_(_&lambda;_).
 >
 > 3. Assume there is a pushdown automaton (_F_) that follows Definition 1 except it uses a set of _N_ input letters (and not simply HEADS or TAILS), accepts an input word if the stack is empty, and rejects the word if the machine reaches a configuration without a transition rule.  Then a pushdown automaton in the full sense of Definition 1 (_G_) can be built.  In essence:
 >     1. Add a new FAILURE state, which when reached, pops all symbols from the stack.
@@ -1893,7 +1893,7 @@ _Proof of Proposition 8:_ Let _n_ be an integer greater than 0. Take a finite-st
 
 To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020\)[^60], the generator can generate a real number's binary expansion only if that number is rational or transcendental (see also Cobham (1968\)[^61]; Adamczewski and Bugeaud (2007\)[^62]).</s>  &#x25a1;
 
-**Proposition 9.** _If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function._
+**Proposition 9.** _If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function on that interval._
 
 The proof follows from combining Kindler and Romik (2004, Theorem 2\)[^58] and Knuth and Yao (1976\)[^5] with Richman (2012\)[^63], who proved that a continuous algebraic function on an open interval is piecewise analytic ("analytic" is a stronger statement than having infinitely many "slope" functions).
 

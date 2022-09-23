@@ -4,8 +4,8 @@
 
 This page should be read in conjunction with the following articles:
 
-- "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html).
-- "[**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html).
+- [**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html).
+- [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html).
 
 <a id=Contents></a>
 ## Contents

@@ -38,10 +38,10 @@ This section describes certain math terms used on this page for programmers to u
 The following terms can describe a function $f(x)$, specifically how "well-behaved" $f$ is &mdash; which can be important when designing Bernoulli factory algorithms.  This page mostly cares how $f$ behaves when its domain is the interval \[0, 1\], that is, when $0 \le x \le 1$.
 
 - If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" or "velocity" or "instantaneous-rate-of-change" function.  The derivative (or _first derivative_) is denoted as $f'$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f''$, is the derivative of $f'$; the _third derivative_ is the derivative of $f''$; and so on.
-- A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in $f$'s domain and no more than _&delta;_ apart.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.<br>The function also admits a Hölder exponent _&beta;_ such that 0 &lt; _&beta;_ &lt; _&alpha;_.
-- A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the "steepness" of _f_ is no greater than that of _L_\*_x_.<br>If _f_ has a derivative on its domain, _L_ is the maximum absolute value of that derivative.
-- A _convex_ function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the domain of $f$.<br>Roughly speaking, if $f$'s "slope" never goes down, then it's convex.
-- A _concave_ function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the domain of $f$.<br>Roughly speaking, if $f$'s "slope" never goes up, then it's concave.
+- A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.<br>The function also admits a Hölder exponent _&beta;_ such that 0 &lt; _&beta;_ &lt; _&alpha;_.
+- A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the function's "steepness"_ is no greater than that of _L_\*_x_.<br>If the function has a derivative on its domain, _L_ is the maximum absolute value of that derivative.
+- A _convex_ function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes down, then it's convex.
+- A _concave_ function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes up, then it's concave.
 
 <a id=About_This_Document></a>
 ### About This Document
@@ -81,12 +81,12 @@ These randomized upper and lower bounds come from two sequences of polynomials a
 
 The consistency requirement ensures that the upper polynomials "decrease" and the lower polynomials "increase".  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not ensure the consistency requirement by itself.  Examples of this fact are shown in the section "[**Failures of the Consistency Requirement**](#Failures_of_the_Consistency_Requirement)" in the appendix.
 
-In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup>th</sup> coefficient for the lower or upper degree-_n_ polynomial in Bernstein form, respectively, where _k_ is an integer in the interval \[0, _n_\].
+In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup>th</sup> coefficient for the lower or upper degree-_n_ polynomial in Bernstein form, respectively, where 0 &le; _k_ &ge; _n_ is an integer.
 
 <a id=Building_the_Lower_and_Upper_Polynomials></a>
 ### Building the Lower and Upper Polynomials
 
-A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli factory problem can be solved (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)"). The following are ways to build sequences of polynomials that appropriately converge to _f_ if _f_ belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function _f_ using a computer algebra system to see if it belongs to any of the classes of functions described below.
+A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli factory problem can be solved (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)"). The following are ways to build sequences of polynomials that appropriately converge to a factory function if that function meets certain conditions.  It would be helpful to plot that factory function using a computer algebra system to see if it belongs to any of the classes of functions described below.
 
 **Concave functions.** If _f_ is _concave_ on the interval \[0, 1\], then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality. One example is _f_(_&lambda;_) = 1&minus; _&lambda;_<sup>2</sup>.
 
@@ -108,9 +108,9 @@ Finding _m_ and _&alpha;_ is non-trivial in general.  But assuming _m_ and _&alp
 
 > **Note:**
 >
-> 1. Some functions _f_ are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that's steeper than every "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than every "nth" root.
-> 2. If _f_ has a Hölder exponent of 1 (and so is Lipschitz continuous), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
-> 3. If _f_'s Hölder exponent is 1/2 or greater, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
+> 1. Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that's steeper than every "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than every "nth" root.
+> 2. If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
+> 3. If the factory function's Hölder exponent is 1/2 or greater, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
 
 **Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -125,7 +125,7 @@ Let _m_ be the Lipschitz constant of _f_'s derivative, or a greater number than 
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise,  _f_(_k_/_n_) &minus; _m_/(7\*_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _m_/(7\*_n_).
 
-My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `c2params`, to calculate the necessary values for _m_ and the bounds of these polynomials, given _f_.
+My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `c2params`, to calculate the necessary values for _m_ and the bounds of these polynomials, given a factory function.
 
 > **Examples:**
 >
@@ -222,7 +222,7 @@ An **approximate Bernoulli factory** for a function _f_(_&lambda;_) is a Bernoul
 
 Usually _g_ is a polynomial, but can also be a rational function (ratio of polynomials) or another function with an easy-to-implement Bernoulli factory algorithm.
 
-Meanwhile, _f_(_&lambda;_) can be any function that maps the closed interval [0, 1] to [0, 1], even if it isn't continuous or a factory function (examples include the "step function" 0 if _&lambda;_ < 1/2 and 1 otherwise, or the function 2\*min(_&lambda;_, 1 &minus; _&lambda;_)).  Continuous functions on \[0, 1\] can be approximated arbitrarily well by an approximate Bernoulli factory (as a result of the so-called "Weierstrass approximation theorem"), but this is not the case in general for discontinuous functions.
+Meanwhile, _f_(_&lambda;_) can be any function that maps the closed interval [0, 1] to itself, even if it isn't continuous or a factory function (examples include the "step function" 0 if _&lambda;_ < 1/2 and 1 otherwise, or the function 2\*min(_&lambda;_, 1 &minus; _&lambda;_)).  Continuous functions on \[0, 1\] can be approximated arbitrarily well by an approximate Bernoulli factory (as a result of the so-called "Weierstrass approximation theorem"), but this is not the case in general for discontinuous functions.
 
 To build an approximate Bernoulli factory with a polynomial:
 
@@ -614,7 +614,7 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 **Lemma A1:** Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and sum to a finite value and where $0\le x\le 1$ (the domain is the interval [0, 1]). Then $f$ is convex and has a maximum at 1.
 
-_Proof:_ By inspection, $f$ is a power series and is nonnegative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is an increasing function for every $n\ge 0$, and multiplying that by a nonnegative constant doesn't change whether it's increasing.  Since all of these terms have a maximum at 1 on the domain, so does their sum.
+_Proof:_ By inspection, $f$ is a power series and is nonnegative on the positive real line (and thus on the domain [0, 1]).  Each of its terms has a maximum at 1 since $x^n$ is a strictly increasing function for every $n\ge 0$, and multiplying that by a nonnegative constant doesn't change whether it's strictly increasing.  Since all of these terms have a maximum at 1 on the domain, so does their sum.
 
 The derivative of $f$ is&mdash; $$f'(x) = a_1 x^0 + ... + a_i x^{i-1} + ...,$$ which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f'$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.
 
@@ -629,19 +629,19 @@ For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + 
 <a id=Results_Used_in_Approximate_Bernoulli_Factories></a>
 ### Results Used in Approximate Bernoulli Factories
 
-**Proposition B1**: Let $f(\lambda)$ map [0, 1] to [0, 1] and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in "Approximate Bernoulli Factories for Certain Functions") are nonnegative on [0, 1].
+**Proposition B1**: Let $f(\lambda)$ map the closed interval [0, 1] to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in "Approximate Bernoulli Factories for Certain Functions") are nonnegative on [0, 1].
 
 _Proof:_ For $W_{n,2}$ it's enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen's inequality and because $f$ is concave.
 
-For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is nonnegative.  For this, using only the fact that $f$ maps [0, 1] to [0, 1], $B_n(f)$ will have Bernstein coefficients in \[0, 1\] (each coefficient is a value of $f$) and so will likewise map [0, 1] to \[0, 1\] (Qian et al. 2011)[^20].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on [0, 1]. &#x25a1;
+For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is nonnegative.  For this, using only the fact that $f$ maps the closed interval [0, 1] to itself, $B_n(f)$ will have Bernstein coefficients in \[0, 1\] (each coefficient is a value of $f$) and so will likewise map the closed interval [0, 1] to \[0, 1\] (Qian et al. 2011)[^20].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on [0, 1]. &#x25a1;
 
-**Proposition B2**: Let $f(\lambda)$ map [0, 1] to [0, 1], be continuous, nondecreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is nonnegative on [0, 1].
+**Proposition B2**: Let $f(\lambda)$ map the closed interval [0, 1] to itself, be continuous, nondecreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is nonnegative on [0, 1].
 
 _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^21], showing that $W_{n,2}$ is nonnegative on [0, 1].  &#x25a1;
 
 > **Note:** A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$'s domain.
 
-**Proposition B3**: Let $f(\lambda)$ map [0, 1] to [0, 1] and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.
+**Proposition B3**: Let $f(\lambda)$ map the closed interval [0, 1] to itself and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.
 
 _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
@@ -902,7 +902,7 @@ Now consider the last paragraph of Proposition 2.5.  If the input coin were flip
 
 so that the algorithm would simulate _f_(_&lambda;_) = _P1_ / _P01_.  Observe that the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> cancels out in the division.  Thus, we could replace the input coin with unbiased random bits and still simulate _f_(_&lambda;_); the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> above would then be (1/2)<sup>2\*_r_</sup>.
 
-While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if _f_(_&lambda;_) maps the interval _J_ to a small range of values, so that the algorithm could, for example, generate a uniform random variate in [0, 1] using unbiased random bits and see whether it lies outside that range of values &mdash; and thus produce a sample from _f_(_&lambda;_) without flipping the input coin again.
+While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if _f_(_&lambda;_) maps the interval _J_ to a small range of values, so that the algorithm could, for example, generate a uniform random variate greater than 0 and less than 1 using unbiased random bits and see whether that variate lies outside that range of values &mdash; and thus produce a sample from _f_(_&lambda;_) without flipping the input coin again.
 
 <small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae's entropy-preserving binarization (Pae 2018\)[^28].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every _&lambda;_.</small>
 
@@ -923,7 +923,7 @@ _Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ "domina
 
 Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes the larger class of _Hölder continuous_ functions (see "[**Definitions**](#Definitions)").
 
-**Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
+**Lemma 2.** _Let f(&lambda;) be a continuous function that maps the closed interval [0, 1] to itself, and let X be a hypergeometric(2\*n, k, n) random variable._
 
 1. _Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave on [0, 1], then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is less than or equal to&mdash;_
     - _&omega;(sqrt(1/(8\*n&minus;4))), for every integer n&ge;1 that's a power of 2,_
@@ -950,7 +950,7 @@ _Proof._
 >
 > 1. **E**[.] means expected value ("long-run average"), and **Var**[.] means variance.  A hypergeometric(2 \* _n_, _k_, _n_) random variable is the number of "good" balls out of _n_ balls taken uniformly at random, all at once, from a bag containing 2 \* _n_ balls, _k_ of which are "good".
 > 2. Parts 1 through 3 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively\)[^1].  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
-> 3. All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple _&omega;_ that satisfies the lemma:
+> 3. All continuous functions that map the closed interval [0, 1] to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple _&omega;_ that satisfies the lemma:
 >     1. If _f_ is strictly increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990\)[^31]; (Gal 1995\)[^32].
 >     2. If _f_ is strictly decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990\)[^31]; (Gal 1995\)[^32].
 >     3. If _f_ is strictly increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
@@ -1020,7 +1020,7 @@ Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The 
 
 Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
 
-**Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha;, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
+**Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; D(n)._
 - _**fabove**(n, k) = f(k/n) + D(n)._
@@ -1045,7 +1045,7 @@ The result then follows from Theorem 1. &#x25a1;
 
 > **Note:** For specific values of _&alpha;_, the equation _D_(_n_) = _D_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following code in Python that uses the SymPy computer algebra library: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
 
-**Corollary 2.** _Let f(&lambda;) be a strictly bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
+**Corollary 2.** _Let f(&lambda;) be a strictly bounded factory function.  If that function is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)\*sqrt(n))._
 - _**fabove**(n, k) = f(k/n) + M/((sqrt(2)&minus;1)\*sqrt(n))._
@@ -1059,7 +1059,7 @@ _Proof._ Because Lipschitz continuous functions are Hölder continuous with Höl
 
 > **Note:** The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005\)[^1].
 
-**Corollary 3.** _Let f(&lambda;) be a strictly bounded factory function. If f has a Lipschitz continuous derivative with Lipschitz constant L, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
+**Corollary 3.** _Let f(&lambda;) be a strictly bounded factory function. If that function has a Lipschitz continuous derivative with Lipschitz constant L, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; L/(7\*n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + L/(7\*n)._
@@ -1068,7 +1068,7 @@ _Proof._ By part 3 of lemma 2, for each integer $n\ge 4$ that's a power of 2 ($n
 
 > **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the domain [0, 1] that is not greater than a constant \(a slightly stronger condition than having a Lipschitz continuous derivative on that domain).
 
-**Theorem 2.** _Let f(&lambda;) be a strictly bounded factory function.  If f is convex and nondecreasing, then Theorem 1 remains valid with &phi;(n) = **E**\[f(Y/n)\] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
+**Theorem 2.** _Let f(&lambda;) be a strictly bounded factory function.  If that function is convex and nondecreasing, then Theorem 1 remains valid with &phi;(n) = **E**\[f(Y/n)\] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
 
 _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1's assumption that the series converges, so that _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
 
