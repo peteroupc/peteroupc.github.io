@@ -1337,7 +1337,7 @@ The methods in this section should not be used to sample at random for informati
 <a id=Uniform_Random_Real_Numbers></a>
 ### Uniform Random Real Numbers
 
-This section defines a method, namely `RNDRANGEMinMaxExc(a, b)`, to generate independent "uniform" random real numbers in the open interval (`a`, `b`).[^60]
+This section defines a method, namely `RNDRANGEMinMaxExc(a, b)`, to generate independent "uniform" random real numbers greater than `a` and less than `b`.[^60]
 
 The section shows how this method can be implemented for fixed-point, rational, and floating-point numbers.  However, all three formats use a predetermined and fixed precision. Other formats for random real numbers don't have this limitation and include [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) and "constructive reals" or "recursive reals" (Boehm 2020)[^61].
 
