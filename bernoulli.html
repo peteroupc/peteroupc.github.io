@@ -308,6 +308,7 @@
 <li>The Greek letter lambda (<em>&lambda;</em>) represents the unknown probability of heads of the input coin.</li>
 <li> choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Manolopoulos 2002)[^5].  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</li>
 <li><em>n</em>! = 1*2*3*...*<em>n</em> is also known as <em>n</em> factorial; in this document, (0!) = 1.</li>
+<li><em>Summation notation</em>, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.</li>
 <li>The instruction to &quot;generate a uniform(0, 1) random variate&quot; can be implemented&mdash;
 
 <ul>
@@ -358,11 +359,13 @@
 
 <p>Any polynomial can be written in <em>Bernstein form</em> as&mdash;</p>
 
-<p>$$\sum_{i=0}^n {n \choose i} \lambda^i (1-\lambda)^{n-i} a[i],$$</p>
+<p>$${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$</p>
 
-<p>where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[<em>i</em>] are its <em>n</em> plus one <em>coefficients</em>.</p>
+<p>where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], ..., <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>coefficients</em>.</p>
 
-<p>But the only polynomials that admit a Bernoulli factory are those whose coefficients are all in the interval [0, 1] (once the polynomials are written in Bernstein form), and these polynomials are the only functions that can be simulated with a fixed number of coin flips (Goyal and Sigman 2012[^6]; Qian et al. 2011)[^7]; see also Wästlund 1999, section 4[^8]).  Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.</p>
+<p>But a polynomial admits a Bernoulli factory only if each of its coefficients is 0 or greater and less than 1 (once the polynomial is written in Bernstein form), and a function can be simulated with a fixed number of coin flips only if it&#39;s a polynomial of that kind (Goyal and Sigman 2012[^6]; Qian et al. 2011)[^7]; see also Wästlund 1999, section 4[^8]).</p>
+
+<p>Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.</p>
 
 <ol>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.[^9]</li>
@@ -850,7 +853,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><p><strong>Building convex combinations.</strong> Assume we have a function of the form <em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>), where <em>w</em><sub><em>n</em></sub> are continuous functions.  Let <em>g</em>(<em>n</em>) be the probability that a randomly chosen number <em>X</em> is <em>n</em>, such that <em>g</em>(0) + <em>g</em>(1) + ... = 1.  Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability <em>f</em>(<em>&lambda;</em>) as the convex combination&mdash; $$f(\lambda)=\sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ but this works only if the following conditions are met for each integer <em>n</em>&ge;0:</p>
+<li><p><strong>Building convex combinations.</strong> Assume we have a function of the form <em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>), where <em>w</em><sub><em>n</em></sub> are continuous functions.  Let <em>g</em>(<em>n</em>) be the probability that a randomly chosen number <em>X</em> is <em>n</em>, such that <em>g</em>(0) + <em>g</em>(1) + ... = 1.  Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability <em>f</em>(<em>&lambda;</em>) as the convex combination&mdash; $$f(\lambda)=g(0) \frac{w_0(\lambda)}{g(0)} + g(1) \frac{w_1(\lambda)}{g(1)} + ...$$ (where a term is omitted if division by 0 occurs), but this works only if the following conditions are met for each integer <em>n</em>&ge;0:</p>
 
 <ul>
 <li>$1 \ge g(n) \ge w_n(\lambda) \ge 0$, whenever $0 \le \lambda \le 1$.</li>
@@ -865,7 +868,7 @@
 <li>$1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 0$.</li>
 </ul>
 
-<p>Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>a</em><sub><em>X</em></sub>/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability  <em>c</em> as the convex combination&mdash; $$c=\sum_{n\ge 0} g(n) \frac{a_n}{g(n)}.$$</p></li>
+<p>Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>a</em><sub><em>X</em></sub>/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability  <em>c</em> as the convex combination&mdash; $$f(\lambda)=g(0) \frac{a_0}{g(0)} + g(1) \frac{a_1}{g(1)} + ...,$$ where a term is omitted if division by 0 occurs.$$</p></li>
 </ol>
 
 <p><strong>Examples:</strong></p>
@@ -1058,7 +1061,7 @@
 
 <h4>Integrals</h4>
 
-<p>Roughly speaking, the <em>integral</em> of <em>f</em>(<em>x</em>) on an interval [<em>a</em>, <em>b</em>] is the area under that function&#39;s graph when the function is restricted to that interval.</p>
+<p>Roughly speaking, the <em>integral</em> of <em>f</em>(<em>x</em>) on an interval [<em>a</em>, <em>b</em>] is the &quot;area under the graph&quot; of that function when the function is restricted to that interval.</p>
 
 <p><strong>Algorithm 1.</strong> (Flajolet et al., 2010)[^1] showed how to turn an algorithm that simulates <em>f</em>(<em>&lambda;</em>) into an algorithm that simulates the probability&mdash;</p>
 

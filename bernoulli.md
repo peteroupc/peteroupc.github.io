@@ -207,6 +207,7 @@ In the following algorithms:
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads of the input coin.
 -  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002\)[^5].  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
+- _Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
 - The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating a uniform random variate greater than 0 and less than 1 (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
@@ -239,11 +240,13 @@ This section describes general-purpose algorithms for sampling probabilities tha
 
 Any polynomial can be written in _Bernstein form_ as&mdash;
 
-$$\sum_{i=0}^n {n \choose i} \lambda^i (1-\lambda)^{n-i} a[i],$$
+$${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$
 
-where _n_ is the polynomial's _degree_ and _a_\[_i_\] are its _n_ plus one _coefficients_.
+where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _coefficients_.
 
-But the only polynomials that admit a Bernoulli factory are those whose coefficients are all in the interval \[0, 1\] (once the polynomials are written in Bernstein form), and these polynomials are the only functions that can be simulated with a fixed number of coin flips (Goyal and Sigman 2012[^6]; Qian et al. 2011\)[^7]; see also Wästlund 1999, section 4[^8]).  Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.
+But a polynomial admits a Bernoulli factory only if each of its coefficients is 0 or greater and less than 1 (once the polynomial is written in Bernstein form), and a function can be simulated with a fixed number of coin flips only if it's a polynomial of that kind (Goyal and Sigman 2012[^6]; Qian et al. 2011\)[^7]; see also Wästlund 1999, section 4[^8]).
+
+Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.[^9]
 2. Return a number that is 1 with probability _a_\[_j_\], or 0 otherwise.
@@ -588,7 +591,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 >
 > **Notes:**
 >
-> 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sub>(_&lambda;_), where _w_<sub>_n_</sub> are continuous functions.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=\sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ but this works only if the following conditions are met for each integer _n_&ge;0:
+> 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sub>(_&lambda;_), where _w_<sub>_n_</sub> are continuous functions.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=g(0) \frac{w_0(\lambda)}{g(0)} + g(1) \frac{w_1(\lambda)}{g(1)} + ...$$ (where a term is omitted if division by 0 occurs), but this works only if the following conditions are met for each integer _n_&ge;0:
 >     - $1 \ge g(n) \ge w_n(\lambda) \ge 0$, whenever $0 \le \lambda \le 1$.
 >     - The function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories").
 >
@@ -598,7 +601,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 >     - $a_n$ are each 0 or greater and sum to 1 or less, and
 >     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 0$.
 >
->     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash; $$c=\sum_{n\ge 0} g(n) \frac{a_n}{g(n)}.$$
+>     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash; $$f(\lambda)=g(0) \frac{a_0}{g(0)} + g(1) \frac{a_1}{g(1)} + ...,$$ where a term is omitted if division by 0 occurs.$$
 >
 > **Examples:**
 >
@@ -742,7 +745,7 @@ and both schemes implement step 1 of the algorithm in the same way.  However, di
 <a id=Integrals></a>
 #### Integrals
 
-Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the area under that function's graph when the function is restricted to that interval.
+Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the "area under the graph" of that function when the function is restricted to that interval.
 
 **Algorithm 1.** (Flajolet et al., 2010\)[^1] showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the probability&mdash;
 
