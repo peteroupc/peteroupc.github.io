@@ -170,7 +170,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 7. (Stage 1: Estimate _p_<sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create _k_ many blocks.  For each block:
     1. Get _m_ samples from the stream.
     2. Add the samples and divide by _m_ to get this block's sample mean, _mean_.
-    3. Calculate the estimate of the _p_<sup>th</sup> c.a.m. for this block, which is: (_&sum;_<sub>_i_ = 0, ..., _k_&minus;1</sub> (_block_\[_i_\] &minus; _mean_)<sup>_p_</sup>)/_m_, where _block_\[_i_\] is the sample at position _i_ of the block (positions start at 0).
+    3. Calculate the estimate of the _p_<sup>th</sup> c.a.m. for this block, which is: ((_block_\[0\] &minus; _mean_)<sup>_p_</sup> + _block_\[1\] &minus; _mean_)<sup>_p_</sup> + ... + _block_\[_k_&minus;1\] &minus; _mean_)<sup>_p_</sup>)/_m_, where _block_\[_i_\] is the sample at position _i_ of the block (positions start at 0).
 8. (Find the median of the _p_<sup>th</sup> c.a.m. estimates.)  Sort the estimates calculated by step 7 in ascending order, and set _median_ to the value in the middle of the sorted list (at position floor(_k_/2) with positions starting at 0); this works because _k_ is odd.
 9. (Calculate sample size for the next stage.)  Set _mp_ to max(1, ceil(_h_ \* _median_<sup>_s_</sup>)), or an integer greater than this.
 10. (Stage 2: Estimate of the sample mean.) Create _kp_ many blocks.  For each block:

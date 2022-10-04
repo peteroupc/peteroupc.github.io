@@ -194,7 +194,7 @@ If $g(\lambda) = \lambda$, this kind of function&mdash;
 - is either constant or strictly increasing, and
 - is _convex_ (its "slope" or "velocity" doesn't decrease as _&lambda;_ increases)[^3].
 
-Suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash; $$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$ where each sum is taken over all nonnegative values of $n$ where $a_n > 0$.
+Suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash; $$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$ where each sum is taken over all nonnegative values of $n$ where $a_n > 0$.[^64]
 
 Then the key to simulating $f(\lambda)$ is to "tuck" the values $a_n$ under a function $w(n)$ such that&mdash;
 
@@ -1337,6 +1337,8 @@ The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution
 
 [^63]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^64]: _Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -1556,7 +1558,7 @@ The following explains how the algorithm is derived.
 The function min(_&lambda;_, 1/2) can be rewritten as _A_ + _B_ where&mdash;
 
 - _A_  = (1/2) \* _&lambda;_, and
-- _B_ = (1/2) \* min(_&lambda;_, 1&minus;_&lambda;_)<br/>&nbsp;&nbsp;= (1/2) \* ((1&minus;sqrt(1&minus;4\*_&lambda;_\*(1&minus;_&lambda;_)))/2)<br/>&nbsp;&nbsp;= (1/2) \* &sum;<sub>_k_ = 1, 2, ...</sub> _g_(_k_) \*  _h_<sub>_k_</sub>(_&lambda;_),
+- _B_ = (1/2) \* min(_&lambda;_, 1&minus;_&lambda;_)<br/>&nbsp;&nbsp;= (1/2) \* ((1&minus;sqrt(1&minus;4\*_&lambda;_\*(1&minus;_&lambda;_)))/2)<br/>&nbsp;&nbsp;= (1/2) \* $\sum_{k\ge 1} h_k(\lambda)$,
 
 revealing that the function is a [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), and _B_ is itself a convex combination where&mdash;
 
@@ -1722,9 +1724,9 @@ Because of Lemma 1A, it's possible to label each left-hand side of a pushdown au
 
 **Proposition 1A:** _If f(&lambda;) is in the class **PDA**, then so is every polynomial written as&mdash;_
 
-&sum;<sub>_i_ = 0, ..., _n_</sub> choose(_n_, _i_) * _f_(_&lambda;_)<sup>_i_</sup> * (1 &minus; _f_(_&lambda;_))<sup>_n_ &minus; _i_</sup> * _a_\[_i_\],
+$${n\choose 0}f(\lambda)^0 (1-f(\lambda))^{n-0} a[0] + {n\choose 1}f(\lambda)^1 (1-f(\lambda))^{n-1} a[1] + ... + {n\choose n}f(\lambda)^n (1-f(\lambda))^{n-n} a[n],$$
 
-_where n is the polynomial's degree and a\[i\] is a function in the class **PDA**._
+_where n is the polynomial's degree and a\[0], a\[1], ..., a\[n] are functions in the class **PDA**._
 
 _Proof Sketch_: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012\)[^13]\: The first stage counts the number of "heads" shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability _a_\[_i_\], where _i_ is the number of "heads". The automaton's transitions take advantage of Lemma 1A.  &#x25a1;
 
