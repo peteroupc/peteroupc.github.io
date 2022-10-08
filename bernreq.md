@@ -18,26 +18,28 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Contents**](#Contents)
 - [**Key Problems**](#Key_Problems)
 - [**Polynomials that approach a factory function "fast"**](#Polynomials_that_approach_a_factory_function_fast)
+    - [**Main Question**](#Main_Question)
+    - [**Solving the Bernoulli factory problem with polynomials**](#Solving_the_Bernoulli_factory_problem_with_polynomials)
     - [**Formal Statement**](#Formal_Statement)
-        - [**On Condition 3**](#On_Condition_3)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
-    - [**Questions**](#Questions)
+    - [**A Conjecture on Polynomial Approximation**](#A_Conjecture_on_Polynomial_Approximation)
+    - [**General and Related Questions**](#General_and_Related_Questions)
     - [**Examples of Functions to Ponder**](#Examples_of_Functions_to_Ponder)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
-    - [**Questions**](#Questions_2)
+    - [**Questions**](#Questions)
 - [**Reverse-time martingales**](#Reverse_time_martingales)
 - [**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)
     - [**Using Two Polynomial Sequences**](#Using_Two_Polynomial_Sequences)
     - [**Using a Series Expansion**](#Using_a_Series_Expansion)
-    - [**Questions**](#Questions_3)
+    - [**Questions**](#Questions_2)
 - [**Simulable and strongly simulable functions**](#Simulable_and_strongly_simulable_functions)
 - [**Multiple-Output Bernoulli Factories**](#Multiple_Output_Bernoulli_Factories)
-    - [**Questions**](#Questions_4)
+    - [**Questions**](#Questions_3)
     - [**Functions with Optimal Factories**](#Functions_with_Optimal_Factories)
 - [**From coin flips to algebraic functions via pushdown automata**](#From_coin_flips_to_algebraic_functions_via_pushdown_automata)
     - [**Pushdown Automata**](#Pushdown_Automata)
     - [**Algebraic Functions**](#Algebraic_Functions)
-    - [**Questions**](#Questions_5)
+    - [**Questions**](#Questions_4)
 - [**Other Questions**](#Other_Questions)
 - [**End Notes**](#End_Notes)
 - [**My Attempt**](#My_Attempt)
@@ -82,6 +84,25 @@ In this question, a polynomial $P(x)$ is written in _Bernstein form of degree $n
 
 The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.
 
+<a id=Main_Question></a>
+### Main Question
+
+This question involves solving the Bernoulli factory problem with polynomials.
+
+Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$), let $r\ge 1$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.
+
+Given that $f$ has a continuous $r$-th derivative, are there practical formulas to compute two sequences of polynomials $g_n$ and $h_n$ in Bernstein form as follows, for each integer $n\ge 1$ that's a power of 2?
+
+- $g_n \le h_n$.
+- $\lim_n g_n = \lim_n h_n = f$.
+- $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$. (**See note 5 in "End Notes".**)
+- The rate of convergence is $O(M/n^{r/2}),$ where $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
+
+This can be answered by answering the following question ([**more info**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable)).  Suppose $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  Then, what is an explicit and tight upper bound on $C_1>0$ with the following property?  For each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.\tag{A}$$
+
+<a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
+### Solving the Bernoulli factory problem with polynomials
+
 An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) simulates a factory function $f(\lambda)$ via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
 
 1. Generate U, a uniform random variate in $[0, 1]$.
@@ -95,29 +116,20 @@ However, the algorithm requires the polynomial sequences to meet certain require
 <a id=Formal_Statement></a>
 ### Formal Statement
 
-More formally, there two sequences of polynomials, namely—
+More formally, there must exist two sequences of polynomials, namely—
 
 - $g_{n}(\lambda): =\sum_{k=0}^{n}a(n, k){n \choose k}\lambda^{k}(1-\lambda)^{n-k}$, and
 - $h_{n}(\lambda): =\sum_{k=0}^{n}b(n, k){n \choose k}\lambda^{k}(1-\lambda)^{n-k}$,
 
 for every integer $n\ge1$, such that—
 
-1. $0\le a(n, k)\le b(n, k)\le1$,
+1. $a(n, k)\le b(n, k)$,
 2. $\lim_{n}g_{n}(\lambda)=\lim_{n}h_{n}(\lambda)=f(\lambda)$ for every $\lambda\in[0,1]$, and
-3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$,
+3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$ (**see note 5 in "End Notes"**),
 
 where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.
 
-It is allowed for $a(n, k)\lt 0$ for a given $n$ and some $k$, in which case all $a(n, k)$ for that $n$ are taken to be 0 instead. It is allowed for $b(n, k)\gt 1$ for a given $n$ and some $k$, in which case all $b(n, k)$ for that $n$ are taken to be 1 instead.
-
 Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_{n\ge 1} P_n(\lambda) = 1 - \sum_{n\ge 1} Q_n(\lambda),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with nonnegative Bernstein coefficients.
-
-<a id=On_Condition_3></a>
-#### On Condition 3
-
-Condition 3 is also known as a "consistency requirement"; it ensures that not only the upper and lower polynomials "decrease" and "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This requirement is crucial in the algorithm I mentioned above.
-
-Condition 3 is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
 <a id=A_Matter_of_Efficiency></a>
 ### A Matter of Efficiency
@@ -130,36 +142,38 @@ Thus, people have developed alternatives, including iterated Bernstein polynomia
 
 These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but nearly all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance). (**See note 4 in "End Notes".**)
 
-<a id=Questions></a>
-### Questions
+<a id=A_Conjecture_on_Polynomial_Approximation></a>
+### A Conjecture on Polynomial Approximation
 
-Thus the questions are:
+The following is a conjecture that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-1. Are there practical formulas to compute polynomials that&mdash;
+Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
 
-    - meet the formal statement above, and
-    - meet the following error bound? $$|f(x) - P_n(f)(x)| \le \epsilon(f,n,x) = O(1/n^{k/2}),$$ for every $n\ge 1$, where $P_n(f)(x)$ is an approximating degree-$n$ polynomial that can be readily rewritten to Bernstein form (ideally with coefficients in $[0,1]$); $k$ is the number of continuous derivatives; and $\epsilon(f,n,x)$ is a fully determined formula with all constants in the formula having a **known exact value or upper bound**.
+For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.
 
-2. The following is a technical question that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
+Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (**See note 5 in "End Notes".**)
 
-    Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
+Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.$$
 
-     For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.
+My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially if $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.
 
-    Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
+<a id=General_and_Related_Questions></a>
+### General and Related Questions
 
-    Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.$$
+The following are additional questions that supplement the main question given above.
 
-    1. For what value of $C_0$ (or $C_1$) is the statement true in each of the following cases?
-        - $W_n$ is arbitrary.
-        - $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=0.3$. Interesting functions $f$ to test are quadratic polynomials.
-        - $W_n = B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ is 5 or 6.
+For what value of $C_0$ (or $C_1$) is the conjecture given in "A Conjecture on Polynomial Approximation" true in the following cases?
 
-    2. Does the same value of $C_0$ (or $C_1$) suffice when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative?
+- $W_n$ is such that $B_n(W_n)$ converges uniformly to $f$ at the rate $O(1/n^{r/2})$.
+- $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=0.3$. Interesting functions $f$ to test are quadratic polynomials.
+- $W_n = B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ is 5 or 6.
 
-3. Are there practical formulas to compute polynomials that satisfy the Formal Statement and/or meet the error bound given in question 1 and can be readily rewritten to Bernstein form with coefficients in [0, 1]?
+Does the same value of $C_0$ (or $C_1$) suffice in either of the following cases, and if not, what value suffices?
 
-(***) Corresponds to the iterated Bernstein polynomials of order 2 and 3 [Güntürk and Li 2021].
+- $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
+- $f$'s $(r-1)$-th derivative is in the Zygmund class and $M$ is the maximum of $D$ and the maximum absolute value of $f$ and its derivatives up to the $(r-1)$-th derivative, where $D$ is such that $|f^{(r-1)}(x) + f^{(r-1)}(y) - 2f^{(r-1)}((x+y)/2)| \le D\epsilon$ for every $\epsilon>0$.
+
+(***) Corresponds to the iterated Bernstein polynomials of order 2 and 3 (Güntürk and Li 2021).
 
 <a id=Examples_of_Functions_to_Ponder></a>
 ### Examples of Functions to Ponder
@@ -218,7 +232,7 @@ However, the Holtz method is not yet implementable, for the following reasons am
 
 And I seek ways to make this solution implementable.
 
-<a id=Questions_2></a>
+<a id=Questions></a>
 ### Questions
 
 1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as assumptions given in the section "Key Problems")?
@@ -317,7 +331,7 @@ $$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a, p)
 
 for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except that $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.
 
-<a id=Questions_3></a>
+<a id=Questions_2></a>
 ### Questions
 
 1. Given that a factory function $f(\lambda)$ is concave and has a continuous $\alpha$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.
@@ -369,7 +383,7 @@ Obviously, any single-output Bernoulli factory can produce multiple outputs by r
 
 Define the entropy bound as&mdash; $$h(f(\lambda))/h(\lambda),$$ where&mdash; $$h(x)=-x \ln(x)-(1-x) \ln(1-x),$$ is related to the Shannon entropy function.
 
-<a id=Questions_4></a>
+<a id=Questions_3></a>
 ### Questions
 
 1. Given that a function $f(\lambda)$ is continuous and maps a closed interval in (0, 1) to (0, 1), is there a multiple-output Bernoulli factory algorithm for $f$ with an expected number of coin flips per sample that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain? Call such a Bernoulli factory an _optimal factory_.  (See Nacu and Peres 2005, Question 1.)
@@ -434,7 +448,7 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 - If a pushdown automaton can generate a discrete distribution of _n_-letter words of the same letter, it can generate that distribution conditioned on a finite set of word lengths, or a periodic infinite set of word lengths (e.g., odd word lengths only).
 - Every quadratic irrational in (0, 1) is in $\mathcal{D}$.
 
-<a id=Questions_5></a>
+<a id=Questions_4></a>
 ### Questions
 
 1. For every function in class $\mathcal{C}$, is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
@@ -473,6 +487,8 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 **Note 3**: On pushdown automata: Banderier and Drmota (2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
 **Note 4**: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include so-called "iterated Bernstein" polynomials and "one-bit" polynomials).  Indeed, unlike with rational arithmetic (where arbitrary precision is trivial), transcendental functions require special measures to support arbitrary accuracy, such as constructive/recursive reals &mdash; floating-point numbers won't do for purposes of these open questions.
+
+**Note 5**: This condition is also known as a "consistency requirement"; it ensures that not only the upper and lower polynomials "decrease" and "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
 <a id=My_Attempt></a>
 ## My Attempt
