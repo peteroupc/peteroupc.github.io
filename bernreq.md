@@ -80,14 +80,14 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 
 [**https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable)
 
+This question involves solving the Bernoulli factory problem with polynomials.
+
 In this question, a polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.
 
 The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.
 
 <a id=Main_Question></a>
 ### Main Question
-
-This question involves solving the Bernoulli factory problem with polynomials.
 
 Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$), let $r\ge 1$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.
 
@@ -98,7 +98,7 @@ Given that $f$ has a continuous $r$-th derivative, are there practical formulas 
 - $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$. (**See note 5 in "End Notes".**)
 - The rate of convergence is $O(M/n^{r/2}),$ where $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.
 
-This can be answered by answering the following question ([**more info**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable)).  Suppose $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  Then, what is an explicit and tight upper bound on $C_1>0$ with the following property?  For each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.\tag{A}$$
+This can be answered by answering the following question ([**more info**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable)).  Suppose $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  Then, what is an explicit and tight upper bound on $C_1>0$ with the following property?  For each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.\tag{PB}$$
 
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
 ### Solving the Bernoulli factory problem with polynomials
@@ -153,7 +153,7 @@ For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such 
 
 Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (**See note 5 in "End Notes".**)
 
-Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.$$
+Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that $(PB)$ holds true for each integer $n\ge 1$ that's a power of 2 (see "Main Question" above).
 
 My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially if $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.
 
