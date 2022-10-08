@@ -591,7 +591,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 >
 > **Notes:**
 >
-> 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sub>(_&lambda;_), where _w_<sub>_n_</sub> are continuous functions.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=g(0) \frac{w_0(\lambda)}{g(0)} + g(1) \frac{w_1(\lambda)}{g(1)} + ...$$ (where a term is omitted if division by 0 occurs), but this works only if the following conditions are met for each integer _n_&ge;0:
+> 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = $w_0(\lambda)+w_1(\lambda)+...$, where $w_0, w_1, ...$ are continuous functions.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=g(0) \frac{w_0(\lambda)}{g(0)} + g(1) \frac{w_1(\lambda)}{g(1)} + ...$$ (where a term is omitted if division by 0 occurs), but this works only if the following conditions are met for each integer _n_&ge;0:
 >     - $1 \ge g(n) \ge w_n(\lambda) \ge 0$, whenever $0 \le \lambda \le 1$.
 >     - The function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories").
 >
@@ -601,7 +601,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 >     - $a_n$ are each 0 or greater and sum to 1 or less, and
 >     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 0$.
 >
->     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash; $$f(\lambda)=g(0) \frac{a_0}{g(0)} + g(1) \frac{a_1}{g(1)} + ...,$$ where a term is omitted if division by 0 occurs.$$
+>     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash; $$f(\lambda)=g(0) \frac{a_0}{g(0)} + g(1) \frac{a_1}{g(1)} + ...,$$ where a term is omitted if division by 0 occurs.
 >
 > **Examples:**
 >

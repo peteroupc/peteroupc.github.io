@@ -2103,7 +2103,7 @@ The following are some additional articles I have written on the topic of random
 
 [^6]: Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS]
 
-[^7]: "[**Probability and Random Numbers**](http://mathforum.org/library/drmath/view/65653.html)", Feb. 29, 2004.
+[^7]: "[**Probability and Random Numbers**](https://web.archive.org/web/20170705004415/http://mathforum.org/library/drmath/view/65653.html)", Feb. 29, 2004.
 
 [^8]: Mennucci, A.C.G., "[**Bit Recycling for Scaling Random Number Generators**](https://arxiv.org/abs/1012.4290)", arXiv:1012.4290 [cs.IT], 2018.
 
