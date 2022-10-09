@@ -170,8 +170,10 @@ For what value of $C_0$ (or $C_1$) is the conjecture given in "A Conjecture on P
 
 Does the same value of $C_0$ (or $C_1$) suffice in either of the following cases, and if not, what value suffices?
 
-- $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
+- $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $|f|$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 - $f$'s $(r-1)$-th derivative is in the Zygmund class and $M$ is the maximum of $D$ and the maximum absolute value of $f$ and its derivatives up to the $(r-1)$-th derivative, where $D$ is such that $|f^{(r-1)}(x) + f^{(r-1)}(y) - 2f^{(r-1)}((x+y)/2)| \le D\epsilon$ for every $\epsilon>0$.
+
+Given that $f:[0,1]\to [0,1]$ has an $(r-1)$-th derivative that is Lipschitz continuous or in the Zygmund class, or has a continuous $r$-th derivative, are there results that give a sequence of functions $Q_n(f)$ with the following error bound? $$| f(x) - B_n(Q_n(f))(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a *known exact value or upper bound*, and $Q_n(f)$ is easily computable from $f$ using rational arithmetic only. (**See note 4 in "End Notes".**)
 
 (***) Corresponds to the iterated Bernstein polynomials of order 2 and 3 (Güntürk and Li 2021).
 
