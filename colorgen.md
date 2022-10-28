@@ -544,7 +544,7 @@ An RGB color can be transformed to a specialized form to improve image and video
 - C<sub>_B_</sub>, or _blue chroma_, is based on the difference between blue and luma.
 - C<sub>_R_</sub>, or _red chroma_, is, based on the difference between red and luma.
 
-The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  There are three variants shown here, namely&mdash;
+The following pseudocode is an approximate conversion between RGB and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> (an approximation because the factors in the pseudocode are rounded off to a limited number of decimal places).  There are three variants shown here, namely&mdash;
 
 - the Rec. 601 variant (for standard-definition digital video), as the `YCbCrToRgb601` and `RgbToYCbCr601` methods,
 - the Rec. 709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
@@ -635,6 +635,8 @@ Conventions for XYZ colors include the following:
 The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Spaces).  For example, the pseudocode below shows two methods that convert a color between **encoded sRGB** (`rgb`) and relative XYZ:
 - For `XYZFromsRGB(rgb)` and  `XYZTosRGB(xyz)`, the white point is the D65/2 white point.
 - For `XYZFromsRGBD50(rgb)` and  `XYZTosRGBD50(xyz)`, the white point is the D50/2 white point[^15].
+
+Both methods are approximate conversions because the factors in the pseudocode are rounded off to a limited number of decimal places.
 
 &nbsp;
 
@@ -787,6 +789,8 @@ In the following pseudocode:
 - The following methods convert an **encoded sRGB** color to and from CIELAB:
     - `SRGBToLab` and `SRGBFromLab` treat white as the D65/2 white point.
     - `SRGBToLabD50` and `SRGBFromLabD50` treat white as the D50/2 white point.[^15]
+
+    Both methods are approximate conversions because the values in the pseudocode are rounded off to a limited number of decimal places.
 - `XYZToLab(xyz, wpoint)` and `LabToXYZ(lab, wpoint)` convert an XYZ color to or from CIELAB, respectively, treating `wpoint` (an XYZ color) as the white point.
 - `LabToChroma(lab)` and `LabToHue(lab)` find a CIELAB color's _chroma_ or _hue_, respectively.
 - `LchToLab(lch)` finds a CIELAB color given a 3-item list of lightness, chroma, and hue (_L\*C\*h_), in that order.
@@ -896,6 +900,8 @@ In the following pseudocode&mdash;
 - the `SRGBToLuv`, `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [**CIELAB**](#CIELAB), and
 - the `LuvToSaturation` method finds the [**_saturation_**](https://en.wikipedia.org/wiki/Colorfulness) (_s_<sub>uv</sub>) of a CIELUV color.
 
+`SRGBToLuv` and `SRGBFromLuv` are approximate conversions because the values in the pseudocode are rounded off to a limited number of decimal places.
+
 &nbsp;
 
     METHOD XYZToLuv(xyz, wpoint)
@@ -995,7 +1001,7 @@ Finding a color's luminance factor depends on that color's color space.
 
 A [**_linear RGB_ color**](#RGB_Color_Spaces)'s luminance factor is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the luminance factors (relative Y components) of the RGB color space's red, green, and blue points, respectively.  (If a different white point than the RGB color space's usual white point should have a luminance factor of 1, then `r`, `g`, and `b` are the corresponding values after a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.[^16])
 
-An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB color space) before finding its luminance factor.  For example, the pseudocode below implements `Luminance(color)` for encoded sRGB colors (`LuminanceSRGB` and `LuminanceSRGBD50`\)[^15].
+An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB color space) before finding its luminance factor.  For example, the pseudocode below implements `Luminance(color)` for encoded sRGB colors (`LuminanceSRGB` and `LuminanceSRGBD50`\)[^15].  Both methods are approximate conversions because the factors in the pseudocode are rounded off to a limited number of decimal places.
 
     // Convert encoded sRGB to luminance factor
     METHOD LuminanceSRGB(color)
@@ -1144,7 +1150,7 @@ A _color matrix_ is a 9-item (3&times;3) list for transforming a three-component
 - **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
 from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)"[^30].
-- **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.[^30][^32]
+- **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.[^30][^32]  This is an approximate hue rotation because the constant factors in the pseudocode are rounded off to a limited number of decimal places.
 
 In the following pseudocode, `TransformColor` transforms an RGB color (`color`) with a color matrix (`matrix`).
 
@@ -1565,7 +1571,8 @@ The `Planckian` method shown below models the spectral power distribution (SPD) 
     METHOD Planckian(wl, temp)
         num = pow(wl, -5)
         // NOTE: 0.014... was calculated based on
-        // 2017 versions of Planck and Boltzmann constants
+        // 2017 versions of Planck and Boltzmann constants, and
+        // is rounded off to a limited number of decimal places.
         return num / (exp(0.0143877687750393/(wl*pow(10, -9)*temp)) - 1)
     END METHOD
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/10/09"><meta name="citation_online_date" content="2022/10/09"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2022/10/17"><meta name="citation_online_date" content="2022/10/17"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -84,7 +84,7 @@
 <li><strong>The Bernstein coefficients of $P(\lambda)$.</strong></li>
 </ul></li>
 <li><strong>Same as problem 1, except that $P(\lambda)$ is a rational function (ratio of two polynomials) rather than a polynomial.</strong></li>
-<li><strong>Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the <a href="#Formal_Statement"><strong>Formal Statement</strong></a> given later, together with their Bernstein coefficients.</strong></li>
+<li><strong>Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the</strong> <a href="#Formal_Statement"><strong>Formal Statement</strong></a> <strong>given later, together with their Bernstein coefficients, with a rate of convergence $O(1/n^{k/2})$ where k is the number of continuous derivatives.</strong> (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must &quot;increase&quot; and &quot;decrease&quot; in a specific sense.)</li>
 <li><strong>Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.</strong></li>
 <li><strong>Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.</strong></li>
 <li><strong>Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.</strong></li>
@@ -98,6 +98,8 @@
 <li>$f(\lambda)$ is real analytic.</li>
 <li>$f(\lambda)$ is concave.</li>
 <li>$f(\lambda)$ is strictly increasing and continuous.</li>
+<li>$f(\lambda)$ has a $k$-th derivative of bounded variation for some fixed $k\ge 1$.</li>
+<li>$f(\lambda)$ has a $k$-th derivative in the Zygmund class for some fixed $k\ge 0$.</li>
 <li>$f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.</li>
 <li>$f(\lambda)$ belongs to Gevrey&#39;s hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).</li>
 </ul>
@@ -126,7 +128,7 @@
 
 <p>Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$), let $r\ge 1$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.</p>
 
-<p>Given that $f$ has a continuous $r$-th derivative, are there practical formulas to compute two sequences of polynomials $g_n$ and $h_n$ in Bernstein form as follows, for each integer $n\ge 1$ that&#39;s a power of 2?</p>
+<p>Given that $f$ has a continuous $r$-th derivative, are there practical formulas to compute two sequences of polynomials $g_n$ (&quot;lower&quot;) and $h_n$ (&quot;upper&quot;) in Bernstein form as follows, for each integer $n\ge 1$ that&#39;s a power of 2?</p>
 
 <ul>
 <li>$g_n \le h_n$.</li>
@@ -214,7 +216,7 @@
 
 <ul>
 <li>$W_n$ is such that $B_n(W_n)$ converges uniformly to $f$ at the rate $O(1/n^{r/2})$.</li>
-<li>$W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=0.3$. Interesting functions $f$ to test are quadratic polynomials.</li>
+<li>$W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005$.</li>
 <li>$W_n = B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ is 5 or 6.</li>
 </ul>
 
@@ -256,8 +258,8 @@
 <p>Specifically, Holtz et al. proved the following results:</p>
 
 <ol>
-<li><p>A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ is $\lfloor\beta\rfloor$ times differentiable and has a Hölder continuous $\lfloor\beta\rfloor$-th derivative with Hölder exponent $\beta-\lfloor\beta\rfloor$, where $\beta&gt;0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)</p></li>
-<li><p>A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^{r+1})$ only if the $r$th derivative of $f$ is in the Zygmund class, where $r\ge 0$ is an integer.</p></li>
+<li><p>A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ has a Hölder continuous $\lfloor\beta\rfloor$-th derivative with Hölder exponent $\beta-\lfloor\beta\rfloor$, where $\beta&gt;0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)</p></li>
+<li><p>A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^r)$ only if the $(r-1)$-th derivative of $f$ is in the Zygmund class, where $r\ge 1$ is an integer.</p></li>
 </ol>
 
 <p>The scheme is as follows:</p>

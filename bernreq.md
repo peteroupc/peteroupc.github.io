@@ -54,7 +54,7 @@ The following summarizes most of the problems raised by these open questions.
     - **A reasonably small integer $n>0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$'s coefficients are rational numbers in $[0,1]$ and $|P - f| = O(1/n^{r/2})$ whenever $f$ has a continuous $r$-th derivative.**
     - **The Bernstein coefficients of $P(\lambda)$.**
 2. **Same as problem 1, except that $P(\lambda)$ is a rational function (ratio of two polynomials) rather than a polynomial.**
-3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the [**Formal Statement**](#Formal_Statement) given later, together with their Bernstein coefficients.**
+3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the** [**Formal Statement**](#Formal_Statement) **given later, together with their Bernstein coefficients, with a rate of convergence $O(1/n^{k/2})$ where k is the number of continuous derivatives.** (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must "increase" and "decrease" in a specific sense.)
 4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
 5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
 6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
@@ -66,6 +66,8 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 - $f(\lambda)$ is real analytic.
 - $f(\lambda)$ is concave.
 - $f(\lambda)$ is strictly increasing and continuous.
+- $f(\lambda)$ has a $k$-th derivative of bounded variation for some fixed $k\ge 1$.
+- $f(\lambda)$ has a $k$-th derivative in the Zygmund class for some fixed $k\ge 0$.
 - $f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.
 - $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
 
@@ -91,7 +93,7 @@ The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernst
 
 Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$), let $r\ge 1$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.
 
-Given that $f$ has a continuous $r$-th derivative, are there practical formulas to compute two sequences of polynomials $g_n$ and $h_n$ in Bernstein form as follows, for each integer $n\ge 1$ that's a power of 2?
+Given that $f$ has a continuous $r$-th derivative, are there practical formulas to compute two sequences of polynomials $g_n$ ("lower") and $h_n$ ("upper") in Bernstein form as follows, for each integer $n\ge 1$ that's a power of 2?
 
 - $g_n \le h_n$.
 - $\lim_n g_n = \lim_n h_n = f$.
@@ -165,7 +167,7 @@ The following are additional questions that supplement the main question given a
 For what value of $C_0$ (or $C_1$) is the conjecture given in "A Conjecture on Polynomial Approximation" true in the following cases?
 
 - $W_n$ is such that $B_n(W_n)$ converges uniformly to $f$ at the rate $O(1/n^{r/2})$.
-- $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=0.3$. Interesting functions $f$ to test are quadratic polynomials.
+- $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005$.
 - $W_n = B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ is 5 or 6.
 
 Does the same value of $C_0$ (or $C_1$) suffice in either of the following cases, and if not, what value suffices?
@@ -199,9 +201,9 @@ The scheme achieves a convergence rate that generally depends on the smoothness 
 
 Specifically, Holtz et al. proved the following results:
 
-1. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ is $\lfloor\beta\rfloor$ times differentiable and has a Hölder continuous $\lfloor\beta\rfloor$-th derivative with Hölder exponent $\beta-\lfloor\beta\rfloor$, where $\beta>0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)
+1. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ has a Hölder continuous $\lfloor\beta\rfloor$-th derivative with Hölder exponent $\beta-\lfloor\beta\rfloor$, where $\beta>0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)
 
-2. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^{r+1})$ only if the $r$th derivative of $f$ is in the Zygmund class, where $r\ge 0$ is an integer.
+2. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^r)$ only if the $(r-1)$-th derivative of $f$ is in the Zygmund class, where $r\ge 1$ is an integer.
 
 The scheme is as follows:
 

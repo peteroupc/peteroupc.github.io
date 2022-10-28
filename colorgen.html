@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2022/09/14"><meta name="citation_online_date" content="2022/09/14"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2022/10/28"><meta name="citation_online_date" content="2022/10/28"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -663,7 +663,7 @@ END METHOD
 <li>C<sub><em>R</em></sub>, or <em>red chroma</em>, is, based on the difference between red and luma.</li>
 </ul>
 
-<p>The following pseudocode converts colors between RGB and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  There are three variants shown here, namely&mdash;</p>
+<p>The following pseudocode is an approximate conversion between RGB and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> (an approximation because the factors in the pseudocode are rounded off to a limited number of decimal places).  There are three variants shown here, namely&mdash;</p>
 
 <ul>
 <li>the Rec. 601 variant (for standard-definition digital video), as the <code>YCbCrToRgb601</code> and <code>RgbToYCbCr601</code> methods,</li>
@@ -770,6 +770,8 @@ END METHOD
 <li>For <code>XYZFromsRGB(rgb)</code> and  <code>XYZTosRGB(xyz)</code>, the white point is the D65/2 white point.</li>
 <li>For <code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code>, the white point is the D50/2 white point[^15].</li>
 </ul>
+
+<p>Both methods are approximate conversions because the factors in the pseudocode are rounded off to a limited number of decimal places.</p>
 
 <p>&nbsp;</p>
 
@@ -941,12 +943,14 @@ END METHOD
 <p>In the following pseudocode:</p>
 
 <ul>
-<li>The following methods convert an <strong>encoded sRGB</strong> color to and from CIELAB:
+<li><p>The following methods convert an <strong>encoded sRGB</strong> color to and from CIELAB:</p>
 
 <ul>
 <li><code>SRGBToLab</code> and <code>SRGBFromLab</code> treat white as the D65/2 white point.</li>
 <li><code>SRGBToLabD50</code> and <code>SRGBFromLabD50</code> treat white as the D50/2 white point.[^15]</li>
-</ul></li>
+</ul>
+
+<p>Both methods are approximate conversions because the values in the pseudocode are rounded off to a limited number of decimal places.</p></li>
 <li><code>XYZToLab(xyz, wpoint)</code> and <code>LabToXYZ(lab, wpoint)</code> convert an XYZ color to or from CIELAB, respectively, treating <code>wpoint</code> (an XYZ color) as the white point.</li>
 <li><code>LabToChroma(lab)</code> and <code>LabToHue(lab)</code> find a CIELAB color&#39;s <em>chroma</em> or <em>hue</em>, respectively.</li>
 <li><code>LchToLab(lch)</code> finds a CIELAB color given a 3-item list of lightness, chroma, and hue (<em>L*C*h</em>), in that order.</li>
@@ -1064,6 +1068,8 @@ METHOD LabChromaHueDifference(lab1, lab2)
 <li>the <code>LuvToSaturation</code> method finds the <a href="https://en.wikipedia.org/wiki/Colorfulness"><strong><em>saturation</em></strong></a> (<em>s</em><sub>uv</sub>) of a CIELUV color.</li>
 </ul>
 
+<p><code>SRGBToLuv</code> and <code>SRGBFromLuv</code> are approximate conversions because the values in the pseudocode are rounded off to a limited number of decimal places.</p>
+
 <p>&nbsp;</p>
 
 <pre>METHOD XYZToLuv(xyz, wpoint)
@@ -1175,7 +1181,7 @@ END METHOD
 
 <p>A <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> color</strong></a>&#39;s luminance factor is <code>(color[0] * r + color[1] * g + color[2] * b)</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are the luminance factors (relative Y components) of the RGB color space&#39;s red, green, and blue points, respectively.  (If a different white point than the RGB color space&#39;s usual white point should have a luminance factor of 1, then <code>r</code>, <code>g</code>, and <code>b</code> are the corresponding values after a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> from one white point to another.[^16])</p>
 
-<p>An <strong><em>encoded RGB</em> color</strong> needs to be converted to linear RGB (in the same RGB color space) before finding its luminance factor.  For example, the pseudocode below implements <code>Luminance(color)</code> for encoded sRGB colors (<code>LuminanceSRGB</code> and <code>LuminanceSRGBD50</code>)[^15].</p>
+<p>An <strong><em>encoded RGB</em> color</strong> needs to be converted to linear RGB (in the same RGB color space) before finding its luminance factor.  For example, the pseudocode below implements <code>Luminance(color)</code> for encoded sRGB colors (<code>LuminanceSRGB</code> and <code>LuminanceSRGBD50</code>)[^15].  Both methods are approximate conversions because the factors in the pseudocode are rounded off to a limited number of decimal places.</p>
 
 <pre>// Convert encoded sRGB to luminance factor
 METHOD LuminanceSRGB(color)
@@ -1362,7 +1368,7 @@ END METHOD
 <li><strong>Sepia.</strong> Sepia matrices can have the form <code>[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Luminance_Factor_Grayscale"><strong>Luminance Factor (Grayscale)</strong></a>&quot;, and <code>sw</code> is the RGB color for &quot;sepia white&quot; (an arbitrary choice).  An example for linear sRGB is: <code>[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]</code>.</li>
 <li><strong>Saturate.</strong> <code>[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]</code>, where <code>s</code> ranges
 from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Luminance_Factor_Grayscale"><strong>Luminance Factor (Grayscale)</strong></a>&quot;[^30].</li>
-<li><strong>Hue rotate.</strong> <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.[^30][^32]</li>
+<li><strong>Hue rotate.</strong> <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.[^30][^32]  This is an approximate hue rotation because the constant factors in the pseudocode are rounded off to a limited number of decimal places.</li>
 </ul>
 
 <p>In the following pseudocode, <code>TransformColor</code> transforms an RGB color (<code>color</code>) with a color matrix (<code>matrix</code>).</p>
@@ -1889,7 +1895,8 @@ END METHOD
 <pre>METHOD Planckian(wl, temp)
     num = pow(wl, -5)
     // NOTE: 0.014... was calculated based on
-    // 2017 versions of Planck and Boltzmann constants
+    // 2017 versions of Planck and Boltzmann constants, and
+    // is rounded off to a limited number of decimal places.
     return num / (exp(0.0143877687750393/(wl*pow(10, -9)*temp)) - 1)
 END METHOD
 

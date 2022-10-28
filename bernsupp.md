@@ -222,7 +222,7 @@ An **approximate Bernoulli factory** for a function _f_(_&lambda;_) is a Bernoul
 
 Usually _g_ is a polynomial, but can also be a rational function (ratio of polynomials) or another function with an easy-to-implement Bernoulli factory algorithm.
 
-Meanwhile, _f_(_&lambda;_) can be any function that maps the closed interval [0, 1] to itself, even if it isn't continuous or a factory function (examples include the "step function" 0 if _&lambda;_ < 1/2 and 1 otherwise, or the function 2\*min(_&lambda;_, 1 &minus; _&lambda;_)).  If the function is continuous, if can be approximated arbitrarily well by an approximate Bernoulli factory (as a result of the so-called "Weierstrass approximation theorem"), but generally not if the function is discontinuous.
+Meanwhile, _f_(_&lambda;_) can be any function that maps the closed interval [0, 1] to itself, even if it isn't continuous or a factory function (examples include the "step function" 0 if _&lambda;_ < 1/2 and 1 otherwise, or the function 2\*min(_&lambda;_, 1 &minus; _&lambda;_)).  If the function is continuous, it can be approximated arbitrarily well by an approximate Bernoulli factory (as a result of the so-called "Weierstrass approximation theorem"), but generally not if the function is discontinuous.
 
 To build an approximate Bernoulli factory with a polynomial:
 
@@ -247,7 +247,7 @@ For example:
 
 | If _f_(_&lambda;_): |  Then the degree-_n_ Bernstein polynomial is close to $f$ with the following error bound: |   Where _n_ is:  |  Notes |
  --- | --- | --- | --- |
-| Has Lipschitz continuous derivative (see "Definitions"). | _&epsilon;_ = _M_/(8*n). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Lorentz (1966)[^4]. _M_ is the derivative's Lipschitz constant. |
+| Has Lipschitz continuous derivative (see "Definitions"). | _&epsilon;_ = _M_/(8\*_n_). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Lorentz (1966)[^4]. _M_ is the derivative's Lipschitz constant. |
 | Hölder continuous with constant _M_ and exponent _&alpha;_. | _&epsilon;_ = _M_\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil(1/(4<sup>_&alpha;_</sup>\*_&epsilon;_<sup>2</sup>/_M_<sup>2</sup>)<sup>1/_&alpha;_</sup>). | Mathé (1999)[^5]. 0 &lt; _&alpha;_ &le; 1. |
 | Lipschitz continuous with constant _L_. | _&epsilon;_ = _L_\*sqrt(1/(4\*_n_)). | _n_ = ceil(_L_<sup>2</sup>/(4\*_&epsilon;_<sup>2</sup>)). | Special case of previous entry. |
 
@@ -1094,7 +1094,7 @@ The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials u
 1. _$g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f,\lambda)$ and $W_n(k/n) + \epsilon_n(f,\lambda)$, respectively ($0\le k\le n$)._
 2. _$g_n \le h_n$._
 3. _$g_n$ and $h_n$ converge to $f$ as $n$ gets large._
-4. $(g_{m}-g_n)$ _and_ $(h_{n}-h_{m})$ _are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$. (This is the consistency requirement.)_
+4. $(g_{m}-g_n)$ _and_ $(h_{n}-h_{m})$ _are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$._
 
 _Then for each $n$ in $S$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f,\lambda)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 

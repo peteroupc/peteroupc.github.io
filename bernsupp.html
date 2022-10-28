@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/10/08"><meta name="citation_online_date" content="2022/10/08"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/10/23"><meta name="citation_online_date" content="2022/10/23"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -334,7 +334,7 @@
 
 <p>Usually <em>g</em> is a polynomial, but can also be a rational function (ratio of polynomials) or another function with an easy-to-implement Bernoulli factory algorithm.</p>
 
-<p>Meanwhile, <em>f</em>(<em>&lambda;</em>) can be any function that maps the closed interval [0, 1] to itself, even if it isn&#39;t continuous or a factory function (examples include the &quot;step function&quot; 0 if <em>&lambda;</em> &lt; 1/2 and 1 otherwise, or the function 2*min(<em>&lambda;</em>, 1 &minus; <em>&lambda;</em>)).  If the function is continuous, if can be approximated arbitrarily well by an approximate Bernoulli factory (as a result of the so-called &quot;Weierstrass approximation theorem&quot;), but generally not if the function is discontinuous.</p>
+<p>Meanwhile, <em>f</em>(<em>&lambda;</em>) can be any function that maps the closed interval [0, 1] to itself, even if it isn&#39;t continuous or a factory function (examples include the &quot;step function&quot; 0 if <em>&lambda;</em> &lt; 1/2 and 1 otherwise, or the function 2*min(<em>&lambda;</em>, 1 &minus; <em>&lambda;</em>)).  If the function is continuous, it can be approximated arbitrarily well by an approximate Bernoulli factory (as a result of the so-called &quot;Weierstrass approximation theorem&quot;), but generally not if the function is discontinuous.</p>
 
 <p>To build an approximate Bernoulli factory with a polynomial:</p>
 
@@ -371,7 +371,7 @@
 </thead><tbody>
 <tr>
 <td>Has Lipschitz continuous derivative (see &quot;Definitions&quot;).</td>
-<td><em>&epsilon;</em> = <em>M</em>/(8*n).</td>
+<td><em>&epsilon;</em> = <em>M</em>/(8*<em>n</em>).</td>
 <td><em>n</em> = ceil(<em>M</em>/(8*<em>&epsilon;</em>)).</td>
 <td>Lorentz (1966)[^4]. <em>M</em> is the derivative&#39;s Lipschitz constant.</td>
 </tr>
@@ -1585,7 +1585,7 @@
 <li><em>$g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f,\lambda)$ and $W_n(k/n) + \epsilon_n(f,\lambda)$, respectively ($0\le k\le n$).</em></li>
 <li><em>$g_n \le h_n$.</em></li>
 <li><em>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</em></li>
-<li>$(g_{m}-g_n)$ <em>and</em> $(h_{n}-h_{m})$ <em>are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$. (This is the consistency requirement.)</em></li>
+<li>$(g_{m}-g_n)$ <em>and</em> $(h_{n}-h_{m})$ <em>are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$.</em></li>
 </ol>
 
 <p><em>Then for each $n$ in $S$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f,\lambda)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$.</em></p>
