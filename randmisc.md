@@ -15,7 +15,7 @@ This page should be read in conjunction with the following articles:
 - [**On a Binomial Sampler**](#On_a_Binomial_Sampler)
 - [**On a Geometric Sampler**](#On_a_Geometric_Sampler)
 - [**Weighted Choice for Special Distributions**](#Weighted_Choice_for_Special_Distributions)
-    - [**Distributions with nonincreasing or nondecreasing weights**](#Distributions_with_nonincreasing_or_nondecreasing_weights)
+    - [**Distributions with nowhere increasing or nowhere decreasing weights**](#Distributions_with_nowhere_increasing_or_nowhere_decreasing_weights)
     - [**Unimodal distributions of weights**](#Unimodal_distributions_of_weights)
     - [**Weighted Choice with Log Probabilities**](#Weighted_Choice_with_Log_Probabilities)
 - [**Bit Vectors with Random Bit Flips**](#Bit_Vectors_with_Random_Bit_Flips)
@@ -128,10 +128,10 @@ As used in the Bringmann paper, a bounded geometric(_p_, _n_) random variate is 
 
 The following are algorithms to sample items whose probabilities (or "weights") are given in a special way.  They supplement the section "[**Weighted Choice**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice)" in my article "Randomization and Sampling Methods".
 
-<a id=Distributions_with_nonincreasing_or_nondecreasing_weights></a>
-### Distributions with nonincreasing or nondecreasing weights
+<a id=Distributions_with_nowhere_increasing_or_nowhere_decreasing_weights></a>
+### Distributions with nowhere increasing or nowhere decreasing weights
 
-An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nonincreasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2022\)[^9].  It has a logarithmic time complexity in terms of setup and sampling.
+An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nowhere increasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2022\)[^9].  It has a logarithmic time complexity in terms of setup and sampling.
 
 - Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
     1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
@@ -142,7 +142,7 @@ An algorithm for sampling an integer in the interval \[_a_, _b_) with probabilit
     2. Set _x_ to an integer chosen uniformly at random, in the half-open interval \[_D_\[_k_\]\[0\], _D_\[_k_\]\[1\]).
     3. With probability _w_\[_x_\] / _q_\[_k_\], return _x_.  Otherwise, go to step 1.
 
-For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follows instead:
+For _nowhere decreasing_ rather than nowhere increasing weights, the algorithm is as follows instead:
 
 - Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
     1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_b_&minus;1\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append _w_\[_b_&minus;1&minus;_j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
@@ -155,11 +155,11 @@ For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follo
 <a id=Unimodal_distributions_of_weights></a>
 ### Unimodal distributions of weights
 
-The following is an algorithm for sampling an integer in the interval \[_a_, _b_\) with probability proportional to a _unimodal distribution_ of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2022\)[^9].  It assumes the mode (the point with the highest weight) is known.  An example is \[1, 3, 9, 4, 4\] when _a_ = 0 and _b_ = 5, and the _mode_ is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.
+The following is an algorithm for sampling an integer in the interval \[_a_, _b_\) with probability proportional to a _unimodal distribution_ of weights (that is, nowhere decreasing on the left and nowhere increasing on the right) (Chewi et al. 2022\)[^9].  It assumes the mode (the point with the highest weight) is known.  An example is \[1, 3, 9, 4, 4\] when _a_ = 0 and _b_ = 5, and the _mode_ is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.
 
 - Setup:
     1. Find the point with the highest weight, such as via binary search.  Call this point _mode_.
-    2. Run the setup for _nondecreasing_ weights on the interval [_a_, _mode_), then run the setup for _nonincreasing_ weights on the interval [_mode_, _b_).  Both setups are described in the previous section.  Then, concatenate the two _q_ lists into one, the two _r_ lists into one, and the two _D_ lists into one.
+    2. Run the setup for _nowhere decreasing_ weights on the interval [_a_, _mode_), then run the setup for _nowhere increasing_ weights on the interval [_mode_, _b_).  Both setups are described in the previous section.  Then, concatenate the two _q_ lists into one, the two _r_ lists into one, and the two _D_ lists into one.
 - The sampling is the same as for the algorithms in the previous section.
 
 <a id=Weighted_Choice_with_Log_Probabilities></a>
@@ -243,7 +243,7 @@ This section is a note on certain families of univariate (one-variable) probabil
 
 The following mathematical definitions are used:
 
-- A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nondecreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.
+- A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nowhere decreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.
 - A distribution's _support_ is the set of values the distribution can take on, plus that set's endpoints.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
 - The _zero-truncated Poisson_ distribution: To generate a random variate that follows this distribution (with parameter _&lambda;_ > 0), generate random variates from the [**Poisson distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution) with parameter _&lambda;_ until a variate other than 0 is generated this way, then take the last generated variate.
 
@@ -265,7 +265,7 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^23] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
 - Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: "Generate a uniform random variate _x_ in [0, 1], then with probability (1&minus;_x_<sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process."; or "Create a uniform PSRN _x_ with positive sign and integer part 0, then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process."
 
-**Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^24] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a PDF; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nondecreasing function that, among other conditions, maps a number in [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:
+**Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^24] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a PDF; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nowhere decreasing function that, among other conditions, maps a number in [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. Calculate _w_ = _W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _W_), then calculate the quantile for G of _w_ and return that quantile. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)

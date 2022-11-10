@@ -3615,7 +3615,8 @@ class RandomGen:
         - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
            and returns a number within base^-digitplaces of the True inverse
            CDF (inverse cumulative distribution function, or quantile function)
-           of u/base^ubits, and is nondecreasing for a given value of `digitplaces`.
+           of u/base^ubits. For a given value of `digitplaces`, icdf(x)<=icdf(y)
+           whenever 0<=x<y<=1.
         - 'digitplaces' is an accuracy expressed as a number of digits after the
            point. Each random number will be a multiple of base^-digitplaces,
            or have a smaller granularity. Default is 53.

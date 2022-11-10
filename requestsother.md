@@ -225,7 +225,7 @@ Let $X$ be a random variable that does not take on a single value with probabili
 
     - being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
     - following a geometric distribution, and/or
-    - having decreasing or nonincreasing probabilities.
+    - having decreasing or nowhere increasing probabilities.
 
     Then, is there an algorithm, besides the algorithm of Kunsch et al. (2019)&mdash;
 

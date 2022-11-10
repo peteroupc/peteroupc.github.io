@@ -534,7 +534,7 @@ A general-purpose algorithm was given by Mendo (2020/2021\)[^28] that can simula
 
 - the probability is greater than 0 and less than 1,
 - the probability can be written as a sum of rational numbers greater than 0, that is, as _p_ = _a_\[0\] + _a_\[1\] + ..., and
-- a sequence of rational numbers _err_\[0\], _err_\[1\], ... is available that is nonincreasing and approaches 0 (_converges_ to 0), where _err_\[_n_\] is not less than the _p_ &minus; (_a_\[0] + ... + _a_\[_n_]).
+- a sequence of rational numbers _err_\[0\], _err_\[1\], ... is available that is nowhere increasing and approaches 0 (_converges_ to 0), where _err_\[_n_\] is not less than the _p_ &minus; (_a_\[0] + ... + _a_\[_n_]).
 
 The algorithm follows.
 
@@ -548,7 +548,7 @@ The algorithm follows.
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ &le; _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
-If _a_, given above, sums to the _base-2 logarithm_ of the probability rather than that probability, the following algorithm I developed simulates that probability.  For simplicity's sake, even though logarithms for such probabilities are negative, all the _a_\[_i_\] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
+If _a_, given above, sums to the _base-2 logarithm_ of the probability rather than that probability, the following algorithm I developed simulates that probability.  For simplicity's sake, even though logarithms for such probabilities are negative, all the _a_\[_i_\] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nowhere decreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
 
 1. Set _intinf_ to floor(max(0, abs(_a_\[0\]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)
 2. If _intinf_ is greater than 0, generate unbiased random bits until a zero bit or _intinf_ bits were generated this way.  If a zero was generated this way, return 0.
@@ -559,7 +559,7 @@ If _a_, given above, sums to the _base-2 logarithm_ of the probability rather th
     2. If _E_ is less than _inf_+_intinf_, return 0.  If _E_ is less than _sup_+_intinf_, go to the next step.  If neither is the case, return 1.
     3. Set _n_ to 1.
 
-The case when the sequence _a_ converges to a _natural logarithm_ rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the _a_\[_i_\] must be 0 or greater and form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
+The case when the sequence _a_ converges to a _natural logarithm_ rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the _a_\[_i_\] must be 0 or greater and form a nowhere decreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
 
 1. Generate an exponential random variate _E_ (with rate 1).
 2. Set _n_ to 0.
@@ -1892,7 +1892,7 @@ Then the algorithm's behavior is given in the tables below.
 
 > **Notes:**
 >
-> 1. All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express what are called _cumulative distribution functions_, namely _F_<sub>_D_</sub>(_x_ given that _n_ is odd) or _F_<sub>_D_</sub>(_x_ given that _n_ is even), respectively.
+> 1. All the functions possible for formulas 1 and 2 are nowhere decreasing functions.  Both formulas express what are called _cumulative distribution functions_, namely _F_<sub>_D_</sub>(_x_ given that _n_ is odd) or _F_<sub>_D_</sub>(_x_ given that _n_ is even), respectively.
 > 2. EGF(_z_) is the _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm.  For example, the class of _alternating permutations_ (permutations whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).  Other examples of EGFs were given in the section on the von Neumann schema.
 > 3. The results that point to this note have the special case that both _D_ and _E_ are uniform random variates greater than 0 and less than 1.  Indeed, if each variate _x_ in the sequence is transformed with _CDF_(_x_), where _CDF_ is _D_'s cumulative distribution function, then with probability 1, _x_ becomes a uniform random variate greater than 0 and less than 1, with the same numerical order as before.  See also [**this Stack Exchange question**](https://stats.stackexchange.com/questions/550847).
 

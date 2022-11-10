@@ -4086,7 +4086,7 @@ def fpNormalROU():
 def logconcave(f, c):  # Devroye 1986, chapter 7
     # Samples a random variate from an absolutely
     # continuous log-concave distribution.
-    # f is a concave nonincreasing log-density function
+    # f is a concave log-density function that increases nowhere,
     # such that f(0)=0; c is the maximum
     # value of the (normalized) density.
     while True:
@@ -4255,8 +4255,8 @@ def randUniformPower(pwr):
 def monoSecondMoment(secondMoment, pdf):
     # For distributions on the positive real line
     # with:
-    # - continuous, bounded, and nonincreasing
-    #    density function.
+    # - continuous and bounded density function
+    #    that increases nowhere
     # - a finite second moment.
     #
     # secondMoment - Integral of pdf(x)*x^2 over

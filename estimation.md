@@ -345,7 +345,7 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 
     - being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
     - following a geometric distribution, and/or
-    - having decreasing or nonincreasing probabilities?
+    - having decreasing or nowhere increasing probabilities?
 
     Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al. 2019[^6]).  Here, the accuracy tolerances for small error and high probability are user-specified.  A relative-error algorithm for **E**\[_X_\] for the geometric distribution was given already in a note.
 

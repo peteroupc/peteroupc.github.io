@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/09/23"><meta name="citation_online_date" content="2022/09/23"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/11/10"><meta name="citation_online_date" content="2022/11/10"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -27,7 +27,7 @@
 <li><a href="#Weighted_Choice_for_Special_Distributions"><strong>Weighted Choice for Special Distributions</strong></a>
 
 <ul>
-<li><a href="#Distributions_with_nonincreasing_or_nondecreasing_weights"><strong>Distributions with nonincreasing or nondecreasing weights</strong></a></li>
+<li><a href="#Distributions_with_nowhere_increasing_or_nowhere_decreasing_weights"><strong>Distributions with nowhere increasing or nowhere decreasing weights</strong></a></li>
 <li><a href="#Unimodal_distributions_of_weights"><strong>Unimodal distributions of weights</strong></a></li>
 <li><a href="#Weighted_Choice_with_Log_Probabilities"><strong>Weighted Choice with Log Probabilities</strong></a></li>
 </ul></li>
@@ -173,11 +173,11 @@
 
 <p>The following are algorithms to sample items whose probabilities (or &quot;weights&quot;) are given in a special way.  They supplement the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice"><strong>Weighted Choice</strong></a>&quot; in my article &quot;Randomization and Sampling Methods&quot;.</p>
 
-<p><a id=Distributions_with_nonincreasing_or_nondecreasing_weights></a></p>
+<p><a id=Distributions_with_nowhere_increasing_or_nowhere_decreasing_weights></a></p>
 
-<h3>Distributions with nonincreasing or nondecreasing weights</h3>
+<h3>Distributions with nowhere increasing or nowhere decreasing weights</h3>
 
-<p>An algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to weights listed in <em>nonincreasing</em> order (example: [10, 3, 2, 1, 1] when <em>a</em> = 0 and <em>b</em> = 5) can be implemented as follows (Chewi et al. 2022)[^9].  It has a logarithmic time complexity in terms of setup and sampling.</p>
+<p>An algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to weights listed in <em>nowhere increasing</em> order (example: [10, 3, 2, 1, 1] when <em>a</em> = 0 and <em>b</em> = 5) can be implemented as follows (Chewi et al. 2022)[^9].  It has a logarithmic time complexity in terms of setup and sampling.</p>
 
 <ul>
 <li>Setup:  Let <em>w</em>[<em>i</em>] be the weight for integer <em>i</em> (with <em>i</em> starting at <em>a</em>).
@@ -196,7 +196,7 @@
 </ol></li>
 </ul>
 
-<p>For <em>nondecreasing</em> rather than nonincreasing weights, the algorithm is as follows instead:</p>
+<p>For <em>nowhere decreasing</em> rather than nowhere increasing weights, the algorithm is as follows instead:</p>
 
 <ul>
 <li>Setup:  Let <em>w</em>[<em>i</em>] be the weight for integer <em>i</em> (with <em>i</em> starting at <em>a</em>).
@@ -217,14 +217,14 @@
 
 <h3>Unimodal distributions of weights</h3>
 
-<p>The following is an algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to a <em>unimodal distribution</em> of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2022)[^9].  It assumes the mode (the point with the highest weight) is known.  An example is [1, 3, 9, 4, 4] when <em>a</em> = 0 and <em>b</em> = 5, and the <em>mode</em> is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.</p>
+<p>The following is an algorithm for sampling an integer in the interval [<em>a</em>, <em>b</em>) with probability proportional to a <em>unimodal distribution</em> of weights (that is, nowhere decreasing on the left and nowhere increasing on the right) (Chewi et al. 2022)[^9].  It assumes the mode (the point with the highest weight) is known.  An example is [1, 3, 9, 4, 4] when <em>a</em> = 0 and <em>b</em> = 5, and the <em>mode</em> is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.</p>
 
 <ul>
 <li>Setup:
 
 <ol>
 <li>Find the point with the highest weight, such as via binary search.  Call this point <em>mode</em>.</li>
-<li>Run the setup for <em>nondecreasing</em> weights on the interval [<em>a</em>, <em>mode</em>), then run the setup for <em>nonincreasing</em> weights on the interval [<em>mode</em>, <em>b</em>).  Both setups are described in the previous section.  Then, concatenate the two <em>q</em> lists into one, the two <em>r</em> lists into one, and the two <em>D</em> lists into one.</li>
+<li>Run the setup for <em>nowhere decreasing</em> weights on the interval [<em>a</em>, <em>mode</em>), then run the setup for <em>nowhere increasing</em> weights on the interval [<em>mode</em>, <em>b</em>).  Both setups are described in the previous section.  Then, concatenate the two <em>q</em> lists into one, the two <em>r</em> lists into one, and the two <em>D</em> lists into one.</li>
 </ol></li>
 <li>The sampling is the same as for the algorithms in the previous section.</li>
 </ul>
@@ -334,7 +334,7 @@
 <p>The following mathematical definitions are used:</p>
 
 <ul>
-<li>A distribution&#39;s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nondecreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.</li>
+<li>A distribution&#39;s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nowhere decreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.</li>
 <li>A distribution&#39;s <em>support</em> is the set of values the distribution can take on, plus that set&#39;s endpoints.  For example, the beta distribution&#39;s support is the closed interval [0, 1], and the normal distribution&#39;s support is the entire real line.</li>
 <li>The <em>zero-truncated Poisson</em> distribution: To generate a random variate that follows this distribution (with parameter <em>&lambda;</em> &gt; 0), generate random variates from the <a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson distribution</strong></a> with parameter <em>&lambda;</em> until a variate other than 0 is generated this way, then take the last generated variate.</li>
 </ul>
@@ -363,7 +363,7 @@
 <li>Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: &quot;Generate a uniform random variate <em>x</em> in [0, 1], then with probability (1&minus;<em>x</em><sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process.&quot;; or &quot;Create a uniform PSRN <em>x</em> with positive sign and integer part 0, then run <strong>SampleGeometricBag</strong> on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process.&quot;</li>
 </ul>
 
-<p><strong>Transformed&ndash;transformer family.</strong> In fact, the &quot;X-G&quot; families are a special case of the so-called &quot;transformed&ndash;transformer&quot; family of distributions introduced by Alzaatreh et al. (2013)[^24] that uses two distributions, X and G, where X (the &quot;transformed&quot;) is an arbitrary distribution with a PDF; G (the &quot;transformer&quot;) is a distribution with an easy-to-compute quantile function; and <em>W</em> is a nondecreasing function that, among other conditions, maps a number in [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:</p>
+<p><strong>Transformed&ndash;transformer family.</strong> In fact, the &quot;X-G&quot; families are a special case of the so-called &quot;transformed&ndash;transformer&quot; family of distributions introduced by Alzaatreh et al. (2013)[^24] that uses two distributions, X and G, where X (the &quot;transformed&quot;) is an arbitrary distribution with a PDF; G (the &quot;transformer&quot;) is a distribution with an easy-to-compute quantile function; and <em>W</em> is a nowhere decreasing function that, among other conditions, maps a number in [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:</p>
 
 <ol>
 <li>Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
