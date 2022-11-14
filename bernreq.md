@@ -167,7 +167,7 @@ The following are additional questions that supplement the main question given a
 For what value of $C_0$ (or $C_1$) is the conjecture given in "A Conjecture on Polynomial Approximation" true in the following cases?
 
 - $W_n$ is such that $B_n(W_n)$ converges uniformly to $f$ at the rate $O(1/n^{r/2})$.
-- $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005$.
+- $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.
 - $W_n = B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ is 5 or 6.
 
 Does the same value of $C_0$ (or $C_1$) suffice in either of the following cases, and if not, what value suffices?
