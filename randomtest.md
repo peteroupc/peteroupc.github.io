@@ -9,6 +9,8 @@ According to my document on [**pseudorandom number generator (PRNG) recommendati
 
 a requirement called the "independence requirement" in this short document.
 
+> **Note:** This document is intended to apply only to PRNGs used for noncryptographic purposes.
+
 To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey and show no failures ("FAILs") in the PractRand tests at 1 TiB (2^40 bytes) or greater.  For more information, see "[**How to Test with PractRand**](http://www.pcg-random.org/posts/how-to-test-with-practrand.html)" by M. E. O'Neill.
 
 **Random number streams.** Many PRNGs use different strategies to produce nearby sequences (or _streams_) of pseudorandom numbers.  But not every strategy produces _independent_ streams.  To determine whether nearby sequences of the PRNG meet the independence requirement, the output sent to PractRand should be formed by interleaving the outputs of those sequences (for example, one output from the first sequence, one output from the second, another output from the first, another from the second, and so on).

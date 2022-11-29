@@ -1600,7 +1600,7 @@ The following method (`XYZToCCT`), which computes an approximate CCT from an [**
 <a id=Color_Mixture></a>
 ### Color Mixture
 
-The mixture of two colorants is quite complex, and there are several approaches to simulating this kind of color mixture.
+The mixture of two colorants can be complex, and there are several approaches to simulating this kind of color mixture.
 
 - As [**S. A. Burns indicates**](http://www.scottburns.us/subtractive-color-mixture/), two or more [**_reflectance curves_**](#Spectral_Color_Functions), each representing a **pigment or colorant**, can be mixed by calculating their _weighted geometric mean_, which
   takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.[^44]
