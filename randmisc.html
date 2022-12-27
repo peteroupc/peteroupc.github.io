@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/11/10"><meta name="citation_online_date" content="2022/11/10"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2022/12/27"><meta name="citation_online_date" content="2022/12/27"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -653,6 +653,11 @@
 <td><em>&alpha;</em> &lt; <em>&nu;</em> + 1, and <em>&nu;</em> &ge; 0.[^68]</td>
 </tr>
 <tr>
+<td>Himanshu (Agarwal and Pandey 2022)[^78]</td>
+<td>(1) Set <em>ret</em> to 0; (2) flip coin that shows heads with probability <em>p</em>, <em>n</em> times; (3) if any flip shows 0 (tails), add 1 to <em>ret</em> and go to 2; otherwise, return <em>ret</em>.</td>
+<td>0 &le; <em>p</em> &le; 1; <em>n</em> &ge; 1 is an integer.</td>
+</tr>
+<tr>
 <td>Tilted beta (Hahn and López Martín 2005)[^69]</td>
 <td>(1) With probability <em>&theta;</em>, return a beta(<em>&alpha;</em>, <em>&beta;</em>) variate; (2) Generate a uniform variate in (0, 1), call it <em>x</em>; (3) Flip coin that returns 1 with probability <em>x</em>, and another that returns 1 with probability <em>v</em>; (4) If both coins return 1 or both return 0, return <em>x</em>; otherwise go to step 2.</td>
 <td>0 &le; <em>&theta;</em> &le; 1;  0 &le; <em>v</em> &le; 1; <em>&alpha;</em>&gt;0; <em>&beta;</em>&gt;0.</td>
@@ -962,6 +967,8 @@ END METHOD
 <p>[^76]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
 
 <p>[^77]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+
+<p>[^78]: Agarwal, A., Pandey, H., &quot;Himanshu distribution and its applications&quot;, Bulletin of Mathematics and Statistics Research 10(4), 2022.</p>
 
 <p><a id=License></a></p>
 

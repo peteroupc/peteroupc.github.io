@@ -382,6 +382,7 @@ In the table below, _U_ is a uniform random variate in the interval [0, 1], and 
 | Generalized skew normal (SNE(_&lambda;_,_&xi;_)) (Henze 1986)[^65] | **First algorithm:** (1) Generate _Y_ and _Z_, two Normal(0,1) variates; (2) if _Z_<_Y_\*_&lambda;_+_&xi;_, return _Y_; else go to 1. **Second algorithm:** (1) Let _il_=1/sqrt(1+_&lambda;_<sup>2</sup>); (2) Generate _Y_ and _Z_, two Normal(0,1) variates; (3) if _Y_>&minus;_&xi;_\*_il_, return _Y_\*_&lambda;_\*_il_ + _Z_; else go to 2. | _&lambda;_ and _&xi;_ are real numbers. |
 | Generalized geometric (Francis-Staite and White 2022)[^66] | (1) Set _ret_ to 1; (2) with probability _&rho;_(_ret_), add 1 to _ret_ and repeat this step; otherwise, return _ret_. | 0 &le; _&rho;_(_k_) &le; 1 for each _k_. |
 | Generalized Sibuya (Kozubowski and Podgórski 2018)[^67] | (1) Set _ret_ to 1; (2) with probability _&alpha;_/(_&nu;_+_ret_), return _ret_; otherwise, add 1 to _ret_ and repeat this step. | _&alpha;_ < _&nu;_ + 1, and _&nu;_ &ge; 0.[^68] |
+| Himanshu (Agarwal and Pandey 2022)[^78] | (1) Set _ret_ to 0; (2) flip coin that shows heads with probability _p_, _n_ times; (3) if any flip shows 0 (tails), add 1 to _ret_ and go to 2; otherwise, return _ret_. | 0 &le; _p_ &le; 1; _n_ &ge; 1 is an integer. |
 | Tilted beta (Hahn and López Martín 2005)[^69] | (1) With probability _&theta;_, return a beta(_&alpha;_, _&beta;_) variate; (2) Generate a uniform variate in (0, 1), call it _x_; (3) Flip coin that returns 1 with probability _x_, and another that returns 1 with probability _v_; (4) If both coins return 1 or both return 0, return _x_; otherwise go to step 2. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0; _&beta;_>0. |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
@@ -660,6 +661,8 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 [^76]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
 [^77]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
+
+[^78]: Agarwal, A., Pandey, H., "Himanshu distribution and its applications", Bulletin of Mathematics and Statistics Research 10(4), 2022.
 
 <a id=License></a>
 ## License
