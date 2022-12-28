@@ -893,7 +893,7 @@ METHOD InclusionSelect(weights, n)
 END METHOD
 ```
 
-For the case when the list of items has an unknown size and its weight can be calculated "on the fly", see <<Chao, M-T., "A general purpose unequal probability sampling plan", _Biometrika_ 69 (1982).>>.
+For the case when the list of items has an unknown size and its weight can be calculated "on the fly", see (Chao 1982)[^109].
 
 <a id=Mixtures_of_Distributions></a>
 ### Mixtures of Distributions
@@ -2243,6 +2243,8 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 [^107]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965.)", arXiv:2108.00965.
 
 [^108]: For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
+
+[^109]: Chao, M-T., "A general purpose unequal probability sampling plan", _Biometrika_ 69 (1982).
 
 <a id=Appendix></a>
 ## Appendix
