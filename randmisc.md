@@ -176,7 +176,7 @@ an integer in the closed interval [0, _n_] can be sampled as follows:
 1. ("Gumbel".) For each _p_<sub>_i_</sub>, generate a "Gumbel variate" _G_, then set _q_<sub>_i_</sub> to _p_<sub>_i_</sub>+_G_.  (A so-called "Gumbel variate" is distributed as &minus;ln(&minus;ln(_U_)), where _U_ is a uniform random variate greater than 0 and less than 1.[^11])
 2. ("Max".) Return the integer _i_ corresponding to the highest _q_<sub>_i_</sub> value.
 
-> **Note:** To sample _k_ items without replacement according to their "unnormalized log probabilities", do step 1, then choose the _k_ integers corresponding to the _k_ highest _q_<sub>_i_</sub> values.  This is also known as "Gumbel top _k_ sampling"; see Fig. 7 of Huijben et al. (2022)[^10].
+> **Note:** "Gumbel top _k_ sampling" samples _k_ items according to their "unnormalized log probabilities" (see Fig. 7 of Huijben et al. (2022)[^10]); this sampling works by doing step 1, then choosing the _k_ integers corresponding to the _k_ highest _q_<sub>_i_</sub> values.  With this sampling, though, the probability of getting _i_ (if the plain Gumbel max trick were used) is not necessarily the probability that _i_ is included in the _k_-item sample (Tillé 2023)[^79].
 
 **Weighted choice with the Gumbel softmax trick.** Given a vector described above as well as a "temperature" parameter _&lambda;_ > 0, a "continuous relaxation" or "concrete distribution" (which transforms the vector to a new one) can be sampled as follows:
 
@@ -663,6 +663,8 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 [^77]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
 [^78]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
+
+[^79]: Tillé, Y., "Remarks on some misconceptions about unequal probability sampling without replacement", Computer Science Review 47 (Feb. 2023).
 
 <a id=License></a>
 ## License

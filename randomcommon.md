@@ -140,7 +140,7 @@ The pseudocode shown there is a straightforward way to implement weighted choice
 Weighted choice _without replacement_ is a choice where each item can be chosen no more than once.  If the weights have the property that higher-weighted items have a greater chance of appearing first, then:
 
 - The simplest way to implement this is to use weighted choice with replacement, except that after an index is chosen, that index's weight is set to 0 to keep the index from being chosen again.
-- Other options are given in "[**Weighted Choice Without Replacement (Single Copies)**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_Single_Copies)" and "[**Weighted Choice Without Replacement (List of Unknown Size)**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_List_of_Unknown_Size)".
+- Other options are given in "[**Weighted Choice Without Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement)".
 
 However, these methods do not necessarily ensure that a random sample of _n_ items will include a given item with probability proportional to that item's weight.  This is a similar problem that is not solved by these methods; for that problem, see "[**Algorithms of sampling with equal or unequal probabilities**](https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf)".
 
