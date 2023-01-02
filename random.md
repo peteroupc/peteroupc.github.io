@@ -469,7 +469,7 @@ This section contains suggested requirements on cryptographic and high-quality R
 
 <a id=Cryptographic_RNGs_Requirements></a>
 ### Cryptographic RNGs: Requirements
-A cryptographic RNG generates random bits that behave like independent uniform random bits, such that an outside party has no more than negligible advantage in correctly guessing prior or future unseen output bits of that RNG even after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen output bits of that RNG after compromising its security, such as reading its internal state.[^38]
+A cryptographic RNG generates bits that behave like independent uniform random bits, such that an outside party has no more than negligible advantage in correctly guessing prior or future unseen output bits of that RNG even after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen output bits of that RNG after compromising its security, such as reading its internal state.[^38]
 
 If a cryptographic RNG implementation uses a PRNG:
 
@@ -517,7 +517,7 @@ The following are some ways a PRNG can be implemented:
 
 A **programming language API** designed for reuse by applications could implement RNGs using the following guidelines:
 
-1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.
+1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with independent uniform random-behaving bits.  See example 1.
 2.  If the API implements an automatically-seeded RNG, it should not allow applications to initialize that same RNG with a seed for reproducible "randomness"[^42] \(it may provide a separate PRNG to accept such a seed). See example 2.
 3.  If the API provides a PRNG that an application can seed for reproducible "randomness", it should document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and should not change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
 4.  A new programming language's **standard library** ought to include the following methods for generating numbers that behave like independent uniformly distributed numbers (see my document on [**randomization and sampling methods**](https://peteroupc.github.io/randomfunc.html) for details).

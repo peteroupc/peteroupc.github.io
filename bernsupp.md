@@ -81,7 +81,7 @@ These randomized upper and lower bounds come from two sequences of polynomials a
 
 The consistency requirement ensures that the upper polynomials "decrease" and the lower polynomials "increase".  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not ensure the consistency requirement by itself.  Examples of this fact are shown in the section "[**Failures of the Consistency Requirement**](#Failures_of_the_Consistency_Requirement)" in the appendix.
 
-In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup>th</sup> coefficient for the lower or upper degree-_n_ polynomial in Bernstein form, respectively, where 0 &le; _k_ &ge; _n_ is an integer.
+In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup>th</sup> coefficient for the lower or upper degree-_n_ polynomial in Bernstein form, respectively, where 0 &le; _k_ &le; _n_ is an integer.
 
 <a id=Building_the_Lower_and_Upper_Polynomials></a>
 ### Building the Lower and Upper Polynomials
@@ -146,7 +146,7 @@ More specifically, _h_(_&lambda;_) must meet the following requirements:
 - _h_(_&lambda;_) is continuous on the closed interval [0, 1].
 - _h_(0) = 0. (This is required to ensure correctness in case _&lambda;_ is 0.)
 - 1 &ge; _h_(1) &ge; _f_(1) &ge; 0.
-- 1 &gt; _h_(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 for every _&lambda;_ in the open interval (0, 1).
+- 1 &gt; _h_(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
 - If _f_(1) = 0, then _h_(1) = 0. (This is required to ensure correctness in case _&lambda;_ is 1.)
 
 Also, _h_ should be a function with a simple Bernoulli factory algorithm.  For example, _h_ can be a polynomial in Bernstein form of degree _n_ whose _n_ plus one coefficients are \[0, 1, 1, ..., 1\].  This polynomial is easy to simulate using the algorithms from the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)".
@@ -188,11 +188,11 @@ then _f_ can be simulated using the following algorithm:
 - _&omega;_(_&lambda;_) is a function that meets the following requirements:
     - _&omega;_(_&lambda;_) is continuous on the closed interval [0, 1].
     - _&omega;_(0) = 0 and _&omega;_(1) = 1.
-    - 1 &gt; _f_(_&lambda;_) &gt; _&omega;_(_&lambda;_) &gt; 0 for every _&lambda;_ in the open interval (0, 1).
+    - 1 &gt; _f_(_&lambda;_) &gt; _&omega;_(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
 - _q_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _&omega;_(_&nu;_)/_h_(_&nu;_).
 - _r_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> (1&minus;_g_(_&nu;_))/(1&minus;_q_(_&nu;_)).
 
-Roughly speaking, _&omega;_ is a function that bounds _f_ from below, just as _h_ bounds _f_ from above. _&omega;_ should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both _&omega;_ and _h_ are polynomials of the same degree, _q_ will be a rational function with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
+Roughly speaking, _&omega;_ is a function that bounds _f_ from below, just as _h_ bounds _f_ from above. _&omega;_ should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both _&omega;_ and _h_ are polynomials of the same degree, _q_ will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
 
 Now, if _r_(_&lambda;_) is continuous on [0, 1], then _f_ can be simulated using the following algorithm:
 
@@ -713,7 +713,7 @@ If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli fact
 
 - _f_(_&lambda;_) is continuous.
 - _f_(_&lambda;_) maps the closed interval \[0, 1\] to \[0, 1\].
-- _f_(_&lambda;_) equals neither 0 nor 1 on the open interval (0, 1).
+- 0 < _f_(_&lambda;_) < 1 whenever 0 < _&lambda;_ < 1.
 - _f_(_&lambda;_) is algebraic over rational numbers (that is, there is a nonzero polynomial _P_(_x_, _y_) in two variables and whose coefficients are rational numbers, such that _P_(_x_, _f_(_x_)) = 0 for every _x_ in the domain of _f_).
 
 A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by showing that _f_ is a _semialgebraic function_, so that by a known inequality and the other conditions, it meets the definitions of being Hölder continuous and polynomially bounded.
@@ -867,10 +867,10 @@ This algorithm, though, doesn't count as an _optimal factory_, and Peres describ
     4. If _fc_ and _bc_ are both 0, append 1 then 1 to extractor 2's input bits.
     5. If _fc_ is 1 and _bc_ is 0, append 1 then 0 to extractor 2's input bits.
 
-Inspired by Peres's result with _&lambda;_/2, the following algorithm is proposed.  It works for every rational function of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
+Inspired by Peres's result with _&lambda;_/2, the following algorithm is proposed.  It works for every function writable as _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
-- $D(\lambda)=\sum_{i=0}^k \lambda^i (1-\lambda)^{k-i} d[i]$,
-- $E(\lambda)=\sum_{i=0}^k \lambda^i (1-\lambda)^{k-i} e[i]$,
+- $D$ is the polynomial $D(\lambda)=\sum_{i=0}^k \lambda^i (1-\lambda)^{k-i} d[i]$,
+- $E$ is the polynomial $E(\lambda)=\sum_{i=0}^k \lambda^i (1-\lambda)^{k-i} e[i]$,
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
 - each _d_\[_i_\] and each _e_\[_i_\] is a nonnegative integer.
 

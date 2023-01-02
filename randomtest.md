@@ -21,7 +21,7 @@ There are several kinds of nearby sequences to test for this purpose:
 - Two or more PRNGs initialized with consecutive seeds.
 - Two or more PRNGs initialized with seeds that differ from each other by one bit (see also "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php#flaws)").
 
-The _leapfrogging_ technique involves assigning N processes each a PRNG that differs from the last by 1 step, then having each such PRNG advance N steps, where N is the number of PRNGs, each time it generates a random number.  However, note that testing nearby sequences produced by leapfrogging is redundant with testing the regular PRNG sequence without streams.
+The _leapfrogging_ technique (Bauke and Mertens 2007)[^9] involves assigning N processes each a PRNG that differs from the last by 1 step, then having each such PRNG advance N steps, where N is the number of PRNGs, each time it generates a pseudorandom number.  However, note that testing nearby sequences produced by leapfrogging is redundant with testing the regular PRNG sequence without streams.
 
 **Hash functions and counter-based PRNGs.** In general, a _counter-based PRNG_ produces pseudorandom numbers by transforming a seed and a _counter_; with each number, it increments the counter and leaves the seed unchanged (Salmon et al. 2011\)[^1].  The seed and counter can be transformed using block ciphers, other permutation functions, or hash functions.  In general, counter-based PRNGs that use hash functions (such as MD5, SHA-1, MurmurHash, CityHash, xxHash) will meet the independence requirement if the following hash stream (for that hash function) doesn't fail the PractRand tests at 1 TiB or greater:
 
@@ -53,7 +53,7 @@ _Other combinations and transformations._  There are other ways to combine two P
 
 **Splittable PRNGs.** A _splittable PRNG_ consists of two operations: a `split` operation to create multiple new internal states from one, and a `generate` operation to produce a pseudorandom number from a state (Schaathun 2015; Claessen et al., 2013\)[^8]. The Schaathun paper surveys several known constructions of splittable PRNGs.  Some of the constructions can be used by any PRNG, but do not necessarily lead to high-quality splittable PRNGs.
 
-The Schaathun paper suggests the following four random number sequences for testing purposes:
+The Schaathun paper suggests the following four pseudorandom number sequences for testing purposes:
 
 - Sequence suggested in section 5.5:
     1. Set `seed` and `g` to `split(seed)[0]` and `split(seed)[1]`, respectively.
@@ -85,3 +85,5 @@ The Schaathun paper suggests the following four random number sequences for test
 [^7]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
 
 [^8]: Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators", 2015; Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", Proceedings of Haskell Symposium 2013, pp. 47-58.
+
+[^9]: Bauke and Mertens, "Random numbers for large-scale distributed Monte Carlo simulations", 2007

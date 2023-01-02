@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2022/11/11"><meta name="citation_online_date" content="2022/11/11"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/01/01"><meta name="citation_online_date" content="2023/01/01"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -119,7 +119,7 @@
 
 <p>The consistency requirement ensures that the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot;.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not ensure the consistency requirement by itself.  Examples of this fact are shown in the section &quot;<a href="#Failures_of_the_Consistency_Requirement"><strong>Failures of the Consistency Requirement</strong></a>&quot; in the appendix.</p>
 
-<p>In this document, <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) mean the <em>k</em><sup>th</sup> coefficient for the lower or upper degree-<em>n</em> polynomial in Bernstein form, respectively, where 0 &le; <em>k</em> &ge; <em>n</em> is an integer.</p>
+<p>In this document, <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) mean the <em>k</em><sup>th</sup> coefficient for the lower or upper degree-<em>n</em> polynomial in Bernstein form, respectively, where 0 &le; <em>k</em> &le; <em>n</em> is an integer.</p>
 
 <p><a id=Building_the_Lower_and_Upper_Polynomials></a></p>
 
@@ -211,7 +211,7 @@
 <li><em>h</em>(<em>&lambda;</em>) is continuous on the closed interval [0, 1].</li>
 <li><em>h</em>(0) = 0. (This is required to ensure correctness in case <em>&lambda;</em> is 0.)</li>
 <li>1 &ge; <em>h</em>(1) &ge; <em>f</em>(1) &ge; 0.</li>
-<li>1 &gt; <em>h</em>(<em>&lambda;</em>) &gt; <em>f</em>(<em>&lambda;</em>) &gt; 0 for every <em>&lambda;</em> in the open interval (0, 1).</li>
+<li>1 &gt; <em>h</em>(<em>&lambda;</em>) &gt; <em>f</em>(<em>&lambda;</em>) &gt; 0 whenever 0 &lt; <em>&lambda;</em> &lt; 1.</li>
 <li>If <em>f</em>(1) = 0, then <em>h</em>(1) = 0. (This is required to ensure correctness in case <em>&lambda;</em> is 1.)</li>
 </ul>
 
@@ -271,13 +271,13 @@
 <ul>
 <li><em>&omega;</em>(<em>&lambda;</em>) is continuous on the closed interval [0, 1].</li>
 <li><em>&omega;</em>(0) = 0 and <em>&omega;</em>(1) = 1.</li>
-<li>1 &gt; <em>f</em>(<em>&lambda;</em>) &gt; <em>&omega;</em>(<em>&lambda;</em>) &gt; 0 for every <em>&lambda;</em> in the open interval (0, 1).</li>
+<li>1 &gt; <em>f</em>(<em>&lambda;</em>) &gt; <em>&omega;</em>(<em>&lambda;</em>) &gt; 0 whenever 0 &lt; <em>&lambda;</em> &lt; 1.</li>
 </ul></li>
 <li><em>q</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>&omega;</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>).</li>
 <li><em>r</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> (1&minus;<em>g</em>(<em>&nu;</em>))/(1&minus;<em>q</em>(<em>&nu;</em>)).</li>
 </ul>
 
-<p>Roughly speaking, <em>&omega;</em> is a function that bounds <em>f</em> from below, just as <em>h</em> bounds <em>f</em> from above. <em>&omega;</em> should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both <em>&omega;</em> and <em>h</em> are polynomials of the same degree, <em>q</em> will be a rational function with a relatively simple Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>&quot;).</p>
+<p>Roughly speaking, <em>&omega;</em> is a function that bounds <em>f</em> from below, just as <em>h</em> bounds <em>f</em> from above. <em>&omega;</em> should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both <em>&omega;</em> and <em>h</em> are polynomials of the same degree, <em>q</em> will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>&quot;).</p>
 
 <p>Now, if <em>r</em>(<em>&lambda;</em>) is continuous on [0, 1], then <em>f</em> can be simulated using the following algorithm:</p>
 
@@ -1100,7 +1100,7 @@
 <ul>
 <li><em>f</em>(<em>&lambda;</em>) is continuous.</li>
 <li><em>f</em>(<em>&lambda;</em>) maps the closed interval [0, 1] to [0, 1].</li>
-<li><em>f</em>(<em>&lambda;</em>) equals neither 0 nor 1 on the open interval (0, 1).</li>
+<li>0 &lt; <em>f</em>(<em>&lambda;</em>) &lt; 1 whenever 0 &lt; <em>&lambda;</em> &lt; 1.</li>
 <li><em>f</em>(<em>&lambda;</em>) is algebraic over rational numbers (that is, there is a nonzero polynomial <em>P</em>(<em>x</em>, <em>y</em>) in two variables and whose coefficients are rational numbers, such that <em>P</em>(<em>x</em>, <em>f</em>(<em>x</em>)) = 0 for every <em>x</em> in the domain of <em>f</em>).</li>
 </ul>
 
@@ -1284,11 +1284,11 @@
 </ol></li>
 </ol>
 
-<p>Inspired by Peres&#39;s result with <em>&lambda;</em>/2, the following algorithm is proposed.  It works for every rational function of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
+<p>Inspired by Peres&#39;s result with <em>&lambda;</em>/2, the following algorithm is proposed.  It works for every function writable as <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
 
 <ul>
-<li>$D(\lambda)=\sum_{i=0}^k \lambda^i (1-\lambda)^{k-i} d[i]$,</li>
-<li>$E(\lambda)=\sum_{i=0}^k \lambda^i (1-\lambda)^{k-i} e[i]$,</li>
+<li>$D$ is the polynomial $D(\lambda)=\sum_{i=0}^k \lambda^i (1-\lambda)^{k-i} d[i]$,</li>
+<li>$E$ is the polynomial $E(\lambda)=\sum_{i=0}^k \lambda^i (1-\lambda)^{k-i} e[i]$,</li>
 <li>every <em>d</em>[<em>i</em>] is less than or equal to the corresponding <em>e</em>[<em>i</em>], and</li>
 <li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is a nonnegative integer.</li>
 </ul>
