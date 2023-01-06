@@ -83,7 +83,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 
 In this document:
 
-- **Random number generator (RNG)** means software and/or hardware that seeks to generate integers in a bounded range such that each possible outcome occurs with the same chance as any other without influence by anything else[^4].
+- **Random number generator (RNG)** means software and/or hardware that seeks to generate integers in a bounded range that behave as if each possible outcome occurs with the same chance as any other without influence by anything else[^4].
 - **Pseudorandom number generator (PRNG)** means a random number generator that produces numbers by an algorithm that mathematically expands its input.
 - **Seed** means arbitrary data serving as a PRNG's input.
 - **Information security** means keeping information safe from attacks that could access, use, delay, or manipulate that information.[^5]
@@ -208,7 +208,7 @@ In general, the bigger that "random" content is, the greater the justification t
 
 If an application requires only one random value, with a fixed number of bits, then the application can pass the seed to a hash function rather than a PRNG.  Examples of this include the following:
 
-- Generating a color pseudorandomly, by passing the seed to the MD5 hash function, which outputs a 128-bit hash code, and taking the first 24 bits of the hash code as the random color.
+- Generating a color pseudorandomly, by passing the seed to the MD5 hash function, which outputs a 128-bit hash code, and taking the first 24 bits of the hash code as the pseudorandom color.
 - Generating a pseudorandom number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or "pixel") as well as a seed (which is the same for all fragments) to the Wang hash, which outputs a 32-bit integer.[^6]
 
 <a id=Ensuring_Reproducibility></a>

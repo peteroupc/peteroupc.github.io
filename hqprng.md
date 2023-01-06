@@ -28,9 +28,9 @@ Besides cryptographic random number generators (RNGs), the following are example
 <a id=PRNGs_with_Stream_Support></a>
 ### PRNGs with Stream Support
 
-Some PRNGs support multiple "streams" that behave like independent random number sequences.  The test for independence involves interleaving two "streams"' outputs and sending the interleaved outputs to the PractRand tests.
+Some PRNGs support multiple "streams" that behave like independent uniform random bit sequences.  The test for independence involves interleaving two "streams"' outputs and sending the interleaved outputs to the PractRand tests.
 
-The following lists high-quality PRNGs that support streams and their PractRand results for different strategies of forming random number "streams".
+The following lists high-quality PRNGs that support streams and their PractRand results for different strategies of forming pseudorandom number "streams".
 
 | PRNG | Fails PractRand Starting At | Notes |
  ----------| --- | --- |
