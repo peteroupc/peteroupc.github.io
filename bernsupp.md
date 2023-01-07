@@ -131,7 +131,7 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 
 > **Examples:**
 >
-> 1. Take _f_(_&lambda;_) = exp(&minus;_&lambda;_).  This is a convex function, and its derivative is Lipschitz continuous with Lipschitz constant 1.  Then it can be shown that the following scheme for _f_ is valid (the value 3321/10000 is slightly greater than _M_ &minus; 1/(7\*4), where _M_ is the minimum of _f_ on its domain):
+> 1. Take _f_(_&lambda;_) = exp(&minus;_&lambda;_).  This is a convex function, and its derivative is Lipschitz continuous with Lipschitz constant 1.  Then it can be shown that the following scheme for _f_ is valid (the value 3321/10000 is slightly less than _M_ &minus; 1/(7\*4), where _M_ is the minimum of _f_ on its domain):
 >
 >     * **fbelow**(_n_, _k_) = 3321/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n). (Observe that _f_(_k_/4) &minus; 1/(7\*4) &ge; 3321/10000.)
 >     * **fabove**(_n_, _k_) = _f_(_k_/_n_) (because _f_ is convex).
@@ -172,7 +172,9 @@ then _f_ can be simulated using the following algorithm:
 >
 >     - _f_ is strictly increasing,
 >     - _h_(_&lambda;_) = _&lambda;_, and
->     - _f&prime;_(_&lambda;_), the first derivative of _f_, is continuous on the closed unit interval, maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,
+>     - _f&prime;_(_&lambda;_), the first derivative of _f_, is continuous on the closed unit interval,
+>     - 0 < _f&prime;_(_&lambda;_) < 1 whenever 0 < _&lambda;_ < 1, and
+>     - _f&prime;_ belongs in one of the classes of functions given earlier,
 >
 >     then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform random variate, greater than 0 and less than 1, is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010\)[^2] \(the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
 >
@@ -334,15 +336,15 @@ There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_
 
 In general, the number of input coin flips needed by any Bernoulli factory algorithm for a factory function _f_(_&lambda;_) depends on how "smooth" the function _f_ is.
 
-The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved _in theory_ depending on _f_(_&lambda;_), assuming the unknown probability of heads.  In the table below:
+The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved _in theory_ depending on _f_(_&lambda;_), assuming the input coin's probability of heads is unknown.  In the table below:
 
-- _&lambda;_, the unknown probability of heads, is greater than _&epsilon;_ and less than 1&minus;_&epsilon;_ for some _&epsilon;_ &gt; 0.
+- _&lambda;_, the unknown probability of heads, is _&epsilon;_ or greater and (1&minus;_&epsilon;_) or less for some _&epsilon;_ &gt; 0.
 - The simulation makes use of unbiased random bits in addition to input coin flips.
 - _&Delta;_(_n_, _r_, _&lambda;_) = _O_(max(sqrt(_&lambda;_\*(1&minus;_&lambda;_)/_n_),1/_n_)<sup>_r_</sup>), that is, _O_((1/_n_)<sup>_r_</sup>) near _&lambda;_ = 0 or 1, and _O_((1/_n_)<sup>_r_/2</sup>) elsewhere. (_O_(_h_(_n_)) roughly means "less than or equal to _h_(_n_) times a constant, for every _n_ large enough".)
 
 |   Property of simulation   |   Property of _f_
   ------------- |  ------------------------
-| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \the closed unit interval (Goyal and Sigman 2012\)[^17]. |
+| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in the closed unit interval (Goyal and Sigman 2012\)[^17]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^2]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^18].  |
 | Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note 3) (Holtz et al. 2011\)[^19]. |
@@ -717,7 +719,7 @@ If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli fact
 - _f_(_&lambda;_) is continuous on the closed unit interval.
 - _f_(_&lambda;_) has a minimum of greater than 0 and a maximum of less than 1.
 
-If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (has no slope steeper than an _n_<sup>th</sup> root's):
+If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (see "[**Definitions**](#Definitions)"):
 
 - _f_(_&lambda;_) maps the closed unit interval to \[0, 1\].
 - _f_(_&lambda;_) is continuous.
@@ -773,11 +775,11 @@ _Proof:_  Consider the following algorithm.
 
     Now, we know that the input coin's probability of heads is neither 0 nor 1.
 
-    By the conditions in the lemma, both _f_ and _g_ will be positive on the open interval (0, 1) (wherever _f_ is defined).
+    By the conditions in the lemma, both _f_(_&lambda;_)>0 and _g_(_&lambda;_)>0 whenever 0 < _&lambda_ < 1 and _&lambda;_ is in _f_'s domain.
 
     Now let _h_(_&lambda;_) = _f_(_&lambda;_)/_g_(_&lambda;_).  By the conditions in the lemma, _h_ will be positive everywhere in that interval.
 
-3. If _h_ equals 1 everywhere in the interval (0, 1) \(wherever _f_ is defined), return 1.
+3. Return 1 if _h_ has the following property: _h_(_&lambda;_) = 0 whenever 0 < _&lambda;_ < 1 and _&lambda;_ is in _f_'s domain.
 4. Otherwise, we run a Bernoulli factory algorithm for _h_(_&lambda;_) that uses the input coin (and possibly outside randomness).  Since _h_ is continuous and polynomially bounded and the input coin's probability of heads is neither 0 nor 1, _h_ is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.
 
 Thus, _f_ admits an algorithm that uses nothing but the input coin as a source of randomness, and so is strongly simulable. &#x25a1;
@@ -801,7 +803,7 @@ Now, let _g_\[_j_\] and _&omega;_\[_j_\] be the _j_<sup>th</sup> coefficient of 
 
 If the algorithm didn't return a value, then by now we know that the input coin's probability of heads is neither 0 nor 1, since step 2 returned a value (either 0 or 1), which can only happen if the input coin didn't return all zeros or all ones.
 
-Now let _r_(_&lambda;_) = (_f_(_&lambda;_) &minus; _&omega;_(_&lambda;_)) / (_g_(_&lambda;_) &minus; _&omega;_(_&lambda;_)).  By the conditions in the lemma, _h_ will be positive everywhere in the interval (0, 1), wherever _f_ is defined.
+Now let _r_(_&lambda;_) = (_f_(_&lambda;_) &minus; _&omega;_(_&lambda;_)) / (_g_(_&lambda;_) &minus; _&omega;_(_&lambda;_)).  By the conditions in the lemma, _h_(_&lambda;_) will be positive wherever 0 < _&lambda;_ < 1 and _&lambda;_ is in the domain of _f_.
 
 Now, run a Bernoulli factory algorithm for _r_(_&lambda;_) that uses the input coin (and possibly outside randomness).  Since _r_ is continuous and polynomially bounded and the input coin's probability of heads is neither 0 nor 1, _r_ is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.
 
@@ -1183,7 +1185,7 @@ Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), an
 
 To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$'s first derivative (see "Definitions")[^35], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f'$ at those points (Le Gruyer 2009)[^36]; see also (Herbert-Voss et al. 2017)[^37]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3]) = \max(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|,$$ $$\sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|,$$ $$2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|)$$ $$=L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3])$$ (where $t$ is greater than 0 and less than 1), so only $f'$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.
 
-Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in $the closed unit interval$ have to be checked and only $f'$ values in $[-H, H]$ have to be checked.
+Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in the closed unit interval have to be checked and only $f'$ values in $[-H, H]$ have to be checked.
 
 Assuming that no $M_{1,3}$ less than $8\cdot |0-f(1/2)|$ is found, then&mdash; $$C_0=\frac{|0-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{|0-f(1/2)|}{H} \frac{12}{2\cdot (4-\sqrt{2})}=(1/8) \frac{12}{2\cdot (4-\sqrt{2})}$$ $$=3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.
 

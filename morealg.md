@@ -160,7 +160,7 @@ Then the algorithm below, based on an algorithm by Łatuszyński et al. (2009/20
 The algorithm that follows can be used to simulate a more general class of power series functions.  Suppose the following for a power series function $f(\lambda)$:
 
 - $f$ is written as in equation $(1)$.
-- There is a rational number $Z$ defined as follows. For every $\lambda$ in $[0, 1]$, $f(\lambda) \le Z \lt 1$.
+- There is a rational number $Z$ defined as follows. For every $\lambda$ in $[0, 1]$, $0 \le f(\lambda) \le Z \lt 1$.
 - There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm.  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$'s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nowhere increasing sequence); such functions $C$ admit the **general martingale algorithm**. ($C$ and $A$ admit a Bernoulli factory only if they map the interval [0, 1] to itself and meet other requirements.)
 
 In addition, the algorithm will be simpler if each coefficient $a_i$ is a rational number.

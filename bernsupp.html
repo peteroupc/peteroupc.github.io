@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/01/06"><meta name="citation_online_date" content="2023/01/06"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/01/07"><meta name="citation_online_date" content="2023/01/07"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -190,7 +190,7 @@
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li><p>Take <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>).  This is a convex function, and its derivative is Lipschitz continuous with Lipschitz constant 1.  Then it can be shown that the following scheme for <em>f</em> is valid (the value 3321/10000 is slightly greater than <em>M</em> &minus; 1/(7*4), where <em>M</em> is the minimum of <em>f</em> on its domain):</p>
+<li><p>Take <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>).  This is a convex function, and its derivative is Lipschitz continuous with Lipschitz constant 1.  Then it can be shown that the following scheme for <em>f</em> is valid (the value 3321/10000 is slightly less than <em>M</em> &minus; 1/(7*4), where <em>M</em> is the minimum of <em>f</em> on its domain):</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 3321/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1/(7*n). (Observe that <em>f</em>(<em>k</em>/4) &minus; 1/(7*4) &ge; 3321/10000.)</li>
@@ -245,7 +245,9 @@
 <ul>
 <li><em>f</em> is strictly increasing,</li>
 <li><em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and</li>
-<li><em>f&prime;</em>(<em>&lambda;</em>), the first derivative of <em>f</em>, is continuous on the closed unit interval, maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,</li>
+<li><em>f&prime;</em>(<em>&lambda;</em>), the first derivative of <em>f</em>, is continuous on the closed unit interval,</li>
+<li>0 &lt; <em>f&prime;</em>(<em>&lambda;</em>) &lt; 1 whenever 0 &lt; <em>&lambda;</em> &lt; 1, and</li>
+<li><em>f&prime;</em> belongs in one of the classes of functions given earlier,</li>
 </ul>
 
 <p>then step 2 can be implemented by taking <em>g</em> as <em>f&prime;</em>, except: (A) a uniform random variate, greater than 0 and less than 1, is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>. Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;<br/>This is the &quot;<strong>integral method</strong>&quot; of Flajolet et al. (2010)[^2] (the modified step 2 simulates 1/<em>&lambda;</em> times the <em>integral</em> of <em>f</em>.).</p></li>
@@ -518,10 +520,10 @@
 
 <p>In general, the number of input coin flips needed by any Bernoulli factory algorithm for a factory function <em>f</em>(<em>&lambda;</em>) depends on how &quot;smooth&quot; the function <em>f</em> is.</p>
 
-<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads.  In the table below:</p>
+<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>&lambda;</em>), assuming the input coin&#39;s probability of heads is unknown.  In the table below:</p>
 
 <ul>
-<li><em>&lambda;</em>, the unknown probability of heads, is greater than <em>&epsilon;</em> and less than 1&minus;<em>&epsilon;</em> for some <em>&epsilon;</em> &gt; 0.</li>
+<li><em>&lambda;</em>, the unknown probability of heads, is <em>&epsilon;</em> or greater and (1&minus;<em>&epsilon;</em>) or less for some <em>&epsilon;</em> &gt; 0.</li>
 <li>The simulation makes use of unbiased random bits in addition to input coin flips.</li>
 <li><em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere. (<em>O</em>(<em>h</em>(<em>n</em>)) roughly means &quot;less than or equal to <em>h</em>(<em>n</em>) times a constant, for every <em>n</em> large enough&quot;.)</li>
 </ul>
@@ -534,7 +536,7 @@
 </thead><tbody>
 <tr>
 <td>Requires no more than <em>n</em> input coin flips.</td>
-<td>If and only if <em>f</em> can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in \the closed unit interval (Goyal and Sigman 2012)[^17].</td>
+<td>If and only if <em>f</em> can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in the closed unit interval (Goyal and Sigman 2012)[^17].</td>
 </tr>
 <tr>
 <td>Requires a finite number of flips on average. Also known as &quot;realizable&quot; by Flajolet et al. (2010)[^2].</td>
@@ -1105,7 +1107,7 @@
 <li><em>f</em>(<em>&lambda;</em>) has a minimum of greater than 0 and a maximum of less than 1.</li>
 </ul>
 
-<p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (has no slope steeper than an <em>n</em><sup>th</sup> root&#39;s):</p>
+<p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;):</p>
 
 <ul>
 <li><em>f</em>(<em>&lambda;</em>) maps the closed unit interval to [0, 1].</li>
@@ -1173,10 +1175,10 @@
 
 <p>Now, we know that the input coin&#39;s probability of heads is neither 0 nor 1.</p>
 
-<p>By the conditions in the lemma, both <em>f</em> and <em>g</em> will be positive on the open interval (0, 1) (wherever <em>f</em> is defined).</p>
+<p>By the conditions in the lemma, both <em>f</em>(<em>&lambda;</em>)&gt;0 and <em>g</em>(<em>&lambda;</em>)&gt;0 whenever 0 &lt; <em>&amp;lambda</em> &lt; 1 and <em>&lambda;</em> is in <em>f</em>&#39;s domain.</p>
 
 <p>Now let <em>h</em>(<em>&lambda;</em>) = <em>f</em>(<em>&lambda;</em>)/<em>g</em>(<em>&lambda;</em>).  By the conditions in the lemma, <em>h</em> will be positive everywhere in that interval.</p></li>
-<li><p>If <em>h</em> equals 1 everywhere in the interval (0, 1) (wherever <em>f</em> is defined), return 1.</p></li>
+<li><p>Return 1 if <em>h</em> has the following property: <em>h</em>(<em>&lambda;</em>) = 0 whenever 0 &lt; <em>&lambda;</em> &lt; 1 and <em>&lambda;</em> is in <em>f</em>&#39;s domain.</p></li>
 <li>Otherwise, we run a Bernoulli factory algorithm for <em>h</em>(<em>&lambda;</em>) that uses the input coin (and possibly outside randomness).  Since <em>h</em> is continuous and polynomially bounded and the input coin&#39;s probability of heads is neither 0 nor 1, <em>h</em> is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.</li>
 </ol>
 
@@ -1205,7 +1207,7 @@
 
 <p>If the algorithm didn&#39;t return a value, then by now we know that the input coin&#39;s probability of heads is neither 0 nor 1, since step 2 returned a value (either 0 or 1), which can only happen if the input coin didn&#39;t return all zeros or all ones.</p>
 
-<p>Now let <em>r</em>(<em>&lambda;</em>) = (<em>f</em>(<em>&lambda;</em>) &minus; <em>&omega;</em>(<em>&lambda;</em>)) / (<em>g</em>(<em>&lambda;</em>) &minus; <em>&omega;</em>(<em>&lambda;</em>)).  By the conditions in the lemma, <em>h</em> will be positive everywhere in the interval (0, 1), wherever <em>f</em> is defined.</p>
+<p>Now let <em>r</em>(<em>&lambda;</em>) = (<em>f</em>(<em>&lambda;</em>) &minus; <em>&omega;</em>(<em>&lambda;</em>)) / (<em>g</em>(<em>&lambda;</em>) &minus; <em>&omega;</em>(<em>&lambda;</em>)).  By the conditions in the lemma, <em>h</em>(<em>&lambda;</em>) will be positive wherever 0 &lt; <em>&lambda;</em> &lt; 1 and <em>&lambda;</em> is in the domain of <em>f</em>.</p>
 
 <p>Now, run a Bernoulli factory algorithm for <em>r</em>(<em>&lambda;</em>) that uses the input coin (and possibly outside randomness).  Since <em>r</em> is continuous and polynomially bounded and the input coin&#39;s probability of heads is neither 0 nor 1, <em>r</em> is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.</p>
 
@@ -1779,7 +1781,7 @@
 
 <p>To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$&#39;s first derivative (see &quot;Definitions&quot;)[^35], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f&#39;$ at those points (Le Gruyer 2009)[^36]; see also (Herbert-Voss et al. 2017)[^37]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3]) = \max(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|,$$ $$\sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|,$$ $$2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|)$$ $$=L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3])$$ (where $t$ is greater than 0 and less than 1), so only $f&#39;$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.</p>
 
-<p>Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in $the closed unit interval$ have to be checked and only $f&#39;$ values in $[-H, H]$ have to be checked.</p>
+<p>Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in the closed unit interval have to be checked and only $f&#39;$ values in $[-H, H]$ have to be checked.</p>
 
 <p>Assuming that no $M_{1,3}$ less than $8\cdot |0-f(1/2)|$ is found, then&mdash; $$C_0=\frac{|0-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{|0-f(1/2)|}{H} \frac{12}{2\cdot (4-\sqrt{2})}=(1/8) \frac{12}{2\cdot (4-\sqrt{2})}$$ $$=3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.</p>
 
