@@ -2168,7 +2168,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 [^71]: Harase, S., "[**A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo**](https://arxiv.org/abs/2002.09006)", arXiv:2002.09006 [math.NA], 2020.
 
-[^72]: Kamath, Chandrika. "Intelligent sampling for surrogate modeling, hyperparameter optimization, and data analysis." Machine Learning with Applications (2022): 100373, [**https://doi.org/10.1016/j.mlwa.2022.100373.**](https://doi.org/10.1016/j.mlwa.2022.100373.)
+[^72]: Kamath, Chandrika. "Intelligent sampling for surrogate modeling, hyperparameter optimization, and data analysis." Machine Learning with Applications (2022): 100373, [**https://doi.org/10.1016/j.mlwa.2022.100373**](https://doi.org/10.1016/j.mlwa.2022.100373).
 
 [^73]: D. Revuz, M. Yor, "Continuous Martingales and Brownian Motion", 1999.
 

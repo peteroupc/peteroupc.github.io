@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2022/11/18"><meta name="citation_online_date" content="2022/11/18"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2023/01/09"><meta name="citation_online_date" content="2023/01/09"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -117,6 +117,7 @@
 <li><a href="#Kinds_of_Color_Maps"><strong>Kinds of Color Maps</strong></a></li>
 <li><a href="#Color_Collections"><strong>Color Collections</strong></a></li>
 <li><a href="#Visually_Distinct_Colors"><strong>Visually Distinct Colors</strong></a></li>
+<li><a href="#Linear_Gradients"><strong>Linear Gradients</strong></a></li>
 <li><a href="#Pseudocode"><strong>Pseudocode</strong></a></li>
 </ul></li>
 <li><a href="#Generating_a_Random_Color"><strong>Generating a Random Color</strong></a></li>
@@ -1703,6 +1704,42 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 <p>In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly&#39;s list) should use other visual means in addition to color (or rather than color) to help users identify them, such as numbered labels, text labels, different shapes, different shading, different dash patterns, or a combination of these. (Note that under the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/"><strong>Web Content Accessibility Guidelines 2.0</strong></a> level A, color may not be <a href="http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color"><strong>&quot;the only visual means of conveying information&quot;</strong></a>.)</p>
 
 <p>In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest <a href="#Color_Differences"><strong>color difference</strong></a> [<code>COLORDIFF</code>] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular <em>color gamut</em>. Here, the color difference method should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)[^42].)</p>
+
+<p><a id=Linear_Gradients></a></p>
+
+<h3>Linear Gradients</h3>
+
+<p>A <em>linear gradient</em> is a smooth transition of two or more colors. A linear gradient consists of two or more <em>gradient stops</em>, which each consist of a point on the number line and a color located at that point.  The remaining colors on the number line are linearly interpolated between these points.</p>
+
+<p>The following pseudocode, <code>LinearGradientPoint</code>, gets the color at the specified point on the linear gradient. It takes a list, <code>stops</code>, consisting of one or more gradient stops, and <code>point</code>, the desired point on the gradient.  Each gradient stop is a list containing the point and the color, in that order, and the gradient stops are sorted in ascending order by point.   The method is independent of color space, but all colors passed to the method must be in the same color space and <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a> should be used rather than encoded RGB colors.</p>
+
+<pre>METHOD LinearGradientPoint(stops, point)
+    if size(stops)==0: return error
+    if size(stops)==1: return stops[0][1]
+    if point &lt;= stops[0][0]: return stops[0][1]
+    lastStop=stops[size(stops)-1]
+    if point &gt;= lastStop[0]: return lastStop[1]
+    i = 0
+    while i &lt; size(stops) - 1
+        i = i + 1
+       s = stops[i][0]
+       e = stops[i + 1][0]
+        if point == s: return stops[i][1]
+        if point == e: return stops[i + 1][1]
+        if point &lt; e
+          interpPoint=(point - s) / (e - s)
+          return Lerp3(stops[i][1],stops[i+1][1],
+                       interpPoint)
+        end
+        i = i + 1
+    end
+    return lastStop[1]
+end
+</pre>
+
+<blockquote>
+<p><strong>Note:</strong> Linear gradients are often the basis for 2-dimensional gradients such as radial gradients, or even gradients in higher dimensions.  They can generally be described in terms of a <em>contouring function</em>, which returns a point on a linear gradient given an N-dimensional point.  For instance, a <em>radial gradient</em> can be implemented by using the following contouring function: <code>sqrt(x*x+y*y)</code>, where <code>x</code> and <code>y</code> are the coordinates of an arbitrary point in 2-dimensional space.  The value of the radial gradient function can then be passed to <code>LinearGradientPoint</code> to generate the appropriate color at the given 2-dimensional point.  Note, however, that generating multidimensional gradients can cause undesirable &quot;banding&quot; of colors (see the notes in <a href="#Dominant_Colors_of_an_Image"><strong>&quot;Dominant_Colors_of_an_Image&quot;</strong></a>).  Ways to solve banding include either dithering techniques or adding/subtracting a small random offset (&quot;noise&quot;) to the value of the contouring function for each 2-dimensional point.</p>
+</blockquote>
 
 <p><a id=Pseudocode></a></p>
 

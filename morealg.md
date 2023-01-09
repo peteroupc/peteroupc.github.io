@@ -336,7 +336,7 @@ For this particular function:
 
 **Examples 8:** cosh(_&lambda;_)&minus;1 and additional target functions are shown in the following table.  (In the table below, $w(n)=1/(2^{w^{-1}(n)+1})$ where $w^{-1}(n)$ is the inverse of the "Step 1b" column, and the $g(\lambda)$ in step 3 is simply $\lambda$.)
 
-| Target function _f_(_&lambda;_) | Step 1b reads "Set _n_ to ..." | $a_n$ | $w(n)$ | Value of _P_ |
+| Target function _f_(_&lambda;_) | Step 1b in **Example 7** reads "Set _n_ to ..." | $a_n$ | $w(n)$ | Value of _P_ |
   ------- | -------- | --- | --- | --- |
 | cosh(_&lambda;_)&minus;1. | 2\*_n_ + 2. | 1/(_n_!). | 1/(2<sup>(n&minus;2)/2+1</sup>). | 2<sup>_n_/2</sup>/(_n_!). |
 | exp(_&lambda;_/4)/2. | _n_. | 1/(_n_!\*2\*4<sup>_n_</sup>) | 1/(2<sup>_n_+1</sup>). |  1/(2<sup>_n_</sup>\*(_n_!)). |
@@ -371,7 +371,7 @@ The code in the [**appendix**](#Appendix) uses the computer algebra library SymP
 
 1. Set _i_ to 1.
 2. Run `calc_linear_func(eps, mult, i)` and get the degree and _Y parameter_ for the last listed item, call them _n_ and _y_, respectively.
-3. Set _x_ to &minus;((_y_&minus;(1&minus;_&epsilon;_))/_&epsilon;_)<sup>5</sup>/_mult_ + _y_/_mult_.  (This exact formula doesn't appear in the Thomas and Blanchet paper; rather it comes from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.
+3. Set _x_ to &minus;((_y_&minus;(1&minus;_&epsilon;_))/_&epsilon;_)<sup>5</sup>/_mult_ + _y_/_mult_.  (This exact formula doesn't appear in the Thomas and Blanchet paper; rather it comes from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.)
 4. For degree _n_, **fbelow(_n_, _k_)** is min((_k_/_n_)\*_mult_, 1&minus;_&epsilon;_), and **fabove(_n_, _k_)** is min((_k_/_n_)\*_y_/_x_,_y_).  (**fbelow** matches _f_ because _f_ is _concave_ on the interval [0, 1], which roughly means that its rate of growth there never goes up.)
 5. Add 1 to _i_ and go to step 2.
 
@@ -446,7 +446,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 
 **_Bernoulli 1/n._** It's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153\)[^16].
 
-**_Random variate with mean n._** Likewise, it's trivial to generate variates with a mean of _n_: Do "Bernoulli 1/n" trials as described above until a trial returns 0, then return the number of trials done this way.  (This is often called 1 plus a "geometric" random variate, and has a mean of _n_.)
+**_Random variate with mean n._** Likewise, it's trivial to generate variates with a mean of _n_: Do "Bernoulli 1/n" trials as described above until a trial returns 0, then return the number of trials done this way.  (This is related to the ambiguously defined "geometric" random variates.)
 
 **_Binomial with parameters n and 1/n._** Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20\)[^16]\:
 
@@ -777,7 +777,7 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 |  _n_/_&pi;_  |  (_n_ is 1, 2, or 3.)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=_n_ and _c_=3.  |
 |  _r_/_&pi;_  |  (_r_ is a rational number greater than 0 and less than 3.)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Create _&mu;_ coin that does: "With probability _r_ &minus; floor(_r_), return 1; otherwise return 0."<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=floor(_r_) and _c_=3.  |
 |  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
-|  exp(1)/4  |  Follow the algorithm for **exp(_&lambda;_/4)/2**, except the probability in step 2 is 2<sup>_n_&minus;1</sup>/(_n_!), _c_ is 0, and step 3 is replaced with "Return 1."  |
+|  exp(1)/4  |  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way, then set _n_ to the number of ones generated this way.<br>Set _n_ to 2\*_n_ + 2.<br>With probability 2<sup>_n_&minus;1</sup>/(_n_!), return 1.  Otherwise return 0. |
 |  _r_\*_&lambda;_ &minus; _r_ + _r_\*exp(&minus;_&lambda;_)  |  (_r_ is a rational number greater than 0, but not greater than 2.  _&lambda;_ is the unknown heads probability of a coin.)<br>Run the **general martingale algorithm** with $g(\lambda) = \lambda$, and with $d_0 = r/2$  and coefficients $a_i = \frac{r}{(i)!} (-1)^i$ if $i\ge 2$ and $a_i=0$ otherwise.  |
 |  _n_\*exp(&minus;1) = _n_/exp(1)  |  (_n_ is 1 or 2.)<br>Create _&lambda;_ coin for algorithm **exp(1) &minus; 2**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=_n_ and _c_=2.  |
 |  _r_\*exp(&minus;1) = _r_/exp(1)  |  (_r_ is a rational number greater than 0, but not less than 2.)<br>Run algorithm for **_c_\*_&lambda;_ &minus; _c_ + _c_\*exp(&minus;_&lambda;_)** with _r_=_r_ and _&lambda;_ being a coin that always returns 1. |
@@ -985,7 +985,7 @@ This algorithm uses the skeleton described earlier in "Building an Arbitrary-Pre
 <a id=Arc_Cosine_Distribution></a>
 ### Arc-Cosine Distribution
 
-The following is a reimplementation of an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129\)[^26].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random variate will be in the interval [0, 1].  This algorithm's result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random variate, as pointed out by Devroye.  The algorithm follows.
+The following is a reimplementation of an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129\)[^26].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random variate will be in the interval [0, 1].  This algorithm's result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random variate, as pointed out by Devroye. (acos(_x_) is the inverse cosine function.)  The algorithm follows.
 
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.

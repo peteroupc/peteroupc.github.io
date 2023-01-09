@@ -75,6 +75,7 @@ This document presents an overview of many common color topics that are of gener
     - [**Kinds of Color Maps**](#Kinds_of_Color_Maps)
     - [**Color Collections**](#Color_Collections)
     - [**Visually Distinct Colors**](#Visually_Distinct_Colors)
+    - [**Linear Gradients**](#Linear_Gradients)
     - [**Pseudocode**](#Pseudocode)
 - [**Generating a Random Color**](#Generating_a_Random_Color)
 - [**Spectral Color Functions**](#Spectral_Color_Functions)
@@ -1420,6 +1421,38 @@ Color maps can list colors used to identify different items. Because of this use
 In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly's list) should use other visual means in addition to color (or rather than color) to help users identify them, such as numbered labels, text labels, different shapes, different shading, different dash patterns, or a combination of these. (Note that under the [**Web Content Accessibility Guidelines 2.0**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/) level A, color may not be [**"the only visual means of conveying information"**](http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color).)
 
 In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest [**color difference**](#Color_Differences) [`COLORDIFF`] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular _color gamut_. Here, the color difference method should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize\)[^42].)
+
+<a id=Linear_Gradients></a>
+### Linear Gradients
+
+A _linear gradient_ is a smooth transition of two or more colors. A linear gradient consists of two or more _gradient stops_, which each consist of a point on the number line and a color located at that point.  The remaining colors on the number line are linearly interpolated between these points.
+
+The following pseudocode, `LinearGradientPoint`, gets the color at the specified point on the linear gradient. It takes a list, `stops`, consisting of one or more gradient stops, and `point`, the desired point on the gradient.  Each gradient stop is a list containing the point and the color, in that order, and the gradient stops are sorted in ascending order by point.   The method is independent of color space, but all colors passed to the method must be in the same color space and [**_linear RGB_ colors**](#RGB_Color_Spaces) should be used rather than encoded RGB colors.
+
+    METHOD LinearGradientPoint(stops, point)
+        if size(stops)==0: return error
+        if size(stops)==1: return stops[0][1]
+        if point <= stops[0][0]: return stops[0][1]
+        lastStop=stops[size(stops)-1]
+        if point >= lastStop[0]: return lastStop[1]
+        i = 0
+        while i < size(stops) - 1
+            i = i + 1
+           s = stops[i][0]
+           e = stops[i + 1][0]
+            if point == s: return stops[i][1]
+            if point == e: return stops[i + 1][1]
+            if point < e
+              interpPoint=(point - s) / (e - s)
+              return Lerp3(stops[i][1],stops[i+1][1],
+                           interpPoint)
+            end
+            i = i + 1
+        end
+        return lastStop[1]
+    end
+
+> **Note:** Linear gradients are often the basis for 2-dimensional gradients such as radial gradients, or even gradients in higher dimensions.  They can generally be described in terms of a _contouring function_, which returns a point on a linear gradient given an N-dimensional point.  For instance, a _radial gradient_ can be implemented by using the following contouring function: `sqrt(x*x+y*y)`, where `x` and `y` are the coordinates of an arbitrary point in 2-dimensional space.  The value of the radial gradient function can then be passed to `LinearGradientPoint` to generate the appropriate color at the given 2-dimensional point.  Note, however, that generating multidimensional gradients can cause undesirable "banding" of colors (see the notes in [**"Dominant_Colors_of_an_Image"**](#Dominant_Colors_of_an_Image)).  Ways to solve banding include either dithering techniques or adding/subtracting a small random offset ("noise") to the value of the contouring function for each 2-dimensional point.
 
 <a id=Pseudocode></a>
 ### Pseudocode

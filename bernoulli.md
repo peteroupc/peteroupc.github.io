@@ -533,8 +533,8 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
 A general-purpose algorithm was given by Mendo (2020/2021\)[^28] that can simulate any probability, as long as&mdash;
 
 - the probability is greater than 0 and less than 1,
-- the probability can be written as a sum of rational numbers greater than 0, that is, as _p_ = _a_\[0\] + _a_\[1\] + ..., and
-- a sequence of rational numbers _err_\[0\], _err_\[1\], ... is available that is nowhere increasing and approaches 0 (_converges_ to 0), where _err_\[_n_\] is not less than the _p_ &minus; (_a_\[0] + ... + _a_\[_n_]).
+- the probability can be written as a (possibly infinite) sum of rational numbers greater than 0, that is, as _p_ = _a_\[0\] + _a_\[1\] + ..., and
+- a sequence of rational numbers _err_\[0\], _err_\[1\], ... is available that is nowhere increasing and approaches 0 (_converges_ to 0), where _err_\[_n_\] is not less than _p_ &minus; (_a_\[0] + ... + _a_\[_n_]).
 
 The algorithm follows.
 
@@ -585,7 +585,7 @@ The case when the sequence _a_ converges to a _natural logarithm_ rather than a 
 
 Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return heads with a probability that depends on _&lambda;_.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm generates 1 with probability equal to the following weighted sum: _g_(0) * _h_<sub>0</sub>(_&lambda;_) + _g_(1) * _h_<sub>1</sub>(_&lambda;_) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7\)[^8].  (Alternatively, the algorithm can be seen as returning heads with probability **E**\[_h_<sub>_X_</sub>(_&lambda;_)\], that is, the expected value, or "long-run average", of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
 
-1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in \[1, 6\], or it could be a Poisson random variate.  (Specifically, the number _X_ is generated with probability _g_(_X_).  If every _g_(_i_) is a rational number, the following [**algorithm**](https://www.keithschwarz.com/darts-dice-coins/) can generate _X_: "(1) Set _X_ to 0 and _d_ to 1. (2) With probability _g_(_X_)/_d_, return _X_; otherwise subtract _g_(_X_) from _d_, add 1 to _X_, and repeat this step.")
+1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer greater than 1 and less than 6, or it could be a Poisson random variate.  (Specifically, the number _X_ is generated with probability _g_(_X_).  If every _g_(_i_) is a rational number, the following [**algorithm**](https://www.keithschwarz.com/darts-dice-coins/) can generate _X_: "(1) Set _X_ to 0 and _d_ to 1. (2) With probability _g_(_X_)/_d_, return _X_; otherwise subtract _g_(_X_) from _d_, add 1 to _X_, and repeat this step.")
 2. Flip the coin represented by _X_ and return the result.
 
 >
@@ -1412,7 +1412,7 @@ Two algorithms:
 
 Three algorithms:
 
-- First algorithm (Flajolet et al., 2010\)[^1]\: Generate a random integer in the interval [0, 6), call it _n_.  If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
+- First algorithm (Flajolet et al., 2010\)[^1]\: Generate a random integer _n_ satisfying 0 &le; _n_ &le; 5, call it _n_.  If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
 - Second algorithm (since arctan(1) = _&pi;_ / 4): Run the second **algorithm for arctan(1/1) \* 1/1**.
 - Third algorithm: See the appendix.
 
@@ -1881,13 +1881,13 @@ Then the algorithm's behavior is given in the tables below.
 | Numbers sorted in descending order | Arbitrary; _D_ = _E_ | _n_ / ((_n_ + 1)!). | Odd is 1&minus;exp(&minus;1); even is exp(&minus;1). See note 3. |
 | Numbers sorted in descending order | Each arbitrary | (&int;<sub>(&minus;&infin;,&infin;)</sub> DPDF(_z_) \* ((ECDF(_z_))<sup>_n_&minus;1</sup>/((_n_&minus;1)!) &minus; (ECDF(_z_))<sup>_n_</sup>/(_n_!)) _dz_), for every _n_ > 0 (see also proof of Theorem 2.1 of (Devroye 1986, Chapter IV\)[^22]. DPDF and ECDF are defined later. | Odd is denominator of formula 1 below. |
 | Alternating numbers | Arbitrary; _D_ = _E_ | (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!, where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_. | Odd is 1&minus;cos(1)/(sin(1)+1); even is cos(1)/(sin(1)+1).  See note 3. |
-| Any | Arbitrary; _D_ = _E_ | (&int;<sub>\[0, 1\]</sub> 1 \* (_z_<sup>_n_&minus;1</sup>\*V(_n_)/((_n_&minus;1)!) &minus; _z_<sup>_n_</sup>\*V(_n_+1)/(_n_!)) _dz_), for every _n_ > 0.  _V_(_n_) is the number of permutations of size _n_ that belong in the permutation class. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\]; this algorithm won't work, for example, if there are 0 permutations of odd size.  | Odd is 1 &minus; 1 / EGF(1); even is 1/EGF(1).<br/>Less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).  See note 3. |
+| Any | Arbitrary; _D_ = _E_ | (&int;<sub>\[0, 1\]</sub> 1 \* (_z_<sup>_n_&minus;1</sup>\*V(_n_)/((_n_&minus;1)!) &minus; _z_<sup>_n_</sup>\*V(_n_+1)/(_n_!)) _dz_), for every _n_ > 0.  _V_(_n_) is the number of permutations of size _n_ that belong in the permutation class. For this algorithm, _V_(_n_) must be greater than 0 and less than or equal to _n_ factorial; this algorithm won't work, for example, if there are 0 permutations of odd size.  | Odd is 1 &minus; 1 / EGF(1); even is 1/EGF(1).<br/>Less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).  See note 3. |
 
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is _x_ or less given that _n_ is ... |
  --- | --- | --- | --- |
 | Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV\)[^22]; see also Forsythe 1972[^58]).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is a uniform random variate greater than 0 and less than 1, this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
 | Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979[^62]).  DPDF and ECDF are as above. |
-| Numbers sorted in descending order | Both uniform variates greater than 0 and less than 1 | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and "cut off" to the interval \[0, 1\] (von Neumann 1951\)[^60]. |
+| Numbers sorted in descending order | Both uniform variates greater than 0 and less than 1 | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and "cut off" to be not less than 0 and not greater than 1 (von Neumann 1951\)[^60]. |
 | Numbers sorted in descending order | _D_ is a uniform variate greater than 0 and less than 1; _E_ is max. of two uniform variates in (0,1). | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 > **Notes:**
@@ -1996,7 +1996,7 @@ If the polynomial is written in so-called "power form" as _c\[0\]_ + _c\[1\]_\*_
 If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2022\)[^17].  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001[^63]).  It is implemented as follows:
 
 - Let _n_ be the polynomial's old degree.  For each _k_ in [0, _n_+1], the new polynomial's coefficient at _k_ is found as follows:
-    - Let _c_\[_j_\] be the old polynomial's _j_<sup>th</sup> coefficient (starting at 0).  Calculate _c_\[_j_\] \* choose(1, _k_&minus;_j_) for each _j_ in the interval \[max(0, _k_&minus;1), min(_n_, _k_)\], then add them together.  The sum is the new coefficient.
+    - Let _c_\[_j_\] be the old polynomial's _j_<sup>th</sup> coefficient (starting at 0).  Calculate _c_\[_j_\] \* choose(1, _k_&minus;_j_) for each integer _j_ satisfying max(0, _k_&minus;1) &le; _j_ &le; min(_n_, _k_), then add them together.  The sum is the new coefficient.
 
 According to the Morina paper, it's enough to do _n_ augmentations on each polynomial for the whole array to meet the conditions above (although fewer than _n_ will often suffice).
 
