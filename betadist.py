@@ -1852,7 +1852,7 @@ def _test_rand_extraction(rg, func, digits=2, nofill=False):
 
     import scipy.stats as st
 
-    # Test whether adding randomness extraction suggested by Devroye and Gravel
+    # Test whether adding randomness extraction
     # preserves the distribution
     samplesize = 5000
     rg = randomgen.RandomGen()

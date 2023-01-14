@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2023/01/02"><meta name="citation_online_date" content="2023/01/02"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2023/01/12"><meta name="citation_online_date" content="2023/01/12"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -77,7 +77,7 @@
 <li>With probability choose(<em>n</em>, <em>ret</em>)*<em>m</em>*2<sup><em>k</em>&minus;<em>n</em>&minus;2</sup>, return <em>ret</em>.  Otherwise, go to step 3. (Here, choose(<em>n</em>, <em>k</em>) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.[^3])</li>
 </ol>
 
-<p>This algorithm has an acceptance rate of 1/16 regardless of the value of <em>n</em>.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as <em>n</em> gets larger, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge&#39;s approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated, then an exponential random variate can be generated, negated, and compared with that logarithm to determine whether the step succeeds.</p>
+<p>This algorithm has an acceptance rate of 1/16 regardless of the value of <em>n</em>.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as <em>n</em> gets larger, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge&#39;s approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated, then 0 minus an exponential random variate can be generated and compared with that logarithm to determine whether the step succeeds.</p>
 
 <p>More specifically, step 7 can be changed as follows:</p>
 
@@ -191,7 +191,7 @@
 
 <ol>
 <li>Choose an integer in [0, <em>s</em>) with probability proportional to the weights in <em>r</em>, where <em>s</em> is the number of items in <em>r</em>.  Call the chosen integer <em>k</em>.</li>
-<li>Set <em>x</em> to an integer chosen uniformly at random, in the half-open interval [<em>D</em>[<em>k</em>][0], <em>D</em>[<em>k</em>][1]).</li>
+<li>Set <em>x</em> to an integer chosen uniformly at random such that <em>x</em> is greater than or equal to <em>D</em>[<em>k</em>][0] and is less than <em>D</em>[<em>k</em>][1].</li>
 <li>With probability <em>w</em>[<em>x</em>] / <em>q</em>[<em>k</em>], return <em>x</em>.  Otherwise, go to step 1.</li>
 </ol></li>
 </ul>
@@ -267,10 +267,10 @@
 
 <h2>Bit Vectors with Random Bit Flips</h2>
 
-<p>Chakraborty and Vardeman (2021)[^13] describes distributions of bit vectors with a random number of bit flips. Given three parameters &mdash; <em>&mu;</em> is a <em>p</em>-item vector (list) with only zeros and/or ones; <em>p</em> is the size of <em>&mu;</em>; and <em>&alpha;</em> is a spread parameter in (0, 1) &mdash; do the following to generate such a vector:</p>
+<p>Chakraborty and Vardeman (2021)[^13] describes distributions of bit vectors with a random number of bit flips. Given three parameters &mdash; <em>&mu;</em> is a <em>p</em>-item vector (list) with only zeros and/or ones; <em>p</em> is the size of <em>&mu;</em>; and <em>&alpha;</em> is a spread parameter greater than 0 and less than 1 &mdash; do the following to generate such a vector:</p>
 
 <ol>
-<li>Generate a random integer <em>c</em> in the interval [0, <em>p</em>] in some way.  (This is the number of bit flips.)</li>
+<li>Generate a random integer <em>c</em> in the interval [0, <em>p</em>] in some way.  (<em>c</em> need not be uniformly distributed.  This is the number of bit flips.)</li>
 <li>Create a <em>p</em>-item list <em>&nu;</em>, where the first <em>c</em> items are ones and the rest are zeros.  <a href="https://peteroupc.github.io/randomfunc.html#Shuffling"><strong>Shuffle</strong></a> the list.</li>
 <li>Create a copy of <em>&mu;</em>, call it <em>M</em>.  Then for each <em>i</em> where <em>&nu;</em>[<em>i</em>] = 1, set <em>M</em>[<em>i</em>] to 1 &minus; <em>M</em>[<em>i</em>].  Then return <em>M</em>.</li>
 </ol>

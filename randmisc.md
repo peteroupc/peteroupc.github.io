@@ -57,7 +57,7 @@ Take the following sampler of a binomial(_n_, 1/2) distribution (where _n_ is ev
 6. (Second, accept or reject _ret_.) If _ret_ < 0 or _ret_ > _n_, go to step 3.
 7. With probability choose(_n_, _ret_)\*_m_\*2<sup>_k_&minus;_n_&minus;2</sup>, return _ret_.  Otherwise, go to step 3. (Here, choose(_n_, _k_) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.[^3])
 
-This algorithm has an acceptance rate of 1/16 regardless of the value of _n_.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as _n_ gets larger, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge's approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated, then an exponential random variate can be generated, negated, and compared with that logarithm to determine whether the step succeeds.
+This algorithm has an acceptance rate of 1/16 regardless of the value of _n_.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as _n_ gets larger, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge's approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated, then 0 minus an exponential random variate can be generated and compared with that logarithm to determine whether the step succeeds.
 
 More specifically, step 7 can be changed as follows:
 
@@ -139,7 +139,7 @@ An algorithm for sampling an integer in the interval \[_a_, _b_) with probabilit
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_a_, _a_+1\], then set _j_ to 1, then while _j_ &lt; _n_, append the list \[_j_, _j_ + min((_b_&minus;_a_) &minus; _j_, _j_)\] and multiply _j_ by 2.
 - Sampling:
     1. Choose an integer in [0, _s_) with probability proportional to the weights in _r_, where _s_ is the number of items in _r_.  Call the chosen integer _k_.
-    2. Set _x_ to an integer chosen uniformly at random, in the half-open interval \[_D_\[_k_\]\[0\], _D_\[_k_\]\[1\]).
+    2. Set _x_ to an integer chosen uniformly at random such that _x_ is greater than or equal to _D_\[_k_\]\[0\] and is less than _D_\[_k_\]\[1\].
     3. With probability _w_\[_x_\] / _q_\[_k_\], return _x_.  Otherwise, go to step 1.
 
 For _nowhere decreasing_ rather than nowhere increasing weights, the algorithm is as follows instead:
@@ -190,9 +190,9 @@ The algorithm's result is a vector _q_, which can be used only once to sample _i
 <a id=Bit_Vectors_with_Random_Bit_Flips></a>
 ## Bit Vectors with Random Bit Flips
 
-Chakraborty and Vardeman (2021)[^13] describes distributions of bit vectors with a random number of bit flips. Given three parameters &mdash; _&mu;_ is a _p_-item vector (list) with only zeros and/or ones; _p_ is the size of _&mu;_; and _&alpha;_ is a spread parameter in (0, 1) &mdash; do the following to generate such a vector:
+Chakraborty and Vardeman (2021)[^13] describes distributions of bit vectors with a random number of bit flips. Given three parameters &mdash; _&mu;_ is a _p_-item vector (list) with only zeros and/or ones; _p_ is the size of _&mu;_; and _&alpha;_ is a spread parameter greater than 0 and less than 1 &mdash; do the following to generate such a vector:
 
-1. Generate a random integer _c_ in the interval \[0, _p_] in some way.  (This is the number of bit flips.)
+1. Generate a random integer _c_ in the interval \[0, _p_] in some way.  (_c_ need not be uniformly distributed.  This is the number of bit flips.)
 2. Create a _p_-item list _&nu;_, where the first _c_ items are ones and the rest are zeros.  [**Shuffle**](https://peteroupc.github.io/randomfunc.html#Shuffling) the list.
 3. Create a copy of _&mu;_, call it _M_.  Then for each _i_ where _&nu;_\[_i_\] = 1, set _M_\[_i_\] to 1 &minus; _M_\[_i_\].  Then return _M_.
 

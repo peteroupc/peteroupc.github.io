@@ -75,6 +75,7 @@ The algorithm, called **Algorithm A** in this document, follows.
 >    and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.
 > 2. As can be seen in Feng et al. (2016\)[^3], the following is equivalent to steps 2 and 3 of _Algorithm A_: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), generate a gamma random variate with shape parameter _r_ and scale 1, and add that variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, generate a gamma random variate with shape parameter _r_ and scale 1, and add that variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like _Algorithm A_.
 > 3. The generation of a gamma random variate and the division by that variate can cause numerical errors in practice, such as rounding and cancellations, unless care is taken.
+> 4. Huber proposes another algorithm that claims to be faster when the mean is bounded away from zero; see (Huber 2022)[^15].
 
 <a id=A_Relative_Error_Algorithm_for_a_Bounded_Stream></a>
 ## A Relative-Error Algorithm for a Bounded Stream
@@ -383,6 +384,8 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 [^13]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
 [^14]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+
+[^15]: Huber, M., "[Tight relative estimation in the mean of Bernoulli ranodm variables](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
 
 <a id=License></a>
 ## License
