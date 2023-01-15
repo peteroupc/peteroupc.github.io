@@ -75,12 +75,12 @@ The algorithm, called **Algorithm A** in this document, follows.
 >    and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.
 > 2. As can be seen in Feng et al. (2016\)[^3], the following is equivalent to steps 2 and 3 of _Algorithm A_: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), generate a gamma random variate with shape parameter _r_ and scale 1, and add that variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, generate a gamma random variate with shape parameter _r_ and scale 1, and add that variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like _Algorithm A_.
 > 3. The generation of a gamma random variate and the division by that variate can cause numerical errors in practice, such as rounding and cancellations, unless care is taken.
-> 4. Huber proposes another algorithm that claims to be faster when the mean is bounded away from zero; see (Huber 2022)[^15].
+> 4. Huber proposes another algorithm that claims to be faster when the mean is bounded away from zero; see (Huber 2022)[^4].
 
 <a id=A_Relative_Error_Algorithm_for_a_Bounded_Stream></a>
 ## A Relative-Error Algorithm for a Bounded Stream
 
-The following algorithm comes from Huber and Jones (2019\)[^4]; see also Huber (2017\)[^5].  It estimates the expected value of a stream of random variates with the following properties:
+The following algorithm comes from Huber and Jones (2019\)[^5]; see also Huber (2017\)[^6].  It estimates the expected value of a stream of random variates with the following properties:
 
 - The numbers in the stream lie in the closed interval [0, 1].
 - The stream of numbers can't take on the value 0 with probability 1.
@@ -132,7 +132,7 @@ The standard deviation sub-algorithm follows.
 <a id=An_Absolute_Error_Adaptive_Algorithm></a>
 ## An Absolute-Error Adaptive Algorithm
 
-The following algorithm comes from Kunsch et al. (2019\)[^6].  It estimates the mean of a stream of random variates with the following properties:
+The following algorithm comes from Kunsch et al. (2019\)[^7].  It estimates the mean of a stream of random variates with the following properties:
 
 - The distribution of numbers in the stream has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m.
 - The exact _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. need not be known in advance.
@@ -147,7 +147,7 @@ The algorithm has the following parameters:
 - _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be less than 1.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
 - _p_: The degree of the _p_<sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.
 - _q_: The degree of the _q_<sup>th</sup> c.a.m.  _q_ must be greater than _p_.
-- _&kappa;_: Maximum value allowed for the following value: the _q_<sup>th</sup> c.a.m.'s  _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012\)[^7] [^8].) _&kappa;_ may not be less than 1.
+- _&kappa;_: Maximum value allowed for the following value: the _q_<sup>th</sup> c.a.m.'s  _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012\)[^8] [^9].) _&kappa;_ may not be less than 1.
 
 Both _p_ and _q_ must be 1 or greater and are usually integers.
 
@@ -161,7 +161,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 1. If _&kappa;_ is 1:
     1. Set _n_ to ceil(ln(1/_&delta;_)/ln(2))+1 (or an integer greater than this).
     2. Get _n_ samples from the stream and return (_mn_ + _mx_)/2, where _mx_ is the highest sample and _mn_ is the lowest.
-2. Set _k_ to ceil((2*ln(1/_&delta;_))/ln(4/3)).  If _k_ is even[^9], add 1 to _k_.
+2. Set _k_ to ceil((2*ln(1/_&delta;_))/ln(4/3)).  If _k_ is even[^10], add 1 to _k_.
 3. Set _kp_ to _k_.
 4. Set _&kappa;_ to _&kappa;_<sup>(_p_\*_q_/(_q_&minus;_p_))</sup>.
 5. If _q_ is 2 or less:
@@ -183,10 +183,10 @@ The algorithm, called **Algorithm C** in this document, follows.
 >
 > 1. The interval $[\hat{\mu} - \epsilon, \hat{\mu} + \epsilon]$ is also known as a _confidence interval_ for the mean, with _confidence level_ at least 1 &minus; _&delta;_ (where $\hat{\mu}$ is an estimate of the mean returned by _Algorithm C_).
 > 2. If the stream of random variates meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.
-> 3. Theorem 3.4 of Kunsch et al. (2019\)[^6] shows that there is no mean estimation algorithm that&mdash;
+> 3. Theorem 3.4 of Kunsch et al. (2019\)[^7] shows that there is no mean estimation algorithm that&mdash;
 >      - produces an estimate within a user-specified error tolerance (in terms of _absolute error_, as opposed to _relative error_) with probability greater than a user-specified value, and
 >      - works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).
-> 4. There is also a mean estimation algorithm for very high dimensions, which works if the stream of multidimensional variates has a finite variance (Lee and Valiant 2022)[^10], but this algorithm is impractical &mdash; it requires millions of samples at best.
+> 4. There is also a mean estimation algorithm for very high dimensions, which works if the stream of multidimensional variates has a finite variance (Lee and Valiant 2022)[^11], but this algorithm is impractical &mdash; it requires millions of samples at best.
 >
 >
 > **Examples:**
@@ -198,7 +198,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 <a id=Estimating_the_Mode></a>
 ## Estimating the Mode
 
-Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the _mode_.(Dutta and Goswami 2010)[^11]  This assumes the following are known:
+Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the _mode_.(Dutta and Goswami 2010)[^12]  This assumes the following are known:
 
 - Exactly one item must occur more frequently than the others.
 - $\epsilon$ is greater than 0 and less than one half of the smallest possible difference between the mode's probability and the next most frequent item's probability.
@@ -233,13 +233,13 @@ The algorithm, like _Algorithm C_, works only if the stream's distribution has t
 2. Run _Algorithm C_ with the given parameters _p_, _q_, _&kappa;_, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).
 
-A simpler version of _Algorithm D_ was given as an answer to the linked-to question; see also Jiang and Hickernell (2014\)[^12].  As with _Algorithm D_, this algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].  The algorithm, called **Algorithm E** in this document, follows.
+A simpler version of _Algorithm D_ was given as an answer to the linked-to question; see also Jiang and Hickernell (2014\)[^13].  As with _Algorithm D_, this algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].  The algorithm, called **Algorithm E** in this document, follows.
 
 1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
 2. (Calculate the sample size.) Set _n_ to ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). (As the answer notes, this sample size is based on Hoeffding's inequality.)
 3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
 
-If the stream is **unbounded** (can take on any real number) and its distribution has a **known upper bound on the standard deviation** _&sigma;_ (**or the variance** _&sigma;_<sup>2</sup>), then a similar algorithm follows from Chebyshev's inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012/2013\)[^7], but is adapted to find the mean for _f_(_x_), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers. The algorithm, called **Algorithm F** in this document, follows.
+If the stream is **unbounded** (can take on any real number) and its distribution has a **known upper bound on the standard deviation** _&sigma;_ (**or the variance** _&sigma;_<sup>2</sup>), then a similar algorithm follows from Chebyshev's inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012/2013\)[^8], but is adapted to find the mean for _f_(_x_), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers. The algorithm, called **Algorithm F** in this document, follows.
 
 1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
 2. (Calculate the sample size.) Set _n_ to ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)).
@@ -304,7 +304,7 @@ kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
 pprint(Max(1,kappa))
 ```
 
-> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^13], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
+> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^14], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
 >
 > 1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
 > 2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
@@ -326,7 +326,7 @@ Given _m_ coins each with unknown probability of heads, the following algorithm 
 
 In this section, ilog(_a_, _r_) means either _a_ if _r_ is 0, or max(ln(ilog(_a_, _r_&minus;1)), 1) otherwise.
 
-Agarwal et al. (2017\)[^14] called this algorithm "aggressive elimination", and it can be described as follows.
+Agarwal et al. (2017\)[^15] called this algorithm "aggressive elimination", and it can be described as follows.
 
 1. Let _t_ be ceil((ilog(_m_, _r_) + ln(8\*_k_/_&delta;_)) \* 2/(_D_\*_D_)).
 2. For each integer _i_ in \[1, _m_\], flip the coin labeled _i_, _t_ many times, then set _P_\[_i_\] to a list of two items: first is the number of times coin _i_ showed heads, and second is the label _i_.
@@ -348,7 +348,7 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
     - following a geometric distribution, and/or
     - having decreasing or nowhere increasing probabilities?
 
-    Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al. 2019[^6]).  Here, the accuracy tolerances for small error and high probability are user-specified.  A relative-error algorithm for **E**\[_X_\] for the geometric distribution was given already in a note.
+    Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al. 2019[^7]).  Here, the accuracy tolerances for small error and high probability are user-specified.  A relative-error algorithm for **E**\[_X_\] for the geometric distribution was given already in a note.
 
 2. How can _Algorithm D_ or _Algorithm E_ be adapted to a known discontinuous function _g_, so that the algorithm finds _g_(**E**[_X_]) with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around _g_'s discontinuities?  Is it enough to replace _g_ with a continuous function _f_ that equals _g_ everywhere except at that "negligible" area?  Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified.  Perhaps the tolerance could be defined as the integral ("area under the graph") of absolute differences between _f_ and _f_ instead of "negligible area"; in that case, how should the continuous _f_ be built?
 
@@ -363,29 +363,29 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 
 [^3]: Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016).
 
-[^4]: Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.
+[^4]: Huber, M., "[**Tight relative estimation in the mean of Bernoulli ranodm variables**](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
 
-[^5]: Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.
+[^5]: Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.
 
-[^6]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .
+[^6]: Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.
 
-[^7]: Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v3)", arXiv:1208.4318v3 [math.ST], 2012/2013.
+[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .
 
-[^8]: As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.
+[^8]: Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v3)", arXiv:1208.4318v3 [math.ST], 2012/2013.
 
-[^9]: "_k_ is even" means that _k_ is divisible by 2.  This is true if _k_ &minus; 2\*floor(_k_/2) equals 0, or if the least significant bit of abs(_x_) is 0.
+[^9]: As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.
 
-[^10]: Lee, J.C. and Valiant, P., 2022. [**Optimal Sub-Gaussian Mean Estimation in Very High Dimensions**](https://drops.dagstuhl.de/opus/volltexte/2022/15694/). In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik.
+[^10]: "_k_ is even" means that _k_ is divisible by 2.  This is true if _k_ &minus; 2\*floor(_k_/2) equals 0, or if the least significant bit of abs(_x_) is 0.
 
-[^11]: Dutta, Santanu, and Alok Goswami. "Mode estimation for discrete distributions." Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.
+[^11]: Lee, J.C. and Valiant, P., 2022. [**Optimal Sub-Gaussian Mean Estimation in Very High Dimensions**](https://drops.dagstuhl.de/opus/volltexte/2022/15694/). In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik.
 
-[^12]: Jiang, L., Hickernell, F.J., "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", arXiv:1411.1151 [math.NA], 2014.
+[^12]: Dutta, Santanu, and Alok Goswami. "Mode estimation for discrete distributions." Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.
 
-[^13]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
+[^13]: Jiang, L., Hickernell, F.J., "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", arXiv:1411.1151 [math.NA], 2014.
 
-[^14]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+[^14]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
-[^15]: Huber, M., "[Tight relative estimation in the mean of Bernoulli ranodm variables](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
+[^15]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
 
 <a id=License></a>
 ## License
