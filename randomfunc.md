@@ -2284,7 +2284,7 @@ The randomization methods in this document are deterministic (that is, they prod
 5. **Fixed amount of "randomness".** Given a _k_-bit integer _n_ (which lies in the interval \[0, 2<sup>_k_</sup>) and is chosen uniformly at random), values that approximate a probability distribution (for example, `Poisson`, `Normal`) can be generated with the integer _n_ by&mdash;
 
     - [**finding the quantile for (_n_+1)/(2<sup>_k_</sup>+2)**](#Inverse_Transform_Sampling) (if the distribution can take on any value in the real line), or
-    - [**finding the quantile for _n_/(2<sup>_k_</sup>+1)**](#Inverse_Transform_Sampling) (if the distribution takes on only values in the positive real line), or
+    - finding the quantile for _n_/(2<sup>_k_</sup>+1) (if the distribution takes on only values in the positive real line), or
     - finding the quantile for _n_/2<sup>_k_</sup> (if the distribution has a minimum and maximum value), or
     - using _n_ to help initialize a local PRNG and using the PRNG to generate a sample from that distribution.
 
