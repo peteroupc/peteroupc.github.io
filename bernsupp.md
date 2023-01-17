@@ -610,8 +610,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^37]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. "Computing minimal interpolants in C1, 1 (Rd)." Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.
 
-[^38]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
-
 <a id=Appendix></a>
 ## Appendix
 
