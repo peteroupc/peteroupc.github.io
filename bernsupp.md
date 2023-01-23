@@ -140,6 +140,7 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 >
 >     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
 >     * **fabove**(_n_, _k_) = 893/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*_n_).
+
 **Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (`High`(_&lambda;_)) that "dominates" _f_ everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.
 
 More specifically, `High`(_&lambda;_) must meet the following requirements:
@@ -150,7 +151,7 @@ More specifically, `High`(_&lambda;_) must meet the following requirements:
 - 1 &gt; `High`(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
 - If _f_(1) = 0, then `High`(1) = 0. (This is required to ensure correctness in case _&lambda;_ is 1.)
 
-Also, `High` should be a function with a simple Bernoulli factory algorithm.  For example, `High` can be a polynomial in Bernstein form of degree _n_ whose _n_ plus one coefficients are \[0, 1, 1, ..., 1\].  This polynomial is easy to simulate using the algorithms from the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)".
+Also, `High` should be a function with a simple Bernoulli factory algorithm.  For example, `High` can be a polynomial in Bernstein form of degree _n_ whose _n_ plus one coefficients are \[0, 1, 1, ..., 1\].  This polynomial is easy to simulate using the algorithms from the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)".[^38]
 
 The algorithm is now described.
 
@@ -612,6 +613,8 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 [^36]: Le Gruyer, Erwan. "Minimal Lipschitz extensions to differentiable functions defined on a Hilbert space." Geometric and Functional Analysis 19, no. 4 (2009): 1101-1118.
 
 [^37]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. "Computing minimal interpolants in C1, 1 (Rd)." Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.
+
+[^38]: In this case, an algorithm to simulate `High`(_&lambda;_) is: Flip the input coin _n_ times or until a flip returns 1, whichever comes first, then output the last coin flip result.
 
 <a id=Appendix></a>
 ## Appendix

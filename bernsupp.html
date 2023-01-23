@@ -200,11 +200,12 @@
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 893/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2/(7*<em>n</em>).
-<strong>Certain functions that equal 0 at 0.</strong> This approach involves transforming the function <em>f</em> so that it no longer equals 0 at the point 0.  This can be done by dividing <em>f</em> by a function (<code>High</code>(<em>&lambda;</em>)) that &quot;dominates&quot; <em>f</em> everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 893/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2/(7*<em>n</em>).</li>
 </ul></li>
 </ol>
 </blockquote>
+
+<p><strong>Certain functions that equal 0 at 0.</strong> This approach involves transforming the function <em>f</em> so that it no longer equals 0 at the point 0.  This can be done by dividing <em>f</em> by a function (<code>High</code>(<em>&lambda;</em>)) that &quot;dominates&quot; <em>f</em> everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.</p>
 
 <p>More specifically, <code>High</code>(<em>&lambda;</em>) must meet the following requirements:</p>
 
@@ -216,7 +217,7 @@
 <li>If <em>f</em>(1) = 0, then <code>High</code>(1) = 0. (This is required to ensure correctness in case <em>&lambda;</em> is 1.)</li>
 </ul>
 
-<p>Also, <code>High</code> should be a function with a simple Bernoulli factory algorithm.  For example, <code>High</code> can be a polynomial in Bernstein form of degree <em>n</em> whose <em>n</em> plus one coefficients are [0, 1, 1, ..., 1].  This polynomial is easy to simulate using the algorithms from the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;.</p>
+<p>Also, <code>High</code> should be a function with a simple Bernoulli factory algorithm.  For example, <code>High</code> can be a polynomial in Bernstein form of degree <em>n</em> whose <em>n</em> plus one coefficients are [0, 1, 1, ..., 1].  This polynomial is easy to simulate using the algorithms from the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;.[^38]</p>
 
 <p>The algorithm is now described.</p>
 
@@ -983,6 +984,8 @@
 <p>[^36]: Le Gruyer, Erwan. &quot;Minimal Lipschitz extensions to differentiable functions defined on a Hilbert space.&quot; Geometric and Functional Analysis 19, no. 4 (2009): 1101-1118.</p>
 
 <p>[^37]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. &quot;Computing minimal interpolants in C1, 1 (Rd).&quot; Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.</p>
+
+<p>[^38]: In this case, an algorithm to simulate <code>High</code>(<em>&lambda;</em>) is: Flip the input coin <em>n</em> times or until a flip returns 1, whichever comes first, then output the last coin flip result.</p>
 
 <p><a id=Appendix></a></p>
 
