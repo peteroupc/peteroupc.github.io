@@ -1478,7 +1478,7 @@ Generating random data points based on how a list of data points is distributed 
 
 > **Notes:**
 >
-> 1. Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (for example, multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the simplest kind that shows an acceptable _predictive accuracy_ for the data set (for example, information criterion, precision, recall) should be chosen.
+> 1. Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (for example, multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the simplest kind that shows an acceptable _predictive performance_ for the data set (for example, information criterion, precision, recall) should be chosen.
 > 2. If the existing data points each belong in one of several _categories_, choosing a random category could be done by choosing a number at random with probability proportional to the number of data points in each category (see "[**Weighted Choice**](#Weighted_Choice)").
 > 3. If the existing data points each belong in one of several _categories_, choosing a random data point _and_ its category could be done&mdash;
 >     1. by choosing a random data point based on all the existing data points, then finding its category (for example, via machine learning models known as _classification models_), or
@@ -2283,9 +2283,7 @@ The randomization methods in this document are deterministic (that is, they prod
 4. **Multithreading.** Multithreading can serve as a fast way to generate multiple random variates at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a pseudorandom number generator (or another program that simulates a "source of random numbers"), and letting each thread fill its assigned chunk with random variates.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
 5. **Fixed amount of "randomness".** Given a _k_-bit integer _n_ (which lies in the interval \[0, 2<sup>_k_</sup>) and is chosen uniformly at random), values that approximate a probability distribution (for example, `Poisson`, `Normal`) can be generated with the integer _n_ by&mdash;
 
-    - [**finding the quantile for (_n_+1)/(2<sup>_k_</sup>+2)**](#Inverse_Transform_Sampling) (if the distribution can take on any value in the real line), or
-    - finding the quantile for _n_/(2<sup>_k_</sup>+1) (if the distribution takes on only values in the positive real line), or
-    - finding the quantile for _n_/2<sup>_k_</sup> (if the distribution has a minimum and maximum value), or
+    - [**finding the quantile for (_n_+1)/(2<sup>_k_</sup>+2)**](#Inverse_Transform_Sampling), or
     - using _n_ to help initialize a local PRNG and using the PRNG to generate a sample from that distribution.
 
     An application should use this suggestion only if it wants to ensure a fixed amount of "randomness" per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>_k_</sup> different outcomes or less this way. (In general, _n_ can't be chosen uniformly at random with a _fixed_ number of randomly chosen bits, unless the number of different outcomes for _n_ is a power of 2.)

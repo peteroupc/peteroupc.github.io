@@ -359,7 +359,7 @@ As much as possible, **applications should use existing libraries and techniques
 A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_.
 
 For pseudorandom number generation purposes:
-- The individual bits of a hash code can serve as pseudorandom numbers, or the hash code can serve as the seed for a PRNG.
+- If the individual bits of a hash code behave like independent uniform random bits, the code can serve as the seed for a PRNG or those bits can serve as pseudorandom numbers.
 - Good hash functions include cryptographic hash functions (for example, SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs.
 - Poor hash functions include linear PRNGs such as LCGs and the Xorshift family.
 
@@ -382,7 +382,7 @@ A _pseudorandom function_ is a kind of hash function that takes&mdash;
 - a _secret_ (such as a password or a long-term key), and
 - additional data such as a _salt_ (which is designed to mitigate precomputation attacks) or a _nonce_,
 
-and outputs a pseudorandom number.  (If the output is encryption keys, the function is also called a _key derivation function_; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess &mdash; examples of such functions include PBKDF2 (RFC 2898), `scrypt` (RFC 7914), and Ethash.  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.
+and outputs a pseudorandom number whose bits behave like independent uniform random bits.  (If the output is encryption keys, the function is also called a _key derivation function_; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess &mdash; examples of such functions include PBKDF2 (RFC 2898), `scrypt` (RFC 7914), and Ethash.  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.
 
 <a id=RNG_Topics></a>
 ## RNG Topics

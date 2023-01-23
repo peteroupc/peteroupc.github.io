@@ -140,73 +140,76 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 >
 >     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
 >     * **fabove**(_n_, _k_) = 893/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*_n_).
+**Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (`High`(_&lambda;_)) that "dominates" _f_ everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.
 
-**Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (_h_(_&lambda;_)) that "dominates" _f_ everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.
+More specifically, `High`(_&lambda;_) must meet the following requirements:
 
-More specifically, _h_(_&lambda;_) must meet the following requirements:
+- `High`(_&lambda;_) is continuous on the closed unit interval.
+- `High`(0) = 0. (This is required to ensure correctness in case _&lambda;_ is 0.)
+- 1 &ge; `High`(1) &ge; _f_(1) &ge; 0.
+- 1 &gt; `High`(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
+- If _f_(1) = 0, then `High`(1) = 0. (This is required to ensure correctness in case _&lambda;_ is 1.)
 
-- _h_(_&lambda;_) is continuous on the closed unit interval.
-- _h_(0) = 0. (This is required to ensure correctness in case _&lambda;_ is 0.)
-- 1 &ge; _h_(1) &ge; _f_(1) &ge; 0.
-- 1 &gt; _h_(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
-- If _f_(1) = 0, then _h_(1) = 0. (This is required to ensure correctness in case _&lambda;_ is 1.)
-
-Also, _h_ should be a function with a simple Bernoulli factory algorithm.  For example, _h_ can be a polynomial in Bernstein form of degree _n_ whose _n_ plus one coefficients are \[0, 1, 1, ..., 1\].  This polynomial is easy to simulate using the algorithms from the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)".
+Also, `High` should be a function with a simple Bernoulli factory algorithm.  For example, `High` can be a polynomial in Bernstein form of degree _n_ whose _n_ plus one coefficients are \[0, 1, 1, ..., 1\].  This polynomial is easy to simulate using the algorithms from the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)".
 
 The algorithm is now described.
 
-Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;_) (roughly speaking, the value that _f_(_&nu;_)/_h_(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
+Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/`High`(_&nu;_) (roughly speaking, the value that _f_(_&nu;_)/`High`(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
 
 - _f_(0) = 0 and _f_(1) < 1, and
 - _g_(_&lambda;_) is continuous on the closed unit interval and belongs in one of the classes of functions given earlier,
 
 then _f_ can be simulated using the following algorithm:
 
-1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
+1. Run a Bernoulli factory algorithm for `High`.  If the call returns 0, return 0. (For example, if `High`(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
 2. Run a Bernoulli factory algorithm for _g_(.) and return the result of that algorithm.  This can be one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) if there is a way to calculate polynomials that converge to _g_(.) in a manner needed for that algorithm (for example, if _g_ is described earlier in this section).
 
 > **Notes:**
 >
-> 1. It may happen that _g_(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new _g_ and _h_ functions that are found based on the current _g_ function.  See the second example below.
+> 1. It may happen that _g_(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new _g_ and `High` functions that are found based on the current _g_ function.  See the second example below.
 > 2. If&mdash;
 >
 >     - _f_ is strictly increasing,
->     - _h_(_&lambda;_) = _&lambda;_, and
+>     - `High`(_&lambda;_) = _&lambda;_, and
 >     - _f&prime;_(_&lambda;_), the first derivative of _f_, is continuous on the closed unit interval,
 >     - 0 < _f&prime;_(_&lambda;_) < 1 whenever 0 < _&lambda;_ < 1, and
 >     - _f&prime;_ belongs in one of the classes of functions given earlier,
 >
 >     then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform random variate, greater than 0 and less than 1, is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010\)[^2] \(the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
+> 3. `High`(_&lambda;_) can also equal 1 instead of be described in this section.  That leads to the original Bernoulli factory algorithm for _f_(_&lambda;_).
 >
 > **Examples:**
 >
-> 1. If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, then _f_ is less than or equal to _h_(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following code in Python that uses the SymPy computer algebra library computes this example: `fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))`.
-> 2. If _f_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, then _f_ is less than or equal to _h_(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 0 if _&lambda;_ = 0, and (cosh(_&lambda;_)&minus;1)/_&lambda;_ otherwise.  Now, since _g_(0) = 0, find new functions _g_ and _h_ based on the current _g_.  The current _g_ is less than or equal to _H_(_&lambda;_) = _&lambda;_\*3\*(2&minus;_&lambda;_)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so _G_(_&lambda;_) = 5/12 if _&lambda;_ = 0, and &minus;(5\*cosh(_&lambda;_) &minus; 5)/(3\*_&lambda;_<sup>2</sup>\*(_&lambda;_&minus;2)) otherwise. _G_ is bounded away from 0 and 1, resulting in the following algorithm:
+> 1. If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, then _f_ is less than or equal to `High`(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following code in Python that uses the SymPy computer algebra library computes this example: `fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))`.
+> 2. If _f_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, then _f_ is less than or equal to `High`(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 0 if _&lambda;_ = 0, and (cosh(_&lambda;_)&minus;1)/_&lambda;_ otherwise.  Now, since _g_(0) = 0, find new functions _g_ and `High` based on the current _g_.  The current _g_ is less than or equal to `High`(_&lambda;_) = _&lambda;_\*3\*(2&minus;_&lambda;_)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so _G_(_&lambda;_) = 5/12 if _&lambda;_ = 0, and &minus;(5\*cosh(_&lambda;_) &minus; 5)/(3\*_&lambda;_<sup>2</sup>\*(_&lambda;_&minus;2)) otherwise. _G_ is bounded away from 0 and 1, resulting in the following algorithm:
 >
->     1. (Simulate _h_.) Flip the input coin.  If it returns 0, return 0.
->     2. (Simulate _H_.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
+>     1. (Simulate `High`.) Flip the input coin.  If it returns 0, return 0.
+>     2. (Simulate `High`.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
 >     3. Run a Bernoulli factory algorithm for _G_ (which might involve building polynomials that converge to _G_, noticing that _G_'s derivative is Lipschitz continuous) and return the result of that algorithm.
 
-**Certain functions that equal 0 at 0 and 1 at 1.**  Let _f_, _g_, and _h_ be functions as defined earlier, except that _f_(0) = 0 and _f_(1) = 1.  Define the following additional functions:
+**Certain functions that equal 0 at 0 and 1 at 1.**  Let _f_, _g_, and `High` be functions as defined earlier, except that _f_(0) = 0 and _f_(1) = 1.  Define the following additional functions:
 
-- _&omega;_(_&lambda;_) is a function that meets the following requirements:
-    - _&omega;_(_&lambda;_) is continuous on the closed unit interval.
-    - _&omega;_(0) = 0 and _&omega;_(1) = 1.
-    - 1 &gt; _f_(_&lambda;_) &gt; _&omega;_(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
-- _q_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _&omega;_(_&nu;_)/_h_(_&nu;_).
+- `Low`(_&lambda;_) is a function that meets the following requirements:
+    - `Low`(_&lambda;_) is continuous on the closed unit interval.
+    - `Low`(0) = 0 and `Low`(1) = 1.
+    - 1 &gt; _f_(_&lambda;_) &gt; `Low`(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
+- _q_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> `Low`(_&nu;_)/`High`(_&nu;_).
 - _r_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> (1&minus;_g_(_&nu;_))/(1&minus;_q_(_&nu;_)).
 
-Roughly speaking, _&omega;_ is a function that bounds _f_ from below, just as _h_ bounds _f_ from above. _&omega;_ should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both _&omega;_ and _h_ are polynomials of the same degree, _q_ will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
+Roughly speaking, `Low` is a function that bounds _f_ from below, just as `High` bounds _f_ from above. `Low` should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both `Low` and `High` are polynomials of the same degree, _q_ will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
 
 Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can be simulated using the following algorithm:
 
-1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
+1. Run a Bernoulli factory algorithm for `High`.  If the call returns 0, return 0. (For example, if `High`(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
 2. Run a Bernoulli factory algorithm for _q_(.).  If the call returns 1, return 1.
 3. Run a Bernoulli factory algorithm for _r_(.), and return 1 minus the result of that call.  The Bernoulli factory algorithm can be one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) if there is a way to calculate polynomials that converge to _r_(.) in a manner needed for that algorithm (for example, if _r_ is described earlier in this section).
 
-> **Note:** Quick proof: Rewrite $f=h\cdot(q\cdot1+(1-q)\cdot(1-r))+(1-h)\cdot0$.
+> **Notes:**
 >
-> **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is less than or equal to _h_(_&lambda;_) = _&lambda;_, and greater than or equal to _&omega;_(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = _&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: `fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)`.
+> 1. Quick proof: Rewrite $f=\text{High}\cdot(q\cdot1+(1-q)\cdot(1-r))+(1-\text{High})\cdot0$.
+> 2. `High`(_&lambda;_) is allowed to equal 1 if the _r_(.) in step 3 is allowed to equal 0 at 0.
+>
+> **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is less than or equal to `High`(_&lambda;_) = _&lambda;_, and greater than or equal to `Low`(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = _&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: `fx=(1-exp(x))/(1-exp(1)); high=x; low=x**2; q=(low/high); r=(1-fx/high)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)`.
 
 **Other functions that equal 0 or 1 at the endpoints 0 and/or 1.** If _f_ does not fully admit a polynomial-building scheme under the convex, concave, Lipschitz derivative, and Hölder classes:
 

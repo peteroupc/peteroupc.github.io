@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/01/17"><meta name="citation_online_date" content="2023/01/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/01/22"><meta name="citation_online_date" content="2023/01/22"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -200,28 +200,27 @@
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 893/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2/(7*<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 893/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2/(7*<em>n</em>).
+<strong>Certain functions that equal 0 at 0.</strong> This approach involves transforming the function <em>f</em> so that it no longer equals 0 at the point 0.  This can be done by dividing <em>f</em> by a function (<code>High</code>(<em>&lambda;</em>)) that &quot;dominates&quot; <em>f</em> everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.</li>
 </ul></li>
 </ol>
 </blockquote>
 
-<p><strong>Certain functions that equal 0 at 0.</strong> This approach involves transforming the function <em>f</em> so that it no longer equals 0 at the point 0.  This can be done by dividing <em>f</em> by a function (<em>h</em>(<em>&lambda;</em>)) that &quot;dominates&quot; <em>f</em> everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.</p>
-
-<p>More specifically, <em>h</em>(<em>&lambda;</em>) must meet the following requirements:</p>
+<p>More specifically, <code>High</code>(<em>&lambda;</em>) must meet the following requirements:</p>
 
 <ul>
-<li><em>h</em>(<em>&lambda;</em>) is continuous on the closed unit interval.</li>
-<li><em>h</em>(0) = 0. (This is required to ensure correctness in case <em>&lambda;</em> is 0.)</li>
-<li>1 &ge; <em>h</em>(1) &ge; <em>f</em>(1) &ge; 0.</li>
-<li>1 &gt; <em>h</em>(<em>&lambda;</em>) &gt; <em>f</em>(<em>&lambda;</em>) &gt; 0 whenever 0 &lt; <em>&lambda;</em> &lt; 1.</li>
-<li>If <em>f</em>(1) = 0, then <em>h</em>(1) = 0. (This is required to ensure correctness in case <em>&lambda;</em> is 1.)</li>
+<li><code>High</code>(<em>&lambda;</em>) is continuous on the closed unit interval.</li>
+<li><code>High</code>(0) = 0. (This is required to ensure correctness in case <em>&lambda;</em> is 0.)</li>
+<li>1 &ge; <code>High</code>(1) &ge; <em>f</em>(1) &ge; 0.</li>
+<li>1 &gt; <code>High</code>(<em>&lambda;</em>) &gt; <em>f</em>(<em>&lambda;</em>) &gt; 0 whenever 0 &lt; <em>&lambda;</em> &lt; 1.</li>
+<li>If <em>f</em>(1) = 0, then <code>High</code>(1) = 0. (This is required to ensure correctness in case <em>&lambda;</em> is 1.)</li>
 </ul>
 
-<p>Also, <em>h</em> should be a function with a simple Bernoulli factory algorithm.  For example, <em>h</em> can be a polynomial in Bernstein form of degree <em>n</em> whose <em>n</em> plus one coefficients are [0, 1, 1, ..., 1].  This polynomial is easy to simulate using the algorithms from the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;.</p>
+<p>Also, <code>High</code> should be a function with a simple Bernoulli factory algorithm.  For example, <code>High</code> can be a polynomial in Bernstein form of degree <em>n</em> whose <em>n</em> plus one coefficients are [0, 1, 1, ..., 1].  This polynomial is easy to simulate using the algorithms from the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;.</p>
 
 <p>The algorithm is now described.</p>
 
-<p>Let <em>g</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>f</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>) (roughly speaking, the value that <em>f</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>) approaches as <em>&nu;</em> approaches <em>&lambda;</em>.) If&mdash;</p>
+<p>Let <em>g</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>f</em>(<em>&nu;</em>)/<code>High</code>(<em>&nu;</em>) (roughly speaking, the value that <em>f</em>(<em>&nu;</em>)/<code>High</code>(<em>&nu;</em>) approaches as <em>&nu;</em> approaches <em>&lambda;</em>.) If&mdash;</p>
 
 <ul>
 <li><em>f</em>(0) = 0 and <em>f</em>(1) &lt; 1, and</li>
@@ -231,7 +230,7 @@
 <p>then <em>f</em> can be simulated using the following algorithm:</p>
 
 <ol>
-<li>Run a Bernoulli factory algorithm for <em>h</em>.  If the call returns 0, return 0. (For example, if <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, then this step amounts to the following: &quot;Flip the input coin.  If it returns 0, return 0.&quot;)</li>
+<li>Run a Bernoulli factory algorithm for <code>High</code>.  If the call returns 0, return 0. (For example, if <code>High</code>(<em>&lambda;</em>) = <em>&lambda;</em>, then this step amounts to the following: &quot;Flip the input coin.  If it returns 0, return 0.&quot;)</li>
 <li>Run a Bernoulli factory algorithm for <em>g</em>(.) and return the result of that algorithm.  This can be one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> if there is a way to calculate polynomials that converge to <em>g</em>(.) in a manner needed for that algorithm (for example, if <em>g</em> is described earlier in this section).</li>
 </ol>
 
@@ -239,62 +238,68 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>It may happen that <em>g</em>(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new <em>g</em> and <em>h</em> functions that are found based on the current <em>g</em> function.  See the second example below.</li>
+<li>It may happen that <em>g</em>(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new <em>g</em> and <code>High</code> functions that are found based on the current <em>g</em> function.  See the second example below.</li>
 <li><p>If&mdash;</p>
 
 <ul>
 <li><em>f</em> is strictly increasing,</li>
-<li><em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and</li>
+<li><code>High</code>(<em>&lambda;</em>) = <em>&lambda;</em>, and</li>
 <li><em>f&prime;</em>(<em>&lambda;</em>), the first derivative of <em>f</em>, is continuous on the closed unit interval,</li>
 <li>0 &lt; <em>f&prime;</em>(<em>&lambda;</em>) &lt; 1 whenever 0 &lt; <em>&lambda;</em> &lt; 1, and</li>
 <li><em>f&prime;</em> belongs in one of the classes of functions given earlier,</li>
 </ul>
 
 <p>then step 2 can be implemented by taking <em>g</em> as <em>f&prime;</em>, except: (A) a uniform random variate, greater than 0 and less than 1, is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>. Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;<br/>This is the &quot;<strong>integral method</strong>&quot; of Flajolet et al. (2010)[^2] (the modified step 2 simulates 1/<em>&lambda;</em> times the <em>integral</em> of <em>f</em>.).</p></li>
+<li><code>High</code>(<em>&lambda;</em>) can also equal 1 instead of be described in this section.  That leads to the original Bernoulli factory algorithm for <em>f</em>(<em>&lambda;</em>).</li>
 </ol>
 
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>If <em>f</em>(<em>&lambda;</em>) = (sinh(<em>&lambda;</em>)+cosh(<em>&lambda;</em>)&minus;1)/4, then <em>f</em> is less than or equal to <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 1/4 if <em>&lambda;</em> = 0, and (exp(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em>) otherwise.  The following code in Python that uses the SymPy computer algebra library computes this example: <code>fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))</code>.</li>
-<li><p>If <em>f</em>(<em>&lambda;</em>) = cosh(<em>&lambda;</em>) &minus; 1, then <em>f</em> is less than or equal to <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 0 if <em>&lambda;</em> = 0, and (cosh(<em>&lambda;</em>)&minus;1)/<em>&lambda;</em> otherwise.  Now, since <em>g</em>(0) = 0, find new functions <em>g</em> and <em>h</em> based on the current <em>g</em>.  The current <em>g</em> is less than or equal to <em>H</em>(<em>&lambda;</em>) = <em>&lambda;</em>*3*(2&minus;<em>&lambda;</em>)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so <em>G</em>(<em>&lambda;</em>) = 5/12 if <em>&lambda;</em> = 0, and &minus;(5*cosh(<em>&lambda;</em>) &minus; 5)/(3*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em>&minus;2)) otherwise. <em>G</em> is bounded away from 0 and 1, resulting in the following algorithm:</p>
+<li>If <em>f</em>(<em>&lambda;</em>) = (sinh(<em>&lambda;</em>)+cosh(<em>&lambda;</em>)&minus;1)/4, then <em>f</em> is less than or equal to <code>High</code>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 1/4 if <em>&lambda;</em> = 0, and (exp(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em>) otherwise.  The following code in Python that uses the SymPy computer algebra library computes this example: <code>fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))</code>.</li>
+<li><p>If <em>f</em>(<em>&lambda;</em>) = cosh(<em>&lambda;</em>) &minus; 1, then <em>f</em> is less than or equal to <code>High</code>(<em>&lambda;</em>) = <em>&lambda;</em>, so <em>g</em>(<em>&lambda;</em>) is 0 if <em>&lambda;</em> = 0, and (cosh(<em>&lambda;</em>)&minus;1)/<em>&lambda;</em> otherwise.  Now, since <em>g</em>(0) = 0, find new functions <em>g</em> and <code>High</code> based on the current <em>g</em>.  The current <em>g</em> is less than or equal to <code>High</code>(<em>&lambda;</em>) = <em>&lambda;</em>*3*(2&minus;<em>&lambda;</em>)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so <em>G</em>(<em>&lambda;</em>) = 5/12 if <em>&lambda;</em> = 0, and &minus;(5*cosh(<em>&lambda;</em>) &minus; 5)/(3*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em>&minus;2)) otherwise. <em>G</em> is bounded away from 0 and 1, resulting in the following algorithm:</p>
 
 <ol>
-<li>(Simulate <em>h</em>.) Flip the input coin.  If it returns 0, return 0.</li>
-<li>(Simulate <em>H</em>.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.</li>
+<li>(Simulate <code>High</code>.) Flip the input coin.  If it returns 0, return 0.</li>
+<li>(Simulate <code>High</code>.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.</li>
 <li>Run a Bernoulli factory algorithm for <em>G</em> (which might involve building polynomials that converge to <em>G</em>, noticing that <em>G</em>&#39;s derivative is Lipschitz continuous) and return the result of that algorithm.</li>
 </ol></li>
 </ol>
 </blockquote>
 
-<p><strong>Certain functions that equal 0 at 0 and 1 at 1.</strong>  Let <em>f</em>, <em>g</em>, and <em>h</em> be functions as defined earlier, except that <em>f</em>(0) = 0 and <em>f</em>(1) = 1.  Define the following additional functions:</p>
+<p><strong>Certain functions that equal 0 at 0 and 1 at 1.</strong>  Let <em>f</em>, <em>g</em>, and <code>High</code> be functions as defined earlier, except that <em>f</em>(0) = 0 and <em>f</em>(1) = 1.  Define the following additional functions:</p>
 
 <ul>
-<li><em>&omega;</em>(<em>&lambda;</em>) is a function that meets the following requirements:
+<li><code>Low</code>(<em>&lambda;</em>) is a function that meets the following requirements:
 
 <ul>
-<li><em>&omega;</em>(<em>&lambda;</em>) is continuous on the closed unit interval.</li>
-<li><em>&omega;</em>(0) = 0 and <em>&omega;</em>(1) = 1.</li>
-<li>1 &gt; <em>f</em>(<em>&lambda;</em>) &gt; <em>&omega;</em>(<em>&lambda;</em>) &gt; 0 whenever 0 &lt; <em>&lambda;</em> &lt; 1.</li>
+<li><code>Low</code>(<em>&lambda;</em>) is continuous on the closed unit interval.</li>
+<li><code>Low</code>(0) = 0 and <code>Low</code>(1) = 1.</li>
+<li>1 &gt; <em>f</em>(<em>&lambda;</em>) &gt; <code>Low</code>(<em>&lambda;</em>) &gt; 0 whenever 0 &lt; <em>&lambda;</em> &lt; 1.</li>
 </ul></li>
-<li><em>q</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>&omega;</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>).</li>
+<li><em>q</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <code>Low</code>(<em>&nu;</em>)/<code>High</code>(<em>&nu;</em>).</li>
 <li><em>r</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> (1&minus;<em>g</em>(<em>&nu;</em>))/(1&minus;<em>q</em>(<em>&nu;</em>)).</li>
 </ul>
 
-<p>Roughly speaking, <em>&omega;</em> is a function that bounds <em>f</em> from below, just as <em>h</em> bounds <em>f</em> from above. <em>&omega;</em> should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both <em>&omega;</em> and <em>h</em> are polynomials of the same degree, <em>q</em> will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>&quot;).</p>
+<p>Roughly speaking, <code>Low</code> is a function that bounds <em>f</em> from below, just as <code>High</code> bounds <em>f</em> from above. <code>Low</code> should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both <code>Low</code> and <code>High</code> are polynomials of the same degree, <em>q</em> will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>&quot;).</p>
 
 <p>Now, if <em>r</em>(<em>&lambda;</em>) is continuous on the closed unit interval, then <em>f</em> can be simulated using the following algorithm:</p>
 
 <ol>
-<li>Run a Bernoulli factory algorithm for <em>h</em>.  If the call returns 0, return 0. (For example, if <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, then this step amounts to the following: &quot;Flip the input coin.  If it returns 0, return 0.&quot;)</li>
+<li>Run a Bernoulli factory algorithm for <code>High</code>.  If the call returns 0, return 0. (For example, if <code>High</code>(<em>&lambda;</em>) = <em>&lambda;</em>, then this step amounts to the following: &quot;Flip the input coin.  If it returns 0, return 0.&quot;)</li>
 <li>Run a Bernoulli factory algorithm for <em>q</em>(.).  If the call returns 1, return 1.</li>
 <li>Run a Bernoulli factory algorithm for <em>r</em>(.), and return 1 minus the result of that call.  The Bernoulli factory algorithm can be one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> if there is a way to calculate polynomials that converge to <em>r</em>(.) in a manner needed for that algorithm (for example, if <em>r</em> is described earlier in this section).</li>
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> Quick proof: Rewrite $f=h\cdot(q\cdot1+(1-q)\cdot(1-r))+(1-h)\cdot0$.</p>
+<p><strong>Notes:</strong></p>
 
-<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is less than or equal to <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and greater than or equal to <em>&omega;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: <code>fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
+<ol>
+<li>Quick proof: Rewrite $f=\text{High}\cdot(q\cdot1+(1-q)\cdot(1-r))+(1-\text{High})\cdot0$.</li>
+<li><code>High</code>(<em>&lambda;</em>) is allowed to equal 1 if the <em>r</em>(.) in step 3 is allowed to equal 0 at 0.</li>
+</ol>
+
+<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is less than or equal to <code>High</code>(<em>&lambda;</em>) = <em>&lambda;</em>, and greater than or equal to <code>Low</code>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: <code>fx=(1-exp(x))/(1-exp(1)); high=x; low=x**2; q=(low/high); r=(1-fx/high)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
 </blockquote>
 
 <p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit a polynomial-building scheme under the convex, concave, Lipschitz derivative, and Hölder classes:</p>
