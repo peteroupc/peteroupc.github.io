@@ -1352,7 +1352,7 @@ The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique 
 This algorithm works for every univariate (one-variable) distribution as long as&mdash;
 
 - _PDF_(_x_) (either the distribution's PDF or a function proportional to the PDF) is continuous "almost everywhere" on its domain,
-- both _PDF_(_x_) and _x_<sup>2</sup>\*sqrt(_PDF_(_x_)) have a maximum on that domain, and
+- both _PDF_(_x_) and _x_<sup>2</sup>\*_PDF_(_x_) have a maximum on that domain, and
 - either&mdash;
     - the distribution's ratio-of-uniforms shape (the transformed PDF) is covered entirely by the rectangle [0, ceil(_d1_)]&times;[0, ceil(_d2_)], where _d1_ is not less than the maximum of abs(_x_)\*sqrt(_PDF_(_x_)) on its domain, and _d2_ is not less than the maximum of sqrt(_PDF_(_x_)) on its domain, or
     - half of that shape is covered this way and the shape is symmetric about the _v_-axis.

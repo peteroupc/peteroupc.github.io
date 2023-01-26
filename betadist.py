@@ -2053,6 +2053,18 @@ class Real:
     def __rsub__(a, b):
         return RealSubtract(b, a)
 
+    def __lt__(a,b):
+       return realIsLess(a,b)
+
+    def __le__(a,b):
+       return realIsLessOrEqual(a,b)
+
+    def __gt__(a,b):
+       return realIsLess(b,a)
+
+    def __ge__(a,b):
+       return realIsLessOrEqual(b,a)
+
     def isNegative(self):
         raise NotImplementedError
 
@@ -4065,11 +4077,12 @@ def realNormalROU():
         b = REAL_858_1000 * RandUniform()
         c = -a * a * 4 * RealLn(a)
         if realIsLess(b * b, c):
+            if sigma!=1: b*=sigma
             if random.randint(0, 1) == 0:
-                return -b / a
-            return b / a
+                return -b / a if mu==0 else (-b/a)+mu
+            return b / a if mu==0 else (b/a)+mu
 
-def fpNormalROU():
+def fpNormalROU(mu=0, sigma=1):
     # Generates a Gaussian random variate using
     # the ratio of uniforms method.
     while True:
@@ -4079,9 +4092,10 @@ def fpNormalROU():
         b = (858 / 1000) * random.random()
         c = -a * a * 4 * math.log(a)
         if b * b < c:
+            if sigma!=1: b*=sigma
             if random.randint(0, 1) == 0:
-                return -b / a
-            return b / a
+                return -b / a if mu==0 else (-b/a)+mu
+            return b / a if mu==0 else (b/a)+mu
 
 def logconcave(f, c):  # Devroye 1986, chapter 7
     # Samples a random variate from an absolutely

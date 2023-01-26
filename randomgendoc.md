@@ -2610,6 +2610,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -2666,6 +2678,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -2721,6 +2745,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -2780,6 +2816,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -2819,6 +2867,18 @@ CLASSES
      |  Methods defined here:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -2883,6 +2943,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -2940,6 +3012,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -2999,6 +3083,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -3056,6 +3152,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -3115,6 +3223,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -3172,6 +3292,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -3232,6 +3364,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -3311,6 +3455,18 @@ CLASSES
      |  ----------------------------------------------------------------------
      |  Methods inherited from Real:
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __pow__(a, b)
      |
      |  __rpow__(b, a)
@@ -3352,6 +3508,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -3410,6 +3578,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -3473,6 +3653,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -3530,6 +3722,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -3589,6 +3793,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -3646,6 +3862,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -3707,6 +3935,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -3764,6 +4004,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -3823,6 +4075,18 @@ CLASSES
      |
      |  __add__(a, b)
      |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
+     |
      |  __mul__(a, b)
      |
      |  __neg__(a)
@@ -3880,6 +4144,18 @@ CLASSES
      |  Methods inherited from Real:
      |
      |  __add__(a, b)
+     |
+     |  __ge__(a, b)
+     |      Return self>=value.
+     |
+     |  __gt__(a, b)
+     |      Return self>value.
+     |
+     |  __le__(a, b)
+     |      Return self<=value.
+     |
+     |  __lt__(a, b)
+     |      Return self<value.
      |
      |  __mul__(a, b)
      |
@@ -4028,7 +4304,7 @@ FUNCTIONS
 
     forsythe_prob3(rg, x)
 
-    fpNormalROU()
+    fpNormalROU(mu=0, sigma=1)
 
     fracAreClose(a, b, n)
 
