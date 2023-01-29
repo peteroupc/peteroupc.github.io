@@ -1,7 +1,7 @@
 <a id=A_new_atlas></a>
 ## A new atlas
 
-Thanks to the _OpenStreetMap_ project and its vast geographical database, as well as advances in mapmaking software, the following should be doable nowadays, but I haven't seen it yet:
+Thanks to the _OpenStreetMap_ project and its vast geographical database, as well as advances in mapmaking software, the following should be doable nowadays with open-source software and freely-licensed data, but I haven't seen it yet:
 
 An atlas of the world covering all land masses in the scale 1:4,000,000.  The maps in the atlas should be _political maps_, showing:
 
