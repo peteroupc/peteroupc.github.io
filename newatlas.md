@@ -1,5 +1,5 @@
-<a id=A_new_atlas></a>
-## A new atlas
+<a id=A_wish_for_a_new_atlas></a>
+## A wish for a new atlas
 
 Thanks to the _OpenStreetMap_ project and its vast geographical database, as well as advances in mapmaking software, the following should be doable nowadays with open-source software and freely-licensed data, but I haven't seen it yet:
 
