@@ -9,7 +9,7 @@ According to my document on [**pseudorandom number generator (PRNG) recommendati
 
 a requirement called the "independence requirement" in this short document.
 
-> **Note:** This document is intended to apply only to PRNGs used for noncryptographic purposes.
+> **Note:** This document is intended to apply only to PRNGs not used for information security (including cryptography).
 
 To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey and show no failures ("FAILs") in the PractRand tests at 1 TiB (2^40 bytes) or greater.  For more information, see "[**How to Test with PractRand**](http://www.pcg-random.org/posts/how-to-test-with-practrand.html)" by M. E. O'Neill.
 

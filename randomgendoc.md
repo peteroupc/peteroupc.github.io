@@ -4464,7 +4464,7 @@ FUNCTIONS
 
     realIsNegative(a)
 
-    realNormalROU()
+    realNormalROU(mu=0, sigma=1)
 
     recordcount(n)
 

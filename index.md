@@ -42,6 +42,7 @@ In the articles above, I put an emphasis on random variate generation that:
 
 **Other Articles**
 
+* [**A New Atlas**](./newatlas.html)
 * [**A Note on Hash Functions**](./hash.html)
 * [**Pseudocode Conventions**](./pseudocode.html)
 * [**File Name Support in Applications**](./filenames.html)

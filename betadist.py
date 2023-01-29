@@ -3060,6 +3060,7 @@ class RealDivide(Real):
             # print(["faster",self.ev_n,self.ev_v])
             return self.ev_v >> (self.ev_n - n)
         nv = n
+        # print(["dividestart",nv])
         while True:
             av = self.a.ev(nv)  # div
             bv = self.b.ev(nv)  # div
@@ -4069,7 +4070,7 @@ class RealMultiply(Real):
 
 REAL_858_1000 = RealFraction(Fraction(858, 1000))
 
-def realNormalROU():
+def realNormalROU(mu=0, sigma=1):
     # Generates a Gaussian random variate using
     # the ratio of uniforms method.
     while True:
