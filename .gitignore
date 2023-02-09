@@ -20,7 +20,6 @@
 .project
 .settings/
 .vs/
-distrnotes.pdf
 CBORTest/OpenCover/
 CBORTest/ProfilingSessions/
 CBORTest/bin/
@@ -29,6 +28,7 @@ Help/
 ProfilingSessions/
 TestResults/
 bin/
+distrnotes.pdf
 encoding/
 encodingfldr/
 node_modules/

@@ -47,7 +47,7 @@ Comments on other aspects of this document are welcome.
 <a id=On_a_Binomial_Sampler></a>
 ## On a Binomial Sampler
 
-Take the following sampler of a binomial(_n_, 1/2) distribution (where _n_ is even), which is equivalent to the one that appeared in (Bringmann et al. 2014\)[^1], and adapted to be more programmer-friendly.
+Take the following sampler of a binomial(_n_, 1/2) distribution (with an even number _n_ of trials), which is equivalent to the one that appeared in (Bringmann et al. 2014\)[^1], and adapted to be more programmer-friendly.
 
 1. If _n_ is less than 4, generate _n_ unbiased random bits (zeros or ones) and return their sum.  Otherwise, if _n_ is odd[^2], set _ret_ to the result of this algorithm with _n_ = _n_ &minus; 1, then add an unbiased random bit's value to _ret_, then return _ret_.
 2. Set _m_ to floor(sqrt(_n_)) + 1.

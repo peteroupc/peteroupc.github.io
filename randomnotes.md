@@ -317,7 +317,7 @@ A _phase-type distribution_ models a sum of exponential random variates driven b
 - `alpha`, an `n`-item array showing the probability of starting the chain at each normal state.
 - `s`, an `n`&times;`n` _subgenerator matrix_, a list of `n` lists of `n` values each.  The values in each list (each normal state of the Markov chain) must sum to 0 or less, and for each state `i`, `s[i][i]` is 0 minus the rate of that state's exponential random variate, and each entry `s[i][j]` with `i!=j` is the relative probability for moving to state `j`.
 
-The method `PhaseType`, given below, samples from a phase-type distribution given the two parameters above.
+The method `PhaseType`, given below, samples from a phase-type distribution given the two parameters above.  (The pseudocode assumes each number in `alpha` and `s` is a rational number, because it uses `NormalizeRatios`.)
 
 ```
 METHOD GenToTrans(s)
@@ -341,11 +341,11 @@ METHOD PhaseType(alpha, s)
    // Setup
    trans=GenToTrans(s)
    // Sampling
-   state=WeightedChoice(alpha)
+   state=WeightedChoice(NormalizeRatios(alpha))
    ret=0
    while state<size(s)
      ret=ret+Expo(-s[state][state])
-     state=WeightedChoice(trans[state])
+     state=WeightedChoice(NormalizeRatios(trans[state]))
    end
    return ret
 END METHOD
@@ -527,7 +527,7 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 <a id=Multivariate_Phase_Type_Distributions></a>
 #### Multivariate Phase-Type Distributions
 
-The following pseudocode generates a random vector (of `d` coordinates) following a _multivariate phase-type distribution_ called MPH\*.  In addition to parameters `alpha` and `s`, there is also a _reward matrix_ `r`, such that `r[i][j]` is the probability of adding to coordinate `j` when state `i` is visited.
+The following pseudocode generates a random vector (of `d` coordinates) following a _multivariate phase-type distribution_ called MPH\*.  In addition to parameters `alpha` and `s`, there is also a _reward matrix_ `r`, such that `r[i][j]` is the probability of adding to coordinate `j` when state `i` is visited. (The pseudocode assumes each number in `alpha`, `s`, and `r` is a rational number, because it uses `NormalizeRatios`.)
 
 ```
 METHOD MPH(alpha, s, r)
@@ -536,12 +536,12 @@ METHOD MPH(alpha, s, r)
    trans=GenToTrans(s)
    ret=[]; for i in 0...size(r[0]): AddItem(ret,0)
    // Sampling
-   state=WeightedChoice(alpha)
+   state=WeightedChoice(NormalizeRatios(alpha))
    ret=0
    while state<size(s)
-     rs=WeightedChoice(reward[state])
+     rs=WeightedChoice(NormalizeRatios(r[state]))
      ret[rs]=ret[rs]+Expo(-s[state][state])
-     state=WeightedChoice(trans[state])
+     state=WeightedChoice(NormalizeRatios(trans[state]))
    end
    return ret
 END METHOD
@@ -664,9 +664,9 @@ There are three kinds of randomization algorithms:
     - In sampling from a distribution, the algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).
 
     Many error-bounded algorithms use random bits as their only source of randomness. An application should use error-bounded algorithms whenever possible.
-3. An _inexact_, _approximate_, or _biased algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2\)[^16].  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
-Most algorithms on this page, though, are not _error-bounded_ when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as "constructive reals" or "recursive reals" that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^24].)
+    Most algorithms on this page, though, are not _error-bounded_ when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as "constructive reals" or "recursive reals" that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^24].)
+3. An _inexact_, _approximate_, or _biased algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2\)[^16].  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
 There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020\)[^25] is Wasserstein distance (or "earth-mover distance").  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.
 

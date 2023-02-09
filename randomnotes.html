@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2022/11/13"><meta name="citation_online_date" content="2022/11/13"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="citation_title" content="More Random Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2023/02/09"><meta name="citation_online_date" content="2023/02/09"><meta name="og:title" content="More Random Sampling Methods"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Random Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -378,7 +378,7 @@ END METHOD
 <li><code>s</code>, an <code>n</code>&times;<code>n</code> <em>subgenerator matrix</em>, a list of <code>n</code> lists of <code>n</code> values each.  The values in each list (each normal state of the Markov chain) must sum to 0 or less, and for each state <code>i</code>, <code>s[i][i]</code> is 0 minus the rate of that state&#39;s exponential random variate, and each entry <code>s[i][j]</code> with <code>i!=j</code> is the relative probability for moving to state <code>j</code>.</li>
 </ul>
 
-<p>The method <code>PhaseType</code>, given below, samples from a phase-type distribution given the two parameters above.</p>
+<p>The method <code>PhaseType</code>, given below, samples from a phase-type distribution given the two parameters above.  (The pseudocode assumes each number in <code>alpha</code> and <code>s</code> is a rational number, because it uses <code>NormalizeRatios</code>.)</p>
 
 <pre>METHOD GenToTrans(s)
   // Converts a subgenerator matrix to a
@@ -401,11 +401,11 @@ METHOD PhaseType(alpha, s)
    // Setup
    trans=GenToTrans(s)
    // Sampling
-   state=WeightedChoice(alpha)
+   state=WeightedChoice(NormalizeRatios(alpha))
    ret=0
    while state&lt;size(s)
      ret=ret+Expo(-s[state][state])
-     state=WeightedChoice(trans[state])
+     state=WeightedChoice(NormalizeRatios(trans[state]))
    end
    return ret
 END METHOD
@@ -612,7 +612,7 @@ END METHOD
 
 <h4>Multivariate Phase-Type Distributions</h4>
 
-<p>The following pseudocode generates a random vector (of <code>d</code> coordinates) following a <em>multivariate phase-type distribution</em> called MPH*.  In addition to parameters <code>alpha</code> and <code>s</code>, there is also a <em>reward matrix</em> <code>r</code>, such that <code>r[i][j]</code> is the probability of adding to coordinate <code>j</code> when state <code>i</code> is visited.</p>
+<p>The following pseudocode generates a random vector (of <code>d</code> coordinates) following a <em>multivariate phase-type distribution</em> called MPH*.  In addition to parameters <code>alpha</code> and <code>s</code>, there is also a <em>reward matrix</em> <code>r</code>, such that <code>r[i][j]</code> is the probability of adding to coordinate <code>j</code> when state <code>i</code> is visited. (The pseudocode assumes each number in <code>alpha</code>, <code>s</code>, and <code>r</code> is a rational number, because it uses <code>NormalizeRatios</code>.)</p>
 
 <pre>METHOD MPH(alpha, s, r)
    if len(r[0])&lt;1 or len(r)!=len(s): return error
@@ -620,12 +620,12 @@ END METHOD
    trans=GenToTrans(s)
    ret=[]; for i in 0...size(r[0]): AddItem(ret,0)
    // Sampling
-   state=WeightedChoice(alpha)
+   state=WeightedChoice(NormalizeRatios(alpha))
    ret=0
    while state&lt;size(s)
-     rs=WeightedChoice(reward[state])
+     rs=WeightedChoice(NormalizeRatios(r[state]))
      ret[rs]=ret[rs]+Expo(-s[state][state])
-     state=WeightedChoice(trans[state])
+     state=WeightedChoice(NormalizeRatios(trans[state]))
    end
    return ret
 END METHOD
@@ -759,11 +759,11 @@ END METHOD
 <li>In sampling from a distribution, the algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).</li>
 </ul>
 
-<p>Many error-bounded algorithms use random bits as their only source of randomness. An application should use error-bounded algorithms whenever possible.</p></li>
+<p>Many error-bounded algorithms use random bits as their only source of randomness. An application should use error-bounded algorithms whenever possible.</p>
+
+<p>Most algorithms on this page, though, are not <em>error-bounded</em> when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as &quot;constructive reals&quot; or &quot;recursive reals&quot; that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^24].)</p></li>
 <li>An <em>inexact</em>, <em>approximate</em>, or <em>biased algorithm</em> is neither exact nor error-bounded; it uses &quot;a mathematical approximation of sorts&quot; to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2)[^16].  An application should use this kind of algorithm only if it&#39;s willing to trade accuracy for speed.</li>
 </ol>
-
-<p>Most algorithms on this page, though, are not <em>error-bounded</em> when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as &quot;constructive reals&quot; or &quot;recursive reals&quot; that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^24].)</p>
 
 <p>There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020)[^25] is Wasserstein distance (or &quot;earth-mover distance&quot;).  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.</p>
 
