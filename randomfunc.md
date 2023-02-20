@@ -393,7 +393,7 @@ The method can also be implemented in the following way (as pointed out by Lumbr
       end
     END METHOD
 
-> **Note:** Probabilities can be rational or irrational numbers.  Rational probabilities are of the form `n`/`d` and can be simulated with `ZeroOrOne` above.  Irrational probabilities (such as `exp(-x/y)` or `ln(2)`) have an infinite digit expansion (`0.ddddd....`), and they require special algorithms to simulate; see "[**Algorithms for Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants)" in my page on Bernoulli Factory algorithms.
+> **Note:** Probabilities can be rational or irrational numbers.  Rational probabilities are of the form `n`/`d` and can be simulated with `ZeroOrOne` above.  Irrational probabilities (such as `exp(-x/y)` or `ln(2)`) have an infinite digit expansion (`0.ddddd....`), and they require special algorithms to simulate; see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" and "[**Algorithms for Specific Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Specific_Constants)" in my page on Bernoulli Factory algorithms.
 >
 > **Examples**:
 >
@@ -1481,8 +1481,8 @@ Generating random data points based on how a list of data points is distributed 
 > 1. Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (for example, multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the simplest kind that shows an acceptable _predictive performance_ for the data set (for example, information criterion, precision, recall) should be chosen.
 > 2. If the existing data points each belong in one of several _categories_, choosing a random category could be done by choosing a number at random with probability proportional to the number of data points in each category (see "[**Weighted Choice**](#Weighted_Choice)").
 > 3. If the existing data points each belong in one of several _categories_, choosing a random data point _and_ its category could be done&mdash;
->     1. by choosing a random data point based on all the existing data points, then finding its category (for example, via machine learning models known as _classification models_), or
->     2. by choosing a random category as given above, then by choosing a random data point based only on the existing data points of that category.
+>     - by choosing a random data point based on all the existing data points, then finding its category (for example, via machine learning models known as _classification models_), or
+>     - by choosing a random category as given in note 2, then by choosing a random data point based only on the existing data points of that category.
 
 <a id=Sampling_from_an_Arbitrary_Distribution></a>
 ### Sampling from an Arbitrary Distribution

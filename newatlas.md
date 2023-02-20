@@ -9,7 +9,7 @@ An atlas of the world covering **all land masses in the scale 1:4,000,000**.  Th
 - For some countries, the boundaries and areas of counties (and their equivalents).
 - Major cities and important towns, grouped by population.
 - Important rivers and bodies of water labeled.
-- Important mountain peaks and depressions labeled.
+- Important mountain peaks, volcanoes, and depressions labeled.
 - Relief shading.
 - Natural features (e.g., plains, mountain ranges, islands) labeled.
 

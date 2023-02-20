@@ -363,7 +363,7 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 
 [^3]: Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016).
 
-[^4]: Huber, M., "[**Tight relative estimation in the mean of Bernoulli ranodm variables**](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
+[^4]: Huber, M., "[**Tight relative estimation in the mean of Bernoulli random variables**](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
 
 [^5]: Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.
 

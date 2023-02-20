@@ -64,10 +64,10 @@ A multiple recursive generator with a modulus of 1449 has the following transiti
     |  0   0   1  |
     | 444 342 499 |
 
-To calculate the 3&times;3 jump matrix to jump 100 steps from this MRG, raise this matrix to the power of 100 then reduce the result's elements mod 1449.  One way to do this is the "square-and-multiply" method, described by D. Knuth in _The Art of Computer Programming_: Set J to the identity matrix, N to 100, and M to a copy of the transition matrix, then while N is greater than 0:
+To calculate the 3&times;3 jump matrix to jump 100 steps from this MRG, raise this matrix to the power of 100 then take the result's elements mod 1449.  One way to do this is the "square-and-multiply" method, described by D. Knuth in _The Art of Computer Programming_: Set J to the identity matrix, N to 100, and M to a copy of the transition matrix, then while N is greater than 0:
 
-1. If N is odd[^6], multiply J by M then reduce J's elements mod 1449.
-2. Divide N by 2 and round down, then multiply M by M then reduce M's elements mod 1449.
+1. If N is odd[^6], multiply J by M then take J's elements mod 1449.
+2. Divide N by 2 and round down, then multiply M by M then take M's elements mod 1449.
 
 The resulting J is a _jump matrix_ as follows:
 
@@ -75,7 +75,7 @@ The resulting J is a _jump matrix_ as follows:
     | 1389 1128  130 |
     | 1209  930  793 |
 
-Transforming the MRG's state with J (and reducing mod 1449) will transform the state as though 100 outputs were discarded from the MRG.
+Transforming the MRG's state with J (and taking its elements mod 1449) will transform the state as though 100 outputs were discarded from the MRG.
 
 <a id=Linear_Congruential_Generators></a>
 ### Linear Congruential Generators
@@ -94,7 +94,7 @@ Jumping the LCG ahead can then be done using this matrix as described in the pre
 <a id=Multiply_with_Carry_Add_with_Carry_Subtract_with_Borrow></a>
 ### Multiply-with-Carry, Add-with-Carry, Subtract-with-Borrow
 
-There are implementations for jumping a multiply-with-carry (MWC) PRNG ahead, but only in source code form ([**ref. 1**](https://github.com/rsaucier/Random/blob/3a7981bd6a8ac6d4507e9630393303b18e8967ca/kiss.h)).  I am not aware of an article or paper that describes how jumping an MWC PRNG ahead works.
+There are implementations for jumping a multiply-with-carry (MWC) PRNG ahead, but [**only in source-code form**](https://github.com/rsaucier/Random/blob/3a7981bd6a8ac6d4507e9630393303b18e8967ca/kiss.h).  I am not aware of an article or paper that describes how jumping an MWC PRNG ahead works.
 
 I am not aware of any efficient ways to jump an add-with-carry or subtract-with-borrow PRNG ahead an arbitrary number of steps.
 

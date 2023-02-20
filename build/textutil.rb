@@ -222,7 +222,7 @@ Dir.glob("*.md").sort.each{|fn|
     File.delete(rtex) rescue nil
     cmd="pandoc -V papersize=letter -f gfm --number-sections --number-offset=0 --top-level-division=" + (outputengine=="html5" ? "chapter" : "section")
     cmd+=" -t #{outputengine}"
-    #cmd+=" --pdf-engine=lualatex"
+    cmd+=" --pdf-engine=wkhtmltopdf"
     cmd+=" #{output} --metadata pagetitle=\"#{title}\""
     if outputengine!="html5"
       cmd+=" --variable=title:\"#{title}\""
