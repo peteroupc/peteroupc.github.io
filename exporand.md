@@ -180,8 +180,8 @@ Because a PSRN stores a random variate in a certain interval, PSRNs are not well
 
 - Sets of integers or rational numbers.
 - Sets of individual points.
-- Curves on two- or higher-dimensional space.
-- Surfaces on three- or higher-dimensional space.
+- Curves on two- or higher-dimensional real number space.
+- Surfaces on three- or higher-dimensional real number space.
 
 In the case of curves and surfaces, a PSRN can't directly store the coordinates, in space, of a random point on that curve or surface (because the exact value of those coordinates may be an irrational number that no computer can store, and no interval can bound those exact coordinates "tightly" enough), but the PSRN _can_ store upper and lower bounds that indirectly give that point's position on that curve or surface.
 
