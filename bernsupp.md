@@ -168,16 +168,7 @@ then _f_ can be simulated using the following algorithm:
 > **Notes:**
 >
 > 1. It may happen that _g_(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new _g_ and `High` functions that are found based on the current _g_ function.  See the second example below.
-> 2. If&mdash;
->
->     - _f_ is strictly increasing,
->     - `High`(_&lambda;_) = _&lambda;_, and
->     - _f&prime;_(_&lambda;_), the first derivative of _f_, is continuous on the closed unit interval,
->     - 0 < _f&prime;_(_&lambda;_) < 1 whenever 0 < _&lambda;_ < 1, and
->     - _f&prime;_ belongs in one of the classes of functions given earlier,
->
->     then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform random variate, greater than 0 and less than 1, is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010\)[^3] \(the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
-> 3. `High`(_&lambda;_) can also equal 1 instead of be described in this section.  That leads to the original Bernoulli factory algorithm for _f_(_&lambda;_).
+> 2. `High`(_&lambda;_) can also equal 1 instead of be described in this section.  That leads to the original Bernoulli factory algorithm for _f_(_&lambda;_).
 >
 > **Examples:**
 >
@@ -247,7 +238,7 @@ To build an approximate Bernoulli factory with a polynomial:
 <a id=Approximate_Bernoulli_Factories_for_Certain_Functions></a>
 ### Approximate Bernoulli Factories for Certain Functions
 
-This section first discusses approximating $f$ with a _Bernstein polynomial_ (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials approach $f$ slowly in general, in the order of $1/n$ (Voronovskaya 1932)[^4].
+This section first discusses approximating $f$ with a _Bernstein polynomial_ (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials approach $f$ slowly in general, in the order of $1/n$ (Voronovskaya 1932)[^3].
 
 There are results that give an upper bound on the error on approximating _f_ with a degree-_n_ Bernstein polynomial.  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, solve the error bound's equation for _n_, then take _n_ = ceil(_n_) to get the solution if it's an integer, or the nearest integer that's bigger than the solution.
 
@@ -255,8 +246,8 @@ For example:
 
 | If _f_(_&lambda;_): |  Then the degree-_n_ Bernstein polynomial is close to $f$ with the following error bound: |   Where _n_ is:  |  Notes |
  --- | --- | --- | --- |
-| Has Lipschitz continuous derivative (see "Definitions"). | _&epsilon;_ = _M_/(8\*_n_). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Lorentz (1966)[^5]. _M_ is the derivative's Lipschitz constant. |
-| Hölder continuous with constant _M_ and exponent _&alpha;_. | _&epsilon;_ = _M_\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil(1/(4<sup>_&alpha;_</sup>\*_&epsilon;_<sup>2</sup>/_M_<sup>2</sup>)<sup>1/_&alpha;_</sup>). | Mathé (1999)[^6]. 0 &lt; _&alpha;_ &le; 1. |
+| Has Lipschitz continuous derivative (see "Definitions"). | _&epsilon;_ = _M_/(8\*_n_). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Lorentz (1966)[^4]. _M_ is the derivative's Lipschitz constant. |
+| Hölder continuous with constant _M_ and exponent _&alpha;_. | _&epsilon;_ = _M_\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil(1/(4<sup>_&alpha;_</sup>\*_&epsilon;_<sup>2</sup>/_M_<sup>2</sup>)<sup>1/_&alpha;_</sup>). | Mathé (1999)[^5]. 0 &lt; _&alpha;_ &le; 1. |
 | Lipschitz continuous with constant _L_. | _&epsilon;_ = _L_\*sqrt(1/(4\*_n_)). | _n_ = ceil(_L_<sup>2</sup>/(4\*_&epsilon;_<sup>2</sup>)). | Special case of previous entry. |
 
 Now, if _f_ belongs to any of the classes given above, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
@@ -269,19 +260,19 @@ Now, if _f_ belongs to any of the classes given above, the following algorithm (
 
 Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my [**question on MathOverflow**](https://mathoverflow.net/questions/424272).
 
-An example is given by the iterated Bernstein polynomial construction discussed in Micchelli (1973)[^7] and Guan (2009)[^8]. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Then&mdash;
+An example is given by the iterated Bernstein polynomial construction discussed in Micchelli (1973)[^6] and Guan (2009)[^7]. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Then&mdash;
 
 - the order-2 iterated Bernstein polynomial of degree $n$ is $U_{n,2} = B_n(W_{n,2})$, where $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$, and
 - the order-3 iterated Bernstein polynomial of degree $n$ is $U_{n,3} = B_n(W_{n,3})$, where $W_{n,3} = B_n(B_n(f(\lambda))) + 3 (f(\lambda) - B_n(f(\lambda)))$
 
-(Güntürk and Li 2021, sec. 3.3)[^9]. The goal is now to find a degree $n$ such that&mdash;
+(Güntürk and Li 2021, sec. 3.3)[^8]. The goal is now to find a degree $n$ such that&mdash;
 
 1. the iterated polynomial is within $\epsilon$ of $f(\lambda)$, and
 2. the polynomial $W_{n,i}$ is not less than 0 or greater than 1.
 
 &nbsp;
 
-By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds _appear_ to be true.  In the table below, _M_<sub>_n_</sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^10]
+By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds _appear_ to be true.  In the table below, _M_<sub>_n_</sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^9]
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  |
  --- | --- | --- | --- |
@@ -304,34 +295,34 @@ Once _n_ is found, simulating the iterated polynomial is as follows:
 
 > **Notes:**
 >
-> 1. Providing the full proof for the error bounds shown in the table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 3.3 of Güntürk and Li (2021)[^9], finding upper bounds for so-called "central moments" of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem's proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.
+> 1. Providing the full proof for the error bounds shown in the table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 3.3 of Güntürk and Li (2021)[^8], finding upper bounds for so-called "central moments" of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem's proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.
 > 2. A polynomial's Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting $c$=floor($c/\delta$) \* $\delta$ for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial's coefficients as given here.)
 
 <a id=Approximate_Bernoulli_Factories_for_Power_Series></a>
 ### Approximate Bernoulli Factories for Power Series
 
-Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the _coefficients_, are constant rational numbers[^11].
+Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the _coefficients_, are constant rational numbers[^10].
 
 To simulate an approximation of $f$ that comes within $\epsilon$ of $f$:
 
 1. Find the first $n$+1 coefficients such that the polynomial $P(\lambda) = a_0 \lambda^0 + ... + a_n\lambda^n$ is within $\epsilon$ of $f$ on the closed unit interval.
 
-    If $f$'s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called "ratio test", the algorithms in Carvalho and Moreira (2022)[^12] can be used here (see also "[**Proofs on Cutting Off a Power Series**](#Proofs_on_Cutting_Off_a_Power_Series)" in the appendix).
+    If $f$'s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called "ratio test", the algorithms in Carvalho and Moreira (2022)[^11] can be used here (see also "[**Proofs on Cutting Off a Power Series**](#Proofs_on_Cutting_Off_a_Power_Series)" in the appendix).
 
     Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor's theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the maximum absolute value of $f$'s ($n$+1)-th derivative on the domain of $f$.
-2. Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the "power" coefficients $a_0, ..., a_n$, is the so-called "matrix method" from Ray and Nataraj (2012)[^13].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial's coefficients.
+2. Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the "power" coefficients $a_0, ..., a_n$, is the so-called "matrix method" from Ray and Nataraj (2012)[^12].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial's coefficients.
 3. Flip the input coin _n_ times, then let _j_ be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.
 
-In fact, if $f(\lambda)$ belongs in _Gevrey's hierarchy_ (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative's absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$), which includes functions equaling power series as a special case ($\gamma=1$), it's possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^14]; see also (Gevrey 1918)[^15]).
+In fact, if $f(\lambda)$ belongs in _Gevrey's hierarchy_ (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative's absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$), which includes functions equaling power series as a special case ($\gamma=1$), it's possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^13]; see also (Gevrey 1918)[^14]).
 
 <a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a>
 ### Approximate Bernoulli Factories for Linear Functions
 
 There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_ > 1 and 0 &le; _&lambda;_ &lt; 1/_c_.  ("Approximate" because this function touches 1 at 1/_c_, so it can't be a factory function.) Since the methods use only up to _n_ flips, where _n_ is an integer greater than 0, the approximation will be a polynomial of degree _n_.
 
-- Henderson and Glynn (2003, Remark 4\)[^16] approximates the function _&lambda;_\*2 using a polynomial where the _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*2, 1&minus;1/_n_).  If _g_(_&lambda;_) is that polynomial, then the error in approximating _f_ is no greater than 1&minus;_g_(1/2).  _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
+- Henderson and Glynn (2003, Remark 4\)[^15] approximates the function _&lambda;_\*2 using a polynomial where the _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*2, 1&minus;1/_n_).  If _g_(_&lambda;_) is that polynomial, then the error in approximating _f_ is no greater than 1&minus;_g_(1/2).  _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
 
-- I found the following approximation for _&lambda;_\*_c_[^17]\: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where the _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*_c_, 1).  If _g_(_&lambda;_) is that polynomial, then the error in approximating _f_ is no greater than 1&minus;_g_(1/_c_).
+- I found the following approximation for _&lambda;_\*_c_[^16]\: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where the _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*_c_, 1).  If _g_(_&lambda;_) is that polynomial, then the error in approximating _f_ is no greater than 1&minus;_g_(1/_c_).
 
 - The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005\)[^1], which approximates _&lambda;_\*2.
 
@@ -348,12 +339,12 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 |   Property of simulation   |   Property of _f_
   ------------- |  ------------------------
-| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in the closed unit interval (Goyal and Sigman 2012\)[^18]. |
-| Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^3]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^19].  |
+| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in the closed unit interval (Goyal and Sigman 2012\)[^17]. |
+| Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^18]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^19].  |
 | Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note 3) (Holtz et al. 2011\)[^20]. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with exponent (_&alpha;_ &minus; _r_), where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^20]. Assumes _f_ is bounded away from 0 and 1. |
-| "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^3]. | If and only if _f_ is real analytic (writable as $f(\lambda)=a_0 \lambda^0 + a_1 \lambda^1 + ...$ for real constants $a_i$) (Nacu and Peres 2005\)[^1].   |
+| "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^18]. | If and only if _f_ is real analytic (writable as $f(\lambda)=a_0 \lambda^0 + a_1 \lambda^1 + ...$ for real constants $a_i$) (Nacu and Peres 2005\)[^1].   |
 | Average number of flips greater than or equal to (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^19]. |
 
 > **Notes:**
@@ -544,37 +535,37 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^2]: In this case, an algorithm to simulate `High`(_&lambda;_) is: Flip the input coin _n_ times or until a flip returns 1, whichever comes first, then output the last coin flip result.
 
-[^3]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.
+[^3]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
 
-[^4]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
+[^4]: G.G. Lorentz, "Approximation of functions", 1966.
 
-[^5]: G.G. Lorentz, "Approximation of functions", 1966.
+[^5]: Mathé, Peter. “Approximation of Hölder Continuous Functions by Bernstein Polynomials.” The American Mathematical Monthly 106, no. 6 (1999): 568–74. [**https://doi.org/10.2307/2589469.**](https://doi.org/10.2307/2589469.)
 
-[^6]: Mathé, Peter. “Approximation of Hölder Continuous Functions by Bernstein Polynomials.” The American Mathematical Monthly 106, no. 6 (1999): 568–74. [**https://doi.org/10.2307/2589469.**](https://doi.org/10.2307/2589469.)
+[^6]: Micchelli, Charles. "The saturation class and iterates of the Bernstein polynomials." Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^7]: Micchelli, Charles. "The saturation class and iterates of the Bernstein polynomials." Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^7]: Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/abs/0909.0684)", arXiv:0909.0684 (2009).
 
-[^8]: Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/abs/0909.0684)", arXiv:0909.0684 (2009).
+[^8]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
 
-[^9]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
+[^9]: Güntürk and Li 2021 defines the $C^n$ norm as the maximum absolute value of $f(\lambda)$ and its _n_-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.
 
-[^10]: Güntürk and Li 2021 defines the $C^n$ norm as the maximum absolute value of $f(\lambda)$ and its _n_-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.
+[^10]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.
 
-[^11]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.
+[^11]: Carvalho, Luiz Max, and Guido A. Moreira. "[**Adaptive truncation of infinite sums: applications to Statistics**](https://arxiv.org/abs/2202.06121)", arXiv:2202.06121 (2022).
 
-[^12]: Carvalho, Luiz Max, and Guido A. Moreira. "[**Adaptive truncation of infinite sums: applications to Statistics**](https://arxiv.org/abs/2202.06121)", arXiv:2202.06121 (2022).
+[^12]: S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", Reliable Computing 17(1), 2012.
 
-[^13]: S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", Reliable Computing 17(1), 2012.
+[^13]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. "[**Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy**](https://doi.org/10.1016/j.jco.2015.05.001)." Journal of Complexity 31, no. 5 (2015): 689-714.
 
-[^14]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. "[**Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy**](https://doi.org/10.1016/j.jco.2015.05.001)." Journal of Complexity 31, no. 5 (2015): 689-714.
+[^14]: M. Gevrey, "Sur la nature analytique des solutions des équations aux dérivées partielles", 1918.
 
-[^15]: M. Gevrey, "Sur la nature analytique des solutions des équations aux dérivées partielles", 1918.
+[^15]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).
 
-[^16]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).
+[^16]: For this approximation, if _n_ were infinity, the method would return 1 with probability 1 and so would not approximate _&lambda;_\*_c_, of course.
 
-[^17]: For this approximation, if _n_ were infinity, the method would return 1 with probability 1 and so would not approximate _&lambda;_\*_c_, of course.
+[^17]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
-[^18]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
+[^18]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.
 
 [^19]: Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.
 
@@ -642,7 +633,7 @@ Now, since the second derivative is nonnegative on the positive real line, and t
 
 _Proof:_ $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative coefficients, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;
 
-For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$'s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^12] &mdash; which apply to infinite sums &mdash; can be used to "cut off" $f$ at a certain number of terms and do so with a controlled error.
+For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$'s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^11] &mdash; which apply to infinite sums &mdash; can be used to "cut off" $f$ at a certain number of terms and do so with a controlled error.
 
 <a id=Results_Used_in_Approximate_Bernoulli_Factories></a>
 ### Results Used in Approximate Bernoulli Factories
@@ -661,7 +652,7 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^22], showi
 
 **Proposition B3**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.
 
-_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^5] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
+_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^4] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
 The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value ("long-run average").  The following results bound the absolute value of $T$.[^23]
 
@@ -682,7 +673,7 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 
 In the academic literature (papers and books), there are many results showing that a polynomial comes within a given error bound of a function _f_(_&lambda;_), when _f_ meets certain conditions.  Unfortunately, these error bounds don't necessarily mean that a sequence of polynomials far from these bounds will obey the consistency requirement, a requirement for simulating _f_ in the Bernoulli factory setting.
 
-Here is one such error bound. Let _f_ have a Lipschitz continuous derivative on the closed unit interval with Lipschitz constant _M_.  Then the _Bernstein polynomial_ for _f_ of degree _n_ (which is in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$) is within _M_\*_x_\*(1&minus;_x_)/(2\*_n_) of _f_ (and thus within _M_/(8\*_n_) of _f_) whenever $0\le x\le 1$ (Lorentz 1966)[^5]. Thus, for every _n_&ge;1:
+Here is one such error bound. Let _f_ have a Lipschitz continuous derivative on the closed unit interval with Lipschitz constant _M_.  Then the _Bernstein polynomial_ for _f_ of degree _n_ (which is in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$) is within _M_\*_x_\*(1&minus;_x_)/(2\*_n_) of _f_ (and thus within _M_/(8\*_n_) of _f_) whenever $0\le x\le 1$ (Lorentz 1966)[^4]. Thus, for every _n_&ge;1:
 
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; _M_ / (8*_n_).
@@ -754,7 +745,7 @@ To show that _f_ is strongly simulable, it's enough to show that there is a Bern
 
 _Proof:_ If _f_ is the constant 0 or 1, the proof is trivial: simply return 0 or 1, respectively.
 
-Otherwise: Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012\)[^18].
+Otherwise: Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012\)[^17].
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0). (By condition 3, _f_(0) must be either 0 or 1.)
@@ -961,7 +952,7 @@ _Proof._
 
 1. _&omega;_ is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2 \* _n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2 \* _n_))] &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for every _n_&ge;4 that's an integer power of 2, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).  To prove the fourth bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt( (_k_/(2\*_n_)) \* (1&minus;_k_/(2\*_n_)) / (2\*_n_&minus;1) )).
 2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on the closed unit interval, the result follows from part 1.
-3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f'(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^7], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4 that's a power of 2, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
+3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f'(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^6], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4 that's a power of 2, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
 4. Let _X_<sub>_m_</sub> be a hypergeometric(2 \* _n_, _m_, _n_) random variable.  By Lemma 1 and the assumption that _f_ is nowhere decreasing, **E**[_f_(_X_<sub>_k_</sub>/_n_)] is nowhere decreasing as _k_ increases, so take **E**[_f_(_X_<sub>_n_</sub>/_n_)] = **E**[_f_(_Y_</sub>/_n_)] as the upper bound.  Then, abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) = abs(**E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_])) = **E**[_f_(_X_/_n_)] &minus; _f_(**E**\[_X_/_n_\]) (by Jensen's inequality, because _f_ is convex and not less than 0) = **E**\[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_)) &le; **E**\[_f_(_X_/_n_)\] (because _f_ is not less than 0) &le; **E**[_f_(_Y_/_n_)]. &#x25a1;
 
 > **Notes:**
@@ -1151,7 +1142,7 @@ It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when 
 
 The following lower bounds on $C_0$ can be shown.  In the table:
 
-- $M_{0,r}$ is the maximum absolute value of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^9].
+- $M_{0,r}$ is the maximum absolute value of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].
 - $M_{1,r}$ is the maximum absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.
 - The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.
 
@@ -1172,9 +1163,9 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 6 | $M=M_{1,6}$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 6 | $M=M_{1,6}$, $n\ge 4$ | $B_n(B_n(f))+3(f-B_n(f))$ | 0.22 | 0.23 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 
-\* Corresponds to the iterated Bernstein polynomial of order 2 (Güntürk and Li 2021)[^9].
+\* Corresponds to the iterated Bernstein polynomial of order 2 (Güntürk and Li 2021)[^8].
 
-\*\*\* Corresponds to the iterated Bernstein polynomial of order 3 (Güntürk and Li 2021)[^9].
+\*\*\* Corresponds to the iterated Bernstein polynomial of order 3 (Güntürk and Li 2021)[^8].
 
 \*\* The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.
 

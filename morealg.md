@@ -715,10 +715,10 @@ Similar to the _&pi;_/4 algorithm.  First it samples a point inside an area cove
 
 Given that the point (_x_, _y_) has positive coordinates and lies inside a disk of radius 1 centered at (0, 0), the mean value of _x_ is 4/(3\*_&pi;_). This leads to the following algorithm to sample that probability:
 
-1. Generate two PSRNs in the form of a uniformly chosen point inside a 2-dimensional quarter hypersphere (see "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)" below, as well as the examples).
+1. Generate two PSRNs in the form of a uniformly chosen point inside a 2-dimensional quarter hypersphere (that is, a quarter of a "filled circle"; see "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)" below, as well as the examples).
 2. Let _x_ be one of those PSRNs.  Run **SampleGeometricBag** on that PSRN and return the result (which will be either 0 or 1).
 
-> **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_ is _p_(_z_) = sqrt(1 &minus; _z_\*_z_), where _z_ is in the interval [0, 1].  Now find the integral ("area under the graph") of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the integral of _p_(_z_)).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
+> **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_, where $0\le _z_ \le 1$, is _p_(_z_) = sqrt(1 &minus; _z_\*_z_).  Now find the integral ("area under the graph") of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the integral of _p_(_z_) on the interval [0, 1]).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
 
 <a id=ln___pi_____pi></a>
 ### ln(_&pi;_)/_&pi;_
@@ -846,7 +846,7 @@ it may be possible to describe an arbitrary-precision sampler for that distribut
 5. Create _ret_, a uniform PSRN with a positive sign and an integer part of 0.
 6. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Run a Bernoulli factory algorithm that simulates the probability _C_(_i_, _&lambda;_), using the input coin (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 4.
     - The probability _C_(_i_, _&lambda;_) is calculated as _PDF_(_i_ + _&lambda;_) / _M_, where _PDF_ is the distribution's PDF or a function proportional to the PDF, and should be found analytically using a computer algebra system such as SymPy.
-    - In this formula, _M_ is any convenient number in the interval \[_PDF_(_intval_),  max(1, _PDF_(_intval_))\], and should be as low as feasible. _M_ serves to ensure that _C_ is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of _M_ can vary for each interval (each value of _intval_, which can only be 0, 1, or a power of 2).  Any such choice for _M_ preserves the algorithm's correctness because the PDF has to be strictly decreasing and a new interval isn't chosen when _&lambda;_ is rejected.
+    - In this formula, _M_ is any convenient number that satisfies _PDF_(_intval_) &le; _M_ &le; max(1, _PDF_(_intval_)), and should be as low as feasible. _M_ serves to ensure that _C_ is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of _M_ can vary for each interval (each value of _intval_, which can only be 0, 1, or a power of 2).  Any such choice for _M_ preserves the algorithm's correctness because the PDF has to be strictly decreasing and a new interval isn't chosen when _&lambda;_ is rejected.
     - The symbolic form of _C_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
 7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
@@ -931,7 +931,7 @@ For bases other than 2, such as 10 for decimal, this can be implemented as follo
     2. Return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
 3. If _i_ is _z_ or greater:
     1. If the digit at position (_i_ &minus; _z_) in the uniform PSRN's fractional part is not set, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the second most significant, etc.).
-    2. Set _da_ to the item at that position, and set _db_ to a digit chosen uniformly at random (that is, an integer in the interval [0, _base_)).
+    2. Set _da_ to the item at that position, and set _db_ to a digit chosen uniformly at random (so that 0 &le; _db_ &lt; _base_).
     3. Return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
 4. Add 1 to _i_ and go to step 3.
 
@@ -959,7 +959,7 @@ The following algorithm generates a PSRN of the form 1/_U_<sup>1/_x_</sup>, wher
 
 This algorithm uses the skeleton described earlier in "Building an Arbitrary-Precision Sampler".  Here, the probabilities _A_, _B_,  and _C_ are as follows:
 
-- _A_ = 0, since the random variate can't lie in the interval [0, 1).
+- _A_ = 0, since the random variate can't be zero or come between 0 and 1.
 - _B_ = (4<sup>_x_</sup>&minus;2<sup>_x_</sup>)/4<sup>_x_</sup>.
 - _C_ = (_x_/(_i_ + _&lambda;_)<sup>_x_+1</sup>) / _M_.  Ideally, _M_ is either _x_ if _intval_ is 1, or _x_/_intval_<sup>_x_+1</sup> otherwise.  Thus, the ideal form for _C_ is _intval_<sup>_x_+1</sup>/(_i_+_&lambda;_)<sup>_x_+1</sup>.
 
@@ -973,7 +973,7 @@ The following algorithm generates a PSRN distributed as _U_/(1&minus;_U_), where
 3. With probability _size_/(_size_ + _intval_ + 1), go to step 4.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
 4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
 5. Create _ret_, a uniform PSRN with a positive sign and an integer part of 0.
-6. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_ + 1, _c_ = _i_ + 1, and _k_ = 2 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 4.
+6. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_ + 1, _c_ = _i_ + 1, and _k_ = 2 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and satisfies 0 &le; _&lambda;_ &le; 1).  If the call returns 0, go to step 4.
 7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
 This algorithm uses the skeleton described earlier in "Building an Arbitrary-Precision Sampler".  Here, the probabilities _A_, _B_,  and _C_ are as follows:
@@ -985,7 +985,7 @@ This algorithm uses the skeleton described earlier in "Building an Arbitrary-Pre
 <a id=Arc_Cosine_Distribution></a>
 ### Arc-Cosine Distribution
 
-The following is a reimplementation of an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129\)[^26].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random variate will be in the interval [0, 1].  This algorithm's result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random variate, as pointed out by Devroye. (acos(_x_) is the inverse cosine function.)  The algorithm follows.
+The following is a reimplementation of an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129\)[^26].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random variate will be 0, 1, or a real number in between.  This algorithm's result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform random variate between 0 and 1, as pointed out by Devroye. (acos(_x_) is the inverse cosine function.)  The algorithm follows.
 
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.
@@ -1044,7 +1044,7 @@ Uses the skeleton for the uniform distribution inside N-dimensional shapes.
 <a id=Exponential_Distribution_with_Unknown_Rate___lambda___Lying_in_0_1></a>
 ### Exponential Distribution with Unknown Rate _&lambda;_, Lying in (0, 1]
 
-Exponential random variates can be generated using an input coin of unknown probability of heads of _&lambda;_ (which can be in the interval (0, 1]), by generating arrival times in a _Poisson process_ of rate 1, then _thinning_ the process using the coin.  The arrival times that result will be exponentially distributed with rate _&lambda;_.  I found the basic idea in the answer to a [**Mathematics Stack Exchange question**](https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform), and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six\)[^26].  The algorithm follows:
+Exponential random variates can be generated using an input coin of unknown probability of heads of _&lambda;_ (which can either be 1 or come between 0 and 1), by generating arrival times in a _Poisson process_ of rate 1, then _thinning_ the process using the coin.  The arrival times that result will be exponentially distributed with rate _&lambda;_.  I found the basic idea in the answer to a [**Mathematics Stack Exchange question**](https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform), and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six\)[^26].  The algorithm follows:
 
 1. Generate an exponential(1) random variate using the **ExpRand** or **ExpRand2** algorithm (with _&lambda;_ = 1), call it _ex_.
 2. (Thinning step.) Flip the input coin.  If it returns 1, return _ex_.
