@@ -305,7 +305,7 @@ Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \l
 
 To simulate an approximation of $f$ that comes within $\epsilon$ of $f$:
 
-1. Find the first $n$+1 coefficients such that the polynomial $P(\lambda) = a_0 \lambda^0 + ... + a_n\lambda^n$ is within $\epsilon$ of $f$ on the closed unit interval.
+1. Find the first $n$+1 coefficients such that the polynomial $P(\lambda) = a_0 \lambda^0 + ... + a_n\lambda^n$ is within $\epsilon$ of $f$ wherever $0 \le \lambda \le 1$.
 
     If $f$'s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called "ratio test", the algorithms in Carvalho and Moreira (2022)[^11] can be used here (see also "[**Proofs on Cutting Off a Power Series**](#Proofs_on_Cutting_Off_a_Power_Series)" in the appendix).
 
