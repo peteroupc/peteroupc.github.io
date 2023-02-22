@@ -592,8 +592,8 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 > **Notes:**
 >
 > 1. **Building convex combinations.** Assume we have a function of the form _f_(_&lambda;_) = $w_0(\lambda)+w_1(\lambda)+...$, where $w_0, w_1, ...$ are continuous functions.  Let _g_(_n_) be the probability that a randomly chosen number _X_ is _n_, such that _g_(0) + _g_(1) + ... = 1.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=g(0) \frac{w_0(\lambda)}{g(0)} + g(1) \frac{w_1(\lambda)}{g(1)} + ...$$ (where a term is omitted if division by 0 occurs), but this works only if the following conditions are met for each integer _n_&ge;0:
->     - $1 \ge g(n) \ge w_n(\lambda) \ge 0$, whenever $0 \le \lambda \le 1$.
->     - The function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories").
+>     - $1 \ge g(n) \ge w_n(\lambda) \ge 0$, wherever $0 \le \lambda \le 1$.
+>     - If $g(n)>0$, the function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories".
 >
 >     See also Mendo (2019\)[^33].
 > 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1, and let $c$ be a constant written as&mdash; $$c=a_0+a_1+a_2+...,$$ where&mdash;
@@ -658,7 +658,7 @@ In addition, the set of integers to choose from can be infinite.  This algorithm
 
 > **Note:**  The probability that $s$ many values of _X_ are rejected by this algorithm is $p(1 − p)^s$, where&mdash; $$p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda)}.$$
 >
-> **Example:** Step 1 can read "Flip the input coin for _&lambda;_ repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way." Then step 1 generates _X_ with probability $\lambda^i (1-\lambda)$.[^36]
+> **Example:** Step 1 can read "Flip the input coin for _&lambda;_ repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way." Then step 1 generates _X_ with probability $g(X,\lambda)=\lambda^X (1-\lambda)$.[^36]
 
 <a id=Flajolet_s_Probability_Simulation_Schemes></a>
 #### Flajolet's Probability Simulation Schemes
@@ -721,7 +721,7 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 >     1. Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way.
 >     2. With probability 1/((_X_)!), _X_ is accepted so return a number that is 1 if _X_ is 0 and 0 otherwise.  Otherwise, go to the previous step.
 >
-> 4. For the class of _alternating permutations of even size_ (see example 1), step 2 can be implemented as follows (Flajolet et al. 2010, sec. 2.2\)[^1]:
+> 4. For the class of _alternating permutations of even size_ (see example 1), step 2 in **Algorithm BR** can be implemented as follows (Flajolet et al. 2010, sec. 2.2\)[^1]:
 >
 >     - (2a.) (Limited to even-sized permutations.) If _X_ is odd[^44], reject _X_ (and go to step 1).
 >     - (2b.) Generate a uniform(0, 1) random variate U, then set _i_ to 1.
@@ -729,11 +729,10 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 >         - Generate a uniform(0, 1) random variate V.
 >         - If _i_ is odd[^44] and V is less than U, or if _i_ is even[^43] and U is less than V, reject _X_ (and go to step 1).
 >         - Add 1 to i, then set U to V.
->     - (2d.) (_X_ is accepted.) Return _X_.
 >
-> 5. For the class of _alternating permutations of odd size_ (see example 1), step 2 can be implemented as in example 4, except 2a reads: "(2a.) (Limited to odd-sized permutations.) If _X_ is even[^43], reject _X_ (and go to step 1)." (Flajolet et al. 2010, sec. 2.2\)[^1].
-> 6. By computing&mdash; $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), we find that the algorithm's output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$.
-> 7. The _X_ generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because the Bernoulli race algorithm is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if _X_ is a Poisson random variate with mean _z_<sup>2</sup>/4, where _z_ &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
+> 5. For the class of _alternating permutations of odd size_ (see example 1), step 2 in **Algorithm BR** can be implemented as in example 4, except 2a reads: "(2a.) (Limited to odd-sized permutations.) If _X_ is even[^43], reject _X_ (and go to step 1)." (Flajolet et al. 2010, sec. 2.2\)[^1].
+> 6. By computing&mdash; $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), we find that the von Neumann schema's output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$.
+> 7. The _X_ generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because **Algorithm BR** is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if _X_ is a Poisson random variate with mean _z_<sup>2</sup>/4, where _z_ &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
 
 **Recap.**  As can be seen&mdash;
 
