@@ -103,12 +103,12 @@ Comments on other aspects of this document are welcome.
 ## Bernoulli Factories
 &nbsp;
 
-In the methods below, _&lambda;_ is the unknown probability of heads of the coin involved in the Bernoulli Factory problem.
+In the methods below, _&lambda;_ is the unknown probability of heads of the coin involved in the Bernoulli factory problem.
 
 <a id=Certain_Power_Series></a>
 ### Certain Power Series
 
-A _power series_ is a function written as&mdash; $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are _coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this section do, and they must be factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function.)
+A _power series_ is a function written as&mdash; $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are _coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this section do, and they must be Bernoulli factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function, too.)
 
 Depending on the coefficients, different algorithms can be built to simulate a power series function:
 
@@ -161,7 +161,7 @@ The algorithm that follows can be used to simulate a more general class of power
 
 - $f$ is written as in equation $(1)$.
 - There is a rational number $Z$ defined as follows. For every $\lambda$ that satisfies $0 \le \lambda \le 1$, it is true that $0 \le f(\lambda) \le Z \lt 1$.
-- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)" in the "Bernoulli Factory Algorithms" article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$'s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nowhere increasing sequence); such functions $C$ admit the **general martingale algorithm**.
+- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)" in the "Bernoulli Factory Algorithms" article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$'s are each positive or zero and odd-indexed are each negative or zero) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nowhere increasing sequence); such functions $C$ admit the **general martingale algorithm**.
 
 In addition, the algorithm will be simpler if each coefficient $a_i$ is a rational number.
 
@@ -219,9 +219,9 @@ Step 1 is rather general, and doesn't fully describe how to generate the value $
 
 > **Note:** Part of **Algorithm 2** involves choosing $X$ at random with probability $w(X)$, then doing $X$ coin flips.  Thus, the algorithm uses, on average, at least the number of unbiased random bits needed to generate $X$ on average (Knuth and Yao 1976\)[^6].
 
-**Algorithm 2** covers an algorithm that was given by Luis Mendo (2019)[^7] for simulating certain power series, but works only if the coefficients sum to 1 or less and only if coefficient 0 ($a_0$) is 0.
+**Algorithm 2** covers an algorithm that was given by Luis Mendo (2019)[^7] for simulating certain power series, but that works only if the coefficients sum to 1 or less and only if coefficient 0 ($a_0$) is 0.
 
-To get to an algorithm equivalent to Mendo's, first **Algorithm 2** is modified to simulate $f_0(\lambda)$/_CS_ as follows, where _CS_ is the sum of all coefficients $a_i$, starting with $i=1$.  This shows Mendo's algorithm, like **Algorithm 2**, is actually a special case of the [**convex combination algorithm**](#Convex_Combinations).
+To get to an algorithm equivalent to Mendo's, first **Algorithm 2** is modified to simulate $f_0(\lambda)$/_CS_ as follows, where _CS_ is the sum of all coefficients $a_i$, starting with $i=1$.  This shows Mendo's algorithm, like **Algorithm 2**, is actually a special case of the [**convex combination algorithm**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations).
 
 - Step 1 of **Algorithm 2** becomes: "(1a.) Set _dsum_ to 0 and $n$ to 1; (1b.) With probability $a_n$/(_CS_ &minus; _dsum_), go to step 2. Otherwise, add $a_n$ to _dsum_; (1c.) Add 1 to _i_ and go to step 1b." (Choose at random $n$ with probability $w(n)=a_n$/_CS_.)
 - Step 2 becomes "Go to step 3". (The _P_ in **Algorithm 2** is not used; it's effectively $w(n)/\frac{a_n}{CS}=\frac{a_n}{CS}/\frac{a_n}{CS} = 1$.)
@@ -248,7 +248,7 @@ The conditions on $f$ given above mean that&mdash;
 
 If $f$ is a power series written as equation (1), but&mdash;
 
-- all of the coefficients are nonnegative, and
+- each of the coefficients is positive or zero, and
 - the coefficients sum to greater than 1,
 
 then Nacu and Peres (2005, proposition 16\)[^1] gave an algorithm which takes the following parameters:
@@ -266,7 +266,7 @@ _B_ is not a parameter, but is the maximum allowed value for $g(\lambda)$ (proba
 
 Examples 1 to 4 show how **Algorithm 1** leads to algorithms for simulating certain factory functions.
 
-> **Note:** In the SymPy computer algebra library, the `series(func, n=20)` method computes the first 20 terms of a function's power series expansion.  An example is: `series(sin(x), n=20)`.
+> **Note:** In the SymPy computer algebra library, the `series(func, x, n=20)` method computes the terms of a function's power series up to the term with $x^{19}$.  An example is: `series(sin(x), x, n=20)`.
 
 **Example 1:** Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.
 
@@ -305,7 +305,7 @@ Examples 1 to 4 show how **Algorithm 1** leads to algorithms for simulating cert
 | Function $f(\lambda)$ | Coefficients | Value of $d_0$ |
   --- | --- | --- |
 | $\lambda/(\exp(\lambda)-1)$ |  $a_i = -1/2$ if $i=1$, or $B(i)/(i!)$ otherwise. |  1. |
-| $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd[^8], or 0 otherwise. |  1. |
+| Hyperbolic tangent: $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd[^8], or 0 otherwise. |  1. |
 | $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
 | $\sum_{i\ge 0} a_i x^i$ ([**source**](https://math.stackexchange.com/questions/855517)) | $a_i = \frac{(-1)^i 4^i}{(2i+1)^2 {2i \choose i}}$. | 1. |
 
@@ -349,7 +349,7 @@ For this particular function:
 
 **Examples 9:** The table below shows power series functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number such that 0 &le; _D_ &le; _&phi;_(0), where _&phi;_(.) is the original function.
 
-| Original function (_&phi;_(_&lambda;_)) | Target function _f_(_&lambda;_) | Step 1b reads "Set _n_ to ..." | Value of _P_ |
+| Original function (_&phi;_(_&lambda;_)) | Target function _f_(_&lambda;_) | Step 1b in **Example 7** reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- | --- |
 | exp(_&lambda;_)/4. | _&phi;_(_&lambda;_) &minus; _D_. | _n_. | (1/4&minus;_D_)\*2 or (_&phi;_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. |
 | exp(_&lambda;_)/6.  | _&phi;_(_&lambda;_) &minus; _D_. | _n_. | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. |
@@ -537,9 +537,9 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 In this algorithm, _c_ must be an integer 1 or greater, and _&lambda;_ is the unknown heads probability of a coin.
 
 1. Run the algorithm for **_d_ / (_c_ + _&lambda;_)**, with _d_=1 and _c_=_c_, repeatedly, until the run returns 1, then set _g_ to the number of runs that returned 0 this way.
-2. If _g_ is 0, return 0.  Otherwise, return a number that is 1 with probability 1/_g_ or 0 otherwise. (Here, returning 0 means that the von Neumann schema would require another iteration; see the note.)
+2. If _g_ is 0, return 0.  Otherwise, return a number that is 1 with probability 1/_g_ or 0 otherwise.
 
-> **Note:** This algorithm is based on the [**von Neumann schema**](https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes) with the single-cycle permutation class.  In this case, given a coin that shows heads with probability _z_, the schema will terminate in one iteration with probability (1&minus;_z_)\*ln(1/(1&minus;_z_)).  Thus, if the coin shows heads with probability 1 &minus; _z_, the one-iteration probability is _z_\*ln(1/_z_), so if the coin shows heads with probability 1 &minus; 1/(_m_+_z_), the one-iteration probability is (1/(_m_+_z_))\*ln(1/(1/(_m_+_z_))) = ln(_m_+_z_)/(_m_+_z_).
+> **Note:** This algorithm is based on the [**von Neumann schema**](https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes) with the single-cycle permutation class.  In this case, given a coin that shows heads with probability _z_, the schema will terminate in one iteration with probability (1&minus;_z_)\*ln(1/(1&minus;_z_)).  (In step 2 of the algorithm, returning 0 means that the von Neumann schema would require another iteration.) Thus, if the coin shows heads with probability 1 &minus; _z_, the one-iteration probability is _z_\*ln(1/_z_), so if the coin shows heads with probability 1 &minus; 1/(_m_+_z_), the one-iteration probability is (1/(_m_+_z_))\*ln(1/(1/(_m_+_z_))) = ln(_m_+_z_)/(_m_+_z_).
 
 <a id=Examples_for_the_von_Neumann_schema></a>
 ### Examples for the von Neumann schema
@@ -1626,7 +1626,7 @@ The algorithm to achieve this goal follows (see Lee et al. 2014\)[^53]\:
 
 **Algorithm 3.** Suppose there is an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nowhere decreasing in that interval (Jacob and Thiery 2015\)[^15].  This can be done using the algorithm below.  In the algorithm:
 
-- _f_(_&mu;_) must be a function that can be written as the following infinite series expansion: _c_[0]\*_z_<sup>0</sup> + _c_[1]\*_z_<sup>1</sup> + ..., where _z_ = _&mu;_&minus;_a_ and all _c_\[_i_\] are 0 or greater.
+- _f_(_&mu;_) must be a function that can be written as&mdash;<br>_c_[0]\*_z_<sup>0</sup> + _c_[1]\*_z_<sup>1</sup> + ...,<br>which is an infinite series where _z_ = _&mu;_&minus;_a_ and all _c_\[_i_\] are 0 or greater.
 - _&psi;_ is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)
 
 The algorithm follows.

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2023/02/21"><meta name="citation_online_date" content="2023/02/21"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2023/02/22"><meta name="citation_online_date" content="2023/02/22"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -144,13 +144,13 @@
 
 <p>&nbsp;</p>
 
-<p>In the methods below, <em>&lambda;</em> is the unknown probability of heads of the coin involved in the Bernoulli Factory problem.</p>
+<p>In the methods below, <em>&lambda;</em> is the unknown probability of heads of the coin involved in the Bernoulli factory problem.</p>
 
 <p><a id=Certain_Power_Series></a></p>
 
 <h3>Certain Power Series</h3>
 
-<p>A <em>power series</em> is a function written as&mdash; $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are <em>coefficients</em> and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this section do, and they must be factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function.)</p>
+<p>A <em>power series</em> is a function written as&mdash; $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are <em>coefficients</em> and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this section do, and they must be Bernoulli factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function, too.)</p>
 
 <p>Depending on the coefficients, different algorithms can be built to simulate a power series function:</p>
 
@@ -228,7 +228,7 @@
 <ul>
 <li>$f$ is written as in equation $(1)$.</li>
 <li>There is a rational number $Z$ defined as follows. For every $\lambda$ that satisfies $0 \le \lambda \le 1$, it is true that $0 \le f(\lambda) \le Z \lt 1$.</li>
-<li>There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot; in the &quot;Bernoulli Factory Algorithms&quot; article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$&#39;s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nowhere increasing sequence); such functions $C$ admit the <strong>general martingale algorithm</strong>.</li>
+<li>There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot; in the &quot;Bernoulli Factory Algorithms&quot; article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$&#39;s are each positive or zero and odd-indexed are each negative or zero) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nowhere increasing sequence); such functions $C$ admit the <strong>general martingale algorithm</strong>.</li>
 </ul>
 
 <p>In addition, the algorithm will be simpler if each coefficient $a_i$ is a rational number.</p>
@@ -309,9 +309,9 @@
 <p><strong>Note:</strong> Part of <strong>Algorithm 2</strong> involves choosing $X$ at random with probability $w(X)$, then doing $X$ coin flips.  Thus, the algorithm uses, on average, at least the number of unbiased random bits needed to generate $X$ on average (Knuth and Yao 1976)[^6].</p>
 </blockquote>
 
-<p><strong>Algorithm 2</strong> covers an algorithm that was given by Luis Mendo (2019)[^7] for simulating certain power series, but works only if the coefficients sum to 1 or less and only if coefficient 0 ($a_0$) is 0.</p>
+<p><strong>Algorithm 2</strong> covers an algorithm that was given by Luis Mendo (2019)[^7] for simulating certain power series, but that works only if the coefficients sum to 1 or less and only if coefficient 0 ($a_0$) is 0.</p>
 
-<p>To get to an algorithm equivalent to Mendo&#39;s, first <strong>Algorithm 2</strong> is modified to simulate $f_0(\lambda)$/<em>CS</em> as follows, where <em>CS</em> is the sum of all coefficients $a_i$, starting with $i=1$.  This shows Mendo&#39;s algorithm, like <strong>Algorithm 2</strong>, is actually a special case of the <a href="#Convex_Combinations"><strong>convex combination algorithm</strong></a>.</p>
+<p>To get to an algorithm equivalent to Mendo&#39;s, first <strong>Algorithm 2</strong> is modified to simulate $f_0(\lambda)$/<em>CS</em> as follows, where <em>CS</em> is the sum of all coefficients $a_i$, starting with $i=1$.  This shows Mendo&#39;s algorithm, like <strong>Algorithm 2</strong>, is actually a special case of the <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination algorithm</strong></a>.</p>
 
 <ul>
 <li>Step 1 of <strong>Algorithm 2</strong> becomes: &quot;(1a.) Set <em>dsum</em> to 0 and $n$ to 1; (1b.) With probability $a_n$/(<em>CS</em> &minus; <em>dsum</em>), go to step 2. Otherwise, add $a_n$ to <em>dsum</em>; (1c.) Add 1 to <em>i</em> and go to step 1b.&quot; (Choose at random $n$ with probability $w(n)=a_n$/<em>CS</em>.)</li>
@@ -366,7 +366,7 @@
 <p>If $f$ is a power series written as equation (1), but&mdash;</p>
 
 <ul>
-<li>all of the coefficients are nonnegative, and</li>
+<li>each of the coefficients is positive or zero, and</li>
 <li>the coefficients sum to greater than 1,</li>
 </ul>
 
@@ -391,7 +391,7 @@
 <p>Examples 1 to 4 show how <strong>Algorithm 1</strong> leads to algorithms for simulating certain factory functions.</p>
 
 <blockquote>
-<p><strong>Note:</strong> In the SymPy computer algebra library, the <code>series(func, n=20)</code> method computes the first 20 terms of a function&#39;s power series expansion.  An example is: <code>series(sin(x), n=20)</code>.</p>
+<p><strong>Note:</strong> In the SymPy computer algebra library, the <code>series(func, x, n=20)</code> method computes the terms of a function&#39;s power series up to the term with $x^{19}$.  An example is: <code>series(sin(x), x, n=20)</code>.</p>
 </blockquote>
 
 <p><strong>Example 1:</strong> Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.</p>
@@ -452,7 +452,7 @@
 <td>1.</td>
 </tr>
 <tr>
-<td>$\tanh(\lambda)$</td>
+<td>Hyperbolic tangent: $\tanh(\lambda)$</td>
 <td>$a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd[^8], or 0 otherwise.</td>
 <td>1.</td>
 </tr>
@@ -579,7 +579,7 @@
 <tr>
 <th>Original function (<em>&phi;</em>(<em>&lambda;</em>))</th>
 <th>Target function <em>f</em>(<em>&lambda;</em>)</th>
-<th>Step 1b reads &quot;Set <em>n</em> to ...&quot;</th>
+<th>Step 1b in <strong>Example 7</strong> reads &quot;Set <em>n</em> to ...&quot;</th>
 <th>Value of <em>P</em></th>
 </tr>
 </thead><tbody>
@@ -876,11 +876,11 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <ol>
 <li>Run the algorithm for <strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong>, with <em>d</em>=1 and <em>c</em>=<em>c</em>, repeatedly, until the run returns 1, then set <em>g</em> to the number of runs that returned 0 this way.</li>
-<li>If <em>g</em> is 0, return 0.  Otherwise, return a number that is 1 with probability 1/<em>g</em> or 0 otherwise. (Here, returning 0 means that the von Neumann schema would require another iteration; see the note.)</li>
+<li>If <em>g</em> is 0, return 0.  Otherwise, return a number that is 1 with probability 1/<em>g</em> or 0 otherwise.</li>
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> This algorithm is based on the <a href="https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes"><strong>von Neumann schema</strong></a> with the single-cycle permutation class.  In this case, given a coin that shows heads with probability <em>z</em>, the schema will terminate in one iteration with probability (1&minus;<em>z</em>)*ln(1/(1&minus;<em>z</em>)).  Thus, if the coin shows heads with probability 1 &minus; <em>z</em>, the one-iteration probability is <em>z</em>*ln(1/<em>z</em>), so if the coin shows heads with probability 1 &minus; 1/(<em>m</em>+<em>z</em>), the one-iteration probability is (1/(<em>m</em>+<em>z</em>))*ln(1/(1/(<em>m</em>+<em>z</em>))) = ln(<em>m</em>+<em>z</em>)/(<em>m</em>+<em>z</em>).</p>
+<p><strong>Note:</strong> This algorithm is based on the <a href="https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes"><strong>von Neumann schema</strong></a> with the single-cycle permutation class.  In this case, given a coin that shows heads with probability <em>z</em>, the schema will terminate in one iteration with probability (1&minus;<em>z</em>)*ln(1/(1&minus;<em>z</em>)).  (In step 2 of the algorithm, returning 0 means that the von Neumann schema would require another iteration.) Thus, if the coin shows heads with probability 1 &minus; <em>z</em>, the one-iteration probability is <em>z</em>*ln(1/<em>z</em>), so if the coin shows heads with probability 1 &minus; 1/(<em>m</em>+<em>z</em>), the one-iteration probability is (1/(<em>m</em>+<em>z</em>))*ln(1/(1/(<em>m</em>+<em>z</em>))) = ln(<em>m</em>+<em>z</em>)/(<em>m</em>+<em>z</em>).</p>
 </blockquote>
 
 <p><a id=Examples_for_the_von_Neumann_schema></a></p>
@@ -2425,7 +2425,7 @@ calc_linear_func(count=8)
 <p><strong>Algorithm 3.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nowhere decreasing in that interval (Jacob and Thiery 2015)[^15].  This can be done using the algorithm below.  In the algorithm:</p>
 
 <ul>
-<li><em>f</em>(<em>&mu;</em>) must be a function that can be written as the following infinite series expansion: <em>c</em>[0]*<em>z</em><sup>0</sup> + <em>c</em>[1]*<em>z</em><sup>1</sup> + ..., where <em>z</em> = <em>&mu;</em>&minus;<em>a</em> and all <em>c</em>[<em>i</em>] are 0 or greater.</li>
+<li><em>f</em>(<em>&mu;</em>) must be a function that can be written as&mdash;<br><em>c</em>[0]*<em>z</em><sup>0</sup> + <em>c</em>[1]*<em>z</em><sup>1</sup> + ...,<br>which is an infinite series where <em>z</em> = <em>&mu;</em>&minus;<em>a</em> and all <em>c</em>[<em>i</em>] are 0 or greater.</li>
 <li><em>&psi;</em> is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)</li>
 </ul>
 
