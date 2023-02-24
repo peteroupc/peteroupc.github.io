@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/02/21"><meta name="citation_online_date" content="2023/02/21"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/02/23"><meta name="citation_online_date" content="2023/02/23"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -174,7 +174,7 @@
 </ul></li>
 </ul>
 
-<p>Let <em>m</em> be the Lipschitz constant of <em>f</em>&#39;s derivative, or a greater number than that constant (if <em>f</em> has a second derivative on the domain the closed unit interval, then <em>m</em> can be the maximum absolute value of that second derivative).  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
+<p>Let <em>m</em> be the Lipschitz constant of <em>f</em>&#39;s derivative, or a greater number than that constant (if <em>f</em> has a second derivative on its domain, then <em>m</em> can be the maximum absolute value of that second derivative).  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
@@ -973,6 +973,8 @@
 
 <p>[^38]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. &quot;Computing minimal interpolants in C1, 1 (Rd).&quot; Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.</p>
 
+<p>[^39]: Molteni, Giuseppe. &quot;Explicit bounds for even moments of Bernstein’s polynomials.&quot; Journal of Approximation Theory 273 (2022): 105658.</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1029,7 +1031,7 @@
 
 <p>The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value (&quot;long-run average&quot;).  The following results bound the absolute value of $T$.[^23]</p>
 
-<p><strong>Result B4</strong> (Molteni 2022)[^38]: If $r$ is an even integer such that $0\le r\le 44$, then $|T(n, r, p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ for every $n\ge 1$.</p>
+<p><strong>Result B4</strong> (Molteni 2022)[^39]: If $r$ is an even integer such that $0\le r\le 44$, then $|T(n, r, p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ for every $n\ge 1$.</p>
 
 <p><strong>Proposition B5</strong>: For every integer $n\ge 1$, the following is true: $$|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$</p>
 
@@ -1559,7 +1561,7 @@
 <p><em>Proof.</em> By part 3 of lemma 2, for each integer $n\ge 4$ that&#39;s a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1). $\eta(n)$ is finite and converges to 0 as $n$ increases. The result then follows from Theorem 1. &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> Nacu and Peres (2005)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the domain the closed unit interval that is not greater than a constant (a slightly stronger condition than having a Lipschitz continuous derivative on that domain).</p>
+<p><strong>Note:</strong> Nacu and Peres (2005)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the closed unit interval that is not greater than a constant (a slightly stronger condition than having a Lipschitz continuous derivative on that domain).</p>
 </blockquote>
 
 <p><strong>Theorem 2.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If that function is convex and nowhere decreasing, then Theorem 1 remains valid with &phi;(n) = <strong>E</strong>[f(Y/n)] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem.</em></p>

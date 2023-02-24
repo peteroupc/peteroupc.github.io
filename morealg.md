@@ -76,7 +76,7 @@ Comments on other aspects of this document are welcome.
     - [**Arc-Cosine Distribution**](#Arc_Cosine_Distribution)
     - [**Logistic Distribution**](#Logistic_Distribution)
     - [**Cauchy Distribution**](#Cauchy_Distribution)
-    - [Exponential Distribution with Unknown Rate _&lambda;_, Lying in (0, 1\]](#Exponential_Distribution_with_Unknown_Rate___lambda___Lying_in_0_1)
+    - [**Exponential Distribution with Unknown Small Rate**](#Exponential_Distribution_with_Unknown_Small_Rate)
     - [**Exponential Distribution with Rate ln(_x_)**](#Exponential_Distribution_with_Rate_ln__x)
     - [**Symmetric Geometric Distribution**](#Symmetric_Geometric_Distribution)
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
@@ -1041,8 +1041,8 @@ Uses the skeleton for the uniform distribution inside N-dimensional shapes.
 5. If (_c1_<sup>2</sup> + _c2_<sup>2</sup>) > _S_<sup>2</sup>, then go to step 2.
 6. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
-<a id=Exponential_Distribution_with_Unknown_Rate___lambda___Lying_in_0_1></a>
-### Exponential Distribution with Unknown Rate _&lambda;_, Lying in (0, 1]
+<a id=Exponential_Distribution_with_Unknown_Small_Rate></a>
+### Exponential Distribution with Unknown Small Rate
 
 Exponential random variates can be generated using an input coin of unknown probability of heads of _&lambda;_ (which can either be 1 or come between 0 and 1), by generating arrival times in a _Poisson process_ of rate 1, then _thinning_ the process using the coin.  The arrival times that result will be exponentially distributed with rate _&lambda;_.  I found the basic idea in the answer to a [**Mathematics Stack Exchange question**](https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform), and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six\)[^26].  The algorithm follows:
 

@@ -122,7 +122,7 @@ Finding _m_ and _&alpha;_ is non-trivial in general.  But assuming _m_ and _&alp
     - is convex and has a minimum of greater than 0, or
     - is concave and has a maximum of less than 1.
 
-Let _m_ be the Lipschitz constant of _f_'s derivative, or a greater number than that constant (if _f_ has a second derivative on the domain the closed unit interval, then _m_ can be the maximum absolute value of that second derivative).  Then for every integer _n_ that's a power of 2:
+Let _m_ be the Lipschitz constant of _f_'s derivative, or a greater number than that constant (if _f_ has a second derivative on its domain, then _m_ can be the maximum absolute value of that second derivative).  Then for every integer _n_ that's a power of 2:
 
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise,  _f_(_k_/_n_) &minus; _m_/(7\*_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _m_/(7\*_n_).
@@ -607,6 +607,8 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^38]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. "Computing minimal interpolants in C1, 1 (Rd)." Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.
 
+[^39]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -656,7 +658,7 @@ _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^
 
 The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value ("long-run average").  The following results bound the absolute value of $T$.[^23]
 
-**Result B4** (Molteni 2022)[^38]: If $r$ is an even integer such that $0\le r\le 44$, then $|T(n, r, p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ for every $n\ge 1$.
+**Result B4** (Molteni 2022)[^39]: If $r$ is an even integer such that $0\le r\le 44$, then $|T(n, r, p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ for every $n\ge 1$.
 
 **Proposition B5**: For every integer $n\ge 1$, the following is true: $$|T(n, 3, p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$
 
@@ -1075,7 +1077,7 @@ _Proof._ Because Lipschitz continuous functions are Hölder continuous with Höl
 
 _Proof._ By part 3 of lemma 2, for each integer $n\ge 4$ that's a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1). $\eta(n)$ is finite and converges to 0 as $n$ increases. The result then follows from Theorem 1. &#x25a1;
 
-> **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the domain the closed unit interval that is not greater than a constant \(a slightly stronger condition than having a Lipschitz continuous derivative on that domain).
+> **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the closed unit interval that is not greater than a constant \(a slightly stronger condition than having a Lipschitz continuous derivative on that domain).
 
 **Theorem 2.** _Let f(&lambda;) be a strictly bounded factory function.  If that function is convex and nowhere decreasing, then Theorem 1 remains valid with &phi;(n) = **E**\[f(Y/n)\] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
 

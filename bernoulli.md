@@ -616,10 +616,13 @@ The previous algorithm can be generalized further, so that an input coin that si
 
 This algorithm, called **Algorithm CC** in this document, follows.
 
-1. Choose an integer 0 or greater at random with probability $g(k,\lambda)$ for integer $k$, with help of the input coin for $\lambda$. Call the chosen integer _X_.
+1. Choose an integer 0 or greater at random, with help of the input coin for $\lambda$, so that $k$ is chosen with probability $g(k,\lambda)$. Call the chosen integer _X_.
 2. Flip the coin represented by _X_ and return the result.
 
-> **Note:** If we define _S_ to be a set of integers 0 or greater, and replace step 2 with "If _X_ is in the set _S_, return 1.  Otherwise, return 0", then the algorithm returns 1 with probability $\sum_{k\text{ in }S} g(k,\lambda)$ (because $h_k(\lambda)$ is either 1 if $k$ is in _S_, or 0 otherwise). Then the so-called "even-parity" construction[^24] is a special case of this algorithm, if _S_ is the even positive integers and zero and if the example below is used.
+> **Notes:**
+>
+> 1. Step 1 of this algorithm is incomplete, since it doesn't explain how to generate $X$ exactly.  That depends on the probability $g(k,\lambda)$.
+> 2. If we define _S_ to be a set of integers 0 or greater, and replace step 2 with "If _X_ is in the set _S_, return 1.  Otherwise, return 0", then the algorithm returns 1 with probability $\sum_{k\text{ in }S} g(k,\lambda)$ (because $h_k(\lambda)$ is either 1 if $k$ is in _S_, or 0 otherwise). Then the so-called "even-parity" construction[^24] is a special case of this algorithm, if _S_ is the even positive integers and zero and if the example below is used.
 >
 > **Example:** Step 1 can read "Flip the input coin for _&lambda;_ repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way." Then step 1 generates _X_ with probability $\lambda^X (1-\lambda)$.[^36]
 
@@ -652,11 +655,14 @@ The previous algorithm can be generalized further, so that an input coin that si
 
 In addition, the set of integers to choose from can be infinite.  This algorithm, called **Algorithm BR** in this document, follows.
 
-1. Choose an integer 0 or greater at random with probability $g(k,\lambda)$ for integer $k$, with help of the input coin for $\lambda$. Call the chosen integer _X_.  (If the integer must be less than or equal to an integer _r_, then the integer will have probability proportional to the following weights: \[_g_(0, _&lambda;_), _g_(1, _&lambda;_), ..., _g_(_r_, _&lambda;_)\].)
+1. Choose an integer 0 or greater at random, with help of the input coin for $\lambda$, so that $k$ is chosen with probability proportional to $g(k,\lambda). Call the chosen integer _X_.  (If the integer must be less than or equal to an integer _r_, then the integer will have probability proportional to the following weights: \[_g_(0, _&lambda;_), _g_(1, _&lambda;_), ..., _g_(_r_, _&lambda;_)\].)
 2. Run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(**_&mu;_**).  If the run returns 0 (_i_ is rejected), go to step 1.
 3. _X_ is accepted, so return _X_.
 
-> **Note:**  The probability that $s$ many values of _X_ are rejected by this algorithm is $p(1 − p)^s$, where&mdash; $$p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda)}.$$
+> **Notes:**
+>
+> 1. Step 1 of this algorithm is incomplete, since it doesn't explain how to generate $X$ exactly.  That depends on the weights $g(k,\lambda)$.
+> 2. The probability that $s$ many values of _X_ are rejected by this algorithm is $p(1 − p)^s$, where&mdash; $$p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda)}.$$
 >
 > **Example:** Step 1 can read "Flip the input coin for _&lambda;_ repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way." Then step 1 generates _X_ with probability $g(X,\lambda)=\lambda^X (1-\lambda)$.[^36]
 
@@ -695,7 +701,7 @@ The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the inp
 
 - A _permutation class_ is a rule that describes how a sequence of numbers must be ordered.  The ordering of the numbers is called a _permutation_.  Two examples of permutation classes cover permutations sorted in descending order, and permutations whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.
 
-Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 1$, with probability equal to&mdash; $$w_n(\lambda) = \frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)},$$ where the schema uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$, so that&mdash; $$w_n(\lambda)=\frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)} = \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where:
+Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 0$, with probability equal to&mdash; $$w_n(\lambda) = \frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)},$$ where the schema uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$, so that&mdash; $$w_n(\lambda)=\frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)} = \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where:
 
 - $V(n)$ returns a number in the interval \[0, _n_!\].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.
 - $EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an _exponential generating function_, which completely determines a permutation class.

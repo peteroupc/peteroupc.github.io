@@ -1294,13 +1294,13 @@ A _rational number_ is a ratio of integers.  If the rational number's denominato
 <a id=For_Floating_Point_Number_Formats></a>
 #### For Floating-Point Number Formats
 
-For floating-point number formats representing numbers of the form `FPSign` * `s` * `FPRADIX`<sup>`e`</sup> [^62], the following pseudocode implements `RNDRANGEMinMaxExc(lo, hi)`.  In the pseudocode:
+For floating-point number formats representing numbers of the form `FPSign` * `FPSignificand` * `FPRADIX`<sup>`e`</sup> [^62], the following pseudocode implements `RNDRANGEMinMaxExc(lo, hi)`.  In the pseudocode:
 
 - `MINEXP` is the lowest exponent a number can have in the floating-point format.  For the IEEE 754 binary64 format (Java `double`), `MINEXP = -1074`.  For the IEEE 754 binary32 format (Java `float`), `MINEXP = -149`.
 - `FPPRECISION` is the number of significant digits in the floating-point format, whether the format stores them as such or not. Equals 53 for binary64, or 24 for binary32.
 - `FPRADIX` is the digit base of the floating-point format.  Equals 2 for binary64 and binary32.
 - `FPExponent(x)` returns the value of `e` for the number `x` such that the number of digits in `s` equals `FPPRECISION`.  Returns `MINEXP` if `x = 0` or if `e` would be less than `MINEXP`.
-- `FPSignificand(x)` returns `s`, the significand of the number `x`.  Returns 0 if `x = 0`. Has `FPPRECISION` digits unless `FPExponent(x) == MINEXP`.
+- `FPSignificand(x)` returns the significand (which is nonnegative) of the number `x`.  Returns 0 if `x = 0`. Has `FPPRECISION` digits, but may have fewer if `FPExponent(x) == MINEXP`.
 - `FPSign(x)` returns either -1 or 1 indicating whether the number is positive or negative.  Can be &minus;1 even if `s` is 0.
 
 See also (Downey 2007\)[^63] and the [**Rademacher Floating-Point Library**](https://gitlab.com/christoph-conrads/rademacher-fpl).
