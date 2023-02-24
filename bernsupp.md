@@ -97,7 +97,7 @@ A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli facto
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
 - is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)"), and
-- in the closed unit interval&mdash;
+- on the closed interval&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
     - is concave and has a maximum of less than 1.
@@ -606,8 +606,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 [^37]: Le Gruyer, Erwan. "Minimal Lipschitz extensions to differentiable functions defined on a Hilbert space." Geometric and Functional Analysis 19, no. 4 (2009): 1101-1118.
 
 [^38]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. "Computing minimal interpolants in C1, 1 (Rd)." Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.
-
-[^39]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
 
 <a id=Appendix></a>
 ## Appendix
