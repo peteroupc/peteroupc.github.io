@@ -477,21 +477,21 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 <a id=Pushdown_Automata_for_Square_Root_Like_Functions></a>
 ### Pushdown Automata for Square-Root-Like Functions
 
-A _pushdown automaton_ is a state machine that keeps a stack of symbols.  In this document, the input for this automaton is a stream of flips of a coin that shows heads with probability _&lambda;_, and the output is 0 or 1 depending on which state the automaton ends up in when it empties the stack (Mossel and Peres 2005\)[^18].  That paper shows that a pushdown automaton, as defined here, can simulate only _algebraic functions_, that is, functions that can be a solution of a nonzero polynomial equation.  The [**appendix**](#Pushdown_Automata_and_Algebraic_Functions) defines these machines in more detail and has proofs on which algebraic functions are possible with pushdown automata.
-
 In this section, ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient.
 
-The following algorithm extends the square-root construction of Flajolet et al. (2010\)[^19], takes an input coin with probability of heads _&lambda;_, and returns 1 with probability&mdash;
+The following algorithm extends the square-root construction of Flajolet et al. (2010\)[^18], takes an input coin with probability of heads _&lambda;_ (where 0 &le; _&lambda;_ &lt; 1), and returns 1 with probability&mdash;
 
 $$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda\mathtt{Coin}(\lambda)(\mathtt{Coin}(\lambda)-1)}} = (1-\lambda)\sum_{n\ge 0} \lambda^n (\mathtt{Coin}(\lambda))^n (1-\mathtt{Coin}(\lambda))^n {2n \choose n}$$  $$= (1-\lambda)\sum_{n\ge 0} (\lambda \mathtt{Coin}(\lambda) (1-\mathtt{Coin}(\lambda)))^n {2n \choose n}$$ $$= \sum_{n\ge 0} (1-\lambda) \lambda^n h_n(\lambda) = \sum_{n\ge 0} g(n, \lambda) h_n(\lambda),$$
 
 and 0 otherwise, where:
 
-- `Coin`(_&lambda;_) is a Bernoulli factory function with the property $0\le \mathtt{Coin}(\lambda)\lt 1$ whenever $0\le\lambda\le 1$. If `Coin` is a rational function (a ratio of two polynomials) whose coefficients are rational numbers, then _f_ is algebraic and can be simulated by a _pushdown automaton_, as in the algorithm below. But this algorithm will still work even if `Coin` is not a rational function.  In the original square-root construction,  $`Coin`(\lambda)=1/2$.
-- $g(n, \lambda) = (1-\lambda) \lambda^n$; this is the probability of running the `Coin` Bernoulli factory $n$ times 2 times.
+- `Coin`(_&lambda;_) is a Bernoulli factory function with the property $0\le \mathtt{Coin}(\lambda)\lt 1$ whenever $0\le\lambda\le 1$. If `Coin` is a rational function (a ratio of two polynomials) whose coefficients are rational numbers, then _f_ is an _algebraic function_ (a function that can be a solution of a nonzero polynomial equation) and can be simulated by a _pushdown automaton_, or a state machine with a stack (see the algorithm below and the note that follows it). But this algorithm will still work even if `Coin` is not a rational function.  In the original square-root construction,  `Coin`(_&lambda;_) = 1/2.
+- $g(n, \lambda) = (1-\lambda) \lambda^n$; this is the probability of running the `Coin` Bernoulli factory $2 \times n$ times.
 - $h_n(\lambda) = (\mathtt{Coin}(\lambda))^n (1-\mathtt{Coin}(\lambda))^n {2n \choose n}$; this is the probability of getting as many ones as zeros from the `Coin` Bernoulli factory.
 
 Equivalently&mdash; $$f(\lambda)=(1-\lambda) OGF(\lambda \mathtt{Coin}(\lambda) (1-\mathtt{Coin}(\lambda))),$$ where $OGF(x) = \sum_{n\ge 0} x^n {2n \choose n}$ is the algorithm's ordinary generating function (also known as counting generating function).
+
+The algorithm follows.
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
@@ -499,25 +499,26 @@ Equivalently&mdash; $$f(\lambda)=(1-\lambda) OGF(\lambda \mathtt{Coin}(\lambda) 
     2. Run a Bernoulli factory algorithm for `Coin`(_&lambda;_).  If the run returns 1, add 1 to _d_.  Otherwise, subtract 1 from _d_.
     3. Repeat the previous substep.
 
-As a pushdown automaton, this algorithm (except the "Repeat the previous substep" part) can be expressed as follows. Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These _transition rules_ can be written as follows:
-
-- (POS-S1, HEADS, _topsymbol_) &rarr; (POS-S2, {_topsymbol_}) (set state to POS-S2, keep _topsymbol_ on the stack).
-- (NEG-S1, HEADS, _topsymbol_) &rarr; (NEG-S2, {_topsymbol_}).
-- (POS-S1, TAILS, EMPTY) &rarr; (ONE, {}) (set state to ONE, pop the top symbol from the stack).
-- (NEG-S1, TAILS, EMPTY) &rarr; (ONE, {}).
-- (POS-S1, TAILS, X) &rarr; (ZERO, {}).
-- (NEG-S1, TAILS, X) &rarr; (ZERO, {}).
-- (ZERO, _flip_, _topsymbol_) &rarr; (ZERO, {}).
-- (POS-S2, _flip_, _topsymbol_) &rarr; Add enough transition rules to the automaton to simulate _g_(_&lambda;_) by a finite-state machine (only possible if _g_ is rational with rational coefficients (Mossel and Peres 2005\)[^18]).  Transition to POS-S2-ZERO if the machine outputs 0, or POS-S2-ONE if the machine outputs 1.
-- (NEG-S2, _flip_, _topsymbol_) &rarr; Same as before, but the transitioning states are NEG-S2-ZERO and NEG-S2-ONE, respectively.
-- (POS-S2-ONE, _flip_, _topsymbol_) &rarr; (POS-S1, {_topsymbol_, X}) (replace top stack symbol with _topsymbol_, then push X to the stack).
-- (POS-S2-ZERO, _flip_, EMPTY) &rarr; (NEG-S1, {EMPTY, X}).
-- (POS-S2-ZERO, _flip_, X) &rarr; (POS-S1, {}).
-- (NEG-S2-ZERO, _flip_, _topsymbol_) &rarr; (NEG-S1, {_topsymbol_, X}).
-- (NEG-S2-ONE, _flip_, EMPTY) &rarr; (POS-S1, {EMPTY, X}).
-- (NEG-S2-ONE, _flip_, X) &rarr; (NEG-S1, {}).
-
-The machine stops when it removes EMPTY from the stack, and the result is either ZERO (0) or ONE (1).
+> **Note:** A _pushdown automaton_ is a state machine that keeps a stack of symbols.  In this document, the input for this automaton is a stream of flips of a coin that shows heads with probability _&lambda;_, and the output is 0 or 1 depending on which state the automaton ends up in when it empties the stack (Mossel and Peres 2005\)[^19].  That paper shows that a pushdown automaton, as defined here, can simulate only _algebraic functions_, that is, functions that can be a solution of a nonzero polynomial equation.  The [**appendix**](#Pushdown_Automata_and_Algebraic_Functions) defines these machines in more detail and has proofs on which algebraic functions are possible with pushdown automata.
+>
+> As a pushdown automaton, this algorithm (except the "Repeat the previous substep" part) can be expressed as follows. Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These _transition rules_ can be written as follows:
+> - (POS-S1, HEADS, _topsymbol_) &rarr; (POS-S2, {_topsymbol_}) (set state to POS-S2, keep _topsymbol_ on the stack).
+> - (NEG-S1, HEADS, _topsymbol_) &rarr; (NEG-S2, {_topsymbol_}).
+> - (POS-S1, TAILS, EMPTY) &rarr; (ONE, {}) (set state to ONE, pop the top symbol from the stack).
+> - (NEG-S1, TAILS, EMPTY) &rarr; (ONE, {}).
+> - (POS-S1, TAILS, X) &rarr; (ZERO, {}).
+> - (NEG-S1, TAILS, X) &rarr; (ZERO, {}).
+> - (ZERO, _flip_, _topsymbol_) &rarr; (ZERO, {}).
+> - (POS-S2, _flip_, _topsymbol_) &rarr; Add enough transition rules to the automaton to simulate _g_(_&lambda;_) by a finite-state machine (only possible if _g_ is rational with rational coefficients (Mossel and Peres 2005\)[^19]).  Transition to POS-S2-ZERO if the machine outputs 0, or POS-S2-ONE if the machine outputs 1.
+> - (NEG-S2, _flip_, _topsymbol_) &rarr; Same as before, but the transitioning states are NEG-S2-ZERO and NEG-S2-ONE, respectively.
+> - (POS-S2-ONE, _flip_, _topsymbol_) &rarr; (POS-S1, {_topsymbol_, X}) (replace top stack symbol with _topsymbol_, then push X to the stack).
+> - (POS-S2-ZERO, _flip_, EMPTY) &rarr; (NEG-S1, {EMPTY, X}).
+> - (POS-S2-ZERO, _flip_, X) &rarr; (POS-S1, {}).
+> - (NEG-S2-ZERO, _flip_, _topsymbol_) &rarr; (NEG-S1, {_topsymbol_, X}).
+> - (NEG-S2-ONE, _flip_, EMPTY) &rarr; (POS-S1, {EMPTY, X}).
+> - (NEG-S2-ONE, _flip_, X) &rarr; (NEG-S1, {}).
+>
+> The machine stops when it removes EMPTY from the stack, and the result is either ZERO (0) or ONE (1).
 
 For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} \mathtt{Coin}(\lambda)^n (1-\mathtt{Coin}(\lambda))^{Hn-n} {Hn \choose n},$$ where _H_ &ge; 2 is an integer; and `Coin` has the same meaning as earlier.
 
@@ -547,26 +548,25 @@ In this algorithm, _c_ must be an integer 1 or greater, and _&lambda;_ is the un
 <a id=Examples_for_the_von_Neumann_schema></a>
 ### Examples for the von Neumann schema
 
-Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^19].  In the table:
+Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^18].  In the table:
 
 - _&lambda;_ is the unknown heads probability of a coin.
 - _&mu;_ is another coin that flips the _&lambda;_ coin and returns 1 minus the result (thus simulating 1 &minus; _&lambda;_).
-- "Domain" is the set of values _&lambda;_ can take on.
 
-| Function | Domain |  Algorithm |
+| Function | Values Allowed |  Algorithm |
  --- | ---- | --- |
-| exp(&minus;_&lambda;_) | \[0, 1\) | Uses [**von Neumann schema algorithm**](https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes) (VNS) with **sorted** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
-| exp(_&lambda;_ &minus; 1) = exp(&minus;(1 &minus; _&lambda;_)) | (0, 1] | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
-| (1&minus;_&lambda;_)\*exp(_&lambda;_) | [0, 1) | Uses VNS with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| _&lambda;_\*exp(1&minus;_&lambda;_) | (0, 1] | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| _&lambda;_/ln(1/(1&minus;_&lambda;_)) | [0, 1) | Uses VNS with **single-cycle** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
-| (1&minus;_&lambda;_)/ln(1/_&lambda;_) | (0, 1] | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
-| (1&minus;_&lambda;_)\*ln(1/(1&minus;_&lambda;_)) | [0, 1) | Uses VNS with single-cycle permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| _&lambda;_\*ln(1/_&lambda;_) | (0, 1] | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| cos(_&lambda;_) | [0, 1) | Uses VNS with **alternating even-sized** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **0**, and 0 otherwise. |
-| (1&minus;_&lambda;_)/cos(_&lambda;_) = (1&minus;_&lambda;_)\*sec(_&lambda;_) | [0, 1) | Uses VNS with alternating even-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| _&lambda;_/tan(_&lambda;_) | [0, 1) | Uses VNS with **alternating odd-sized** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
-| (1&minus;_&lambda;_)\*tan(_&lambda;_) | [0, 1) | Uses VNS with alternating odd-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| exp(&minus;_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses [**von Neumann schema algorithm**](https://peteroupc.github.io/bernoulli.html#Flajolet_s_Probability_Simulation_Schemes) (VNS) with **sorted** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| exp(_&lambda;_ &minus; 1) = exp(&minus;(1 &minus; _&lambda;_)) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| (1&minus;_&lambda;_)\*exp(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_\*exp(1&minus;_&lambda;_) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_/ln(1/(1&minus;_&lambda;_)) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with **single-cycle** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
+| (1&minus;_&lambda;_)/ln(1/_&lambda;_) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
+| (1&minus;_&lambda;_)\*ln(1/(1&minus;_&lambda;_)) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with single-cycle permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_\*ln(1/_&lambda;_) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| cos(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with **alternating even-sized** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **0**, and 0 otherwise. |
+| (1&minus;_&lambda;_)/cos(_&lambda;_) = (1&minus;_&lambda;_)\*sec(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with alternating even-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_/tan(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with **alternating odd-sized** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
+| (1&minus;_&lambda;_)\*tan(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with alternating odd-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
 
 <a id=1_1__m____lambda___2></a>
 ### 1/(1+(_m_+_&lambda;_)<sup>2</sup>)
@@ -1248,9 +1248,9 @@ The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution
 
 [^17]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
 
-[^18]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
+[^18]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010
 
-[^19]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010
+[^19]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
 
 [^20]: Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).
 
@@ -1681,7 +1681,7 @@ The following definitions are used in this section:
 
 > **Notes:**
 >
-> 1. Mossel and Peres (2005\)[^18] defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.
+> 1. Mossel and Peres (2005\)[^19] defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.
 > 2. Pushdown automata, as defined here, are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020\)[^54] and can be translated to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009\)[^55], as long as those grammars and systems use only transition probabilities that are rational numbers.
 
 **Proposition 0** (Mossel and Peres 2005[^54], Theorem 1.2): _A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class **ALGRAT**._
@@ -1743,11 +1743,11 @@ _Proof:_ Special case of Proposition 1A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda
 
 **Proposition 2:** _If f(&lambda;) and g(&lambda;) are functions in the class **PDA**, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;)._
 
-_Proof:_ Let _F_ be the full-domain pushdown automaton for _f_. For each state/symbol pair among the left-hand sides of _F_'s rules, apply Lemma 1A to the automaton _F_, using the function _g_.  Then the new machine _F_ terminates with probability 1 because the original _F_ and the original automaton for _g_ do for every _&lambda;_ greater than 0 and less than 1, and because the automaton for _g_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^18] because the machine is a full-domain pushdown automaton.  &#x25a1;
+_Proof:_ Let _F_ be the full-domain pushdown automaton for _f_. For each state/symbol pair among the left-hand sides of _F_'s rules, apply Lemma 1A to the automaton _F_, using the function _g_.  Then the new machine _F_ terminates with probability 1 because the original _F_ and the original automaton for _g_ do for every _&lambda;_ greater than 0 and less than 1, and because the automaton for _g_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^19] because the machine is a full-domain pushdown automaton.  &#x25a1;
 
 **Proposition 3:** _Every rational function with rational coefficients that maps (0, 1) to itself is in class **PDA**._
 
-_Proof:_ These functions can be simulated by a finite-state machine (Mossel and Peres 2005\)[^18].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;
+_Proof:_ These functions can be simulated by a finite-state machine (Mossel and Peres 2005\)[^19].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;
 
 > **Note:** An unbounded stack size is necessary for a pushdown automaton to simulate functions that a finite-state machine can't.  With a bounded stack size, there is a finite-state machine where each state not only holds the pushdown automaton's original state, but also encodes the contents of the stack (which is possible because the stack's size is bounded); each operation that would push, pop, or change the top symbol transitions to a state with the appropriate encoding of the stack instead.
 
@@ -1767,7 +1767,7 @@ add another state S&prime; (with a name that differs from all other states) and 
 (S&prime;, HEADS, _stacksymbol_) &rarr; (T, _newstack_), and<br/>
 (S&prime;, TAILS, _stacksymbol_) &rarr; (FAILURE, {}).
 
-Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By (Dughmi et al. 2021\)[^5], the machine now simulates the distribution's probability generating function.  Moreover, the function is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^18] because the machine is a full-domain pushdown automaton.  &#x25a1;
+Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By (Dughmi et al. 2021\)[^5], the machine now simulates the distribution's probability generating function.  Moreover, the function is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^19] because the machine is a full-domain pushdown automaton.  &#x25a1;
 
 Define a _stochastic context-free grammar_ as follows.  The grammar consists of a finite set of _nonterminals_ and a finite set of _letters_, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009\)[^55]):
 
@@ -1782,7 +1782,7 @@ Instead of a letter (such as _a_), a rule can use _&epsilon;_ (the empty string)
 _Proof Sketch:_ In the equivalent pushdown automaton:
 
 - _X_ &rarr; _a_ becomes the two rules&mdash;<br>(START, HEADS, _X_) &rarr; (_letter_, {}), and<br>(START, TAILS, _X_) &rarr; (_letter_, {}).<br>Here, _letter_ is either START or a unique state in _F_ that "detours" to a letter-generating operation for _a_ and sets the state back to START when finished (see Proposition 4).  If _a_ is _&epsilon;_, _letter_ is START and no letter-generating operation is done.
-- _X_ &rarr;<sub>_p_<sub>_i_</sub></sub> (_a_<sub>_i_</sub>, _Y_<sub>_i_</sub>) (all rules with the same nonterminal _X_) are rewritten to enough rules to transition to a letter-generating operation for _a_<sub>_i_</sub>, and swap the top stack symbol with _Y_<sub>_i_</sub>, with probability _p_<sub>_i_</sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005\)[^18].  If _a_<sub>_i_</sub> is _&epsilon;_, no letter-generating operation is done.
+- _X_ &rarr;<sub>_p_<sub>_i_</sub></sub> (_a_<sub>_i_</sub>, _Y_<sub>_i_</sub>) (all rules with the same nonterminal _X_) are rewritten to enough rules to transition to a letter-generating operation for _a_<sub>_i_</sub>, and swap the top stack symbol with _Y_<sub>_i_</sub>, with probability _p_<sub>_i_</sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005\)[^19].  If _a_<sub>_i_</sub> is _&epsilon;_, no letter-generating operation is done.
 - _X_ &rarr; (_Y_, _Z_) becomes the two rules&mdash;<br>(START, HEADS, _X_) &rarr; (START, {_Z_, _Y_}), and<br>(START, TAILS, _X_) &rarr; (START, {_Z_, _Y_}).
 
 Here, _X_ is the stack symbol EMPTY if _X_ is the grammar's starting nonterminal. Now, assuming the automaton is full-domain, the rest of the result follows easily.   For a single-letter alphabet, the grammar corresponds to a system of polynomial equations, one for each rule in the grammar, as follows:
@@ -1791,15 +1791,15 @@ Here, _X_ is the stack symbol EMPTY if _X_ is the grammar's starting nonterminal
 - For each nonterminal _X_, all _n_ rules of the form _X_ &rarr;<sub>_p_<sub>_i_</sub></sub> (_a_<sub>_i_</sub>, _Y_<sub>_i_</sub>) become the equation _X_ = _p_<sub>1</sub>\*_&lambda;_<sub>1</sub>\*_Y_<sub>1</sub> + _p_<sub>2</sub>\*_&lambda;_<sub>2</sub>\*_Y_<sub>2</sub> + ... + _p_<sub>_n_</sub>\*_&lambda;_<sub>_n_</sub>\*_Y_<sub>_n_</sub>, where _&lambda;_<sub>_i_</sub> is either 1 if _a_<sub>_i_</sub> is _&epsilon;_, or _&lambda;_ otherwise.
 - _X_ &rarr; (_Y_, _Z_) becomes _X_ = _Y_\*_Z_.
 
-Solving this system for the grammar's starting nonterminal, and applying Proposition 4, leads to the _probability generating function_ for the grammar's word distribution.  (See also Flajolet et al. 2010[^19], Icard 2020[^54].) &#x25a1;
+Solving this system for the grammar's starting nonterminal, and applying Proposition 4, leads to the _probability generating function_ for the grammar's word distribution.  (See also Flajolet et al. 2010[^18], Icard 2020[^54].) &#x25a1;
 
-> **Example:** The stochastic context-free grammar&mdash;<br>_X_ &rarr;<sub>1/2</sub> (_a_, _X1_),<br>_X1_ &rarr; (_X_, _X2_),<br>_X2_ &rarr; (_X_, _X_),<br>_X_ &rarr;<sub>1/2</sub> (_a_, _X3_),<br>_X3_ &rarr; _&epsilon;_,<br>which encodes ternary trees (Flajolet et al. 2010\)[^19], corresponds to the equation _X_ = (1/2) \* _&lambda;_\*_X_\*_X_\*_X_ + (1/2)\*_&lambda;_\*1, and solving this equation for _X_ leads to the probability generating function for such trees, which is a complicated expression.
+> **Example:** The stochastic context-free grammar&mdash;<br>_X_ &rarr;<sub>1/2</sub> (_a_, _X1_),<br>_X1_ &rarr; (_X_, _X2_),<br>_X2_ &rarr; (_X_, _X_),<br>_X_ &rarr;<sub>1/2</sub> (_a_, _X3_),<br>_X3_ &rarr; _&epsilon;_,<br>which encodes ternary trees (Flajolet et al. 2010\)[^18], corresponds to the equation _X_ = (1/2) \* _&lambda;_\*_X_\*_X_\*_X_ + (1/2)\*_&lambda;_\*1, and solving this equation for _X_ leads to the probability generating function for such trees, which is a complicated expression.
 >
 > **Notes:**
 >
-> 1. A stochastic context-free grammar in which all the probabilities are 1/2 is called a _binary stochastic grammar_ (Flajolet et al. 2010[^19]).  If the starting nonterminal has _n_ rules of probability 1/_n_, then the grammar can be called an "_n_-ary stochastic grammar".  It is even possible for a nonterminal to have two rules of probability _&lambda;_ and (1&minus; _&lambda;_), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.
+> 1. A stochastic context-free grammar in which all the probabilities are 1/2 is called a _binary stochastic grammar_ (Flajolet et al. 2010[^18]).  If every probability is a multiple of 1/_n_, then the grammar can be called an "_n_-ary stochastic grammar".  It is even possible for a nonterminal to have two rules of probability _&lambda;_ and (1&minus; _&lambda;_), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.
 >
-> 2. If a pushdown automaton simulates the function _f_(_&lambda;_), then _f_ corresponds to a special system of equations, built as follows (Mossel and Peres 2005\)[^18]; see also (Esparza et al. 2004\)[^56].  For each state of the automaton (call the state _en_), include the following equations in the system based on the automaton's transition rules:
+> 2. If a pushdown automaton simulates the function _f_(_&lambda;_), then _f_ corresponds to a special system of equations, built as follows (Mossel and Peres 2005\)[^19]; see also (Esparza et al. 2004\)[^56].  For each state of the automaton (call the state _en_), include the following equations in the system based on the automaton's transition rules:
 >
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {}) becomes either _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ if _s2_ is _en_, or _&alpha;_<sub>_st_,_sy_,_en_</sub> = 0 otherwise.
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_}) becomes _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ \* _&alpha;_<sub>_s2_,_sy1_,_en_</sub>.
@@ -1829,7 +1829,7 @@ _Proof Sketch:_
 
 **Proposition 7:** _Every constant function equal to a quadratic irrational number between 0 and 1 is in class **PDA**._
 
-A _continued fraction_ is one way to write a real number.  For purposes of the following proof, every real number greater than 0 and less than 1 has the following _continued fraction expansion_: 0 + 1 / (_a_[1] + 1 / (_a_[2] + 1 / (_a_[3] + ... ))), where each _a_\[_i_\], a _partial denominator_, is an integer greater than 0.  A _quadratic irrational number_ is an irrational number of the form (_b_+sqrt(_c_))/_d_, where _b_, _c_, and _d_ are rational numbers.
+A _continued fraction_ is one way to write a real number.  For purposes of the following proof, every real number greater than 0 and less than 1 has the following _continued fraction expansion_: 0 + 1 / (_a_[1] + 1 / (_a_[2] + 1 / (_a_[3] + ... ))), where each _a_\[_i_\], a _partial denominator_, is an integer greater than 0.  A _quadratic irrational number_ is an irrational number that can be written as (_b_+sqrt(_c_))/_d_, where _b_, _c_, and _d_ are rational numbers.
 
 _Proof:_  By Lagrange's continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last "few" of which repeat forever.  The following example describes a periodic continued fraction expansion: \[0; 1, 2, (5, 4, 3)\], which is the same as \[0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, ...\].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (`(5, 4, 3)`) is 3; and the size of the non-period (`1, 2`) is 2.
 
@@ -1848,7 +1848,7 @@ According to Etessami and Yannakakis (2009\)[^55], the recursive Markov chain ca
 
 **Lemma 1:** _The square root function sqrt(&lambda;) is in class **PDA**._
 
-_Proof:_ See (Mossel and Peres 2005\)[^18]. &#x25a1;
+_Proof:_ See (Mossel and Peres 2005\)[^19]. &#x25a1;
 
 **Corollary 1:** _The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class **PDA**._
 
@@ -1856,7 +1856,7 @@ _Proof:_ Start with the case _m_=1.  If _n_ is 1, write _f_ as sqrt(_&lambda;_);
 
 For general _m_ and _n_, write _f_ as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(_&lambda;_))<sup>_m_</sup>, with _n_ instances of sqrt.  This involves doing _m_ multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can _f_.
 
-Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^18] because the machine is a full-domain pushdown automaton. &#x25a1;
+Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^19] because the machine is a full-domain pushdown automaton. &#x25a1;
 
 <a id=Finite_State_and_Pushdown_Generators></a>
 #### Finite-State and Pushdown Generators
