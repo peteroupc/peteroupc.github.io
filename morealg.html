@@ -804,7 +804,7 @@
 <p>and 0 otherwise, where:</p>
 
 <ul>
-<li><code>Coin</code>(<em>&lambda;</em>) is a Bernoulli factory function with the property $0\le \mathtt{Coin}(\lambda)\lt 1$ whenever $0\le\lambda\le 1$. If <code>Coin</code> is a rational function (a ratio of two polynomials) whose coefficients are rational numbers, then <em>f</em> is an <em>algebraic function</em> (a function that can be a solution of a nonzero polynomial equation) and can be simulated by a <em>pushdown automaton</em>, or a state machine with a stack (see the algorithm below and the note that follows it). But this algorithm will still work even if <code>Coin</code> is not a rational function.  In the original square-root construction,  <code>Coin</code>(<em>&lambda;</em>) = 1/2.</li>
+<li><code>Coin</code>(<em>&lambda;</em>) is a Bernoulli factory function. If <code>Coin</code> is a rational function (a ratio of two polynomials) whose coefficients are rational numbers, then <em>f</em> is an <em>algebraic function</em> (a function that can be a solution of a nonzero polynomial equation) and can be simulated by a <em>pushdown automaton</em>, or a state machine with a stack (see the algorithm below and the note that follows it). But this algorithm will still work even if <code>Coin</code> is not a rational function.  In the original square-root construction,  <code>Coin</code>(<em>&lambda;</em>) = 1/2.</li>
 <li>$g(n, \lambda) = (1-\lambda) \lambda^n$; this is the probability of running the <code>Coin</code> Bernoulli factory $2 \times n$ times.</li>
 <li>$h_n(\lambda) = (\mathtt{Coin}(\lambda))^n (1-\mathtt{Coin}(\lambda))^n {2n \choose n}$; this is the probability of getting as many ones as zeros from the <code>Coin</code> Bernoulli factory.</li>
 </ul>

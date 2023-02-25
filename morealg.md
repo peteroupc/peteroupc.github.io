@@ -485,7 +485,7 @@ $$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda\mathtt{Coin}(\lambda)(\mathtt{Coi
 
 and 0 otherwise, where:
 
-- `Coin`(_&lambda;_) is a Bernoulli factory function with the property $0\le \mathtt{Coin}(\lambda)\lt 1$ whenever $0\le\lambda\le 1$. If `Coin` is a rational function (a ratio of two polynomials) whose coefficients are rational numbers, then _f_ is an _algebraic function_ (a function that can be a solution of a nonzero polynomial equation) and can be simulated by a _pushdown automaton_, or a state machine with a stack (see the algorithm below and the note that follows it). But this algorithm will still work even if `Coin` is not a rational function.  In the original square-root construction,  `Coin`(_&lambda;_) = 1/2.
+- `Coin`(_&lambda;_) is a Bernoulli factory function. If `Coin` is a rational function (a ratio of two polynomials) whose coefficients are rational numbers, then _f_ is an _algebraic function_ (a function that can be a solution of a nonzero polynomial equation) and can be simulated by a _pushdown automaton_, or a state machine with a stack (see the algorithm below and the note that follows it). But this algorithm will still work even if `Coin` is not a rational function.  In the original square-root construction,  `Coin`(_&lambda;_) = 1/2.
 - $g(n, \lambda) = (1-\lambda) \lambda^n$; this is the probability of running the `Coin` Bernoulli factory $2 \times n$ times.
 - $h_n(\lambda) = (\mathtt{Coin}(\lambda))^n (1-\mathtt{Coin}(\lambda))^n {2n \choose n}$; this is the probability of getting as many ones as zeros from the `Coin` Bernoulli factory.
 
