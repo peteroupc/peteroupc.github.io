@@ -161,7 +161,7 @@ The algorithm that follows can be used to simulate a more general class of power
 
 - $f$ is written as in equation $(1)$.
 - There is a rational number $Z$ defined as follows. For every $\lambda$ that satisfies $0 \le \lambda \le 1$, it is true that $0 \le f(\lambda) \le Z \lt 1$.
-- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)" in the "Bernoulli Factory Algorithms" article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$'s are each positive or zero and odd-indexed are each negative or zero) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nowhere increasing sequence); such functions $C$ admit the **general martingale algorithm**.
+- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)" in the "Bernoulli Factory Algorithms" article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  As an example, if $C$ is a power series function described in the section "Certain Alternating Series", above, then $C$ admits a Bernoulli factory algorithm, namely the **general martingale algorithm**.
 
 In addition, the algorithm will be simpler if each coefficient $a_i$ is a rational number.
 
@@ -211,8 +211,8 @@ Once $a_n$ and $w(n)$ are found, the function $f(\lambda)$ can be simulated usin
 
 **Algorithm 2:**
 
-1. Choose at random a number _n_ that equals _i_ with probability $w(i)$.
-2. (The next two steps succeed with probability $\frac{a_n}{w(n)} \lambda^n$.) Let _P_ be $a_n/w(n)$.  With probability _P_, go to the next step.  Otherwise, return 0.
+1. Choose at random an integer _n_ that equals _i_ with probability $w(i)$.
+2. (The next two steps succeed with probability $\frac{a_n}{w(n)} (g(\lambda))^n$.) Let _P_ be $a_n/w(n)$.  With probability _P_, go to the next step.  Otherwise, return 0.
 3. (At this point, _n_ equals _i_ with probability $a_i$.) Run a Bernoulli factory algorithm for $g(\lambda)$, _n_ times or until a run returns 0, whichever happens first. (For example, if $g(\lambda)=\lambda$, flip the input coin each time.)  Return 1 if all the runs, including the last, returned 1 (or if _n_ is 0).  Otherwise, return 0.
 
 Step 1 is rather general, and doesn't fully describe how to generate the value $n$ at random.  That depends on the function $w(n)$.  See "[**Power Series Examples**](#Power_Series_Examples)", later, for examples of power series functions $f(\lambda)$ that can be simulated using Algorithm 2.

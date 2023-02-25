@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/02/24"><meta name="citation_online_date" content="2023/02/24"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/02/25"><meta name="citation_online_date" content="2023/02/25"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -134,7 +134,7 @@
 
 <ul>
 <li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;), and</li>
-<li>on the closed interval&mdash;
+<li>on the closed unit interval&mdash;
 
 <ul>
 <li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
@@ -561,7 +561,6 @@
 
 <ol>
 <li>By the results of Holtz et al., it is suspected that the target function <em>f</em> can&#39;t be simulated using a finite number of flips on average for every probability of heads unless <em>f</em>&#39;s fourth derivative is Hölder continuous.</li>
-<li>If a function is constant on some non-empty open interval in its domain, but is not constant on the whole domain, then it can&#39;t be real analytic.</li>
 <li>A function in the <em>Zygmund class</em>, roughly speaking, has no vertical slope.  The Zygmund class includes the smaller class of Lipschitz continuous functions.</li>
 </ol>
 </blockquote>
@@ -1363,7 +1362,7 @@
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nowhere decreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2*n] .  Then the expected value of f(X<sub>k</sub>/n) decreases nowhere as k increases.</em></p>
 
-<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &quot;dominates&quot; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &quot;dominates&quot; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)[^31].   This means that the probability that (<em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the closed interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community[^32]. &#x25a1;</p>
+<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &quot;dominates&quot; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &quot;dominates&quot; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)[^31].   This means that the probability that (<em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> satisfying 0 &le; <em>j</em> &le; <em>n</em>.  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community[^32]. &#x25a1;</p>
 
 <p>Lemma 6(i) of Nacu and Peres (2005)[^1] can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes the larger class of <em>Hölder continuous</em> functions (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;).</p>
 

@@ -508,7 +508,7 @@ For a correctness proof, see the appendix.
 
 A method to sample a probability equal to a polynomial's root appears in a French-language article by Penaud and Roques (2002\)[^27].  The following is an implementation of that method, using the discussion in the paper's section 1 and Algorithm 2, and incorporates a correction to Algorithm 2.  The algorithm takes a polynomial as follows:
 
-- It has the form _P_(_x_) = _a_\[0\]\*_x_<sup>0</sup> + _a_\[1\]\*_x_<sup>1</sup> + ... + _a_\[_n_\]\*_x_<sup>_n_</sup>, where _a_\[_i_\], the _coefficients_, are all rational numbers.
+- It has the form _P_(_x_) = _a_\[0\]\*_x_<sup>0</sup> + _a_\[1\]\*_x_<sup>1</sup> + ... + _a_\[_n_\]\*_x_<sup>_n_</sup>, where _a_\[_i_\], the _coefficients_, are all rational numbers, and 0 &le; _x_ &le; 1.
 - It equals 0 (has a _root_) at exactly one point, and that point is greater than 0 and less than 1.
 
 And the algorithm returns 1 with probability equal to the root, and 0 otherwise.  The root _R_ is known as an _algebraic number_ because it satisfies the polynomial equation _P_(_R_) = 0.  The algorithm follows.
@@ -525,7 +525,7 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
         2. If _z_ is 0 and _P_(_t_) is less than 0, return 1.
     5. Set _r_ to _r_\*2+_z_, then multiply _d_ by 2.
 
-> **Example** (Penaud and Roques 2002\)[^27]\:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  This is a polynomial whose only root on the closed interval [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_ or about 0.618, and _P_(0) > 0.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
+> **Example** (Penaud and Roques 2002\)[^27]\:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  When 0 &le; _x_ &le; 1, this is a polynomial whose only root 1 is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_ or about 0.618, and _P_(0) > 0.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
 
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series
@@ -648,7 +648,7 @@ The algorithm follows.
 > **Notes:**
 >
 > 1. The _Bernoulli Race_ (Dughmi et al. 2021\)[^35] is a special case of this algorithm with _g_(_k_) = 1 for every _k_. Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
-> 2. If we define _S_ to be a subset of integers in \[0, _r_\] and replace step 3 with "If _i_ is in the set _S_, return 1.  Otherwise, return 0.", the algorithm returns 1 with probability &sum;<sub>_k_&nbsp;in&nbsp;_S_</sub>&nbsp;_&phi;_<sub>_k_</sub>, and 0 otherwise.  In that case, the modified algorithm has the so-called "die-coin algorithm" of Agrawal et al. (2021, Appendix D\)[^38] as a special case with&mdash;<br>_g_(_k_) = _c_<sup>_k_</sup>\*_d_<sup>_r_&minus;_k_</sup>,<br>_h_<sub>_k_</sub>(_&lambda;_, _&mu;_) = _&lambda;_<sup>_k_</sup>\*_&mu;_<sup>_r_&minus;_k_</sup> (for the following algorithm: flip the _&lambda;_ coin _k_ times and the _&mu;_ coin _r_&minus;_k_ times; return 1 if all flips return 1, or 0 otherwise), and<br>_S_ is the closed interval \[1, _r_\],<br>where _c_&ge;0, _d_&ge;0, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins.  In that paper, _c_, _d_, _&lambda;_, and _&mu;_ correspond to _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively.
+> 2. If we define _S_ to be a subset of integers in \[0, _r_\] and replace step 3 with "If _i_ is in the set _S_, return 1.  Otherwise, return 0.", the algorithm returns 1 with probability &sum;<sub>_k_&nbsp;in&nbsp;_S_</sub>&nbsp;_&phi;_<sub>_k_</sub>, and 0 otherwise.  In that case, the modified algorithm has the so-called "die-coin algorithm" of Agrawal et al. (2021, Appendix D\)[^38] as a special case with&mdash;<br>_g_(_k_) = _c_<sup>_k_</sup>\*_d_<sup>_r_&minus;_k_</sup>,<br>_h_<sub>_k_</sub>(_&lambda;_, _&mu;_) = _&lambda;_<sup>_k_</sup>\*_&mu;_<sup>_r_&minus;_k_</sup> (for the following algorithm: flip the _&lambda;_ coin _k_ times and the _&mu;_ coin _r_&minus;_k_ times; return 1 if all flips return 1, or 0 otherwise), and<br>_S_ is the set of integers that are 1 or greater and _r_ or less,<br>where _c_&ge;0, _d_&ge;0, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins.  In that paper, _c_, _d_, _&lambda;_, and _&mu;_ correspond to _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively.
 > 3. Although not noted in the Schmon paper, the _r_ in the algorithm can be infinity (see also Wästlund 1999, Theorem 2.7[^8]).  In that case, Step 1 is changed to say "Choose an integer 0 or greater at random with probability _g_(_k_) for integer _k_.  Call the chosen integer _i_."  As an example, step 1 can sample from a Poisson distribution, which can take on any integer 0 or greater.
 
 The previous algorithm can be generalized further, so that an input coin that simulates the probability _&lambda;_ helps generate the random integer in step 1.  Now, the overall algorithm generates an integer _X_ with probability&mdash; $$\frac{g(X,\lambda) h_X(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}.$$
@@ -1123,7 +1123,7 @@ Special case of the previous algorithm with _&mu;_ = 1/2.
 <a id=lambda____x___y></a>
 #### _&lambda;_ * _x_/_y_
 
-In general, this function will touch 0 or 1 somewhere in the open interval (0, 1), when _x_/_y_ > 1.  This makes the function relatively non-trivial to simulate in this case.
+In general, this function will touch 0 or 1 at some point greater than 0 and less than 1, when _x_/_y_ > 1.  This makes the function relatively non-trivial to simulate in this case.
 
 Huber has suggested several algorithms for this function over the years.
 

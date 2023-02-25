@@ -97,7 +97,7 @@ A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli facto
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
 - is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)"), and
-- on the closed interval&mdash;
+- on the closed unit interval&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
     - is concave and has a maximum of less than 1.
@@ -350,8 +350,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 > **Notes:**
 >
 > 1. By the results of Holtz et al., it is suspected that the target function _f_ can't be simulated using a finite number of flips on average for every probability of heads unless _f_'s fourth derivative is Hölder continuous.
-> 2. If a function is constant on some non-empty open interval in its domain, but is not constant on the whole domain, then it can't be real analytic.
-> 3. A function in the _Zygmund class_, roughly speaking, has no vertical slope.  The Zygmund class includes the smaller class of Lipschitz continuous functions.
+> 2. A function in the _Zygmund class_, roughly speaking, has no vertical slope.  The Zygmund class includes the smaller class of Lipschitz continuous functions.
 
 <a id=Complexity></a>
 ## Complexity
@@ -928,7 +927,7 @@ In the following results:
 
 **Lemma 1.** _Let f(&lambda;) be a continuous and nowhere decreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then the expected value of f(X<sub>k</sub>/n) decreases nowhere as k increases._
 
-_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ "dominates" _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> "dominates" _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998\)[^31].   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the closed interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community[^32]. &#x25a1;
+_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ "dominates" _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> "dominates" _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998\)[^31].   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ satisfying 0 &le; _j_ &le; _n_.  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community[^32]. &#x25a1;
 
 Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes the larger class of _Hölder continuous_ functions (see "[**Definitions**](#Definitions)").
 
