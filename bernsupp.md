@@ -706,14 +706,9 @@ However, by clamping coefficients above 1 to equal 1, so that _g_ is now _g&prim
 <a id=Which_functions_admit_a_Bernoulli_factory></a>
 ### Which functions admit a Bernoulli factory?
 
-Let _f_(_&lambda;_) be a function whose domain is the _closed_ closed unit interval or a subset of it, and that maps its domain to the closed unit interval.  The domain of _f_ gives the allowable values of _&lambda;_, which is the input coin's probability of heads.
+Let _f_(_&lambda;_) be a function whose domain is the closed unit interval or a subset of it, and that maps its domain to the closed unit interval.  The domain of _f_ gives the allowable values of _&lambda;_, which is the input coin's probability of heads.
 
 _f_ admits a Bernoulli factory if and only if _f_ is constant on its domain, or is continuous and _polynomially bounded_ on its domain, as defined later in the section "Proofs for Polynomial-Building Schemes" (Keane and O'Brien 1994\)[^25].
-
-If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli factory:
-
-- _f_(_&lambda;_) is continuous on the closed unit interval.
-- _f_(_&lambda;_) has a minimum of greater than 0 and a maximum of less than 1.
 
 If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (see "[**Definitions**](#Definitions)"):
 

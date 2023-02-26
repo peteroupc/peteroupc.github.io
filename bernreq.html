@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/02/19"><meta name="citation_online_date" content="2023/02/19"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/02/26"><meta name="citation_online_date" content="2023/02/26"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -80,7 +80,7 @@
 <li><strong>Given $\epsilon &gt; 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:</strong>
 
 <ul>
-<li><strong>A reasonably small integer $n&gt;0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$&#39;s coefficients are rational numbers in $[0,1]$ and $|P - f| = O(1/n^{r/2})$ whenever $f$ has a continuous $r$-th derivative.</strong></li>
+<li><strong>A reasonably small integer $n&gt;0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$&#39;s coefficients are rational numbers in $[0,1]$; $|P - f| = O(1/n^{r/2})$ whenever $f$ has a continuous $r$-th derivative; and $P$ is easily computable from $f$ using rational arithmetic only.</strong></li>
 <li><strong>The Bernstein coefficients of $P(\lambda)$.</strong></li>
 </ul></li>
 <li><strong>Same as problem 1, except that $P(\lambda)$ is a rational function (ratio of two polynomials) rather than a polynomial.</strong></li>
@@ -133,7 +133,7 @@
 <ul>
 <li>$g_n \le h_n$.</li>
 <li>$\lim_n g_n = \lim_n h_n = f$.</li>
-<li>$(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$. (<strong>See note 5 in &quot;End Notes&quot;.</strong>)</li>
+<li>$(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$. (<strong>See note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</li>
 <li>The rate of convergence is $O(M/n^{r/2}),$ where $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.</li>
 </ul>
 
@@ -171,7 +171,7 @@
 <ol>
 <li>$a(n, k)\le b(n, k)$,</li>
 <li>$\lim_{n}g_{n}(\lambda)=\lim_{n}h_{n}(\lambda)=f(\lambda)$ for every $\lambda\in[0,1]$, and</li>
-<li>$(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$ (<strong>see note 5 in &quot;End Notes&quot;</strong>),</li>
+<li>$(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$ (<strong>see note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;</strong>),</li>
 </ol>
 
 <p>where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.</p>
@@ -188,7 +188,7 @@
 
 <p>Thus, people have developed alternatives, including iterated Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973), Guan (2009), Güntürk and Li (2021a, 2021b), the &quot;Lorentz operator&quot; in Holtz et al. (2011) (see also &quot;<a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>&quot;), and Draganov (2014).</p>
 
-<p>These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but nearly all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can&#39;t be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance). (<strong>See note 4 in &quot;End Notes&quot;.</strong>)</p>
+<p>These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but nearly all those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can&#39;t be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance). (<strong>See note 4 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</p>
 
 <p><a id=A_Conjecture_on_Polynomial_Approximation></a></p>
 
@@ -200,7 +200,7 @@
 
 <p>For each integer $n\ge 1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.</p>
 
-<p>Then, a <a href="https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation"><strong>conjecture</strong></a> is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (<strong>See note 5 in &quot;End Notes&quot;.</strong>)</p>
+<p>Then, a <a href="https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation"><strong>conjecture</strong></a> is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (<strong>See note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</p>
 
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that $(PB)$ holds true for each integer $n\ge 1$ that&#39;s a power of 2 (see &quot;Main Question&quot; above).</p>
 
@@ -227,7 +227,7 @@
 <li>$f$&#39;s $(r-1)$-th derivative is in the Zygmund class and $M$ is the maximum of $D$ and the maximum absolute value of $f$ and its derivatives up to the $(r-1)$-th derivative, where $D$ is such that $|f^{(r-1)}(x) + f^{(r-1)}(y) - 2f^{(r-1)}((x+y)/2)| \le D\epsilon$ for every $\epsilon&gt;0$.</li>
 </ul>
 
-<p>Given that $f:[0,1]\to [0,1]$ has an $(r-1)$-th derivative that is Lipschitz continuous or in the Zygmund class, or has a continuous $r$-th derivative, are there results that give a sequence of functions $Q_n(f)$ with the following error bound? $$| f(x) - B_n(Q_n(f))(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a <em>known exact value or upper bound</em>, and $Q_n(f)$ is easily computable from $f$ using rational arithmetic only. (<strong>See note 4 in &quot;End Notes&quot;.</strong>)</p>
+<p>Given that $f:[0,1]\to [0,1]$ has an $(r-1)$-th derivative that is Lipschitz continuous or in the Zygmund class, or has a continuous $r$-th derivative, are there results that give a sequence of functions $Q_n(f)$ with the following error bound? $$| f(x) - B_n(Q_n(f))(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a <em>known exact value or upper bound</em>, and $Q_n(f)$ is easily computable from $f$ using rational arithmetic only. (<strong>See note 4 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</p>
 
 <p>(***) Corresponds to the iterated Bernstein polynomials of order 2 and 3 (Güntürk and Li 2021).</p>
 
@@ -386,7 +386,7 @@
 <ul>
 <li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,</li>
 <li>$\pi(a, p) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,</li>
-<li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,</li>
+<li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$ (or, more generally, a polynomial satisfying $0\le g_n(\lambda)\le 1$ and $\sum g_n(\lambda) = f(\lambda)$ whenever $0\le \lambda\le 1$),</li>
 <li>$(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,</li>
 <li>$p$ is a rational number in $(0, 1)$, and</li>
 <li>$\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it&#39;s a constant.  In the case of concave functions, this polynomial will always be nonnegative.</li>
