@@ -384,9 +384,9 @@
 <p>where&mdash;</p>
 
 <ul>
-<li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,</li>
 <li>$\pi(a, p) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,</li>
-<li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$ (or, more generally, a polynomial satisfying $0\le g_n(\lambda)\le 1$ and $\sum g_n(\lambda) = f(\lambda)$ whenever $0\le \lambda\le 1$),</li>
+<li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$ (or, more generally, a polynomial equal to 0 or $\pi(a,p)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a,p)$ whenever $0\lt \lambda\lt 1$),</li>
+<li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,</li>
 <li>$(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,</li>
 <li>$p$ is a rational number in $(0, 1)$, and</li>
 <li>$\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it&#39;s a constant.  In the case of concave functions, this polynomial will always be nonnegative.</li>
@@ -405,7 +405,7 @@
 <p>However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which <em>appears</em> to be correct:</p>
 
 <ul>
-<li>$n_a = 2 * 2^a$.</li>
+<li>$n_a = 2 \cdot 2^a$.</li>
 <li>$p = 0.27$.</li>
 </ul>
 

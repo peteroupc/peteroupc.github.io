@@ -305,9 +305,9 @@ $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lam
 
 where&mdash;
 
-- $\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,
 - $\pi(a, p) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,
-- $g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$ (or, more generally, a polynomial satisfying $0\le g_n(\lambda)\le 1$ and $\sum g_n(\lambda) = f(\lambda)$ whenever $0\le \lambda\le 1$),
+- $\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$ (or, more generally, a polynomial equal to 0 or $\pi(a,p)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a,p)$ whenever $0\lt \lambda\lt 1$),
+- $g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,
 - $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,
 - $p$ is a rational number in $(0, 1)$, and
 - $\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it's a constant.  In the case of concave functions, this polynomial will always be nonnegative.
@@ -322,7 +322,7 @@ Then an algorithm to toss heads with probability equal to $f$ would be:
 
 However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which _appears_ to be correct:
 
-- $n_a = 2 * 2^a$.
+- $n_a = 2 \cdot 2^a$.
 - $p = 0.27$.
 
 Finding these parameters was far from rigorous, though, and the process will have to be repeated for each concave function.
