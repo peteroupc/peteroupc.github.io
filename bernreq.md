@@ -66,7 +66,7 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 - $f(\lambda)$ is concave.
 - $f(\lambda)$ is strictly increasing and continuous.
 - $f(\lambda)$ has a $k$-th derivative of bounded variation for some fixed $k\ge 1$.
-- $f(\lambda)$ has a $k$-th derivative in the Zygmund class for some fixed $k\ge 0$ (there is $D>0$ such that $|f^{(k)}(x) + f^{(k)}(y) - 2f^{(k)}((x+y)/2)| \le D\epsilon$ for every $\epsilon>0$, whenever $x$, $y$, $(x+y)/2$ are in the domain and $|x-y|\le\epsilon$.).
+- $f(\lambda)$ has a $k$-th derivative in the Zygmund class for some fixed $k\ge 0$. ($g(\lambda)$ is in the Zygmund class if there is $D>0$ such that $|g(x-\epsilon) + g(x+\epsilon) - 2g(x)| \le D\epsilon$ for every $\epsilon>0$, whenever $x$, $x-\epsilon$, $x+\epsilon$ are in the domain.)
 - $f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.
 - $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
 
@@ -92,7 +92,7 @@ The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernst
 
 Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$), let $r\ge 1$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.
 
-Suppose that $f$ has a continuous $r$-th derivative, or that $f^{(r-1)}$ is Lipschitz continuous, or that $f^{(r-1)}$ is in the Zygmund class.
+Suppose that $f$ has a continuous $r$-th derivative, or that $f^{(r-1)}$ is Lipschitz continuous, or that $f^{(r-1)}$ is in the Zygmund class. Let $L$ be $\max |f^{(r)}|$, the Lipschitz constant of $f^{(r-1)}$, or the $D$ that puts $f^{(r-1)}$ in the Zygmund class, respectively.
 
 1. Find a practical formula to compute two sequences of polynomials $g_n$ ("lower") and $h_n$ ("upper") in Bernstein form as follows, for each integer $n\ge 1$ that's a power of 2.
 
@@ -102,7 +102,7 @@ Suppose that $f$ has a continuous $r$-th derivative, or that $f^{(r-1)}$ is Lips
     - The rate of convergence is $O(1/n^{r/2})$.
 2. With possibly extra assumptions on $f$, such as those given in "[**Key Problems**](#Key_Problems)", above, find a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - B_n(Q_n(f))(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a *known exact value or upper bound*, and $Q_n(f)$ is easily computable from $f$ using rational arithmetic only. (**See note 4 in "[**End Notes**](#End_Notes)".**)
 
-One way to answer either question ([**more info**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable)) is to find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ where $M$ is the maximum of $|f^{(0)}|, ...,|f^{(r)}|$ (or, respectively, the maximum of $|f|$ and the Lipschitz constants of $f^{(0)}, ..., f^{(r-1)}$, or the maximum of $|f^{(0)}|, ...,|f^{(r-1)}|$ and the $D$ that puts $f^{(r)}$ in the Zygmund class).
+One way to answer either question ([**more info**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable)) is to find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$.
 
 Then $| f(x) - B_n(W_n(f))(x) | \le \frac{C_1}{1-\sqrt{2/2^{r+1}}}\frac{M}{n^{r/2}}=O(1/n^{r/2})$ (see Lemma 3 in "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)), although this is only guaranteed to work for power-of-2 values of $n$.  For example, $W_n$ can be $2f-B_n(f)$\(\*\*\*\) and $r$ can be 3 or 4 (interesting functions $f$ to test are quadratic polynomials), or $W_n$ can be $B_n(B_n(f))+3(f-B_n(f))$\(\*\*\*\) and $r$ can be 5 or 6.
 
@@ -237,28 +237,6 @@ And I seek ways to make this solution implementable.
 ## Reverse-time martingales
 
 This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).
-
-~~One way to toss heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ is to build randomized upper and lower bounds that converge to $f$ on average. These bounds serve as an unbiased estimator of $f(\lambda)$; the algorithm returns 1 with probability equal to the estimate, and 0 otherwise.~~
-
-~~Part of the _reverse-time martingale algorithm_ of Łatuszyński et al. (2009/2011) (see "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)") to simulate a factory function $f(\lambda)$ is as follows. For each _n_ starting with 1:~~
-
-1. ~~Flip the input coin, and compute the _n_<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L_ and _U_.~~
-
-2. ~~Compute the $(n-1)$th upper and lower bounds of _f_ given the number of heads so far, call them _L\*_ and _U\*_. (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [_L\*_, _U\*_] must equal or entirely contain the interval [_L_, _U_].)~~
-
-~~More technically (Algorithm 4):~~
-
-1. ~~Obtain $L_n$ and $U_n$ given $\mathcal{F}_{0, n-1}$,~~
-2. ~~Compute $L_n^s$ = $E(L_{n-1}$ | $\mathcal{F}_n)$ and $U_n^s$ = $E(U_{n-1}$ \| $\mathcal{F}_{n})$,~~
-
-~~where $\mathcal{F}_n$ is a filtration that depends on $L_n$ and $U_n$.~~
-
-~~Though the paper as well as the section on general factory functions that I linked to above shows how this algorithm can be implemented for polynomials, these parts of the algorithm appear to work for any two sequences of functions that converge to $f$, where $L$ or $L^s$ and $U$ or $U^s$ are their lower and upper bound approximations. An example for [**polynomials**](#Polynomials_that_approach_a_factory_function_fast) follows:~~
-
-1. ~~Given the number of heads $H_n$, $L_n$ is the $H_n$th Bernstein coefficient of the $n$th lower approximating polynomial, and $U_n$ is the $H_n$th Bernstein coefficient of the $n$th upper approximating polynomial.~~
-2. ~~$L^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th lower approximating polynomial, and $U^s_n$ is the $H_n$th Bernstein coefficient of the $(n-1)$th upper approximating polynomial, after elevating both polynomials to degree $n$.~~
-
-~~But how do these steps work when the **approximating functions (the functions that converge to _f_) are other than polynomials?** Specifically, what if the approximating functions are rational functions with integer coefficients? rational functions with rational coefficients? arbitrary approximating functions?~~
 
 <a id=Tossing_Heads_According_to_a_Concave_Function></a>
 ## Tossing Heads According to a Concave Function
