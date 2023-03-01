@@ -265,10 +265,10 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 
 [**https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials**](https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials)
 
-Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in "[**Key Problems**](#Key_Problems)", above, give a practical way to find a sequence $(\gamma_n)$ and a function $\pi(a,p)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{PC}$$ where:
+Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in "[**Key Problems**](#Key_Problems)", above, give a practical way to find a sequence $(\gamma_n)$ and a function $\pi(a)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{PC}$$ where:
 
-- $\pi(a, p)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$).
-- $\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a,p)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a,p)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, some or all $\gamma_a(\lambda)$ can be rational functions in $\lambda$ and/or functions that are power series with coefficients of nonincreasing magnitude, which have simple Bernoulli factory algorithms (Łatuszyński et al. 2009/2011).
+- $\pi(a)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$ where $0 < p < 1$ is a known rational).
+- $\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, some or all $\gamma_a(\lambda)$ can be rational functions in $\lambda$ and/or functions that are power series with coefficients of nonincreasing magnitude, which have simple Bernoulli factory algorithms (Łatuszyński et al. 2009/2011).
 - Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a continuous $r$-th derivative.
 
 <a id=Using_Two_Polynomial_Sequences></a>
@@ -291,17 +291,17 @@ I believe a more general solution is to somehow find the maximum difference betw
 
 There is another way to simulate a concave $f$.  This involves rewriting the concave function as the series $(PC)$ where&mdash;
 
-- $\pi(a, p) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,
+- $\pi(a) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,
 - $\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,
 - $g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,
 - $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,
-- $p$ is a rational number in $(0, 1)$, and
-- $\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it's a constant.  In the case of concave functions, this polynomial will always be nonnegative.
+- $p$ is a rational number satisfying $0 < p < 1$, and
+- $\frac{\gamma_a(\lambda)}{\pi(a)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it's a constant.  In the case of concave functions, this polynomial will always be nonnegative.
 
 Then an algorithm to toss heads with probability equal to $f$ would be:
 
 1. Flip a coin that shows heads with probability $p$ until that coin shows heads.  Set $a$ to the number of tails.
-2. Write $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial's degree, and let $j$ be the number of heads.
+2. Write $\frac{\gamma_a(\lambda)}{\pi(a)}$ as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial's degree, and let $j$ be the number of heads.
 3. Return 1 with probability equal to the polynomial's $j$th Bernstein coefficient, or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).
 
 (This algorithm has similarities to the one used in the proof in Keane and O'Brien 1994.)
@@ -313,13 +313,13 @@ However, using this technique for a given concave $f$ requires finding the appro
 
 Finding these parameters was far from rigorous, though, and the process will have to be repeated for each concave function.
 
-It's also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(a, p)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.
+It's also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(a)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.
 
 Note: Some concave functions can be rewritten as&mdash;
 
-$$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{2}$$
+$$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{2}$$
 
-for some integer $k\ge 0$, if they satisfy the series expansion earlier in this section except that $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.
+for some integer $k\ge 0$, if they satisfy the series expansion earlier in this section except that $\frac{\gamma_a(\lambda)}{\pi(a)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.
 
 <a id=Questions_2></a>
 ### Questions

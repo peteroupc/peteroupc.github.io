@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/02/28"><meta name="citation_online_date" content="2023/02/28"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/03/01"><meta name="citation_online_date" content="2023/03/01"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -338,11 +338,11 @@
 
 <p><a href="https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials"><strong>https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials</strong></a></p>
 
-<p>Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in &quot;<a href="#Key_Problems"><strong>Key Problems</strong></a>&quot;, above, give a practical way to find a sequence $(\gamma_n)$ and a function $\pi(a,p)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{PC}$$ where:</p>
+<p>Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in &quot;<a href="#Key_Problems"><strong>Key Problems</strong></a>&quot;, above, give a practical way to find a sequence $(\gamma_n)$ and a function $\pi(a)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{PC}$$ where:</p>
 
 <ul>
-<li>$\pi(a, p)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$).</li>
-<li>$\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a,p)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a,p)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, some or all $\gamma_a(\lambda)$ can be rational functions in $\lambda$ and/or functions that are power series with coefficients of nonincreasing magnitude, which have simple Bernoulli factory algorithms (Łatuszyński et al. 2009/2011).</li>
+<li>$\pi(a)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational).</li>
+<li>$\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, some or all $\gamma_a(\lambda)$ can be rational functions in $\lambda$ and/or functions that are power series with coefficients of nonincreasing magnitude, which have simple Bernoulli factory algorithms (Łatuszyński et al. 2009/2011).</li>
 <li>Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a continuous $r$-th derivative.</li>
 </ul>
 
@@ -369,19 +369,19 @@
 <p>There is another way to simulate a concave $f$.  This involves rewriting the concave function as the series $(PC)$ where&mdash;</p>
 
 <ul>
-<li>$\pi(a, p) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,</li>
+<li>$\pi(a) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,</li>
 <li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,</li>
 <li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,</li>
 <li>$(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,</li>
-<li>$p$ is a rational number in $(0, 1)$, and</li>
-<li>$\frac{\gamma_a(\lambda)}{\pi(a, p)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it&#39;s a constant.  In the case of concave functions, this polynomial will always be nonnegative.</li>
+<li>$p$ is a rational number satisfying $0 &lt; p &lt; 1$, and</li>
+<li>$\frac{\gamma_a(\lambda)}{\pi(a)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it&#39;s a constant.  In the case of concave functions, this polynomial will always be nonnegative.</li>
 </ul>
 
 <p>Then an algorithm to toss heads with probability equal to $f$ would be:</p>
 
 <ol>
 <li>Flip a coin that shows heads with probability $p$ until that coin shows heads.  Set $a$ to the number of tails.</li>
-<li>Write $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial&#39;s degree, and let $j$ be the number of heads.</li>
+<li>Write $\frac{\gamma_a(\lambda)}{\pi(a)}$ as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial&#39;s degree, and let $j$ be the number of heads.</li>
 <li>Return 1 with probability equal to the polynomial&#39;s $j$th Bernstein coefficient, or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).</li>
 </ol>
 
@@ -396,13 +396,13 @@
 
 <p>Finding these parameters was far from rigorous, though, and the process will have to be repeated for each concave function.</p>
 
-<p>It&#39;s also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(a, p)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.</p>
+<p>It&#39;s also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(a)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.</p>
 
 <p>Note: Some concave functions can be rewritten as&mdash;</p>
 
-<p>$$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{2}$$</p>
+<p>$$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{2}$$</p>
 
-<p>for some integer $k\ge 0$, if they satisfy the series expansion earlier in this section except that $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.</p>
+<p>for some integer $k\ge 0$, if they satisfy the series expansion earlier in this section except that $\frac{\gamma_a(\lambda)}{\pi(a)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.</p>
 
 <p><a id=Questions_2></a></p>
 
