@@ -82,30 +82,31 @@ Comments on other aspects of this document are welcome.
         - [**expit(_m_ + _&lambda;_)\*2 &minus; 1 or tanh((_m_ + _&lambda;_)/2)**](#expit__m____lambda___2_minus_1_or_tanh__m____lambda___2)
         - [**_&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_m_ + _&nu;_) / (1 + _&lambda;_\*(exp(_m_ + _&nu;_) &minus; 1))**](#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda___or___lambda___exp__m____nu___1___lambda___exp__m____nu___minus_1)
         - [**1 / (1 + (_x_/_y_)\*_&lambda;_)**](#1_1__x___y____lambda)
-        - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
-        - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
-        - [**_&#x03F5;_ / _&lambda;_**](#x03F5_____lambda)
-        - [**_&mu;_ / _&lambda;_**](#mu_____lambda)
         - [**_&lambda;_<sup>_x_/_y_</sup>**](#lambda___x___y)
         - [**_&lambda;_<sup>_&mu;_</sup>**](#lambda____mu)
         - [**sqrt(_&lambda;_)**](#sqrt___lambda)
-        - [**_&lambda;_ * _x_/_y_**](#lambda____x___y)
-        - [**(_&lambda;_ * _x_/_y_)<sup>_i_</sup>**](#lambda____x___y___i)
-        - [**Linear Bernoulli Factories**](#Linear_Bernoulli_Factories)
         - [**arctan(_&lambda;_) /_&lambda;_**](#arctan___lambda_____lambda)
         - [**arctan(_&lambda;_)**](#arctan___lambda)
         - [**cos(_&lambda;_)**](#cos___lambda)
         - [**sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))**](#sin___lambda___sqrt__c____lambda___sqrt__c)
         - [**sin(_&lambda;_)**](#sin___lambda)
-        - [**(1&minus;_&lambda;_)/cos(_&lambda;_)**](#1_minus___lambda___cos___lambda)
-        - [**(1&minus;_&lambda;_) * tan(_&lambda;_)**](#1_minus___lambda___tan___lambda)
         - [**ln(1+_&lambda;_)**](#ln_1___lambda)
-        - [**ln((_c_ + _d_ + _&lambda;_)/_c_)**](#ln__c___d____lambda____c)
         - [**arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1**](#arcsin___lambda___sqrt_1_minus___lambda__2_minus_1)
-        - [**arcsin(_&lambda;_) / 2**](#arcsin___lambda___2)
         - [**tanh(_m_ + _&lambda;_)**](#tanh__m____lambda)
         - [**Expressions Involving Polylogarithms**](#Expressions_Involving_Polylogarithms)
-        - [**Other Factory Functions**](#Other_Factory_Functions)
+    - [**Algorithms for Specific Functions of _&lambda;_ (Probability-Sensitive)**](#Algorithms_for_Specific_Functions_of___lambda___Probability_Sensitive)
+        - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
+        - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
+        - [**_&#x03F5;_ / _&lambda;_**](#x03F5_____lambda)
+        - [**_&mu;_ / _&lambda;_**](#mu_____lambda)
+        - [**_&lambda;_ * _x_/_y_**](#lambda____x___y)
+        - [**(_&lambda;_ * _x_/_y_)<sup>_i_</sup>**](#lambda____x___y___i)
+        - [**Linear Bernoulli Factories**](#Linear_Bernoulli_Factories)
+        - [**(1&minus;_&lambda;_)/cos(_&lambda;_)**](#1_minus___lambda___cos___lambda)
+        - [**(1&minus;_&lambda;_) * tan(_&lambda;_)**](#1_minus___lambda___tan___lambda)
+        - [**ln((_c_ + _d_ + _&lambda;_)/_c_)**](#ln__c___d____lambda____c)
+        - [**arcsin(_&lambda;_) / 2**](#arcsin___lambda___2)
+    - [**Other Factory Functions**](#Other_Factory_Functions)
     - [**Algorithms for Specific Constants**](#Algorithms_for_Specific_Constants)
         - [**1 / _&phi;_ (1 divided by the golden ratio)**](#1___phi___1_divided_by_the_golden_ratio)
         - [**sqrt(2) &minus; 1**](#sqrt_2_minus_1)
@@ -783,7 +784,7 @@ namely the following algorithm:
 <a id=Algorithms_for_Specific_Functions_of___lambda></a>
 ### Algorithms for Specific Functions of _&lambda;_
 
-This section describes algorithms for specific functions, especially when they have a more convenient simulation than the general-purpose algorithms given earlier.  They can be grouped as follows:
+This section and the next one describe algorithms for specific functions, especially when they have a more convenient simulation than the general-purpose algorithms given earlier.  They can be grouped as follows:
 
 - Functions involving the exponential function exp(_x_).
 - Rational functions of several variables.
@@ -1044,42 +1045,6 @@ Another special case of the two-coin algorithm.  In this algorithm, _x_/_y_ must
 >
 > **Example**:  **_&mu;_ / (1 + (_x_/_y_)\*_&lambda;_)** (takes two input coins that simulate _&lambda;_ or _&mu;_, respectively): Run the **algorithm for 1 / (1 + (_x_/_y_)\*_&lambda;_)** using the _&lambda;_ input coin.  If it returns 0, return 0.  Otherwise, flip the _&mu;_ input coin and return the result.
 
-<a id=lambda_____mu></a>
-#### _&lambda;_ + _&mu;_
-
-(Nacu and Peres 2005, proposition 14(iii)\)[^16].  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5; &le; 1 &minus; _&lambda;_ &minus; _&mu;_.
-
-1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result."
-2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&nu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = _&#x03F5;_, and return the result.
-
-<a id=lambda___minus___mu></a>
-#### _&lambda;_ &minus; _&mu;_
-
-(Nacu and Peres 2005, proposition 14(iii-iv)\)[^16].  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_ &minus; _&mu;_ \(the greater _&#x03F5;_ is, the more efficient\).
-
-1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return **1 minus the result**.  Otherwise, flip the _&mu;_ input coin and return the result."
-2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&nu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = _&#x03F5;_, and return 1 minus the result.
-
-<a id=x03F5_____lambda></a>
-#### _&#x03F5;_ / _&lambda;_
-
-(Lee et al. 2014\)[^51].  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_ such that 0 &lt; _&#03F5;_ &le; _&lambda;_.
-
-1. Set _&beta;_ to max(_&#x03F5;_, 1/2) and set _&gamma;_ to 1 &minus; (1 &minus; _&beta;_) / (1 &minus; (_&beta;_ / 2)).
-2. Create a _&mu;_ input coin that flips the input coin and returns 1 minus the result.
-3. With probability _&#x03F5;_, return 1.
-4. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) with the _&mu;_ input coin, _x_/_y_ = 1 / (1 &minus; _&#x03F5;_), and _&#x03F5;_ = _&gamma;_. If the result is 0, return 0.  Otherwise, go to step 3.  (Running the linear Bernoulli factory this way simulates the probability (_&lambda;_ &minus; _&#x03F5;_)/(1 &minus; _&#x03F5;_) or 1 &minus; (1 &minus; _&lambda;_)/(1 &minus; _&#x03F5;_)).
-
-<a id=mu_____lambda></a>
-#### _&mu;_ / _&lambda;_
-
-(Morina 2021\)[^52].  This division algorithm takes two input coins, namely a coin simulating the dividend _&mu;_ and a coin simulating the divisor _&lambda;_, and a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_ &minus; _&mu;_.  In this algorithm, _&mu;_ must be less than _&lambda;_.
-
-- Do the following process repeatedly, until this algorithm returns a value:
-    1. Generate an unbiased random bit (either 0 or 1 with equal probability).
-    2. If the bit generated in step 1 is 1, flip the _&mu;_ input coin.  If it returns 1, return 1.
-    3. If the bit generated in step 1 is 0, run the **algorithm for _&lambda;_ &minus; _&mu;_** with _&#x03F5;_ = _&#x03F5;_. If it returns 1, return 0.
-
 <a id=lambda___x___y></a>
 #### _&lambda;_<sup>_x_/_y_</sup>
 
@@ -1123,79 +1088,6 @@ Special case of the previous algorithm with _&mu;_ = 1/2.
     2. With probability 1/(_i_\*2), return 0.
     3. Add 1 to _i_ and go to step 1.
 
-<a id=lambda____x___y></a>
-#### _&lambda;_ * _x_/_y_
-
-In general, this function will touch 0 or 1 at some point greater than 0 and less than 1, when _x_/_y_ > 1.  This makes the function relatively non-trivial to simulate in this case.
-
-Huber has suggested several algorithms for this function over the years.
-
-The first algorithm in this document comes from Huber (2014\)[^4].  It uses three parameters:
-
-- _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
-- _&#x03F5;_ is a rational number greater than 0 and less than 1.  If _x_/_y_ is greater than 1, _&#x03F5;_ must be such that 0 &lt; _&#x03F5;_ &le;1 &minus; _&lambda;_ * _x_/_y_, in order to bound the function away from 0 and 1.  The greater _&#x03F5;_ is, the more efficient.
-
-As a result, some knowledge of _&lambda;_ has to be available to the algorithm. The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.
-
-1. Special cases: If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_, flip the input coin and return the result.  Otherwise, if _x_ is less than _y_, then do the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0."
-2. Set _c_ to _x_/_y_, and set _k_ to 23 / (5 * _&#x03F5;_).
-3. If _&#x03F5;_ is greater than 644/1000, set _&#x03F5;_ to 644/1000.
-4. Set _i_ to 1.
-5. While _i_ is not 0:
-    1. Flip the input coin.  If it returns 0, then generate numbers that are each 1 with probability (_c_ &minus; 1) / _c_ and 0 otherwise, until 1 is generated this way, then add 1 to _i_ for each number generated this way (including the last).
-    2. Subtract 1 from _i_.
-    3. If _i_ is _k_ or greater:
-        1. Generate _i_ numbers that are each 1 with probability 2 / (_&#x03F5;_ + 2) or 0 otherwise.  If any of those numbers is 0, return 0.
-        2. Multiply _c_ by 2 / (_&#x03F5;_ + 2), then divide _&#x03F5;_ by 2, then multiply _k_ by 2.
-9. (_i_ is 0.) Return 1.
-
-Huber (2016\)[^34] presented a second algorithm using the same three parameters, but it's omitted here because it appears to perform worse than the algorithm given above and the **algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>** below (see also Morina 2021[^52]).
-
-Huber (2016) also included a third algorithm that simulates _&lambda;_ * _x_ / _y_.  The algorithm works only if _&lambda;_ * _x_ / _y_ is known to be less than 1/2.  This third algorithm takes three parameters:
-
-- _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
-- _m_ is a rational number such that _&lambda;_ * _x_ / _y_ &le; _m_ &lt; 1/2.
-
-The algorithm follows.
-
-1. The same special cases as for the first algorithm in this section apply.
-2. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = (_x_/_y_) / (1 &minus; 2 * _m_).  If it returns 0, return 0.
-3. With probability 1 &minus; 2 * _m_, return 1.
-4. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) with _x_/_y_ = (_x_/_y_) / (2 * _m_) and _&#x03F5;_ = 1 &minus; _m_.
-
-> **Note:** For approximate methods to simulate _&lambda;_\*(_x_/_y_), see the page "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)".
-
-<a id=lambda____x___y___i></a>
-#### (_&lambda;_ * _x_/_y_)<sup>_i_</sup>
-
-(Huber 2019\)[^53].  This algorithm uses four parameters:
-
-- _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
-- _i_ is an integer 0 or greater.
-- _&#x03F5;_ is a rational number such that 0 &lt; _&#x03F5;_ &lt; 1.  If _x_/_y_ is greater than 1, _&#x03F5;_ must be such that 0 &lt; _&#x03F5;_ &le;1 &minus; _&lambda;_ * _x_/_y_.
-
-The algorithm also has special cases not mentioned in Huber 2019.
-
-1.  Special cases: If _i_ is 0, return 1.  If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_ and _i_ equals 1, flip the input coin and return the result.
-2. Special case: If _x_ is less than _y_ and _i_ = 1, then do the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0."
-3. Special case: If _x_ is less than _y_, then create a secondary coin that does the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0", then run the **algorithm for** [**_&lambda;_<sup>_x_/_y_</sup>**](#lambda___x___y) with _x_=_i_, _y_=1, and _&lambda;_ being the secondary coin, then return the result of that run.
-4. Set _t_ to 355/100 and _c_ to _x_/_y_.
-5. While _i_ is not 0:
-    1. While _i_ > _t_ / _&#x03F5;_:
-        1. Set _&beta;_ to (1 &minus; _&#x03F5;_ / 2) / (1 &minus; _&#x03F5;_).
-        2. Run the **algorithm for (_a_/_b_)<sup>_x_/_y_</sup>** (given in the irrational constants section) with _a_=1, _b_=_&beta;_, _x_=_i_, and _y_=1.  If the run returns 0, return 0.
-        3. Multiply _c_ by _&beta;_, then divide _&#x03F5;_ by 2.
-    2. Run the **logistic Bernoulli factory** with _c_/_d_ = _c_, then set _z_ to the result.  Set _i_ to _i_ + 1 &minus; _z_ * 2.
-6. (_i_ is 0.) Return 1.
-
-<a id=Linear_Bernoulli_Factories></a>
-#### Linear Bernoulli Factories
-
-In this document, a **linear Bernoulli factory** refers to one of the following:
-
-- The first algorithm for [**_&lambda;_ * _x_/_y_**](#lambda____x___y) with the stated parameters _x_, _y_, and _&#x03F5;_.
-- The [**algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>**](#lambda____x___y___i) with the stated parameters _x_, _y_, and _&#x03F5;_, and with _i_ = 1 (see previous section).
-
 <a id=arctan___lambda_____lambda></a>
 #### arctan(_&lambda;_) /_&lambda;_
 
@@ -1230,6 +1122,162 @@ Equals the previous function times _&lambda;_, with _c_ = 1.
 
 - Flip the input coin.  If it returns 0, return 0.  Otherwise, run the algorithm for **sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))** with _c_ = 1, then return the result.
 
+<a id=ln_1___lambda></a>
+#### ln(1+_&lambda;_)
+
+Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which does not).[^24][^55]
+
+- Do the following process repeatedly, until this algorithm returns a value:
+    1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
+    2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
+    3. [**Sample from the number _u_**](#Implementation_Notes), then flip the input coin.  If the call and the flip both return 1, return 0.
+
+<a id=arcsin___lambda___sqrt_1_minus___lambda__2_minus_1></a>
+#### arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1
+
+(Flajolet et al., 2010\)[^1].  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^24].
+
+1. Generate a uniform(0, 1) random variate _u_.
+2. Create a secondary coin _&mu;_ that does the following: "[**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
+3. Call the **algorithm for _&mu;_<sup>1/2</sup>** using the secondary coin _&mu;_.  If it returns 0, return 0.
+4. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
+5. [**Sample from the number _u_**](#Implementation_Notes) once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
+
+<a id=tanh__m____lambda></a>
+#### tanh(_m_ + _&lambda;_)
+
+In this algorithm for the hyperbolic tangent function, _m_ is an integer 0 or greater, and _&lambda;_ is the probability of heads of an input coin.[^51]
+
+- Do the following process repeatedly, until this algorithm returns a value:
+    1. Run the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** twice, with _k_=1 and _m_=_m_.  Let _r_ be a number that is 1 if both runs returned 1, or 0 otherwise.
+    2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1&minus;_r_.  Otherwise, if _r_ is 1, return 0.
+
+> **Note:** Follows from observing that tanh(_m_+_&lambda;_) = (_d_ + (1 &minus; _&mu;_)) / (_c_ + _&mu;_), where _&mu;_ = (exp(&minus;(_m_+_&lambda;_)))<sup>2</sup>, _d_ = 0, and _c_ = 1.
+
+<a id=Expressions_Involving_Polylogarithms></a>
+#### Expressions Involving Polylogarithms
+
+The following algorithm simulates the expression Li<sub>_r_</sub>(_&lambda;_) * (1 / _&lambda;_ &minus; 1), where Li<sub>_r_</sub>(.) is a polylogarithm of order _r_, and _r_ is an integer 1 or greater.    However, even with a relatively small _r_ such as 6, the expression quickly approaches a straight line.
+
+If _&lambda;_ is 1/2, this expression simplifies to Li<sub>_r_</sub>(1/2). See also (Flajolet et al., 2010\)[^1].  See also "[**Convex Combinations**](#Convex_Combinations)" (the case of 1/2 works by decomposing the series forming the polylogarithmic constant into _g_(_i_) = (1/2)<sup>_i_</sup>, which sums to 1, and _h_<sub>_i_</sub>() = 1/_i_<sup>_r_</sup>, where _i_ &ge; 1).
+
+1. Flip the input coin until it returns 0, and let _t_ be 1 plus the number of times the coin returned 1 this way.
+2. Return a number that is 1 with probability 1/_t_<sup>_r_</sup> and 0 otherwise.
+
+<a id=Algorithms_for_Specific_Functions_of___lambda___Probability_Sensitive></a>
+### Algorithms for Specific Functions of _&lambda;_ (Probability-Sensitive)
+
+This section describes algorithms for specific functions that require knowing certain information on the probability of input coins.
+
+<a id=lambda_____mu></a>
+#### _&lambda;_ + _&mu;_
+
+(Nacu and Peres 2005, proposition 14(iii)\)[^16].  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; 1 &minus; _&lambda;_ &minus; _&mu;_.
+
+1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result."
+2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&nu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = _&#x03F5;_, and return the result.
+
+<a id=lambda___minus___mu></a>
+#### _&lambda;_ &minus; _&mu;_
+
+(Nacu and Peres 2005, proposition 14(iii-iv)\)[^16].  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_ &minus; _&mu;_ \(the greater _&#x03F5;_ is, the more efficient\).
+
+1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return **1 minus the result**.  Otherwise, flip the _&mu;_ input coin and return the result."
+2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&nu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = _&#x03F5;_, and return 1 minus the result.
+
+<a id=x03F5_____lambda></a>
+#### _&#x03F5;_ / _&lambda;_
+
+(Lee et al. 2014\)[^52].  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_.
+
+1. Set _&beta;_ to max(_&#x03F5;_, 1/2) and set _&gamma;_ to 1 &minus; (1 &minus; _&beta;_) / (1 &minus; (_&beta;_ / 2)).
+2. Create a _&mu;_ input coin that flips the input coin and returns 1 minus the result.
+3. With probability _&#x03F5;_, return 1.
+4. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) with the _&mu;_ input coin, _x_/_y_ = 1 / (1 &minus; _&#x03F5;_), and _&#x03F5;_ = _&gamma;_. If the result is 0, return 0.  Otherwise, go to step 3.  (Running the linear Bernoulli factory this way simulates the probability (_&lambda;_ &minus; _&#x03F5;_)/(1 &minus; _&#x03F5;_) or 1 &minus; (1 &minus; _&lambda;_)/(1 &minus; _&#x03F5;_)).
+
+<a id=mu_____lambda></a>
+#### _&mu;_ / _&lambda;_
+
+(Morina 2021\)[^53].  This division algorithm takes two input coins, namely a coin simulating the dividend _&mu;_ and a coin simulating the divisor _&lambda;_, and a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_ &minus; _&mu;_.  In this algorithm, _&mu;_ must be less than _&lambda;_.
+
+- Do the following process repeatedly, until this algorithm returns a value:
+    1. Generate an unbiased random bit (either 0 or 1 with equal probability).
+    2. If the bit generated in step 1 is 1, flip the _&mu;_ input coin.  If it returns 1, return 1.
+    3. If the bit generated in step 1 is 0, run the **algorithm for _&lambda;_ &minus; _&mu;_** with _&#x03F5;_ = _&#x03F5;_. If it returns 1, return 0.
+
+<a id=lambda____x___y></a>
+#### _&lambda;_ * _x_/_y_
+
+In general, this function will touch 0 or 1 at some point greater than 0 and less than 1, when _x_/_y_ > 1.  This makes the function relatively non-trivial to simulate in this case.
+
+Huber has suggested several algorithms for this function over the years.
+
+The first algorithm in this document comes from Huber (2014\)[^4].  It uses three parameters:
+
+- _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
+- _&#x03F5;_ is a rational number greater than 0 and less than 1.  If _x_/_y_ is greater than 1, _&#x03F5;_ must be such that 0 &lt; _&#x03F5;_ &le;1 &minus; _&lambda;_ * _x_/_y_, in order to bound the function away from 0 and 1.  The greater _&#x03F5;_ is, the more efficient.
+
+As a result, some knowledge of _&lambda;_ has to be available to the algorithm. The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.
+
+1. Special cases: If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_, flip the input coin and return the result.  Otherwise, if _x_ is less than _y_, then do the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0."
+2. Set _c_ to _x_/_y_, and set _k_ to 23 / (5 * _&#x03F5;_).
+3. If _&#x03F5;_ is greater than 644/1000, set _&#x03F5;_ to 644/1000.
+4. Set _i_ to 1.
+5. While _i_ is not 0:
+    1. Flip the input coin.  If it returns 0, then generate numbers that are each 1 with probability (_c_ &minus; 1) / _c_ and 0 otherwise, until 1 is generated this way, then add 1 to _i_ for each number generated this way (including the last).
+    2. Subtract 1 from _i_.
+    3. If _i_ is _k_ or greater:
+        1. Generate _i_ numbers that are each 1 with probability 2 / (_&#x03F5;_ + 2) or 0 otherwise.  If any of those numbers is 0, return 0.
+        2. Multiply _c_ by 2 / (_&#x03F5;_ + 2), then divide _&#x03F5;_ by 2, then multiply _k_ by 2.
+9. (_i_ is 0.) Return 1.
+
+Huber (2016\)[^34] presented a second algorithm using the same three parameters, but it's omitted here because it appears to perform worse than the algorithm given above and the **algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>** below (see also Morina 2021[^53]).
+
+Huber (2016) also included a third algorithm that simulates _&lambda;_ * _x_ / _y_.  The algorithm works only if _&lambda;_ * _x_ / _y_ is known to be less than 1/2.  This third algorithm takes three parameters:
+
+- _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
+- _m_ is a rational number such that _&lambda;_ * _x_ / _y_ &le; _m_ &lt; 1/2.
+
+The algorithm follows.
+
+1. The same special cases as for the first algorithm in this section apply.
+2. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = (_x_/_y_) / (1 &minus; 2 * _m_).  If it returns 0, return 0.
+3. With probability 1 &minus; 2 * _m_, return 1.
+4. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) with _x_/_y_ = (_x_/_y_) / (2 * _m_) and _&#x03F5;_ = 1 &minus; _m_.
+
+> **Note:** For approximate methods to simulate _&lambda;_\*(_x_/_y_), see the page "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)".
+
+<a id=lambda____x___y___i></a>
+#### (_&lambda;_ * _x_/_y_)<sup>_i_</sup>
+
+(Huber 2019\)[^54].  This algorithm uses four parameters:
+
+- _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
+- _i_ is an integer 0 or greater.
+- _&#x03F5;_ is a rational number such that 0 &lt; _&#x03F5;_ &lt; 1.  If _x_/_y_ is greater than 1, _&#x03F5;_ must be such that 0 &lt; _&#x03F5;_ &le;1 &minus; _&lambda;_ * _x_/_y_.
+
+The algorithm also has special cases not mentioned in Huber 2019.
+
+1.  Special cases: If _i_ is 0, return 1.  If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_ and _i_ equals 1, flip the input coin and return the result.
+2. Special case: If _x_ is less than _y_ and _i_ = 1, then do the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0."
+3. Special case: If _x_ is less than _y_, then create a secondary coin that does the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0", then run the **algorithm for** [**_&lambda;_<sup>_x_/_y_</sup>**](#lambda___x___y) with _x_=_i_, _y_=1, and _&lambda;_ being the secondary coin, then return the result of that run.
+4. Set _t_ to 355/100 and _c_ to _x_/_y_.
+5. While _i_ is not 0:
+    1. While _i_ > _t_ / _&#x03F5;_:
+        1. Set _&beta;_ to (1 &minus; _&#x03F5;_ / 2) / (1 &minus; _&#x03F5;_).
+        2. Run the **algorithm for (_a_/_b_)<sup>_x_/_y_</sup>** (given in the irrational constants section) with _a_=1, _b_=_&beta;_, _x_=_i_, and _y_=1.  If the run returns 0, return 0.
+        3. Multiply _c_ by _&beta;_, then divide _&#x03F5;_ by 2.
+    2. Run the **logistic Bernoulli factory** with _c_/_d_ = _c_, then set _z_ to the result.  Set _i_ to _i_ + 1 &minus; _z_ * 2.
+6. (_i_ is 0.) Return 1.
+
+<a id=Linear_Bernoulli_Factories></a>
+#### Linear Bernoulli Factories
+
+In this document, a **linear Bernoulli factory** refers to one of the following:
+
+- The first algorithm for [**_&lambda;_ * _x_/_y_**](#lambda____x___y) with the stated parameters _x_, _y_, and _&#x03F5;_.
+- The [**algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>**](#lambda____x___y___i) with the stated parameters _x_, _y_, and _&#x03F5;_, and with _i_ = 1 (see previous section).
+
 <a id=1_minus___lambda___cos___lambda></a>
 #### (1&minus;_&lambda;_)/cos(_&lambda;_)
 
@@ -1260,16 +1308,6 @@ Equals the previous function times _&lambda;_, with _c_ = 1.
     4. Add 1 to _i_, then set _U_ to _V_.
 5. Return 1.
 
-<a id=ln_1___lambda></a>
-#### ln(1+_&lambda;_)
-
-Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which does not).[^24][^55]
-
-- Do the following process repeatedly, until this algorithm returns a value:
-    1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
-    2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
-    3. [**Sample from the number _u_**](#Implementation_Notes), then flip the input coin.  If the call and the flip both return 1, return 0.
-
 <a id=ln__c___d____lambda____c></a>
 #### ln((_c_ + _d_ + _&lambda;_)/_c_)
 
@@ -1280,49 +1318,17 @@ In this algorithm, _d_ and _c_ are integers, 0 &lt; _c_, and _c_ &gt; _d_ &ge; 0
     2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
     3. [**Sample from the number _u_**](#Implementation_Notes), then run the **algorithm for (_d_ + _&lambda;_) / _c_** with _d_ = _d_ and _c_ = _c_.  If both calls return 1, return 0.
 
-<a id=arcsin___lambda___sqrt_1_minus___lambda__2_minus_1></a>
-#### arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1
-
-(Flajolet et al., 2010\)[^1].  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^24].
-
-1. Generate a uniform(0, 1) random variate _u_.
-2. Create a secondary coin _&mu;_ that does the following: "[**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
-3. Call the **algorithm for _&mu;_<sup>1/2</sup>** using the secondary coin _&mu;_.  If it returns 0, return 0.
-4. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
-5. [**Sample from the number _u_**](#Implementation_Notes) once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
-
 <a id=arcsin___lambda___2></a>
 #### arcsin(_&lambda;_) / 2
 
-The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out of arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.[^54] However, the number of input coin flips is expected to grow without bound as _&lambda;_ approaches 1.
+The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out of arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.[^55] However, the number of input coin flips is expected to grow without bound as _&lambda;_ approaches 1.
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the **algorithm for arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1** and return the result.
 2. Create a secondary coin _&mu;_ that does the following: "Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1." (The coin simulates 1 &minus; _&lambda;_<sup>2</sup>.)
 3. Call the **algorithm for _&mu;_<sup>1/2</sup>** using the secondary coin _&mu;_.  If it returns 0, return 1; otherwise, return 0. (This step effectively cancels out the sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1 part and divides by 2.)
 
-<a id=tanh__m____lambda></a>
-#### tanh(_m_ + _&lambda;_)
-
-In this algorithm for the hyperbolic tangent function, _m_ is an integer 0 or greater, and _&lambda;_ is the probability of heads of an input coin.[^55]
-
-- Do the following process repeatedly, until this algorithm returns a value:
-    1. Run the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** twice, with _k_=1 and _m_=_m_.  Let _r_ be a number that is 1 if both runs returned 1, or 0 otherwise.
-    2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1&minus;_r_.  Otherwise, if _r_ is 1, return 0.
-
-> **Note:** Follows from observing that tanh(_m_+_&lambda;_) = (_d_ + (1 &minus; _&mu;_)) / (_c_ + _&mu;_), where _&mu;_ = (exp(&minus;(_m_+_&lambda;_)))<sup>2</sup>, _d_ = 0, and _c_ = 1.
-
-<a id=Expressions_Involving_Polylogarithms></a>
-#### Expressions Involving Polylogarithms
-
-The following algorithm simulates the expression Li<sub>_r_</sub>(_&lambda;_) * (1 / _&lambda;_ &minus; 1), where Li<sub>_r_</sub>(.) is a polylogarithm of order _r_, and _r_ is an integer 1 or greater.    However, even with a relatively small _r_ such as 6, the expression quickly approaches a straight line.
-
-If _&lambda;_ is 1/2, this expression simplifies to Li<sub>_r_</sub>(1/2). See also (Flajolet et al., 2010\)[^1].  See also "[**Convex Combinations**](#Convex_Combinations)" (the case of 1/2 works by decomposing the series forming the polylogarithmic constant into _g_(_i_) = (1/2)<sup>_i_</sup>, which sums to 1, and _h_<sub>_i_</sub>() = 1/_i_<sup>_r_</sup>, where _i_ &ge; 1).
-
-1. Flip the input coin until it returns 0, and let _t_ be 1 plus the number of times the coin returned 1 this way.
-2. Return a number that is 1 with probability 1/_t_<sup>_r_</sup> and 0 otherwise.
-
 <a id=Other_Factory_Functions></a>
-#### Other Factory Functions
+### Other Factory Functions
 
 Algorithms in bold are given in this page.
 
@@ -1779,15 +1785,15 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 [^50]: Sadowsky, Bucklew, On large deviations theory and asymptotically efficient Monte Carlo
 estimation, IEEE Transactions on Information Theory 36 (1990)
 
-[^51]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
+[^51]: There is another algorithm for tanh(_&lambda;_), based on Lambert's continued fraction for tanh(.), but it works only if 0 &le; _&lambda;_ &le; 1.  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
 
-[^52]: Morina, Giulio (2021) Extending the Bernoulli Factory to a dice enterprise. PhD thesis, University of Warwick.
+[^52]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
-[^53]: Huber, M., "[**Designing perfect simulation algorithms using local correctness**](https://arxiv.org/abs/1907.06748v1)", arXiv:1907.06748v1 [cs.DS], 2019.
+[^53]: Morina, Giulio (2021) Extending the Bernoulli Factory to a dice enterprise. PhD thesis, University of Warwick.
 
-[^54]: One of the only implementations I could find of this, if not the only, was a [**Haskell implementation**](https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs).
+[^54]: Huber, M., "[**Designing perfect simulation algorithms using local correctness**](https://arxiv.org/abs/1907.06748v1)", arXiv:1907.06748v1 [cs.DS], 2019.
 
-[^55]: There is another algorithm for tanh(_&lambda;_), based on Lambert's continued fraction for tanh(.), but it works only if 0 &le; _&lambda;_ &le; 1.  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
+[^55]: One of the only implementations I could find of this, if not the only, was a [**Haskell implementation**](https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs).
 
 [^56]: Another algorithm for this function uses the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$), but uses more bits on average as _&lambda;_ approaches 1.
 
@@ -1858,7 +1864,7 @@ This page focuses on _unbiased_ estimators because "exact sampling" depends on b
 
 **Theorem.** _If the algorithm given in "Continued Logarithms" terminates with probability 1, it returns 1 with probability exactly equal to the number represented by the continued logarithm c, and 0 otherwise._
 
-_Proof._ This proof of correctness takes advantage of Huber's "fundamental theorem of perfect simulation" (Huber 2019\)[^53].  Using Huber's theorem requires proving two things:
+_Proof._ This proof of correctness takes advantage of Huber's "fundamental theorem of perfect simulation" (Huber 2019\)[^54].  Using Huber's theorem requires proving two things:
 
 - The algorithm finishes with probability 1 by assumption.
 - Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with a "black box" that simulates the correct "continued sub-logarithm".  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), where _x_ is the "continued sub-logarithm" and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to _x_/2), and the last piece is the "rejection piece" that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability _p_ = (1 / 2<sup>_c_\[_i_\]</sup>) / 2 and fail either at the first substep of the loop with probability _f1_ = (1 &minus; 1 / 2<sup>_c_\[_i_\]</sup>) / 2, or at the second substep with probability _f2_ = _x_/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (_p_ / (_p_ + _f1_ + _f2_)) leads to (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), which is the probability we wanted.

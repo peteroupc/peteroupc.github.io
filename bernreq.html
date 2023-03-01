@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/02/26"><meta name="citation_online_date" content="2023/02/26"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/02/28"><meta name="citation_online_date" content="2023/02/28"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -34,7 +34,6 @@
 <li><a href="#Formal_Statement"><strong>Formal Statement</strong></a></li>
 <li><a href="#A_Matter_of_Efficiency"><strong>A Matter of Efficiency</strong></a></li>
 <li><a href="#A_Conjecture_on_Polynomial_Approximation"><strong>A Conjecture on Polynomial Approximation</strong></a></li>
-<li><a href="#General_and_Related_Questions"><strong>General and Related Questions</strong></a></li>
 <li><a href="#Examples_of_Functions_to_Ponder"><strong>Examples of Functions to Ponder</strong></a></li>
 </ul></li>
 <li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>
@@ -99,7 +98,7 @@
 <li>$f(\lambda)$ is concave.</li>
 <li>$f(\lambda)$ is strictly increasing and continuous.</li>
 <li>$f(\lambda)$ has a $k$-th derivative of bounded variation for some fixed $k\ge 1$.</li>
-<li>$f(\lambda)$ has a $k$-th derivative in the Zygmund class for some fixed $k\ge 0$.</li>
+<li>$f(\lambda)$ has a $k$-th derivative in the Zygmund class for some fixed $k\ge 0$ (there is $D&gt;0$ such that $|f^{(k)}(x) + f^{(k)}(y) - 2f^{(k)}((x+y)/2)| \le D\epsilon$ for every $\epsilon&gt;0$).</li>
 <li>$f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.</li>
 <li>$f(\lambda)$ belongs to Gevrey&#39;s hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).</li>
 </ul>
@@ -128,16 +127,23 @@
 
 <p>Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$), let $r\ge 1$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.</p>
 
-<p>Given that $f$ has a continuous $r$-th derivative, are there practical formulas to compute two sequences of polynomials $g_n$ (&quot;lower&quot;) and $h_n$ (&quot;upper&quot;) in Bernstein form as follows, for each integer $n\ge 1$ that&#39;s a power of 2?</p>
+<p>Suppose that $f$ has a continuous $r$-th derivative, or that $f^{(r-1)}$ is Lipschitz continuous, or that $f^{(r-1)}$ is in the Zygmund class.</p>
+
+<ol>
+<li><p>Find a practical formula to compute two sequences of polynomials $g_n$ (&quot;lower&quot;) and $h_n$ (&quot;upper&quot;) in Bernstein form as follows, for each integer $n\ge 1$ that&#39;s a power of 2.</p>
 
 <ul>
 <li>$g_n \le h_n$.</li>
 <li>$\lim_n g_n = \lim_n h_n = f$.</li>
 <li>$(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$. (<strong>See note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</li>
-<li>The rate of convergence is $O(M/n^{r/2}),$ where $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative.</li>
-</ul>
+<li>The rate of convergence is $O(1/n^{r/2})$.</li>
+</ul></li>
+<li>With possibly extra assumptions on $f$, such as those given in &quot;<a href="#Key_Problems"><strong>Key Problems</strong></a>&quot;, above, find a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - B_n(Q_n(f))(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a <em>known exact value or upper bound</em>, and $Q_n(f)$ is easily computable from $f$ using rational arithmetic only. (<strong>See note 4 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</li>
+</ol>
 
-<p>This can be answered by answering the following question (<a href="https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable"><strong>more info</strong></a>).  Suppose $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  Then, what is an explicit and tight upper bound on $C_1&gt;0$ with the following property?  For each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}}.\tag{PB}$$</p>
+<p>One way to answer either question (<a href="https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable"><strong>more info</strong></a>) is to find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ where $M$ is the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative (or, respectively, the maximum of $|f|$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative, or the maximum of $D$ defining the Zygmund class and the maximum absolute values of $f$ and its derivatives up to the $(r-1)$-th derivative).</p>
+
+<p>Then $| f(x) - B_n(W_n(f))(x) | \le \frac{C_1}{1-\sqrt{2/2^{r+1}}}\frac{M}{n^{r/2}}=O(1/n^{r/2})$ (see Lemma 3 in &quot;<a href="https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial-Building Schemes</strong></a>), although this is only guaranteed to work for power-of-2 values of $n$.  For example, $W_n$ can be $2f-B_n(f)$(***) and $r$ can be 3 or 4 (interesting functions $f$ to test are quadratic polynomials), or $W_n$ can be $B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ can be 5 or 6.</p>
 
 <p><a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a></p>
 
@@ -176,8 +182,6 @@
 
 <p>where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.</p>
 
-<p>Alternatively, find a way to rewrite $f(\lambda)$ as&mdash; $$f(\lambda) = \sum_{n\ge 1} P_n(\lambda) = 1 - \sum_{n\ge 1} Q_n(\lambda),$$ where $P_n$ and $Q_n$ are polynomials of degree $n$ with nonnegative Bernstein coefficients.</p>
-
 <p><a id=A_Matter_of_Efficiency></a></p>
 
 <h3>A Matter of Efficiency</h3>
@@ -205,29 +209,6 @@
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that $(PB)$ holds true for each integer $n\ge 1$ that&#39;s a power of 2 (see &quot;Main Question&quot; above).</p>
 
 <p>My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially if $W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.</p>
-
-<p><a id=General_and_Related_Questions></a></p>
-
-<h3>General and Related Questions</h3>
-
-<p>The following are additional questions that supplement the main question given above.</p>
-
-<p>For what value of $C_0$ (or $C_1$) is the conjecture given in &quot;A Conjecture on Polynomial Approximation&quot; true in the following cases?</p>
-
-<ul>
-<li>$W_n$ is such that $B_n(W_n)$ converges uniformly to $f$ at the rate $O(1/n^{r/2})$.</li>
-<li>$W_n = 2 f - B_n(f)$(***) and $r$ is 3 or 4.  I conjecture $C_0=\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.</li>
-<li>$W_n = B_n(B_n(f))+3(f-B_n(f))$(***) and $r$ is 5 or 6.</li>
-</ul>
-
-<p>Does the same value of $C_0$ (or $C_1$) suffice in either of the following cases, and if not, what value suffices?</p>
-
-<ul>
-<li>$f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of $|f|$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</li>
-<li>$f$&#39;s $(r-1)$-th derivative is in the Zygmund class and $M$ is the maximum of $D$ and the maximum absolute value of $f$ and its derivatives up to the $(r-1)$-th derivative, where $D$ is such that $|f^{(r-1)}(x) + f^{(r-1)}(y) - 2f^{(r-1)}((x+y)/2)| \le D\epsilon$ for every $\epsilon&gt;0$.</li>
-</ul>
-
-<p>Given that $f:[0,1]\to [0,1]$ has an $(r-1)$-th derivative that is Lipschitz continuous or in the Zygmund class, or has a continuous $r$-th derivative, are there results that give a sequence of functions $Q_n(f)$ with the following error bound? $$| f(x) - B_n(Q_n(f))(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a <em>known exact value or upper bound</em>, and $Q_n(f)$ is easily computable from $f$ using rational arithmetic only. (<strong>See note 4 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</p>
 
 <p>(***) Corresponds to the iterated Bernstein polynomials of order 2 and 3 (Güntürk and Li 2021).</p>
 
@@ -357,6 +338,14 @@
 
 <p><a href="https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials"><strong>https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials</strong></a></p>
 
+<p>Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in &quot;<a href="#Key_Problems"><strong>Key Problems</strong></a>&quot;, above, give a practical way to find a sequence $(\gamma_n)$ and a function $\pi(a,p)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{PC}$$ where:</p>
+
+<ul>
+<li>$\pi(a, p)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$).</li>
+<li>$\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a,p)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a,p)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, some or all $\gamma_a(\lambda)$ can be rational functions in $\lambda$ and/or functions that are power series with coefficients of nonincreasing magnitude, which have simple Bernoulli factory algorithms (Łatuszyński et al. 2009/2011).</li>
+<li>Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a continuous $r$-th derivative.</li>
+</ul>
+
 <p><a id=Using_Two_Polynomial_Sequences></a></p>
 
 <h3>Using Two Polynomial Sequences</h3>
@@ -377,15 +366,11 @@
 
 <h3>Using a Series Expansion</h3>
 
-<p>There is another way to simulate a concave $f$.  This involves rewriting the concave function as a series expansion as follows:</p>
-
-<p>$$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{1}$$</p>
-
-<p>where&mdash;</p>
+<p>There is another way to simulate a concave $f$.  This involves rewriting the concave function as the series $(PC)$ where&mdash;</p>
 
 <ul>
 <li>$\pi(a, p) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,</li>
-<li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$ (or, more generally, a polynomial equal to 0 or $\pi(a,p)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a,p)$ whenever $0\lt \lambda\lt 1$),</li>
+<li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,</li>
 <li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,</li>
 <li>$(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,</li>
 <li>$p$ is a rational number in $(0, 1)$, and</li>
@@ -417,7 +402,7 @@
 
 <p>$$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a, p)} \pi(a, p), \tag{2}$$</p>
 
-<p>for some integer $k\ge 0$, if they satisfy the series expansion $(1)$ except that $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.</p>
+<p>for some integer $k\ge 0$, if they satisfy the series expansion earlier in this section except that $\frac{\gamma_a(\lambda)}{\pi(a, p)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.</p>
 
 <p><a id=Questions_2></a></p>
 
@@ -426,7 +411,7 @@
 <ol>
 <li>Given that a factory function $f(\lambda)$ is concave and has a continuous $\alpha$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz&#39;s results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.</li>
 <li>Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?</li>
-<li>Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(1)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz&#39;s results.</li>
+<li>Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(PC)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz&#39;s results.</li>
 </ol>
 
 <p><strong>See also Note 1.</strong></p>
