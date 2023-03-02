@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/03/01"><meta name="citation_online_date" content="2023/03/01"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/03/02"><meta name="citation_online_date" content="2023/03/02"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -62,8 +62,8 @@
 <li><a href="#Algebraic_Functions"><strong>Algebraic Functions</strong></a></li>
 <li><a href="#Questions_4"><strong>Questions</strong></a></li>
 </ul></li>
-<li><a href="#Other_Questions"><strong>Other Questions</strong></a></li>
 <li><a href="#Reverse_time_martingales"><strong>Reverse-time martingales</strong></a></li>
+<li><a href="#Other_Questions"><strong>Other Questions</strong></a></li>
 <li><a href="#End_Notes"><strong>End Notes</strong></a></li>
 <li><a href="#My_Attempt"><strong>My Attempt</strong></a></li>
 <li><a href="#References"><strong>References</strong></a></li>
@@ -79,7 +79,7 @@
 <li><strong>Given $\epsilon &gt; 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:</strong>
 
 <ul>
-<li><strong>A reasonably small integer $n&gt;0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$&#39;s coefficients are rational numbers in $[0,1]$; $|P - f| = O(1/n^{r/2})$ whenever $f$ has a continuous $r$-th derivative; and $P$ is easily computable from $f$ using rational arithmetic only.</strong></li>
+<li><strong>A reasonably small integer $n&gt;0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$&#39;s coefficients are rational numbers in $[0,1]$; $|P - f| = O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative; and $P$ is easily computable from $f$ using rational arithmetic only.</strong></li>
 <li><strong>The Bernstein coefficients of $P(\lambda)$.</strong></li>
 </ul></li>
 <li><strong>Same as problem 1, except that $P(\lambda)$ is a rational function (ratio of two polynomials) rather than a polynomial.</strong></li>
@@ -87,7 +87,6 @@
 <li><strong>Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.</strong></li>
 <li><strong>Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.</strong></li>
 <li><strong>Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.</strong></li>
-<li><s><strong>Describe how Algorithm 4 of Łatuszyński et al. (2009/2011) works when the randomized lower and upper bounds of $f(\lambda)$ given the number of heads are formed by functions other than polynomials. (Proposition 3.1 there describes the case of polynomials.)</strong></s></li>
 </ol>
 
 <p>Assumptions on $f(\lambda)$ can include any combination of the following:</p>
@@ -235,7 +234,7 @@
 <ul>
 <li>$\pi(a)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational).</li>
 <li>$\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, some or all $\gamma_a(\lambda)$ can be rational functions in $\lambda$ and/or functions that are power series with coefficients of nonincreasing magnitude, which have simple Bernoulli factory algorithms (Łatuszyński et al. 2009/2011).</li>
-<li>Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a continuous $r$-th derivative.</li>
+<li>Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.</li>
 </ul>
 
 <p><a id=Using_Two_Polynomial_Sequences></a></p>
@@ -301,7 +300,7 @@
 <h3>Questions</h3>
 
 <ol>
-<li>Given that a factory function $f(\lambda)$ is concave and has a continuous $\alpha$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz&#39;s results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.</li>
+<li>Given that a factory function $f(\lambda)$ is concave and has a Lipschitz continuous $(\alpha-1)$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz&#39;s results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.</li>
 <li>Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?</li>
 <li>Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(PC)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz&#39;s results.</li>
 </ol>
@@ -528,6 +527,12 @@
 
 <p><strong>See also Notes 2 and 3.</strong></p>
 
+<p><a id=Reverse_time_martingales></a></p>
+
+<h2>Reverse-time martingales</h2>
+
+<p>This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).</p>
+
 <p><a id=Other_Questions></a></p>
 
 <h2>Other Questions</h2>
@@ -559,14 +564,8 @@
 <li>Series with nonnegative terms and bounds on the truncation error (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series"><strong>Certain Converging Series</strong></a>&quot;).</li>
 </ul></li>
 </ul></li>
-<li><p>Given that $f:[0,1]\to [0,1]$ is continuous, and given certain assumptions on $f$, such as those given in &quot;<a href="#Key_Problems"><strong>Key Problems</strong></a>&quot;, find a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - Q_n(f)(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ whenever $f$ has a continuous $r$-th derivative, where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a <em>known exact value or upper bound</em>, and $Q_n(f)$ is a rational function or another non-polynomial function with a simple Bernoulli factory algorithm, preferably a function that is easily computable from $f$ using rational arithmetic only.</p></li>
+<li><p>Let $f:[0,1]\to [0,1]$ be continuous and let $r\le 1$.  Given certain assumptions on $f$, such as those given in &quot;<a href="#Key_Problems"><strong>Key Problems</strong></a>&quot;, find a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - Q_n(f)(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative, where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a <em>known exact value or upper bound</em>, and $Q_n(f)$ is a rational function or another non-polynomial function with a simple Bernoulli factory algorithm, preferably a function that is easily computable from $f$ using rational arithmetic only.</p></li>
 </ul>
-
-<p><a id=Reverse_time_martingales></a></p>
-
-<h2>Reverse-time martingales</h2>
-
-<p>This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).</p>
 
 <p><a id=End_Notes></a></p>
 

@@ -38,8 +38,8 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Pushdown Automata**](#Pushdown_Automata)
     - [**Algebraic Functions**](#Algebraic_Functions)
     - [**Questions**](#Questions_4)
-- [**Other Questions**](#Other_Questions)
 - [**Reverse-time martingales**](#Reverse_time_martingales)
+- [**Other Questions**](#Other_Questions)
 - [**End Notes**](#End_Notes)
 - [**My Attempt**](#My_Attempt)
 - [**References**](#References)
@@ -50,14 +50,13 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 The following summarizes most of the problems raised by these open questions.
 
 1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:**
-    - **A reasonably small integer $n>0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$'s coefficients are rational numbers in $[0,1]$; $|P - f| = O(1/n^{r/2})$ whenever $f$ has a continuous $r$-th derivative; and $P$ is easily computable from $f$ using rational arithmetic only.**
+    - **A reasonably small integer $n>0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$'s coefficients are rational numbers in $[0,1]$; $|P - f| = O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative; and $P$ is easily computable from $f$ using rational arithmetic only.**
     - **The Bernstein coefficients of $P(\lambda)$.**
 2. **Same as problem 1, except that $P(\lambda)$ is a rational function (ratio of two polynomials) rather than a polynomial.**
 3. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the** [**Formal Statement**](#Formal_Statement) **given later, together with their Bernstein coefficients, with a rate of convergence $O(1/n^{k/2})$ where k is the number of continuous derivatives.** (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must "increase" and "decrease" in a specific sense.)
 4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
 5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
 6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
-7. <s>**Describe how Algorithm 4 of Łatuszyński et al. (2009/2011) works when the randomized lower and upper bounds of $f(\lambda)$ given the number of heads are formed by functions other than polynomials. (Proposition 3.1 there describes the case of polynomials.)**</s>
 
 Assumptions on $f(\lambda)$ can include any combination of the following:
 
@@ -181,7 +180,7 @@ Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given c
 
 - $\pi(a)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$ where $0 < p < 1$ is a known rational).
 - $\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, some or all $\gamma_a(\lambda)$ can be rational functions in $\lambda$ and/or functions that are power series with coefficients of nonincreasing magnitude, which have simple Bernoulli factory algorithms (Łatuszyński et al. 2009/2011).
-- Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a continuous $r$-th derivative.
+- Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.
 
 <a id=Using_Two_Polynomial_Sequences></a>
 ### Using Two Polynomial Sequences
@@ -236,7 +235,7 @@ for some integer $k\ge 0$, if they satisfy the series expansion earlier in this 
 <a id=Questions></a>
 ### Questions
 
-1. Given that a factory function $f(\lambda)$ is concave and has a continuous $\alpha$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.
+1. Given that a factory function $f(\lambda)$ is concave and has a Lipschitz continuous $(\alpha-1)$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.
 2. Given that a factory function $f(\lambda):[0, 1] \to (0, 1)$ is concave and continuous, is it enough to shift $g_{n}(\lambda)$ upward by the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, to get the corresponding upper polynomial $h_{n}(\lambda)$?  If not, for which concave functions does this work?
 3. Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(PC)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz's results.
 
@@ -419,6 +418,11 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 
 **See also Notes 2 and 3.**
 
+<a id=Reverse_time_martingales></a>
+## Reverse-time martingales
+
+This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).
+
 <a id=Other_Questions></a>
 ## Other Questions
 
@@ -438,12 +442,7 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
         - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
         - Series with nonnegative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
 
-- Given that $f:[0,1]\to [0,1]$ is continuous, and given certain assumptions on $f$, such as those given in "[**Key Problems**](#Key_Problems)", find a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - Q_n(f)(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ whenever $f$ has a continuous $r$-th derivative, where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a *known exact value or upper bound*, and $Q_n(f)$ is a rational function or another non-polynomial function with a simple Bernoulli factory algorithm, preferably a function that is easily computable from $f$ using rational arithmetic only.
-
-<a id=Reverse_time_martingales></a>
-## Reverse-time martingales
-
-This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).
+- Let $f:[0,1]\to [0,1]$ be continuous and let $r\le 1$.  Given certain assumptions on $f$, such as those given in "[**Key Problems**](#Key_Problems)", find a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - Q_n(f)(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative, where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a *known exact value or upper bound*, and $Q_n(f)$ is a rational function or another non-polynomial function with a simple Bernoulli factory algorithm, preferably a function that is easily computable from $f$ using rational arithmetic only.
 
 <a id=End_Notes></a>
 ## End Notes
