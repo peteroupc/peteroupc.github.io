@@ -24,12 +24,11 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**A Conjecture on Polynomial Approximation**](#A_Conjecture_on_Polynomial_Approximation)
     - [**Examples of Functions to Ponder**](#Examples_of_Functions_to_Ponder)
-- [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
-    - [**Questions**](#Questions)
-- [**Reverse-time martingales**](#Reverse_time_martingales)
 - [**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)
     - [**Using Two Polynomial Sequences**](#Using_Two_Polynomial_Sequences)
     - [**Using a Series Expansion**](#Using_a_Series_Expansion)
+    - [**Questions**](#Questions)
+- [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
     - [**Questions**](#Questions_2)
 - [**Simulable and strongly simulable functions**](#Simulable_and_strongly_simulable_functions)
 - [**Multiple-Output Bernoulli Factories**](#Multiple_Output_Bernoulli_Factories)
@@ -40,6 +39,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Algebraic Functions**](#Algebraic_Functions)
     - [**Questions**](#Questions_4)
 - [**Other Questions**](#Other_Questions)
+- [**Reverse-time martingales**](#Reverse_time_martingales)
 - [**End Notes**](#End_Notes)
 - [**My Attempt**](#My_Attempt)
 - [**References**](#References)
@@ -100,11 +100,11 @@ Suppose that $f$ has a continuous $r$-th derivative, or that $f^{(r-1)}$ is Lips
     - $\lim_n g_n = \lim_n h_n = f$.
     - $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$. (**See note 5 in "[**End Notes**](#End_Notes)".**)
     - The rate of convergence is $O(1/n^{r/2})$.
-2. With possibly extra assumptions on $f$, such as those given in "[**Key Problems**](#Key_Problems)", above, find a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - B_n(Q_n(f))(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a *known exact value or upper bound*, and $Q_n(f)$ is easily computable from $f$ using rational arithmetic only. (**See note 4 in "[**End Notes**](#End_Notes)".**)
+2. With possibly extra assumptions on $f$, such as those given in "[**Key Problems**](#Key_Problems)", above, find a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - B_n(Q_n(f))(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),\tag{PA}$$ where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a *known exact value or upper bound*, and $Q_n(f)$ is easily computable from $f$ using rational arithmetic only. (**See note 4 in "[**End Notes**](#End_Notes)".**)
 
-One way to answer either question ([**more info**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable)) is to find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$.
+One way to answer these questions ([**more info**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable)) is to find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$.
 
-Then $| f(x) - B_n(W_n(f))(x) | \le \frac{C_1}{1-\sqrt{2/2^{r+1}}}\frac{M}{n^{r/2}}=O(1/n^{r/2})$ (see Lemma 3 in "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)), although this is only guaranteed to work for power-of-2 values of $n$.  For example, $W_n$ can be $2f-B_n(f)$\(\*\*\*\) and $r$ can be 3 or 4 (interesting functions $f$ to test are quadratic polynomials), or $W_n$ can be $B_n(B_n(f))+3(f-B_n(f))$\(\*\*\*\) and $r$ can be 5 or 6.
+Then $| f(x) - B_n(W_n(f))(x) | \le \frac{C_1}{1-\sqrt{2/2^{r+1}}}\frac{M}{n^{r/2}}=O(1/n^{r/2})$ (see Lemma 3 in "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)). For example, $W_n$ can be $2f-B_n(f)$\(\*\*\*\) and $r$ can be 3 or 4 (interesting functions $f$ to test are quadratic polynomials), or $W_n$ can be $B_n(B_n(f))+3(f-B_n(f))$\(\*\*\*\) and $r$ can be 5 or 6.
 
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
 ### Solving the Bernoulli factory problem with polynomials
@@ -172,72 +172,6 @@ The following are examples of functions worth pondering for these questions:
 - Functions whose $k$-th derivative ($k\ge 0$) is continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$, where $0<\alpha<1$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.
 - The function $(1-(1-2\lambda)^\alpha)/2$ if $\lambda<1/2$ and $(1+(2\lambda-1)^\alpha)/2$ otherwise, where $\alpha>0$.
 
-<a id=New_coins_from_old_smoothly></a>
-## New coins from old, smoothly
-
-[**https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
-
-Now, we focus on a **specific approximation scheme**, the one **presented by [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly"**.
-
-The scheme involves building polynomials that are shifted upward and downward to approximate $f$ from above and below so that the polynomials meet the [**Formal Statement**](#Formal_Statement) given earlier.
-
-The scheme achieves a convergence rate that generally depends on the smoothness of $f$; in fact, it can achieve the highest convergence rate possible for functions with that smoothness.
-
-Specifically, Holtz et al. proved the following results:
-
-1. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ has a Hölder continuous $\lfloor\beta\rfloor$-th derivative with Hölder exponent $\beta-\lfloor\beta\rfloor$, where $\beta>0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)
-
-2. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^r)$ only if the $(r-1)$-th derivative of $f$ is in the Zygmund class, where $r\ge 1$ is an integer.
-
-The scheme is as follows:
-
-Let $f$ be a function&mdash;
-
-- that maps [0, 1] to the open interval (0, 1), and
-- whose $r$th derivative is Hölder continuous with exponent $\beta$, where $\beta$ is in (0, 1).
-
-Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\ge0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ (see the paper for details on the Lorentz operator). Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
-
-- $f_{n_0} = Q_{n_0, r}f$.
-- $f_{n} = f_{n/b} + Q_{n, r}(f-f_{n/b})$ for each integer $n > n_0$.
-
-- $\phi(n, \alpha, \lambda) = \frac{\theta_{\alpha}}{n^{\alpha}}+(\frac{\lambda(1-\lambda)}{n})^{\alpha/2}$.
-
-Let $B_{n, k, F}$ be the $k$th coefficient of the degree-$n$ Bernstein polynomial of $F$.
-
-Let $C(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then elevate it to a degree-$n+r$ Bernstein polynomial.
-
-Then the coefficients for the degree $n+r$ polynomial that approximates $f$ are&mdash;
-
-- $g(n, r, k) = B_{n+r,k,f_{n}} - D * B_{n+r,k,C}$, and
-- $h(n, r, k) = B_{n+r,k,f_{n}} + D * B_{n+r,k,C}$.
-
-However, the Holtz method is not yet implementable, for the following reasons among others:
-
-- The paper doesn't give values or upper bounds for important constants, notably the three constants $s$, $\theta_{\alpha}$, and $D$. For example, the paper says only that $D$ should be chosen "large enough".
-- The method's results are only asymptotic.
-- The paper has no examples of how the scheme works for a selection of functions $f$.
-
-And I seek ways to make this solution implementable.
-
-<a id=Questions></a>
-### Questions
-
-1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as assumptions given in the section "Key Problems")?
-2. Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the "New coins from old, smoothly" method valid in the following cases?  (Note that the method as written doesn't apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)
-
-    - With $\alpha=1, r=0$, when $f$ is Lipschitz continuous and/or differentiable.
-    - With $\alpha=2, r=1$, when $f$ has a Lipschitz continuous first derivative.
-    - With $\alpha=2, r=2$, when $f$ is twice differentiable.
-    - With $\alpha=4, r=3$, when $f$ has a Lipschitz continuous third derivative.
-    - With $\alpha=4, r=4$, when $f$ is four times differentiable.
-    - With $\alpha=5, r=4$, when $f$ has a Lipschitz continuous fourth derivative.
-
-<a id=Reverse_time_martingales></a>
-## Reverse-time martingales
-
-This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).
-
 <a id=Tossing_Heads_According_to_a_Concave_Function></a>
 ## Tossing Heads According to a Concave Function
 
@@ -299,7 +233,7 @@ $$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a)} \
 
 for some integer $k\ge 0$, if they satisfy the series expansion earlier in this section except that $\frac{\gamma_a(\lambda)}{\pi(a)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.
 
-<a id=Questions_2></a>
+<a id=Questions></a>
 ### Questions
 
 1. Given that a factory function $f(\lambda)$ is concave and has a continuous $\alpha$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.
@@ -307,6 +241,67 @@ for some integer $k\ge 0$, if they satisfy the series expansion earlier in this 
 3. Given that a factory function $f(\lambda):[0, 1] \to [0, 1)$ is concave and continuous, what values of $n_a$ and $p$ will allow that function to have the series expansion $(PC)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz's results.
 
 **See also Note 1.**
+
+<a id=New_coins_from_old_smoothly></a>
+## New coins from old, smoothly
+
+[**https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
+
+Now, we focus on a **specific approximation scheme**, the one **presented by [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly"**.
+
+The scheme involves building polynomials that are shifted upward and downward to approximate $f$ from above and below so that the polynomials meet the [**Formal Statement**](#Formal_Statement) given earlier.
+
+The scheme achieves a convergence rate that generally depends on the smoothness of $f$; in fact, it can achieve the highest convergence rate possible for functions with that smoothness.
+
+Specifically, Holtz et al. proved the following results:
+
+1. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ has a Hölder continuous $\lfloor\beta\rfloor$-th derivative with Hölder exponent $\beta-\lfloor\beta\rfloor$, where $\beta>0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)
+
+2. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^r)$ only if the $(r-1)$-th derivative of $f$ is in the Zygmund class, where $r\ge 1$ is an integer.
+
+The scheme is as follows:
+
+Let $f$ be a function&mdash;
+
+- that maps [0, 1] to the open interval (0, 1), and
+- whose $r$th derivative is Hölder continuous with exponent $\beta$, where $\beta$ is in (0, 1).
+
+Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\ge0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ (see the paper for details on the Lorentz operator). Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
+
+- $f_{n_0} = Q_{n_0, r}f$.
+- $f_{n} = f_{n/b} + Q_{n, r}(f-f_{n/b})$ for each integer $n > n_0$.
+
+- $\phi(n, \alpha, \lambda) = \frac{\theta_{\alpha}}{n^{\alpha}}+(\frac{\lambda(1-\lambda)}{n})^{\alpha/2}$.
+
+Let $B_{n, k, F}$ be the $k$th coefficient of the degree-$n$ Bernstein polynomial of $F$.
+
+Let $C(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then elevate it to a degree-$n+r$ Bernstein polynomial.
+
+Then the coefficients for the degree $n+r$ polynomial that approximates $f$ are&mdash;
+
+- $g(n, r, k) = B_{n+r,k,f_{n}} - D * B_{n+r,k,C}$, and
+- $h(n, r, k) = B_{n+r,k,f_{n}} + D * B_{n+r,k,C}$.
+
+However, the Holtz method is not yet implementable, for the following reasons among others:
+
+- The paper doesn't give values or upper bounds for important constants, notably the three constants $s$, $\theta_{\alpha}$, and $D$. For example, the paper says only that $D$ should be chosen "large enough".
+- The method's results are only asymptotic.
+- The paper has no examples of how the scheme works for a selection of functions $f$.
+
+And I seek ways to make this solution implementable.
+
+<a id=Questions_2></a>
+### Questions
+
+1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as assumptions given in the section "Key Problems")?
+2. Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the "New coins from old, smoothly" method valid in the following cases?  (Note that the method as written doesn't apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)
+
+    - With $\alpha=1, r=0$, when $f$ is Lipschitz continuous and/or differentiable.
+    - With $\alpha=2, r=1$, when $f$ has a Lipschitz continuous first derivative.
+    - With $\alpha=2, r=2$, when $f$ is twice differentiable.
+    - With $\alpha=4, r=3$, when $f$ has a Lipschitz continuous third derivative.
+    - With $\alpha=4, r=4$, when $f$ is four times differentiable.
+    - With $\alpha=5, r=4$, when $f$ has a Lipschitz continuous fourth derivative.
 
 <a id=Simulable_and_strongly_simulable_functions></a>
 ## Simulable and strongly simulable functions
@@ -427,9 +422,7 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 <a id=Other_Questions></a>
 ## Other Questions
 
-[**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili):
-
-- What simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
+- [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): What simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
     - Should use only uniform random integers (or bits) and integer arithmetic.
     - Does not use floating-point arithmetic or make direct use of square root or transcendental functions.
     - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
@@ -445,6 +438,13 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
         - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
         - Series with nonnegative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
 
+- Given that $f:[0,1]\to [0,1]$ is continuous, and given certain assumptions on $f$, such as those given in "[**Key Problems**](#Key_Problems)", find a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - Q_n(f)(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),$$ whenever $f$ has a continuous $r$-th derivative, where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a *known exact value or upper bound*, and $Q_n(f)$ is a rational function or another non-polynomial function with a simple Bernoulli factory algorithm, preferably a function that is easily computable from $f$ using rational arithmetic only.
+
+<a id=Reverse_time_martingales></a>
+## Reverse-time martingales
+
+This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).
+
 <a id=End_Notes></a>
 ## End Notes
 
@@ -454,7 +454,7 @@ The following section of my open-source page, [**https://peteroupc.github.io/mor
 
 **Note 3**: On pushdown automata: Banderier and Drmota (2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
-**Note 4**: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include so-called "iterated Bernstein" polynomials and "one-bit" polynomials).  Indeed, unlike with rational arithmetic (where arbitrary precision is trivial), transcendental functions require special measures to support arbitrary accuracy, such as constructive/recursive reals &mdash; floating-point numbers won't do for purposes of these open questions.
+**Note 4**: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  For purposes of these open questions, Chebyshev interpolants are impractical.  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include so-called "iterated Bernstein" polynomials and "one-bit" polynomials).  Indeed, unlike with rational arithmetic (where arbitrary precision is trivial), transcendental functions require special measures to support arbitrary accuracy, such as constructive/recursive reals &mdash; floating-point numbers won't do for purposes of these open questions.
 
 **Note 5**: This condition is also known as a "consistency requirement"; it ensures that not only the upper and lower polynomials "decrease" and "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $k\in[0,2n]$ and every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
