@@ -231,7 +231,7 @@
 <p>Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in &quot;<a href="#Key_Problems"><strong>Key Problems</strong></a>&quot;, above, find a practical way to compute a sequence $(\gamma_n)$ and a function $\pi(a)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{PC}$$ where:</p>
 
 <ul>
-<li>$\pi(a)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational).</li>
+<li>$\pi(a)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational).  ($0\le\pi(a)\le 1$, $\sum \pi(a) = 1$.)</li>
 <li>$\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, some or all $\gamma_a(\lambda)$ can be rational functions in $\lambda$ and/or functions that are power series with coefficients of nonincreasing magnitude, which have simple Bernoulli factory algorithms (Łatuszyński et al. 2009/2011).</li>
 <li>Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.</li>
 </ul>
