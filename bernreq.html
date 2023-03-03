@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/03/02"><meta name="citation_online_date" content="2023/03/02"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/03/03"><meta name="citation_online_date" content="2023/03/03"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -79,10 +79,9 @@
 <li><strong>Given $\epsilon &gt; 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:</strong>
 
 <ul>
-<li><strong>A reasonably small integer $n&gt;0$ such that there is a polynomial $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$&#39;s coefficients are rational numbers in $[0,1]$; $|P - f| = O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative; and $P$ is easily computable from $f$ using rational arithmetic only.</strong></li>
+<li><strong>A reasonably small integer $n&gt;0$ such that there is a polynomial or rational function $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$&#39;s coefficients are rational numbers in $[0,1]$; $|P - f| = O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative; and $P$ is easily computable from $f$ using rational arithmetic only.</strong></li>
 <li><strong>The Bernstein coefficients of $P(\lambda)$.</strong></li>
 </ul></li>
-<li><strong>Same as problem 1, except that $P(\lambda)$ is a rational function (ratio of two polynomials) rather than a polynomial.</strong></li>
 <li><strong>Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the</strong> <a href="#Formal_Statement"><strong>Formal Statement</strong></a> <strong>given later, together with their Bernstein coefficients, with a rate of convergence $O(1/n^{k/2})$ where k is the number of continuous derivatives.</strong> (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must &quot;increase&quot; and &quot;decrease&quot; in a specific sense.)</li>
 <li><strong>Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.</strong></li>
 <li><strong>Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.</strong></li>
@@ -219,7 +218,7 @@
 
 <ul>
 <li>$f(\lambda)=\sin(\lambda\pi/2)=\cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.</li>
-<li>Functions whose $k$-th derivative ($k\ge 0$) is continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$, where $0&lt;\alpha&lt;1$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.</li>
+<li>Functions whose $k$-th derivative ($k\ge 0$) is continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as if that derivative is $\lambda^\alpha$, where $0&lt;\alpha&lt;1$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.</li>
 <li>The function $(1-(1-2\lambda)^\alpha)/2$ if $\lambda<1/2$ and $(1+(2\lambda-1)^\alpha)/2$ otherwise, where $\alpha>0$.</li>
 </ul>
 
@@ -288,12 +287,6 @@
 <p>Finding these parameters was far from rigorous, though, and the process will have to be repeated for each concave function.</p>
 
 <p>It&#39;s also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(a)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.</p>
-
-<p>Note: Some concave functions can be rewritten as&mdash;</p>
-
-<p>$$f(\lambda)=g_{n_k}(\lambda) + \sum_{a\gt k} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{2}$$</p>
-
-<p>for some integer $k\ge 0$, if they satisfy the series expansion earlier in this section except that $\frac{\gamma_a(\lambda)}{\pi(a)}$ is allowed to equal 1 or greater for some $p$ in $(0, 1)$ and some $a\le k$.  This way of writing $f$ is acceptable for my purposes.</p>
 
 <p><a id=Questions></a></p>
 
@@ -417,7 +410,18 @@
 
 <p>And the proof proceeds by showing, among other things, that the Bernoulli factory for $f$ must flip the input coin and get 0 and 1 before it simulates any fair coin flips via the von Neumann trick.</p>
 
-<p>Question: <strong>Does the result just given describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?</strong>  Examples of functions to ponder are those that are continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as $\lambda^\alpha$ where $\alpha \in (0, 1)$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.</p>
+<p>Question: <strong>Does the result just given describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?</strong></p>
+
+<p>I suspect that $f:[0, 1]\to [0,1]$ is strongly simulable if and only if&mdash;</p>
+
+<ul>
+<li>$f$ is constant on its domain, or is continuous and polynomially bounded on its domain, and</li>
+<li>$f(0)$ and $f(1)$ are each 0, 1, or undefined, and</li>
+<li>0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon&gt;0$, and</li>
+<li>1 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $(1-\epsilon, 1]$ for some $\epsilon&gt;0$.</li>
+</ul>
+
+<p>This is suspected by observing that for every integer $n&gt;0$ and every Bernoulli factory function $f(x)$, $(1-(1-x)^n) \cdot f(x)$ is Lipschitz continuous at 0 with Lipschitz constant no more than $n$. ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)</p>
 
 <p><a id=Multiple_Output_Bernoulli_Factories></a></p>
 
