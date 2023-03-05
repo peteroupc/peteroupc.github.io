@@ -811,7 +811,7 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 
 1. Special case: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_z_)** (given later in this page) with _z_ = _c_, and return the result.
 2. Generate _N_, a Poisson random variate with mean _c_.
 3. Set _i_ to 0, then while _i_ < _N_:
-    1. Flip the input coin until the flip returns 0 or the coin is flipped _k_ times, whichever comes first.  Return 0 if all of the coin flips (including the last) return 1.
+    1. Flip the input coin until the flip returns 0 or the coin is flipped _k_ times, whichever comes first.  Return 0 if _k_ is 0 or all of the coin flips (including the last) return 1.
     2. Add 1 to _i_.
 4. Return 1.
 
@@ -829,14 +829,16 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 
 <a id=exp_minus__m____lambda_____mu></a>
 #### exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)
 
-In the following algorithm, _m_ is an integer 0 or greater, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins.
+In the following algorithm, _m_ is an integer 0 or greater, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins, with 0 &le; _&lambda;_ &le; 1, and 0 &le; _&mu;_ &le; 1.
 
 1. Set _j_ to 0, then while _j_ < _m_+1:
     1. Generate _N_, a Poisson random variate with mean 1.
     2. If _j_ = _m_, flip the _&lambda;_ input coin _N_ times and set _N_ to the number of flips that return 1 this way.  (This transforms a Poisson variate with mean 1 to one with mean _&lambda;_; see (Devroye 1986, p. 487\)[^22].)
-    3. Flip the _&mu;_ input coin until a flip returns 1 or the coin is flipped _N_ times, whichever comes first.  Return 0 if any of the flips, including the last, returns 1.
+    3. Flip the _&mu;_ input coin until a flip returns 1 or the coin is flipped _N_ times, whichever comes first.  Return 0 if _N_ is greater than 0 and any of the flips, including the last, returns 1.
     4. Add 1 to _j_.
 2. Return 1.
+
+> **Note:** The following is a proof of this algorithm.  First, suppose $\mu = 1$.  Each iteration of the loop in the algorithm returns 0 if a Poisson random variate with mean $t$ (see second substep of step 1) is other than 0, where $t$ is $\lambda$ in the last iteration, or 1 otherwise. Since a Poisson random variate is 0 with probability $\exp(-t)$, the iteration will terminate the algorithm with probability $1-\exp(-t)$ and "succeed" with probability $\exp(-t)$.  If all the iterations "succeed", the algorithm will return 1, which will happen with probability $\exp(-\lambda) \cdot (\exp(-1))^m = \exp(-(m+\lambda))$.  Now suppose $\mu$ is in $[0, 1)$.  Then (due to the third substep of step 1) the Poisson variate just mentioned has mean $t\mu$ rather than $t$, so that each iteration succeeds with probability $1-exp(-t\mu)$ and the final algorithm returns 1 with probability $\exp(-\lambda\mu) (\exp(-\mu))^m = \exp(-(m+\lambda)\mu)$.
 
 <a id=exp_minus__m____lambda____k></a>
 #### exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)
