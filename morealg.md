@@ -1342,6 +1342,8 @@ The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution
 
 [^64]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^65]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -1659,7 +1661,10 @@ The following summarizes what can be established about these algebraic functions
 - If a stochastic context-free grammar (defined later) can generate a probability distribution of word lengths, and terminates with probability 1, then the probability generating function for that distribution can be simulated.
 - Every quadratic irrational number between 0 and 1 can be simulated.
 
-It is not yet known whether the following functions can be simulated: _&lambda;_<sup>1/_p_</sup> for prime numbers _p_ greater than 2, or min(_&lambda;_, 1&minus;_&lambda;_).
+It is not yet known whether the following functions can be simulated:
+
+- _&lambda;_<sup>1/_p_</sup> for prime numbers _p_ greater than 2. The answer may be no; Banderier and Drmota (2015)[^65] proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose coefficients are non-negative real numbers.
+- min(_&lambda;_, 1&minus;_&lambda;_).
 
 --------------------------------
 

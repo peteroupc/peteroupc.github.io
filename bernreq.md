@@ -50,7 +50,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 The following summarizes most of the problems raised by these open questions.
 
 1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find:**
-    - **A reasonably small integer $n>0$ such that there is a polynomial or rational function $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$.  Preferably, $P$'s coefficients are rational numbers in $[0,1]$; $|P - f| = O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative; and $P$ is easily computable from $f$ using rational arithmetic only.**
+    - **A reasonably small integer $n>0$ such that there is a polynomial or rational function $P(\lambda)$ of degree $n$ in Bernstein form such that $|P(\lambda) - f(\lambda)| \le \epsilon$ whenever $0\le\lambda\le 1$, with convergence rate $O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.**
     - **The Bernstein coefficients of $P(\lambda)$.**
 2. **Given certain assumptions on $f(\lambda)$ (such as those given later), find two sequences of polynomials in Bernstein form meeting the** [**Formal Statement**](#Formal_Statement) **given later, together with their Bernstein coefficients, with a rate of convergence $O(1/n^{k/2})$ where k is the number of continuous derivatives.** (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must "increase" and "decrease" in a specific sense.)
 3. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
@@ -73,7 +73,7 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 
 [**https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
 
-[https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions](https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions)
+[**https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions**](https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions)
 
 [**https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form**](https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form)
 
