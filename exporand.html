@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2023/02/20"><meta name="citation_online_date" content="2023/02/20"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2023/03/06"><meta name="citation_online_date" content="2023/03/06"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -396,18 +396,32 @@
 <p><strong>Sampling an e-rand</strong> (a exponential PSRN) makes use of two observations (based on the parameter <em>&lambda;</em> of the exponential distribution):</p>
 
 <ul>
-<li>While a coin flip with probability of heads of exp(-<em>&lambda;</em>) is heads, the exponential random variate is increased by 1.</li>
+<li>While a coin flip with probability of heads of exp(&minus;<em>&lambda;</em>) is heads, the exponential random variate is increased by 1.</li>
 <li>If a coin flip with probability of heads of 1/(1+exp(<em>&lambda;</em>/2<sup><em>k</em></sup>)) is heads, the exponential random variate is increased by 2<sup>-<em>k</em></sup>, where <em>k</em> &gt; 0 is an integer.</li>
 </ul>
 
 <p>Devroye and Gravel (2020)[^3] already made these observations in section 3.8, but only for <em>&lambda;</em> = 1.</p>
 
-<p>To implement these probabilities using just random bits, the sampler uses two algorithms, which both enable e-rands with rational valued <em>&lambda;</em> parameters:</p>
+<p>To implement these probabilities using just random bits, the sampler uses algorithms from &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.  These algorithms enable e-rands when <em>&lambda;</em> is written as <em>x</em>/<em>y</em> where <em>x</em>&ge;0 and <em>y</em>&gt;0, or is written as <em>m</em> + <em>&nu;</em> where <em>m</em> &ge; 0 is an integer and <em>&nu;</em> (0 &le; <em>&nu;</em> &le; 1) is the probability of heads of a coin.</p>
 
 <ol>
-<li>One to simulate a probability of the form <code>exp(-x/y)</code> (here, the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
-<li>One to simulate a probability of the form <code>1/(1+exp(x/(y*pow(2, prec))))</code> (here, the <strong>LogisticExp</strong> algorithm described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
+<li>To flip a coin with probability of heads of exp(&minus;<em>&lambda;</em>):
+
+<ul>
+<li>Use the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong>.  Or...</li>
+<li>Use the <strong>algorithm for exp(&minus;(<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong> where <em>&lambda;</em> represents the coin for <em>&nu;</em>, and <em>&mu;</em> represents a coin that always returns 1.</li>
+</ul></li>
+<li>To flip a coin with probability of heads of 1/(1+exp(<em>&lambda;</em>/2<sup><em>k</em></sup>)) = 1 &minus; expit(<em>&lambda;</em>/2<sup><em>k</em></sup>):
+
+<ul>
+<li>Use the <strong>1 / (1 + exp(<em>x</em> / (<em>y</em> * 2<sup><em>prec</em></sup>))</strong> (<strong>LogisticExp</strong>). Or...</li>
+<li>Use the <strong>algorithm for expit((<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong> where <em>&lambda;</em> represents the coin for <em>&nu;</em>, and <em>&mu;</em> represents a coin that returns either 1 with probability 1/(2<sup><em>k</em></sup>) or 0 otherwise.  However the algorithm returns 1 minus the usual result instead (leading to <strong>1 &minus; expit((<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong>).</li>
+</ul></li>
 </ol>
+
+<blockquote>
+<p><strong>Note:</strong> An exponential PSRN is an exponential random variate built up digit by digit, but an exponential random variate can also be stored in a <em>uniform PSRN</em> and generated by other algorithms.</p>
+</blockquote>
 
 <p><a id=Arithmetic_and_Comparisons_with_PSRNs></a></p>
 
