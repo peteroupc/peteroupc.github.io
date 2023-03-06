@@ -5,7 +5,7 @@
 <a id=Background></a>
 ## Background
 
-We're given a coin that shows heads with an unknown probability, $\lambda$. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on $\lambda$, call it $f(\lambda)$. This is the _Bernoulli factory problem_, and it can be solved only for certain functions $f$. (For example, flipping the coin twice and taking heads only if exactly one coin shows heads, we can simulate the probability $2\lambda(1-\lambda)$.)
+Suppose there is a coin that shows heads with an unknown probability, $\lambda$. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on $\lambda$, call it $f(\lambda)$. This is the _Bernoulli factory problem_, and it can be solved only for certain functions $f$. (For example, flipping the coin twice and taking heads only if exactly one coin shows heads, the probability $2\lambda(1-\lambda)$ can be simulated.)
 
 Specifically, the only functions that can be simulated this way **are continuous and polynomially bounded on their domain, and map $[0, 1]$ or a subset thereof to $[0, 1]$**, as well as $f=0$ and $f=1$. These functions are called _factory functions_ in this page. (A function $f(x)$ is _polynomially bounded_ if both $f$ and $1-f$ are greater than or equal to min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O'Brien 1994). This implies that $f$ admits no roots on (0, 1) and can't take on the value 0 or 1 except possibly at 0 and/or 1.)
 
@@ -239,7 +239,7 @@ It's also possible for $a$ to be generated in step 1 differently, perhaps with a
 
 [**https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
 
-Now, we focus on a **specific approximation scheme**, the one **presented by [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly"**.
+The focus is now on a **specific approximation scheme**, the one **presented by [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly"**.
 
 The scheme involves building polynomials that are shifted upward and downward to approximate $f$ from above and below so that the polynomials meet the [**Formal Statement**](#Formal_Statement) given earlier.
 
@@ -313,7 +313,7 @@ However, it's not so trivial to find the exact class of strongly simulable funct
 
 As one illustration of this, the proof of Keane and O'Brien relies on generating a geometric random variate and using that variate to control which "part" of the target function $f(\lambda)$ to simulate.   This obviously works on all of [0, 1] if the algorithm uses both the biased coin and a separate fair coin.  However, if only the biased coin is used in the algorithm, the geometric random variate is generated using fair bits via the von Neumann method, which however will never terminate if $\lambda$ is either 0 or 1.
 
-As another illustration, I managed to find the following [**result**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate):
+The following [**result**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) is another illustration:
 
 - If $f(\lambda)$ is a factory function that meets the following conditions, then $f$ is strongly simulable.
 
@@ -403,7 +403,7 @@ Let $\mathcal{D} \subseteq \mathcal{C}$ be the class of functions that a pushdow
 
 I don't yet know whether $\mathcal{D}=\mathcal{C}$ (and that was also a question of Mossel and Peres).
 
-The following section of my open-source page, [**https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions**](https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions), contains information on the question. As that section shows, I could establish the following about the class $\mathcal{D}$:
+The following section of my open-source page, [**https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions**](https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions), contains information on the question. That section sets forth the following results about the class $\mathcal{D}$:
 
 - $\sqrt{\lambda}$ is in $\mathcal{D}$, and so is every rational function in $\mathcal{C}$.
 - If $f(\lambda)$ and $g(\lambda)$ are in $\mathcal{D}$, then so are their product and composition.
@@ -433,7 +433,7 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
     - Does not use floating-point arithmetic or make direct use of square root or transcendental functions.
     - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
 
-    See also Flajolet et al., "On Buffon machines and numbers", 2010.  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:
+    See also Flajolet et al., "On Buffon machines and numbers", 2010.  There are many ways to describe the irrational probability or factory function. References are sought to papers or books that describe irrational constants or factory functions in any of the following ways:
 
     - For irrational constants:
         - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions.

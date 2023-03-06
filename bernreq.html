@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/03/04"><meta name="citation_online_date" content="2023/03/04"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/03/06"><meta name="citation_online_date" content="2023/03/06"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -12,7 +12,7 @@
 
 <h2>Background</h2>
 
-<p>We&#39;re given a coin that shows heads with an unknown probability, $\lambda$. The goal is to use that coin (and possibly also a fair coin) to build a &quot;new&quot; coin that shows heads with a probability that depends on $\lambda$, call it $f(\lambda)$. This is the <em>Bernoulli factory problem</em>, and it can be solved only for certain functions $f$. (For example, flipping the coin twice and taking heads only if exactly one coin shows heads, we can simulate the probability $2\lambda(1-\lambda)$.)</p>
+<p>Suppose there is a coin that shows heads with an unknown probability, $\lambda$. The goal is to use that coin (and possibly also a fair coin) to build a &quot;new&quot; coin that shows heads with a probability that depends on $\lambda$, call it $f(\lambda)$. This is the <em>Bernoulli factory problem</em>, and it can be solved only for certain functions $f$. (For example, flipping the coin twice and taking heads only if exactly one coin shows heads, the probability $2\lambda(1-\lambda)$ can be simulated.)</p>
 
 <p>Specifically, the only functions that can be simulated this way <strong>are continuous and polynomially bounded on their domain, and map $[0, 1]$ or a subset thereof to $[0, 1]$</strong>, as well as $f=0$ and $f=1$. These functions are called <em>factory functions</em> in this page. (A function $f(x)$ is <em>polynomially bounded</em> if both $f$ and $1-f$ are greater than or equal to min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O&#39;Brien 1994). This implies that $f$ admits no roots on (0, 1) and can&#39;t take on the value 0 or 1 except possibly at 0 and/or 1.)</p>
 
@@ -306,7 +306,7 @@
 
 <p><a href="https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi"><strong>https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi</strong></a></p>
 
-<p>Now, we focus on a <strong>specific approximation scheme</strong>, the one <strong>presented by <a href="https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf"><strong>Holtz et al. 2011</strong></a>, in the paper &quot;New coins from old, smoothly&quot;</strong>.</p>
+<p>The focus is now on a <strong>specific approximation scheme</strong>, the one <strong>presented by <a href="https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf"><strong>Holtz et al. 2011</strong></a>, in the paper &quot;New coins from old, smoothly&quot;</strong>.</p>
 
 <p>The scheme involves building polynomials that are shifted upward and downward to approximate $f$ from above and below so that the polynomials meet the <a href="#Formal_Statement"><strong>Formal Statement</strong></a> given earlier.</p>
 
@@ -396,7 +396,7 @@
 
 <p>As one illustration of this, the proof of Keane and O&#39;Brien relies on generating a geometric random variate and using that variate to control which &quot;part&quot; of the target function $f(\lambda)$ to simulate.   This obviously works on all of [0, 1] if the algorithm uses both the biased coin and a separate fair coin.  However, if only the biased coin is used in the algorithm, the geometric random variate is generated using fair bits via the von Neumann method, which however will never terminate if $\lambda$ is either 0 or 1.</p>
 
-<p>As another illustration, I managed to find the following <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>result</strong></a>:</p>
+<p>The following <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>result</strong></a> is another illustration:</p>
 
 <ul>
 <li><p>If $f(\lambda)$ is a factory function that meets the following conditions, then $f$ is strongly simulable.</p>
@@ -509,7 +509,7 @@
 
 <p>I don&#39;t yet know whether $\mathcal{D}=\mathcal{C}$ (and that was also a question of Mossel and Peres).</p>
 
-<p>The following section of my open-source page, <a href="https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions"><strong>https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions</strong></a>, contains information on the question. As that section shows, I could establish the following about the class $\mathcal{D}$:</p>
+<p>The following section of my open-source page, <a href="https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions"><strong>https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions</strong></a>, contains information on the question. That section sets forth the following results about the class $\mathcal{D}$:</p>
 
 <ul>
 <li>$\sqrt{\lambda}$ is in $\mathcal{D}$, and so is every rational function in $\mathcal{C}$.</li>
@@ -550,7 +550,7 @@
 <li>Should not use rational arithmetic or increasingly complex approximations, except as a last resort.</li>
 </ul>
 
-<p>See also Flajolet et al., &quot;On Buffon machines and numbers&quot;, 2010.  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:</p>
+<p>See also Flajolet et al., &quot;On Buffon machines and numbers&quot;, 2010.  There are many ways to describe the irrational probability or factory function. References are sought to papers or books that describe irrational constants or factory functions in any of the following ways:</p>
 
 <ul>
 <li>For irrational constants:
@@ -667,14 +667,7 @@ above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
 </p>
 </div>
 </nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
  document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
     encodeURIComponent(document.location.href)
-}
 </script>
 </body></html>

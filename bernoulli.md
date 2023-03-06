@@ -120,8 +120,8 @@ Comments on other aspects of this document are welcome.
         - [**exp(&minus;_x_/_y_)**](#exp_minus__x___y)
         - [**exp(&minus;_z_)**](#exp_minus__z)
         - [**(_a_/_b_)<sup>_z_</sup>**](#a___b___z)
-        - [**1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__x___y__2_prec__LogisticExp)
-        - [**1 / (1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__z__2_prec__LogisticExp)
+        - [**1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>))**](#1_1_exp__x___y__2_prec)
+        - [**1 / (1 + exp(_z_ / 2<sup>_prec_</sup>))**](#1_1_exp__z__2_prec)
         - [**_&zeta;_(3) * 3 / 4 and Other Zeta-Related Constants**](#zeta___3_3_4_and_Other_Zeta_Related_Constants)
         - [**erf(_x_)/erf(1)**](#erf__x__erf_1)
         - [**2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))**](#2_1_exp_2_or_1_exp_0_1_exp_1)
@@ -1510,16 +1510,16 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
     4. Flip the input coin that simulates  _LF_\[_i_\] (which is the exponent); if it returns 1, return 0 with probability 1/_j_.
     5. Add 1 to _j_ and go to substep 2.
 
-<a id=1_1_exp__x___y__2_prec__LogisticExp></a>
-#### 1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)
+<a id=1_1_exp__x___y__2_prec></a>
+#### 1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>))
 
 This is the probability that the bit at _prec_ (the _prec_<sup>th</sup> bit after the point) is set for an exponential random variate with rate _x_/_y_.  This algorithm is a special case of the **logistic Bernoulli factory**.
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Call the **algorithm for exp(&minus; _x_/(_y_ * 2<sup>_prec_</sup>))**.  If the call returns 1, return 1.  Otherwise, go to step 1.
 
-<a id=1_1_exp__z__2_prec__LogisticExp></a>
-#### 1 / (1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)
+<a id=1_1_exp__z__2_prec></a>
+#### 1 / (1 + exp(_z_ / 2<sup>_prec_</sup>))
 
 This is similar to the previous algorithm, except that _z_ can be any real number described in the **algorithm for exp(&minus;_z_)**.
 
