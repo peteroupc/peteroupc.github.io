@@ -106,10 +106,39 @@
 <li><a href="#ExpRandFill"><strong>ExpRandFill</strong></a></li>
 <li><a href="#ExpRandLess"><strong>ExpRandLess</strong></a></li>
 </ul></li>
-<li><a href="#Accurate_Simulation_of_Continuous_Distributions_Supported_on_0_to_1"><strong>Accurate Simulation of Continuous Distributions Supported on 0 to 1</strong></a>
+<li><a href="#Accurate_Simulation_of_Continuous_Distributions"><strong>Accurate Simulation of Continuous Distributions</strong></a>
 
 <ul>
-<li><a href="#An_Example_The_Continuous_Bernoulli_Distribution"><strong>An Example: The Continuous Bernoulli Distribution</strong></a></li>
+<li><a href="#General_Arbitrary_Precision_Samplers"><strong>General Arbitrary-Precision Samplers</strong></a>
+
+<ul>
+<li><a href="#Cumulative_Distribution_Functions"><strong>Cumulative Distribution Functions</strong></a></li>
+<li><a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a></li>
+<li><a href="#Building_an_Arbitrary_Precision_Sampler"><strong>Building an Arbitrary-Precision Sampler</strong></a></li>
+<li><a href="#Mixtures"><strong>Mixtures</strong></a></li>
+<li><a href="#Weighted_Choice_Involving_PSRNs"><strong>Weighted Choice Involving PSRNs</strong></a></li>
+<li><a href="#Continuous_Distributions_Supported_on_0_to_1"><strong>Continuous Distributions Supported on 0 to 1</strong></a></li>
+</ul></li>
+<li><a href="#Specific_Arbitrary_Precision_Samplers"><strong>Specific Arbitrary-Precision Samplers</strong></a>
+
+<ul>
+<li><a href="#Rayleigh_Distribution"><strong>Rayleigh Distribution</strong></a></li>
+<li><a href="#Hyperbolic_Secant_Distribution"><strong>Hyperbolic Secant Distribution</strong></a></li>
+<li><a href="#Reciprocal_of_Power_of_Uniform"><strong>Reciprocal of Power of Uniform</strong></a></li>
+<li><a href="#Distribution_of__U__1_minus__U"><strong>Distribution of <em>U</em>/(1&minus;<em>U</em>)</strong></a></li>
+<li><a href="#Arc_Cosine_Distribution"><strong>Arc-Cosine Distribution</strong></a></li>
+<li><a href="#Logistic_Distribution"><strong>Logistic Distribution</strong></a></li>
+<li><a href="#Cauchy_Distribution"><strong>Cauchy Distribution</strong></a></li>
+<li><a href="#Exponential_Distribution_with_Unknown_Small_Rate"><strong>Exponential Distribution with Unknown Small Rate</strong></a></li>
+<li><a href="#Exponential_Distribution_with_Rate_ln__x"><strong>Exponential Distribution with Rate ln(<em>x</em>)</strong></a></li>
+<li><a href="#Symmetric_Geometric_Distribution"><strong>Symmetric Geometric Distribution</strong></a></li>
+<li><a href="#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley Distribution and Lindley-Like Mixtures</strong></a></li>
+<li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
+<li><a href="#One_Dimensional_Epanechnikov_Kernel"><strong>One-Dimensional Epanechnikov Kernel</strong></a></li>
+<li><a href="#Uniform_Distribution_Inside_Rectellipse"><strong>Uniform Distribution Inside Rectellipse</strong></a></li>
+<li><a href="#Tulap_distribution"><strong>Tulap distribution</strong></a></li>
+<li><a href="#Continuous_Bernoulli_Distribution"><strong>Continuous Bernoulli Distribution</strong></a></li>
+</ul></li>
 </ul></li>
 <li><a href="#Complexity"><strong>Complexity</strong></a>
 
@@ -930,7 +959,7 @@
 
 <h2>Sampler Code</h2>
 
-<p>The following Python code implements the beta sampler just described.  It relies on two Python modules I wrote:</p>
+<p>The following Python code implements the beta sampler described in this document.  It relies on two Python modules I wrote:</p>
 
 <ul>
 <li>&quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>&quot;, which collects a number of Bernoulli factories, some of which are relied on by the code below.</li>
@@ -1773,22 +1802,242 @@ def exprandscore(ln,ld,ln2,ld2):
               else 0 for i in range(1000))
 </pre>
 
-<p><a id=Accurate_Simulation_of_Continuous_Distributions_Supported_on_0_to_1></a></p>
+<p><a id=Accurate_Simulation_of_Continuous_Distributions></a></p>
 
-<h2>Accurate Simulation of Continuous Distributions Supported on 0 to 1</h2>
+<h2>Accurate Simulation of Continuous Distributions</h2>
 
-<p>The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions with PDFs on the domain [0, 1], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) <em>b</em> (such as 2 for binary).  (See also (Devroye 1986, ch. 2, sec. 3.8, exercise 14)[^25].)</p>
+<p>The following shows arbitrary-precision samplers for various continuous distributions using PSRNs.</p>
+
+<p><a id=General_Arbitrary_Precision_Samplers></a></p>
+
+<h3>General Arbitrary-Precision Samplers</h3>
+
+<p>&nbsp;</p>
+
+<p><a id=Cumulative_Distribution_Functions></a></p>
+
+<h4>Cumulative Distribution Functions</h4>
+
+<p>Suppose a real number <em>z</em> is given (which might be a uniform PSRN or a rational number).  If a probability distribution&mdash;</p>
+
+<ul>
+<li>has a probability density function (PDF) (as with the normal or exponential distribution), and</li>
+<li>has an arbitrary-precision sampler that returns a uniform PSRN <em>X</em>,</li>
+</ul>
+
+<p>then it&#39;s possible to generate 1 with the same probability as the sampler returns an <em>X</em> that is less than or equal to <em>z</em>, as follows:</p>
 
 <ol>
-<li>Create an uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part.  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that PSRN.</li>
-<li><p>As the PSRN builds up a uniform random variate, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability density function (PDF) modeled by this Bernoulli factory, where <em>U</em> is the uniform random variate built up by the PSRN. <em>f</em> has a domain equal to the open interval (0, 1) or a subset of that interval, and returns a value of [0, 1] everywhere in its domain. <em>f</em> is the PDF for the underlying continuous distribution, or the PDF times a (possibly unknown) constant factor.  As shown by Keane and O&#39;Brien [^6], however, this step works if and only if&mdash;</p>
+<li>Run the arbitrary-precision sampler to generate <em>X</em>, a uniform PSRN.</li>
+<li>Run <strong>URandLess</strong> (if <em>z</em> is a uniform PSRN) or <strong>URandLessThanReal</strong> (if <em>z</em> is a real number) with parameters <em>X</em> and <em>z</em>, in that order, and return the result.</li>
+</ol>
+
+<p>Specifically, the probability of returning 1 is the <em>cumulative distribution function</em> (CDF) for the distribution of <em>X</em>.</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Although step 2 of the algorithm checks whether <em>X</em> is merely less than <em>z</em>, this is still correct; because the distribution of <em>X</em> has a PDF, <em>X</em> is less than <em>z</em> with the same probability as <em>X</em> is less than or equal to <em>z</em>.</li>
+<li>All probability distributions have a CDF, not just those with a PDF, but also discrete ones such as Poisson or binomial.</li>
+</ol>
+</blockquote>
+
+<p><a id=Uniform_Distribution_Inside_N_Dimensional_Shapes></a></p>
+
+<h4>Uniform Distribution Inside N-Dimensional Shapes</h4>
+
+<p>The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, <em>d1</em>]&times;[0, <em>d2</em>]&times;...&times;[0,<em>dN</em>] in <em>N</em>-dimensional space, where <em>d1</em>, ..., <em>dN</em> are integers greater than 0. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape must have a zero-volume (Lebesgue measure zero) boundary and a nonzero finite volume, and must assign zero probability to any zero-volume subset of it (such as a set of individual points).</p>
+
+<p>The sampler&#39;s description has the following skeleton.</p>
+
+<ol>
+<li>Generate <em>N</em> empty uniform partially-sampled random numbers (PSRNs), with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em>, <em>p2</em>, ..., <em>pN</em>.</li>
+<li>Set <em>S</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>N</em> coordinates to 0, call the coordinates <em>c1</em>, <em>c2</em>, ..., <em>cN</em>.  Then set <em>d</em> to 1.  Then, for each coordinate (<em>c1</em>, ..., <em>cN</em>), set that coordinate to an integer in [0, <em>dX</em>), chosen uniformly at random, where <em>dX</em> is the corresponding dimension&#39;s size.</li>
+<li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), multiply that coordinate by <em>base</em> and add a digit chosen uniformly at random to that coordinate.</li>
+<li>This step uses a function known as <strong>InShape</strong>, which takes the coordinates of a box and returns one of three values: <em>YES</em> if the box is entirely inside the shape; <em>NO</em> if the box is entirely outside the shape; and <em>MAYBE</em> if the box is partly inside and partly outside the shape, or if the function is unsure.  <strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.  See the Implementation Notes for Box Shape Intersection, later in this section, for further implementation notes.  In this step, run <strong>InShape</strong> using the current box, whose coordinates in this case are ((<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>, ..., <em>cN</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>, ..., (<em>cN</em>+1)/<em>S</em>)).</li>
+<li>If the result of <strong>InShape</strong> is <em>YES</em>, then the current box was accepted.  If the box is accepted this way, then at this point, <em>c1</em>, <em>c2</em>, etc., will each store the <em>d</em> digits of a coordinate in the shape, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, then the first coordinate is 0.342..., or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
+
+<ol>
+<li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), transfer that coordinate&#39;s least significant digits to the corresponding PSRN&#39;s fractional part.  The variable <em>d</em> tells how many digits to transfer to each PSRN this way. Then, for each coordinate (<em>c1</em>, ..., <em>cN</em>), set the corresponding PSRN&#39;s integer part to floor(<em>cX</em>/<em>base</em><sup><em>d</em></sup>), where <em>cX</em> is that coordinate.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 7342, set <em>p1</em>&#39;s fractional part to [3, 4, 2] and <em>p1</em>&#39;s integer part to 7.)</li>
+<li>For each PSRN (<em>p1</em>, ..., <em>pN</em>), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>).</li>
+<li>For each PSRN, optionally do the following: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set that PSRN&#39;s sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)</li>
+<li>Return the PSRNs <em>p1</em>, ..., <em>pN</em>, in that order.</li>
+</ol></li>
+<li>If the result of <strong>InShape</strong> is <em>NO</em>, then the current box lies outside the shape and is rejected.  In this case, go to step 2.</li>
+<li>If the result of <strong>InShape</strong> is <em>MAYBE</em>, it is not known whether the current box lies fully inside or fully outside the shape, so multiply <em>S</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
+</ol>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>See Li and El Gamal [^38] and Oberhoff (2018)[^39] for related work on encoding random points uniformly distributed in a shape.</li>
+<li>Rejection sampling on a shape is subject to the &quot;curse of dimensionality&quot;, since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more volume the shape takes up in the bounding box, the higher the acceptance rate.</li>
+<li>Devroye (1986, chapter 8, section 3)[^40] describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/<em>base</em><sup><em>k</em></sup> in all dimensions; the result of <strong>InShape</strong> is calculated for each such box and that box labeled with the result; all boxes labeled <em>NO</em> are discarded; and the algorithm is modified by adding the following after step 2: &quot;2a. Choose a precalculated box uniformly at random, then set <em>c1</em>, ..., <em>cN</em> to that box&#39;s coordinates, then set <em>d</em> to <em>k</em> and set <em>S</em> to <em>base</em><sup><em>k</em></sup>. If a box labeled <em>YES</em> was chosen, follow the substeps in step 5. If a box labeled <em>MAYBE</em> was chosen, multiply <em>S</em> by <em>base</em> and add 1 to <em>d</em>.&quot; (For example, if <em>base</em> is 10, <em>k</em> is 1, <em>N</em> is 2, and <em>d1</em> = <em>d2</em> = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, <strong>InShape</strong> is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on [the boxes&#39; coordinates are stored as just given, but <strong>InShape</strong> instead uses those coordinates divided by <em>base</em><sup><em>k</em></sup>, or 10<sup>1</sup> in this case], each such box is labeled with the result, and boxes labeled <em>NO</em> are discarded.  Finally the algorithm above is modified as just given.)</li>
+<li>Besides a grid, another useful data structure is a <em>mapped regular paving</em> (Harlow et al. 2012)[^41], which can be described as a binary tree with nodes each consisting of zero or two child nodes and a marking value.  Start with a box that entirely covers the desired shape.  Calculate <strong>InShape</strong> for the box.  If it returns <em>YES</em> or <em>NO</em> then mark the box with <em>YES</em> or <em>NO</em>, respectively; otherwise it returns <em>MAYBE</em>, so divide the box along its first widest coordinate into two sub-boxes, set the parent box&#39;s children to those sub-boxes, then repeat this process for each sub-box (or if the nesting level is too deep, instead mark each sub-box with <em>MAYBE</em>).  Then, to generate a random point (with a base-2 fractional part), start from the root, then: (1) If the box is marked <em>YES</em>, return a uniform random point between the given coordinates using the <strong>RandUniformInRange</strong> algorithm; or (2) if the box is marked <em>NO</em>, start over from the root; or (3) if the box is marked <em>MAYBE</em>, get the two child boxes bisected from the box, choose one of them with equal probability (for example, choose the left child if an unbiased random bit is 0, or the right child otherwise), mark the chosen child with the result of <strong>InShape</strong> for that child, and repeat this process with that child; or (4) the box has two child boxes, so choose one of them with equal probability and repeat this process with that child.</li>
+<li>The algorithm can be adapted to return 1 with probability equal to its acceptance rate (which equals the shape&#39;s volume divided by the hyperrectangle&#39;s volume), and return 0 with the opposite probability.  In this case, replace steps 5 and 6 with the following: &quot;5. If the result of <strong>InShape</strong> is <em>YES</em>, return 1.; 6. If the result of <strong>InShape</strong> is <em>NO</em>, return 0.&quot; (I thank BruceET of the Cross Validated community for leading me to this insight.)</li>
+</ol>
+
+<p><strong>Implementation Notes for Box/Shape Intersection</strong>: The algorithm in this section uses a function called <strong>InShape</strong> to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust implementation of <strong>InShape</strong> for a particular shape, especially because the boxes being tested can be arbitrarily small.</p>
+
+<ol>
+<li><strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.</li>
+<li><p>If the shape is convex, and the point (0, 0, ..., 0) is on or inside that shape, <strong>InShape</strong> can return&mdash;</p>
+
+<ul>
+<li><em>YES</em> if all the box&#39;s corners are in the shape;</li>
+<li><em>NO</em> if none of the box&#39;s corners are in the shape and if the shape&#39;s boundary does not intersect with the box&#39;s boundary; and</li>
+<li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
+</ul>
+
+<p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.</p></li>
+<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &le; 0, where <em>f</em> is a continuous function of one or more variables, <strong>InShape</strong>&#39;s calculations should involve <em>rational intervals</em>, or objects that describe a number that&#39;s bounded by two rational numbers with numerators and denominators of arbitrary size.  (See also (Duff 1992)[^42]; Daumas et al. (2007)[^43] give one implementation of rational intervals.) Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals[^44] with an accuracy that increases as <em>S</em> increases.  Then, <strong>InShape</strong> can return&mdash;</p>
+
+<ul>
+<li><em>YES</em> if the interval result of <em>f</em> has an upper bound less than or equal to 0;</li>
+<li><em>NO</em> if the interval result of <em>f</em> has a lower bound greater than 0; and</li>
+<li><em>MAYBE</em> in any other case.</li>
+</ul>
+
+<p>For example, if <em>f</em> is (<em>t1</em><sup>2</sup>+<em>t2</em><sup>2</sup>&minus;1), which describes a quarter disk, <strong>InShape</strong> should build two intervals, namely <em>t1</em> = [<em>c1</em>/<em>S</em>, (<em>c1</em>+1)/<em>S</em>] and <em>t2</em> = [<em>c2</em>/<em>S</em>, (<em>c2</em>+1)/<em>S</em>], and evaluate <em>f</em>(<em>t1</em>, <em>t2</em>) using interval arithmetic.</p>
+
+<p>One thing to point out, though: If <em>f</em> calls the exp(<em>x</em>) function where <em>x</em> can potentially have a high absolute value, say 10000 or higher, the exp function can run a very long time in order to calculate proper bounds for the result, since the number of digits in exp(<em>x</em>) grows linearly with <em>x</em>.  In this case, it may help to transform the inequality to its logarithmic version.  For example, by applying ln(.) to each side of the inequality <em>y</em><sup>2</sup> &le; exp(&minus;(<em>x</em>/<em>y</em>)<sup>2</sup>/2), the inequality becomes 2*ln(<em>y</em>) &le; &minus;(<em>x</em>/<em>y</em>)<sup>2</sup>/2 and thus becomes 2*ln(<em>y</em>) + (<em>x</em>/<em>y</em>)<sup>2</sup>/2 &le; 0 and thus becomes 4*ln(<em>y</em>) + (<em>x</em>/<em>y</em>)<sup>2</sup> &le; 0.</p></li>
+<li><p>If the shape is such that every axis-aligned line segment that begins in one face of the hypercube and ends in another face crosses the shape at most once, ignoring the segment&#39;s endpoints (an example is an axis-aligned quarter of a circular disk where the disk&#39;s center is (0, 0)), then <strong>InShape</strong> can return&mdash;</p>
+
+<ul>
+<li><em>YES</em> if all the box&#39;s corners are in the shape;</li>
+<li><em>NO</em> if none of the box&#39;s corners are in the shape; and</li>
+<li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
+</ul>
+
+<p>If <strong>InShape</strong> uses rational interval arithmetic, it can build an interval per dimension <em>per corner</em>, evaluate the shape for each corner individually and with an accuracy that increases as <em>S</em> increases, and treat a corner as inside or outside the shape only if the result of the evaluation clearly indicates that.  Using the example of a quarter disk, <strong>InShape</strong> can build eight intervals, namely an <em>x</em>- and <em>y</em>-interval for each of the four corners; evaluate (<em>x</em><sup>2</sup>+<em>y</em><sup>2</sup>&minus;1) for each corner; and return <em>YES</em> only if all four results have upper bounds less than or equal to 0, <em>NO</em> only if all four results have lower bounds greater than 0, and <em>MAYBE</em> in any other case.</p></li>
+<li>If <strong>InShape</strong> expresses a shape in the form of a <a href="https://en.wikipedia.org/wiki/Signed_distance_function"><strong><em>signed distance function</em></strong></a>, namely a function that describes the closest distance from any point in space to the shape&#39;s boundary, it can return&mdash;
+
+<ul>
+<li><em>YES</em> if the signed distance (or an upper bound of such distance) at each of the box&#39;s corners, after dividing their coordinates by <em>S</em>, is less than or equal to &minus;<em>&sigma;</em> (where <em>&sigma;</em> is an upper bound for sqrt(<em>N</em>)/(<em>S</em>*2), such as 1/<em>S</em>);</li>
+<li><em>NO</em> if the signed distance (or a lower bound of such distance) at each of the box&#39;s corners is greater than <em>&sigma;</em>; and</li>
+<li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
+</ul></li>
+<li><strong>InShape</strong> implementations can also involve a shape&#39;s <em>implicit curve</em> or <em>algebraic curve</em> equation (for closed curves), its <em>implicit surface</em> equation (for closed surfaces), or its <em>signed distance field</em> (a quantized version of a signed distance function).</li>
+<li>An <strong>InShape</strong> function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own <strong>InShape</strong> function.  The final result depends on the set operation (such as union or intersection) as well as the result returned by each component for a given box.  The following are examples of set operations:
+
+<ul>
+<li>For unions, the final result is <em>YES</em> if any component returns <em>YES</em>; <em>NO</em> if all components return <em>NO</em>; and <em>MAYBE</em> otherwise.</li>
+<li>For intersections, the final result is <em>YES</em> if all components return <em>YES</em>; <em>NO</em> if any component returns <em>NO</em>; and <em>MAYBE</em> otherwise.</li>
+<li>For differences between two shapes, the final result is <em>YES</em> if the first shape returns <em>YES</em> and the second returns <em>NO</em>; <em>NO</em> if the first shape returns <em>NO</em> or if both shapes return <em>YES</em>; and <em>MAYBE</em> otherwise.</li>
+<li>For the exclusive OR of two shapes, the final result is <em>YES</em> if one shape returns <em>YES</em> and the other returns <em>NO</em>; <em>NO</em> if both shapes return <em>NO</em> or both return <em>YES</em>; and <em>MAYBE</em> otherwise.</li>
+</ul></li>
+</ol>
+
+<p><strong>Examples:</strong></p>
+
+<ul>
+<li>The following example generates a point inside a quarter diamond (centered at (0, ..., 0), &quot;radius&quot; <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1) + ... + (<em>cN</em>+1)) &lt; <em>S</em>*<em>k</em>; <em>NO</em> if (<em>c1</em> + ... + <em>cN</em>) &gt; <em>S</em>*<em>k</em>; and <em>MAYBE</em> otherwise.  For <em>N</em>=2, the acceptance rate (see note 5) is 1/2.  For a full diamond, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.</li>
+<li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1)<sup>2</sup> + ... + (<em>cN</em>+1)<sup>2</sup>) &lt; (<em>S</em>*<em>k</em>)<sup>2</sup>; <em>NO</em> if (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; (<em>S</em>*<em>k</em>)<sup>2</sup>; and <em>MAYBE</em> otherwise.  For <em>N</em>=2, the acceptance rate (see note 5) is <em>&pi;</em>/4. For a full hypersphere with radius 1, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.  In the case of a 2-dimensional disk, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (for example, Devroye (1986, p. 230 ff.)[^45]).</li>
+<li>The following example generates a point inside a quarter <em>astroid</em> (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>sk</em>&minus;<em>c1</em>&minus;1)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>&minus;1)<sup>2</sup>) &gt; <em>sk</em><sup>2</sup>; <em>NO</em> if ((<em>sk</em>&minus;<em>c1</em>)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>)<sup>2</sup>) &lt; <em>sk</em><sup>2</sup>; and <em>MAYBE</em> otherwise, where <em>sk</em> = <em>S</em>*<em>k</em>.  For <em>N</em>=2, the acceptance rate (see note 5) is 1 &minus; <em>&pi;</em>/4. For a full astroid, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.</li>
+</ul>
+</blockquote>
+
+<p><a id=Building_an_Arbitrary_Precision_Sampler></a></p>
+
+<h4>Building an Arbitrary-Precision Sampler</h4>
+
+<p>Suppose a probability distribution&mdash;</p>
+
+<ul>
+<li>takes on only values 0 or greater, and</li>
+<li>is described by a cumulative distribution function (CDF, or <em>CDF</em>(<em>x</em>), or the probability of getting <em>x</em> or less under the distribution) and by a probability distribution (PDF) or a function proportional to the PDF.</li>
+</ul>
+
+<p>Also, suppose that&mdash;</p>
+
+<ul>
+<li>the CDF and PDF or proportional function have known symbolic forms, and</li>
+<li>the PDF that has an infinite tail to the right, is less than or equal to a finite number (so that <em>PDF(0)</em> is other than infinity), and is strictly decreasing.</li>
+</ul>
+
+<p>Then it may be possible to describe an arbitrary-precision sampler for that distribution.  Such a description has the following skeleton.</p>
+
+<ol>
+<li>With probability <em>A</em>, set <em>intval</em> to 0, then set <em>size</em> to 1, then go to step 4.
+
+<ul>
+<li><em>A</em> is calculated as (<em>CDF</em>(1) &minus; <em>CDF</em>(0)) / (1&minus;<em>CDF</em>(0)), where <em>CDF</em> is the distribution&#39;s CDF.  This should be found analytically using a computer algebra system such as SymPy.</li>
+<li>The symbolic form of <em>A</em> will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.</li>
+</ul></li>
+<li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
+<li>With probability <em>B</em>(<em>size</em>, <em>intval</em>), go to step 4.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.
+
+<ul>
+<li>This step chooses an interval beyond 1, and grows this interval by geometric steps, so that an appropriate interval is chosen with the correct probability.</li>
+<li>The probability <em>B</em>(<em>size</em>, <em>intval</em>) is the probability that the interval is chosen given that the previous intervals weren&#39;t chosen, and is calculated as (<em>CDF</em>(<em>size</em> + <em>intval</em>) &minus; <em>CDF</em>(<em>intval</em>)) / (1&minus;<em>CDF</em>(<em>intval</em>)).  This should be found analytically using a computer algebra system such as SymPy.</li>
+<li>The symbolic form of <em>B</em> will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.</li>
+</ul></li>
+<li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
+<li>Create <em>ret</em>, a uniform PSRN with a positive sign and an integer part of 0.</li>
+<li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Run a Bernoulli factory algorithm that returns 1 with probability equal to  <em>C</em>(<em>i</em>, <em>&lambda;</em>), using the input coin (here, <em>&lambda;</em>, the heads probability of the input coin, is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 4.
+
+<ul>
+<li>The probability <em>C</em>(<em>i</em>, <em>&lambda;</em>) is calculated as <em>PDF</em>(<em>i</em> + <em>&lambda;</em>) / <em>M</em>, where <em>PDF</em> is the distribution&#39;s PDF or a function proportional to the PDF, and should be found analytically using a computer algebra system such as SymPy.</li>
+<li>In this formula, <em>M</em> is any convenient number that satisfies <em>PDF</em>(<em>intval</em>) &le; <em>M</em> &le; max(1, <em>PDF</em>(<em>intval</em>)), and should be as low as feasible. <em>M</em> serves to ensure that <em>C</em> is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of <em>M</em> can vary for each interval (each value of <em>intval</em>, which can only be 0, 1, or a power of 2).  Any such choice for <em>M</em> preserves the algorithm&#39;s correctness because the PDF has to be strictly decreasing and a new interval isn&#39;t chosen when <em>&lambda;</em> is rejected.</li>
+<li>The symbolic form of <em>C</em> will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.</li>
+</ul></li>
+<li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
+</ol>
+
+<p>Examples of algorithms that use this skeleton are the algorithm for the <a href="https://peteroupc.github.io/uniformsum.html"><strong>ratio of two uniform random variates</strong></a>, as well as the algorithms for the Rayleigh distribution and for the reciprocal of power of uniform, both given later.</p>
+
+<p>Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory algorithm for the probabilities <em>A</em>, <em>B</em>, and <em>C</em>, especially when these probabilities have a non-trivial symbolic form.</p>
+
+<blockquote>
+<p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in Devroye (1986, ch. 7, sec. 4.6)[^46]; an exception is that instead of generating a uniform random variate and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
+</blockquote>
+
+<p><a id=Mixtures></a></p>
+
+<h4>Mixtures</h4>
+
+<p>A <em>mixture</em> involves sampling one of several distributions, where each distribution has a separate probability of being sampled.  In general, an arbitrary-precision sampler is possible if all of the following conditions are met:</p>
+
+<ul>
+<li>There is a finite number of distributions to choose from.</li>
+<li>The probability of sampling each distribution is a rational number, or it can be expressed as a function for which a <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory algorithm</strong></a> exists.</li>
+<li>For each distribution, an arbitrary-precision sampler exists.</li>
+</ul>
+
+<blockquote>
+<p><strong>Example:</strong> One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a> for details).</p>
+</blockquote>
+
+<p><a id=Weighted_Choice_Involving_PSRNs></a></p>
+
+<h4>Weighted Choice Involving PSRNs</h4>
+
+<p>Given <em>n</em> uniform PSRNs, called <em>weights</em>, with labels starting from 0 and ending at <em>n</em>&minus;1, the following algorithm chooses an integer in [0, <em>n</em>) with probability proportional to its weight.  Each weight&#39;s sign must be positive.</p>
+
+<ol>
+<li>Create an empty list, then for each weight starting with weight 0, add the weight&#39;s integer part plus 1 to that list.  For example, if the weights are [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the <em>rounded weights list</em>.</li>
+<li>Choose an integer <em>i</em> with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of <strong>WeightedChoice</strong>(<em>list</em>), where <em>list</em> is the rounded weights list and <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Sampling Methods</strong></a>&quot;.</li>
+<li>Run <strong>URandLessThanReal</strong>(<em>w</em>, <em>rw</em>), where <em>w</em> is the original weight for integer <em>i</em>, and <em>rw</em> is the rounded weight for integer <em>i</em> in the rounded weights list.  That algorithm returns 1 if <em>w</em> turns out to be less than <em>rw</em>.  If the result is 1, return <em>i</em>.  Otherwise, go to step 2.</li>
+</ol>
+
+<p><a id=Continuous_Distributions_Supported_on_0_to_1></a></p>
+
+<h4>Continuous Distributions Supported on 0 to 1</h4>
+
+<p>The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions thanks to Bernoulli factories, as long as the distributions have probability density functions (PDFs) and take on only values 0 or greater and 1 or less.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) <em>b</em> (such as 2 for binary).  (See also Devroye (1986, ch. 2, sec. 3.8, exercise 14)[^47])</p>
+
+<ol>
+<li>Create a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part.  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that PSRN.</li>
+<li><p>As the PSRN builds up a uniform random variate, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability density function (PDF) modeled by this Bernoulli factory, where <em>U</em> is the uniform random variate built up by the PSRN. <em>f</em> has a domain equal to the open interval (0, 1) or a subset of that interval, and returns a value of [0, 1] everywhere in its domain. <em>f</em> is the PDF for the underlying continuous distribution, or the PDF times a (possibly unknown) constant factor.  As shown by Keane and O&#39;Brien (1994)[^48], however, this step works if and only if&mdash;</p>
 
 <ul>
 <li><em>f</em>(<em>&lambda;</em>) is constant on its domain, or</li>
 <li><em>f</em>(<em>&lambda;</em>) is continuous and polynomially bounded on its domain (polynomially bounded means that both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em>),</li>
 </ul>
 
-<p>and they show that 2 * <em>&lambda;</em> with domain [0, 1/2), is one function that does not admit a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>&quot; for ways to simulate constant probabilities.</p></li>
+<p>and they show that 2 * <em>&lambda;</em>, where 0 &le; <em>&lambda;</em> &lt; 1/2, is one function that does not admit a Bernoulli factory.  <em>f</em>(<em>&lambda;</em>) can be a constant, including an irrational number; see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>&quot; for ways to simulate constant probabilities.</p></li>
 <li>If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part <em>n</em> digits (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the PSRN.</li>
 </ol>
 
@@ -1806,13 +2055,439 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <p>Note that here, the function <em>f&prime;</em> must meet the requirements of Keane and O&#39;Brien.  (For example, take the function <code>sqrt((x - 4) / 2)</code>, which isn&#39;t a Bernoulli factory function.  If we now seek to sample from the interval [4, 4+2<sup>1</sup>] = [4, 6], the <em>f</em> used in step 2 is now <code>sqrt(x)</code>, which <em>is</em> a Bernoulli factory function so that we can apply this algorithm.)</p>
 
-<p><a id=An_Example_The_Continuous_Bernoulli_Distribution></a></p>
+<p><a id=Specific_Arbitrary_Precision_Samplers></a></p>
 
-<h3>An Example: The Continuous Bernoulli Distribution</h3>
+<h3>Specific Arbitrary-Precision Samplers</h3>
 
-<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)[^28] was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
+<p>&nbsp;</p>
 
-<p>The continous Bernoulli distribution takes one parameter <code>lamda</code> (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;</p>
+<p><a id=Rayleigh_Distribution></a></p>
+
+<h4>Rayleigh Distribution</h4>
+
+<p>The following is an arbitrary-precision sampler for the Rayleigh distribution with parameter <em>s</em>, which is a rational number greater than 0.</p>
+
+<ol>
+<li>Set <em>k</em> to 0, and set <em>y</em> to 2 * <em>s</em> * <em>s</em>.</li>
+<li>With probability exp(&minus;(<em>k</em> * 2 + 1)/<em>y</em>), go to step 3.  Otherwise, add 1 to <em>k</em> and repeat this step.  (The probability check should be done with the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with <em>x</em>/<em>y</em> = (<em>k</em> * 2 + 1)/<em>y</em>.)</li>
+<li>(Now, the piece located at [<em>k</em>, <em>k</em> + 1) is sampled.)  Create a positive-sign zero-integer-part uniform PSRN, and create an input coin that returns the result of <strong>SampleGeometricBag</strong> on that uniform PSRN.</li>
+<li>Set <em>ky</em> to <em>k</em> * <em>k</em> / <em>y</em>.</li>
+<li>(Now simulating exp(&minus;<em>U</em><sup>2</sup>/<em>y</em>), exp(&minus;<em>k</em><sup>2</sup>/<em>y</em>) , exp(&minus;<em>U</em>*<em>k</em>*2/<em>y</em>), as well as a scaled-down version of <em>U</em> + <em>k</em>, where <em>U</em> is the number built up by the uniform PSRN.) Call the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> with <em>x</em>/<em>y</em> = <em>ky</em>, then call the <strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>)) algorithm</strong> using the input coin from step 2, <em>x</em> = 1/<em>y</em>, and <em>k</em> = 2, then call the first or third algorithm for <strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong> using the same input coin, <em>c</em> = floor(<em>k</em> * 2 / <em>y</em>), and <em>k</em> = 1, then call the <strong>sub-algorithm</strong> given later with the uniform PSRN and <em>k</em> = <em>k</em>.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN&#39;s fractional part and go to step 4.</li>
+<li>If the uniform PSRN, call it <em>ret</em>, was accepted by step 5, set <em>ret</em>&#39;s integer part to <em>k</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
+</ol>
+
+<p>The sub-algorithm below simulates a probability equal to (<em>U</em>+<em>k</em>)/<em>base</em><sup><em>z</em></sup>, where <em>U</em> is the number built by the uniform PSRN, <em>base</em> is the base (radix) of digits stored by that PSRN, <em>k</em> is an integer 0 or greater, and <em>z</em> is the number of significant digits in <em>k</em> (for this purpose, <em>z</em> is 0 if <em>k</em> is 0).</p>
+
+<p>For base 2:</p>
+
+<ol>
+<li> Set <em>N</em> to 0.</li>
+<li> Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step.</li>
+<li> If <em>N</em> is less than <em>z</em>, return rem(<em>k</em> / 2<sup><em>z</em> &minus; 1 &minus; <em>N</em></sup>, 2).  (Alternatively, shift <em>k</em> to the right, by <em>z</em> &minus; 1 &minus; <em>N</em> bits, then return <em>k</em> <em>AND</em> 1, where &quot;<em>AND</em>&quot; is a bitwise AND-operation.)</li>
+<li> Subtract <em>z</em> from <em>N</em>.  Then, if the item at position <em>N</em> in the uniform PSRN&#39;s fractional part (positions start at 0) is not set to a digit (for example, 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (for example, either 0 or 1 for base 2), increasing the capacity of the uniform PSRN&#39;s fractional part as necessary.</li>
+<li> Return the item at position <em>N</em>.</li>
+</ol>
+
+<p>For bases other than 2, such as 10 for decimal, this can be implemented as follows (based on <strong>URandLess</strong>):</p>
+
+<ol>
+<li>Set <em>i</em> to 0.</li>
+<li>If <em>i</em> is less than <em>z</em>:
+
+<ol>
+<li>Set <em>da</em> to rem(<em>k</em> / 2<sup><em>z</em> &minus; 1 &minus; <em>i</em></sup>, <em>base</em>), and set <em>db</em> to a digit chosen uniformly at random (that is, an integer in the interval [0, <em>base</em>)).</li>
+<li>Return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
+</ol></li>
+<li>If <em>i</em> is <em>z</em> or greater:
+
+<ol>
+<li>If the digit at position (<em>i</em> &minus; <em>z</em>) in the uniform PSRN&#39;s fractional part is not set, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the second most significant, etc.).</li>
+<li>Set <em>da</em> to the item at that position, and set <em>db</em> to a digit chosen uniformly at random (so that 0 &le; <em>db</em> &lt; <em>base</em>).</li>
+<li>Return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
+</ol></li>
+<li>Add 1 to <em>i</em> and go to step 3.</li>
+</ol>
+
+<p><a id=Hyperbolic_Secant_Distribution></a></p>
+
+<h4>Hyperbolic Secant Distribution</h4>
+
+<p>The following algorithm adapts the rejection algorithm from p. 472 in Devroye (1986)[^49] for arbitrary-precision sampling.</p>
+
+<ol>
+<li>Generate <em>ret</em>, an exponential random variate with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm.  This number will be a uniform PSRN.</li>
+<li>Set <em>ip</em> to 1 plus <em>ret</em>&#39;s integer part.</li>
+<li>(The rest of the algorithm accepts <em>ret</em> with probability 1/(1+<em>ret</em>).) With probability <em>ip</em>/(1+<em>ip</em>), generate a number that is 1 with probability 1/<em>ip</em> and 0 otherwise.  If that number is 1, <em>ret</em> was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>ret</em>&#39;s sign to positive or negative with equal probability, then return <em>ret</em>.</li>
+<li>Call <strong>SampleGeometricBag</strong> on <em>ret</em>&#39;s fractional part (ignore <em>ret</em>&#39;s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.</li>
+</ol>
+
+<p><a id=Reciprocal_of_Power_of_Uniform></a></p>
+
+<h4>Reciprocal of Power of Uniform</h4>
+
+<p>The following algorithm generates a PSRN of the form 1/<em>U</em><sup>1/<em>x</em></sup>, where <em>U</em> is a uniform random variate greater than 0 and less than 1 and <em>x</em> is an integer greater than 0.</p>
+
+<ol>
+<li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
+<li>With probability (4<sup><em>x</em></sup>&minus;2<sup><em>x</em></sup>)/4<sup><em>x</em></sup>, go to step 3.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.</li>
+<li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
+<li>Create <em>ret</em>, a uniform PSRN with a positive sign and an integer part of 0.</li>
+<li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Call the <strong>algorithm for <em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup></strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin, where <em>d</em> = <em>intval</em>, <em>c</em> = <em>i</em>, and <em>k</em> = <em>x</em> + 1 (here, <em>&lambda;</em> is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 3.</li>
+<li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
+</ol>
+
+<p>This algorithm uses the skeleton described earlier in &quot;Building an Arbitrary-Precision Sampler&quot;.  Here, the probabilities <em>A</em>, <em>B</em>,  and <em>C</em> are as follows:</p>
+
+<ul>
+<li><em>A</em> = 0, since the random variate can&#39;t be zero or come between 0 and 1.</li>
+<li><em>B</em> = (4<sup><em>x</em></sup>&minus;2<sup><em>x</em></sup>)/4<sup><em>x</em></sup>.</li>
+<li><em>C</em> = (<em>x</em>/(<em>i</em> + <em>&lambda;</em>)<sup><em>x</em>+1</sup>) / <em>M</em>.  Ideally, <em>M</em> is either <em>x</em> if <em>intval</em> is 1, or <em>x</em>/<em>intval</em><sup><em>x</em>+1</sup> otherwise.  Thus, the ideal form for <em>C</em> is <em>intval</em><sup><em>x</em>+1</sup>/(<em>i</em>+<em>&lambda;</em>)<sup><em>x</em>+1</sup>.</li>
+</ul>
+
+<p><a id=Distribution_of__U__1_minus__U></a></p>
+
+<h4>Distribution of <em>U</em>/(1&minus;<em>U</em>)</h4>
+
+<p>The following algorithm generates a PSRN distributed as <em>U</em>/(1&minus;<em>U</em>), where <em>U</em> is a uniform random variate greater than 0 and less than 1.</p>
+
+<ol>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set <em>intval</em> to 0, then set <em>size</em> to 1, then go to step 4.</li>
+<li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
+<li>With probability <em>size</em>/(<em>size</em> + <em>intval</em> + 1), go to step 4.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.</li>
+<li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
+<li>Create <em>ret</em>, a uniform PSRN with a positive sign and an integer part of 0.</li>
+<li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Call the <strong>algorithm for <em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup></strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin, where <em>d</em> = <em>intval</em> + 1, <em>c</em> = <em>i</em> + 1, and <em>k</em> = 2 (here, <em>&lambda;</em> is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and satisfies 0 &le; <em>&lambda;</em> &le; 1).  If the call returns 0, go to step 4.</li>
+<li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
+</ol>
+
+<p>This algorithm uses the skeleton described earlier in &quot;Building an Arbitrary-Precision Sampler&quot;.  Here, the probabilities <em>A</em>, <em>B</em>,  and <em>C</em> are as follows:</p>
+
+<ul>
+<li><em>A</em> = 1/2.</li>
+<li><em>B</em> = <em>size</em>/(<em>size</em> + <em>intval</em> + 1).</li>
+<li><em>C</em> = (1/(<em>i</em>+<em>&lambda;</em>+1)<sup>2</sup>) / <em>M</em>.  Ideally, <em>M</em> is 1/(<em>intval</em>+1)<sup>2</sup>.  Thus, the ideal form for <em>C</em> is (<em>intval</em>+1)<sup>2</sup>/(<em>i</em>+<em>&lambda;</em>+1)<sup>2</sup>.</li>
+</ul>
+
+<p><a id=Arc_Cosine_Distribution></a></p>
+
+<h4>Arc-Cosine Distribution</h4>
+
+<p>The following is a reimplementation of an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)[^50].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random variate will be 0, 1, or a real number in between.  This algorithm&#39;s result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform random variate between 0 and 1, as pointed out by Devroye. (acos(<em>x</em>) is the inverse cosine function.)  The algorithm follows.</p>
+
+<ol>
+<li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
+<li>Set <em>m</em> to 1.</li>
+<li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>u</em> be the result.</li>
+<li>With probability 4/(4*<em>m</em>*<em>m</em> + 2*<em>m</em>), call the <strong>URandLess</strong> algorithm with parameters <em>u</em> and <em>ret</em> in that order, and if that call returns 1, call the <strong>algorithm for &pi; / 4</strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, twice, and if both of these calls return 1, add 1 to <em>m</em> and go to step 3.  (Here, an erratum in the algorithm on page 129 of the book is incorporated.)</li>
+<li>If <em>m</em> is odd[^51], optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
+<li>If <em>m</em> is even[^52], go to step 1.</li>
+</ol>
+
+<p>And here is Python code that implements this algorithm.  The code uses floating-point arithmetic only at the end, to convert the result to a convenient form, and it relies on methods from <em>randomgen.py</em> and <em>bernoulli.py</em>.</p>
+
+<pre>def example_4_2_1(rg, bern, precision=53):
+    while True:
+       ret=rg.kthsmallest_psrn(2,2)
+       k=1
+       while True:
+          u=rg.kthsmallest_psrn(2,2)
+          kden=4*k*k+2*k # erratum incorporated
+          if randomgen.urandless(rg,u, ret) and \
+             rg.zero_or_one(4, kden)==1 and \
+             bern.zero_or_one_pi_div_4()==1 and \
+             bern.zero_or_one_pi_div_4()==1:
+             k+=1
+          elif (k&amp;1)==1:
+             return randomgen.urandfill(rg,ret,precision)/(1&lt;&lt;precision)
+          else: break
+</pre>
+
+<p><a id=Logistic_Distribution></a></p>
+
+<h4>Logistic Distribution</h4>
+
+<p>The following new algorithm generates a partially-sampled random number that follows the logistic distribution.</p>
+
+<ol>
+<li>Set <em>k</em> to 0.</li>
+<li>(Choose a 1-unit-wide piece of the logistic density.) Run the <strong>algorithm for (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1))</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).  If the call returns 0, add 1 to <em>k</em> and repeat this step.  Otherwise, go to step 3.</li>
+<li>(The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random variate, call it <em>f</em>.</li>
+<li>(Steps 4 through 7 succeed with probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>.) Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.</li>
+<li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), then <strong>sample from the number <em>f</em></strong> (for example, call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>f</em>&#39;s sign to positive or negative with equal probability, then return <em>f</em>.</li>
+<li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> and <strong>sample from the number <em>f</em></strong> (for example, call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.</li>
+</ol>
+
+<p><a id=Cauchy_Distribution></a></p>
+
+<h4>Cauchy Distribution</h4>
+
+<p>Uses the skeleton for the uniform distribution inside N-dimensional shapes.</p>
+
+<ol>
+<li>Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em> and <em>p2</em>.</li>
+<li>Set <em>S</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>c1</em> and <em>c2</em> each to 0.  Then set <em>d</em> to 1.</li>
+<li>Multiply <em>c1</em> and <em>c2</em> each by <em>base</em> and add a digit chosen uniformly at random to that coordinate.</li>
+<li>If ((<em>c1</em>+1)<sup>2</sup> + (<em>c2</em>+1)<sup>2</sup>) &lt; <em>S</em><sup>2</sup>, then do the following:
+
+<ol>
+<li>Transfer <em>c1</em>&#39;s least significant digits to <em>p1</em>&#39;s fractional part, and transfer <em>c2</em>&#39;s least significant digits to <em>p2</em>&#39;s fractional part.  The variable <em>d</em> tells how many digits to transfer to each PSRN this way. (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, set <em>p1</em>&#39;s fractional part to [3, 4, 2].)</li>
+<li>Run the <strong>UniformDivide</strong> algorithm (described in the article on PSRNs) on <em>p1</em> and <em>p2</em>, in that order, then set the resulting PSRN&#39;s sign to positive or negative with equal probability, then return that PSRN.</li>
+</ol></li>
+<li>If (<em>c1</em><sup>2</sup> + <em>c2</em><sup>2</sup>) &gt; <em>S</em><sup>2</sup>, then go to step 2.</li>
+<li>Multiply <em>S</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
+</ol>
+
+<p><a id=Exponential_Distribution_with_Unknown_Small_Rate></a></p>
+
+<h4>Exponential Distribution with Unknown Small Rate</h4>
+
+<p>Exponential random variates can be generated using an input coin of unknown probability of heads of <em>&lambda;</em> (which can either be 1 or come between 0 and 1), by generating arrival times in a <em>Poisson process</em> of rate 1, then <em>thinning</em> the process using the coin.  The arrival times that result will be exponentially distributed with rate <em>&lambda;</em>.  I found the basic idea in the answer to a <a href="https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform"><strong>Mathematics Stack Exchange question</strong></a>, and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)[^53].  The algorithm follows:</p>
+
+<ol>
+<li>Generate an exponential(1) random variate using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex</em>.</li>
+<li>(Thinning step.) Flip the input coin.  If it returns 1, return <em>ex</em>.</li>
+<li>Generate another exponential(1) random variate using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex2</em>.  Then run <strong>UniformAdd</strong> on <em>ex</em> and <em>ex2</em> and set <em>ex</em> to the result.  Then go to step 2.</li>
+</ol>
+
+<p>Notice that the algorithm&#39;s average running time increases as <em>&lambda;</em> decreases.</p>
+
+<p><a id=Exponential_Distribution_with_Rate_ln__x></a></p>
+
+<h4>Exponential Distribution with Rate ln(<em>x</em>)</h4>
+
+<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with rate ln(<em>x</em>).  This is useful for generating a base-<em>x</em> logarithm of a uniform(0,1) random variate.  This algorithm has two supported cases:</p>
+
+<ul>
+<li><em>x</em> is a rational number that&#39;s greater than 1.  In that case, let <em>b</em> be floor(ln(<em>x</em>)/ln(2)).</li>
+<li><em>x</em> is a uniform PSRN with a positive sign and an integer part of 1 or greater.  In that case, let <em>b</em> be floor(ln(<em>i</em>)/ln(2)), where <em>i</em> is <em>x</em>&#39;s integer part.</li>
+</ul>
+
+<p>The algorithm follows.</p>
+
+<ol>
+<li>(Samples the integer part of the random variate.) Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise, repeatedly until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way. (This is also known as a &quot;geometric random variate&quot;, but this terminology is avoided because it has conflicting meanings in academic works.)
+
+<ul>
+<li>If <em>x</em> is a rational number and a power of 2, this step can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits is generated this way, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.</li>
+<li>If <em>x</em> is a uniform PSRN, this step is implemented as follows: Run the first subalgorithm (later in this section) repeatedly until a run returns 0.  Set <em>k</em> to the number of runs that returned 1 this way.</li>
+</ul></li>
+<li>(The rest of the algorithm samples the fractional part.) Create <em>f</em>, a uniform PSRN with a positive sign, an empty fractional part, and an integer part of 0.</li>
+<li>Create a <em>&mu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (for example, call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(1+<em>y</em>/<em>z</em>)</strong> (given in &quot;Bernoulli Factory Algorithms&quot;) with <em>y</em>/<em>z</em> = 1/1.  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)   Then:
+
+<ul>
+<li>If <em>x</em> is a rational number, but not a power of 2, also create a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>y</em>/<em>z</em>)</strong> with <em>y</em>/<em>z</em> = (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
+<li>If <em>x</em> is a uniform PSRN, also create a <em>&rho;</em> input coin that does the following: &quot;Return the result of the second subalgorithm (later in this section), given <em>x</em> and <em>b</em>&quot;, and a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>&lambda;</em>)</strong>, using the <em>&rho;</em> input coin.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
+</ul></li>
+<li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) <em>b</em> times, using the <em>&mu;</em> input coin.  If a <em>&nu;</em> input coin was created in step 3, run the same algorithm once, using the <em>&nu;</em> input coin.  If all these calls return 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
+<li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
+</ol>
+
+<blockquote>
+<p><strong>Note</strong>: A <em>bounded exponential</em> random variate with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Do the following <em>m</em> times or until a zero is generated, whichever happens first: &#39;Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise&#39;. Then set <em>k</em> to the number of ones generated this way. (<em>k</em> is a so-called bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random variate, which an algorithm of Bringmann and Friedrich (2013)[^54] can generate as well.  If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random variate in step 2, a uniform(0,<em>&mu;</em>) random variate can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number greater than 0 and less than 1).</p>
+</blockquote>
+
+<p>The following generator for the <strong>rate ln(2)</strong> is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random variate. Unlike the similar algorithm of Ahrens and Dieter (1972)[^55], this one doesn&#39;t require a table of probability values.</p>
+
+<ol>
+<li>(Samples the integer part of the random variate.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
+<li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random variate, call it <em>f</em>.</li>
+<li>Create an input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (for example, call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(1+<em>y</em>/<em>z</em>)</strong> (given in &quot;Bernoulli Factory Algorithms&quot;) with <em>y</em>/<em>z</em> = 1/1.  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)</li>
+<li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), using the input coin from the previous step.  If the call returns 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
+<li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
+</ol>
+
+<p>The first subalgorithm samples the probability 1/<em>x</em>, where <em>x</em>&ge;1 is a uniform PSRN:</p>
+
+<ol>
+<li>Set <em>c</em> to <em>x</em>&#39;s integer part.  With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability 1/<em>c</em> and 0 otherwise.</li>
+<li>Run <strong>SampleGeometricBag</strong> on <em>x</em> (which ignores <em>x</em>&#39;s integer part and sign).  If the run returns 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
+<p>The second subalgorithm samples the probability (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>, where <em>x</em>&ge;1 is a uniform PSRN and <em>b</em>&ge;0 is an integer:</p>
+
+<ol>
+<li>Subtract 2<sup><em>b</em></sup> from <em>x</em>&#39;s integer part, then create <em>y</em> as <strong>RandUniformFromReal</strong>(2<sup><em>b</em></sup>), then run <strong>URandLessThanReal</strong>(<em>x</em>, <em>y</em>), then add 2<sup><em>b</em></sup> back to <em>x</em>&#39;s integer part.</li>
+<li>Return the result of <strong>URandLessThanReal</strong> from step 1.</li>
+</ol>
+
+<p><a id=Symmetric_Geometric_Distribution></a></p>
+
+<h4>Symmetric Geometric Distribution</h4>
+
+<p>Samples from the symmetric geometric distribution from (Ghosh et al. 2012)[^56], with parameter <em>&lambda;</em>, in the form of an input coin with unknown probability of heads of <em>&lambda;</em>.</p>
+
+<ol>
+<li>Flip the input coin until it returns 0.  Set <em>n</em> to the number of times the coin returned 1 this way.</li>
+<li>Run a <strong>Bernoulli factory algorithm for 1/(2&minus;<em>&lambda;</em>)</strong>, using the input coin.  If the run returns 1, return <em>n</em>.  Otherwise, return &minus;1 &minus; <em>n</em>.</li>
+</ol>
+
+<p>This is similar to an algorithm mentioned in an appendix in Li (2021)[^57], in which the input coin&mdash;</p>
+
+<ul>
+<li>has <em>&lambda;</em> = 1&minus;exp(&minus;<em>&epsilon;</em>), and</li>
+<li>can be built as follows using another input coin with probability of heads <em>&epsilon;</em>: &quot;Run a <strong>Bernoulli factory algorithm for exp(&minus;<em>&lambda;</em>)</strong> using the <em>&epsilon;</em> input coin, then return 1 minus the result.&quot;</li>
+</ul>
+
+<p><a id=Lindley_Distribution_and_Lindley_Like_Mixtures></a></p>
+
+<h4>Lindley Distribution and Lindley-Like Mixtures</h4>
+
+<p>The <em>Lindley distribution</em> is a <em>mixture</em> of two probability distributions, with each of the two distributions having a separate probability of being sampled (<em>w</em> and 1&minus;<em>w</em> in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^58] with parameter <em>&theta;</em> (a real number greater than 0) can be generated as follows:</p>
+
+<p>Let <em>A</em> be 1 and let <em>B</em> be 2.  Then:</p>
+
+<ol>
+<li>With probability <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>), generate <em>A</em> exponential random variates with a rate of <em>r</em> = <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong> (described in my article on PSRNs), then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
+<li>Otherwise, generate <em>B</em> exponential random variates with a rate of <em>r</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
+</ol>
+
+<p>Mixtures similar to the Lindley distribution are shown in the following table and use the same algorithm, but with the values given in the table.</p>
+
+<table><thead>
+<tr>
+<th>Distribution</th>
+<th><em>w</em> is:</th>
+<th><em>r</em> is:</th>
+<th><em>A</em> is:</th>
+<th><em>B</em> is:</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Garima (Shanker 2016)[^59].</td>
+<td>(1+<em>&theta;</em>)/(2+<em>&theta;</em>).</td>
+<td><em>&theta;</em>.</td>
+<td>1.</td>
+<td>2.</td>
+</tr>
+<tr>
+<td>i-Garima (Singh and Das 2020)[^60].</td>
+<td>(2+<em>&theta;</em>)/(3+<em>&theta;</em>).</td>
+<td><em>&theta;</em>.</td>
+<td>1.</td>
+<td>2.</td>
+</tr>
+<tr>
+<td>Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020)[^61].</td>
+<td><em>&theta;</em>/(1+<em>&theta;</em>).</td>
+<td><em>&theta;</em>.</td>
+<td>2.</td>
+<td>3.</td>
+</tr>
+<tr>
+<td>Xgamma (Sen et al. 2016)[^62].</td>
+<td><em>&theta;</em>/(1+<em>&theta;</em>).</td>
+<td><em>&theta;</em>.</td>
+<td>1.</td>
+<td>3.</td>
+</tr>
+<tr>
+<td>Mirra (Sen et al. 2021)[^63].</td>
+<td><em>&theta;</em><sup>2</sup>/(<em>&alpha;</em>+<em>&theta;</em><sup>2</sup>) where <em>&alpha;</em>&gt;0.</td>
+<td><em>&theta;</em>.</td>
+<td>1.</td>
+<td>3.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>If <em>&theta;</em> is a uniform PSRN, then the check &quot;With probability  <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>)&quot; can be implemented by running the Bernoulli factory algorithm for <strong>(<em>d</em> + <em>&mu;</em>) / ((<em>d</em> + <em>&mu;</em>) + (<em>c</em> + <em>&lambda;</em>))</strong>, where <em>c</em> is 1; <em>&lambda;</em> represents an input coin that always returns 0; <em>d</em> is <em>&theta;</em>&#39;s integer part, and <em>&mu;</em> is an input coin that runs <strong>SampleGeometricBag</strong> on <em>&theta;</em>&#39;s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.</li>
+<li>A <strong>Sushila</strong> random variate is <em>&alpha;</em> times a Lindley random variate, where <em>&alpha;</em> &gt; 0 (Shanker et al. 2013)[^64].</li>
+<li>An <strong>X-Lindley</strong> random variate (Chouia and Zeghdoudi 2021)[^28] is, with probability <em>&theta;</em>/(1+<em>&theta;</em>), an exponential random variate with a rate of <em>&theta;</em> (see step 1), and otherwise, a Lindley random variate with parameter <em>&theta;</em>.</li>
+</ol>
+</blockquote>
+
+<p><a id=Gamma_Distribution></a></p>
+
+<h4>Gamma Distribution</h4>
+
+<p>The following arbitrary-precision sampler generates the sum of <em>n</em> independent exponential random variates (also known as the Erlang(<em>n</em>) or gamma(<em>n</em>) distribution), implemented via partially-sampled uniform random variates.  Obviously, this algorithm is inefficient for large values of <em>n</em>.</p>
+
+<ol>
+<li>Generate <em>n</em> exponential random variates with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  These numbers will be uniform PSRNs; this algorithm won&#39;t work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
+<li>Generate the sum of the random variates generated in step 1 by applying the <a href="https://peteroupc.github.io/exporand.html#Addition_and_Subtraction"><strong>UniformAdd</strong></a> algorithm given in another document.</li>
+</ol>
+
+<p><a id=One_Dimensional_Epanechnikov_Kernel></a></p>
+
+<h4>One-Dimensional Epanechnikov Kernel</h4>
+
+<p>Adapted from Devroye and Györfi (1985, p. 236)[^65].</p>
+
+<ol>
+<li>Generate three uniform PSRNs <em>a</em>, <em>b</em>, and <em>c</em>, with a positive sign, an integer part of 0, and an empty fractional part.</li>
+<li>Run <strong>URandLess</strong> on <em>a</em> and <em>c</em> in that order, then run <strong>URandLess</strong> on <em>b</em> and <em>c</em> in that order.  If both runs return 1, set <em>c</em> to point to <em>b</em>.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which will happen with probability 1/2), set <em>c</em>&#39;s sign to negative.</li>
+<li>Return <em>c</em>.</li>
+</ol>
+
+<p><a id=Uniform_Distribution_Inside_Rectellipse></a></p>
+
+<h4>Uniform Distribution Inside Rectellipse</h4>
+
+<p>The following example generates a point inside a quarter <a href="https://mathworld.wolfram.com/Rectellipse.html"><strong><em>rectellipse</em></strong></a> centered at (0, 0) with&mdash;</p>
+
+<ul>
+<li>horizontal &quot;radius&quot; <em>d1</em>, which is an integer greater than 0,</li>
+<li>vertical &quot;radius&quot; <em>d2</em>, which is an integer greater than 0, and</li>
+<li>squareness parameter <em>&sigma;</em>, which is a rational number in [0, 1].</li>
+</ul>
+
+<p>Use the algorithm in &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot;, except:</p>
+
+<ul>
+<li><p>Let <strong>InShape</strong> return&mdash;</p>
+
+<ul>
+<li><em>YES</em> if (<em>&sigma;</em>*<em>x1</em>*<em>y1</em>)<sup>2</sup>/(<em>d1</em>*<em>d2</em>)<sup>2</sup> &minus; (<em>x2</em>/<em>d1</em>)<sup>2</sup> &minus; (<em>y2</em>/<em>d2</em>)<sup>2</sup> + 1 &gt; 0,</li>
+<li><em>NO</em> if (<em>&sigma;</em>*<em>x2</em>*<em>y2</em>)<sup>2</sup>/(<em>d1</em>*<em>d2</em>)<sup>2</sup> &minus; (<em>x1</em>/<em>d1</em>)<sup>2</sup> &minus; (<em>y1</em>/<em>d2</em>)<sup>2</sup> + 1 &lt; 0, and</li>
+<li><em>MAYBE</em> otherwise,</li>
+</ul>
+
+<p>where <em>x1</em> = <em>C1</em>/<em>S</em>, <em>x2</em> = (<em>C1</em>+1)/<em>S</em>, <em>y1</em> = <em>C2</em>/<em>S</em>, and <em>y2</em> = (<em>C2</em>+1)/<em>S</em> (these four values define the bounds, along the X and Y dimensions, of the box passed to <strong>InShape</strong>).</p></li>
+</ul>
+
+<p>For a full rectellipse, step 5.3 in the algorithm is done for each of the two dimensions.</p>
+
+<p><a id=Tulap_distribution></a></p>
+
+<h4>Tulap distribution</h4>
+
+<p>The algorithm below samples a variate from the Tulap(<em>m</em>, <em>b</em>, <em>q</em>) distribution (&quot;truncated uniform Laplace&quot;; Awan and Slavković (2019)[^29]) and returns it as a uniform PSRN.</p>
+
+<ul>
+<li>The parameter <em>b</em> is greater than 0, is less than 1, and can be a uniform PSRN.</li>
+<li>The parameter <em>m</em> is a rational number or a uniform PSRN.</li>
+<li>The parameter <em>q</em> is not used in this algorithm, and is treated as 0.</li>
+</ul>
+
+<hr>
+
+<ol>
+<li><strong>Sample from the number <em>b</em></strong> (for example, call <strong>SampleGeometricBag</strong> on <em>b</em> if <em>b</em> is implemented as a uniform PSRN) until the result is 0.  Set <em>g1</em> to the number of times the result is 1 this way.</li>
+<li><strong>Sample from the number <em>b</em></strong> until the result is 0.  Set <em>g2</em> to the number of times the result is 1 this way.</li>
+<li>Set <em>n</em> to <em>g2</em> &minus; <em>g1</em>.  Create <em>ret</em>, a uniform PSRN as follows: The sign part is positive if <em>n</em> &ge; 0 and negative otherwise; the integer part is abs(<em>n</em>); the fractional part is empty.</li>
+<li>Add a uniform random variate in (&minus;1/2, 1/2) to <em>ret</em>.  If <em>ret</em> stores base-2 fractional digits, this can be done as follows.  Set <em>u</em> to an unbiased random bit, then:
+
+<ul>
+<li>If <em>n</em> &lt; 0 and <em>u</em> is 1, subtract 1 from the integer part and append 1 to the fractional part.</li>
+<li>If <em>n</em> &gt; 0 and <em>u</em> is 1, add 1 to the integer part and append 1 to the fractional part.</li>
+<li>If <em>n</em> is 0 or <em>u</em> is 0, append 0 to the fractional part.</li>
+</ul></li>
+<li>If <em>m</em> is given and is not 0, run the <strong>UniformAdd</strong> or <strong>UniformAddRational</strong> algorithm with parameters <em>ret</em> and <em>m</em>, respectively, and set <em>ret</em> to the result.</li>
+<li>Return <em>ret</em>.</li>
+</ol>
+
+<p><a id=Continuous_Bernoulli_Distribution></a></p>
+
+<h4>Continuous Bernoulli Distribution</h4>
+
+<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)[^30] was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
+
+<p>The continous Bernoulli distribution takes one parameter <code>lamda</code> (where 0 &le; <code>lamda</code> &le; 1), and takes on values in the closed interval [0, 1] with a probability proportional to&mdash;</p>
 
 <pre>pow(lamda, x) * pow(1 - lamda, 1 - x).
 </pre>
@@ -1889,7 +2564,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>For a 1-dimensional distribution with a probability density function (PDF), the bit complexity is greater than or equal to <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random variate&#39;s fractional part (Devroye and Gravel 2020)[^3].</li>
-<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is greater than or equal to the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)[^29].  (For a given probability <em>p</em>, the binary entropy is <code>0 - p*log2(p)</code> where <code>log2(x) = ln(x)/ln(2)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
+<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is greater than or equal to the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)[^31].  (For a given probability <em>p</em>, the binary entropy is <code>0 - p*log2(p)</code> where <code>log2(x) = ln(x)/ln(2)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
 </ul>
 
 <p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/<em>&lambda;</em>), so the minimum bit complexity for this distribution is log2(exp(1)/<em>&lambda;</em>) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when <em>&lambda;</em> = 1, decreases when <em>&lambda;</em> goes up, and increases when <em>&lambda;</em> goes down.  In the case of any other distribution with a PDF, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s PDF.</p>
@@ -1909,7 +2584,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.</p>
 
-<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)[^30].  However, it uses no random bits if both its parameters are the same.</p>
+<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)[^32].  However, it uses no random bits if both its parameters are the same.</p>
 
 <p>For <strong>SampleGeometricBag</strong> with base 2, the bit complexity has two components.</p>
 
@@ -1939,13 +2614,15 @@ def contbernoullidist(b, lamda, precision=53):
 <li>choosing the item with the smallest key</li>
 </ul>
 
-<p>(see also (Efraimidis 2015)[^31]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom <code>-ln(1-X)/w</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
+<p>(see also (Efraimidis 2015)[^33]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom <code>-ln(1-X)/w</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
 
 <p><a id=Acknowledgments></a></p>
 
 <h2>Acknowledgments</h2>
 
 <p>I acknowledge Claude Gravel who reviewed a previous version of this article.</p>
+
+<p>Due to a suggestion by Michael Shoemate who suggested it was &quot;easy to get lost&quot; in this and related articles, some sections that related to PSRNs and were formerly in &quot;More Algorithms for Arbitrary-Precision Sampling&quot; were moved here.</p>
 
 <p><a id=Other_Documents></a></p>
 
@@ -1969,7 +2646,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h2>Notes</h2>
 
-<p>[^1]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+<p>[^1]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from t`he normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
 <p>[^2]: Philippe Flajolet, Nasser Saheb. The complexity of generating an exponentially distributed variate. [Research Report] RR-0159, INRIA. 1982. inria-00076400.</p>
 
@@ -2023,21 +2700,81 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>[^27]: More specifically, the <em>essential supremum</em>, that is, the function&#39;s highest point in [0, 1] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous PDFs don&#39;t admit Bernoulli factories, as required by step 2.</p>
 
-<p>[^28]: Loaiza-Ganem, Gabriel, and John P. Cunningham. &quot;The continuous Bernoulli: fixing a pervasive error in variational autoencoders.&quot; <em>Advances in Neural Information Processing Systems</em> 32 (2019).</p>
+<p>[^28]: No note text yet.</p>
 
-<p>[^29]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^29]: No note text yet.</p>
 
-<p>[^30]: Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</p>
+<p>[^30]: Loaiza-Ganem, Gabriel, and John P. Cunningham. &quot;The continuous Bernoulli: fixing a pervasive error in variational autoencoders.&quot; <em>Advances in Neural Information Processing Systems</em> 32 (2019).</p>
 
-<p>[^31]: Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</p>
+<p>[^31]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^32]: Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics &amp; data analysis, 44(3), pp.451-464.</p>
+<p>[^32]: Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</p>
 
-<p>[^33]: S. Kakutani, &quot;On equivalence of infinite product measures&quot;, <em>Annals of Mathematics</em> 1948.</p>
+<p>[^33]: Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</p>
 
-<p>[^34]: George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</p>
+<p>[^34]: Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics &amp; data analysis, 44(3), pp.451-464.</p>
 
-<p>[^35]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</p>
+<p>[^35]: S. Kakutani, &quot;On equivalence of infinite product measures&quot;, <em>Annals of Mathematics</em> 1948.</p>
+
+<p>[^36]: George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</p>
+
+<p>[^37]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</p>
+
+<p>[^38]: 2016C.T. Li, A. El Gamal, &quot;<a href="https://arxiv.org/abs/1603.05238v1"><strong>A Universal Coding Scheme for Remote Generation of Continuous Random Variables</strong></a>&quot;, arXiv:1603.05238v1  [cs.IT], 2016.</p>
+
+<p>[^39]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
+
+<p>[^40]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+
+<p>[^41]: Harlow, J., Sainudiin, R., Tucker, W., &quot;Mapped Regular Pavings&quot;, <em>Reliable Computing</em> 16 (2012).</p>
+
+<p>[^42]: Duff, T., &quot;Interval Arithmetic and Recursive Subdivision for Implicit Functions and Constructive Solid Geometry&quot;, Computer Graphics 26(2), July 1992.</p>
+
+<p>[^43]: Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</p>
+
+<p>[^44]: I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</p>
+
+<p>[^45]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+
+<p>[^46]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+
+<p>[^47]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+
+<p>[^48]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
+
+<p>[^49]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+
+<p>[^50]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+
+<p>[^51]: &quot;<em>x</em> is odd&quot; means that <em>x</em> is an integer and not divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 1, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 1.</p>
+
+<p>[^52]: &quot;<em>x</em> is even&quot; means that <em>x</em> is an integer and divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 0, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 0.</p>
+
+<p>[^53]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+
+<p>[^54]: Bringmann, K. and Friedrich, T., 2013, July. &quot;Exact and efficient generation of geometric random variates and random graphs&quot;, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</p>
+
+<p>[^55]: Ahrens, J.H., and Dieter, U., &quot;Computer methods for sampling from the exponential and normal distributions&quot;, <em>Communications of the ACM</em> 15, 1972.</p>
+
+<p>[^56]: Ghosh, A., Roughgarden, T., and Sundararajan, M., &quot;Universally Utility-Maximizing Privacy Mechanisms&quot;, <em>SIAM Journal on Computing</em> 41(6), 2012.</p>
+
+<p>[^57]: Li, L., 2021. Bayesian Inference on Ratios Subject to Differentially Private Noise (Doctoral dissertation, Duke University).</p>
+
+<p>[^58]: Lindley, D.V., &quot;Fiducial distributions and Bayes&#39; theorem&quot;, <em>Journal of the Royal Statistical Society Series B</em>, 1958.</p>
+
+<p>[^59]: Shanker, R., &quot;Garima distribution and its application to model behavioral science data&quot;, <em>Biom Biostat Int J.</em> 4(7), 2016.</p>
+
+<p>[^60]: Singh, B.P., Das, U.D., &quot;<a href="https://arxiv.org/abs/2010.15078"><strong>On an Induced Distribution and its Statistical Properties</strong></a>&quot;, arXiv:2010.15078 [stat.ME], 2020.</p>
+
+<p>[^61]: Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</p>
+
+<p>[^62]: Sen, S., et al., &quot;The xgamma distribution: statistical properties and application&quot;, 2016.</p>
+
+<p>[^63]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. &quot;The Mirra distribution for modeling time-to-event data sets.&quot; In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.</p>
+
+<p>[^64]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. &quot;Sushila distribution and its application to waiting times data.&quot; International Journal of Business Management 3, no. 2 (2013): 1-11.</p>
+
+<p>[^65]: Devroye, L., Györfi, L., <em>Nonparametric Density Estimation: The L1 View</em>, 1985.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -2136,7 +2873,7 @@ def contbernoullidist(b, lamda, precision=53):
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a not-so-trivial distribution; when each PSRN is bounded away from 0, the distribution&#39;s left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.  See Glen et al. (2004)[^32] and a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>Stack Exchange question</strong></a>.</p>
+<p><strong>Note:</strong> The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a not-so-trivial distribution; when each PSRN is bounded away from 0, the distribution&#39;s left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.  See Glen et al. (2004)[^34] and a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>Stack Exchange question</strong></a>.</p>
 </blockquote>
 
 <p><a id=Uniform_of_Uniforms_Produces_a_Product_of_Uniforms></a></p>
@@ -2151,7 +2888,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>To find the PDF for the algorithm, find the expected value of UPDF(<em>x</em>, 0, <em>Z</em>+<em>b</em>*<em>c</em>), where <em>Z</em> is distributed as uniform(0, <em>K</em>).  This is done by finding the integral (area under the graph) with respect to <em>z</em> of UPDF(<em>x</em>, 0, <em>z</em>+<em>b</em>*<em>c</em>)*UPDF(<em>z</em>, 0, <em>K</em>) in the interval [0, <em>K</em>] (the set of values <em>Z</em> can take on).  The result is <code>PDF1(x) = ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)</code>.</li>
-<li>The second PDF is the PDF for the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>].  By Rohatgi&#39;s formula (see also (Glen et al. 2004)[^32]), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>.</li>
+<li>The second PDF is the PDF for the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>].  By Rohatgi&#39;s formula (see also (Glen et al. 2004)[^34]), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>.</li>
 </ul>
 
 <p>Now it must be shown that <code>PDF1</code> and <code>PDF2</code> are equal whenever <em>x</em> is in the interval (0, <em>b</em>*<em>d</em>).  Subtracting one PDF from the other and simplifying, it is seen that:</p>
@@ -2196,9 +2933,9 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>Let <em>a</em><sub><em>j</em></sub> be the probability that the digit at position <em>j</em> equals 1 (starting with <em>j</em> = 1 for the first digit after the point).</p>
 
-<p>Then Kakutani&#39;s theorem (Kakutani 1948)[^33] says that <em>X</em> has an <em>absolutely continuous</em>[^12] distribution if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)[^34], (Chatterji 1964)[^35].</p>
+<p>Then Kakutani&#39;s theorem (Kakutani 1948)[^35] says that <em>X</em> has an <em>absolutely continuous</em>[^12] distribution if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)[^36], (Chatterji 1964)[^37].</p>
 
-<p>This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2, and set <em>X</em>&#39;s binary digits using those probabilities.  However, as Marsaglia (1971)[^34] showed, the absolutely continuous distribution can only be one of the following:</p>
+<p>This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2, and set <em>X</em>&#39;s binary digits using those probabilities.  However, as Marsaglia (1971)[^36] showed, the absolutely continuous distribution can only be one of the following:</p>
 
 <ol>
 <li>The distribution&#39;s probability density function (PDF) is zero somewhere in every open interval in (0, 1), without being 0 on all of [0, 1].  Thus, the PDF is not continuous.</li>
