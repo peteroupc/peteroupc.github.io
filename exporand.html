@@ -1872,10 +1872,10 @@ def exprandscore(ln,ld,ln2,ld2):
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>See Li and El Gamal [^38] and Oberhoff (2018)[^39] for related work on encoding random points uniformly distributed in a shape.</li>
+<li>See Li and El Gamal [^27] and Oberhoff (2018)[^13] for related work on encoding random points uniformly distributed in a shape.</li>
 <li>Rejection sampling on a shape is subject to the &quot;curse of dimensionality&quot;, since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more volume the shape takes up in the bounding box, the higher the acceptance rate.</li>
-<li>Devroye (1986, chapter 8, section 3)[^40] describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/<em>base</em><sup><em>k</em></sup> in all dimensions; the result of <strong>InShape</strong> is calculated for each such box and that box labeled with the result; all boxes labeled <em>NO</em> are discarded; and the algorithm is modified by adding the following after step 2: &quot;2a. Choose a precalculated box uniformly at random, then set <em>c1</em>, ..., <em>cN</em> to that box&#39;s coordinates, then set <em>d</em> to <em>k</em> and set <em>S</em> to <em>base</em><sup><em>k</em></sup>. If a box labeled <em>YES</em> was chosen, follow the substeps in step 5. If a box labeled <em>MAYBE</em> was chosen, multiply <em>S</em> by <em>base</em> and add 1 to <em>d</em>.&quot; (For example, if <em>base</em> is 10, <em>k</em> is 1, <em>N</em> is 2, and <em>d1</em> = <em>d2</em> = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, <strong>InShape</strong> is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on [the boxes&#39; coordinates are stored as just given, but <strong>InShape</strong> instead uses those coordinates divided by <em>base</em><sup><em>k</em></sup>, or 10<sup>1</sup> in this case], each such box is labeled with the result, and boxes labeled <em>NO</em> are discarded.  Finally the algorithm above is modified as just given.)</li>
-<li>Besides a grid, another useful data structure is a <em>mapped regular paving</em> (Harlow et al. 2012)[^41], which can be described as a binary tree with nodes each consisting of zero or two child nodes and a marking value.  Start with a box that entirely covers the desired shape.  Calculate <strong>InShape</strong> for the box.  If it returns <em>YES</em> or <em>NO</em> then mark the box with <em>YES</em> or <em>NO</em>, respectively; otherwise it returns <em>MAYBE</em>, so divide the box along its first widest coordinate into two sub-boxes, set the parent box&#39;s children to those sub-boxes, then repeat this process for each sub-box (or if the nesting level is too deep, instead mark each sub-box with <em>MAYBE</em>).  Then, to generate a random point (with a base-2 fractional part), start from the root, then: (1) If the box is marked <em>YES</em>, return a uniform random point between the given coordinates using the <strong>RandUniformInRange</strong> algorithm; or (2) if the box is marked <em>NO</em>, start over from the root; or (3) if the box is marked <em>MAYBE</em>, get the two child boxes bisected from the box, choose one of them with equal probability (for example, choose the left child if an unbiased random bit is 0, or the right child otherwise), mark the chosen child with the result of <strong>InShape</strong> for that child, and repeat this process with that child; or (4) the box has two child boxes, so choose one of them with equal probability and repeat this process with that child.</li>
+<li>Devroye (1986, chapter 8, section 3)[^25] describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/<em>base</em><sup><em>k</em></sup> in all dimensions; the result of <strong>InShape</strong> is calculated for each such box and that box labeled with the result; all boxes labeled <em>NO</em> are discarded; and the algorithm is modified by adding the following after step 2: &quot;2a. Choose a precalculated box uniformly at random, then set <em>c1</em>, ..., <em>cN</em> to that box&#39;s coordinates, then set <em>d</em> to <em>k</em> and set <em>S</em> to <em>base</em><sup><em>k</em></sup>. If a box labeled <em>YES</em> was chosen, follow the substeps in step 5. If a box labeled <em>MAYBE</em> was chosen, multiply <em>S</em> by <em>base</em> and add 1 to <em>d</em>.&quot; (For example, if <em>base</em> is 10, <em>k</em> is 1, <em>N</em> is 2, and <em>d1</em> = <em>d2</em> = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, <strong>InShape</strong> is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on [the boxes&#39; coordinates are stored as just given, but <strong>InShape</strong> instead uses those coordinates divided by <em>base</em><sup><em>k</em></sup>, or 10<sup>1</sup> in this case], each such box is labeled with the result, and boxes labeled <em>NO</em> are discarded.  Finally the algorithm above is modified as just given.)</li>
+<li>Besides a grid, another useful data structure is a <em>mapped regular paving</em> (Harlow et al. 2012)[^28], which can be described as a binary tree with nodes each consisting of zero or two child nodes and a marking value.  Start with a box that entirely covers the desired shape.  Calculate <strong>InShape</strong> for the box.  If it returns <em>YES</em> or <em>NO</em> then mark the box with <em>YES</em> or <em>NO</em>, respectively; otherwise it returns <em>MAYBE</em>, so divide the box along its first widest coordinate into two sub-boxes, set the parent box&#39;s children to those sub-boxes, then repeat this process for each sub-box (or if the nesting level is too deep, instead mark each sub-box with <em>MAYBE</em>).  Then, to generate a random point (with a base-2 fractional part), start from the root, then: (1) If the box is marked <em>YES</em>, return a uniform random point between the given coordinates using the <strong>RandUniformInRange</strong> algorithm; or (2) if the box is marked <em>NO</em>, start over from the root; or (3) if the box is marked <em>MAYBE</em>, get the two child boxes bisected from the box, choose one of them with equal probability (for example, choose the left child if an unbiased random bit is 0, or the right child otherwise), mark the chosen child with the result of <strong>InShape</strong> for that child, and repeat this process with that child; or (4) the box has two child boxes, so choose one of them with equal probability and repeat this process with that child.</li>
 <li>The algorithm can be adapted to return 1 with probability equal to its acceptance rate (which equals the shape&#39;s volume divided by the hyperrectangle&#39;s volume), and return 0 with the opposite probability.  In this case, replace steps 5 and 6 with the following: &quot;5. If the result of <strong>InShape</strong> is <em>YES</em>, return 1.; 6. If the result of <strong>InShape</strong> is <em>NO</em>, return 0.&quot; (I thank BruceET of the Cross Validated community for leading me to this insight.)</li>
 </ol>
 
@@ -1892,7 +1892,7 @@ def exprandscore(ln,ld,ln2,ld2):
 </ul>
 
 <p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.</p></li>
-<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &le; 0, where <em>f</em> is a continuous function of one or more variables, <strong>InShape</strong>&#39;s calculations should involve <em>rational intervals</em>, or objects that describe a number that&#39;s bounded by two rational numbers with numerators and denominators of arbitrary size.  (See also (Duff 1992)[^42]; Daumas et al. (2007)[^43] give one implementation of rational intervals.) Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals[^44] with an accuracy that increases as <em>S</em> increases.  Then, <strong>InShape</strong> can return&mdash;</p>
+<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &le; 0, where <em>f</em> is a continuous function of one or more variables, <strong>InShape</strong>&#39;s calculations should involve <em>rational intervals</em>, or objects that describe a number that&#39;s bounded by two rational numbers with numerators and denominators of arbitrary size.  (See also (Duff 1992)[^29]; Daumas et al. (2007)[^30] give one implementation of rational intervals.) Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals[^31] with an accuracy that increases as <em>S</em> increases.  Then, <strong>InShape</strong> can return&mdash;</p>
 
 <ul>
 <li><em>YES</em> if the interval result of <em>f</em> has an upper bound less than or equal to 0;</li>
@@ -1934,7 +1934,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <ul>
 <li>The following example generates a point inside a quarter diamond (centered at (0, ..., 0), &quot;radius&quot; <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1) + ... + (<em>cN</em>+1)) &lt; <em>S</em>*<em>k</em>; <em>NO</em> if (<em>c1</em> + ... + <em>cN</em>) &gt; <em>S</em>*<em>k</em>; and <em>MAYBE</em> otherwise.  For <em>N</em>=2, the acceptance rate (see note 5) is 1/2.  For a full diamond, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.</li>
-<li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1)<sup>2</sup> + ... + (<em>cN</em>+1)<sup>2</sup>) &lt; (<em>S</em>*<em>k</em>)<sup>2</sup>; <em>NO</em> if (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; (<em>S</em>*<em>k</em>)<sup>2</sup>; and <em>MAYBE</em> otherwise.  For <em>N</em>=2, the acceptance rate (see note 5) is <em>&pi;</em>/4. For a full hypersphere with radius 1, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.  In the case of a 2-dimensional disk, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (for example, Devroye (1986, p. 230 ff.)[^45]).</li>
+<li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1)<sup>2</sup> + ... + (<em>cN</em>+1)<sup>2</sup>) &lt; (<em>S</em>*<em>k</em>)<sup>2</sup>; <em>NO</em> if (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; (<em>S</em>*<em>k</em>)<sup>2</sup>; and <em>MAYBE</em> otherwise.  For <em>N</em>=2, the acceptance rate (see note 5) is <em>&pi;</em>/4. For a full hypersphere with radius 1, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.  In the case of a 2-dimensional disk, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (for example, Devroye (1986, p. 230 ff.)[^25]).</li>
 <li>The following example generates a point inside a quarter <em>astroid</em> (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>sk</em>&minus;<em>c1</em>&minus;1)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>&minus;1)<sup>2</sup>) &gt; <em>sk</em><sup>2</sup>; <em>NO</em> if ((<em>sk</em>&minus;<em>c1</em>)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>)<sup>2</sup>) &lt; <em>sk</em><sup>2</sup>; and <em>MAYBE</em> otherwise, where <em>sk</em> = <em>S</em>*<em>k</em>.  For <em>N</em>=2, the acceptance rate (see note 5) is 1 &minus; <em>&pi;</em>/4. For a full astroid, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.</li>
 </ul>
 </blockquote>
@@ -1991,7 +1991,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <p>Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory algorithm for the probabilities <em>A</em>, <em>B</em>, and <em>C</em>, especially when these probabilities have a non-trivial symbolic form.</p>
 
 <blockquote>
-<p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in Devroye (1986, ch. 7, sec. 4.6)[^46]; an exception is that instead of generating a uniform random variate and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
+<p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in Devroye (1986, ch. 7, sec. 4.6)[^25]; an exception is that instead of generating a uniform random variate and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
 </blockquote>
 
 <p><a id=Mixtures></a></p>
@@ -2026,11 +2026,11 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Continuous Distributions Supported on 0 to 1</h4>
 
-<p>The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions thanks to Bernoulli factories, as long as the distributions have probability density functions (PDFs) and take on only values 0 or greater and 1 or less.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) <em>b</em> (such as 2 for binary).  (See also Devroye (1986, ch. 2, sec. 3.8, exercise 14)[^47])</p>
+<p>The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions thanks to Bernoulli factories, as long as the distributions have probability density functions (PDFs) and take on only values 0 or greater and 1 or less.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) <em>b</em> (such as 2 for binary).  (See also Devroye (1986, ch. 2, sec. 3.8, exercise 14)[^25])</p>
 
 <ol>
 <li>Create a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part.  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that PSRN.</li>
-<li><p>As the PSRN builds up a uniform random variate, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability density function (PDF) modeled by this Bernoulli factory, where <em>U</em> is the uniform random variate built up by the PSRN. <em>f</em> has a domain equal to the open interval (0, 1) or a subset of that interval, and returns a value of [0, 1] everywhere in its domain. <em>f</em> is the PDF for the underlying continuous distribution, or the PDF times a (possibly unknown) constant factor.  As shown by Keane and O&#39;Brien (1994)[^48], however, this step works if and only if&mdash;</p>
+<li><p>As the PSRN builds up a uniform random variate, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability density function (PDF) modeled by this Bernoulli factory, where <em>U</em> is the uniform random variate built up by the PSRN. <em>f</em> has a domain equal to the open interval (0, 1) or a subset of that interval, and returns a value of [0, 1] everywhere in its domain. <em>f</em> is the PDF for the underlying continuous distribution, or the PDF times a (possibly unknown) constant factor.  As shown by Keane and O&#39;Brien (1994)[^6], however, this step works if and only if&mdash;</p>
 
 <ul>
 <li><em>f</em>(<em>&lambda;</em>) is constant on its domain, or</li>
@@ -2041,7 +2041,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <li>If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part <em>n</em> digits (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the PSRN.</li>
 </ol>
 
-<p>However, the speed of this algorithm depends crucially on the mode (highest point) of <em>f</em> in [0, 1].[^27]  As the mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If the mode is close to 0, <em>f</em> will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of <em>f</em> and have to be rejected.</p>
+<p>However, the speed of this algorithm depends crucially on the mode (highest point) of <em>f</em> in [0, 1].[^32]  As the mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If the mode is close to 0, <em>f</em> will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of <em>f</em> and have to be rejected.</p>
 
 <p>The beta distribution&#39;s PDF at (1) fits the requirements of Keane and O&#39;Brien (for <code>alpha</code> and <code>beta</code> both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.</p>
 
@@ -2112,7 +2112,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Hyperbolic Secant Distribution</h4>
 
-<p>The following algorithm adapts the rejection algorithm from p. 472 in Devroye (1986)[^49] for arbitrary-precision sampling.</p>
+<p>The following algorithm adapts the rejection algorithm from p. 472 in Devroye (1986)[^25] for arbitrary-precision sampling.</p>
 
 <ol>
 <li>Generate <em>ret</em>, an exponential random variate with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm.  This number will be a uniform PSRN.</li>
@@ -2172,15 +2172,15 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Arc-Cosine Distribution</h4>
 
-<p>The following is a reimplementation of an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)[^50].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random variate will be 0, 1, or a real number in between.  This algorithm&#39;s result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform random variate between 0 and 1, as pointed out by Devroye. (acos(<em>x</em>) is the inverse cosine function.)  The algorithm follows.</p>
+<p>The following is a reimplementation of an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)[^25].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random variate will be 0, 1, or a real number in between.  This algorithm&#39;s result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform random variate between 0 and 1, as pointed out by Devroye. (acos(<em>x</em>) is the inverse cosine function.)  The algorithm follows.</p>
 
 <ol>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
 <li>Set <em>m</em> to 1.</li>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>u</em> be the result.</li>
 <li>With probability 4/(4*<em>m</em>*<em>m</em> + 2*<em>m</em>), call the <strong>URandLess</strong> algorithm with parameters <em>u</em> and <em>ret</em> in that order, and if that call returns 1, call the <strong>algorithm for &pi; / 4</strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, twice, and if both of these calls return 1, add 1 to <em>m</em> and go to step 3.  (Here, an erratum in the algorithm on page 129 of the book is incorporated.)</li>
-<li>If <em>m</em> is odd[^51], optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
-<li>If <em>m</em> is even[^52], go to step 1.</li>
+<li>If <em>m</em> is odd[^33], optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
+<li>If <em>m</em> is even[^34], go to step 1.</li>
 </ol>
 
 <p>And here is Python code that implements this algorithm.  The code uses floating-point arithmetic only at the end, to convert the result to a convenient form, and it relies on methods from <em>randomgen.py</em> and <em>bernoulli.py</em>.</p>
@@ -2242,7 +2242,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Exponential Distribution with Unknown Small Rate</h4>
 
-<p>Exponential random variates can be generated using an input coin of unknown probability of heads of <em>&lambda;</em> (which can either be 1 or come between 0 and 1), by generating arrival times in a <em>Poisson process</em> of rate 1, then <em>thinning</em> the process using the coin.  The arrival times that result will be exponentially distributed with rate <em>&lambda;</em>.  I found the basic idea in the answer to a <a href="https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform"><strong>Mathematics Stack Exchange question</strong></a>, and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)[^53].  The algorithm follows:</p>
+<p>Exponential random variates can be generated using an input coin of unknown probability of heads of <em>&lambda;</em> (which can either be 1 or come between 0 and 1), by generating arrival times in a <em>Poisson process</em> of rate 1, then <em>thinning</em> the process using the coin.  The arrival times that result will be exponentially distributed with rate <em>&lambda;</em>.  I found the basic idea in the answer to a <a href="https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform"><strong>Mathematics Stack Exchange question</strong></a>, and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)[^25].  The algorithm follows:</p>
 
 <ol>
 <li>Generate an exponential(1) random variate using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex</em>.</li>
@@ -2284,10 +2284,10 @@ def exprandscore(ln,ld,ln2,ld2):
 </ol>
 
 <blockquote>
-<p><strong>Note</strong>: A <em>bounded exponential</em> random variate with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Do the following <em>m</em> times or until a zero is generated, whichever happens first: &#39;Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise&#39;. Then set <em>k</em> to the number of ones generated this way. (<em>k</em> is a so-called bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random variate, which an algorithm of Bringmann and Friedrich (2013)[^54] can generate as well.  If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random variate in step 2, a uniform(0,<em>&mu;</em>) random variate can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number greater than 0 and less than 1).</p>
+<p><strong>Note</strong>: A <em>bounded exponential</em> random variate with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Do the following <em>m</em> times or until a zero is generated, whichever happens first: &#39;Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise&#39;. Then set <em>k</em> to the number of ones generated this way. (<em>k</em> is a so-called bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random variate, which an algorithm of Bringmann and Friedrich (2013)[^35] can generate as well.  If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random variate in step 2, a uniform(0,<em>&mu;</em>) random variate can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number greater than 0 and less than 1).</p>
 </blockquote>
 
-<p>The following generator for the <strong>rate ln(2)</strong> is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random variate. Unlike the similar algorithm of Ahrens and Dieter (1972)[^55], this one doesn&#39;t require a table of probability values.</p>
+<p>The following generator for the <strong>rate ln(2)</strong> is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random variate. Unlike the similar algorithm of Ahrens and Dieter (1972)[^36], this one doesn&#39;t require a table of probability values.</p>
 
 <ol>
 <li>(Samples the integer part of the random variate.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
@@ -2315,14 +2315,14 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Symmetric Geometric Distribution</h4>
 
-<p>Samples from the symmetric geometric distribution from (Ghosh et al. 2012)[^56], with parameter <em>&lambda;</em>, in the form of an input coin with unknown probability of heads of <em>&lambda;</em>.</p>
+<p>Samples from the symmetric geometric distribution from (Ghosh et al. 2012)[^37], with parameter <em>&lambda;</em>, in the form of an input coin with unknown probability of heads of <em>&lambda;</em>.</p>
 
 <ol>
 <li>Flip the input coin until it returns 0.  Set <em>n</em> to the number of times the coin returned 1 this way.</li>
 <li>Run a <strong>Bernoulli factory algorithm for 1/(2&minus;<em>&lambda;</em>)</strong>, using the input coin.  If the run returns 1, return <em>n</em>.  Otherwise, return &minus;1 &minus; <em>n</em>.</li>
 </ol>
 
-<p>This is similar to an algorithm mentioned in an appendix in Li (2021)[^57], in which the input coin&mdash;</p>
+<p>This is similar to an algorithm mentioned in an appendix in Li (2021)[^38], in which the input coin&mdash;</p>
 
 <ul>
 <li>has <em>&lambda;</em> = 1&minus;exp(&minus;<em>&epsilon;</em>), and</li>
@@ -2333,7 +2333,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Lindley Distribution and Lindley-Like Mixtures</h4>
 
-<p>The <em>Lindley distribution</em> is a <em>mixture</em> of two probability distributions, with each of the two distributions having a separate probability of being sampled (<em>w</em> and 1&minus;<em>w</em> in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^58] with parameter <em>&theta;</em> (a real number greater than 0) can be generated as follows:</p>
+<p>The <em>Lindley distribution</em> is a <em>mixture</em> of two probability distributions, with each of the two distributions having a separate probability of being sampled (<em>w</em> and 1&minus;<em>w</em> in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^39] with parameter <em>&theta;</em> (a real number greater than 0) can be generated as follows:</p>
 
 <p>Let <em>A</em> be 1 and let <em>B</em> be 2.  Then:</p>
 
@@ -2354,35 +2354,35 @@ def exprandscore(ln,ld,ln2,ld2):
 </tr>
 </thead><tbody>
 <tr>
-<td>Garima (Shanker 2016)[^59].</td>
+<td>Garima (Shanker 2016)[^40].</td>
 <td>(1+<em>&theta;</em>)/(2+<em>&theta;</em>).</td>
 <td><em>&theta;</em>.</td>
 <td>1.</td>
 <td>2.</td>
 </tr>
 <tr>
-<td>i-Garima (Singh and Das 2020)[^60].</td>
+<td>i-Garima (Singh and Das 2020)[^41].</td>
 <td>(2+<em>&theta;</em>)/(3+<em>&theta;</em>).</td>
 <td><em>&theta;</em>.</td>
 <td>1.</td>
 <td>2.</td>
 </tr>
 <tr>
-<td>Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020)[^61].</td>
+<td>Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020)[^42].</td>
 <td><em>&theta;</em>/(1+<em>&theta;</em>).</td>
 <td><em>&theta;</em>.</td>
 <td>2.</td>
 <td>3.</td>
 </tr>
 <tr>
-<td>Xgamma (Sen et al. 2016)[^62].</td>
+<td>Xgamma (Sen et al. 2016)[^43].</td>
 <td><em>&theta;</em>/(1+<em>&theta;</em>).</td>
 <td><em>&theta;</em>.</td>
 <td>1.</td>
 <td>3.</td>
 </tr>
 <tr>
-<td>Mirra (Sen et al. 2021)[^63].</td>
+<td>Mirra (Sen et al. 2021)[^44].</td>
 <td><em>&theta;</em><sup>2</sup>/(<em>&alpha;</em>+<em>&theta;</em><sup>2</sup>) where <em>&alpha;</em>&gt;0.</td>
 <td><em>&theta;</em>.</td>
 <td>1.</td>
@@ -2395,8 +2395,8 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <ol>
 <li>If <em>&theta;</em> is a uniform PSRN, then the check &quot;With probability  <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>)&quot; can be implemented by running the Bernoulli factory algorithm for <strong>(<em>d</em> + <em>&mu;</em>) / ((<em>d</em> + <em>&mu;</em>) + (<em>c</em> + <em>&lambda;</em>))</strong>, where <em>c</em> is 1; <em>&lambda;</em> represents an input coin that always returns 0; <em>d</em> is <em>&theta;</em>&#39;s integer part, and <em>&mu;</em> is an input coin that runs <strong>SampleGeometricBag</strong> on <em>&theta;</em>&#39;s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.</li>
-<li>A <strong>Sushila</strong> random variate is <em>&alpha;</em> times a Lindley random variate, where <em>&alpha;</em> &gt; 0 (Shanker et al. 2013)[^64].</li>
-<li>An <strong>X-Lindley</strong> random variate (Chouia and Zeghdoudi 2021)[^28] is, with probability <em>&theta;</em>/(1+<em>&theta;</em>), an exponential random variate with a rate of <em>&theta;</em> (see step 1), and otherwise, a Lindley random variate with parameter <em>&theta;</em>.</li>
+<li>A <strong>Sushila</strong> random variate is <em>&alpha;</em> times a Lindley random variate, where <em>&alpha;</em> &gt; 0 (Shanker et al. 2013)[^45].</li>
+<li>An <strong>X-Lindley</strong> random variate (Chouia and Zeghdoudi 2021)[^46] is, with probability <em>&theta;</em>/(1+<em>&theta;</em>), an exponential random variate with a rate of <em>&theta;</em> (see step 1), and otherwise, a Lindley random variate with parameter <em>&theta;</em>.</li>
 </ol>
 </blockquote>
 
@@ -2415,7 +2415,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>One-Dimensional Epanechnikov Kernel</h4>
 
-<p>Adapted from Devroye and Györfi (1985, p. 236)[^65].</p>
+<p>Adapted from Devroye and Györfi (1985, p. 236)[^47].</p>
 
 <ol>
 <li>Generate three uniform PSRNs <em>a</em>, <em>b</em>, and <em>c</em>, with a positive sign, an integer part of 0, and an empty fractional part.</li>
@@ -2456,7 +2456,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Tulap distribution</h4>
 
-<p>The algorithm below samples a variate from the Tulap(<em>m</em>, <em>b</em>, <em>q</em>) distribution (&quot;truncated uniform Laplace&quot;; Awan and Slavković (2019)[^29]) and returns it as a uniform PSRN.</p>
+<p>The algorithm below samples a variate from the Tulap(<em>m</em>, <em>b</em>, <em>q</em>) distribution (&quot;truncated uniform Laplace&quot;; Awan and Slavković (2019)[^46]) and returns it as a uniform PSRN.</p>
 
 <ul>
 <li>The parameter <em>b</em> is greater than 0, is less than 1, and can be a uniform PSRN.</li>
@@ -2485,7 +2485,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Continuous Bernoulli Distribution</h4>
 
-<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)[^30] was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
+<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)[^48] was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
 
 <p>The continous Bernoulli distribution takes one parameter <code>lamda</code> (where 0 &le; <code>lamda</code> &le; 1), and takes on values in the closed interval [0, 1] with a probability proportional to&mdash;</p>
 
@@ -2564,7 +2564,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>For a 1-dimensional distribution with a probability density function (PDF), the bit complexity is greater than or equal to <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random variate&#39;s fractional part (Devroye and Gravel 2020)[^3].</li>
-<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is greater than or equal to the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)[^31].  (For a given probability <em>p</em>, the binary entropy is <code>0 - p*log2(p)</code> where <code>log2(x) = ln(x)/ln(2)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
+<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is greater than or equal to the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)[^49].  (For a given probability <em>p</em>, the binary entropy is <code>0 - p*log2(p)</code> where <code>log2(x) = ln(x)/ln(2)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
 </ul>
 
 <p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/<em>&lambda;</em>), so the minimum bit complexity for this distribution is log2(exp(1)/<em>&lambda;</em>) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when <em>&lambda;</em> = 1, decreases when <em>&lambda;</em> goes up, and increases when <em>&lambda;</em> goes down.  In the case of any other distribution with a PDF, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s PDF.</p>
@@ -2584,7 +2584,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.</p>
 
-<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)[^32].  However, it uses no random bits if both its parameters are the same.</p>
+<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)[^50].  However, it uses no random bits if both its parameters are the same.</p>
 
 <p>For <strong>SampleGeometricBag</strong> with base 2, the bit complexity has two components.</p>
 
@@ -2614,7 +2614,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>choosing the item with the smallest key</li>
 </ul>
 
-<p>(see also (Efraimidis 2015)[^33]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom <code>-ln(1-X)/w</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
+<p>(see also (Efraimidis 2015)[^51]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom <code>-ln(1-X)/w</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
 
 <p><a id=Acknowledgments></a></p>
 
@@ -2698,83 +2698,63 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>[^26]: Fan, Baoying et al. “On Generating Exponentially Distributed Variates by Using Early Rejection.” <em>2019 IEEE 5th International Conference on Computer and Communications (ICCC)</em> (2019): 1307-1311.</p>
 
-<p>[^27]: More specifically, the <em>essential supremum</em>, that is, the function&#39;s highest point in [0, 1] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous PDFs don&#39;t admit Bernoulli factories, as required by step 2.</p>
+<p>[^27]: 2016C.T. Li, A. El Gamal, &quot;<a href="https://arxiv.org/abs/1603.05238v1"><strong>A Universal Coding Scheme for Remote Generation of Continuous Random Variables</strong></a>&quot;, arXiv:1603.05238v1  [cs.IT], 2016.</p>
 
-<p>[^28]: No note text yet.</p>
+<p>[^28]: Harlow, J., Sainudiin, R., Tucker, W., &quot;Mapped Regular Pavings&quot;, <em>Reliable Computing</em> 16 (2012).</p>
 
-<p>[^29]: No note text yet.</p>
+<p>[^29]: Duff, T., &quot;Interval Arithmetic and Recursive Subdivision for Implicit Functions and Constructive Solid Geometry&quot;, Computer Graphics 26(2), July 1992.</p>
 
-<p>[^30]: Loaiza-Ganem, Gabriel, and John P. Cunningham. &quot;The continuous Bernoulli: fixing a pervasive error in variational autoencoders.&quot; <em>Advances in Neural Information Processing Systems</em> 32 (2019).</p>
+<p>[^30]: Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</p>
 
-<p>[^31]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^31]: I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</p>
 
-<p>[^32]: Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</p>
+<p>[^32]: More specifically, the <em>essential supremum</em>, that is, the function&#39;s highest point in [0, 1] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous PDFs don&#39;t admit Bernoulli factories, as required by step 2.</p>
 
-<p>[^33]: Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</p>
+<p>[^33]: &quot;<em>x</em> is odd&quot; means that <em>x</em> is an integer and not divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 1, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 1.</p>
 
-<p>[^34]: Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics &amp; data analysis, 44(3), pp.451-464.</p>
+<p>[^34]: &quot;<em>x</em> is even&quot; means that <em>x</em> is an integer and divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 0, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 0.</p>
 
-<p>[^35]: S. Kakutani, &quot;On equivalence of infinite product measures&quot;, <em>Annals of Mathematics</em> 1948.</p>
+<p>[^35]: Bringmann, K. and Friedrich, T., 2013, July. &quot;Exact and efficient generation of geometric random variates and random graphs&quot;, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</p>
 
-<p>[^36]: George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</p>
+<p>[^36]: Ahrens, J.H., and Dieter, U., &quot;Computer methods for sampling from the exponential and normal distributions&quot;, <em>Communications of the ACM</em> 15, 1972.</p>
 
-<p>[^37]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</p>
+<p>[^37]: Ghosh, A., Roughgarden, T., and Sundararajan, M., &quot;Universally Utility-Maximizing Privacy Mechanisms&quot;, <em>SIAM Journal on Computing</em> 41(6), 2012.</p>
 
-<p>[^38]: 2016C.T. Li, A. El Gamal, &quot;<a href="https://arxiv.org/abs/1603.05238v1"><strong>A Universal Coding Scheme for Remote Generation of Continuous Random Variables</strong></a>&quot;, arXiv:1603.05238v1  [cs.IT], 2016.</p>
+<p>[^38]: Li, L., 2021. Bayesian Inference on Ratios Subject to Differentially Private Noise (Doctoral dissertation, Duke University).</p>
 
-<p>[^39]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
+<p>[^39]: Lindley, D.V., &quot;Fiducial distributions and Bayes&#39; theorem&quot;, <em>Journal of the Royal Statistical Society Series B</em>, 1958.</p>
 
-<p>[^40]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^40]: Shanker, R., &quot;Garima distribution and its application to model behavioral science data&quot;, <em>Biom Biostat Int J.</em> 4(7), 2016.</p>
 
-<p>[^41]: Harlow, J., Sainudiin, R., Tucker, W., &quot;Mapped Regular Pavings&quot;, <em>Reliable Computing</em> 16 (2012).</p>
+<p>[^41]: Singh, B.P., Das, U.D., &quot;<a href="https://arxiv.org/abs/2010.15078"><strong>On an Induced Distribution and its Statistical Properties</strong></a>&quot;, arXiv:2010.15078 [stat.ME], 2020.</p>
 
-<p>[^42]: Duff, T., &quot;Interval Arithmetic and Recursive Subdivision for Implicit Functions and Constructive Solid Geometry&quot;, Computer Graphics 26(2), July 1992.</p>
+<p>[^42]: Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</p>
 
-<p>[^43]: Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</p>
+<p>[^43]: Sen, S., et al., &quot;The xgamma distribution: statistical properties and application&quot;, 2016.</p>
 
-<p>[^44]: I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</p>
+<p>[^44]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. &quot;The Mirra distribution for modeling time-to-event data sets.&quot; In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.</p>
 
-<p>[^45]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^45]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. &quot;Sushila distribution and its application to waiting times data.&quot; International Journal of Business Management 3, no. 2 (2013): 1-11.</p>
 
-<p>[^46]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^46]: No note text yet.</p>
 
-<p>[^47]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^47]: Devroye, L., Györfi, L., <em>Nonparametric Density Estimation: The L1 View</em>, 1985.</p>
 
-<p>[^48]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
+<p>[^48]: Loaiza-Ganem, Gabriel, and John P. Cunningham. &quot;The continuous Bernoulli: fixing a pervasive error in variational autoencoders.&quot; <em>Advances in Neural Information Processing Systems</em> 32 (2019).</p>
 
-<p>[^49]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^49]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^50]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^50]: Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</p>
 
-<p>[^51]: &quot;<em>x</em> is odd&quot; means that <em>x</em> is an integer and not divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 1, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 1.</p>
+<p>[^51]: Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</p>
 
-<p>[^52]: &quot;<em>x</em> is even&quot; means that <em>x</em> is an integer and divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 0, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 0.</p>
+<p>[^52]: Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics &amp; data analysis, 44(3), pp.451-464.</p>
 
-<p>[^53]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^53]: S. Kakutani, &quot;On equivalence of infinite product measures&quot;, <em>Annals of Mathematics</em> 1948.</p>
 
-<p>[^54]: Bringmann, K. and Friedrich, T., 2013, July. &quot;Exact and efficient generation of geometric random variates and random graphs&quot;, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</p>
+<p>[^54]: George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</p>
 
-<p>[^55]: Ahrens, J.H., and Dieter, U., &quot;Computer methods for sampling from the exponential and normal distributions&quot;, <em>Communications of the ACM</em> 15, 1972.</p>
-
-<p>[^56]: Ghosh, A., Roughgarden, T., and Sundararajan, M., &quot;Universally Utility-Maximizing Privacy Mechanisms&quot;, <em>SIAM Journal on Computing</em> 41(6), 2012.</p>
-
-<p>[^57]: Li, L., 2021. Bayesian Inference on Ratios Subject to Differentially Private Noise (Doctoral dissertation, Duke University).</p>
-
-<p>[^58]: Lindley, D.V., &quot;Fiducial distributions and Bayes&#39; theorem&quot;, <em>Journal of the Royal Statistical Society Series B</em>, 1958.</p>
-
-<p>[^59]: Shanker, R., &quot;Garima distribution and its application to model behavioral science data&quot;, <em>Biom Biostat Int J.</em> 4(7), 2016.</p>
-
-<p>[^60]: Singh, B.P., Das, U.D., &quot;<a href="https://arxiv.org/abs/2010.15078"><strong>On an Induced Distribution and its Statistical Properties</strong></a>&quot;, arXiv:2010.15078 [stat.ME], 2020.</p>
-
-<p>[^61]: Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</p>
-
-<p>[^62]: Sen, S., et al., &quot;The xgamma distribution: statistical properties and application&quot;, 2016.</p>
-
-<p>[^63]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. &quot;The Mirra distribution for modeling time-to-event data sets.&quot; In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.</p>
-
-<p>[^64]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. &quot;Sushila distribution and its application to waiting times data.&quot; International Journal of Business Management 3, no. 2 (2013): 1-11.</p>
-
-<p>[^65]: Devroye, L., Györfi, L., <em>Nonparametric Density Estimation: The L1 View</em>, 1985.</p>
+<p>[^55]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -2873,7 +2853,7 @@ def contbernoullidist(b, lamda, precision=53):
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a not-so-trivial distribution; when each PSRN is bounded away from 0, the distribution&#39;s left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.  See Glen et al. (2004)[^34] and a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>Stack Exchange question</strong></a>.</p>
+<p><strong>Note:</strong> The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a not-so-trivial distribution; when each PSRN is bounded away from 0, the distribution&#39;s left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.  See Glen et al. (2004)[^52] and a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>Stack Exchange question</strong></a>.</p>
 </blockquote>
 
 <p><a id=Uniform_of_Uniforms_Produces_a_Product_of_Uniforms></a></p>
@@ -2888,7 +2868,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>To find the PDF for the algorithm, find the expected value of UPDF(<em>x</em>, 0, <em>Z</em>+<em>b</em>*<em>c</em>), where <em>Z</em> is distributed as uniform(0, <em>K</em>).  This is done by finding the integral (area under the graph) with respect to <em>z</em> of UPDF(<em>x</em>, 0, <em>z</em>+<em>b</em>*<em>c</em>)*UPDF(<em>z</em>, 0, <em>K</em>) in the interval [0, <em>K</em>] (the set of values <em>Z</em> can take on).  The result is <code>PDF1(x) = ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)</code>.</li>
-<li>The second PDF is the PDF for the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>].  By Rohatgi&#39;s formula (see also (Glen et al. 2004)[^34]), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>.</li>
+<li>The second PDF is the PDF for the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>].  By Rohatgi&#39;s formula (see also (Glen et al. 2004)[^52]), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>.</li>
 </ul>
 
 <p>Now it must be shown that <code>PDF1</code> and <code>PDF2</code> are equal whenever <em>x</em> is in the interval (0, <em>b</em>*<em>d</em>).  Subtracting one PDF from the other and simplifying, it is seen that:</p>
@@ -2933,9 +2913,9 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>Let <em>a</em><sub><em>j</em></sub> be the probability that the digit at position <em>j</em> equals 1 (starting with <em>j</em> = 1 for the first digit after the point).</p>
 
-<p>Then Kakutani&#39;s theorem (Kakutani 1948)[^35] says that <em>X</em> has an <em>absolutely continuous</em>[^12] distribution if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)[^36], (Chatterji 1964)[^37].</p>
+<p>Then Kakutani&#39;s theorem (Kakutani 1948)[^53] says that <em>X</em> has an <em>absolutely continuous</em>[^12] distribution if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)[^54], (Chatterji 1964)[^55].</p>
 
-<p>This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2, and set <em>X</em>&#39;s binary digits using those probabilities.  However, as Marsaglia (1971)[^36] showed, the absolutely continuous distribution can only be one of the following:</p>
+<p>This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2, and set <em>X</em>&#39;s binary digits using those probabilities.  However, as Marsaglia (1971)[^54] showed, the absolutely continuous distribution can only be one of the following:</p>
 
 <ol>
 <li>The distribution&#39;s probability density function (PDF) is zero somewhere in every open interval in (0, 1), without being 0 on all of [0, 1].  Thus, the PDF is not continuous.</li>
