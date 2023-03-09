@@ -46,7 +46,7 @@ $$f(x)=\left(\sum_{k=0}^n (-1)^k {n\choose k} (x-k)^{n-1} \text{sign}(x-k)\right
 
 where ${n\choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items, and sign(_x_) is 1 if _x_ is greater than 0, or 0 if _x_ is 0, or &minus;1 is less than 0.[^1]
 
-For _n_ uniform numbers, the distribution can take on values in the interval [0, _n_].  Note also that the PDF expresses a polynomial of degree _n_ &minus; 1.
+This is a polynomial of degree _n_ &minus; 1.  For _n_ uniform numbers, the distribution can take on values that are 0 or greater and _n_ or less.
 
 The samplers given below for the uniform sum logically work as follows:
 
@@ -291,7 +291,7 @@ def sum_of_uniform3(bern):
 <a id=Ratio_of_Two_Uniform_Random_Variates></a>
 ## Ratio of Two Uniform Random Variates
 
-The ratio of two uniform(0,1) random variates has the following PDF (see [**MathWorld**](https://mathworld.wolfram.com/UniformRatioDistribution.html)):
+The ratio of two uniform random variates between 0 and 1 has the following PDF (see [**MathWorld**](https://mathworld.wolfram.com/UniformRatioDistribution.html)):
 
 - 1/2 if _x_ >= 0 and _x_ <= 1,
 - ( 1/ _x_<sup>2</sup>) / 2 if _x_ > 1, and
