@@ -126,6 +126,7 @@
 <li><a href="#arcsin___lambda___sqrt_1_minus___lambda__2_minus_1"><strong>arcsin(<em>&lambda;</em>) + sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1</strong></a></li>
 <li><a href="#tanh__m____lambda"><strong>tanh(<em>m</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#Expressions_Involving_Polylogarithms"><strong>Expressions Involving Polylogarithms</strong></a></li>
+<li><a href="#min___lambda___1_2_and_min___lambda___1_minus___lambda"><strong>min(<em>&lambda;</em>, 1/2) and min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)</strong></a></li>
 </ul></li>
 <li><a href="#Algorithms_for_Specific_Functions_of___lambda___Probability_Sensitive"><strong>Algorithms for Specific Functions of <em>&lambda;</em> (Probability-Sensitive)</strong></a>
 
@@ -1802,6 +1803,108 @@
 <li>Return a number that is 1 with probability 1/<em>t</em><sup><em>r</em></sup> and 0 otherwise.</li>
 </ol>
 
+<p><a id=min___lambda___1_2_and_min___lambda___1_minus___lambda></a></p>
+
+<h4>min(<em>&lambda;</em>, 1/2) and min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)</h4>
+
+<p>My own algorithm for min(<em>&lambda;</em>, 1/2) is as follows.  See the <a href="https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>appendix</strong></a> for the derivation of this algorithm.</p>
+
+<ol>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
+<li>Run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) given later, and return the result of that run.</li>
+</ol>
+
+<p>And the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) is as follows:</p>
+
+<ol>
+<li>(Random walk.) Generate unbiased random bits until more zeros than ones are generated this way for the first time.  Then set <em>m</em> to (<em>n</em>&minus;1)/2+1, where <em>n</em> is the number of bits generated this way.</li>
+<li>(Build a degree-<em>m</em>*2 polynomial equivalent to (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>m</em></sup>/2.) Let <em>z</em> be (4<sup><em>m</em></sup>/2)/choose(<em>m</em>*2,<em>m</em>).  Define a polynomial of degree <em>m</em>*2 whose (<em>m</em>*2)+1 Bernstein coefficients are all zero except the <em>m</em><sup>th</sup> coefficient (starting at 0), whose value is <em>z</em>.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial&#39;s degree without changing its shape or position; see the derivation in the appendix).  Let <em>d</em> be the new polynomial&#39;s degree.</li>
+<li>(Simulate the polynomial, whose degree is <em>d</em> (Goyal and Sigman 2012)[^14].) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be the <em>h</em><sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
+</ol>
+
+<p>I suspected that the required degree <em>d</em> would be floor(<em>m</em>*2/3)+1, as described in the appendix.  With help from the <a href="https://mathoverflow.net/questions/381419"><strong>MathOverflow community</strong></a>, steps 2 and 3 of the algorithm above can be described more efficiently as follows:</p>
+
+<ul>
+<li>(2.) Let <em>r</em> be floor(<em>m</em>*2/3)+1, and let <em>d</em> be <em>m</em>*2+<em>r</em>.</li>
+<li>(3.) (Simulate the polynomial, whose degree is <em>d</em>.) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be (1/2) * 2<sup><em>m</em>*2</sup>*choose(<em>r</em>,<em>h</em>&minus;<em>m</em>)/choose(<em>d</em>, <em>h</em>) (the polynomial&#39;s <em>h</em><sup>th</sup> Bernstein coefficient starting at 0; the first term is 1/2 because the polynomial being simulated has the value 1/2 at the point 1/2).  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
+</ul>
+
+<p>The min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) algorithm can be used to simulate certain other piecewise linear functions with three breakpoints, and algorithms for those functions are shown in the following table.  In the table, <em>&mu;</em> is the unknown probability of heads of a second input coin, and <em>&nu;</em> is the unknown probability of heads of a third input coin.</p>
+
+<table><thead>
+<tr>
+<th>Breakpoints</th>
+<th>Algorithm</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0 at 0; <em>&nu;</em>/2 at 1/2; and <em>&nu;</em>*<em>&mu;</em> at 1.</td>
+<td>Flip the <em>&nu;</em> input coin.  If it returns 0, return 0.  Otherwise, flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
+</tr>
+<tr>
+<td>(1&minus;<em>&mu;</em>)/2 at 0; 1/2 at 1/2; and <em>&mu;</em>/2 at 1.</td>
+<td>Generate an unbiased random bit.  If that bit is 1, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.  Otherwise, flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&lambda;</em> input coin and return 1 minus the result.</td>
+</tr>
+<tr>
+<td>0 at 0; <em>&mu;</em>/2 at 1/2; and <em>&mu;</em>/2 at 1.</td>
+<td>Flip the <em>&mu;</em> input coin.  If it returns 0, return 0.  Otherwise, generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
+</tr>
+<tr>
+<td><em>&mu;</em> at 0; 1/2 at 1/2; and 0 at 1.</td>
+<td>Flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return 1 minus the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
+</tr>
+<tr>
+<td>1 at 0; 1/2 at 1/2; and <em>&mu;</em> at 1.</td>
+<td>Flip the <em>&mu;</em> input coin.  If it returns 0, flip the <em>&lambda;</em> input coin and return 1 minus the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return 1 minus the result of that run.</td>
+</tr>
+<tr>
+<td><em>&mu;</em> at 0; 1/2 at 1/2; and 1 at 1.</td>
+<td>Flip the <em>&mu;</em> input coin.  If it returns 0, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return 1 minus the result of that run.</td>
+</tr>
+<tr>
+<td><em>B</em> at 0; <em>B</em>+(<em>A</em>/2) at 1/2; and <em>B</em>+(<em>A</em>/2) at 1.</td>
+<td>(<em>A</em>&le;1 and <em>B</em>&le;1&minus;<em>A</em> are rational numbers.) With probability 1&minus;<em>A</em>, return a number that is 1 with probability <em>B</em>/(1&minus;<em>A</em>) and 0 otherwise.  Otherwise, generate an unbiased random bit.  If that bit is 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Example:</strong> Let $f$ be $\lambda/2$ if $\lambda\le 1/2$, and $1/2-\lambda/2$ otherwise.  Then use the algorithm for 0 at 0; <em>&nu;</em>/2 at 1/2; and <em>&nu;</em>*<em>&mu;</em> at 1, where <em>&nu;</em> is a coin that returns 1 with probability 1/2 and 0 otherwise, and <em>&mu;</em> is a coin that always returns 0.</p>
+
+<p><strong>Note:</strong> The following explains how the algorithm is derived. The function min(<em>&lambda;</em>, 1/2) can be rewritten as <em>A</em> + <em>B</em> where&mdash;</p>
+
+<ul>
+<li><em>A</em>  = (1/2) * <em>&lambda;</em>, and</li>
+<li><em>B</em> = (1/2) * min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)<br/>&nbsp;&nbsp;= (1/2) * ((1&minus;sqrt(1&minus;4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)))/2)<br/>&nbsp;&nbsp;= (1/2) * $\sum_{k\ge 1} h_k(\lambda)$,</li>
+</ul>
+
+<p>revealing that the function is a <a href="#Convex_Combinations"><strong>convex combination</strong></a>, and <em>B</em> is itself a convex combination where&mdash;</p>
+
+<ul>
+<li><em>g</em>(<em>k</em>) = choose(2*<em>k</em>,<em>k</em>)/((2*<em>k</em>&minus;1)*2<sup>2*<em>k</em></sup>), and</li>
+<li><em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>) = (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>k</em></sup> / 2 = (<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>k</em></sup> * 4<sup><em>k</em></sup> / 2</li>
+</ul>
+
+<p>(see also Wästlund (1999)[^66]; Dale et al. (2015)[^67]).  The right-hand side of <em>h</em>, which is the polynomial built in step 3 of the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>), is a polynomial of degree <em>k</em>*2 with Bernstein coefficients&mdash;</p>
+
+<ul>
+<li><em>z</em> = (4<sup><em>v</em></sup>/2) / choose(<em>v</em>*2,<em>v</em>) at <em>v</em>=<em>k</em>, and</li>
+<li>0 elsewhere.</li>
+</ul>
+
+<p>Unfortunately, <em>z</em> can be greater than 1, so that the polynomial can&#39;t be simulated, as is, using the Bernoulli factory algorithm for <a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form"><strong>polynomials in Bernstein form</strong></a>.  Fortunately, the polynomial&#39;s degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see Tsai and Farouki (2001)[^68]).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree <em>d</em> as well as <em>z</em> (as defined above), the degree elevation is as follows:</p>
+
+<ol>
+<li>Set <em>r</em> to floor(<em>d</em>/3) + 1. (This starting value is because when this routine finishes, <em>r</em>/<em>d</em> appears to converge to 1/3 as <em>d</em> gets large, for the polynomial in question.)  Let <em>c</em> be choose(<em>d</em>,<em>d</em>/2).</li>
+<li>Create a list of <em>d</em>+<em>r</em>+1 Bernstein coefficients, all zeros.</li>
+<li>For each integer <em>i</em> in the interval [0, <em>d</em>+<em>r</em>]:
+
+<ul>
+<li>If <em>d</em>/2 is in the interval [max(0, <em>i</em>&minus;<em>r</em>), min(<em>d</em>,<em>i</em>)], set the <em>i</em><sup>th</sup> Bernstein coefficient (starting at 0) to <em>z</em>*<em>c</em>*choose(<em>r</em>,<em>i</em>&minus;<em>d</em>/2)* / choose(<em>d</em>+<em>r</em>, <em>i</em>).</li>
+</ul></li>
+<li>If all the Bernstein coefficients are 1 or less, return them.  Otherwise, add <em>d</em>/2 to <em>r</em> and go to step 2.</li>
+</ol>
+</blockquote>
+
 <p><a id=Algorithms_for_Specific_Functions_of___lambda___Probability_Sensitive></a></p>
 
 <h3>Algorithms for Specific Functions of <em>&lambda;</em> (Probability-Sensitive)</h3>
@@ -2293,7 +2396,7 @@ kind of irrational number.</p>
 <li>Third algorithm: See the appendix.</li>
 </ul>
 
-<p>A fourth algorithm to sample <em>&pi;</em>/4 is based on the section &quot;<a href="https://peteroupc.github.io/morealg.html#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot;, especially its Note 5, in &quot;More Algorithms for Arbitrary-Precision Sampling&quot;.</p>
+<p>A fourth algorithm to sample <em>&pi;</em>/4 is based on the section &quot;<a href="https://peteroupc.github.io/morealg.html#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot;, especially its Note 5, in &quot;More Algorithms for Arbitrary-Precision Sampling&quot;.  In effect, it samples a 2-dimensional point with coordinates between 0 and 1 and determines if that point is within 1 unit of the origin (0, 0), which will happen with probability <em>&pi;</em>/4.</p>
 
 <ol>
 <li>Set <em>S</em> to 2.  Then set <em>c1</em> and <em>c2</em> to 0.</li>
@@ -2658,7 +2761,7 @@ kind of irrational number.</p>
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> The following is another algorithm for this constant.  As <a href="https://stats.stackexchange.com/a/539564"><strong>I learned</strong></a>, the fractional part of 1/<em>U</em>, where <em>U</em> is a uniform random variate between 0 and 1, has a mean equal to 1 minus the Euler&ndash;Mascheroni constant <em>&gamma;</em>, about 0.5772.[^64]  This leads to the following algorithm to sample a probability equal to <em>&gamma;</em>:</p>
+<p><strong>Note:</strong> The following is another algorithm for this constant.  As <a href="https://stats.stackexchange.com/a/539564"><strong>I learned</strong></a>, the fractional part of 1/<em>U</em>, where <em>U</em> is a uniform random variate between 0 and 1, has a mean equal to 1 minus the Euler&ndash;Mascheroni constant <em>&gamma;</em>, about 0.5772.[^60]  This leads to the following algorithm to sample a probability equal to <em>&gamma;</em>:</p>
 
 <ol>
 <li>Generate a random variate of the form 1/<em>U</em> &minus; floor(1/<em>U</em>), where <em>U</em> is a uniform(0, 1) random variate.  This can be done by generating a uniform PSRN for <a href="https://peteroupc.github.io/uniformsum.html#Reciprocal_of_Uniform_Random_Number"><strong>the reciprocal of a uniform random variate</strong></a>, then setting that PSRN&#39;s integer part to 0.  Call the variate (or PSRN) <em>f</em>.</li>
@@ -2689,7 +2792,7 @@ kind of irrational number.</p>
 
 <h4>Certain Numbers Based on the Golden Ratio</h4>
 
-<p>The following algorithm given by Fishman and Miller (2013)[^65] finds the continued fraction expansion of certain numbers described as&mdash;</p>
+<p>The following algorithm given by Fishman and Miller (2013)[^61] finds the continued fraction expansion of certain numbers described as&mdash;</p>
 
 <ul>
 <li><em>G</em>(<em>m</em>, <em>&#x2113;</em>) = (<em>m</em> + sqrt(<em>m</em><sup>2</sup> + 4 * <em>&#x2113;</em>))/2<br>&nbsp;&nbsp;&nbsp;&nbsp;or (<em>m</em> &minus; sqrt(<em>m</em><sup>2</sup> + 4 * <em>&#x2113;</em>))/2,</li>
@@ -2712,11 +2815,11 @@ kind of irrational number.</p>
 
 <ol>
 <li><strong>Get the previous and next Fibonacci-based number given <em>k</em>, <em>m</em>, and <em>&#x2113;</em></strong>, call them <em>p</em> and <em>n</em>, respectively.</li>
-<li>If <em>&#x2113;</em> is 1 and <em>k</em> is odd[^66], return <em>p</em> + <em>n</em>.</li>
+<li>If <em>&#x2113;</em> is 1 and <em>k</em> is odd[^44], return <em>p</em> + <em>n</em>.</li>
 <li>If <em>&#x2113;</em> is &minus;1 and <em>pos</em> is 0, return <em>n</em> &minus; <em>p</em> &minus; 1.</li>
 <li>If <em>&#x2113;</em> is 1 and <em>pos</em> is 0, return (<em>n</em> + <em>p</em>) &minus; 1.</li>
-<li>If <em>&#x2113;</em> is &minus;1 and <em>pos</em> is even[^67], return <em>n</em> &minus; <em>p</em> &minus; 2. (The paper had an error here; the correction given here was verified by Miller via personal communication.)</li>
-<li>If <em>&#x2113;</em> is 1 and <em>pos</em> is even[^68], return (<em>n</em> + <em>p</em>) &minus; 2.</li>
+<li>If <em>&#x2113;</em> is &minus;1 and <em>pos</em> is even[^43], return <em>n</em> &minus; <em>p</em> &minus; 2. (The paper had an error here; the correction given here was verified by Miller via personal communication.)</li>
+<li>If <em>&#x2113;</em> is 1 and <em>pos</em> is even[^43], return (<em>n</em> + <em>p</em>) &minus; 2.</li>
 <li>Return 1.</li>
 </ol></li>
 </ul>
@@ -2916,23 +3019,23 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 
 <p>[^59]: Sondow, Jonathan. “New Vacca-Type Rational Series for Euler&#39;s Constant and Its &#39;Alternating&#39; Analog ln 4/<em>&pi;</em>.”, 2005.</p>
 
-<p>[^60]: von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</p>
+<p>[^60]: It can also be said that the integral (see &quot;<a href="#Integrals"><strong>Integrals</strong></a>&quot;) of <em>x</em> &minus; floor(1/<em>x</em>), where <em>x</em> is greater than 0 but not greater than 1, equals 1 minus <em>&gamma;</em>.  See, for example, Havil, J., <em>Gamma: Exploring Euler&#39;s Constant</em>, 2003.</p>
 
-<p>[^61]: Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</p>
+<p>[^61]: Fishman, D., Miller, S.J., &quot;Closed Form Continued Fraction Expansions of Special Quadratic Irrationals&quot;, ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</p>
 
-<p>[^62]: Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</p>
+<p>[^62]: von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</p>
 
-<p>[^63]: Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</p>
+<p>[^63]: Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</p>
 
-<p>[^64]: It can also be said that the integral (&quot;area under the graph&quot;) of <em>x</em> &minus; floor(1/<em>x</em>), where <em>x</em> is 0 or greater but not greater than 1, equals 1 minus <em>&gamma;</em>.  See, for example, Havil, J., <em>Gamma: Exploring Euler&#39;s Constant</em>, 2003.</p>
+<p>[^64]: Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</p>
 
-<p>[^65]:  Fishman, D., Miller, S.J., &quot;Closed Form Continued Fraction Expansions of Special Quadratic Irrationals&quot;, ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</p>
+<p>[^65]: Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</p>
 
-<p>[^66]: &quot;<em>x</em> is odd&quot; means that <em>x</em> is an integer and not divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 1, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 1.</p>
+<p>[^66]: Wästlund, J., &quot;<a href="http://www.math.chalmers.se/%7Ewastlund/coinFlip.pdf"><strong>Functions arising by coin flipping</strong></a>&quot;, 1999.</p>
 
-<p>[^67]: &quot;<em>x</em> is even&quot; means that <em>x</em> is an integer and divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 0, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 0.</p>
+<p>[^67]: Dale, H., Jennings, D. and Rudolph, T., 2015, &quot;Provable quantum advantage in randomness processing&quot;, <em>Nature communications</em> 6(1), pp. 1-4.</p>
 
-<p>[^68]: &quot;<em>x</em> is even&quot; means that <em>x</em> is an integer and divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 0, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 0.</p>
+<p>[^68]: Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -2949,7 +3052,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <p>If a Bernoulli factory algorithm uses a fair coin, it can often generate flips of the fair coin using the input coin instead, with the help of <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> techniques.</p>
 
 <blockquote>
-<p><strong>Example:</strong> If a Bernoulli factory algorithm would generate an unbiased random bit, instead it could flip the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then take the result as 0 or 1, respectively (von Neumann 1951)[^60].  But this trick works only if the input coin&#39;s probability of heads is neither 0 nor 1.</p>
+<p><strong>Example:</strong> If a Bernoulli factory algorithm would generate an unbiased random bit, instead it could flip the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then take the result as 0 or 1, respectively (von Neumann 1951)[^62].  But this trick works only if the input coin&#39;s probability of heads is neither 0 nor 1.</p>
 </blockquote>
 
 <p>When Keane and O&#39;Brien (1994)[^33] introduced Bernoulli factories, they showed already that <em>f</em>(<em>&lambda;</em>) is strongly simulable whenever it admits a Bernoulli factory and its domain includes neither 0 nor 1 (so the input coin doesn&#39;t show heads every time or tails every time) &mdash; just use the von Neumann trick as in the example above.  But does <em>f</em> remain strongly simulable if its domain includes 0 and/or 1?  That&#39;s a complexer question; see the <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>supplemental notes</strong></a>.</p>
@@ -2958,7 +3061,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 
 <h3>The Entropy Bound</h3>
 
-<p>There is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, for example, (Pae 2005)[^61], (Peres 1992)[^42]) and is calculated as&mdash;</p>
+<p>There is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, for example, (Pae 2005)[^63], (Peres 1992)[^42]) and is calculated as&mdash;</p>
 
 <ul>
 <li>((<em>&tau;</em> &minus; 1) * ln(1 &minus; <em>&tau;</em>) &minus; <em>&tau;</em> * ln(<em>&tau;</em>)) / ((<em>&lambda;</em> &minus; 1) * ln(1 &minus; <em>&lambda;</em>) &minus; <em>&lambda;</em> * ln(<em>&lambda;</em>)).</li>
@@ -3085,12 +3188,12 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Each arbitrary</td>
-<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979[^62]).  DPDF and ECDF are as above.</td>
+<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979[^64]).  DPDF and ECDF are as above.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Both uniform variates greater than 0 and less than 1</td>
-<td>Odd is ((1&minus;exp(&minus;<em>x</em>)))/(1&minus;exp(&minus;1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and &quot;cut off&quot; to be not less than 0 and not greater than 1 (von Neumann 1951)[^60].</td>
+<td>Odd is ((1&minus;exp(&minus;<em>x</em>)))/(1&minus;exp(&minus;1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and &quot;cut off&quot; to be not less than 0 and not greater than 1 (von Neumann 1951)[^62].</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
@@ -3244,7 +3347,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <li>the sum of <em>j</em><sup>th</sup> coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin and/or end with zeros.</li>
 </ul>
 
-<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2022)[^17].  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001[^63]).  It is implemented as follows:</p>
+<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2022)[^17].  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001[^65]).  It is implemented as follows:</p>
 
 <ul>
 <li>Let <em>n</em> be the polynomial&#39;s old degree.  For each <em>k</em> in [0, <em>n</em>+1], the new polynomial&#39;s coefficient at <em>k</em> is found as follows:

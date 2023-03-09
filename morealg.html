@@ -69,7 +69,6 @@
 <li><a href="#Power_Series_Examples"><strong>Power Series Examples</strong></a></li>
 </ul></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
-<li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
 <li><a href="#Pushdown_Automata_for_Square_Root_Like_Functions"><strong>Pushdown Automata for Square-Root-Like Functions</strong></a></li>
 </ul></li>
 <li><a href="#Irrational_Probabilities"><strong>Irrational Probabilities</strong></a>
@@ -79,14 +78,15 @@
 <li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a></li>
 <li><a href="#1_exp__k__1_exp__k__1"><strong>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</strong></a></li>
 </ul></li>
+<li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
 <li><a href="#General_Arbitrary_Precision_Samplers"><strong>General Arbitrary-Precision Samplers</strong></a>
 
 <ul>
+<li><a href="#Cumulative_Distribution_Functions"><strong>Cumulative Distribution Functions</strong></a></li>
 <li><a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a></li>
 <li><a href="#Building_an_Arbitrary_Precision_Sampler"><strong>Building an Arbitrary-Precision Sampler</strong></a></li>
 <li><a href="#Mixtures"><strong>Mixtures</strong></a></li>
 <li><a href="#Weighted_Choice_Involving_PSRNs"><strong>Weighted Choice Involving PSRNs</strong></a></li>
-<li><a href="#Cumulative_Distribution_Functions"><strong>Cumulative Distribution Functions</strong></a></li>
 </ul></li>
 <li><a href="#Specific_Arbitrary_Precision_Samplers"><strong>Specific Arbitrary-Precision Samplers</strong></a>
 
@@ -118,7 +118,6 @@
 <li><a href="#Probability_Transformations"><strong>Probability Transformations</strong></a></li>
 <li><a href="#Proof_of_the_General_Martingale_Algorithm"><strong>Proof of the General Martingale Algorithm</strong></a></li>
 <li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
-<li><a href="#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</strong></a></li>
 <li><a href="#Algorithm_for_sin___lambda_____pi___2"><strong>Algorithm for sin(<em>&lambda;</em>*<em>&pi;</em>/2)</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information_Omitted_Algorithms"><strong>Sampling Distributions Using Incomplete Information: Omitted Algorithms</strong></a></li>
 <li><a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>Pushdown Automata and Algebraic Functions</strong></a>
@@ -613,7 +612,7 @@
 
 <p>Let <em>f</em>(<em>&lambda;</em>) be a function of the form min(<em>&lambda;</em>*<em>mult</em>, 1&minus;<em>&epsilon;</em>). This is a <em>piecewise linear function</em>, a function made up of two linear pieces (in this case, the pieces are a rising linear part and a constant part).</p>
 
-<p>This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to <em>f</em>, based on Thomas and Blanchet (2012)[^12].  These polynomials can then be used to generate heads with probability <em>f</em>(<em>&lambda;</em>) using the algorithms given in &quot;<a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;.</p>
+<p>This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to <em>f</em>, based on Thomas and Blanchet (2012)[^12].  These polynomials can then be used to show heads with probability <em>f</em>(<em>&lambda;</em>) using the algorithms given in &quot;<a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;.</p>
 
 <p>In this section, <strong>fbelow(<em>n</em>, <em>k</em>)</strong> and <strong>fabove(<em>n</em>, <em>k</em>)</strong> are the <em>k</em><sup>th</sup> coefficients (with <em>k</em> starting at 0) of the lower and upper polynomials, respectively, in Bernstein form of degree <em>n</em>.</p>
 
@@ -639,161 +638,13 @@
 </ul>
 </blockquote>
 
-<p>My own algorithm for min(<em>&lambda;</em>, 1/2) is as follows.  See the <a href="https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>appendix</strong></a> for the derivation of this algorithm.</p>
-
-<ol>
-<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
-<li>Run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) given later, and return the result of that run.</li>
-</ol>
-
-<p>And the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) is as follows:</p>
-
-<ol>
-<li>(Random walk.) Generate unbiased random bits until more zeros than ones are generated this way for the first time.  Then set <em>m</em> to (<em>n</em>&minus;1)/2+1, where <em>n</em> is the number of bits generated this way.</li>
-<li>(Build a degree-<em>m</em>*2 polynomial equivalent to (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>m</em></sup>/2.) Let <em>z</em> be (4<sup><em>m</em></sup>/2)/choose(<em>m</em>*2,<em>m</em>).  Define a polynomial of degree <em>m</em>*2 whose (<em>m</em>*2)+1 Bernstein coefficients are all zero except the <em>m</em><sup>th</sup> coefficient (starting at 0), whose value is <em>z</em>.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial&#39;s degree without changing its shape or position; see the derivation in the appendix).  Let <em>d</em> be the new polynomial&#39;s degree.</li>
-<li>(Simulate the polynomial, whose degree is <em>d</em> (Goyal and Sigman 2012)[^14].) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be the <em>h</em><sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
-</ol>
-
-<p>I suspected that the required degree <em>d</em> would be floor(<em>m</em>*2/3)+1, as described in the appendix.  With help from the <a href="https://mathoverflow.net/questions/381419"><strong>MathOverflow community</strong></a>, steps 2 and 3 of the algorithm above can be described more efficiently as follows:</p>
-
-<ul>
-<li>(2.) Let <em>r</em> be floor(<em>m</em>*2/3)+1, and let <em>d</em> be <em>m</em>*2+<em>r</em>.</li>
-<li>(3.) (Simulate the polynomial, whose degree is <em>d</em>.) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be (1/2) * 2<sup><em>m</em>*2</sup>*choose(<em>r</em>,<em>h</em>&minus;<em>m</em>)/choose(<em>d</em>, <em>h</em>) (the polynomial&#39;s <em>h</em><sup>th</sup> Bernstein coefficient starting at 0; the first term is 1/2 because the polynomial being simulated has the value 1/2 at the point 1/2).  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
-</ul>
-
-<p>The min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) algorithm can be used to simulate certain other piecewise linear functions with three breakpoints, and algorithms for those functions are shown in the following table.  In the table, <em>&mu;</em> is the unknown probability of heads of a second input coin, and <em>&nu;</em> is the unknown probability of heads of a third input coin.</p>
-
-<table><thead>
-<tr>
-<th>Breakpoints</th>
-<th>Algorithm</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>0 at 0; <em>&nu;</em>/2 at 1/2; and <em>&nu;</em>*<em>&mu;</em> at 1.</td>
-<td>Flip the <em>&nu;</em> input coin.  If it returns 0, return 0.  Otherwise, flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
-</tr>
-<tr>
-<td>(1&minus;<em>&mu;</em>)/2 at 0; 1/2 at 1/2; and <em>&mu;</em>/2 at 1.</td>
-<td>Generate an unbiased random bit.  If that bit is 1, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.  Otherwise, flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&lambda;</em> input coin and return 1 minus the result.</td>
-</tr>
-<tr>
-<td>0 at 0; <em>&mu;</em>/2 at 1/2; and <em>&mu;</em>/2 at 1.</td>
-<td>Flip the <em>&mu;</em> input coin.  If it returns 0, return 0.  Otherwise, generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
-</tr>
-<tr>
-<td><em>&mu;</em> at 0; 1/2 at 1/2; and 0 at 1.</td>
-<td>Flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return 1 minus the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
-</tr>
-<tr>
-<td>1 at 0; 1/2 at 1/2; and <em>&mu;</em> at 1.</td>
-<td>Flip the <em>&mu;</em> input coin.  If it returns 0, flip the <em>&lambda;</em> input coin and return 1 minus the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return 1 minus the result of that run.</td>
-</tr>
-<tr>
-<td><em>&mu;</em> at 0; 1/2 at 1/2; and 1 at 1.</td>
-<td>Flip the <em>&mu;</em> input coin.  If it returns 0, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return 1 minus the result of that run.</td>
-</tr>
-<tr>
-<td><em>B</em> at 0; <em>B</em>+(<em>A</em>/2) at 1/2; and <em>B</em>+(<em>A</em>/2) at 1.</td>
-<td>(<em>A</em>&le;1 and <em>B</em>&le;1&minus;<em>A</em> are rational numbers.) With probability 1&minus;<em>A</em>, return a number that is 1 with probability <em>B</em>/(1&minus;<em>A</em>) and 0 otherwise.  Otherwise, generate an unbiased random bit.  If that bit is 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
-</tr>
-</tbody></table>
-
-<blockquote>
-<p><strong>Example:</strong> Let $f$ be $\lambda/2$ if $\lambda\le 1/2$, and $1/2-\lambda/2$ otherwise.  Then use the algorithm for 0 at 0; <em>&nu;</em>/2 at 1/2; and <em>&nu;</em>*<em>&mu;</em> at 1, where <em>&nu;</em> is a coin that returns 1 with probability 1/2 and 0 otherwise, and <em>&mu;</em> is a coin that always returns 0.</p>
-</blockquote>
-
-<p><a id=Sampling_Distributions_Using_Incomplete_Information></a></p>
-
-<h3>Sampling Distributions Using Incomplete Information</h3>
-
-<p>The Bernoulli factory is a special case of the problem of <strong>sampling a probability distribution with unknown parameters</strong>.  This problem can be described as sampling from a new distribution using an <em>oracle</em> (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a <em>coin that shows heads or tails where the probability of heads is unknown</em>.  The rest of this section deals with oracles that go beyond coins.</p>
-
-<p><strong>Algorithm 1.</strong> Suppose there is an oracle that produces independent random variates on a closed interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
-
-<ul>
-<li><em>f</em> is continuous on the closed interval, and</li>
-<li><em>f</em>(<em>&mu;</em>) is greater than or equal to <em>&epsilon;</em>*min((<em>&mu;</em> &minus; <em>a</em>)<sup><em>n</em></sup>, (<em>b</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> and some <em>&epsilon;</em> greater than 0 (loosely speaking, <em>f</em> is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)</li>
-</ul>
-
-<p>(Jacob and Thiery 2015)[^15]. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
-
-<p>In the algorithm below, let <em>K</em> be a rational number greater than the maximum value of <em>f</em> on the closed interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>&lambda;</em>) = <em>f</em>(<em>a</em> + (<em>b</em>&minus;<em>a</em>)*<em>&lambda;</em>)/<em>K</em>.</p>
-
-<ol>
-<li>Create a <em>&lambda;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>) (see note below), return 1.  Otherwise, return 0.&quot;</li>
-<li>Run a Bernoulli factory algorithm for <em>g</em>(<em>&lambda;</em>), using the <em>&lambda;</em> input coin.  Then return <em>K</em> times the result.</li>
-</ol>
-
-<blockquote>
-<p><strong>Note:</strong> The check &quot;With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>)&quot; is exact if the oracle produces only rational numbers.  If the oracle can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then the code for the oracle should use uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  In that case, the check can be implemented as follows.  Let <em>x</em> be a uniform PSRN representing a number generated by the oracle.  Set <em>y</em> to <strong>RandUniformFromReal</strong>(<em>b</em>&minus;<em>a</em>), then the check succeeds if <strong>URandLess</strong>(<em>y</em>, <strong>UniformAddRational</strong>(<em>x</em>, &minus;<em>a</em>)) returns 1, and fails otherwise.</p>
-
-<p><strong>Example:</strong> Suppose an oracle produces random variates in the interval [3, 13] with unknown mean <em>&mu;</em>, and the goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>&mu;</em>) = &minus;319/100 + <em>&mu;</em>*103/50 &minus; <em>&mu;</em><sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of <em>f</em> in that interval, <em>g</em>(<em>&lambda;</em>) is a degree-2 polynomial in the interval [0, 1] that has Bernstein coefficients [2/8, 9/8, 5/8].  <em>g</em> can&#39;t be simulated as is, though, but increasing <em>g</em>&#39;s degree to 3 leads to the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so that the following algorithm can be used (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;):</p>
-
-<ol>
-<li>Set <em>heads</em> to 0.</li>
-<li>Generate three random variates from the oracle (which must produce random variates in the interval [3, 13]).  For each number <em>x</em>: With probability (<em>x</em>&minus;3)/(10&minus;3), add 1 to <em>heads</em>.</li>
-<li>Depending on <em>heads</em>, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: <em>heads</em>=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.</li>
-</ol>
-</blockquote>
-
-<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces nonnegative random variates whose expected value (&quot;long-run average&quot;) is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
-
-<p><strong>Algorithm 3.</strong> For this algorithm, see the appendix.</p>
-
-<p><strong>Algorithm 4.</strong> Say there is an oracle in the form of a fair die.  The number of faces of the die, <em>n</em>, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than <em>n</em>.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)[^16], and the following are four of these distributions.</p>
-
-<p><strong><em>Bernoulli 1/n.</em></strong> It&#39;s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)[^16].</p>
-
-<p><strong><em>Random variate with mean n.</em></strong> Likewise, it&#39;s trivial to generate variates with a mean of <em>n</em>: Do &quot;Bernoulli 1/n&quot; trials as described above until a trial returns 0, then return the number of trials done this way.  (This is related to the ambiguously defined &quot;geometric&quot; random variates.)</p>
-
-<p><strong><em>Binomial with parameters n and 1/n.</em></strong> Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20)[^16]:</p>
-
-<ol>
-<li>Take items from the oracle until the same item is taken twice.</li>
-<li>Create a list consisting of the items taken in step 1, except for the last item taken, then shuffle that list.</li>
-<li>In the shuffled list, count the number of items that didn&#39;t change position after being shuffled, then return that number.</li>
-</ol>
-
-<p><strong><em>Binomial with parameters n and k/n.</em></strong> Duvignau 2015 also includes an algorithm (Algorithm 25) to generate a binomial variate of this kind using the oracle (where <em>k</em> is a known integer such that 0 &lt; <em>k</em> and <em>k</em> &le; <em>n</em>):</p>
-
-<ol>
-<li>Take items from the oracle until <em>k</em> different items were taken this way.  Let <em>U</em> be a list of these <em>k</em> items, in the order in which they were first taken.</li>
-<li>Create an empty list <em>L</em>.</li>
-<li>For each integer <em>i</em> in [0, <em>k</em>):
-
-<ol>
-<li>Create an empty list <em>M</em>.</li>
-<li>Take an item from the oracle.  If the item is in <em>U</em> at a position <strong>less than <em>i</em></strong> (positions start at 0), repeat this substep.  Otherwise, if the item is not in <em>M</em>, add it to <em>M</em> and repeat this substep.  Otherwise, go to the next substep.</li>
-<li>Shuffle the list <em>M</em>, then add to <em>L</em> each item that didn&#39;t change position after being shuffled (if not already present in <em>L</em>).</li>
-</ol></li>
-<li>For each integer <em>i</em> in [0, <em>k</em>):
-
-<ol>
-<li>Let <em>P</em> be the item at position <em>i</em> in <em>U</em>.</li>
-<li>Take an item from the oracle.  If the item is in <em>U</em> at position <strong><em>i</em> or less</strong> (positions start at 0), repeat this substep.</li>
-<li>If the last item taken in the previous substep is in <em>U</em> at a position <strong>greater than <em>i</em></strong>, add <em>P</em> to <em>L</em> (if not already present).</li>
-</ol></li>
-<li>Return the number of items in <em>L</em>.</li>
-</ol>
-
-<blockquote>
-<p><strong>Note:</strong> Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown <em>n</em> can be sampled with the oracle?[^17] The result applies to a family of (discrete) distributions with the same unknown parameter <em>n</em>, starting with either 1 or a greater integer.  Let Supp(<em>m</em>) be the set of values taken on by the distribution with parameter equal to <em>m</em>.  Then that family can be sampled using the oracle if and only if:</p>
-
-<ul>
-<li>There is a computable function <em>f</em>(<em>k</em>) that outputs a positive number.</li>
-<li>For each <em>n</em>, Supp(<em>n</em>) is included in Supp(<em>n</em>+1).</li>
-<li>For every <em>k</em> and for every <em>n</em> &ge; 2 starting with the first <em>n</em> for which <em>k</em> is in Supp(<em>n</em>), the probability of seeing <em>k</em> given parameter <em>n</em> is at least (1/<em>n</em>)<sup><em>f</em>(<em>k</em>)</sup> (roughly speaking, the probability doesn&#39;t decay at a faster than polynomial rate as <em>n</em> increases).</li>
-</ul>
-</blockquote>
-
 <p><a id=Pushdown_Automata_for_Square_Root_Like_Functions></a></p>
 
 <h3>Pushdown Automata for Square-Root-Like Functions</h3>
 
 <p>In this section, ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient.</p>
 
-<p>The following algorithm extends the square-root construction of Flajolet et al. (2010)[^18], takes an input coin with probability of heads <em>&lambda;</em> (where 0 &le; <em>&lambda;</em> &lt; 1), and returns 1 with probability&mdash;</p>
+<p>The following algorithm extends the square-root construction of Flajolet et al. (2010)[^14], takes an input coin with probability of heads <em>&lambda;</em> (where 0 &le; <em>&lambda;</em> &lt; 1), and returns 1 with probability&mdash;</p>
 
 <p>$$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda\mathtt{Coin}(\lambda)(\mathtt{Coin}(\lambda)-1)}} = (1-\lambda)\sum_{n\ge 0} \lambda^n (\mathtt{Coin}(\lambda))^n (1-\mathtt{Coin}(\lambda))^n {2n \choose n}$$  $$= (1-\lambda)\sum_{n\ge 0} (\lambda \mathtt{Coin}(\lambda) (1-\mathtt{Coin}(\lambda)))^n {2n \choose n}$$ $$= \sum_{n\ge 0} (1-\lambda) \lambda^n h_n(\lambda) = \sum_{n\ge 0} g(n, \lambda) h_n(\lambda),$$</p>
 
@@ -821,7 +672,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> A <em>pushdown automaton</em> is a state machine that keeps a stack of symbols.  In this document, the input for this automaton is a stream of flips of a coin that shows heads with probability <em>&lambda;</em>, and the output is 0 or 1 depending on which state the automaton ends up in when it empties the stack (Mossel and Peres 2005)[^19].  That paper shows that a pushdown automaton, as defined here, can simulate only <em>algebraic functions</em>, that is, functions that can be a solution of a nonzero polynomial equation.  The <a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>appendix</strong></a> defines these machines in more detail and has proofs on which algebraic functions are possible with pushdown automata.</p>
+<p><strong>Note:</strong> A <em>pushdown automaton</em> is a state machine that keeps a stack of symbols.  In this document, the input for this automaton is a stream of flips of a coin that shows heads with probability <em>&lambda;</em>, and the output is 0 or 1 depending on which state the automaton ends up in when it empties the stack (Mossel and Peres 2005)[^15].  That paper shows that a pushdown automaton, as defined here, can simulate only <em>algebraic functions</em>, that is, functions that can be a solution of a nonzero polynomial equation.  The <a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>appendix</strong></a> defines these machines in more detail and has proofs on which algebraic functions are possible with pushdown automata.</p>
 
 <p>As a pushdown automaton, this algorithm (except the &quot;Repeat the previous substep&quot; part) can be expressed as follows. Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These <em>transition rules</em> can be written as follows:</p>
 
@@ -833,7 +684,7 @@
 <li>(POS-S1, TAILS, X) &rarr; (ZERO, {}).</li>
 <li>(NEG-S1, TAILS, X) &rarr; (ZERO, {}).</li>
 <li>(ZERO, <em>flip</em>, <em>topsymbol</em>) &rarr; (ZERO, {}).</li>
-<li>(POS-S2, <em>flip</em>, <em>topsymbol</em>) &rarr; Add enough transition rules to the automaton to simulate <em>g</em>(<em>&lambda;</em>) by a finite-state machine (only possible if <em>g</em> is rational with rational coefficients (Mossel and Peres 2005)[^19]).  Transition to POS-S2-ZERO if the machine outputs 0, or POS-S2-ONE if the machine outputs 1.</li>
+<li>(POS-S2, <em>flip</em>, <em>topsymbol</em>) &rarr; Add enough transition rules to the automaton to simulate <em>g</em>(<em>&lambda;</em>) by a finite-state machine (only possible if <em>g</em> is rational with rational coefficients (Mossel and Peres 2005)[^15]).  Transition to POS-S2-ZERO if the machine outputs 0, or POS-S2-ONE if the machine outputs 1.</li>
 <li>(NEG-S2, <em>flip</em>, <em>topsymbol</em>) &rarr; Same as before, but the transitioning states are NEG-S2-ZERO and NEG-S2-ONE, respectively.</li>
 <li>(POS-S2-ONE, <em>flip</em>, <em>topsymbol</em>) &rarr; (POS-S1, {<em>topsymbol</em>, X}) (replace top stack symbol with <em>topsymbol</em>, then push X to the stack).</li>
 <li>(POS-S2-ZERO, <em>flip</em>, EMPTY) &rarr; (NEG-S1, {EMPTY, X}).</li>
@@ -913,7 +764,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</h3>
 
-<p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated through an algorithm by Citterio and Pavani (2016)[^20].  Note the use of the methodology in Łatuszyński et al. (2009/2011, algorithm 2)[^21] in this algorithm.  In this algorithm, <em>k</em> must be an integer 0 or greater.</p>
+<p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated through an algorithm by Citterio and Pavani (2016)[^16].  Note the use of the methodology in Łatuszyński et al. (2009/2011, algorithm 2)[^17] in this algorithm.  In this algorithm, <em>k</em> must be an integer 0 or greater.</p>
 
 <ol>
 <li>If <em>k</em> is 0, run the <strong>algorithm for 2 / (1 + exp(2))</strong> and return the result.  If <em>k</em> is 1, run the <strong>algorithm for (1 + exp(1)) / (1 + exp(2))</strong> and return the result.</li>
@@ -958,11 +809,124 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <li>If (<em>i</em> &minus; 1) is odd[^8], return <em>semi</em> as the lower bound and <em>conv</em> as the upper bound.  Otherwise, return <em>conv</em> as the lower bound and <em>semi</em> as the upper bound.</li>
 </ol>
 
+<p><a id=Sampling_Distributions_Using_Incomplete_Information></a></p>
+
+<h2>Sampling Distributions Using Incomplete Information</h2>
+
+<p>The Bernoulli factory is a special case of the problem of <strong>sampling a probability distribution with unknown parameters</strong>.  This problem can be described as sampling from a new distribution using an <em>oracle</em> (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a <em>coin that shows heads or tails where the probability of heads is unknown</em>.  The rest of this section deals with oracles that go beyond coins.</p>
+
+<p><strong>Algorithm 1.</strong> Suppose there is an oracle that produces independent random variates on a closed interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
+
+<ul>
+<li><em>f</em> is continuous on the closed interval, and</li>
+<li><em>f</em>(<em>&mu;</em>) is greater than or equal to <em>&epsilon;</em>*min((<em>&mu;</em> &minus; <em>a</em>)<sup><em>n</em></sup>, (<em>b</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> and some <em>&epsilon;</em> greater than 0 (loosely speaking, <em>f</em> is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)</li>
+</ul>
+
+<p>(Jacob and Thiery 2015)[^18]. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
+
+<p>In the algorithm below, let <em>K</em> be a rational number greater than the maximum value of <em>f</em> on the closed interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>&lambda;</em>) = <em>f</em>(<em>a</em> + (<em>b</em>&minus;<em>a</em>)*<em>&lambda;</em>)/<em>K</em>.</p>
+
+<ol>
+<li>Create a <em>&lambda;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>) (see note below), return 1.  Otherwise, return 0.&quot;</li>
+<li>Run a Bernoulli factory algorithm for <em>g</em>(<em>&lambda;</em>), using the <em>&lambda;</em> input coin.  Then return <em>K</em> times the result.</li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> The check &quot;With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>)&quot; is exact if the oracle produces only rational numbers.  If the oracle can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then the code for the oracle should use uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  In that case, the check can be implemented as follows.  Let <em>x</em> be a uniform PSRN representing a number generated by the oracle.  Set <em>y</em> to <strong>RandUniformFromReal</strong>(<em>b</em>&minus;<em>a</em>), then the check succeeds if <strong>URandLess</strong>(<em>y</em>, <strong>UniformAddRational</strong>(<em>x</em>, &minus;<em>a</em>)) returns 1, and fails otherwise.</p>
+
+<p><strong>Example:</strong> Suppose an oracle produces random variates in the interval [3, 13] with unknown mean <em>&mu;</em>, and the goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>&mu;</em>) = &minus;319/100 + <em>&mu;</em>*103/50 &minus; <em>&mu;</em><sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of <em>f</em> in that interval, <em>g</em>(<em>&lambda;</em>) is a degree-2 polynomial in the interval [0, 1] that has Bernstein coefficients [2/8, 9/8, 5/8].  <em>g</em> can&#39;t be simulated as is, though, but increasing <em>g</em>&#39;s degree to 3 leads to the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so that the following algorithm can be used (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;):</p>
+
+<ol>
+<li>Set <em>heads</em> to 0.</li>
+<li>Generate three random variates from the oracle (which must produce random variates in the interval [3, 13]).  For each number <em>x</em>: With probability (<em>x</em>&minus;3)/(10&minus;3), add 1 to <em>heads</em>.</li>
+<li>Depending on <em>heads</em>, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: <em>heads</em>=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.</li>
+</ol>
+</blockquote>
+
+<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces nonnegative random variates whose expected value (&quot;long-run average&quot;) is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
+
+<p><strong>Algorithm 3.</strong> For this algorithm, see the appendix.</p>
+
+<p><strong>Algorithm 4.</strong> Say there is an oracle in the form of a fair die.  The number of faces of the die, <em>n</em>, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than <em>n</em>.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)[^19], and the following are four of these distributions.</p>
+
+<p><strong><em>Bernoulli 1/n.</em></strong> It&#39;s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)[^19].</p>
+
+<p><strong><em>Random variate with mean n.</em></strong> Likewise, it&#39;s trivial to generate variates with a mean of <em>n</em>: Do &quot;Bernoulli 1/n&quot; trials as described above until a trial returns 0, then return the number of trials done this way.  (This is related to the ambiguously defined &quot;geometric&quot; random variates.)</p>
+
+<p><strong><em>Binomial with parameters n and 1/n.</em></strong> Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20)[^19]:</p>
+
+<ol>
+<li>Take items from the oracle until the same item is taken twice.</li>
+<li>Create a list consisting of the items taken in step 1, except for the last item taken, then shuffle that list.</li>
+<li>In the shuffled list, count the number of items that didn&#39;t change position after being shuffled, then return that number.</li>
+</ol>
+
+<p><strong><em>Binomial with parameters n and k/n.</em></strong> Duvignau 2015 also includes an algorithm (Algorithm 25) to generate a binomial variate of this kind using the oracle (where <em>k</em> is a known integer such that 0 &lt; <em>k</em> and <em>k</em> &le; <em>n</em>):</p>
+
+<ol>
+<li>Take items from the oracle until <em>k</em> different items were taken this way.  Let <em>U</em> be a list of these <em>k</em> items, in the order in which they were first taken.</li>
+<li>Create an empty list <em>L</em>.</li>
+<li>For each integer <em>i</em> in [0, <em>k</em>):
+
+<ol>
+<li>Create an empty list <em>M</em>.</li>
+<li>Take an item from the oracle.  If the item is in <em>U</em> at a position <strong>less than <em>i</em></strong> (positions start at 0), repeat this substep.  Otherwise, if the item is not in <em>M</em>, add it to <em>M</em> and repeat this substep.  Otherwise, go to the next substep.</li>
+<li>Shuffle the list <em>M</em>, then add to <em>L</em> each item that didn&#39;t change position after being shuffled (if not already present in <em>L</em>).</li>
+</ol></li>
+<li>For each integer <em>i</em> in [0, <em>k</em>):
+
+<ol>
+<li>Let <em>P</em> be the item at position <em>i</em> in <em>U</em>.</li>
+<li>Take an item from the oracle.  If the item is in <em>U</em> at position <strong><em>i</em> or less</strong> (positions start at 0), repeat this substep.</li>
+<li>If the last item taken in the previous substep is in <em>U</em> at a position <strong>greater than <em>i</em></strong>, add <em>P</em> to <em>L</em> (if not already present).</li>
+</ol></li>
+<li>Return the number of items in <em>L</em>.</li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown <em>n</em> can be sampled with the oracle?[^20] The result applies to a family of (discrete) distributions with the same unknown parameter <em>n</em>, starting with either 1 or a greater integer.  Let Supp(<em>m</em>) be the set of values taken on by the distribution with parameter equal to <em>m</em>.  Then that family can be sampled using the oracle if and only if:</p>
+
+<ul>
+<li>There is a computable function <em>f</em>(<em>k</em>) that outputs a positive number.</li>
+<li>For each <em>n</em>, Supp(<em>n</em>) is included in Supp(<em>n</em>+1).</li>
+<li>For every <em>k</em> and for every <em>n</em> &ge; 2 starting with the first <em>n</em> for which <em>k</em> is in Supp(<em>n</em>), the probability of seeing <em>k</em> given parameter <em>n</em> is at least (1/<em>n</em>)<sup><em>f</em>(<em>k</em>)</sup> (roughly speaking, the probability doesn&#39;t decay at a faster than polynomial rate as <em>n</em> increases).</li>
+</ul>
+</blockquote>
+
 <p><a id=General_Arbitrary_Precision_Samplers></a></p>
 
 <h2>General Arbitrary-Precision Samplers</h2>
 
 <p>&nbsp;</p>
+
+<p><a id=Cumulative_Distribution_Functions></a></p>
+
+<h3>Cumulative Distribution Functions</h3>
+
+<p>Suppose a real number <em>z</em> is given (which might be a uniform PSRN or a rational number).  If a probability distribution&mdash;</p>
+
+<ul>
+<li>has a probability density function (PDF) (as with the normal or exponential distribution), and</li>
+<li>has an arbitrary-precision sampler that returns a uniform PSRN <em>X</em>,</li>
+</ul>
+
+<p>then it&#39;s possible to generate 1 with the same probability as the sampler returns an <em>X</em> that is less than or equal to <em>z</em>, as follows:</p>
+
+<ol>
+<li>Run the arbitrary-precision sampler to generate <em>X</em>, a uniform PSRN.</li>
+<li>Run <strong>URandLess</strong> (if <em>z</em> is a uniform PSRN) or <strong>URandLessThanReal</strong> (if <em>z</em> is a real number) with parameters <em>X</em> and <em>z</em>, in that order, and return the result.</li>
+</ol>
+
+<p>Specifically, the probability of returning 1 is the <em>cumulative distribution function</em> (CDF) for the distribution of <em>X</em>.</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Although step 2 of the algorithm checks whether <em>X</em> is merely less than <em>z</em>, this is still correct; because the distribution of <em>X</em> has a PDF, <em>X</em> is less than <em>z</em> with the same probability as <em>X</em> is less than or equal to <em>z</em>.</li>
+<li>All probability distributions have a CDF, not just those with a PDF, but also discrete ones such as Poisson or binomial.</li>
+</ol>
+</blockquote>
 
 <p><a id=Uniform_Distribution_Inside_N_Dimensional_Shapes></a></p>
 
@@ -993,10 +957,10 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>See (Li and El Gamal 2016)[^22] and (Oberhoff 2018)[^23] for related work on encoding random points uniformly distributed in a shape.</li>
+<li>See (Li and El Gamal 2016)[^21] and (Oberhoff 2018)[^22] for related work on encoding random points uniformly distributed in a shape.</li>
 <li>Rejection sampling on a shape is subject to the &quot;curse of dimensionality&quot;, since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more volume the shape takes up in the bounding box, the higher the acceptance rate.</li>
-<li>Devroye (1986, chapter 8, section 3)[^24] describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/<em>base</em><sup><em>k</em></sup> in all dimensions; the result of <strong>InShape</strong> is calculated for each such box and that box labeled with the result; all boxes labeled <em>NO</em> are discarded; and the algorithm is modified by adding the following after step 2: &quot;2a. Choose a precalculated box uniformly at random, then set <em>c1</em>, ..., <em>cN</em> to that box&#39;s coordinates, then set <em>d</em> to <em>k</em> and set <em>S</em> to <em>base</em><sup><em>k</em></sup>. If a box labeled <em>YES</em> was chosen, follow the substeps in step 5. If a box labeled <em>MAYBE</em> was chosen, multiply <em>S</em> by <em>base</em> and add 1 to <em>d</em>.&quot; (For example, if <em>base</em> is 10, <em>k</em> is 1, <em>N</em> is 2, and <em>d1</em> = <em>d2</em> = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, <strong>InShape</strong> is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on [the boxes&#39; coordinates are stored as just given, but <strong>InShape</strong> instead uses those coordinates divided by <em>base</em><sup><em>k</em></sup>, or 10<sup>1</sup> in this case], each such box is labeled with the result, and boxes labeled <em>NO</em> are discarded.  Finally the algorithm above is modified as just given.)</li>
-<li>Besides a grid, another useful data structure is a <em>mapped regular paving</em> (Harlow et al. 2012)[^25], which can be described as a binary tree with nodes each consisting of zero or two child nodes and a marking value.  Start with a box that entirely covers the desired shape.  Calculate <strong>InShape</strong> for the box.  If it returns <em>YES</em> or <em>NO</em> then mark the box with <em>YES</em> or <em>NO</em>, respectively; otherwise it returns <em>MAYBE</em>, so divide the box along its first widest coordinate into two sub-boxes, set the parent box&#39;s children to those sub-boxes, then repeat this process for each sub-box (or if the nesting level is too deep, instead mark each sub-box with <em>MAYBE</em>).  Then, to generate a random point (with a base-2 fractional part), start from the root, then: (1) If the box is marked <em>YES</em>, return a uniform random point between the given coordinates using the <strong>RandUniformInRange</strong> algorithm; or (2) if the box is marked <em>NO</em>, start over from the root; or (3) if the box is marked <em>MAYBE</em>, get the two child boxes bisected from the box, choose one of them with equal probability (for example, choose the left child if an unbiased random bit is 0, or the right child otherwise), mark the chosen child with the result of <strong>InShape</strong> for that child, and repeat this process with that child; or (4) the box has two child boxes, so choose one of them with equal probability and repeat this process with that child.</li>
+<li>Devroye (1986, chapter 8, section 3)[^23] describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/<em>base</em><sup><em>k</em></sup> in all dimensions; the result of <strong>InShape</strong> is calculated for each such box and that box labeled with the result; all boxes labeled <em>NO</em> are discarded; and the algorithm is modified by adding the following after step 2: &quot;2a. Choose a precalculated box uniformly at random, then set <em>c1</em>, ..., <em>cN</em> to that box&#39;s coordinates, then set <em>d</em> to <em>k</em> and set <em>S</em> to <em>base</em><sup><em>k</em></sup>. If a box labeled <em>YES</em> was chosen, follow the substeps in step 5. If a box labeled <em>MAYBE</em> was chosen, multiply <em>S</em> by <em>base</em> and add 1 to <em>d</em>.&quot; (For example, if <em>base</em> is 10, <em>k</em> is 1, <em>N</em> is 2, and <em>d1</em> = <em>d2</em> = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, <strong>InShape</strong> is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on [the boxes&#39; coordinates are stored as just given, but <strong>InShape</strong> instead uses those coordinates divided by <em>base</em><sup><em>k</em></sup>, or 10<sup>1</sup> in this case], each such box is labeled with the result, and boxes labeled <em>NO</em> are discarded.  Finally the algorithm above is modified as just given.)</li>
+<li>Besides a grid, another useful data structure is a <em>mapped regular paving</em> (Harlow et al. 2012)[^24], which can be described as a binary tree with nodes each consisting of zero or two child nodes and a marking value.  Start with a box that entirely covers the desired shape.  Calculate <strong>InShape</strong> for the box.  If it returns <em>YES</em> or <em>NO</em> then mark the box with <em>YES</em> or <em>NO</em>, respectively; otherwise it returns <em>MAYBE</em>, so divide the box along its first widest coordinate into two sub-boxes, set the parent box&#39;s children to those sub-boxes, then repeat this process for each sub-box (or if the nesting level is too deep, instead mark each sub-box with <em>MAYBE</em>).  Then, to generate a random point (with a base-2 fractional part), start from the root, then: (1) If the box is marked <em>YES</em>, return a uniform random point between the given coordinates using the <strong>RandUniformInRange</strong> algorithm; or (2) if the box is marked <em>NO</em>, start over from the root; or (3) if the box is marked <em>MAYBE</em>, get the two child boxes bisected from the box, choose one of them with equal probability (for example, choose the left child if an unbiased random bit is 0, or the right child otherwise), mark the chosen child with the result of <strong>InShape</strong> for that child, and repeat this process with that child; or (4) the box has two child boxes, so choose one of them with equal probability and repeat this process with that child.</li>
 <li>The algorithm can be adapted to return 1 with probability equal to its acceptance rate (which equals the shape&#39;s volume divided by the hyperrectangle&#39;s volume), and return 0 with the opposite probability.  In this case, replace steps 5 and 6 with the following: &quot;5. If the result of <strong>InShape</strong> is <em>YES</em>, return 1.; 6. If the result of <strong>InShape</strong> is <em>NO</em>, return 0.&quot; (I thank BruceET of the Cross Validated community for leading me to this insight.)</li>
 </ol>
 
@@ -1004,7 +968,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <ul>
 <li>The following example generates a point inside a quarter diamond (centered at (0, ..., 0), &quot;radius&quot; <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1) + ... + (<em>cN</em>+1)) &lt; <em>S</em>*<em>k</em>; <em>NO</em> if (<em>c1</em> + ... + <em>cN</em>) &gt; <em>S</em>*<em>k</em>; and <em>MAYBE</em> otherwise.  For <em>N</em>=2, the acceptance rate (see note 5) is 1/2.  For a full diamond, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.</li>
-<li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1)<sup>2</sup> + ... + (<em>cN</em>+1)<sup>2</sup>) &lt; (<em>S</em>*<em>k</em>)<sup>2</sup>; <em>NO</em> if (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; (<em>S</em>*<em>k</em>)<sup>2</sup>; and <em>MAYBE</em> otherwise.  For <em>N</em>=2, the acceptance rate (see note 5) is <em>&pi;</em>/4. For a full hypersphere with radius 1, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.  In the case of a 2-dimensional disk, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (for example, (Devroye 1986, p. 230 et seq.)[^24]).</li>
+<li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1)<sup>2</sup> + ... + (<em>cN</em>+1)<sup>2</sup>) &lt; (<em>S</em>*<em>k</em>)<sup>2</sup>; <em>NO</em> if (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; (<em>S</em>*<em>k</em>)<sup>2</sup>; and <em>MAYBE</em> otherwise.  For <em>N</em>=2, the acceptance rate (see note 5) is <em>&pi;</em>/4. For a full hypersphere with radius 1, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.  In the case of a 2-dimensional disk, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (for example, (Devroye 1986, p. 230 et seq.)[^23]).</li>
 <li>The following example generates a point inside a quarter <em>astroid</em> (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>sk</em>&minus;<em>c1</em>&minus;1)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>&minus;1)<sup>2</sup>) &gt; <em>sk</em><sup>2</sup>; <em>NO</em> if ((<em>sk</em>&minus;<em>c1</em>)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>)<sup>2</sup>) &lt; <em>sk</em><sup>2</sup>; and <em>MAYBE</em> otherwise, where <em>sk</em> = <em>S</em>*<em>k</em>.  For <em>N</em>=2, the acceptance rate (see note 5) is 1 &minus; <em>&pi;</em>/4. For a full astroid, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.</li>
 </ul>
 </blockquote>
@@ -1013,16 +977,21 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>Building an Arbitrary-Precision Sampler</h3>
 
-<p>If a probability distribution&mdash;</p>
+<p>Suppose a probability distribution&mdash;</p>
 
 <ul>
-<li>has a probability density function (PDF), or a function proportional to the PDF, with a known symbolic form,</li>
-<li>has a cumulative distribution function (CDF) with a known symbolic form,</li>
 <li>takes on only values 0 or greater, and</li>
-<li>has a PDF that has an infinite tail to the right, is less than or equal to a finite number (so that <em>PDF(0)</em> is other than infinity), and is strictly decreasing,</li>
+<li>is described by a cumulative distribution function (CDF, or <em>CDF</em>(<em>x</em>), or the probability of getting <em>x</em> or less under the distribution) and by a probability distribution (PDF) or a function proportional to the PDF.</li>
 </ul>
 
-<p>it may be possible to describe an arbitrary-precision sampler for that distribution.  Such a description has the following skeleton.</p>
+<p>Also, suppose that&mdash;</p>
+
+<ul>
+<li>the CDF and PDF or proportional function have known symbolic forms, and</li>
+<li>the PDF that has an infinite tail to the right, is less than or equal to a finite number (so that <em>PDF(0)</em> is other than infinity), and is strictly decreasing.</li>
+</ul>
+
+<p>Then it may be possible to describe an arbitrary-precision sampler for that distribution.  Such a description has the following skeleton.</p>
 
 <ol>
 <li>With probability <em>A</em>, set <em>intval</em> to 0, then set <em>size</em> to 1, then go to step 4.
@@ -1041,7 +1010,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 </ul></li>
 <li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
 <li>Create <em>ret</em>, a uniform PSRN with a positive sign and an integer part of 0.</li>
-<li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Run a Bernoulli factory algorithm that simulates the probability <em>C</em>(<em>i</em>, <em>&lambda;</em>), using the input coin (here, <em>&lambda;</em> is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 4.
+<li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Run a Bernoulli factory algorithm that returns 1 with probability equal to  <em>C</em>(<em>i</em>, <em>&lambda;</em>), using the input coin (here, <em>&lambda;</em>, the heads probability of the input coin, is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 4.
 
 <ul>
 <li>The probability <em>C</em>(<em>i</em>, <em>&lambda;</em>) is calculated as <em>PDF</em>(<em>i</em> + <em>&lambda;</em>) / <em>M</em>, where <em>PDF</em> is the distribution&#39;s PDF or a function proportional to the PDF, and should be found analytically using a computer algebra system such as SymPy.</li>
@@ -1053,10 +1022,10 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>Examples of algorithms that use this skeleton are the algorithm for the <a href="https://peteroupc.github.io/uniformsum.html"><strong>ratio of two uniform random variates</strong></a>, as well as the algorithms for the Rayleigh distribution and for the reciprocal of power of uniform, both given later.</p>
 
-<p>Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities <em>A</em>, <em>B</em>, and <em>C</em>, especially when these probabilities have a non-trivial symbolic form.</p>
+<p>Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory algorithm for the probabilities <em>A</em>, <em>B</em>, and <em>C</em>, especially when these probabilities have a non-trivial symbolic form.</p>
 
 <blockquote>
-<p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)[^24]; an exception is that instead of generating a uniform random variate and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
+<p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in Devroye (1986, ch. 7, sec. 4.6)[^23]; an exception is that instead of generating a uniform random variate and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
 </blockquote>
 
 <p><a id=Mixtures></a></p>
@@ -1086,35 +1055,6 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <li>Choose an integer <em>i</em> with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of <strong>WeightedChoice</strong>(<em>list</em>), where <em>list</em> is the rounded weights list and <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Sampling Methods</strong></a>&quot;.</li>
 <li>Run <strong>URandLessThanReal</strong>(<em>w</em>, <em>rw</em>), where <em>w</em> is the original weight for integer <em>i</em>, and <em>rw</em> is the rounded weight for integer <em>i</em> in the rounded weights list.  That algorithm returns 1 if <em>w</em> turns out to be less than <em>rw</em>.  If the result is 1, return <em>i</em>.  Otherwise, go to step 2.</li>
 </ol>
-
-<p><a id=Cumulative_Distribution_Functions></a></p>
-
-<h3>Cumulative Distribution Functions</h3>
-
-<p>Suppose a real number <em>z</em> is given (which might be a uniform PSRN or a rational number).  If a probability distribution&mdash;</p>
-
-<ul>
-<li>has a probability density function (PDF) (as with the normal or exponential distribution), and</li>
-<li>has an arbitrary-precision sampler that returns a uniform PSRN <em>X</em>,</li>
-</ul>
-
-<p>then it&#39;s possible to generate 1 with the same probability as the sampler returns an <em>X</em> that is less than or equal to <em>z</em>, as follows:</p>
-
-<ol>
-<li>Run the arbitrary-precision sampler to generate <em>X</em>, a uniform PSRN.</li>
-<li>Run <strong>URandLess</strong> (if <em>z</em> is a uniform PSRN) or <strong>URandLessThanReal</strong> (if <em>z</em> is a real number) with parameters <em>X</em> and <em>z</em>, in that order, and return the result.</li>
-</ol>
-
-<p>Specifically, the probability of returning 1 is the <em>cumulative distribution function</em> (CDF) for the distribution of <em>X</em>.</p>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li>Although step 2 of the algorithm checks whether <em>X</em> is merely less than <em>z</em>, this is still correct; because the distribution of <em>X</em> has a PDF, <em>X</em> is less than <em>z</em> with the same probability as <em>X</em> is less than or equal to <em>z</em>.</li>
-<li>All probability distributions have a CDF, not just those with a PDF, but also discrete ones such as Poisson or binomial.</li>
-</ol>
-</blockquote>
 
 <p><a id=Specific_Arbitrary_Precision_Samplers></a></p>
 
@@ -1173,7 +1113,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>Hyperbolic Secant Distribution</h3>
 
-<p>The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)[^24] for arbitrary-precision sampling.</p>
+<p>The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)[^23] for arbitrary-precision sampling.</p>
 
 <ol>
 <li>Generate <em>ret</em>, an exponential random variate with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>PSRNs</strong></a>.  This number will be a uniform PSRN.</li>
@@ -1233,7 +1173,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>Arc-Cosine Distribution</h3>
 
-<p>The following is a reimplementation of an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)[^24].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random variate will be 0, 1, or a real number in between.  This algorithm&#39;s result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform random variate between 0 and 1, as pointed out by Devroye. (acos(<em>x</em>) is the inverse cosine function.)  The algorithm follows.</p>
+<p>The following is a reimplementation of an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)[^23].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random variate will be 0, 1, or a real number in between.  This algorithm&#39;s result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform random variate between 0 and 1, as pointed out by Devroye. (acos(<em>x</em>) is the inverse cosine function.)  The algorithm follows.</p>
 
 <ol>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
@@ -1303,7 +1243,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>Exponential Distribution with Unknown Small Rate</h3>
 
-<p>Exponential random variates can be generated using an input coin of unknown probability of heads of <em>&lambda;</em> (which can either be 1 or come between 0 and 1), by generating arrival times in a <em>Poisson process</em> of rate 1, then <em>thinning</em> the process using the coin.  The arrival times that result will be exponentially distributed with rate <em>&lambda;</em>.  I found the basic idea in the answer to a <a href="https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform"><strong>Mathematics Stack Exchange question</strong></a>, and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)[^24].  The algorithm follows:</p>
+<p>Exponential random variates can be generated using an input coin of unknown probability of heads of <em>&lambda;</em> (which can either be 1 or come between 0 and 1), by generating arrival times in a <em>Poisson process</em> of rate 1, then <em>thinning</em> the process using the coin.  The arrival times that result will be exponentially distributed with rate <em>&lambda;</em>.  I found the basic idea in the answer to a <a href="https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform"><strong>Mathematics Stack Exchange question</strong></a>, and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)[^23].  The algorithm follows:</p>
 
 <ol>
 <li>Generate an exponential(1) random variate using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex</em>.</li>
@@ -1345,10 +1285,10 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 </ol>
 
 <blockquote>
-<p><strong>Note</strong>: A <em>bounded exponential</em> random variate with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Do the following <em>m</em> times or until a zero is generated, whichever happens first: &#39;Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise&#39;. Then set <em>k</em> to the number of ones generated this way. (<em>k</em> is a so-called bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random variate, which an algorithm of Bringmann and Friedrich (2013)[^26] can generate as well.  If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random variate in step 2, a uniform(0,<em>&mu;</em>) random variate can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number greater than 0 and less than 1).</p>
+<p><strong>Note</strong>: A <em>bounded exponential</em> random variate with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Do the following <em>m</em> times or until a zero is generated, whichever happens first: &#39;Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise&#39;. Then set <em>k</em> to the number of ones generated this way. (<em>k</em> is a so-called bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random variate, which an algorithm of Bringmann and Friedrich (2013)[^25] can generate as well.  If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random variate in step 2, a uniform(0,<em>&mu;</em>) random variate can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number greater than 0 and less than 1).</p>
 </blockquote>
 
-<p>The following generator for the <strong>rate ln(2)</strong> is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random variate. Unlike the similar algorithm of Ahrens and Dieter (1972)[^27], this one doesn&#39;t require a table of probability values.</p>
+<p>The following generator for the <strong>rate ln(2)</strong> is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random variate. Unlike the similar algorithm of Ahrens and Dieter (1972)[^26], this one doesn&#39;t require a table of probability values.</p>
 
 <ol>
 <li>(Samples the integer part of the random variate.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
@@ -1376,14 +1316,14 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>Symmetric Geometric Distribution</h3>
 
-<p>Samples from the symmetric geometric distribution from (Ghosh et al. 2012)[^28], with parameter <em>&lambda;</em>, in the form of an input coin with unknown probability of heads of <em>&lambda;</em>.</p>
+<p>Samples from the symmetric geometric distribution from (Ghosh et al. 2012)[^27], with parameter <em>&lambda;</em>, in the form of an input coin with unknown probability of heads of <em>&lambda;</em>.</p>
 
 <ol>
 <li>Flip the input coin until it returns 0.  Set <em>n</em> to the number of times the coin returned 1 this way.</li>
 <li>Run a <strong>Bernoulli factory algorithm for 1/(2&minus;<em>&lambda;</em>)</strong>, using the input coin.  If the run returns 1, return <em>n</em>.  Otherwise, return &minus;1 &minus; <em>n</em>.</li>
 </ol>
 
-<p>This is similar to an algorithm mentioned in an appendix in Li (2021)[^29], in which the input coin&mdash;</p>
+<p>This is similar to an algorithm mentioned in an appendix in Li (2021)[^28], in which the input coin&mdash;</p>
 
 <ul>
 <li>has <em>&lambda;</em> = 1&minus;exp(&minus;<em>&epsilon;</em>), and</li>
@@ -1394,7 +1334,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>Lindley Distribution and Lindley-Like Mixtures</h3>
 
-<p>The <em>Lindley distribution</em> is a <em>mixture</em> of two probability distributions, with each of the two distributions having a separate probability of being sampled (<em>w</em> and 1&minus;<em>w</em> in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^30] with parameter <em>&theta;</em> (a real number greater than 0) can be generated as follows:</p>
+<p>The <em>Lindley distribution</em> is a <em>mixture</em> of two probability distributions, with each of the two distributions having a separate probability of being sampled (<em>w</em> and 1&minus;<em>w</em> in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^29] with parameter <em>&theta;</em> (a real number greater than 0) can be generated as follows:</p>
 
 <p>Let <em>A</em> be 1 and let <em>B</em> be 2.  Then:</p>
 
@@ -1415,35 +1355,35 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 </tr>
 </thead><tbody>
 <tr>
-<td>Garima (Shanker 2016)[^31].</td>
+<td>Garima (Shanker 2016)[^30].</td>
 <td>(1+<em>&theta;</em>)/(2+<em>&theta;</em>).</td>
 <td><em>&theta;</em>.</td>
 <td>1.</td>
 <td>2.</td>
 </tr>
 <tr>
-<td>i-Garima (Singh and Das 2020)[^32].</td>
+<td>i-Garima (Singh and Das 2020)[^31].</td>
 <td>(2+<em>&theta;</em>)/(3+<em>&theta;</em>).</td>
 <td><em>&theta;</em>.</td>
 <td>1.</td>
 <td>2.</td>
 </tr>
 <tr>
-<td>Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020)[^33].</td>
+<td>Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020)[^32].</td>
 <td><em>&theta;</em>/(1+<em>&theta;</em>).</td>
 <td><em>&theta;</em>.</td>
 <td>2.</td>
 <td>3.</td>
 </tr>
 <tr>
-<td>Xgamma (Sen et al. 2016)[^34].</td>
+<td>Xgamma (Sen et al. 2016)[^33].</td>
 <td><em>&theta;</em>/(1+<em>&theta;</em>).</td>
 <td><em>&theta;</em>.</td>
 <td>1.</td>
 <td>3.</td>
 </tr>
 <tr>
-<td>Mirra (Sen et al. 2021)[^35].</td>
+<td>Mirra (Sen et al. 2021)[^34].</td>
 <td><em>&theta;</em><sup>2</sup>/(<em>&alpha;</em>+<em>&theta;</em><sup>2</sup>) where <em>&alpha;</em>&gt;0.</td>
 <td><em>&theta;</em>.</td>
 <td>1.</td>
@@ -1456,8 +1396,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <ol>
 <li>If <em>&theta;</em> is a uniform PSRN, then the check &quot;With probability  <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>)&quot; can be implemented by running the Bernoulli factory algorithm for <strong>(<em>d</em> + <em>&mu;</em>) / ((<em>d</em> + <em>&mu;</em>) + (<em>c</em> + <em>&lambda;</em>))</strong>, where <em>c</em> is 1; <em>&lambda;</em> represents an input coin that always returns 0; <em>d</em> is <em>&theta;</em>&#39;s integer part, and <em>&mu;</em> is an input coin that runs <strong>SampleGeometricBag</strong> on <em>&theta;</em>&#39;s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.</li>
-<li>A <strong>Sushila</strong> random variate is <em>&alpha;</em> times a Lindley random variate, where <em>&alpha;</em> &gt; 0 (Shanker et al. 2013)[^36].</li>
-<li>An <strong>X-Lindley</strong> random variate (Chouia and Zeghdoudi 2021)[^37] is, with probability <em>&theta;</em>/(1+<em>&theta;</em>), an exponential random variate with a rate of <em>&theta;</em> (see step 1), and otherwise, a Lindley random variate with parameter <em>&theta;</em>.</li>
+<li>A <strong>Sushila</strong> random variate is <em>&alpha;</em> times a Lindley random variate, where <em>&alpha;</em> &gt; 0 (Shanker et al. 2013)[^35].</li>
+<li>An <strong>X-Lindley</strong> random variate (Chouia and Zeghdoudi 2021)[^36] is, with probability <em>&theta;</em>/(1+<em>&theta;</em>), an exponential random variate with a rate of <em>&theta;</em> (see step 1), and otherwise, a Lindley random variate with parameter <em>&theta;</em>.</li>
 </ol>
 </blockquote>
 
@@ -1476,7 +1416,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>One-Dimensional Epanechnikov Kernel</h3>
 
-<p>Adapted from Devroye and Györfi (1985, p. 236)[^38].</p>
+<p>Adapted from Devroye and Györfi (1985, p. 236)[^37].</p>
 
 <ol>
 <li>Generate three uniform PSRNs <em>a</em>, <em>b</em>, and <em>c</em>, with a positive sign, an integer part of 0, and an empty fractional part.</li>
@@ -1517,7 +1457,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>Tulap distribution</h3>
 
-<p>The algorithm below samples a variate from the Tulap(<em>m</em>, <em>b</em>, <em>q</em>) distribution (&quot;truncated uniform Laplace&quot;; Awan and Slavković (2019)[^39]) and returns it as a uniform PSRN.</p>
+<p>The algorithm below samples a variate from the Tulap(<em>m</em>, <em>b</em>, <em>q</em>) distribution (&quot;truncated uniform Laplace&quot;; Awan and Slavković (2019)[^38]) and returns it as a uniform PSRN.</p>
 
 <ul>
 <li>The parameter <em>b</em> is greater than 0, is less than 1, and can be a uniform PSRN.</li>
@@ -1607,107 +1547,101 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>[^13]: Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</p>
 
-<p>[^14]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
+<p>[^14]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</p>
 
-<p>[^15]: Jacob, P.E., Thiery, A.H., &quot;On nonnegative unbiased estimators&quot;, Ann. Statist., Volume 43, Number 2 (2015), 769-784.</p>
+<p>[^15]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</p>
 
-<p>[^16]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).</p>
+<p>[^16]: Citterio, M., Pavani, R., &quot;A Fast Computation of the Best k-Digit Rational Approximation to a Real Number&quot;, Mediterranean Journal of Mathematics 13 (2016).</p>
 
-<p>[^17]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won&#39;t use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs <em>arbitrary</em> but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).</p>
+<p>[^17]: Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
 
-<p>[^18]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</p>
+<p>[^18]: Jacob, P.E., Thiery, A.H., &quot;On nonnegative unbiased estimators&quot;, Ann. Statist., Volume 43, Number 2 (2015), 769-784.</p>
 
-<p>[^19]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</p>
+<p>[^19]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).</p>
 
-<p>[^20]: Citterio, M., Pavani, R., &quot;A Fast Computation of the Best k-Digit Rational Approximation to a Real Number&quot;, Mediterranean Journal of Mathematics 13 (2016).</p>
+<p>[^20]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won&#39;t use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs <em>arbitrary</em> but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).</p>
 
-<p>[^21]: Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
+<p>[^21]: C.T. Li, A. El Gamal, &quot;<a href="https://arxiv.org/abs/1603.05238v1"><strong>A Universal Coding Scheme for Remote Generation of Continuous Random Variables</strong></a>&quot;, arXiv:1603.05238v1  [cs.IT], 2016</p>
 
-<p>[^22]: C.T. Li, A. El Gamal, &quot;<a href="https://arxiv.org/abs/1603.05238v1"><strong>A Universal Coding Scheme for Remote Generation of Continuous Random Variables</strong></a>&quot;, arXiv:1603.05238v1  [cs.IT], 2016</p>
+<p>[^22]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
 
-<p>[^23]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
+<p>[^23]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
 
-<p>[^24]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^24]: Harlow, J., Sainudiin, R., Tucker, W., &quot;Mapped Regular Pavings&quot;, <em>Reliable Computing</em> 16 (2012).</p>
 
-<p>[^25]: Harlow, J., Sainudiin, R., Tucker, W., &quot;Mapped Regular Pavings&quot;, <em>Reliable Computing</em> 16 (2012).</p>
+<p>[^25]: Bringmann, K. and Friedrich, T., 2013, July. &quot;Exact and efficient generation of geometric random variates and random graphs&quot;, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</p>
 
-<p>[^26]: Bringmann, K. and Friedrich, T., 2013, July. &quot;Exact and efficient generation of geometric random variates and random graphs&quot;, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</p>
+<p>[^26]: Ahrens, J.H., and Dieter, U., &quot;Computer methods for sampling from the exponential and normal distributions&quot;, <em>Communications of the ACM</em> 15, 1972.</p>
 
-<p>[^27]: Ahrens, J.H., and Dieter, U., &quot;Computer methods for sampling from the exponential and normal distributions&quot;, <em>Communications of the ACM</em> 15, 1972.</p>
+<p>[^27]: Ghosh, A., Roughgarden, T., and Sundararajan, M., &quot;Universally Utility-Maximizing Privacy Mechanisms&quot;, <em>SIAM Journal on Computing</em> 41(6), 2012.</p>
 
-<p>[^28]: Ghosh, A., Roughgarden, T., and Sundararajan, M., &quot;Universally Utility-Maximizing Privacy Mechanisms&quot;, <em>SIAM Journal on Computing</em> 41(6), 2012.</p>
+<p>[^28]: Li, L., 2021. Bayesian Inference on Ratios Subject to Differentially Private Noise (Doctoral dissertation, Duke University).</p>
 
-<p>[^29]: Li, L., 2021. Bayesian Inference on Ratios Subject to Differentially Private Noise (Doctoral dissertation, Duke University).</p>
+<p>[^29]: Lindley, D.V., &quot;Fiducial distributions and Bayes&#39; theorem&quot;, <em>Journal of the Royal Statistical Society Series B</em>, 1958.</p>
 
-<p>[^30]: Lindley, D.V., &quot;Fiducial distributions and Bayes&#39; theorem&quot;, <em>Journal of the Royal Statistical Society Series B</em>, 1958.</p>
+<p>[^30]: Shanker, R., &quot;Garima distribution and its application to model behavioral science data&quot;, <em>Biom Biostat Int J.</em> 4(7), 2016.</p>
 
-<p>[^31]: Shanker, R., &quot;Garima distribution and its application to model behavioral science data&quot;, <em>Biom Biostat Int J.</em> 4(7), 2016.</p>
+<p>[^31]: Singh, B.P., Das, U.D., &quot;<a href="https://arxiv.org/abs/2010.15078"><strong>On an Induced Distribution and its Statistical Properties</strong></a>&quot;, arXiv:2010.15078 [stat.ME], 2020.</p>
 
-<p>[^32]: Singh, B.P., Das, U.D., &quot;<a href="https://arxiv.org/abs/2010.15078"><strong>On an Induced Distribution and its Statistical Properties</strong></a>&quot;, arXiv:2010.15078 [stat.ME], 2020.</p>
+<p>[^32]: Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</p>
 
-<p>[^33]: Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</p>
+<p>[^33]: Sen, S., et al., &quot;The xgamma distribution: statistical properties and application&quot;, 2016.</p>
 
-<p>[^34]: Sen, S., et al., &quot;The xgamma distribution: statistical properties and application&quot;, 2016.</p>
+<p>[^34]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. &quot;The Mirra distribution for modeling time-to-event data sets.&quot; In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.</p>
 
-<p>[^35]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. &quot;The Mirra distribution for modeling time-to-event data sets.&quot; In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.</p>
+<p>[^35]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. &quot;Sushila distribution and its application to waiting times data.&quot; International Journal of Business Management 3, no. 2 (2013): 1-11.</p>
 
-<p>[^36]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. &quot;Sushila distribution and its application to waiting times data.&quot; International Journal of Business Management 3, no. 2 (2013): 1-11.</p>
+<p>[^36]: Chouia, Sarra, and Halim Zeghdoudi. &quot;The xlindley distribution: Properties and application.&quot; Journal of Statistical Theory and Applications 20, no. 2 (2021): 318-327.</p>
 
-<p>[^37]: Chouia, Sarra, and Halim Zeghdoudi. &quot;The xlindley distribution: Properties and application.&quot; Journal of Statistical Theory and Applications 20, no. 2 (2021): 318-327.</p>
+<p>[^37]: Devroye, L., Györfi, L., <em>Nonparametric Density Estimation: The L1 View</em>, 1985.</p>
 
-<p>[^38]: Devroye, L., Györfi, L., <em>Nonparametric Density Estimation: The L1 View</em>, 1985.</p>
+<p>[^38]: Awan, Jordan, and Aleksandra Slavković. &quot;Differentially private inference for binomial data.&quot; arXiv:1904.00459 (2019).</p>
 
-<p>[^39]: Awan, Jordan, and Aleksandra Slavković. &quot;Differentially private inference for binomial data.&quot; arXiv:1904.00459 (2019).</p>
+<p>[^39]: Kinderman, A.J., Monahan, J.F., &quot;Computer generation of random variables using the ratio of uniform deviates&quot;, <em>ACM Transactions on Mathematical Software</em> 3(3), pp. 257-260, 1977.</p>
 
-<p>[^40]: Kinderman, A.J., Monahan, J.F., &quot;Computer generation of random variables using the ratio of uniform deviates&quot;, <em>ACM Transactions on Mathematical Software</em> 3(3), pp. 257-260, 1977.</p>
+<p>[^40]: Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</p>
 
-<p>[^41]: Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</p>
+<p>[^41]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
-<p>[^42]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+<p>[^42]: Leydold, J., &quot;<a href="https://dl.acm.org/doi/10.1145/347837.347863"><strong>Automatic sampling with the ratio-of-uniforms method</strong></a>&quot;, ACM Transactions on Mathematical Software 26(1), 2000.</p>
 
-<p>[^43]: Leydold, J., &quot;<a href="https://dl.acm.org/doi/10.1145/347837.347863"><strong>Automatic sampling with the ratio-of-uniforms method</strong></a>&quot;, ACM Transactions on Mathematical Software 26(1), 2000.</p>
+<p>[^43]: Duff, T., &quot;Interval Arithmetic and Recursive Subdivision for Implicit Functions and Constructive Solid Geometry&quot;, Computer Graphics 26(2), July 1992.</p>
 
-<p>[^44]: Duff, T., &quot;Interval Arithmetic and Recursive Subdivision for Implicit Functions and Constructive Solid Geometry&quot;, Computer Graphics 26(2), July 1992.</p>
+<p>[^44]: I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</p>
 
-<p>[^45]: I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</p>
+<p>[^45]: Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092"><strong>https://doi.org/10.3390/e21010092</strong></a> .</p>
 
-<p>[^46]: Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092"><strong>https://doi.org/10.3390/e21010092</strong></a> .</p>
+<p>[^46]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6 [cs.IT], 2020.</p>
 
-<p>[^47]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6 [cs.IT], 2020.</p>
+<p>[^47]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
 
-<p>[^48]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
+<p>[^48]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
 
-<p>[^49]: Wästlund, J., &quot;<a href="http://www.math.chalmers.se/%7Ewastlund/coinFlip.pdf"><strong>Functions arising by coin flipping</strong></a>&quot;, 1999.</p>
+<p>[^49]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.</p>
 
-<p>[^50]: Dale, H., Jennings, D. and Rudolph, T., 2015, &quot;Provable quantum advantage in randomness processing&quot;, <em>Nature communications</em> 6(1), pp. 1-4.</p>
+<p>[^50]: Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy&quot;, <em>Journal of Mathematical Psychology</em> 95 (2020): 102308.</p>
 
-<p>[^51]: Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</p>
+<p>[^51]: Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</p>
 
-<p>[^52]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
+<p>[^52]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
 
-<p>[^53]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.</p>
+<p>[^53]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In <em>Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science</em>, 2004. (pp. 12-21). IEEE.</p>
 
-<p>[^54]: Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy&quot;, <em>Journal of Mathematical Psychology</em> 95 (2020): 102308.</p>
+<p>[^54]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</p>
 
-<p>[^55]: Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</p>
+<p>[^55]: Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</p>
 
-<p>[^56]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In <em>Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science</em>, 2004. (pp. 12-21). IEEE.</p>
+<p>[^56]: Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</p>
 
-<p>[^57]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</p>
+<p>[^57]: Vatan (2001) claims that a finite-state generator has a continuous <code>CDF</code> (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.</p>
 
-<p>[^58]: Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</p>
+<p>[^58]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</p>
 
-<p>[^59]: Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</p>
+<p>[^59]: Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</p>
 
-<p>[^60]: Vatan (2001) claims that a finite-state generator has a continuous <code>CDF</code> (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.</p>
+<p>[^60]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
-<p>[^61]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</p>
-
-<p>[^62]: Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</p>
-
-<p>[^63]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
-
-<p>[^64]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+<p>[^61]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -1719,7 +1653,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>Ratio of Uniforms</h3>
 
-<p>The Cauchy sampler given earlier demonstrates the <em>ratio-of-uniforms</em> technique for sampling a distribution (Kinderman and Monahan 1977)[^40].  It involves transforming the distribution&#39;s probability density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it&#39;s possible to achieve in rational arithmetic (Daumas et al., 2007)[^41], is less elegant than, say, the normal distribution sampler by Karney (2014)[^42], which doesn&#39;t require calculating logarithms or other transcendental functions.</p>
+<p>The Cauchy sampler given earlier demonstrates the <em>ratio-of-uniforms</em> technique for sampling a distribution (Kinderman and Monahan 1977)[^39].  It involves transforming the distribution&#39;s probability density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it&#39;s possible to achieve in rational arithmetic (Daumas et al., 2007)[^40], is less elegant than, say, the normal distribution sampler by Karney (2014)[^41], which doesn&#39;t require calculating logarithms or other transcendental functions.</p>
 
 <p>This algorithm works for every univariate (one-variable) distribution as long as&mdash;</p>
 
@@ -1754,7 +1688,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> The ratio-of-uniforms shape is convex if and only if &minus;1/sqrt(<em>PDF</em>(<em>x</em>)) is a concave function (loosely speaking, its &quot;slope&quot; never increases) (Leydold 2000)[^43].</p>
+<p><strong>Note:</strong> The ratio-of-uniforms shape is convex if and only if &minus;1/sqrt(<em>PDF</em>(<em>x</em>)) is a concave function (loosely speaking, its &quot;slope&quot; never increases) (Leydold 2000)[^42].</p>
 
 <p><strong>Examples:</strong></p>
 
@@ -1782,7 +1716,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 </ul>
 
 <p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.</p></li>
-<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &le; 0, where <em>f</em> is a continuous function of one or more variables, <strong>InShape</strong>&#39;s calculations should involve <em>rational intervals</em>, or objects that describe a number that&#39;s bounded by two rational numbers with numerators and denominators of arbitrary size.  (See also (Duff 1992)[^44] Daumas et al. (2007)[^41] give one implementation of rational intervals.) Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals[^45] with an accuracy that increases as <em>S</em> increases.  Then, <strong>InShape</strong> can return&mdash;</p>
+<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &le; 0, where <em>f</em> is a continuous function of one or more variables, <strong>InShape</strong>&#39;s calculations should involve <em>rational intervals</em>, or objects that describe a number that&#39;s bounded by two rational numbers with numerators and denominators of arbitrary size.  (See also (Duff 1992)[^43] Daumas et al. (2007)[^40] give one implementation of rational intervals.) Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals[^44] with an accuracy that increases as <em>S</em> increases.  Then, <strong>InShape</strong> can return&mdash;</p>
 
 <ul>
 <li><em>YES</em> if the interval result of <em>f</em> has an upper bound less than or equal to 0;</li>
@@ -1824,14 +1758,14 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <h3>Probability Transformations</h3>
 
-<p>The following algorithm takes a uniform partially-sampled random number (PSRN) as a &quot;coin&quot; and flips that &quot;coin&quot; using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>).  Given that &quot;coin&quot; and a function <em>f</em> as described below, the algorithm returns 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number built up by the uniform PSRN (see also (Brassard et al., 2019)[^46], (Devroye 1986, p. 769)[^24], (Devroye and Gravel 2020)[^47].  In the algorithm:</p>
+<p>The following algorithm takes a uniform partially-sampled random number (PSRN) as a &quot;coin&quot; and flips that &quot;coin&quot; using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>).  Given that &quot;coin&quot; and a function <em>f</em> as described below, the algorithm returns 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number built up by the uniform PSRN (see also (Brassard et al., 2019)[^45], (Devroye 1986, p. 769)[^23], (Devroye and Gravel 2020)[^46].  In the algorithm:</p>
 
 <ul>
 <li> The uniform PSRN&#39;s sign must be positive and its integer part must be 0.</li>
 <li><p>For correctness, <em>f</em>(<em>U</em>) must meet the following conditions:</p>
 
 <ul>
-<li>If the algorithm will be run multiple times with the same PSRN, <em>f</em>(<em>U</em>) must be the constant 0 or 1, or be continuous and polynomially bounded on the open interval (0, 1) (polynomially bounded means that both <em>f</em>(<em>U</em>) and 1&minus;<em>f</em>(<em>U</em>) are greater than or equal to min(<em>U</em><sup><em>n</em></sup>, (1&minus;<em>U</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^48]).</li>
+<li>If the algorithm will be run multiple times with the same PSRN, <em>f</em>(<em>U</em>) must be the constant 0 or 1, or be continuous and polynomially bounded on the open interval (0, 1) (polynomially bounded means that both <em>f</em>(<em>U</em>) and 1&minus;<em>f</em>(<em>U</em>) are greater than or equal to min(<em>U</em><sup><em>n</em></sup>, (1&minus;<em>U</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^47]).</li>
 <li>Otherwise, <em>f</em>(<em>U</em>) must map the interval [0, 1] to [0, 1] and be continuous everywhere or &quot;almost everywhere&quot;.</li>
 </ul>
 
@@ -1974,46 +1908,6 @@ def calc_linear_func(eps=S(5)/10, mult=1, count=10):
 calc_linear_func(count=8)
 </pre>
 
-<p><a id=Derivation_of_My_Algorithm_for_min___lambda___1_2></a></p>
-
-<h3>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</h3>
-
-<p>The following explains how the algorithm is derived.</p>
-
-<p>The function min(<em>&lambda;</em>, 1/2) can be rewritten as <em>A</em> + <em>B</em> where&mdash;</p>
-
-<ul>
-<li><em>A</em>  = (1/2) * <em>&lambda;</em>, and</li>
-<li><em>B</em> = (1/2) * min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)<br/>&nbsp;&nbsp;= (1/2) * ((1&minus;sqrt(1&minus;4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)))/2)<br/>&nbsp;&nbsp;= (1/2) * $\sum_{k\ge 1} h_k(\lambda)$,</li>
-</ul>
-
-<p>revealing that the function is a <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a>, and <em>B</em> is itself a convex combination where&mdash;</p>
-
-<ul>
-<li><em>g</em>(<em>k</em>) = choose(2*<em>k</em>,<em>k</em>)/((2*<em>k</em>&minus;1)*2<sup>2*<em>k</em></sup>), and</li>
-<li><em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>) = (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>k</em></sup> / 2 = (<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>k</em></sup> * 4<sup><em>k</em></sup> / 2</li>
-</ul>
-
-<p>(see also Wästlund (1999)[^49]; Dale et al. (2015)[^50]).  The right-hand side of <em>h</em>, which is the polynomial built in step 3 of the algorithm, is a polynomial of degree <em>k</em>*2 with Bernstein coefficients&mdash;</p>
-
-<ul>
-<li><em>z</em> = (4<sup><em>v</em></sup>/2) / choose(<em>v</em>*2,<em>v</em>) at <em>v</em>=<em>k</em>, and</li>
-<li>0 elsewhere.</li>
-</ul>
-
-<p>Unfortunately, <em>z</em> is generally greater than 1, so that the polynomial can&#39;t be simulated, as is, using the Bernoulli factory algorithm for <a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form"><strong>polynomials in Bernstein form</strong></a>.  Fortunately, the polynomial&#39;s degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001)[^51]).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree <em>d</em> as well as <em>z</em> (as defined above), the degree elevation is as follows:</p>
-
-<ol>
-<li>Set <em>r</em> to floor(<em>d</em>/3) + 1. (This starting value is because when this routine finishes, <em>r</em>/<em>d</em> appears to converge to 1/3 as <em>d</em> gets large, for the polynomial in question.)  Let <em>c</em> be choose(<em>d</em>,<em>d</em>/2).</li>
-<li>Create a list of <em>d</em>+<em>r</em>+1 Bernstein coefficients, all zeros.</li>
-<li>For each integer <em>i</em> in the interval [0, <em>d</em>+<em>r</em>]:
-
-<ul>
-<li>If <em>d</em>/2 is in the interval [max(0, <em>i</em>&minus;<em>r</em>), min(<em>d</em>,<em>i</em>)], set the <em>i</em><sup>th</sup> Bernstein coefficient (starting at 0) to <em>z</em>*<em>c</em>*choose(<em>r</em>,<em>i</em>&minus;<em>d</em>/2)* / choose(<em>d</em>+<em>r</em>, <em>i</em>).</li>
-</ul></li>
-<li>If all the Bernstein coefficients are 1 or less, return them.  Otherwise, add <em>d</em>/2 to <em>r</em> and go to step 2.</li>
-</ol>
-
 <p><a id=Algorithm_for_sin___lambda_____pi___2></a></p>
 
 <h3>Algorithm for sin(<em>&lambda;</em>*<em>&pi;</em>/2)</h3>
@@ -2051,7 +1945,7 @@ calc_linear_func(count=8)
 <li>the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0.</li>
 </ul>
 
-<p>The algorithm to achieve this goal follows (see Lee et al. 2014)[^52]:</p>
+<p>The algorithm to achieve this goal follows (see Lee et al. 2014)[^48]:</p>
 
 <ol>
 <li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
@@ -2059,13 +1953,13 @@ calc_linear_func(count=8)
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> An example from Lee et al. (2014)[^52].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
+<p><strong>Example:</strong> An example from Lee et al. (2014)[^48].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
 
 <p><strong>Notes:</strong></p>
 
 <ol>
 <li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected or average value) is not the same as averaging to <em>f</em>(<em>&mu;</em>) where <em>&mu;</em> is the mean of the oracle&#39;s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 0 or 1 with equal probability, and <em>f</em>(<em>&nu;</em>) = exp(&minus;<em>&nu;</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(&minus;1) &minus; exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(&minus;1/2).</li>
-<li><p>(Lee et al. 2014, Corollary 4)[^52]: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
+<li><p>(Lee et al. 2014, Corollary 4)[^48]: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
 
 <ul>
 <li>Use <em>f</em>(<em>&nu;</em>) = <em>f</em>(<em>&nu;</em>) &minus; <em>b</em>, and use <em>&delta;</em> = <em>&delta;</em> &minus; <em>b</em>.</li>
@@ -2076,7 +1970,7 @@ calc_linear_func(count=8)
 </ol>
 </blockquote>
 
-<p><strong>Algorithm 3.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nowhere decreasing in that interval (Jacob and Thiery 2015)[^15].  This can be done using the algorithm below.  In the algorithm:</p>
+<p><strong>Algorithm 3.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nowhere decreasing in that interval (Jacob and Thiery 2015)[^18].  This can be done using the algorithm below.  In the algorithm:</p>
 
 <ul>
 <li><em>f</em>(<em>&mu;</em>) must be a function that can be written as&mdash;<br><em>c</em>[0]*<em>z</em><sup>0</sup> + <em>c</em>[1]*<em>z</em><sup>1</sup> + ...,<br>which is an infinite series where <em>z</em> = <em>&mu;</em>&minus;<em>a</em> and all <em>c</em>[<em>i</em>] are 0 or greater.</li>
@@ -2093,7 +1987,7 @@ calc_linear_func(count=8)
 <li>With probability <em>&psi;</em>, go to step 2.  Otherwise, return <em>ret</em>.</li>
 </ol>
 
-<p>Now, assume the oracle&#39;s numbers are all less than or equal to <em>b</em> (rather than greater than or equal to <em>a</em>), where <em>b</em> is a known rational number.  Then <em>f</em> must be 0 or greater everywhere in (&minus;<em>&infin;</em>, <em>b</em>] and be nowhere increasing there (Jacob and Thiery 2015)[^15], and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, <em>z</em> = <em>b</em> &minus;<em>&mu;</em>; (2) in step 2, multiply <em>prod</em> by <em>b</em> &minus; <em>x</em> rather than <em>x</em> &minus; <em>a</em>.</p>
+<p>Now, assume the oracle&#39;s numbers are all less than or equal to <em>b</em> (rather than greater than or equal to <em>a</em>), where <em>b</em> is a known rational number.  Then <em>f</em> must be 0 or greater everywhere in (&minus;<em>&infin;</em>, <em>b</em>] and be nowhere increasing there (Jacob and Thiery 2015)[^18], and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, <em>z</em> = <em>b</em> &minus;<em>&mu;</em>; (2) in step 2, multiply <em>prod</em> by <em>b</em> &minus; <em>x</em> rather than <em>x</em> &minus; <em>a</em>.</p>
 
 <blockquote>
 <p><strong>Note:</strong> This algorithm is exact if the oracle produces only rational numbers <em>and</em> if all <em>c</em>[<em>i</em>] are rational numbers.  If the oracle can produce irrational numbers, then they should be implemented using uniform PSRNs.  See also note 3 on Algorithm 2.</p>
@@ -2120,7 +2014,7 @@ calc_linear_func(count=8)
 <p>It is not yet known whether the following functions can be simulated:</p>
 
 <ul>
-<li><em>&lambda;</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)[^53] proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose coefficients are non-negative real numbers.</li>
+<li><em>&lambda;</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)[^49] proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose coefficients are non-negative real numbers.</li>
 <li>min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>).</li>
 </ul>
 
@@ -2153,12 +2047,12 @@ calc_linear_func(count=8)
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Mossel and Peres (2005)[^19] defined pushdown automata to start with a non-empty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
-<li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)[^54] and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)[^55], as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
+<li>Mossel and Peres (2005)[^15] defined pushdown automata to start with a non-empty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
+<li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)[^50] and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)[^51], as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
 </ol>
 </blockquote>
 
-<p><strong>Proposition 0</strong> (Mossel and Peres 2005[^54], Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
+<p><strong>Proposition 0</strong> (Mossel and Peres 2005[^50], Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
 
 <p>It is not known whether <strong>ALGRAT</strong> and <strong>PDA</strong> are equal, but the following can be established about <strong>PDA</strong>:</p>
 
@@ -2207,7 +2101,7 @@ calc_linear_func(count=8)
 
 <p><em>where n is the polynomial&#39;s degree and a[0], a[1], ..., a[n] are functions in the class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof Sketch</em>: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)[^14]: The first stage counts the number of &quot;heads&quot; shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability <em>a</em>[<em>i</em>], where <em>i</em> is the number of &quot;heads&quot;. The automaton&#39;s transitions take advantage of Lemma 1A.  &#x25a1;</p>
+<p><em>Proof Sketch</em>: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)[^52]: The first stage counts the number of &quot;heads&quot; shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability <em>a</em>[<em>i</em>], where <em>i</em> is the number of &quot;heads&quot;. The automaton&#39;s transitions take advantage of Lemma 1A.  &#x25a1;</p>
 
 <p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their product, namely f(&lambda;)*g(&lambda;).</em></p>
 
@@ -2219,11 +2113,11 @@ calc_linear_func(count=8)
 
 <p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;).</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^19] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^15] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
 <p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps (0, 1) to itself is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)[^19].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;</p>
+<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)[^15].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> An unbounded stack size is necessary for a pushdown automaton to simulate functions that a finite-state machine can&#39;t.  With a bounded stack size, there is a finite-state machine where each state not only holds the pushdown automaton&#39;s original state, but also encodes the contents of the stack (which is possible because the stack&#39;s size is bounded); each operation that would push, pop, or change the top symbol transitions to a state with the appropriate encoding of the stack instead.</p>
@@ -2245,9 +2139,9 @@ calc_linear_func(count=8)
 (S&prime;, HEADS, <em>stacksymbol</em>) &rarr; (T, <em>newstack</em>), and<br/>
 (S&prime;, TAILS, <em>stacksymbol</em>) &rarr; (FAILURE, {}).</p>
 
-<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By (Dughmi et al. 2021)[^5], the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^19] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By (Dughmi et al. 2021)[^5], the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^15] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
-<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^55]):</p>
+<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^51]):</p>
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> (rewrite <em>X</em> to the letter <em>a</em>).</li>
@@ -2263,7 +2157,7 @@ calc_linear_func(count=8)
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> becomes the two rules&mdash;<br>(START, HEADS, <em>X</em>) &rarr; (<em>letter</em>, {}), and<br>(START, TAILS, <em>X</em>) &rarr; (<em>letter</em>, {}).<br>Here, <em>letter</em> is either START or a unique state in <em>F</em> that &quot;detours&quot; to a letter-generating operation for <em>a</em> and sets the state back to START when finished (see Proposition 4).  If <em>a</em> is <em>&epsilon;</em>, <em>letter</em> is START and no letter-generating operation is done.</li>
-<li><em>X</em> &rarr;<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)[^19].  If <em>a</em><sub><em>i</em></sub> is <em>&epsilon;</em>, no letter-generating operation is done.</li>
+<li><em>X</em> &rarr;<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)[^15].  If <em>a</em><sub><em>i</em></sub> is <em>&epsilon;</em>, no letter-generating operation is done.</li>
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) becomes the two rules&mdash;<br>(START, HEADS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}), and<br>(START, TAILS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}).</li>
 </ul>
 
@@ -2275,16 +2169,16 @@ calc_linear_func(count=8)
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) becomes <em>X</em> = <em>Y</em>*<em>Z</em>.</li>
 </ul>
 
-<p>Solving this system for the grammar&#39;s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar&#39;s word distribution.  (See also Flajolet et al. 2010[^18], Icard 2020[^54].) &#x25a1;</p>
+<p>Solving this system for the grammar&#39;s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar&#39;s word distribution.  (See also Flajolet et al. 2010[^14], Icard 2020[^50].) &#x25a1;</p>
 
 <blockquote>
-<p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)[^18], corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
+<p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)[^14], corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
 
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010[^18]).  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p></li>
-<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)[^19]; see also (Esparza et al. 2004)[^56].  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
+<li><p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010[^14]).  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p></li>
+<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)[^15]; see also (Esparza et al. 2004)[^53].  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
 
 <ul>
 <li>(<em>st</em>, <em>p</em>, <em>sy</em>) &rarr; (<em>s2</em>, {}) becomes either <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = <em>p</em> if <em>s2</em> is <em>en</em>, or <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = 0 otherwise.</li>
@@ -2301,7 +2195,7 @@ calc_linear_func(count=8)
 <li>When the stack is empty, output 0 if <em>G</em> is in the FAILURE state, or 1 otherwise.</li>
 </ol>
 
-<p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called &quot;end-of-string&quot; symbol, so that a pushdown automaton can be built that accepts &quot;empty strings&quot;; an example is (Elder et al. 2015)[^57].</p></li>
+<p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called &quot;end-of-string&quot; symbol, so that a pushdown automaton can be built that accepts &quot;empty strings&quot;; an example is (Elder et al. 2015)[^54].</p></li>
 </ol>
 </blockquote>
 
@@ -2327,7 +2221,7 @@ calc_linear_func(count=8)
 
 <p><em>Proof:</em>  By Lagrange&#39;s continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last &quot;few&quot; of which repeat forever.  The following example describes a periodic continued fraction expansion: [0; 1, 2, (5, 4, 3)], which is the same as [0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, ...].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (<code>(5, 4, 3)</code>) is 3; and the size of the non-period (<code>1, 2</code>) is 2.</p>
 
-<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)[^55] can be described as follows.  The chain&#39;s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
+<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)[^51] can be described as follows.  The chain&#39;s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
 
 <ul>
 <li>From E: Go to N with probability <em>x</em>, or to the box&#39;s call port with probability 1 &minus; <em>x</em>.</li>
@@ -2342,11 +2236,11 @@ calc_linear_func(count=8)
 <li>For each <em>i</em> in [1, <em>n</em>+1], there is a component labeled <em>i</em>.  It is the same as the template component, except <em>x</em> = <em>a</em>[<em>i</em>]/(1 + <em>a</em>[<em>i</em>]), and <em>y</em> = 1/<em>a</em>[<em>i</em>].  The component&#39;s single box goes to the component labeled <em>i</em>+1, <em>except</em> that for component <em>n</em>+<em>p</em>, the component&#39;s single box goes to the component labeled <em>n</em>+1.</li>
 </ul>
 
-<p>According to Etessami and Yannakakis (2009)[^55], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
+<p>According to Etessami and Yannakakis (2009)[^51], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
 
 <p><strong>Lemma 1:</strong> <em>The square root function sqrt(&lambda;) is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> See (Mossel and Peres 2005)[^19]. &#x25a1;</p>
+<p><em>Proof:</em> See (Mossel and Peres 2005)[^15]. &#x25a1;</p>
 
 <p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class <strong>PDA</strong>.</em></p>
 
@@ -2354,7 +2248,7 @@ calc_linear_func(count=8)
 
 <p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
-<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^19] because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^15] because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
 <p><a id=Finite_State_and_Pushdown_Generators></a></p>
 
@@ -2375,7 +2269,7 @@ calc_linear_func(count=8)
 <li><code>PDF(z)</code> is the probability density function of <em>X</em>, or the &quot;slope&quot; function of <code>CDF(z)</code>, or the relative probability of choosing a number &quot;close&quot; to <em>z</em> at random.</li>
 </ul>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^6] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many &quot;slope&quot; functions on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)[^58], (Kindler and Romik 2004)[^59], and it can be shown that the mean of <em>X</em> must be a rational number.  [^60]</p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^6] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many &quot;slope&quot; functions on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)[^55], (Kindler and Romik 2004)[^56], and it can be shown that the mean of <em>X</em> must be a rational number.  [^57]</p>
 
 <p><strong>Proposition 8.</strong> <em>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:</em></p>
 
@@ -2388,7 +2282,7 @@ calc_linear_func(count=8)
 
 <p>Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:</p>
 
-<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)[^61] section 5.3), for some k equal to 2 or greater.</em></p>
+<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)[^58] section 5.3), for some k equal to 2 or greater.</em></p>
 
 <p><em>Proof Sketch:</em> There are two cases.</p>
 
@@ -2399,15 +2293,15 @@ calc_linear_func(count=8)
 <li>The <em>output function</em> takes a configuration described above and returns a digit.  If the coin wasn&#39;t flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).</li>
 </ol>
 
-<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)[^58].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.  Now at this point the generator&#39;s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  &#x25a1;</p>
+<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)[^55].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.  Now at this point the generator&#39;s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  &#x25a1;</p>
 
-<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)[^54].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)[^54].  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in [0, 1] with probability 1.</p>
+<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)[^50].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)[^50].  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in [0, 1] with probability 1.</p>
 
-<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)[^61], the generator can generate a real number&#39;s binary expansion only if that number is rational or transcendental (see also Cobham (1968)[^62]; Adamczewski and Bugeaud (2007)[^63]).</s>  &#x25a1;</p>
+<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)[^58], the generator can generate a real number&#39;s binary expansion only if that number is rational or transcendental (see also Cobham (1968)[^59]; Adamczewski and Bugeaud (2007)[^60]).</s>  &#x25a1;</p>
 
 <p><strong>Proposition 9.</strong> <em>If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function on that interval.</em></p>
 
-<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)[^59] and Knuth and Yao (1976)[^6] with Richman (2012)[^64], who proved that a continuous algebraic function on an open interval is piecewise analytic (&quot;analytic&quot; is a stronger statement than having infinitely many &quot;slope&quot; functions).</p>
+<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)[^56] and Knuth and Yao (1976)[^6] with Richman (2012)[^61], who proved that a continuous algebraic function on an open interval is piecewise analytic (&quot;analytic&quot; is a stronger statement than having infinitely many &quot;slope&quot; functions).</p>
 
 <p><a id=License></a></p>
 
