@@ -84,7 +84,6 @@
 
 <ul>
 <li><a href="#Probability_Transformations"><strong>Probability Transformations</strong></a></li>
-<li><a href="#Proof_of_the_General_Martingale_Algorithm"><strong>Proof of the General Martingale Algorithm</strong></a></li>
 <li><a href="#Algorithm_for_sin___lambda_____pi___2"><strong>Algorithm for sin(<em>&lambda;</em>*<em>&pi;</em>/2)</strong></a></li>
 <li><a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>Pushdown Automata and Algebraic Functions</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information_Omitted_Algorithms"><strong>Sampling Distributions Using Incomplete Information: Omitted Algorithms</strong></a></li>
@@ -494,7 +493,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>$$f(x)=\left(\sum_{k=0}^n (-1)^k {n\choose k} (x-k)^{n-1} \text{sign}(x-k)\right)/(2(n-1)!),$$</p>
 
-<p>where ${n\choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items, and sign(<em>x</em>) is 1 if <em>x</em> is greater than 0, or 0 if <em>x</em> is 0, or &minus;1 is less than 0.[^12][^13][^14]</p>
+<p>where ${n\choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items, and sign(<em>x</em>) is 1 if <em>x</em> is greater than 0, or 0 if <em>x</em> is 0, or &minus;1 is less than 0.[^12][^13][^13]</p>
 
 <p>This is a polynomial of degree <em>n</em> &minus; 1.  For <em>n</em> uniform numbers, the distribution can take on values that are 0 or greater and <em>n</em> or less.</p>
 
@@ -505,9 +504,9 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <li>An integer in [0, <em>n</em>) is chosen uniformly at random, call it <em>i</em>, then the piece identified by <em>i</em> is chosen.  There are <a href="https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N"><strong>many algorithms to choose an integer</strong></a> this way, but an algorithm that is &quot;optimal&quot; in terms of the number of bits it uses, as well as unbiased, should be chosen.</li>
 <li><p>The PDF at [<em>i</em>, <em>i</em> + 1] is simulated.  This is done by shifting the PDF so the desired piece of the PDF is at [0, 1] rather than its usual place.  More specifically, the PDF is now as follows: $$f(x)=\left(\sum_{k=0}^n (-1)^k {n\choose k} ((x+i)-k)^{n-1} \text{sign}((x+i)-k)\right)/(2(n-1)!),$$ where <em>x</em> is a real number in [0, 1].  Since <em>f</em>&prime; is a polynomial, it can be rewritten in Bernstein form, so that it has <em>Bernstein coefficients</em>, which are equivalent to control points describing the shape of the curve drawn out by <em>f</em>&prime;. (The Bernstein coefficients are the backbone of the well-known Bézier curve.) A polynomial can be written in Bernstein form as&mdash; $$\sum_{k=0}^m {m\choose k} x^k (1-x)^{m-k} a[k],$$ where <em>a</em>[<em>k</em>] are the control points and <em>m</em> is the polynomial&#39;s degree (here, <em>n</em> &minus; 1). In this case, there will be <em>n</em> control points, which together trace out a 1-dimensional Bézier curve.  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when <em>x</em> = 0, and 0.6 when <em>x</em> = 1.  (Note that the curve is not at 0.3 when <em>x</em> = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)</p>
 
-<p>Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in [0, 1] (Goyal and Sigman 2012)[^15].</p></li>
+<p>Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in [0, 1] (Goyal and Sigman 2012)[^14].</p></li>
 <li>The sampler creates a &quot;coin&quot; made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called <strong>SampleGeometricBag</strong>.  It flips this &quot;coin&quot; <em>n</em> &minus; 1 times and counts the number of times the coin returned 1 this way, call it <em>j</em>. (The &quot;coin&quot; will return 1 with probability equal to the to-be-determined uniform random variate.)</li>
-<li>Based on <em>j</em>, the sampler accepts the PSRN with probability equal to the control point <em>a</em>[<em>j</em>]. (See (Goyal and Sigman 2012)[^15].)</li>
+<li>Based on <em>j</em>, the sampler accepts the PSRN with probability equal to the control point <em>a</em>[<em>j</em>]. (See (Goyal and Sigman 2012)[^14].)</li>
 <li>If the PSRN is accepted, the sampler optionally fills it up with uniform random digits, then sets the PSRN&#39;s integer part to <em>i</em>, then the sampler returns the finished PSRN.  If the PSRN is not accepted, the sampler starts over from step 2.</li>
 </ol>
 
@@ -578,7 +577,7 @@ def find_control_points(n, scale_pieces=False):
  return controls
 </pre>
 
-<p>The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012)[^16].</p>
+<p>The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012)[^15].</p>
 
 <p>For example, if <em>n</em> = 4 (so a sum of four uniform random variates is desired), the following control points are used for each piece of the PDF:</p>
 
@@ -846,25 +845,23 @@ def sum_of_uniform_base2(bern, precision=53):
 
 <p>[^12]: <em>Summation notation</em>, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.</p>
 
-<p>[^13]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in the interval [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</p>
+<p>[^13]: <em>n</em>! = 1*2*3*...*<em>n</em> is also known as <em>n</em> factorial; in this document, (0!) = 1.</p>
 
-<p>[^14]: <em>n</em>! = 1*2*3*...*<em>n</em> is also known as <em>n</em> factorial; in this document, (0!) = 1.</p>
+<p>[^14]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
 
-<p>[^15]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
+<p>[^15]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
 
-<p>[^16]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
+<p>[^16]: Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092"><strong>https://doi.org/10.3390/e21010092</strong></a></p>
 
-<p>[^17]: Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092"><strong>https://doi.org/10.3390/e21010092</strong></a></p>
+<p>[^17]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
 
-<p>[^18]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+<p>[^18]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6 [cs.IT], 2020.</p>
 
-<p>[^19]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6 [cs.IT], 2020.</p>
+<p>[^19]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
 
-<p>[^20]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
+<p>[^20]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
 
-<p>[^21]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
-
-<p>[^22]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
+<p>[^21]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
 
 <p><a id=Appendix></a></p>
 
@@ -876,18 +873,18 @@ def sum_of_uniform_base2(bern, precision=53):
 
 <h3>Probability Transformations</h3>
 
-<p>The following algorithm takes a uniform partially-sampled random number (PSRN) as a &quot;coin&quot; and flips that &quot;coin&quot; using <strong>SampleGeometricBag</strong>.  Given that &quot;coin&quot; and a function <em>f</em> as described below, the algorithm returns 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number built up by the uniform PSRN (see also Brassard et al., (2019)[^17], (Devroye 1986, p. 769)[^18], (Devroye and Gravel 2020)[^19].  In the algorithm:</p>
+<p>The following algorithm takes a uniform partially-sampled random number (PSRN) as a &quot;coin&quot; and flips that &quot;coin&quot; using <strong>SampleGeometricBag</strong>.  Given that &quot;coin&quot; and a function <em>f</em> as described below, the algorithm returns 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number built up by the uniform PSRN (see also Brassard et al., (2019)[^16], (Devroye 1986, p. 769)[^17], (Devroye and Gravel 2020)[^18].  In the algorithm:</p>
 
 <ul>
 <li> The uniform PSRN&#39;s sign must be positive and its integer part must be 0.</li>
 <li><p>For correctness, <em>f</em>(<em>U</em>) must meet the following conditions:</p>
 
 <ul>
-<li>If the algorithm will be run multiple times with the same PSRN, <em>f</em>(<em>U</em>) must be the constant 0 or 1, or be continuous and polynomially bounded on the open interval (0, 1) (polynomially bounded means that both <em>f</em>(<em>U</em>) and 1&minus;<em>f</em>(<em>U</em>) are greater than or equal to min(<em>U</em><sup><em>n</em></sup>, (1&minus;<em>U</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^20]).</li>
+<li>If the algorithm will be run multiple times with the same PSRN, <em>f</em>(<em>U</em>) must be the constant 0 or 1, or be continuous and polynomially bounded on the open interval (0, 1) (polynomially bounded means that both <em>f</em>(<em>U</em>) and 1&minus;<em>f</em>(<em>U</em>) are greater than or equal to min(<em>U</em><sup><em>n</em></sup>, (1&minus;<em>U</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^19]).</li>
 <li>Otherwise, <em>f</em>(<em>U</em>) must map the interval [0, 1] to [0, 1] and be continuous everywhere or &quot;almost everywhere&quot;.</li>
 </ul>
 
-<p>The first set of conditions is the same as those for the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) and ensure this algorithm is unbiased (see also Łatuszyński et al. (2009/2011)[^21]).</p></li>
+<p>The first set of conditions is the same as those for the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) and ensure this algorithm is unbiased (see also Łatuszyński et al. (2009/2011)[^20]).</p></li>
 </ul>
 
 <p>The algorithm follows.</p>
@@ -914,28 +911,6 @@ def sum_of_uniform_base2(bern, precision=53):
 <li>This section appears in the appendix because this article is focused on algorithms that don&#39;t rely on calculations of irrational numbers.</li>
 </ol>
 </blockquote>
-
-<p><a id=Proof_of_the_General_Martingale_Algorithm></a></p>
-
-<h3>Proof of the General Martingale Algorithm</h3>
-
-<p>This proof of the <strong>general martingale algorithm</strong> is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^21], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences <em>U</em> and <em>L</em> as follows:</p>
-
-<ul>
-<li>$U_0=d_0$ and $L_0=0$.</li>
-<li>For each $n&gt;0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n &gt; 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if no nonzero coefficients follow $a_n$ and $a_n &lt; 0$, otherwise $U_{n-1}$.</li>
-<li>For each $n&gt;0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n &lt; 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if no nonzero coefficients follow $a_n$ and $a_n &gt; 0$, otherwise $L_{n-1}$.</li>
-</ul>
-
-<p>Then it&#39;s clear that with probability 1, for every $n\ge 1$&mdash;</p>
-
-<ul>
-<li>$L_n \le U_n$,</li>
-<li>$U_n$ is 0 or greater and $L_n$ is 1 or less, and</li>
-<li>$L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.</li>
-</ul>
-
-<p>Moreover, if there are infinitely many nonzero coefficients, the <em>U</em> and <em>L</em> sequences have expected values (&quot;long-run averages&quot;) converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values that approach $f(\lambda)$ as $n$ gets large.  These conditions are required for the paper&#39;s Algorithm 3 (and thus the <strong>general martingale algorithm</strong>) to be valid.</p>
 
 <p><a id=Algorithm_for_sin___lambda_____pi___2></a></p>
 
@@ -980,7 +955,7 @@ def sum_of_uniform_base2(bern, precision=53):
 <li>the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0.</li>
 </ul>
 
-<p>The algorithm to achieve this goal follows (see Lee et al. 2014)[^22]:</p>
+<p>The algorithm to achieve this goal follows (see Lee et al. 2014)[^21]:</p>
 
 <ol>
 <li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
@@ -988,13 +963,13 @@ def sum_of_uniform_base2(bern, precision=53):
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> An example from Lee et al. (2014)[^22].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
+<p><strong>Example:</strong> An example from Lee et al. (2014)[^21].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
 
 <p><strong>Notes:</strong></p>
 
 <ol>
 <li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected or average value) is not the same as averaging to <em>f</em>(<em>&mu;</em>) where <em>&mu;</em> is the mean of the oracle&#39;s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 0 or 1 with equal probability, and <em>f</em>(<em>&nu;</em>) = exp(&minus;<em>&nu;</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(&minus;1) &minus; exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(&minus;1/2).</li>
-<li><p>(Lee et al. 2014, Corollary 4)[^22]: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
+<li><p>(Lee et al. 2014, Corollary 4)[^21]: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
 
 <ul>
 <li>Use <em>f</em>(<em>&nu;</em>) = <em>f</em>(<em>&nu;</em>) &minus; <em>b</em>, and use <em>&delta;</em> = <em>&delta;</em> &minus; <em>b</em>.</li>
