@@ -13,7 +13,7 @@ def prepareMarkdown(data)
     textstorefs[notetext]=n[0] if !textstorefs[notetext]
     notetexts[n[0]]=notetext
   }
-  data.scan(/^\[\^(\d+)\]\:\s+([\s\S]+?)(?=\[\^\d+\]\:|\#\#|\z)/){|n|
+  data.scan(/^\[\^([A-Za-z\d]+)\]\:\s+([\s\S]+?)(?=\[\^[A-Za-z\d]+\]\:|\#\#|\z)/){|n|
     notetext=n[1].gsub(/\s+\z/,"")
     notetext=notetext.gsub(/<\/?small>/,"").gsub(/<br\/>\s*\z/,"").gsub(/\s+-\s*\z/,"").gsub(/\s+\z/,"")
     notetext=notetext.gsub(/\n\s*(-\s+|\d+\.)/) { "\n" + " "*4 + $1 }
@@ -22,11 +22,11 @@ def prepareMarkdown(data)
   }
   noterefs={} # Associates old note refs with new refs
   newnotetexts=[]
-  data=data.gsub(/([\s\S])\[\^(\d+)\](?!\s*\:)/){
+  data=data.gsub(/([\s\S])\[\^([A-Za-z0-9]+)\](?!\s*\:)/){
      next $& if $1=="\n"
      next "#{$1}<sup>[(#{$2})](\#Note#{$2})</sup>"
   }
-  data=data.gsub(/<sup>\s*\[(?:\*\*)?\(\d+\)(?:\*\*)?\]\s*\(\#([^>]+)\)\s*<\/sup>/){
+  data=data.gsub(/<sup>\s*\[(?:\*\*)?\([A-Za-z0-9]+\)(?:\*\*)?\]\s*\(\#([^>]+)\)\s*<\/sup>/){
      noteref=$1
      newrefid=""
      newref=0
@@ -55,7 +55,7 @@ def prepareMarkdown(data)
   if data.include?("](\#Note6")
      raise "Sanity check failure"
   end
-  data=data.gsub( /\[\^(\d+)\](\s*)\(/ ) { "[^#{$1}]#{$2}\\(" } #/
+  data=data.gsub( /\[\^([A-Za-z\d]+)\](\s*)\(/ ) { "[^#{$1}]#{$2}\\(" } #/
   data=data.gsub( /<<([^\|\n>]*)\|([^\|]+?)>>/ ){
      noteref=$1||""
      notedata=$2
