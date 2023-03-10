@@ -1042,7 +1042,7 @@ The pseudocode below implements an exact sampler of this distribution, with cert
 In this document, the _negative binomial distribution_ models the number of failing trials that happen before a fixed number of successful trials (`successes`). Each trial is independent and has a success probability of `px/py` (where 0 means never and 1 means always). The following is a naïve implementation; see also the notes for the geometric distribution, a special case of this one.
 
     METHOD NegativeBinomialInt(successes, px, py)
-        // Needs to be 0 or greater; px must not be 0
+        // successes>=0; px/py needs to be greater than 0
         if successes < 0 or px == 0: return error
         if successes == 0 or px >= py: return 0
         total = 0
@@ -1081,7 +1081,7 @@ The geometric distribution is a negative binomial distribution with `successes =
 > **Notes:**
 >
 > 1. The negative binomial and geometric distributions are defined differently in different works.  For example, _Mathematica_'s definition excludes the last success, but the definition in (Devroye 1986, p. 498\)[^19] includes it.  And some works may define a negative binomial number as the number of successes before N failures, rather than vice versa.
-> 2. A _bounded geometric_ random variate is either _n_ (an integer greater than 0) or a geometric random variate, whichever is less.   Exact and efficient samplers for the geometric and bounded geometric distributions are given in (Bringmann and Friedrich 2013\)[^54] and described in my "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html)".)
+> 2. A _bounded geometric_ random variate is either _n_ (an integer greater than 0) or a geometric random variate, whichever is less.   Exact and efficient samplers for the geometric and bounded geometric distributions, such as the ones described in (Bringmann and Friedrich 2013\)[^54], are described in my "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html#On Geometric Samplers)".)
 
 <a id=Exponential_Distribution></a>
 ### Exponential Distribution

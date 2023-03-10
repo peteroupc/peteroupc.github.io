@@ -91,6 +91,8 @@
 <li><a href="#Algorithms_for_Specific_Functions_of___lambda"><strong>Algorithms for Specific Functions of <em>&lambda;</em></strong></a>
 
 <ul>
+<li><a href="#ExpMinus_exp_minus__z"><strong>ExpMinus (exp(&minus;_z))</strong></a></li>
+<li><a href="#LogisticExp_1_minus_expit__z__2_prec"><strong>LogisticExp (1 &minus; expit(<em>z</em>/2<sup><em>prec</em></sup>))</strong></a></li>
 <li><a href="#exp_minus___lambda"><strong>exp(&minus;<em>&lambda;</em>)</strong></a></li>
 <li><a href="#exp_minus___lambda___k___c"><strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong></a></li>
 <li><a href="#exp_minus__m____lambda_____mu"><strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong></a></li>
@@ -1217,6 +1219,40 @@
 <li>Transcendental functions.</li>
 <li>Other factory functions.</li>
 </ul>
+
+<p><a id=ExpMinus_exp_minus__z></a></p>
+
+<h4>ExpMinus (exp(&minus;_z))</h4>
+
+<p>In this document, the <strong>ExpMinus</strong> algorithm is a Bernoulli factory taking a parameter <em>z</em>.  The parameter <em>z</em> can be written in any of the following ways:</p>
+
+<ol>
+<li>As a rational number, namely <em>x</em>/<em>y</em> where <em>x</em>&ge;0 and <em>y</em>&gt;0.</li>
+<li>As an integer and fractional part, namely <em>m</em> + <em>&nu;</em> where <em>m</em> &ge; 0 is an integer and <em>&nu;</em> (0 &le; <em>&nu;</em> &le; 1) is the probability of heads of a coin.  (Specifically, the &quot;coin&quot; must implement a so-called <em>Bernoulli factory</em> algorithm that returns 1 [or outputs heads] with probability equal to the fractional part <em>&nu;</em>.[^67])</li>
+<li>As a sum of <em>n</em> &gt; 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if <em>z</em> = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, <em>m</em> = 0 and <em>&nu;</em> = (&pi; / 4).</li>
+</ol>
+
+<p>The <strong>ExpMinus</strong> algorithm is as follows.  To flip a coin with probability of heads of exp(&minus;<em>z</em>):
+    - In case 1, use the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong>.
+    - In case 2, use the <strong>algorithm for exp(&minus;(<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong> where <em>&lambda;</em> represents the coin for <em>&nu;</em>, and <em>&mu;</em> represents a coin that always returns 1.
+    - In case 3, use the <strong>algorithm for exp(&minus;<em>z</em>)</strong> in &quot;Algorithms for Specific Constants&quot; where <em>z</em> is the <em>z</em> parameter decomposed as a sum.</p>
+
+<p><a id=LogisticExp_1_minus_expit__z__2_prec></a></p>
+
+<h4>LogisticExp (1 &minus; expit(<em>z</em>/2<sup><em>prec</em></sup>))</h4>
+
+<p>In this document, the <strong>LogisticExp</strong> algorithm is a Bernoulli factory taking the parameters <em>z</em> and <em>prec</em>, in that order.  The parameter <em>z</em> can be written in any of the following ways:</p>
+
+<ol>
+<li>As a rational number, namely <em>x</em>/<em>y</em> where <em>x</em>&ge;0 and <em>y</em>&gt;0.</li>
+<li>As an integer and fractional part, namely <em>m</em> + <em>&nu;</em> where <em>m</em> &ge; 0 is an integer and <em>&nu;</em> (0 &le; <em>&nu;</em> &le; 1) is the probability of heads of a coin.  (Specifically, the &quot;coin&quot; must implement a so-called <em>Bernoulli factory</em> algorithm that returns 1 [or outputs heads] with probability equal to the fractional part <em>&nu;</em>.[^68])</li>
+<li>As a sum of <em>n</em> &gt; 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if <em>z</em> = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, <em>m</em> = 0 and <em>&nu;</em> = (&pi; / 4).</li>
+</ol>
+
+<p>The <strong>LogisticExp</strong> algorithm is as follows.  To flip a coin with probability of heads of 1/(1+exp(<em>z</em>/2<sup><em>prec</em></sup>)) = 1 &minus; expit(<em>&lambda;</em>/2<sup><em>prec</em></sup>):
+    - In case 1 the <strong>1 / (1 + exp(<em>x</em> / (<em>y</em> * 2<sup><em>prec</em></sup>))</strong>. Or...
+    - In case 2 the <strong>algorithm for expit((<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong> where <em>&lambda;</em> represents the coin for <em>&nu;</em>, and <em>&mu;</em> represents a coin that returns either 1 with probability 1/(2<sup><em>prec</em></sup>) or 0 otherwise.  However the algorithm returns 1 minus the usual result instead (leading to <strong>1 &minus; expit((<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong>).
+    - In case 3, use the <strong>algorithm for 1 / 1 + exp(<em>z</em> / 2<sup><em>index</em> + 1</sup>))</strong> where <em>z</em> is the <em>&lambda;</em> parameter decomposed as a sum.</p>
 
 <p><a id=exp_minus___lambda></a></p>
 
@@ -3032,6 +3068,10 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <p>[^65]: Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</p>
 
 <p>[^66]: Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</p>
+
+<p>[^67]: In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), the fractional part <em>&nu;</em> can even come from a uniform partially-sampled random number (PSRN).</p>
+
+<p>[^68]: In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), the fractional part <em>&nu;</em> can even come from a uniform partially-sampled random number (PSRN).</p>
 
 <p><a id=Appendix></a></p>
 

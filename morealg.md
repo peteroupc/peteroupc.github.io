@@ -59,7 +59,6 @@ Comments on other aspects of this document are welcome.
     - [**Ratio of Uniforms**](#Ratio_of_Uniforms)
     - [**Probability Transformations**](#Probability_Transformations)
     - [**Proof of the General Martingale Algorithm**](#Proof_of_the_General_Martingale_Algorithm)
-    - [**SymPy Code for Piecewise Linear Factory Functions**](#SymPy_Code_for_Piecewise_Linear_Factory_Functions)
     - [**Algorithm for sin(_&lambda;_\*_&pi;_/2)**](#Algorithm_for_sin___lambda_____pi___2)
     - [**Pushdown Automata and Algebraic Functions**](#Pushdown_Automata_and_Algebraic_Functions)
     - [**Sampling Distributions Using Incomplete Information: Omitted Algorithms**](#Sampling_Distributions_Using_Incomplete_Information_Omitted_Algorithms)
@@ -337,7 +336,7 @@ This section describes how to calculate the Bernstein coefficients for polynomia
 
 In this section, **fbelow(_n_, _k_)** and **fabove(_n_, _k_)** are the _k_<sup>th</sup> coefficients (with _k_ starting at 0) of the lower and upper polynomials, respectively, in Bernstein form of degree _n_.
 
-The code in the [**appendix**](#Appendix) uses the computer algebra library SymPy to calculate a list of parameters for a sequence of polynomials converging from above.  The method to do so is called `calc_linear_func(eps, mult, count)`, where `eps` is _&epsilon;_, `mult` = _mult_, and `count` is the number of polynomials to generate.  Each item returned by `calc_linear_func` is a list of two items: the degree of the polynomial, and a _Y parameter_.  The procedure to calculate the required polynomials is then logically as follows (as written, it runs very slowly, though):
+The code at the end of this section uses the computer algebra library SymPy to calculate a list of parameters for a sequence of polynomials converging from above.  The method to do so is called `calc_linear_func(eps, mult, count)`, where `eps` is _&epsilon;_, `mult` = _mult_, and `count` is the number of polynomials to generate.  Each item returned by `calc_linear_func` is a list of two items: the degree of the polynomial, and a _Y parameter_.  The procedure to calculate the required polynomials is then logically as follows (as written, it runs very slowly, though):
 
 1. Set _i_ to 1.
 2. Run `calc_linear_func(eps, mult, i)` and get the degree and _Y parameter_ for the last listed item, call them _n_ and _y_, respectively.
@@ -352,6 +351,94 @@ It would be interesting to find general formulas to find the appropriate polynom
 > - **fbelow(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)$.
 > - **fabove(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)+$<br> $
  \frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})} \sqrt{2/n}+$<br> $\frac{72\times\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-2n\times\varepsilon^2)$.
+
+SymPy code for piecewise linear functions:
+
+```
+def bernstein_n(func, x, n, pt=None):
+  # Bernstein operator.
+  # Create a polynomial that approximates func, which in turn uses
+  # the symbol x.  The polynomial's degree is n and is evaluated
+  # at the point pt (or at x if not given).
+  if pt==None: pt=x
+  ret=0
+  v=[binomial(n,j) for j in range(n//2+1)]
+  for i in range(0, n+1):
+    oldret=ret
+    bino=v[i] if i<len(v) else v[n-i]
+    ret+=func.subs(x,S(i)/n)*bino*pt**i*(1-pt)**(n-i)
+    if pt!=x and ret==oldret and ret>0: break
+  return ret
+
+def inflec(y,eps=S(2)/10,mult=2):
+  # Calculate the inflection point (x) given y, eps, and mult.
+  # The formula is not found in the paper by Thomas and
+  # Blanchet 2012, but in
+  # the supplemental source code uploaded by
+  # A.C. Thomas.
+  po=5 # Degree of y-to-x polynomial curve
+  eps=S(eps)
+  mult=S(mult)
+  x=-((y-(1-eps))/eps)**po/mult + y/mult
+  return x
+
+def xfunc(y,sym,eps=S(2)/10,mult=2):
+  # Calculate Bernstein "control polygon" given y,
+  # eps, and mult.
+  return Min(sym*y/inflec(y,eps,mult),y)
+
+def calc_linear_func(eps=S(5)/10, mult=1, count=10):
+   # Calculates the degrees and Y parameters
+   # of a sequence of polynomials that converge
+   # from above to min(x*mult, 1-eps).
+   # eps must be greater than 0 and less than 1.
+   # Default is 10 polynomials.
+   polys=[]
+   eps=S(eps)
+   mult=S(mult)
+   count=S(count)
+   bs=20
+   ypt=1-(eps/4)
+   x=symbols('x')
+   tfunc=Min(x*mult,1-eps)
+   tfn=tfunc.subs(x,(1-eps)/mult).n()
+   xpt=xfunc(ypt,x,eps=eps,mult=mult)
+   bits=5
+   i=0
+   lastbxn = 1
+   diffs=[]
+   while i<count:
+     bx=bernstein_n(xpt,x,bits,(1-eps)/mult)
+     bxn=bx.n()
+     if bxn > tfn and bxn < lastbxn:
+       # Dominates target function
+       #if oldbx!=None:
+       #   diffs.append(bx)
+       #   diffs.append(oldbx-bx)
+       #oldbx=bx
+       oldxpt=xpt
+       lastbxn = bxn
+       polys.append([bits,ypt])
+       print("    [%d,%s]," % (bits,ypt))
+       # Find y2 such that y2 < ypt and
+       # bernstein_n(oldxpt,x,bits,inflec(y2, ...)) >= y2,
+       # so that next Bernstein expansion will go
+       # underneath the previous one
+       while True:
+         ypt-=(ypt-(1-eps))/4
+         xpt=inflec(ypt,eps=eps,mult=mult).n()
+         bxs=bernstein_n(oldxpt,x,bits,xpt).n()
+         if bxs>=ypt.n():
+            break
+       xpt=xfunc(ypt,x,eps=eps,mult=mult)
+       bits+=20
+       i+=1
+     else:
+       bits=int(bits*200/100)
+   return polys
+
+calc_linear_func(count=8)
+```
 
 <a id=Pushdown_Automata_for_Square_Root_Like_Functions></a>
 ### Pushdown Automata for Square-Root-Like Functions
@@ -688,95 +775,6 @@ Then it's clear that with probability 1, for every $n\ge 1$&mdash;
 - $L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.
 
 Moreover, if there are infinitely many nonzero coefficients, the _U_ and _L_ sequences have expected values ("long-run averages") converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values that approach $f(\lambda)$ as $n$ gets large.  These conditions are required for the paper's Algorithm 3 (and thus the **general martingale algorithm**) to be valid.
-
-<a id=SymPy_Code_for_Piecewise_Linear_Factory_Functions></a>
-### SymPy Code for Piecewise Linear Factory Functions
-
-```
-def bernstein_n(func, x, n, pt=None):
-  # Bernstein operator.
-  # Create a polynomial that approximates func, which in turn uses
-  # the symbol x.  The polynomial's degree is n and is evaluated
-  # at the point pt (or at x if not given).
-  if pt==None: pt=x
-  ret=0
-  v=[binomial(n,j) for j in range(n//2+1)]
-  for i in range(0, n+1):
-    oldret=ret
-    bino=v[i] if i<len(v) else v[n-i]
-    ret+=func.subs(x,S(i)/n)*bino*pt**i*(1-pt)**(n-i)
-    if pt!=x and ret==oldret and ret>0: break
-  return ret
-
-def inflec(y,eps=S(2)/10,mult=2):
-  # Calculate the inflection point (x) given y, eps, and mult.
-  # The formula is not found in the paper by Thomas and
-  # Blanchet 2012, but in
-  # the supplemental source code uploaded by
-  # A.C. Thomas.
-  po=5 # Degree of y-to-x polynomial curve
-  eps=S(eps)
-  mult=S(mult)
-  x=-((y-(1-eps))/eps)**po/mult + y/mult
-  return x
-
-def xfunc(y,sym,eps=S(2)/10,mult=2):
-  # Calculate Bernstein "control polygon" given y,
-  # eps, and mult.
-  return Min(sym*y/inflec(y,eps,mult),y)
-
-def calc_linear_func(eps=S(5)/10, mult=1, count=10):
-   # Calculates the degrees and Y parameters
-   # of a sequence of polynomials that converge
-   # from above to min(x*mult, 1-eps).
-   # eps must be greater than 0 and less than 1.
-   # Default is 10 polynomials.
-   polys=[]
-   eps=S(eps)
-   mult=S(mult)
-   count=S(count)
-   bs=20
-   ypt=1-(eps/4)
-   x=symbols('x')
-   tfunc=Min(x*mult,1-eps)
-   tfn=tfunc.subs(x,(1-eps)/mult).n()
-   xpt=xfunc(ypt,x,eps=eps,mult=mult)
-   bits=5
-   i=0
-   lastbxn = 1
-   diffs=[]
-   while i<count:
-     bx=bernstein_n(xpt,x,bits,(1-eps)/mult)
-     bxn=bx.n()
-     if bxn > tfn and bxn < lastbxn:
-       # Dominates target function
-       #if oldbx!=None:
-       #   diffs.append(bx)
-       #   diffs.append(oldbx-bx)
-       #oldbx=bx
-       oldxpt=xpt
-       lastbxn = bxn
-       polys.append([bits,ypt])
-       print("    [%d,%s]," % (bits,ypt))
-       # Find y2 such that y2 < ypt and
-       # bernstein_n(oldxpt,x,bits,inflec(y2, ...)) >= y2,
-       # so that next Bernstein expansion will go
-       # underneath the previous one
-       while True:
-         ypt-=(ypt-(1-eps))/4
-         xpt=inflec(ypt,eps=eps,mult=mult).n()
-         bxs=bernstein_n(oldxpt,x,bits,xpt).n()
-         if bxs>=ypt.n():
-            break
-       xpt=xfunc(ypt,x,eps=eps,mult=mult)
-       bits+=20
-       i+=1
-     else:
-       bits=int(bits*200/100)
-   return polys
-
-calc_linear_func(count=8)
-```
 
 <a id=Algorithm_for_sin___lambda_____pi___2></a>
 ### Algorithm for sin(_&lambda;_\*_&pi;_/2)
