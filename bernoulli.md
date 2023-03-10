@@ -1856,7 +1856,7 @@ The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;
 
 > **Note:** The following is another algorithm for this constant.  As [**I learned**](https://stats.stackexchange.com/a/539564), the fractional part of 1/_U_, where _U_ is a uniform random variate between 0 and 1, has a mean equal to 1 minus the Euler&ndash;Mascheroni constant _&gamma;_, about 0.5772.[^63]  This leads to the following algorithm to sample a probability equal to _&gamma;_:
 >
-> 1. Generate a random variate of the form 1/_U_ &minus; floor(1/_U_), where _U_ is a uniform(0, 1) random variate.  This can be done by generating a uniform PSRN for [**the reciprocal of a uniform random variate**](https://peteroupc.github.io/uniformsum.html#Reciprocal_of_Uniform_Random_Number), then setting that PSRN's integer part to 0.  Call the variate (or PSRN) _f_.
+> 1. Generate a random variate of the form 1/_U_ &minus; floor(1/_U_), where _U_ is a uniform(0, 1) random variate.  This can be done by generating a uniform PSRN for [**the reciprocal of a uniform random variate**](https://peteroupc.github.io/exporand.html#Reciprocal_of_Uniform_Random_Variate), then setting that PSRN's integer part to 0.  Call the variate (or PSRN) _f_.
 > 2. **Sample from the number _f_** (for example, call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  Return 0 if the run returns 1, or 1 otherwise.
 
 <a id=exp_minus__x___y___z___t></a>
