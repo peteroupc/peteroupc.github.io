@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-_Note: This document is now obsolete.  Its contents were merged into what is now [**"More Algorithms for Arbitrary-Precision Samplers"**](https://peteroupc.github.io/morealg.html)._
+_Note: This document is now obsolete.  Its contents were merged into what is now [**"Partially-Sampled Random Numbers"**](https://peteroupc.github.io/exporand.html)._
 
 <a id=License></a>
 ## License

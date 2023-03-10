@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2022/11/07"><meta name="citation_online_date" content="2022/11/07"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2023/03/10"><meta name="citation_online_date" content="2023/03/10"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -18,8 +18,7 @@
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#My_Probability_Questions"><strong>My Probability Questions</strong></a></li>
 <li><a href="#Randomization_and_Sampling_Methods"><strong>Randomization and Sampling Methods</strong></a></li>
-<li><a href="#Bernoulli_Factory_Algorithms"><strong>Bernoulli Factory Algorithms</strong></a></li>
-<li><a href="#More_Algorithms_for_Arbitrary_Precision_Sampling"><strong>More Algorithms for Arbitrary-Precision Sampling</strong></a></li>
+<li><a href="#Bernoulli_Factory_Algorithms_and_Partially_Sampled_Random_Numbers"><strong>Bernoulli Factory Algorithms and Partially-Sampled Random Numbers</strong></a></li>
 <li><a href="#Randomized_Estimation_Algorithms"><strong>Randomized Estimation Algorithms</strong></a></li>
 <li><a href="#Color_Topics_for_Programmers"><strong>Color Topics for Programmers</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -58,25 +57,20 @@
 <li>To ensure the documents are easy for programmers to understand and implement.</li>
 </ul>
 
-<p><a id=Bernoulli_Factory_Algorithms></a></p>
+<p><a id=Bernoulli_Factory_Algorithms_and_Partially_Sampled_Random_Numbers></a></p>
 
-<h2>Bernoulli Factory Algorithms</h2>
+<h2>Bernoulli Factory Algorithms and Partially-Sampled Random Numbers</h2>
 
 <ul>
 <li><a href="https://peteroupc.github.io/bernoulli.html"><strong>https://peteroupc.github.io/bernoulli.html</strong></a></li>
+<li><a href="https://peteroupc.github.io/exporand.html"><strong>https://peteroupc.github.io/exporand.html</strong></a></li>
 </ul>
 
-<p>This is a page showing algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as <em>Bernoulli factories</em>.  A <em>factory function</em> is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O&#39;Brien 1994)[^1].</p>
+<p>The first page shows algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as <em>Bernoulli factories</em>.  A <em>factory function</em> is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O&#39;Brien 1994)[^1].</p>
 
 <p>For open questions, see &quot;<a href="https://peteroupc.github.io/bernreq.html"><strong>Open Questions on the Bernoulli Factory Problem</strong></a>&quot;.</p>
 
-<p><a id=More_Algorithms_for_Arbitrary_Precision_Sampling></a></p>
-
-<h2>More Algorithms for Arbitrary-Precision Sampling</h2>
-
-<p><a href="https://peteroupc.github.io/morealg.html"><strong>https://peteroupc.github.io/morealg.html</strong></a></p>
-
-<p>This page has more algorithms for sampling using partially-sampled random numbers, as well as more Bernoulli factory algorithms.  The following are requests and open questions for this article.</p>
+<p>The second page describes a structure for storing a random variate.</p>
 
 <ol>
 <li>We would like to see new implementations of the following:
@@ -85,7 +79,7 @@
 <li>Algorithms that implement <strong>InShape</strong> for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that <strong>InShape</strong> determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.</li>
 <li>Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section &quot;Building an Arbitrary-Precision Sampler&quot;.</li>
 </ul></li>
-<li>Take a polynomial <em>f</em>(<em>&lambda;</em>) of even degree <em>n</em> of the form choose(<em>n</em>,<em>n</em>/2)*<em>&lambda;</em><sup><em>n</em>/2</sup>*(1&minus;<em>&lambda;</em>)<sup><em>n</em>/2</sup>*<em>k</em>, where <em>k</em> is greater than 1 (thus all <em>f</em>&#39;s Bernstein coefficients are 0 except for the middle one, which equals <em>k</em>).  Suppose <em>f</em>(1/2) lies in the interval (0, 1).  If we do the degree elevation, described in the <a href="https://peteroupc.github.io/morealg.html#Appendix"><strong>appendix</strong></a>, enough times (at least <em>r</em> times), then <em>f</em>&#39;s Bernstein coefficients will all lie in [0, 1].  The question is: how many degree elevations are enough?  A <a href="https://mathoverflow.net/questions/381419/on-the-degree-elevation-needed-to-bring-bernstein-coefficients-to-0-1"><strong>MathOverflow answer</strong></a> showed that <em>r</em> is at least <em>m</em> = (<em>n</em>/<em>f</em>(1/2)<sup>2</sup>)/(1&minus;<em>f</em>(1/2)<sup>2</sup>), but is it true that floor(<em>m</em>)+1 elevations are enough?</li>
+<li>Take a polynomial <em>f</em>(<em>&lambda;</em>) of even degree <em>n</em> of the form choose(<em>n</em>,<em>n</em>/2)*<em>&lambda;</em><sup><em>n</em>/2</sup>*(1&minus;<em>&lambda;</em>)<sup><em>n</em>/2</sup>*<em>k</em>, where <em>k</em> is greater than 1 (thus all <em>f</em>&#39;s Bernstein coefficients are 0 except for the middle one, which equals <em>k</em>).  Suppose <em>f</em>(1/2) lies in the interval (0, 1).  If we do the degree elevation enough times (at least <em>r</em> times), then <em>f</em>&#39;s Bernstein coefficients will all lie in [0, 1].  The question is: how many degree elevations are enough?  A <a href="https://mathoverflow.net/questions/381419/on-the-degree-elevation-needed-to-bring-bernstein-coefficients-to-0-1"><strong>MathOverflow answer</strong></a> showed that <em>r</em> is at least <em>m</em> = (<em>n</em>/<em>f</em>(1/2)<sup>2</sup>)/(1&minus;<em>f</em>(1/2)<sup>2</sup>), but is it true that floor(<em>m</em>)+1 elevations are enough?</li>
 </ol>
 
 <p>For other open questions, see &quot;<a href="https://peteroupc.github.io/requestsother.html"><strong>Other Open Questions on Probability</strong></a>&quot;.</p>

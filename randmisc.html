@@ -580,7 +580,7 @@
 
 <ol>
 <li>With probability <em>&alpha;</em>, return a number that is 0 with probability <em>p</em> and 1 otherwise.</li>
-<li>Generate a unit Lindley(<em>&theta;</em>) random variate, that is, generate <em>x</em>/(1+<em>x</em>) where <em>x</em> is a <a href="https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley(<em>&theta;</em>) random variate</strong></a>.</li>
+<li>Generate a unit Lindley(<em>&theta;</em>) random variate, that is, generate <em>x</em>/(1+<em>x</em>) where <em>x</em> is a <a href="https://peteroupc.github.io/exporand.html#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley(<em>&theta;</em>) random variate</strong></a>.</li>
 </ol>
 
 <blockquote>
@@ -953,7 +953,7 @@
 <li>the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0.</li>
 </ul>
 
-<p>The algorithm to achieve this goal follows (see Lee et al. 2014[^84]):</p>
+<p>The algorithm to achieve this goal follows (see Lee et al. 2014[^83]):</p>
 
 <ol>
 <li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
@@ -1176,9 +1176,7 @@
 
 <p>[^82]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won&#39;t use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs <em>arbitrary</em> but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).</p>
 
-<p>[^83]: No note text yet.</p>
-
-<p>[^84]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
+<p>[^83]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
 
 <p><a id=License></a></p>
 

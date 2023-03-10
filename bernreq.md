@@ -403,7 +403,7 @@ Let $\mathcal{D} \subseteq \mathcal{C}$ be the class of functions that a pushdow
 
 I don't yet know whether $\mathcal{D}=\mathcal{C}$ (and that was also a question of Mossel and Peres).
 
-The following section of my open-source page, [**https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions**](https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions), contains information on the question. That section sets forth the following results about the class $\mathcal{D}$:
+The following section of my open-source page, [**Pushdown Automata and Algebraic Functions**](https://peteroupc.github.io/bernsupp.html#Pushdown_Automata_and_Algebraic_Functions), contains information on the question. That section sets forth the following results about the class $\mathcal{D}$:
 
 - $\sqrt{\lambda}$ is in $\mathcal{D}$, and so is every rational function in $\mathcal{C}$.
 - If $f(\lambda)$ and $g(\lambda)$ are in $\mathcal{D}$, then so are their product and composition.
@@ -437,8 +437,8 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 
     - For irrational constants:
         - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions.
-        - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/morealg.html#pi___4)
-        - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
+        - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/bernoulli.html#pi___4)
+        - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/bernsupp.html#4_3___pi)
         - Functions that map [0, 1] to [0, 1] whose integral is an irrational number.
     - Bernoulli factory functions with any of the following series expansions, using rational arithmetic only:
         - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").

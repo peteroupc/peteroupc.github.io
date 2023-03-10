@@ -232,7 +232,7 @@ In the following algorithms:
     - by generating `-ln(1/X)`, where `X` is a uniform random variate greater than 0 and less than 1, (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Real_Numbers)") (less accurate).
 - The instruction to "choose [integers] with probability proportional to [_weights_]" can be implemented in one of the following ways:
     - If the weights are rational numbers, take the result of **WeightedChoice**(**NormalizeRatios**(_weights_))), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
-    - If the weights are uniform PSRNs, use the algorithm given in "[**Weighted Choice Involving PSRNs**](https://peteroupc.github.io/morealg.html)".
+    - If the weights are uniform PSRNs, use the algorithm given in "[**Weighted Choice Involving PSRNs**](https://peteroupc.github.io/randmisc.html#Weighted_Choice_Involving_PSRNs)".
 
     For example, "Choose 0, 1, or 2 with probability proportional to the weights [A, B, C]" means to choose 0, 1, or 2 at random so that 0 is chosen with probability A/(A+B+C), 1 with probability B/(A+B+C), and 2 with probability C/(A+B+C).
 - Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are random variates, it means to run the **RandLess** algorithm on the two numbers (if they are both PSRNs), or do a less-than operation on _a_ and _b_, as appropriate. (**RandLess** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
@@ -811,7 +811,7 @@ If _a_, given above, sums to the _base-2 logarithm_ of the probability rather th
 
 1. Set _intinf_ to floor(max(0, abs(_a_\[0\]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)
 2. If _intinf_ is greater than 0, generate unbiased random bits until a zero bit or _intinf_ bits were generated this way.  If a zero was generated this way, return 0.
-3. Generate an exponential random variate _E_ with rate ln(2).  This can be done, for example, by using the algorithm given in "[**More Algorithms for Arbitrary-Precision Sampling**](https://peteroupc.github.io/morealg.html)". (We take advantage of the exponential distribution's _memoryless property_: given that an exponential random variate _E_ is greater than _intinf_, _E_ minus _intinf_ has the same distribution.)
+3. Generate an exponential random variate _E_ with rate ln(2).  This can be done, for example, by using the algorithm given in "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)". (We take advantage of the exponential distribution's _memoryless property_: given that an exponential random variate _E_ is greater than _intinf_, _E_ minus _intinf_ has the same distribution.)
 4. Set _n_ to 0.
 5. Do the following process repeatedly until the algorithm returns a value:
     1. Set _inf_ to max(0, _a_\[_n_\]), then set _sup_ to min(0, _inf_+_err_\[_n_\]).
@@ -1100,7 +1100,7 @@ The **LogisticExp** algorithm is as follows.  To flip a coin with probability of
 <a id=exp_minus___lambda></a>
 #### exp(&minus;_&lambda;_)
 
-This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](https://peteroupc.github.io/morealg.html#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^53]
+This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^53]
 
 > **Note:** exp(&minus;_&lambda;_) = exp(1&minus;_&lambda;_)/exp(1).
 
@@ -1121,7 +1121,7 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 
 **Algorithm 2.**  The target function can be rewritten as a power series expansion.  However, the following algorithm works only when **_c_ is a rational number 0 or greater, but not greater than 1**.
 
 1. Special cases: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _c_, and return the result.
-2. Run the **general martingale algorithm** (see "[**Certain Power Series**](https://peteroupc.github.io/morealg.html#Certain_Power_Series)"), with $g(\lambda) = \lambda^k$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)
+2. Run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda) = \lambda^k$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)
 
 **Algorithm 3.** Builds on Algorithm 2 and works when **_c_ is a rational number 0 or greater**.
 
@@ -1177,7 +1177,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater unless no
 
 In this algorithm, _m_ is an integer 0 or greater.
 
-1. (Write as series expansion if _m_ is 0.) If _m_ is 0, run the **general martingale algorithm** (see "[**Certain Power Series**](https://peteroupc.github.io/morealg.html#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
+1. (Write as series expansion if _m_ is 0.) If _m_ is 0, run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
 2. (Separate as two functions otherwise.) If _m_ is greater than 0:
     1. Run the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1.  If it returns 1, return 0.
     2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1 and _c_=_m_, and return the result of that algorithm.
@@ -1421,12 +1421,12 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 <a id=cos___lambda></a>
 #### cos(_&lambda;_)
 
-This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](https://peteroupc.github.io/morealg.html#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even[^29] and 0 otherwise.
+This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even[^29] and 0 otherwise.
 
 <a id=sin___lambda___sqrt__c____lambda___sqrt__c></a>
 #### sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))
 
-This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](https://peteroupc.github.io/morealg.html#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even[^29] and 0 otherwise.  In this algorithm, _c_ must be a rational number in the interval (0, 6].
+This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even[^29] and 0 otherwise.  In this algorithm, _c_ must be a rational number in the interval (0, 6].
 
 <a id=sin___lambda></a>
 #### sin(_&lambda;_)
@@ -1490,7 +1490,7 @@ If _&lambda;_ is 1/2, this expression simplifies to Li<sub>_r_</sub>(1/2). See a
 <a id=min___lambda___1_2_and_min___lambda___1_minus___lambda></a>
 #### min(_&lambda;_, 1/2) and min(_&lambda;_, 1&minus;_&lambda;_)
 
-My own algorithm for min(_&lambda;_, 1/2) is as follows.  See the [**appendix**](https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2) for the derivation of this algorithm.
+My own algorithm for min(_&lambda;_, 1/2) is as follows.  See the end of this section for the derivation of this algorithm.
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
 2. Run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) given later, and return the result of that run.
@@ -1831,7 +1831,7 @@ Three algorithms:
 - Second algorithm (since arctan(1) = _&pi;_ / 4): Run the second **algorithm for arctan(1/1) \* 1/1**.
 - Third algorithm: See the appendix.
 
-A fourth algorithm to sample _&pi;_/4 is based on the section "[**Uniform Distribution Inside N-Dimensional Shapes**](https://peteroupc.github.io/morealg.html#Uniform_Distribution_Inside_N_Dimensional_Shapes)", especially its Note 5, in "More Algorithms for Arbitrary-Precision Sampling".  In effect, it samples a 2-dimensional point with coordinates between 0 and 1 and determines if that point is within 1 unit of the origin (0, 0), which will happen with probability _&pi;_/4.
+A fourth algorithm to sample _&pi;_/4 is based on the section "[**Uniform Distribution Inside N-Dimensional Shapes**](https://peteroupc.github.io/exporand.html#Uniform_Distribution_Inside_N_Dimensional_Shapes)", especially its Note 5, in "More Algorithms for Arbitrary-Precision Sampling".  In effect, it samples a 2-dimensional point with coordinates between 0 and 1 and determines if that point is within 1 unit of the origin (0, 0), which will happen with probability _&pi;_/4.
 
 1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
 2. Do the following process repeatedly, until the algorithm returns a value:

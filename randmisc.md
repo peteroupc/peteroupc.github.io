@@ -393,7 +393,7 @@ Some weighted distributions allow any weight function _w_(_x_) whose values are 
 For example, a _zero-inflated beta_ random variate is 0 with probability _&alpha;_ and a beta random variate otherwise (the parameter _c_ is 0) (Ospina and Ferrari 2010\)[^47]  A zero-and-one inflated X distribution is 0 or 1 with probability _&alpha;_ and distributed as X otherwise.  For example, to generate a _zero-and-one-inflated unit Lindley_ random variate (with parameters _&alpha;_, _&theta;_, and _p_) (Chakraborty and Bhattacharjee 2021\)[^48]\:
 
 1. With probability _&alpha;_, return a number that is 0 with probability _p_ and 1 otherwise.
-2. Generate a unit Lindley(_&theta;_) random variate, that is, generate _x_/(1+_x_) where _x_ is a [**Lindley(_&theta;_) random variate**](https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures).
+2. Generate a unit Lindley(_&theta;_) random variate, that is, generate _x_/(1+_x_) where _x_ is a [**Lindley(_&theta;_) random variate**](https://peteroupc.github.io/exporand.html#Lindley_Distribution_and_Lindley_Like_Mixtures).
 
 > **Note:** A zero-inflated X distribution where X takes on 0 with probability 0 is also called a _hurdle distribution_ (Mullahy 1986)[^49].
 
@@ -596,7 +596,7 @@ The following algorithms are included here because they require applying an arbi
 - _f_ has a finite lower bound and a finite upper bound on its domain, and
 - the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0.
 
-The algorithm to achieve this goal follows (see Lee et al. 2014[^84]\)\:
+The algorithm to achieve this goal follows (see Lee et al. 2014[^83]\)\:
 
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
@@ -803,9 +803,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^82]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
 
-[^83]: No note text yet.
-
-[^84]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
+[^83]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
 <a id=License></a>
 ## License

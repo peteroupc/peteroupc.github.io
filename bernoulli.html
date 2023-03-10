@@ -344,7 +344,7 @@
 
 <ul>
 <li>If the weights are rational numbers, take the result of <strong>WeightedChoice</strong>(<strong>NormalizeRatios</strong>(<em>weights</em>))), where <strong>WeightedChoice</strong> and <strong>NormalizeRatios</strong> are given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Sampling Methods</strong></a>&quot;.</li>
-<li>If the weights are uniform PSRNs, use the algorithm given in &quot;<a href="https://peteroupc.github.io/morealg.html"><strong>Weighted Choice Involving PSRNs</strong></a>&quot;.</li>
+<li>If the weights are uniform PSRNs, use the algorithm given in &quot;<a href="https://peteroupc.github.io/randmisc.html#Weighted_Choice_Involving_PSRNs"><strong>Weighted Choice Involving PSRNs</strong></a>&quot;.</li>
 </ul>
 
 <p>For example, &quot;Choose 0, 1, or 2 with probability proportional to the weights [A, B, C]&quot; means to choose 0, 1, or 2 at random so that 0 is chosen with probability A/(A+B+C), 1 with probability B/(A+B+C), and 2 with probability C/(A+B+C).</p></li>
@@ -1266,7 +1266,7 @@
 <ol>
 <li>Set <em>intinf</em> to floor(max(0, abs(<em>a</em>[0]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)</li>
 <li>If <em>intinf</em> is greater than 0, generate unbiased random bits until a zero bit or <em>intinf</em> bits were generated this way.  If a zero was generated this way, return 0.</li>
-<li>Generate an exponential random variate <em>E</em> with rate ln(2).  This can be done, for example, by using the algorithm given in &quot;<a href="https://peteroupc.github.io/morealg.html"><strong>More Algorithms for Arbitrary-Precision Sampling</strong></a>&quot;. (We take advantage of the exponential distribution&#39;s <em>memoryless property</em>: given that an exponential random variate <em>E</em> is greater than <em>intinf</em>, <em>E</em> minus <em>intinf</em> has the same distribution.)</li>
+<li>Generate an exponential random variate <em>E</em> with rate ln(2).  This can be done, for example, by using the algorithm given in &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;. (We take advantage of the exponential distribution&#39;s <em>memoryless property</em>: given that an exponential random variate <em>E</em> is greater than <em>intinf</em>, <em>E</em> minus <em>intinf</em> has the same distribution.)</li>
 <li>Set <em>n</em> to 0.</li>
 <li>Do the following process repeatedly until the algorithm returns a value:
 
@@ -1707,7 +1707,7 @@
 
 <h4>exp(&minus;<em>&lambda;</em>)</h4>
 
-<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="https://peteroupc.github.io/morealg.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^53]</p>
+<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^53]</p>
 
 <blockquote>
 <p><strong>Note:</strong> exp(&minus;<em>&lambda;</em>) = exp(1&minus;<em>&lambda;</em>)/exp(1).</p>
@@ -1737,7 +1737,7 @@
 
 <ol>
 <li>Special cases: If <em>c</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>c</em>, and return the result.</li>
-<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="https://peteroupc.github.io/morealg.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda) = \lambda^k$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)</li>
+<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda) = \lambda^k$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)</li>
 </ol>
 
 <p><strong>Algorithm 3.</strong> Builds on Algorithm 2 and works when <strong><em>c</em> is a rational number 0 or greater</strong>.</p>
@@ -1818,7 +1818,7 @@
 <p>In this algorithm, <em>m</em> is an integer 0 or greater.</p>
 
 <ol>
-<li>(Write as series expansion if <em>m</em> is 0.) If <em>m</em> is 0, run the <strong>general martingale algorithm</strong> (see &quot;<a href="https://peteroupc.github.io/morealg.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.</li>
+<li>(Write as series expansion if <em>m</em> is 0.) If <em>m</em> is 0, run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.</li>
 <li>(Separate as two functions otherwise.) If <em>m</em> is greater than 0:
 
 <ol>
@@ -2193,13 +2193,13 @@
 
 <h4>cos(<em>&lambda;</em>)</h4>
 
-<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="https://peteroupc.github.io/morealg.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even[^29] and 0 otherwise.</p>
+<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even[^29] and 0 otherwise.</p>
 
 <p><a id=sin___lambda___sqrt__c____lambda___sqrt__c></a></p>
 
 <h4>sin(<em>&lambda;</em>*sqrt(<em>c</em>)) / (<em>&lambda;</em>*sqrt(<em>c</em>))</h4>
 
-<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="https://peteroupc.github.io/morealg.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even[^29] and 0 otherwise.  In this algorithm, <em>c</em> must be a rational number in the interval (0, 6].</p>
+<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even[^29] and 0 otherwise.  In this algorithm, <em>c</em> must be a rational number in the interval (0, 6].</p>
 
 <p><a id=sin___lambda></a></p>
 
@@ -2292,7 +2292,7 @@
 
 <h4>min(<em>&lambda;</em>, 1/2) and min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)</h4>
 
-<p>My own algorithm for min(<em>&lambda;</em>, 1/2) is as follows.  See the <a href="https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>appendix</strong></a> for the derivation of this algorithm.</p>
+<p>My own algorithm for min(<em>&lambda;</em>, 1/2) is as follows.  See the end of this section for the derivation of this algorithm.</p>
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
@@ -2881,7 +2881,7 @@ kind of irrational number.</p>
 <li>Third algorithm: See the appendix.</li>
 </ul>
 
-<p>A fourth algorithm to sample <em>&pi;</em>/4 is based on the section &quot;<a href="https://peteroupc.github.io/morealg.html#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot;, especially its Note 5, in &quot;More Algorithms for Arbitrary-Precision Sampling&quot;.  In effect, it samples a 2-dimensional point with coordinates between 0 and 1 and determines if that point is within 1 unit of the origin (0, 0), which will happen with probability <em>&pi;</em>/4.</p>
+<p>A fourth algorithm to sample <em>&pi;</em>/4 is based on the section &quot;<a href="https://peteroupc.github.io/exporand.html#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot;, especially its Note 5, in &quot;More Algorithms for Arbitrary-Precision Sampling&quot;.  In effect, it samples a 2-dimensional point with coordinates between 0 and 1 and determines if that point is within 1 unit of the origin (0, 0), which will happen with probability <em>&pi;</em>/4.</p>
 
 <ol>
 <li>Set <em>S</em> to 2.  Then set <em>c1</em> and <em>c2</em> to 0.</li>
