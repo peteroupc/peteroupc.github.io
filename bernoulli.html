@@ -1676,8 +1676,8 @@
 <p>In this document, the <strong>ExpMinus</strong> algorithm is a Bernoulli factory taking a parameter <em>z</em>.  The parameter <em>z</em> can be written in any of the following ways:</p>
 
 <ol>
-<li>As a rational number, namely <em>x</em>/<em>y</em> where <em>x</em>&ge;0 and <em>y</em>&gt;0.</li>
-<li>As an integer and fractional part, namely <em>m</em> + <em>&nu;</em> where <em>m</em> &ge; 0 is an integer and <em>&nu;</em> (0 &le; <em>&nu;</em> &le; 1) is the probability of heads of a coin.  (Specifically, the &quot;coin&quot; must implement a so-called <em>Bernoulli factory</em> algorithm that returns 1 [or outputs heads] with probability equal to the fractional part <em>&nu;</em>.[^52])</li>
+<li>As a rational number, namely <em>x</em>/<em>y</em> where <em>x</em>&ge;0 and <em>y</em>&gt;0 are integers.</li>
+<li>As an integer and fractional part, namely <em>m</em> + <em>&nu;</em> where <em>m</em> &ge; 0 is an integer and <em>&nu;</em> (0 &le; <em>&nu;</em> &le; 1) is the probability of heads of a coin.  (Specifically, the &quot;coin&quot; must implement a Bernoulli factory algorithm that returns 1 [or outputs heads] with probability equal to the fractional part <em>&nu;</em>.[^52])</li>
 <li>As a sum of <em>n</em> &gt; 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if <em>z</em> = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, <em>m</em> = 0 and <em>&nu;</em> = (&pi; / 4).</li>
 </ol>
 
@@ -1690,11 +1690,11 @@
 
 <h4>LogisticExp (1 &minus; expit(<em>z</em>/2<sup><em>prec</em></sup>))</h4>
 
-<p>In this document, the <strong>LogisticExp</strong> algorithm is a Bernoulli factory taking the parameters <em>z</em> and <em>prec</em>, in that order.  The parameter <em>z</em> can be written in any of the following ways:</p>
+<p>In this document, the <strong>LogisticExp</strong> algorithm is a Bernoulli factory taking the parameters <em>z</em> and <em>prec</em>, in that order.  The parameter <em>prec</em> is an integer 0 or greater, and the parameter <em>z</em> can be written in any of the following ways:</p>
 
 <ol>
-<li>As a rational number, namely <em>x</em>/<em>y</em> where <em>x</em>&ge;0 and <em>y</em>&gt;0.</li>
-<li>As an integer and fractional part, namely <em>m</em> + <em>&nu;</em> where <em>m</em> &ge; 0 is an integer and <em>&nu;</em> (0 &le; <em>&nu;</em> &le; 1) is the probability of heads of a coin.  (Specifically, the &quot;coin&quot; must implement a so-called <em>Bernoulli factory</em> algorithm that returns 1 [or outputs heads] with probability equal to the fractional part <em>&nu;</em>.[^52])</li>
+<li>As a rational number, namely <em>x</em>/<em>y</em> where <em>x</em>&ge;0 and <em>y</em>&gt;0 are integers.</li>
+<li>As an integer and fractional part, namely <em>m</em> + <em>&nu;</em> where <em>m</em> &ge; 0 is an integer and <em>&nu;</em> (0 &le; <em>&nu;</em> &le; 1) is the probability of heads of a coin.  (Specifically, the &quot;coin&quot; must implement a Bernoulli factory algorithm that returns 1 [or outputs heads] with probability equal to the fractional part <em>&nu;</em>.[^52])</li>
 <li>As a sum of <em>n</em> &gt; 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if <em>z</em> = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, <em>m</em> = 0 and <em>&nu;</em> = (&pi; / 4).</li>
 </ol>
 

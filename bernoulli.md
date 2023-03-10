@@ -1074,8 +1074,8 @@ This section and the next one describe algorithms for specific functions, especi
 
 In this document, the **ExpMinus** algorithm is a Bernoulli factory taking a parameter _z_.  The parameter _z_ can be written in any of the following ways:
 
-1. As a rational number, namely _x_/_y_ where _x_&ge;0 and _y_>0.
-2. As an integer and fractional part, namely _m_ + _&nu;_ where _m_ &ge; 0 is an integer and _&nu;_ (0 &le; _&nu;_ &le; 1) is the probability of heads of a coin.  (Specifically, the "coin" must implement a so-called _Bernoulli factory_ algorithm that returns 1 \[or outputs heads\] with probability equal to the fractional part _&nu;_.[^52])
+1. As a rational number, namely _x_/_y_ where _x_&ge;0 and _y_>0 are integers.
+2. As an integer and fractional part, namely _m_ + _&nu;_ where _m_ &ge; 0 is an integer and _&nu;_ (0 &le; _&nu;_ &le; 1) is the probability of heads of a coin.  (Specifically, the "coin" must implement a Bernoulli factory algorithm that returns 1 \[or outputs heads\] with probability equal to the fractional part _&nu;_.[^52])
 3. As a sum of _n_ > 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if _z_ = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).
 
 The **ExpMinus** algorithm is as follows.  To flip a coin with probability of heads of exp(&minus;_z_):
@@ -1086,10 +1086,10 @@ The **ExpMinus** algorithm is as follows.  To flip a coin with probability of he
 <a id=LogisticExp_1_minus_expit__z__2_prec></a>
 #### LogisticExp (1 &minus; expit(_z_/2<sup>_prec_</sup>))
 
-In this document, the **LogisticExp** algorithm is a Bernoulli factory taking the parameters _z_ and _prec_, in that order.  The parameter _z_ can be written in any of the following ways:
+In this document, the **LogisticExp** algorithm is a Bernoulli factory taking the parameters _z_ and _prec_, in that order.  The parameter _prec_ is an integer 0 or greater, and the parameter _z_ can be written in any of the following ways:
 
-1. As a rational number, namely _x_/_y_ where _x_&ge;0 and _y_>0.
-2. As an integer and fractional part, namely _m_ + _&nu;_ where _m_ &ge; 0 is an integer and _&nu;_ (0 &le; _&nu;_ &le; 1) is the probability of heads of a coin.  (Specifically, the "coin" must implement a so-called _Bernoulli factory_ algorithm that returns 1 \[or outputs heads\] with probability equal to the fractional part _&nu;_.[^52])
+1. As a rational number, namely _x_/_y_ where _x_&ge;0 and _y_>0 are integers.
+2. As an integer and fractional part, namely _m_ + _&nu;_ where _m_ &ge; 0 is an integer and _&nu;_ (0 &le; _&nu;_ &le; 1) is the probability of heads of a coin.  (Specifically, the "coin" must implement a Bernoulli factory algorithm that returns 1 \[or outputs heads\] with probability equal to the fractional part _&nu;_.[^52])
 3. As a sum of _n_ > 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if _z_ = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).
 
 The **LogisticExp** algorithm is as follows.  To flip a coin with probability of heads of 1/(1+exp(_z_/2<sup>_prec_</sup>)) = 1 &minus; expit(_&lambda;_/2<sup>_prec_</sup>):
