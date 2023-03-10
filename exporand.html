@@ -114,9 +114,6 @@
 <ul>
 <li><a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a></li>
 <li><a href="#Building_an_Arbitrary_Precision_Sampler"><strong>Building an Arbitrary-Precision Sampler</strong></a></li>
-<li><a href="#Mixtures"><strong>Mixtures</strong></a></li>
-<li><a href="#Weighted_Choice_Involving_PSRNs"><strong>Weighted Choice Involving PSRNs</strong></a></li>
-<li><a href="#Bernoulli_Distribution_for_Cumulative_Distribution_Functions"><strong>Bernoulli Distribution for Cumulative Distribution Functions</strong></a></li>
 <li><a href="#Continuous_Distributions_Supported_on_0_to_1"><strong>Continuous Distributions Supported on 0 to 1</strong></a></li>
 </ul></li>
 <li><a href="#Specific_Arbitrary_Precision_Samplers"><strong>Specific Arbitrary-Precision Samplers</strong></a>
@@ -124,7 +121,9 @@
 <ul>
 <li><a href="#Rayleigh_Distribution"><strong>Rayleigh Distribution</strong></a></li>
 <li><a href="#Hyperbolic_Secant_Distribution"><strong>Hyperbolic Secant Distribution</strong></a></li>
-<li><a href="#Reciprocal_of_Power_of_Uniform"><strong>Reciprocal of Power of Uniform</strong></a></li>
+<li><a href="#Ratio_of_Two_Uniform_Random_Variates"><strong>Ratio of Two Uniform Random Variates</strong></a></li>
+<li><a href="#Reciprocal_of_Uniform_Random_Variate"><strong>Reciprocal of Uniform Random Variate</strong></a></li>
+<li><a href="#Reciprocal_of_Power_of_Uniform_Random_Variate"><strong>Reciprocal of Power of Uniform Random Variate</strong></a></li>
 <li><a href="#Distribution_of__U__1_minus__U"><strong>Distribution of <em>U</em>/(1&minus;<em>U</em>)</strong></a></li>
 <li><a href="#Arc_Cosine_Distribution"><strong>Arc-Cosine Distribution</strong></a></li>
 <li><a href="#Logistic_Distribution"><strong>Logistic Distribution</strong></a></li>
@@ -156,6 +155,7 @@
 <li><a href="#UniformMultiply_Algorithm"><strong>UniformMultiply Algorithm</strong></a></li>
 <li><a href="#Uniform_of_Uniforms_Produces_a_Product_of_Uniforms"><strong>Uniform of Uniforms Produces a Product of Uniforms</strong></a></li>
 <li><a href="#Oberhoff_s_Exact_Rejection_Sampling_Method"><strong>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</strong></a></li>
+<li><a href="#Ratio_of_Uniforms"><strong>Ratio of Uniforms</strong></a></li>
 <li><a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -878,15 +878,15 @@
 
 <p>In the rest of this section, though, an e-rand&#39;s <em>&lambda;</em> parameter can be written as a rational number, as an integer and fractional part, or as a sum of components, as described in the section &quot;Sampling E-rands&quot;.</p>
 
-<p>To sample bit <em>k</em> after the binary point of an exponential random variate with rate <em>&lambda;</em> (where <em>k</em> = 1 means the first digit after the point, <em>k</em> = 2 means the second, etc.), call the <strong>LogisticExp</strong> algorithm (see &quot;Sampling E-rands&quot;) with <em>&lambda;</em>=<em>&lambda;</em> and <em>prec</em> = <em>k</em>.</p>
+<p>To sample bit <em>k</em> after the binary point of an exponential random variate with rate <em>&lambda;</em> (where <em>k</em> = 1 means the first digit after the point, <em>k</em> = 2 means the second, etc.), call the <strong>LogisticExp</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>&lambda;</em>=<em>&lambda;</em> and <em>prec</em> = <em>k</em>.</p>
 
 <p>The <strong>ExpRandLess</strong> algorithm is a special case of the general <strong>RandLess</strong> algorithm given earlier.  It compares two e-rands <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong>, or 0 otherwise. (Note that <strong>a</strong> and <strong>b</strong> are allowed to have different <em>&lambda;</em> parameters.)</p>
 
 <ol>
-<li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, call the <strong>ExpMinus</strong> algorithm (see &quot;Sampling E-rands&quot;) with <em>&lambda;</em>=<em>&lambda;</em>, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for <strong>b</strong>.</li>
+<li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, call the <strong>ExpMinus</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>&lambda;</em>=<em>&lambda;</em>, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for <strong>b</strong>.</li>
 <li>Return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if <strong>a</strong>&#39;s integer part is greater than <strong>b</strong>&#39;s.</li>
 <li>Set <em>i</em> to 0.</li>
-<li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer bits, call the <strong>LogisticExp</strong> algorithm (see &quot;Sampling E-rands&quot;) with <em>&lambda;</em>=<em>&lambda;</em> and <em>prec</em> = <em>i</em> + 1, and append the result to that fractional part&#39;s binary expansion.  (For example, if the implementation stores the binary expansion as a packed integer and a size, the implementation can shift the packed integer by 1, add the result of the algorithm to that integer, then add 1 to the size.) Do the same for <strong>b</strong>.</li>
+<li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer bits, call the <strong>LogisticExp</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>&lambda;</em>=<em>&lambda;</em> and <em>prec</em> = <em>i</em> + 1, and append the result to that fractional part&#39;s binary expansion.  (For example, if the implementation stores the binary expansion as a packed integer and a size, the implementation can shift the packed integer by 1, add the result of the algorithm to that integer, then add 1 to the size.) Do the same for <strong>b</strong>.</li>
 <li>Return 1 if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or 0 if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
@@ -894,7 +894,7 @@
 <p>The <strong>ExpRandFill</strong> algorithm takes an e-rand and generates a number whose fractional part has <code>p</code> digits as follows:</p>
 
 <ol>
-<li>For each position <em>i</em> in [0, <code>p</code>), if the item at that position in the e-rand&#39;s fractional part is unsampled, call the <strong>LogisticExp</strong> algorithm (see &quot;Sampling E-rands&quot;) with <em>&lambda;</em>=<em>&lambda;</em> and <em>prec</em> = = <em>i</em> + 1, and set the item at position <em>i</em> to the result (which will be either 0 or 1), increasing the fractional part&#39;s capacity as necessary. (Bit positions start at 0 where 0 is the most significant bit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)[^13].)</li>
+<li>For each position <em>i</em> in [0, <code>p</code>), if the item at that position in the e-rand&#39;s fractional part is unsampled, call the <strong>LogisticExp</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>&lambda;</em>=<em>&lambda;</em> and <em>prec</em> = = <em>i</em> + 1, and set the item at position <em>i</em> to the result (which will be either 0 or 1), increasing the fractional part&#39;s capacity as necessary. (Bit positions start at 0 where 0 is the most significant bit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)[^13].)</li>
 <li>Let <code>sign</code> be -1 if the e-rand&#39;s sign is negative, or 1 otherwise; let <code>ipart</code> be the e-rand&#39;s integer part; and let <code>bag</code> be the PSRN&#39;s fractional part.  Take the first <code>p</code> digits of <code>bag</code> and return <code>sign</code> * (<code>ipart</code> + bag[0] * 2<sup>&minus;0&minus;1</sup> + bag[1] * 2<sup>&minus;1&minus;1</sup> + ... + bag[<code>p</code>&minus;1] * 2<sup>&minus;(<code>p</code>&minus;1)&minus;1</sup>).</li>
 </ol>
 
@@ -1939,63 +1939,6 @@ def exprandscore(ln,ld,ln2,ld2):
 <p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in Devroye (1986, ch. 7, sec. 4.6)[^24]; an exception is that instead of generating a uniform random variate and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
 </blockquote>
 
-<p><a id=Mixtures></a></p>
-
-<h4>Mixtures</h4>
-
-<p>A <em>mixture</em> involves sampling one of several distributions, where each distribution has a separate probability of being sampled.  In general, an arbitrary-precision sampler is possible if all of the following conditions are met:</p>
-
-<ul>
-<li>There is a finite number of distributions to choose from.</li>
-<li>The probability of sampling each distribution is a rational number, or it can be expressed as a function for which a <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory algorithm</strong></a> exists.</li>
-<li>For each distribution, an arbitrary-precision sampler exists.</li>
-</ul>
-
-<blockquote>
-<p><strong>Example:</strong> One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (where the <strong>ExpMinus</strong> algorithm with parameter 3 can be used) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a> for details).</p>
-</blockquote>
-
-<p><a id=Weighted_Choice_Involving_PSRNs></a></p>
-
-<h4>Weighted Choice Involving PSRNs</h4>
-
-<p>Given <em>n</em> uniform PSRNs, called <em>weights</em>, with labels starting from 0 and ending at <em>n</em>&minus;1, the following algorithm chooses an integer in [0, <em>n</em>) with probability proportional to its weight.  Each weight&#39;s sign must be positive.</p>
-
-<ol>
-<li>Create an empty list, then for each weight starting with weight 0, add the weight&#39;s integer part plus 1 to that list.  For example, if the weights are [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the <em>rounded weights list</em>.</li>
-<li>Choose an integer <em>i</em> with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of <strong>WeightedChoice</strong>(<em>list</em>), where <em>list</em> is the rounded weights list and <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Sampling Methods</strong></a>&quot;.</li>
-<li>Run <strong>URandLessThanReal</strong>(<em>w</em>, <em>rw</em>), where <em>w</em> is the original weight for integer <em>i</em>, and <em>rw</em> is the rounded weight for integer <em>i</em> in the rounded weights list.  That algorithm returns 1 if <em>w</em> turns out to be less than <em>rw</em>.  If the result is 1, return <em>i</em>.  Otherwise, go to step 2.</li>
-</ol>
-
-<p><a id=Bernoulli_Distribution_for_Cumulative_Distribution_Functions></a></p>
-
-<h4>Bernoulli Distribution for Cumulative Distribution Functions</h4>
-
-<p>Suppose a real number <em>z</em> is given (which might be a uniform PSRN or a rational number).  If a probability distribution&mdash;</p>
-
-<ul>
-<li>has a probability density function (PDF) (as with the normal or exponential distribution), and</li>
-<li>has an arbitrary-precision sampler that returns a uniform PSRN <em>X</em>,</li>
-</ul>
-
-<p>then it&#39;s possible to generate 1 with the same probability as the sampler returns an <em>X</em> that is less than or equal to <em>z</em>, as follows:</p>
-
-<ol>
-<li>Run the arbitrary-precision sampler to generate <em>X</em>, a uniform PSRN.</li>
-<li>Run <strong>URandLess</strong> (if <em>z</em> is a uniform PSRN) or <strong>URandLessThanReal</strong> (if <em>z</em> is a real number) with parameters <em>X</em> and <em>z</em>, in that order, and return the result.</li>
-</ol>
-
-<p>Specifically, the probability of returning 1 is the <em>cumulative distribution function</em> (CDF) for the distribution of <em>X</em>.</p>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li>Although step 2 of the algorithm checks whether <em>X</em> is merely less than <em>z</em>, this is still correct; because the distribution of <em>X</em> has a PDF, <em>X</em> is less than <em>z</em> with the same probability as <em>X</em> is less than or equal to <em>z</em>.</li>
-<li>All probability distributions have a CDF, not just those with a PDF, but also discrete ones such as Poisson or binomial.</li>
-</ol>
-</blockquote>
-
 <p><a id=Continuous_Distributions_Supported_on_0_to_1></a></p>
 
 <h4>Continuous Distributions Supported on 0 to 1</h4>
@@ -2095,9 +2038,91 @@ def exprandscore(ln,ld,ln2,ld2):
 <li>Call <strong>SampleGeometricBag</strong> on <em>ret</em>&#39;s fractional part (ignore <em>ret</em>&#39;s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.</li>
 </ol>
 
-<p><a id=Reciprocal_of_Power_of_Uniform></a></p>
+<p><a id=Ratio_of_Two_Uniform_Random_Variates></a></p>
 
-<h4>Reciprocal of Power of Uniform</h4>
+<h4>Ratio of Two Uniform Random Variates</h4>
+
+<p>The ratio of two uniform random variates between 0 and 1 has the following probability density function (see <a href="https://mathworld.wolfram.com/UniformRatioDistribution.html"><strong>MathWorld</strong></a>):</p>
+
+<ul>
+<li>1/2 if <em>x</em> &gt;= 0 and <em>x</em> &lt;= 1,</li>
+<li>( 1/ <em>x</em><sup>2</sup>) / 2 if <em>x</em> &gt; 1, and</li>
+<li>0 otherwise.</li>
+</ul>
+
+<p>The following algorithm generates the ratio of two uniform random variates.</p>
+
+<ol>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), we have a uniform(0, 1) random variate.  Create a positive-sign zero-integer-part uniform PSRN, then optionally fill the PSRN with uniform random digits as necessary to give the number&#39;s fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return the PSRN.</li>
+<li>At this point, the result will be 1 or greater.  Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 4.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.  (This step chooses an interval beyond 1, taking advantage of the fact that the area under the PDF between 1 and 2 is 1/4, between 2 and 4 is 1/8, between 4 and 8 is 1/16, and so on, so that an appropriate interval is chosen with the correct probability.)</li>
+<li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.</li>
+<li>Call the <strong>sub-algorithm</strong> below with <em>d</em> = <em>intval</em> and <em>c</em> = <em>i</em>.  If the call returns 0, go to step 4.  (Here we simulate <em>intval</em>/(<em>i</em>+<em>&lambda;</em>) rather than 1/(<em>i</em>+<em>&lambda;</em>) in order to increase acceptance rates in this step.  This is possible without affecting the algorithm&#39;s correctness.)</li>
+<li>Call the <strong>sub-algorithm</strong> below with <em>d</em> = 1 and <em>c</em> = <em>i</em>.  If the call returns 0, go to step 4.</li>
+<li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
+</ol>
+
+<p>The algorithm above uses a sub-algorithm that simulates the probability <em>d</em> / (<em>c</em> + <em>&lambda;</em>), where <em>&lambda;</em> is the probability built up by the uniform PSRN, as follows:</p>
+
+<ol>
+<li>With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability <em>d</em>/<em>c</em> and 0 otherwise.</li>
+<li>Call <strong>SampleGeometricBag</strong> on <em>ret</em> (the uniform PSRN).  If the call returns 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
+<p>And the following Python code implements this algorithm.</p>
+
+<pre>def numerator_div(bern, numerator, intpart, bag):
+   # Simulates numerator/(intpart+bag)
+   while True:
+      if bern.zero_or_one(intpart,1+intpart)==1:
+         return bern.zero_or_one(numerator,intpart)
+      if bern.geometric_bag(bag)==1: return 0
+
+def ratio_of_uniform(bern):
+    &quot;&quot;&quot; Exact simulation of the ratio of uniform random variates.&quot;&quot;&quot;
+    # First, simulate the integer part
+    if bern.randbit():
+       # This is 0 to 1, which follows a uniform distribution
+       bag=[]
+       return bern.fill_geometric_bag(bag)
+    else:
+       # This is 1 or greater
+       intval=1
+       size=1
+       # Determine which range of integer parts to draw
+       while True:
+           if bern.randbit()==1:
+                break
+           intval+=size
+           size*=2
+       while True:
+         # Draw the integer part
+         intpart=bern.rndintexc(size) + intval
+         bag=[]
+         # Note: Density at [intval,intval+size) is multiplied
+         # by intval, to increase acceptance rates
+         if numerator_div(bern,intval,intpart,bag)==1 and \
+            numerator_div(bern,1,intpart,bag)==1:
+             return intpart + bern.fill_geometric_bag(bag)
+</pre>
+
+<p><a id=Reciprocal_of_Uniform_Random_Variate></a></p>
+
+<h4>Reciprocal of Uniform Random Variate</h4>
+
+<p>The reciprocal of a uniform(0, 1) random variate has the probability density function&mdash;</p>
+
+<ul>
+<li>1 / <em>x</em><sup>2</sup> if <em>x</em> &gt; 1, and</li>
+<li>0 otherwise.</li>
+</ul>
+
+<p>The algorithm to generate the reciprocal of a uniform random variate is the same as the algorithm for the ratio of two uniform random variates, except step 1 is omitted.</p>
+
+<p><a id=Reciprocal_of_Power_of_Uniform_Random_Variate></a></p>
+
+<h4>Reciprocal of Power of Uniform Random Variate</h4>
 
 <p>The following algorithm generates a PSRN of the form 1/<em>U</em><sup>1/<em>x</em></sup>, where <em>U</em> is a uniform random variate greater than 0 and less than 1 and <em>x</em> is an integer greater than 0.</p>
 
@@ -2289,7 +2314,13 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Lindley Distribution and Lindley-Like Mixtures</h4>
 
-<p>The <em>Lindley distribution</em> is a <em>mixture</em> of two probability distributions, with each of the two distributions having a separate probability of being sampled (<em>w</em> and 1&minus;<em>w</em> in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^36] with parameter <em>&theta;</em> (a real number greater than 0) can be generated as follows:</p>
+<p>A <em>mixture</em> involves one or more distributions, where each distribution has a separate probability of being sampled, and sampling one of them at random.</p>
+
+<blockquote>
+<p><strong>Example:</strong> One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (which can be simulated, for example, using the <strong>ExpMinus</strong> algorithm with parameter 3 can be used) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists.</p>
+</blockquote>
+
+<p>The <em>Lindley distribution</em> is one example of a <em>mixture</em>, namely, there are two probability distributions, with each of the two distributions having a separate probability of being sampled (<em>w</em> and 1&minus;<em>w</em> in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^36] with parameter <em>&theta;</em> (a real number greater than 0) can be generated as follows:</p>
 
 <p>Let <em>A</em> be 1 and let <em>B</em> be 2.  Then:</p>
 
@@ -2352,7 +2383,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <ol>
 <li>If <em>&theta;</em> is a uniform PSRN, then the check &quot;With probability  <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>)&quot; can be implemented by running the Bernoulli factory algorithm for <strong>(<em>d</em> + <em>&mu;</em>) / ((<em>d</em> + <em>&mu;</em>) + (<em>c</em> + <em>&lambda;</em>))</strong>, where <em>c</em> is 1; <em>&lambda;</em> represents an input coin that always returns 0; <em>d</em> is <em>&theta;</em>&#39;s integer part, and <em>&mu;</em> is an input coin that runs <strong>SampleGeometricBag</strong> on <em>&theta;</em>&#39;s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.</li>
 <li>A <strong>Sushila</strong> random variate is <em>&alpha;</em> times a Lindley random variate, where <em>&alpha;</em> &gt; 0 (Shanker et al. 2013)[^42].</li>
-<li>An <strong>X-Lindley</strong> random variate (Chouia and Zeghdoudi 2021)[^43] is, with probability <em>&theta;</em>/(1+<em>&theta;</em>), an exponential random variate with a rate of <em>&theta;</em> (see step 1), and otherwise, a Lindley random variate with parameter <em>&theta;</em>.</li>
+<li>An <strong>X-Lindley</strong> random variate (Chouia and Zeghdoudi 2021)[^53] is, with probability <em>&theta;</em>/(1+<em>&theta;</em>), an exponential random variate with a rate of <em>&theta;</em> (see step 1), and otherwise, a Lindley random variate with parameter <em>&theta;</em>.</li>
 </ol>
 </blockquote>
 
@@ -2371,7 +2402,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>One-Dimensional Epanechnikov Kernel</h4>
 
-<p>Adapted from Devroye and Györfi (1985, p. 236)[^44].</p>
+<p>Adapted from Devroye and Györfi (1985, p. 236)[^43].</p>
 
 <ol>
 <li>Generate three uniform PSRNs <em>a</em>, <em>b</em>, and <em>c</em>, with a positive sign, an integer part of 0, and an empty fractional part.</li>
@@ -2412,7 +2443,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h4>Tulap distribution</h4>
 
-<p>The algorithm below samples a variate from the Tulap(<em>m</em>, <em>b</em>, <em>q</em>) distribution (&quot;truncated uniform Laplace&quot;; Awan and Slavković (2019)[^43]) and returns it as a uniform PSRN.</p>
+<p>The algorithm below samples a variate from the Tulap(<em>m</em>, <em>b</em>, <em>q</em>) distribution (&quot;truncated uniform Laplace&quot;; Awan and Slavković (2019)[^44]) and returns it as a uniform PSRN.</p>
 
 <ul>
 <li>The parameter <em>b</em> is greater than 0, is less than 1, and can be a uniform PSRN.</li>
@@ -2686,9 +2717,9 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>[^42]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. &quot;Sushila distribution and its application to waiting times data.&quot; International Journal of Business Management 3, no. 2 (2013): 1-11.</p>
 
-<p>[^43]: No note text yet.</p>
+<p>[^43]: Devroye, L., Györfi, L., <em>Nonparametric Density Estimation: The L1 View</em>, 1985.</p>
 
-<p>[^44]: Devroye, L., Györfi, L., <em>Nonparametric Density Estimation: The L1 View</em>, 1985.</p>
+<p>[^44]: No note text yet.</p>
 
 <p>[^45]: Loaiza-Ganem, Gabriel, and John P. Cunningham. &quot;The continuous Bernoulli: fixing a pervasive error in variational autoencoders.&quot; <em>Advances in Neural Information Processing Systems</em> 32 (2019).</p>
 
@@ -2705,6 +2736,16 @@ def contbernoullidist(b, lamda, precision=53):
 <p>[^51]: George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</p>
 
 <p>[^52]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</p>
+
+<p>[^53]: Chouia, Sarra, and Halim Zeghdoudi. &quot;The xlindley distribution: Properties and application.&quot; Journal of Statistical Theory and Applications 20, no. 2 (2021): 318-327.</p>
+
+<p>[^54]: Kinderman, A.J., Monahan, J.F., &quot;Computer generation of random variables using the ratio of uniform deviates&quot;, <em>ACM Transactions on Mathematical Software</em> 3(3), pp. 257-260, 1977.</p>
+
+<p>[^55]: Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</p>
+
+<p>[^56]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+
+<p>[^57]: Leydold, J., &quot;<a href="https://dl.acm.org/doi/10.1145/347837.347863"><strong>Automatic sampling with the ratio-of-uniforms method</strong></a>&quot;, ACM Transactions on Mathematical Software 26(1), 2000.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -2852,6 +2893,56 @@ def contbernoullidist(b, lamda, precision=53):
 <p>Because this algorithm requires evaluating the PDF (or a constant times the PDF) and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.  Moreover, there is additional approximation error from generating <em>y</em> with a fixed number of digits, unless <em>y</em> is a uniform PSRN (see also &quot;<a href="#Application_to_Weighted_Reservoir_Sampling"><strong>Application to Weighted Reservoir Sampling</strong></a>&quot;).  For practical purposes, the lower and upper bounds calculated in step 4 should depend on <em>prefixLength</em> (the higher <em>prefixLength</em> is, the more accurate).</p>
 
 <p>Oberhoff also describes <em>prefix distributions</em> that sample a box that covers the PDF, with probability proportional to the box&#39;s area, but these distributions will have to support a fixed maximum prefix length and so will only approximate the underlying distribution.</p>
+
+<p><a id=Ratio_of_Uniforms></a></p>
+
+<h3>Ratio of Uniforms</h3>
+
+<p>The Cauchy sampler given earlier demonstrates the <em>ratio-of-uniforms</em> technique for sampling a distribution (Kinderman and Monahan 1977)[^54].  It involves transforming the distribution&#39;s probability density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it&#39;s possible to achieve in rational arithmetic (Daumas et al., 2007)[^55], is less elegant than, say, the normal distribution sampler by Karney (2016)[^56], which doesn&#39;t require calculating logarithms or other transcendental functions.</p>
+
+<p>This algorithm works for every univariate (one-variable) distribution as long as&mdash;</p>
+
+<ul>
+<li><em>PDF</em>(<em>x</em>) (either the distribution&#39;s PDF or a function proportional to the PDF) is continuous &quot;almost everywhere&quot; on its domain,</li>
+<li>both <em>PDF</em>(<em>x</em>) and <em>x</em><sup>2</sup>*<em>PDF</em>(<em>x</em>) have a maximum on that domain, and</li>
+<li>either&mdash;
+
+<ul>
+<li>the distribution&#39;s ratio-of-uniforms shape (the transformed PDF) is covered entirely by the rectangle [0, ceil(<em>d1</em>)]&times;[0, ceil(<em>d2</em>)], where <em>d1</em> is not less than the maximum of abs(<em>x</em>)*sqrt(<em>PDF</em>(<em>x</em>)) on its domain, and <em>d2</em> is not less than the maximum of sqrt(<em>PDF</em>(<em>x</em>)) on its domain, or</li>
+<li>half of that shape is covered this way and the shape is symmetric about the <em>v</em>-axis.</li>
+</ul></li>
+</ul>
+
+<p>The algorithm follows.</p>
+
+<ol>
+<li>Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em> and <em>p2</em>.</li>
+<li>Set <em>S</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>c1</em> to an integer in the interval [0, <em>d1</em>), chosen uniformly at random, then set <em>c2</em> to an integer in [0, <em>d2</em>), chosen uniformly at random, then set <em>d</em> to 1.</li>
+<li>Multiply <em>c1</em> and <em>c2</em> each by <em>base</em> and add a digit chosen uniformly at random to that coordinate.</li>
+<li>Run an <strong>InShape</strong> function that determines whether the transformed PDF is covered by the current box. In principle, this is the case when <em>z</em> &le; 0 everywhere in the box, where <em>u</em> lies in [<em>c1</em>/<em>S</em>, (<em>c1</em>+1)/<em>S</em>], <em>v</em> lies in [<em>c2</em>/<em>S</em>, (<em>c2</em>+1)/<em>S</em>], and <em>z</em> is <em>v</em><sup>2</sup>&minus;<em>PDF</em>(<em>u</em>/<em>v</em>).  <strong>InShape</strong> returns <em>YES</em> if the box is fully inside the transformed PDF, <em>NO</em> if the box is fully outside it, and <em>MAYBE</em> in any other case, or if evaluating <em>z</em> fails for a given box (for example, because ln(0) would be calculated or <em>v</em> is 0).  See the next section for implementation notes.</li>
+<li>If <strong>InShape</strong> as described in step 4 returns <em>YES</em>, then do the following:
+
+<ol>
+<li>Transfer <em>c1</em>&#39;s least significant digits to <em>p1</em>&#39;s fractional part, and transfer <em>c2</em>&#39;s least significant digits to <em>p2</em>&#39;s fractional part.  The variable <em>d</em> tells how many digits to transfer to each PSRN this way.  Then set <em>p1</em>&#39;s integer part to floor(<em>c1</em>/<em>base</em><sup><em>d</em></sup>) and <em>p2</em>&#39;s integer part to floor(<em>c2</em>/<em>base</em><sup><em>d</em></sup>). (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 7342, set <em>p1</em>&#39;s fractional part to [3, 4, 2] and <em>p1</em>&#39;s integer part to 7.)</li>
+<li>Run the <strong>UniformDivide</strong> algorithm (described in the article on PSRNs) on <em>p1</em> and <em>p2</em>, in that order.</li>
+<li>If the transformed PDF is symmetric about the <em>v</em>-axis, set the resulting PSRN&#39;s sign to positive or negative with equal probability.  Otherwise, set the PSRN&#39;s sign to positive.</li>
+<li>Return the PSRN.</li>
+</ol></li>
+<li>If <strong>InShape</strong> as described in step 4 returns <em>NO</em>, then go to step 2.</li>
+<li>Multiply <em>S</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> The ratio-of-uniforms shape is convex if and only if &minus;1/sqrt(<em>PDF</em>(<em>x</em>)) is a concave function (loosely speaking, its &quot;slope&quot; never increases) (Leydold 2000)[^57].</p>
+
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>For the normal distribution, <em>PDF</em> is proportional to exp(&minus;<em>x</em><sup>2</sup>/2), so that <em>z</em> after a logarithmic transformation (see next section) becomes 4*ln(<em>v</em>) + (<em>u</em>/<em>v</em>)<sup>2</sup>, and since the distribution&#39;s ratio-of-uniforms shape is symmetric about the <em>v</em>-axis, the return value&#39;s sign is positive or negative with equal probability.</li>
+<li>For the standard lognormal distribution (<a href="https://mathworld.wolfram.com/GibratsDistribution.html"><strong>Gibrat&#39;s distribution</strong></a>), <em>PDF</em>(<em>x</em>) is proportional to exp(&minus;(ln(<em>x</em>))<sup>2</sup>/2)/<em>x</em>, so that <em>z</em> after a logarithmic transformation becomes 2*ln(<em>v</em>)&minus;(&minus;ln(<em>u</em>/<em>v</em>)<sup>2</sup>/2 &minus; ln(<em>u</em>/<em>v</em>)), and the returned PSRN has a positive sign.</li>
+<li>For the gamma distribution with shape parameter <em>a</em> &gt; 1, <em>PDF</em>(<em>x</em>) is proportional to <em>x</em><sup><em>a</em>&minus;1</sup>*exp(&minus;<em>x</em>), so that <em>z</em> after a logarithmic transformation becomes 2*ln(<em>v</em>)&minus;(<em>a</em>&minus;1)*ln(<em>u</em>/<em>v</em>)&minus;(<em>u</em>/<em>v</em>), or 0 if <em>u</em> or <em>v</em> is 0, and the returned PSRN has a positive sign.</li>
+</ol>
+</blockquote>
 
 <p><a id=Setting_Digits_by_Digit_Probabilities></a></p>
 

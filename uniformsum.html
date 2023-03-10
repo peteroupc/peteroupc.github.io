@@ -1,10 +1,10 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates</title><meta name="citation_title" content="Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates"><meta name="citation_pdf_url" content="https://peteroupc.github.io/uniformsum.pdf"><meta name="citation_url" content="https://peteroupc.github.io/uniformsum.html"><meta name="citation_date" content="2023/03/09"><meta name="citation_online_date" content="2023/03/09"><meta name="og:title" content="Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/uniformsum.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Arbitrary-Precision Samplers for the Sum of Uniform Random Variates</title><meta name="citation_title" content="Arbitrary-Precision Samplers for the Sum of Uniform Random Variates"><meta name="citation_pdf_url" content="https://peteroupc.github.io/uniformsum.pdf"><meta name="citation_url" content="https://peteroupc.github.io/uniformsum.html"><meta name="citation_date" content="2023/03/09"><meta name="citation_online_date" content="2023/03/09"><meta name="og:title" content="Arbitrary-Precision Samplers for the Sum of Uniform Random Variates"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/uniformsum.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Arbitrary-Precision Samplers for the Sum of Uniform Random Variates"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates</h1>
+<h1>Arbitrary-Precision Samplers for the Sum of Uniform Random Variates</h1>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -25,8 +25,6 @@
 <li><a href="#Finding_Parameters"><strong>Finding Parameters</strong></a></li>
 <li><a href="#Sum_of_Two_Uniform_Random_Variates"><strong>Sum of Two Uniform Random Variates</strong></a></li>
 <li><a href="#Sum_of_Three_Uniform_Random_Variates"><strong>Sum of Three Uniform Random Variates</strong></a></li>
-<li><a href="#Ratio_of_Two_Uniform_Random_Variates"><strong>Ratio of Two Uniform Random Variates</strong></a></li>
-<li><a href="#Reciprocal_of_Uniform_Random_Variate"><strong>Reciprocal of Uniform Random Variate</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -374,88 +372,6 @@ def sum_of_uniform_base2(bern, precision=53):
               # Accepted
              return 2.0 + bern.fill_geometric_bag(bag)
 </pre>
-
-<p><a id=Ratio_of_Two_Uniform_Random_Variates></a></p>
-
-<h2>Ratio of Two Uniform Random Variates</h2>
-
-<p>The ratio of two uniform random variates between 0 and 1 has the following PDF (see <a href="https://mathworld.wolfram.com/UniformRatioDistribution.html"><strong>MathWorld</strong></a>):</p>
-
-<ul>
-<li>1/2 if <em>x</em> &gt;= 0 and <em>x</em> &lt;= 1,</li>
-<li>( 1/ <em>x</em><sup>2</sup>) / 2 if <em>x</em> &gt; 1, and</li>
-<li>0 otherwise.</li>
-</ul>
-
-<p>The following algorithm simulates this PDF.</p>
-
-<ol>
-<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), we have a uniform(0, 1) random variate.  Create a positive-sign zero-integer-part uniform PSRN, then optionally fill the PSRN with uniform random digits as necessary to give the number&#39;s fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return the PSRN.</li>
-<li>At this point, the result will be 1 or greater.  Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
-<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 4.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.  (This step chooses an interval beyond 1, taking advantage of the fact that the area under the PDF between 1 and 2 is 1/4, between 2 and 4 is 1/8, between 4 and 8 is 1/16, and so on, so that an appropriate interval is chosen with the correct probability.)</li>
-<li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
-<li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.</li>
-<li>Call the <strong>sub-algorithm</strong> below with <em>d</em> = <em>intval</em> and <em>c</em> = <em>i</em>.  If the call returns 0, go to step 4.  (Here we simulate <em>intval</em>/(<em>i</em>+<em>&lambda;</em>) rather than 1/(<em>i</em>+<em>&lambda;</em>) in order to increase acceptance rates in this step.  This is possible without affecting the algorithm&#39;s correctness.)</li>
-<li>Call the <strong>sub-algorithm</strong> below with <em>d</em> = 1 and <em>c</em> = <em>i</em>.  If the call returns 0, go to step 4.</li>
-<li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
-</ol>
-
-<p>The algorithm above uses a sub-algorithm that simulates the probability <em>d</em> / (<em>c</em> + <em>&lambda;</em>), where <em>&lambda;</em> is the probability built up by the uniform PSRN, as follows:</p>
-
-<ol>
-<li>With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability <em>d</em>/<em>c</em> and 0 otherwise.</li>
-<li>Call <strong>SampleGeometricBag</strong> on <em>ret</em> (the uniform PSRN).  If the call returns 1, return 0.  Otherwise, go to step 1.</li>
-</ol>
-
-<p>And the following Python code implements this algorithm.</p>
-
-<pre>def numerator_div(bern, numerator, intpart, bag):
-   # Simulates numerator/(intpart+bag)
-   while True:
-      if bern.zero_or_one(intpart,1+intpart)==1:
-         return bern.zero_or_one(numerator,intpart)
-      if bern.geometric_bag(bag)==1: return 0
-
-def ratio_of_uniform(bern):
-    &quot;&quot;&quot; Exact simulation of the ratio of uniform random variates.&quot;&quot;&quot;
-    # First, simulate the integer part
-    if bern.randbit():
-       # This is 0 to 1, which follows a uniform distribution
-       bag=[]
-       return bern.fill_geometric_bag(bag)
-    else:
-       # This is 1 or greater
-       intval=1
-       size=1
-       # Determine which range of integer parts to draw
-       while True:
-           if bern.randbit()==1:
-                break
-           intval+=size
-           size*=2
-       while True:
-         # Draw the integer part
-         intpart=bern.rndintexc(size) + intval
-         bag=[]
-         # Note: Density at [intval,intval+size) is multiplied
-         # by intval, to increase acceptance rates
-         if numerator_div(bern,intval,intpart,bag)==1 and \
-            numerator_div(bern,1,intpart,bag)==1:
-             return intpart + bern.fill_geometric_bag(bag)
-</pre>
-
-<p><a id=Reciprocal_of_Uniform_Random_Variate></a></p>
-
-<h2>Reciprocal of Uniform Random Variate</h2>
-
-<p>The reciprocal of a uniform(0, 1) random variate has the PDF&mdash;</p>
-
-<ul>
-<li>1 / <em>x</em><sup>2</sup> if <em>x</em> &gt; 1, and</li>
-<li>0 otherwise.</li>
-</ul>
-
-<p>The algorithm to simulate this PDF is the same as the algorithm for the ratio of two uniform random variates, except step 1 is omitted.</p>
 
 <p><a id=Notes></a></p>
 

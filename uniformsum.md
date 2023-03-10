@@ -1,4 +1,4 @@
-# Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates
+# Arbitrary-Precision Samplers for the Sum of Uniform Random Variates
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
@@ -17,8 +17,6 @@ The algorithms on this page work no matter what base the digits of the partially
 - [**Finding Parameters**](#Finding_Parameters)
 - [**Sum of Two Uniform Random Variates**](#Sum_of_Two_Uniform_Random_Variates)
 - [**Sum of Three Uniform Random Variates**](#Sum_of_Three_Uniform_Random_Variates)
-- [**Ratio of Two Uniform Random Variates**](#Ratio_of_Two_Uniform_Random_Variates)
-- [**Reciprocal of Uniform Random Variate**](#Reciprocal_of_Uniform_Random_Variate)
 - [**Notes**](#Notes)
 - [**License**](#License)
 
@@ -287,79 +285,6 @@ def sum_of_uniform3(bern):
               # Accepted
              return 2.0 + bern.fill_geometric_bag(bag)
 ```
-
-<a id=Ratio_of_Two_Uniform_Random_Variates></a>
-## Ratio of Two Uniform Random Variates
-
-The ratio of two uniform random variates between 0 and 1 has the following PDF (see [**MathWorld**](https://mathworld.wolfram.com/UniformRatioDistribution.html)):
-
-- 1/2 if _x_ >= 0 and _x_ <= 1,
-- ( 1/ _x_<sup>2</sup>) / 2 if _x_ > 1, and
-- 0 otherwise.
-
-The following algorithm simulates this PDF.
-
-1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), we have a uniform(0, 1) random variate.  Create a positive-sign zero-integer-part uniform PSRN, then optionally fill the PSRN with uniform random digits as necessary to give the number's fractional part the desired number of digits (similarly to **FillGeometricBag**), then return the PSRN.
-2. At this point, the result will be 1 or greater.  Set _intval_ to 1 and set _size_ to 1.
-3. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 4.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.  (This step chooses an interval beyond 1, taking advantage of the fact that the area under the PDF between 1 and 2 is 1/4, between 2 and 4 is 1/8, between 4 and 8 is 1/16, and so on, so that an appropriate interval is chosen with the correct probability.)
-4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
-5. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
-6. Call the **sub-algorithm** below with _d_ = _intval_ and _c_ = _i_.  If the call returns 0, go to step 4.  (Here we simulate _intval_/(_i_+_&lambda;_) rather than 1/(_i_+_&lambda;_) in order to increase acceptance rates in this step.  This is possible without affecting the algorithm's correctness.)
-7. Call the **sub-algorithm** below with _d_ = 1 and _c_ = _i_.  If the call returns 0, go to step 4.
-8. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
-
-The algorithm above uses a sub-algorithm that simulates the probability _d_ / (_c_ + _&lambda;_), where _&lambda;_ is the probability built up by the uniform PSRN, as follows:
-
-1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
-2. Call **SampleGeometricBag** on _ret_ (the uniform PSRN).  If the call returns 1, return 0.  Otherwise, go to step 1.
-
-And the following Python code implements this algorithm.
-
-```
-def numerator_div(bern, numerator, intpart, bag):
-   # Simulates numerator/(intpart+bag)
-   while True:
-      if bern.zero_or_one(intpart,1+intpart)==1:
-         return bern.zero_or_one(numerator,intpart)
-      if bern.geometric_bag(bag)==1: return 0
-
-def ratio_of_uniform(bern):
-    """ Exact simulation of the ratio of uniform random variates."""
-    # First, simulate the integer part
-    if bern.randbit():
-       # This is 0 to 1, which follows a uniform distribution
-       bag=[]
-       return bern.fill_geometric_bag(bag)
-    else:
-       # This is 1 or greater
-       intval=1
-       size=1
-       # Determine which range of integer parts to draw
-       while True:
-           if bern.randbit()==1:
-                break
-           intval+=size
-           size*=2
-       while True:
-         # Draw the integer part
-         intpart=bern.rndintexc(size) + intval
-         bag=[]
-         # Note: Density at [intval,intval+size) is multiplied
-         # by intval, to increase acceptance rates
-         if numerator_div(bern,intval,intpart,bag)==1 and \
-            numerator_div(bern,1,intpart,bag)==1:
-             return intpart + bern.fill_geometric_bag(bag)
-```
-
-<a id=Reciprocal_of_Uniform_Random_Variate></a>
-## Reciprocal of Uniform Random Variate
-
-The reciprocal of a uniform(0, 1) random variate has the PDF&mdash;
-
-- 1 / _x_<sup>2</sup> if _x_ > 1, and
-- 0 otherwise.
-
-The algorithm to simulate this PDF is the same as the algorithm for the ratio of two uniform random variates, except step 1 is omitted.
 
 <a id=Notes></a>
 ## Notes
