@@ -81,16 +81,18 @@
 
 <h2>Samplers for Certain Discrete Distributions</h2>
 
-<p>The following are exact samplers for certain <em>discrete distributions</em>, or distributions that take on values that can map to integers and back without loss.</p>
+<p>The following are exact samplers for certain <em>discrete distributions</em>, or probability distributions that take on values that can map to integers and back without loss.</p>
 
 <p><a id=On_a_Binomial_Sampler></a></p>
 
 <h3>On a Binomial Sampler</h3>
 
-<p>Take the following sampler of a binomial(<em>n</em>, 1/2) distribution (with an even number <em>n</em> of trials), which is equivalent to the one that appeared in (Bringmann et al. 2014)[^1], and adapted to be more programmer-friendly.</p>
+<p>The binomial(<em>n</em>, <em>p</em>) distribution models the number of successful trials (&quot;coin flips&quot;) out of <em>n</em> of them, where the trials are independent and have success probability <em>p</em>.</p>
+
+<p>Take the following sampler of a binomial(<em>n</em>, 1/2) distribution, where <em>n</em> is even, which is equivalent to the one that appeared in Bringmann et al. (2014)[^1], and adapted to be more programmer-friendly.</p>
 
 <ol>
-<li>If <em>n</em> is less than 4, generate <em>n</em> unbiased random bits (zeros or ones) and return their sum.  Otherwise, if <em>n</em> is odd[^2], set <em>ret</em> to the result of this algorithm with <em>n</em> = <em>n</em> &minus; 1, then add an unbiased random bit&#39;s value to <em>ret</em>, then return <em>ret</em>.</li>
+<li>If <em>n</em> is less than 4, generate <em>n</em> unbiased random bits (each bit is zero or one with equal probability) and return their sum.  Otherwise, if <em>n</em> is odd[^2], set <em>ret</em> to the result of this algorithm with <em>n</em> = <em>n</em> &minus; 1, then add an unbiased random bit&#39;s value to <em>ret</em>, then return <em>ret</em>.</li>
 <li>Set <em>m</em> to floor(sqrt(<em>n</em>)) + 1.</li>
 <li>(First, sample from an envelope of the binomial curve.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
 <li>Set <em>s</em> to an integer in [0, <em>m</em>) chosen uniformly at random, then set <em>i</em> to <em>k</em>*<em>m</em> + <em>s</em>.</li>
@@ -132,7 +134,13 @@
 
 <h3>On Geometric Samplers</h3>
 
-<p>The following algorithm is equivalent to the geometric(<em>px</em>/<em>py</em>) sampler that appeared in (Bringmann and Friedrich 2013)[^7], but adapted to be more programmer-friendly.  As used in that paper, a geometric(<em>p</em>) random variate expresses the number of failing trials before the first success, where each trial is independent and has success probability <em>p</em>, satisfying 0 &lt; <em>p</em> &le; 1. (Note that the terms &quot;geometric distribution&quot; and &quot;geometric random variate&quot; have conflicting meanings in academic works.  Note also that the algorithm uses the rational number <em>px</em>/<em>py</em>, not an arbitrary real number <em>p</em>; some of the notes in this section indicate how to adapt the algorithm to an arbitrary <em>p</em>.)</p>
+<p>As used in Bringmann and Friedrich (2013)[^7], a geometric(<em>p</em>) random variate expresses the number of failing trial before the first success, where each trial (&quot;coin flip&quot;) is independent and has success probability <em>p</em>, satisfying 0 &lt; <em>p</em> &le; 1.</p>
+
+<blockquote>
+<p><strong>Note</strong>: The terms &quot;geometric distribution&quot; and &quot;geometric random variate&quot; have conflicting meanings in academic works.</p>
+</blockquote>
+
+<p>The following algorithm is equivalent to the geometric(<em>px</em>/<em>py</em>) sampler that appeared in that paper, but adapted to be more programmer-friendly.  The algorithm uses the rational number <em>px</em>/<em>py</em>, not an arbitrary real number <em>p</em>; some of the notes in this section indicate how to adapt the algorithm to an arbitrary <em>p</em>.</p>
 
 <ol>
 <li>Set <em>pn</em> to <em>px</em>, <em>k</em> to 0, and <em>d</em> to 0.</li>
@@ -218,7 +226,7 @@
 <li>Run the <strong>ExpMinus</strong> algorithm with parameter <em>u</em>/<em>t</em>.   If it returns 0, go to step 1.</li>
 <li>Run the <strong>ExpMinus</strong> algorithm with parameter 1, until a run returns 0, then set <em>n</em> to the number of times the algorithm returned 1 this way.</li>
 <li>Set <em>y</em> to floor((<em>u</em>+<em>n</em>*<em>t</em>)/<em>s</em>).</li>
-<li>Generate an unbiased random bit.  If the bit is 0, return <em>y</em>.  Otherwise, if <em>y</em> is 0, go to step 1.  Otherwise, return &minus;<em>y</em>.</li>
+<li>Generate an unbiased random bit (either zero or one with equal probability).  If the bit is 0, return <em>y</em>.  Otherwise, if <em>y</em> is 0, go to step 1.  Otherwise, return &minus;<em>y</em>.</li>
 </ol>
 
 <p><a id=Weighted_Choice_for_Special_Distributions></a></p>
@@ -264,7 +272,7 @@
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The weights can be base-<em>&beta;</em> logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace &quot;<em>q</em>[<em>m</em>]*min((<em>b</em>&minus;<em>a</em>)&quot; with &quot;<em>q</em>[<em>m</em>]+ln(min((<em>b</em>&minus;<em>a</em>))/ln(<em>&beta;</em>)&quot; (which is generally inexact unless <em>&beta;</em> is 2); in sampling step 1, use an algorithm that takes base-<em>&beta;</em> logarithms as weights; and replace sampling step 3 with &quot;Generate an exponential random variate with rate ln(<em>&beta;</em>) (that is, the variate is <em>E</em>/ln(<em>&beta;</em>) where <em>E</em> is exponential with rate 1).  If that variate is greater than <em>q</em>[<em>k</em>] minus <em>w</em>[<em>x</em>], return <em>x</em>.  Otherwise, go to step 1.&quot;  These modifications can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).</p>
+<p><strong>Note:</strong> The weights can be base-<em>&beta;</em> logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace &quot;<em>q</em>[<em>m</em>]*min((<em>b</em>&minus;<em>a</em>)&quot; with &quot;<em>q</em>[<em>m</em>]+ln(min((<em>b</em>&minus;<em>a</em>))/ln(<em>&beta;</em>)&quot; (which is generally inexact unless <em>&beta;</em> is 2); in sampling step 1, use an algorithm that takes base-<em>&beta;</em> logarithms as weights; and replace sampling step 3 with &quot;Generate an exponential random variate with rate ln(<em>&beta;</em>) (that is, the variate is <em>E</em>/ln(<em>&beta;</em>) where <em>E</em> is exponential with rate 1).  If that variate is greater than <em>q</em>[<em>k</em>] minus <em>w</em>[<em>x</em>], return <em>x</em>.  Otherwise, go to step 1.&quot;<br>Applying these modifications to this section&#39;s algorithms can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).  The same is true for running the unmodified algorithms with weights that are not rational numbers.</p>
 </blockquote>
 
 <p><a id=Unimodal_distributions_of_weights></a></p>
@@ -288,6 +296,10 @@
 <h4>Weighted Choice with Log Probabilities</h4>
 
 <p>Huijben et al. (2022)[^13] reviews the Gumbel max trick and Gumbel softmax distributions.</p>
+
+<blockquote>
+<p><strong>Note</strong>: Because these algorithms involve adding one real number to another and calculating <code>exp</code> of a real number, they can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).</p>
+</blockquote>
 
 <p><strong>Weighted choice with the Gumbel max trick.</strong> Let <em>C</em>&gt;0 be an unknown number.  Then, given&mdash;</p>
 
@@ -321,7 +333,7 @@
 
 <h4>Weighted Choice Involving PSRNs</h4>
 
-<p>Given <em>n</em> uniform PSRNs, called <em>weights</em>, with labels starting from 0 and ending at <em>n</em>&minus;1, the following algorithm chooses an integer in [0, <em>n</em>) with probability proportional to its weight.  Each weight&#39;s sign must be positive.</p>
+<p>Given <em>n</em> uniform <a href="https://peteroupc.github.io/exporand.html"><strong><em>partially-sampled random numbers</em></strong></a> (PSRNs), called <em>weights</em>, with labels starting from 0 and ending at <em>n</em>&minus;1, the following algorithm chooses an integer in [0, <em>n</em>) with probability proportional to its weight.  Each weight&#39;s sign must be positive.</p>
 
 <ol>
 <li>Create an empty list, then for each weight starting with weight 0, add the weight&#39;s integer part plus 1 to that list.  For example, if the weights are [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the <em>rounded weights list</em>.</li>
@@ -333,7 +345,7 @@
 
 <h3>Bernoulli Distribution for Cumulative Distribution Functions</h3>
 
-<p>Suppose a real number <em>z</em> is given (which might be a uniform PSRN or a rational number).  If a probability distribution&mdash;</p>
+<p>Suppose a real number <em>z</em> is given (which might be a uniform partially-sampled random number [PSRN] or a rational number).  If a probability distribution&mdash;</p>
 
 <ul>
 <li>has a probability density function (PDF) (as with the normal or exponential distribution), and</li>
@@ -370,7 +382,7 @@
 <li>Create a copy of <em>&mu;</em>, call it <em>M</em>.  Then for each <em>i</em> where <em>&nu;</em>[<em>i</em>] = 1, set <em>M</em>[<em>i</em>] to 1 &minus; <em>M</em>[<em>i</em>].  Then return <em>M</em>.</li>
 </ol>
 
-<p>The paper describes two ways to generate the weights for <em>c</em> in step 1 (there are others as well):</p>
+<p>The paper describes two ways to establish the weights for <em>c</em> in step 1 (there are others as well):</p>
 
 <ul>
 <li>Generate <em>c</em> with probability proportional to the following weights: [<em>&alpha;</em><sup>0</sup>, <em>&alpha;</em><sup>1</sup>, ..., <em>&alpha;</em><sup><em>p</em></sup>].  (Since each weight is 1 or less, this can be implemented as follows, for example.  Generate a uniform random integer in [0, <em>p</em>], call it <em>d</em>, then flip a coin that shows heads with probability <em>&alpha;</em>, <em>d</em> times, then either return <em>d</em> if <em>d</em> is 0 or all the flips are heads, or repeat this process otherwise.)</li>

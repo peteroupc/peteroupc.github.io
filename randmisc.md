@@ -54,14 +54,16 @@ Comments on other aspects of this document are welcome.
 <a id=Samplers_for_Certain_Discrete_Distributions></a>
 ## Samplers for Certain Discrete Distributions
 
-The following are exact samplers for certain _discrete distributions_, or distributions that take on values that can map to integers and back without loss.
+The following are exact samplers for certain _discrete distributions_, or probability distributions that take on values that can map to integers and back without loss.
 
 <a id=On_a_Binomial_Sampler></a>
 ### On a Binomial Sampler
 
-Take the following sampler of a binomial(_n_, 1/2) distribution (with an even number _n_ of trials), which is equivalent to the one that appeared in (Bringmann et al. 2014\)[^1], and adapted to be more programmer-friendly.
+The binomial(_n_, _p_) distribution models the number of successful trials ("coin flips") out of _n_ of them, where the trials are independent and have success probability _p_.
 
-1. If _n_ is less than 4, generate _n_ unbiased random bits (zeros or ones) and return their sum.  Otherwise, if _n_ is odd[^2], set _ret_ to the result of this algorithm with _n_ = _n_ &minus; 1, then add an unbiased random bit's value to _ret_, then return _ret_.
+Take the following sampler of a binomial(_n_, 1/2) distribution, where _n_ is even, which is equivalent to the one that appeared in Bringmann et al. (2014\)[^1], and adapted to be more programmer-friendly.
+
+1. If _n_ is less than 4, generate _n_ unbiased random bits (each bit is zero or one with equal probability) and return their sum.  Otherwise, if _n_ is odd[^2], set _ret_ to the result of this algorithm with _n_ = _n_ &minus; 1, then add an unbiased random bit's value to _ret_, then return _ret_.
 2. Set _m_ to floor(sqrt(_n_)) + 1.
 3. (First, sample from an envelope of the binomial curve.) Generate unbiased random bits until a zero is generated this way.  Set _k_ to the number of ones generated this way.
 4. Set _s_ to an integer in [0, _m_) chosen uniformly at random, then set _i_ to _k_\*_m_ + _s_.
@@ -92,7 +94,11 @@ Also, according to the Bringmann paper, _m_ can be set such that _m_ is in the i
 <a id=On_Geometric_Samplers></a>
 ### On Geometric Samplers
 
-The following algorithm is equivalent to the geometric(_px_/_py_) sampler that appeared in (Bringmann and Friedrich 2013\)[^7], but adapted to be more programmer-friendly.  As used in that paper, a geometric(_p_) random variate expresses the number of failing trials before the first success, where each trial is independent and has success probability _p_, satisfying 0 &lt; _p_ &le; 1. (Note that the terms "geometric distribution" and "geometric random variate" have conflicting meanings in academic works.  Note also that the algorithm uses the rational number _px_/_py_, not an arbitrary real number _p_; some of the notes in this section indicate how to adapt the algorithm to an arbitrary _p_.)
+As used in Bringmann and Friedrich (2013\)[^7], a geometric(_p_) random variate expresses the number of failing trial before the first success, where each trial ("coin flip") is independent and has success probability _p_, satisfying 0 &lt; _p_ &le; 1.
+
+> **Note**: The terms "geometric distribution" and "geometric random variate" have conflicting meanings in academic works.
+
+The following algorithm is equivalent to the geometric(_px_/_py_) sampler that appeared in that paper, but adapted to be more programmer-friendly.  The algorithm uses the rational number _px_/_py_, not an arbitrary real number _p_; some of the notes in this section indicate how to adapt the algorithm to an arbitrary _p_.
 
 1. Set _pn_ to _px_, _k_ to 0, and _d_ to 0.
 2. While _pn_\*2 &le; _py_, add 1 to _k_ and multiply _pn_ by 2.  (Equivalent to finding the largest _k_ &ge; 0 such that _p_\*2<sup>_k_</sup> &le; 1.  For the case when _p_ need not be rational, enough of its binary expansion can be calculated to carry out this step accurately, but in this case any _k_ such that _p_ is greater than 1/(2<sup>_k_+2</sup>) and less than or equal to 1/(2<sup>_k_</sup>) will suffice, as the Bringmann paper points out.)
@@ -157,7 +163,7 @@ The algorithm of Li generates a variate from the _discrete Laplace distribution_
 2. Run the **ExpMinus** algorithm with parameter _u_/_t_.   If it returns 0, go to step 1.
 3. Run the **ExpMinus** algorithm with parameter 1, until a run returns 0, then set _n_ to the number of times the algorithm returned 1 this way.
 4. Set _y_ to floor((_u_+_n_\*_t_)/_s_).
-5. Generate an unbiased random bit.  If the bit is 0, return _y_.  Otherwise, if _y_ is 0, go to step 1.  Otherwise, return &minus;_y_.
+5. Generate an unbiased random bit (either zero or one with equal probability).  If the bit is 0, return _y_.  Otherwise, if _y_ is 0, go to step 1.  Otherwise, return &minus;_y_.
 
 <a id=Weighted_Choice_for_Special_Distributions></a>
 ### Weighted Choice for Special Distributions
@@ -186,7 +192,7 @@ For _nowhere decreasing_ rather than nowhere increasing weights, the algorithm i
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_b_&minus;1, _b_\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append the list \[(_b_&minus;_j_) &minus; min((_b_&minus;_a_) &minus; _j_, _j_), _b_&minus;_j_\] and multiply _j_ by 2.
 - The sampling is the same as for the previous algorithm.
 
-> **Note:** The weights can be base-_&beta;_ logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace "_q_\[_m_\]\*min((_b_&minus;_a_)" with "_q_\[_m_\]+ln(min((_b_&minus;_a_))/ln(_&beta;_)" (which is generally inexact unless _&beta;_ is 2); in sampling step 1, use an algorithm that takes base-_&beta;_ logarithms as weights; and replace sampling step 3 with "Generate an exponential random variate with rate ln(_&beta;_) (that is, the variate is _E_/ln(_&beta;_) where _E_ is exponential with rate 1).  If that variate is greater than _q_\[_k_\] minus _w_\[_x_\], return _x_.  Otherwise, go to step 1."  These modifications can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).
+> **Note:** The weights can be base-_&beta;_ logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace "_q_\[_m_\]\*min((_b_&minus;_a_)" with "_q_\[_m_\]+ln(min((_b_&minus;_a_))/ln(_&beta;_)" (which is generally inexact unless _&beta;_ is 2); in sampling step 1, use an algorithm that takes base-_&beta;_ logarithms as weights; and replace sampling step 3 with "Generate an exponential random variate with rate ln(_&beta;_) (that is, the variate is _E_/ln(_&beta;_) where _E_ is exponential with rate 1).  If that variate is greater than _q_\[_k_\] minus _w_\[_x_\], return _x_.  Otherwise, go to step 1."<br>Applying these modifications to this section's algorithms can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).  The same is true for running the unmodified algorithms with weights that are not rational numbers.
 
 <a id=Unimodal_distributions_of_weights></a>
 #### Unimodal distributions of weights
@@ -202,6 +208,8 @@ The following is an algorithm for sampling an integer in the interval \[_a_, _b_
 #### Weighted Choice with Log Probabilities
 
 Huijben et al. (2022)[^13] reviews the Gumbel max trick and Gumbel softmax distributions.
+
+>  **Note**: Because these algorithms involve adding one real number to another and calculating `exp` of a real number, they can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).
 
 **Weighted choice with the Gumbel max trick.** Let _C_>0 be an unknown number.  Then, given&mdash;
 
@@ -226,7 +234,7 @@ The algorithm's result is a vector _q_, which can be used only once to sample _i
 <a id=Weighted_Choice_Involving_PSRNs></a>
 #### Weighted Choice Involving PSRNs
 
-Given _n_ uniform PSRNs, called _weights_, with labels starting from 0 and ending at _n_&minus;1, the following algorithm chooses an integer in [0, _n_) with probability proportional to its weight.  Each weight's sign must be positive.
+Given _n_ uniform [**_partially-sampled random numbers_**](https://peteroupc.github.io/exporand.html) \(PSRNs\), called _weights_, with labels starting from 0 and ending at _n_&minus;1, the following algorithm chooses an integer in [0, _n_) with probability proportional to its weight.  Each weight's sign must be positive.
 
 1. Create an empty list, then for each weight starting with weight 0, add the weight's integer part plus 1 to that list.  For example, if the weights are [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the _rounded weights list_.
 2. Choose an integer _i_ with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of **WeightedChoice**(_list_), where _list_ is the rounded weights list and **WeightedChoice** is given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
@@ -235,7 +243,7 @@ Given _n_ uniform PSRNs, called _weights_, with labels starting from 0 and endin
 <a id=Bernoulli_Distribution_for_Cumulative_Distribution_Functions></a>
 ### Bernoulli Distribution for Cumulative Distribution Functions
 
-Suppose a real number _z_ is given (which might be a uniform PSRN or a rational number).  If a probability distribution&mdash;
+Suppose a real number _z_ is given (which might be a uniform partially-sampled random number [PSRN] or a rational number).  If a probability distribution&mdash;
 
 - has a probability density function (PDF) (as with the normal or exponential distribution), and
 - has an arbitrary-precision sampler that returns a uniform PSRN _X_,
@@ -261,7 +269,7 @@ Chakraborty and Vardeman (2021)[^16] describes distributions of bit vectors with
 2. Create a _p_-item list _&nu;_, where the first _c_ items are ones and the rest are zeros.  [**Shuffle**](https://peteroupc.github.io/randomfunc.html#Shuffling) the list.
 3. Create a copy of _&mu;_, call it _M_.  Then for each _i_ where _&nu;_\[_i_\] = 1, set _M_\[_i_\] to 1 &minus; _M_\[_i_\].  Then return _M_.
 
-The paper describes two ways to generate the weights for _c_ in step 1 (there are others as well):
+The paper describes two ways to establish the weights for _c_ in step 1 (there are others as well):
 
 - Generate _c_ with probability proportional to the following weights: [_&alpha;_<sup>0</sup>, _&alpha;_<sup>1</sup>, ..., _&alpha;_<sup>_p_</sup>].  (Since each weight is 1 or less, this can be implemented as follows, for example.  Generate a uniform random integer in \[0, _p_\], call it _d_, then flip a coin that shows heads with probability _&alpha;_, _d_ times, then either return _d_ if _d_ is 0 or all the flips are heads, or repeat this process otherwise.)
 - Generate _c_ with probability proportional to the following weights: [_&alpha;_<sup>0</sup>\*choose(_p_,0), _&alpha;_<sup>1</sup>\*choose(_p_,1), ..., _&alpha;_<sup>_p_</sup>\*choose(_p_,_p_)].  (Since the sum of weights is no more than $2^p$, each weight can be divided by $2^p$ to get weights that are 1 or less, so that this can be implemented as follows, for example.  Generate a uniform random integer in \[0, _p_\], call it _d_, then flip a coin that shows heads with probability _&alpha;_, _d_ times, and a coin that shows heads with probability choose(_p_, _d_)/2<sup>_p_</sup> once, then either return _d_ if all the flips are heads, or repeat this process otherwise.  Note that the probability choose(_p_, _d_)/2<sup>_p_</sup> is simple to simulate for being a rational number.)

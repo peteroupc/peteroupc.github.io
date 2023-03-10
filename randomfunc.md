@@ -981,7 +981,7 @@ The _binomial distribution_ uses two parameters: `trials` and `p`.  This distrib
 
 This distribution has a simple implementation: `count = 0; for i in 0...trials: count=count+ZeroOrOne(px, py)`.  But for large numbers of trials, this can be very slow.
 
-The pseudocode below implements an exact sampler of this distribution, with certain optimizations based on (Farach-Colton and Tsai 2015\)[^51].  (Another exact sampler is given in (Bringmann et al. 2014\)[^52] and described in my "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html)".) Here, the parameter `p` is expressed as a ratio `px`/`py`.
+The pseudocode below implements an exact sampler of this distribution, with certain optimizations based on (Farach-Colton and Tsai 2015\)[^51].  (Another exact sampler is given in (Bringmann et al. 2014\)[^52] and described in my "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html#On_a_Binomial_Sampler)".) Here, the parameter `p` is expressed as a ratio `px`/`py`.
 
 &nbsp;
 
@@ -1081,7 +1081,7 @@ The geometric distribution is a negative binomial distribution with `successes =
 > **Notes:**
 >
 > 1. The negative binomial and geometric distributions are defined differently in different works.  For example, _Mathematica_'s definition excludes the last success, but the definition in (Devroye 1986, p. 498\)[^19] includes it.  And some works may define a negative binomial number as the number of successes before N failures, rather than vice versa.
-> 2. A _bounded geometric_ random variate is either _n_ (an integer greater than 0) or a geometric random variate, whichever is less.   Exact and efficient samplers for the geometric and bounded geometric distributions, such as the ones described in (Bringmann and Friedrich 2013\)[^54], are described in my "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html#On Geometric Samplers)".)
+> 2. A _bounded geometric_ random variate is either _n_ (an integer greater than 0) or a geometric random variate, whichever is less.   Exact and efficient samplers for the geometric and bounded geometric distributions, such as the ones described in (Bringmann and Friedrich 2013\)[^54], are described in my "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html#On_ _Geometric_Samplers)".)
 
 <a id=Exponential_Distribution></a>
 ### Exponential Distribution
@@ -2180,7 +2180,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 [^77]: "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.
 
-[^78]: A _discrete distribution_ is a distribution that associates a countable number of items with a separate probability per item. These items are usually integers, but they need not be.  For example, the items can be non-integer values (for example, `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers. Two examples:
+[^78]: A _discrete distribution_ is a distribution that takes on values that can map to integers and back without loss. These values are usually integers, but they need not be.  For example, the values can be non-integer values (for example, `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers without loss. Two examples:
     - A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
     - Integer-quantized numbers (popular in "deep-learning" neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a "look-up table" that maps 256 integers to real numbers.
 

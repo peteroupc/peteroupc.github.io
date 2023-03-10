@@ -2,7 +2,12 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-This page is now obsolete.
+This page is now obsolete.  Its contents were moved to:
+
+* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](https://peteroupc.github.io/exporand.html)
+* [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
+* [**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)
+* [**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html)
 
 <a id=Pushdown_Automata_and_Algebraic_Functions></a>
 ### Pushdown Automata and Algebraic Functions

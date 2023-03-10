@@ -537,7 +537,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 <a id=Miscellaneous_Bernoulli_Factories></a>
 ## Miscellaneous Bernoulli Factories
-&nbsp;
 
 In the methods below, _&lambda;_ is the unknown probability of heads of the coin involved in the Bernoulli factory problem.
 
