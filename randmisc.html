@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2023/03/09"><meta name="citation_online_date" content="2023/03/09"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2023/03/10"><meta name="citation_online_date" content="2023/03/10"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -49,6 +49,11 @@
 <li><a href="#Certain_Distributions"><strong>Certain Distributions</strong></a></li>
 <li><a href="#Random_Variate_Generation_via_Quantiles"><strong>Random Variate Generation via Quantiles</strong></a></li>
 <li><a href="#Batching_Random_Samples_via_Randomness_Extraction"><strong>Batching Random Samples via Randomness Extraction</strong></a></li>
+<li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a>
+
+<ul>
+<li><a href="#Additional_Algorithms"><strong>Additional Algorithms</strong></a></li>
+</ul></li>
 <li><a href="#Acknowledgments"><strong>Acknowledgments</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -855,6 +860,147 @@
 <li>Now, when the sampler consumes a random bit, it checks the input queue.  As long as 64 bits or more are in the input queue, the sampler dequeues 64 bits from it, runs the extractor on those bits, and adds the extracted bits to an output queue. (The number 64 can instead be any even number greater than 2.)  Then, if the output queue is not empty, the sampler dequeues a bit from that queue and uses that bit; otherwise it generates an unbiased random bit as usual.</li>
 </ol>
 
+<p><a id=Sampling_Distributions_Using_Incomplete_Information></a></p>
+
+<h2>Sampling Distributions Using Incomplete Information</h2>
+
+<p>The Bernoulli factory problem (the problem of turning one biased coin into another biased coin; see &quot;[Bernoulli Factory Algorithms]&quot;(<a href="https://peteroupc.github.io/bernoulli.html">https://peteroupc.github.io/bernoulli.html</a>)) is a special case of the problem of <strong>sampling a probability distribution with unknown parameters</strong>.  This problem can be described as sampling from a new distribution using an <em>oracle</em> (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a <em>coin that shows heads or tails where the probability of heads is unknown</em>.  The rest of this section deals with oracles that go beyond coins.</p>
+
+<p><strong>Algorithm 1.</strong> Suppose there is an oracle that produces independent random variates on a closed interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
+
+<ul>
+<li><em>f</em> is continuous on the closed interval, and</li>
+<li><em>f</em>(<em>&mu;</em>) is greater than or equal to <em>&epsilon;</em>*min((<em>&mu;</em> &minus; <em>a</em>)<sup><em>n</em></sup>, (<em>b</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> and some <em>&epsilon;</em> greater than 0 (loosely speaking, <em>f</em> is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)</li>
+</ul>
+
+<p>(Jacob and Thiery 2015)[^80]. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
+
+<p>In the algorithm below, let <em>K</em> be a rational number greater than the maximum value of <em>f</em> on the closed interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>&lambda;</em>) = <em>f</em>(<em>a</em> + (<em>b</em>&minus;<em>a</em>)*<em>&lambda;</em>)/<em>K</em>.</p>
+
+<ol>
+<li>Create a <em>&lambda;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>) (see note below), return 1.  Otherwise, return 0.&quot;</li>
+<li>Run a Bernoulli factory algorithm for <em>g</em>(<em>&lambda;</em>), using the <em>&lambda;</em> input coin.  Then return <em>K</em> times the result.</li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> The check &quot;With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>)&quot; is exact if the oracle produces only rational numbers.  If the oracle can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then the code for the oracle should use uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  In that case, the check can be implemented as follows.  Let <em>x</em> be a uniform PSRN representing a number generated by the oracle.  Set <em>y</em> to <strong>RandUniformFromReal</strong>(<em>b</em>&minus;<em>a</em>), then the check succeeds if <strong>URandLess</strong>(<em>y</em>, <strong>UniformAddRational</strong>(<em>x</em>, &minus;<em>a</em>)) returns 1, and fails otherwise.</p>
+
+<p><strong>Example:</strong> Suppose an oracle produces random variates in the interval [3, 13] with unknown mean <em>&mu;</em>, and the goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>&mu;</em>) = &minus;319/100 + <em>&mu;</em>*103/50 &minus; <em>&mu;</em><sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of <em>f</em> in that interval, <em>g</em>(<em>&lambda;</em>) is a degree-2 polynomial in the interval [0, 1] that has Bernstein coefficients [2/8, 9/8, 5/8].  <em>g</em> can&#39;t be simulated as is, though, but increasing <em>g</em>&#39;s degree to 3 leads to the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so that the following algorithm can be used (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;):</p>
+
+<ol>
+<li>Set <em>heads</em> to 0.</li>
+<li>Generate three random variates from the oracle (which must produce random variates in the interval [3, 13]).  For each number <em>x</em>: With probability (<em>x</em>&minus;3)/(10&minus;3), add 1 to <em>heads</em>.</li>
+<li>Depending on <em>heads</em>, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: <em>heads</em>=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.</li>
+</ol>
+</blockquote>
+
+<p><strong>Algorithm 2.</strong> Say there is an oracle in the form of a fair die.  The number of faces of the die, <em>n</em>, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than <em>n</em>.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)[^81], and the following are four of these distributions.</p>
+
+<p><strong><em>Bernoulli 1/n.</em></strong> It&#39;s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)[^81].</p>
+
+<p><strong><em>Random variate with mean n.</em></strong> Likewise, it&#39;s trivial to generate variates with a mean of <em>n</em>: Do &quot;Bernoulli 1/n&quot; trials as described above until a trial returns 0, then return the number of trials done this way.  (This is related to the ambiguously defined &quot;geometric&quot; random variates.)</p>
+
+<p><strong><em>Binomial with parameters n and 1/n.</em></strong> Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20)[^81]:</p>
+
+<ol>
+<li>Take items from the oracle until the same item is taken twice.</li>
+<li>Create a list consisting of the items taken in step 1, except for the last item taken, then shuffle that list.</li>
+<li>In the shuffled list, count the number of items that didn&#39;t change position after being shuffled, then return that number.</li>
+</ol>
+
+<p><strong><em>Binomial with parameters n and k/n.</em></strong> Duvignau 2015 also includes an algorithm (Algorithm 25) to generate a binomial variate of this kind using the oracle (where <em>k</em> is a known integer such that 0 &lt; <em>k</em> and <em>k</em> &le; <em>n</em>):</p>
+
+<ol>
+<li>Take items from the oracle until <em>k</em> different items were taken this way.  Let <em>U</em> be a list of these <em>k</em> items, in the order in which they were first taken.</li>
+<li>Create an empty list <em>L</em>.</li>
+<li>For each integer <em>i</em> in [0, <em>k</em>):
+
+<ol>
+<li>Create an empty list <em>M</em>.</li>
+<li>Take an item from the oracle.  If the item is in <em>U</em> at a position <strong>less than <em>i</em></strong> (positions start at 0), repeat this substep.  Otherwise, if the item is not in <em>M</em>, add it to <em>M</em> and repeat this substep.  Otherwise, go to the next substep.</li>
+<li>Shuffle the list <em>M</em>, then add to <em>L</em> each item that didn&#39;t change position after being shuffled (if not already present in <em>L</em>).</li>
+</ol></li>
+<li>For each integer <em>i</em> in [0, <em>k</em>):
+
+<ol>
+<li>Let <em>P</em> be the item at position <em>i</em> in <em>U</em>.</li>
+<li>Take an item from the oracle.  If the item is in <em>U</em> at position <strong><em>i</em> or less</strong> (positions start at 0), repeat this substep.</li>
+<li>If the last item taken in the previous substep is in <em>U</em> at a position <strong>greater than <em>i</em></strong>, add <em>P</em> to <em>L</em> (if not already present).</li>
+</ol></li>
+<li>Return the number of items in <em>L</em>.</li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown <em>n</em> can be sampled with the oracle?[^82] The result applies to a family of (discrete) distributions with the same unknown parameter <em>n</em>, starting with either 1 or a greater integer.  Let Supp(<em>m</em>) be the set of values taken on by the distribution with parameter equal to <em>m</em>.  Then that family can be sampled using the oracle if and only if:</p>
+
+<ul>
+<li>There is a computable function <em>f</em>(<em>k</em>) that outputs a positive number.</li>
+<li>For each <em>n</em>, Supp(<em>n</em>) is included in Supp(<em>n</em>+1).</li>
+<li>For every <em>k</em> and for every <em>n</em> &ge; 2 starting with the first <em>n</em> for which <em>k</em> is in Supp(<em>n</em>), the probability of seeing <em>k</em> given parameter <em>n</em> is at least (1/<em>n</em>)<sup><em>f</em>(<em>k</em>)</sup> (roughly speaking, the probability doesn&#39;t decay at a faster than polynomial rate as <em>n</em> increases).</li>
+</ul>
+</blockquote>
+
+<p><a id=Additional_Algorithms></a></p>
+
+<h3>Additional Algorithms</h3>
+
+<p>The following algorithms are included here because they require applying an arbitrary function (such as <em>f</em>(<em>&lambda;</em>)) to a potentially irrational number.</p>
+
+<p><strong>Algorithm 3.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers whose expected value (&quot;long-run average&quot;) is a known or unknown mean. The goal is now to produce nonnegative random variates whose expected value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever&mdash;</p>
+
+<ul>
+<li><em>f</em> has a finite lower bound and a finite upper bound on its domain, and</li>
+<li>the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0.</li>
+</ul>
+
+<p>The algorithm to achieve this goal follows (see Lee et al. 2014[^84]):</p>
+
+<ol>
+<li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
+<li>Use one of the <a href="https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories"><strong>linear Bernoulli factories</strong></a> to simulate 2*<em>&nu;</em> (2 times the <em>&nu;</em> coin&#39;s probability of heads), using the <em>&nu;</em> input coin, with <em>&#x03F5;</em> = <em>&delta;</em>/<em>m</em>.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it <em>&xi;</em>, and return abs(<em>f</em>(<em>&xi;</em>)).</li>
+</ol>
+
+<blockquote>
+<p><strong>Example:</strong> An example from Lee et al. (2014)[^83].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
+
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected value or &quot;long-run average&quot;) is not the same as averaging to <em>f</em>(<em>&mu;</em>) where <em>&mu;</em> is the mean of the oracle&#39;s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 0 or 1 with equal probability, and <em>f</em>(<em>&nu;</em>) = exp(&minus;<em>&nu;</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(&minus;1) &minus; exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(&minus;1/2).</li>
+<li><p>(Lee et al. 2014, Corollary 4)[^83]: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
+
+<ul>
+<li>Use <em>f</em>(<em>&nu;</em>) = <em>f</em>(<em>&nu;</em>) &minus; <em>b</em>, and use <em>&delta;</em> = <em>&delta;</em> &minus; <em>b</em>.</li>
+<li><em>m</em> is taken as max(<em>b</em>&minus;<em>a</em>, <em>c</em>&minus;<em>b</em>).</li>
+<li>When Algorithm 2 finishes, add <em>b</em> to its return value.</li>
+</ul></li>
+<li>The check &quot;With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>&quot; is exact if the oracle produces only rational numbers <em>and</em> if <em>f</em>(<em>x</em>) outputs only rational numbers.  If the oracle or <em>f</em> can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then this check should be implemented using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</li>
+</ol>
+</blockquote>
+
+<p><strong>Algorithm 4.</strong> Suppose there is an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nowhere decreasing in that interval (Jacob and Thiery 2015)[^80].  This can be done using the algorithm below.  In the algorithm:</p>
+
+<ul>
+<li><em>f</em>(<em>&mu;</em>) must be a function that can be written as&mdash;<br><em>c</em>[0]*<em>z</em><sup>0</sup> + <em>c</em>[1]*<em>z</em><sup>1</sup> + ...,<br>which is an infinite series where <em>z</em> = <em>&mu;</em>&minus;<em>a</em> and all <em>c</em>[<em>i</em>] are 0 or greater.</li>
+<li><em>&psi;</em> is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)</li>
+</ul>
+
+<p>The algorithm follows.</p>
+
+<ol>
+<li>Set <em>ret</em> to 0, <em>prod</em> to 1, <em>k</em> to 0, and <em>w</em> to 1. (<em>w</em> is the probability of generating <em>k</em> or more random variates in a single run of the algorithm.)</li>
+<li>If <em>k</em> is greater than 0: Take a number from the oracle, call it <em>x</em>, and multiply <em>prod</em> by <em>x</em>&minus;<em>a</em>.</li>
+<li>Add <em>c</em>[<em>k</em>]*<em>prod</em>/<em>w</em> to <em>ret</em>.</li>
+<li>Multiply <em>w</em> by <em>&psi;</em> and add 1 to <em>k</em>.</li>
+<li>With probability <em>&psi;</em>, go to step 2.  Otherwise, return <em>ret</em>.</li>
+</ol>
+
+<p>Now, assume the oracle&#39;s numbers are all less than or equal to <em>b</em> (rather than greater than or equal to <em>a</em>), where <em>b</em> is a known rational number.  Then <em>f</em> must be 0 or greater everywhere in (&minus;<em>&infin;</em>, <em>b</em>] and be nowhere increasing there (Jacob and Thiery 2015)[^80], and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, <em>z</em> = <em>b</em> &minus;<em>&mu;</em>; (2) in step 2, multiply <em>prod</em> by <em>b</em> &minus; <em>x</em> rather than <em>x</em> &minus; <em>a</em>.</p>
+
+<blockquote>
+<p><strong>Note:</strong> This algorithm is exact if the oracle produces only rational numbers <em>and</em> if all <em>c</em>[<em>i</em>] are rational numbers.  If the oracle can produce irrational numbers, then they should be implemented using uniform partially-sampled random numbers (PSRNs).  See also note 3 on Algorithm 2.</p>
+</blockquote>
+
 <p><a id=Acknowledgments></a></p>
 
 <h2>Acknowledgments</h2>
@@ -1023,6 +1169,16 @@
 <p>[^78]: Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it&#39;s uniformly continuous there.  For this reason, there is a positive function <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) such that <em>Q</em>(<em>x</em>) is less than <em>&epsilon;</em>-away from <em>Q</em>(<em>y</em>), for every <em>&epsilon;</em>&gt;0, whenever <em>x</em> and <em>y</em> lie in that interval and whenever <em>x</em> is less than <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>)-away from <em>y</em>.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(<em>z</em>)/ln(<em>&beta;</em>))) is an upper bound on the number of base-<em>&beta;</em> fractional digits needed to store 1/<em>z</em> with an error of at most <em>&epsilon;</em>.</p>
 
 <p>[^79]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+
+<p>[^80]: Jacob, P.E., Thiery, A.H., &quot;On nonnegative unbiased estimators&quot;, Ann. Statist., Volume 43, Number 2 (2015), 769-784.</p>
+
+<p>[^81]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).</p>
+
+<p>[^82]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won&#39;t use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs <em>arbitrary</em> but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).</p>
+
+<p>[^83]: No note text yet.</p>
+
+<p>[^84]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
 
 <p><a id=License></a></p>
 
