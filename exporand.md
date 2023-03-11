@@ -163,7 +163,7 @@ Each additional digit of a uniform PSRN's fractional part is sampled simply by s
 <a id=Exponential_Partially_Sampled_Random_Numbers></a>
 ### Exponential Partially-Sampled Random Numbers
 
-In this document, an **exponential PSRN** (or **_e-rand_**, named similarly to Karney's "u-rands" for partially-sampled uniform random variates (Karney 2016\)[^1]) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random variate of the given rate.  Also, because `-ln(1 - X)`, where `X` is a uniform random variate in the interval [0, 1], is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random variate in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.   (More specifically, an exponential PSRN generally represents an exponentially-distributed random variate in a given interval.)
+In this document, an **exponential PSRN** (or **_e-rand_**, named similarly to Karney's "u-rands" for partially-sampled uniform random variates (Karney 2016\)[^1]) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random variate of the given rate.  Also, because `-ln(1 - X)`, where `X` is a uniform random variate between 0 and 1, is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random variate in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.   (More specifically, an exponential PSRN generally represents an exponentially-distributed random variate in a given interval.)
 
 Algorithms for sampling e-rands are given in the section "Algorithms for the Beta and Exponential Distributions".
 
@@ -186,7 +186,7 @@ PSRNs could also be implemented via rejection from the exponential distribution,
 An algorithm that samples from a non-discrete distribution using PSRNs has the following properties:
 
 1. The algorithm relies only on a source of independent and unbiased random bits for randomness.
-2. The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational or transcendental numbers. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations use arbitrary precision.)
+2. The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational or transcendental numbers. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations are rational numbers of arbitrary precision.)
 3. The algorithm may use rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby), as long as the arithmetic is exact.
 4. If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the position, starting from 1, of the rightmost sampled digit of the PSRN's fractional part.  ((Devroye and Gravel 2020\)[^3] suggests Wasserstein distance, or "earth-mover distance", as the distance to use for this purpose.) The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (for example, uniformly at random in the case of a uniform PSRN).
 5. If the algorithm fills a PSRN's unsampled fractional digits at random (for example, uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number's distribution must remain close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>.
@@ -245,8 +245,8 @@ The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) tha
 > **Notes:**
 >
 > 1. Karney (2014, end of sec. 4\)[^1] discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.
-> 2. The **RandUniform** algorithm is equivalent to generating the product of a random variate (**b**) and a uniform random variate in the interval [0, 1].
-> 3. If **b** is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the **RandUniform** algorithm is equivalent to generating the product of two uniform random variate in the interval [0, 1].
+> 2. The **RandUniform** algorithm is equivalent to generating the product of a random variate (**b**) and a uniform random variate between 0 and 1.
+> 3. If **b** is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the **RandUniform** algorithm is equivalent to generating the product of two uniform random variate between 0 and 1.
 
 The **RandUniformInRangePositive** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one nonnegative real number **bmin** and less than another positive real number **bmax** with probability 1.  This algorithm works whether **bmin** or **bmax** is known to be a rational number or not (for example, either number can be the result of an expression such as `exp(-2)` or `ln(20)`), but the algorithm notes how it can be more efficiently implemented if **bmin** or **bmax** is known to be a rational number.
 
@@ -403,7 +403,7 @@ The following algorithm (**UniformReciprocal**) generates 1/**a**, where **a** i
 4. Let _afp_ be **a**'s integer and fractional parts packed into an integer, as explained in the example.  (For example, if **a** represents the number 83.12344..., _afp_ is 8312344.)
 5. (Calculate lower and upper bounds of 1/**a**, disregarding **a**'s sign.)  Set _dcount_ to _digitcount_, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to (_ddc_/(_afp_+1)), then set _upper_ to (_ddc_/_afp_).
 6. Set _lowerdc_ to floor(_lower_\*_ddc_).  If _lowerdc_ is 0, add 1 to _dcount_, multiply _ddc_ by _base_, then repeat this step. (This step too is important for correctness.)
-7. (_rv_ represents a tight interval between the lower and upper bounds, and _rv2_ represents a uniform(0, 1) random variate to compare with the density function for the reciprocal.) Set _rv_ to a uniform random integer in the interval [_lowerdc_, floor(_upper_\*_ddc_)).  Set _rv2_ to a uniform random integer in the interval [0, _lowerdc_).
+7. (_rv_ represents a tight interval between the lower and upper bounds, and _rv2_ represents a uniform random variate between 0 and 1 to compare with the density function for the reciprocal.) Set _rv_ to a uniform random integer in the interval [_lowerdc_, floor(_upper_\*_ddc_)).  Set _rv2_ to a uniform random integer in the interval [0, _lowerdc_).
 8. (Get the bounds of the tight interval _rv_.) Set _rvlower_ to _rv_/_ddc_, then set _rvupper_ to (_rv_+1)/_ddc_.
 9. If _rvlower_ is greater than or equal to _lower_ and _rvupper_ is less than _upper_:
     1. Set _rvd_ to _lowerdc_/_ddc_, then set _rvlower2_ to _rv2_/_lowerdc_, then set _rvupper2_ to (_rv2_+1)/_lowerdc_. (_rvlower2_ and _rvupper2_ are bounds of the uniform(0, 1) variate.)
@@ -452,7 +452,7 @@ The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples addi
 
 **URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to an unbiased random bit.)
 
-> **Note**: To sample the **maximum** of two uniform random variate in the interval [0, 1], or the **square root** of a uniform random variate in the interval [0, 1]: (1) Generate two uniform PSRNs **a** and **b** each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run **RandLess** on **a** and **b** in that order.  If the call returns 0, return **a**; otherwise, return **b**.
+> **Note**: To sample the **maximum** of two uniform random variate between 0 and 1, or the **square root** of a uniform random variate between 0 and 1: (1) Generate two uniform PSRNs **a** and **b** each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run **RandLess** on **a** and **b** in that order.  If the call returns 0, return **a**; otherwise, return **b**.
 
 The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b** and returns 1 if **a** turns out to be less than **b** with probability 1, or 0 otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `ln(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
 
@@ -580,9 +580,9 @@ After step 2, if it somehow happens that digits beyond `p` in the PSRN's fractio
 <a id=kthsmallest></a>
 ### kthsmallest
 
-The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random variate in the interval \[0, 1\] out of 'n' of them (also known as the 'n'th _order statistic_), is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variate in this case is the `a`th smallest uniform random variate in the interval [0, 1] out of `a + b - 1` of them (Devroye 1986, p. 431\)[^24].
+The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random variate in the interval \[0, 1\] out of 'n' of them (also known as the 'n'th _order statistic_), is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variate in this case is the `a`th smallest uniform random variate between 0 and 1 out of `a + b - 1` of them (Devroye 1986, p. 431\)[^24].
 
-**kthsmallest**, however, doesn't simply generate 'n' 'bitcount'-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via PSRNs.    It uses the observation that (in the binary case) each uniform random variate in the interval [0, 1] is either less than half or greater than half with equal probability; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample "on the fly".  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.  I am not aware of any other article or paper (besides one by me) that describes the **kthsmallest** algorithm given here.
+**kthsmallest**, however, doesn't simply generate 'n' 'bitcount'-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via PSRNs.    It uses the observation that (in the binary case) each uniform random variate between 0 and 1 is either less than half or greater than half with equal probability; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample "on the fly".  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.  I am not aware of any other article or paper (besides one by me) that describes the **kthsmallest** algorithm given here.
 
 The algorithm is as follows:
 
@@ -640,7 +640,7 @@ All the building blocks are now in place to describe a _new_ algorithm to sample
     3. Create an input coin _geobag_ that returns the result of **SampleGeometricBag** using the given PSRN.  Create another input coin _geobagcomp_ that returns the result of **SampleGeometricBagComplement** using the given PSRN.
     4. Call the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the _geobag_ input coin and _x_/_y_ = _arest_/1, then call the same algorithm using the _geobagcomp_ input coin and _x_/_y_ = _brest_/1. If both calls return 1, return _bag_. Otherwise, go to substep 2.
 3. Create an positive-sign zero-integer-part uniform PSRN.  Create an input coin _geobag_ that returns the result of **SampleGeometricBag** using the given PSRN.  Create another input coin _geobagcomp_ that returns the result of **SampleGeometricBagComplement** using the given PSRN.
-4. Remove all digits from the PSRN's fractional part.  This will result in an "empty" uniform random variate in the interval [0, 1], _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
+4. Remove all digits from the PSRN's fractional part.  This will result in an "empty" uniform random variate between 0 and 1, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
 5. Call the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the _geobag_ input coin and _x_/_y_ = _a_ &minus; 1)/1 (thus returning with probability _U_<sup>a&minus;1</sup>).  If the result is 0, go to step 4.
 6. Call the same algorithm using the _geobagcomp_ input coin and _x_/_y_ = (_b_ &minus; 1)/1 (thus returning 1 with probability (1&minus;_U_)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that this step and the previous step don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
 7. _U_ was accepted, so return the result of **FillGeometricBag**.
@@ -672,10 +672,10 @@ The **ExpRandLess** algorithm is a special case of the general **RandLess** algo
 
 The **ExpRandFill** algorithm takes an e-rand and generates a number whose fractional part has `p` digits as follows:
 
-1. For each position _i_ in \[0, `p`), if the item at that position in the e-rand's fractional part is unsampled, call the **LogisticExp** algorithm (see "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html") with _z_=_&lambda;_ and _prec_ = = _i_ + 1, and set the item at position _i_ to the result (which will be either 0 or 1), increasing the fractional part's capacity as necessary. (Bit positions start at 0 where 0 is the most significant bit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8\)[^13].)
+1. For each position _i_ in \[0, `p`), if the item at that position in the e-rand's fractional part is unsampled, call the **LogisticExp** algorithm (see "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html") with _z_=_&lambda;_ and _prec_ = _i_ + 1, and set the item at position _i_ to the result (which will be either 0 or 1), increasing the fractional part's capacity as necessary. (Bit positions start at 0 where 0 is the most significant bit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8\)[^13].)
 2. Let `sign` be -1 if the e-rand's sign is negative, or 1 otherwise; let `ipart` be the e-rand's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + bag[0] * 2<sup>&minus;0&minus;1</sup> + bag[1] * 2<sup>&minus;1&minus;1</sup> + ... + bag[`p`&minus;1] * 2<sup>&minus;(`p`&minus;1)&minus;1</sup>).
 
-See the discussion in **FillGeometricBag** for advice on how to handle the case when if it somehow happens that bits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit) after step 2 of this algorithm.
+See the discussion in **FillGeometricBag** for advice on how to handle the case when it somehow happens that bits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit) after step 2 of this algorithm.
 
 Here is a third algorithm (called **ExpRand**) that generates a _uniform PSRN_, rather than an e-rand, that follows the exponential distribution.   In the algorithm, the rate _&lambda;_ is given as a rational number greater than 0.  The method is based on von Neumann's algorithm (von Neumann 1951\)[^9].
 
@@ -1553,7 +1553,7 @@ The following algorithm adapts the rejection algorithm from p. 472 in Devroye (1
 <a id=Sum_of_Uniform_Random_Variates></a>
 #### Sum of Uniform Random Variates
 
-The sum of _n_ uniform(0, 1) random variates has the following probability density function (PDF) (see [**MathWorld**](https://mathworld.wolfram.com/UniformSumDistribution.html)):
+The sum of _n_ uniform random variates between 0 and 1 has the following probability density function (PDF) (see [**MathWorld**](https://mathworld.wolfram.com/UniformSumDistribution.html)):
 
 $$f(x)=\left(\sum_{k=0}^n (-1)^k {n\choose k} (x-k)^{n-1} \text{sign}(x-k)\right)/(2(n-1)!),$$
 
@@ -1561,7 +1561,7 @@ where ${n\choose k}$ is a _binomial coefficient_, or the number of ways to choos
 
 This is a polynomial of degree _n_ &minus; 1.  For _n_ uniform numbers, the distribution can take on values that are 0 or greater and _n_ or less.
 
-This new algorithm samples the sum of uniform(0, 1) random variates and the ratio of two uniform(0, 1) random variates, with the help of PSRNs. It logically works as follows:
+This new algorithm samples the sum of uniform random variates between 0 and 1 and the ratio of two uniform random variates between 0 and 1, with the help of PSRNs. It logically works as follows:
 
 1. The distribution is divided into pieces that are each 1 unit long (thus, for example, if _n_ is 4, there will be four pieces).
 2. An integer in \[0, _n_\) is chosen uniformly at random, call it _i_, then the piece identified by _i_ is chosen.  There are [**many algorithms to choose an integer**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N) this way, but an algorithm that is "optimal" in terms of the number of bits it uses, as well as unbiased, should be chosen.
@@ -1734,7 +1734,7 @@ The ratio of two uniform random variates between 0 and 1 has the following proba
 
 The following algorithm generates the ratio of two uniform random variates.
 
-1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), we have a uniform(0, 1) random variate.  Create a positive-sign zero-integer-part uniform PSRN, then optionally fill the PSRN with uniform random digits as necessary to give the number's fractional part the desired number of digits (similarly to **FillGeometricBag**), then return the PSRN.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), we have a uniform random variate between 0 and 1.  Create a positive-sign zero-integer-part uniform PSRN, then optionally fill the PSRN with uniform random digits as necessary to give the number's fractional part the desired number of digits (similarly to **FillGeometricBag**), then return the PSRN.
 2. At this point, the result will be 1 or greater.  Set _intval_ to 1 and set _size_ to 1.
 3. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 4.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.  (This step chooses an interval beyond 1, taking advantage of the fact that the area under the PDF between 1 and 2 is 1/4, between 2 and 4 is 1/8, between 4 and 8 is 1/16, and so on, so that an appropriate interval is chosen with the correct probability.)
 4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
@@ -1789,7 +1789,7 @@ def ratio_of_uniform(bern):
 <a id=Reciprocal_of_Uniform_Random_Variate></a>
 #### Reciprocal of Uniform Random Variate
 
-The reciprocal of a uniform(0, 1) random variate has the probability density function&mdash;
+The reciprocal of a uniform random variate between 0 and 1 has the probability density function&mdash;
 
 - 1 / _x_<sup>2</sup> if _x_ > 1, and
 - 0 otherwise.
@@ -1805,7 +1805,7 @@ The following algorithm generates a PSRN of the form 1/_U_<sup>1/_x_</sup>, wher
 2. With probability (4<sup>_x_</sup>&minus;2<sup>_x_</sup>)/4<sup>_x_</sup>, go to step 3.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
 3. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
 4. Create _ret_, a uniform PSRN with a positive sign and an integer part of 0.
-5. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_, _c_ = _i_, and _k_ = _x_ + 1 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 3.
+5. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_, _c_ = _i_, and _k_ = _x_ + 1 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and satisfies 0 &le; _&lambda;_ &le; 1).  If the call returns 0, go to step 3.
 6. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
 This algorithm uses the skeleton described earlier in "Building an Arbitrary-Precision Sampler".  Here, the probabilities _A_, _B_,  and _C_ are as follows:
@@ -1872,11 +1872,11 @@ The following new algorithm generates a partially-sampled random number that fol
 
 1. Set _k_ to 0.
 2. (Choose a 1-unit-wide piece of the logistic density.) Run the **algorithm for (1+exp(_k_))/(1+exp(_k_+1))** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)").  If the call returns 0, add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
-3. (The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random variate, call it _f_.
+3. (The rest of the algorithm samples from the chosen piece.) Create a uniform PSRN with integer part 0 and a positive sign, call it _f_.
 4. (Steps 4 through 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.
-5. Call the **ExpMinus** algorithm with parameter _k_, then **sample from the number _f_** (for example, call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.
+5. Call the **ExpMinus** algorithm with parameter _k_, then call **SampleGeometricBag** on _f_.  If any of these calls returns 0, go to step 4.
 6. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to positive or negative with equal probability, then return _f_.
-7. Call the **ExpMinus** algorithm with parameter _k_, then **sample from the number _f_** (for example, call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
+7. Call the **ExpMinus** algorithm with parameter _k_, then call **SampleGeometricBag** on _f_.  If both calls return 1, go to step 3.  Otherwise, go to step 6.
 
 <a id=Cauchy_Distribution></a>
 #### Cauchy Distribution
@@ -1917,9 +1917,9 @@ The algorithm follows.
     - If _x_ is a rational number and a power of 2, this step can be implemented by generating blocks of _b_ unbiased random bits until a **non-zero** block of bits is generated this way, then setting _k_ to the number of **all-zero** blocks of bits generated this way.
     - If _x_ is a uniform PSRN, this step is implemented as follows: Run the first subalgorithm (later in this section) repeatedly until a run returns 0.  Set _k_ to the number of runs that returned 1 this way.
 2. (The rest of the algorithm samples the fractional part.) Create _f_, a uniform PSRN with a positive sign, an empty fractional part, and an integer part of 0.
-3. Create a _&mu;_ input coin that does the following: "**Sample from the number _f_** (for example, call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN), then run the **algorithm for ln(1+_y_/_z_)** (given in "Bernoulli Factory Algorithms") with _y_/_z_ = 1/1.  If both calls return 1, return 1.  Otherwise, return 0." (This simulates the probability _&lambda;_ = _f_\*ln(2).)   Then:
-    - If _x_ is a rational number, but not a power of 2, also create a _&nu;_ input coin that does the following: "**Sample from the number _f_**, then run the **algorithm for ln(1 + _y_/_z_)** with _y_/_z_ = (_x_&minus;2<sup>_b_</sup>)/2<sup>_b_</sup>.  If both calls return 1, return 1.  Otherwise, return 0."
-    - If _x_ is a uniform PSRN, also create a _&rho;_ input coin that does the following: "Return the result of the second subalgorithm (later in this section), given _x_ and _b_", and a _&nu;_ input coin that does the following: "**Sample from the number _f_**, then run the **algorithm for ln(1 + _&lambda;_)**, using the _&rho;_ input coin.  If both calls return 1, return 1.  Otherwise, return 0."
+3. Create a _&mu;_ input coin that does the following: "Call **SampleGeometricBag** on _f_, then run the **algorithm for ln(1+_y_/_z_)** (given in "Bernoulli Factory Algorithms") with _y_/_z_ = 1/1.  If both calls return 1, return 1.  Otherwise, return 0." (This simulates the probability _&lambda;_ = _f_\*ln(2).)   Then:
+    - If _x_ is a rational number, but not a power of 2, also create a _&nu;_ input coin that does the following: "Call **SampleGeometricBag** on _f_, then run the **algorithm for ln(1 + _y_/_z_)** with _y_/_z_ = (_x_&minus;2<sup>_b_</sup>)/2<sup>_b_</sup>.  If both calls return 1, return 1.  Otherwise, return 0."
+    - If _x_ is a uniform PSRN, also create a _&rho;_ input coin that does the following: "Return the result of the second subalgorithm (later in this section), given _x_ and _b_", and a _&nu;_ input coin that does the following: "Call **SampleGeometricBag** on _f_, then run the **algorithm for ln(1 + _&lambda;_)**, using the _&rho;_ input coin.  If both calls return 1, return 1.  Otherwise, return 0."
 4. Call the **ExpMinus** algorithm with parameter _&mu;_ (using the _&mu;_ input coin), _b_ times.  If a _&nu;_ input coin was created in step 3, run the same algorithm once, using the _&nu;_ input coin.  If all these calls return 1, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _f_.
 5. If _f_ was not accepted by the previous step, go to step 2.
 
@@ -1928,8 +1928,8 @@ The algorithm follows.
 The following generator for the **rate ln(2)** is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random variate. Unlike the similar algorithm of Ahrens and Dieter (1972)[^40], this one doesn't require a table of probability values.
 
 1. (Samples the integer part of the random variate.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set _k_ to the number of ones generated this way.
-2. (The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random variate, call it _f_.
-3. Create an input coin that does the following: "**Sample from the number _f_** (for example, call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN), then run the **algorithm for ln(1+_y_/_z_)** (given in "Bernoulli Factory Algorithms") with _y_/_z_ = 1/1.  If both calls return 1, return 1.  Otherwise, return 0." (This simulates the probability _&lambda;_ = _f_\*ln(2).)
+2. (The rest of the algorithm samples the fractional part.) Create _f_, a uniform PSRN with integer part 0 and a positive sign.
+3. Create an input coin that does the following: "Call **SampleGeometricBag** on _f_, then run the **algorithm for ln(1+_y_/_z_)** (given in "Bernoulli Factory Algorithms") with _y_/_z_ = 1/1.  If both calls return 1, return 1.  Otherwise, return 0." (This simulates the probability _&lambda;_ = _f_\*ln(2).)
 4. Run the **ExpMinus** algorithm with parameter _&lambda;_, using the input coin from the previous step.  If the call returns 1, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _f_.
 5. If _f_ was not accepted by the previous step, go to step 2.
 
@@ -2016,14 +2016,14 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 
 The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution ("truncated uniform Laplace"; Awan and Slavković (2019)[^50]) and returns it as a uniform PSRN.
 
-- The parameter _b_ is greater than 0, is less than 1, and can be a uniform PSRN.
+- The parameter _b_ is greater than 0 and less than 1.  Logically, this is implemented as a "coin" whose probability of returning 1 (showing heads) is not known by the algorithm.  An example of this "coin" is a uniform PSRN with an initially empty fractional part, where "flipping" this "coin" means running **SampleGeometricBag** on that PSRN.
 - The parameter _m_ is a rational number or a uniform PSRN.
 - The parameter _q_ is not used in this algorithm, and is treated as 0.
 
 -----
 
-1. **Sample from the number _b_** (for example, call **SampleGeometricBag** on _b_ if _b_ is implemented as a uniform PSRN) until the result is 0.  Set _g1_ to the number of times the result is 1 this way.
-2. **Sample from the number _b_** until the result is 0.  Set _g2_ to the number of times the result is 1 this way.
+1. Flip the coin for _b_ until the result is 0.  Set _g1_ to the number of times the result is 1 this way.
+2. Flip the coin for _b_ until the result is 0.  Set _g2_ to the number of times the result is 1 this way.
 3. Set _n_ to _g2_ &minus; _g1_.  Create _ret_, a uniform PSRN as follows: The sign part is positive if _n_ &ge; 0 and negative otherwise; the integer part is abs(_n_); the fractional part is empty.
 4. Add a uniform random variate in (&minus;1/2, 1/2) to _ret_.  If _ret_ stores base-2 fractional digits, this can be done as follows.  Set _u_ to an unbiased random bit, then:
     - If _n_ < 0 and _u_ is 1, subtract 1 from the integer part and append 1 to the fractional part.
@@ -2145,7 +2145,7 @@ For **SampleGeometricBag** with base 2, the bit complexity has two components.
 - giving each item an exponential random variate with _&lambda;_ = _w_, call it a key, and
 - choosing the item with the smallest key
 
-(see also (Efraimidis 2015\)[^54]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom `-ln(1-X)/w`, where `X` is a uniform random variate in the interval [0, 1], in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+(see also (Efraimidis 2015\)[^54]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom `-ln(1-X)/w`, where `X` is a uniform random variate between 0 and 1, in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -2430,7 +2430,7 @@ The algorithm follows.
 <a id=Ratio_of_Uniforms></a>
 ### Ratio of Uniforms
 
-The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique for sampling a distribution (Kinderman and Monahan 1977)[^59].  It involves transforming the distribution's probability density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)[^29], is less elegant than, say, the normal distribution sampler by Karney (2016)[^60], which doesn't require calculating logarithms or other transcendental functions.
+The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique for sampling a distribution (Kinderman and Monahan 1977)[^59].  It involves transforming the distribution's probability density function (PDF) into a compact shape.
 
 This algorithm works for every univariate (one-variable) distribution as long as&mdash;
 
@@ -2448,11 +2448,16 @@ The algorithm follows.
 4. Run an **InShape** function that determines whether the transformed PDF is covered by the current box. In principle, this is the case when _z_ &le; 0 everywhere in the box, where _u_ lies in \[_c1_/_S_, (_c1_+1)/_S_\], _v_ lies in \[_c2_/_S_, (_c2_+1)/_S_\], and _z_ is _v_<sup>2</sup>&minus;_PDF_(_u_/_v_).  **InShape** returns _YES_ if the box is fully inside the transformed PDF, _NO_ if the box is fully outside it, and _MAYBE_ in any other case, or if evaluating _z_ fails for a given box (for example, because ln(0) would be calculated or _v_ is 0).  See the next section for implementation notes.
 5. If **InShape** as described in step 4 returns _YES_, then do the following:
     1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way.  Then set _p1_'s integer part to floor(_c1_/_base_<sup>_d_</sup>) and _p2_'s integer part to floor(_c2_/_base_<sup>_d_</sup>). (For example, if _base_ is 10, _d_ is 3, and _c1_ is 7342, set _p1_'s fractional part to \[3, 4, 2\] and _p1_'s integer part to 7.)
-    2. Run the **UniformDivide** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order.
+    2. Run the **UniformDivide** algorithm on _p1_ and _p2_, in that order.
     3. If the transformed PDF is symmetric about the _v_-axis, set the resulting PSRN's sign to positive or negative with equal probability.  Otherwise, set the PSRN's sign to positive.
     4. Return the PSRN.
 6. If **InShape** as described in step 4 returns _NO_, then go to step 2.
 7. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
+
+This algorithm appears here in the appendix rather than in the main text, because:
+
+- Certain operations it uses can introduce numerical errors unless care is taken.  These operations can include calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)[^29], is less elegant than, say, the normal distribution sampler by Karney (2016)[^60], which doesn't require calculating logarithms or other transcendental functions.
+- This article is focused on algorithms that don't rely on calculations of irrational numbers.
 
 > **Note:** The ratio-of-uniforms shape is convex if and only if &minus;1/sqrt(_PDF_(_x_)) is a concave function (loosely speaking, its "slope" never increases) (Leydold 2000)[^61].
 >
@@ -2471,7 +2476,7 @@ Let _X_ be a random variate of the form `0.bbbbbbb...`, where each `b` is an ind
 
 Let _a_<sub>_j_</sub> be the probability that the digit at position _j_ equals 1 (starting with _j_ = 1 for the first digit after the point).
 
-Then Kakutani's theorem (Kakutani 1948\)[^62] says that _X_ has an _absolutely continuous_[^12] distribution if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the binary digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971\)[^63], (Chatterji 1964\)[^64].
+Then Kakutani's theorem (Kakutani 1948\)[^62] says that _X_ has an _absolutely continuous_[^12] distribution if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges (so that the binary digits become less and less biased as they move farther and farther from the binary point).  See also Marsaglia (1971\)[^63], Chatterji (1964\)[^64].
 
 This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2, and set _X_'s binary digits using those probabilities.  However, as Marsaglia (1971\)[^63] showed, the absolutely continuous distribution can only be one of the following:
 

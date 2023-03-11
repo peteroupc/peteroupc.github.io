@@ -1093,9 +1093,9 @@ In this document, the **LogisticExp** algorithm is a Bernoulli factory taking th
 3. As a sum of _n_ > 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if _z_ = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).
 
 The **LogisticExp** algorithm is as follows.  To flip a coin with probability of heads of 1/(1+exp(_z_/2<sup>_prec_</sup>)) = 1 &minus; expit(_&lambda;_/2<sup>_prec_</sup>):
-    - In case 1 the **1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>))**. Or...
-    - In case 2 the **algorithm for expit((_m_ + _&lambda;_)\*_&mu;_)** where _&lambda;_ represents the coin for _&nu;_, and _&mu;_ represents a coin that returns either 1 with probability 1/(2<sup>_prec_</sup>) or 0 otherwise.  However the algorithm returns 1 minus the usual result instead (leading to **1 &minus; expit((_m_ + _&lambda;_)\*_&mu;_)**).
-    - In case 3, use the **algorithm for 1 / 1 + exp(_z_ / 2<sup>_index_ + 1</sup>))** where _z_ is the _&lambda;_ parameter decomposed as a sum.
+    - In case 1, use the **algorithm 1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>))**. Or...
+    - In case 2, use the **algorithm for expit((_m_ + _&lambda;_)\*_&mu;_)** where _&lambda;_ represents the coin for _&nu;_, and _&mu;_ represents a coin that returns either 1 with probability 1/(2<sup>_prec_</sup>) or 0 otherwise.  However the algorithm returns 1 minus the usual result instead (leading to **1 &minus; expit((_m_ + _&lambda;_)\*_&mu;_)**).
+    - In case 3, use the **algorithm for 1 / (1 + exp(_z_ / 2<sup>_prec_</sup>))** where _z_ is the _&lambda;_ parameter decomposed as a sum.
 
 <a id=exp_minus___lambda></a>
 #### exp(&minus;_&lambda;_)
@@ -1969,20 +1969,24 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 <a id=1_1_exp__x___y__2_prec></a>
 #### 1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>))
 
-This is the probability that the bit at _prec_ (the _prec_<sup>th</sup> bit after the point) is set for an exponential random variate with rate _x_/_y_.  This algorithm is a special case of the **logistic Bernoulli factory**.
+This is the probability that the binary digit at _prec_ (the _prec_<sup>th</sup> binary digit after the point, where _prec_ is greater than 0) is set for an exponential random variate with rate _x_/_y_.  This algorithm is a special case of the **logistic Bernoulli factory**.
+
+In this algorithm, _x_&ge; 1, _y_&gt;1, _prec_&ge;0 are integers.
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-2. Call the **algorithm for exp(&minus; _x_/(_y_ * 2<sup>_prec_</sup>))**.  If the call returns 1, return 1.  Otherwise, go to step 1.
+2. Call the **algorithm for exp(&minus; _x_/_y_)** with  _x_ = _x_ and _y_ = _y_ * 2<sup>_prec_</sup>.  If the call returns 1, return 1.  Otherwise, go to step 1.
 
 <a id=1_1_exp__z__2_prec></a>
 #### 1 / (1 + exp(_z_ / 2<sup>_prec_</sup>))
 
 This is similar to the previous algorithm, except that _z_ can be any real number described in the **algorithm for exp(&minus;_z_)**.
 
+In this algorithm, _prec_&ge;0 is an integer.
+
 Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **exp(&minus;_z_)** algorithm.  The algorithm is then as follows.
 
 1. For each component _LC_\[_i_\], create an input coin that does the following: "(a) With probability 1/(2<sup>_prec_</sup>), return 1 if the input coin that simulates _LF_\[_i_\] returns 1; (b) Return 0".
-2. Return 0 with probability 1/2.
+2. Generate an unbiased random bit.  If that bit is 0 (which happens with probability 1/2), return 0.
 3. Call the **algorithm for exp(&minus; _x_/_y_)** with _x_ = _LI_\[1\] + _LI_\[2\] + ... + _LI_\[_n_\] and _y_ = 2<sup>_prec_</sup>.  If this call returns 0, go to step 2.
 4. For each component _LC_\[_i_\], call the **algorithm for exp(&minus;_&lambda;_)**, using the corresponding input coin for  _LC_\[_i_\] created in step 1. If any of these calls returns 0, go to step 2.  Otherwise, return 1.
 
