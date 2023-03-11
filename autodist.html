@@ -154,11 +154,19 @@ function codegenruby(fldr,name,offset) {
         ret += "    if x < leaves\n"
         if (fldr[2]<fldr[1]) {
           // No rejection leaf
-          ret += "        return (table[x + 1][y] - 1) + " + (offset||0) + "\n"
+          if (offset && offset!=0) {
+            ret += "        return (table[x + 1][y] - 1) + " + (offset||0) + "\n"
+            } else {
+            ret += "        return table[x + 1][y] - 1\n"
+            }
         } else {
           ret += "        label = table[x + 1][y]\n"
           ret += "        if label <= "+fldr[1]+"\n"
-          ret += "            return (label - 1) + " + (offset||0) + "\n"
+          if (offset && offset!=0) {
+             ret += "            return (label - 1) + " + (offset||0) + "\n"
+          } else {
+             ret += "            return label - 1\n"
+          }
           ret += "        end\n"
           ret += "        x = 0\n"
           ret += "        y = 0\n"
@@ -202,11 +210,19 @@ function codegen(fldr,name,offset) {
         ret += "    if(x < leaves){\n"
         if (fldr[2]<fldr[1]) {
           // No rejection leaf
-          ret += "        return (table[x + 1][y] - 1) + " + (offset||0) + "\n"
+          if (offset && offset!=0) {
+              ret += "        return (table[x + 1][y] - 1) + " + (offset||0) + "\n"
+          } else {
+              ret += "        return table[x + 1][y] - 1\n"
+          }
         } else {
           ret += "        let label = table[x + 1][y]\n"
           ret += "        if (label <= "+fldr[1]+") {\n"
-          ret += "            return (label - 1) + " + (offset||0) + "\n"
+          if (offset && offset!=0) {
+             ret += "            return (label - 1) + " + (offset||0) + "\n"
+          } else {
+             ret += "            return label - 1\n"
+          }
           ret += "        }\n"
           ret += "        x = 0\n"
           ret += "        y = 0\n"

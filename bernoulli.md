@@ -2041,8 +2041,6 @@ In fact, this algorithm takes advantage of a theorem related to the Forsythe met
 <a id=2_1_exp_2_or_1_exp_0_1_exp_1></a>
 #### 2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))
 
-This algorithm takes advantage of formula 2 mentioned in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_)))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_).
-
 1. Generate an **exponential** random variate _ex_, then set _k_ to 1.
 2. Set _u_ to point to the same value as _ex_.
 3. Generate a **uniform(0, 1)** random variate _v_.
@@ -2050,10 +2048,10 @@ This algorithm takes advantage of formula 2 mentioned in the section "[**Probabi
 5. If _stop_ is 1 and _k_ **is even**, return a number that is 0 if _ex_ is **less than 1**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
 6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 
+> **Note**: Derivation: Rewrite the probability as&mdash; $$1-\frac{ \int_0^1 (1-\exp(-\min(1,z)))\cdot \exp(-z) dz}{ \int_0^\infty (1-\exp(-\min(1,z)))\cdot \exp(-z) dz},$$ where $\min(1,z)$ = ECDF(_z_) is the probability that a uniform(0,1) random variate is $z$ or less, and $\exp(-z)$ = DPDF(_z_) is the exponential distribution's density function.  See Formula 2 in the section [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)".
+
 <a id=1_exp_1_1_exp_2></a>
 #### (1 + exp(1)) / (1 + exp(2))
-
-This algorithm takes advantage of the theorem mentioned in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, _z_)) * exp(&minus;_z_) _dz_).
 
 1. Generate an **exponential** random variate _ex_, then set _k_ to 1.
 2. Set _u_ to point to the same value as _ex_.
@@ -2061,6 +2059,8 @@ This algorithm takes advantage of the theorem mentioned in the section "[**Proba
 4. Set _stop_ to 1 if _u_ is less than _v_, and 0 otherwise.
 5. If _stop_ is 1 and _k_ **is odd**, return a number that is 0 if _ex_ is **less than 1/2**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
 6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
+
+> **Note**: Derivation: Rewrite the probability as&mdash; $$1-\frac{ \int_0^{1/2} \exp(-\min(1,z))\cdot \exp(-z) dz}{ \int_0^\infty \exp(-\min(1,z))\cdot \exp(-z) dz},$$ where $\min(1,z)$ = ECDF(_z_) is the probability that a uniform(0,1) random variate is $z$ or less, and $\exp(-z)$ = DPDF(_z_) is the exponential distribution's density function.  See Formula 1 in the section [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)".
 
 <a id=1_exp__k__1_exp__k__1></a>
 #### (1 + exp(_k_)) / (1 + exp(_k_ + 1))
@@ -2075,10 +2075,10 @@ The sub-algorithm referred to is the following (which simulates the probability 
 
 1. Generate an unbiased random bit.  If that bit is 1, simulate the probability 1/(1+exp(_k_+1)) as follows:  Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1, return 0.
-    2. Run the algorithm for **exp(&minus;_x_/_y_)** with _x_/_y_ = (_k_+1)/1.  If it returns 1, return 1.
+    2. Run the **ExpMinus** algorithm with parameter (_k_+1)/1.  If it returns 1, return 1.
 2. The bit is 0, so simulate the probability exp(_k_)/(1+exp(_k_+1)) as follows:  Do the following process repeatedly, until this algorithm returns a value:
-    1. Generate an unbiased random bit.  If that bit is 1, run the algorithm for **exp(&minus;_x_/_y_)** with _x_/_y_ = 1/1 and return the result.
-    2. Run the algorithm for **exp(&minus;_x_/_y_)** with _x_/_y_ = (_k_+1)/1.  If it returns 1, return 0.
+    1. Generate an unbiased random bit.  If that bit is 1, run the **ExpMinus** algorithm with parameter 1 and return the result.
+    2. Run the **ExpMinus** algorithm with parameter (_k_+1)/1.  If it returns 1, return 0.
 
 See "More Algorithms for Arbitrary-Precision Sampling" for another way to sample this probability.
 

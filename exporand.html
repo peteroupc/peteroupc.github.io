@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2023/03/10"><meta name="citation_online_date" content="2023/03/10"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2023/03/11"><meta name="citation_online_date" content="2023/03/11"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -297,7 +297,9 @@
 
 <h3>Relation to Constructive Reals</h3>
 
-<p>Partially-sampled random numbers are related to a body of work dealing with so-called &quot;constructive reals&quot; or &quot;recursive reals&quot;, or operations on real numbers that compute an approximation of the exact result to a user-specified number of digit places.  For example, in Hans-J. Boehm&#39;s implementation (Boehm 2020)[^16], (Boehm 1987)[^17], each operation on &quot;constructive reals&quot; (such as addition, multiplication, <code>exp</code>, <code>ln</code>, and so on) is associated with a function <code>f(n)</code> (where <code>n</code> is usually 0 or greater) that returns an integer <code>m</code> such that <code>abs(m/pow(2, n) - x) &lt; 1/pow(2, n)</code>, where <code>x</code> is the exact result of the operation.  As suggested in Goubault-Larrecq et al. (2021)[^18], there can also be an operation that samples the digits of a uniform random variate in [0, 1] and gives access to approximations of that variate, sampling random digits as necessary.  Similarly, operations of this kind can be defined to access approximations of the value stored in a PSRN (including a uniform or exponential PSRN), sampling digits for the PSRN as necessary.</p>
+<p>Partially-sampled random numbers are related to a body of work dealing with so-called &quot;constructive reals&quot; or &quot;recursive reals&quot;, or operations on real numbers that compute an approximation of the exact result to a user-specified number of digit places.  For example, in Hans-J. Boehm&#39;s implementation (Boehm 2020)[^16], (Boehm 1987)[^17], each operation on &quot;constructive reals&quot; (such as addition, multiplication, <code>exp</code>, <code>ln</code>, and so on) is associated with a function <code>f(n)</code> (where <code>n</code> is usually 0 or greater) that returns an integer <code>m</code> such that <code>abs(m/pow(2, n) - x) &lt; 1/pow(2, n)</code>, where <code>x</code> is the exact result of the operation.  In addition, comparisons such as &quot;less than&quot; or &quot;greater than&quot; can operate on &quot;constructive reals&quot;.  As suggested in Goubault-Larrecq et al. (2021)[^18], there can also be an operation that samples the digits of a uniform random variate between 0 and 1 and gives access to approximations of that variate, sampling random digits as necessary.  Similarly, operations of this kind can be defined to access approximations of the value stored in a PSRN (including a uniform or exponential PSRN), sampling digits for the PSRN as necessary.</p>
+
+<p>Details on &quot;constructive real&quot; operations and comparisons are outside the scope of this document.</p>
 
 <p><a id=Sampling_Uniform_and_Exponential_PSRNs></a></p>
 
@@ -419,16 +421,16 @@
 
 <h3>Sampling E-rands</h3>
 
-<p><strong>Sampling an e-rand</strong> (a exponential PSRN) makes use of two observations (based on the parameter <em>&lambda;</em> of the exponential distribution):</p>
+<p><strong>Sampling an e-rand</strong> (a exponential PSRN) makes use of two observations, based on the parameter <em>&lambda;</em> of the exponential distribution (with <em>&lambda;</em> greater than 0):</p>
 
 <ul>
 <li>While a coin flip with probability of heads of exp(&minus;<em>&lambda;</em>) is heads, the exponential random variate is increased by 1.</li>
 <li>If a coin flip with probability of heads of 1/(1+exp(<em>&lambda;</em>/2<sup><em>prec</em></sup>)) is heads, the exponential random variate is increased by 2<sup>&minus;<em>prec</em></sup>, where <em>prec</em> &gt; 0 is an integer.</li>
 </ul>
 
-<p>Devroye and Gravel (2020)[^3] already made these observations in section 3.8, but only for <em>&lambda;</em> = 1.</p>
+<p>Devroye and Gravel (2020, sec. 3.8)[^3] already made these observations, but only for <em>&lambda;</em> = 1.</p>
 
-<p>To implement these probabilities using just random bits, the sampler uses the <strong>ExpMinus</strong> and <strong>LogisticExp</strong> algorithms from &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, described as follows.</p>
+<p>To implement these probabilities using just random bits, the sampler uses the <strong>ExpMinus</strong> and <strong>LogisticExp</strong> algorithms from &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</p>
 
 <blockquote>
 <p><strong>Note:</strong> An exponential PSRN is an exponential random variate built up digit by digit, but an exponential random variate can also be stored in a <em>uniform PSRN</em> and generated by other algorithms.</p>
@@ -880,7 +882,7 @@
 
 <p>In the rest of this section, though, an e-rand&#39;s <em>&lambda;</em> parameter can be written as a rational number, as an integer and fractional part, or as a sum of components, as described in the section &quot;Sampling E-rands&quot;.</p>
 
-<p>To sample bit <em>k</em> after the binary point of an exponential random variate with rate <em>&lambda;</em> (where <em>k</em> = 1 means the first digit after the point, <em>k</em> = 2 means the second, etc.), call the <strong>LogisticExp</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>&lambda;</em>=<em>&lambda;</em> and <em>prec</em> = <em>k</em>.</p>
+<p>To sample bit <em>k</em> after the binary point of an exponential random variate with rate <em>&lambda;</em> (where <em>k</em> = 1 means the first digit after the point, <em>k</em> = 2 means the second, etc.), call the <strong>LogisticExp</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>z</em>=<em>&lambda;</em> and <em>prec</em> = <em>k</em>.</p>
 
 <p>The <strong>ExpRandLess</strong> algorithm is a special case of the general <strong>RandLess</strong> algorithm given earlier.  It compares two e-rands <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong>, or 0 otherwise. (Note that <strong>a</strong> and <strong>b</strong> are allowed to have different <em>&lambda;</em> parameters.)</p>
 
@@ -888,7 +890,7 @@
 <li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, call the <strong>ExpMinus</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>&lambda;</em>=<em>&lambda;</em>, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for <strong>b</strong>.</li>
 <li>Return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if <strong>a</strong>&#39;s integer part is greater than <strong>b</strong>&#39;s.</li>
 <li>Set <em>i</em> to 0.</li>
-<li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer bits, call the <strong>LogisticExp</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>&lambda;</em>=<em>&lambda;</em> and <em>prec</em> = <em>i</em> + 1, and append the result to that fractional part&#39;s binary expansion.  (For example, if the implementation stores the binary expansion as a packed integer and a size, the implementation can shift the packed integer by 1, add the result of the algorithm to that integer, then add 1 to the size.) Do the same for <strong>b</strong>.</li>
+<li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer bits, call the <strong>LogisticExp</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>z</em>=<em>&lambda;</em> and <em>prec</em> = <em>i</em> + 1, and append the result to that fractional part&#39;s binary expansion.  (For example, if the implementation stores the binary expansion as a packed integer and a size, the implementation can shift the packed integer by 1, add the result of the algorithm to that integer, then add 1 to the size.) Do the same for <strong>b</strong>.</li>
 <li>Return 1 if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or 0 if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
@@ -896,7 +898,7 @@
 <p>The <strong>ExpRandFill</strong> algorithm takes an e-rand and generates a number whose fractional part has <code>p</code> digits as follows:</p>
 
 <ol>
-<li>For each position <em>i</em> in [0, <code>p</code>), if the item at that position in the e-rand&#39;s fractional part is unsampled, call the <strong>LogisticExp</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>&lambda;</em>=<em>&lambda;</em> and <em>prec</em> = = <em>i</em> + 1, and set the item at position <em>i</em> to the result (which will be either 0 or 1), increasing the fractional part&#39;s capacity as necessary. (Bit positions start at 0 where 0 is the most significant bit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)[^13].)</li>
+<li>For each position <em>i</em> in [0, <code>p</code>), if the item at that position in the e-rand&#39;s fractional part is unsampled, call the <strong>LogisticExp</strong> algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html%22"><strong>Bernoulli Factory Algorithms</strong></a> with <em>z</em>=<em>&lambda;</em> and <em>prec</em> = = <em>i</em> + 1, and set the item at position <em>i</em> to the result (which will be either 0 or 1), increasing the fractional part&#39;s capacity as necessary. (Bit positions start at 0 where 0 is the most significant bit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)[^13].)</li>
 <li>Let <code>sign</code> be -1 if the e-rand&#39;s sign is negative, or 1 otherwise; let <code>ipart</code> be the e-rand&#39;s integer part; and let <code>bag</code> be the PSRN&#39;s fractional part.  Take the first <code>p</code> digits of <code>bag</code> and return <code>sign</code> * (<code>ipart</code> + bag[0] * 2<sup>&minus;0&minus;1</sup> + bag[1] * 2<sup>&minus;1&minus;1</sup> + ... + bag[<code>p</code>&minus;1] * 2<sup>&minus;(<code>p</code>&minus;1)&minus;1</sup>).</li>
 </ol>
 
@@ -1923,12 +1925,13 @@ def exprandscore(ln,ld,ln2,ld2):
 </ul></li>
 <li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
 <li>Create <em>ret</em>, a uniform PSRN with a positive sign and an integer part of 0.</li>
-<li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Run a Bernoulli factory algorithm that returns 1 with probability equal to  <em>C</em>(<em>i</em>, <em>&lambda;</em>), using the input coin (here, <em>&lambda;</em>, the heads probability of the input coin, is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 4.
+<li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Run a Bernoulli factory algorithm that returns 1 with probability equal to  <em>C</em>(<em>i</em>, <em>&lambda;</em>), using the input coin (here, <em>&lambda;</em>, the heads probability of the input coin, is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and satisfies 0 &le; <em>&lambda;</em> &le; 1). If the call returns 0, go to step 4.
 
 <ul>
 <li>The probability <em>C</em>(<em>i</em>, <em>&lambda;</em>) is calculated as <em>PDF</em>(<em>i</em> + <em>&lambda;</em>) / <em>M</em>, where <em>PDF</em> is the distribution&#39;s PDF or a function proportional to the PDF, and should be found analytically using a computer algebra system such as SymPy.</li>
 <li>In this formula, <em>M</em> is any convenient number that satisfies <em>PDF</em>(<em>intval</em>) &le; <em>M</em> &le; max(1, <em>PDF</em>(<em>intval</em>)), and should be as low as feasible. <em>M</em> serves to ensure that <em>C</em> is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of <em>M</em> can vary for each interval (each value of <em>intval</em>, which can only be 0, 1, or a power of 2).  Any such choice for <em>M</em> preserves the algorithm&#39;s correctness because the PDF has to be strictly decreasing and a new interval isn&#39;t chosen when <em>&lambda;</em> is rejected.</li>
 <li>The symbolic form of <em>C</em> will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.</li>
+<li>This step could be implemented as follows instead: &quot;Generate <em>z</em>, a uniform PSRN with a positive sign and an integer part of 0.  Determine whether <em>z</em> is greater than <em>C</em>(<em>i</em>, <em>ret</em>), using operations for &#39;constructive reals&#39; and treating <em>z</em> and <em>ret</em> as &#39;constructive reals&#39; whose fractional digits are sampled using <strong>SampleGeometricBag</strong> as necessary.  If <em>z</em> is greater, go to step 4.&quot; See &quot;<a href="#Relation_to_Constructive_Reals"><strong>Relation to Constructive Reals</strong></a>&quot;, earlier.  However, although this change is also correct, the use of &quot;constructive reals&quot; (or &quot;recursive reals&quot;) here is not preferred when a Bernoulli factory is available to implement this step.</li>
 </ul></li>
 <li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
 </ol>
@@ -3140,7 +3143,7 @@ def contbernoullidist(b, lamda, precision=53):
 <ol>
 <li>Set <em>pdfmax</em> to an upper bound of the PDF (or the PDF times a possibly unknown constant factor) on the domain at [0, 1].  Let <em>base</em> be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).</li>
 <li>Set <em>prefix</em> to 0 and <em>prefixLength</em> to 0.</li>
-<li>Set <em>y</em> to a uniform random variate in the interval [0, <em>pdfmax</em>].</li>
+<li>Set <em>y</em> to a uniform random variate that satisfies 0 &le; <em>y</em> &le; <em>pdfmax</em>.</li>
 <li>Let <em>pw</em> be <em>base</em><sup>&minus;<em>prefixLength</em></sup>.  Set <em>lower</em> and <em>upper</em> to a lower or upper bound, respectively, of the value of the PDF (or the PDF times a possibly unknown constant factor) on the domain at [<em>prefix</em> * <em>pw</em>, <em>prefix</em> * <em>pw</em> + <em>pw</em>].</li>
 <li>If <em>y</em> turns out to be greater than <em>upper</em>, the prefix was rejected, so go to step 2.</li>
 <li>If <em>y</em> turns out to be less than <em>lower</em>, the prefix was accepted.  Now do the following:
@@ -3152,7 +3155,14 @@ def contbernoullidist(b, lamda, precision=53):
 <li>Set <em>prefix</em> to <em>prefix</em> * <em>base</em> + <em>r</em>, where <em>r</em> is a uniform random digit, then add 1 to <em>prefixLength</em>, then go to step 4.</li>
 </ol>
 
-<p>Because this algorithm requires evaluating the PDF (or a constant times the PDF) and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.  Moreover, there is additional approximation error from generating <em>y</em> with a fixed number of digits, unless <em>y</em> is a uniform PSRN (see also &quot;<a href="#Application_to_Weighted_Reservoir_Sampling"><strong>Application to Weighted Reservoir Sampling</strong></a>&quot;).  For practical purposes, the lower and upper bounds calculated in step 4 should depend on <em>prefixLength</em> (the higher <em>prefixLength</em> is, the more accurate).</p>
+<p>This algorithm appears here in the appendix rather than in the main text, because:</p>
+
+<ul>
+<li>Certain operations it uses can introduce numerical errors unless care is taken.  These operations include evaluating the PDF (or a constant times the PDF) and finding its maximum and minimum values at an interval.</li>
+<li>This article is focused on algorithms that don&#39;t rely on calculations of irrational numbers.</li>
+</ul>
+
+<p>Moreover, there is additional approximation error from generating <em>y</em> with a fixed number of digits, unless <em>y</em> is a uniform PSRN (see also &quot;<a href="#Application_to_Weighted_Reservoir_Sampling"><strong>Application to Weighted Reservoir Sampling</strong></a>&quot;).  For practical purposes, the lower and upper bounds calculated in step 4 should depend on <em>prefixLength</em> (the higher <em>prefixLength</em> is, the more accurate).</p>
 
 <p>Oberhoff also describes <em>prefix distributions</em> that sample a box that covers the PDF, with probability proportional to the box&#39;s area, but these distributions will have to support a fixed maximum prefix length and so will only approximate the underlying distribution.</p>
 
