@@ -93,7 +93,6 @@
 <ul>
 <li><a href="#ExpMinus_exp_minus__z"><strong>ExpMinus (exp(&minus;<em>z</em>))</strong></a></li>
 <li><a href="#LogisticExp_1_minus_expit__z__2_prec"><strong>LogisticExp (1 &minus; expit(<em>z</em>/2<sup><em>prec</em></sup>))</strong></a></li>
-<li><a href="#exp_minus___lambda___k___c"><strong>exp(&minus;( <em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong></a></li>
 <li><a href="#exp_minus___lambda____z"><strong>exp(&minus;(<em>&lambda;</em> * <em>z</em>))</strong></a></li>
 <li><a href="#exp_minus__m____lambda____k"><strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)<sup><em>k</em></sup>)</strong></a></li>
 <li><a href="#exp___lambda___1_minus___lambda"><strong>exp(<em>&lambda;</em>)*(1&minus;<em>&lambda;</em>)</strong></a></li>
@@ -1711,43 +1710,8 @@
 <p>The <strong>LogisticExp</strong> algorithm is as follows.  To flip a coin with probability of heads of 1/(1+exp(<em>z</em>/2<sup><em>prec</em></sup>)) = 1 &minus; expit(<em>&lambda;</em>/2<sup><em>prec</em></sup>):</p>
 
 <ul>
-<li>Run the <strong>algorithm for expit(<em>&lambda;</em>*<em>z</em>)</strong> where <em>z</em> = <em>z</em>, and where <em>&lambda;</em> represents a coin that returns either 1 with probability 1/(2<sup><em>prec</em></sup>) or 0 otherwise.  Return 1 minus the result of that run (leading to <strong>1 &minus; expit((<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong>).</li>
+<li>Run the <strong>algorithm for expit(<em>&lambda;</em>*<em>z</em>)</strong> where <em>z</em> = <em>z</em>, and where <em>&lambda;</em> represents a coin that returns either 1 with probability 1/(2<sup><em>prec</em></sup>) or 0 otherwise.  Return 1 minus the result of that run (leading to <strong>1 &minus; expit(<em>&lambda;</em>*<em>z</em>)</strong>).</li>
 </ul>
-
-<p><a id=exp_minus___lambda___k___c></a></p>
-
-<h4>exp(&minus;( <em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</h4>
-
-<p>In the algorithms in this section, <em>k</em> is an integer 0 or greater, and <em>c</em> &ge; 0 is a real number.</p>
-
-<p><strong>Algorithm 1.</strong> Works when <strong><em>c</em> is 0 or greater</strong>.  (See also algorithm for exp(&minus;((1&minus;<em>&lambda;</em>)<sup>1</sup> * <em>c</em>)) in &quot;Other Factory Functions&quot;.)</p>
-
-<ol>
-<li>Special case: If <em>c</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>ExpMinus</strong> algorithm with parameter <em>c</em>, and return the result.</li>
-<li>Generate <em>N</em>, a Poisson random variate with mean <em>c</em>.</li>
-<li>Set <em>i</em> to 0, then while <em>i</em> &lt; <em>N</em>:
-
-<ol>
-<li>Flip the input coin until the flip returns 0 or the coin is flipped <em>k</em> times, whichever comes first.  Return 0 if <em>k</em> is 0 or all of the coin flips (including the last) return 1.</li>
-<li>Add 1 to <em>i</em>.</li>
-</ol></li>
-<li>Return 1.</li>
-</ol>
-
-<p><strong>Algorithm 2.</strong>  The target function can be rewritten as a power series expansion.  However, the following algorithm works only when <strong><em>c</em> is a rational number 0 or greater, but not greater than 1</strong>.</p>
-
-<ol>
-<li>Special cases: If <em>c</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>ExpMinus</strong> algorithm with parameter <em>c</em>, and return the result.</li>
-<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda) = \lambda^k$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)</li>
-</ol>
-
-<p><strong>Algorithm 3.</strong> Builds on Algorithm 2 and works when <strong><em>c</em> is a rational number 0 or greater</strong>.</p>
-
-<ol>
-<li>Let <em>m</em> be floor(<em>c</em>).  Call the second algorithm <em>m</em> times with <em>k</em> = <em>k</em> and <em>c</em> = 1.  If any of these calls returns 0, return 0.</li>
-<li>If <em>c</em> is an integer (that is, if floor(<em>c</em>) = <em>c</em>), return 1.</li>
-<li>Call the second algorithm once, with <em>k</em> = <em>k</em> and <em>c</em> = <em>c</em> &minus; floor(<em>c</em>).  Return the result of this call.</li>
-</ol>
 
 <p><a id=exp_minus___lambda____z></a></p>
 
@@ -1763,7 +1727,13 @@
 <p>The algorithm follows.</p>
 
 <ul>
-<li>In case 1 (<em>z</em> = <em>x</em>/<em>y</em>), run algorithm 3 for <strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup>*<em>c</em>))</strong>, with <em>c</em> = <em>x</em>/<em>y</em>, <em>k</em> = 1, and <em>&lambda;</em> being the <em>&lambda;</em> input coin.</li>
+<li>In case 1 (<em>z</em> = <em>x</em>/<em>y</em>) (see also algorithm for exp(&minus;((1&minus;<em>&lambda;</em>)<sup>1</sup> * <em>c</em>)) in &quot;Other Factory Functions&quot;):
+
+<ol>
+<li>Special case: If <em>x</em> is 0, return 1.</li>
+<li>Generate <em>N</em>, a Poisson random variate with mean <em>x</em>/<em>y</em>.  (See &quot;<a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson Distribution</strong></a> for one way to do this.)</li>
+<li>Flip the <em>&lambda;</em> input coin until a flip returns 1 or the coin is flipped <em>N</em> times, whichever comes first.  Return 0 if <em>N</em> is greater than 0 and any of the flips, including the last, returns 1.  Otherwise, return 1.</li>
+</ol></li>
 <li>In case 2 (<em>z</em> = <em>m</em> + <em>&nu;</em>):
 
 <ol>
@@ -1785,6 +1755,8 @@
 
 <ol>
 <li>The following is a proof of case 2 of this algorithm.  First, suppose $\lambda = 1$.  Each iteration of the loop in the algorithm returns 0 if a Poisson random variate with mean $t$ (see second substep of step 1) is other than 0, where $t$ is $\nu$ in the last iteration, or 1 otherwise. Since the Poisson variate is 0 with probability $\exp(-t)$, the iteration will terminate the algorithm with probability $1-\exp(-t)$ and &quot;succeed&quot; with probability $\exp(-t)$.  If all the iterations &quot;succeed&quot;, the algorithm will return 1, which will happen with probability $\exp(-\nu) \cdot (\exp(-1))^m = \exp(-(m+\nu))$.  Now suppose 0 &le; $\lambda$ &lt; 1.  Then (due to the third substep of step 1) the Poisson variate just mentioned has mean $t\lambda$ rather than $t$, so that each iteration succeeds with probability $1-\exp(-t\lambda)$ and the final algorithm returns 1 with probability $\exp(-\nu\lambda) \cdot (\exp(-\lambda))^m = \exp(-(m+\nu)\lambda)$.</li>
+<li>When <em>z</em> is a rational number with 0 &le; <em>z</em> &le; 1, this function can be rewritten as a power series expansion.  In that case, one way to simulate the function is to run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda) = \lambda$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i z^i}{i!}$, and return the result of that algorithm.</li>
+<li>When <em>z</em> is a rational number 0 or greater, this function can be simulated as follows: Let <em>m</em> be floor(<em>c</em>).  Call the algorithm in note 2 <em>m</em> times with <em>z</em> = 1.  If any of these calls returns 0, return 0. Otherwise, if <em>z</em> is an integer (that is, if floor(<em>z</em>) = <em>z</em>), return 1.  Otherwise, call the algorithm in note 2 once, with <em>z</em> = <em>z</em> &minus; floor(<em>z</em>).  Return the result of this call.</li>
 <li>When <em>m</em> = 0 and <em>&mu;</em> = 1, this function in case 2 becomes exp(&minus;<em>&lambda;</em>) and can be rewritten as a power series expansion.  In that case, one way to simulate the function is to use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^54]</li>
 </ol>
 </blockquote>
@@ -1799,13 +1771,13 @@
 <li>If <em>k</em> is 0, run the <strong>ExpMinus</strong> algorithm with parameter 1, and return the result.</li>
 <li>If <em>k</em> is 1, run the <strong>ExpMinus</strong> algorithm with parameter <em>m</em> + <em>&lambda;</em>, and return the result.</li>
 <li>Run the <strong>ExpMinus</strong> algorithm with parameter <em>m</em><sup><em>k</em></sup>.  If the algorithm returns 0, return 0.</li>
-<li>Run the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong>, with <em>k</em> = <em>k</em> and <em>c</em> = 1.  If the algorithm returns 0, return 0.</li>
+<li>Run the <strong>ExpMinus</strong> algorithm with parameter 0 + <em>&mu;</em>, where <em>&mu;</em> represents an input coin that does: &quot;Flip the input coin <em>k</em> times and return either 1 if all the flips return 1, or 0 otherwise&quot;. If the algorithm returns 0, return 0.</li>
 <li>If <em>m</em> is 0, return 1.</li>
 <li>Set <em>i</em> to 1, then while <em>i</em> &lt; <em>k</em>:
 
 <ol>
-<li>Set <em>z</em> to choose(<em>k</em>, <em>i</em>) * <em>m</em><sup><em>k</em> &minus; <em>i</em></sup>.</li>
-<li>Run the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong> <em>z</em> times, with <em>k</em> = <em>i</em> and <em>c</em> = 1.  If any of these calls returns 0, return 0.</li>
+<li>Set <em>w</em> to choose(<em>k</em>, <em>i</em>) * <em>m</em><sup><em>k</em> &minus; <em>i</em></sup>.</li>
+<li>Run the <strong>ExpMinus</strong> algorithm, <em>w</em> times, with parameter 0 + <em>&mu;</em>, where <em>&mu;</em> represents an input coin that does: &quot;Flip the input coin <em>i</em> times and return either 1 if all the flips return 1, or 0 otherwise&quot;.  If any of these calls returns 0, return 0.</li>
 <li>Add 1 to <em>i</em>.</li>
 </ol></li>
 <li>Return 1.</li>
@@ -1832,7 +1804,7 @@
 <p>In this algorithm, <em>m</em> + <em>&lambda;</em> must be greater than 0.</p>
 
 <ol>
-<li>Run the algorithm for <strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)<sup><em>k</em></sup>)</strong> with <em>k</em>=1.  If it returns 1, return 0.</li>
+<li>Run the <strong>ExpMinus</strong> algorithm with parameter <em>z</em> = <em>m</em> + <em>&lambda;</em>.  If it returns 1, return 0.</li>
 <li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1 and <em>c</em>=<em>m</em>, and return the result of that algorithm.</li>
 </ol>
 
@@ -2686,7 +2658,7 @@
 </tr>
 <tr>
 <td>exp(&minus;((1&minus;<em>&lambda;</em>)<sup>1</sup> * <em>c</em>))</td>
-<td>((Dughmi et al. 2021)[^44]; applies an exponential weight&mdash;here, <em>c</em>&mdash;to an input coin)<br>(1) If <em>c</em> is 0, return 1.<br>(2) Generate <em>N</em>, a Poisson random variate with mean <em>c</em>.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped <em>N</em> times, whichever comes first, then return a number that is 1 if <em>N</em> is 0 or all of the coin flips (including the last) return 1, or 0 otherwise.</td>
+<td>((Dughmi et al. 2021)[^44]; applies an exponential weight&mdash;here, <em>c</em>&mdash;to an input coin.  <em>&lambda;</em> is unknown heads probability of a coin.)<br>(1) If <em>c</em> is 0, return 1.<br>(2) Generate <em>N</em>, a Poisson random variate with mean <em>c</em>.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped <em>N</em> times, whichever comes first, then return a number that is 1 if <em>N</em> is 0 or all of the coin flips (including the last) return 1, or 0 otherwise.</td>
 </tr>
 <tr>
 <td>exp(<em>&lambda;</em><sup>2</sup>) &minus; <em>&lambda;</em>*exp(<em>&lambda;</em><sup>2</sup>)</td>
