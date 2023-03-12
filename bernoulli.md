@@ -61,9 +61,8 @@ Comments on other aspects of this document are welcome.
         - [**Flajolet's Probability Simulation Schemes**](#Flajolet_s_Probability_Simulation_Schemes)
         - [**Integrals**](#Integrals)
     - [**Algorithms for Specific Functions of _&lambda;_**](#Algorithms_for_Specific_Functions_of___lambda)
-        - [**ExpMinus (exp(&minus;_z))**](#ExpMinus_exp_minus__z)
+        - [**ExpMinus (exp(&minus;_z_))**](#ExpMinus_exp_minus__z)
         - [**LogisticExp (1 &minus; expit(_z_/2<sup>_prec_</sup>))**](#LogisticExp_1_minus_expit__z__2_prec)
-        - [**exp(&minus;_&lambda;_)**](#exp_minus___lambda)
         - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**](#exp_minus___lambda___k___c)
         - [**exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)**](#exp_minus__m____lambda_____mu)
         - [**exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)**](#exp_minus__m____lambda____k)
@@ -80,10 +79,10 @@ Comments on other aspects of this document are welcome.
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
         - [**1/(2 &minus; _&lambda;_)**](#1_2_minus___lambda)
         - [**1/(1+(_m_+_&lambda;_)<sup>2</sup>)**](#1_1__m____lambda___2)
-        - [**expit(_m_ + _&lambda;_) or 1&minus;1/(1+exp(_m_ + _&lambda;_)) or exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_)) or 1/(1+exp(&minus;(_m_ + _&lambda;_)))**](#expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda___or_1_1_exp_minus__m____lambda)
+        - [**expit(_z_) or 1&minus;1/(1+exp(_z_)) or exp(_z_)/(1+exp(_z_)) or 1/(1+exp(&minus;_z_))**](#expit__z__or_1_minus_1_1_exp__z__or_exp__z__1_exp__z__or_1_1_exp_minus__z)
         - [**expit((_m_ + _&lambda;_)\*_&mu;_)**](#expit__m____lambda_____mu)
-        - [**expit(_m_ + _&lambda;_)\*2 &minus; 1 or tanh((_m_ + _&lambda;_)/2)**](#expit__m____lambda___2_minus_1_or_tanh__m____lambda___2)
-        - [**_&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_m_ + _&nu;_) / (1 + _&lambda;_\*(exp(_m_ + _&nu;_) &minus; 1))**](#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda___or___lambda___exp__m____nu___1___lambda___exp__m____nu___minus_1)
+        - [**expit(_z_)\*2 &minus; 1 or tanh(_z_/2)**](#expit__z__2_minus_1_or_tanh__z__2)
+        - [**_&lambda;_\*exp(_z_) / (_&lambda;_\*exp(_z_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_z_) / (1 + _&lambda;_\*(exp(_z_) &minus; 1))**](#lambda___exp__z____lambda___exp__z__1_minus___lambda___or___lambda___exp__z__1___lambda___exp__z__minus_1)
         - [**1 / (1 + (_x_/_y_)\*_&lambda;_)**](#1_1__x___y____lambda)
         - [**_&lambda;_<sup>_x_/_y_</sup>**](#lambda___x___y)
         - [**_&lambda;_<sup>_&mu;_</sup>**](#lambda____mu)
@@ -96,7 +95,7 @@ Comments on other aspects of this document are welcome.
         - [**ln(1+_&lambda;_)**](#ln_1___lambda)
         - [**ln(_c_+_&lambda;_)/(_c_+_&lambda;_)**](#ln__c____lambda____c____lambda)
         - [**arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1**](#arcsin___lambda___sqrt_1_minus___lambda__2_minus_1)
-        - [**tanh(_m_ + _&lambda;_)**](#tanh__m____lambda)
+        - [**tanh(_z_)**](#tanh__z)
         - [**Expressions Involving Polylogarithms**](#Expressions_Involving_Polylogarithms)
         - [**min(_&lambda;_, 1/2) and min(_&lambda;_, 1&minus;_&lambda;_)**](#min___lambda___1_2_and_min___lambda___1_minus___lambda)
     - [**Algorithms for Specific Functions of _&lambda;_ (Probability-Sensitive)**](#Algorithms_for_Specific_Functions_of___lambda___Probability_Sensitive)
@@ -127,9 +126,7 @@ Comments on other aspects of this document are welcome.
         - [**1 / _&pi;_**](#1___pi)
         - [**(_a_/_b_)<sup>_x_/_y_</sup>**](#a___b___x___y)
         - [**exp(&minus;_x_/_y_)**](#exp_minus__x___y)
-        - [**exp(&minus;_z_)**](#exp_minus__z)
         - [**(_a_/_b_)<sup>_z_</sup>**](#a___b___z)
-        - [**1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>))**](#1_1_exp__x___y__2_prec)
         - [**1 / (1 + exp(_z_ / 2<sup>_prec_</sup>))**](#1_1_exp__z__2_prec)
         - [**1/(exp(1) + _c_ &minus; 2)**](#1_exp_1__c__minus_2)
         - [**exp(1) &minus; 2**](#exp_1_minus_2)
@@ -1070,39 +1067,39 @@ This section and the next one describe algorithms for specific functions, especi
 - Other factory functions.
 
 <a id=ExpMinus_exp_minus__z></a>
-#### ExpMinus (exp(&minus;_z))
+#### ExpMinus (exp(&minus;_z_))
 
 In this document, the **ExpMinus** algorithm is a Bernoulli factory taking a parameter _z_.  The parameter _z_ can be written in any of the following ways:
 
 1. As a rational number, namely _x_/_y_ where _x_&ge;0 and _y_>0 are integers.
 2. As an integer and fractional part, namely _m_ + _&nu;_ where _m_ &ge; 0 is an integer and _&nu;_ (0 &le; _&nu;_ &le; 1) is the probability of heads of a coin.  (Specifically, the "coin" must implement a Bernoulli factory algorithm that returns 1 \[or outputs heads\] with probability equal to the fractional part _&nu;_.[^52])
-3. As a sum of _n_ > 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if _z_ = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).
+3. As a sum of _n_ > 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if _z_ = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).  (This case makes use of the identity exp(&minus;(_b_+_c_)) = exp(&minus;_b_) \* exp(&minus;_c_).  Here, &pi;/4 has a not-so-trivial Bernoulli factory algorithm described in this article.)
 
 The **ExpMinus** algorithm is as follows.  To flip a coin with probability of heads of exp(&minus;_z_):
     - In case 1, use the **algorithm for exp(&minus;_x_/_y_)**.
     - In case 2, use the **algorithm for exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)** where _&lambda;_ represents the coin for _&nu;_, and _&mu;_ represents a coin that always returns 1.
-    - In case 3, use the **algorithm for exp(&minus;_z_)** in "Algorithms for Specific Constants" where _z_ is the _z_ parameter decomposed as a sum.
+    - In case 3, rewrite the _z_ parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of the **ExpMinus** algorithm with that component as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.  (See also (Canonne et al. 2020\)[^53].)
+
+> **Examples:** The **ExpMinus** algorithm with the following parameters can be implemented as follows:
+
+> - Parameter _&pi;_:  Run the **algorithm for exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)**, four times, where _m_ = 0, _&lambda;_ is a Bernoulli factory for (_&pi;_/4), and _&mu;_ represents a coin that always returns 1.  If any of these runs returns 0, return 0; otherwise, return 1.
+> - Parameter 3: Run the **algorithm for exp(&minus;_x_/_y_)** where _x_=3 and _y_=1.
+> - Parameter 7/5: Run the **algorithm for exp(&minus;_x_/_y_)** where _x_=7 and _y_=5.
+>
+> **Note:** exp(&minus;_z_) = exp(1&minus;_z_)/exp(1).
 
 <a id=LogisticExp_1_minus_expit__z__2_prec></a>
 #### LogisticExp (1 &minus; expit(_z_/2<sup>_prec_</sup>))
 
-In this document, the **LogisticExp** algorithm is a Bernoulli factory taking the parameters _z_ and _prec_, in that order.  The parameter _prec_ is an integer 0 or greater, and the parameter _z_ can be written in any of the following ways:
+In this document, the **LogisticExp** algorithm is a Bernoulli factory taking the following parameters in this order:
 
-1. As a rational number, namely _x_/_y_ where _x_&ge;0 and _y_>0 are integers.
-2. As an integer and fractional part, namely _m_ + _&nu;_ where _m_ &ge; 0 is an integer and _&nu;_ (0 &le; _&nu;_ &le; 1) is the probability of heads of a coin.  (Specifically, the "coin" must implement a Bernoulli factory algorithm that returns 1 \[or outputs heads\] with probability equal to the fractional part _&nu;_.[^52])
-3. As a sum of _n_ > 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if _z_ = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).
+1. _z_ can be written as a rational number, as an integer and fractional part, or as a sum of components, as described in the "ExpMinus" section.
+2. _prec_ is an integer 0 or greater.
 
 The **LogisticExp** algorithm is as follows.  To flip a coin with probability of heads of 1/(1+exp(_z_/2<sup>_prec_</sup>)) = 1 &minus; expit(_&lambda;_/2<sup>_prec_</sup>):
-    - In case 1, use the **algorithm 1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>))**. Or...
-    - In case 2, use the **algorithm for expit((_m_ + _&lambda;_)\*_&mu;_)** where _&lambda;_ represents the coin for _&nu;_, and _&mu;_ represents a coin that returns either 1 with probability 1/(2<sup>_prec_</sup>) or 0 otherwise.  However the algorithm returns 1 minus the usual result instead (leading to **1 &minus; expit((_m_ + _&lambda;_)\*_&mu;_)**).
+    - In case 1, run the **algorithm for expit(_z_)** with parameter _z_ = x_/(_y_\*2<sup>_prec_</sup>), then return 1 minus the result of that run. Or...
+    - In case 2, run the **algorithm for expit((_m_ + _&lambda;_)\*_&mu;_)** where _&lambda;_ represents the coin for _&nu;_, and _&mu;_ represents a coin that returns either 1 with probability 1/(2<sup>_prec_</sup>) or 0 otherwise.  Return 1 minus the result of that run (leading to **1 &minus; expit((_m_ + _&lambda;_)\*_&mu;_)**).
     - In case 3, use the **algorithm for 1 / (1 + exp(_z_ / 2<sup>_prec_</sup>))** where _z_ is the _&lambda;_ parameter decomposed as a sum.
-
-<a id=exp_minus___lambda></a>
-#### exp(&minus;_&lambda;_)
-
-This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^53]
-
-> **Note:** exp(&minus;_&lambda;_) = exp(1&minus;_&lambda;_)/exp(1).
 
 <a id=exp_minus___lambda___k___c></a>
 #### exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))
@@ -1111,7 +1108,7 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 
 
 **Algorithm 1.** Works when **_c_ is 0 or greater**.  (See also algorithm for exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_)) in "Other Factory Functions".)
 
-1. Special case: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_z_)** (given later in this page) with _z_ = _c_, and return the result.
+1. Special case: If _c_ is 0, return 1.  If _k_ is 0, run the **ExpMinus** algorithm with parameter _c_, and return the result.
 2. Generate _N_, a Poisson random variate with mean _c_.
 3. Set _i_ to 0, then while _i_ < _N_:
     1. Flip the input coin until the flip returns 0 or the coin is flipped _k_ times, whichever comes first.  Return 0 if _k_ is 0 or all of the coin flips (including the last) return 1.
@@ -1120,7 +1117,7 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 
 
 **Algorithm 2.**  The target function can be rewritten as a power series expansion.  However, the following algorithm works only when **_c_ is a rational number 0 or greater, but not greater than 1**.
 
-1. Special cases: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _c_, and return the result.
+1. Special cases: If _c_ is 0, return 1.  If _k_ is 0, run the **ExpMinus** algorithm with parameter _c_, and return the result.
 2. Run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda) = \lambda^k$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)
 
 **Algorithm 3.** Builds on Algorithm 2 and works when **_c_ is a rational number 0 or greater**.
@@ -1141,23 +1138,26 @@ In the following algorithm, _m_ is an integer 0 or greater, and _&lambda;_ and _
     4. Add 1 to _j_.
 2. Return 1.
 
-> **Note:** The following is a proof of this algorithm.  First, suppose $\mu = 1$.  Each iteration of the loop in the algorithm returns 0 if a Poisson random variate with mean $t$ (see second substep of step 1) is other than 0, where $t$ is $\lambda$ in the last iteration, or 1 otherwise. Since the Poisson variate is 0 with probability $\exp(-t)$, the iteration will terminate the algorithm with probability $1-\exp(-t)$ and "succeed" with probability $\exp(-t)$.  If all the iterations "succeed", the algorithm will return 1, which will happen with probability $\exp(-\lambda) \cdot (\exp(-1))^m = \exp(-(m+\lambda))$.  Now suppose 0 &le; $\mu$ &lt; 1.  Then (due to the third substep of step 1) the Poisson variate just mentioned has mean $t\mu$ rather than $t$, so that each iteration succeeds with probability $1-\exp(-t\mu)$ and the final algorithm returns 1 with probability $\exp(-\lambda\mu) \cdot (\exp(-\mu))^m = \exp(-(m+\lambda)\mu)$.
+> **Notes:**
+>
+> 1. The following is a proof of this algorithm.  First, suppose $\mu = 1$.  Each iteration of the loop in the algorithm returns 0 if a Poisson random variate with mean $t$ (see second substep of step 1) is other than 0, where $t$ is $\lambda$ in the last iteration, or 1 otherwise. Since the Poisson variate is 0 with probability $\exp(-t)$, the iteration will terminate the algorithm with probability $1-\exp(-t)$ and "succeed" with probability $\exp(-t)$.  If all the iterations "succeed", the algorithm will return 1, which will happen with probability $\exp(-\lambda) \cdot (\exp(-1))^m = \exp(-(m+\lambda))$.  Now suppose 0 &le; $\mu$ &lt; 1.  Then (due to the third substep of step 1) the Poisson variate just mentioned has mean $t\mu$ rather than $t$, so that each iteration succeeds with probability $1-\exp(-t\mu)$ and the final algorithm returns 1 with probability $\exp(-\lambda\mu) \cdot (\exp(-\mu))^m = \exp(-(m+\lambda)\mu)$.
+> 2. When _m_ = 0 and _&mu;_ = 1, this function becomes exp(&minus;_&lambda;) and can be rewritten as a power series expansion.  In that case, one way to simulate the function is to use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^54]
 
 <a id=exp_minus__m____lambda____k></a>
 #### exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)
 
 In the following algorithm, _m_ and _k_ are both integers 0 or greater unless noted otherwise.
 
-1. If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later on this page) with _x_/_y_ = 1/1, and return the result.
+1. If _k_ is 0, run the **ExpMinus** algorithm with parameter 1, and return the result.
 2. If _k_ is 1 and _m_ is 0, run the **algorithm for exp(&minus;_&lambda;_)** and return the result.
 3. If _k_ is 1 and _m_ is greater than 0 (and in this case, _m_ can be any rational number):
-    - Run the **algorithm for exp(&minus;_x_/_y_)** with _x_/_y_ = _m_.  If the algorithm returns 0, return 0.  Otherwise, return the result of the **algorithm for exp(&minus;_&lambda;_)**.
-4. Run the **algorithm for exp(&minus;_x_/_y_)** with _x_/_y_ = _m_<sup>_k_</sup> / 1.  If the algorithm returns 0, return 0.
-5. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**, with _k_ = _k_ and _x_ = 1.  If the algorithm returns 0, return 0.
+    - Run the **ExpMinus** algorithm with parameter _m_.  If the algorithm returns 0, return 0.  Otherwise, return the result of the **algorithm for exp(&minus;_&lambda;_)**.
+4. Run the **ExpMinus** algorithm with parameter _m_<sup>_k_</sup>.  If the algorithm returns 0, return 0.
+5. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**, with _k_ = _k_ and _c_ = 1.  If the algorithm returns 0, return 0.
 6. If _m_ is 0, return 1.
 7. Set _i_ to 1, then while _i_ < _k_:
      1. Set _z_ to choose(_k_, _i_) * _m_<sup>_k_ &minus; _i_</sup>.
-     2. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))** _z_ times, with _k_ = _i_ and _x_ = 1.  If any of these calls returns 0, return 0.
+     2. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))** _z_ times, with _k_ = _i_ and _c_ = 1.  If any of these calls returns 0, return 0.
      3. Add 1 to _i_.
 8. Return 1.
 
@@ -1175,12 +1175,12 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater unless no
 <a id=1_minus_exp_minus__m____lambda____m____lambda></a>
 #### (1 &minus; exp(&minus;(_m_ + _&lambda;_))) / (_m_ + _&lambda;_)
 
-In this algorithm, _m_ is an integer 0 or greater.
+In this algorithm, _m_ + _&lambda;_ must be 0 or greater.
 
-1. (Write as series expansion if _m_ is 0.) If _m_ is 0, run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
-2. (Separate as two functions otherwise.) If _m_ is greater than 0:
-    1. Run the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1.  If it returns 1, return 0.
-    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1 and _c_=_m_, and return the result of that algorithm.
+1. Run the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1.  If it returns 1, return 0.
+2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1 and _c_=_m_, and return the result of that algorithm.
+
+> **Note**: If _m_ is 0, so that _m_+_&lambda;_ is written as _&lambda;_ where _&lambda;_ is the unknown probability of heads of an input coin, this function becomes (1 &minus; exp(&minus;_&lambda;_))/_&lambda;_ and can be written as a power series.  In this case, one way to simulate the function is to run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
 
 <a id=1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a>
 #### 1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))
@@ -1189,12 +1189,12 @@ This new algorithm uses the base-2 logarithm _k_ + _&lambda;_ and is useful when
 
 1. If _k_ &gt; 0, generate unbiased random bits until a zero bit or _k_\*_m_ bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.
 2. Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(1+_y_/_z_)** (given later) with _y_/_z_ = 1/1.  If both the call and the flip return 1, return 1.  Otherwise, return 0."
-3. Run the **algorithm for exp(&minus;&mu;)** _m_ times, using the _&mu;_ input coin.  If any of the calls returns 0, return 0.  Otherwise, return 1.
+3. Run the **ExpMinus** algorithm, with parameter 0 + _&mu;_ (using the _&mu;_ input coin), _m_ times.  If any of the runs returns 0, return 0.  Otherwise, return 1.
 
 <a id=c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d></a>
 #### _c_ * _&lambda;_ * _&beta;_ / (_&beta;_ * (_c_ * _&lambda;_ + _d_ * _&mu;_) &minus; (_&beta;_ &minus; 1) * (_c_ + _d_))
 
-This is the general **two-coin algorithm** of (Gonçalves et al., 2017\)[^54] and (Vats et al. 2022\)[^55].  It takes two input coins that each output heads (1) with probability _&lambda;_ or _&mu;_, respectively.  It also takes parameters _c_ and _d_, each 0 or greater, and _&beta;_ in the interval \[0, 1\], which is a so-called "portkey" or early rejection parameter (when _&beta;_ = 1, the formula simplifies to _c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_ * _&mu;_)).  In Vats et al. (2022\)[^55], _&beta;_, _c_, _d_, _&lambda;_ and _&mu;_ correspond to _&beta;_, _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively, in the "portkey" algorithm, or to _&beta;_, _c̃_<sub>_x_</sub>, _c̃_<sub>_y_</sub>, _p̃_<sub>_x_</sub>, and _p̃_<sub>_y_</sub>, respectively, in the "flipped portkey" algorithm.
+This is the general **two-coin algorithm** of (Gonçalves et al., 2017\)[^55] and (Vats et al. 2022\)[^56].  It takes two input coins that each output heads (1) with probability _&lambda;_ or _&mu;_, respectively.  It also takes parameters _c_ and _d_, each 0 or greater, and _&beta;_ in the interval \[0, 1\], which is a so-called "portkey" or early rejection parameter (when _&beta;_ = 1, the formula simplifies to _c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_ * _&mu;_)).  In Vats et al. (2022\)[^56], _&beta;_, _c_, _d_, _&lambda;_ and _&mu;_ correspond to _&beta;_, _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively, in the "portkey" algorithm, or to _&beta;_, _c̃_<sub>_x_</sub>, _c̃_<sub>_y_</sub>, _p̃_<sub>_x_</sub>, and _p̃_<sub>_y_</sub>, respectively, in the "flipped portkey" algorithm.
 
 1. With probability _&beta;_, go to step 2.  Otherwise, return 0. (For example, call `ZeroOrOne` with _&beta;_'s numerator and denominator, and return 0 if that call returns 0, or go to step 2 otherwise.  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).)
 2. With probability _c_ / (_c_ + _d_), flip the _&lambda;_ input coin.  Otherwise, flip the _&mu;_ input coin.  If the _&lambda;_ input coin returns 1, return 1.  If the _&mu;_ input coin returns 1, return 0.  If the corresponding coin returns 0, go to step 1.
@@ -1264,7 +1264,7 @@ In this algorithm, _c_ and _d_ must be rational numbers, _c_ &ge; 1, and 0 &le; 
 <a id=1_1___lambda></a>
 #### 1/(1+_&lambda;_)
 
-This algorithm is a special case of the two-coin algorithm of (Gonçalves et al., 2017\)[^54] and has bounded expected running time for all _&lambda;_ parameters.[^56]
+This algorithm is a special case of the two-coin algorithm of (Gonçalves et al., 2017\)[^55] and has bounded expected running time for all _&lambda;_ parameters.[^57]
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
@@ -1287,23 +1287,23 @@ This is a rational function (ratio of two polynomials) with variable _&lambda;_,
 1. Let _d_ be the three-item list [1, 2, 1] \(for numerator 1).  Let _e_ be the three-item list [1+m<sup>2</sup>, 2\*(1+m<sup>2</sup>+m), 1+m<sup>2</sup>+2\*m+1] \(for denominator).  Find the highest number in _e_, then divide each item in _d_ and in _e_ by that number (using rational arithmetic).
 2. Run the first algorithm for [**rational functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions) in "Bernoulli Factory Algorithms", with _n_ = 2, and with _d_ and _e_ given above.
 
-<a id=expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda___or_1_1_exp_minus__m____lambda></a>
-#### expit(_m_ + _&lambda;_) or 1&minus;1/(1+exp(_m_ + _&lambda;_)) or exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_)) or 1/(1+exp(&minus;(_m_ + _&lambda;_)))
+<a id=expit__z__or_1_minus_1_1_exp__z__or_exp__z__1_exp__z__or_1_1_exp_minus__z></a>
+#### expit(_z_) or 1&minus;1/(1+exp(_z_)) or exp(_z_)/(1+exp(_z_)) or 1/(1+exp(&minus;_z_))
 
-expit(_x_), also known as the _logistic function_, is the probability that a random variate from the logistic distribution is _x_ or less.
+expit(_z_), also known as the _logistic function_, is the probability that a random variate from the logistic distribution is _z_ or less.
 
-In this algorithm, _m_ is an integer and can be positive or not.
+_z_ is a number (positive or not) whose absolute value (abs(_z_)) is written in one of the ways described in the "ExpMinus" section.
 
-- If _m_ = 0:
-    1. Create a _&mu;_ coin that runs the algorithm for **exp(&minus;_&lambda;_)**.
-    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with _&lambda;_ being the _&mu;_ coin, and return the result of that run.
-- If _m_ > 0:
-    1. Create a _&mu;_ coin that runs the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1 and _m_=_m_.
+- If _z_ is known to be 0 or greater:
+    1. Create a _&mu;_ coin that runs the **ExpMinus** algorithm with parameter _z_.
     2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with  _&lambda;_ being the _&mu;_ coin, and return the result of that run.
-- If _m_ < 0:
-    1. Create a _&nu;_ input coin that flips the (_&lambda;_) input coin and returns 1 minus the result.
-    2. Create a _&mu;_ input coin that runs the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1, _m_=abs(_m_)&minus;1, and _&lambda;_ being the _&nu;_ input coin.
-    3. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin, and return **1 minus the result** of that run.
+- If _z_ is known to be 0 or less:
+    1. Create a _&mu;_ coin that runs the **ExpMinus** algorithm with parameter abs(_z_).
+    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with  _&lambda;_ being the _&mu;_ coin, and return **1 minus the result** of that run.
+- If _z_ is 0 or less, but written as _m_+_&lambda;_ where _m_<0 is an integer and _&lambda;_ is the probability of heads of an input coin:
+    1. Create a _&nu;_ input coin that flips the _&lambda;_ input coin and returns 1 minus the result.
+    2. Create a _&mu;_ input coin that runs the **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1, _m_=abs(_m_)&minus;1, and _&lambda;_ being the _&nu;_ input coin.
+    3. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with _&lambda;_ being the _&mu;_ coin, and return **1 minus the result** of that run.
 
 <a id=expit__m____lambda_____mu></a>
 #### expit((_m_ + _&lambda;_)\*_&mu;_)
@@ -1318,32 +1318,32 @@ In this algorithm, _m_ is an integer and can be positive or not, and _&lambda;_ 
     2. Create a _&nu;_ input coin that runs the algorithm for **exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)** with _m_=abs(_m_)&minus;1, _&mu;_ being the _&mu;_ input coin, and _&lambda;_ being the _&beta;_ input coin.
     3. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&nu;_ coin, and return **1 minus the result** of that run.
 
-<a id=expit__m____lambda___2_minus_1_or_tanh__m____lambda___2></a>
-#### expit(_m_ + _&lambda;_)\*2 &minus; 1 or tanh((_m_ + _&lambda;_)/2)
+<a id=expit__z__2_minus_1_or_tanh__z__2></a>
+#### expit(_z_)\*2 &minus; 1 or tanh(_z_/2)
 
-In this algorithm, _m_ is an integer 0 or greater, and _&lambda;_ is the probability of heads of an input coin. (tanh is the hyperbolic tangent function.)
+In this algorithm, _z_ must be 0 or greater.
 
 - Do the following process repeatedly, until this algorithm returns a value:
-    1. Run the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1 and _m_=_m_.  Let _r_ be the result of that run.
+    1. Run the **ExpMinus** algorithm with parameter _z_.  Let _r_ be the result of that run.
     2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1&minus;_r_.  Otherwise, if _r_ is 1, return 0.
 
-> **Note:** Follows from observing that tanh((_m_+_&lambda;_)/2) = (_d_ + (1 &minus; _&mu;_)) / (_c_ + _&mu;_), where _&mu;_ = exp(&minus;(_m_+_&lambda;_)), _d_ = 0, and _c_ = 1.
+> **Note:** Follows from observing that tanh(_z_/2) = (_d_ + (1 &minus; _&mu;_)) / (_c_ + _&mu;_), where _&mu;_ = exp(&minus;_z_), _d_ = 0, and _c_ = 1.
 
-<a id=lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda___or___lambda___exp__m____nu___1___lambda___exp__m____nu___minus_1></a>
-#### _&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_m_ + _&nu;_) / (1 + _&lambda;_\*(exp(_m_ + _&nu;_) &minus; 1))
+<a id=lambda___exp__z____lambda___exp__z__1_minus___lambda___or___lambda___exp__z__1___lambda___exp__z__minus_1></a>
+#### _&lambda;_\*exp(_z_) / (_&lambda;_\*exp(_z_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_z_) / (1 + _&lambda;_\*(exp(_z_) &minus; 1))
 
 In this algorithm:
 
-- _m_ + _&nu;_ is an "exponential shift" (Peres et al. 2021\)[^57] or "exponential twist" (Sadowsky and Bucklew 1990)[^58], where _m_ is an integer and _&nu;_ is a coin that shows heads with probability equal to the shift minus _m_.
+- _z_ is an "exponential shift" (Peres et al. 2021\)[^58] or "exponential twist" (Sadowsky and Bucklew 1990)[^59].
 - _&lambda;_ is a coin that shows heads with probability equal to the probability to be shifted.
 
 The algorithm follows:
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Flip the _&lambda;_ input coin.  Let _flip_ be the result of that flip.
-    2. Run the algorithm for **expit(_m_ + _&lambda;_)** with _m_=_m_, and with  _&lambda;_ being the _&nu;_ input coin. If the run returns 1 and if _flip_ is 1, return 1.  If the run returns 0 and if _flip_ is 0, return 0.
+    2. Run the algorithm for **expit(_z_)** with _z_=_z_. If the run returns 1 and if _flip_ is 1, return 1.  If the run returns 0 and if _flip_ is 0, return 0.
 
-> **Note:** This is also a special case of the two-coin algorithm, where _&beta;_=1, _c_=exp(_m_ + _&nu;_), _d_=1, _&lambda;_ = _&lambda;_, and _&mu;_ = 1 &minus; _&lambda;_.
+> **Note:** This is also a special case of the two-coin algorithm, where _&beta;_=1, _c_=exp(_z_), _d_=1, _&lambda;_ = _&lambda;_, and _&mu;_ = 1 &minus; _&lambda;_.
 
 <a id=1_1__x___y____lambda></a>
 #### 1 / (1 + (_x_/_y_)\*_&lambda;_)
@@ -1466,16 +1466,16 @@ In this algorithm, _c_ must be an integer 1 or greater, and _&lambda;_ is the un
 4. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
 5. [**Sample from the number _u_**](#Implementation_Notes) once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
 
-<a id=tanh__m____lambda></a>
-#### tanh(_m_ + _&lambda;_)
+<a id=tanh__z></a>
+#### tanh(_z_)
 
-In this algorithm for the hyperbolic tangent function, _m_ is an integer 0 or greater, and _&lambda;_ is the probability of heads of an input coin.[^59]
+`tanh` is the hyperbolic tangent function.  _z_ must be 0 or greater.[^60]
 
 - Do the following process repeatedly, until this algorithm returns a value:
-    1. Run the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** twice, with _k_=1 and _m_=_m_.  Let _r_ be a number that is 1 if both runs returned 1, or 0 otherwise.
+    1. Run the **ExpMinus** algorithm, with parameter _z_, twice.  Let _r_ be a number that is 1 if both runs returned 1, or 0 otherwise.
     2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1&minus;_r_.  Otherwise, if _r_ is 1, return 0.
 
-> **Note:** Follows from observing that tanh(_m_+_&lambda;_) = (_d_ + (1 &minus; _&mu;_)) / (_c_ + _&mu;_), where _&mu;_ = (exp(&minus;(_m_+_&lambda;_)))<sup>2</sup>, _d_ = 0, and _c_ = 1.
+> **Note:** Follows from observing that tanh(_z_) = (_d_ + (1 &minus; _&mu;_)) / (_c_ + _&mu;_), where _&mu;_ = (exp(&minus;_z_))<sup>2</sup>, _d_ = 0, and _c_ = 1.
 
 <a id=Expressions_Involving_Polylogarithms></a>
 #### Expressions Involving Polylogarithms
@@ -1530,12 +1530,12 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 > - _g_(_k_) = choose(2\*_k_,_k_)/((2\*_k_&minus;1)\*2<sup>2*_k_</sup>), and
 > - _h_<sub>_k_</sub>(_&lambda;_) = (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> / 2 = (_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> * 4<sup>_k_</sup> / 2
 >
-> (see also Wästlund (1999)[^8]; Dale et al. (2015)[^60]).  The right-hand side of _h_, which is the polynomial built in step 3 of the algorithm for min(_&lambda;_, 1&minus;_&lambda;_), is a polynomial of degree _k_\*2 with Bernstein coefficients&mdash;
+> (see also Wästlund (1999)[^8]; Dale et al. (2015)[^61]).  The right-hand side of _h_, which is the polynomial built in step 3 of the algorithm for min(_&lambda;_, 1&minus;_&lambda;_), is a polynomial of degree _k_\*2 with Bernstein coefficients&mdash;
 >
 > - _z_ = (4<sup>_v_</sup>/2) / choose(_v_*2,_v_) at _v_=_k_, and
 > - 0 elsewhere.
 >
-> Unfortunately, _z_ can be greater than 1, so that the polynomial can't be simulated, as is, using the Bernoulli factory algorithm for [**polynomials in Bernstein form**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form).  Fortunately, the polynomial's degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see Tsai and Farouki (2001)[^61]).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree _d_ as well as _z_ (as defined above), the degree elevation is as follows:
+> Unfortunately, _z_ can be greater than 1, so that the polynomial can't be simulated, as is, using the Bernoulli factory algorithm for [**polynomials in Bernstein form**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form).  Fortunately, the polynomial's degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see Tsai and Farouki (2001)[^62]).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree _d_ as well as _z_ (as defined above), the degree elevation is as follows:
 >
 > 1. Set _r_ to floor(_d_/3) + 1. (This starting value is because when this routine finishes, _r_/_d_ appears to converge to 1/3 as _d_ gets large, for the polynomial in question.)  Let _c_ be choose(_d_,_d_/2).
 > 2. Create a list of _d_+_r_+1 Bernstein coefficients, all zeros.
@@ -1567,7 +1567,7 @@ This section describes algorithms for specific functions that require knowing ce
 <a id=x03F5_____lambda></a>
 #### _&#x03F5;_ / _&lambda;_
 
-(Lee et al. 2014\)[^62].  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_.
+(Lee et al. 2014\)[^63].  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_.
 
 1. Set _&beta;_ to max(_&#x03F5;_, 1/2) and set _&gamma;_ to 1 &minus; (1 &minus; _&beta;_) / (1 &minus; (_&beta;_ / 2)).
 2. Create a _&mu;_ input coin that flips the input coin and returns 1 minus the result.
@@ -1577,7 +1577,7 @@ This section describes algorithms for specific functions that require knowing ce
 <a id=mu_____lambda></a>
 #### _&mu;_ / _&lambda;_
 
-(Morina 2021\)[^63].  This division algorithm takes two input coins, namely a coin simulating the dividend _&mu;_ and a coin simulating the divisor _&lambda;_, and a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_ &minus; _&mu;_.  In this algorithm, _&mu;_ must be less than _&lambda;_.
+(Morina 2021\)[^64].  This division algorithm takes two input coins, namely a coin simulating the dividend _&mu;_ and a coin simulating the divisor _&lambda;_, and a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_ &minus; _&mu;_.  In this algorithm, _&mu;_ must be less than _&lambda;_.
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit (either 0 or 1 with equal probability).
@@ -1610,7 +1610,7 @@ As a result, some knowledge of _&lambda;_ has to be available to the algorithm. 
         2. Multiply _c_ by 2 / (_&#x03F5;_ + 2), then divide _&#x03F5;_ by 2, then multiply _k_ by 2.
 9. (_i_ is 0.) Return 1.
 
-Huber (2016\)[^43] presented a second algorithm using the same three parameters, but it's omitted here because it appears to perform worse than the algorithm given above and the **algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>** below (see also Morina 2021[^63]).
+Huber (2016\)[^43] presented a second algorithm using the same three parameters, but it's omitted here because it appears to perform worse than the algorithm given above and the **algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>** below (see also Morina 2021[^64]).
 
 Huber (2016) also included a third algorithm that simulates _&lambda;_ * _x_ / _y_.  The algorithm works only if _&lambda;_ * _x_ / _y_ is known to be less than 1/2.  This third algorithm takes three parameters:
 
@@ -1629,7 +1629,7 @@ The algorithm follows.
 <a id=lambda____x___y___i></a>
 #### (_&lambda;_ * _x_/_y_)<sup>_i_</sup>
 
-(Huber 2019\)[^64].  This algorithm uses four parameters:
+(Huber 2019\)[^65].  This algorithm uses four parameters:
 
 - _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
 - _i_ is an integer 0 or greater.
@@ -1708,7 +1708,7 @@ Special case of the algorithm for **ln(_c_+_&lambda;_)/(_c_+_&lambda;_)**.
 <a id=arcsin___lambda___2></a>
 #### arcsin(_&lambda;_) / 2
 
-The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out of arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.[^65] However, the number of input coin flips is expected to grow without bound as _&lambda;_ approaches 1.
+The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out of arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.[^66] However, the number of input coin flips is expected to grow without bound as _&lambda;_ approaches 1.
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the **algorithm for arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1** and return the result.
 2. Create a secondary coin _&mu;_ that does the following: "Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1." (The coin simulates 1 &minus; _&lambda;_<sup>2</sup>.)
@@ -1725,7 +1725,7 @@ Algorithms in bold are given in this page.
 |  1/sqrt(_h_+_&lambda;_)  |  (_&lambda;_ is unknown heads probability of a coin; _h_&ge;1 is a rational number.)<br>Create _&mu;_ coin for algorithm **_d_/(_c_+_&lambda;_)** with _c_=_h_ and _d_=1.<br>Run algorithm for **sqrt(_&lambda;_)** with _&lambda;_ being the _&mu;_ coin.  |
 |  1 / (_c_ + _&lambda;_)  |  (_&lambda;_ is unknown heads probability of a coin; _c_&ge;1 is a rational number.)<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_ = 1. |
 |  1 / (1 + _&lambda;_<sup>2</sup>)  |  (Slope function of arctan(_&lambda;_).  _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin that flips _&lambda;_ coin twice and returns either 1 if both flips return 1, or 0 otherwise.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
-|  1 / (_c_ + exp(&minus; _&lambda;_))  |  (_&lambda;_ is unknown heads probability of a coin; _c_&ge;1 is a rational number.)<br>Create _&mu;_ coin for algorithm **exp(&minus; _&lambda;_)**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=1, _c_=_c_, and _&lambda;_ being the _&mu;_ coin. |
+|  1 / (_c_ + exp(&minus; _z_))  |  (_z_&ge;0 is written as described in "ExpMinus" section; _c_&ge;1 is a rational number.)<br>Create _&mu;_ coin for **ExpMinus** algorithm with parameter _z_.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=1, _c_=_c_, and _&lambda;_ being the _&mu;_ coin. |
 | 1/(2<sup>_k_ + _&lambda;_</sup>) or<br>exp(&minus;(_k_ + _&lambda;_)\*ln(2)) | (_&lambda;_ is unknown heads probability of a coin.  _k_ &ge; 0 is an integer.)<br>Run algorithm **1/(2<sup>_m_\*(_k_ + _&lambda;_</sup>))** with _k_=_k_ and _m_=1. |
 | 1&minus;exp(&minus; (_m_ + _&lambda;_)) = (exp((_m_+_&lambda;_))&minus;1) \* exp(&minus;(_m_+_&lambda;_)) = (exp(_m_+_&lambda;_)&minus;1) / exp(_m_+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin. _m_ &ge; 0 is a rational number.)<br>Run algorithm **exp(&minus;(_m_+_&lambda;_)<sup>k</sup>)** with _k_ = 1, and return 1 minus the result. |
 | exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_)) | ((Dughmi et al. 2021\)[^44]; applies an exponential weight&mdash;here, _c_&mdash;to an input coin)<br>(1) If _c_ is 0, return 1.<br>(2) Generate _N_, a Poisson random variate with mean _c_.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped _N_ times, whichever comes first, then return a number that is 1 if _N_ is 0 or all of the coin flips (including the last) return 1, or 0 otherwise. |
@@ -1734,14 +1734,14 @@ Algorithms in bold are given in this page.
 | _&lambda;_/(1+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for **1/(1+_&lambda;_)**, then return 1 minus the result. |
 | _c_ * _&lambda;_ / (_c_ * _&lambda;_ + (_d_+_&mu;_)) = (_c_/(_d_+_&mu;_)) * _&lambda;_ / (1 + (_c_/(_d_+_&mu;_)) * _&lambda;_)) | (_c_&ge;0 is an integer; _d_&ge;0 is an integer; _&lambda;_ is in [0, 1], _&mu;_ is in [0, 1), and both are unknown heads probabilities of two coins.)<br>(1) If _c_ is 0, return 0.<br>(2) Let _D_ = _d_ and _C_ = _c_, then run the algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _&lambda;_ and _&mu;_ both being the _&mu;_ input coin, with _d_ = _D_, and with _c_ = _D_ + _C_.  If the run returns 1, return 0.<br>(3) Flip the _&lambda;_ input coin.  If the flip returns 1, return 1.  Otherwise, go to step 2. |
 | (_d_+_&mu;_) / (_c_ * _&lambda;_ + (_d_+_&mu;_)) | (_c_, _d_, _&lambda;_, and _&mu;_ are as in the previous algorithm.)<br> Run the previous algorithm and return 1 minus the result. |
-| exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_))<sup>2</sup> | (Equals expit(_m_ + _&lambda;_)\*(1&minus;expit(_m_ + _&lambda;_)).  _&lambda;_ is unknown heads probability of a coin.)<br>Run the algorithm for **expit(_m_ + _&lambda;_)** twice, with _m_=0. If the first run returns 1 and the second returns 0, return 1.  Otherwise, return 0. |
+| exp(_z_)/(1+exp(_z_))<sup>2</sup> | (Equals expit(_z_)\*(1&minus;expit(_z_)). _z_ is described in "expit(_z_)" section.)<br>Run the algorithm for **expit(_z_)** twice, with _m_=0. If the first run returns 1 and the second returns 0, return 1.  Otherwise, return 0. |
 | _&nu;_ * 1 + (1 &minus; _&nu;_) * _&mu;_ = _&nu;_ + _&mu;_ &minus; (_&nu;_\*_&mu;_) | (_Logical OR_. Flajolet et al., 2010[^1].  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&lambda;_ = 1. _&nu;_ and _&mu;_ are unknown heads probabilities of two coins.)<br>Flip the _&nu;_ input coin and the _&mu;_ input coin.  Return 1 if either flip returns 1, and 0 otherwise. |
 | 1 &minus; _&nu;_ | (_Complement_. Flajolet et al., 2010[^1].  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&lambda;_ = 0 and _&mu;_ = 1. _&nu;_ is unknown heads probability of a coin.)<br>Flip the _&nu;_ input coin and return 1 minus the result. |
 | _&nu;_ * _&lambda;_ | (_Logical AND_ or _Product_. Flajolet et al., 2010[^1].  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&mu;_ = 0. _&nu;_ and _&lambda;_ are unknown heads probabilities of two coins.)<br>Flip the _&nu;_ input coin and the _&lambda;_ input coin.  Return 1 if both flips return 1, and 0 otherwise. |
 | (_&lambda;_ + _&mu;_)/2 = (1/2)\*_&lambda;_ + (1/2)\*_&mu;_ | (_Mean_. Nacu and Peres 2005, proposition 14(iii\)[^16]; Flajolet et al., 2010[^1].  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&nu;_ = 1/2. _&lambda;_ and _&mu;_ are unknown heads probabilities of two coins.)<br> Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result. |
 |  (1+_&lambda;_)/2 = (1/2) + (1/2)\*_&lambda;_ | (_&lambda;_ is unknown heads probability of a coin.)<br>Generate an unbiased random bit.  If that bit is 1, return 1.  Otherwise, flip the input coin and return the result. |
 |  (1&minus;_&lambda;_)/2 | (_&lambda;_ is unknown heads probability of a coin.)<br>Generate an unbiased random bit.  If that bit is 1, return 0.  Otherwise, flip the input coin and return 1 minus the result. |
-| 1 &minus; ln(1+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for **ln(1+_&lambda;_)**, then return 1 minus the result.[^66] |
+| 1 &minus; ln(1+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for **ln(1+_&lambda;_)**, then return 1 minus the result.[^67] |
 | sin(sqrt(_&lambda;_)\*sqrt(_c_)) / (sqrt(_&lambda;_)\*sqrt(_c_)) | (_c_ is a rational number in (0, 6].  _&lambda;_ is unknown heads probability of a coin.)<br>Run **general martingale algorithm** with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i} c^{i}}{(i+i+1)!}$. |
 |  3 &minus; exp(1) | Run the algorithm for **exp(1) &minus; 2**, then return 1 minus the result. |
 |  1/(exp(1)&minus;1) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 1. |
@@ -1930,27 +1930,13 @@ The algorithm follows.
 <a id=exp_minus__x___y></a>
 #### exp(&minus;_x_/_y_)
 
-This algorithm takes integers _x_ &ge; 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020\)[^67].
+This algorithm takes integers _x_ &ge; 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020\)[^53].
 
 1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
 2. If `x > y` (so _x_/_y_ is greater than 1), call this algorithm (recursively) `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ &minus; floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
 3. Set _r_ to 1 and _i_ to 1.
 4. Return _r_ with probability (_y_ \* _i_ &minus; _x_) / (_y_ \* _i_).
 5. Set _r_ to 1 &minus; _r_, add 1 to _i_, and go to step 4.
-
-<a id=exp_minus__z></a>
-#### exp(&minus;_z_)
-
-This algorithm is similar to the previous algorithm, except that the exponent, _z_, can be any real number 0 or greater, as long as _z_ can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. (This makes use of the identity exp(&minus;a) = exp(&minus;b) * exp(&minus;c).)
-
-More specifically:
-
-1. Decompose _z_ into _n_ > 0 components that sum to _z_, all of which are greater than 0.  For example, if _z_ = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if _z_ = _&pi;_, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described earlier on this page.
-2. For each component _LC_\[_i_\] found this way (where _i_ is in \[1, _n_\]), let _LI_\[_i_\] be floor(_LC_\[_i_\]) and let _LF_\[_i_\] be _LC_\[_i_\] &minus; floor(_LC_\[_i_\]) (_LC_\[_i_\]'s fractional part).
-
-The algorithm is then as follows:
-
-- For each component _LC_\[_i_\], run the **algorithm for exp(&minus; _x_/_y_)** with _x_=_LI_\[_i_] and _y_=1, then run the algorithm for **exp(&minus;_&lambda;_)** using the input coin that simulates  _LF_\[_i_\].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020\)[^67].)
 
 <a id=a___b___z></a>
 #### (_a_/_b_)<sup>_z_</sup>
@@ -1966,22 +1952,11 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
     4. Flip the input coin that simulates  _LF_\[_i_\] (which is the exponent); if it returns 1, return 0 with probability 1/_j_.
     5. Add 1 to _j_ and go to substep 2.
 
-<a id=1_1_exp__x___y__2_prec></a>
-#### 1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>))
-
-This is the probability that the binary digit at _prec_ (the _prec_<sup>th</sup> binary digit after the point, where _prec_ is greater than 0) is set for an exponential random variate with rate _x_/_y_.  This algorithm is a special case of the **logistic Bernoulli factory**.
-
-In this algorithm, _x_&ge; 1, _y_&gt;1, _prec_&ge;0 are integers.
-
-1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-2. Call the **algorithm for exp(&minus; _x_/_y_)** with  _x_ = _x_ and _y_ = _y_ * 2<sup>_prec_</sup>.  If the call returns 1, return 1.  Otherwise, go to step 1.
-
 <a id=1_1_exp__z__2_prec></a>
 #### 1 / (1 + exp(_z_ / 2<sup>_prec_</sup>))
 
-This is similar to the previous algorithm, except that _z_ can be any real number described in the **algorithm for exp(&minus;_z_)**.
-
-In this algorithm, _prec_&ge;0 is an integer.
+This is the probability that the binary digit at _prec_ (the _prec_<sup>th</sup> binary digit after the point, where _prec_ is greater than 0) is set for an exponential random variate with rate _z_.  This algorithm is a special case of the **logistic Bernoulli factory**.
+In this algorithm, _z_ is 0 or greater and written as described in the "ExpMinus" section, and _prec_&ge;0 is an integer.
 
 Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **exp(&minus;_z_)** algorithm.  The algorithm is then as follows.
 
@@ -2305,36 +2280,36 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^52]: In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), the fractional part _&nu;_ can even come from a uniform partially-sampled random number (PSRN).
 
-[^53]: Another algorithm for exp(&minus;_&lambda;_) involves the von Neumann schema, but unfortunately, it converges slowly as _&lambda;_ approaches 1.
+[^53]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
-[^54]: Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.
+[^54]: Another algorithm for exp(&minus;_&lambda;_) involves the von Neumann schema, but unfortunately, it converges slowly as _&lambda;_ approaches 1.
 
-[^55]: Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., "Efficient Bernoulli factory Markov chain Monte Carlo for intractable posteriors", _Biometrika_ 109(2), June 2022 (also in arXiv:2004.07471 [stat.CO]).
+[^55]: Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.
 
-[^56]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** (see "More Algorithms for Arbitrary-Precision Sampling") with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
+[^56]: Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., "Efficient Bernoulli factory Markov chain Monte Carlo for intractable posteriors", _Biometrika_ 109(2), June 2022 (also in arXiv:2004.07471 [stat.CO]).
 
-[^57]: Peres, N., Lee, A.R. and Keich, U., 2021. Exactly computing the tail of the Poisson-Binomial Distribution. ACM Transactions on Mathematical Software (TOMS), 47(4), pp.1-19.
+[^57]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** (see "More Algorithms for Arbitrary-Precision Sampling") with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
 
-[^58]: Sadowsky, Bucklew, On large deviations theory and asymptotically efficient Monte Carlo
+[^58]: Peres, N., Lee, A.R. and Keich, U., 2021. Exactly computing the tail of the Poisson-Binomial Distribution. ACM Transactions on Mathematical Software (TOMS), 47(4), pp.1-19.
+
+[^59]: Sadowsky, Bucklew, On large deviations theory and asymptotically efficient Monte Carlo
 estimation, IEEE Transactions on Information Theory 36 (1990)
 
-[^59]: There is another algorithm for tanh(_&lambda;_), based on Lambert's continued fraction for tanh(.), but it works only if 0 &le; _&lambda;_ &le; 1.  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
+[^60]: There is another algorithm for tanh(_&lambda;_), based on Lambert's continued fraction for tanh(.), but it works only if 0 &le; _&lambda;_ &le; 1.  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
 
-[^60]: Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.
+[^61]: Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.
 
-[^61]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
+[^62]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
 
-[^62]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
+[^63]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
-[^63]: Morina, Giulio (2021) Extending the Bernoulli Factory to a dice enterprise. PhD thesis, University of Warwick.
+[^64]: Morina, Giulio (2021) Extending the Bernoulli Factory to a dice enterprise. PhD thesis, University of Warwick.
 
-[^64]: Huber, M., "[**Designing perfect simulation algorithms using local correctness**](https://arxiv.org/abs/1907.06748v1)", arXiv:1907.06748v1 [cs.DS], 2019.
+[^65]: Huber, M., "[**Designing perfect simulation algorithms using local correctness**](https://arxiv.org/abs/1907.06748v1)", arXiv:1907.06748v1 [cs.DS], 2019.
 
-[^65]: One of the only implementations I could find of this, if not the only, was a [**Haskell implementation**](https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs).
+[^66]: One of the only implementations I could find of this, if not the only, was a [**Haskell implementation**](https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs).
 
-[^66]: Another algorithm for this function uses the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$), but uses more bits on average as _&lambda;_ approaches 1.
-
-[^67]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
+[^67]: Another algorithm for this function uses the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$), but uses more bits on average as _&lambda;_ approaches 1.
 
 [^68]: Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.
 
@@ -2403,7 +2378,7 @@ This page focuses on _unbiased_ estimators because "exact sampling" depends on b
 
 **Theorem.** _If the algorithm given in "Continued Logarithms" terminates with probability 1, it returns 1 with probability exactly equal to the number represented by the continued logarithm c, and 0 otherwise._
 
-_Proof._ This proof of correctness takes advantage of Huber's "fundamental theorem of perfect simulation" (Huber 2019\)[^64].  Using Huber's theorem requires proving two things:
+_Proof._ This proof of correctness takes advantage of Huber's "fundamental theorem of perfect simulation" (Huber 2019\)[^65].  Using Huber's theorem requires proving two things:
 
 - The algorithm finishes with probability 1 by assumption.
 - Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with a "black box" that simulates the correct "continued sub-logarithm".  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), where _x_ is the "continued sub-logarithm" and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to _x_/2), and the last piece is the "rejection piece" that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability _p_ = (1 / 2<sup>_c_\[_i_\]</sup>) / 2 and fail either at the first substep of the loop with probability _f1_ = (1 &minus; 1 / 2<sup>_c_\[_i_\]</sup>) / 2, or at the second substep with probability _f2_ = _x_/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (_p_ / (_p_ + _f1_ + _f2_)) leads to (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), which is the probability we wanted.
@@ -2584,7 +2559,7 @@ If the polynomial is written in so-called "power form" as _c\[0\]_ + _c\[1\]_\*_
 - their coefficients are all 0 or greater, and
 - the sum of _j_<sup>th</sup> coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin and/or end with zeros.
 
-If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2022\)[^17].  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001[^61]).  It is implemented as follows:
+If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2022\)[^17].  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001[^62]).  It is implemented as follows:
 
 - Let _n_ be the polynomial's old degree.  For each _k_ in [0, _n_+1], the new polynomial's coefficient at _k_ is found as follows:
     - Let _c_\[_j_\] be the old polynomial's _j_<sup>th</sup> coefficient (starting at 0).  Calculate _c_\[_j_\] \* choose(1, _k_&minus;_j_) for each integer _j_ satisfying max(0, _k_&minus;1) &le; _j_ &le; min(_n_, _k_), then add them together.  The sum is the new coefficient.
