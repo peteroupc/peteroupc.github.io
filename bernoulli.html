@@ -1674,15 +1674,16 @@
 <ol>
 <li>As a rational number, namely <em>x</em>/<em>y</em> where <em>x</em>&ge;0 and <em>y</em>&gt;0 are integers.</li>
 <li>As an integer and fractional part, namely <em>m</em> + <em>&nu;</em> where <em>m</em> &ge; 0 is an integer and <em>&nu;</em> (0 &le; <em>&nu;</em> &le; 1) is the probability of heads of a coin.  (Specifically, the &quot;coin&quot; must implement a Bernoulli factory algorithm that returns 1 [or outputs heads] with probability equal to the fractional part <em>&nu;</em>.[^52])</li>
-<li>As a sum of <em>n</em> &gt; 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if <em>z</em> = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, <em>m</em> = 0 and <em>&nu;</em> = (&pi; / 4).  (This case makes use of the identity exp(&minus;(<em>b</em>+<em>c</em>)) = exp(&minus;<em>b</em>) * exp(&minus;<em>c</em>).  Here, &pi;/4 has a not-so-trivial Bernoulli factory algorithm described in this article.)</li>
+<li>As a sum of <em>n</em> &gt; 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if <em>z</em> = &pi;, it can be written as a sum of four numbers, each of which is (&pi; / 4), that is, <em>m</em> = 0 and <em>&nu;</em> = (&pi; / 4).  (This case makes use of the identity exp(&minus;(<em>b</em>+<em>c</em>)) = exp(&minus;<em>b</em>) * exp(&minus;<em>c</em>).  Here, &pi;/4 has a not-so-trivial Bernoulli factory algorithm described in this article.)</li>
 </ol>
 
 <p>The <strong>ExpMinus</strong> algorithm is as follows.  To flip a coin with probability of heads of exp(&minus;<em>z</em>):</p>
 
-<pre>- In case 1, use the **algorithm for exp(&amp;minus;_x_/_y_)**.
-- In case 2, use case 2 of the **algorithm for exp(&amp;minus;(_&amp;lambda;_ \* _z_))** with parameter _z_, where _&amp;lambda;_ represents a coin that always returns 1.
-- In case 3, rewrite the _z_ parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of the **ExpMinus** algorithm with that component as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.  (See also (Canonne et al. 2020\)[^53].)
-</pre>
+<ul>
+<li>In case 1, use the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong>.</li>
+<li>In case 2, use case 2 of the <strong>algorithm for exp(&minus;(<em>&lambda;</em> * <em>z</em>))</strong> with parameter <em>z</em>, where <em>&lambda;</em> represents a coin that always returns 1.</li>
+<li>In case 3, rewrite the <em>z</em> parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of the <strong>ExpMinus</strong> algorithm with that component as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.  (See also (Canonne et al. 2020)[^53].)</li>
+</ul>
 
 <blockquote>
 <p><strong>Examples:</strong> The <strong>ExpMinus</strong> algorithm with the following parameters can be implemented as follows:</p>
@@ -1709,8 +1710,9 @@
 
 <p>The <strong>LogisticExp</strong> algorithm is as follows.  To flip a coin with probability of heads of 1/(1+exp(<em>z</em>/2<sup><em>prec</em></sup>)) = 1 &minus; expit(<em>&lambda;</em>/2<sup><em>prec</em></sup>):</p>
 
-<pre>- Run the **algorithm for expit(_&amp;lambda;_\*_z_)** where _z_ = _z_, and where _&amp;lambda;_ represents a coin that returns either 1 with probability 1/(2&lt;sup&gt;_prec_&lt;/sup&gt;) or 0 otherwise.  Return 1 minus the result of that run (leading to **1 &amp;minus; expit((_m_ + _&amp;lambda;_)\*_&amp;mu;_)**).
-</pre>
+<ul>
+<li>Run the <strong>algorithm for expit(<em>&lambda;</em>*<em>z</em>)</strong> where <em>z</em> = <em>z</em>, and where <em>&lambda;</em> represents a coin that returns either 1 with probability 1/(2<sup><em>prec</em></sup>) or 0 otherwise.  Return 1 minus the result of that run (leading to <strong>1 &minus; expit((<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong>).</li>
+</ul>
 
 <p><a id=exp_minus___lambda___k___c></a></p>
 
@@ -1758,7 +1760,7 @@
 <li><em>&lambda;</em> is the probability of heads of an input coin, with 0 &le; <em>&lambda;</em> &le; 1.</li>
 </ul>
 
-<hr>
+<p>The algorithm follows.</p>
 
 <ul>
 <li>In case 1 (<em>z</em> = <em>x</em>/<em>y</em>), run algorithm 3 for <strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup>*<em>c</em>))</strong>, with <em>c</em> = <em>x</em>/<em>y</em>, <em>k</em> = 1, and <em>&lambda;</em> being the <em>&lambda;</em> input coin.</li>
@@ -1782,8 +1784,8 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>The following is a proof of case 2 of this algorithm.  First, suppose $\mu = 1$.  Each iteration of the loop in the algorithm returns 0 if a Poisson random variate with mean $t$ (see second substep of step 1) is other than 0, where $t$ is $\lambda$ in the last iteration, or 1 otherwise. Since the Poisson variate is 0 with probability $\exp(-t)$, the iteration will terminate the algorithm with probability $1-\exp(-t)$ and &quot;succeed&quot; with probability $\exp(-t)$.  If all the iterations &quot;succeed&quot;, the algorithm will return 1, which will happen with probability $\exp(-\lambda) \cdot (\exp(-1))^m = \exp(-(m+\lambda))$.  Now suppose 0 &le; $\mu$ &lt; 1.  Then (due to the third substep of step 1) the Poisson variate just mentioned has mean $t\mu$ rather than $t$, so that each iteration succeeds with probability $1-\exp(-t\mu)$ and the final algorithm returns 1 with probability $\exp(-\lambda\mu) \cdot (\exp(-\mu))^m = \exp(-(m+\lambda)\mu)$.</li>
-<li>When <em>m</em> = 0 and <em>&mu;</em> = 1, this function in case 2 becomes exp(&minus;_&lambda;) and can be rewritten as a power series expansion.  In that case, one way to simulate the function is to use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^54]</li>
+<li>The following is a proof of case 2 of this algorithm.  First, suppose $\lambda = 1$.  Each iteration of the loop in the algorithm returns 0 if a Poisson random variate with mean $t$ (see second substep of step 1) is other than 0, where $t$ is $\nu$ in the last iteration, or 1 otherwise. Since the Poisson variate is 0 with probability $\exp(-t)$, the iteration will terminate the algorithm with probability $1-\exp(-t)$ and &quot;succeed&quot; with probability $\exp(-t)$.  If all the iterations &quot;succeed&quot;, the algorithm will return 1, which will happen with probability $\exp(-\nu) \cdot (\exp(-1))^m = \exp(-(m+\nu))$.  Now suppose 0 &le; $\lambda$ &lt; 1.  Then (due to the third substep of step 1) the Poisson variate just mentioned has mean $t\lambda$ rather than $t$, so that each iteration succeeds with probability $1-\exp(-t\lambda)$ and the final algorithm returns 1 with probability $\exp(-\nu\lambda) \cdot (\exp(-\lambda))^m = \exp(-(m+\nu)\lambda)$.</li>
+<li>When <em>m</em> = 0 and <em>&mu;</em> = 1, this function in case 2 becomes exp(&minus;<em>&lambda;</em>) and can be rewritten as a power series expansion.  In that case, one way to simulate the function is to use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^54]</li>
 </ol>
 </blockquote>
 
@@ -2014,13 +2016,6 @@
 <li>Create a <em>R</em> coin that runs the <strong>ExpMinus</strong> algorithm with parameter abs(<em>z</em>).</li>
 <li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and with  <em>&lambda;</em> being the <em>R</em> coin, and return <strong>1 minus the result</strong> of that run.</li>
 </ol></li>
-<li>If <em>z</em> is 0 or less, but written as <em>m</em>+<em>&nu;</em> where <em>m</em>&lt;0 is an integer and <em>&lambda;</em> is the probability of heads of an input coin:
-
-<ol>
-<li>Create a <em>Q</em> input coin that flips the <em>&nu;</em> input coin and returns 1 minus the result.</li>
-<li>Create an <em>R</em> input coin that runs case 2 of the <strong>algorithm for exp(&minus;(<em>&lambda;</em> * <em>z</em>))</strong> (with <em>z</em> = (abs(<em>m</em>) &minus; 1) + <em>Q</em>, where <em>Q</em> is the input coin created in step 1 and <em>&lambda;</em> is an input coin that always returns 1).</li>
-<li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and with <em>&lambda;</em> being the <em>R</em> coin, and return <strong>1 minus the result</strong> of that run.</li>
-</ol></li>
 </ul>
 
 <p><a id=expit___lambda____z></a></p>
@@ -2034,7 +2029,7 @@
 <li><em>&lambda;</em> is the probability of heads of an input coin, with 0 &le; <em>&lambda;</em> &le; 1.</li>
 </ul>
 
-<hr>
+<p>The algorithm follows.</p>
 
 <ul>
 <li>If <em>z</em> is known to be 0 or greater:
@@ -2048,13 +2043,6 @@
 <ol>
 <li>Create an <em>R</em> coin that runs the <strong>algorithm for exp(&minus;(<em>&lambda;</em> * <em>z</em>))</strong> with parameter abs(<em>z</em>), where <em>&lambda;</em> is the <em>&lambda;</em> input coin.</li>
 <li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and with  <em>&lambda;</em> being the <em>R</em> coin, and return <strong>1 minus the result</strong> of that run.</li>
-</ol></li>
-<li>If <em>z</em> is 0 or less, but written as <em>m</em>+<em>&nu;</em> where <em>m</em>&lt;0 is an integer and <em>&lambda;</em> is the probability of heads of an input coin:
-
-<ol>
-<li>Create a <em>Q</em> input coin that flips the <em>&nu;</em> input coin and returns 1 minus the result.</li>
-<li>Create an <em>R</em> input coin that runs case 2 of the <strong>algorithm for exp(&minus;(<em>&lambda;</em> * <em>z</em>))</strong> (with <em>z</em> = (abs(<em>m</em>) &minus; 1) + <em>Q</em>, where <em>Q</em> is the input coin created in step 1 and <em>&lambda;</em> is the <em>&lambda;</em> input coin).</li>
-<li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and with <em>&lambda;</em> being the <em>R</em> coin, and return <strong>1 minus the result</strong> of that run.</li>
 </ol></li>
 </ul>
 
@@ -2693,8 +2681,8 @@
 <td>(<em>&lambda;</em> is unknown heads probability of a coin.  <em>k</em> &ge; 0 is an integer.)<br>Run algorithm <strong>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em></sup>))</strong> with <em>k</em>=<em>k</em> and <em>m</em>=1.</td>
 </tr>
 <tr>
-<td>1&minus;exp(&minus; (<em>m</em> + <em>&lambda;</em>)) = (exp((<em>m</em>+<em>&lambda;</em>))&minus;1) * exp(&minus;(<em>m</em>+<em>&lambda;</em>)) = (exp(<em>m</em>+<em>&lambda;</em>)&minus;1) / exp(<em>m</em>+<em>&lambda;</em>)</td>
-<td>(<em>&lambda;</em> is unknown heads probability of a coin. <em>m</em> &ge; 0 is a rational number.)<br>Run algorithm <strong>exp(&minus;(<em>m</em>+<em>&lambda;</em>)<sup>k</sup>)</strong> with <em>k</em> = 1, and return 1 minus the result.</td>
+<td>1&minus;exp(&minus; <em>z</em>) = (exp(<em>z</em>)&minus;1) * exp(&minus;<em>z</em>) = (exp(<em>z</em>)&minus;1) / exp(<em>z</em>)</td>
+<td>(<em>z</em>&ge;0 is written as described in <a href="#ExpMinus_exp_minus__z"><strong>&quot;ExpMinus&quot; section</strong></a>.)<br>Run <strong>ExpMinus</strong> algorithm with parameter <em>z</em>, and return 1 minus the result.</td>
 </tr>
 <tr>
 <td>exp(&minus;((1&minus;<em>&lambda;</em>)<sup>1</sup> * <em>c</em>))</td>

@@ -1072,13 +1072,13 @@ In this document, the **ExpMinus** algorithm is a Bernoulli factory taking a par
 
 1. As a rational number, namely _x_/_y_ where _x_&ge;0 and _y_>0 are integers.
 2. As an integer and fractional part, namely _m_ + _&nu;_ where _m_ &ge; 0 is an integer and _&nu;_ (0 &le; _&nu;_ &le; 1) is the probability of heads of a coin.  (Specifically, the "coin" must implement a Bernoulli factory algorithm that returns 1 \[or outputs heads\] with probability equal to the fractional part _&nu;_.[^52])
-3. As a sum of _n_ > 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if _z_ = &pi;, it can be decomposed into four components, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).  (This case makes use of the identity exp(&minus;(_b_+_c_)) = exp(&minus;_b_) \* exp(&minus;_c_).  Here, &pi;/4 has a not-so-trivial Bernoulli factory algorithm described in this article.)
+3. As a sum of _n_ > 0 positive numbers, each of which can be written in either of the preceding ways.  For example, if _z_ = &pi;, it can be written as a sum of four numbers, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).  (This case makes use of the identity exp(&minus;(_b_+_c_)) = exp(&minus;_b_) \* exp(&minus;_c_).  Here, &pi;/4 has a not-so-trivial Bernoulli factory algorithm described in this article.)
 
 The **ExpMinus** algorithm is as follows.  To flip a coin with probability of heads of exp(&minus;_z_):
 
-    - In case 1, use the **algorithm for exp(&minus;_x_/_y_)**.
-    - In case 2, use case 2 of the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** with parameter _z_, where _&lambda;_ represents a coin that always returns 1.
-    - In case 3, rewrite the _z_ parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of the **ExpMinus** algorithm with that component as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.  (See also (Canonne et al. 2020\)[^53].)
+- In case 1, use the **algorithm for exp(&minus;_x_/_y_)**.
+- In case 2, use case 2 of the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** with parameter _z_, where _&lambda;_ represents a coin that always returns 1.
+- In case 3, rewrite the _z_ parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of the **ExpMinus** algorithm with that component as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.  (See also (Canonne et al. 2020\)[^53].)
 
 > **Examples:** The **ExpMinus** algorithm with the following parameters can be implemented as follows:
 >
@@ -1098,7 +1098,7 @@ This is the probability that the binary digit at _prec_ (the _prec_<sup>th</sup>
 
 The **LogisticExp** algorithm is as follows.  To flip a coin with probability of heads of 1/(1+exp(_z_/2<sup>_prec_</sup>)) = 1 &minus; expit(_&lambda;_/2<sup>_prec_</sup>):
 
-    - Run the **algorithm for expit(_&lambda;_\*_z_)** where _z_ = _z_, and where _&lambda;_ represents a coin that returns either 1 with probability 1/(2<sup>_prec_</sup>) or 0 otherwise.  Return 1 minus the result of that run (leading to **1 &minus; expit((_m_ + _&lambda;_)\*_&mu;_)**).
+- Run the **algorithm for expit(_&lambda;_\*_z_)** where _z_ = _z_, and where _&lambda;_ represents a coin that returns either 1 with probability 1/(2<sup>_prec_</sup>) or 0 otherwise.  Return 1 minus the result of that run (leading to **1 &minus; expit((_m_ + _&lambda;_)\*_&mu;_)**).
 
 <a id=exp_minus___lambda___k___c></a>
 #### exp(&minus;( _&lambda;_<sup>_k_</sup> \* _c_))
@@ -1133,7 +1133,7 @@ In the following algorithm:
 - _z_ is 0 or greater, and written as a rational number (case 1), as an integer and fractional part (case 2), or as a sum of positive numbers (case 3), as described in the [**"ExpMinus" section**](#ExpMinus_exp_minus__z).
 - _&lambda;_ is the probability of heads of an input coin, with 0 &le; _&lambda;_ &le; 1.
 
-------------------
+The algorithm follows.
 
 - In case 1 (_z_ = _x_/_y_), run algorithm 3 for **exp(&minus;(_&lambda;_<sup>_k_</sup>\*_c_))**, with _c_ = _x_/_y_, _k_ = 1, and _&lambda;_ being the _&lambda;_ input coin.
 - In case 2 (_z_ = _m_ + _&nu;_):
@@ -1147,8 +1147,8 @@ In the following algorithm:
 
 > **Notes:**
 >
-> 1. The following is a proof of case 2 of this algorithm.  First, suppose $\mu = 1$.  Each iteration of the loop in the algorithm returns 0 if a Poisson random variate with mean $t$ (see second substep of step 1) is other than 0, where $t$ is $\lambda$ in the last iteration, or 1 otherwise. Since the Poisson variate is 0 with probability $\exp(-t)$, the iteration will terminate the algorithm with probability $1-\exp(-t)$ and "succeed" with probability $\exp(-t)$.  If all the iterations "succeed", the algorithm will return 1, which will happen with probability $\exp(-\lambda) \cdot (\exp(-1))^m = \exp(-(m+\lambda))$.  Now suppose 0 &le; $\mu$ &lt; 1.  Then (due to the third substep of step 1) the Poisson variate just mentioned has mean $t\mu$ rather than $t$, so that each iteration succeeds with probability $1-\exp(-t\mu)$ and the final algorithm returns 1 with probability $\exp(-\lambda\mu) \cdot (\exp(-\mu))^m = \exp(-(m+\lambda)\mu)$.
-> 2. When _m_ = 0 and _&mu;_ = 1, this function in case 2 becomes exp(&minus;_&lambda;) and can be rewritten as a power series expansion.  In that case, one way to simulate the function is to use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^54]
+> 1. The following is a proof of case 2 of this algorithm.  First, suppose $\lambda = 1$.  Each iteration of the loop in the algorithm returns 0 if a Poisson random variate with mean $t$ (see second substep of step 1) is other than 0, where $t$ is $\nu$ in the last iteration, or 1 otherwise. Since the Poisson variate is 0 with probability $\exp(-t)$, the iteration will terminate the algorithm with probability $1-\exp(-t)$ and "succeed" with probability $\exp(-t)$.  If all the iterations "succeed", the algorithm will return 1, which will happen with probability $\exp(-\nu) \cdot (\exp(-1))^m = \exp(-(m+\nu))$.  Now suppose 0 &le; $\lambda$ &lt; 1.  Then (due to the third substep of step 1) the Poisson variate just mentioned has mean $t\lambda$ rather than $t$, so that each iteration succeeds with probability $1-\exp(-t\lambda)$ and the final algorithm returns 1 with probability $\exp(-\nu\lambda) \cdot (\exp(-\lambda))^m = \exp(-(m+\nu)\lambda)$.
+> 2. When _m_ = 0 and _&mu;_ = 1, this function in case 2 becomes exp(&minus;_&lambda;_) and can be rewritten as a power series expansion.  In that case, one way to simulate the function is to use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^54]
 
 <a id=exp_minus__m____lambda____k></a>
 #### exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)
@@ -1305,10 +1305,6 @@ _z_ is a number (positive or not) whose absolute value (abs(_z_)) is written in 
 - If _z_ is known to be 0 or less:
     1. Create a _R_ coin that runs the **ExpMinus** algorithm with parameter abs(_z_).
     2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with  _&lambda;_ being the _R_ coin, and return **1 minus the result** of that run.
-- If _z_ is 0 or less, but written as _m_+_&nu;_ where _m_<0 is an integer and _&lambda;_ is the probability of heads of an input coin:
-    1. Create a _Q_ input coin that flips the _&nu;_ input coin and returns 1 minus the result.
-    2. Create an _R_ input coin that runs case 2 of the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** (with _z_ = (abs(_m_) &minus; 1) + _Q_, where _Q_ is the input coin created in step 1 and _&lambda;_ is an input coin that always returns 1).
-    3. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with _&lambda;_ being the _R_ coin, and return **1 minus the result** of that run.
 
 <a id=expit___lambda____z></a>
 #### expit(_&lambda;_\* _z_)
@@ -1318,7 +1314,7 @@ In this algorithm:
 - _z_ is a number (positive or not) whose absolute value (abs(_z_)) is written in one of the ways described in the [**"ExpMinus" section**](#ExpMinus_exp_minus__z).
 - _&lambda;_ is the probability of heads of an input coin, with 0 &le; _&lambda;_ &le; 1.
 
----------------
+The algorithm follows.
 
 - If _z_ is known to be 0 or greater:
     1. Create an _R_ coin that runs the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** with parameter _z_, where _&lambda;_ is the _&lambda;_ input coin.
@@ -1326,10 +1322,6 @@ In this algorithm:
 - If _z_ is known to be 0 or less:
     1. Create an _R_ coin that runs the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** with parameter abs(_z_), where _&lambda;_ is the _&lambda;_ input coin.
     2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with  _&lambda;_ being the _R_ coin, and return **1 minus the result** of that run.
-- If _z_ is 0 or less, but written as _m_+_&nu;_ where _m_<0 is an integer and _&lambda;_ is the probability of heads of an input coin:
-    1. Create a _Q_ input coin that flips the _&nu;_ input coin and returns 1 minus the result.
-    2. Create an _R_ input coin that runs case 2 of the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** (with _z_ = (abs(_m_) &minus; 1) + _Q_, where _Q_ is the input coin created in step 1 and _&lambda;_ is the _&lambda;_ input coin).
-    3. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with _&lambda;_ being the _R_ coin, and return **1 minus the result** of that run.
 
 <a id=expit__z__2_minus_1_or_tanh__z__2></a>
 #### expit(_z_)\*2 &minus; 1 or tanh(_z_/2)
@@ -1740,7 +1732,7 @@ Algorithms in bold are given in this page.
 |  1 / (1 + _&lambda;_<sup>2</sup>)  |  (Slope function of arctan(_&lambda;_).  _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin that flips _&lambda;_ coin twice and returns either 1 if both flips return 1, or 0 otherwise.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
 |  1 / (_c_ + exp(&minus; _z_))  |  (_z_&ge;0 is written as described in [**"ExpMinus" section**](#ExpMinus_exp_minus__z); _c_&ge;1 is a rational number.)<br>Create _&mu;_ coin for **ExpMinus** algorithm with parameter _z_.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=1, _c_=_c_, and _&lambda;_ being the _&mu;_ coin. |
 | 1/(2<sup>_k_ + _&lambda;_</sup>) or<br>exp(&minus;(_k_ + _&lambda;_)\*ln(2)) | (_&lambda;_ is unknown heads probability of a coin.  _k_ &ge; 0 is an integer.)<br>Run algorithm **1/(2<sup>_m_\*(_k_ + _&lambda;_</sup>))** with _k_=_k_ and _m_=1. |
-| 1&minus;exp(&minus; (_m_ + _&lambda;_)) = (exp((_m_+_&lambda;_))&minus;1) \* exp(&minus;(_m_+_&lambda;_)) = (exp(_m_+_&lambda;_)&minus;1) / exp(_m_+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin. _m_ &ge; 0 is a rational number.)<br>Run algorithm **exp(&minus;(_m_+_&lambda;_)<sup>k</sup>)** with _k_ = 1, and return 1 minus the result. |
+| 1&minus;exp(&minus; _z_) = (exp(_z_)&minus;1) \* exp(&minus;_z_) = (exp(_z_)&minus;1) / exp(_z_) | (_z_&ge;0 is written as described in [**"ExpMinus" section**](#ExpMinus_exp_minus__z).)<br>Run **ExpMinus** algorithm with parameter _z_, and return 1 minus the result. |
 | exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_)) | ((Dughmi et al. 2021\)[^44]; applies an exponential weight&mdash;here, _c_&mdash;to an input coin)<br>(1) If _c_ is 0, return 1.<br>(2) Generate _N_, a Poisson random variate with mean _c_.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped _N_ times, whichever comes first, then return a number that is 1 if _N_ is 0 or all of the coin flips (including the last) return 1, or 0 otherwise. |
 | exp(_&lambda;_<sup>2</sup>) &minus; _&lambda;_\*exp(_&lambda;_<sup>2</sup>) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0=1$, and $a_i=\frac{(-1)^i}{(\text{floor}(i/2))!}$. |
 | 1 &minus; 1 / (1+(_&mu;_\*_&lambda;_/(1 &minus; _&mu;_)) =<br>(_&mu;_\*_&lambda;_/(1 &minus; _&mu;_) / (1+(_&mu;_\*_&lambda;_/(1 &minus; _&mu;_)) | (Special case of **logistic Bernoulli factory**; _&lambda;_ is in [0, 1], _&mu;_ is in [0, 1), and both are unknown heads probabilities of two coins.)<br>(1) Flip the _&mu;_ coin.  If it returns 0, return 0. (Coin samples probability _&mu;_/(_&mu;_ + (1 &minus; _&mu;_)) = _&mu;_.) <br>(2) Flip the _&lambda;_ coin.  If it returns 1, return 1.  Otherwise, go to step 1. |
