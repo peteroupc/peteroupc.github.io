@@ -98,6 +98,7 @@
 <li><a href="#exp___lambda___1_minus___lambda"><strong>exp(<em>&lambda;</em>)*(1&minus;<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_minus_exp_minus__m____lambda____m____lambda"><strong>(1 &minus; exp(&minus;(<em>m</em> + <em>&lambda;</em>))) / (<em>m</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m"><strong>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</strong></a></li>
+<li><a href="#1_2__x___y____lambda___or_exp_minus___lambda___ln_2_x___y"><strong>1/(2<sup>(<em>x</em>/<em>y</em>)*(<em>&lambda;</em>)</sup>) or exp(&minus;(<em>&lambda;</em>)*ln(2<sup><em>x</em>/<em>y</em></sup>))</strong></a></li>
 <li><a href="#c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d"><strong><em>c</em> * <em>&lambda;</em> * <em>&beta;</em> / (<em>&beta;</em> * (<em>c</em> * <em>&lambda;</em> + <em>d</em> * <em>&mu;</em>) &minus; (<em>&beta;</em> &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
 <li><a href="#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda"><strong><em>c</em> * <em>&lambda;</em> / (<em>c</em> * <em>&lambda;</em> + <em>d</em>) or (<em>c</em>/<em>d</em>) * <em>&lambda;</em> / (1 + (<em>c</em>/<em>d</em>) * <em>&lambda;</em>))</strong></a></li>
 <li><a href="#d____lambda____c"><strong>(<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong></a></li>
@@ -1341,7 +1342,7 @@
 <ol>
 <li>Generate <em>X</em>, a Poisson random variate with mean <em>&mu;</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities and the coin for <em>h</em><sub><em>i</em></sub> returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.  The probability that this method returns 1 is <strong>E</strong>[1/(1+<em>X</em>)], or (exp(<em>&mu;</em>)&minus;1)/(exp(<em>&mu;</em>)*<em>&mu;</em>).</li>
 <li>(Wästlund 1999)[^8]: Generate a Poisson random variate <em>X</em> with mean 1, then flip the input coin <em>X</em> times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&lambda;</em>), and corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities, namely 1/(<em>i</em>!*exp(1)), and <em>h</em><sub><em>i</em></sub>() being (1&minus;<em>&lambda;</em>)<sup><em>i</em></sup>.</li>
-<li>Generate <em>X</em>, a Poisson random variate with mean <em>&mu;</em>, run the <strong>algorithm for exp(&minus;<em>z</em>)</strong> with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
+<li>Generate <em>X</em>, a Poisson random variate with mean <em>&mu;</em>, run the <strong>ExpMinus</strong> algorithm with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
 <li>Multivariate Bernoulli factory (Huber 2016)[^43] of the form <em>R</em> = <em>C</em><sub>0</sub>*<em>&lambda;</em><sub>0</sub> + <em>C</em><sub>1</sub>*<em>&lambda;</em><sub>1</sub> + ... + <em>C</em><sub><em>m</em>&minus;1</sub>*<em>&lambda;</em><sub><em>m</em>&minus;1</sub>, where <em>C</em><sub><em>i</em></sub> are known constants greater than 0,  <em>&#x03F5;</em> &gt; 0, and <em>R</em> &le; 1 &minus; <em>&#x03F5;</em>: Choose an integer in [0, <em>m</em>) uniformly at random, call it <em>i</em>, then run a linear Bernoulli factory for (<em>m</em>*<em>C</em><sub><em>i</em></sub>)*<em>&lambda;</em><sub><em>i</em></sub>.  This differs from Huber&#39;s suggestion of &quot;thinning&quot; a random process driven by multiple input coins.</li>
 <li><strong>Probability generating function</strong> (PGF) (Dughmi et al. 2021)[^44]. Generates heads with probability <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>], that is, the expected value (&quot;long-run average&quot;) of <em>&lambda;</em><sup><em>X</em></sup>.  <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>] is the PGF for the distribution of <em>X</em>.  The algorithm follows: (1) Generate a random integer <em>X</em> in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
 <li>Assume <em>X</em> is the number of unbiased random bits that show 0 before the first 1 is generated.  Then <em>g</em>(<em>n</em>) = 1/(2<sup><em>n</em>+1</sup>).</li>
@@ -1668,7 +1669,7 @@
 
 <h4>ExpMinus (exp(&minus;<em>z</em>))</h4>
 
-<p>In this document, the <strong>ExpMinus</strong> algorithm is a Bernoulli factory taking a parameter <em>z</em>.  The parameter <em>z</em> can be written in any of the following ways:</p>
+<p>In this document, the <strong>ExpMinus</strong> algorithm is a Bernoulli factory taking a parameter <em>z</em>.  The parameter <em>z</em> is 0 or greater and can be written in any of the following ways:</p>
 
 <ol>
 <li>As a rational number, namely <em>x</em>/<em>y</em> where <em>x</em>&ge;0 and <em>y</em>&gt;0 are integers.</li>
@@ -1693,7 +1694,7 @@
 <li>Parameter 7/5: Run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> where <em>x</em>=7 and <em>y</em>=5.</li>
 </ul>
 
-<p><strong>Note:</strong> exp(&minus;<em>z</em>) = exp(1&minus;<em>z</em>)/exp(1).</p>
+<p><strong>Note:</strong> exp(&minus;<em>z</em>) = exp(1&minus;<em>z</em>)/exp(1) = 1/exp(<em>z</em>).</p>
 </blockquote>
 
 <p><a id=LogisticExp_1_minus_expit__z__2_prec></a></p>
@@ -1710,7 +1711,7 @@
 <p>The <strong>LogisticExp</strong> algorithm is as follows.  To flip a coin with probability of heads of 1/(1+exp(<em>z</em>/2<sup><em>prec</em></sup>)) = 1 &minus; expit(<em>&lambda;</em>/2<sup><em>prec</em></sup>):</p>
 
 <ul>
-<li>Run the <strong>algorithm for expit(<em>&lambda;</em>*<em>z</em>)</strong> where <em>z</em> = <em>z</em>, and where <em>&lambda;</em> represents a coin that returns either 1 with probability 1/(2<sup><em>prec</em></sup>) or 0 otherwise.  Return 1 minus the result of that run (leading to <strong>1 &minus; expit(<em>&lambda;</em>*<em>z</em>)</strong>).</li>
+<li>Run the <strong>algorithm for expit(<em>&lambda;</em>*<em>z</em>)</strong> where <em>z</em> = <em>z</em>, and where <em>&lambda;</em> represents a coin that returns a number that is 1 with probability 1/(2<sup><em>prec</em></sup>) or 0 otherwise.  Return 1 minus the result of that run (leading to <strong>1 &minus; expit(<em>&lambda;</em>*<em>z</em>)</strong>).</li>
 </ul>
 
 <p><a id=exp_minus___lambda____z></a></p>
@@ -1731,8 +1732,8 @@
 
 <ol>
 <li>Special case: If <em>x</em> is 0, return 1.</li>
-<li>Generate <em>N</em>, a Poisson random variate with mean <em>x</em>/<em>y</em>.  (See &quot;<a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson Distribution</strong></a> for one way to do this.)</li>
-<li>Flip the <em>&lambda;</em> input coin until a flip returns 1 or the coin is flipped <em>N</em> times, whichever comes first.  Return 0 if <em>N</em> is greater than 0 and any of the flips, including the last, returns 1.  Otherwise, return 1.</li>
+<li>Generate <em>N</em>, a Poisson random variate with mean <em>x</em>/<em>y</em>.  (See &quot;<a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot; for one way to do this.)</li>
+<li>Flip the <em>&lambda;</em> input coin until a flip returns 1 or the coin is flipped <em>N</em> times, whichever comes first.  Return 0 if <em>N</em> is greater than 0 and any of the flips, including the last, returns 1.  Otherwise, return 1. (The flips transform a Poisson variate with mean <em>x</em>/<em>y</em> to one with mean <em>&lambda;</em>*<em>x</em>/<em>y</em>; see (Devroye 1986, p. 487)[^32].)</li>
 </ol></li>
 <li>In case 2 (<em>z</em> = <em>m</em> + <em>&nu;</em>):
 
@@ -1770,14 +1771,14 @@
 <ol>
 <li>If <em>k</em> is 0, run the <strong>ExpMinus</strong> algorithm with parameter 1, and return the result.</li>
 <li>If <em>k</em> is 1, run the <strong>ExpMinus</strong> algorithm with parameter <em>m</em> + <em>&lambda;</em>, and return the result.</li>
-<li>Run the <strong>ExpMinus</strong> algorithm with parameter <em>m</em><sup><em>k</em></sup>.  If the algorithm returns 0, return 0.</li>
-<li>Run the <strong>ExpMinus</strong> algorithm with parameter 0 + <em>&mu;</em>, where <em>&mu;</em> represents an input coin that does: &quot;Flip the input coin <em>k</em> times and return either 1 if all the flips return 1, or 0 otherwise&quot;. If the algorithm returns 0, return 0.</li>
-<li>If <em>m</em> is 0, return 1.</li>
+<li>(Expand (<em>m</em> + <em>&lambda;</em>)<sup><em>k</em></sup> to a polynomial in <em>&lambda;</em> in rest of algorithm.  First the <em>&lambda;</em><sup>0</sup> term.) Run the <strong>ExpMinus</strong> algorithm with parameter <em>m</em><sup><em>k</em></sup>.  If the algorithm returns 0, return 0.</li>
+<li>(Now the <em>&lambda;</em><sup><em>k</em></sup> term.) Run the <strong>ExpMinus</strong> algorithm with parameter 0 + <em>&mu;</em>, where <em>&mu;</em> represents an input coin that does: &quot;Flip the <em>&lambda;</em> input coin <em>k</em> times and return either 1 if all the flips return 1, or 0 otherwise&quot;. If the algorithm returns 0, return 0.</li>
+<li>(Now the other terms.) If <em>m</em> is 0, return 1.</li>
 <li>Set <em>i</em> to 1, then while <em>i</em> &lt; <em>k</em>:
 
 <ol>
 <li>Set <em>w</em> to choose(<em>k</em>, <em>i</em>) * <em>m</em><sup><em>k</em> &minus; <em>i</em></sup>.</li>
-<li>Run the <strong>ExpMinus</strong> algorithm, <em>w</em> times, with parameter 0 + <em>&mu;</em>, where <em>&mu;</em> represents an input coin that does: &quot;Flip the input coin <em>i</em> times and return either 1 if all the flips return 1, or 0 otherwise&quot;.  If any of these calls returns 0, return 0.</li>
+<li>(Now the <em>&lambda;</em><sup><em>i</em></sup> term.) Run the <strong>ExpMinus</strong> algorithm, <em>w</em> times, with parameter 0 + <em>&mu;</em>, where <em>&mu;</em> represents an input coin that does: &quot;Flip the <em>&lambda;</em> input coin <em>i</em> times and return either 1 if all the flips return 1, or 0 otherwise&quot;.  If any of these calls returns 0, return 0.</li>
 <li>Add 1 to <em>i</em>.</li>
 </ol></li>
 <li>Return 1.</li>
@@ -1801,27 +1802,36 @@
 
 <h4>(1 &minus; exp(&minus;(<em>m</em> + <em>&lambda;</em>))) / (<em>m</em> + <em>&lambda;</em>)</h4>
 
-<p>In this algorithm, <em>m</em> + <em>&lambda;</em> must be greater than 0.</p>
+<p>In this algorithm, <em>m</em> + <em>&lambda;</em> must be 0 or greater.</p>
 
 <ol>
-<li>Run the <strong>ExpMinus</strong> algorithm with parameter <em>z</em> = <em>m</em> + <em>&lambda;</em>.  If it returns 1, return 0.</li>
+<li>If <em>m</em> = 0, run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.</li>
+<li>(<em>m</em>&gt;0.) Run the <strong>ExpMinus</strong> algorithm with parameter <em>z</em> = <em>m</em> + <em>&lambda;</em>.  If it returns 1, return 0.</li>
 <li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1 and <em>c</em>=<em>m</em>, and return the result of that algorithm.</li>
 </ol>
-
-<blockquote>
-<p><strong>Note</strong>: If <em>m</em> is 0, so that <em>m</em>+<em>&lambda;</em> is written as <em>&lambda;</em> where <em>&lambda;</em> is the unknown probability of heads of an input coin, this function becomes (1 &minus; exp(&minus;<em>&lambda;</em>))/<em>&lambda;</em> and can be written as a power series.  In this case, one way to simulate the function is to run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.</p>
-</blockquote>
 
 <p><a id=1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a></p>
 
 <h4>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</h4>
 
-<p>This new algorithm uses the base-2 logarithm <em>k</em> + <em>&lambda;</em> and is useful when this logarithm is very large.  In this algorithm, <em>k</em> &gt; 0 is an integer, and <em>m</em> &ge; 0 is an integer.</p>
+<p>This new algorithm uses the base-2 logarithm <em>k</em> + <em>&lambda;</em> and is useful when this logarithm is very large.  In this algorithm, <em>k</em> &ge; 0 is an integer, and <em>m</em> &ge; 0 is an integer.</p>
 
 <ol>
-<li>If <em>k</em> &gt; 0, generate unbiased random bits until a zero bit or <em>k</em>*<em>m</em> bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.</li>
-<li>Create an input coin <em>&mu;</em> that does the following: &quot;Flip the input coin, then run the <strong>algorithm for ln(1+<em>y</em>/<em>z</em>)</strong> (given later) with <em>y</em>/<em>z</em> = 1/1.  If both the call and the flip return 1, return 1.  Otherwise, return 0.&quot;</li>
+<li>(Factor function in two parts.  First, simulate 1/(2<sup><em>mk</em></sup>).) If <em>k</em> &gt; 0, generate unbiased random bits until a zero bit or <em>k</em>*<em>m</em> bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.</li>
+<li>(Rest of algorithm simulates 1/(2<sup><em>m&lambda;</em></sup>).) Create an input coin <em>&mu;</em> that does the following: &quot;Flip the input coin, then run the <strong>algorithm for ln(1+<em>y</em>/<em>z</em>)</strong> (given later) with <em>y</em>/<em>z</em> = 1/1.  If both the call and the flip return 1, return 1.  Otherwise, return 0.&quot; (Simulates $\ln(2) \lambda$.)</li>
 <li>Run the <strong>ExpMinus</strong> algorithm, with parameter 0 + <em>&mu;</em> (using the <em>&mu;</em> input coin), <em>m</em> times.  If any of the runs returns 0, return 0.  Otherwise, return 1.</li>
+</ol>
+
+<p><a id=1_2__x___y____lambda___or_exp_minus___lambda___ln_2_x___y></a></p>
+
+<h4>1/(2<sup>(<em>x</em>/<em>y</em>)*(<em>&lambda;</em>)</sup>) or exp(&minus;(<em>&lambda;</em>)*ln(2<sup><em>x</em>/<em>y</em></sup>))</h4>
+
+<p>Based on the previous algorithm.  In this algorithm, <em>x</em> &ge; 0 and <em>y</em> &gt; 0 are integers.</p>
+
+<ol>
+<li>Special case: If <em>x</em> is 0, return 1.</li>
+<li>Let <em>c</em> = ceil(<em>x</em>/<em>y</em>). Create an input coin <em>&mu;</em> that does the following: &quot;Flip the input coin, then run the <strong>algorithm for ln(1+<em>y</em>/<em>z</em>)</strong> (given later) with <em>y</em>/<em>z</em> = 1/1.  If both the call and the flip return 1, return a number that is 1 with probability <em>x</em>/(<em>y</em>*<em>c</em>) and 0 otherwise.  Otherwise, return 0.&quot; (Simulates $\ln(2) \frac{xy}{c} \lambda$.)</li>
+<li>Run the <strong>ExpMinus</strong> algorithm, with parameter 0 + <em>&mu;</em> (using the <em>&mu;</em> input coin), <em>c</em> times.  If any of the runs returns 0, return 0.  Otherwise, return 1.</li>
 </ol>
 
 <p><a id=c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d></a></p>
@@ -2860,8 +2870,8 @@ kind of irrational number.</p>
 <p>Three algorithms:</p>
 
 <ul>
-<li>First algorithm (Flajolet et al., 2010)[^1]: Generate a random integer <em>n</em> satisfying 0 &le; <em>n</em> &le; 5, call it <em>n</em>.  If <em>n</em> is less than 3, return the result of the <strong>algorithm for arctan(1/2) * 2</strong>.  Otherwise, if <em>n</em> is 3, return 0.  Otherwise, return the result of the <strong>algorithm for arctan(1/3) * 3</strong>.</li>
-<li>Second algorithm (since arctan(1) = <em>&pi;</em> / 4): Run the second <strong>algorithm for arctan(1/1) * 1/1</strong>.</li>
+<li>First algorithm (Flajolet et al., 2010)[^1]: Generate a random integer <em>n</em> satisfying 0 &le; <em>n</em> &le; 5, call it <em>n</em>.  If <em>n</em> is less than 3, return the result of the <strong>algorithm for arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></strong> with <em>x</em>=1 and <em>y</em>=2.  Otherwise, if <em>n</em> is 3, return 0.  Otherwise, return the result of the <strong>algorithm for arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></strong> with <em>x</em>=1 and <em>y</em>=3.</li>
+<li>Second algorithm (since arctan(1) = <em>&pi;</em> / 4): Run the second <strong>algorithm for arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></strong> with <em>x</em>=1 and <em>y</em>=1.</li>
 <li>Third algorithm: See the appendix.</li>
 </ul>
 
@@ -3321,7 +3331,8 @@ kind of irrational number.</p>
 
 <h2>Acknowledgments</h2>
 
-<p>I acknowledge Luis Mendo, who responded to one of my open questions, as well as C. Karney.</p>
+<p>I acknowledge Luis Mendo, who responded to one of my open questions, as well as C. Karney.
+Due to a suggestion by Michael Shoemate who suggested it was &quot;easy to get lost&quot; in this and related articles, some sections that related to Bernoulli factories and were formerly in &quot;More Algorithms for Arbitrary-Precision Sampling&quot; were moved here.</p>
 
 <p><a id=Notes></a></p>
 

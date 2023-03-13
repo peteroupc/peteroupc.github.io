@@ -2646,8 +2646,8 @@ def ratio_of_uniform(bern):
 <p>The following arbitrary-precision sampler generates the sum of <em>n</em> independent exponential random variates (also known as the Erlang(<em>n</em>) or gamma(<em>n</em>) distribution), implemented via partially-sampled uniform random variates.  Obviously, this algorithm is inefficient for large values of <em>n</em>.</p>
 
 <ol>
-<li>Generate <em>n</em> exponential random variates with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  These numbers will be uniform PSRNs; this algorithm won&#39;t work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
-<li>Generate the sum of the random variates generated in step 1 by applying the <a href="https://peteroupc.github.io/exporand.html#Addition_and_Subtraction"><strong>UniformAdd</strong></a> algorithm given in another document.</li>
+<li>Generate <em>n</em> exponential random variates with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm.  These numbers will be uniform PSRNs; this algorithm won&#39;t work for exponential PSRNs (e-rands) because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
+<li>Generate the sum of the random variates generated in step 1 by applying the <a href="#Addition_and_Subtraction"><strong>UniformAdd</strong></a> algorithm given in another document.</li>
 </ol>
 
 <p><a id=One_Dimensional_Epanechnikov_Kernel></a></p>

@@ -1978,8 +1978,8 @@ Mixtures similar to the Lindley distribution are shown in the following table an
 
 The following arbitrary-precision sampler generates the sum of _n_ independent exponential random variates (also known as the Erlang(_n_) or gamma(_n_) distribution), implemented via partially-sampled uniform random variates.  Obviously, this algorithm is inefficient for large values of _n_.
 
-1. Generate _n_ exponential random variates with a rate of 1 via the **ExpRand** or **ExpRand2** algorithm described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  These numbers will be uniform PSRNs; this algorithm won't work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
-2. Generate the sum of the random variates generated in step 1 by applying the [**UniformAdd**](https://peteroupc.github.io/exporand.html#Addition_and_Subtraction) algorithm given in another document.
+1. Generate _n_ exponential random variates with a rate of 1 via the **ExpRand** or **ExpRand2** algorithm.  These numbers will be uniform PSRNs; this algorithm won't work for exponential PSRNs (e-rands) because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
+2. Generate the sum of the random variates generated in step 1 by applying the [**UniformAdd**](#Addition_and_Subtraction) algorithm given in another document.
 
 <a id=One_Dimensional_Epanechnikov_Kernel></a>
 #### One-Dimensional Epanechnikov Kernel
