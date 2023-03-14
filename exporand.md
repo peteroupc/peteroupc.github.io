@@ -178,7 +178,7 @@ PSRNs of other distributions can be implemented via rejection from the uniform d
 - The standard normal distribution, as shown in (Karney 2016\)[^1] by running Karney's Algorithm N and filling unsampled digits uniformly at random, or as shown in an improved version of that algorithm by Du et al. (2020\)[^11].
 - Sampling uniform distributions in \[0, _n_\) (not just \[0, 1\]), is described later in "[**Sampling Uniform PSRNs**](#Sampling_Uniform_PSRNs)".)
 
-For all these distributions, the PSRN's unsampled trailing digits converge to the uniform distribution, and this also applies to any continuous distribution with a continuous probability density function (or more generally, to so-called "absolutely continuous"[^12] distributions) (Oberhoff 2018\)[^13], (Hill and Schürger 2005, Corollary 4.4\)[^14].
+For all these distributions, the PSRN's unsampled trailing digits converge to the uniform distribution, and this also applies to any continuous distribution with a continuous probability density function (or, more generally, to so-called "absolutely continuous"[^12] distributions) (Oberhoff 2018\)[^13], (Hill and Schürger 2005, Corollary 4.4\)[^14].
 
 PSRNs could also be implemented via rejection from the exponential distribution.
 
@@ -188,10 +188,10 @@ PSRNs could also be implemented via rejection from the exponential distribution.
 An algorithm that samples from a non-discrete distribution using PSRNs has the following properties:
 
 1. The algorithm relies only on a source of independent and unbiased random bits for randomness.
-2. The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational numbers or transcendental functions. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations are rational numbers of arbitrary precision.  The more implicitly the algorithm works with irrational numbers or transcendental functions, the better.)
+2. The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational numbers or transcendental functions. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations are rational numbers of arbitrary precision.  However, the more implicitly the algorithm works with irrational numbers or transcendental functions, the better.)
 3. The algorithm may use rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby), as long as the arithmetic is exact.
 4. If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the position, starting from 1, of the rightmost sampled digit of the PSRN's fractional part.  ((Devroye and Gravel 2020\)[^3] suggests Wasserstein distance, or "earth-mover distance", as the distance to use for this purpose.) The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (for example, uniformly at random in the case of a uniform PSRN).
-5. If the algorithm fills a PSRN's unsampled fractional digits at random (for example, uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number's distribution must remain close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>.
+5. After the algorithm outputs a PSRN, if the algorithm's caller fills a PSRN's unsampled fractional digits at random (for example, uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number's distribution must remain close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>.
 
 > **Notes:**
 >
@@ -577,7 +577,13 @@ For more on why these two algorithms are equivalent, see the appendix.
 1. For each position in \[0, `p`), if the item at that position in the uniform PSRN's fractional part is unsampled, set the item there to a digit chosen uniformly at random (for example, either 0 or 1 for binary), increasing the fractional part's capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8\)[^13].)
 2. Let `sign` be -1 if the PSRN's sign is negative, or 1 otherwise; let `ipart` be the PSRN's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + bag[0] * _b_<sup>&minus;0&minus;1</sup> + bag[1] * _b_<sup>&minus;1&minus;1</sup> + ... + bag[`p`&minus;1] * _b_<sup>&minus;(`p`&minus;1)&minus;1</sup>), where _b_ is the base, or radix.
 
-After step 2, if it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice. (For example, if `p` is 4, _b_ is 10, and the PSRN is 0.3437500... or 0.3438500..., it could use a round-to-nearest mode to round the PSRN to the number 0.3438 or 0.3439, respectively; because this is a PSRN with an "infinite" but unsampled digit expansion, there is no tie-breaking such as "ties to even" applied here.)
+After step 2, if it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to&mdash;
+
+- fill all unsampled digits between the first and the last set digit,
+- round the number represented by the PSRN to a number whose fractional part has `p` digits, with a rounding mode of choice (and without further modifying the PSRN), and
+- returning the rounded number.
+
+For example, if `p` is 4, _b_ is 10, and the PSRN is 0.3437500... or 0.3438500..., the implementation could use a round-to-nearest mode to round the number that the PSRN represents to the number 0.3438 or 0.3439, respectively, and return the rounded number; because this is a PSRN with an "infinite" but unsampled digit expansion, there is no tie-breaking such as "ties to even" applied here.
 
 <a id=kthsmallest></a>
 ### kthsmallest
@@ -1486,7 +1492,7 @@ The beta sampler in this document shows one case of a general approach to simula
     - _f_(_&lambda;_) is constant on its domain, or
     - _f_(_&lambda;_) is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_),
 
-   and they show that 2 \* _&lambda;_, where 0 &le; _&lambda;_ &lt; 1/2, is one function that does not admit a Bernoulli factory.  _f_(_&lambda;_) can be a constant, including an irrational number; see "[**Algorithms for Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants)" for ways to simulate constant probabilities.
+   and they show that 2 \* _&lambda;_, where 0 &le; _&lambda;_ &lt; 1/2, is one function that does not admit a Bernoulli factory.  _f_(_&lambda;_) can be a constant, including an irrational number; see "[**Algorithms for Specific Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Specific_Constants)" for ways to simulate constant probabilities.
 3. If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part _n_ digits (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the PSRN.
 
 However, the speed of this algorithm depends crucially on the mode (highest point) of _f_(_&lambda;_) with 0 &le; _&lambda;_ &le; 1.[^31]  As the mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If the mode is close to 0, _f_ will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of _f_ and have to be rejected.

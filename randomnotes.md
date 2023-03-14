@@ -21,7 +21,6 @@
         - [**Multivariate Phase-Type Distributions**](#Multivariate_Phase_Type_Distributions)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
-    - [**Implementation of `erf`**](#Implementation_of_erf)
     - [**Exact, Error-Bounded, and Approximate Algorithms**](#Exact_Error_Bounded_and_Approximate_Algorithms)
 - [**License**](#License)
 
@@ -467,7 +466,7 @@ A _copula_ is a way to describe the dependence between randomly sampled numbers.
 One example is a _Gaussian copula_; this copula is sampled by sampling from a [**multinormal distribution**](#Multivariate_Normal_Multinormal_Distribution), then converting the resulting numbers to _dependent_ uniform random values. In the following pseudocode, which implements a Gaussian copula:
 
 - The parameter `covar` is the covariance matrix for the multinormal distribution.
-- `erf(v)` is the [**error function**](https://en.wikipedia.org/wiki/Error_function) of the number `v` (see the appendix).
+- `erf(v)` is the [**error function**](https://en.wikipedia.org/wiki/Error_function) of the number `v`.
 
 &nbsp;
 
@@ -612,39 +611,6 @@ END METHOD
 
 <a id=Appendix></a>
 ## Appendix
-
-<a id=Implementation_of_erf></a>
-### Implementation of `erf`
-
-The pseudocode below shows an approximate implementation of the [**error function**](https://en.wikipedia.org/wiki/Error_function) `erf`, in case the programming language used doesn't include a built-in version of `erf` (such as JavaScript at the time of this writing).   In the pseudocode, `EPSILON` is a very small number to end the iterative calculation.
-
-    METHOD erf(v)
-        if v==0: return 0
-        if v<0: return -erf(-v)
-        if v==infinity: return 1
-        // NOTE: For Java `double`, the following
-        // line can be added:
-        // if v>=6: return 1
-        i=1
-        fac=1
-        dosub=true
-        ret=v
-        while i < 100
-            zval=zval*v*v
-            den=fac*(2*i+1)
-            c=zval/den
-            if dosub: ret=ret-c
-            else: ret=ret+c
-            // NOTE: EPSILON can be pow(10,14),
-            // for example.
-            if abs(c)<EPSILON: break
-            i = i + 1
-            fac=fac*i
-            if dosub: dosub=false
-            else: dosub=true
-        end
-        return ret*2/sqrt(pi)
-    END METHOD
 
 <a id=Exact_Error_Bounded_and_Approximate_Algorithms></a>
 ### Exact, Error-Bounded, and Approximate Algorithms

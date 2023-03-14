@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2023/03/13"><meta name="citation_online_date" content="2023/03/13"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2023/03/14"><meta name="citation_online_date" content="2023/03/14"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -244,7 +244,7 @@
 <li>Sampling uniform distributions in [0, <em>n</em>) (not just [0, 1]), is described later in &quot;<a href="#Sampling_Uniform_PSRNs"><strong>Sampling Uniform PSRNs</strong></a>&quot;.)</li>
 </ul>
 
-<p>For all these distributions, the PSRN&#39;s unsampled trailing digits converge to the uniform distribution, and this also applies to any continuous distribution with a continuous probability density function (or more generally, to so-called &quot;absolutely continuous&quot;[^12] distributions) (Oberhoff 2018)[^13], (Hill and Schürger 2005, Corollary 4.4)[^14].</p>
+<p>For all these distributions, the PSRN&#39;s unsampled trailing digits converge to the uniform distribution, and this also applies to any continuous distribution with a continuous probability density function (or, more generally, to so-called &quot;absolutely continuous&quot;[^12] distributions) (Oberhoff 2018)[^13], (Hill and Schürger 2005, Corollary 4.4)[^14].</p>
 
 <p>PSRNs could also be implemented via rejection from the exponential distribution.</p>
 
@@ -256,10 +256,10 @@
 
 <ol>
 <li>The algorithm relies only on a source of independent and unbiased random bits for randomness.</li>
-<li>The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational numbers or transcendental functions. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations are rational numbers of arbitrary precision.  The more implicitly the algorithm works with irrational numbers or transcendental functions, the better.)</li>
+<li>The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational numbers or transcendental functions. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations are rational numbers of arbitrary precision.  However, the more implicitly the algorithm works with irrational numbers or transcendental functions, the better.)</li>
 <li>The algorithm may use rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby), as long as the arithmetic is exact.</li>
 <li>If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>, where <em>b</em> is the PSRN&#39;s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the rightmost sampled digit of the PSRN&#39;s fractional part.  ((Devroye and Gravel 2020)[^3] suggests Wasserstein distance, or &quot;earth-mover distance&quot;, as the distance to use for this purpose.) The number has to be close this way even if the algorithm&#39;s caller later samples unsampled digits of that PSRN at random (for example, uniformly at random in the case of a uniform PSRN).</li>
-<li>If the algorithm fills a PSRN&#39;s unsampled fractional digits at random (for example, uniformly at random in the case of a uniform PSRN), so that the number&#39;s fractional part has <em>m</em> digits, the number&#39;s distribution must remain close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>.</li>
+<li>After the algorithm outputs a PSRN, if the algorithm&#39;s caller fills a PSRN&#39;s unsampled fractional digits at random (for example, uniformly at random in the case of a uniform PSRN), so that the number&#39;s fractional part has <em>m</em> digits, the number&#39;s distribution must remain close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>.</li>
 </ol>
 
 <blockquote>
@@ -771,7 +771,15 @@
 <li>Let <code>sign</code> be -1 if the PSRN&#39;s sign is negative, or 1 otherwise; let <code>ipart</code> be the PSRN&#39;s integer part; and let <code>bag</code> be the PSRN&#39;s fractional part.  Take the first <code>p</code> digits of <code>bag</code> and return <code>sign</code> * (<code>ipart</code> + bag[0] * <em>b</em><sup>&minus;0&minus;1</sup> + bag[1] * <em>b</em><sup>&minus;1&minus;1</sup> + ... + bag[<code>p</code>&minus;1] * <em>b</em><sup>&minus;(<code>p</code>&minus;1)&minus;1</sup>), where <em>b</em> is the base, or radix.</li>
 </ol>
 
-<p>After step 2, if it somehow happens that digits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice. (For example, if <code>p</code> is 4, <em>b</em> is 10, and the PSRN is 0.3437500... or 0.3438500..., it could use a round-to-nearest mode to round the PSRN to the number 0.3438 or 0.3439, respectively; because this is a PSRN with an &quot;infinite&quot; but unsampled digit expansion, there is no tie-breaking such as &quot;ties to even&quot; applied here.)</p>
+<p>After step 2, if it somehow happens that digits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to&mdash;</p>
+
+<ul>
+<li>fill all unsampled digits between the first and the last set digit,</li>
+<li>round the number represented by the PSRN to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice (and without further modifying the PSRN), and</li>
+<li>returning the rounded number.</li>
+</ul>
+
+<p>For example, if <code>p</code> is 4, <em>b</em> is 10, and the PSRN is 0.3437500... or 0.3438500..., the implementation could use a round-to-nearest mode to round the number that the PSRN represents to the number 0.3438 or 0.3439, respectively, and return the rounded number; because this is a PSRN with an &quot;infinite&quot; but unsampled digit expansion, there is no tie-breaking such as &quot;ties to even&quot; applied here.</p>
 
 <p><a id=kthsmallest></a></p>
 
@@ -1959,7 +1967,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <li><em>f</em>(<em>&lambda;</em>) is continuous and polynomially bounded on its domain (polynomially bounded means that both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em>),</li>
 </ul>
 
-<p>and they show that 2 * <em>&lambda;</em>, where 0 &le; <em>&lambda;</em> &lt; 1/2, is one function that does not admit a Bernoulli factory.  <em>f</em>(<em>&lambda;</em>) can be a constant, including an irrational number; see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>&quot; for ways to simulate constant probabilities.</p></li>
+<p>and they show that 2 * <em>&lambda;</em>, where 0 &le; <em>&lambda;</em> &lt; 1/2, is one function that does not admit a Bernoulli factory.  <em>f</em>(<em>&lambda;</em>) can be a constant, including an irrational number; see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_Specific_Constants"><strong>Algorithms for Specific Constants</strong></a>&quot; for ways to simulate constant probabilities.</p></li>
 <li>If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part <em>n</em> digits (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the PSRN.</li>
 </ol>
 
