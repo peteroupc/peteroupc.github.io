@@ -185,18 +185,18 @@ PSRNs could also be implemented via rejection from the exponential distribution.
 <a id=Properties></a>
 ### Properties
 
-An algorithm that samples from a non-discrete distribution using PSRNs has the following properties:
+An algorithm that samples from a non-discrete distribution[^64] using PSRNs has the following properties:
 
 1. The algorithm relies only on a source of independent and unbiased random bits for randomness.
 2. The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational numbers or transcendental functions. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations are rational numbers of arbitrary precision.  However, the more implicitly the algorithm works with irrational numbers or transcendental functions, the better.)
 3. The algorithm may use rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby), as long as the arithmetic is exact.
-4. If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the algorithm's ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the position, starting from 1, of the rightmost sampled digit of the PSRN's fractional part.  ((Devroye and Gravel 2020\)[^3] suggests Wasserstein distance, or "earth-mover distance", as the distance to use for this purpose.) The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (for example, uniformly at random in the case of a uniform PSRN).
-5. After the algorithm outputs a PSRN, if the algorithm's caller fills the PSRN's unsampled fractional digits at random (for example, uniformly at random in the case of a uniform PSRN), so that the PSRN's fractional part's first _m_ digits are sampled, the PSRN's distribution must remain close to the algorithm's ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>.
+4. If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the algorithm's ideal distribution by a distance of not more than 1/(_b_<sup>_m_</sup>), where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the position, starting from 1, of the rightmost sampled digit of the PSRN's fractional part.  ((Devroye and Gravel 2020\)[^3] suggests Wasserstein distance, or "earth-mover distance", as the distance to use for this purpose.) The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (for example, uniformly at random in the case of a uniform PSRN).
+5. After the algorithm outputs a PSRN, if the algorithm's caller fills the PSRN's unsampled fractional digits at random (for example, uniformly at random in the case of a uniform PSRN), so that the PSRN's fractional part's first _m_ digits are sampled, the PSRN's distribution must remain close to the algorithm's ideal distribution by a distance of not more than 1/(_b_<sup>_m_</sup>).
 
 > **Example**:  Suppose an algorithm samples from a normal distribution using base-2 uniform PSRNs.  If it outputs a PSRN whose fractional part's first three digits are sampled, the PSRN's distribution must be within a distance of&mdash;
 >
-> - 2<sup>3</sup> to the ideal normal distribution at the time the PSRN is output, and
-> - 2<sup>6</sup> to the ideal normal distribution if the caller later inserts three more uniform random bits to the end of the PSRN's fractional part.
+> - 1/(2<sup>3</sup>) to the ideal normal distribution at the time the PSRN is output, and
+> - 1/(2<sup>6</sup>) to the ideal normal distribution if the caller later inserts three more uniform random bits to the end of the PSRN's fractional part.
 >
 > **Notes:**
 >
@@ -2307,6 +2307,8 @@ The following are some additional articles I have written on the topic of random
 [^62]: George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .
 
 [^63]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.
+
+[^64]: A _non-discrete distribution_ is a probability distribution taking on values that each can't be mapped to a different integer.  An example is a distribution taking on any real number between 0 and 1.
 
 <a id=Appendix></a>
 ## Appendix
