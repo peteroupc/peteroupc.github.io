@@ -46,17 +46,19 @@ Here are my goals for both articles:
 ## Bernoulli Factory Algorithms and Partially-Sampled Random Numbers
 
 - [**https://peteroupc.github.io/bernoulli.html**](https://peteroupc.github.io/bernoulli.html)
-- [**https://peteroupc.github.io/exporand.html**](https://peteroupc.github.io/exporand.html)
 
 The first page shows algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O'Brien 1994\)[^1].
 
 For open questions, see "[**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)".
 
+- [**https://peteroupc.github.io/exporand.html**](https://peteroupc.github.io/exporand.html)
+
 The second page describes a structure for storing a random variate.
 
 1. We would like to see new implementations of the following:
     - Algorithms that implement **InShape** for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
-    - Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
+    - Descriptions of algorithms for non-discrete distributions that satisfy the [**properties for partially-sampled random number algorithms**](https://peteroupc.github.io/exporand.html#Properties).
+    - Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "[**Building an Arbitrary-Precision Sampler**](#https://peteroupc.github.io/exporand.html#Building_an_Arbitrary_Precision_Sampler)".
 3. Take a polynomial _f_(_&lambda;_) of even degree _n_ of the form choose(_n_,_n_/2)\*_&lambda;_<sup>_n_/2</sup>\*(1&minus;_&lambda;_)<sup>_n_/2</sup>\*_k_, where _k_ is greater than 1 (thus all _f_'s Bernstein coefficients are 0 except for the middle one, which equals _k_).  Suppose _f_(1/2) lies in the interval (0, 1).  If we do the degree elevation enough times (at least _r_ times), then _f_'s Bernstein coefficients will all lie in [0, 1].  The question is: how many degree elevations are enough?  A [**MathOverflow answer**](https://mathoverflow.net/questions/381419/on-the-degree-elevation-needed-to-bring-bernstein-coefficients-to-0-1) showed that _r_ is at least _m_ = (_n_/_f_(1/2)<sup>2</sup>)/(1&minus;_f_(1/2)<sup>2</sup>), but is it true that floor(_m_)+1 elevations are enough?
 
 For other open questions, see "[**Other Open Questions on Probability**](https://peteroupc.github.io/requestsother.html)".
