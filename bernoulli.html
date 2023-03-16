@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/03/15"><meta name="citation_online_date" content="2023/03/15"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/03/16"><meta name="citation_online_date" content="2023/03/16"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -100,6 +100,7 @@
 <li><a href="#expit__z__or_1_minus_1_1_exp__z__or_exp__z__1_exp__z__or_1_1_exp_minus__z"><strong>expit(<em>z</em>) or 1&minus;1/(1+exp(<em>z</em>)) or exp(<em>z</em>)/(1+exp(<em>z</em>)) or 1/(1+exp(&minus;<em>z</em>))</strong></a></li>
 <li><a href="#expit__z__2_minus_1_or_tanh__z__2"><strong>expit(<em>z</em>)*2 &minus; 1 or tanh(<em>z</em>/2)</strong></a></li>
 <li><a href="#lambda___exp__z____lambda___exp__z__1_minus___lambda___or___lambda___exp__z__1___lambda___exp__z__minus_1"><strong><em>&lambda;</em>*exp(<em>z</em>) / (<em>&lambda;</em>*exp(<em>z</em>) + (1 &minus; <em>&lambda;</em>)) or <em>&lambda;</em>*exp(<em>z</em>) / (1 + <em>&lambda;</em>*(exp(<em>z</em>) &minus; 1))</strong></a></li>
+<li><a href="#1_exp__z__minus_1_1_exp__z"><strong>(1 + exp(<em>z</em> &minus; 1)) / (1 + exp(<em>z</em>))</strong></a></li>
 <li><a href="#1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m"><strong>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</strong></a></li>
 <li><a href="#1_2__x___y____lambda___or_exp_minus___lambda___ln_2_x___y"><strong>1/(2<sup>(<em>x</em>/<em>y</em>)*(<em>&lambda;</em>)</sup>) or exp(&minus;(<em>&lambda;</em>)*ln(2<sup><em>x</em>/<em>y</em></sup>))</strong></a></li>
 <li><a href="#Two_Coin_Algorithm__c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d"><strong>Two-Coin Algorithm (<em>c</em> * <em>&lambda;</em> * <em>&beta;</em> / (<em>&beta;</em> * (<em>c</em> * <em>&lambda;</em> + <em>d</em> * <em>&mu;</em>) &minus; (<em>&beta;</em> &minus; 1) * (<em>c</em> + <em>d</em>)))</strong></a></li>
@@ -158,8 +159,6 @@
 <li><a href="#pi___minus_3_4"><strong>(<em>&pi;</em> &minus; 3)/4</strong></a></li>
 <li><a href="#pi___minus_3"><strong><em>&pi;</em> &minus; 3</strong></a></li>
 <li><a href="#1___pi"><strong>1 / <em>&pi;</em></strong></a></li>
-<li><a href="#a___b___x___y"><strong>(<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong></a></li>
-<li><a href="#exp_minus__x___y"><strong>exp(&minus;<em>x</em>/<em>y</em>)</strong></a></li>
 <li><a href="#a___b___z"><strong>(<em>a</em>/<em>b</em>)<sup><em>z</em></sup></strong></a></li>
 <li><a href="#1_exp_1__c__minus_2"><strong>1/(exp(1) + <em>c</em> &minus; 2)</strong></a></li>
 <li><a href="#exp_1_minus_2"><strong>exp(1) &minus; 2</strong></a></li>
@@ -1290,7 +1289,7 @@
 
 <ol>
 <li>Mendo (2020/2021)[^38] as well as Carvalho and Moreira (2022)[^39] discuss how to find error bounds on &quot;cutting off&quot; a series that work for many infinite series.  This can be helpful in finding the appropriate sequences <em>a</em> and <em>err</em> needed for the first algorithm in this section.</li>
-<li>If a number is known a simple continued fraction whose partial denominators are integers, Citterio and Pavani (2016)[^75] show how to calculate lower and upper bounds for that number.  The bounds will be rational numbers whose numerator has at most a given number of digits.</li>
+<li>If a number is known as a simple continued fraction whose partial denominators are integers, Citterio and Pavani (2016)[^75] show how to calculate lower and upper bounds for that number.  The bounds will be rational numbers whose numerator has at most a given number of digits.</li>
 </ol>
 
 <p><strong>Examples</strong>:</p>
@@ -1683,7 +1682,21 @@
 <p>The <strong>ExpMinus</strong> algorithm is as follows.  To flip a coin with probability of heads of exp(&minus;<em>z</em>):</p>
 
 <ul>
-<li>In case 1, use the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong>.</li>
+<li><p>In case 1, use the following algorithm (Canonne et al. 2020)[^53]:</p>
+
+<ol>
+<li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
+<li>If <code>x &gt; y</code> (so <em>x</em>/<em>y</em> is greater than 1), call this algorithm (recursively) <code>floor(x/y)</code> times with <em>x</em> = <em>y</em> = 1 and once with <em>x</em> = <em>x</em> &minus; floor(<em>x</em>/<em>y</em>) * <em>y</em> and <em>y</em> = <em>y</em>.  Return 1 if all these calls return 1; otherwise, return 0.</li>
+<li>Set <em>r</em> to 1 and <em>i</em> to 1.</li>
+<li>Return <em>r</em> with probability (<em>y</em> * <em>i</em> &minus; <em>x</em>) / (<em>y</em> * <em>i</em>).</li>
+<li>Set <em>r</em> to 1 &minus; <em>r</em>, add 1 to <em>i</em>, and go to step 4.</li>
+</ol>
+
+<p>Or the following algorithm:</p>
+
+<ul>
+<li>If <em>x</em> is 0, return 1.  Otherwise, generate <em>N</em>, a Poisson random variate with mean <em>x</em>/<em>y</em> (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot; for one way to do this), and return a number that is 1 if <em>N</em> is 0, or 0 otherwise.</li>
+</ul></li>
 <li>In case 2, use case 2 of the <strong>algorithm for exp(&minus;(<em>&lambda;</em> * <em>z</em>))</strong> with parameter <em>z</em>, where <em>&lambda;</em> represents a coin that always returns 1.</li>
 <li>In case 3, rewrite the <em>z</em> parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of the <strong>ExpMinus</strong> algorithm with that number as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.  (See also (Canonne et al. 2020)[^53].)</li>
 </ul>
@@ -1693,8 +1706,8 @@
 
 <ul>
 <li>Parameter <em>&pi;</em>:  Run the <strong>algorithm for exp(&minus;(<em>&lambda;</em> * <em>z</em>))</strong>, four times, with parameter <em>z</em> = 0 + <em>&nu;</em>, where <em>&nu;</em> is a Bernoulli factory for (<em>&pi;</em>/4), and <em>&lambda;</em> represents a coin that always returns 1.  If any of these runs returns 0, return 0; otherwise, return 1.</li>
-<li>Parameter 3: Run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> where <em>x</em>=3 and <em>y</em>=1.</li>
-<li>Parameter 7/5: Run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> where <em>x</em>=7 and <em>y</em>=5.</li>
+<li>Parameter 3: Run case 1 of the algorithm where <em>x</em>=3 and <em>y</em>=1.</li>
+<li>Parameter 7/5: Run case 1 of the algorithm where <em>x</em>=7 and <em>y</em>=5.</li>
 </ul>
 
 <p><strong>Note:</strong> exp(&minus;<em>z</em>) = exp(1&minus;<em>z</em>)/exp(1) = 1/exp(<em>z</em>).</p>
@@ -1805,7 +1818,7 @@
 
 <h4>(1 &minus; exp(&minus;(<em>m</em> + <em>&lambda;</em>))) / (<em>m</em> + <em>&lambda;</em>)</h4>
 
-<p>In this algorithm, <em>m</em> + <em>&lambda;</em> must be 0 or greater.</p>
+<p>In this algorithm, <em>m</em> + <em>&lambda;</em> must be greater than 0.</p>
 
 <ol>
 <li>If <em>m</em> = 0, run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.</li>
@@ -1844,7 +1857,7 @@
 
 <h4>expit(<em>z</em>)*2 &minus; 1 or tanh(<em>z</em>/2)</h4>
 
-<p>In this algorithm, <em>z</em> must be 0 or greater.</p>
+<p>In this algorithm, <em>z</em> is 0 or greater and is written in one of the ways described in the <a href="#ExpMinus_exp_minus__z"><strong>&quot;ExpMinus&quot; section</strong></a>.</p>
 
 <ul>
 <li>Do the following process repeatedly, until this algorithm returns a value:
@@ -1866,7 +1879,7 @@
 <p>In this algorithm:</p>
 
 <ul>
-<li><em>z</em> is an &quot;exponential shift&quot; (Peres et al. 2021)[^55] or &quot;exponential twist&quot; (Sadowsky and Bucklew 1990)[^56].</li>
+<li><em>z</em> is an &quot;exponential shift&quot; (Peres et al. 2021)[^55] or &quot;exponential twist&quot; (Sadowsky and Bucklew 1990)[^56]. Its absolute value is written in one of the ways described in the <a href="#ExpMinus_exp_minus__z"><strong>&quot;ExpMinus&quot; section</strong></a>.</li>
 <li><em>&lambda;</em> is a coin that shows heads with probability equal to the probability to be shifted.</li>
 </ul>
 
@@ -1883,6 +1896,34 @@
 
 <blockquote>
 <p><strong>Note:</strong> This is also a special case of the two-coin algorithm, where <em>&beta;</em>=1, <em>c</em>=exp(<em>z</em>), <em>d</em>=1, <em>&lambda;</em> = <em>&lambda;</em>, and <em>&mu;</em> = 1 &minus; <em>&lambda;</em>.</p>
+</blockquote>
+
+<p><a id=1_exp__z__minus_1_1_exp__z></a></p>
+
+<h4>(1 + exp(<em>z</em> &minus; 1)) / (1 + exp(<em>z</em>))</h4>
+
+<p>In this algorithm, <em>z</em> is a number (positive or not), and its absolute value is written in one of the ways described in the <a href="https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z"><strong>ExpMinus section</strong></a>&quot;.</p>
+
+<ul>
+<li>If <em>z</em> is known to be 0 or greater:
+
+<ul>
+<li>Run the <strong>ExpMinus</strong> algorithm with parameter 1, then run the <strong>expit(<em>z</em>)</strong> algorithm with parameter <em>z</em>.  If the <strong>ExpMinus</strong> run returns 1 and the <strong>expit</strong> run returns 0, return 0.  Otherwise, return 1.</li>
+</ul></li>
+<li>If <em>z</em> is known to be 0 or less:
+
+<ul>
+<li>Run the <strong>ExpMinus</strong> algorithm with parameter 1, then run the <strong>expit(<em>z</em>)</strong> algorithm with parameter abs(<em>z</em>).  If both runs return 0, return 0.  Otherwise, return 1.</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>(1 + exp(<em>z</em>&minus;1)) / (1 + exp(<em>z</em>)) = $1-\frac{1 - e^{-1}}{e^{-z} + 1}$. (1 + exp(1&minus;1)) / (1 + exp(1)) = 2 / (1 + exp(2)) = (1 + exp(0)) / (1 + exp(1)).</li>
+<li>For the similar function <strong>(1 + exp(<em>z</em>)) / (1 + exp(<em>z</em>+1))</strong>, use this algorithm, except add 1 to <em>z</em> (if <em>z</em> is written as an integer and fractional part, add 1 to the integer part; if written as a sum of numbers, append 1 to those numbers).</li>
+</ol>
 </blockquote>
 
 <p><a id=1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a></p>
@@ -2501,7 +2542,7 @@
 <ol>
 <li> Special cases: If <em>i</em> is 0, return 1.  If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em> and <em>i</em> equals 1, flip the input coin and return the result.</li>
 <li>Special case: If <em>x</em> is less than <em>y</em> and <em>i</em> = 1, then do the following: &quot;With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise return 0.&quot;</li>
-<li>Special case: If <em>x</em> is less than <em>y</em>, then create a secondary coin that does the following: &quot;With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise return 0&quot;, then run the <strong>algorithm for</strong> <a href="#lambda___x___y"><strong><em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong></a> with <em>x</em>=<em>i</em>, <em>y</em>=1, and <em>&lambda;</em> being the secondary coin, then return the result of that run.</li>
+<li>Special case: If <em>x</em> is less than <em>y</em>, then create a secondary coin that does the following: &quot;With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise return 0&quot;, then flip the secondary coin <em>i</em> times until a flip returns 0, whichever comes first, then return a number that is 1 if all the flips, including the last, return 1, or 0 otherwise.</li>
 <li>Set <em>t</em> to 355/100 and <em>c</em> to <em>x</em>/<em>y</em>.</li>
 <li>While <em>i</em> is not 0:
 
@@ -2510,7 +2551,7 @@
 
 <ol>
 <li>Set <em>&beta;</em> to (1 &minus; <em>&#x03F5;</em> / 2) / (1 &minus; <em>&#x03F5;</em>).</li>
-<li>Run the <strong>algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong> (given in the irrational constants section) with <em>a</em>=1, <em>b</em>=<em>&beta;</em>, <em>x</em>=<em>i</em>, and <em>y</em>=1.  If the run returns 0, return 0.</li>
+<li>Run the <strong>algorithm for (<em>a</em>/<em>b</em>)<sup><em>z</em></sup></strong> (given in the irrational constants section) with <em>a</em>=1, <em>b</em>=<em>&beta;</em>, and <em>z</em> = <em>i</em>.  If the run returns 0, return 0.</li>
 <li>Multiply <em>c</em> by <em>&beta;</em>, then divide <em>&#x03F5;</em> by 2.</li>
 </ol></li>
 <li>Run the <strong>logistic Bernoulli factory</strong> with <em>c</em>/<em>d</em> = <em>c</em>, then set <em>z</em> to the result.  Set <em>i</em> to <em>i</em> + 1 &minus; <em>z</em> * 2.</li>
@@ -2956,22 +2997,28 @@ kind of irrational number.</p>
 
 <p>For a sketch of how this algorithm is derived, see the appendix.</p>
 
-<p><a id=a___b___x___y></a></p>
+<p><a id=a___b___z></a></p>
 
-<h4>(<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></h4>
+<h4>(<em>a</em>/<em>b</em>)<sup><em>z</em></sup></h4>
 
-<p>In the algorithm below, <em>a</em>, <em>b</em>, <em>x</em>, and <em>y</em> are integers, and the case where 0 &lt; <em>x</em>/<em>y</em> &lt; 1 is due to recent work by Mendo (2019)[^25].  This algorithm works only if&mdash;</p>
+<p>In the algorithm below:</p>
 
 <ul>
-<li> <em>x</em>/<em>y</em> is 0 or greater, and 0 &le; <em>a</em>/<em>b</em> &le; 1, or</li>
-<li> <em>x</em>/<em>y</em> is less than 0, and <em>a</em>/<em>b</em> is 1 or greater.</li>
+<li><em>a</em> &ge; 0 is an integer.</li>
+<li><em>b</em> &gt; 0 is an integer.</li>
+<li>z is a number (positive or not), and its absolute value (abs(<em>z</em>)) is written as a rational number (case 1), as an integer and fractional part (case 2), or as a sum of positive numbers (case 3), as described in the <a href="#ExpMinus_exp_minus__z"><strong>&quot;ExpMinus&quot; section</strong></a>.</li>
+<li> If <em>z</em> is known to be 0 or greater then it must be that 0 &le; <em>a</em>/<em>b</em> &le; 1, or</li>
+<li> If <em>z</em> is known to be less than 0, then it must be that <em>a</em>/<em>b</em> &ge; 1.</li>
 </ul>
 
 <p>The algorithm follows.</p>
 
+<ul>
+<li>In case 1 (<em>z</em> = <em>x</em>/<em>y</em>):
+
 <ol>
-<li>If <em>x</em>/<em>y</em> is less than 0, swap <em>a</em> and <em>b</em>, and remove the sign from <em>x</em>/<em>y</em>.  If <em>a</em>/<em>b</em> is now less than 0 or greater than 1, return an error.</li>
-<li>If <em>x</em>/<em>y</em> is equal to 1, return 1 with probability <em>a</em>/<em>b</em> and 0 otherwise.</li>
+<li>If <em>z</em> is known to be less than 0, swap <em>a</em> and <em>b</em>, and remove the sign from <em>z</em>.  If <em>a</em>/<em>b</em> is now less than 0 or greater than 1, return an error.</li>
+<li>If <em>x</em> equals <em>y</em>, return 1 with probability <em>a</em>/<em>b</em> and 0 otherwise.</li>
 <li>If <em>x</em> is 0, return 1.  Otherwise, if <em>a</em> is 0, return 0.  Otherwise, if <em>a</em> equals <em>b</em>, return 1.</li>
 <li>If <em>x</em>/<em>y</em> is greater than 1:
 
@@ -2981,44 +3028,23 @@ kind of irrational number.</p>
 <li>If <em>ipart</em> is 1 or greater, generate at random a number that is 1 with probability <em>a</em><sup><em>ipart</em></sup>/<em>b</em><sup><em>ipart</em></sup> or 0 otherwise. (Or generate, at random, <em>ipart</em> many numbers that are each 1 with probability <em>a</em>/<em>b</em> or 0 otherwise, then multiply them all into one number.)  If that number is 0, return 0.</li>
 <li>Return 1.</li>
 </ol></li>
-<li>Set <em>i</em> to 1.</li>
+<li>(Note on steps 5 to 8: This case where 0 &lt; <em>x</em>/<em>y</em> &lt; 1 is due to recent work by Mendo (2019)[^25].) Set <em>i</em> to 1.</li>
 <li>With probability <em>a</em>/<em>b</em>, return 1.</li>
 <li>Otherwise, with probability <em>x</em>/(<em>y</em>*<em>i</em>), return 0.</li>
 <li>Add 1 to <em>i</em> and go to step 6.</li>
-</ol>
-
-<p><a id=exp_minus__x___y></a></p>
-
-<h4>exp(&minus;<em>x</em>/<em>y</em>)</h4>
-
-<p>This algorithm takes integers <em>x</em> &ge; 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)[^53].</p>
-
-<ol>
-<li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
-<li>If <code>x &gt; y</code> (so <em>x</em>/<em>y</em> is greater than 1), call this algorithm (recursively) <code>floor(x/y)</code> times with <em>x</em> = <em>y</em> = 1 and once with <em>x</em> = <em>x</em> &minus; floor(<em>x</em>/<em>y</em>) * <em>y</em> and <em>y</em> = <em>y</em>.  Return 1 if all these calls return 1; otherwise, return 0.</li>
-<li>Set <em>r</em> to 1 and <em>i</em> to 1.</li>
-<li>Return <em>r</em> with probability (<em>y</em> * <em>i</em> &minus; <em>x</em>) / (<em>y</em> * <em>i</em>).</li>
-<li>Set <em>r</em> to 1 &minus; <em>r</em>, add 1 to <em>i</em>, and go to step 4.</li>
-</ol>
-
-<p><a id=a___b___z></a></p>
-
-<h4>(<em>a</em>/<em>b</em>)<sup><em>z</em></sup></h4>
-
-<p>This algorithm is similar to the previous algorithm for powering, except that the exponent, <em>z</em>,  can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. This algorithm makes use of a similar identity as for <code>exp</code> and works only if <em>z</em> is 0 or greater and if 0 &le; (<em>a</em>/<em>b</em>) &le; 1.</p>
-
-<p>Decompose <em>z</em> into <em>LC</em>[<em>i</em>], <em>LI</em>[<em>i</em>], and <em>LF</em>[<em>i</em>] just as for the <strong>exp(&minus; <em>z</em>)</strong> algorithm.  The algorithm is then as follows.</p>
-
-<ul>
-<li>If <em>z</em> is 0, return 1.  Otherwise, if <em>a</em> is 0, return 0.  Otherwise, for each component <em>LC</em>[<em>i</em>] (until the algorithm returns a number):
-
-<ol>
-<li>Call the <strong>algorithm for  (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong> with <em>a</em> = <em>a</em>, <em>b</em> = <em>b</em>, <em>x</em> = <em>LI</em>[<em>i</em>] and <em>y</em> = 1.  If it returns 0, return 0.</li>
-<li>Set <em>j</em> to 1.</li>
-<li>Generate a number that is 1 with probability <em>a</em>/<em>b</em> and 0 otherwise.  If that number is 1, abort these steps and move on to the next component or, if there are no more components, return 1.</li>
-<li>Flip the input coin that simulates  <em>LF</em>[<em>i</em>] (which is the exponent); if it returns 1, return 0 with probability 1/<em>j</em>.</li>
-<li>Add 1 to <em>j</em> and go to substep 2.</li>
 </ol></li>
+<li>In case 2 (abs(<em>z</em>) = <em>m</em> + <em>&nu;</em>; here, 0 &lt; <em>&nu;</em> &le; 1):
+
+<ol>
+<li>If <em>z</em> is known to be less than 0, swap <em>a</em> and <em>b</em>, and remove the sign from <em>z</em>.  If <em>a</em>/<em>b</em> is now less than 0 or greater than 1, return an error.</li>
+<li>If <em>a</em> is 0 and <em>m</em> is not 0, return 0.  If <em>a</em> equals <em>b</em>, return 1.</li>
+<li>If <em>m</em> is 1 or greater, generate at random a number that is 1 with probability <em>a</em><sup><em>m</em></sup>/<em>b</em><sup><em>m</em></sup> or 0 otherwise. (Or generate, at random, <em>m</em> many numbers that are each 1 with probability <em>a</em>/<em>b</em> or 0 otherwise, then multiply them all into one number.)  If that number is 0, return 0.</li>
+<li>(Note on steps 4 to 7: This case where 0 &lt; <em>z</em> &lt; 1 is due to recent work by Mendo (2019)[^25].) Set <em>i</em> to 1.</li>
+<li>With probability <em>a</em>/<em>b</em>, return 1.</li>
+<li>Flip the <em>&nu;</em> input coin.  If it returns 0, return 0 with probability 1/<em>i</em>.</li>
+<li>Add 1 to <em>i</em> and go to step 6.</li>
+</ol></li>
+<li>In case 3, rewrite the <em>z</em> parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of this algorithm with that number as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.</li>
 </ul>
 
 <p><a id=1_exp_1__c__minus_2></a></p>

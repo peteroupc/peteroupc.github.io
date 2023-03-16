@@ -70,6 +70,7 @@ Comments on other aspects of this document are welcome.
         - [**expit(_z_) or 1&minus;1/(1+exp(_z_)) or exp(_z_)/(1+exp(_z_)) or 1/(1+exp(&minus;_z_))**](#expit__z__or_1_minus_1_1_exp__z__or_exp__z__1_exp__z__or_1_1_exp_minus__z)
         - [**expit(_z_)\*2 &minus; 1 or tanh(_z_/2)**](#expit__z__2_minus_1_or_tanh__z__2)
         - [**_&lambda;_\*exp(_z_) / (_&lambda;_\*exp(_z_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_z_) / (1 + _&lambda;_\*(exp(_z_) &minus; 1))**](#lambda___exp__z____lambda___exp__z__1_minus___lambda___or___lambda___exp__z__1___lambda___exp__z__minus_1)
+        - [**(1 + exp(_z_ &minus; 1)) / (1 + exp(_z_))**](#1_exp__z__minus_1_1_exp__z)
         - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
         - [**1/(2<sup>(_x_/_y_)\*(_&lambda;_)</sup>) or exp(&minus;(_&lambda;_)\*ln(2<sup>_x_/_y_</sup>))**](#1_2__x___y____lambda___or_exp_minus___lambda___ln_2_x___y)
         - [**Two-Coin Algorithm (_c_ * _&lambda;_ * _&beta;_ / (_&beta;_ * (_c_ * _&lambda;_ + _d_ * _&mu;_) &minus; (_&beta;_ &minus; 1) * (_c_ + _d_)))**](#Two_Coin_Algorithm__c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d)
@@ -122,8 +123,6 @@ Comments on other aspects of this document are welcome.
         - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
         - [**_&pi;_ &minus; 3**](#pi___minus_3)
         - [**1 / _&pi;_**](#1___pi)
-        - [**(_a_/_b_)<sup>_x_/_y_</sup>**](#a___b___x___y)
-        - [**exp(&minus;_x_/_y_)**](#exp_minus__x___y)
         - [**(_a_/_b_)<sup>_z_</sup>**](#a___b___z)
         - [**1/(exp(1) + _c_ &minus; 2)**](#1_exp_1__c__minus_2)
         - [**exp(1) &minus; 2**](#exp_1_minus_2)
@@ -824,7 +823,7 @@ The case when the sequence _a_ converges to a _natural logarithm_ rather than a 
 > **Notes:**
 >
 > 1. Mendo (2020/2021\)[^38] as well as Carvalho and Moreira (2022)[^39] discuss how to find error bounds on "cutting off" a series that work for many infinite series.  This can be helpful in finding the appropriate sequences _a_ and _err_ needed for the first algorithm in this section.
-> 2. If a number is known a simple continued fraction whose partial denominators are integers, Citterio and Pavani (2016)[^75] show how to calculate lower and upper bounds for that number.  The bounds will be rational numbers whose numerator has at most a given number of digits.
+> 2. If a number is known as a simple continued fraction whose partial denominators are integers, Citterio and Pavani (2016)[^75] show how to calculate lower and upper bounds for that number.  The bounds will be rational numbers whose numerator has at most a given number of digits.
 >
 > **Examples**:
 >
@@ -1077,15 +1076,24 @@ In this document, the **ExpMinus** algorithm is a Bernoulli factory taking a par
 
 The **ExpMinus** algorithm is as follows.  To flip a coin with probability of heads of exp(&minus;_z_):
 
-- In case 1, use the **algorithm for exp(&minus;_x_/_y_)**.
+- In case 1, use the following algorithm (Canonne et al. 2020\)[^53]:
+    1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
+    2. If `x > y` (so _x_/_y_ is greater than 1), call this algorithm (recursively) `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ &minus; floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
+    3. Set _r_ to 1 and _i_ to 1.
+    4. Return _r_ with probability (_y_ \* _i_ &minus; _x_) / (_y_ \* _i_).
+    5. Set _r_ to 1 &minus; _r_, add 1 to _i_, and go to step 4.
+
+    Or the following algorithm:
+
+    - If _x_ is 0, return 1.  Otherwise, generate _N_, a Poisson random variate with mean _x_/_y_ (see "[**Poisson Distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution)" for one way to do this), and return a number that is 1 if _N_ is 0, or 0 otherwise.
 - In case 2, use case 2 of the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** with parameter _z_, where _&lambda;_ represents a coin that always returns 1.
 - In case 3, rewrite the _z_ parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of the **ExpMinus** algorithm with that number as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.  (See also (Canonne et al. 2020\)[^53].)
 
 > **Examples:** The **ExpMinus** algorithm with the following parameters can be implemented as follows:
 >
 > - Parameter _&pi;_:  Run the **algorithm for exp(&minus;(_&lambda;_ \* _z_))**, four times, with parameter _z_ = 0 + _&nu;_, where _&nu;_ is a Bernoulli factory for (_&pi;_/4), and _&lambda;_ represents a coin that always returns 1.  If any of these runs returns 0, return 0; otherwise, return 1.
-> - Parameter 3: Run the **algorithm for exp(&minus;_x_/_y_)** where _x_=3 and _y_=1.
-> - Parameter 7/5: Run the **algorithm for exp(&minus;_x_/_y_)** where _x_=7 and _y_=5.
+> - Parameter 3: Run case 1 of the algorithm where _x_=3 and _y_=1.
+> - Parameter 7/5: Run case 1 of the algorithm where _x_=7 and _y_=5.
 >
 > **Note:** exp(&minus;_z_) = exp(1&minus;_z_)/exp(1) = 1/exp(_z_).
 
@@ -1161,7 +1169,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater unless no
 <a id=1_minus_exp_minus__m____lambda____m____lambda></a>
 #### (1 &minus; exp(&minus;(_m_ + _&lambda;_))) / (_m_ + _&lambda;_)
 
-In this algorithm, _m_ + _&lambda;_ must be 0 or greater.
+In this algorithm, _m_ + _&lambda;_ must be greater than 0.
 
 1. If _m_ = 0, run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
 2. (_m_>0.) Run the **ExpMinus** algorithm with parameter _z_ = _m_ + _&lambda;_.  If it returns 1, return 0.
@@ -1186,7 +1194,7 @@ _z_ is a number (positive or not) whose absolute value (abs(_z_)) is written in 
 <a id=expit__z__2_minus_1_or_tanh__z__2></a>
 #### expit(_z_)\*2 &minus; 1 or tanh(_z_/2)
 
-In this algorithm, _z_ must be 0 or greater.
+In this algorithm, _z_ is 0 or greater and is written in one of the ways described in the [**"ExpMinus" section**](#ExpMinus_exp_minus__z).
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Run the **ExpMinus** algorithm with parameter _z_.  Let _r_ be the result of that run.
@@ -1199,7 +1207,7 @@ In this algorithm, _z_ must be 0 or greater.
 
 In this algorithm:
 
-- _z_ is an "exponential shift" (Peres et al. 2021\)[^55] or "exponential twist" (Sadowsky and Bucklew 1990)[^56].
+- _z_ is an "exponential shift" (Peres et al. 2021\)[^55] or "exponential twist" (Sadowsky and Bucklew 1990)[^56]. Its absolute value is written in one of the ways described in the [**"ExpMinus" section**](#ExpMinus_exp_minus__z).
 - _&lambda;_ is a coin that shows heads with probability equal to the probability to be shifted.
 
 The algorithm follows:
@@ -1209,6 +1217,21 @@ The algorithm follows:
     2. Run the algorithm for **expit(_z_)** with _z_=_z_. If the run returns 1 and if _flip_ is 1, return 1.  If the run returns 0 and if _flip_ is 0, return 0.
 
 > **Note:** This is also a special case of the two-coin algorithm, where _&beta;_=1, _c_=exp(_z_), _d_=1, _&lambda;_ = _&lambda;_, and _&mu;_ = 1 &minus; _&lambda;_.
+
+<a id=1_exp__z__minus_1_1_exp__z></a>
+#### (1 + exp(_z_ &minus; 1)) / (1 + exp(_z_))
+
+In this algorithm, _z_ is a number (positive or not), and its absolute value is written in one of the ways described in the [**ExpMinus section**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z)".
+
+- If _z_ is known to be 0 or greater:
+    - Run the **ExpMinus** algorithm with parameter 1, then run the **expit(_z_)** algorithm with parameter _z_.  If the **ExpMinus** run returns 1 and the **expit** run returns 0, return 0.  Otherwise, return 1.
+- If _z_ is known to be 0 or less:
+    - Run the **ExpMinus** algorithm with parameter 1, then run the **expit(_z_)** algorithm with parameter abs(_z_).  If both runs return 0, return 0.  Otherwise, return 1.
+
+> **Notes:**
+>
+> 1. (1 + exp(_z_&minus;1)) / (1 + exp(_z_)) = $1-\frac{1 - e^{-1}}{e^{-z} + 1}$. (1 + exp(1&minus;1)) / (1 + exp(1)) = 2 / (1 + exp(2)) = (1 + exp(0)) / (1 + exp(1)).
+> 2. For the similar function **(1 + exp(_z_)) / (1 + exp(_z_+1))**, use this algorithm, except add 1 to _z_ (if _z_ is written as an integer and fractional part, add 1 to the integer part; if written as a sum of numbers, append 1 to those numbers).
 
 <a id=1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a>
 #### 1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))
@@ -1623,12 +1646,12 @@ The algorithm also has special cases not mentioned in Huber 2019.
 
 1.  Special cases: If _i_ is 0, return 1.  If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_ and _i_ equals 1, flip the input coin and return the result.
 2. Special case: If _x_ is less than _y_ and _i_ = 1, then do the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0."
-3. Special case: If _x_ is less than _y_, then create a secondary coin that does the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0", then run the **algorithm for** [**_&lambda;_<sup>_x_/_y_</sup>**](#lambda___x___y) with _x_=_i_, _y_=1, and _&lambda;_ being the secondary coin, then return the result of that run.
+3. Special case: If _x_ is less than _y_, then create a secondary coin that does the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0", then flip the secondary coin _i_ times until a flip returns 0, whichever comes first, then return a number that is 1 if all the flips, including the last, return 1, or 0 otherwise.
 4. Set _t_ to 355/100 and _c_ to _x_/_y_.
 5. While _i_ is not 0:
     1. While _i_ > _t_ / _&#x03F5;_:
         1. Set _&beta;_ to (1 &minus; _&#x03F5;_ / 2) / (1 &minus; _&#x03F5;_).
-        2. Run the **algorithm for (_a_/_b_)<sup>_x_/_y_</sup>** (given in the irrational constants section) with _a_=1, _b_=_&beta;_, _x_=_i_, and _y_=1.  If the run returns 0, return 0.
+        2. Run the **algorithm for (_a_/_b_)<sup>_z_</sup>** (given in the irrational constants section) with _a_=1, _b_=_&beta;_, and _z_ = _i_.  If the run returns 0, return 0.
         3. Multiply _c_ by _&beta;_, then divide _&#x03F5;_ by 2.
     2. Run the **logistic Bernoulli factory** with _c_/_d_ = _c_, then set _z_ to the result.  Set _i_ to _i_ + 1 &minus; _z_ * 2.
 6. (_i_ is 0.) Return 1.
@@ -1887,53 +1910,41 @@ Similar to the _&pi;_/4 algorithm.  First it samples a point inside an area cove
 
 For a sketch of how this algorithm is derived, see the appendix.
 
-<a id=a___b___x___y></a>
-#### (_a_/_b_)<sup>_x_/_y_</sup>
-
-In the algorithm below, _a_, _b_, _x_, and _y_ are integers, and the case where 0 &lt; _x_/_y_ &lt; 1 is due to recent work by Mendo (2019\)[^25].  This algorithm works only if&mdash;
-
--  _x_/_y_ is 0 or greater, and 0 &le; _a_/_b_ &le; 1, or
--  _x_/_y_ is less than 0, and _a_/_b_ is 1 or greater.
-
-The algorithm follows.
-
-1. If _x_/_y_ is less than 0, swap _a_ and _b_, and remove the sign from _x_/_y_.  If _a_/_b_ is now less than 0 or greater than 1, return an error.
-2. If _x_/_y_ is equal to 1, return 1 with probability _a_/_b_ and 0 otherwise.
-3. If _x_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, if _a_ equals _b_, return 1.
-4. If _x_/_y_ is greater than 1:
-    1. Set _ipart_ to floor(_x_/_y_) and _fpart_ to rem(_x_, _y_) (equivalent to _x_ - _y_\*floor(_x_/_y_)).
-    2. If _fpart_ is greater than 0, subtract 1 from _ipart_, then call this algorithm recursively with _x_ = floor(_fpart_/2) and _y_ = _y_, then call this algorithm, again recursively, with _x_ = _fpart_ &minus; floor(_fpart_/2) and _y_ = _y_. Return 0 if either call returns 0.  (This is done rather than the more obvious approach in order to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)
-    3. If _ipart_ is 1 or greater, generate at random a number that is 1 with probability _a_<sup>_ipart_</sup>/_b_<sup>_ipart_</sup> or 0 otherwise. (Or generate, at random, _ipart_ many numbers that are each 1 with probability _a_/_b_ or 0 otherwise, then multiply them all into one number.)  If that number is 0, return 0.
-    4. Return 1.
-5. Set _i_ to 1.
-6. With probability _a_/_b_, return 1.
-7. Otherwise, with probability _x_/(_y_*_i_), return 0.
-8. Add 1 to _i_ and go to step 6.
-
-<a id=exp_minus__x___y></a>
-#### exp(&minus;_x_/_y_)
-
-This algorithm takes integers _x_ &ge; 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020\)[^53].
-
-1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
-2. If `x > y` (so _x_/_y_ is greater than 1), call this algorithm (recursively) `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ &minus; floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
-3. Set _r_ to 1 and _i_ to 1.
-4. Return _r_ with probability (_y_ \* _i_ &minus; _x_) / (_y_ \* _i_).
-5. Set _r_ to 1 &minus; _r_, add 1 to _i_, and go to step 4.
-
 <a id=a___b___z></a>
 #### (_a_/_b_)<sup>_z_</sup>
 
-This algorithm is similar to the previous algorithm for powering, except that the exponent, _z_,  can be any real number 0 or greater, as long as _z_ can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. This algorithm makes use of a similar identity as for `exp` and works only if _z_ is 0 or greater and if 0 &le; (_a_/_b_) &le; 1.
+In the algorithm below:
 
-Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **exp(&minus; _z_)** algorithm.  The algorithm is then as follows.
+- _a_ &ge; 0 is an integer.
+- _b_ &gt; 0 is an integer.
+- z is a number (positive or not), and its absolute value (abs(_z_)) is written as a rational number (case 1), as an integer and fractional part (case 2), or as a sum of positive numbers (case 3), as described in the [**"ExpMinus" section**](#ExpMinus_exp_minus__z).
+-  If _z_ is known to be 0 or greater then it must be that 0 &le; _a_/_b_ &le; 1, or
+-  If _z_ is known to be less than 0, then it must be that _a_/_b_ &ge; 1.
 
-- If _z_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, for each component _LC_\[_i_\] (until the algorithm returns a number):
-    1. Call the **algorithm for  (_a_/_b_)<sup>_x_/_y_</sup>** with _a_ = _a_, _b_ = _b_, _x_ = _LI_\[_i_\] and _y_ = 1.  If it returns 0, return 0.
-    2. Set _j_ to 1.
-    3. Generate a number that is 1 with probability _a_/_b_ and 0 otherwise.  If that number is 1, abort these steps and move on to the next component or, if there are no more components, return 1.
-    4. Flip the input coin that simulates  _LF_\[_i_\] (which is the exponent); if it returns 1, return 0 with probability 1/_j_.
-    5. Add 1 to _j_ and go to substep 2.
+The algorithm follows.
+
+- In case 1 (_z_ = _x_/_y_):
+    1. If _z_ is known to be less than 0, swap _a_ and _b_, and remove the sign from _z_.  If _a_/_b_ is now less than 0 or greater than 1, return an error.
+    2. If _x_ equals _y_, return 1 with probability _a_/_b_ and 0 otherwise.
+    3. If _x_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, if _a_ equals _b_, return 1.
+    4. If _x_/_y_ is greater than 1:
+        1. Set _ipart_ to floor(_x_/_y_) and _fpart_ to rem(_x_, _y_) (equivalent to _x_ - _y_\*floor(_x_/_y_)).
+        2. If _fpart_ is greater than 0, subtract 1 from _ipart_, then call this algorithm recursively with _x_ = floor(_fpart_/2) and _y_ = _y_, then call this algorithm, again recursively, with _x_ = _fpart_ &minus; floor(_fpart_/2) and _y_ = _y_. Return 0 if either call returns 0.  (This is done rather than the more obvious approach in order to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)
+        3. If _ipart_ is 1 or greater, generate at random a number that is 1 with probability _a_<sup>_ipart_</sup>/_b_<sup>_ipart_</sup> or 0 otherwise. (Or generate, at random, _ipart_ many numbers that are each 1 with probability _a_/_b_ or 0 otherwise, then multiply them all into one number.)  If that number is 0, return 0.
+        4. Return 1.
+    5. (Note on steps 5 to 8: This case where 0 &lt; _x_/_y_ &lt; 1 is due to recent work by Mendo (2019\)[^25].) Set _i_ to 1.
+    6. With probability _a_/_b_, return 1.
+    7. Otherwise, with probability _x_/(_y_*_i_), return 0.
+    8. Add 1 to _i_ and go to step 6.
+- In case 2 (abs(_z_) = _m_ + _&nu;_; here, 0 < _&nu;_ &le; 1):
+    1. If _z_ is known to be less than 0, swap _a_ and _b_, and remove the sign from _z_.  If _a_/_b_ is now less than 0 or greater than 1, return an error.
+    2. If _a_ is 0 and _m_ is not 0, return 0.  If _a_ equals _b_, return 1.
+    3. If _m_ is 1 or greater, generate at random a number that is 1 with probability _a_<sup>_m_</sup>/_b_<sup>_m_</sup> or 0 otherwise. (Or generate, at random, _m_ many numbers that are each 1 with probability _a_/_b_ or 0 otherwise, then multiply them all into one number.)  If that number is 0, return 0.
+    4. (Note on steps 4 to 7: This case where 0 &lt; _z_ &lt; 1 is due to recent work by Mendo (2019\)[^25].) Set _i_ to 1.
+    5. With probability _a_/_b_, return 1.
+    6. Flip the _&nu;_ input coin.  If it returns 0, return 0 with probability 1/_i_.
+    7. Add 1 to _i_ and go to step 6.
+- In case 3, rewrite the _z_ parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of this algorithm with that number as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.
 
 <a id=1_exp_1__c__minus_2></a>
 #### 1/(exp(1) + _c_ &minus; 2)
