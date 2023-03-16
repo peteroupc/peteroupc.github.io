@@ -9,7 +9,11 @@ on several of my projects on GitHub.
 <a id=Articles></a>
 ### Articles
 
-Open-source articles on programming subjects.  Help me on my [**requests and open questions**](https://peteroupc.github.io/requests.html) (and [**open questions on the Bernoulli factory problem**](https://peteroupc.github.io/bernreq.html), and [**other open questions on probability**](https://peteroupc.github.io/requestsother.html)).
+Open-source articles on programming subjects.  Help me on my:
+
+- [**requests and open questions**](https://peteroupc.github.io/requests.html), and
+- [**open questions on the Bernoulli factory problem**](https://peteroupc.github.io/bernreq.html), and
+- [**other open questions on probability**](https://peteroupc.github.io/requestsother.html).
 
 **Random and Pseudorandom Number Generators**
 

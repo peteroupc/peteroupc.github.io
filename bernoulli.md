@@ -129,9 +129,6 @@ Comments on other aspects of this document are welcome.
         - [**exp(1) &minus; 2**](#exp_1_minus_2)
         - [**_&zeta;_(3) * 3 / 4 and Other Zeta-Related Constants**](#zeta___3_3_4_and_Other_Zeta_Related_Constants)
         - [**erf(_x_)/erf(1)**](#erf__x__erf_1)
-        - [**2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))**](#2_1_exp_2_or_1_exp_0_1_exp_1)
-        - [**(1 + exp(1)) / (1 + exp(2))**](#1_exp_1_1_exp_2)
-        - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
         - [**Euler&ndash;Mascheroni constant _&gamma;_**](#Euler_ndash_Mascheroni_constant___gamma)
         - [**exp(&minus;_x_/_y_) \* _z_/_t_**](#exp_minus__x___y___z___t)
         - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
@@ -691,9 +688,11 @@ In the algorithm (see also (Brassard et al., 2019\)[^31], (Devroye 1986, p. 769\
 <a id=Continued_Fractions></a>
 #### Continued Fractions
 
-The following algorithm simulates a probability expressed as a simple continued fraction of the following form: 0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions"\)[^1], I developed the following algorithm.
+A _simple continued fraction_ is a way to write a real number between 0 and 1. A simple continued fraction has the form&mdash; $0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))),$ where the _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.
 
-**Algorithm 1.** This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is greater than 0, but otherwise, each  _a_\[_i_\] may be negative and/or a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions"\)[^1], I developed the following algorithm.
+
+**Algorithm 1.** The following algorithm simulates a probability expressed as a simple continued fraction.  This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is greater than 0, but otherwise, each  _a_\[_i_\] may be negative and/or a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. Set _k_ to _a_\[_pos_\].
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
@@ -822,7 +821,10 @@ The case when the sequence _a_ converges to a _natural logarithm_ rather than a 
     2. If _E_ is less than _inf_+_intinf_, return 0.  If _E_ is less than _sup_+_intinf_, go to the next step.  If  neither is the case, return 1.
     3. Set _n_ to 1.
 
-> **Note:** Mendo (2020/2021\)[^38] as well as Carvalho and Moreira (2022)[^39] discuss how to find error bounds on "cutting off" a series that work for many infinite series.  This can be helpful in finding the appropriate sequences _a_ and _err_ needed for the first algorithm in this section.
+> **Notes:**
+>
+> 1. Mendo (2020/2021\)[^38] as well as Carvalho and Moreira (2022)[^39] discuss how to find error bounds on "cutting off" a series that work for many infinite series.  This can be helpful in finding the appropriate sequences _a_ and _err_ needed for the first algorithm in this section.
+> 2. If a number is known a simple continued fraction whose partial denominators are integers, Citterio and Pavani (2016)[^75] show how to calculate lower and upper bounds for that number.  The bounds will be rational numbers whose numerator has at most a given number of digits.
 >
 > **Examples**:
 >
@@ -902,7 +904,7 @@ The algorithm follows.
 > **Notes:**
 >
 > 1. The _Bernoulli Race_ (Dughmi et al. 2021\)[^44] is a special case of this algorithm with _g_(_k_) = 1 for every _k_. Say there is _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
-> 2. If we define _S_ to be a subset of integers in \[0, _r_\] and replace step 3 with "If _i_ is in the set _S_, return 1.  Otherwise, return 0.", the algorithm returns 1 with probability &sum;<sub>_k_&nbsp;in&nbsp;_S_</sub>&nbsp;_&phi;_<sub>_k_</sub>, and 0 otherwise.  In that case, the modified algorithm has the so-called "die-coin algorithm" of Agrawal et al. (2021, Appendix D\)[^47] as a special case with&mdash;<br>_g_(_k_) = _c_<sup>_k_</sup>\*_d_<sup>_r_&minus;_k_</sup>,<br>_h_<sub>_k_</sub>(_&lambda;_, _&mu;_) = _&lambda;_<sup>_k_</sup>\*_&mu;_<sup>_r_&minus;_k_</sup> (for the following algorithm: flip the _&lambda;_ coin _k_ times and the _&mu;_ coin _r_&minus;_k_ times; return 1 if all flips return 1, or 0 otherwise), and<br>_S_ is the set of integers that are 1 or greater and _r_ or less,<br>where _c_&ge;0, _d_&ge;0, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins.  In that paper, _c_, _d_, _&lambda;_, and _&mu;_ correspond to _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively.
+> 2. If we define _S_ to be the integers \[0, _r_\] or a subset of them and replace step 3 with "If _i_ is in the set _S_, return 1.  Otherwise, return 0.", the algorithm returns 1 with probability &sum;<sub>_k_&nbsp;in&nbsp;_S_</sub>&nbsp;_&phi;_<sub>_k_</sub>, and 0 otherwise.  In that case, the modified algorithm has the so-called "die-coin algorithm" of Agrawal et al. (2021, Appendix D\)[^47] as a special case with&mdash;<br>_g_(_k_) = _c_<sup>_k_</sup>\*_d_<sup>_r_&minus;_k_</sup>,<br>_h_<sub>_k_</sub>(_&lambda;_, _&mu;_) = _&lambda;_<sup>_k_</sup>\*_&mu;_<sup>_r_&minus;_k_</sup> (for the following algorithm: flip the _&lambda;_ coin _k_ times and the _&mu;_ coin _r_&minus;_k_ times; return 1 if all flips return 1, or 0 otherwise), and<br>_S_ is the set of integers that are 1 or greater and _r_ or less,<br>where _c_&ge;0, _d_&ge;0, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins.  In that paper, _c_, _d_, _&lambda;_, and _&mu;_ correspond to _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively.
 > 3. Although not noted in the Schmon paper, the _r_ in the algorithm can be infinity (see also Wästlund 1999, Theorem 2.7[^8]).  In that case, Step 1 is changed to say "Choose an integer 0 or greater at random with probability _g_(_k_) for integer _k_.  Call the chosen integer _i_."  As an example, step 1 can sample from a Poisson distribution, which can take on any integer 0 or greater.
 
 The previous algorithm can be generalized further, so that an input coin that simulates the probability _&lambda;_ helps generate the random integer in step 1.  Now, the overall algorithm generates an integer _X_ with probability&mdash; $$\frac{g(X,\lambda) h_X(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}.$$
@@ -1538,7 +1540,12 @@ This section describes algorithms for specific functions that require knowing ce
 <a id=x03F5_____lambda></a>
 #### _&#x03F5;_ / _&lambda;_
 
-(Lee et al. 2014\)[^63].  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_.
+(Lee et al. 2014\)[^63].  In the following algorithm:
+
+- _&lambda;_ is the probability of heads of an input coin.
+- _&#x03F5;_ is a rational number that satisfies 0 &lt; _&#x03F5;_ &le; _&lambda;_ &le; 1.
+
+The algorithm follows.
 
 1. Set _&beta;_ to max(_&#x03F5;_, 1/2) and set _&gamma;_ to 1 &minus; (1 &minus; _&beta;_) / (1 &minus; (_&beta;_ / 2)).
 2. Create a _&mu;_ input coin that flips the input coin and returns 1 minus the result.
@@ -1548,7 +1555,13 @@ This section describes algorithms for specific functions that require knowing ce
 <a id=mu_____lambda></a>
 #### _&mu;_ / _&lambda;_
 
-(Morina 2021\)[^64].  This division algorithm takes two input coins, namely a coin simulating the dividend _&mu;_ and a coin simulating the divisor _&lambda;_, and a parameter _&#x03F5;_ such that 0 &lt; _&#x03F5;_ &le; _&lambda;_ &minus; _&mu;_.  In this algorithm, _&mu;_ must be less than _&lambda;_.
+(Morina 2021\)[^64].  In this division algorithm:
+
+- _&mu;_ is the probability of heads of an input coin and represents the dividend.
+- _&lambda;_ is the probability of heads of another input coin, represents the divisor, and satisfies 0 &le; _&mu;_ &lt; _&lambda;_ &le; 1.
+- _&#x03F5;_ is a rational number that satisfies 0 &lt; _&#x03F5;_ &le; _&lambda;_ &minus; _&mu;_.  _&#x03F5;_ can be a positive rational number that equals a lower bound for _&lambda;_ minus an upper bound for _&mu;_.
+
+The algorithm follows.
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit (either 0 or 1 with equal probability).
@@ -1974,50 +1987,6 @@ In fact, this algorithm takes advantage of a theorem related to the Forsythe met
 
 > **Note:** If the last step in the algorithm reads "Return 0" rather than "Go to step 1", then the algorithm simulates the probability erf(_x_)\*sqrt(&pi;)/2 instead.
 
-<a id=2_1_exp_2_or_1_exp_0_1_exp_1></a>
-#### 2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))
-
-1. Generate an **exponential** random variate _ex_, then set _k_ to 1.
-2. Set _u_ to point to the same value as _ex_.
-3. Generate a **uniform(0, 1)** random variate _v_.
-4. Set _stop_ to 1 if _u_ is less than _v_, and 0 otherwise.
-5. If _stop_ is 1 and _k_ **is even**, return a number that is 0 if _ex_ is **less than 1**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
-6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
-
-> **Note**: Derivation: Rewrite the probability as&mdash; $$1-\frac{ \int_0^1 (1-\exp(-\min(1,z)))\cdot \exp(-z) dz}{ \int_0^\infty (1-\exp(-\min(1,z)))\cdot \exp(-z) dz},$$ where $\min(1,z)$ = ECDF(_z_) is the probability that a uniform(0,1) random variate is $z$ or less, and $\exp(-z)$ = DPDF(_z_) is the exponential distribution's density function.  See Formula 2 in the section [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)".
-
-<a id=1_exp_1_1_exp_2></a>
-#### (1 + exp(1)) / (1 + exp(2))
-
-1. Generate an **exponential** random variate _ex_, then set _k_ to 1.
-2. Set _u_ to point to the same value as _ex_.
-3. Generate a **uniform(0, 1)** random variate _v_.
-4. Set _stop_ to 1 if _u_ is less than _v_, and 0 otherwise.
-5. If _stop_ is 1 and _k_ **is odd**, return a number that is 0 if _ex_ is **less than 1/2**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
-6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
-
-> **Note**: Derivation: Rewrite the probability as&mdash; $$1-\frac{ \int_0^{1/2} \exp(-\min(1,z))\cdot \exp(-z) dz}{ \int_0^\infty \exp(-\min(1,z))\cdot \exp(-z) dz},$$ where $\min(1,z)$ = ECDF(_z_) is the probability that a uniform(0,1) random variate is $z$ or less, and $\exp(-z)$ = DPDF(_z_) is the exponential distribution's density function.  See Formula 1 in the section [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)".
-
-<a id=1_exp__k__1_exp__k__1></a>
-#### (1 + exp(_k_)) / (1 + exp(_k_ + 1))
-
-In this algorithm, _k_ must be an integer 0 or greater.
-
-1. If _k_ is 0, run the **algorithm for 2 / (1 + exp(2))** and return the result.  If _k_ is 1, run the **algorithm for (1 + exp(1)) / (1 + exp(2))** and return the result.
-2. Create a _&mu;_ input coin that runs the sub-algorithm given below.
-3. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&mu;_ input coin, _x_=2, _y_=1, and _&#x03F5;_ = 6/10 (6/10 because it's less than 1 minus (1 + exp(2)) / (1 + exp(2+1))), and return the result of that run.
-
-The sub-algorithm referred to is the following (which simulates the probability (1/(1+exp(_k_+1)) + exp(_k_)/(1+exp(_k_+1)))/2):
-
-1. Generate an unbiased random bit.  If that bit is 1, simulate the probability 1/(1+exp(_k_+1)) as follows:  Do the following process repeatedly, until this algorithm returns a value:
-    1. Generate an unbiased random bit.  If that bit is 1, return 0.
-    2. Run the **ExpMinus** algorithm with parameter (_k_+1)/1.  If it returns 1, return 1.
-2. The bit is 0, so simulate the probability exp(_k_)/(1+exp(_k_+1)) as follows:  Do the following process repeatedly, until this algorithm returns a value:
-    1. Generate an unbiased random bit.  If that bit is 1, run the **ExpMinus** algorithm with parameter 1 and return the result.
-    2. Run the **ExpMinus** algorithm with parameter (_k_+1)/1.  If it returns 1, return 0.
-
-See "More Algorithms for Arbitrary-Precision Sampling" for another way to sample this probability.
-
 <a id=Euler_ndash_Mascheroni_constant___gamma></a>
 #### Euler&ndash;Mascheroni constant _&gamma;_
 
@@ -2291,6 +2260,8 @@ estimation, IEEE Transactions on Information Theory 36 (1990)
 
 [^74]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
 
+[^75]: Citterio, M., Pavani, R., "A Fast Computation of the Best k-Digit Rational Approximation to a Real Number", Mediterranean Journal of Mathematics 13 (2016).
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -2420,7 +2391,12 @@ Then the algorithm's behavior is given in the tables below.
 | Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV\)[^32]; see also Forsythe 1972[^68]).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is a uniform random variate greater than 0 and less than 1, this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
 | Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979[^74]).  DPDF and ECDF are as above. |
 | Numbers sorted in descending order | Both uniform variates greater than 0 and less than 1 | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(&minus;1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and "cut off" to be not less than 0 and not greater than 1 (von Neumann 1951\)[^72]. |
-| Numbers sorted in descending order | _D_ is a uniform variate greater than 0 and less than 1; _E_ is max. of two uniform variates in (0,1). | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
+| Numbers sorted in descending order | _D_ is a uniform variate between 0 and 1; _E_ is max. of two uniform variates between 0 and 1. | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for 0&le;_z_&le;1; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
+
+| Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is...|
+ --- | --- | --- | --- |
+| Numbers sorted in descending order | _D_ is an exponential variate; _E_ is a uniform variate between 0 and 1. | 1 or less given that _n_ is even is 1 &minus; 2 / (1 + exp(2)) = 1 &minus; (1 + exp(0)) / (1 + exp(1)) = (exp(1)&minus;1)/(exp(1)+1) (uses Formula 2, where DPDF(_z_) = exp(&minus;_z_) and ECDF(_z_) = min(1,_z_) for _z_&ge;0). |
+| Numbers sorted in descending order | _D_ is an exponential variate; _E_ is a uniform variate between 0 and 1. | 1/2 or less given that _n_ is odd is 1 &minus; (1 + exp(1)) / (1 + exp(2)) = (exp(2) &minus; exp(1)) / (exp(2)+1) (uses Formula 1, where DPDF(_z_) = exp(&minus;_z_) and ECDF(_z_) = min(1,_z_) for _z_&ge;0). |
 
 > **Notes:**
 >

@@ -506,7 +506,7 @@ For example&mdash;
 - if _Q_ is Lipschitz continuous[^76] with Lipschitz constant _L_ on \[_a_, _b_\], then the function is no "steeper" than that of _&omega;_(_&delta;_) = _L_\*_&delta;_, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_, and
 - if _Q_ is _&alpha;_-Hölder continuous with Hölder constant _M_ on that interval, then the function is no "steeper" than that of _&omega;_(_&delta;_) = _M_\*_&delta;_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
 
-The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
+The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance. (Indeed, for this reason, the algorithms don't satisfy [**desirable properties for PSRN samplers**](https://peteroupc.github.io/exporand.html#Properties).)  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
 - The target distribution must have a probability density function (PDF), as is the case with the normal and exponential distributions.
 - That PDF, or a function proportional to it, must be known, must be less than or equal to a finite number, and must be continuous "almost everywhere" (the set of discontinuous points is "zero-volume", that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020\)[^75]).
@@ -592,7 +592,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 
 > - There is a computable function _f_(_k_) that outputs a positive number.
 > - For each _n_, Supp(_n_) is included in Supp(_n_+1).
-> - For every _k_ and for every _n_ &ge; 2 starting with the first _n_ for which _k_ is in Supp(_n_), the probability of seeing _k_ given parameter _n_ is at least (1/_n_)<sup>_f_(_k_)</sup> (roughly speaking, the probability doesn't decay at a faster than polynomial rate as _n_ increases).
+> - For every _k_ and for every _n_ &ge; 2 starting with the first _n_ for which _k_ is in Supp(_n_), the probability of seeing _k_ given parameter _n_ is at least (1/_n_)<sup>_f_(_k_)</sup>.
 
 <a id=Additional_Algorithms></a>
 ### Additional Algorithms

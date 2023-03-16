@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2023/03/14"><meta name="citation_online_date" content="2023/03/14"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2023/03/15"><meta name="citation_online_date" content="2023/03/15"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -18,7 +18,8 @@
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#My_Probability_Questions"><strong>My Probability Questions</strong></a></li>
 <li><a href="#Randomization_and_Sampling_Methods"><strong>Randomization and Sampling Methods</strong></a></li>
-<li><a href="#Bernoulli_Factory_Algorithms_and_Partially_Sampled_Random_Numbers"><strong>Bernoulli Factory Algorithms and Partially-Sampled Random Numbers</strong></a></li>
+<li><a href="#Bernoulli_Factory_Algorithms"><strong>Bernoulli Factory Algorithms</strong></a></li>
+<li><a href="#Partially_Sampled_Random_Numbers"><strong>Partially-Sampled Random Numbers</strong></a></li>
 <li><a href="#Randomized_Estimation_Algorithms"><strong>Randomized Estimation Algorithms</strong></a></li>
 <li><a href="#Color_Topics_for_Programmers"><strong>Color Topics for Programmers</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -42,7 +43,7 @@
 
 <p><strong>Size Reduction Sought:</strong></p>
 
-<p>Of the articles in this repository, <a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a> and <a href="https://peteroupc.github.io/randomnotes.html"><strong>More Random Sampling Methods</strong></a> combined are very long (about 230 KB in size combined).</p>
+<p>Of the articles in this repository, <a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a> and <a href="https://peteroupc.github.io/randomnotes.html"><strong>More Random Sampling Methods</strong></a> combined are very long.</p>
 
 <p>These articles describe numerous algorithms to generate random variates (from discrete and continuous distributions) as well as perform random sampling with and without replacement, shuffling, geometric sampling, and more, assuming a source of &quot;truly&quot; random numbers is available.</p>
 
@@ -57,23 +58,33 @@
 <li>To ensure the documents are easy for programmers to understand and implement.</li>
 </ul>
 
-<p><a id=Bernoulli_Factory_Algorithms_and_Partially_Sampled_Random_Numbers></a></p>
+<p><a id=Bernoulli_Factory_Algorithms></a></p>
 
-<h2>Bernoulli Factory Algorithms and Partially-Sampled Random Numbers</h2>
+<h2>Bernoulli Factory Algorithms</h2>
 
 <ul>
 <li><a href="https://peteroupc.github.io/bernoulli.html"><strong>https://peteroupc.github.io/bernoulli.html</strong></a></li>
 </ul>
 
-<p>The first page shows algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as <em>Bernoulli factories</em>.  A <em>factory function</em> is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O&#39;Brien 1994)[^1].</p>
+<p>This page shows algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as <em>Bernoulli factories</em>.  A <em>factory function</em> is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O&#39;Brien 1994)[^1].</p>
 
 <p>For open questions, see &quot;<a href="https://peteroupc.github.io/bernreq.html"><strong>Open Questions on the Bernoulli Factory Problem</strong></a>&quot;.</p>
+
+<p>The following is a To-Do list item:</p>
+
+<ul>
+<li>Extend the <a href="https://peteroupc.github.io/bernoulli.html#1_exp__k__1_exp__k__1"><strong>algorithm for (1 + exp(<em>z</em>)) / (1 + exp(<em>z</em> + 1))</strong></a> to negative values of <em>z</em>, since the function is bounded by 0 and 1 at every negative <em>z</em>.</li>
+</ul>
+
+<p><a id=Partially_Sampled_Random_Numbers></a></p>
+
+<h2>Partially-Sampled Random Numbers</h2>
 
 <ul>
 <li><a href="https://peteroupc.github.io/exporand.html"><strong>https://peteroupc.github.io/exporand.html</strong></a></li>
 </ul>
 
-<p>The second page describes a structure for storing a random variate.</p>
+<p>This page describes a structure for storing a random variate with arbitrary precision.</p>
 
 <ol>
 <li>We would like to see new implementations of the following:

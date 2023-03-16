@@ -340,19 +340,7 @@ Agarwal et al. (2017\)[^15] called this algorithm "aggressive elimination", and 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-Let _X_ be an endless stream of random variates and let _f_(_x_) be a known continuous function.
-
-1. Is there an algorithm, besides _Algorithm C_ or _Algorithm F_, that can find **E**\[_X_\] (or _f_(**E**\[_X_\])) with either a high probability of a "small" absolute error or one of a "small" relative error, when the distribution of _X_ is unbounded, and additional assumptions on the distribution of _X_ apply, such as&mdash;
-
-    - being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
-    - following a geometric distribution, and/or
-    - having decreasing or nowhere increasing probabilities?
-
-    Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al. 2019[^7]).  Here, the accuracy tolerances for small error and high probability are user-specified.  A relative-error algorithm for **E**\[_X_\] for the geometric distribution was given already in a note.
-
-2. How can _Algorithm D_ or _Algorithm E_ be adapted to a known discontinuous function _g_, so that the algorithm finds _g_(**E**[_X_]) with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around _g_'s discontinuities?  Is it enough to replace _g_ with a continuous function _f_ that equals _g_ everywhere except at that "negligible" area?  Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified.  Perhaps the tolerance could be defined as the integral ("area under the graph") of absolute differences between _f_ and _f_ instead of "negligible area"; in that case, how should the continuous _f_ be built?
-
-3. Is it true that _Algorithm F_ remains valid when the sample size _n_ is ceil(abs(_M_)/(_&delta;_\*_&gamma;_<sup>_k_</sup>)), given that the stream's distribution is known to have a maximum _k_<sup>th</sup> central absolute moment of _M_?
+For open questions, see "[**Questions on Estimation Algorithms**](https://peteroupc.github.io/requestsother.html#Questions_on_Estimation_Algorithms)".
 
 <a id=Notes></a>
 ## Notes

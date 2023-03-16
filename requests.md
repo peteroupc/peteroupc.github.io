@@ -10,7 +10,8 @@ This page lists questions and issues relating to my articles posted on this site
 - [**Contents**](#Contents)
 - [**My Probability Questions**](#My_Probability_Questions)
 - [**Randomization and Sampling Methods**](#Randomization_and_Sampling_Methods)
-- [**Bernoulli Factory Algorithms and Partially-Sampled Random Numbers**](#Bernoulli_Factory_Algorithms_and_Partially_Sampled_Random_Numbers)
+- [**Bernoulli Factory Algorithms**](#Bernoulli_Factory_Algorithms)
+- [**Partially-Sampled Random Numbers**](#Partially_Sampled_Random_Numbers)
 - [**Randomized Estimation Algorithms**](#Randomized_Estimation_Algorithms)
 - [**Color Topics for Programmers**](#Color_Topics_for_Programmers)
 - [**Notes**](#Notes)
@@ -29,7 +30,7 @@ The following two pages describe questions I have also posted on _MathOverflow_ 
 
 **Size Reduction Sought:**
 
-Of the articles in this repository, [**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html) and [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html) combined are very long (about 230 KB in size combined).
+Of the articles in this repository, [**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html) and [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html) combined are very long.
 
 These articles describe numerous algorithms to generate random variates (from discrete and continuous distributions) as well as perform random sampling with and without replacement, shuffling, geometric sampling, and more, assuming a source of "truly" random numbers is available.
 
@@ -42,18 +43,25 @@ Here are my goals for both articles:
 - To put emphasis on algorithms that sample a distribution _exactly_, or at least with a controlled upper bound on the error.  For discussion, see  "[**Exact, Error-Bounded, and Approximate Algorithms**](https://peteroupc.github.io/randomnotes.html#Exact_Error_Bounded_and_Approximate_Algorithms)".
 - To ensure the documents are easy for programmers to understand and implement.
 
-<a id=Bernoulli_Factory_Algorithms_and_Partially_Sampled_Random_Numbers></a>
-## Bernoulli Factory Algorithms and Partially-Sampled Random Numbers
+<a id=Bernoulli_Factory_Algorithms></a>
+## Bernoulli Factory Algorithms
 
 - [**https://peteroupc.github.io/bernoulli.html**](https://peteroupc.github.io/bernoulli.html)
 
-The first page shows algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O'Brien 1994\)[^1].
+This page shows algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O'Brien 1994\)[^1].
 
 For open questions, see "[**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)".
 
+The following is a To-Do list item:
+
+- Extend the [**algorithm for (1 + exp(_z_)) / (1 + exp(_z_ + 1))**](https://peteroupc.github.io/bernoulli.html#1_exp__k__1_exp__k__1) to negative values of _z_, since the function is bounded by 0 and 1 at every negative _z_.
+
+<a id=Partially_Sampled_Random_Numbers></a>
+## Partially-Sampled Random Numbers
+
 - [**https://peteroupc.github.io/exporand.html**](https://peteroupc.github.io/exporand.html)
 
-The second page describes a structure for storing a random variate.
+This page describes a structure for storing a random variate with arbitrary precision.
 
 1. We would like to see new implementations of the following:
     - Algorithms that implement **InShape** for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.

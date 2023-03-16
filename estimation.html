@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/02/09"><meta name="citation_online_date" content="2023/02/09"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/03/15"><meta name="citation_online_date" content="2023/03/15"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -464,21 +464,7 @@ pprint(Max(1,kappa))
 
 <h2>Requests and Open Questions</h2>
 
-<p>Let <em>X</em> be an endless stream of random variates and let <em>f</em>(<em>x</em>) be a known continuous function.</p>
-
-<ol>
-<li><p>Is there an algorithm, besides <em>Algorithm C</em> or <em>Algorithm F</em>, that can find <strong>E</strong>[<em>X</em>] (or <em>f</em>(<strong>E</strong>[<em>X</em>])) with either a high probability of a &quot;small&quot; absolute error or one of a &quot;small&quot; relative error, when the distribution of <em>X</em> is unbounded, and additional assumptions on the distribution of <em>X</em> apply, such as&mdash;</p>
-
-<ul>
-<li>being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or</li>
-<li>following a geometric distribution, and/or</li>
-<li>having decreasing or nowhere increasing probabilities?</li>
-</ul>
-
-<p>Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al. 2019[^7]).  Here, the accuracy tolerances for small error and high probability are user-specified.  A relative-error algorithm for <strong>E</strong>[<em>X</em>] for the geometric distribution was given already in a note.</p></li>
-<li><p>How can <em>Algorithm D</em> or <em>Algorithm E</em> be adapted to a known discontinuous function <em>g</em>, so that the algorithm finds <em>g</em>(<strong>E</strong>[<em>X</em>]) with either a high probability of a &quot;small&quot; absolute error or one of a &quot;small&quot; relative error at all points in [0, 1] except at a &quot;negligible&quot; area around <em>g</em>&#39;s discontinuities?  Is it enough to replace <em>g</em> with a continuous function <em>f</em> that equals <em>g</em> everywhere except at that &quot;negligible&quot; area?  Here, the accuracy tolerances for small error, high probability, and &quot;negligible&quot; area are user-specified.  Perhaps the tolerance could be defined as the integral (&quot;area under the graph&quot;) of absolute differences between <em>f</em> and <em>f</em> instead of &quot;negligible area&quot;; in that case, how should the continuous <em>f</em> be built?</p></li>
-<li><p>Is it true that <em>Algorithm F</em> remains valid when the sample size <em>n</em> is ceil(abs(<em>M</em>)/(<em>&delta;</em>*<em>&gamma;</em><sup><em>k</em></sup>)), given that the stream&#39;s distribution is known to have a maximum <em>k</em><sup>th</sup> central absolute moment of <em>M</em>?</p></li>
-</ol>
+<p>For open questions, see &quot;<a href="https://peteroupc.github.io/requestsother.html#Questions_on_Estimation_Algorithms"><strong>Questions on Estimation Algorithms</strong></a>&quot;.</p>
 
 <p><a id=Notes></a></p>
 

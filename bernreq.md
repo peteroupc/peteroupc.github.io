@@ -88,7 +88,7 @@ The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernst
 <a id=Main_Question></a>
 ### Main Question
 
-Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$), let $r\ge 1$, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.
+Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$), let $r\ge 1$ be given, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.
 
 Suppose that $f$ has a continuous $r$-th derivative, or that $f^{(r-1)}$ is Lipschitz continuous, or that $f^{(r-1)}$ is in the Zygmund class. Let $L$ be $\max |f^{(r)}|$, the Lipschitz constant of $f^{(r-1)}$, or the $D$ that puts $f^{(r-1)}$ in the Zygmund class, respectively.
 
