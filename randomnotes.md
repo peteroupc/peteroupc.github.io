@@ -266,10 +266,10 @@ As more and more numbers, sampled independently at random in the same way, are a
         halfpi = pi * 0.5
         unif=RNDRANGEMinMaxExc(-halfpi, halfpi)
         c=cos(unif)
+        expo=Expo(1)
         if alpha == 1
            s=sin(unif)
            if beta == 0: return s/c
-           expo=Expo(1)
            return 2.0*((unif*beta+halfpi)*s/c -
              beta * ln(halfpi*expo*c/(unif*beta+halfpi)))/pi
         else

@@ -2476,7 +2476,7 @@ def ratio_of_uniform(bern):
 
 <ol>
 <li>Set <em>k</em> to 0.</li>
-<li>(Choose a 1-unit-wide piece of the logistic density.) Run the <strong>algorithm for (1+exp(<em>z</em>&minus;1))/(1+exp(<em>z</em>))</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;) with <em>z</em> = <em>k</em> + 1.  If the call returns 0, add 1 to <em>k</em> and repeat this step.  Otherwise, go to step 3.</li>
+<li>(Choose a 1-unit-wide piece of the logistic density.) Run the <a href="https://peteroupc.github.io/bernoulli.html#1_exp__z__minus_w_1_1_exp__z"><strong>algorithm for (1 + exp(<em>z</em> &minus; <em>w</em>)) / (1 + exp(<em>z</em>))</strong></a> described in &quot;Bernoulli Factory Algorithms&quot; with <em>z</em> = <em>k</em> + 1 and <em>w</em> = 1.  If the call returns 0, add 1 to <em>k</em> and repeat this step.  Otherwise, go to step 3.</li>
 <li>(The rest of the algorithm samples from the chosen piece.) Create a uniform PSRN with integer part 0 and a positive sign, call it <em>f</em>.</li>
 <li>(Steps 4 through 7 succeed with probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>.) Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.</li>
 <li>Call the <strong>ExpMinus</strong> algorithm with parameter <em>k</em>, then call the <strong>ExpMinus</strong> algorithm with parameter <em>f</em>.  If any of these calls returns 0, go to step 4.</li>

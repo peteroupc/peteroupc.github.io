@@ -52,10 +52,6 @@ This page shows algorithms to turn a coin with an unknown probability of heads i
 
 For open questions, see "[**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)".
 
-The following is a To-Do list item:
-
-- Extend the [**algorithm for (1 + exp(_z_)) / (1 + exp(_z_ + 1))**](https://peteroupc.github.io/bernoulli.html#1_exp__k__1_exp__k__1) to negative values of _z_, since the function is bounded by 0 and 1 at every negative _z_.
-
 <a id=Partially_Sampled_Random_Numbers></a>
 ## Partially-Sampled Random Numbers
 

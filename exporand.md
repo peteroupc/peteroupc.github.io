@@ -1882,7 +1882,7 @@ def example_4_2_1(rg, bern, precision=53):
 The following new algorithm generates a partially-sampled random number that follows the logistic distribution.
 
 1. Set _k_ to 0.
-2. (Choose a 1-unit-wide piece of the logistic density.) Run the **algorithm for (1+exp(_z_&minus;1))/(1+exp(_z_))** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") with _z_ = _k_ + 1.  If the call returns 0, add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
+2. (Choose a 1-unit-wide piece of the logistic density.) Run the [**algorithm for (1 + exp(_z_ &minus; _w_)) / (1 + exp(_z_))**](https://peteroupc.github.io/bernoulli.html#1_exp__z__minus_w_1_1_exp__z) described in "Bernoulli Factory Algorithms" with _z_ = _k_ + 1 and _w_ = 1.  If the call returns 0, add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
 3. (The rest of the algorithm samples from the chosen piece.) Create a uniform PSRN with integer part 0 and a positive sign, call it _f_.
 4. (Steps 4 through 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.
 5. Call the **ExpMinus** algorithm with parameter _k_, then call the **ExpMinus** algorithm with parameter _f_.  If any of these calls returns 0, go to step 4.
