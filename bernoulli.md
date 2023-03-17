@@ -214,13 +214,9 @@ In the following algorithms:
 -  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002\)[^5].  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
 - _Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
-- The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
+- The instruction to "generate a uniform random variate between 0 and 1" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating a uniform random variate greater than 0 and less than 1 (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
-- The instruction to "generate an exponential random variate" can be implemented&mdash;
-    - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
-    - by getting the result of the **ExpRand** or **ExpRand2** algorithm (described in my article on PSRNs) with a rate of 1, or
-    - by generating `-ln(1/X)`, where `X` is a uniform random variate greater than 0 and less than 1, (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Real_Numbers)") (less accurate).
 - The instruction to "choose [integers] with probability proportional to [_weights_]" can be implemented in one of the following ways:
     - If the weights are rational numbers, take the result of **WeightedChoice**(**NormalizeRatios**(_weights_))), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
     - If the weights are uniform PSRNs, use the algorithm given in "[**Weighted Choice Involving PSRNs**](https://peteroupc.github.io/randmisc.html#Weighted_Choice_Involving_PSRNs)".
@@ -230,9 +226,9 @@ In the following algorithms:
 - Where an algorithm says "if _a_ is less than (or equal to) _b_", where _a_ and _b_ are random variates, it means to run the **RandLess** algorithm on the two numbers (if they are both PSRNs), or do a less-than-or-equal operation on _a_ and _b_, as appropriate.
 - To **sample from a number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
     - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (**SampleGeometricBag** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-    - Otherwise, this can be implemented by generating a uniform(0, 1) random variate _v_ (see above) and generating 1 if _v_ is less than _u_ (see above) or 0 otherwise.
+    - Otherwise, this can be implemented by generating a uniform random variate between 0 and 1 _v_ (see above) and generating 1 if _v_ is less than _u_ (see above) or 0 otherwise.
 - Where a step in the algorithm says "with probability _x_" to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
-    - Generate a uniform(0, 1) random variate _v_ (see above). The event occurs if _v_ is less than _x_ (see above).
+    - Generate a uniform random variate between 0 and 1 _v_ (see above). The event occurs if _v_ is less than _x_ (see above).
     - Convert _x_ to a rational number _y_/_z_, then call `ZeroOrOne(y, z)`.  The event occurs if the call returns 1. For example, if an instruction says "With probability 3/5, return 1", then implement it as "Call `ZeroOrOne(3, 5)`. If the call returns 1, return 1."  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).  If _x_ is not a rational number, then rounding error will result, however.
 - For best results, the algorithms should be implemented using exact rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby).  Floating-point arithmetic is discouraged because it can introduce errors due to fixed-precision calculations, such as rounding and cancellations.
 
@@ -266,7 +262,7 @@ For certain polynomials with duplicate coefficients, the following is an optimiz
 
 And here is another optimized algorithm:
 
-1. Set _j_ to 0 and _i_ to 0.  If _n_ is 0, return 0.  Otherwise, generate a uniform(0, 1) random variate, call it _u_.
+1. Set _j_ to 0 and _i_ to 0.  If _n_ is 0, return 0.  Otherwise, generate a uniform random variate between 0 and 1, call it _u_.
 2. If _u_ is less than a lower bound of the lowest coefficient, return 1.  Otherwise, if _u_ is less than (or equal to) an upper bound of the highest coefficient, go to the next step.  Otherwise, return 0.
 3. If _i_ is _n_ or greater, or if the coefficients _a_\[_k_\], with _k_ in the interval \[_j_, _j_+(_n_&minus;_i_)\], are all equal, return a number that is 1 if _u_ is less than _a_\[_j_\], or 0 otherwise.
 4. Flip the input coin.  If it returns 1, add 1 to _j_.
@@ -359,7 +355,7 @@ Then the algorithm is as follows:
 
 1. Create two empty lists: _blist_ and _ulist_.
 2. Set _state1_ to the position of the first non-zero item in _R_.  Set _state2_ to the position of the last non-zero item in _R_.  In both cases, positions start at 0.  If all the items in _R_ are zeros, return 0.
-3. Flip the input coin and append the result (which is 0 or 1) to the end of _blist_.  Generate a uniform(0, 1) random variate and append it to the end of _ulist_.
+3. Flip the input coin and append the result (which is 0 or 1) to the end of _blist_.  Generate a uniform random variate between 0 and 1 and append it to the end of _ulist_.
 4. (Monotonic coupling from the past (Morina et al., 2022\)[^17], (Propp and Wilson 1996\)[^18].) Set _i_ to the number of items in _blist_ minus 1, then while _i_ is 0 or greater:
     1. Let _b_ be the item at position _i_ (starting at 0) in _blist_, and let _u_ be the item at that position in _ulist_.
     2. **Get the new state given _state1_, _b_, _u_, and _n_**, and set _state1_ to the new state.
@@ -411,7 +407,7 @@ Then the algorithm below, based on an algorithm by Łatuszyński et al. (2009/20
 **General martingale algorithm:**
 
 1. Set _u_ to abs($d_0$) ($d_0$ is the value of the first nonzero coefficient in the sequence $(a_i)$), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
-2. Generate a uniform(0, 1) random variate _ret_.
+2. Generate a uniform random variate between 0 and 1 _ret_.
 3. Do the following process repeatedly, until this algorithm returns a value:
     1. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ (if $g(\lambda) = \lambda$, this is done by flipping the input coin), then multiply _w_ by the result of the run.
     2. If $a_n$ is greater than 0: Set _u_ to _&#x2113;_ + _w_ * $a_n$, then, if no further nonzero coefficients follow $a_n$, set _&#x2113;_ to _u_.
@@ -640,7 +636,7 @@ The following algorithm can be used to simulate factory functions via polynomial
 
 The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011\)[^19] and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012\)[^30], although an error in Algorithm I is noted below.  The first algorithm follows.
 
-1. Generate a uniform(0, 1) random variate, call it _ret_.
+1. Generate a uniform random variate between 0 and 1, call it _ret_.
 2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _lastdegree_ to 0, and set _ones_ to 0.
 3. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) with _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 4. Set _startdegree_ to _degree_.
@@ -804,7 +800,7 @@ If _a_, given above, sums to the _base-2 logarithm_ of the probability rather th
 
 1. Set _intinf_ to floor(max(0, abs(_a_\[0\]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)
 2. If _intinf_ is greater than 0, generate unbiased random bits until a zero bit or _intinf_ bits were generated this way.  If a zero was generated this way, return 0.
-3. Generate an exponential random variate _E_ with rate ln(2).  This can be done, for example, by using the algorithm given in "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)". (We take advantage of the exponential distribution's _memoryless property_: given that an exponential random variate _E_ is greater than _intinf_, _E_ minus _intinf_ has the same distribution.)
+3. Generate an exponential random variate _E_ with rate ln(2).  This can be done, for example, by using the **exponential distribution with rate ln(_x_)** algorithm given in "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html#Exponential_Distribution_with_Rate_ln__x)". (This step takes advantage of the exponential distribution's _memoryless property_: given that an exponential random variate _E_ is greater than _intinf_, _E_ minus _intinf_ has the same distribution.)
 4. Set _n_ to 0.
 5. Do the following process repeatedly until the algorithm returns a value:
     1. Set _inf_ to max(0, _a_\[_n_\]), then set _sup_ to min(0, _inf_+_err_\[_n_\]).
@@ -813,7 +809,7 @@ If _a_, given above, sums to the _base-2 logarithm_ of the probability rather th
 
 The case when the sequence _a_ converges to a _natural logarithm_ rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the _a_\[_i_\] must be 0 or greater and form a nowhere decreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
 
-1. Generate an exponential random variate _E_ (with rate 1).
+1. Generate an exponential random variate _E_ with rate 1.  This can be done, for example, by using the **ExpRand** or **ExpRand2** algorithm given in "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html#Exponential_Distribution)".
 2. Set _n_ to 0.
 3. Do the following process repeatedly until the algorithm returns a value:
     1. Set _inf_ to max(0, _a_\[_n_\]), then set _sup_ to min(0, _inf_+_err_\[_n_\]).
@@ -962,7 +958,7 @@ Now, given a permutation class and an input coin, the von Neumann schema generat
 - $EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an _exponential generating function_, which completely determines a permutation class.
 -  The probability that $r$ many values of $X$ are rejected by the von Neumann schema (for the choices of $g$ and $h$ above) is $p(1 − p)^r$, where $p=(1-\lambda) EGF(\lambda)$.
 
-The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann schema as given in the Flajolet paper does the following: "Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way."[^46]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010\)[^1]: generate  _X_ uniform(0, 1) random variates, then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.
+The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann schema as given in the Flajolet paper does the following: "Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way."[^46]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010\)[^1]: generate  _X_ uniform random variates between 0 and 1, then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.
 
 > **Note:** The von Neumann schema can sample from any _power series distribution_ (such as Poisson, negative binomial, and logarithmic series), given a suitable exponential generating function.  However, the number of input coin flips required by the schema grows without bound as _&lambda;_ approaches 1.
 >
@@ -985,9 +981,9 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 > 4. For the class of _alternating permutations of even size_ (see example 1), step 2 in **Algorithm BR** can be implemented as follows (Flajolet et al. 2010, sec. 2.2\)[^1]:
 >
 >     - (2a.) (Limited to even-sized permutations.) If _X_ is odd[^26], reject _X_ (and go to step 1).
->     - (2b.) Generate a uniform(0, 1) random variate U, then set _i_ to 1.
+>     - (2b.) Generate a uniform random variate between 0 and 1 U, then set _i_ to 1.
 >     - (2c.) While _i_ is less than _X_:
->         - Generate a uniform(0, 1) random variate V.
+>         - Generate a uniform random variate between 0 and 1 V.
 >         - If _i_ is odd[^26] and V is less than U, or if _i_ is even[^29] and U is less than V, reject _X_ (and go to step 1).
 >         - Add 1 to i, then set U to V.
 >
@@ -1025,7 +1021,7 @@ and both schemes implement step 1 of the algorithm in the same way.  However, di
 <a id=Integrals></a>
 #### Integrals
 
-Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the "area under the graph" of that function when the function is restricted to that interval.  For continuous functions, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+...+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.
+Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the "area under the graph" of that function when the function is restricted to that interval.  If _f_ is continuous there, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+...+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.
 
 **Algorithm 1.** (Flajolet et al., 2010\)[^1] showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the probability&mdash;
 
@@ -1034,21 +1030,21 @@ Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the 
 
 namely the following algorithm:
 
-1. Generate a uniform(0, 1) random variate _u_.
+1. Generate a uniform random variate between 0 and 1 _u_.
 2. Create an input coin that does the following: "Flip the original input coin, then [**sample from the number _u_**](#Implementation_Notes).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
 **Algorithm 2.** A special case of Algorithm 1 is the integral $\int_0^1 f(u)\,du$, when the original input coin always returns 1:
 
-1. Generate a uniform(0, 1) random variate _u_.
+1. Generate a uniform random variate between 0 and 1 _u_.
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
 **Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash; $$\int_a^b f(\lambda u)\,du,$$ where $0\le a\lt b\le 1$, using the following algorithm:
 
-1. Generate a uniform(0, 1) random variate _u_.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
+1. Generate a uniform random variate between 0 and 1 _u_.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
-3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform(0, 1) random variate _v_ and return a number that is 0 if _v_ is less than _a_ or is greater than _b_, or 1 otherwise.
+3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform random variate between 0 and 1 _v_ and return a number that is 0 if _v_ is less than _a_ or is greater than _b_, or 1 otherwise.
 
 > **Note**: If _a_ is 0 and _b_ is 1, the probability simulated by this algorithm will be strictly increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
 
@@ -1162,7 +1158,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater unless no
 
 1. Set _k_ and _w_ each to 0.
 2. Flip the input coin.  If it returns 0, return 1.
-3. Generate a uniform(0, 1) random variate _U_.
+3. Generate a uniform random variate between 0 and 1 _U_.
 4. If _k_ > 0 and _w_ is less than _U_, return 0.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
@@ -1221,7 +1217,7 @@ The algorithm follows:
 <a id=1_exp__z__minus__w__1_exp__z></a>
 #### (1 + exp(_z_ &minus; _w_)) / (1 + exp(_z_))
 
-In this algorithm, _z_ is a number (positive or not), and _w_ is 0 or greater, and their absolute values are each written in one of the ways described in the [**ExpMinus section**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z)".
+In this algorithm, _z_ is a number (positive or not), and _w_ is 0 or greater, and their absolute values are each written in one of the ways described in the [**"ExpMinus" section**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z)".
 
 - If _z_ is known to be 0 or greater:
     - Run the **ExpMinus** algorithm with parameter _w_, then run the **expit(_z_)** algorithm with parameter _z_.  If the **ExpMinus** run returns 1 and the **expit** run returns 0, return 0.  Otherwise, return 1.
@@ -1401,7 +1397,7 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-    2. Generate a uniform(0, 1) random variate _u_, if it wasn't generated yet.
+    2. Generate a uniform random variate between 0 and 1 _u_, if it wasn't generated yet.
     3. [**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.
 
 <a id=arctan___lambda></a>
@@ -1433,7 +1429,7 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
-    2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
+    2. Generate a uniform random variate between 0 and 1 _u_, if _u_ wasn't generated yet.
     3. [**Sample from the number _u_**](#Implementation_Notes), then flip the input coin.  If the call and the flip both return 1, return 0.
 
 <a id=ln__c____lambda____c____lambda></a>
@@ -1456,7 +1452,7 @@ The algorithm follows.
 
 (Flajolet et al., 2010\)[^1].  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^34].
 
-1. Generate a uniform(0, 1) random variate _u_.
+1. Generate a uniform random variate between 0 and 1 _u_.
 2. Create a secondary coin _&mu;_ that does the following: "[**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
 3. Call the **algorithm for _&mu;_<sup>1/2</sup>** using the secondary coin _&mu;_.  If it returns 0, return 0.
 4. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
@@ -1465,7 +1461,7 @@ The algorithm follows.
 <a id=tanh__z></a>
 #### tanh(_z_)
 
-`tanh` is the hyperbolic tangent function.  _z_ must be 0 or greater.[^61]
+`tanh` is the hyperbolic tangent function.  In this algorithm, _z_ is 0 or greater and is written in one of the ways described in the [**"ExpMinus" section**](#ExpMinus_exp_minus__z).[^61]
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Run the **ExpMinus** algorithm, with parameter _z_, twice.  Let _r_ be a number that is 1 if both runs returned 1, or 0 otherwise.
@@ -1535,8 +1531,8 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 >
 > 1. Set _r_ to floor(_d_/3) + 1. (This starting value is because when this routine finishes, _r_/_d_ appears to converge to 1/3 as _d_ gets large, for the polynomial in question.)  Let _c_ be choose(_d_,_d_/2).
 > 2. Create a list of _d_+_r_+1 Bernstein coefficients, all zeros.
-> 3. For each integer _i_ in the interval [0, _d_+_r_]:
->      - If _d_/2 is in the interval [max(0, _i_&minus;_r_), min(_d_,_i_)], set the _i_<sup>th</sup> Bernstein coefficient (starting at 0) to _z_\*_c_\*choose(_r_,_i_&minus;_d_/2)\* / choose(_d_+_r_, _i_).
+> 3. For each integer _i_ satisfying 0 &le; _i_ &le; _d_+_r_:
+>      - If max(0, _i_&minus;_r_) &le; _d_/2 and if _d_/2 &le; min(_d_, _i_), set the _i_<sup>th</sup> Bernstein coefficient (starting at 0) to _z_\*_c_\*choose(_r_,_i_&minus;_d_/2)\* / choose(_d_+_r_, _i_).
 > 4. If all the Bernstein coefficients are 1 or less, return them.  Otherwise, add _d_/2 to _r_ and go to step 2.
 
 <a id=Algorithms_for_Specific_Functions_of___lambda___Probability_Sensitive></a>
@@ -1681,9 +1677,9 @@ This algorithm is based on the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, b
 
 1. Flip the input coin until the flip returns 0.  Then set _G_ to the number of times the flip returns 1 this way.
 2. If _G_ is **odd**, return 0.
-3. Generate a uniform(0, 1) random variate _U_, then set _i_ to 1.
+3. Generate a uniform random variate between 0 and 1 _U_, then set _i_ to 1.
 4. While _i_ is less than _G_:
-    1. Generate a uniform(0, 1) random variate _V_.
+    1. Generate a uniform random variate between 0 and 1 _V_.
     2. If _i_ is odd[^26] and _V_ is less than _U_, return 0.
     3. If _i_ is even[^29] and _U_ is less than _V_, return 0.
     4. Add 1 to _i_, then set _U_ to _V_.
@@ -1696,9 +1692,9 @@ This algorithm is based on the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, b
 
 1. Flip the input coin until the flip returns 0.  Then set _G_ to the number of times the flip returns 1 this way.
 2. If _G_ is **even**, return 0.
-3. Generate a uniform(0, 1) random variate _U_, then set _i_ to 1.
+3. Generate a uniform random variate between 0 and 1 _U_, then set _i_ to 1.
 4. While _i_ is less than _G_:
-    1. Generate a uniform(0, 1) random variate _V_.
+    1. Generate a uniform random variate between 0 and 1 _V_.
     2. If _i_ is odd[^26] and _V_ is less than _U_, return 0.
     3. If _i_ is even[^29] and _U_ is less than _V_, return 0.
     4. Add 1 to _i_, then set _U_ to _V_.
@@ -1711,7 +1707,7 @@ In this algorithm, _d_ and _c_ are integers, 0 &lt; _c_, and _c_ &gt; _d_ &ge; 0
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the **algorithm for (_d_ + _&lambda;_) / _c_** with _d_ = _d_ and _c_ = _c_, and return the result.
-    2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
+    2. Generate a uniform random variate between 0 and 1 _u_, if _u_ wasn't generated yet.
     3. [**Sample from the number _u_**](#Implementation_Notes), then run the **algorithm for (_d_ + _&lambda;_) / _c_** with _d_ = _d_ and _c_ = _c_.  If both calls return 1, return 0.
 
 <a id=arcsin___lambda___2></a>
@@ -1807,7 +1803,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 (Flajolet et al., 2010\)[^1]\:
 
-1. Generate a uniform(0, 1) random variate _u_.
+1. Generate a uniform random variate between 0 and 1 _u_.
 2. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 1.
 3. [**Sample from the number _u_**](#Implementation_Notes) twice.  If either of these calls returns 0, return 1.
 4. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 0.
@@ -1816,7 +1812,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 Observing that the even-parity construction used in the Flajolet paper[^34] is equivalent to the two-coin algorithm, which has bounded expected running time for all _&lambda;_ parameters, the algorithm above can be modified as follows:
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-2. Generate a uniform(0, 1) random variate _u_, if it wasn't generated yet.
+2. Generate a uniform random variate between 0 and 1 _u_, if it wasn't generated yet.
 3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Implementation_Notes) twice.  If both of these calls return 1, return 0.
 4. Go to step 1.
 
@@ -1972,7 +1968,7 @@ Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for 
 
 (Flajolet et al., 2010\)[^1].  It can be seen as a triple integral of the function 1/(1 + _a_ * _b_ * _c_), where _a_, _b_, and _c_ are uniform random variates between 0 and 1.  This algorithm is given below, but using the two-coin algorithm instead of the even-parity construction[^34].  Here, _&zeta;_(_x_) is the Riemann zeta function.
 
-1. Generate three uniform(0, 1) random variates.
+1. Generate three uniform random variates between 0 and 1.
 2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 3. [**Sample from each of the three numbers**](#Implementation_Notes) generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random variates.)
 
@@ -1980,7 +1976,7 @@ Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for 
 
 This can be extended to cover any constant of the form _&zeta;_(_k_) * (1 &minus; 2<sup>&minus;(_k_ &minus; 1)</sup>) where _k_ &ge; 2 is an integer, as suggested slightly by the Flajolet paper when it mentions _&zeta;_(5) * 31 / 32 (which should probably read _&zeta;_(5) * 15 / 16 instead), using the following algorithm.
 
-1. Generate _k_ uniform(0, 1) random variates.
+1. Generate _k_ uniform random variates between 0 and 1.
 2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 3. [**Sample from each of the _k_ numbers**](#Implementation_Notes) generated in step 1.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
 
@@ -1989,9 +1985,9 @@ This can be extended to cover any constant of the form _&zeta;_(_k_) * (1 &minus
 
 In the following algorithm, _x_ is a real number that is 0 or greater and 1 or less.
 
-1. Generate a uniform(0, 1) random variate, call it _ret_.
+1. Generate a uniform random variate between 0 and 1, call it _ret_.
 2. Set _u_ to point to the same value as _ret_, and set _k_ to 1.
-3. (In this and the next step, _v_ is created, which is the maximum of two uniform [0, 1] random variates.) Generate two uniform(0, 1) random variates, call them _a_ and _b_.
+3. (In this and the next step, _v_ is created, which is the maximum of two uniform [0, 1] random variates.) Generate two uniform random variates between 0 and 1, call them _a_ and _b_.
 4. If _a_ is less than _b_, set _v_ to _b_. Otherwise, set _v_ to _a_.
 5. If _v_ is less than _u_, set _u_ to _v_, then add 1 to _k_, then go to step 3.
 6. If _k_ is odd[^26], return 1 if _ret_ is less than _x_, or 0 otherwise. (If _ret_ is implemented as a uniform PSRN, this comparison should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
@@ -2018,7 +2014,7 @@ The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;
 
 > **Note:** The following is another algorithm for this constant.  As [**I learned**](https://stats.stackexchange.com/a/539564), the fractional part of 1/_U_, where _U_ is a uniform random variate between 0 and 1, has a mean equal to 1 minus the Euler&ndash;Mascheroni constant _&gamma;_, about 0.5772.[^71]  This leads to the following algorithm to sample a probability equal to _&gamma;_:
 >
-> 1. Generate a random variate of the form 1/_U_ &minus; floor(1/_U_), where _U_ is a uniform(0, 1) random variate.  This can be done by generating a uniform PSRN for [**the reciprocal of a uniform random variate**](https://peteroupc.github.io/exporand.html#Reciprocal_of_Uniform_Random_Variate), then setting that PSRN's integer part to 0.  Call the variate (or PSRN) _f_.
+> 1. Generate a random variate of the form 1/_U_ &minus; floor(1/_U_), where _U_ is a uniform random variate between 0 and 1.  This can be done by generating a uniform PSRN for [**the reciprocal of a uniform random variate**](https://peteroupc.github.io/exporand.html#Reciprocal_of_Uniform_Random_Variate), then setting that PSRN's integer part to 0.  Call the variate (or PSRN) _f_.
 > 2. **Sample from the number _f_** (for example, call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  Return 0 if the run returns 1, or 1 otherwise.
 
 <a id=exp_minus__x___y___z___t></a>
@@ -2077,7 +2073,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 1. If _y_ is 0, return 0.
 2. Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability _y_/_z_ and 0 otherwise.
-    2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
+    2. Generate a uniform random variate between 0 and 1 _u_, if _u_ wasn't generated yet.
     3. [**Sample from the number _u_**](#Implementation_Notes), then generate a number that is 1 with probability _y_/_z_ and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.
 
 <a id=ln___pi_____pi></a>
@@ -2246,7 +2242,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)
 
 [^60]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** (see "More Algorithms for Arbitrary-Precision Sampling") with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
 
-[^61]: There is another algorithm for tanh(_&lambda;_), based on Lambert's continued fraction for tanh(.), but it works only if 0 &le; _&lambda;_ &le; 1.  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
+[^61]: There is another algorithm for tanh(_z_), based on Lambert's continued fraction for tanh(.), but it works only if 0 &le; _z_ &le; 1 and if _z_ is the probability of heads of an input coin.  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
 
 [^62]: Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.
 
@@ -2404,7 +2400,7 @@ Then the algorithm's behavior is given in the tables below.
  --- | --- | --- | --- |
 | Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV\)[^32]; see also Forsythe 1972[^69]).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is a uniform random variate greater than 0 and less than 1, this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
 | Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979[^75]).  DPDF and ECDF are as above. |
-| Numbers sorted in descending order | Both uniform variates greater than 0 and less than 1 | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(&minus;1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and "cut off" to be not less than 0 and not greater than 1 (von Neumann 1951\)[^73]. |
+| Numbers sorted in descending order | Both uniform variates between 0 and 1 | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(&minus;1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and "cut off" to be not less than 0 and not greater than 1 (von Neumann 1951\)[^73]. |
 | Numbers sorted in descending order | _D_ is a uniform variate between 0 and 1; _E_ is max. of two uniform variates between 0 and 1. | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for 0&le;_z_&le;1; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is...|
@@ -2416,18 +2412,18 @@ Then the algorithm's behavior is given in the tables below.
 >
 > 1. All the functions possible for formulas 1 and 2 are nowhere decreasing functions.  Both formulas express what are called _cumulative distribution functions_, namely _F_<sub>_D_</sub>(_x_ given that _n_ is odd) or _F_<sub>_D_</sub>(_x_ given that _n_ is even), respectively.
 > 2. EGF(_z_) is the _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm.  For example, the class of _alternating permutations_ (permutations whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).  Other examples of EGFs were given in the section on the von Neumann schema.
-> 3. The results that point to this note have the special case that both _D_ and _E_ are uniform random variates greater than 0 and less than 1.  Indeed, if each variate _x_ in the sequence is transformed with _CDF_(_x_), where _CDF_ is _D_'s cumulative distribution function, then with probability 1, _x_ becomes a uniform random variate greater than 0 and less than 1, with the same numerical order as before.  See also [**this Stack Exchange question**](https://stats.stackexchange.com/questions/550847).
+> 3. The results that point to this note have the special case that both _D_ and _E_ are uniform random variates between 0 and 1.  Indeed, if each variate _x_ in the sequence is transformed with _CDF_(_x_), where _CDF_ is _D_'s cumulative distribution function, then with probability 1, _x_ becomes a uniform random variate greater than 0 and less than 1, with the same numerical order as before.  See also [**this Stack Exchange question**](https://stats.stackexchange.com/questions/550847).
 
 <a id=Derivation_of_an_Algorithm_for___pi___4></a>
 ### Derivation of an Algorithm for _&pi;_ / 4
 
 The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz (MGL) generator for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  It works as follows.  Let $S$ be a set of non-negative integers.  Then:
 
-1. Generate a uniform(0, 1) random variate, call it $U$.
+1. Generate a uniform random variate between 0 and 1, call it $U$.
 2. [**Sample from the number $U$**](#Implementation_Notes) repeatedly until the sampling "fails" (returns 0).  Set $k$ to the number of "successes".  (Thus, this step generates $k$ with probability $g(k,U) = (1-U) U^k$.)
 3. If $k$ is in $S$, return 1; otherwise, return 0.
 
-This can be seen as running **Algorithm CC** with an input coin for a randomly generated probability (a uniform(0, 1) random variate).  Given that step 1 generates $U$, the probability this algorithm returns 1 is&mdash; $$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the "[**integral method**](#Integrals)", so that the overall algorithm returns 1 with probability&mdash; $$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.
+This can be seen as running **Algorithm CC** with an input coin for a randomly generated probability (a uniform random variate between 0 and 1).  Given that step 1 generates $U$, the probability this algorithm returns 1 is&mdash; $$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the "[**integral method**](#Integrals)", so that the overall algorithm returns 1 with probability&mdash; $$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.
 
 The derivation below relies on the following fact: The probability satisfies&mdash; $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the interval $[0, 1]$ have natural sigma-finite measures.
 

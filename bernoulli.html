@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/03/16"><meta name="citation_online_date" content="2023/03/16"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/03/17"><meta name="citation_online_date" content="2023/03/17"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -318,18 +318,11 @@
 <li> choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Manolopoulos 2002)[^5].  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</li>
 <li><em>n</em>! = 1*2*3*...*<em>n</em> is also known as <em>n</em> factorial; in this document, (0!) = 1.</li>
 <li><em>Summation notation</em>, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.</li>
-<li>The instruction to &quot;generate a uniform(0, 1) random variate&quot; can be implemented&mdash;
+<li>The instruction to &quot;generate a uniform random variate between 0 and 1&quot; can be implemented&mdash;
 
 <ul>
 <li>by creating a <a href="https://peteroupc.github.io/exporand.html"><strong>uniform partially-sampled random number (PSRN)</strong></a> with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or</li>
 <li>by generating a uniform random variate greater than 0 and less than 1 (for example, <code>RNDRANGEMinMaxExc(0, 1)</code> in &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a>&quot; (less accurate).</li>
-</ul></li>
-<li>The instruction to &quot;generate an exponential random variate&quot; can be implemented&mdash;
-
-<ul>
-<li>by creating an empty <a href="https://peteroupc.github.io/exporand.html"><strong>exponential PSRN</strong></a> (most accurate), or</li>
-<li>by getting the result of the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (described in my article on PSRNs) with a rate of 1, or</li>
-<li>by generating <code>-ln(1/X)</code>, where <code>X</code> is a uniform random variate greater than 0 and less than 1, (for example, <code>RNDRANGEMinMaxExc(0, 1)</code> in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Real_Numbers"><strong>Randomization and Sampling Methods</strong></a>&quot;) (less accurate).</li>
 </ul></li>
 <li><p>The instruction to &quot;choose [integers] with probability proportional to [<em>weights</em>]&quot; can be implemented in one of the following ways:</p>
 
@@ -345,12 +338,12 @@
 
 <ul>
 <li>If the number is a uniform PSRN, call the <strong>SampleGeometricBag</strong> algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (<strong>SampleGeometricBag</strong> is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>Otherwise, this can be implemented by generating a uniform(0, 1) random variate <em>v</em> (see above) and generating 1 if <em>v</em> is less than <em>u</em> (see above) or 0 otherwise.</li>
+<li>Otherwise, this can be implemented by generating a uniform random variate between 0 and 1 <em>v</em> (see above) and generating 1 if <em>v</em> is less than <em>u</em> (see above) or 0 otherwise.</li>
 </ul></li>
 <li>Where a step in the algorithm says &quot;with probability <em>x</em>&quot; to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
 
 <ul>
-<li>Generate a uniform(0, 1) random variate <em>v</em> (see above). The event occurs if <em>v</em> is less than <em>x</em> (see above).</li>
+<li>Generate a uniform random variate between 0 and 1 <em>v</em> (see above). The event occurs if <em>v</em> is less than <em>x</em> (see above).</li>
 <li>Convert <em>x</em> to a rational number <em>y</em>/<em>z</em>, then call <code>ZeroOrOne(y, z)</code>.  The event occurs if the call returns 1. For example, if an instruction says &quot;With probability 3/5, return 1&quot;, then implement it as &quot;Call <code>ZeroOrOne(3, 5)</code>. If the call returns 1, return 1.&quot;  <code>ZeroOrOne</code> is described in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>.  If <em>x</em> is not a rational number, then rounding error will result, however.</li>
 </ul></li>
 <li>For best results, the algorithms should be implemented using exact rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby).  Floating-point arithmetic is discouraged because it can introduce errors due to fixed-precision calculations, such as rounding and cancellations.</li>
@@ -393,7 +386,7 @@
 <p>And here is another optimized algorithm:</p>
 
 <ol>
-<li>Set <em>j</em> to 0 and <em>i</em> to 0.  If <em>n</em> is 0, return 0.  Otherwise, generate a uniform(0, 1) random variate, call it <em>u</em>.</li>
+<li>Set <em>j</em> to 0 and <em>i</em> to 0.  If <em>n</em> is 0, return 0.  Otherwise, generate a uniform random variate between 0 and 1, call it <em>u</em>.</li>
 <li>If <em>u</em> is less than a lower bound of the lowest coefficient, return 1.  Otherwise, if <em>u</em> is less than (or equal to) an upper bound of the highest coefficient, go to the next step.  Otherwise, return 0.</li>
 <li>If <em>i</em> is <em>n</em> or greater, or if the coefficients <em>a</em>[<em>k</em>], with <em>k</em> in the interval [<em>j</em>, <em>j</em>+(<em>n</em>&minus;<em>i</em>)], are all equal, return a number that is 1 if <em>u</em> is less than <em>a</em>[<em>j</em>], or 0 otherwise.</li>
 <li>Flip the input coin.  If it returns 1, add 1 to <em>j</em>.</li>
@@ -523,7 +516,7 @@
 <ol>
 <li>Create two empty lists: <em>blist</em> and <em>ulist</em>.</li>
 <li>Set <em>state1</em> to the position of the first non-zero item in <em>R</em>.  Set <em>state2</em> to the position of the last non-zero item in <em>R</em>.  In both cases, positions start at 0.  If all the items in <em>R</em> are zeros, return 0.</li>
-<li>Flip the input coin and append the result (which is 0 or 1) to the end of <em>blist</em>.  Generate a uniform(0, 1) random variate and append it to the end of <em>ulist</em>.</li>
+<li>Flip the input coin and append the result (which is 0 or 1) to the end of <em>blist</em>.  Generate a uniform random variate between 0 and 1 and append it to the end of <em>ulist</em>.</li>
 <li>(Monotonic coupling from the past (Morina et al., 2022)[^17], (Propp and Wilson 1996)[^18].) Set <em>i</em> to the number of items in <em>blist</em> minus 1, then while <em>i</em> is 0 or greater:
 
 <ol>
@@ -598,7 +591,7 @@
 
 <ol>
 <li>Set <em>u</em> to abs($d_0$) ($d_0$ is the value of the first nonzero coefficient in the sequence $(a_i)$), set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>ret</em>.</li>
 <li>Do the following process repeatedly, until this algorithm returns a value:
 
 <ol>
@@ -1025,7 +1018,7 @@
 <p>The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)[^19] and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)[^30], although an error in Algorithm I is noted below.  The first algorithm follows.</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random variate, call it <em>ret</em>.</li>
+<li>Generate a uniform random variate between 0 and 1, call it <em>ret</em>.</li>
 <li>Set <em>&#x2113;</em> and <em>&#x2113;t</em> to 0.  Set <em>u</em> and <em>ut</em> to 1. Set <em>lastdegree</em> to 0, and set <em>ones</em> to 0.</li>
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) with <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
@@ -1259,7 +1252,7 @@
 <ol>
 <li>Set <em>intinf</em> to floor(max(0, abs(<em>a</em>[0]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)</li>
 <li>If <em>intinf</em> is greater than 0, generate unbiased random bits until a zero bit or <em>intinf</em> bits were generated this way.  If a zero was generated this way, return 0.</li>
-<li>Generate an exponential random variate <em>E</em> with rate ln(2).  This can be done, for example, by using the algorithm given in &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;. (We take advantage of the exponential distribution&#39;s <em>memoryless property</em>: given that an exponential random variate <em>E</em> is greater than <em>intinf</em>, <em>E</em> minus <em>intinf</em> has the same distribution.)</li>
+<li>Generate an exponential random variate <em>E</em> with rate ln(2).  This can be done, for example, by using the <strong>exponential distribution with rate ln(<em>x</em>)</strong> algorithm given in &quot;<a href="https://peteroupc.github.io/exporand.html#Exponential_Distribution_with_Rate_ln__x"><strong>Partially-Sampled Random Numbers</strong></a>&quot;. (This step takes advantage of the exponential distribution&#39;s <em>memoryless property</em>: given that an exponential random variate <em>E</em> is greater than <em>intinf</em>, <em>E</em> minus <em>intinf</em> has the same distribution.)</li>
 <li>Set <em>n</em> to 0.</li>
 <li>Do the following process repeatedly until the algorithm returns a value:
 
@@ -1273,7 +1266,7 @@
 <p>The case when the sequence <em>a</em> converges to a <em>natural logarithm</em> rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the <em>a</em>[<em>i</em>] must be 0 or greater and form a nowhere decreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
 
 <ol>
-<li>Generate an exponential random variate <em>E</em> (with rate 1).</li>
+<li>Generate an exponential random variate <em>E</em> with rate 1.  This can be done, for example, by using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm given in &quot;<a href="https://peteroupc.github.io/exporand.html#Exponential_Distribution"><strong>Partially-Sampled Random Numbers</strong></a>&quot;.</li>
 <li>Set <em>n</em> to 0.</li>
 <li>Do the following process repeatedly until the algorithm returns a value:
 
@@ -1482,7 +1475,7 @@
 <li> The probability that $r$ many values of $X$ are rejected by the von Neumann schema (for the choices of $g$ and $h$ above) is $p(1 − p)^r$, where $p=(1-\lambda) EGF(\lambda)$.</li>
 </ul>
 
-<p>The von Neumann schema uses <strong>Algorithm BR</strong>, where in step 1, the von Neumann schema as given in the Flajolet paper does the following: &quot;Flip the input coin repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.&quot;[^46]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010)[^1]: generate  <em>X</em> uniform(0, 1) random variates, then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.</p>
+<p>The von Neumann schema uses <strong>Algorithm BR</strong>, where in step 1, the von Neumann schema as given in the Flajolet paper does the following: &quot;Flip the input coin repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.&quot;[^46]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010)[^1]: generate  <em>X</em> uniform random variates between 0 and 1, then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.</p>
 
 <blockquote>
 <p><strong>Note:</strong> The von Neumann schema can sample from any <em>power series distribution</em> (such as Poisson, negative binomial, and logarithmic series), given a suitable exponential generating function.  However, the number of input coin flips required by the schema grows without bound as <em>&lambda;</em> approaches 1.</p>
@@ -1510,11 +1503,11 @@
 
 <ul>
 <li>(2a.) (Limited to even-sized permutations.) If <em>X</em> is odd[^26], reject <em>X</em> (and go to step 1).</li>
-<li>(2b.) Generate a uniform(0, 1) random variate U, then set <em>i</em> to 1.</li>
+<li>(2b.) Generate a uniform random variate between 0 and 1 U, then set <em>i</em> to 1.</li>
 <li>(2c.) While <em>i</em> is less than <em>X</em>:
 
 <ul>
-<li>Generate a uniform(0, 1) random variate V.</li>
+<li>Generate a uniform random variate between 0 and 1 V.</li>
 <li>If <em>i</em> is odd[^26] and V is less than U, or if <em>i</em> is even[^29] and U is less than V, reject <em>X</em> (and go to step 1).</li>
 <li>Add 1 to i, then set U to V.</li>
 </ul></li>
@@ -1614,7 +1607,7 @@
 
 <h4>Integrals</h4>
 
-<p>Roughly speaking, the <em>integral</em> of <em>f</em>(<em>x</em>) on an interval [<em>a</em>, <em>b</em>] is the &quot;area under the graph&quot; of that function when the function is restricted to that interval.  For continuous functions, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+...+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.</p>
+<p>Roughly speaking, the <em>integral</em> of <em>f</em>(<em>x</em>) on an interval [<em>a</em>, <em>b</em>] is the &quot;area under the graph&quot; of that function when the function is restricted to that interval.  If <em>f</em> is continuous there, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+...+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.</p>
 
 <p><strong>Algorithm 1.</strong> (Flajolet et al., 2010)[^1] showed how to turn an algorithm that simulates <em>f</em>(<em>&lambda;</em>) into an algorithm that simulates the probability&mdash;</p>
 
@@ -1626,7 +1619,7 @@
 <p>namely the following algorithm:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random variate <em>u</em>.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>.</li>
 <li>Create an input coin that does the following: &quot;Flip the original input coin, then <a href="#Implementation_Notes"><strong>sample from the number <em>u</em></strong></a>.  Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;</li>
 <li>Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.</li>
 </ol>
@@ -1634,7 +1627,7 @@
 <p><strong>Algorithm 2.</strong> A special case of Algorithm 1 is the integral $\int_0^1 f(u)\,du$, when the original input coin always returns 1:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random variate <em>u</em>.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>.</li>
 <li>Create an input coin that does the following: &quot;<a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> and return the result.&quot;</li>
 <li>Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.</li>
 </ol>
@@ -1642,9 +1635,9 @@
 <p><strong>Algorithm 3.</strong> I have found that it&#39;s possible to simulate the following integral, namely&mdash; $$\int_a^b f(\lambda u)\,du,$$ where $0\le a\lt b\le 1$, using the following algorithm:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random variate <em>u</em>.  Then if <em>u</em> is less than <em>a</em> or is greater than <em>b</em>, repeat this step. (If <em>u</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal</strong> algorithm.)</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>.  Then if <em>u</em> is less than <em>a</em> or is greater than <em>b</em>, repeat this step. (If <em>u</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal</strong> algorithm.)</li>
 <li>Create an input coin that does the following: &quot;<a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> and return the result.&quot;</li>
-<li>Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform(0, 1) random variate <em>v</em> and return a number that is 0 if <em>v</em> is less than <em>a</em> or is greater than <em>b</em>, or 1 otherwise.</li>
+<li>Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform random variate between 0 and 1 <em>v</em> and return a number that is 0 if <em>v</em> is less than <em>a</em> or is greater than <em>b</em>, or 1 otherwise.</li>
 </ol>
 
 <blockquote>
@@ -1809,7 +1802,7 @@
 <ol>
 <li>Set <em>k</em> and <em>w</em> each to 0.</li>
 <li>Flip the input coin.  If it returns 0, return 1.</li>
-<li>Generate a uniform(0, 1) random variate <em>U</em>.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>U</em>.</li>
 <li>If <em>k</em> &gt; 0 and <em>w</em> is less than <em>U</em>, return 0.</li>
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
 </ol>
@@ -1902,7 +1895,7 @@
 
 <h4>(1 + exp(<em>z</em> &minus; <em>w</em>)) / (1 + exp(<em>z</em>))</h4>
 
-<p>In this algorithm, <em>z</em> is a number (positive or not), and <em>w</em> is 0 or greater, and their absolute values are each written in one of the ways described in the <a href="https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z"><strong>ExpMinus section</strong></a>&quot;.</p>
+<p>In this algorithm, <em>z</em> is a number (positive or not), and <em>w</em> is 0 or greater, and their absolute values are each written in one of the ways described in the <a href="https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z"><strong>&quot;ExpMinus&quot; section</strong></a>&quot;.</p>
 
 <ul>
 <li>If <em>z</em> is known to be 0 or greater:
@@ -2175,7 +2168,7 @@
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
-<li>Generate a uniform(0, 1) random variate <em>u</em>, if it wasn&#39;t generated yet.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if it wasn&#39;t generated yet.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.</li>
 </ol></li>
 </ul>
@@ -2219,7 +2212,7 @@
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
-<li>Generate a uniform(0, 1) random variate <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then flip the input coin.  If the call and the flip both return 1, return 0.</li>
 </ol></li>
 </ul>
@@ -2253,7 +2246,7 @@
 <p>(Flajolet et al., 2010)[^1].  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^34].</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random variate <em>u</em>.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>.</li>
 <li>Create a secondary coin <em>&mu;</em> that does the following: &quot;<a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1.&quot;</li>
 <li>Call the <strong>algorithm for <em>&mu;</em><sup>1/2</sup></strong> using the secondary coin <em>&mu;</em>.  If it returns 0, return 0.</li>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
@@ -2264,7 +2257,7 @@
 
 <h4>tanh(<em>z</em>)</h4>
 
-<p><code>tanh</code> is the hyperbolic tangent function.  <em>z</em> must be 0 or greater.[^61]</p>
+<p><code>tanh</code> is the hyperbolic tangent function.  In this algorithm, <em>z</em> is 0 or greater and is written in one of the ways described in the <a href="#ExpMinus_exp_minus__z"><strong>&quot;ExpMinus&quot; section</strong></a>.[^61]</p>
 
 <ul>
 <li>Do the following process repeatedly, until this algorithm returns a value:
@@ -2385,10 +2378,10 @@
 <ol>
 <li>Set <em>r</em> to floor(<em>d</em>/3) + 1. (This starting value is because when this routine finishes, <em>r</em>/<em>d</em> appears to converge to 1/3 as <em>d</em> gets large, for the polynomial in question.)  Let <em>c</em> be choose(<em>d</em>,<em>d</em>/2).</li>
 <li>Create a list of <em>d</em>+<em>r</em>+1 Bernstein coefficients, all zeros.</li>
-<li>For each integer <em>i</em> in the interval [0, <em>d</em>+<em>r</em>]:
+<li>For each integer <em>i</em> satisfying 0 &le; <em>i</em> &le; <em>d</em>+<em>r</em>:
 
 <ul>
-<li>If <em>d</em>/2 is in the interval [max(0, <em>i</em>&minus;<em>r</em>), min(<em>d</em>,<em>i</em>)], set the <em>i</em><sup>th</sup> Bernstein coefficient (starting at 0) to <em>z</em>*<em>c</em>*choose(<em>r</em>,<em>i</em>&minus;<em>d</em>/2)* / choose(<em>d</em>+<em>r</em>, <em>i</em>).</li>
+<li>If max(0, <em>i</em>&minus;<em>r</em>) &le; <em>d</em>/2 and if <em>d</em>/2 &le; min(<em>d</em>, <em>i</em>), set the <em>i</em><sup>th</sup> Bernstein coefficient (starting at 0) to <em>z</em>*<em>c</em>*choose(<em>r</em>,<em>i</em>&minus;<em>d</em>/2)* / choose(<em>d</em>+<em>r</em>, <em>i</em>).</li>
 </ul></li>
 <li>If all the Bernstein coefficients are 1 or less, return them.  Otherwise, add <em>d</em>/2 to <em>r</em> and go to step 2.</li>
 </ol>
@@ -2595,11 +2588,11 @@
 <ol>
 <li>Flip the input coin until the flip returns 0.  Then set <em>G</em> to the number of times the flip returns 1 this way.</li>
 <li>If <em>G</em> is <strong>odd</strong>, return 0.</li>
-<li>Generate a uniform(0, 1) random variate <em>U</em>, then set <em>i</em> to 1.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>U</em>, then set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
 
 <ol>
-<li>Generate a uniform(0, 1) random variate <em>V</em>.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>V</em>.</li>
 <li>If <em>i</em> is odd[^26] and <em>V</em> is less than <em>U</em>, return 0.</li>
 <li>If <em>i</em> is even[^29] and <em>U</em> is less than <em>V</em>, return 0.</li>
 <li>Add 1 to <em>i</em>, then set <em>U</em> to <em>V</em>.</li>
@@ -2616,11 +2609,11 @@
 <ol>
 <li>Flip the input coin until the flip returns 0.  Then set <em>G</em> to the number of times the flip returns 1 this way.</li>
 <li>If <em>G</em> is <strong>even</strong>, return 0.</li>
-<li>Generate a uniform(0, 1) random variate <em>U</em>, then set <em>i</em> to 1.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>U</em>, then set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
 
 <ol>
-<li>Generate a uniform(0, 1) random variate <em>V</em>.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>V</em>.</li>
 <li>If <em>i</em> is odd[^26] and <em>V</em> is less than <em>U</em>, return 0.</li>
 <li>If <em>i</em> is even[^29] and <em>U</em> is less than <em>V</em>, return 0.</li>
 <li>Add 1 to <em>i</em>, then set <em>U</em> to <em>V</em>.</li>
@@ -2639,7 +2632,7 @@
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the <strong>algorithm for (<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong> with <em>d</em> = <em>d</em> and <em>c</em> = <em>c</em>, and return the result.</li>
-<li>Generate a uniform(0, 1) random variate <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then run the <strong>algorithm for (<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong> with <em>d</em> = <em>d</em> and <em>c</em> = <em>c</em>.  If both calls return 1, return 0.</li>
 </ol></li>
 </ul>
@@ -2854,7 +2847,7 @@ kind of irrational number.</p>
 <p>(Flajolet et al., 2010)[^1]:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random variate <em>u</em>.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>.</li>
 <li>Generate a number that is 1 with probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), or 0 otherwise.  If the number is 0, return 1.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice.  If either of these calls returns 0, return 1.</li>
 <li>Generate a number that is 1 with probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), or 0 otherwise.  If the number is 0, return 0.</li>
@@ -2865,7 +2858,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
-<li>Generate a uniform(0, 1) random variate <em>u</em>, if it wasn&#39;t generated yet.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if it wasn&#39;t generated yet.</li>
 <li>With probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), <a href="#Implementation_Notes"><strong>sample from the number <em>u</em></strong></a> twice.  If both of these calls return 1, return 0.</li>
 <li>Go to step 1.</li>
 </ol>
@@ -3085,7 +3078,7 @@ kind of irrational number.</p>
 <p>(Flajolet et al., 2010)[^1].  It can be seen as a triple integral of the function 1/(1 + <em>a</em> * <em>b</em> * <em>c</em>), where <em>a</em>, <em>b</em>, and <em>c</em> are uniform random variates between 0 and 1.  This algorithm is given below, but using the two-coin algorithm instead of the even-parity construction[^34].  Here, <em>&zeta;</em>(<em>x</em>) is the Riemann zeta function.</p>
 
 <ol>
-<li>Generate three uniform(0, 1) random variates.</li>
+<li>Generate three uniform random variates between 0 and 1.</li>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from each of the three numbers</strong></a> generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random variates.)</li>
 </ol>
@@ -3097,7 +3090,7 @@ kind of irrational number.</p>
 <p>This can be extended to cover any constant of the form <em>&zeta;</em>(<em>k</em>) * (1 &minus; 2<sup>&minus;(<em>k</em> &minus; 1)</sup>) where <em>k</em> &ge; 2 is an integer, as suggested slightly by the Flajolet paper when it mentions <em>&zeta;</em>(5) * 31 / 32 (which should probably read <em>&zeta;</em>(5) * 15 / 16 instead), using the following algorithm.</p>
 
 <ol>
-<li>Generate <em>k</em> uniform(0, 1) random variates.</li>
+<li>Generate <em>k</em> uniform random variates between 0 and 1.</li>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from each of the <em>k</em> numbers</strong></a> generated in step 1.  If all <em>k</em> calls return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
@@ -3109,9 +3102,9 @@ kind of irrational number.</p>
 <p>In the following algorithm, <em>x</em> is a real number that is 0 or greater and 1 or less.</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random variate, call it <em>ret</em>.</li>
+<li>Generate a uniform random variate between 0 and 1, call it <em>ret</em>.</li>
 <li>Set <em>u</em> to point to the same value as <em>ret</em>, and set <em>k</em> to 1.</li>
-<li>(In this and the next step, <em>v</em> is created, which is the maximum of two uniform [0, 1] random variates.) Generate two uniform(0, 1) random variates, call them <em>a</em> and <em>b</em>.</li>
+<li>(In this and the next step, <em>v</em> is created, which is the maximum of two uniform [0, 1] random variates.) Generate two uniform random variates between 0 and 1, call them <em>a</em> and <em>b</em>.</li>
 <li>If <em>a</em> is less than <em>b</em>, set <em>v</em> to <em>b</em>. Otherwise, set <em>v</em> to <em>a</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>, set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
 <li>If <em>k</em> is odd[^26], return 1 if <em>ret</em> is less than <em>x</em>, or 0 otherwise. (If <em>ret</em> is implemented as a uniform PSRN, this comparison should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
@@ -3146,7 +3139,7 @@ kind of irrational number.</p>
 <p><strong>Note:</strong> The following is another algorithm for this constant.  As <a href="https://stats.stackexchange.com/a/539564"><strong>I learned</strong></a>, the fractional part of 1/<em>U</em>, where <em>U</em> is a uniform random variate between 0 and 1, has a mean equal to 1 minus the Euler&ndash;Mascheroni constant <em>&gamma;</em>, about 0.5772.[^71]  This leads to the following algorithm to sample a probability equal to <em>&gamma;</em>:</p>
 
 <ol>
-<li>Generate a random variate of the form 1/<em>U</em> &minus; floor(1/<em>U</em>), where <em>U</em> is a uniform(0, 1) random variate.  This can be done by generating a uniform PSRN for <a href="https://peteroupc.github.io/exporand.html#Reciprocal_of_Uniform_Random_Variate"><strong>the reciprocal of a uniform random variate</strong></a>, then setting that PSRN&#39;s integer part to 0.  Call the variate (or PSRN) <em>f</em>.</li>
+<li>Generate a random variate of the form 1/<em>U</em> &minus; floor(1/<em>U</em>), where <em>U</em> is a uniform random variate between 0 and 1.  This can be done by generating a uniform PSRN for <a href="https://peteroupc.github.io/exporand.html#Reciprocal_of_Uniform_Random_Variate"><strong>the reciprocal of a uniform random variate</strong></a>, then setting that PSRN&#39;s integer part to 0.  Call the variate (or PSRN) <em>f</em>.</li>
 <li><strong>Sample from the number <em>f</em></strong> (for example, call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  Return 0 if the run returns 1, or 1 otherwise.</li>
 </ol>
 </blockquote>
@@ -3230,7 +3223,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.</li>
-<li>Generate a uniform(0, 1) random variate <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
+<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then generate a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.</li>
 </ol></li>
 </ol>
@@ -3415,7 +3408,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 
 <p>[^60]: There are two other algorithms for this function, but they both converge very slowly when <em>&lambda;</em> is very close to 1.  One is the <strong>general martingale algorithm</strong> (see &quot;More Algorithms for Arbitrary-Precision Sampling&quot;) with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called &quot;even-parity&quot; construction from Flajolet et al. 2010: &quot;(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.&quot;</p>
 
-<p>[^61]: There is another algorithm for tanh(<em>&lambda;</em>), based on Lambert&#39;s continued fraction for tanh(.), but it works only if 0 &le; <em>&lambda;</em> &le; 1.  The algorithm begins with <em>k</em> equal to 1.  Then: (1) If <em>k</em> is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If <em>k</em> is greater than 1, then with probability <em>k</em>/(1+<em>k</em>), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with <em>k</em> = <em>k</em> + 2.  If the separate run returns 1, return 0; (4) Go to step 2.</p>
+<p>[^61]: There is another algorithm for tanh(<em>z</em>), based on Lambert&#39;s continued fraction for tanh(.), but it works only if 0 &le; <em>z</em> &le; 1 and if <em>z</em> is the probability of heads of an input coin.  The algorithm begins with <em>k</em> equal to 1.  Then: (1) If <em>k</em> is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If <em>k</em> is greater than 1, then with probability <em>k</em>/(1+<em>k</em>), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with <em>k</em> = <em>k</em> + 2.  If the separate run returns 1, return 0; (4) Go to step 2.</p>
 
 <p>[^62]: Dale, H., Jennings, D. and Rudolph, T., 2015, &quot;Provable quantum advantage in randomness processing&quot;, <em>Nature communications</em> 6(1), pp. 1-4.</p>
 
@@ -3647,7 +3640,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td>Both uniform variates greater than 0 and less than 1</td>
+<td>Both uniform variates between 0 and 1</td>
 <td>Odd is ((1&minus;exp(&minus;<em>x</em>)))/(1&minus;exp(&minus;1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and &quot;cut off&quot; to be not less than 0 and not greater than 1 (von Neumann 1951)[^73].</td>
 </tr>
 <tr>
@@ -3682,7 +3675,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <ol>
 <li>All the functions possible for formulas 1 and 2 are nowhere decreasing functions.  Both formulas express what are called <em>cumulative distribution functions</em>, namely <em>F</em><sub><em>D</em></sub>(<em>x</em> given that <em>n</em> is odd) or <em>F</em><sub><em>D</em></sub>(<em>x</em> given that <em>n</em> is even), respectively.</li>
 <li>EGF(<em>z</em>) is the <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm.  For example, the class of <em>alternating permutations</em> (permutations whose numbers alternate between low and high, that is, <em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; ...) uses the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).  Other examples of EGFs were given in the section on the von Neumann schema.</li>
-<li>The results that point to this note have the special case that both <em>D</em> and <em>E</em> are uniform random variates greater than 0 and less than 1.  Indeed, if each variate <em>x</em> in the sequence is transformed with <em>CDF</em>(<em>x</em>), where <em>CDF</em> is <em>D</em>&#39;s cumulative distribution function, then with probability 1, <em>x</em> becomes a uniform random variate greater than 0 and less than 1, with the same numerical order as before.  See also <a href="https://stats.stackexchange.com/questions/550847"><strong>this Stack Exchange question</strong></a>.</li>
+<li>The results that point to this note have the special case that both <em>D</em> and <em>E</em> are uniform random variates between 0 and 1.  Indeed, if each variate <em>x</em> in the sequence is transformed with <em>CDF</em>(<em>x</em>), where <em>CDF</em> is <em>D</em>&#39;s cumulative distribution function, then with probability 1, <em>x</em> becomes a uniform random variate greater than 0 and less than 1, with the same numerical order as before.  See also <a href="https://stats.stackexchange.com/questions/550847"><strong>this Stack Exchange question</strong></a>.</li>
 </ol>
 </blockquote>
 
@@ -3693,12 +3686,12 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <p>The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz (MGL) generator for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  It works as follows.  Let $S$ be a set of non-negative integers.  Then:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random variate, call it $U$.</li>
+<li>Generate a uniform random variate between 0 and 1, call it $U$.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number $U$</strong></a> repeatedly until the sampling &quot;fails&quot; (returns 0).  Set $k$ to the number of &quot;successes&quot;.  (Thus, this step generates $k$ with probability $g(k,U) = (1-U) U^k$.)</li>
 <li>If $k$ is in $S$, return 1; otherwise, return 0.</li>
 </ol>
 
-<p>This can be seen as running <strong>Algorithm CC</strong> with an input coin for a randomly generated probability (a uniform(0, 1) random variate).  Given that step 1 generates $U$, the probability this algorithm returns 1 is&mdash; $$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the &quot;<a href="#Integrals"><strong>integral method</strong></a>&quot;, so that the overall algorithm returns 1 with probability&mdash; $$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.</p>
+<p>This can be seen as running <strong>Algorithm CC</strong> with an input coin for a randomly generated probability (a uniform random variate between 0 and 1).  Given that step 1 generates $U$, the probability this algorithm returns 1 is&mdash; $$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the &quot;<a href="#Integrals"><strong>integral method</strong></a>&quot;, so that the overall algorithm returns 1 with probability&mdash; $$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.</p>
 
 <p>The derivation below relies on the following fact: The probability satisfies&mdash; $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli&#39;s theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the interval $[0, 1]$ have natural sigma-finite measures.</p>
 
