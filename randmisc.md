@@ -593,6 +593,8 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 > - There is a computable function _f_(_k_) that outputs a positive number.
 > - For each _n_, Supp(_n_) is included in Supp(_n_+1).
 > - For every _k_ and for every _n_ &ge; 2 starting with the first _n_ for which _k_ is in Supp(_n_), the probability of seeing _k_ given parameter _n_ is at least (1/_n_)<sup>_f_(_k_)</sup>.
+>
+> **Example:** Let _n_&ge; 2 be an integer.  The family of Bernoulli distributions, taking on 1 with probability exp(&minus;_n_) and 0 otherwise, cannot be simulated this way, because it decays faster than the rate $(1/n)^f(1)$ for any $f$.  This is consistent with the results for _Bernoulli factories_ (Keane and O'Brien 1994)[^84], where a coin that shows heads with unknown probability _&lambda;_ = 1/_n_ cannot be turned into a coin that shows heads with probability exp(&minus;_n_) = exp(&minus;1/_&lambda;_) since that function is not polynomially bounded (away from 0).
 
 <a id=Additional_Algorithms></a>
 ### Additional Algorithms
@@ -812,6 +814,8 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^82]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
 
 [^83]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
+
+[^84]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
 <a id=License></a>
 ## License

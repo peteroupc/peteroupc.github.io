@@ -1503,11 +1503,11 @@
 
 <ul>
 <li>(2a.) (Limited to even-sized permutations.) If <em>X</em> is odd[^26], reject <em>X</em> (and go to step 1).</li>
-<li>(2b.) Generate a uniform random variate between 0 and 1 U, then set <em>i</em> to 1.</li>
+<li>(2b.) Generate a uniform random variate between 0 and 1, call it U, then set <em>i</em> to 1.</li>
 <li>(2c.) While <em>i</em> is less than <em>X</em>:
 
 <ul>
-<li>Generate a uniform random variate between 0 and 1 V.</li>
+<li>Generate a uniform random variate between 0 and 1, call it V.</li>
 <li>If <em>i</em> is odd[^26] and V is less than U, or if <em>i</em> is even[^29] and U is less than V, reject <em>X</em> (and go to step 1).</li>
 <li>Add 1 to i, then set U to V.</li>
 </ul></li>
@@ -1619,7 +1619,7 @@
 <p>namely the following algorithm:</p>
 
 <ol>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1, call it <em>u</em>.</li>
 <li>Create an input coin that does the following: &quot;Flip the original input coin, then <a href="#Implementation_Notes"><strong>sample from the number <em>u</em></strong></a>.  Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;</li>
 <li>Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.</li>
 </ol>
@@ -1627,7 +1627,7 @@
 <p><strong>Algorithm 2.</strong> A special case of Algorithm 1 is the integral $\int_0^1 f(u)\,du$, when the original input coin always returns 1:</p>
 
 <ol>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>.</li>
+<li>Generate a uniform random variate between 0 and 1, call it <em>u</em>.</li>
 <li>Create an input coin that does the following: &quot;<a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> and return the result.&quot;</li>
 <li>Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.</li>
 </ol>
@@ -3659,12 +3659,12 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 </thead><tbody>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td><em>D</em> is an exponential variate; <em>E</em> is a uniform variate between 0 and 1.</td>
+<td><em>D</em> is an exponential variate with rate 1; <em>E</em> is a uniform variate between 0 and 1.</td>
 <td>1 or less given that <em>n</em> is even is 1 &minus; 2 / (1 + exp(2)) = 1 &minus; (1 + exp(0)) / (1 + exp(1)) = (exp(1)&minus;1)/(exp(1)+1) (uses Formula 2, where DPDF(<em>z</em>) = exp(&minus;<em>z</em>) and ECDF(<em>z</em>) = min(1,<em>z</em>) for <em>z</em>&ge;0).</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td><em>D</em> is an exponential variate; <em>E</em> is a uniform variate between 0 and 1.</td>
+<td><em>D</em> is an exponential variate with rate 1; <em>E</em> is a uniform variate between 0 and 1.</td>
 <td>1/2 or less given that <em>n</em> is odd is 1 &minus; (1 + exp(1)) / (1 + exp(2)) = (exp(2) &minus; exp(1)) / (exp(2)+1) (uses Formula 1, where DPDF(<em>z</em>) = exp(&minus;<em>z</em>) and ECDF(<em>z</em>) = min(1,<em>z</em>) for <em>z</em>&ge;0).</td>
 </tr>
 </tbody></table>

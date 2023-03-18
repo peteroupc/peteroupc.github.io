@@ -981,9 +981,9 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 > 4. For the class of _alternating permutations of even size_ (see example 1), step 2 in **Algorithm BR** can be implemented as follows (Flajolet et al. 2010, sec. 2.2\)[^1]:
 >
 >     - (2a.) (Limited to even-sized permutations.) If _X_ is odd[^26], reject _X_ (and go to step 1).
->     - (2b.) Generate a uniform random variate between 0 and 1 U, then set _i_ to 1.
+>     - (2b.) Generate a uniform random variate between 0 and 1, call it U, then set _i_ to 1.
 >     - (2c.) While _i_ is less than _X_:
->         - Generate a uniform random variate between 0 and 1 V.
+>         - Generate a uniform random variate between 0 and 1, call it V.
 >         - If _i_ is odd[^26] and V is less than U, or if _i_ is even[^29] and U is less than V, reject _X_ (and go to step 1).
 >         - Add 1 to i, then set U to V.
 >
@@ -1030,13 +1030,13 @@ Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the 
 
 namely the following algorithm:
 
-1. Generate a uniform random variate between 0 and 1 _u_.
+1. Generate _u_, a uniform random variate between 0 and 1, call it _u_.
 2. Create an input coin that does the following: "Flip the original input coin, then [**sample from the number _u_**](#Implementation_Notes).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
 **Algorithm 2.** A special case of Algorithm 1 is the integral $\int_0^1 f(u)\,du$, when the original input coin always returns 1:
 
-1. Generate a uniform random variate between 0 and 1 _u_.
+1. Generate a uniform random variate between 0 and 1, call it _u_.
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
@@ -2405,8 +2405,8 @@ Then the algorithm's behavior is given in the tables below.
 
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is...|
  --- | --- | --- | --- |
-| Numbers sorted in descending order | _D_ is an exponential variate; _E_ is a uniform variate between 0 and 1. | 1 or less given that _n_ is even is 1 &minus; 2 / (1 + exp(2)) = 1 &minus; (1 + exp(0)) / (1 + exp(1)) = (exp(1)&minus;1)/(exp(1)+1) (uses Formula 2, where DPDF(_z_) = exp(&minus;_z_) and ECDF(_z_) = min(1,_z_) for _z_&ge;0). |
-| Numbers sorted in descending order | _D_ is an exponential variate; _E_ is a uniform variate between 0 and 1. | 1/2 or less given that _n_ is odd is 1 &minus; (1 + exp(1)) / (1 + exp(2)) = (exp(2) &minus; exp(1)) / (exp(2)+1) (uses Formula 1, where DPDF(_z_) = exp(&minus;_z_) and ECDF(_z_) = min(1,_z_) for _z_&ge;0). |
+| Numbers sorted in descending order | _D_ is an exponential variate with rate 1; _E_ is a uniform variate between 0 and 1. | 1 or less given that _n_ is even is 1 &minus; 2 / (1 + exp(2)) = 1 &minus; (1 + exp(0)) / (1 + exp(1)) = (exp(1)&minus;1)/(exp(1)+1) (uses Formula 2, where DPDF(_z_) = exp(&minus;_z_) and ECDF(_z_) = min(1,_z_) for _z_&ge;0). |
+| Numbers sorted in descending order | _D_ is an exponential variate with rate 1; _E_ is a uniform variate between 0 and 1. | 1/2 or less given that _n_ is odd is 1 &minus; (1 + exp(1)) / (1 + exp(2)) = (exp(2) &minus; exp(1)) / (exp(2)+1) (uses Formula 1, where DPDF(_z_) = exp(&minus;_z_) and ECDF(_z_) = min(1,_z_) for _z_&ge;0). |
 
 > **Notes:**
 >
