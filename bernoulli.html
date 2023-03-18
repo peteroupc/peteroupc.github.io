@@ -957,6 +957,10 @@
 </tr>
 </tbody></table>
 
+<blockquote>
+<p><strong>Note:</strong> sinh(<em>&lambda;</em>) is the hyperbolic sine function.</p>
+</blockquote>
+
 <p><strong>Examples 9:</strong> The table below shows power series functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, <em>D</em> is a rational number such that 0 &le; <em>D</em> &le; <em>&phi;</em>(0), where <em>&phi;</em>(.) is the original function.</p>
 
 <table><thead>
@@ -1850,7 +1854,7 @@
 
 <h4>expit(<em>z</em>)*2 &minus; 1 or tanh(<em>z</em>/2)</h4>
 
-<p>In this algorithm, <em>z</em> is 0 or greater and is written in one of the ways described in the <a href="#ExpMinus_exp_minus__z"><strong>&quot;ExpMinus&quot; section</strong></a>.</p>
+<p>In this algorithm, <em>z</em> is 0 or greater and is written in one of the ways described in the <a href="#ExpMinus_exp_minus__z"><strong>&quot;ExpMinus&quot; section</strong></a>.  <code>tanh</code> is the hyperbolic tangent function.</p>
 
 <ul>
 <li>Do the following process repeatedly, until this algorithm returns a value:
@@ -2243,7 +2247,7 @@
 
 <h4>arcsin(<em>&lambda;</em>) + sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1</h4>
 
-<p>(Flajolet et al., 2010)[^1].  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^34].</p>
+<p>(Flajolet et al., 2010)[^1].  arcsin(<em>&lambda;</em>) is the inverse sine of <em>&lambda;</em>.  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^34].</p>
 
 <ol>
 <li>Generate a uniform random variate between 0 and 1 <em>u</em>.</li>

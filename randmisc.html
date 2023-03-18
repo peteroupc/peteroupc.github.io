@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2023/03/17"><meta name="citation_online_date" content="2023/03/17"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2023/03/18"><meta name="citation_online_date" content="2023/03/18"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -925,14 +925,14 @@
 <ol>
 <li>Take items from the oracle until <em>k</em> different items were taken this way.  Let <em>U</em> be a list of these <em>k</em> items, in the order in which they were first taken.</li>
 <li>Create an empty list <em>L</em>.</li>
-<li>For each integer <em>i</em> in [0, <em>k</em>):
+<li>For each integer <em>i</em> satisfying 0 &le; <em>i</em> &lt; <em>k</em>:
 
 <ol>
 <li>Create an empty list <em>M</em>.</li>
 <li>Take an item from the oracle.  If the item is in <em>U</em> at a position <strong>less than <em>i</em></strong> (positions start at 0), repeat this substep.  Otherwise, if the item is not in <em>M</em>, add it to <em>M</em> and repeat this substep.  Otherwise, go to the next substep.</li>
 <li>Shuffle the list <em>M</em>, then add to <em>L</em> each item that didn&#39;t change position after being shuffled (if not already present in <em>L</em>).</li>
 </ol></li>
-<li>For each integer <em>i</em> in [0, <em>k</em>):
+<li>For each integer <em>i</em> satisfying 0 &le; <em>i</em> &lt; <em>k</em>:
 
 <ol>
 <li>Let <em>P</em> be the item at position <em>i</em> in <em>U</em>.</li>
@@ -943,7 +943,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown <em>n</em> can be sampled with the oracle?[^82] The result applies to a family of (discrete) distributions with the same unknown parameter <em>n</em>, starting with either 1 or a greater integer.  Let Supp(<em>m</em>) be the set of values taken on by the distribution with parameter equal to <em>m</em>.  Then that family can be sampled using the oracle if and only if:</p>
+<p><strong>Note:</strong> Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown <em>n</em> can be sampled with the oracle?[^82] The result applies to a family of (discrete) distributions with the same unknown parameter <em>n</em>, starting with either 1 or a greater integer.  Let Supp(<em>m</em>) be the set of values taken on by the distribution with parameter equal to <em>m</em>.  Then that family can be sampled using the oracle (with or without additional randomness) if and only if:</p>
 
 <ul>
 <li>There is a computable function <em>f</em>(<em>k</em>) that outputs a positive number.</li>
@@ -951,7 +951,9 @@
 <li>For every <em>k</em> and for every <em>n</em> &ge; 2 starting with the first <em>n</em> for which <em>k</em> is in Supp(<em>n</em>), the probability of seeing <em>k</em> given parameter <em>n</em> is at least (1/<em>n</em>)<sup><em>f</em>(<em>k</em>)</sup>.</li>
 </ul>
 
-<p><strong>Example:</strong> Let <em>n</em>&ge; 2 be an integer.  The family of Bernoulli distributions, taking on 1 with probability exp(&minus;<em>n</em>) and 0 otherwise, cannot be simulated this way, because it decays faster than the rate $(1/n)^f(1)$ for any $f$.  This is consistent with the results for <em>Bernoulli factories</em> (Keane and O&#39;Brien 1994)[^84], where a coin that shows heads with unknown probability <em>&lambda;</em> = 1/<em>n</em> cannot be turned into a coin that shows heads with probability exp(&minus;<em>n</em>) = exp(&minus;1/<em>&lambda;</em>) since that function is not polynomially bounded (away from 0).</p>
+<p>Moreover, by Proposition 5.5 of Duvignau, a family meeting the conditions above can be sampled without additional randomness (besides the oracle) if and only if Supp(1) has only one element.</p>
+
+<p><strong>Example:</strong> Let <em>n</em>&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;<em>n</em>) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/<em>n</em>)<sup><em>f</em>(1)</sup> for any <em>f</em>.  This is consistent with the results for <em>Bernoulli factories</em> (Keane and O&#39;Brien 1994)[^83], where a coin that shows heads with unknown probability <em>&lambda;</em> = 1/<em>n</em> cannot be turned into a coin that shows heads with probability g(<em>&lambda;</em>) = exp(&minus;1/<em>&lambda;</em>) = exp(&minus;<em>n</em>) =  since <em>g</em> is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability <em>h</em>(<em>n</em>) = (1+ln(<em>n</em>))/<em>n</em> and 0 with probability 1&minus;<em>h</em>(<em>n</em>), <em>can</em> be simulated, because min(<em>h</em>(<em>n</em>), 1&minus;<em>h</em>(<em>n</em>)) &ge; (1/<em>n</em>)<sup>3</sup>.</p>
 </blockquote>
 
 <p><a id=Additional_Algorithms></a></p>
@@ -967,7 +969,7 @@
 <li>the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0.</li>
 </ul>
 
-<p>The algorithm to achieve this goal follows (see Lee et al. 2014[^83]):</p>
+<p>The algorithm to achieve this goal follows (see Lee et al. 2014[^84]):</p>
 
 <ol>
 <li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
@@ -975,13 +977,13 @@
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> An example from Lee et al. (2014)[^83].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
+<p><strong>Example:</strong> An example from Lee et al. (2014)[^84].  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (&quot;long-run average&quot;) is that mean.</p>
 
 <p><strong>Notes:</strong></p>
 
 <ol>
 <li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected value or &quot;long-run average&quot;) is not the same as averaging to <em>f</em>(<em>&mu;</em>) where <em>&mu;</em> is the mean of the oracle&#39;s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 0 or 1 with equal probability, and <em>f</em>(<em>&nu;</em>) = exp(&minus;<em>&nu;</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(&minus;1) &minus; exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(&minus;1/2).</li>
-<li><p>(Lee et al. 2014, Corollary 4)[^83]: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
+<li><p>(Lee et al. 2014, Corollary 4)[^84]: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
 
 <ul>
 <li>Use <em>f</em>(<em>&nu;</em>) = <em>f</em>(<em>&nu;</em>) &minus; <em>b</em>, and use <em>&delta;</em> = <em>&delta;</em> &minus; <em>b</em>.</li>
@@ -1190,9 +1192,9 @@
 
 <p>[^82]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won&#39;t use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs <em>arbitrary</em> but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).</p>
 
-<p>[^83]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
+<p>[^83]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
 
-<p>[^84]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
+<p>[^84]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
 
 <p><a id=License></a></p>
 
