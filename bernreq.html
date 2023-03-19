@@ -78,6 +78,7 @@
 <ol>
 <li><strong>Given $\epsilon &gt; 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$ with convergence rate $O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.</strong></li>
 <li><strong>With the same assumptions and convergence rate, find two sequences of polynomials in Bernstein form that converge to $f(\lambda)$ and meet the</strong> <a href="#Formal_Statement"><strong>Formal Statement</strong></a> <strong>given later, together with their Bernstein coefficients.</strong> (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must &quot;increase&quot; and &quot;decrease&quot; in a specific sense.)</li>
+<li><strong>With the same assumptions and convergence rate, find a random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ has a simple Bernoulli factory algorithm.</strong></li>
 <li><strong>Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.</strong></li>
 <li><strong>Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.</strong></li>
 <li><strong>Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.</strong></li>
@@ -93,7 +94,7 @@
 <li>$f(\lambda)$ has a $k$-th derivative of bounded variation for some fixed $k\ge 1$.</li>
 <li>$f(\lambda)$ has a $k$-th derivative in the Zygmund class for some fixed $k\ge 0$. ($g(\lambda)$ is in the Zygmund class if there is $D&gt;0$ such that $|g(x-\epsilon) + g(x+\epsilon) - 2g(x)| \le D\epsilon$ for every $\epsilon&gt;0$, whenever $x$, $x-\epsilon$, $x+\epsilon$ are in the domain.)</li>
 <li>$f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.</li>
-<li>$f(\lambda)$ belongs to Gevrey&#39;s hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).</li>
+<li>$f(\lambda)$ belongs to Gevrey&#39;s hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; <strong>see note 4 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;</strong>).</li>
 </ul>
 
 <p><a id=Polynomials_that_approach_a_factory_function_fast></a></p>

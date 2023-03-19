@@ -51,9 +51,10 @@ The following summarizes most of the problems raised by these open questions.
 
 1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), find the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$ with convergence rate $O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.**
 2. **With the same assumptions and convergence rate, find two sequences of polynomials in Bernstein form that converge to $f(\lambda)$ and meet the** [**Formal Statement**](#Formal_Statement) **given later, together with their Bernstein coefficients.** (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must "increase" and "decrease" in a specific sense.)
-3. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
-4. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
-5. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
+3. **With the same assumptions and convergence rate, find a random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ has a simple Bernoulli factory algorithm.**
+4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
+5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
+6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
 
 Assumptions on $f(\lambda)$ can include any combination of the following:
 
@@ -64,7 +65,7 @@ Assumptions on $f(\lambda)$ can include any combination of the following:
 - $f(\lambda)$ has a $k$-th derivative of bounded variation for some fixed $k\ge 1$.
 - $f(\lambda)$ has a $k$-th derivative in the Zygmund class for some fixed $k\ge 0$. ($g(\lambda)$ is in the Zygmund class if there is $D>0$ such that $|g(x-\epsilon) + g(x+\epsilon) - 2g(x)| \le D\epsilon$ for every $\epsilon>0$, whenever $x$, $x-\epsilon$, $x+\epsilon$ are in the domain.)
 - $f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.
-- $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; see Note 4).
+- $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; **see note 4 in "[**End Notes**](#End_Notes)"**).
 
 <a id=Polynomials_that_approach_a_factory_function_fast></a>
 ## Polynomials that approach a factory function "fast"
