@@ -374,16 +374,16 @@ Then the algorithm is as follows:
 <a id=Certain_Power_Series></a>
 #### Certain Power Series
 
-A _power series_ is a function written as&mdash; $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are _coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this section do, and they must be Bernoulli factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function, too.)
+Some functions can be written as&mdash; $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are _coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  (The right-hand side of (1) is called a _power series_ as long as $g(\lambda) = \lambda$.  A function writable as (1) will be called a _generalized power series_ here.)  Not all power series sum to a definite value, but all generalized power series that matter in this section do, and they must be Bernoulli factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function, too.)
 
-Depending on the coefficients, different algorithms can be built to simulate a power series function:
+Depending on the coefficients, different algorithms can be built to simulate a generalized power series:
 
 - The coefficients are arbitrary, but can be split into two parts.
 - The coefficients alternate in sign, and their absolute values form a decreasing sequence.
 - The coefficients are nonnegative and sum to 1 or less.
 - The coefficients are nonnegative and may sum to 1 or greater.
 
-> **Note:** In theory, the power series can contain coefficients that are irrational numbers or sum to an irrational number, but the algorithms for such series can be inexact in practice.  Also, not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:
+> **Note:** In theory, the series (1) can contain coefficients that are irrational numbers or sum to an irrational number, but the algorithms for such series can be inexact in practice.  Also, not all generalized power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:
 >
 > - Series with coefficients that alternate in sign, but do not satisfy the **general martingale algorithm** or **Algorithm 1** below.  This includes nearly all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0. (An example is $\sin(\lambda\pi/2)$.)
 > - Series with negative and positive coefficients that do not eventually alternate in sign (ignoring zeros).
@@ -416,16 +416,16 @@ Then the algorithm below, based on an algorithm by Łatuszyński et al. (2009/20
 
 > **Notes:**
 >
-> 1. The **general martingale algorithm**, as it's called in this article, supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the general martingale algorithm uses that paper's framework.  A proof of its correctness is given in the appendix.
+> 1. The **general martingale algorithm**, as it's called in this article, supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only functions writable as a power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the general martingale algorithm uses that paper's framework.  A proof of its correctness is given in the appendix.
 > 2. The **general martingale algorithm** allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence's nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a nowhere increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is less than or equal to $\lambda$.
 
 **_General Power Series_**:
 
-The algorithm that follows can be used to simulate a more general class of power series functions.  Suppose the following for a power series function $f(\lambda)$:
+Suppose the following for a generalized power series function $f(\lambda)$:
 
 - $f$ is written as in equation $(1)$.
 - There is a rational number $Z$ defined as follows. For every $\lambda$ that satisfies $0 \le \lambda \le 1$, it is true that $0 \le f(\lambda) \le Z \lt 1$.
-- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)" in the "Bernoulli Factory Algorithms" article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  As an example, if $C$ is a power series function described in the section "Certain Alternating Series", above, then $C$ admits a Bernoulli factory algorithm, namely the **general martingale algorithm**.
+- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)" in the "Bernoulli Factory Algorithms" article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  As an example, if $C$ is a generalized power series function described in the section "Certain Alternating Series", above, then $C$ admits a Bernoulli factory algorithm, namely the **general martingale algorithm**.
 
 In addition, the algorithm will be simpler if each coefficient $a_i$ is a rational number.
 
@@ -449,7 +449,7 @@ Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (On
 
 **_Series with Non-Negative Coefficients Summing to 1 or Less_**:
 
-Now, suppose $f(\lambda)$ can be written as a power series in equation $(1)$, but this time, the _coefficients_ $a_i$ are 0 or greater and their sum is 1 or less.
+Now, suppose $f(\lambda)$ can be written as in equation $(1)$, at the beginning of this section, but this time, the _coefficients_ $a_i$ are 0 or greater and their sum is 1 or less.
 
 If $g(\lambda) = \lambda$, this kind of function&mdash;
 
@@ -478,11 +478,11 @@ Once $a_n$ and $w(n)$ are found, the function $f(\lambda)$ can be simulated usin
 2. (The next two steps succeed with probability $\frac{a_n}{w(n)} (g(\lambda))^n$.) Let _P_ be $a_n/w(n)$.  With probability _P_, go to the next step.  Otherwise, return 0.
 3. (At this point, _n_ equals _i_ with probability $a_i$.) Run a Bernoulli factory algorithm for $g(\lambda)$, _n_ times or until a run returns 0, whichever happens first. (For example, if $g(\lambda)=\lambda$, flip the input coin each time.)  Return 1 if all the runs, including the last, returned 1 (or if _n_ is 0).  Otherwise, return 0.
 
-Step 1 is rather general, and doesn't fully describe how to generate the value $n$ at random.  That depends on the function $w(n)$.  See "[**Power Series Examples**](#Power_Series_Examples)", later, for examples of power series functions $f(\lambda)$ that can be simulated using Algorithm 2.
+Step 1 is rather general, and doesn't fully describe how to generate the value $n$ at random.  That depends on the function $w(n)$.  See "[**Power Series Examples**](#Power_Series_Examples)", later, for examples of generalized power series $f(\lambda)$ that can be simulated using Algorithm 2.
 
 > **Note:** Part of **Algorithm 2** involves choosing $X$ at random with probability $w(X)$, then doing $X$ coin flips.  Thus, the algorithm uses, on average, at least the number of unbiased random bits needed to generate $X$ on average (Knuth and Yao 1976\)[^23].
 
-**Algorithm 2** covers an algorithm that was given by Luis Mendo (2019)[^24] for simulating certain power series, but that works only if the coefficients sum to 1 or less and only if coefficient 0 ($a_0$) is 0.
+**Algorithm 2** covers an algorithm that was given by Luis Mendo (2019)[^24] for simulating certain functions writable as power series, but that works only if the coefficients sum to 1 or less and only if coefficient 0 ($a_0$) is 0.
 
 To get to an algorithm equivalent to Mendo's, first **Algorithm 2** is modified to simulate $f_0(\lambda)$/_CS_ as follows, where _CS_ is the sum of all coefficients $a_i$, starting with $i=1$.  This shows Mendo's algorithm, like **Algorithm 2**, is actually a special case of the [**convex combination algorithm**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations).
 
@@ -490,7 +490,7 @@ To get to an algorithm equivalent to Mendo's, first **Algorithm 2** is modified 
 - Step 2 becomes "Go to step 3". (The _P_ in **Algorithm 2** is not used; it's effectively $w(n)/\frac{a_n}{CS}=\frac{a_n}{CS}/\frac{a_n}{CS} = 1$.)
 - In step 3, $g(\lambda)$ is either $\lambda$ (flip the input coin) or $1-\lambda$ (flip the input coin and take 1 minus the flip).
 
-Mendo's algorithm and extensions of it mentioned by him cover several variations of power series as follows:
+Mendo's algorithm and extensions of it mentioned by him cover several variations of functions writable as power series as follows:
 
 | Type |   Power Series  |   Algorithm  |
   --- | --- | --- |
@@ -508,7 +508,7 @@ The conditions on $f$ given above mean that&mdash;
 
 **_Series with General Non-Negative Coefficients_**:
 
-If $f$ is a power series written as equation (1), but&mdash;
+If $f$ is written as equation (1), in the beginning of this section, but&mdash;
 
 - each of the coefficients is positive or zero, and
 - the coefficients sum to greater than 1,
@@ -529,7 +529,7 @@ Examples 1 to 4 show how **Algorithm 1** leads to algorithms for simulating cert
 
 > **Note:** In the SymPy computer algebra library, the `series(func, x, n=20)` method computes the terms of a function's power series up to the term with $x^{19}$.  An example is: `series(sin(x), x, n=20)`.
 
-**Example 1:** Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.
+**Example 1:** Take $f(\lambda) = \sin(3\lambda)/2$, which is writable as a power series.
 
 - $f$ is less than or equal to $Z=1/2 \lt 1$.
 - $f$ satisfies $m=8$ since splitting the series at 8 leads to two functions that admit Bernoulli factories.
@@ -581,7 +581,7 @@ To simulate a function in the table, run the **general martingale algorithm** wi
 >     2. Add 2 to _i_.
 > 4. Return &minus;_v_/(_m_+1).
 
-Examples 7 to 9 use **Algorithm 2** to simulate power series functions where the coefficients $a_0$ are nonnegative.
+Examples 7 to 9 use **Algorithm 2** to simulate generalized power series where the coefficients $a_0$ are nonnegative.
 
 **Example 7:** The hyperbolic cosine minus 1, denoted as cosh(_&lambda;_)&minus;1, can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},$$ where:
 
@@ -610,7 +610,7 @@ For this particular function:
 
 > **Note:** sinh(_&lambda;_) is the hyperbolic sine function.
 
-**Examples 9:** The table below shows power series functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number such that 0 &le; _D_ &le; _&phi;_(0), where _&phi;_(.) is the original function.
+**Examples 9:** The table below shows generalized power series shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number such that 0 &le; _D_ &le; _&phi;_(0), where _&phi;_(.) is the original function.
 
 | Original function (_&phi;_(_&lambda;_)) | Target function _f_(_&lambda;_) | Step 1b in **Example 7** reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- | --- |

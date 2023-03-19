@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/03/18"><meta name="citation_online_date" content="2023/03/18"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/03/19"><meta name="citation_online_date" content="2023/03/19"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -544,9 +544,9 @@
 
 <h4>Certain Power Series</h4>
 
-<p>A <em>power series</em> is a function written as&mdash; $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are <em>coefficients</em> and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this section do, and they must be Bernoulli factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function, too.)</p>
+<p>Some functions can be written as&mdash; $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are <em>coefficients</em> and $g(\lambda)$ is a function in the variable $\lambda$.  (The right-hand side of (1) is called a <em>power series</em> as long as $g(\lambda) = \lambda$.  A function writable as (1) will be called a <em>generalized power series</em> here.)  Not all power series sum to a definite value, but all generalized power series that matter in this section do, and they must be Bernoulli factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function, too.)</p>
 
-<p>Depending on the coefficients, different algorithms can be built to simulate a power series function:</p>
+<p>Depending on the coefficients, different algorithms can be built to simulate a generalized power series:</p>
 
 <ul>
 <li>The coefficients are arbitrary, but can be split into two parts.</li>
@@ -556,7 +556,7 @@
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> In theory, the power series can contain coefficients that are irrational numbers or sum to an irrational number, but the algorithms for such series can be inexact in practice.  Also, not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:</p>
+<p><strong>Note:</strong> In theory, the series (1) can contain coefficients that are irrational numbers or sum to an irrational number, but the algorithms for such series can be inexact in practice.  Also, not all generalized power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:</p>
 
 <ul>
 <li>Series with coefficients that alternate in sign, but do not satisfy the <strong>general martingale algorithm</strong> or <strong>Algorithm 1</strong> below.  This includes nearly all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0. (An example is $\sin(\lambda\pi/2)$.)</li>
@@ -606,19 +606,19 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>The <strong>general martingale algorithm</strong>, as it&#39;s called in this article, supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the general martingale algorithm uses that paper&#39;s framework.  A proof of its correctness is given in the appendix.</li>
+<li>The <strong>general martingale algorithm</strong>, as it&#39;s called in this article, supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only functions writable as a power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the general martingale algorithm uses that paper&#39;s framework.  A proof of its correctness is given in the appendix.</li>
 <li>The <strong>general martingale algorithm</strong> allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence&#39;s nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a nowhere increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is less than or equal to $\lambda$.</li>
 </ol>
 </blockquote>
 
 <p><strong><em>General Power Series</em></strong>:</p>
 
-<p>The algorithm that follows can be used to simulate a more general class of power series functions.  Suppose the following for a power series function $f(\lambda)$:</p>
+<p>Suppose the following for a generalized power series function $f(\lambda)$:</p>
 
 <ul>
 <li>$f$ is written as in equation $(1)$.</li>
 <li>There is a rational number $Z$ defined as follows. For every $\lambda$ that satisfies $0 \le \lambda \le 1$, it is true that $0 \le f(\lambda) \le Z \lt 1$.</li>
-<li>There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot; in the &quot;Bernoulli Factory Algorithms&quot; article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  As an example, if $C$ is a power series function described in the section &quot;Certain Alternating Series&quot;, above, then $C$ admits a Bernoulli factory algorithm, namely the <strong>general martingale algorithm</strong>.</li>
+<li>There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot; in the &quot;Bernoulli Factory Algorithms&quot; article).  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  As an example, if $C$ is a generalized power series function described in the section &quot;Certain Alternating Series&quot;, above, then $C$ admits a Bernoulli factory algorithm, namely the <strong>general martingale algorithm</strong>.</li>
 </ul>
 
 <p>In addition, the algorithm will be simpler if each coefficient $a_i$ is a rational number.</p>
@@ -652,7 +652,7 @@
 
 <p><strong><em>Series with Non-Negative Coefficients Summing to 1 or Less</em></strong>:</p>
 
-<p>Now, suppose $f(\lambda)$ can be written as a power series in equation $(1)$, but this time, the <em>coefficients</em> $a_i$ are 0 or greater and their sum is 1 or less.</p>
+<p>Now, suppose $f(\lambda)$ can be written as in equation $(1)$, at the beginning of this section, but this time, the <em>coefficients</em> $a_i$ are 0 or greater and their sum is 1 or less.</p>
 
 <p>If $g(\lambda) = \lambda$, this kind of function&mdash;</p>
 
@@ -691,13 +691,13 @@
 <li>(At this point, <em>n</em> equals <em>i</em> with probability $a_i$.) Run a Bernoulli factory algorithm for $g(\lambda)$, <em>n</em> times or until a run returns 0, whichever happens first. (For example, if $g(\lambda)=\lambda$, flip the input coin each time.)  Return 1 if all the runs, including the last, returned 1 (or if <em>n</em> is 0).  Otherwise, return 0.</li>
 </ol>
 
-<p>Step 1 is rather general, and doesn&#39;t fully describe how to generate the value $n$ at random.  That depends on the function $w(n)$.  See &quot;<a href="#Power_Series_Examples"><strong>Power Series Examples</strong></a>&quot;, later, for examples of power series functions $f(\lambda)$ that can be simulated using Algorithm 2.</p>
+<p>Step 1 is rather general, and doesn&#39;t fully describe how to generate the value $n$ at random.  That depends on the function $w(n)$.  See &quot;<a href="#Power_Series_Examples"><strong>Power Series Examples</strong></a>&quot;, later, for examples of generalized power series $f(\lambda)$ that can be simulated using Algorithm 2.</p>
 
 <blockquote>
 <p><strong>Note:</strong> Part of <strong>Algorithm 2</strong> involves choosing $X$ at random with probability $w(X)$, then doing $X$ coin flips.  Thus, the algorithm uses, on average, at least the number of unbiased random bits needed to generate $X$ on average (Knuth and Yao 1976)[^23].</p>
 </blockquote>
 
-<p><strong>Algorithm 2</strong> covers an algorithm that was given by Luis Mendo (2019)[^24] for simulating certain power series, but that works only if the coefficients sum to 1 or less and only if coefficient 0 ($a_0$) is 0.</p>
+<p><strong>Algorithm 2</strong> covers an algorithm that was given by Luis Mendo (2019)[^24] for simulating certain functions writable as power series, but that works only if the coefficients sum to 1 or less and only if coefficient 0 ($a_0$) is 0.</p>
 
 <p>To get to an algorithm equivalent to Mendo&#39;s, first <strong>Algorithm 2</strong> is modified to simulate $f_0(\lambda)$/<em>CS</em> as follows, where <em>CS</em> is the sum of all coefficients $a_i$, starting with $i=1$.  This shows Mendo&#39;s algorithm, like <strong>Algorithm 2</strong>, is actually a special case of the <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination algorithm</strong></a>.</p>
 
@@ -707,7 +707,7 @@
 <li>In step 3, $g(\lambda)$ is either $\lambda$ (flip the input coin) or $1-\lambda$ (flip the input coin and take 1 minus the flip).</li>
 </ul>
 
-<p>Mendo&#39;s algorithm and extensions of it mentioned by him cover several variations of power series as follows:</p>
+<p>Mendo&#39;s algorithm and extensions of it mentioned by him cover several variations of functions writable as power series as follows:</p>
 
 <table><thead>
 <tr>
@@ -749,7 +749,7 @@
 
 <p><strong><em>Series with General Non-Negative Coefficients</em></strong>:</p>
 
-<p>If $f$ is a power series written as equation (1), but&mdash;</p>
+<p>If $f$ is written as equation (1), in the beginning of this section, but&mdash;</p>
 
 <ul>
 <li>each of the coefficients is positive or zero, and</li>
@@ -778,7 +778,7 @@
 <p><strong>Note:</strong> In the SymPy computer algebra library, the <code>series(func, x, n=20)</code> method computes the terms of a function&#39;s power series up to the term with $x^{19}$.  An example is: <code>series(sin(x), x, n=20)</code>.</p>
 </blockquote>
 
-<p><strong>Example 1:</strong> Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.</p>
+<p><strong>Example 1:</strong> Take $f(\lambda) = \sin(3\lambda)/2$, which is writable as a power series.</p>
 
 <ul>
 <li>$f$ is less than or equal to $Z=1/2 \lt 1$.</li>
@@ -870,7 +870,7 @@
 </ol>
 </blockquote>
 
-<p>Examples 7 to 9 use <strong>Algorithm 2</strong> to simulate power series functions where the coefficients $a_0$ are nonnegative.</p>
+<p>Examples 7 to 9 use <strong>Algorithm 2</strong> to simulate generalized power series where the coefficients $a_0$ are nonnegative.</p>
 
 <p><strong>Example 7:</strong> The hyperbolic cosine minus 1, denoted as cosh(<em>&lambda;</em>)&minus;1, can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},$$ where:</p>
 
@@ -961,7 +961,7 @@
 <p><strong>Note:</strong> sinh(<em>&lambda;</em>) is the hyperbolic sine function.</p>
 </blockquote>
 
-<p><strong>Examples 9:</strong> The table below shows power series functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, <em>D</em> is a rational number such that 0 &le; <em>D</em> &le; <em>&phi;</em>(0), where <em>&phi;</em>(.) is the original function.</p>
+<p><strong>Examples 9:</strong> The table below shows generalized power series shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, <em>D</em> is a rational number such that 0 &le; <em>D</em> &le; <em>&phi;</em>(0), where <em>&phi;</em>(.) is the original function.</p>
 
 <table><thead>
 <tr>
