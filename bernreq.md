@@ -428,6 +428,7 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 <a id=Other_Questions></a>
 ## Other Questions
 
+- Given integers _m_&ge;0, rational number 0&le;_k_&le;exp(1), and unknown heads probability 0&le;_&lambda;_&le;1, find a Bernoulli factory for&mdash; $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},$$ that, as much as possible, avoids calculating exp(_m_+_&lambda;_)&minus;(_k_\*(_m_+_&lambda;_)); in this sense, the more implicitly it works with irrational or transcental functions, the better.  Note that the right-hand side can be implemented by **ExpMinus** and division Bernoulli factories, but is inefficient.
 - [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): What simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
     - Should use only uniform random integers (or bits) and integer arithmetic.
     - Does not use floating-point arithmetic or make direct use of square root or transcendental functions.

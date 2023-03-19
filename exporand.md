@@ -7,7 +7,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page introduces a Python implementation of _partially-sampled random numbers_ (PSRNs).  Although structures for PSRNs were largely described before this work, this document unifies the concepts for these kinds of numbers from prior works and shows how they can be used to sample the beta distribution (for most sets of parameters), the exponential distribution (with an arbitrary rate parameter), and many other continuous distributions&mdash;
+This page introduces a implementation of _partially-sampled random numbers_ (PSRNs) in the Python programming language.  Although structures for PSRNs were largely described before this work, this document unifies the concepts for these kinds of numbers from prior works and shows how they can be used to sample the beta distribution (for most sets of parameters), the exponential distribution (with an arbitrary rate parameter), and many other continuous distributions&mdash;
 
 - while avoiding floating-point arithmetic, and
 - to an arbitrary precision and with user-specified error bounds (and thus in an "exact" manner in the sense defined in (Karney 2016\)[^1]).
@@ -138,7 +138,7 @@ In this document, a _partially-sampled random number_ (PSRN) is a data structure
 
 PSRNs specified here consist of the following three things:
 
-- A _fractional part_ with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were _sampled_ or _unsampled_; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (for example, by using the `None` keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part's digits form a so-called _digit expansion_ (for example, _binary expansion_ in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.
+- A _fractional part_ with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were _sampled_ or _unsampled_; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (for example, by using the `None` keyword in the Python programming language, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part's digits form a so-called _digit expansion_ (for example, _binary expansion_ in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.
 
     For example, if the fractional part stores the base-10 digits \[1, 3, 5\], in that order, then it represents a random variate in the interval \[0.135, 0.136\], reflecting the fact that the digits between 0.135 and 0.136 are unknown.
 - An optional _integer part_ (more specifically, the integer part of the number's absolute value, that is, `floor(abs(x))`).
@@ -586,7 +586,7 @@ After step 2, if it somehow happens that digits beyond `p` in the PSRN's fractio
 
 - fill all unsampled digits between the first and the last set digit,
 - round the number represented by the PSRN to a number whose fractional part has `p` digits, with a rounding mode of choice (and without further modifying the PSRN), and
-- returning the rounded number.
+- return the rounded number.
 
 For example, if `p` is 4, _b_ is 10, and the PSRN is 0.3437500... or 0.3438500..., the implementation could use a round-to-nearest mode to round the number that the PSRN represents to the number 0.3438 or 0.3439, respectively, and return the rounded number; because this is a PSRN with an "infinite" but unsampled digit expansion, there is no tie-breaking such as "ties to even" applied here.
 
@@ -1576,7 +1576,7 @@ This new algorithm samples the sum of uniform random variates between 0 and 1 an
 
 1. The distribution is divided into pieces that are each 1 unit long (thus, for example, if _n_ is 4, there will be four pieces).
 2. An integer in \[0, _n_\) is chosen uniformly at random, call it _i_, then the piece identified by _i_ is chosen.  There are [**many algorithms to choose an integer**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N) this way, but an algorithm that is "optimal" in terms of the number of bits it uses, as well as unbiased, should be chosen.
-3. The PDF at \[_i_, _i_ + 1\] is shifted so the desired piece of the PDF is at \[0, 1\] rather than its usual place.  More specifically, the PDF is now as follows: $$\mathtt{ShiftedF}(x)=\left(p(x+1,n,0) + p(x+1,n,1) + ... + p(x+1,n,n)\right)/(2(n-1)!),$$ where _x_ is a real number in \[0, 1\].  Since `ShiftedF` is a polynomial, it can be rewritten in Bernstein form, so that it has _Bernstein coefficients_, which are equivalent to control points describing the shape of the curve drawn out by `ShiftedF`. (The Bernstein coefficients are the backbone of the well-known Bézier curve.) A polynomial can be written in _Bernstein form_ as&mdash;  $${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$ where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _coefficients_. The coefficients serve as control points that together trace out a 1-dimensional Bézier curve.  For example, given coefficients (control points) 0.2, 0.3, and 0.6, the curve is at 0.2 when _x_ = 0, and 0.6 when _x_ = 1.  (Note that the curve is not at 0.3 when _x_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
+3. The PDF at \[_i_, _i_ + 1\] is shifted so the desired piece of the PDF is at the closed interval \[0, 1\] rather than its usual place.  More specifically, the PDF is now as follows: $$\mathtt{ShiftedF}(x)=\left(p(x+i,n,0) + p(x+i,n,1) + ... + p(x+i,n,n)\right)/(2(n-1)!),$$ where 0 &le; _x_ &le; 1.  Since `ShiftedF` is a polynomial, it can be rewritten in Bernstein form, so that it has _Bernstein coefficients_, which are equivalent to control points describing the shape of the curve drawn out by `ShiftedF`. (The Bernstein coefficients are the backbone of the well-known Bézier curve.) A polynomial can be written in _Bernstein form_ as&mdash;  $${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$ where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _coefficients_. The coefficients serve as control points that together trace out a 1-dimensional Bézier curve.  For example, given coefficients (control points) 0.2, 0.3, and 0.6, the curve is at 0.2 when _x_ = 0, and 0.6 when _x_ = 1.  (Note that the curve is not at 0.3 when _x_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 
     Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in \[0, 1\] (Goyal and Sigman 2012\)[^35].
 4. The sampler creates a "coin" made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called **SampleGeometricBag**.  It flips this "coin" _n_ &minus; 1 times and counts the number of times the coin returned 1 this way, call it _j_. (The "coin" will return 1 with probability equal to the to-be-determined uniform random variate.)
@@ -2218,7 +2218,7 @@ The following are some additional articles I have written on the topic of random
 
 [^18]: Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
 
-[^19]: Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "[A Domain-Theoretic Approach to Statistical Programming Languages](https://arxiv.org/abs/2106.16190)", arXiv:2106.16190 (2021) (especially sec. 12.3).
+[^19]: Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "[**A Domain-Theoretic Approach to Statistical Programming Languages**](https://arxiv.org/abs/2106.16190)", arXiv:2106.16190 (2021) (especially sec. 12.3).
 
 [^20]: Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), doi:10.3390/e21010092.
 
