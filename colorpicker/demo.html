@@ -7,4 +7,69 @@
 
 <body>
 <div style="float:right; max-width: 50%; min-width: 20%; padding-left: 5px; padding-bottom: 5px">
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h2>Demo</h2>
+<p>Include these scripts in your HTML header:</p>
+<pre>
+&lt;script type="text/javascript" src="cbox.js">&lt;/script>
+</pre>
+<p>Then, color input boxes, and textboxes with IDs or class names starting with "color_" or "acolor_" or
+"rgbahex_" or "argbhex_" will turn into color pickers.</p>
+<form action="index.html">
+<p><label for="color_c2"><a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html">Normal Color Picker</a>:</label>
+<input type="text" value="blue" name="c1" id="color_c1"></p>
+<pre>
+&lt;input type="text" value="blue" name="c1" id="color_c1">
+OR
+&lt;input type="text" value="blue" name="c1" class="color_c1">
+</pre>
+<p><label for="acolor_c2"><a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html">Alpha Color Picker</a>:</label>
+<input type="text" value="#ff0000" name="c2" id="acolor_c2">
+<pre>
+&lt;input type="text" value="#ff0000" name="c2" id="acolor_c2">
+</pre>
+<p><label for="acolor_c2"><a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html">
+Alpha Color Picker (RRGGBBAA format)</a>:</label><br/>
+<input type="text" value="ff0000ff" name="c2" id="rgbahex_c2">
+<pre>
+&lt;input type="text" value="ff0000ff" name="c2" id="rgbahex_c2">
+</pre>
+<p><label for="acolor_c2"><a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html">
+Alpha Color Picker (AARRGGBB format)</a>:</label><br/>
+<input type="text" value="ff0000ff" name="c2" id="argbhex_c2">
+<pre>
+&lt;input type="text" value="ff0000ff" name="c2" id="argbhex_c2">
+</pre>
+<a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html">Native Color Picker</a>:
+<input type="color" value="#00ff00" name="c3">
+<pre>
+&lt;input type="color" value="#00ff00" name="c3">
+</pre>
+<input type="submit" value="Fake Submit">
+</form>
+
+<script>
+if(document.location.href.indexOf("file://")!=0){
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
 </body></html>
