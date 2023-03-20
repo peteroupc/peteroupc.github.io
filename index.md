@@ -23,13 +23,14 @@ Open-source articles on programming subjects.  Help me on my [**requests and ope
 
 * [**Randomization and Sampling Methods**](./randomfunc.html)
 * [**More Random Sampling Methods**](./randomnotes.html)
-* [**The Most Common Topics Involving Randomization**](./randomcommon.html)
 * [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.html)
 * [**Bernoulli Factory Algorithms**](./bernoulli.html)
 * [**Supplemental Notes for Bernoulli Factory Algorithms**](./bernsupp.html)
 * [**Miscellaneous Observations on Randomization**](./randmisc.html)
-* [**Code Generator for Discrete Distributions**](./autodist.html)
 * [**Randomized Estimation Algorithms**](./estimation.html)
+* More:
+    * [**The Most Common Topics Involving Randomization**](./randomcommon.html)
+    * [**Code Generator for Discrete Distributions**](./autodist.html)
 
 In the articles above, I put an emphasis on random variate generation that:
 
