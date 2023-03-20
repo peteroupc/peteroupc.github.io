@@ -242,6 +242,8 @@ Let $X$ be a random variable that does not take on a single value with probabili
 
 3. Let $g$ be a known piecewise continuous function on [0, 1], and suppose $X$ lies on the interval [0, 1].  How can [**a Stack Exchange answer**](https://stats.stackexchange.com/a/523355/296678) be adapted to $g$, so that the algorithm estimates $g(\mathbb{E}[X])$ with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around $g$'s discontinuities? Is it enough to replace $g$ with a continuous function $f$ that equals $g$ everywhere except at that "negligible" area? Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified. Perhaps the tolerance could be defined as the integral of absolute differences between $f$ and $g$ instead of "negligible area"; in that case, how should the continuous $f$ be built?
 
+4. If $X$ is Bernoulli with unknown mean 0 &lt; _&lambda;_ &le; 1, is the following algorithm an unbiased estimator of 1/_&lambda;_? Take random variates i.i.d. until a 1 is taken, then count the number of variates taken this way.  This question is asked because the results of Jacob and Thiery (2015) don't cover the case of whether a nonnegative unbiased estimator of $f(E[X])$ exists when $f:(a,b]\to[0,\infty)$ is unbounded, as opposed to when $f$ is bounded or when $f$'s _domain_ is unbounded or a _closed_ interval.
+
 <a id=References></a>
 ## References
 
@@ -254,3 +256,4 @@ Let $X$ be a random variable that does not take on a single value with probabili
 - Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs, " SIAM Journal on Discrete Mathematics 17 (2004): 624-633.
 - Adamczewski, B., Cassaigne, J. And Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
 - Yao, Andrew C. "Context-free grammars and random number generation." In Combinatorial algorithms on words, pp. 357-361. Springer, Berlin, Heidelberg, 1985.
+- Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
