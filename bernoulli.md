@@ -619,15 +619,13 @@ For this particular function:
 | exp(_&lambda;_/2)/2.  | _&phi;_(_&lambda;_) &minus; _D_. | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. |
 | cosh(_&lambda;_)/4. | _&phi;_(_&lambda;_) &minus; _D_. | 2\*_n_. | (1/4&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_/2</sup>/(2\*(_n_!)) otherwise. |
 
-**Example 10:**
+**Example 10:** Let $f = \exp(\lambda)/3$.  Then this function is a generalized power series, with nonnegative coefficients, which can be tucked under probabilities of the form $w(n) = \left(\frac{2}{3}(1-\frac{2}{3})^n\right)$.
 
-Let $f = \exp(\lambda)/3$.  Then this function is a generalized power series, where the coefficients can be tucked under probabilities of the form $w(n) = \left(\frac{2}{3}(1-\frac{2}{3})^n = \frac{2^{n/2}}{n!}\right)$.
-
-- Step 1 of **Algorithm 2** can read: "(1a.) Set _n_ to 0.  (1b.) With probability 2/3, go to the next step.  Otherwise, add 1 to _n_ and repeat this substep. (1c.) Set _n_ to 2\*_n_ + 2."
-- In step 2, _P_ is $a_n/w(n) = \frac{1}{n!} / \left(\frac{2}{3}(1-\frac{2}{3})^n = \frac{2^{n/2}}{n!}\right) = \frac{\left(\frac{3}{2}\right)^{n + 1}}{n!}$ for each allowed $n$.
+- Step 1 of **Algorithm 2** can read: "(1a.) Set _n_ to 0.  (1b.) With probability 2/3, go to substep 1c.  Otherwise, add 1 to _n_ and repeat this substep. (1c.) Set _n_ to 2\*_n_ + 2."
+- In step 2, _P_ is $a_n/w(n) = \frac{1}{3\cdot n!} / \left(\frac{2}{3}(1-\frac{2}{3})^n\right) = \frac{(3/2)^{n + 1}}{n!}$ for each allowed $n$.
 - In step 3, $g(\lambda)$ is simply $\lambda$.
 
-**Example 11:** Let $f(\lambda)=exp(\lambda)\cdot (1-\lambda)$.  Run Mendo's algorithm for series of type 1, with $a_i = \frac{i-1}{i!}$ and $CS = 1$.
+**Example 11:** Let $f(\lambda)=\exp(\lambda)\cdot (1-\lambda)$.  Run Mendo's algorithm for series of type 1, with $a_i = \frac{i-1}{i!}$ and $CS = 1$.
 
 <a id=General_Factory_Functions></a>
 #### General Factory Functions
