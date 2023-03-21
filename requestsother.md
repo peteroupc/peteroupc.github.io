@@ -6,6 +6,7 @@ This page lists certain open questions on probability.  Any answers to these que
 ## Contents
 
 - [**Contents**](#Contents)
+- [**Additional Requests and Open Questions**](#Additional_Requests_and_Open_Questions)
 - [**Probability distributions computable by pushdown automata**](#Probability_distributions_computable_by_pushdown_automata)
     - [**Pushdown Generators**](#Pushdown_Generators)
     - [**Distributions Computable by Pushdown Generators**](#Distributions_Computable_by_Pushdown_Generators)
@@ -17,6 +18,14 @@ This page lists certain open questions on probability.  Any answers to these que
     - [**Questions**](#Questions_3)
 - [**Questions on Estimation Algorithms**](#Questions_on_Estimation_Algorithms)
 - [**References**](#References)
+
+<a id=Additional_Requests_and_Open_Questions></a>
+## Additional Requests and Open Questions
+
+Besides the requests and open questions found here, the following pages list others:
+
+- [**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)
+- [**Requests and Open Questions**](https://peteroupc.github.io/requests.html)
 
 <a id=Probability_distributions_computable_by_pushdown_automata></a>
 ## Probability distributions computable by pushdown automata
@@ -242,7 +251,7 @@ Let $X$ be a random variable that does not take on a single value with probabili
 
 3. Let $g$ be a known piecewise continuous function on [0, 1], and suppose $X$ lies on the interval [0, 1].  How can [**a Stack Exchange answer**](https://stats.stackexchange.com/a/523355/296678) be adapted to $g$, so that the algorithm estimates $g(\mathbb{E}[X])$ with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around $g$'s discontinuities? Is it enough to replace $g$ with a continuous function $f$ that equals $g$ everywhere except at that "negligible" area? Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified. Perhaps the tolerance could be defined as the integral of absolute differences between $f$ and $g$ instead of "negligible area"; in that case, how should the continuous $f$ be built?
 
-4. If $X$ is Bernoulli with unknown mean 0 &lt; _&lambda;_ &le; 1, is the following algorithm an unbiased estimator of 1/_&lambda;_? Take random variates i.i.d. until a 1 is taken, then count the number of variates taken this way.  This question is asked because the results of Jacob and Thiery (2015) don't cover the case of whether a nonnegative unbiased estimator of $f(E[X])$ exists when $f:(a,b]\to[0,\infty)$ is unbounded, as opposed to when $f$ is bounded or when $f$'s _domain_ is unbounded or a _closed_ interval.
+4. If $X$ is Bernoulli with unknown mean 0 &lt; _&lambda;_ &le; 1, is the following algorithm an unbiased estimator of 1/_&lambda;_? Take random variates i.i.d. until a 1 is taken, then count the number of variates taken this way.  This question is asked because the results of Jacob and Thiery (2015) don't cover the case of whether a nonnegative unbiased estimator of $f(\mathbb{E}[X])$ exists when $f:(a,b]\to[0,\infty)$ is unbounded, as opposed to when $f$ is bounded or when $f$'s _domain_ is unbounded or a _closed_ interval.
 
 <a id=References></a>
 ## References

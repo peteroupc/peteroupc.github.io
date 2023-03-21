@@ -632,7 +632,7 @@ The algorithm to achieve this goal follows (see Lee et al. 2014[^84]\)\:
 
 The algorithm follows.
 
-1. Set _ret_ to 0, _prod_ to 1, _k_ to 0, and _w_ to 1. (_w_ is the probability of generating _k_ or more random variates in a single run of the algorithm.)
+1. Set _ret_ to 0, _prod_ to 1, _k_ to 0, and _w_ to 1. (_w_ is the probability of taking _k_ or more numbers from the oracle in a single run of the algorithm.)
 2. If _k_ is greater than 0: Take a number from the oracle, call it _x_, and multiply _prod_ by _x_&minus;_a_.
 3. Add _c_\[_k_\]\*_prod_/_w_ to _ret_.
 4. Multiply _w_ by _&psi;_ and add 1 to _k_.
