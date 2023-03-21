@@ -64,6 +64,7 @@ Comments on other aspects of this document are welcome.
         - [**ExpMinus (exp(&minus;_z_))**](#ExpMinus_exp_minus__z)
         - [**LogisticExp (1 &minus; expit(_z_/2<sup>_prec_</sup>))**](#LogisticExp_1_minus_expit__z__2_prec)
         - [**exp(&minus;(_&lambda;_ \* _z_))**](#exp_minus___lambda____z)
+        - [**exp(&minus;exp(_m_ + _&lambda;_))**](#exp_minus_exp__m____lambda)
         - [**exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)**](#exp_minus__m____lambda____k)
         - [**exp(_&lambda;_)*(1&minus;_&lambda;_)**](#exp___lambda___1_minus___lambda)
         - [**(1 &minus; exp(&minus;(_m_ + _&lambda;_))) / (_m_ + _&lambda;_)**](#1_minus_exp_minus__m____lambda____m____lambda)
@@ -621,7 +622,7 @@ For this particular function:
 
 **Example 10:** Let $f = \exp(\lambda)/3$.  Then this function is a generalized power series, with nonnegative coefficients, which can be tucked under probabilities of the form $w(n) = \left(\frac{2}{3}(1-\frac{2}{3})^n\right)$.
 
-- Step 1 of **Algorithm 2** can read: "(1a.) Set _n_ to 0.  (1b.) With probability 2/3, go to substep 1c.  Otherwise, add 1 to _n_ and repeat this substep. (1c.) Set _n_ to 2\*_n_ + 2."
+- Step 1 of **Algorithm 2** can read: "(1a.) Set _n_ to 0.  (1b.) With probability 2/3, go to substep 1c.  Otherwise, add 1 to _n_ and repeat this substep. (1c.) Set _n_ to _n_."
 - In step 2, _P_ is $a_n/w(n) = \frac{1}{3\cdot n!} / \left(\frac{2}{3}(1-\frac{2}{3})^n\right) = \frac{(3/2)^{n + 1}}{n!}$ for each allowed $n$.
 - In step 3, $g(\lambda)$ is simply $\lambda$.
 
@@ -1140,6 +1141,18 @@ The algorithm follows.
 > 2. When _z_ is a rational number with 0 &le; _z_ &le; 1, this function can be rewritten as a power series expansion.  In that case, one way to simulate the function is to run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda) = \lambda$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i z^i}{i!}$, and return the result of that algorithm.
 > 3. When _z_ is a rational number 0 or greater, this function can be simulated as follows: Let _m_ be floor(_c_).  Call the algorithm in note 2 _m_ times with _z_ = 1.  If any of these calls returns 0, return 0. Otherwise, if _z_ is an integer (that is, if floor(_z_) = _z_), return 1.  Otherwise, call the algorithm in note 2 once, with _z_ = _z_ &minus; floor(_z_).  Return the result of this call.
 > 4. When _m_ = 0 and _&mu;_ = 1, this function, in case 2, becomes exp(&minus;_&lambda;_) and can be rewritten as a power series expansion.  In that case, one way to simulate the function is to use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^53]
+
+<a id=exp_minus_exp__m____lambda></a>
+#### exp(&minus;exp(_m_ + _&lambda;_))
+
+In the following algorithm, _m_ is an integer 0 or greater.
+
+1. Generate a Poisson random variate with mean 3<sup>_m_+1</sup>, call it _n_.  (See "[**Poisson Distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution)" for one way to do this.)
+2. (Thin _n_ to a Poisson random variate with mean $\exp(m+\lambda)$, returning early if the variate would be greater than 0.) If _n_ is greater than 0, do the following _n_ times or until this algorithm returns a value:
+    - Run the algorithm for **exp(_&lambda;_)/3** (see "Certain Power Series"), _m_ times, with _&lambda;_ being a coin that always returns 0.  Then run the algorithm for **exp(_&lambda;_)/3** once, with _&lambda;_ being the input coin.  If all these runs return 1, return 0.
+3. Return 1.
+
+> **Note:** The following is a proof this algorithm is valid.  Rewrite $\exp(m+\lambda)=3^{m+1}\cdot\frac{\exp(1)}{3}^m\cdot\frac{\exp(\lambda)}{3}$.  Step 1 generates a Poisson variate with mean $3^{m+1}$.  This variate is then thinned to a Poisson variate with mean $\exp(m+\lambda)$ in step 2, returning early if the new variate would be greater than 0 (because a Poisson variate with mean $\exp(m+\lambda)$ is 0 with probability $\exp(-\exp(m+\lambda))$).
 
 <a id=exp_minus__m____lambda____k></a>
 #### exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)

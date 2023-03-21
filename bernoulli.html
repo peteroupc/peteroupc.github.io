@@ -94,6 +94,7 @@
 <li><a href="#ExpMinus_exp_minus__z"><strong>ExpMinus (exp(&minus;<em>z</em>))</strong></a></li>
 <li><a href="#LogisticExp_1_minus_expit__z__2_prec"><strong>LogisticExp (1 &minus; expit(<em>z</em>/2<sup><em>prec</em></sup>))</strong></a></li>
 <li><a href="#exp_minus___lambda____z"><strong>exp(&minus;(<em>&lambda;</em> * <em>z</em>))</strong></a></li>
+<li><a href="#exp_minus_exp__m____lambda"><strong>exp(&minus;exp(<em>m</em> + <em>&lambda;</em>))</strong></a></li>
 <li><a href="#exp_minus__m____lambda____k"><strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)<sup><em>k</em></sup>)</strong></a></li>
 <li><a href="#exp___lambda___1_minus___lambda"><strong>exp(<em>&lambda;</em>)*(1&minus;<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_minus_exp_minus__m____lambda____m____lambda"><strong>(1 &minus; exp(&minus;(<em>m</em> + <em>&lambda;</em>))) / (<em>m</em> + <em>&lambda;</em>)</strong></a></li>
@@ -1000,7 +1001,7 @@
 <p><strong>Example 10:</strong> Let $f = \exp(\lambda)/3$.  Then this function is a generalized power series, with nonnegative coefficients, which can be tucked under probabilities of the form $w(n) = \left(\frac{2}{3}(1-\frac{2}{3})^n\right)$.</p>
 
 <ul>
-<li>Step 1 of <strong>Algorithm 2</strong> can read: &quot;(1a.) Set <em>n</em> to 0.  (1b.) With probability 2/3, go to substep 1c.  Otherwise, add 1 to <em>n</em> and repeat this substep. (1c.) Set <em>n</em> to 2*<em>n</em> + 2.&quot;</li>
+<li>Step 1 of <strong>Algorithm 2</strong> can read: &quot;(1a.) Set <em>n</em> to 0.  (1b.) With probability 2/3, go to substep 1c.  Otherwise, add 1 to <em>n</em> and repeat this substep. (1c.) Set <em>n</em> to <em>n</em>.&quot;</li>
 <li>In step 2, <em>P</em> is $a_n/w(n) = \frac{1}{3\cdot n!} / \left(\frac{2}{3}(1-\frac{2}{3})^n\right) = \frac{(3/2)^{n + 1}}{n!}$ for each allowed $n$.</li>
 <li>In step 3, $g(\lambda)$ is simply $\lambda$.</li>
 </ul>
@@ -1777,6 +1778,26 @@
 <li>When <em>z</em> is a rational number 0 or greater, this function can be simulated as follows: Let <em>m</em> be floor(<em>c</em>).  Call the algorithm in note 2 <em>m</em> times with <em>z</em> = 1.  If any of these calls returns 0, return 0. Otherwise, if <em>z</em> is an integer (that is, if floor(<em>z</em>) = <em>z</em>), return 1.  Otherwise, call the algorithm in note 2 once, with <em>z</em> = <em>z</em> &minus; floor(<em>z</em>).  Return the result of this call.</li>
 <li>When <em>m</em> = 0 and <em>&mu;</em> = 1, this function, in case 2, becomes exp(&minus;<em>&lambda;</em>) and can be rewritten as a power series expansion.  In that case, one way to simulate the function is to use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^53]</li>
 </ol>
+</blockquote>
+
+<p><a id=exp_minus_exp__m____lambda></a></p>
+
+<h4>exp(&minus;exp(<em>m</em> + <em>&lambda;</em>))</h4>
+
+<p>In the following algorithm, <em>m</em> is an integer 0 or greater.</p>
+
+<ol>
+<li>Generate a Poisson random variate with mean 3<sup><em>m</em>+1</sup>, call it <em>n</em>.  (See &quot;<a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot; for one way to do this.)</li>
+<li>(Thin <em>n</em> to a Poisson random variate with mean $\exp(m+\lambda)$, returning early if the variate would be greater than 0.) If <em>n</em> is greater than 0, do the following <em>n</em> times or until this algorithm returns a value:
+
+<ul>
+<li>Run the algorithm for <strong>exp(<em>&lambda;</em>)/3</strong> (see &quot;Certain Power Series&quot;), <em>m</em> times, with <em>&lambda;</em> being a coin that always returns 0.  Then run the algorithm for <strong>exp(<em>&lambda;</em>)/3</strong> once, with <em>&lambda;</em> being the input coin.  If all these runs return 1, return 0.</li>
+</ul></li>
+<li>Return 1.</li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> The following is a proof this algorithm is valid.  Rewrite $\exp(m+\lambda)=3^{m+1}\cdot\frac{\exp(1)}{3}^m\cdot\frac{\exp(\lambda)}{3}$.  Step 1 generates a Poisson variate with mean $3^{m+1}$.  This variate is then thinned to a Poisson variate with mean $\exp(m+\lambda)$ in step 2, returning early if the new variate would be greater than 0 (because a Poisson variate with mean $\exp(m+\lambda)$ is 0 with probability $\exp(-\exp(m+\lambda))$).</p>
 </blockquote>
 
 <p><a id=exp_minus__m____lambda____k></a></p>
