@@ -2117,8 +2117,8 @@ The _bit complexity_ of an algorithm that generates random variates is measured 
 
 Existing work shows how to calculate the bit complexity for any probability distribution:
 
-- For a 1-dimensional distribution with a probability density function (PDF), the bit complexity is greater than or equal to `DE + prec - 1` random bits, where `DE` is the differential entropy for the distribution and _prec_ is the number of bits in the random variate's fractional part (Devroye and Gravel 2020\)[^3].
 - For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is greater than or equal to the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976\)[^52].  (For a given probability _p_, the binary entropy is `0 - p*log2(p)` where `log2(x) = ln(x)/ln(2)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
+- For a 1-dimensional distribution with a probability density function (PDF), if the distribution's integer part has a finite bit complexity, the full distribution's bit complexity is greater than or equal to `DE + prec - 1` random bits, where `DE` is the differential entropy for the distribution and _prec_ is the number of bits in the random variate's fractional part (Devroye and Gravel 2020\)[^3].
 
 For example, in the case of the exponential distribution, `DE` is log2(exp(1)/_&lambda;_), so the minimum bit complexity for this distribution is log2(exp(1)/_&lambda;_) + _prec_ &minus; 1, so that if _prec_ = 20, this minimum is about 20.443 bits when _&lambda;_ = 1, decreases when _&lambda;_ goes up, and increases when _&lambda;_ goes down.  In the case of any other distribution with a PDF, `DE` is the integral of `f(x) * log2(1/f(x))` over all valid values `x`, where `f` is the distribution's PDF.
 

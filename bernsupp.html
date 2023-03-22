@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/03/15"><meta name="citation_online_date" content="2023/03/15"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/03/22"><meta name="citation_online_date" content="2023/03/22"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -352,7 +352,7 @@
 
 <p>The simplest choice for this polynomial, known simply as a <em>Bernstein polynomial</em>, has <em>n</em>+1 coefficients and its <em>j</em><sup>th</sup> coefficient (starting at 0) is found as <em>f</em>(<em>j</em>/<em>n</em>).  For this choice, if <em>f</em> is continuous, the polynomial can be brought arbitrarily close to <em>f</em> by choosing <em>n</em> high enough.</p>
 
-<p>Whatever polynomial is used, the polynomial&#39;s coefficients must all lie in [0, 1].</p></li>
+<p>Whatever polynomial is used, the polynomial&#39;s coefficients must all lie on the closed unit interval.</p></li>
 <li><p>Then, use one of the algorithms in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; to toss heads with probability equal to that polynomial, given its coefficients.</p></li>
 </ol>
 
@@ -408,7 +408,7 @@
 
 <hr>
 
-<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my <a href="https://mathoverflow.net/questions/424272"><strong>question on MathOverflow</strong></a>.</p>
+<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>.</p>
 
 <p>An example is given by the iterated Bernstein polynomial construction discussed in Micchelli (1973)[^6] and Guan (2009)[^7]. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Then&mdash;</p>
 
@@ -927,7 +927,7 @@
 <li>Set <em>i</em> to 1.</li>
 <li>Run <code>calc_linear_func(eps, mult, i)</code> and get the degree and <em>Y parameter</em> for the last listed item, call them <em>n</em> and <em>y</em>, respectively.</li>
 <li>Set <em>x</em> to &minus;((<em>y</em>&minus;(1&minus;<em>&epsilon;</em>))/<em>&epsilon;</em>)<sup>5</sup>/<em>mult</em> + <em>y</em>/<em>mult</em>.  (This exact formula doesn&#39;t appear in the Thomas and Blanchet paper; rather it comes from the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)</li>
-<li>For degree <em>n</em>, <strong>fbelow(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>mult</em>, 1&minus;<em>&epsilon;</em>), and <strong>fabove(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>y</em>/<em>x</em>,<em>y</em>).  (<strong>fbelow</strong> matches <em>f</em> because <em>f</em> is <em>concave</em> on the interval [0, 1], which roughly means that its rate of growth there never goes up.)</li>
+<li>For degree <em>n</em>, <strong>fbelow(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>mult</em>, 1&minus;<em>&epsilon;</em>), and <strong>fabove(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>y</em>/<em>x</em>,<em>y</em>).  (<strong>fbelow</strong> matches <em>f</em> because <em>f</em> is <em>concave</em> on the closed unit interval.)</li>
 <li>Add 1 to <em>i</em> and go to step 2.</li>
 </ol>
 
@@ -1121,7 +1121,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <ol>
 <li>Set <em>ret</em> to the result of <strong>kthsmallest</strong> with the two parameters <em>m</em> and <em>m</em>.  (Thus, <em>ret</em> is distributed as <em>u</em><sup>1/<em>m</em></sup> where <em>u</em> is a uniform random variate greater than 0 and less than 1; although <strong>kthsmallest</strong> accepts only integers, this formula works for every <em>m</em> greater than 0.)</li>
 <li>Set <em>k</em> to 1, then set <em>u</em> to point to the same value as <em>ret</em>.</li>
-<li>Generate a uniform(0, 1) random variate <em>v</em>.</li>
+<li>Generate a uniform random variate between 0 and 1, call it <em>v</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>: Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
 <li>If <em>k</em> is odd[^27], return a number that is 1 if <em>ret</em> is less than <em>x</em> and 0 otherwise. (If <em>ret</em> is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via <strong>URandLessThanReal</strong>.)  If <em>k</em> is even[^28], go to step 1.</li>
 </ol>
@@ -1129,8 +1129,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <p>Derivation:  See Formula 1 in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot;, where:</p>
 
 <ul>
-<li><code>ECDF(x)</code>  is the probability that a uniform random variate greater than 0 and less than 1 is <em>x</em> or less, namely <em>x</em> if <em>x</em> is in [0, 1], 0 if <em>x</em> is less than 0, and 1 otherwise.</li>
-<li><code>DPDF(x)</code> is the probability density function for the maximum of <em>m</em> uniform random variates in [0, 1], namely <em>m</em>*<em>x</em><sup><em>m</em>&minus;1</sup> if <em>x</em> is in [0, 1], and 0 otherwise.</li>
+<li><code>ECDF(x)</code>  is the probability that a uniform random variate between 0 and 1 is <em>x</em> or less, namely <em>x</em> if <em>x</em> is greater than 0 and less than 1, 0 if <em>x</em> is less than 0, and 1 otherwise.</li>
+<li><code>DPDF(x)</code> is the probability density function for the maximum of <em>m</em> uniform random variates between 0 and 1, namely <em>m</em>*<em>x</em><sup><em>m</em>&minus;1</sup> if <em>x</em> is greater than 0 and less than 1, and 0 otherwise.</li>
 </ul>
 
 <p><a id=4_3___pi></a></p>
@@ -1145,7 +1145,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> The mean value 4/(3*<em>&pi;</em>) can be derived as follows.  The relative probability that <em>x</em> is &quot;close&quot; to <em>z</em>, where $0\le <em>z</em> \le 1$, is <em>p</em>(<em>z</em>) = sqrt(1 &minus; <em>z</em>*<em>z</em>).  Now find the integral (&quot;area under the graph&quot;) of <em>z</em>*<em>p</em>(<em>z</em>)/<em>c</em> (where <em>c</em>=<em>&pi;</em>/4 is the integral of <em>p</em>(<em>z</em>) on the interval [0, 1]).  The result is the mean value 4/(3*<em>&pi;</em>).  The following Python code prints this mean value using the SymPy computer algebra library: <code>p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));</code>.</p>
+<p><strong>Note:</strong> The mean value 4/(3*<em>&pi;</em>) can be derived as follows.  The relative probability that <em>x</em> is &quot;close&quot; to <em>z</em>, where $0\le <em>z</em> \le 1$, is <em>p</em>(<em>z</em>) = sqrt(1 &minus; <em>z</em>*<em>z</em>).  Now find the integral (&quot;area under the graph&quot;) of <em>z</em>*<em>p</em>(<em>z</em>)/<em>c</em> (where <em>c</em>=<em>&pi;</em>/4 is the integral of <em>p</em>(<em>z</em>) on the closed unit interval).  The result is the mean value 4/(3*<em>&pi;</em>).  The following Python code prints this mean value using the SymPy computer algebra library: <code>p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));</code>.</p>
 </blockquote>
 
 <p><a id=Notes></a></p>
@@ -1282,7 +1282,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p><strong>Lemma A1:</strong> Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and sum to a finite value and where $0\le x\le 1$ (the domain is the closed unit interval). Then $f$ is convex and has a maximum at 1.</p>
 
-<p><em>Proof:</em> By inspection, $f(x)$ is a power series and is nonnegative on the positive real line (and thus wherever $0\le x\le 1$).  Each of its terms has a maximum at 1 since&mdash;</p>
+<p><em>Proof:</em> By inspection, $f(x)$ is a power series and is nonnegative wherever $x\ge 0$ (and thus wherever $0\le x\le 1$).  Each of its terms has a maximum at 1 since&mdash;</p>
 
 <ul>
 <li>for $n=0$, $a_0 x^0=a_0$ is a non-negative constant (which trivially reaches its maximum at 1), and</li>
@@ -1294,7 +1294,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>The derivative of $f$ is&mdash; $$f&#39;(x) = a_1 x^0 + ... + a_i x^{i-1} + ...,$$ which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f&#39;$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.</p>
 
-<p>Now, since the second derivative is nonnegative on the positive real line, and thus on its domain, $f$ is convex, which completes the proof. &#x25a1;</p>
+<p>Now, since the second derivative is nonnegative wherever $x\ge 0$, and thus on its domain, $f$ is convex, which completes the proof. &#x25a1;</p>
 
 <p><strong>Proposition A2:</strong> For a function $f(x)$ as in Lemma A1, let&mdash; $$g_n(x)=a_0 x^0 + ... + a_n x^n,$$ and have the same domain as $f$.  Then for every $n\ge 1$, $g_n(x)$ is within $\epsilon$ of $f(x)$, where $\epsilon = f(1) - g_n(1)$.</p>
 
@@ -1394,7 +1394,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;):</p>
 
 <ul>
-<li><em>f</em>(<em>&lambda;</em>) maps the closed unit interval to [0, 1].</li>
+<li><em>f</em>(<em>&lambda;</em>) maps the closed unit interval to itself.</li>
 <li><em>f</em>(<em>&lambda;</em>) is continuous.</li>
 <li>0 &lt; <em>f</em>(<em>&lambda;</em>) &lt; 1 whenever 0 &lt; <em>&lambda;</em> &lt; 1.</li>
 <li><em>f</em>(<em>&lambda;</em>) is algebraic over rational numbers (that is, there is a nonzero polynomial <em>P</em>(<em>x</em>, <em>y</em>) in two variables and whose coefficients are rational numbers, such that <em>P</em>(<em>x</em>, <em>f</em>(<em>x</em>)) = 0 for every <em>x</em> in the domain of <em>f</em>).</li>
@@ -1554,7 +1554,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <ul>
 <li>The functions <em>&lambda;</em> and 1 &minus; <em>&lambda;</em>.</li>
-<li>Constants in [0, 1].  As Nacu and Peres (2005)[^1] already showed, any such constant <em>c</em> admits an optimal factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)[^34], then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)[^35].</li>
+<li>Constants <em>c</em> satisfying 0 &le; <em>c</em> &le; 1.  As Nacu and Peres (2005)[^1] already showed, any such constant admits an optimal factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)[^34], then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)[^35].</li>
 </ul>
 
 <p>It is easy to see that if an <em>optimal factory</em> exists for <em>f</em>(<em>&lambda;</em>), then one also exists for 1 &minus; <em>f</em>(<em>&lambda;</em>): simply change all ones returned by the <em>f</em>(<em>&lambda;</em>) factory into zeros and vice versa.</p>
@@ -2246,7 +2246,7 @@ for i in range(20):
 
 <p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>&lambda;</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^26] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
-<p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps (0, 1) to itself is in class <strong>PDA</strong>.</em></p>
+<p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps the open interval (0, 1) to itself is in class <strong>PDA</strong>.</em></p>
 
 <p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)[^26].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;</p>
 
@@ -2317,7 +2317,7 @@ for i in range(20):
 <li>(<em>st</em>, <em>p</em>, <em>sy</em>) &rarr; (<em>s2</em>, {<em>sy1</em>, <em>sy2</em>}) becomes <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = <em>p</em>*<em>&alpha;</em><sub><em>s2</em>,<em>sy2</em>,<em>&sigma;[1]</em></sub>*<em>&alpha;</em><sub><em>&sigma;[1]</em>,<em>sy1</em>,<em>en</em></sub> + ... + <em>p</em>*<em>&alpha;</em><sub><em>s2</em>,<em>sy2</em>,<em>&sigma;[n]</em></sub>*<em>&alpha;</em><sub><em>&sigma;[n]</em>,<em>sy1</em>,<em>en</em></sub>, where <em>&sigma;[i]</em> is one of the machine&#39;s <em>n</em> states.</li>
 </ul>
 
-<p>(Here, <em>p</em> is the probability of using the given transition rule; the special value HEADS becomes <em>&lambda;</em>, and the special value TAILS becomes 1&minus;<em>&lambda;</em>.)  Now, each time multiple equations have the same left-hand side, combine them into one equation with the same left-hand side, but with the sum of their right-hand sides.  Then, for every variable of the form <em>&alpha;</em><sub><em>a</em>,<em>b</em>,<em>c</em></sub> not yet present in the system, include the equation <em>&alpha;</em><sub><em>a</em>,<em>b</em>,<em>c</em></sub> = 0.  Then, for each final state <em>fs</em> that returns 1, solve the system for the variable <em>&alpha;</em><sub>START,EMPTY,<em>fs</em></sub> (where START is the automaton&#39;s starting state) to get a solution (a function) that maps (0, 1) to itself. (Each solve can produce multiple solutions, but only one of them will map (0, 1) to itself assuming every <em>p</em> is either HEADS or TAILS.) Finally, add all the solutions to get <em>f</em>(<em>&lambda;</em>).</p></li>
+<p>(Here, <em>p</em> is the probability of using the given transition rule; the special value HEADS becomes <em>&lambda;</em>, and the special value TAILS becomes 1&minus;<em>&lambda;</em>.)  Now, each time multiple equations have the same left-hand side, combine them into one equation with the same left-hand side, but with the sum of their right-hand sides.  Then, for every variable of the form <em>&alpha;</em><sub><em>a</em>,<em>b</em>,<em>c</em></sub> not yet present in the system, include the equation <em>&alpha;</em><sub><em>a</em>,<em>b</em>,<em>c</em></sub> = 0.  Then, for each final state <em>fs</em> that returns 1, solve the system for the variable <em>&alpha;</em><sub>START,EMPTY,<em>fs</em></sub> (where START is the automaton&#39;s starting state) to get a solution (a function) that maps the open interval (0, 1) to itself. (Each solve can produce multiple solutions, but only one of them will map that open interval to itself assuming every <em>p</em> is either HEADS or TAILS.) Finally, add all the solutions to get <em>f</em>(<em>&lambda;</em>).</p></li>
 <li><p>Assume there is a pushdown automaton (<em>F</em>) that follows Definition 1 except it uses a set of <em>N</em> input letters (and not simply HEADS or TAILS), accepts an input word if the stack is empty, and rejects the word if the machine reaches a configuration without a transition rule.  Then a pushdown automaton in the full sense of Definition 1 (<em>G</em>) can be built.  In essence:</p>
 
 <ol>
@@ -2400,7 +2400,7 @@ for i in range(20):
 <li><code>PDF(z)</code> is the probability density function of <em>X</em>, or the derivative of <code>CDF(z)</code>, or the relative probability of choosing a number &quot;close&quot; to <em>z</em> at random.</li>
 </ul>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^35] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many &quot;slope&quot; functions on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)[^53], (Kindler and Romik 2004)[^54], and it can be shown that the expected value (mean or &quot;long-run average&quot;) of <em>X</em> must be a rational number. [^55]</p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^35] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 &le; <code>z</code> &le; 1 is irrational (Vatan 2001)[^53], (Kindler and Romik 2004)[^54], and it can be shown that the expected value (mean or &quot;long-run average&quot;) of <em>X</em> must be a rational number. [^55]</p>
 
 <p><strong>Proposition 8.</strong> <em>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:</em></p>
 

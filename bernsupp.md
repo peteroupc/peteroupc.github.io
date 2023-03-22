@@ -236,7 +236,7 @@ To build an approximate Bernoulli factory with a polynomial:
 
     The simplest choice for this polynomial, known simply as a _Bernstein polynomial_, has _n_+1 coefficients and its _j_<sup>th</sup> coefficient (starting at 0) is found as _f_(_j_/_n_).  For this choice, if _f_ is continuous, the polynomial can be brought arbitrarily close to _f_ by choosing _n_ high enough.
 
-    Whatever polynomial is used, the polynomial's coefficients must all lie in \[0, 1\].
+    Whatever polynomial is used, the polynomial's coefficients must all lie on the closed unit interval.
 
 2. Then, use one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" to toss heads with probability equal to that polynomial, given its coefficients.
 
@@ -265,7 +265,7 @@ Now, if _f_ belongs to any of the classes given above, the following algorithm (
 
 -------------------
 
-Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my [**question on MathOverflow**](https://mathoverflow.net/questions/424272).
+Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my [**question on MathOverflow**](https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions).
 
 An example is given by the iterated Bernstein polynomial construction discussed in Micchelli (1973)[^6] and Guan (2009)[^7]. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Then&mdash;
 
@@ -553,7 +553,7 @@ The code at the end of this section uses the computer algebra library SymPy to c
 1. Set _i_ to 1.
 2. Run `calc_linear_func(eps, mult, i)` and get the degree and _Y parameter_ for the last listed item, call them _n_ and _y_, respectively.
 3. Set _x_ to &minus;((_y_&minus;(1&minus;_&epsilon;_))/_&epsilon;_)<sup>5</sup>/_mult_ + _y_/_mult_.  (This exact formula doesn't appear in the Thomas and Blanchet paper; rather it comes from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.)
-4. For degree _n_, **fbelow(_n_, _k_)** is min((_k_/_n_)\*_mult_, 1&minus;_&epsilon;_), and **fabove(_n_, _k_)** is min((_k_/_n_)\*_y_/_x_,_y_).  (**fbelow** matches _f_ because _f_ is _concave_ on the interval [0, 1], which roughly means that its rate of growth there never goes up.)
+4. For degree _n_, **fbelow(_n_, _k_)** is min((_k_/_n_)\*_mult_, 1&minus;_&epsilon;_), and **fabove(_n_, _k_)** is min((_k_/_n_)\*_y_/_x_,_y_).  (**fbelow** matches _f_ because _f_ is _concave_ on the closed unit interval.)
 5. Add 1 to _i_ and go to step 2.
 
 It would be interesting to find general formulas to find the appropriate polynomials (degrees and _Y parameters_) given only the values for _mult_ and _&epsilon;_, rather than find them "the hard way" via `calc_linear_func`.  For this procedure, the degrees and _Y parameters_ can be upper bounds, as long as the sequence of degrees is strictly increasing and the sequence of Y parameters is nowhere increasing.
@@ -718,14 +718,14 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 1. Set _ret_ to the result of **kthsmallest** with the two parameters _m_ and _m_.  (Thus, _ret_ is distributed as _u_<sup>1/_m_</sup> where _u_ is a uniform random variate greater than 0 and less than 1; although **kthsmallest** accepts only integers, this formula works for every _m_ greater than 0.)
 2. Set _k_ to 1, then set _u_ to point to the same value as _ret_.
-3. Generate a uniform(0, 1) random variate _v_.
+3. Generate a uniform random variate between 0 and 1, call it _v_.
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 5. If _k_ is odd[^27], return a number that is 1 if _ret_ is less than _x_ and 0 otherwise. (If _ret_ is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via **URandLessThanReal**.)  If _k_ is even[^28], go to step 1.
 
 Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations)", where:
 
-- `ECDF(x)`  is the probability that a uniform random variate greater than 0 and less than 1 is _x_ or less, namely _x_ if _x_ is in \[0, 1\], 0 if _x_ is less than 0, and 1 otherwise.
-- `DPDF(x)` is the probability density function for the maximum of _m_ uniform random variates in [0, 1], namely _m_\*_x_<sup>_m_&minus;1</sup> if _x_ is in \[0, 1\], and 0 otherwise.
+- `ECDF(x)`  is the probability that a uniform random variate between 0 and 1 is _x_ or less, namely _x_ if _x_ is greater than 0 and less than 1, 0 if _x_ is less than 0, and 1 otherwise.
+- `DPDF(x)` is the probability density function for the maximum of _m_ uniform random variates between 0 and 1, namely _m_\*_x_<sup>_m_&minus;1</sup> if _x_ is greater than 0 and less than 1, and 0 otherwise.
 
 <a id=4_3___pi></a>
 ### 4/(3\*_&pi;_)
@@ -735,7 +735,7 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 1. Generate two partially-sampled random numbers (PSRNs) in the form of a uniformly chosen point inside a 2-dimensional quarter hypersphere (that is, a quarter of a "filled circle"; see "[**Uniform Distribution Inside N-Dimensional Shapes**](https://peteroupc.github.io/exporand.html#Uniform_Distribution_Inside_N_Dimensional_Shapes)" in the article "Partially-Sampled Random Numbers", as well as the examples there).
 2. Let _x_ be one of those PSRNs.  Run **SampleGeometricBag** on that PSRN and return the result (which will be either 0 or 1).
 
-> **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_, where $0\le _z_ \le 1$, is _p_(_z_) = sqrt(1 &minus; _z_\*_z_).  Now find the integral ("area under the graph") of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the integral of _p_(_z_) on the interval [0, 1]).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
+> **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_, where $0\le _z_ \le 1$, is _p_(_z_) = sqrt(1 &minus; _z_\*_z_).  Now find the integral ("area under the graph") of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the integral of _p_(_z_) on the closed unit interval).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
 
 <a id=Notes></a>
 ## Notes
@@ -868,7 +868,7 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 
 **Lemma A1:** Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and sum to a finite value and where $0\le x\le 1$ (the domain is the closed unit interval). Then $f$ is convex and has a maximum at 1.
 
-_Proof:_ By inspection, $f(x)$ is a power series and is nonnegative on the positive real line (and thus wherever $0\le x\le 1$).  Each of its terms has a maximum at 1 since&mdash;
+_Proof:_ By inspection, $f(x)$ is a power series and is nonnegative wherever $x\ge 0$ (and thus wherever $0\le x\le 1$).  Each of its terms has a maximum at 1 since&mdash;
 
 - for $n=0$, $a_0 x^0=a_0$ is a non-negative constant (which trivially reaches its maximum at 1), and
 - for each $n$ where $a_0 = 0$, $a_0 x^n$ is the constant 0 (which trivially reaches its maximum at 1), and
@@ -878,7 +878,7 @@ Since all of these terms have a maximum at 1 on the domain, so does their sum.
 
 The derivative of $f$ is&mdash; $$f'(x) = a_1 x^0 + ... + a_i x^{i-1} + ...,$$ which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f'$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.
 
-Now, since the second derivative is nonnegative on the positive real line, and thus on its domain, $f$ is convex, which completes the proof. &#x25a1;
+Now, since the second derivative is nonnegative wherever $x\ge 0$, and thus on its domain, $f$ is convex, which completes the proof. &#x25a1;
 
 **Proposition A2:** For a function $f(x)$ as in Lemma A1, let&mdash; $$g_n(x)=a_0 x^0 + ... + a_n x^n,$$ and have the same domain as $f$.  Then for every $n\ge 1$, $g_n(x)$ is within $\epsilon$ of $f(x)$, where $\epsilon = f(1) - g_n(1)$.
 
@@ -964,7 +964,7 @@ _f_ admits a Bernoulli factory if and only if _f_ is constant on its domain, or 
 
 If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (see "[**Definitions**](#Definitions)"):
 
-- _f_(_&lambda;_) maps the closed unit interval to \[0, 1\].
+- _f_(_&lambda;_) maps the closed unit interval to itself.
 - _f_(_&lambda;_) is continuous.
 - 0 < _f_(_&lambda;_) < 1 whenever 0 < _&lambda;_ < 1.
 - _f_(_&lambda;_) is algebraic over rational numbers (that is, there is a nonzero polynomial _P_(_x_, _y_) in two variables and whose coefficients are rational numbers, such that _P_(_x_, _f_(_x_)) = 0 for every _x_ in the domain of _f_).
@@ -1103,7 +1103,7 @@ _When the probability &lambda; is such that a &le; &lambda; &le; b, is there a m
 So far, the following functions do admit an _optimal factory_:
 
 - The functions _&lambda;_ and 1 &minus; _&lambda;_.
-- Constants in \[0, 1\].  As Nacu and Peres (2005\)[^1] already showed, any such constant _c_ admits an optimal factory: generate unbiased random bits using Peres's iterated von Neumann extractor (Peres 1992\)[^34], then build a binary tree that generates 1 with probability _c_ and 0 otherwise (Knuth and Yao 1976\)[^35].
+- Constants _c_ satisfying 0 &le; _c_ &le; 1.  As Nacu and Peres (2005\)[^1] already showed, any such constant admits an optimal factory: generate unbiased random bits using Peres's iterated von Neumann extractor (Peres 1992\)[^34], then build a binary tree that generates 1 with probability _c_ and 0 otherwise (Knuth and Yao 1976\)[^35].
 
 It is easy to see that if an _optimal factory_ exists for _f_(_&lambda;_), then one also exists for 1 &minus; _f_(_&lambda;_): simply change all ones returned by the _f_(_&lambda;_) factory into zeros and vice versa.
 
@@ -1585,7 +1585,7 @@ _Proof:_ Special case of Proposition 1A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda
 
 _Proof:_ Let _F_ be the full-domain pushdown automaton for _f_. For each state/symbol pair among the left-hand sides of _F_'s rules, apply Lemma 1A to the automaton _F_, using the function _g_.  Then the new machine _F_ terminates with probability 1 because the original _F_ and the original automaton for _g_ do for every _&lambda;_ greater than 0 and less than 1, and because the automaton for _g_ never outputs the same value with probability 0 or 1 for any _&lambda;_ greater than 0 or less than 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^26] because the machine is a full-domain pushdown automaton.  &#x25a1;
 
-**Proposition 3:** _Every rational function with rational coefficients that maps (0, 1) to itself is in class **PDA**._
+**Proposition 3:** _Every rational function with rational coefficients that maps the open interval (0, 1) to itself is in class **PDA**._
 
 _Proof:_ These functions can be simulated by a finite-state machine (Mossel and Peres 2005\)[^26].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;
 
@@ -1645,7 +1645,7 @@ Solving this system for the grammar's starting nonterminal, and applying Proposi
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_}) becomes _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ \* _&alpha;_<sub>_s2_,_sy1_,_en_</sub>.
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_, _sy2_}) becomes _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_\*_&alpha;_<sub>_s2_,_sy2_,_&sigma;[1]_</sub>\*_&alpha;_<sub>_&sigma;[1]_,_sy1_,_en_</sub> + ... + _p_\*_&alpha;_<sub>_s2_,_sy2_,_&sigma;[n]_</sub>\*_&alpha;_<sub>_&sigma;[n]_,_sy1_,_en_</sub>, where _&sigma;[i]_ is one of the machine's _n_ states.
 >
->     (Here, _p_ is the probability of using the given transition rule; the special value HEADS becomes _&lambda;_, and the special value TAILS becomes 1&minus;_&lambda;_.)  Now, each time multiple equations have the same left-hand side, combine them into one equation with the same left-hand side, but with the sum of their right-hand sides.  Then, for every variable of the form _&alpha;_<sub>_a_,_b_,_c_</sub> not yet present in the system, include the equation _&alpha;_<sub>_a_,_b_,_c_</sub> = 0.  Then, for each final state _fs_ that returns 1, solve the system for the variable _&alpha;_<sub>START,EMPTY,_fs_</sub> (where START is the automaton's starting state) to get a solution (a function) that maps (0, 1) to itself. (Each solve can produce multiple solutions, but only one of them will map (0, 1) to itself assuming every _p_ is either HEADS or TAILS.) Finally, add all the solutions to get _f_(_&lambda;_).
+>     (Here, _p_ is the probability of using the given transition rule; the special value HEADS becomes _&lambda;_, and the special value TAILS becomes 1&minus;_&lambda;_.)  Now, each time multiple equations have the same left-hand side, combine them into one equation with the same left-hand side, but with the sum of their right-hand sides.  Then, for every variable of the form _&alpha;_<sub>_a_,_b_,_c_</sub> not yet present in the system, include the equation _&alpha;_<sub>_a_,_b_,_c_</sub> = 0.  Then, for each final state _fs_ that returns 1, solve the system for the variable _&alpha;_<sub>START,EMPTY,_fs_</sub> (where START is the automaton's starting state) to get a solution (a function) that maps the open interval (0, 1) to itself. (Each solve can produce multiple solutions, but only one of them will map that open interval to itself assuming every _p_ is either HEADS or TAILS.) Finally, add all the solutions to get _f_(_&lambda;_).
 >
 > 3. Assume there is a pushdown automaton (_F_) that follows Definition 1 except it uses a set of _N_ input letters (and not simply HEADS or TAILS), accepts an input word if the stack is empty, and rejects the word if the machine reaches a configuration without a transition rule.  Then a pushdown automaton in the full sense of Definition 1 (_G_) can be built.  In essence:
 >     1. Add a new FAILURE state, which when reached, pops all symbols from the stack.
@@ -1712,7 +1712,7 @@ The "output" of the machine is now a real number _X_ in the form of the base-_N_
 - `CDF(z)` is the cumulative distribution function of _X_, or the probability that _X_ is _z_ or less.
 - `PDF(z)` is the probability density function of _X_, or the derivative of `CDF(z)`, or the relative probability of choosing a number "close" to _z_ at random.
 
-A _finite-state generator_ (Knuth and Yao 1976)[^35] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` has infinitely many "slope" functions on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)[^53], (Kindler and Romik 2004)[^54], and it can be shown that the expected value (mean or "long-run average") of _X_ must be a rational number. [^55]
+A _finite-state generator_ (Knuth and Yao 1976)[^35] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational coefficients and satisfy `PDF(z) > 0` whenever 0 &le; `z` &le; 1 is irrational (Vatan 2001)[^53], (Kindler and Romik 2004)[^54], and it can be shown that the expected value (mean or "long-run average") of _X_ must be a rational number. [^55]
 
 **Proposition 8.** _Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:_
 
