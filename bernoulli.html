@@ -1787,8 +1787,8 @@
 <p>In the following algorithm, <em>m</em> is an integer 0 or greater.</p>
 
 <ol>
-<li>Generate a Poisson random variate with mean 3<sup><em>m</em>+1</sup>, call it <em>n</em>.  (See &quot;<a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot; for one way to do this.)</li>
-<li>(Thin <em>n</em> to a Poisson random variate with mean $\exp(m+\lambda)$, returning early if the variate would be greater than 0.) If <em>n</em> is greater than 0, do the following <em>n</em> times or until this algorithm returns a value:
+<li>Generate <em>n</em>, a Poisson random variate with mean 3<sup><em>m</em>+1</sup>.  (See &quot;<a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot; for one way to do this.)</li>
+<li>If <em>n</em> is greater than 0, do the following <em>n</em> times or until this algorithm returns a value:
 
 <ul>
 <li>Run the algorithm for <strong>exp(<em>&lambda;</em>)/3</strong> (see &quot;Certain Power Series&quot;), <em>m</em> times, with <em>&lambda;</em> being a coin that always returns 0.  Then run the algorithm for <strong>exp(<em>&lambda;</em>)/3</strong> once, with <em>&lambda;</em> being the input coin.  If all these runs return 1, return 0.</li>
@@ -1797,7 +1797,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> The following is a proof this algorithm is valid.  Rewrite $\exp(m+\lambda)=3^{m+1}\cdot\frac{\exp(1)}{3}^m\cdot\frac{\exp(\lambda)}{3}$.  Step 1 generates a Poisson variate with mean $3^{m+1}$.  This variate is then thinned to a Poisson variate with mean $\exp(m+\lambda)$ in step 2, returning early if the new variate would be greater than 0 (because a Poisson variate with mean $\exp(m+\lambda)$ is 0 with probability $\exp(-\exp(m+\lambda))$).</p>
+<p><strong>Note:</strong> The following is a proof this algorithm is valid.  Rewrite $\exp(m+\lambda)$ = $3^{m+1}\cdot\left(\frac{\exp(1)}{3}\right)^m\cdot\frac{\exp(\lambda)}{3}$.  Step 1 generates a Poisson variate with mean $3^{m+1}$.  This variate is then thinned to a Poisson variate with mean $\exp(m+\lambda)$ in step 2, returning early if the new variate would be greater than 0 (because a Poisson variate with mean $\exp(m+\lambda)$ is 0 with probability $\exp(-\exp(m+\lambda))$).</p>
 </blockquote>
 
 <p><a id=exp_minus__m____lambda____k></a></p>

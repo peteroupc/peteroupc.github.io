@@ -1147,12 +1147,12 @@ The algorithm follows.
 
 In the following algorithm, _m_ is an integer 0 or greater.
 
-1. Generate a Poisson random variate with mean 3<sup>_m_+1</sup>, call it _n_.  (See "[**Poisson Distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution)" for one way to do this.)
-2. (Thin _n_ to a Poisson random variate with mean $\exp(m+\lambda)$, returning early if the variate would be greater than 0.) If _n_ is greater than 0, do the following _n_ times or until this algorithm returns a value:
+1. Generate _n_, a Poisson random variate with mean 3<sup>_m_+1</sup>.  (See "[**Poisson Distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution)" for one way to do this.)
+2. If _n_ is greater than 0, do the following _n_ times or until this algorithm returns a value:
     - Run the algorithm for **exp(_&lambda;_)/3** (see "Certain Power Series"), _m_ times, with _&lambda;_ being a coin that always returns 0.  Then run the algorithm for **exp(_&lambda;_)/3** once, with _&lambda;_ being the input coin.  If all these runs return 1, return 0.
 3. Return 1.
 
-> **Note:** The following is a proof this algorithm is valid.  Rewrite $\exp(m+\lambda)=3^{m+1}\cdot\frac{\exp(1)}{3}^m\cdot\frac{\exp(\lambda)}{3}$.  Step 1 generates a Poisson variate with mean $3^{m+1}$.  This variate is then thinned to a Poisson variate with mean $\exp(m+\lambda)$ in step 2, returning early if the new variate would be greater than 0 (because a Poisson variate with mean $\exp(m+\lambda)$ is 0 with probability $\exp(-\exp(m+\lambda))$).
+> **Note:** The following is a proof this algorithm is valid.  Rewrite $\exp(m+\lambda)$ = $3^{m+1}\cdot\left(\frac{\exp(1)}{3}\right)^m\cdot\frac{\exp(\lambda)}{3}$.  Step 1 generates a Poisson variate with mean $3^{m+1}$.  This variate is then thinned to a Poisson variate with mean $\exp(m+\lambda)$ in step 2, returning early if the new variate would be greater than 0 (because a Poisson variate with mean $\exp(m+\lambda)$ is 0 with probability $\exp(-\exp(m+\lambda))$).
 
 <a id=exp_minus__m____lambda____k></a>
 #### exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)
