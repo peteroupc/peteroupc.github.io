@@ -2242,7 +2242,7 @@ for i in range(20):
 
 <p><em>Proof:</em> Special case of Proposition 1A with <em>n</em>=1, <em>f</em>(<em>&lambda;</em>)=<em>f</em>(<em>&lambda;</em>), <em>a</em>[0]=<em>h</em>(<em>&lambda;</em>), and <em>a</em>[1]=<em>g</em>(<em>&lambda;</em>).  &#x25a1;</p>
 
-<p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;).</em></p>
+<p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or (f&#x2218;g)(&lambda;).</em></p>
 
 <p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>&lambda;</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^26] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
@@ -2375,9 +2375,9 @@ for i in range(20):
 
 <p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>&lambda;</em>); if <em>n</em> is 2, write <em>f</em> as sqrt&#x2218;sqrt(<em>&lambda;</em>); and for general <em>n</em>, write <em>f</em> as sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
+<p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>&lambda;</em>); if <em>n</em> is 2, write <em>f</em> as (sqrt&#x2218;sqrt)(<em>&lambda;</em>); and for general <em>n</em>, write <em>f</em> as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt)(<em>&lambda;</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
-<p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
+<p>For general <em>m</em> and <em>n</em>, write <em>f</em> as ((sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt)(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
 <p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^26] because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 

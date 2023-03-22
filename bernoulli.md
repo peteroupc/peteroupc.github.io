@@ -692,7 +692,7 @@ In the algorithm (see also (Brassard et al., 2019\)[^29], (Devroye 1986, p. 769\
 <a id=Continued_Fractions></a>
 #### Continued Fractions
 
-A _simple continued fraction_ is a way to write a real number between 0 and 1. A simple continued fraction has the form&mdash; $0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))),$ where the _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.
+A _simple continued fraction_ is a way to write a real number between 0 and 1. A simple continued fraction has the form&mdash; $0 + 1 / (_a_[1] + 1 / (_a_[2] + 1 / (_a_[3] + ... ))),$ where the _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.
 
 Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions"\)[^1], I developed the following algorithm.
 
@@ -905,7 +905,7 @@ The algorithm follows.
 
 > **Notes:**
 >
-> 1. The _Bernoulli Race_ (Dughmi et al. 2021\)[^43] is a special case of this algorithm with _g_(_k_) = 1 for every _k_. Say there is _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
+> 1. The _Bernoulli Race_ (Dughmi et al. 2021\)[^43] is a special case of this algorithm with _g_(_k_) = 1 for every _k_. Say there are _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
 > 2. If we define _S_ to be the integers \[0, _r_\] or a subset of them and replace step 3 with "If _i_ is in the set _S_, return 1.  Otherwise, return 0.", the algorithm returns 1 with probability $\sum_{k\text{ in }S} \phi_k$, and 0 otherwise.  In that case, the modified algorithm has the so-called "die-coin algorithm" of Agrawal et al. (2021, Appendix D\)[^46] as a special case with&mdash;<br>_g_(_k_) = _c_<sup>_k_</sup>\*_d_<sup>_r_&minus;_k_</sup>,<br>_h_<sub>_k_</sub>(_&lambda;_, _&mu;_) = _&lambda;_<sup>_k_</sup>\*_&mu;_<sup>_r_&minus;_k_</sup> (for the following algorithm: flip the _&lambda;_ coin _k_ times and the _&mu;_ coin _r_&minus;_k_ times; return 1 if all flips return 1, or 0 otherwise), and<br>_S_ is the set of integers that are 1 or greater and _r_ or less,<br>where _c_&ge;0, _d_&ge;0, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins.  In that paper, _c_, _d_, _&lambda;_, and _&mu;_ correspond to _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively.
 > 3. Although not noted in the Schmon paper, the _r_ in the algorithm can be infinity (see also Wästlund 1999, Theorem 2.7[^8]).  In that case, Step 1 is changed to say "Choose an integer 0 or greater at random with probability _g_(_k_) for integer _k_.  Call the chosen integer _i_."  As an example, step 1 can sample from a Poisson distribution, which can take on any integer 0 or greater.
 
@@ -2117,12 +2117,7 @@ See my page "[**Open Questions on the Bernoulli Factory Problem**](https://peter
 
 Other questions:
 
-- Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way minus 1.  In this case:
-    1. What is the probability that _n_ is returned?
-    2. What is the probability that _n_ is odd or even or belongs to a certain class of numbers?
-    3. For each _x_, what is the probability that the first generated number is _x_ or less given that _n_ is odd? ...given that _n_ is even? the last generated number?
-
-    Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_. See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
+- [**Probabilities arising from permutations**](https://peteroupc.github.io/requestsother.html#Probabilities_arising_from_permutations).
 - Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
 
 <a id=Correctness_and_Performance_Charts></a>
@@ -2147,7 +2142,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^4]: Huber, M., "[**Nearly optimal Bernoulli factories for linear functions**](https://arxiv.org/abs/1308.1562v2)", arXiv:1308.1562v2  [math.PR], 2014.
 
-[^5]: Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168.**](https://doi.org/10.1145/820127.820168.)
+[^5]: Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168).
 
 [^6]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
@@ -2230,7 +2225,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^45]: Schmon, S.M., Doucet, A. and Deligiannidis, G., 2019, April. Bernoulli race particle filters. In The 22nd International Conference on Artificial Intelligence and Statistics (pp. 2350-2358).
 
-[^46]: Agrawal, S., Vats, D., Łatuszyński, K. and Roberts, G.O., 2021. "[**Optimal Scaling of MCMC Beyond Metropolis**](https://arxiv.org/abs/2104.02020.)", arXiv:2104.02020.
+[^46]: Agrawal, S., Vats, D., Łatuszyński, K. and Roberts, G.O., 2021. "[**Optimal Scaling of MCMC Beyond Metropolis**](https://arxiv.org/abs/2104.02020)", arXiv:2104.02020 [stat.CO], 2021.
 
 [^47]: Flajolet, Ph., "Analytic models and ambiguity of context-free languages", _Theoretical Computer Science_ 49, pp. 283-309, 1987
 
