@@ -54,7 +54,7 @@ Comments on other aspects of this document are welcome.
 <a id=Samplers_for_Certain_Discrete_Distributions></a>
 ## Samplers for Certain Discrete Distributions
 
-The following are exact samplers for certain _discrete distributions_, or probability distributions that take on values that can map to integers and back without loss.
+The following are exact samplers for certain _discrete distributions_, or probability distributions that take on values each mappable to a different integer.
 
 <a id=On_a_Binomial_Sampler></a>
 ### On a Binomial Sampler
@@ -192,7 +192,10 @@ For _nowhere decreasing_ rather than nowhere increasing weights, the algorithm i
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_b_&minus;1, _b_\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append the list \[(_b_&minus;_j_) &minus; min((_b_&minus;_a_) &minus; _j_, _j_), _b_&minus;_j_\] and multiply _j_ by 2.
 - The sampling is the same as for the previous algorithm.
 
-> **Note:** The weights can be base-_&beta;_ logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace "_q_\[_m_\]\*min((_b_&minus;_a_)" with "_q_\[_m_\]+ln(min((_b_&minus;_a_))/ln(_&beta;_)" (which is generally inexact unless _&beta;_ is 2); in sampling step 1, use an algorithm that takes base-_&beta;_ logarithms as weights; and replace sampling step 3 with "Generate an exponential random variate with rate ln(_&beta;_) (that is, the variate is _E_/ln(_&beta;_) where _E_ is exponential with rate 1).  If that variate is greater than _q_\[_k_\] minus _w_\[_x_\], return _x_.  Otherwise, go to step 1."<br>Applying these modifications to this section's algorithms can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).  The same is true for running the unmodified algorithms with weights that are not rational numbers.
+> **Notes:**
+>
+> 1. The weights can be base-_&beta;_ logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace "_q_\[_m_\]\*min((_b_&minus;_a_)" with "_q_\[_m_\]+ln(min((_b_&minus;_a_))/ln(_&beta;_)" (which is generally inexact unless _&beta;_ is 2); in sampling step 1, use an algorithm that takes base-_&beta;_ logarithms as weights; and replace sampling step 3 with "Generate an exponential random variate with rate ln(_&beta;_) (that is, the variate is _E_/ln(_&beta;_) where _E_ is an exponential random variate with rate 1).  If that variate is greater than _q_\[_k_\] minus _w_\[_x_\], return _x_.  Otherwise, go to step 1."<br>Applying these modifications to this section's algorithms can introduce numerical errors unless care is taken (see note 2).  The same is true for running the unmodified algorithms with weights that are not rational numbers.
+> 2. If an algorithm will operate on potentially irrational numbers, then to avoid numerical errors, it should store and operate on real numbers in the form of constructive reals or recursive reals (see, e.g., Boehm 1987[^85], 2020[^86]), or in the form of partially-sampled random numbers (PSRNs) together with algorithms with [**desirable properties for PSRN samplers**](https://peteroupc.github.io/exporand.html#Properties).
 
 <a id=Unimodal_distributions_of_weights></a>
 #### Unimodal distributions of weights
@@ -209,7 +212,7 @@ The following is an algorithm for sampling an integer in the interval \[_a_, _b_
 
 Huijben et al. (2022)[^13] reviews the Gumbel max trick and Gumbel softmax distributions.
 
->  **Note**: Because these algorithms involve adding one real number to another and calculating `exp` of a real number, they can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).
+>  **Note**: Because these algorithms involve adding one real number to another and calculating `exp` of a real number, they can introduce numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", above).
 
 **Weighted choice with the Gumbel max trick.** Let _C_>0 be an unknown number.  Then, given&mdash;
 
@@ -305,9 +308,9 @@ It is relatively straightforward to adapt this algorithm for strictly increasing
 
 This algorithm is similar to the "inversion&ndash;rejection" algorithm mentioned in section 4.4 of chapter 7 of Devroye's _Non-Uniform Random Variate Generation_ (1986\)[^4].  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution has support \[0, 1\] ("support" is defined later), while the algorithm presented in this article doesn't make that assumption (for example, the interval [0, 1] can cover only part of the distribution's support).
 
-By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random variate, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html).  Even so, the algorithm I have come up with in this note may be of independent interest.
+By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random variate, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see the article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html).  Even so, the algorithm I have come up with in this note may be of independent interest.
 
-In the case of powers of a uniform random variate between 0 and 1, call the variate _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>.  Note that this formula is the same regardless of _i_. (To return 1 with probability (1/2)<sup>1/_n_</sup>, the algorithm for **(_a_/_b_)<sup>_x_/_y_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)" can be used with _a_=1, _b_=2, _x_=1, and _y_=_n_.)  This is found by taking the PDF _f_(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
+In the case of powers of a uniform random variate between 0 and 1, call the variate _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>.  Note that this formula is the same regardless of _i_. (To return 1 with probability (1/2)<sup>1/_n_</sup>, the algorithm for **(_a_/_b_)<sup>_z_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)" can be used with _a_=1, _b_=2, and _z_=1/_n_.)  This is found by taking the PDF _f_(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
 
 <a id=Certain_Families_of_Distributions></a>
 ## Certain Families of Distributions
@@ -316,8 +319,8 @@ This section is a note on certain families of univariate (one-variable) probabil
 
 The following mathematical definitions are used:
 
-- A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nowhere decreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.
-- A distribution's _support_ is the set of values the distribution can take on, plus that set's endpoints.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
+- A probability distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nowhere decreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.
+- A probability distribution's _support_ is the set of values the distribution can take on, plus that set's endpoints.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
 - The _zero-truncated Poisson_ distribution: To generate a random variate that follows this distribution (with parameter _&lambda;_ > 0), generate random variates from the [**Poisson distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution) with parameter _&lambda;_ until a variate other than 0 is generated this way, then take the last generated variate.
 
 **G families.** In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002\)[^19]) use two distributions, X and G, where&mdash;
@@ -334,11 +337,11 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 
 - The _exp-G_ family (Barreto-Souza and Simas 2010/2013)[^20], where X is an exponential distribution, truncated to the interval [0, 1], with parameter _&lambda;_ &ge; 0; step 1 is modified to read: "Generate _U_, a uniform random variate between 0 and 1, then set _x_ to &minus;ln((exp(&minus;_&lambda;_)&minus;1)\*_U_ + 1)/_&lambda;_ if _&lambda;_ != 0, and _U_ otherwise." (The _alpha power_ or _alpha power transformed_ family (Mahdavi and Kundu 2017\)[^21] uses the same distribution for X, but with _&lambda;_=&minus;ln(_&alpha;_) where _&alpha;_ is in \(0, 1\]; see also Jones (2018)[^22].)
 - One family uses a shape parameter _a_ > 0; step 1 is modified to read: "Generate _u_, a uniform random variate between 0 and 1, then set _x_ to _u_<sup>1/_a_</sup>."  This family is mentioned in Lehmann (1953)[^23], Durrans (1992)[^24], and Mudholkar and Srivastava (1993\)[^25], which called it _exponentiated_.
-- The _transmuted-G_ family (Shaw and Buckley 2007\)[^26]. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate between 0 and 1 with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^4]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate between 0 and 1. Otherwise, generate two uniform random variates in the interval [0, 1], set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^27] mentions the same distribution, but with a parameter _&lambda;_ = _&eta;_ + 1 lying in the interval [0, 2].)
-- A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^27] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
+- The _transmuted-G_ family (Shaw and Buckley 2007\)[^26]. The family uses a shape parameter _&eta;_ satisfying &minus;1 &le; _&eta;_ &le; 1; step 1 is modified to read: "Generate a piecewise linear random variate between 0 and 1 with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^4]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate between 0 and 1. Otherwise, generate two uniform random variates between 0 and 1, set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^27] mentions the same distribution, but with a parameter _&lambda;_ = _&eta;_ + 1 satisfying 0 &le; _&lambda;_ &le; 2.)
+- A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^27] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates between 0 and 1, then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
 - Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: "Generate a uniform random variate _x_ in [0, 1], then with probability (1&minus;_x_<sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process."; or "Create a uniform PSRN _x_ with positive sign and integer part 0, then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process."
 
-**Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^28] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a probability density function; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nowhere decreasing function that, among other conditions, maps a number in [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:
+**Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^28] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a probability density function; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nowhere decreasing function that, among other conditions, maps a number in the closed interval [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. Calculate _w_ = _W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _W_), then calculate the quantile for G of _w_ and return that quantile. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
@@ -430,7 +433,7 @@ In the table below, _U_ is a uniform random variate between 0 and 1, and all ran
 | This distribution: |  Is distributed as: | And uses these parameters: |
  --- | --- | --- |
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
-| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020\)[^51]. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or (_E_/_&beta;_)<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential with rate 1. |
+| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020\)[^51]. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or (_E_/_&beta;_)<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is an exponential random variate with rate 1. |
 | Marshall&ndash;Olkin(_&alpha;_) (Marshall and Olkin 1997\)[^52] | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
 | Lomax(_&alpha;_). | (1&minus;_U_)<sup>&minus;1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016\)[^53]. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
@@ -554,7 +557,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 1. Create a _&lambda;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability (_x_&minus;_a_)/(_b_&minus;_a_) (see note below), return 1.  Otherwise, return 0."
 2. Run a Bernoulli factory algorithm for _g_(_&lambda;_), using the _&lambda;_ input coin.  Then return _K_ times the result.
 
-> **Note:** The check "With probability (_x_&minus;_a_)/(_b_&minus;_a_)" is exact if the oracle produces only rational numbers.  If the oracle can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then the code for the oracle should use uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  In that case, the check can be implemented as follows.  Let _x_ be a uniform PSRN representing a number generated by the oracle.  Set _y_ to **RandUniformFromReal**(_b_&minus;_a_), then the check succeeds if **URandLess**(_y_, **UniformAddRational**(_x_, &minus;_a_)) returns 1, and fails otherwise.
+> **Note:** The check "With probability (_x_&minus;_a_)/(_b_&minus;_a_)" is exact if the oracle produces only rational numbers.  Otherwise, calculating the probability can lead to numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", above).  With partially-sampled random numbers (PSRNs), the check can be implemented as follows.  Let _x_ be a uniform PSRN representing a number generated by the oracle.  Set _y_ to **RandUniformFromReal**(_b_&minus;_a_), then the check succeeds if **URandLess**(_y_, **UniformAddRational**(_x_, &minus;_a_)) returns 1, and fails otherwise.
 >
 > **Example:** Suppose an oracle produces random variates in the interval [3, 13] with unknown mean _&mu;_, and the goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_) = &minus;319/100 + _&mu;_\*103/50 &minus; _&mu;_<sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of _f_ in that interval, _g_(_&lambda;_) is a degree-2 polynomial in the interval [0, 1] that has Bernstein coefficients [2/8, 9/8, 5/8].  _g_ can't be simulated as is, though, but increasing _g_'s degree to 3 leads to the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so that the following algorithm can be used (see "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)"):
 >
@@ -594,9 +597,9 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 > - For each _n_, Supp(_n_) is included in Supp(_n_+1).
 > - For every _k_ and for every _n_ &ge; 2 starting with the first _n_ for which _k_ is in Supp(_n_), the probability of seeing _k_ given parameter _n_ is at least (1/_n_)<sup>_f_(_k_)</sup>.
 >
-> Moreover, by Proposition 5.5 of Duvignau, a family meeting the conditions above can be sampled without additional randomness (besides the oracle) if and only if Supp(1) has only one element.
+> Moreover, by Proposition 5.5 of Duvignau, a family meeting the conditions above can be sampled without additional randomness (besides the oracle) if and only if Supp(1) has no more than one element.
 >
-> **Example:** Let _n_&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;_n_) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/_n_)<sup>_f_(1)</sup> for any _f_.  This is consistent with the results for _Bernoulli factories_ (Keane and O'Brien 1994)[^83], where a coin that shows heads with unknown probability _&lambda;_ = 1/_n_ cannot be turned into a coin that shows heads with probability g(_&lambda;_) = exp(&minus;1/_&lambda;_) = exp(&minus;_n_) =  since _g_ is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability _h_(_n_) = (1+ln(_n_))/_n_ and 0 with probability 1&minus;_h_(_n_), _can_ be simulated, because min(_h_(_n_), 1&minus;_h_(_n_)) &ge; (1/_n_)<sup>3</sup>.
+> **Example:** Let _n_&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;_n_) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/_n_)<sup>_f_(1)</sup> for any _f_.  This is consistent with the results for _Bernoulli factories_ (Keane and O'Brien 1994)[^83], where a coin that shows heads with unknown probability _&lambda;_ = 1/_n_ cannot be turned into a coin that shows heads with probability g(_&lambda;_) = exp(&minus;1/_&lambda;_) = exp(&minus;_n_) since _g_ is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability _h_(_n_) = (1+ln(_n_))/_n_ and 0 with probability 1&minus;_h_(_n_), _can_ be simulated, because min(_h_(_n_), 1&minus;_h_(_n_)) &ge; (1/_n_)<sup>3</sup>.
 
 <a id=Additional_Algorithms></a>
 ### Additional Algorithms
@@ -623,7 +626,7 @@ The algorithm to achieve this goal follows (see Lee et al. 2014[^84]\)\:
 >     - Use _f_(_&nu;_) = _f_(_&nu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
 >     - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).
 >     - When Algorithm 2 finishes, add _b_ to its return value.
-> 3. The check "With probability abs(_f_(_x_))/_m_" is exact if the oracle produces only rational numbers _and_ if _f_(_x_) outputs only rational numbers.  If the oracle or _f_ can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then this check should be implemented using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
+> 3. The check "With probability abs(_f_(_x_))/_m_" is exact if the oracle produces only rational numbers _and_ if _f_(_x_) outputs only rational numbers.  If the oracle or _f_ can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then calculating the probability can lead to numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", above).
 
 **Algorithm 4.** Suppose there is an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nowhere decreasing in that interval (Jacob and Thiery 2015\)[^80].  This can be done using the algorithm below.  In the algorithm:
 
@@ -640,7 +643,7 @@ The algorithm follows.
 
 Now, assume the oracle's numbers are all less than or equal to _b_ (rather than greater than or equal to _a_), where _b_ is a known rational number.  Then _f_ must be 0 or greater everywhere in (&minus;_&infin;_, _b_\] and be nowhere increasing there (Jacob and Thiery 2015\)[^80], and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, _z_ = _b_ &minus;_&mu;_; (2) in step 2, multiply _prod_ by _b_ &minus; _x_ rather than _x_ &minus; _a_.
 
-> **Note:** This algorithm is exact if the oracle produces only rational numbers _and_ if all _c_\[_i_\] are rational numbers.  If the oracle can produce irrational numbers, then they should be implemented using uniform partially-sampled random numbers (PSRNs).  See also note 3 on the previous algorithm.
+> **Note:** This algorithm is exact if the oracle produces only rational numbers _and_ if all _c_\[_i_\] are rational numbers.  Otherwise, the algorithm can introduce numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", above).  See also note 3 on the previous algorithm.
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -818,6 +821,10 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^83]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
 [^84]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
+
+[^85]: Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
+
+[^86]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
 
 <a id=License></a>
 ## License

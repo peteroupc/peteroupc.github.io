@@ -1515,7 +1515,7 @@ Note that here, the function _f&prime;_ must meet the requirements of Keane and 
 <a id=Specific_Arbitrary_Precision_Samplers></a>
 ### Specific Arbitrary-Precision Samplers
 
-&nbsp;
+This section describes samplers for certain specific continuous distributions.  They satisfy the [**properties for PSRN algorithms**](#Properties) described earlier in this article.  **Readers are encouraged to develop or submit other algorithms that satisfy those properties.**
 
 <a id=Rayleigh_Distribution></a>
 #### Rayleigh Distribution
@@ -1959,7 +1959,7 @@ The second subalgorithm samples the probability (_x_&minus;2<sup>_b_</sup>)/2<su
 
 A _mixture_ involves one or more distributions, where each distribution has a separate probability of being sampled, and sampling one of them at random.
 
-> **Example:** One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (which can be simulated, for example, using the **ExpMinus** algorithm with parameter 3 can be used) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists.
+> **Example:** One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (which can be simulated, for example, using the **ExpMinus** algorithm with parameter 3, in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists.
 
 The _Lindley distribution_ is one example of a _mixture_, namely, there are two probability distributions, with each of the two distributions having a separate probability of being sampled (_w_ and 1&minus;_w_ in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^41] with parameter _&theta;_ (a real number greater than 0) can be generated as follows:
 
