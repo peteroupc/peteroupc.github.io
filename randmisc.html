@@ -35,10 +35,10 @@
 <li><a href="#Weighted_Choice_for_Special_Distributions"><strong>Weighted Choice for Special Distributions</strong></a>
 
 <ul>
+<li><a href="#Weighted_Choice_with_Weights_Written_as_an_Integer_and_Fraction"><strong>Weighted Choice with Weights Written as an Integer and Fraction</strong></a></li>
 <li><a href="#Distributions_with_nowhere_increasing_or_nowhere_decreasing_weights"><strong>Distributions with nowhere increasing or nowhere decreasing weights</strong></a></li>
 <li><a href="#Unimodal_distributions_of_weights"><strong>Unimodal distributions of weights</strong></a></li>
 <li><a href="#Weighted_Choice_with_Log_Probabilities"><strong>Weighted Choice with Log Probabilities</strong></a></li>
-<li><a href="#Weighted_Choice_Involving_PSRNs"><strong>Weighted Choice Involving PSRNs</strong></a></li>
 </ul></li>
 <li><a href="#Bernoulli_Distribution_for_Cumulative_Distribution_Functions"><strong>Bernoulli Distribution for Cumulative Distribution Functions</strong></a></li>
 <li><a href="#Bit_Vectors_with_Random_Bit_Flips"><strong>Bit Vectors with Random Bit Flips</strong></a></li>
@@ -235,6 +235,32 @@
 
 <p>The following are algorithms to sample items whose probabilities (or &quot;weights&quot;) are given in a special way.  They supplement the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice"><strong>Weighted Choice</strong></a>&quot; in my article &quot;Randomization and Sampling Methods&quot;.</p>
 
+<p><a id=Weighted_Choice_with_Weights_Written_as_an_Integer_and_Fraction></a></p>
+
+<h4>Weighted Choice with Weights Written as an Integer and Fraction</h4>
+
+<p>Suppose there is a list called <em>weights</em>.  This is a list of <em>n</em> weights, with labels starting at 0 and ending at <em>n</em>&minus;1.</p>
+
+<p>Each weight is written as an integer and fractional part, namely <em>m</em> + <em>&nu;</em> where <em>m</em> &ge; 0 is an integer, and 0 &le; <em>&nu;</em> &le; 1.  Each weight&mdash;</p>
+
+<ul>
+<li>can store an integer part <em>m</em> and have <em>&nu;</em> represent a &quot;coin&quot; that implements a Bernoulli factory algorithm that returns 1 (or outputs heads) with probability equal to the fractional part <em>&nu;</em> (case 1), or</li>
+<li>can store a <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random number</strong></a> (PSRN), with the integer part equal to <em>m</em> and the fractional part equal to <em>&nu;</em> (case 2).</li>
+</ul>
+
+<p>Given this list of weights, the following algorithm chooses an integer in [0, <em>n</em>) with probability proportional to its weight.</p>
+
+<ol>
+<li>Create an empty list, then for each weight starting with weight 0, append the weight&#39;s integer part (<em>m</em>) plus 1 to that list.  For example, if the weights are PSRNs written as [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the <em>rounded weights list</em>.</li>
+<li>Choose an integer <em>i</em> with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of <strong>WeightedChoice</strong>(<em>list</em>), where <em>list</em> is the rounded weights list and <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Sampling Methods</strong></a>&quot;.  Let <em>w</em> be the original weight for integer <em>i</em>, and let <em>rw</em> be the rounded weight for integer <em>i</em> in the rounded weights list.</li>
+<li><p>Generate <em>j</em>, a uniform random integer that is 0 or greater and less than <em>rw</em>. If <em>j</em> is less than <em>rw</em>&minus;1, return <em>i</em>.  Otherwise:</p>
+
+<ul>
+<li>If <em>w</em> is written as in case 1, run the Bernoulli factory algorithm for <em>&nu;</em> (the weight&#39;s fractional part).  If it returns 1, return <em>i</em>.  Otherwise, go to step 2.</li>
+<li>If <em>w</em> is written as in case 2, run <strong>SampleGeometricBag</strong> on the PSRN.  If the result is 1, return <em>i</em>.  Otherwise, go to step 2.</li>
+</ul></li>
+</ol>
+
 <p><a id=Distributions_with_nowhere_increasing_or_nowhere_decreasing_weights></a></p>
 
 <h4>Distributions with nowhere increasing or nowhere decreasing weights</h4>
@@ -333,18 +359,6 @@
 </ol>
 
 <p>The algorithm&#39;s result is a vector <em>q</em>, which can be used only once to sample <em>i</em> with probability proportional to <em>q</em><sub><em>i</em></sub> (which is not a &quot;log probability&quot;). (In this case, steps 3 and 4 above can be omitted if that sampling method can work with weights that need not sum to 1.)</p>
-
-<p><a id=Weighted_Choice_Involving_PSRNs></a></p>
-
-<h4>Weighted Choice Involving PSRNs</h4>
-
-<p>Given <em>n</em> <a href="https://peteroupc.github.io/exporand.html"><strong><em>partially-sampled random numbers</em></strong></a> (PSRNs), called <em>weights</em>, with labels starting from 0 and ending at <em>n</em>&minus;1, the following algorithm chooses an integer in [0, <em>n</em>) with probability proportional to its weight.  The PSRNs can be uniform and/or exponential PSRNs. Each weight&#39;s sign must be positive.</p>
-
-<ol>
-<li>Create an empty list, then for each weight starting with weight 0, add the weight&#39;s integer part plus 1 to that list.  For example, if the weights are [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the <em>rounded weights list</em>.</li>
-<li>Choose an integer <em>i</em> with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of <strong>WeightedChoice</strong>(<em>list</em>), where <em>list</em> is the rounded weights list and <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Sampling Methods</strong></a>&quot;.</li>
-<li>Run <strong>RandLessThanReal</strong>(<em>w</em>, <em>rw</em>), where <em>w</em> is the original weight for integer <em>i</em>, and <em>rw</em> is the rounded weight for integer <em>i</em> in the rounded weights list.  That algorithm returns 1 if <em>w</em> turns out to be less than <em>rw</em>.  If the result is 1, return <em>i</em>.  Otherwise, go to step 2.</li>
-</ol>
 
 <p><a id=Bernoulli_Distribution_for_Cumulative_Distribution_Functions></a></p>
 

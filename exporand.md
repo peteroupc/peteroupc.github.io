@@ -220,12 +220,12 @@ In the case of curves and surfaces, a PSRN can't directly store the coordinates,
 >
 > 1. To represent a point on the edge of a circle, a PSRN can store a random variate in the interval \[0, 2\*_&pi;_\), via the **RandUniformFromReal** method, given later, for 2\*_&pi;_ (for example, it can store an integer part of 2 and a fractional part of \[1, 3, 5\] and thus represent a number in the interval \[2.135, 2.136\]), and the number stored this way indicates the distance on the circular arc relative to its starting position.  A program that cares about the point's X and Y coordinates can then generate enough digits of the PSRN to compute an approximation of cos(_P_) and sin(_P_), respectively, to the desired accuracy, where _P_ is the number stored by the PSRN.  (However, the direct use of mathematical functions such as `cos` and `sin` is outside the scope of this document.)
 > 2. Example 1 is trivial, because each point on the interval maps evenly to a point on the circle.  But this is not true in general: an interval's or box's points don't map evenly to points on a curve or surface in general.  For example, take two PSRNs describing the U and V coordinates of a 3 dimensional cone's surface: \[1.135, 1.136\] for U and \[0.288, 0.289\] for V, and the cone's coordinates are X = U\*cos(V), Y = U\*sin(V), Z = U. In this example, the PSRNs form a box that's mapped to a small part of the cone surface.  However, the points in the box don't map to the cone evenly this way, so generating enough digits to calculate X, Y, and Z to the desired accuracy will not sample uniformly from that part of the cone without more work (see Williamson (1987\)[^16] for one solution).
-> 3. For algorithms that sample uniformly on a general curve with arbitrary accuracy, see Chalkis et al. (2022)[^65]
+> 3. For algorithms that sample uniformly on a general curve with arbitrary accuracy, see Chalkis et al. (2022)[^17]
 
 <a id=Relation_to_Constructive_Reals></a>
 ### Relation to Constructive Reals
 
-Partially-sampled random numbers are related to a body of work dealing with so-called "constructive reals" or "recursive reals", or operations on real numbers that compute an approximation of the exact result to a user-specified number of digit places.  For example, in Hans-J. Boehm's implementation (Boehm 2020)[^17], (Boehm 1987)[^18], each operation on "constructive reals" (such as addition, multiplication, `exp`, `ln`, and so on) is associated with a function `f(n)` (where `n` is usually 0 or greater) that returns an integer `m` such that `abs(m/pow(2, n) - x) < 1/pow(2, n)`, where `x` is the exact result of the operation.  In addition, comparisons such as "less than" or "greater than" can operate on "constructive reals".  As suggested in Goubault-Larrecq et al. (2021)[^19], there can also be an operation that samples the digits of a uniform random variate between 0 and 1 and gives access to approximations of that variate, sampling random digits as necessary.  Similarly, operations of this kind can be defined to access approximations of the value stored in a PSRN (including a uniform or exponential PSRN), sampling digits for the PSRN as necessary.
+Partially-sampled random numbers are related to a body of work dealing with so-called "constructive reals" or "recursive reals", or operations on real numbers that compute an approximation of the exact result to a user-specified number of digit places.  For example, in Hans-J. Boehm's implementation (Boehm 2020)[^18], (Boehm 1987)[^19], each operation on "constructive reals" (such as addition, multiplication, `exp`, `ln`, and so on) is associated with a function `f(n)` (where `n` is usually 0 or greater) that returns an integer `m` such that `abs(m/pow(2, n) - x) < 1/pow(2, n)`, where `x` is the exact result of the operation.  In addition, comparisons such as "less than" or "greater than" can operate on "constructive reals".  As suggested in Goubault-Larrecq et al. (2021)[^20], there can also be an operation that samples the digits of a uniform random variate between 0 and 1 and gives access to approximations of that variate, sampling random digits as necessary.  Similarly, operations of this kind can be defined to access approximations of the value stored in a PSRN (including a uniform or exponential PSRN), sampling digits for the PSRN as necessary.
 
 Details on "constructive real" operations and comparisons are outside the scope of this document.
 
@@ -486,12 +486,12 @@ The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b*
         - _**b** is known to be rational_ and _bf_ is 0 (indicating **a** is greater than **b** with probability 1).
 10. Add 1 to _i_ and go to step 5.
 
-An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019\)[^20]):
+An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019\)[^21]):
 
 - (6.) Calculate _bp_, which is an approximation to **b** such that abs(**b** &minus; _bp_) <= _&beta;_<sup>&minus;_i_ &minus; 1</sup>, and such that _bp_ has the same sign as **b**.  Let _bk_ be _bp_'s digit expansion up to the _i_ + 1 digits after the point (ignoring its sign).  For example, if **b** is &pi; or &minus;&pi;, _&beta;_ is 10, and _i_ is 4, one possibility is _bp_ = 3.14159 and _bk_ = 314159.
 - (7.) Let _ak_ be **a**'s digit expansion up to the _i_ + 1 digits after the point (ignoring its sign).
 - (8.) If _ak_ <= _bk_ &minus; 2, return either 1 if **a**'s sign is positive or 0 otherwise.
-- (9.) If _ak_ >= _bk_ + 1, return either 1 if **a**'s sign is negative or 0 otherwise.[^21]
+- (9.) If _ak_ >= _bk_ + 1, return either 1 if **a**'s sign is negative or 0 otherwise.[^22]
 
 **URandLessThanReal** is a version of **RandLessThanReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessThanReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
@@ -514,7 +514,7 @@ The following shows how to implement **URandLessThanReal** when **b** is a fract
 
 This section discusses issues involving arithmetic with PSRNs.
 
-**Uniform PSRN arithmetic produces non-uniform distributions in general.** As can be seen in the arithmetic algorithms earlier in this section (such as **UniformAdd** and **UniformMultiplyRational**), addition, multiplication, and other arithmetic operations with PSRNs (see also (Brassard et al., 2019\)[^20]) are not as trivial as adding, multiplying, etc. their integer and fractional parts.  A uniform PSRN is ultimately a uniform random variate inside an interval (this is its nature), yet arithmetic on random variates does not produce a uniform distribution in general.
+**Uniform PSRN arithmetic produces non-uniform distributions in general.** As can be seen in the arithmetic algorithms earlier in this section (such as **UniformAdd** and **UniformMultiplyRational**), addition, multiplication, and other arithmetic operations with PSRNs (see also (Brassard et al., 2019\)[^21]) are not as trivial as adding, multiplying, etc. their integer and fractional parts.  A uniform PSRN is ultimately a uniform random variate inside an interval (this is its nature), yet arithmetic on random variates does not produce a uniform distribution in general.
 
 An example illustrates this. Say we have two uniform PSRNs: _A_ = 0.12345... and _B_ = 0.38901....  They represent random variates in the intervals _AI_ = \[0.12345, 0.12346\] and _BI_ = \[0.38901, 0.38902\], respectively.  Adding two uniform PSRNs is akin to adding their intervals (using interval arithmetic), so that in this example, the result _C_ lies in _CI_ = \[0.12345 + 0.38901, 0.12346 + 0.38902\] = \[0.51246, 0.51248\].  However, the resulting random variate is _not_ uniformly distributed in \[0.51246, 0.51248\], so that simply choosing a uniform random variate in the interval won't work.  (This is true in general for other arithmetic operations besides addition.)  This can be demonstrated by generating many pairs of uniform random variates in the intervals _AI_ and _BI_, summing the numbers in each pair, and building a histogram using the sums (which will all lie in the interval _CI_).  In this case, the histogram will show a triangular distribution that peaks at 0.51247.
 
@@ -527,13 +527,13 @@ A promising way to connect PSRNs with other math operations (such as multiplicat
 A sampler can be created that uses the probabilities of getting each digit under the target distribution.  But if the distribution is non-discrete:
 
 - These probabilities will depend on previous digits except for a very limited class of distributions (including uniform and exponential); see the [**appendix**](#Setting_Digits_by_Digit_Probabilities) for details.
-- For distributions outside that limited class, the sampler will be _limited-precision_ (not _arbitrary-precision_) in practice, since it can hold only so many digit probabilities.  For example, the works (Habibizad Navin et al., 2007\)[^22], (Nezhad et al., 2013\)[^23] point to building a "tree" of such digit probabilities. [^24]
+- For distributions outside that limited class, the sampler will be _limited-precision_ (not _arbitrary-precision_) in practice, since it can hold only so many digit probabilities.  For example, the works (Habibizad Navin et al., 2007\)[^23], (Nezhad et al., 2013\)[^24] point to building a "tree" of such digit probabilities. [^25]
 
 Finally, arithmetic with PSRNs may be possible if the result of the arithmetic is distributed with a known probability density function (PDF), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in the **UniformReciprocal** algorithm above.  However, that PDF may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if _X_ is a uniform PSRN in the interval [0, 1], then the distribution of _X_<sup>3</sup> has the PDF `(1/3) / pow(X, 2/3)`, which has an unbounded peak at 0.  While this rules out plain rejection samplers for _X_<sup>3</sup> in practice, it's still possible to sample powers of uniforms using PSRNs, which will be described later in this article.
 
 **Reusing PSRNs.** The arithmetic algorithms in this section may give incorrect results if the _same PSRN_ is used more than once in different runs of these algorithms.
 
-This issue happens in general when the original sampler uses the same random variate for different purposes in the algorithm (an example is "_W_\*_Y_, (1&minus;_W_)\*_Y_", where _W_ and _Y_ are independent random variates (Devroye 1986, p. 394\)[^25]).  In this case, if one PSRN spawns additional PSRNs (so that they become _dependent_ on the first), those additional PSRNs may become inaccurate once additional digits of the first PSRN are sampled uniformly at random. (This is not always the case, but it's hard to characterize when the additional PSRNs become inaccurate this way and when not.)
+This issue happens in general when the original sampler uses the same random variate for different purposes in the algorithm (an example is "_W_\*_Y_, (1&minus;_W_)\*_Y_", where _W_ and _Y_ are independent random variates (Devroye 1986, p. 394\)[^26]).  In this case, if one PSRN spawns additional PSRNs (so that they become _dependent_ on the first), those additional PSRNs may become inaccurate once additional digits of the first PSRN are sampled uniformly at random. (This is not always the case, but it's hard to characterize when the additional PSRNs become inaccurate this way and when not.)
 
 This issue is easy to see for the **UniformAddRational** or **UniformMultiplyRational** algorithm when it's called more than once with the same PSRN and the same rational number:  although the same random variate ought to be returned each time, in reality different variates will be generated this way with probability 1, especially when additional digits are sampled from them afterwards.
 
@@ -595,7 +595,7 @@ For example, if `p` is 4, _b_ is 10, and the PSRN is 0.3437500... or 0.3438500..
 <a id=kthsmallest></a>
 ### kthsmallest
 
-The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random variate in the interval \[0, 1\] out of 'n' of them (also known as the 'n'th _order statistic_), is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variate in this case is the `a`th smallest uniform random variate between 0 and 1 out of `a + b - 1` of them (Devroye 1986, p. 431\)[^25].
+The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random variate in the interval \[0, 1\] out of 'n' of them (also known as the 'n'th _order statistic_), is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variate in this case is the `a`th smallest uniform random variate between 0 and 1 out of `a + b - 1` of them (Devroye 1986, p. 431\)[^26].
 
 **kthsmallest**, however, doesn't simply generate 'n' 'bitcount'-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via PSRNs.    It uses the observation that (in the binary case) each uniform random variate between 0 and 1 is either less than half or greater than half with equal probability; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample "on the fly".  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.  I am not aware of any other article or paper (besides one by me) that describes the **kthsmallest** algorithm given here.
 
@@ -616,7 +616,7 @@ The power-of-uniform sub-algorithm is used for certain cases of the beta sampler
 
 It makes use of a number of algorithms as follows:
 
-- It uses an algorithm for [**sampling unbounded monotone PDFs**](https://peteroupc.github.io/randmisc.html), which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4\)[^25].  This is needed because when _px_/_py_ is greater than 1, the distribution of _U_<sup>_px_/_py_</sup> has the PDF `(py/px) / pow(U, 1-py/px)`, which has an unbounded peak at 0.
+- It uses an algorithm for [**sampling unbounded monotone PDFs**](https://peteroupc.github.io/randmisc.html), which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4\)[^26].  This is needed because when _px_/_py_ is greater than 1, the distribution of _U_<sup>_px_/_py_</sup> has the PDF `(py/px) / pow(U, 1-py/px)`, which has an unbounded peak at 0.
 - It uses a number of Bernoulli factory algorithms, including **SampleGeometricBag** and some algorithms described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".
 
 However, this algorithm currently only supports generating a PSRN with base-2 (binary) digits in its fractional part.
@@ -649,7 +649,7 @@ All the building blocks are now in place to describe a _new_ algorithm to sample
     - If _a_ and _b_ are both integers, return the result of **kthsmallest** with `n = a - b + 1` and `k = a`
     - In the binary case, if _a_ is 1 and _b_ is less than 1, call the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_b_, and the _complement_ flag set to 1, and return the result of that algorithm as is (without filling it as described in substep 7.2 of that algorithm).
     - In the binary case, if _b_ is 1 and _a_ is less than 1, call the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_a_, and the _complement_ flag set to 0, and return the result of that algorithm as is (without filling it as described in substep 7.2 of that algorithm).
-2. If _a_ > 2 and _b_ > 2, do the following steps, which split _a_ and _b_ into two parts that are faster to simulate (and implement the generalized rejection strategy in (Devroye 1986, top of page 47\)[^25]):
+2. If _a_ > 2 and _b_ > 2, do the following steps, which split _a_ and _b_ into two parts that are faster to simulate (and implement the generalized rejection strategy in (Devroye 1986, top of page 47\)[^26]):
     1. Set _aintpart_ to floor(_a_) &minus; 1, set _bintpart_ to floor(_b_) &minus; 1, set _arest_ to _a_ &minus; _aintpart_, and set _brest_ to _b_ &minus; _bintpart_.
     2. Do a separate (recursive) run of this algorithm, but with _a_ = _aintpart_ and _b_ = _bintpart_. Set _bag_ to the PSRN created by the run.
     3. Create an input coin _geobag_ that returns the result of **SampleGeometricBag** using the given PSRN.  Create another input coin _geobagcomp_ that returns the result of **SampleGeometricBagComplement** using the given PSRN.
@@ -704,7 +704,7 @@ The following alternative version of the previous algorithm (called **ExpRand2**
 
 1. Set _recip_ to 1/_&lambda;_, and set _highpart_ to 0.
 2. Set _u_ to the result of **RandUniformFromReal** with the parameter _recip_.
-3. Run the **URandLessThanReal** algorithm on _u_ with the parameter _recip_/2.  If the call returns 0, add _recip_/2 to _highpart_ and go to step 2.  (This is Karney's "early rejection step", where the parameter is 1/2 when _&lambda;_ is 1.  However, Fan et al. (2019\)[^26] point out that the parameter 1/2 in Karney's "early rejection step" is not optimal.)
+3. Run the **URandLessThanReal** algorithm on _u_ with the parameter _recip_/2.  If the call returns 0, add _recip_/2 to _highpart_ and go to step 2.  (This is Karney's "early rejection step", where the parameter is 1/2 when _&lambda;_ is 1.  However, Fan et al. (2019\)[^27] point out that the parameter 1/2 in Karney's "early rejection step" is not optimal.)
 4. Set _val_ to point to the same value as _u_, and set _accept_ to 1.
 5. Set _v_ to the result of **RandUniformFromReal** with the parameter _recip_.
 6. Run the **URandLess** algorithm on _u_ and _v_, in that order.  If the call returns 0, set _u_ to _v_, then set _accept_ to 1 minus _accept_, then go to step 5.
@@ -1405,10 +1405,10 @@ The sampler's description has the following skeleton.
 
 > **Notes:**
 >
-> 1. See Li and El Gamal (2016)[^27] and Oberhoff (2018)[^13] for related work on encoding random points uniformly distributed in a shape.
+> 1. See Li and El Gamal (2016)[^28] and Oberhoff (2018)[^13] for related work on encoding random points uniformly distributed in a shape.
 > 2. Rejection sampling on a shape is subject to the "curse of dimensionality", since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more volume the shape takes up in the bounding box, the higher the acceptance rate.
-> 3. Devroye (1986, chapter 8, section 3)[^25] describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/_base_<sup>_k_</sup> in all dimensions; the result of **InShape** is calculated for each such box and that box labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, _N_ is 2, and _d1_ = _d2_ = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on \[the boxes' coordinates are stored as just given, but **InShape** instead uses those coordinates divided by _base_<sup>_k_</sup>, or 10<sup>1</sup> in this case\], each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
-> 4. Besides a grid, another useful data structure is a _mapped regular paving_ (Harlow et al. 2012)[^28], which can be described as a binary tree with nodes each consisting of zero or two child nodes and a marking value.  Start with a box that entirely covers the desired shape.  Calculate **InShape** for the box.  If it returns _YES_ or _NO_ then mark the box with _YES_ or _NO_, respectively; otherwise it returns _MAYBE_, so divide the box along its first widest coordinate into two sub-boxes, set the parent box's children to those sub-boxes, then repeat this process for each sub-box (or if the nesting level is too deep, instead mark each sub-box with _MAYBE_).  Then, to generate a random point (with a base-2 fractional part), start from the root, then: (1) If the box is marked _YES_, return a uniform random point between the given coordinates using the **RandUniformInRange** algorithm; or (2) if the box is marked _NO_, start over from the root; or (3) if the box is marked _MAYBE_, get the two child boxes bisected from the box, choose one of them with equal probability (for example, choose the left child if an unbiased random bit is 0, or the right child otherwise), mark the chosen child with the result of **InShape** for that child, and repeat this process with that child; or (4) the box has two child boxes, so choose one of them with equal probability and repeat this process with that child.
+> 3. Devroye (1986, chapter 8, section 3)[^26] describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/_base_<sup>_k_</sup> in all dimensions; the result of **InShape** is calculated for each such box and that box labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, _N_ is 2, and _d1_ = _d2_ = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on \[the boxes' coordinates are stored as just given, but **InShape** instead uses those coordinates divided by _base_<sup>_k_</sup>, or 10<sup>1</sup> in this case\], each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
+> 4. Besides a grid, another useful data structure is a _mapped regular paving_ (Harlow et al. 2012)[^29], which can be described as a binary tree with nodes each consisting of zero or two child nodes and a marking value.  Start with a box that entirely covers the desired shape.  Calculate **InShape** for the box.  If it returns _YES_ or _NO_ then mark the box with _YES_ or _NO_, respectively; otherwise it returns _MAYBE_, so divide the box along its first widest coordinate into two sub-boxes, set the parent box's children to those sub-boxes, then repeat this process for each sub-box (or if the nesting level is too deep, instead mark each sub-box with _MAYBE_).  Then, to generate a random point (with a base-2 fractional part), start from the root, then: (1) If the box is marked _YES_, return a uniform random point between the given coordinates using the **RandUniformInRange** algorithm; or (2) if the box is marked _NO_, start over from the root; or (3) if the box is marked _MAYBE_, get the two child boxes bisected from the box, choose one of them with equal probability (for example, choose the left child if an unbiased random bit is 0, or the right child otherwise), mark the chosen child with the result of **InShape** for that child, and repeat this process with that child; or (4) the box has two child boxes, so choose one of them with equal probability and repeat this process with that child.
 > 5. The algorithm can be adapted to return 1 with probability equal to its acceptance rate (which equals the shape's volume divided by the hyperrectangle's volume), and return 0 with the opposite probability.  In this case, replace steps 5 and 6 with the following: "5. If the result of **InShape** is _YES_, return 1.; 6. If the result of **InShape** is _NO_, return 0." (I thank BruceET of the Cross Validated community for leading me to this insight.)
 >
 > **Implementation Notes for Box/Shape Intersection**: The algorithm in this section uses a function called **InShape** to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust implementation of **InShape** for a particular shape, especially because the boxes being tested can be arbitrarily small.
@@ -1420,7 +1420,7 @@ The sampler's description has the following skeleton.
 >     - _MAYBE_ in any other case, or if the function is unsure.
 >
 >     In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.
-> 3. If the shape is given as an inequality of the form _f_(_t1_, ..., _tN_) &le; 0, where _f_ is a continuous function of one or more variables, **InShape**'s calculations should involve _rational intervals_, or objects that describe a number that's bounded by two rational numbers with numerators and denominators of arbitrary size.  (See also (Duff 1992)[^29]; Daumas et al. (2007)[^30] give one implementation of rational intervals.) Then, **InShape** should build one interval for each dimension of the box and evaluate _f_ using those intervals[^31] with an accuracy that increases as _S_ increases.  Then, **InShape** can return&mdash;
+> 3. If the shape is given as an inequality of the form _f_(_t1_, ..., _tN_) &le; 0, where _f_ is a continuous function of one or more variables, **InShape**'s calculations should involve _rational intervals_, or objects that describe a number that's bounded by two rational numbers with numerators and denominators of arbitrary size.  (See also (Duff 1992)[^30]; Daumas et al. (2007)[^31] give one implementation of rational intervals.) Then, **InShape** should build one interval for each dimension of the box and evaluate _f_ using those intervals[^32] with an accuracy that increases as _S_ increases.  Then, **InShape** can return&mdash;
 >     - _YES_ if the interval result of _f_ has an upper bound less than or equal to 0;
 >     - _NO_ if the interval result of _f_ has a lower bound greater than 0; and
 >     - _MAYBE_ in any other case.
@@ -1448,7 +1448,7 @@ The sampler's description has the following skeleton.
 > **Examples:**
 >
 > - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_\*_k_; _NO_ if (_c1_ + ... + _cN_) > _S_\*_k_; and _MAYBE_ otherwise.  For _N_=2, the acceptance rate (see note 5) is 1/2.  For a full diamond, step 5.3 in the algorithm is done for each of the _N_ dimensions.
-> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_c1_+1)<sup>2</sup> + ... + (_cN_+1)<sup>2</sup>) < (_S_\*_k_)<sup>2</sup>; _NO_ if (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > (_S_\*_k_)<sup>2</sup>; and _MAYBE_ otherwise.  For _N_=2, the acceptance rate (see note 5) is _&pi;_/4. For a full hypersphere with radius 1, step 5.3 in the algorithm is done for each of the _N_ dimensions.  In the case of a 2-dimensional disk, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (for example, Devroye (1986, p. 230 ff.)[^25]).
+> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_c1_+1)<sup>2</sup> + ... + (_cN_+1)<sup>2</sup>) < (_S_\*_k_)<sup>2</sup>; _NO_ if (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > (_S_\*_k_)<sup>2</sup>; and _MAYBE_ otherwise.  For _N_=2, the acceptance rate (see note 5) is _&pi;_/4. For a full hypersphere with radius 1, step 5.3 in the algorithm is done for each of the _N_ dimensions.  In the case of a 2-dimensional disk, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (for example, Devroye (1986, p. 230 ff.)[^26]).
 > - The following example generates a point inside a quarter _astroid_ (centered at (0, ..., 0), radius _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_sk_&minus;_c1_&minus;1)<sup>2</sup> + ... + (_sk_&minus;_cN_&minus;1)<sup>2</sup>) > _sk_<sup>2</sup>; _NO_ if ((_sk_&minus;_c1_)<sup>2</sup> + ... + (_sk_&minus;_cN_)<sup>2</sup>) < _sk_<sup>2</sup>; and _MAYBE_ otherwise, where _sk_ = _S_\*_k_.  For _N_=2, the acceptance rate (see note 5) is 1 &minus; _&pi;_/4. For a full astroid, step 5.3 in the algorithm is done for each of the _N_ dimensions.
 
 <a id=Building_an_Arbitrary_Precision_Sampler></a>
@@ -1487,12 +1487,12 @@ Examples of algorithms that use this skeleton are the algorithm for the [**ratio
 
 Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory algorithm for the probabilities _A_, _B_, and _C_, especially when these probabilities have a non-trivial symbolic form.
 
-> **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in Devroye (1986, ch. 7, sec. 4.6)[^25]; an exception is that instead of generating a uniform random variate and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
+> **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in Devroye (1986, ch. 7, sec. 4.6)[^26]; an exception is that instead of generating a uniform random variate and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
 
 <a id=Continuous_Distributions_Supported_on_0_to_1></a>
 #### Continuous Distributions Supported on 0 to 1
 
-The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions thanks to Bernoulli factories, as long as the distributions have probability density functions (PDFs) and take on only values 0 or greater and 1 or less.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) _b_ (such as 2 for binary).  (See also Devroye (1986, ch. 2, sec. 3.8, exercise 14)[^25])
+The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions thanks to Bernoulli factories, as long as the distributions have probability density functions (PDFs) and take on only values 0 or greater and 1 or less.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) _b_ (such as 2 for binary).  (See also Devroye (1986, ch. 2, sec. 3.8, exercise 14)[^26])
 
 1. Create a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part.  Create a **SampleGeometricBag** Bernoulli factory that uses that PSRN.
 2. As the PSRN builds up a uniform random variate, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the **SampleGeometricBag** factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".)  Let _f_(_U_) be the probability density function (PDF) modeled by this Bernoulli factory, where _U_ is the uniform random variate built up by the PSRN. _f_ has a domain equal to the open interval (0, 1) or a subset of that interval, and returns a value of \[0, 1\] everywhere in its domain. _f_ is the PDF for the underlying continuous distribution, or the PDF times a (possibly unknown) constant factor.  As shown by Keane and O'Brien (1994)[^6], however, this step works if and only if&mdash;
@@ -1502,7 +1502,7 @@ The beta sampler in this document shows one case of a general approach to simula
    and they show that 2 \* _&lambda;_, where 0 &le; _&lambda;_ &lt; 1/2, is one function that does not admit a Bernoulli factory.  _f_(_&lambda;_) can be a constant, including an irrational number; see "[**Algorithms for Specific Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Specific_Constants)" for ways to simulate constant probabilities.
 3. If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part _n_ digits (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the PSRN.
 
-However, the speed of this algorithm depends crucially on the mode (highest point) of _f_(_&lambda;_) with 0 &le; _&lambda;_ &le; 1.[^32]  As the mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If the mode is close to 0, _f_ will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of _f_ and have to be rejected.
+However, the speed of this algorithm depends crucially on the mode (highest point) of _f_(_&lambda;_) with 0 &le; _&lambda;_ &le; 1.[^33]  As the mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If the mode is close to 0, _f_ will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of _f_ and have to be rejected.
 
 The beta distribution's PDF at (1) fits the requirements of Keane and O'Brien (for `alpha` and `beta` both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.
 
@@ -1556,7 +1556,7 @@ For bases other than 2, such as 10 for decimal, this can be implemented as follo
 <a id=Hyperbolic_Secant_Distribution></a>
 #### Hyperbolic Secant Distribution
 
-The following algorithm adapts the rejection algorithm from p. 472 in Devroye (1986)[^25] for arbitrary-precision sampling.
+The following algorithm adapts the rejection algorithm from p. 472 in Devroye (1986)[^26] for arbitrary-precision sampling.
 
 1. Generate _ret_, an exponential random variate with a rate of 1 via the **ExpRand** or **ExpRand2** algorithm.  This number will be a uniform PSRN.
 2. Set _ip_ to 1 plus _ret_'s integer part.
@@ -1570,7 +1570,7 @@ The sum of _n_ uniform random variates between 0 and 1 has the following probabi
 
 $$f(x)=\left(p(x,n,0) + p(x,n,1) + ... + p(x,n,n)\right)/(2(n-1)!),$$
 
-where $p(x,n,k) = {n\choose k} (x-k)^{n-1} \text{sign}(x-k)$, ${n\choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items, and sign(_x_) is 1 if _x_ is greater than 0, or 0 if _x_ is 0, or &minus;1 is less than 0.[^33] [^34]
+where $p(x,n,k) = {n\choose k} (x-k)^{n-1} \text{sign}(x-k)$, ${n\choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items, and sign(_x_) is 1 if _x_ is greater than 0, or 0 if _x_ is 0, or &minus;1 is less than 0.[^34] [^35]
 
 This is a polynomial of degree _n_ &minus; 1.  For _n_ uniform numbers, the distribution can take on values that are 0 or greater and _n_ or less.
 
@@ -1580,9 +1580,9 @@ This new algorithm samples the sum of uniform random variates between 0 and 1 an
 2. An integer in \[0, _n_\) is chosen uniformly at random, call it _i_, then the piece identified by _i_ is chosen.  There are [**many algorithms to choose an integer**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N) this way, but an algorithm that is "optimal" in terms of the number of bits it uses, as well as unbiased, should be chosen.
 3. The PDF at \[_i_, _i_ + 1\] is shifted so the desired piece of the PDF is at the closed interval \[0, 1\] rather than its usual place.  More specifically, the PDF is now as follows: $$\mathtt{ShiftedF}(x)=\left(p(x+i,n,0) + p(x+i,n,1) + ... + p(x+i,n,n)\right)/(2(n-1)!),$$ where 0 &le; _x_ &le; 1.  Since `ShiftedF` is a polynomial, it can be rewritten in Bernstein form, so that it has _Bernstein coefficients_, which are equivalent to control points describing the shape of the curve drawn out by `ShiftedF`. (The Bernstein coefficients are the backbone of the well-known Bézier curve.) A polynomial can be written in _Bernstein form_ as&mdash;  $${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$ where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _coefficients_. The coefficients serve as control points that together trace out a 1-dimensional Bézier curve.  For example, given coefficients (control points) 0.2, 0.3, and 0.6, the curve is at 0.2 when _x_ = 0, and 0.6 when _x_ = 1.  (Note that the curve is not at 0.3 when _x_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 
-    Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in \[0, 1\] (Goyal and Sigman 2012\)[^35].
+    Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in \[0, 1\] (Goyal and Sigman 2012\)[^36].
 4. The sampler creates a "coin" made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called **SampleGeometricBag**.  It flips this "coin" _n_ &minus; 1 times and counts the number of times the coin returned 1 this way, call it _j_. (The "coin" will return 1 with probability equal to the to-be-determined uniform random variate.)
-5. Based on _j_, the sampler accepts the PSRN with probability equal to the coefficient _a_\[_j_\]. (See (Goyal and Sigman 2012\)[^35].)
+5. Based on _j_, the sampler accepts the PSRN with probability equal to the coefficient _a_\[_j_\]. (See (Goyal and Sigman 2012\)[^36].)
 6. If the PSRN is accepted, the sampler optionally fills it up with uniform random digits, then sets the PSRN's integer part to _i_, then the sampler returns the finished PSRN.  If the PSRN is not accepted, the sampler starts over from step 2.
 
 **_Finding Parameters_**:
@@ -1649,7 +1649,7 @@ def find_control_points(n, scale_pieces=False):
  return controls
 ```
 
-The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012\)[^36].
+The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012\)[^37].
 
 For example, if _n_ = 4 (so a sum of four uniform random variates is desired), the following Bernstein coefficients are used for each piece of the PDF:
 
@@ -1849,14 +1849,14 @@ This algorithm uses the skeleton described earlier in "Building an Arbitrary-Pre
 <a id=Arc_Cosine_Distribution></a>
 #### Arc-Cosine Distribution
 
-The following is a reimplementation of an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)[^25].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random variate will be 0, 1, or a real number in between.  This algorithm's result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform random variate between 0 and 1, as pointed out by Devroye. (acos(_x_) is the inverse cosine function.)  The algorithm follows.
+The following is a reimplementation of an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)[^26].  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random variate will be 0, 1, or a real number in between.  This algorithm's result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform random variate between 0 and 1, as pointed out by Devroye. (acos(_x_) is the inverse cosine function.)  The algorithm follows.
 
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.
 3. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _u_ be the result.
 4. With probability 4/(4\*_m_\*_m_ + 2\*_m_), call the **URandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns 1, call the **algorithm for &pi; / 4**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, an erratum in the algorithm on page 129 of the book is incorporated.)
-5. If _m_ is odd[^37], optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
-6. If _m_ is even[^38], go to step 1.
+5. If _m_ is odd[^38], optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
+6. If _m_ is even[^39], go to step 1.
 
 And here is Python code that implements this algorithm.  The code uses floating-point arithmetic only at the end, to convert the result to a convenient form, and it relies on methods from _randomgen.py_ and _bernoulli.py_.
 
@@ -1908,7 +1908,7 @@ Uses the skeleton for the uniform distribution inside N-dimensional shapes.
 <a id=Exponential_Distribution_with_Unknown_Small_Rate></a>
 #### Exponential Distribution with Unknown Small Rate
 
-Exponential random variates can be generated using an input coin of unknown probability of heads of _&lambda;_ (which can either be 1 or come between 0 and 1), by generating arrival times in a _Poisson process_ of rate 1, then _thinning_ the process using the coin.  The arrival times that result will be exponentially distributed with rate _&lambda;_.  I found the basic idea in the answer to a [**Mathematics Stack Exchange question**](https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform), and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)[^25].  The algorithm follows:
+Exponential random variates can be generated using an input coin of unknown probability of heads of _&lambda;_ (which can either be 1 or come between 0 and 1), by generating arrival times in a _Poisson process_ of rate 1, then _thinning_ the process using the coin.  The arrival times that result will be exponentially distributed with rate _&lambda;_.  I found the basic idea in the answer to a [**Mathematics Stack Exchange question**](https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform), and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)[^26].  The algorithm follows:
 
 1. Generate an exponential(1) random variate using the **ExpRand** or **ExpRand2** algorithm (with _&lambda;_ = 1), call it _ex_.
 2. (Thinning step.) Flip the input coin.  If it returns 1, return _ex_.
@@ -1936,9 +1936,9 @@ The algorithm follows.
 4. Call the **ExpMinus** algorithm with parameter _&mu;_ (using the _&mu;_ input coin), _b_ times.  If a _&nu;_ input coin was created in step 3, run the same algorithm once, using the _&nu;_ input coin.  If all these calls return 1, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _f_.
 5. If _f_ was not accepted by the previous step, go to step 2.
 
-> **Note**: A _bounded exponential_ random variate with rate ln(_x_) and bounded by _m_ has a similar algorithm to this one.  Step 1 is changed to read as follows: "Do the following _m_ times or until a zero is generated, whichever happens first: 'Generate a number that is 1 with probability 1/_x_ and 0 otherwise'. Then set _k_ to the number of ones generated this way. (_k_ is a so-called bounded-geometric(1&minus;1/_x_, _m_) random variate, which an algorithm of Bringmann and Friedrich (2013)[^39] can generate as well.  If _x_ is a power of 2, this can be implemented by generating blocks of _b_ unbiased random bits until a **non-zero** block of bits or _m_ blocks of bits are generated this way, whichever comes first, then setting _k_ to the number of **all-zero** blocks of bits generated this way.) If _k_ is _m_, return _m_ (this _m_ is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN)."  Additionally, instead of generating a uniform(0,1) random variate in step 2, a uniform(0,_&mu;_) random variate can be generated instead, such as a uniform PSRN generated via **RandUniformFromReal**, to implement an exponential distribution bounded by _m_+_&mu;_ (where _&mu;_ is a real number greater than 0 and less than 1).
+> **Note**: A _bounded exponential_ random variate with rate ln(_x_) and bounded by _m_ has a similar algorithm to this one.  Step 1 is changed to read as follows: "Do the following _m_ times or until a zero is generated, whichever happens first: 'Generate a number that is 1 with probability 1/_x_ and 0 otherwise'. Then set _k_ to the number of ones generated this way. (_k_ is a so-called bounded-geometric(1&minus;1/_x_, _m_) random variate, which an algorithm of Bringmann and Friedrich (2013)[^40] can generate as well.  If _x_ is a power of 2, this can be implemented by generating blocks of _b_ unbiased random bits until a **non-zero** block of bits or _m_ blocks of bits are generated this way, whichever comes first, then setting _k_ to the number of **all-zero** blocks of bits generated this way.) If _k_ is _m_, return _m_ (this _m_ is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN)."  Additionally, instead of generating a uniform(0,1) random variate in step 2, a uniform(0,_&mu;_) random variate can be generated instead, such as a uniform PSRN generated via **RandUniformFromReal**, to implement an exponential distribution bounded by _m_+_&mu;_ (where _&mu;_ is a real number greater than 0 and less than 1).
 
-The following generator for the **rate ln(2)** is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random variate. Unlike the similar algorithm of Ahrens and Dieter (1972)[^40], this one doesn't require a table of probability values.
+The following generator for the **rate ln(2)** is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random variate. Unlike the similar algorithm of Ahrens and Dieter (1972)[^41], this one doesn't require a table of probability values.
 
 1. (Samples the integer part of the random variate.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set _k_ to the number of ones generated this way.
 2. (The rest of the algorithm samples the fractional part.) Create _f_, a uniform PSRN with integer part 0 and a positive sign.
@@ -1963,7 +1963,7 @@ A _mixture_ involves one or more distributions, where each distribution has a se
 
 > **Example:** One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (which can be simulated, for example, using the **ExpMinus** algorithm with parameter 3, in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists.
 
-The _Lindley distribution_ is one example of a _mixture_, namely, there are two probability distributions, with each of the two distributions having a separate probability of being sampled (_w_ and 1&minus;_w_ in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^41] with parameter _&theta;_ (a real number greater than 0) can be generated as follows:
+The _Lindley distribution_ is one example of a _mixture_, namely, there are two probability distributions, with each of the two distributions having a separate probability of being sampled (_w_ and 1&minus;_w_ in the algorithm below).  A random variate that follows the Lindley distribution (Lindley 1958)[^42] with parameter _&theta;_ (a real number greater than 0) can be generated as follows:
 
 Let _A_ be 1 and let _B_ be 2.  Then:
 
@@ -1974,17 +1974,17 @@ Mixtures similar to the Lindley distribution are shown in the following table an
 
 | Distribution | _w_ is: | _r_ is: | _A_ is: | _B_ is: |
   --- | --- | --- | --- | --- |
-| Garima (Shanker 2016)[^42]. | (1+_&theta;_)/(2+_&theta;_). | _&theta;_. | 1. | 2. |
-| i-Garima (Singh and Das 2020)[^43]. | (2+_&theta;_)/(3+_&theta;_). | _&theta;_. | 1. | 2. |
-| Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020)[^44]. | _&theta;_/(1+_&theta;_). | _&theta;_. | 2. | 3. |
-| Xgamma (Sen et al. 2016)[^45]. | _&theta;_/(1+_&theta;_). | _&theta;_. | 1. | 3. |
-| Mirra (Sen et al. 2021)[^46]. | _&theta;_<sup>2</sup>/(_&alpha;_+_&theta;_<sup>2</sup>) where _&alpha;_>0. | _&theta;_. | 1. | 3. |
+| Garima (Shanker 2016)[^43]. | (1+_&theta;_)/(2+_&theta;_). | _&theta;_. | 1. | 2. |
+| i-Garima (Singh and Das 2020)[^44]. | (2+_&theta;_)/(3+_&theta;_). | _&theta;_. | 1. | 2. |
+| Mixture-of-weighted-exponential-and-weighted-gamma (Iqbal and Iqbal 2020)[^45]. | _&theta;_/(1+_&theta;_). | _&theta;_. | 2. | 3. |
+| Xgamma (Sen et al. 2016)[^46]. | _&theta;_/(1+_&theta;_). | _&theta;_. | 1. | 3. |
+| Mirra (Sen et al. 2021)[^47]. | _&theta;_<sup>2</sup>/(_&alpha;_+_&theta;_<sup>2</sup>) where _&alpha;_>0. | _&theta;_. | 1. | 3. |
 
 > **Notes:**
 >
 > 1. If _&theta;_ is a uniform PSRN, then the check "With probability  _w_ = _&theta;_/(1+_&theta;_)" can be implemented by running the Bernoulli factory algorithm for **(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**, where _c_ is 1; _&lambda;_ represents an input coin that always returns 0; _d_ is _&theta;_'s integer part, and _&mu;_ is an input coin that runs **SampleGeometricBag** on _&theta;_'s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.
-> 2. A **Sushila** random variate is _&alpha;_ times a Lindley random variate, where _&alpha;_ > 0 (Shanker et al. 2013)[^47].
-> 3. An **X-Lindley** random variate (Chouia and Zeghdoudi 2021)[^48] is, with probability _&theta;_/(1+_&theta;_), an exponential random variate with a rate of _&theta;_ (see step 1), and otherwise, a Lindley random variate with parameter _&theta;_.
+> 2. A **Sushila** random variate is _&alpha;_ times a Lindley random variate, where _&alpha;_ > 0 (Shanker et al. 2013)[^48].
+> 3. An **X-Lindley** random variate (Chouia and Zeghdoudi 2021)[^49] is, with probability _&theta;_/(1+_&theta;_), an exponential random variate with a rate of _&theta;_ (see step 1), and otherwise, a Lindley random variate with parameter _&theta;_.
 
 <a id=Gamma_Distribution></a>
 #### Gamma Distribution
@@ -1997,7 +1997,7 @@ The following arbitrary-precision sampler generates the sum of _n_ independent e
 <a id=One_Dimensional_Epanechnikov_Kernel></a>
 #### One-Dimensional Epanechnikov Kernel
 
-Adapted from Devroye and Györfi (1985, p. 236)[^49].
+Adapted from Devroye and Györfi (1985, p. 236)[^50].
 
 1. Generate three uniform PSRNs _a_, _b_, and _c_, with a positive sign, an integer part of 0, and an empty fractional part.
 2. Run **URandLess** on _a_ and _c_ in that order, then run **URandLess** on _b_ and _c_ in that order.  If both runs return 1, set _c_ to point to _b_.
@@ -2027,7 +2027,7 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 <a id=Tulap_distribution></a>
 #### Tulap distribution
 
-The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution ("truncated uniform Laplace"; Awan and Slavković (2019)[^50]) and returns it as a uniform PSRN.
+The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution ("truncated uniform Laplace"; Awan and Slavković (2019)[^51]) and returns it as a uniform PSRN.
 
 - The parameter _b_ is greater than 0 and less than 1.  Logically, this is implemented as a "coin" whose probability of returning 1 (showing heads) is not known by the algorithm.  An example of this "coin" is a uniform PSRN with an initially empty fractional part, where "flipping" this "coin" means running **SampleGeometricBag** on that PSRN.
 - The parameter _m_ is a rational number or a uniform PSRN.
@@ -2048,7 +2048,7 @@ The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution
 <a id=Continuous_Bernoulli_Distribution></a>
 #### Continuous Bernoulli Distribution
 
-The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)[^51] was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
+The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)[^52] was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
 
 The continous Bernoulli distribution takes one parameter `lamda` (where 0 &le; `lamda` &le; 1), and takes on values in the closed interval [0, 1] with a probability proportional to&mdash;
 
@@ -2112,7 +2112,7 @@ The Python code that samples the continuous Bernoulli distribution follows.
 <a id=Exchangeable_Farlie_ndash_Gumbel_ndash_Morgenstern_copula></a>
 #### Exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula
 
-Blier-Wong et al. (2022)[^52]  This generates a vector of _d_ uniform random variates between 0 and 1 with a dependence structure according to the so-called _exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula_.
+Blier-Wong et al. (2022)[^53]  This generates a vector of _d_ uniform random variates between 0 and 1 with a dependence structure according to the so-called _exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula_.
 
 1. Choose an integer in [0, _d_] with probability proportional to the given weights, call the chosen integer _n_.  (If the weights are PSRNs, see "[**Weighted Choice Involving PSRNs**](https://peteroupc.github.io/randmisc.html#Weighted_Choice_Involving_PSRNs)".)
 2. Create a list _L_, then add _n_ ones to the list, then add _d_&minus;_n_ zeros to the list.  Then shuffle that list.  Now call the first item in the list _L_\[0\], the second _L_\[1\], and so on.
@@ -2132,7 +2132,7 @@ The _bit complexity_ of an algorithm that generates random variates is measured 
 
 Existing work shows how to calculate the bit complexity for any probability distribution:
 
-- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is greater than or equal to the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976\)[^53].  (For a given probability _p_, the binary entropy is `0 - p*log2(p)` where `log2(x) = ln(x)/ln(2)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
+- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is greater than or equal to the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976\)[^54].  (For a given probability _p_, the binary entropy is `0 - p*log2(p)` where `log2(x) = ln(x)/ln(2)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
 - For a 1-dimensional distribution with a probability density function (PDF), if the distribution's integer part has a finite bit complexity, the full distribution's bit complexity is greater than or equal to `DE + prec - 1` random bits, where `DE` is the differential entropy for the distribution and _prec_ is the number of bits in the random variate's fractional part (Devroye and Gravel 2020\)[^3].
 
 For example, in the case of the exponential distribution, `DE` is log2(exp(1)/_&lambda;_), so the minimum bit complexity for this distribution is log2(exp(1)/_&lambda;_) + _prec_ &minus; 1, so that if _prec_ = 20, this minimum is about 20.443 bits when _&lambda;_ = 1, decreases when _&lambda;_ goes up, and increases when _&lambda;_ goes down.  In the case of any other distribution with a PDF, `DE` is the integral of `f(x) * log2(1/f(x))` over all valid values `x`, where `f` is the distribution's PDF.
@@ -2149,7 +2149,7 @@ In general, if an algorithm calls other algorithms that generate random variates
 
 The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.
 
-The `zero_or_one` method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B\)[^54].  However, it uses no random bits if both its parameters are the same.
+The `zero_or_one` method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B\)[^55].  However, it uses no random bits if both its parameters are the same.
 
 For **SampleGeometricBag** with base 2, the bit complexity has two components.
 
@@ -2171,7 +2171,7 @@ For **SampleGeometricBag** with base 2, the bit complexity has two components.
 - giving each item an exponential random variate with _&lambda;_ = _w_, call it a key, and
 - choosing the item with the smallest key
 
-(see also (Efraimidis 2015\)[^55]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom `-ln(1-X)/w`, where `X` is a uniform random variate between 0 and 1, in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+(see also (Efraimidis 2015\)[^56]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom `-ln(1-X)/w`, where `X` is a uniform random variate between 0 and 1, in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -2229,103 +2229,103 @@ The following are some additional articles I have written on the topic of random
 
 [^16]: J.F. Williamson, "Random selection of points distributed on curved surfaces", _Physics in Medicine & Biology_ 32(10), 1987.
 
-[^17]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
+[^17]: Apostolos Chalkis, Christina Katsamaki, and Josué Tonelli-Cueto, "[**On the Error of Random Sampling: Uniformly Distributed Random Points on Parametric Curves**](https://arxiv.org/abs/2203.02832)", arXiv:2203.02832 [cs.CG], 2002; also in ISSAC'22, 2022. [**https://doi.org/10.1145/3476446.3536190**](https://doi.org/10.1145/3476446.3536190).
 
-[^18]: Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
+[^18]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
 
-[^19]: Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "[**A Domain-Theoretic Approach to Statistical Programming Languages**](https://arxiv.org/abs/2106.16190)", arXiv:2106.16190 (2021) (especially sec. 12.3).
+[^19]: Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
 
-[^20]: Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), doi:10.3390/e21010092.
+[^20]: Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "[**A Domain-Theoretic Approach to Statistical Programming Languages**](https://arxiv.org/abs/2106.16190)", arXiv:2106.16190 (2021) (especially sec. 12.3).
 
-[^21]: Note that _ak_ \* _&beta;_<sup>&minus;(_i_ + 1)</sup> is not just within _&beta;_<sup>&minus;(_i_ + 1)</sup> of its "true" result's absolute value, but also not more than that value.  Hence _ak_ >= _bk_ + 1 rather than _ak_ >= _bk_ + 2.
+[^21]: Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), doi:10.3390/e21010092.
 
-[^22]: A. Habibizad Navin, Fesharaki, M.N., Teshnelab, M. and Mirnia, M., 2007. "Data oriented modeling of uniform random variable: Applied approach". _World Academy Science Engineering Technology_, 21, pp.382-385.
+[^22]: Note that _ak_ \* _&beta;_<sup>&minus;(_i_ + 1)</sup> is not just within _&beta;_<sup>&minus;(_i_ + 1)</sup> of its "true" result's absolute value, but also not more than that value.  Hence _ak_ >= _bk_ + 1 rather than _ak_ >= _bk_ + 2.
 
-[^23]: Nezhad, R.F., Effatparvar, M., Rahimzadeh, M., 2013. "Designing a Universal Data-Oriented Random Number Generator", _International Journal of Modern Education and Computer Science_ 2013(2), pp. 19-24.
+[^23]: A. Habibizad Navin, Fesharaki, M.N., Teshnelab, M. and Mirnia, M., 2007. "Data oriented modeling of uniform random variable: Applied approach". _World Academy Science Engineering Technology_, 21, pp.382-385.
 
-[^24]: In effect, for each supported integer _n_, the tree gives the probabilities of getting a value in \[_n_\*_p_, (_n_+1)\*_p_\], where _p_ is the resolution of the tree such as 1/100000.
+[^24]: Nezhad, R.F., Effatparvar, M., Rahimzadeh, M., 2013. "Designing a Universal Data-Oriented Random Number Generator", _International Journal of Modern Education and Computer Science_ 2013(2), pp. 19-24.
 
-[^25]: Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.
+[^25]: In effect, for each supported integer _n_, the tree gives the probabilities of getting a value in \[_n_\*_p_, (_n_+1)\*_p_\], where _p_ is the resolution of the tree such as 1/100000.
 
-[^26]: Fan, Baoying et al. “On Generating Exponentially Distributed Variates by Using Early Rejection.” _2019 IEEE 5th International Conference on Computer and Communications (ICCC)_ (2019): 1307-1311.
+[^26]: Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.
 
-[^27]: C.T. Li, A. El Gamal, "[**A Universal Coding Scheme for Remote Generation of Continuous Random Variables**](https://arxiv.org/abs/1603.05238v1)", arXiv:1603.05238v1  [cs.IT], 2016.
+[^27]: Fan, Baoying et al. “On Generating Exponentially Distributed Variates by Using Early Rejection.” _2019 IEEE 5th International Conference on Computer and Communications (ICCC)_ (2019): 1307-1311.
 
-[^28]: Harlow, J., Sainudiin, R., Tucker, W., "Mapped Regular Pavings", _Reliable Computing_ 16 (2012).
+[^28]: C.T. Li, A. El Gamal, "[**A Universal Coding Scheme for Remote Generation of Continuous Random Variables**](https://arxiv.org/abs/1603.05238v1)", arXiv:1603.05238v1  [cs.IT], 2016.
 
-[^29]: Duff, T., "Interval Arithmetic and Recursive Subdivision for Implicit Functions and Constructive Solid Geometry", Computer Graphics 26(2), July 1992.
+[^29]: Harlow, J., Sainudiin, R., Tucker, W., "Mapped Regular Pavings", _Reliable Computing_ 16 (2012).
 
-[^30]: Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.
+[^30]: Duff, T., "Interval Arithmetic and Recursive Subdivision for Implicit Functions and Constructive Solid Geometry", Computer Graphics 26(2), July 1992.
 
-[^31]: I thank D. Eisenstat from the _Stack Overflow_ community for leading me to this insight.
+[^31]: Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.
 
-[^32]: More specifically, the _essential supremum_, that is, the function's highest point in \[0, 1\] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous PDFs don't admit Bernoulli factories, as required by step 2.
+[^32]: I thank D. Eisenstat from the _Stack Overflow_ community for leading me to this insight.
 
-[^33]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in the interval \[_n_&minus;_k_+1, _n_\], then multiplying the results (Yannis Manolopoulos. 2002. "[**Binomial coefficient computation: recursion or iteration?**](https://doi.org/10.1145/820127.820168)", SIGCSE Bull. 34, 4 (December 2002), 65–67).  For every _m_&gt;0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
+[^33]: More specifically, the _essential supremum_, that is, the function's highest point in \[0, 1\] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous PDFs don't admit Bernoulli factories, as required by step 2.
 
-[^34]: _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
+[^34]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in the interval \[_n_&minus;_k_+1, _n_\], then multiplying the results (Yannis Manolopoulos. 2002. "[**Binomial coefficient computation: recursion or iteration?**](https://doi.org/10.1145/820127.820168)", SIGCSE Bull. 34, 4 (December 2002), 65–67).  For every _m_&gt;0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 
-[^35]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
+[^35]: _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
 
-[^36]: S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", _Reliable Computing_ 17(1), 2012.
+[^36]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
-[^37]: "_x_ is odd" means that _x_ is an integer and not divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 1, or if _x_ is an integer and the least significant bit of abs(_x_) is 1.
+[^37]: S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", _Reliable Computing_ 17(1), 2012.
 
-[^38]: "_x_ is even" means that _x_ is an integer and divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 0, or if _x_ is an integer and the least significant bit of abs(_x_) is 0.
+[^38]: "_x_ is odd" means that _x_ is an integer and not divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 1, or if _x_ is an integer and the least significant bit of abs(_x_) is 1.
 
-[^39]: Bringmann, K. and Friedrich, T., 2013, July. "Exact and efficient generation of geometric random variates and random graphs", in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).
+[^39]: "_x_ is even" means that _x_ is an integer and divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 0, or if _x_ is an integer and the least significant bit of abs(_x_) is 0.
 
-[^40]: Ahrens, J.H., and Dieter, U., "Computer methods for sampling from the exponential and normal distributions", _Communications of the ACM_ 15, 1972.
+[^40]: Bringmann, K. and Friedrich, T., 2013, July. "Exact and efficient generation of geometric random variates and random graphs", in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).
 
-[^41]: Lindley, D.V., "Fiducial distributions and Bayes' theorem", _Journal of the Royal Statistical Society Series B_, 1958.
+[^41]: Ahrens, J.H., and Dieter, U., "Computer methods for sampling from the exponential and normal distributions", _Communications of the ACM_ 15, 1972.
 
-[^42]: Shanker, R., "Garima distribution and its application to model behavioral science data", _Biom Biostat Int J._ 4(7), 2016.
+[^42]: Lindley, D.V., "Fiducial distributions and Bayes' theorem", _Journal of the Royal Statistical Society Series B_, 1958.
 
-[^43]: Singh, B.P., Das, U.D., "[**On an Induced Distribution and its Statistical Properties**](https://arxiv.org/abs/2010.15078)", arXiv:2010.15078 [stat.ME], 2020.
+[^43]: Shanker, R., "Garima distribution and its application to model behavioral science data", _Biom Biostat Int J._ 4(7), 2016.
 
-[^44]: Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.
+[^44]: Singh, B.P., Das, U.D., "[**On an Induced Distribution and its Statistical Properties**](https://arxiv.org/abs/2010.15078)", arXiv:2010.15078 [stat.ME], 2020.
 
-[^45]: Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.
+[^45]: Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.
 
-[^46]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. "The Mirra distribution for modeling time-to-event data sets." In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.
+[^46]: Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.
 
-[^47]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. "Sushila distribution and its application to waiting times data." International Journal of Business Management 3, no. 2 (2013): 1-11.
+[^47]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. "The Mirra distribution for modeling time-to-event data sets." In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.
 
-[^48]: Chouia, Sarra, and Halim Zeghdoudi. "The xlindley distribution: Properties and application." Journal of Statistical Theory and Applications 20, no. 2 (2021): 318-327.
+[^48]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. "Sushila distribution and its application to waiting times data." International Journal of Business Management 3, no. 2 (2013): 1-11.
 
-[^49]: Devroye, L., Györfi, L., _Nonparametric Density Estimation: The L1 View_, 1985.
+[^49]: Chouia, Sarra, and Halim Zeghdoudi. "The xlindley distribution: Properties and application." Journal of Statistical Theory and Applications 20, no. 2 (2021): 318-327.
 
-[^50]: Awan, Jordan, and Aleksandra Slavković. "Differentially private inference for binomial data." arXiv:1904.00459 (2019).
+[^50]: Devroye, L., Györfi, L., _Nonparametric Density Estimation: The L1 View_, 1985.
 
-[^51]: Loaiza-Ganem, Gabriel, and John P. Cunningham. "The continuous Bernoulli: fixing a pervasive error in variational autoencoders." _Advances in Neural Information Processing Systems_ 32 (2019).
+[^51]: Awan, Jordan, and Aleksandra Slavković. "Differentially private inference for binomial data." arXiv:1904.00459 (2019).
 
-[^52]: Blier-Wong, C., Cossette, H. and Marceau, E., "[**Exchangeable FGM copulas**](https://arxiv.org/abs/2205.11302)", arXiv:2205.11302, 2022.
+[^52]: Loaiza-Ganem, Gabriel, and John P. Cunningham. "The continuous Bernoulli: fixing a pervasive error in variational autoencoders." _Advances in Neural Information Processing Systems_ 32 (2019).
 
-[^53]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^53]: Blier-Wong, C., Cossette, H. and Marceau, E., "[**Exchangeable FGM copulas**](https://arxiv.org/abs/2205.11302)", arXiv:2205.11302, 2022.
 
-[^54]: Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].
+[^54]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^55]: Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.
+[^55]: Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].
 
-[^56]: Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics & data analysis, 44(3), pp.451-464.
+[^56]: Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.
 
-[^57]: Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), [**https://doi.org/10.3390/e21010092**](https://doi.org/10.3390/e21010092)
+[^57]: Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics & data analysis, 44(3), pp.451-464.
 
-[^58]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6 [cs.IT], 2020.
+[^58]: Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), [**https://doi.org/10.3390/e21010092**](https://doi.org/10.3390/e21010092)
 
-[^59]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.
+[^59]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6 [cs.IT], 2020.
 
-[^60]: Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.
+[^60]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.
 
-[^61]: Leydold, J., "[**Automatic sampling with the ratio-of-uniforms method**](https://dl.acm.org/doi/10.1145/347837.347863)", ACM Transactions on Mathematical Software 26(1), 2000.
+[^61]: Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.
 
-[^62]: S. Kakutani, "On equivalence of infinite product measures", _Annals of Mathematics_ 1948.
+[^62]: Leydold, J., "[**Automatic sampling with the ratio-of-uniforms method**](https://dl.acm.org/doi/10.1145/347837.347863)", ACM Transactions on Mathematical Software 26(1), 2000.
 
-[^63]: George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .
+[^63]: S. Kakutani, "On equivalence of infinite product measures", _Annals of Mathematics_ 1948.
 
-[^64]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.
+[^64]: George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .
 
-[^65]: Apostolos Chalkis, Christina Katsamaki, and Josué Tonelli-Cueto, "[On the Error of Random Sampling: Uniformly Distributed Random Points on Parametric Curves](https://arxiv.org/abs/2203.02832)", arXiv:2203.02832 [cs.CG], 2002; also in ISSAC'22, 2022. [**https://doi.org/10.1145/3476446.3536190**](https://doi.org/10.1145/3476446.3536190).
+[^65]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.
 
 <a id=Appendix></a>
 ## Appendix
@@ -2387,7 +2387,7 @@ The following sub-algorithms are used by **UniformMultiply**.  They all involve 
     3. Run **SampleGeometricBag** on _psrn_'s fractional part.  If the result is 1, return 0.  Otherwise, go to step 2.
 - **Sub-algorithm 3** takes one parameter (called _n_ here) and returns 1 with probability ln(1+1/_n_).  Run the **ln(1+_x_)** sub-algorithm with an **input algorithm** as follows: "Return a number that is 1 with probability 1/_n_ and 0 otherwise."
 
-> **Note:** The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a not-so-trivial distribution; when each PSRN is bounded away from 0, the distribution's left and right sides are not exactly "triangular", but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution's "width" gets smaller.  See Glen et al. (2004\)[^56] and a [**Stack Exchange question**](https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables).
+> **Note:** The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a not-so-trivial distribution; when each PSRN is bounded away from 0, the distribution's left and right sides are not exactly "triangular", but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution's "width" gets smaller.  See Glen et al. (2004\)[^57] and a [**Stack Exchange question**](https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables).
 
 <a id=Uniform_of_Uniforms_Produces_a_Product_of_Uniforms></a>
 ### Uniform of Uniforms Produces a Product of Uniforms
@@ -2399,7 +2399,7 @@ The probability density function (PDF) for a uniform(_&alpha;_, _&beta;_) random
 Let _K_ = _b_\*(_d_&minus;_c_).  To show the result, we find two PDFs as described below.
 
 - To find the PDF for the algorithm, find the expected value of UPDF(_x_, 0, _Z_+_b_\*_c_), where _Z_ is distributed as uniform(0, _K_).  This is done by finding the integral (area under the graph) with respect to _z_ of UPDF(_x_, 0, _z_+_b_\*_c_)\*UPDF(_z_, 0, _K_) in the interval [0, _K_\] (the set of values _Z_ can take on).  The result is `PDF1(x) = ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)`.
-- The second PDF is the PDF for the product of two uniform random variates, one in [0, _b_] and the other in [_c_, _d_].  By Rohatgi's formula (see also (Glen et al. 2004\)[^56]), it can be found by finding the integral with respect to _z_ of UPDF(_z_, 0, _b_)\*UPDF(_x_/_z_, _c_, _d_)/_z_, in the interval [0, &infin;) (noting that _z_ is never negative here).  The result is `PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)`.
+- The second PDF is the PDF for the product of two uniform random variates, one in [0, _b_] and the other in [_c_, _d_].  By Rohatgi's formula (see also (Glen et al. 2004\)[^57]), it can be found by finding the integral with respect to _z_ of UPDF(_z_, 0, _b_)\*UPDF(_x_/_z_, _c_, _d_)/_z_, in the interval [0, &infin;) (noting that _z_ is never negative here).  The result is `PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)`.
 
 Now it must be shown that `PDF1` and `PDF2` are equal whenever _x_ is in the interval (0, _b_\*_d_).  Subtracting one PDF from the other and simplifying, it is seen that:
 
@@ -2433,14 +2433,14 @@ Oberhoff also describes _prefix distributions_ that sample a box that covers the
 <a id=Probability_Transformations></a>
 ### Probability Transformations
 
-The following algorithm takes a uniform partially-sampled random number (PSRN) as a "coin" and flips that "coin" using **SampleGeometricBag**.  Given that "coin" and a function _f_ as described below, the algorithm returns 1 with probability _f_(_U_), where _U_ is the number built up by the uniform PSRN (see also Brassard et al., (2019)[^57], (Devroye 1986, p. 769\)[^25], (Devroye and Gravel 2020\)[^58].  In the algorithm:
+The following algorithm takes a uniform partially-sampled random number (PSRN) as a "coin" and flips that "coin" using **SampleGeometricBag**.  Given that "coin" and a function _f_ as described below, the algorithm returns 1 with probability _f_(_U_), where _U_ is the number built up by the uniform PSRN (see also Brassard et al., (2019)[^58], (Devroye 1986, p. 769\)[^26], (Devroye and Gravel 2020\)[^59].  In the algorithm:
 
 -  The uniform PSRN's sign must be positive and its integer part must be 0.
 - For correctness, _f_(_U_) must meet the following conditions:
     - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be continuous and polynomially bounded on the open interval (0, 1) (polynomially bounded means that both _f_(_U_) and 1&minus;_f_(_U_) are greater than or equal to min(_U_<sup>_n_</sup>, (1&minus;_U_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^6]).
     - Otherwise, _f_(_U_) must map the interval \[0, 1] to \[0, 1] and be continuous everywhere or "almost everywhere" (the set of discontinuous points must be "zero-volume", or have Lebesgue measure zero).
 
-    The first set of conditions is the same as those for the Bernoulli factory problem (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)) and ensure this algorithm is unbiased (see also Łatuszyński et al. (2009/2011)[^59]\).
+    The first set of conditions is the same as those for the Bernoulli factory problem (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)) and ensure this algorithm is unbiased (see also Łatuszyński et al. (2009/2011)[^60]\).
 
 The algorithm follows.
 
@@ -2458,7 +2458,7 @@ The algorithm follows.
 <a id=Ratio_of_Uniforms></a>
 ### Ratio of Uniforms
 
-The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique for sampling a distribution (Kinderman and Monahan 1977)[^60].  It involves transforming the distribution's probability density function (PDF) into a compact shape.
+The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique for sampling a distribution (Kinderman and Monahan 1977)[^61].  It involves transforming the distribution's probability density function (PDF) into a compact shape.
 
 This algorithm works for every univariate (one-variable) distribution as long as&mdash;
 
@@ -2484,10 +2484,10 @@ The algorithm follows.
 
 This algorithm appears here in the appendix rather than in the main text, because:
 
-- Certain operations it uses can introduce numerical errors unless care is taken.  These operations can include calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)[^30], is less elegant than, say, the normal distribution sampler by Karney (2016)[^1], which doesn't require calculating logarithms or other transcendental functions.
+- Certain operations it uses can introduce numerical errors unless care is taken.  These operations can include calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)[^31], is less elegant than, say, the normal distribution sampler by Karney (2016)[^1], which doesn't require calculating logarithms or other transcendental functions.
 - This article is focused on algorithms that don't rely on calculations of irrational numbers.
 
-> **Note:** The ratio-of-uniforms shape is convex if and only if &minus;1/sqrt(_PDF_(_x_)) is a concave function (loosely speaking, its "slope" never increases) (Leydold 2000)[^61].
+> **Note:** The ratio-of-uniforms shape is convex if and only if &minus;1/sqrt(_PDF_(_x_)) is a concave function (loosely speaking, its "slope" never increases) (Leydold 2000)[^62].
 >
 > **Examples:**
 >
@@ -2504,9 +2504,9 @@ Let _X_ be a random variate of the form `0.bbbbbbb...`, where each `b` is an ind
 
 Let _a_<sub>_j_</sub> be the probability that the digit at position _j_ equals 1 (starting with _j_ = 1 for the first digit after the point).
 
-Then Kakutani's theorem (Kakutani 1948\)[^62] says that _X_ has an _absolutely continuous_[^12] distribution if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges (so that the binary digits become less and less biased as they move farther and farther from the binary point).  See also Marsaglia (1971\)[^63], Chatterji (1964\)[^64].
+Then Kakutani's theorem (Kakutani 1948\)[^63] says that _X_ has an _absolutely continuous_[^12] distribution if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges (so that the binary digits become less and less biased as they move farther and farther from the binary point).  See also Marsaglia (1971\)[^64], Chatterji (1964\)[^65].
 
-This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2, and set _X_'s binary digits using those probabilities.  However, as Marsaglia (1971\)[^63] showed, the absolutely continuous distribution can only be one of the following:
+This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2, and set _X_'s binary digits using those probabilities.  However, as Marsaglia (1971\)[^64] showed, the absolutely continuous distribution can only be one of the following:
 
 1. The distribution's probability density function (PDF) is zero somewhere in every open interval in (0, 1), without being 0 on all of [0, 1].  Thus, the PDF is not continuous.
 2. The PDF is positive at 1/2, 1/4, 1/8, and so on, so the PDF is continuous and positive on all of (0, 1), and the sequence has the form&mdash;
