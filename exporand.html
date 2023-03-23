@@ -300,6 +300,7 @@
 <ol>
 <li>To represent a point on the edge of a circle, a PSRN can store a random variate in the interval [0, 2*<em>&pi;</em>), via the <strong>RandUniformFromReal</strong> method, given later, for 2*<em>&pi;</em> (for example, it can store an integer part of 2 and a fractional part of [1, 3, 5] and thus represent a number in the interval [2.135, 2.136]), and the number stored this way indicates the distance on the circular arc relative to its starting position.  A program that cares about the point&#39;s X and Y coordinates can then generate enough digits of the PSRN to compute an approximation of cos(<em>P</em>) and sin(<em>P</em>), respectively, to the desired accuracy, where <em>P</em> is the number stored by the PSRN.  (However, the direct use of mathematical functions such as <code>cos</code> and <code>sin</code> is outside the scope of this document.)</li>
 <li>Example 1 is trivial, because each point on the interval maps evenly to a point on the circle.  But this is not true in general: an interval&#39;s or box&#39;s points don&#39;t map evenly to points on a curve or surface in general.  For example, take two PSRNs describing the U and V coordinates of a 3 dimensional cone&#39;s surface: [1.135, 1.136] for U and [0.288, 0.289] for V, and the cone&#39;s coordinates are X = U*cos(V), Y = U*sin(V), Z = U. In this example, the PSRNs form a box that&#39;s mapped to a small part of the cone surface.  However, the points in the box don&#39;t map to the cone evenly this way, so generating enough digits to calculate X, Y, and Z to the desired accuracy will not sample uniformly from that part of the cone without more work (see Williamson (1987)[^16] for one solution).</li>
+<li>For algorithms that sample uniformly on a general curve with arbitrary accuracy, see Chalkis et al. (2022)[^65]</li>
 </ol>
 </blockquote>
 
@@ -2809,7 +2810,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h4>Exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula</h4>
 
-<p>Blier-Wong et al. (2022)[^64]  This generates a vector of <em>d</em> uniform random variates between 0 and 1 with a dependence structure according to the so-called <em>exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula</em>.</p>
+<p>Blier-Wong et al. (2022)[^52]  This generates a vector of <em>d</em> uniform random variates between 0 and 1 with a dependence structure according to the so-called <em>exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula</em>.</p>
 
 <ol>
 <li>Choose an integer in [0, <em>d</em>] with probability proportional to the given weights, call the chosen integer <em>n</em>.  (If the weights are PSRNs, see &quot;<a href="https://peteroupc.github.io/randmisc.html#Weighted_Choice_Involving_PSRNs"><strong>Weighted Choice Involving PSRNs</strong></a>&quot;.)</li>
@@ -2837,7 +2838,7 @@ def contbernoullidist(b, lamda, precision=53):
 <p>Existing work shows how to calculate the bit complexity for any probability distribution:</p>
 
 <ul>
-<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is greater than or equal to the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)[^52].  (For a given probability <em>p</em>, the binary entropy is <code>0 - p*log2(p)</code> where <code>log2(x) = ln(x)/ln(2)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
+<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is greater than or equal to the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)[^53].  (For a given probability <em>p</em>, the binary entropy is <code>0 - p*log2(p)</code> where <code>log2(x) = ln(x)/ln(2)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
 <li>For a 1-dimensional distribution with a probability density function (PDF), if the distribution&#39;s integer part has a finite bit complexity, the full distribution&#39;s bit complexity is greater than or equal to <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random variate&#39;s fractional part (Devroye and Gravel 2020)[^3].</li>
 </ul>
 
@@ -2858,7 +2859,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.</p>
 
-<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)[^53].  However, it uses no random bits if both its parameters are the same.</p>
+<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)[^54].  However, it uses no random bits if both its parameters are the same.</p>
 
 <p>For <strong>SampleGeometricBag</strong> with base 2, the bit complexity has two components.</p>
 
@@ -2888,7 +2889,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>choosing the item with the smallest key</li>
 </ul>
 
-<p>(see also (Efraimidis 2015)[^54]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom <code>-ln(1-X)/w</code>, where <code>X</code> is a uniform random variate between 0 and 1, in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
+<p>(see also (Efraimidis 2015)[^55]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom <code>-ln(1-X)/w</code>, where <code>X</code> is a uniform random variate between 0 and 1, in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
 
 <p><a id=Acknowledgments></a></p>
 
@@ -3021,31 +3022,33 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>[^51]: Loaiza-Ganem, Gabriel, and John P. Cunningham. &quot;The continuous Bernoulli: fixing a pervasive error in variational autoencoders.&quot; <em>Advances in Neural Information Processing Systems</em> 32 (2019).</p>
 
-<p>[^52]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^52]: Blier-Wong, C., Cossette, H. and Marceau, E., &quot;<a href="https://arxiv.org/abs/2205.11302"><strong>Exchangeable FGM copulas</strong></a>&quot;, arXiv:2205.11302, 2022.</p>
 
-<p>[^53]: Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</p>
+<p>[^53]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^54]: Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</p>
+<p>[^54]: Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</p>
 
-<p>[^55]: Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics &amp; data analysis, 44(3), pp.451-464.</p>
+<p>[^55]: Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</p>
 
-<p>[^56]: Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092"><strong>https://doi.org/10.3390/e21010092</strong></a></p>
+<p>[^56]: Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics &amp; data analysis, 44(3), pp.451-464.</p>
 
-<p>[^57]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6 [cs.IT], 2020.</p>
+<p>[^57]: Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092"><strong>https://doi.org/10.3390/e21010092</strong></a></p>
 
-<p>[^58]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
+<p>[^58]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6 [cs.IT], 2020.</p>
 
-<p>[^59]: Kinderman, A.J., Monahan, J.F., &quot;Computer generation of random variables using the ratio of uniform deviates&quot;, <em>ACM Transactions on Mathematical Software</em> 3(3), pp. 257-260, 1977.</p>
+<p>[^59]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
 
-<p>[^60]: Leydold, J., &quot;<a href="https://dl.acm.org/doi/10.1145/347837.347863"><strong>Automatic sampling with the ratio-of-uniforms method</strong></a>&quot;, ACM Transactions on Mathematical Software 26(1), 2000.</p>
+<p>[^60]: Kinderman, A.J., Monahan, J.F., &quot;Computer generation of random variables using the ratio of uniform deviates&quot;, <em>ACM Transactions on Mathematical Software</em> 3(3), pp. 257-260, 1977.</p>
 
-<p>[^61]: S. Kakutani, &quot;On equivalence of infinite product measures&quot;, <em>Annals of Mathematics</em> 1948.</p>
+<p>[^61]: Leydold, J., &quot;<a href="https://dl.acm.org/doi/10.1145/347837.347863"><strong>Automatic sampling with the ratio-of-uniforms method</strong></a>&quot;, ACM Transactions on Mathematical Software 26(1), 2000.</p>
 
-<p>[^62]: George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</p>
+<p>[^62]: S. Kakutani, &quot;On equivalence of infinite product measures&quot;, <em>Annals of Mathematics</em> 1948.</p>
 
-<p>[^63]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</p>
+<p>[^63]: George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</p>
 
-<p>[^64]: Blier-Wong, C., Cossette, H. and Marceau, E., &quot;<a href="https://arxiv.org/abs/2205.11302">Exchangeable FGM copulas</a>&quot;, arXiv:2205.11302, 2022.</p>
+<p>[^64]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</p>
+
+<p>[^65]: Apostolos Chalkis, Christina Katsamaki, and Josué Tonelli-Cueto, &quot;<a href="https://arxiv.org/abs/2203.02832">On the Error of Random Sampling: Uniformly Distributed Random Points on Parametric Curves</a>&quot;, arXiv:2203.02832 [cs.CG], 2002; also in ISSAC&#39;22, 2022. <a href="https://doi.org/10.1145/3476446.3536190"><strong>https://doi.org/10.1145/3476446.3536190</strong></a>.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -3144,7 +3147,7 @@ def contbernoullidist(b, lamda, precision=53):
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a not-so-trivial distribution; when each PSRN is bounded away from 0, the distribution&#39;s left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.  See Glen et al. (2004)[^55] and a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>Stack Exchange question</strong></a>.</p>
+<p><strong>Note:</strong> The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a not-so-trivial distribution; when each PSRN is bounded away from 0, the distribution&#39;s left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.  See Glen et al. (2004)[^56] and a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>Stack Exchange question</strong></a>.</p>
 </blockquote>
 
 <p><a id=Uniform_of_Uniforms_Produces_a_Product_of_Uniforms></a></p>
@@ -3159,7 +3162,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>To find the PDF for the algorithm, find the expected value of UPDF(<em>x</em>, 0, <em>Z</em>+<em>b</em>*<em>c</em>), where <em>Z</em> is distributed as uniform(0, <em>K</em>).  This is done by finding the integral (area under the graph) with respect to <em>z</em> of UPDF(<em>x</em>, 0, <em>z</em>+<em>b</em>*<em>c</em>)*UPDF(<em>z</em>, 0, <em>K</em>) in the interval [0, <em>K</em>] (the set of values <em>Z</em> can take on).  The result is <code>PDF1(x) = ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)</code>.</li>
-<li>The second PDF is the PDF for the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>].  By Rohatgi&#39;s formula (see also (Glen et al. 2004)[^55]), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>.</li>
+<li>The second PDF is the PDF for the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>].  By Rohatgi&#39;s formula (see also (Glen et al. 2004)[^56]), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>.</li>
 </ul>
 
 <p>Now it must be shown that <code>PDF1</code> and <code>PDF2</code> are equal whenever <em>x</em> is in the interval (0, <em>b</em>*<em>d</em>).  Subtracting one PDF from the other and simplifying, it is seen that:</p>
@@ -3205,7 +3208,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h3>Probability Transformations</h3>
 
-<p>The following algorithm takes a uniform partially-sampled random number (PSRN) as a &quot;coin&quot; and flips that &quot;coin&quot; using <strong>SampleGeometricBag</strong>.  Given that &quot;coin&quot; and a function <em>f</em> as described below, the algorithm returns 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number built up by the uniform PSRN (see also Brassard et al., (2019)[^56], (Devroye 1986, p. 769)[^25], (Devroye and Gravel 2020)[^57].  In the algorithm:</p>
+<p>The following algorithm takes a uniform partially-sampled random number (PSRN) as a &quot;coin&quot; and flips that &quot;coin&quot; using <strong>SampleGeometricBag</strong>.  Given that &quot;coin&quot; and a function <em>f</em> as described below, the algorithm returns 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number built up by the uniform PSRN (see also Brassard et al., (2019)[^57], (Devroye 1986, p. 769)[^25], (Devroye and Gravel 2020)[^58].  In the algorithm:</p>
 
 <ul>
 <li> The uniform PSRN&#39;s sign must be positive and its integer part must be 0.</li>
@@ -3216,7 +3219,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>Otherwise, <em>f</em>(<em>U</em>) must map the interval [0, 1] to [0, 1] and be continuous everywhere or &quot;almost everywhere&quot; (the set of discontinuous points must be &quot;zero-volume&quot;, or have Lebesgue measure zero).</li>
 </ul>
 
-<p>The first set of conditions is the same as those for the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) and ensure this algorithm is unbiased (see also Łatuszyński et al. (2009/2011)[^58]).</p></li>
+<p>The first set of conditions is the same as those for the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) and ensure this algorithm is unbiased (see also Łatuszyński et al. (2009/2011)[^59]).</p></li>
 </ul>
 
 <p>The algorithm follows.</p>
@@ -3243,7 +3246,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h3>Ratio of Uniforms</h3>
 
-<p>The Cauchy sampler given earlier demonstrates the <em>ratio-of-uniforms</em> technique for sampling a distribution (Kinderman and Monahan 1977)[^59].  It involves transforming the distribution&#39;s probability density function (PDF) into a compact shape.</p>
+<p>The Cauchy sampler given earlier demonstrates the <em>ratio-of-uniforms</em> technique for sampling a distribution (Kinderman and Monahan 1977)[^60].  It involves transforming the distribution&#39;s probability density function (PDF) into a compact shape.</p>
 
 <p>This algorithm works for every univariate (one-variable) distribution as long as&mdash;</p>
 
@@ -3285,7 +3288,7 @@ def contbernoullidist(b, lamda, precision=53):
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The ratio-of-uniforms shape is convex if and only if &minus;1/sqrt(<em>PDF</em>(<em>x</em>)) is a concave function (loosely speaking, its &quot;slope&quot; never increases) (Leydold 2000)[^60].</p>
+<p><strong>Note:</strong> The ratio-of-uniforms shape is convex if and only if &minus;1/sqrt(<em>PDF</em>(<em>x</em>)) is a concave function (loosely speaking, its &quot;slope&quot; never increases) (Leydold 2000)[^61].</p>
 
 <p><strong>Examples:</strong></p>
 
@@ -3306,9 +3309,9 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>Let <em>a</em><sub><em>j</em></sub> be the probability that the digit at position <em>j</em> equals 1 (starting with <em>j</em> = 1 for the first digit after the point).</p>
 
-<p>Then Kakutani&#39;s theorem (Kakutani 1948)[^61] says that <em>X</em> has an <em>absolutely continuous</em>[^12] distribution if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges (so that the binary digits become less and less biased as they move farther and farther from the binary point).  See also Marsaglia (1971)[^62], Chatterji (1964)[^63].</p>
+<p>Then Kakutani&#39;s theorem (Kakutani 1948)[^62] says that <em>X</em> has an <em>absolutely continuous</em>[^12] distribution if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges (so that the binary digits become less and less biased as they move farther and farther from the binary point).  See also Marsaglia (1971)[^63], Chatterji (1964)[^64].</p>
 
-<p>This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2, and set <em>X</em>&#39;s binary digits using those probabilities.  However, as Marsaglia (1971)[^62] showed, the absolutely continuous distribution can only be one of the following:</p>
+<p>This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2, and set <em>X</em>&#39;s binary digits using those probabilities.  However, as Marsaglia (1971)[^63] showed, the absolutely continuous distribution can only be one of the following:</p>
 
 <ol>
 <li>The distribution&#39;s probability density function (PDF) is zero somewhere in every open interval in (0, 1), without being 0 on all of [0, 1].  Thus, the PDF is not continuous.</li>
