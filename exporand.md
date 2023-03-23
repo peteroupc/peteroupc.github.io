@@ -95,6 +95,7 @@ Comments on other aspects of this document are welcome.
         - [**Uniform Distribution Inside Rectellipse**](#Uniform_Distribution_Inside_Rectellipse)
         - [**Tulap distribution**](#Tulap_distribution)
         - [**Continuous Bernoulli Distribution**](#Continuous_Bernoulli_Distribution)
+        - [**Exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula**](#Exchangeable_Farlie_ndash_Gumbel_ndash_Morgenstern_copula)
 - [**Complexity**](#Complexity)
     - [**General Principles**](#General_Principles)
     - [**Complexity of Specific Algorithms**](#Complexity_of_Specific_Algorithms)
@@ -2107,6 +2108,19 @@ The Python code that samples the continuous Bernoulli distribution follows.
                  return ret
            acc+=1
 
+<a id=Exchangeable_Farlie_ndash_Gumbel_ndash_Morgenstern_copula></a>
+#### Exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula
+
+Blier-Wong et al. (2022)[^64]  This generates a vector of _d_ uniform random variates between 0 and 1 with a dependence structure according to the so-called _exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula_.
+
+1. Choose an integer in [0, _d_] with probability proportional to the given weights, call the chosen integer _n_.  (If the weights are PSRNs, see "[**Weighted Choice Involving PSRNs**](https://peteroupc.github.io/randmisc.html#Weighted_Choice_Involving_PSRNs)".)
+2. Create a list _L_, then add _n_ ones to the list, then add _d_&minus;_n_ zeros to the list.  Then shuffle that list.  Now call the first item in the list _L_\[0\], the second _L_\[1\], and so on.
+3. Create a list _U_.
+4. For each _i_ in [0, _d_):
+    1. Generate three uniform PSRNs with empty fractional part, zero integer part, and positive sign.  Call them _u1_, _u2_, and _u3_.
+    2. If _L_\[_i_\] is 0, append max(_u1_, _u2_) to _U_.  Otherwise, append min(max(_u1_, _u2_), _u3_) to _U_.
+5. Return _U_.
+
 <a id=Complexity></a>
 ## Complexity
 
@@ -2307,6 +2321,8 @@ The following are some additional articles I have written on the topic of random
 [^62]: George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .
 
 [^63]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.
+
+[^64]: Blier-Wong, C., Cossette, H. and Marceau, E., "[Exchangeable FGM copulas](https://arxiv.org/abs/2205.11302)", arXiv:2205.11302, 2022.
 
 <a id=Appendix></a>
 ## Appendix

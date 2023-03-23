@@ -137,6 +137,7 @@
 <li><a href="#Uniform_Distribution_Inside_Rectellipse"><strong>Uniform Distribution Inside Rectellipse</strong></a></li>
 <li><a href="#Tulap_distribution"><strong>Tulap distribution</strong></a></li>
 <li><a href="#Continuous_Bernoulli_Distribution"><strong>Continuous Bernoulli Distribution</strong></a></li>
+<li><a href="#Exchangeable_Farlie_ndash_Gumbel_ndash_Morgenstern_copula"><strong>Exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula</strong></a></li>
 </ul></li>
 </ul></li>
 <li><a href="#Complexity"><strong>Complexity</strong></a>
@@ -2804,6 +2805,25 @@ def contbernoullidist(b, lamda, precision=53):
        acc+=1
 </pre>
 
+<p><a id=Exchangeable_Farlie_ndash_Gumbel_ndash_Morgenstern_copula></a></p>
+
+<h4>Exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula</h4>
+
+<p>Blier-Wong et al. (2022)[^64]  This generates a vector of <em>d</em> uniform random variates between 0 and 1 with a dependence structure according to the so-called <em>exchangeable Farlie&ndash;Gumbel&ndash;Morgenstern copula</em>.</p>
+
+<ol>
+<li>Choose an integer in [0, <em>d</em>] with probability proportional to the given weights, call the chosen integer <em>n</em>.  (If the weights are PSRNs, see &quot;<a href="https://peteroupc.github.io/randmisc.html#Weighted_Choice_Involving_PSRNs"><strong>Weighted Choice Involving PSRNs</strong></a>&quot;.)</li>
+<li>Create a list <em>L</em>, then add <em>n</em> ones to the list, then add <em>d</em>&minus;<em>n</em> zeros to the list.  Then shuffle that list.  Now call the first item in the list <em>L</em>[0], the second <em>L</em>[1], and so on.</li>
+<li>Create a list <em>U</em>.</li>
+<li>For each <em>i</em> in [0, <em>d</em>):
+
+<ol>
+<li>Generate three uniform PSRNs with empty fractional part, zero integer part, and positive sign.  Call them <em>u1</em>, <em>u2</em>, and <em>u3</em>.</li>
+<li>If <em>L</em>[<em>i</em>] is 0, append max(<em>u1</em>, <em>u2</em>) to <em>U</em>.  Otherwise, append min(max(<em>u1</em>, <em>u2</em>), <em>u3</em>) to <em>U</em>.</li>
+</ol></li>
+<li>Return <em>U</em>.</li>
+</ol>
+
 <p><a id=Complexity></a></p>
 
 <h2>Complexity</h2>
@@ -3024,6 +3044,8 @@ def contbernoullidist(b, lamda, precision=53):
 <p>[^62]: George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</p>
 
 <p>[^63]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</p>
+
+<p>[^64]: Blier-Wong, C., Cossette, H. and Marceau, E., &quot;<a href="https://arxiv.org/abs/2205.11302">Exchangeable FGM copulas</a>&quot;, arXiv:2205.11302, 2022.</p>
 
 <p><a id=Appendix></a></p>
 

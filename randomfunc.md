@@ -1576,7 +1576,7 @@ END METHOD
 
 [**_Inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) (or simply _inversion_) is the most generic way to sample a number from a probability distribution.
 
-If the distribution **has a known quantile function**, generate a uniform random variate in (0, 1) if that number wasn't already pregenerated, and take the quantile of that number.  However:
+If the distribution **has a known quantile function**, generate a uniform random variate between 0 and 1 if that number wasn't already pregenerated, and take the quantile of that number.  However:
 
 - In most cases, the quantile function is not available.  Thus, it has to be approximated.
 - Even if the quantile function is available, a na&iuml;ve quantile calculation (for example, `ICDF(RNDRANGEMinMaxExc(0, 1))`) may mean that small changes in the uniform number lead to huge changes in the quantile, leading to gaps in sampling coverage (Monahan 1985, sec. 4 and 6\)[^66].
@@ -1604,7 +1604,7 @@ The following method samples from a distribution via inversion, with an accuracy
        end
     end
 
-Some applications need to convert a pregenerated number in \[0, 1\] (usually a number sampled from a uniform distribution), called `u01` below, to a non-uniform distribution via quantiles. Notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences. The following way to compute quantiles is exact in theory:
+Some applications need to convert a pregenerated number between 0 and 1 (usually a number sampled from a uniform distribution), called `u01` below, to a non-uniform distribution via quantiles. Notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences. The following way to compute quantiles is exact in theory:
 
 - Distribution is **discrete, with known PMF** (and the distribution takes on integers): Sequential search (Devroye 1986, p. 85\)[^19]\: `i = 0; p = PMF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PMF(i); end; return p`, but this is not always fast. (This works only if `PMF`'s values sum to 1, which is why a PMF and not a PDF-like function is allowed here.)
 
