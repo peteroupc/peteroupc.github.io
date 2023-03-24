@@ -168,7 +168,7 @@ The algorithm of Li generates a variate from the _discrete Laplace distribution_
 <a id=Weighted_Choice_for_Special_Distributions></a>
 ### Weighted Choice for Special Distributions
 
-The following are algorithms to sample items whose probabilities (or "weights") are given in a special way.  They supplement the section "[**Weighted Choice**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice)" in my article "Randomization and Sampling Methods".
+The following are algorithms to sample items whose "weights" (which are related to the probability of sampling each item) are given in a special way.  They supplement the section "[**Weighted Choice**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice)" in my article "Randomization and Sampling Methods".
 
 <a id=Weighted_Choice_with_Weights_Written_as_an_Integer_and_Fraction></a>
 #### Weighted Choice with Weights Written as an Integer and Fraction

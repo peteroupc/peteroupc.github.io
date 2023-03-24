@@ -584,7 +584,7 @@ For more on why these two algorithms are equivalent, see the appendix.
 1. For each position in \[0, `p`), if the item at that position in the uniform PSRN's fractional part is unsampled, set the item there to a digit chosen uniformly at random (for example, either 0 or 1 for binary), increasing the fractional part's capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8\)[^13].)
 2. Let `sign` be -1 if the PSRN's sign is negative, or 1 otherwise; let `ipart` be the PSRN's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + bag[0] * _b_<sup>&minus;0&minus;1</sup> + bag[1] * _b_<sup>&minus;1&minus;1</sup> + ... + bag[`p`&minus;1] * _b_<sup>&minus;(`p`&minus;1)&minus;1</sup>), where _b_ is the base, or radix.
 
-After step 2, if it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to&mdash;
+After step 1, if it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to&mdash;
 
 - fill all unsampled digits between the first and the last set digit,
 - round the number represented by the PSRN to a number whose fractional part has `p` digits, with a rounding mode of choice (and without further modifying the PSRN), and

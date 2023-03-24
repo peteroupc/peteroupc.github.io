@@ -184,7 +184,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 > 1. The interval $[\hat{\mu} - \epsilon, \hat{\mu} + \epsilon]$ is also known as a _confidence interval_ for the mean, with _confidence level_ at least 1 &minus; _&delta;_ (where $\hat{\mu}$ is an estimate of the mean returned by _Algorithm C_).
 > 2. If the stream of random variates meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.
 > 3. Theorem 3.4 of Kunsch et al. (2019\)[^7] shows that there is no mean estimation algorithm that&mdash;
->      - produces an estimate within a user-specified error tolerance (in terms of _absolute error_, as opposed to _relative error_) with probability greater than a user-specified value, and
+>      - produces an estimate within a user-specified error tolerance with probability greater than a user-specified value, and
 >      - works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).
 > 4. There is also a mean estimation algorithm for very high dimensions, which works if the stream of multidimensional variates has a finite variance (Lee and Valiant 2022)[^11], but this algorithm is impractical &mdash; it requires millions of samples at best.
 >
@@ -215,8 +215,8 @@ The following algorithm correctly estimates the mode with probability $1-\delta$
 
 _Algorithm C_ can be used to estimate a function of the mean of a stream of random variates with unknown mean.  Specifically, the goal is to estimate _f_(**E**[**z**]), where:
 
-- **z** is a number produced by the stream.  Each number produced by the stream must lie in the interval [0, 1].
-- _f_ is a known continuous function that maps the closed interval [0, 1] to [0, 1].
+- **z** is a number produced by the stream.
+- _f_ is a known continuous function.
 - The stream's numbers can take on a single value with probability 1.
 
 The following algorithm takes the following parameters:
@@ -224,7 +224,13 @@ The following algorithm takes the following parameters:
 - _p_, _q_, and _&kappa;_ are as defined in _Algorithm C_.
 - _&epsilon;_, _&delta;_: The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].
 
-The algorithm, like _Algorithm C_, works only if the stream's distribution has the following technical property: The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.  The algorithm, called **Algorithm D** in this document, follows.
+The algorithm works only if:
+
+- Each number produced by the stream **z** satisfies 0 &le; **z** &le; 1.
+- _f_(_x_) maps the closed interval [0, 1] to itself.
+- Like _Algorithm C_, the _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.
+
+The algorithm, called **Algorithm D** in this document, follows.
 
 1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), or the _inverse modulus of continuity_, which is found by taking the so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_h_), and solving the equation _&omega;_(_h_) = _&epsilon;_ for _h_.
     - Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the maximum range of _f_ in a window of size _h_.
@@ -233,78 +239,82 @@ The algorithm, like _Algorithm C_, works only if the stream's distribution has t
 2. Run _Algorithm C_ with the given parameters _p_, _q_, _&kappa;_, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).
 
-A simpler version of _Algorithm D_ was given as an answer to the linked-to question; see also Jiang and Hickernell (2014\)[^13].  As with _Algorithm D_, this algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].  The algorithm, called **Algorithm E** in this document, follows.
+A simpler version of _Algorithm D_ takes the sample mean as the randomized estimate, that is, _n_ samples are taken from the stream and averaged.  As with _Algorithm D_, the following algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm, called **Algorithm E** in this document, follows:
 
 1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
-2. (Calculate the sample size.) Set _n_ to ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). (As the answer notes, this sample size is based on Hoeffding's inequality.)
+2. (Calculate the sample size.)  Calculate the sample size _n_, depending on the distribution the stream takes and the function _f_.
 3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
 
-If the stream is **unbounded** (can take on any real number) and its distribution has a **known upper bound on the standard deviation** _&sigma;_ (**or the variance** _&sigma;_<sup>2</sup>), then a similar algorithm follows from Chebyshev's inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012/2013\)[^8], but is adapted to find the mean for _f_(_x_), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers. The algorithm, called **Algorithm F** in this document, follows.
+Then the table below shows how the necessary sample size _n_ can be determined.
 
-1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
-2. (Calculate the sample size.) Set _n_ to ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)).
-3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
+| Stream's distribution | Property of _f_ | Sample size |
+  ---- | ---- | ---- |
+| Bounded; lies in [0, 1].[^15] | Continuous; maps [0, 1] to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
+| Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^16] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
+| Unbounded and subgaussian; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^17] | _f_(_x_) = _x_. | _n_ = $\frac{2 \sigma^{2} \log{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$. |
 
 > **Notes:**
 >
-> 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this happens in general when _f_ is piecewise continuous, or made up of independent continuous pieces that cover all of \[0, 1\]), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-> 3. _Algorithm D_ and _Algorithm E_ can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to [_a_, _b_], as follows:
+> 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this happens in general when _f_ is piecewise continuous, or made up of independent continuous pieces that cover _f_'s whole domain), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
+> 3. _Algorithm D_ and _Algorithm E_ (when the stream's numbers lie in [0, 1]) can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to [_a_, _b_], as follows:
 >
 >     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
 >     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
 >     - If the algorithm would return _f_(_&mu;_), instead return _g_(_&mu;_) where _g_(_&mu;_) = _f_(_a_ + (_&mu;_\*(_b_ &minus; _a_))).
 >
-> 4. _Algorithm E_ and _Algorithm F_ are not unbiased estimators in general.  However, when _f_(_x_) = _x_, the sample mean used by both algorithms is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
+> 4. _Algorithm E_ is not an unbiased estimator in general.  However, when _f_(_x_) = _x_, the sample mean used by both algorithms is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
+>
+> 5. In _Algorithm E_, for an estimate in terms of relative error, rather than absolute error, multiply _&gamma;_ by _M_ after step 1 is complete, where _M_ is the smallest absolute value of the mean that the stream's distribution is allowed to have (Wainwright 2019)[^18].
 >
 > **Examples:**
 >
-> 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if we have a coin that produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or _Algorithm E_ with _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
+> 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if we have a coin that produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or the bounded case of _Algorithm E_ with _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
 > 2. Take _f_(_x_) = _x_.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/1.
-> 3. The variance of a Poisson distribution with mean _&mu;_ is _&mu;_.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or less but otherwise unknown, we can take _&sigma;_ = sqrt(_&nu;_) so that the sample size _n_ is ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&epsilon;_<sup>2</sup>)), in accordance with _Algorithm F_.
+> 3. The variance of a Poisson distribution with mean _&mu;_ is _&mu;_.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or less but otherwise unknown, we can take _&sigma;_ = sqrt(_&nu;_) so that the sample size _n_ is ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&epsilon;_<sup>2</sup>)), in accordance with the second case of _Algorithm E_.
 
 <a id=Randomized_Integration></a>
 ## Randomized Integration
 
-Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.
+Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.[^19]
 
 This time, suppose we have an endless stream of _vectors_ (_n_-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.
 
-_Algorithm C_ can be used to estimate an integral of a function _h_(**z**), where **z** is a vector from the stream, with the following properties:
+Suppose the goal is to estimate an integral of a function _h_(**z**), where **z** is a vector from the stream, with the following properties:
 
 - _h_(**z**) is a multidimensional function that takes an _n_-dimensional vector and returns a real number.  _h_(**z**) is usually a function that's easy to evaluate but whose integral is hard to calculate.
 - **z** is an _n_-dimensional vector chosen at random in the sampling domain.
 
-The estimate will come within _&epsilon;_ of the true integral with probability 1 &minus; _&delta;_ or greater, as long as the following conditions are met:
+Then _Algorithm C_ will take the new stream and generate an estimate that comes within _&epsilon;_ of the true integral with probability 1 &minus; _&delta;_ or greater, as long as the following conditions are met:
 
 - The _q_<sup>th</sup> c.a.m. for _h_(**z**) is finite.  That is, **E**\[abs(_h_(**z**)&minus;**E**\[_h_(**z**)\])<sup>_q_</sup>\] is finite.
 - The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.
 
-Unfortunately, these conditions may be hard to verify in practice, especially when the distribution _h_(**z**) is not known.  (In fact, **E**\[_h_(**z**)\], as seen above, is the unknown integral to be estimated.)
+> **Note:** Unfortunately, these conditions may be hard to verify in practice, especially when the distribution of _h_(**z**) is not known.  (In fact, **E**\[_h_(**z**)\], as seen above, is the unknown integral to be estimated.)
 
-For this purpose, each number in the stream of random variates is generated as follows (see also Kunsch et al.):
+To use _Algorithm C_ for this purpose, each number in the stream of random variates is generated as follows (see also Kunsch et al.):
 
 1. Set **z** to an _n_-dimensional vector (list of _n_ numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, **z** is chosen _uniformly_ at random this way (see note later in this section).
 2. Calculate _h_(**z**), and set the next number in the stream to that value.
 
-Alternatively, if _h_(**z**) can take on only numbers in the closed interval [0, 1], the much simpler _Algorithm E_ can be used on the newly generated stream (taking _f_(_x_) = _x_), rather than _Algorithm C_.
+> **Example:** The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter _&kappa;_ for estimating the integral of min(_Z1_, _Z2_) where _Z1_ and _Z2_ are each uniformly chosen at random in the interval [0, 1].  It assumes _p_ = 2 and _q_ = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)
+>
+> ```
+> # Distribution of Z1 and Z2
+> u1=Uniform('U1',0,1)
+> u2=Uniform('U2',0,1)
+> # Function to estimate
+> func = Min(u1,u2)
+> emean=E(func)
+> p = S(2) # Degree of p-moment
+> q = S(4) # Degree of q-moment
+> # Calculate value for kappa
+> kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
+> pprint(Max(1,kappa))
+> ```
 
-The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter _&kappa;_ for estimating the integral of min(_Z1_, _Z2_) where _Z1_ and _Z2_ are each uniformly chosen at random in the interval [0, 1].  It assumes _p_ = 2 and _q_ = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)
+Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if the distribution of _h_(**z**), the newly generated stream, satisfies the properties given in the table for _Algorithm E_.
 
-```
-# Distribution of Z1 and Z2
-u1=Uniform('U1',0,1)
-u2=Uniform('U2',0,1)
-# Function to estimate
-func = Min(u1,u2)
-emean=E(func)
-p = S(2) # Degree of p-moment
-q = S(4) # Degree of q-moment
-# Calculate value for kappa
-kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
-pprint(Max(1,kappa))
-```
-
-> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^14], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
+> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^13], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
 >
 > 1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
 > 2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
@@ -326,7 +336,7 @@ Given _m_ coins each with unknown probability of heads, the following algorithm 
 
 In this section, ilog(_a_, _r_) means either _a_ if _r_ is 0, or max(ln(ilog(_a_, _r_&minus;1)), 1) otherwise.
 
-Agarwal et al. (2017\)[^15] called this algorithm "aggressive elimination", and it can be described as follows.
+Agarwal et al. (2017\)[^14] called this algorithm "aggressive elimination", and it can be described as follows.
 
 1. Let _t_ be ceil((ilog(_m_, _r_) + ln(8\*_k_/_&delta;_)) \* 2/(_D_\*_D_)).
 2. For each integer _i_ in \[1, _m_\], flip the coin labeled _i_, _t_ many times, then set _P_\[_i_\] to a list of two items: first is the number of times coin _i_ showed heads, and second is the label _i_.
@@ -369,11 +379,19 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^12]: Dutta, Santanu, and Alok Goswami. "Mode estimation for discrete distributions." Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.
 
-[^13]: Jiang, L., Hickernell, F.J., "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", arXiv:1411.1151 [math.NA], 2014.
+[^13]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
-[^14]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
+[^14]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
 
-[^15]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+[^15]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality.
+
+[^16]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
+
+[^17]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
+
+[^18]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
+
+[^19]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[Regularized Newton Method with Global $ O (1/k^ 2) $ Convergence](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[Super-universal regularized Newton method](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
 
 <a id=License></a>
 ## License

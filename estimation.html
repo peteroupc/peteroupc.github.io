@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/03/15"><meta name="citation_online_date" content="2023/03/15"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/03/24"><meta name="citation_online_date" content="2023/03/24"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -259,7 +259,7 @@
 <li>Theorem 3.4 of Kunsch et al. (2019)[^7] shows that there is no mean estimation algorithm that&mdash;
 
 <ul>
-<li>produces an estimate within a user-specified error tolerance (in terms of <em>absolute error</em>, as opposed to <em>relative error</em>) with probability greater than a user-specified value, and</li>
+<li>produces an estimate within a user-specified error tolerance with probability greater than a user-specified value, and</li>
 <li>works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).</li>
 </ul></li>
 <li>There is also a mean estimation algorithm for very high dimensions, which works if the stream of multidimensional variates has a finite variance (Lee and Valiant 2022)[^11], but this algorithm is impractical &mdash; it requires millions of samples at best.</li>
@@ -301,8 +301,8 @@
 <p><em>Algorithm C</em> can be used to estimate a function of the mean of a stream of random variates with unknown mean.  Specifically, the goal is to estimate <em>f</em>(<strong>E</strong>[<strong>z</strong>]), where:</p>
 
 <ul>
-<li><strong>z</strong> is a number produced by the stream.  Each number produced by the stream must lie in the interval [0, 1].</li>
-<li><em>f</em> is a known continuous function that maps the closed interval [0, 1] to [0, 1].</li>
+<li><strong>z</strong> is a number produced by the stream.</li>
+<li><em>f</em> is a known continuous function.</li>
 <li>The stream&#39;s numbers can take on a single value with probability 1.</li>
 </ul>
 
@@ -313,7 +313,15 @@
 <li><em>&epsilon;</em>, <em>&delta;</em>: The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].</li>
 </ul>
 
-<p>The algorithm, like <em>Algorithm C</em>, works only if the stream&#39;s distribution has the following technical property: The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.  The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
+<p>The algorithm works only if:</p>
+
+<ul>
+<li>Each number produced by the stream <strong>z</strong> satisfies 0 &le; <strong>z</strong> &le; 1.</li>
+<li><em>f</em>(<em>x</em>) maps the closed interval [0, 1] to itself.</li>
+<li>Like <em>Algorithm C</em>, the <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.</li>
+</ul>
+
+<p>The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
 
 <ol>
 <li>Calculate <em>&gamma;</em> as a number equal to or less than <em>&psi;</em>(<em>&epsilon;</em>), or the <em>inverse modulus of continuity</em>, which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>h</em>), and solving the equation <em>&omega;</em>(<em>h</em>) = <em>&epsilon;</em> for <em>h</em>.
@@ -327,43 +335,62 @@
 <li>Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
-<p>A simpler version of <em>Algorithm D</em> was given as an answer to the linked-to question; see also Jiang and Hickernell (2014)[^13].  As with <em>Algorithm D</em>, this algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].  The algorithm, called <strong>Algorithm E</strong> in this document, follows.</p>
+<p>A simpler version of <em>Algorithm D</em> takes the sample mean as the randomized estimate, that is, <em>n</em> samples are taken from the stream and averaged.  As with <em>Algorithm D</em>, the following algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers.  The algorithm, called <strong>Algorithm E</strong> in this document, follows:</p>
 
 <ol>
 <li>Calculate <em>&gamma;</em> as given in step 1 of <em>Algorithm D</em>.</li>
-<li>(Calculate the sample size.) Set <em>n</em> to ceil(ln(2/<em>&delta;</em>)/(2*<em>&gamma;</em><sup>2</sup>)). (As the answer notes, this sample size is based on Hoeffding&#39;s inequality.)</li>
+<li>(Calculate the sample size.)  Calculate the sample size <em>n</em>, depending on the distribution the stream takes and the function <em>f</em>.</li>
 <li>(Calculate the sample mean.) Get <em>n</em> samples from the stream, sum them, then divide the sum by <em>n</em>, then call the result <em>&mu;</em>.  Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
-<p>If the stream is <strong>unbounded</strong> (can take on any real number) and its distribution has a <strong>known upper bound on the standard deviation</strong> <em>&sigma;</em> (<strong>or the variance</strong> <em>&sigma;</em><sup>2</sup>), then a similar algorithm follows from Chebyshev&#39;s inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012/2013)[^8], but is adapted to find the mean for <em>f</em>(<em>x</em>), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers. The algorithm, called <strong>Algorithm F</strong> in this document, follows.</p>
+<p>Then the table below shows how the necessary sample size <em>n</em> can be determined.</p>
 
-<ol>
-<li>Calculate <em>&gamma;</em> as given in step 1 of <em>Algorithm D</em>.</li>
-<li>(Calculate the sample size.) Set <em>n</em> to ceil(<em>&sigma;</em><sup>2</sup>/(<em>&delta;</em>*<em>&gamma;</em><sup>2</sup>)).</li>
-<li>(Calculate the sample mean.) Get <em>n</em> samples from the stream, sum them, then divide the sum by <em>n</em>, then call the result <em>&mu;</em>.  Return <em>f</em>(<em>&mu;</em>).</li>
-</ol>
+<table><thead>
+<tr>
+<th>Stream&#39;s distribution</th>
+<th>Property of <em>f</em></th>
+<th>Sample size</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Bounded; lies in [0, 1].[^15]</td>
+<td>Continuous; maps [0, 1] to itself.</td>
+<td><em>n</em> = ceil(ln(2/<em>&delta;</em>)/(2*<em>&gamma;</em><sup>2</sup>)).</td>
+</tr>
+<tr>
+<td>Unbounded (can take on any real number) and has a known upper bound on the standard deviation <em>&sigma;</em> (or the variance <em>&sigma;</em><sup>2</sup>).[^16]</td>
+<td>Bounded and continuous on every closed interval of the real line.</td>
+<td><em>n</em> = ceil(<em>&sigma;</em><sup>2</sup>/(<em>&delta;</em>*<em>&gamma;</em><sup>2</sup>)).</td>
+</tr>
+<tr>
+<td>Unbounded and subgaussian; known upper bound on standard deviation <em>&sigma;</em> (Wainwright 2019)[^17]</td>
+<td><em>f</em>(<em>x</em>) = <em>x</em>.</td>
+<td><em>n</em> = $\frac{2 \sigma^{2} \log{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$.</td>
+</tr>
+</tbody></table>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><em>Algorithm D</em> and <em>Algorithm E</em> won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this happens in general when <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover all of [0, 1]), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
-<li><p><em>Algorithm D</em> and <em>Algorithm E</em> can be adapted to apply to streams outputting numbers in a bounded interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and with <em>f</em> being a continuous function that maps [<em>a</em>, <em>b</em>] to [<em>a</em>, <em>b</em>], as follows:</p>
+<li><em>Algorithm D</em> and <em>Algorithm E</em> won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this happens in general when <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover <em>f</em>&#39;s whole domain), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
+<li><p><em>Algorithm D</em> and <em>Algorithm E</em> (when the stream&#39;s numbers lie in [0, 1]) can be adapted to apply to streams outputting numbers in a bounded interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and with <em>f</em> being a continuous function that maps [<em>a</em>, <em>b</em>] to [<em>a</em>, <em>b</em>], as follows:</p>
 
 <ul>
 <li>For each number in the stream, subtract <em>a</em> from it, then divide it by (<em>b</em> &minus; <em>a</em>).</li>
 <li>Instead of <em>&epsilon;</em>, take <em>&epsilon;</em>/(<em>b</em> &minus; <em>a</em>).</li>
 <li>If the algorithm would return <em>f</em>(<em>&mu;</em>), instead return <em>g</em>(<em>&mu;</em>) where <em>g</em>(<em>&mu;</em>) = <em>f</em>(<em>a</em> + (<em>&mu;</em>*(<em>b</em> &minus; <em>a</em>))).</li>
 </ul></li>
-<li><p><em>Algorithm E</em> and <em>Algorithm F</em> are not unbiased estimators in general.  However, when <em>f</em>(<em>x</em>) = <em>x</em>, the sample mean used by both algorithms is an unbiased estimator of the mean as long as the sample size <em>n</em> is unchanged.</p></li>
+<li><p><em>Algorithm E</em> is not an unbiased estimator in general.  However, when <em>f</em>(<em>x</em>) = <em>x</em>, the sample mean used by both algorithms is an unbiased estimator of the mean as long as the sample size <em>n</em> is unchanged.</p></li>
+<li><p>In <em>Algorithm E</em>, for an estimate in terms of relative error, rather than absolute error, multiply <em>&gamma;</em> by <em>M</em> after step 1 is complete, where <em>M</em> is the smallest absolute value of the mean that the stream&#39;s distribution is allowed to have (Wainwright 2019)[^18].</p></li>
 </ol>
 
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if we have a coin that produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run <em>Algorithm D</em> or <em>Algorithm E</em> with <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see the section on <em>Algorithm C</em>).</li>
+<li>Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if we have a coin that produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run <em>Algorithm D</em> or the bounded case of <em>Algorithm E</em> with <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see the section on <em>Algorithm C</em>).</li>
 <li>Take <em>f</em>(<em>x</em>) = <em>x</em>.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/1.</li>
-<li>The variance of a Poisson distribution with mean <em>&mu;</em> is <em>&mu;</em>.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>&nu;</em> or less but otherwise unknown, we can take <em>&sigma;</em> = sqrt(<em>&nu;</em>) so that the sample size <em>n</em> is ceil(<em>&sigma;</em><sup>2</sup>/(<em>&delta;</em>*<em>&epsilon;</em><sup>2</sup>)), in accordance with <em>Algorithm F</em>.</li>
+<li>The variance of a Poisson distribution with mean <em>&mu;</em> is <em>&mu;</em>.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>&nu;</em> or less but otherwise unknown, we can take <em>&sigma;</em> = sqrt(<em>&nu;</em>) so that the sample size <em>n</em> is ceil(<em>&sigma;</em><sup>2</sup>/(<em>&delta;</em>*<em>&epsilon;</em><sup>2</sup>)), in accordance with the second case of <em>Algorithm E</em>.</li>
 </ol>
 </blockquote>
 
@@ -371,36 +398,37 @@
 
 <h2>Randomized Integration</h2>
 
-<p>Monte Carlo integration is a randomized way to estimate the integral (&quot;area under the graph&quot;) of a function.</p>
+<p>Monte Carlo integration is a randomized way to estimate the integral (&quot;area under the graph&quot;) of a function.[^19]</p>
 
 <p>This time, suppose we have an endless stream of <em>vectors</em> (<em>n</em>-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.</p>
 
-<p><em>Algorithm C</em> can be used to estimate an integral of a function <em>h</em>(<strong>z</strong>), where <strong>z</strong> is a vector from the stream, with the following properties:</p>
+<p>Suppose the goal is to estimate an integral of a function <em>h</em>(<strong>z</strong>), where <strong>z</strong> is a vector from the stream, with the following properties:</p>
 
 <ul>
 <li><em>h</em>(<strong>z</strong>) is a multidimensional function that takes an <em>n</em>-dimensional vector and returns a real number.  <em>h</em>(<strong>z</strong>) is usually a function that&#39;s easy to evaluate but whose integral is hard to calculate.</li>
 <li><strong>z</strong> is an <em>n</em>-dimensional vector chosen at random in the sampling domain.</li>
 </ul>
 
-<p>The estimate will come within <em>&epsilon;</em> of the true integral with probability 1 &minus; <em>&delta;</em> or greater, as long as the following conditions are met:</p>
+<p>Then <em>Algorithm C</em> will take the new stream and generate an estimate that comes within <em>&epsilon;</em> of the true integral with probability 1 &minus; <em>&delta;</em> or greater, as long as the following conditions are met:</p>
 
 <ul>
 <li>The <em>q</em><sup>th</sup> c.a.m. for <em>h</em>(<strong>z</strong>) is finite.  That is, <strong>E</strong>[abs(<em>h</em>(<strong>z</strong>)&minus;<strong>E</strong>[<em>h</em>(<strong>z</strong>)])<sup><em>q</em></sup>] is finite.</li>
 <li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.</li>
 </ul>
 
-<p>Unfortunately, these conditions may be hard to verify in practice, especially when the distribution <em>h</em>(<strong>z</strong>) is not known.  (In fact, <strong>E</strong>[<em>h</em>(<strong>z</strong>)], as seen above, is the unknown integral to be estimated.)</p>
+<blockquote>
+<p><strong>Note:</strong> Unfortunately, these conditions may be hard to verify in practice, especially when the distribution of <em>h</em>(<strong>z</strong>) is not known.  (In fact, <strong>E</strong>[<em>h</em>(<strong>z</strong>)], as seen above, is the unknown integral to be estimated.)</p>
+</blockquote>
 
-<p>For this purpose, each number in the stream of random variates is generated as follows (see also Kunsch et al.):</p>
+<p>To use <em>Algorithm C</em> for this purpose, each number in the stream of random variates is generated as follows (see also Kunsch et al.):</p>
 
 <ol>
 <li>Set <strong>z</strong> to an <em>n</em>-dimensional vector (list of <em>n</em> numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, <strong>z</strong> is chosen <em>uniformly</em> at random this way (see note later in this section).</li>
 <li>Calculate <em>h</em>(<strong>z</strong>), and set the next number in the stream to that value.</li>
 </ol>
 
-<p>Alternatively, if <em>h</em>(<strong>z</strong>) can take on only numbers in the closed interval [0, 1], the much simpler <em>Algorithm E</em> can be used on the newly generated stream (taking <em>f</em>(<em>x</em>) = <em>x</em>), rather than <em>Algorithm C</em>.</p>
-
-<p>The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter <em>&kappa;</em> for estimating the integral of min(<em>Z1</em>, <em>Z2</em>) where <em>Z1</em> and <em>Z2</em> are each uniformly chosen at random in the interval [0, 1].  It assumes <em>p</em> = 2 and <em>q</em> = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)</p>
+<blockquote>
+<p><strong>Example:</strong> The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter <em>&kappa;</em> for estimating the integral of min(<em>Z1</em>, <em>Z2</em>) where <em>Z1</em> and <em>Z2</em> are each uniformly chosen at random in the interval [0, 1].  It assumes <em>p</em> = 2 and <em>q</em> = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)</p>
 
 <pre># Distribution of Z1 and Z2
 u1=Uniform(&#39;U1&#39;,0,1)
@@ -414,9 +442,12 @@ q = S(4) # Degree of q-moment
 kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
 pprint(Max(1,kappa))
 </pre>
+</blockquote>
+
+<p>Rather than <em>Algorithm C</em>, <em>Algorithm E</em> can be used (taking <em>f</em>(<em>x</em>) = <em>x</em>) if the distribution of <em>h</em>(<strong>z</strong>), the newly generated stream, satisfies the properties given in the table for <em>Algorithm E</em>.</p>
 
 <blockquote>
-<p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)[^14], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
+<p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)[^13], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
 
 <ol>
 <li>For a sample size <em>n</em>, set <em>m</em> to floor(<em>n</em><sup>1/<em>d</em></sup>), where <em>d</em> is the number of dimensions in the sampling domain (number of components of each point).  Set <em>s</em> to 0.</li>
@@ -447,7 +478,7 @@ pprint(Max(1,kappa))
 
 <p>In this section, ilog(<em>a</em>, <em>r</em>) means either <em>a</em> if <em>r</em> is 0, or max(ln(ilog(<em>a</em>, <em>r</em>&minus;1)), 1) otherwise.</p>
 
-<p>Agarwal et al. (2017)[^15] called this algorithm &quot;aggressive elimination&quot;, and it can be described as follows.</p>
+<p>Agarwal et al. (2017)[^14] called this algorithm &quot;aggressive elimination&quot;, and it can be described as follows.</p>
 
 <ol>
 <li>Let <em>t</em> be ceil((ilog(<em>m</em>, <em>r</em>) + ln(8*<em>k</em>/<em>&delta;</em>)) * 2/(<em>D</em>*<em>D</em>)).</li>
@@ -494,11 +525,19 @@ pprint(Max(1,kappa))
 
 <p>[^12]: Dutta, Santanu, and Alok Goswami. &quot;Mode estimation for discrete distributions.&quot; Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.</p>
 
-<p>[^13]: Jiang, L., Hickernell, F.J., &quot;<a href="https://arxiv.org/abs/1411.1151"><strong>Guaranteed Monte Carlo Methods for Bernoulli Random Variables</strong></a>&quot;, arXiv:1411.1151 [math.NA], 2014.</p>
+<p>[^13]: Kunsch, R.J., Rudolf, D., &quot;<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>&quot;, arXiv:1809.09890, 2018.</p>
 
-<p>[^14]: Kunsch, R.J., Rudolf, D., &quot;<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>&quot;, arXiv:1809.09890, 2018.</p>
+<p>[^14]: Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</p>
 
-<p>[^15]: Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</p>
+<p>[^15]: This was given as an <a href="https://stats.stackexchange.com/questions/522429"><strong>answer to a Stack Exchange question</strong></a>; see also Jiang and Hickernell, &quot;<a href="https://arxiv.org/abs/1411.1151"><strong>Guaranteed Monte Carlo Methods for Bernoulli Random Variables</strong></a>&quot;, 2014.  As the answer notes, this sample size is based on Hoeffding&#39;s inequality.</p>
+
+<p>[^16]: Follows from Chebyshev&#39;s inequality.  The case of <em>f</em>(<em>x</em>)=<em>x</em> was mentioned as Equation 14 in Hickernell et al. (2012/2013).</p>
+
+<p>[^17]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.</p>
+
+<p>[^18]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.</p>
+
+<p>[^19]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, &quot;Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations&quot;, dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. &quot;<a href="https://arxiv.org/abs/2112.02089">Regularized Newton Method with Global $ O (1/k^ 2) $ Convergence</a>&quot;, arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. &quot;<a href="https://arxiv.org/abs/2208.05888">Super-universal regularized Newton method</a>&quot;, arXiv:2208.05888 (2022).</p>
 
 <p><a id=License></a></p>
 

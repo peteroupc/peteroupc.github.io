@@ -1204,7 +1204,10 @@ _z_ is a number (positive or not) whose absolute value (abs(_z_)) is written in 
     1. Create a _R_ coin that runs the **ExpMinus** algorithm with parameter abs(_z_).
     2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with  _&lambda;_ being the _R_ coin, and return **1 minus the result** of that run.
 
-> **Note**: This algorithm can be used to simulate **expit(_&lambda;_\* _z_)**, where _&lambda;_ is the probability of heads of an input coin, with 0 &le; _&lambda;_ &le; 1, except it runs the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** instead of the **ExpMinus** algorithm.
+> **Note**:
+>
+> 1. This algorithm can be used to simulate **expit(_&lambda;_\* _z_)**, where _&lambda;_ is the probability of heads of an input coin, with 0 &le; _&lambda;_ &le; 1, except it runs the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** instead of the **ExpMinus** algorithm.
+> 2. expit(_z_) = (tanh(_z_/2)+1)/2.  `tanh` is the hyperbolic tangent function.
 
 <a id=expit__z__2_minus_1_or_tanh__z__2></a>
 #### expit(_z_)\*2 &minus; 1 or tanh(_z_/2)

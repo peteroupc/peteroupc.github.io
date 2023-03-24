@@ -238,8 +238,8 @@ Let $X$ be a random variable that does not take on a single value with probabili
 
     Then, is there an algorithm, besides the algorithm of Kunsch et al. (2019)&mdash;
 
-    - whose output is within $\epsilon$ of $f(\mathbb{E}[X])$ in terms of absolute error or relative error with probability at least 1 minus $\delta$, or
-    - whose output has an expected (absolute) error or mean squared error not more than $\epsilon$,
+    - whose output is within $\epsilon$ of $f(\mathbb{E}[X])$ in terms of absolute error with probability at least 1 minus $\delta$, or
+    - whose output has an expected absolute error or mean squared error not more than $\epsilon$,
 
     where $\epsilon$ and $\delta$ are user-specified values? (Relative error means $|\hat\mu/f(\mathbb{E}[X])-1|$ where $\hat\mu$ is the estimate.)
 

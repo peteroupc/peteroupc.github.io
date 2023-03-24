@@ -1966,7 +1966,7 @@ See Schechtmann and Zinn (1990)[^102]. Here, EPD generates an _exponential power
 
 > **Notes:**
 >
-> 1. `PNorm(vec, p)`, also known as &#x2113;<sub>`p`</sub> norm, is a generalized notion of distance. `PNorm(vec, 2)` is the "usual" distance and, for instance, forms the "usual" versions of spheres. `p` can be any number 0 or greater, or can be infinity.
+> 1. `PNorm(vec, p)`, also known as &#x2113;<sub>`p`</sub> norm, is a generalized notion of distance. `p` can be any number 0 or greater, or can be infinity.  `PNorm(vec, 2)` is the "usual" distance and, for instance, forms the "usual" versions of spheres, while `PNorm(vec, infinity)` forms a hypercube.
 > 2. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains an optimized method for points on a circle (2-dimensional sphere, `p=2`).
 >
 > **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on a circle and generate a random Z coordinate by `RNDRANGEMinMaxExc(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.

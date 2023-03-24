@@ -780,7 +780,7 @@
 <li>Let <code>sign</code> be -1 if the PSRN&#39;s sign is negative, or 1 otherwise; let <code>ipart</code> be the PSRN&#39;s integer part; and let <code>bag</code> be the PSRN&#39;s fractional part.  Take the first <code>p</code> digits of <code>bag</code> and return <code>sign</code> * (<code>ipart</code> + bag[0] * <em>b</em><sup>&minus;0&minus;1</sup> + bag[1] * <em>b</em><sup>&minus;1&minus;1</sup> + ... + bag[<code>p</code>&minus;1] * <em>b</em><sup>&minus;(<code>p</code>&minus;1)&minus;1</sup>), where <em>b</em> is the base, or radix.</li>
 </ol>
 
-<p>After step 2, if it somehow happens that digits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to&mdash;</p>
+<p>After step 1, if it somehow happens that digits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to&mdash;</p>
 
 <ul>
 <li>fill all unsampled digits between the first and the last set digit,</li>
