@@ -46,6 +46,8 @@
 
 <p>The following concepts are used in this document.</p>
 
+<p>The <em>closed unit interval</em> (written as [0, 1]) means the set consisting of 0, 1, and every real number in between.</p>
+
 <p>Each algorithm takes a stream of independent random variates (numbers).  These variates follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers have greater probability of occurring than others.  A distribution has the following properties.</p>
 
 <ul>
@@ -91,10 +93,10 @@
 <p><strong>Notes</strong>:</p>
 
 <ol>
-<li><p>As noted in Huber 2017, if we have a stream of random variates that take on values in the interval [0, 1], but have unknown mean, we can transform each number by&mdash;</p>
+<li><p>As noted in Huber 2017, if we have a stream of random variates that take on values in the closed unit interval, but have unknown mean, we can transform each number by&mdash;</p>
 
 <ol>
-<li>generating a uniform(0, 1) random variate <em>u</em>, then</li>
+<li>generating <em>u</em>, a uniform random variate between 0 and 1, then</li>
 <li>changing that number to 1 if <em>u</em> is less than that number, or 0 otherwise,</li>
 </ol>
 
@@ -112,7 +114,7 @@
 <p>The following algorithm comes from Huber and Jones (2019)[^5]; see also Huber (2017)[^6].  It estimates the expected value of a stream of random variates with the following properties:</p>
 
 <ul>
-<li>The numbers in the stream lie in the closed interval [0, 1].</li>
+<li>The numbers in the stream lie in the closed unit interval.</li>
 <li>The stream of numbers can&#39;t take on the value 0 with probability 1.</li>
 <li>The stream&#39;s mean (expected value) is unknown.</li>
 </ul>
@@ -137,7 +139,7 @@
 <ol>
 <li>Add 1 to <em>n</em>.</li>
 <li>Take a sample from the stream, call it <em>s</em>.</li>
-<li>With probability <em>s</em> (for example, if a newly generated uniform(0, 1) random variate is less than <em>s</em>), add 1 to <em>b</em>.</li>
+<li>With probability <em>s</em> (for example, if a newly generated uniform random variate between 0 and 1 is less than <em>s</em>), add 1 to <em>b</em>.</li>
 </ol></li>
 <li>Set <em>gb</em> to <em>k</em> + 2, then generate a gamma random variate with shape parameter <em>n</em> and scale 1, then divide <em>gb</em> by that variate.</li>
 <li>(Find the sample size for the next stage.) Set <em>c1</em> to 2*ln(3/<em>&delta;</em>).</li>
@@ -163,7 +165,7 @@
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 0.</li>
 <li>Get two samples from the stream, call them <em>x</em> and <em>y</em>.</li>
-<li>Generate a uniform(0, 1) random variate, call it <em>u</em>.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1.</li>
 <li>If <em>u</em> is less than (<em>x</em>&minus;<em>y</em>)<sup>2</sup>, return 1.  Otherwise, return 0.</li>
 </ol>
 
@@ -310,14 +312,14 @@
 
 <ul>
 <li><em>p</em>, <em>q</em>, and <em>&kappa;</em> are as defined in <em>Algorithm C</em>.</li>
-<li><em>&epsilon;</em>, <em>&delta;</em>: The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].</li>
+<li><em>&epsilon;</em>, <em>&delta;</em>: The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the closed unit interval.</li>
 </ul>
 
 <p>The algorithm works only if:</p>
 
 <ul>
 <li>Each number produced by the stream <strong>z</strong> satisfies 0 &le; <strong>z</strong> &le; 1.</li>
-<li><em>f</em>(<em>x</em>) maps the closed interval [0, 1] to itself.</li>
+<li><em>f</em>(<em>x</em>) maps the closed unit interval to itself.</li>
 <li>Like <em>Algorithm C</em>, the <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.</li>
 </ul>
 
@@ -353,8 +355,8 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Bounded; lies in [0, 1].[^13]</td>
-<td>Continuous; maps [0, 1] to itself.</td>
+<td>Bounded; lies in the closed unit interval.[^13]</td>
+<td>Continuous; maps the closed unit interval to itself.</td>
 <td><em>n</em> = ceil(ln(2/<em>&delta;</em>)/(2*<em>&gamma;</em><sup>2</sup>)).</td>
 </tr>
 <tr>
@@ -363,7 +365,7 @@
 <td><em>n</em> = ceil(<em>&sigma;</em><sup>2</sup>/(<em>&delta;</em>*<em>&gamma;</em><sup>2</sup>)).</td>
 </tr>
 <tr>
-<td>Unbounded and subgaussian; known upper bound on standard deviation <em>&sigma;</em> (Wainwright 2019)[^15]</td>
+<td>Unbounded and subgaussian[^19]; known upper bound on standard deviation <em>&sigma;</em> (Wainwright 2019)[^15]</td>
 <td><em>f</em>(<em>x</em>) = <em>x</em>.</td>
 <td><em>n</em> = $\frac{2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$.</td>
 </tr>
@@ -373,8 +375,8 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><em>Algorithm D</em> and <em>Algorithm E</em> won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this happens in general when <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover <em>f</em>&#39;s whole domain), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
-<li><p><em>Algorithm D</em> and <em>Algorithm E</em> (when the stream&#39;s numbers lie in [0, 1]) can be adapted to apply to streams outputting numbers in a bounded interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and with <em>f</em> being a continuous function that maps [<em>a</em>, <em>b</em>] to [<em>a</em>, <em>b</em>], as follows:</p>
+<li><em>Algorithm D</em> and <em>Algorithm E</em> won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this can happen when <em>f</em> is only piecewise continuous, or made up of independent continuous pieces that cover <em>f</em>&#39;s whole domain), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
+<li><p><em>Algorithm D</em> and <em>Algorithm E</em> (when the stream&#39;s numbers lie on the closed unit interval) can be adapted to apply to streams outputting numbers in a bounded interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and with <em>f</em> being a continuous function that maps [<em>a</em>, <em>b</em>] to itself, as follows:</p>
 
 <ul>
 <li>For each number in the stream, subtract <em>a</em> from it, then divide it by (<em>b</em> &minus; <em>a</em>).</li>
@@ -428,7 +430,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter <em>&kappa;</em> for estimating the integral of min(<em>Z1</em>, <em>Z2</em>) where <em>Z1</em> and <em>Z2</em> are each uniformly chosen at random in the interval [0, 1].  It assumes <em>p</em> = 2 and <em>q</em> = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)</p>
+<p><strong>Example:</strong> The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter <em>&kappa;</em> for estimating the integral of min(<em>Z1</em>, <em>Z2</em>) where <em>Z1</em> and <em>Z2</em> are each uniformly chosen at random in the closed unit interval.  It assumes <em>p</em> = 2 and <em>q</em> = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)</p>
 
 <pre># Distribution of Z1 and Z2
 u1=Uniform(&#39;U1&#39;,0,1)
@@ -460,7 +462,7 @@ pprint(Max(1,kappa))
 <li>Return <em>s</em>/<em>m</em><sup><em>d</em></sup>.</li>
 </ol>
 
-<p>The paper also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is <em>&beta;</em>-Hölder continuous (is continuous and no &quot;steeper&quot; than <em>c</em>* <strong>z</strong><sup><em>&beta;</em></sup> for some <em>c</em>&gt;0) and is defined on [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p>
+<p>The paper also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is <em>&beta;</em>-Hölder continuous (is continuous and no &quot;steeper&quot; than <em>c</em>* <strong>z</strong><sup><em>&beta;</em></sup> for some <em>c</em>&gt;0) and is defined on the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p>
 </blockquote>
 
 <p><a id=Finding_Coins_with_Maximum_Success_Probabilities></a></p>
@@ -536,6 +538,8 @@ pprint(Max(1,kappa))
 <p>[^17]: Kunsch, R.J., Rudolf, D., &quot;<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>&quot;, arXiv:1809.09890, 2018.</p>
 
 <p>[^18]: Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</p>
+
+<p>[^19]: Roughly speaking, a distribution is <em>subgaussian</em> if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every bounded distribution is subgaussian.  See section 2.5 of R. Vershynin, <em>High-Dimensional Probability</em>, 2020.</p>
 
 <p><a id=License></a></p>
 

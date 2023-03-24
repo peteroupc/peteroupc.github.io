@@ -327,7 +327,7 @@ And the proof proceeds by showing, among other things, that the Bernoulli factor
 
 Question: **Does the result just given describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?**
 
-I suspect that $f:[0, 1]\to [0,1]$ is strongly simulable if and only if&mdash;
+I suspect that $f:(D\subseteq [0, 1])\to [0,1]$ is strongly simulable if and only if&mdash;
 
 - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain, and
 - $f(0)$ and $f(1)$ are each 0, 1, or undefined, and

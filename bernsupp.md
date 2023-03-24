@@ -1085,7 +1085,14 @@ To build _g_ and _&omega;_, take their degree as ceil(_M_)+1 or greater (so that
 
 _Proof of Proposition 3:_ In the proof of proposition 2, replace Lemma 1 and Lemma 2 with Lemma 3 and Lemma 4, respectively. &#x25a1;
 
-It is suspected that the conditions in Proposition 2 are necessary and sufficient for _f_(_&lambda;_) to be strongly simulable.
+I suspect that a function $f$ that maps the closed interval or a subset thereof to the closed unit interval is strongly simulable if and only if&mdash;
+
+- $f$ is constant on its domain, or is continuous and polynomially bounded on its domain, and
+- $f(0)$ and $f(1)$ are each 0, 1, or undefined, and
+- 0 is not in the domain of $f$, or there are $\epsilon>0$ and a Lipschitz continuous function $g(x)$ such that $f(x)=g(x)$ whenever $0\le x\lt \epsilon$ and $x$ is in $f$'s domain, and
+- 1 is not in the domain of $f$, or there are $\epsilon>0$ and a Lipschitz continuous function $h(x)$ such that $f(x)=h(x)$ whenever $1-epsilon\lt x\le 1$ and $x$ is in $f$'s domain.
+
+This is suspected by observing that for every integer $n>0$ and every Bernoulli factory function $f(x)$, $(1-(1-x)^n) \cdot f(x)$ is Lipschitz continuous at 0 with Lipschitz constant no more than $n$. ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)
 
 <a id=Multiple_Output_Bernoulli_Factory></a>
 ### Multiple-Output Bernoulli Factory

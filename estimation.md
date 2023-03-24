@@ -33,6 +33,8 @@ Comments on other aspects of this document are welcome.
 
 The following concepts are used in this document.
 
+The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 1, and every real number in between.
+
 Each algorithm takes a stream of independent random variates (numbers).  These variates follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers have greater probability of occurring than others.  A distribution has the following properties.
 
 - The _expectation_, _expected value_, or _mean_ is the "long-run average" value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  If _X_ is non-negative and if we take independent random samples and then take their average, then with probability 1, the average will approach the expected value as the number of samples gets large (the _law of large numbers_).
@@ -67,9 +69,9 @@ The algorithm, called **Algorithm A** in this document, follows.
 
 > **Notes**:
 >
-> 1. As noted in Huber 2017, if we have a stream of random variates that take on values in the interval [0, 1], but have unknown mean, we can transform each number by&mdash;
+> 1. As noted in Huber 2017, if we have a stream of random variates that take on values in the closed unit interval, but have unknown mean, we can transform each number by&mdash;
 >
->    1. generating a uniform(0, 1) random variate _u_, then
+>    1. generating _u_, a uniform random variate between 0 and 1, then
 >    2. changing that number to 1 if _u_ is less than that number, or 0 otherwise,
 >
 >    and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.
@@ -82,7 +84,7 @@ The algorithm, called **Algorithm A** in this document, follows.
 
 The following algorithm comes from Huber and Jones (2019\)[^5]; see also Huber (2017\)[^6].  It estimates the expected value of a stream of random variates with the following properties:
 
-- The numbers in the stream lie in the closed interval [0, 1].
+- The numbers in the stream lie in the closed unit interval.
 - The stream of numbers can't take on the value 0 with probability 1.
 - The stream's mean (expected value) is unknown.
 
@@ -101,7 +103,7 @@ The algorithm, called **Algorithm B** in this document, follows.
 3. (Stage 1: Modified gamma Bernoulli approximation scheme.) While _b_ is less than _k_:
     1. Add 1 to _n_.
     2. Take a sample from the stream, call it _s_.
-    3. With probability _s_ (for example, if a newly generated uniform(0, 1) random variate is less than _s_), add 1 to _b_.
+    3. With probability _s_ (for example, if a newly generated uniform random variate between 0 and 1 is less than _s_), add 1 to _b_.
 4. Set _gb_ to _k_ + 2, then generate a gamma random variate with shape parameter _n_ and scale 1, then divide _gb_ by that variate.
 5. (Find the sample size for the next stage.) Set _c1_ to 2\*ln(3/_&delta;_).
 6. Generate a Poisson random variate with mean _c1_/(_&epsilon;_\*_gb_), call it _n_.
@@ -121,7 +123,7 @@ The standard deviation sub-algorithm follows.
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 0.
 2. Get two samples from the stream, call them _x_ and _y_.
-3. Generate a uniform(0, 1) random variate, call it _u_.
+3. Generate _u_, a uniform random variate between 0 and 1.
 4. If _u_ is less than (_x_&minus;_y_)<sup>2</sup>, return 1.  Otherwise, return 0.
 
 > **Notes:**
@@ -222,12 +224,12 @@ _Algorithm C_ can be used to estimate a function of the mean of a stream of rand
 The following algorithm takes the following parameters:
 
 - _p_, _q_, and _&kappa;_ are as defined in _Algorithm C_.
-- _&epsilon;_, _&delta;_: The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].
+- _&epsilon;_, _&delta;_: The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the closed unit interval.
 
 The algorithm works only if:
 
 - Each number produced by the stream **z** satisfies 0 &le; **z** &le; 1.
-- _f_(_x_) maps the closed interval [0, 1] to itself.
+- _f_(_x_) maps the closed unit interval to itself.
 - Like _Algorithm C_, the _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.
 
 The algorithm, called **Algorithm D** in this document, follows.
@@ -249,14 +251,14 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 
 | Stream's distribution | Property of _f_ | Sample size |
   ---- | ---- | ---- |
-| Bounded; lies in [0, 1].[^13] | Continuous; maps [0, 1] to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
+| Bounded; lies in the closed unit interval.[^13] | Continuous; maps the closed unit interval to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
 | Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^14] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
-| Unbounded and subgaussian; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^15] | _f_(_x_) = _x_. | _n_ = $\frac{2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$. |
+| Unbounded and subgaussian[^19]; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^15] | _f_(_x_) = _x_. | _n_ = $\frac{2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$. |
 
 > **Notes:**
 >
-> 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this happens in general when _f_ is piecewise continuous, or made up of independent continuous pieces that cover _f_'s whole domain), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-> 3. _Algorithm D_ and _Algorithm E_ (when the stream's numbers lie in [0, 1]) can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to [_a_, _b_], as follows:
+> 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this can happen when _f_ is only piecewise continuous, or made up of independent continuous pieces that cover _f_'s whole domain), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
+> 3. _Algorithm D_ and _Algorithm E_ (when the stream's numbers lie on the closed unit interval) can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to itself, as follows:
 >
 >     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
 >     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
@@ -296,7 +298,7 @@ To use _Algorithm C_ for this purpose, each number in the stream of random varia
 1. Set **z** to an _n_-dimensional vector (list of _n_ numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, **z** is chosen _uniformly_ at random this way (see note later in this section).
 2. Calculate _h_(**z**), and set the next number in the stream to that value.
 
-> **Example:** The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter _&kappa;_ for estimating the integral of min(_Z1_, _Z2_) where _Z1_ and _Z2_ are each uniformly chosen at random in the interval [0, 1].  It assumes _p_ = 2 and _q_ = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)
+> **Example:** The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter _&kappa;_ for estimating the integral of min(_Z1_, _Z2_) where _Z1_ and _Z2_ are each uniformly chosen at random in the closed unit interval.  It assumes _p_ = 2 and _q_ = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)
 >
 > ```
 > # Distribution of Z1 and Z2
@@ -322,7 +324,7 @@ Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if 
 >     2. Add _f_((_p\[1]_, _p\[2]_, ..., _p\[j]_)) to _s_.
 > 3. Return _s_/_m_<sup>_d_</sup>.
 >
-> The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than _c_\* **z**<sup>_&beta;_</sup> for some _c_>0) and is defined on [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
+> The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than _c_\* **z**<sup>_&beta;_</sup> for some _c_>0) and is defined on the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
 
 <a id=Finding_Coins_with_Maximum_Success_Probabilities></a>
 ## Finding Coins with Maximum Success Probabilities
@@ -390,6 +392,8 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 [^17]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
 [^18]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+
+[^19]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every bounded distribution is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
 
 <a id=License></a>
 ## License
