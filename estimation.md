@@ -239,19 +239,19 @@ The algorithm, called **Algorithm D** in this document, follows.
 2. Run _Algorithm C_ with the given parameters _p_, _q_, _&kappa;_, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).
 
-A simpler version of _Algorithm D_ takes the sample mean as the randomized estimate, that is, _n_ samples are taken from the stream and averaged.  As with _Algorithm D_, the following algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm, called **Algorithm E** in this document, follows:
+A simpler version of _Algorithm D_ takes the sample mean as the basis for the randomized estimate, that is, _n_ samples are taken from the stream and averaged.  As with _Algorithm D_, the following algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm, called **Algorithm E** in this document, follows:
 
 1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
 2. (Calculate the sample size.)  Calculate the sample size _n_, depending on the distribution the stream takes and the function _f_.
-3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
+3. (Calculate _f_ of the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
 
 Then the table below shows how the necessary sample size _n_ can be determined.
 
 | Stream's distribution | Property of _f_ | Sample size |
   ---- | ---- | ---- |
-| Bounded; lies in [0, 1].[^15] | Continuous; maps [0, 1] to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
-| Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^16] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
-| Unbounded and subgaussian; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^17] | _f_(_x_) = _x_. | _n_ = $\frac{2 \sigma^{2} \log{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$. |
+| Bounded; lies in [0, 1].[^13] | Continuous; maps [0, 1] to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
+| Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^14] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
+| Unbounded and subgaussian; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^15] | _f_(_x_) = _x_. | _n_ = $\frac{2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$. |
 
 > **Notes:**
 >
@@ -262,9 +262,9 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 >     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
 >     - If the algorithm would return _f_(_&mu;_), instead return _g_(_&mu;_) where _g_(_&mu;_) = _f_(_a_ + (_&mu;_\*(_b_ &minus; _a_))).
 >
-> 4. _Algorithm E_ is not an unbiased estimator in general.  However, when _f_(_x_) = _x_, the sample mean used by both algorithms is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
+> 4. _Algorithm E_ is not an unbiased estimator in general.  However, when _f_(_x_) = _x_, the sample mean used by the algorithm is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
 >
-> 5. In _Algorithm E_, for an estimate in terms of relative error, rather than absolute error, multiply _&gamma;_ by _M_ after step 1 is complete, where _M_ is the smallest absolute value of the mean that the stream's distribution is allowed to have (Wainwright 2019)[^18].
+> 5. In _Algorithm E_, for an estimate in terms of relative error, rather than absolute error, multiply _&gamma;_ by _M_ after step 1 is complete, where _M_ is the smallest absolute value of the mean that the stream's distribution is allowed to have (Wainwright 2019)[^15].
 >
 > **Examples:**
 >
@@ -275,7 +275,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 <a id=Randomized_Integration></a>
 ## Randomized Integration
 
-Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.[^19]
+Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.[^16]
 
 This time, suppose we have an endless stream of _vectors_ (_n_-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.
 
@@ -314,7 +314,7 @@ To use _Algorithm C_ for this purpose, each number in the stream of random varia
 
 Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if the distribution of _h_(**z**), the newly generated stream, satisfies the properties given in the table for _Algorithm E_.
 
-> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^13], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
+> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^17], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
 >
 > 1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
 > 2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
@@ -322,7 +322,7 @@ Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if 
 >     2. Add _f_((_p\[1]_, _p\[2]_, ..., _p\[j]_)) to _s_.
 > 3. Return _s_/_m_<sup>_d_</sup>.
 >
-> The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than **z**<sup>_&beta;_</sup>) and is defined on [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
+> The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than _c_\* **z**<sup>_&beta;_</sup> for some _c_>0) and is defined on [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
 
 <a id=Finding_Coins_with_Maximum_Success_Probabilities></a>
 ## Finding Coins with Maximum Success Probabilities
@@ -336,7 +336,7 @@ Given _m_ coins each with unknown probability of heads, the following algorithm 
 
 In this section, ilog(_a_, _r_) means either _a_ if _r_ is 0, or max(ln(ilog(_a_, _r_&minus;1)), 1) otherwise.
 
-Agarwal et al. (2017\)[^14] called this algorithm "aggressive elimination", and it can be described as follows.
+Agarwal et al. (2017\)[^18] called this algorithm "aggressive elimination", and it can be described as follows.
 
 1. Let _t_ be ceil((ilog(_m_, _r_) + ln(8\*_k_/_&delta;_)) \* 2/(_D_\*_D_)).
 2. For each integer _i_ in \[1, _m_\], flip the coin labeled _i_, _t_ many times, then set _P_\[_i_\] to a list of two items: first is the number of times coin _i_ showed heads, and second is the label _i_.
@@ -379,19 +379,17 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^12]: Dutta, Santanu, and Alok Goswami. "Mode estimation for discrete distributions." Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.
 
-[^13]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
+[^13]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality.
 
-[^14]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+[^14]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
 
-[^15]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality.
+[^15]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
 
-[^16]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
+[^16]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^ 2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
 
-[^17]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
+[^17]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
-[^18]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
-
-[^19]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[Regularized Newton Method with Global $ O (1/k^ 2) $ Convergence](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[Super-universal regularized Newton method](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
+[^18]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
 
 <a id=License></a>
 ## License
