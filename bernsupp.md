@@ -1090,7 +1090,7 @@ I suspect that a function $f$ that maps the closed interval or a subset thereof 
 - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain, and
 - $f(0)$ and $f(1)$ are each 0, 1, or undefined, and
 - 0 is not in the domain of $f$, or there are $\epsilon>0$ and a Lipschitz continuous function $g(x)$ such that $f(x)=g(x)$ whenever $0\le x\lt \epsilon$ and $x$ is in $f$'s domain, and
-- 1 is not in the domain of $f$, or there are $\epsilon>0$ and a Lipschitz continuous function $h(x)$ such that $f(x)=h(x)$ whenever $1-epsilon\lt x\le 1$ and $x$ is in $f$'s domain.
+- 1 is not in the domain of $f$, or there are $\epsilon>0$ and a Lipschitz continuous function $h(x)$ such that $f(x)=h(x)$ whenever $1-\epsilon\lt x\le 1$ and $x$ is in $f$'s domain.
 
 This is suspected by observing that for every integer $n>0$ and every Bernoulli factory function $f(x)$, $(1-(1-x)^n) \cdot f(x)$ is Lipschitz continuous at 0 with Lipschitz constant no more than $n$. ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)
 

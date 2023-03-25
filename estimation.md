@@ -253,7 +253,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
   ---- | ---- | ---- |
 | Bounded; lies in the closed unit interval.[^13] | Continuous; maps the closed unit interval to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
 | Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^14] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
-| Unbounded and subgaussian[^19]; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^15] | _f_(_x_) = _x_. | _n_ = $\frac{2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$. |
+| Unbounded and subgaussian[^15]; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^16] | _f_(_x_) = _x_. | _n_ = $\frac{2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$. |
 
 > **Notes:**
 >
@@ -266,7 +266,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 >
 > 4. _Algorithm E_ is not an unbiased estimator in general.  However, when _f_(_x_) = _x_, the sample mean used by the algorithm is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
 >
-> 5. In _Algorithm E_, for an estimate in terms of relative error, rather than absolute error, multiply _&gamma;_ by _M_ after step 1 is complete, where _M_ is the smallest absolute value of the mean that the stream's distribution is allowed to have (Wainwright 2019)[^15].
+> 5. In _Algorithm E_, for an estimate in terms of relative error, rather than absolute error, multiply _&gamma;_ by _M_ after step 1 is complete, where _M_ is the smallest absolute value of the mean that the stream's distribution is allowed to have (Wainwright 2019)[^16].
 >
 > **Examples:**
 >
@@ -277,7 +277,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 <a id=Randomized_Integration></a>
 ## Randomized Integration
 
-Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.[^16]
+Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.[^17]
 
 This time, suppose we have an endless stream of _vectors_ (_n_-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.
 
@@ -316,7 +316,7 @@ To use _Algorithm C_ for this purpose, each number in the stream of random varia
 
 Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if the distribution of _h_(**z**), the newly generated stream, satisfies the properties given in the table for _Algorithm E_.
 
-> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^17], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
+> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^18], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
 >
 > 1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
 > 2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
@@ -338,7 +338,7 @@ Given _m_ coins each with unknown probability of heads, the following algorithm 
 
 In this section, ilog(_a_, _r_) means either _a_ if _r_ is 0, or max(ln(ilog(_a_, _r_&minus;1)), 1) otherwise.
 
-Agarwal et al. (2017\)[^18] called this algorithm "aggressive elimination", and it can be described as follows.
+Agarwal et al. (2017\)[^19] called this algorithm "aggressive elimination", and it can be described as follows.
 
 1. Let _t_ be ceil((ilog(_m_, _r_) + ln(8\*_k_/_&delta;_)) \* 2/(_D_\*_D_)).
 2. For each integer _i_ in \[1, _m_\], flip the coin labeled _i_, _t_ many times, then set _P_\[_i_\] to a list of two items: first is the number of times coin _i_ showed heads, and second is the label _i_.
@@ -385,15 +385,15 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^14]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
 
-[^15]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
+[^15]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every bounded distribution is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
 
-[^16]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^ 2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
+[^16]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
 
-[^17]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
+[^17]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^ 2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
 
-[^18]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+[^18]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
-[^19]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every bounded distribution is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
+[^19]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
 
 <a id=License></a>
 ## License
