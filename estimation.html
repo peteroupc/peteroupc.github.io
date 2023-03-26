@@ -376,7 +376,7 @@
 
 <ol>
 <li><em>Algorithm D</em> and <em>Algorithm E</em> won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this can happen when <em>f</em> is only piecewise continuous, or made up of independent continuous pieces that cover <em>f</em>&#39;s whole domain), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
-<li><p><em>Algorithm D</em> and <em>Algorithm E</em> (when the stream&#39;s numbers lie on the closed unit interval) can be adapted to apply to streams outputting numbers in a bounded interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and with <em>f</em> being a continuous function that maps [<em>a</em>, <em>b</em>] to itself, as follows:</p>
+<li><p><em>Algorithm D</em> and <em>Algorithm E</em> (when the stream&#39;s numbers lie on the closed unit interval) can be adapted to apply to streams outputting numbers in a closed interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and with <em>f</em> being a continuous function that maps [<em>a</em>, <em>b</em>] to itself, as follows:</p>
 
 <ul>
 <li>For each number in the stream, subtract <em>a</em> from it, then divide it by (<em>b</em> &minus; <em>a</em>).</li>
@@ -531,7 +531,7 @@ pprint(Max(1,kappa))
 
 <p>[^14]: Follows from Chebyshev&#39;s inequality.  The case of <em>f</em>(<em>x</em>)=<em>x</em> was mentioned as Equation 14 in Hickernell et al. (2012/2013).</p>
 
-<p>[^15]: Roughly speaking, a distribution is <em>subgaussian</em> if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every bounded distribution is subgaussian.  See section 2.5 of R. Vershynin, <em>High-Dimensional Probability</em>, 2020.</p>
+<p>[^15]: Roughly speaking, a distribution is <em>subgaussian</em> if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval [<em>a</em>, <em>b</em>] is subgaussian.  See section 2.5 of R. Vershynin, <em>High-Dimensional Probability</em>, 2020.</p>
 
 <p>[^16]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.</p>
 

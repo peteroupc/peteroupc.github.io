@@ -258,7 +258,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 > **Notes:**
 >
 > 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this can happen when _f_ is only piecewise continuous, or made up of independent continuous pieces that cover _f_'s whole domain), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-> 3. _Algorithm D_ and _Algorithm E_ (when the stream's numbers lie on the closed unit interval) can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to itself, as follows:
+> 3. _Algorithm D_ and _Algorithm E_ (when the stream's numbers lie on the closed unit interval) can be adapted to apply to streams outputting numbers in a closed interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to itself, as follows:
 >
 >     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
 >     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
@@ -385,7 +385,7 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^14]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
 
-[^15]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every bounded distribution is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
+[^15]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval \[_a_, _b_\] is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
 
 [^16]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
 
