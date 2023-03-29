@@ -236,7 +236,7 @@ The algorithm, called **Algorithm D** in this document, follows.
 
 1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), or the _inverse modulus of continuity_, which is found by taking the so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_h_), and solving the equation _&omega;_(_h_) = _&epsilon;_ for _h_.
     - Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the maximum range of _f_ in a window of size _h_.
-    - For example, if the slope of _f_ is no "steeper" than that of the function _M_\*_h_, then _f_ is _Lipschitz continuous_ with Lipschitz constant _M_, so that its modulus of continuity is _&omega;_(_h_) = _M_\*_h_. The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
+    - For example, _f_ is _Lipschitz continuous_ with Lipschitz constant _M_ or less[^20], its modulus of continuity is _&omega;_(_h_) = _M_\*_h_. The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
     - Because _f_ is continuous on a closed interval, it's guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
 2. Run _Algorithm C_ with the given parameters _p_, _q_, _&kappa;_, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).
@@ -279,12 +279,12 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 
 Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.[^17]
 
-This time, suppose we have an endless stream of _vectors_ (_n_-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.
+This time, suppose we have an endless stream of _vectors_ (_d_-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.
 
 Suppose the goal is to estimate an integral of a function _h_(**z**), where **z** is a vector from the stream, with the following properties:
 
-- _h_(**z**) is a multidimensional function that takes an _n_-dimensional vector and returns a real number.  _h_(**z**) is usually a function that's easy to evaluate but whose integral is hard to calculate.
-- **z** is an _n_-dimensional vector chosen at random in the sampling domain.
+- _h_(**z**) is a multidimensional function that takes a _d_-dimensional vector and returns a real number.  _h_(**z**) is usually a function that's easy to evaluate but whose integral is hard to calculate.
+- **z** is a _d_-dimensional vector chosen at random in the sampling domain.
 
 Then _Algorithm C_ will take the new stream and generate an estimate that comes within _&epsilon;_ of the true integral with probability 1 &minus; _&delta;_ or greater, as long as the following conditions are met:
 
@@ -298,7 +298,7 @@ To use _Algorithm C_ for this purpose, each number in the stream of random varia
 1. Set **z** to an _n_-dimensional vector (list of _n_ numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, **z** is chosen _uniformly_ at random this way (see note later in this section).
 2. Calculate _h_(**z**), and set the next number in the stream to that value.
 
-> **Example:** The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter _&kappa;_ for estimating the integral of min(_Z1_, _Z2_) where _Z1_ and _Z2_ are each uniformly chosen at random in the closed unit interval.  It assumes _p_ = 2 and _q_ = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)
+> **Example:** The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter _&kappa;_ for estimating the integral of min(_Z1_, _Z2_) where _Z1_ and _Z2_ are each uniformly chosen at random in the closed unit interval.  It assumes _p_ = 2 and _q_ = 4. (This is a trivial example because the integral can be calculated directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)
 >
 > ```
 > # Distribution of Z1 and Z2
@@ -316,6 +316,8 @@ To use _Algorithm C_ for this purpose, each number in the stream of random varia
 
 Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if the distribution of _h_(**z**), the newly generated stream, satisfies the properties given in the table for _Algorithm E_.
 
+> **Note:** If _h_(**z**) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for _Algorithm E_ can be _n_ = ceil(23.42938/_&epsilon;_<sup>2</sup>).  _n_ is an upper bound calculated using Theorem 15.1 of Tropp (2021)[^21] (one example of a _uniform law of large numbers_).  This sample size ensures an estimate of the integral with an expected absolute error of _&epsilon;_ or less.
+>
 > **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^18], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
 >
 > 1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
@@ -324,7 +326,7 @@ Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if 
 >     2. Add _f_((_p\[1]_, _p\[2]_, ..., _p\[j]_)) to _s_.
 > 3. Return _s_/_m_<sup>_d_</sup>.
 >
-> The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than _c_\* **z**<sup>_&beta;_</sup> for some _c_>0) and is defined on the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
+> The paper also implied a sample size _n_ for use in stratified sampling when _f_ is Hölder continuous with Hölder exponent _&beta;_ or less [^22] and is defined on the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
 
 <a id=Finding_Coins_with_Maximum_Success_Probabilities></a>
 ## Finding Coins with Maximum Success Probabilities
@@ -394,6 +396,12 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 [^18]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
 [^19]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+
+[^20]: A _Lipschitz continuous_ function with Lipschitz constant _M_ is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_ apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_.
+
+[^21]: J.A. Tropp, "ACM 217: Probability in High Dimensions", Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.
+
+[^22]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 
 <a id=License></a>
 ## License

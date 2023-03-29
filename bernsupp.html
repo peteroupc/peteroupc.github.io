@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/03/24"><meta name="citation_online_date" content="2023/03/24"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/03/29"><meta name="citation_online_date" content="2023/03/29"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -94,7 +94,7 @@
 
 <ul>
 <li>If $f$ is continuous, its <em>derivative</em> is, roughly speaking, its &quot;slope&quot; or &quot;velocity&quot; or &quot;instantaneous-rate-of-change&quot; function.  The derivative (or <em>first derivative</em>) is denoted as $f&#39;$.  The <em>second derivative</em> (&quot;slope-of-slope&quot;) of $f$, denoted $f&#39;&#39;$, is the derivative of $f&#39;$; the <em>third derivative</em> is the derivative of $f&#39;&#39;$; and so on.</li>
-<li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.</li>
+<li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Here, <em>&alpha;</em> satisfies 0 &lt; <em>&alpha;</em> &le; 1.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.</li>
 <li>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>L</em>*<em>x</em>.<br>If the function has a derivative on its domain, <em>L</em> can be the maximum absolute value of that derivative.</li>
 <li>A <em>convex</em> function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes down, then it&#39;s convex.</li>
 <li>A <em>concave</em> function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes up, then it&#39;s concave.</li>
@@ -146,7 +146,7 @@
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;), and</li>
+<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> or less and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;), and</li>
 <li>on the closed unit interval&mdash;
 
 <ul>
@@ -171,6 +171,7 @@
 <li>Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that&#39;s steeper than every &quot;nth&quot; root, and can&#39;t be handled by this method.  One example is <em>f</em>(<em>&lambda;</em>) = 1/10 if <em>&lambda;</em> is 0 and &minus;1/(2*ln(<em>&lambda;</em>/2)) + 1/10 otherwise, which has a slope near 0 that&#39;s steeper than every &quot;nth&quot; root.</li>
 <li>If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), <em>D</em>(<em>n</em>) can be <em>m</em>*322613/(250000*sqrt(<em>n</em>)), which is an upper bound.</li>
 <li>If the factory function&#39;s Hölder exponent is 1/2 or greater, <em>D</em>(<em>n</em>) can be <em>m</em>*154563/(40000*<em>n</em><sup>1/4</sup>), which is an upper bound.</li>
+<li> If <em>f</em>(<em>&lambda;</em>) is a <em>piecewise linear</em> factory function (made of multiple linear functions defined on a finite number of &quot;pieces&quot;, or subintervals, of the closed unit interval), <em>m</em> can equal the greatest absolute value of the slope among all pieces&#39; slopes, and <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous).  For example, suppose <em>f</em>(<em>&lambda;</em>) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, <em>&alpha;</em> is 1 and <em>m</em> is $\max(|(1/2-0)/(2/3)|,|(1/4-3/4)/(1/3)|) = 1.5$.</li>
 </ol>
 </blockquote>
 
@@ -382,19 +383,19 @@
 <td>Has Lipschitz continuous derivative (see &quot;Definitions&quot;).</td>
 <td><em>&epsilon;</em> = <em>M</em>/(8*<em>n</em>).</td>
 <td><em>n</em> = ceil(<em>M</em>/(8*<em>&epsilon;</em>)).</td>
-<td>Lorentz (1966)[^4]. <em>M</em> is the derivative&#39;s Lipschitz constant.</td>
+<td>Lorentz (1966)[^4]. <em>M</em> &gt; 0 is the derivative&#39;s Lipschitz constant or greater.</td>
 </tr>
 <tr>
-<td>Hölder continuous with constant <em>M</em> and exponent <em>&alpha;</em>.</td>
+<td>Hölder continuous.</td>
 <td><em>&epsilon;</em> = <em>M</em>*(1/(4*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.</td>
 <td><em>n</em> = ceil(1/(4<sup><em>&alpha;</em></sup>*<em>&epsilon;</em><sup>2</sup>/<em>M</em><sup>2</sup>)<sup>1/<em>&alpha;</em></sup>).</td>
-<td>Mathé (1999)[^5]. 0 &lt; <em>&alpha;</em> &le; 1.</td>
+<td>Mathé (1999)[^5]. 0 &lt; <em>&alpha;</em> &le; 1 is <em>f</em>&#39;s Hölder exponent; <em>M</em> &gt; 0 is its Hölder constant or greater.</td>
 </tr>
 <tr>
-<td>Lipschitz continuous with constant <em>L</em>.</td>
+<td>Lipschitz continuous.</td>
 <td><em>&epsilon;</em> = <em>L</em>*sqrt(1/(4*<em>n</em>)).</td>
 <td><em>n</em> = ceil(<em>L</em><sup>2</sup>/(4*<em>&epsilon;</em><sup>2</sup>)).</td>
-<td>Special case of previous entry.</td>
+<td>Special case of previous entry. <em>L</em> &gt; 0 is <em>f</em>&#39;s Lipschitz constant or greater.</td>
 </tr>
 </tbody></table>
 
@@ -557,7 +558,7 @@
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and every <em>&lambda;</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
-<td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with exponent (<em>&alpha;</em> &minus; <em>r</em>), where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)[^20]. Assumes <em>f</em> is bounded away from 0 and 1.</td>
+<td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with Hölder exponent (<em>&alpha;</em> &minus; <em>r</em>) or greater, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)[^20]. Assumes <em>f</em> is bounded away from 0 and 1.</td>
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)[^18].</td>

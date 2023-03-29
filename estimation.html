@@ -330,7 +330,7 @@
 
 <ul>
 <li>Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>h</em>) gives the maximum range of <em>f</em> in a window of size <em>h</em>.</li>
-<li>For example, if the slope of <em>f</em> is no &quot;steeper&quot; than that of the function <em>M</em>*<em>h</em>, then <em>f</em> is <em>Lipschitz continuous</em> with Lipschitz constant <em>M</em>, so that its modulus of continuity is <em>&omega;</em>(<em>h</em>) = <em>M</em>*<em>h</em>. The solution for <em>&psi;</em> is then <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>M</em>.</li>
+<li>For example, <em>f</em> is <em>Lipschitz continuous</em> with Lipschitz constant <em>M</em> or less[^20], its modulus of continuity is <em>&omega;</em>(<em>h</em>) = <em>M</em>*<em>h</em>. The solution for <em>&psi;</em> is then <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>M</em>.</li>
 <li>Because <em>f</em> is continuous on a closed interval, it&#39;s guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
 </ul></li>
 <li>Run <em>Algorithm C</em> with the given parameters <em>p</em>, <em>q</em>, <em>&kappa;</em>, and <em>&delta;</em>, but with <em>&epsilon;</em> = <em>&gamma;</em>.  Let <em>&mu;</em> be the result.</li>
@@ -402,13 +402,13 @@
 
 <p>Monte Carlo integration is a randomized way to estimate the integral (&quot;area under the graph&quot;) of a function.[^17]</p>
 
-<p>This time, suppose we have an endless stream of <em>vectors</em> (<em>n</em>-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.</p>
+<p>This time, suppose we have an endless stream of <em>vectors</em> (<em>d</em>-dimensional points), each generated at random and independently from each other, and we can sample as many vectors from the stream as we want.</p>
 
 <p>Suppose the goal is to estimate an integral of a function <em>h</em>(<strong>z</strong>), where <strong>z</strong> is a vector from the stream, with the following properties:</p>
 
 <ul>
-<li><em>h</em>(<strong>z</strong>) is a multidimensional function that takes an <em>n</em>-dimensional vector and returns a real number.  <em>h</em>(<strong>z</strong>) is usually a function that&#39;s easy to evaluate but whose integral is hard to calculate.</li>
-<li><strong>z</strong> is an <em>n</em>-dimensional vector chosen at random in the sampling domain.</li>
+<li><em>h</em>(<strong>z</strong>) is a multidimensional function that takes a <em>d</em>-dimensional vector and returns a real number.  <em>h</em>(<strong>z</strong>) is usually a function that&#39;s easy to evaluate but whose integral is hard to calculate.</li>
+<li><strong>z</strong> is a <em>d</em>-dimensional vector chosen at random in the sampling domain.</li>
 </ul>
 
 <p>Then <em>Algorithm C</em> will take the new stream and generate an estimate that comes within <em>&epsilon;</em> of the true integral with probability 1 &minus; <em>&delta;</em> or greater, as long as the following conditions are met:</p>
@@ -430,7 +430,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter <em>&kappa;</em> for estimating the integral of min(<em>Z1</em>, <em>Z2</em>) where <em>Z1</em> and <em>Z2</em> are each uniformly chosen at random in the closed unit interval.  It assumes <em>p</em> = 2 and <em>q</em> = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)</p>
+<p><strong>Example:</strong> The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter <em>&kappa;</em> for estimating the integral of min(<em>Z1</em>, <em>Z2</em>) where <em>Z1</em> and <em>Z2</em> are each uniformly chosen at random in the closed unit interval.  It assumes <em>p</em> = 2 and <em>q</em> = 4. (This is a trivial example because the integral can be calculated directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)</p>
 
 <pre># Distribution of Z1 and Z2
 u1=Uniform(&#39;U1&#39;,0,1)
@@ -449,6 +449,8 @@ pprint(Max(1,kappa))
 <p>Rather than <em>Algorithm C</em>, <em>Algorithm E</em> can be used (taking <em>f</em>(<em>x</em>) = <em>x</em>) if the distribution of <em>h</em>(<strong>z</strong>), the newly generated stream, satisfies the properties given in the table for <em>Algorithm E</em>.</p>
 
 <blockquote>
+<p><strong>Note:</strong> If <em>h</em>(<strong>z</strong>) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for <em>Algorithm E</em> can be <em>n</em> = ceil(23.42938/<em>&epsilon;</em><sup>2</sup>).  <em>n</em> is an upper bound calculated using Theorem 15.1 of Tropp (2021)<a href="one%20example%20of%20a%20_uniform%20law%20of%20large%20numbers_">^21</a>.  This sample size ensures an estimate of the integral with an expected absolute error of <em>&epsilon;</em> or less.</p>
+
 <p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)[^18], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
 
 <ol>
@@ -462,7 +464,7 @@ pprint(Max(1,kappa))
 <li>Return <em>s</em>/<em>m</em><sup><em>d</em></sup>.</li>
 </ol>
 
-<p>The paper also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is <em>&beta;</em>-Hölder continuous (is continuous and no &quot;steeper&quot; than <em>c</em>* <strong>z</strong><sup><em>&beta;</em></sup> for some <em>c</em>&gt;0) and is defined on the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p>
+<p>The paper also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is Hölder continuous with Hölder exponent <em>&beta;</em> or less [^22] and is defined on the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p>
 </blockquote>
 
 <p><a id=Finding_Coins_with_Maximum_Success_Probabilities></a></p>
@@ -540,6 +542,12 @@ pprint(Max(1,kappa))
 <p>[^18]: Kunsch, R.J., Rudolf, D., &quot;<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>&quot;, arXiv:1809.09890, 2018.</p>
 
 <p>[^19]: Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</p>
+
+<p>[^20]: A <em>Lipschitz continuous</em> function with Lipschitz constant <em>M</em> is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em>.</p>
+
+<p>[^21]: J.A. Tropp, &quot;ACM 217: Probability in High Dimensions&quot;, Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.</p>
+
+<p>[^22]: A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Here, <em>&alpha;</em> satisfies 0 &lt; <em>&alpha;</em> &le; 1.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.</p>
 
 <p><a id=License></a></p>
 
