@@ -51,7 +51,7 @@ The following summarizes most of the problems raised by these open questions.
 
 1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), compute the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$ with convergence rate $O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.**
 2. **With the same assumptions and convergence rate, compute two sequences of polynomials in Bernstein form that converge to $f(\lambda)$ and meet the** [**Formal Statement**](#Formal_Statement) **given later, together with their Bernstein coefficients.** (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must "increase" and "decrease" in a specific sense.)
-3. **With the same assumptions and convergence rate, find a random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ has a simple Bernoulli factory algorithm.**
+3. **With the same assumptions and convergence rate, find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ has a simple Bernoulli factory algorithm.**
 4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
 5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
 6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
@@ -135,7 +135,7 @@ where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 
 <a id=A_Matter_of_Efficiency></a>
 ### A Matter of Efficiency
 
-However, ordinary Bernstein polynomials can't in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
+However, ordinary Bernstein polynomials converge to a function at the rate $\Theta(1/n)$ in general, a result known since Voronovskaya (1932) and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
 
 But Lorentz (1966) showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
 
@@ -174,11 +174,13 @@ The following are examples of functions worth pondering for these questions:
 
 [**https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials**](https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials)
 
-Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in "[**Key Problems**](#Key_Problems)", above, find a practical way to compute a sequence $(\gamma_n)$ and a function $\pi(a)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{PC}$$ where:
+Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in "[**Key Problems**](#Key_Problems)", above, find a practical way to compute a non-trivial sequence $(\gamma_n)$ and a function $\pi(a)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{PC}$$ where:
 
 - $\pi(a)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$ where $0 < p < 1$ is a known rational).  ($0\le\pi(a)\le 1$, $\sum \pi(a) = 1$.)
 - $\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, for each $a$, $\gamma_a(\lambda)/\pi(a)$ can be a function with a simple [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html), such as a rational function in $\lambda$ or a power series with rational coefficients of nonincreasing magnitude (Łatuszyński et al. 2009/2011).
 - Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.
+
+Note: The series (PC) should be non-trivial; a trivial example is $\gamma_a(\lambda)/\pi(a)=f(\lambda)$ for every $a$.
 
 <a id=Using_Two_Polynomial_Sequences></a>
 ### Using Two Polynomial Sequences
@@ -230,7 +232,7 @@ It's also possible for $a$ to be generated in step 1 differently, perhaps with a
 Suppose $f(\lambda):[0, 1] \to (0, 1)$ is a concave factory function.  To the extent the questions make sense, $f$'s codomain can also be $[0, 1]$.  Then:
 
 1. Given that $f$ has a Lipschitz continuous $(\alpha-1)$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.
-2. Is $\max |g_n-f|$ a sufficient upward shift? (By Voronovskaya, this shift would satisfy $O(1/n)$ in general.)
+2. Is $\max |g_n-f|$ a sufficient upward shift? (By Voronovskaya, this shift would satisfy $\Theta(1/n)$ in general.)
 3. If $f$ is symmetric about 1/2, is $|g_n(1/2)-f(1/2)|$ a sufficient upward shift?
 4. What values of $n_a$ and $p$ will allow $f$ to have the series expansion $(PC)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz's results.
 

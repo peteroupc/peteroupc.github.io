@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/03/24"><meta name="citation_online_date" content="2023/03/24"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/03/27"><meta name="citation_online_date" content="2023/03/27"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -78,7 +78,7 @@
 <ol>
 <li><strong>Given $\epsilon &gt; 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), compute the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$ with convergence rate $O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.</strong></li>
 <li><strong>With the same assumptions and convergence rate, compute two sequences of polynomials in Bernstein form that converge to $f(\lambda)$ and meet the</strong> <a href="#Formal_Statement"><strong>Formal Statement</strong></a> <strong>given later, together with their Bernstein coefficients.</strong> (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must &quot;increase&quot; and &quot;decrease&quot; in a specific sense.)</li>
-<li><strong>With the same assumptions and convergence rate, find a random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ has a simple Bernoulli factory algorithm.</strong></li>
+<li><strong>With the same assumptions and convergence rate, find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ has a simple Bernoulli factory algorithm.</strong></li>
 <li><strong>Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.</strong></li>
 <li><strong>Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.</strong></li>
 <li><strong>Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.</strong></li>
@@ -180,7 +180,7 @@
 
 <h3>A Matter of Efficiency</h3>
 
-<p>However, ordinary Bernstein polynomials can&#39;t in general converge to a function faster than $O(1/n)$, a result known since Voronovskaya (1932) and a rate that will lead to an <strong>infinite expected number of coin flips in general</strong>.  (See also my <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental notes</strong></a>.)</p>
+<p>However, ordinary Bernstein polynomials converge to a function at the rate $\Theta(1/n)$ in general, a result known since Voronovskaya (1932) and a rate that will lead to an <strong>infinite expected number of coin flips in general</strong>.  (See also my <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental notes</strong></a>.)</p>
 
 <p>But Lorentz (1966) showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a <strong>finite expected number of coin flips</strong> if the function is &quot;smooth&quot; enough).</p>
 
@@ -224,13 +224,15 @@
 
 <p><a href="https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials"><strong>https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials</strong></a></p>
 
-<p>Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in &quot;<a href="#Key_Problems"><strong>Key Problems</strong></a>&quot;, above, find a practical way to compute a sequence $(\gamma_n)$ and a function $\pi(a)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{PC}$$ where:</p>
+<p>Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in &quot;<a href="#Key_Problems"><strong>Key Problems</strong></a>&quot;, above, find a practical way to compute a non-trivial sequence $(\gamma_n)$ and a function $\pi(a)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{PC}$$ where:</p>
 
 <ul>
 <li>$\pi(a)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational).  ($0\le\pi(a)\le 1$, $\sum \pi(a) = 1$.)</li>
 <li>$\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, for each $a$, $\gamma_a(\lambda)/\pi(a)$ can be a function with a simple <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory algorithm</strong></a>, such as a rational function in $\lambda$ or a power series with rational coefficients of nonincreasing magnitude (Łatuszyński et al. 2009/2011).</li>
 <li>Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.</li>
 </ul>
+
+<p>Note: The series (PC) should be non-trivial; a trivial example is $\gamma_a(\lambda)/\pi(a)=f(\lambda)$ for every $a$.</p>
 
 <p><a id=Using_Two_Polynomial_Sequences></a></p>
 
@@ -292,7 +294,7 @@
 
 <ol>
 <li>Given that $f$ has a Lipschitz continuous $(\alpha-1)$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz&#39;s results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.</li>
-<li>Is $\max |g_n-f|$ a sufficient upward shift? (By Voronovskaya, this shift would satisfy $O(1/n)$ in general.)</li>
+<li>Is $\max |g_n-f|$ a sufficient upward shift? (By Voronovskaya, this shift would satisfy $\Theta(1/n)$ in general.)</li>
 <li>If $f$ is symmetric about 1/2, is $|g_n(1/2)-f(1/2)|$ a sufficient upward shift?</li>
 <li>What values of $n_a$ and $p$ will allow $f$ to have the series expansion $(PC)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz&#39;s results.</li>
 </ol>

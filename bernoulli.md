@@ -2320,7 +2320,7 @@ If an algorithm&mdash;
 - takes flips of a coin with an unknown probability of heads (_&lambda;_), and
 - produces heads with a probability that depends on _&lambda;_ (_f_(_&lambda;_)) and tails otherwise,
 
-the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011\)[^19]. (And an estimator like this is possible only if _f_ is a factory function; see Łatuszyński.) Because the algorithm is _unbiased_, its expected value (or mean or "long-run average") is _f_(_&lambda;_). Since the algorithm is unbiased and outputs only 0 or 1, this leads to the following: If we take _n_ independent outputs of the algorithm, sum them, then divide by _n_, then with probability 1, this _average_ approaches _f_(_&lambda;_) as _n_ gets _large_ (the _law of large numbers_).
+the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011\)[^19]. (And an estimator like this is possible only if _f_ is a factory function; see Łatuszyński.) Because the algorithm is _unbiased_, its expected value (or mean or "long-run average") is _f_(_&lambda;_). Since the algorithm is unbiased and outputs only 0 or 1, this leads to the following: With probability 1, given an infinite sequence of independent outputs of the algorithm, the average of the first _n_ outputs approaches _f_(_&lambda;_) as _n_ gets _large_ (as a result of the _law of large numbers_).
 
 On the other hand&mdash;
 

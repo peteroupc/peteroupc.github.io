@@ -175,10 +175,11 @@ The following are algorithms to sample items whose "weights" (which are related 
 
 Suppose there is a list called _weights_.  This is a list of _n_ weights, with labels starting at 0 and ending at _n_&minus;1.
 
-Each weight is written as an integer and fractional part, namely _m_ + _&nu;_ where _m_ &ge; 0 is an integer, and 0 &le; _&nu;_ &le; 1.  Each weight&mdash;
+Each weight&mdash;
 
-- can store an integer part _m_ and have _&nu;_ represent a "coin" that implements a Bernoulli factory algorithm that returns 1 (or outputs heads) with probability equal to the fractional part _&nu;_ (case 1), or
-- can store a [**partially-sampled random number**](https://peteroupc.github.io/exporand.html) (PSRN), with the integer part equal to _m_ and the fractional part equal to _&nu;_ (case 2).
+1. can store an integer part _m_ and have _&nu;_ represent a "coin" that implements an algorithm that returns 1 (or outputs heads) with probability equal to the fractional part _&nu;_, also known as a _Bernoulli factory algorithm_ (_m_ &ge; 0, and 0 &le; _&nu;_ &le; 1), or
+2. can store a [**partially-sampled random number**](https://peteroupc.github.io/exporand.html) (PSRN), with the integer part equal to _m_ and the fractional part equal to _&nu;_ (_m_ &ge; 0, and 0 &le; _&nu;_ &le; 1), or
+3. can store a rational number _x_/_y_, where _x_&ge;0 and _y_&gt;0 are integers, such that _m_ = floor(_x_/_y_) and _&nu;_ = _x_/_y_&minus;_m_.
 
 Given this list of weights, the following algorithm chooses an integer in [0, _n_) with probability proportional to its weight.
 
@@ -186,8 +187,9 @@ Given this list of weights, the following algorithm chooses an integer in [0, _n
 2. Choose an integer _i_ with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of **WeightedChoice**(_list_), where _list_ is the rounded weights list and **WeightedChoice** is given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".  Let _w_ be the original weight for integer _i_, and let _rw_ be the rounded weight for integer _i_ in the rounded weights list.
 3. Generate _j_, a uniform random integer that is 0 or greater and less than _rw_. If _j_ is less than _rw_&minus;1, return _i_.  Otherwise:
 
-    - If _w_ is written as in case 1, run the Bernoulli factory algorithm for _&nu;_ (the weight's fractional part).  If it returns 1, return _i_.  Otherwise, go to step 2.
+    - If _w_ is written as in case 1, above, run the Bernoulli factory algorithm for _&nu;_ (the weight's fractional part).  If it returns 1, return _i_.  Otherwise, go to step 2.
     - If _w_ is written as in case 2, run **SampleGeometricBag** on the PSRN.  If the result is 1, return _i_.  Otherwise, go to step 2.
+    - If _w_ is written as in case 3, let _r_ = rem(_x_, _y_) = _x_&minus;floor(_x_/_y_)\*_y_, then with probability _r_/_y_, return _i_. (For example, generate _z_, a uniform random integer satisfying 0&le;_z_&lt;_y_, then if _z_&lt;_r_, return _i_.) Otherwise, go to step 2.
 
 <a id=Distributions_with_nowhere_increasing_or_nowhere_decreasing_weights></a>
 #### Distributions with nowhere increasing or nowhere decreasing weights
@@ -455,7 +457,7 @@ In the table below, _U_ is a uniform random variate between 0 and 1, and all ran
 | Gamma exponential (Kudryavtsev 2019)[^60]. | _&delta;_\*Gamma(_t_)<sup>1/_&nu;_</sup>/Gamma(_s_)<sup>_r_/_&nu;_</sup>, where Gamma(_x_) is a gamma(_x_) variate. | 0 &le; _r_ &lt; 1; _&nu;_ &ne; 0; _s_>0; _t_>0; _&delta;_>0. |
 | Extended xgamma (Saha et al. 2019)[^61] | Gamma(_&alpha;_ + _c_) variate divided by _&theta;_, where _c_ is either 0 with probability _&theta;_/(_&theta;_+_&beta;_), or 2 otherwise. | _&theta;_>0, _&alpha;_>0, _&beta;_ &ge; 0. |
 | Generalized Pareto(_a_, _b_) (McNeil et al. 2010)[^62] | _a_\*((1/(1&minus;_U_))<sup>_b_</sup>&minus;1)/_b_. | _a_>0; _b_>0. |
-| Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^63], (Azzalini 2022)[^64]. | _Z_ if _T_ < _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows a symmetric distribution (not necessarily around 0). _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
+| Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^63], (Azzalini 2022)[^64]. | _Z_ if _T_ &le; _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows a symmetric distribution (not necessarily around 0). _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
 | Skew normal (Azzalini 1985)[^65]. | Skew symmetric with _Z_ and _T_ both separate Normal(0, 1) variates, and _w_(_x_) = _x_\*_&alpha;_. | _&alpha;_ is a real number. |
 | Logarithmic skew normal (Gómez-Déniz et al. 2020)[^66] | exp(SNE(_&lambda;_,_&lambda;_)\*_&sigma;_+_&mu;_). | _&mu;_ and _&lambda;_ are real numbers; _&sigma;_ > 0. SNE is described later. |
 | Tilted beta binomial (Hahn 2022)[^67] | Binomial(_n_, Tilted-beta(_&theta;_, _v_, _&alpha;_, _&beta;_)) variate. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0, _&beta;_>0; _n_ &ge; 0 is an integer. |
