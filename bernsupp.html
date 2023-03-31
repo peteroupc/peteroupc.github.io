@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/03/29"><meta name="citation_online_date" content="2023/03/29"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/03/31"><meta name="citation_online_date" content="2023/03/31"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -171,8 +171,9 @@
 <li>Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that&#39;s steeper than every &quot;nth&quot; root, and can&#39;t be handled by this method.  One example is <em>f</em>(<em>&lambda;</em>) = 1/10 if <em>&lambda;</em> is 0 and &minus;1/(2*ln(<em>&lambda;</em>/2)) + 1/10 otherwise, which has a slope near 0 that&#39;s steeper than every &quot;nth&quot; root.</li>
 <li>If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), <em>D</em>(<em>n</em>) can be <em>m</em>*322613/(250000*sqrt(<em>n</em>)), which is an upper bound.</li>
 <li>If the factory function&#39;s Hölder exponent is 1/2 or greater, <em>D</em>(<em>n</em>) can be <em>m</em>*154563/(40000*<em>n</em><sup>1/4</sup>), which is an upper bound.</li>
-<li> If <em>f</em>(<em>&lambda;</em>) is a <em>piecewise linear</em> factory function (made of multiple linear functions defined on a finite number of &quot;pieces&quot;, or subintervals, of the closed unit interval), <em>m</em> can equal the greatest absolute value of the slope among all pieces&#39; slopes, and <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous).  For example, suppose <em>f</em>(<em>&lambda;</em>) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, <em>&alpha;</em> is 1 and <em>m</em> is $\max(|(1/2-0)/(2/3)|,|(1/4-3/4)/(1/3)|) = 1.5$.</li>
 </ol>
+
+<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) is a <em>piecewise linear</em> factory function (made of multiple linear functions defined on a finite number of &quot;pieces&quot;, or subintervals, of the closed unit interval), <em>m</em> can equal the greatest absolute value of the slope among all pieces&#39; slopes, and <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous).  For example, suppose <em>f</em>(<em>&lambda;</em>) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, <em>&alpha;</em> is 1 and <em>m</em> is $\max(|(1/2-0)/(2/3)|,|(1/4-3/4)/(1/3)|) = 1.5$.</p>
 </blockquote>
 
 <p><strong>Functions with a Lipschitz continuous derivative.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
@@ -426,6 +427,12 @@
 </ol>
 
 <p>&nbsp;</p>
+
+<p>Suppose the polynomial $W_{n,i}$ is non-negative for $f$.  Then:</p>
+
+<p>| If <em>f</em>(<em>&lambda;</em>): |  Then the following polynomial: |  Is close to <em>f</em> with the following error bound: | Where <em>n</em> is:  | Notes: |
+ --- | --- | --- | --- |
+| Has continuous second derivative. | $U_{n,2}$. | <em>&epsilon;</em> = 0.75*<em>M</em>/<em>n</em><sup>2</sup> | <em>n</em> = ceil(sqrt(0.75*<em>M</em>/<em>&epsilon;</em>)). | <em>M</em> is not less than maximum absolute value of second derivative.  See Proposition B8 in appendix. |</p>
 
 <p>By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^9]</p>
 
@@ -1271,6 +1278,12 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>[^59]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
+<p>[^60]: Bustamante, J., &quot;Estimates of positive linear operators in terms of second order moduli&quot;, J. Math. Anal. Appl. 345 (2008).</p>
+
+<p>[^61]: Also known as the Ditzian&ndash;Totik second modulus of smoothness (Ditzian, Z., Totik, V., &quot;Moduli of smoothness&quot;, Springer, 1987).</p>
+
+<p>[^62]: A.F. Timan, Theory of Approximation of Functions of a Real Variable, 1994.</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1338,6 +1351,20 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <p><strong>Proposition B7</strong>:  For every integer $n\ge 1$, $|T(n, 5, p)| \le 0.083 n^{5/2}.$  For every integer $n\ge 304$, $|T(n, 5, p)| \le n^2 \le 0.05736 n^{5/2}.$</p>
 
 <p><em>Proof</em>: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| &lt; 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it&#39;s enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 &lt; 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;</p>
+
+<p><strong>Proposition B8</strong>:  Suppose $f(\lambda)$ has a continuous second derivative on the closed unit interval and $U_{n,2}(f)$ is non-negative on the closed unit interval.  Then $U_{n,2}(f)$ is within $\frac{3 Mx(1-x)}{n^2}$ and within $\frac{0.75 M}{n^2}$ of $f$, where $M$ is the maximum absolute value of $f$&#39;s second derivative.</p>
+
+<p><em>Proof:</em> Theorem 11 of Bustamante (2008)[^60] provides error bounds for certain polynomials that come close to a continuous function.  To use this result here, the following conditions are verified:</p>
+
+<ul>
+<li>$U_{n,2}$ is non-negative.</li>
+<li>$U_{n,2}$ equals $f$ whenever $f$ is a linear function.</li>
+<li>$U_{n,2}(x) = x$ and $U_{n,2}(1) = 1$.</li>
+<li>$\phi(x)=1$ which is positive and concave.</li>
+<li>$(U_{n,2}(x^2)-x^2) = x(1-x)/n^2$.</li>
+</ul>
+
+<p>Then by Theorem 11, $U_{n,2}$ is close to $f$ by at most&mdash; $$\left(\frac32+\frac{3}{(2h^2\phi(x)^2)}\frac{x(1-x)}{n^2}\right) \omega_{2}^{\phi}(f, h),$$ where $\omega_{2}^{\phi}(f, h)$ is a function[^61] that satisfies $\omega_{2}^{\phi}(f, h)\le M h^2$ for the given choice of $\phi$ (Timan 1994)[^62].  So&mdash; $$\left(\frac32+\frac{3}{2h^2\phi(x)^2}\frac{x(1-x)}{n^2}\right) \omega_{2}^{\phi}(f, h) \le \left(\frac32+\frac{3x(1-x)}{2h^2n^2}\right) M h^2 = \epsilon(f, h, n).$$ Finally, a change of variable $h=\sqrt{x(1-x)}/n$ leads to&mdash; $$\epsilon(f,h,n)=\left(\frac32+\frac{3}{2}\right) M (\sqrt{x(1-x)}/n)^2 = \frac{3Mx(1-x)}{n^2} \le \frac{3M}{4n^2} = 0.75M/n^2.$$ &#x25a1;</p>
 
 <p><a id=Failures_of_the_Consistency_Requirement></a></p>
 

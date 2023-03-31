@@ -120,7 +120,8 @@ Finding _m_ and _&alpha;_ is non-trivial in general.  But assuming _m_ and _&alp
 > 1. Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that's steeper than every "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than every "nth" root.
 > 2. If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
 > 3. If the factory function's Hölder exponent is 1/2 or greater, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
-> 3.  If _f_(_&lambda;_) is a _piecewise linear_ factory function (made of multiple linear functions defined on a finite number of "pieces", or subintervals, of the closed unit interval), _m_ can equal the greatest absolute value of the slope among all pieces' slopes, and _&alpha;_ is 1 (_f_ is Lipschitz continuous).  For example, suppose _f_(_&lambda;_) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, _&alpha;_ is 1 and _m_ is $\max(|(1/2-0)/(2/3)|,|(1/4-3/4)/(1/3)|) = 1.5$.
+>
+> **Example:** If _f_(_&lambda;_) is a _piecewise linear_ factory function (made of multiple linear functions defined on a finite number of "pieces", or subintervals, of the closed unit interval), _m_ can equal the greatest absolute value of the slope among all pieces' slopes, and _&alpha;_ is 1 (_f_ is Lipschitz continuous).  For example, suppose _f_(_&lambda;_) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, _&alpha;_ is 1 and _m_ is $\max(|(1/2-0)/(2/3)|,|(1/4-3/4)/(1/3)|) = 1.5$.
 
 **Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -279,6 +280,12 @@ An example is given by the iterated Bernstein polynomial construction discussed 
 2. the polynomial $W_{n,i}$ is not less than 0 or greater than 1.
 
 &nbsp;
+
+Suppose the polynomial $W_{n,i}$ is non-negative for $f$.  Then:
+
+| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes: |
+ --- | --- | --- | --- |
+| Has continuous second derivative. | $U_{n,2}$. | _&epsilon;_ = 0.75\*_M_/_n_<sup>2</sup> | _n_ = ceil(sqrt(0.75\*_M_/_&epsilon;_)). | _M_ is not less than maximum absolute value of second derivative.  See Proposition B8 in appendix. |
 
 By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds _appear_ to be true.  In the table below, _M_<sub>_n_</sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^9]
 
@@ -859,6 +866,12 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 
 [^59]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^60]: Bustamante, J., "Estimates of positive linear operators in terms of second order moduli", J. Math. Anal. Appl. 345 (2008).
+
+[^61]: Also known as the Ditzian&ndash;Totik second modulus of smoothness (Ditzian, Z., Totik, V., "Moduli of smoothness", Springer, 1987).
+
+[^62]: A.F. Timan, Theory of Approximation of Functions of a Real Variable, 1994.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -919,6 +932,18 @@ _Proof_: The critical points of $T(n, 3, p)$ (the points where the maximum might
 **Proposition B7**:  For every integer $n\ge 1$, $|T(n, 5, p)| \le 0.083 n^{5/2}.$  For every integer $n\ge 304$, $|T(n, 5, p)| \le n^2 \le 0.05736 n^{5/2}.$
 
 _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| < 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it's enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 < 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;
+
+**Proposition B8**:  Suppose $f(\lambda)$ has a continuous second derivative on the closed unit interval and $U_{n,2}(f)$ is non-negative on the closed unit interval.  Then $U_{n,2}(f)$ is within $\frac{3 Mx(1-x)}{n^2}$ and within $\frac{0.75 M}{n^2}$ of $f$, where $M$ is the maximum absolute value of $f$'s second derivative.
+
+_Proof:_ Theorem 11 of Bustamante (2008)[^60] provides error bounds for certain polynomials that come close to a continuous function.  To use this result here, the following conditions are verified:
+
+- $U_{n,2}$ is non-negative.
+- $U_{n,2}$ equals $f$ whenever $f$ is a linear function.
+- $U_{n,2}(x) = x$ and $U_{n,2}(1) = 1$.
+- $\phi(x)=1$ which is positive and concave.
+- $(U_{n,2}(x^2)-x^2) = x(1-x)/n^2$.
+
+Then by Theorem 11, $U_{n,2}$ is close to $f$ by at most&mdash; $$\left(\frac32+\frac{3}{(2h^2\phi(x)^2)}\frac{x(1-x)}{n^2}\right) \omega_{2}^{\phi}(f, h),$$ where $\omega_{2}^{\phi}(f, h)$ is a function[^61] that satisfies $\omega_{2}^{\phi}(f, h)\le M h^2$ for the given choice of $\phi$ (Timan 1994)[^62].  So&mdash; $$\left(\frac32+\frac{3}{2h^2\phi(x)^2}\frac{x(1-x)}{n^2}\right) \omega_{2}^{\phi}(f, h) \le \left(\frac32+\frac{3x(1-x)}{2h^2n^2}\right) M h^2 = \epsilon(f, h, n).$$ Finally, a change of variable $h=\sqrt{x(1-x)}/n$ leads to&mdash; $$\epsilon(f,h,n)=\left(\frac32+\frac{3}{2}\right) M (\sqrt{x(1-x)}/n)^2 = \frac{3Mx(1-x)}{n^2} \le \frac{3M}{4n^2} = 0.75M/n^2.$$ &#x25a1;
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
