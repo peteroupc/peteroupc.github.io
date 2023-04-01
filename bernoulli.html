@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/03/29"><meta name="citation_online_date" content="2023/03/29"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/04/01"><meta name="citation_online_date" content="2023/04/01"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -118,6 +118,7 @@
 <li><a href="#lambda___x___y"><strong><em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong></a></li>
 <li><a href="#sqrt___lambda"><strong>sqrt(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#arctan___lambda_____lambda"><strong>arctan(<em>&lambda;</em>) /<em>&lambda;</em></strong></a></li>
+<li><a href="#arctan___lambda_____pi"><strong>arctan(<em>&lambda;</em>) /<em>&pi;</em></strong></a></li>
 <li><a href="#arctan___lambda"><strong>arctan(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#cos___lambda"><strong>cos(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#sin___lambda___sqrt__c____lambda___sqrt__c"><strong>sin(<em>&lambda;</em>*sqrt(<em>c</em>)) / (<em>&lambda;</em>*sqrt(<em>c</em>))</strong></a></li>
@@ -1644,7 +1645,7 @@
 <p><strong>Algorithm 3.</strong> I have found that it&#39;s possible to simulate the following integral, namely&mdash; $$\int_a^b f(\lambda u)\,du,$$ where $0\le a\lt b\le 1$, using the following algorithm:</p>
 
 <ol>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>.  Then if <em>u</em> is less than <em>a</em> or is greater than <em>b</em>, repeat this step. (If <em>u</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal</strong> algorithm.)</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1.  Then if <em>u</em> is less than <em>a</em> or is greater than <em>b</em>, repeat this step. (If <em>u</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal</strong> algorithm.)</li>
 <li>Create an input coin that does the following: &quot;<a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> and return the result.&quot;</li>
 <li>Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform random variate between 0 and 1 <em>v</em> and return a number that is 0 if <em>v</em> is less than <em>a</em> or is greater than <em>b</em>, or 1 otherwise.</li>
 </ol>
@@ -1831,7 +1832,7 @@
 <ol>
 <li>Set <em>k</em> and <em>w</em> each to 0.</li>
 <li>Flip the input coin.  If it returns 0, return 1.</li>
-<li>Generate a uniform random variate between 0 and 1 <em>U</em>.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1.</li>
 <li>If <em>k</em> &gt; 0 and <em>w</em> is less than <em>U</em>, return 0.</li>
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
 </ol>
@@ -2202,7 +2203,22 @@
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if it wasn&#39;t generated yet.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1, if it wasn&#39;t generated yet.</li>
+<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.</li>
+</ol></li>
+</ul>
+
+<p><a id=arctan___lambda_____pi></a></p>
+
+<h4>arctan(<em>&lambda;</em>) /<em>&pi;</em></h4>
+
+<ul>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
+<li>Run the <strong>algorithm for 1/<em>&pi;</em></strong>.  If the run returns 0, return 0.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1, if it wasn&#39;t generated yet.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.</li>
 </ol></li>
 </ul>
@@ -2246,7 +2262,7 @@
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1, if <em>u</em> wasn&#39;t generated yet.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then flip the input coin.  If the call and the flip both return 1, return 0.</li>
 </ol></li>
 </ul>
@@ -2280,7 +2296,7 @@
 <p>(Flajolet et al., 2010)[^1].  arcsin(<em>&lambda;</em>) is the inverse sine of <em>&lambda;</em>.  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^32].</p>
 
 <ol>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1.</li>
 <li>Create a secondary coin <em>&mu;</em> that does the following: &quot;<a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1.&quot;</li>
 <li>Call the <strong>algorithm for <em>&mu;</em><sup>1/2</sup></strong> using the secondary coin <em>&mu;</em>.  If it returns 0, return 0.</li>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
@@ -2622,7 +2638,7 @@
 <ol>
 <li>Flip the input coin until the flip returns 0.  Then set <em>G</em> to the number of times the flip returns 1 this way.</li>
 <li>If <em>G</em> is <strong>odd</strong>, return 0.</li>
-<li>Generate a uniform random variate between 0 and 1 <em>U</em>, then set <em>i</em> to 1.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1, then set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
 
 <ol>
@@ -2643,7 +2659,7 @@
 <ol>
 <li>Flip the input coin until the flip returns 0.  Then set <em>G</em> to the number of times the flip returns 1 this way.</li>
 <li>If <em>G</em> is <strong>even</strong>, return 0.</li>
-<li>Generate a uniform random variate between 0 and 1 <em>U</em>, then set <em>i</em> to 1.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1, then set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
 
 <ol>
@@ -2666,7 +2682,7 @@
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the <strong>algorithm for (<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong> with <em>d</em> = <em>d</em> and <em>c</em> = <em>c</em>, and return the result.</li>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1, if <em>u</em> wasn&#39;t generated yet.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then run the <strong>algorithm for (<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong> with <em>d</em> = <em>d</em> and <em>c</em> = <em>c</em>.  If both calls return 1, return 0.</li>
 </ol></li>
 </ul>
@@ -2881,7 +2897,7 @@ kind of irrational number.</p>
 <p>(Flajolet et al., 2010)[^1]:</p>
 
 <ol>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1.</li>
 <li>Generate a number that is 1 with probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), or 0 otherwise.  If the number is 0, return 1.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice.  If either of these calls returns 0, return 1.</li>
 <li>Generate a number that is 1 with probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), or 0 otherwise.  If the number is 0, return 0.</li>
@@ -2892,7 +2908,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if it wasn&#39;t generated yet.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1, if it wasn&#39;t generated yet.</li>
 <li>With probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), <a href="#Implementation_Notes"><strong>sample from the number <em>u</em></strong></a> twice.  If both of these calls return 1, return 0.</li>
 <li>Go to step 1.</li>
 </ol>
@@ -3257,7 +3273,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.</li>
-<li>Generate a uniform random variate between 0 and 1 <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
+<li>Generate <em>u</em>, a uniform random variate between 0 and 1, if <em>u</em> wasn&#39;t generated yet.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then generate a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.</li>
 </ol></li>
 </ol>

@@ -88,6 +88,7 @@ Comments on other aspects of this document are welcome.
         - [**_&lambda;_<sup>_x_/_y_</sup>**](#lambda___x___y)
         - [**sqrt(_&lambda;_)**](#sqrt___lambda)
         - [**arctan(_&lambda;_) /_&lambda;_**](#arctan___lambda_____lambda)
+        - [**arctan(_&lambda;_) /_&pi;_**](#arctan___lambda_____pi)
         - [**arctan(_&lambda;_)**](#arctan___lambda)
         - [**cos(_&lambda;_)**](#cos___lambda)
         - [**sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))**](#sin___lambda___sqrt__c____lambda___sqrt__c)
@@ -1049,7 +1050,7 @@ namely the following algorithm:
 
 **Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash; $$\int_a^b f(\lambda u)\,du,$$ where $0\le a\lt b\le 1$, using the following algorithm:
 
-1. Generate a uniform random variate between 0 and 1 _u_.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
+1. Generate _u_, a uniform random variate between 0 and 1.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform random variate between 0 and 1 _v_ and return a number that is 0 if _v_ is less than _a_ or is greater than _b_, or 1 otherwise.
 
@@ -1177,7 +1178,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 
 1. Set _k_ and _w_ each to 0.
 2. Flip the input coin.  If it returns 0, return 1.
-3. Generate a uniform random variate between 0 and 1 _U_.
+3. Generate _u_, a uniform random variate between 0 and 1.
 4. If _k_ > 0 and _w_ is less than _U_, return 0.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
@@ -1419,8 +1420,17 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-    2. Generate a uniform random variate between 0 and 1 _u_, if it wasn't generated yet.
+    2. Generate _u_, a uniform random variate between 0 and 1, if it wasn't generated yet.
     3. [**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.
+
+<a id=arctan___lambda_____pi></a>
+#### arctan(_&lambda;_) /_&pi;_
+
+- Do the following process repeatedly, until this algorithm returns a value:
+    1. Run the **algorithm for 1/_&pi;_**.  If the run returns 0, return 0.
+    2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
+    3. Generate _u_, a uniform random variate between 0 and 1, if it wasn't generated yet.
+    4. [**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.
 
 <a id=arctan___lambda></a>
 #### arctan(_&lambda;_)
@@ -1451,7 +1461,7 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
-    2. Generate a uniform random variate between 0 and 1 _u_, if _u_ wasn't generated yet.
+    2. Generate _u_, a uniform random variate between 0 and 1, if _u_ wasn't generated yet.
     3. [**Sample from the number _u_**](#Implementation_Notes), then flip the input coin.  If the call and the flip both return 1, return 0.
 
 <a id=ln__c____lambda____c____lambda></a>
@@ -1474,7 +1484,7 @@ The algorithm follows.
 
 (Flajolet et al., 2010\)[^1].  arcsin(_&lambda;_) is the inverse sine of _&lambda;_.  The algorithm given here uses the two-coin algorithm rather than the even-parity construction[^32].
 
-1. Generate a uniform random variate between 0 and 1 _u_.
+1. Generate _u_, a uniform random variate between 0 and 1.
 2. Create a secondary coin _&mu;_ that does the following: "[**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
 3. Call the **algorithm for _&mu;_<sup>1/2</sup>** using the secondary coin _&mu;_.  If it returns 0, return 0.
 4. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
@@ -1699,7 +1709,7 @@ This algorithm is based on the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, b
 
 1. Flip the input coin until the flip returns 0.  Then set _G_ to the number of times the flip returns 1 this way.
 2. If _G_ is **odd**, return 0.
-3. Generate a uniform random variate between 0 and 1 _U_, then set _i_ to 1.
+3. Generate _u_, a uniform random variate between 0 and 1, then set _i_ to 1.
 4. While _i_ is less than _G_:
     1. Generate a uniform random variate between 0 and 1 _V_.
     2. If _i_ is odd[^25] and _V_ is less than _U_, return 0.
@@ -1714,7 +1724,7 @@ This algorithm is based on the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, b
 
 1. Flip the input coin until the flip returns 0.  Then set _G_ to the number of times the flip returns 1 this way.
 2. If _G_ is **even**, return 0.
-3. Generate a uniform random variate between 0 and 1 _U_, then set _i_ to 1.
+3. Generate _u_, a uniform random variate between 0 and 1, then set _i_ to 1.
 4. While _i_ is less than _G_:
     1. Generate a uniform random variate between 0 and 1 _V_.
     2. If _i_ is odd[^25] and _V_ is less than _U_, return 0.
@@ -1729,7 +1739,7 @@ In this algorithm, _d_ and _c_ are integers, 0 &lt; _c_, and _c_ &gt; _d_ &ge; 0
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the **algorithm for (_d_ + _&lambda;_) / _c_** with _d_ = _d_ and _c_ = _c_, and return the result.
-    2. Generate a uniform random variate between 0 and 1 _u_, if _u_ wasn't generated yet.
+    2. Generate _u_, a uniform random variate between 0 and 1, if _u_ wasn't generated yet.
     3. [**Sample from the number _u_**](#Implementation_Notes), then run the **algorithm for (_d_ + _&lambda;_) / _c_** with _d_ = _d_ and _c_ = _c_.  If both calls return 1, return 0.
 
 <a id=arcsin___lambda___2></a>
@@ -1825,7 +1835,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 (Flajolet et al., 2010\)[^1]\:
 
-1. Generate a uniform random variate between 0 and 1 _u_.
+1. Generate _u_, a uniform random variate between 0 and 1.
 2. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 1.
 3. [**Sample from the number _u_**](#Implementation_Notes) twice.  If either of these calls returns 0, return 1.
 4. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 0.
@@ -1834,7 +1844,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 Observing that the even-parity construction used in the Flajolet paper[^32] is equivalent to the two-coin algorithm, which has bounded expected running time for all _&lambda;_ parameters, the algorithm above can be modified as follows:
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-2. Generate a uniform random variate between 0 and 1 _u_, if it wasn't generated yet.
+2. Generate _u_, a uniform random variate between 0 and 1, if it wasn't generated yet.
 3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Implementation_Notes) twice.  If both of these calls return 1, return 0.
 4. Go to step 1.
 
@@ -2095,7 +2105,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 1. If _y_ is 0, return 0.
 2. Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability _y_/_z_ and 0 otherwise.
-    2. Generate a uniform random variate between 0 and 1 _u_, if _u_ wasn't generated yet.
+    2. Generate _u_, a uniform random variate between 0 and 1, if _u_ wasn't generated yet.
     3. [**Sample from the number _u_**](#Implementation_Notes), then generate a number that is 1 with probability _y_/_z_ and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.
 
 <a id=ln___pi_____pi></a>

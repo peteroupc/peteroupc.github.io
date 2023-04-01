@@ -148,7 +148,8 @@ These alternative polynomials usually include results where the error bound is t
 
 The following is a conjecture that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
+Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, let $M$ be the absolute value of the maximum of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
+bsolute value of the maximum/g
 
 For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.
 
@@ -480,7 +481,8 @@ $$A(n,k) = (1/(4n)) \times  2 \times (n+2-k)/((n+1)\times (n+2)),$$
 
 where $k$ is an integer in $[0,n+r]$. Observing that $A(n,k)$ equals 0 at 0 and at $n+r$, and has a peak at $(n+r)/2$,
 the shift will be no greater (in absolute value) than
-$A(n,(n+r)/2)*F$, where $F$ is the maximum absolute value
+$A(n,(n+r)/2)*F$, where $F$ is the absolute value of the maximum
+bsolute value of the maximum/g
 of the second derivative of $f(\lambda)$.  $A(n,(n+r)/2)$ is bounded
 above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.
 

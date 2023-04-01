@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/03/31"><meta name="citation_online_date" content="2023/03/31"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/01"><meta name="citation_online_date" content="2023/04/01"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -95,7 +95,8 @@
 <ul>
 <li>If $f$ is continuous, its <em>derivative</em> is, roughly speaking, its &quot;slope&quot; or &quot;velocity&quot; or &quot;instantaneous-rate-of-change&quot; function.  The derivative (or <em>first derivative</em>) is denoted as $f&#39;$.  The <em>second derivative</em> (&quot;slope-of-slope&quot;) of $f$, denoted $f&#39;&#39;$, is the derivative of $f&#39;$; the <em>third derivative</em> is the derivative of $f&#39;&#39;$; and so on.</li>
 <li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Here, <em>&alpha;</em> satisfies 0 &lt; <em>&alpha;</em> &le; 1.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.</li>
-<li>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>L</em>*<em>x</em>.<br>If the function has a derivative on its domain, <em>L</em> can be the maximum absolute value of that derivative.</li>
+<li>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>L</em>*<em>x</em>.<br>If the function has a derivative on its domain, <em>L</em> can be the absolute value of the maximum of that derivative.
+bsolute value of the maximum/g</li>
 <li>A <em>convex</em> function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes down, then it&#39;s convex.</li>
 <li>A <em>concave</em> function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes up, then it&#39;s concave.</li>
 </ul>
@@ -189,7 +190,8 @@
 </ul></li>
 </ul>
 
-<p>Let <em>m</em> be the Lipschitz constant of <em>f</em>&#39;s derivative, or a greater number than that constant (if <em>f</em> has a second derivative on its domain, then <em>m</em> can be the maximum absolute value of that second derivative).  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
+<p>Let <em>m</em> be the Lipschitz constant of <em>f</em>&#39;s derivative, or a greater number than that constant (if <em>f</em> has a second derivative on its domain, then <em>m</em> can be the absolute value of the maximum of that second derivative).  Then for every integer <em>n</em> that&#39;s a power of 2:
+bsolute value of the maximum/g</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
@@ -426,8 +428,6 @@
 <li>the polynomial $W_{n,i}$ is not less than 0 or greater than 1.</li>
 </ol>
 
-<p>&nbsp;</p>
-
 <p>Suppose the polynomial $W_{n,i}$ is non-negative for $f$.  Then:</p>
 
 <table><thead>
@@ -436,17 +436,19 @@
 <th>Then the following polynomial:</th>
 <th>Is close to <em>f</em> with the following error bound:</th>
 <th>Where <em>n</em> is:</th>
-<th>Notes:</th>
+<th>Notes</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>Has continuous second derivative.</td>
+<td>Is concave and has continuous second derivative.</td>
 <td>$U_{n,2}$.</td>
 <td><em>&epsilon;</em> = 0.75*<em>M</em>/<em>n</em><sup>2</sup></td>
 <td><em>n</em> = ceil(sqrt(0.75*<em>M</em>/<em>&epsilon;</em>)).</td>
-<td><em>M</em> is not less than maximum absolute value of second derivative.  See Proposition B8 in appendix.</td>
+<td><em>M</em> is not less than absolute value of the maximum of second derivative.  See Proposition B8 in appendix.</td>
 </tr>
 </tbody></table>
+
+<p>bsolute value of the maximum/g</p>
 
 <p>By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^9]</p>
 
@@ -462,25 +464,25 @@
 <td>Has continuous third derivative.</td>
 <td>$U_{n,2}$</td>
 <td><em>&epsilon;</em> = 0.3489*<em>M</em><sub>3</sub>/<em>n</em><sup>3/2</sup>.</td>
-<td><em>n</em>=ceil((0.3489)<sup>2/3</sup>*(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)<sup>2/3</sup>) &lt; ceil((49561/100000)*(<em>M</em>/<em>&epsilon;</em>)<sup>2/3</sup>).</td>
+<td><em>n</em>=ceil((0.3489)<sup>2/3</sup>*(<em>M</em><sub>3</sub>/<em>&epsilon;</em>)<sup>2/3</sup>) &lt; ceil((49561/100000)*(<em>M</em><sub>3</sub>/<em>&epsilon;</em>)<sup>2/3</sup>).</td>
 </tr>
 <tr>
 <td>Has continuous fourth derivative.</td>
 <td>$U_{n,2}$</td>
 <td><em>&epsilon;</em> = 0.275*<em>M</em><sub>4</sub>/<em>n</em><sup>2</sup>.</td>
-<td><em>n</em>=ceil(sqrt(0.275)*sqrt(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)) &lt; ceil((52441/100000)*sqrt(<em>M</em>/<em>&epsilon;</em>)).</td>
+<td><em>n</em>=ceil(sqrt(0.275)*sqrt(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)) &lt; ceil((52441/100000)*sqrt(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)).</td>
 </tr>
 <tr>
 <td>Has continuous fifth derivative.</td>
 <td>$U_{n,3}$</td>
 <td><em>&epsilon;</em> = 0.7284*<em>M</em><sub>5</sub>/<em>n</em><sup>5/2</sup>.</td>
-<td><em>n</em>=ceil((0.7284)<sup>2/5</sup>*(<em>M</em><sub>5</sub>/<em>&epsilon;</em>)<sup>2/5</sup>) &lt; ceil((88095/100000)*(<em>M</em>/<em>&epsilon;</em>)<sup>2/5</sup>).</td>
+<td><em>n</em>=ceil((0.7284)<sup>2/5</sup>*(<em>M</em><sub>5</sub>/<em>&epsilon;</em>)<sup>2/5</sup>) &lt; ceil((88095/100000)*(<em>M</em><sub>5</sub>/<em>&epsilon;</em>)<sup>2/5</sup>).</td>
 </tr>
 <tr>
 <td>Has continuous sixth derivative.</td>
 <td>$U_{n,3}$</td>
 <td><em>&epsilon;</em> = 0.9961*<em>M</em><sub>6</sub>/<em>n</em><sup>3</sup>.</td>
-<td><em>n</em>=ceil((0.9961)<sup>1/3</sup>*(<em>M</em><sub>6</sub>/<em>&epsilon;</em>)<sup>1/3</sup>) &lt; ceil((99870/100000)*(<em>M</em>/<em>&epsilon;</em>)<sup>1/3</sup>).</td>
+<td><em>n</em>=ceil((0.9961)<sup>1/3</sup>*(<em>M</em><sub>6</sub>/<em>&epsilon;</em>)<sup>1/3</sup>) &lt; ceil((99870/100000)*(<em>M</em><sub>6</sub>/<em>&epsilon;</em>)<sup>1/3</sup>).</td>
 </tr>
 </tbody></table>
 
@@ -522,7 +524,8 @@
 
 <p>If $f$&#39;s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called &quot;ratio test&quot;, the algorithms in Carvalho and Moreira (2022)[^11] can be used here (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p>
 
-<p>Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor&#39;s theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the maximum absolute value of $f$&#39;s ($n$+1)-th derivative on the domain of $f$.</p></li>
+<p>Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor&#39;s theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the absolute value of the maximum of $f$&#39;s ($n$+1)-th derivative on the domain of $f$.
+bsolute value of the maximum/g</p></li>
 <li>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^12].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.</li>
 <li>Flip the input coin <em>n</em> times, then let <em>j</em> be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.</li>
 </ol>
@@ -1190,7 +1193,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>[^8]: Güntürk, C.S., Li, W., &quot;<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>&quot;, arXiv:2112.09181 [cs.LG], 2021.</p>
 
-<p>[^9]: Güntürk and Li 2021 defines the $C^n$ norm as the maximum absolute value of $f(\lambda)$ and its <em>n</em>-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.</p>
+<p>[^9]: Güntürk and Li 2021 defines the $C^n$ norm as the absolute value of the maximum of $f(\lambda)$ and its <em>n</em>-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.
+bsolute value of the maximum/g</p>
 
 <p>[^10]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.</p>
 
@@ -1366,19 +1370,23 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p><em>Proof</em>: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| &lt; 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it&#39;s enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 &lt; 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;</p>
 
-<p><strong>Proposition B8</strong>:  Let <em>n</em>&ge;1 be an integer.  Suppose $f(\lambda)$ has a continuous second derivative on the closed unit interval and $U_{n,2}(f)$ is non-negative on the closed unit interval.  Then $U_{n,2}(f)$ is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the maximum absolute value of $f$&#39;s second derivative.</p>
+<p><strong>Proposition B8</strong>:  Let <em>n</em>&ge;1 be an integer.  Suppose $f(\lambda)$ is concave and has a continuous second derivative on the closed unit interval.  Then $U_{n,2}(f)$ (as defined in &quot;Approximate Bernoulli Factories for Continuous Functions&quot;) is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the absolute value of the maximum of $f$&#39;s second derivative.</p>
 
 <p><em>Proof:</em> Theorem 11 of Bustamante (2008)[^32] provides error bounds for certain polynomials that come close to a continuous function.  To use this result here, the following conditions are verified:</p>
 
 <ul>
-<li>$U_{n,2}$ is non-negative.</li>
-<li>$U_{n,2}$ equals $f$ whenever $f$ is a linear function.</li>
+<li>$U_{n,2}$ is non-negative (because $f$ is concave, making $W_{n,2}$, and therefore its Bernstein polynomial $U_{n,2}$, non-negative by Proposition B1).</li>
+<li>$U_{n,2}$ is a linear operator (Micchelli 1973)[^6].  Notably, it equals $f$ whenever $f$ is a linear function.</li>
 <li>$U_{n,2}(\lambda) = \lambda$ and $U_{n,2}(1) = 1$.</li>
 <li>$\phi(\lambda)=1$ which is positive and concave.</li>
 <li>$(U_{n,2}(\lambda^2)-\lambda^2) = \lambda(1-\lambda)/n^2$.</li>
 </ul>
 
-<p>Then by Theorem 11, $U_{n,2}$ is close to $f$ by at most&mdash; $$\left(\frac32+\frac{3}{(2h^2\phi(\lambda)^2)}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h),$$ where $\omega_{2}^{\phi}(f, h)$ is a function[^33] that satisfies $\omega_{2}^{\phi}(f, h)\le M h^2$ whenever $h\le 1/2$, for the given choice of $\phi$ (Timan 1994)[^34].  So&mdash; $$\left(\frac32+\frac{3}{2h^2\phi(\lambda)^2}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h) \le \left(\frac32+\frac{3\lambda(1-\lambda)}{2h^2n^2}\right) M h^2 = \epsilon(f, h, n).$$ Finally, the change of variable $h=\sqrt{\lambda(1-\lambda)}/n$ is made (and $h$ is not less than 1/2 given $n\ge 1$).  This change of variable leads to&mdash; $$\epsilon(f,h,n)=\left(\frac32+\frac{3}{2}\right) M (\sqrt{\lambda(1-\lambda)}/n)^2 = \frac{3Mx(1-x)}{n^2} \le \frac{3M}{4n^2} = 0.75M/(n^2).$$ &#x25a1;</p>
+<p>Then by Theorem 11, $U_{n,2}$ is close to $f$ by at most&mdash; $$\left(\frac32+\frac{3}{(2h^2\phi(\lambda)^2)}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h),$$ where $\omega_{2}^{\phi}(f, h)$ is a function[^33] that satisfies $\omega_{2}^{\phi}(f, h)\le M h^2$ whenever $h\le 1/2$, for the given choice of $\phi$ (Timan 1994)[^34].  So&mdash; $$\left(\frac32+\frac{3}{2h^2\phi(\lambda)^2}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h) \le \left(\frac32+\frac{3\lambda(1-\lambda)}{2h^2n^2}\right) M h^2 = \epsilon(f, h, n).$$ Finally, the change of variable $h=\sqrt{\lambda(1-\lambda)}/n$ is made (and $h$ is at most 1/2 given $n\ge 1$).  This change of variable leads to&mdash; $$\epsilon(f,h,n)=\left(\frac32+\frac{3}{2}\right) M (\sqrt{\lambda(1-\lambda)}/n)^2 = \frac{3M\lambda(1-\lambda)}{n^2} \le \frac{3M}{4n^2} = 0.75M/(n^2).$$ &#x25a1;</p>
+
+<blockquote>
+<p><strong>Note:</strong> The requirement of being concave is needed here to ensure $U_{n,2}(f)$ is non-negative.  It is open whether this proposition&#39;s conclusion remains true if this requirement is dropped.</p>
+</blockquote>
 
 <p><a id=Failures_of_the_Consistency_Requirement></a></p>
 
@@ -1561,7 +1569,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <p><em>Proof:</em> If <em>f</em> is 0 everywhere in its domain or 1 everywhere in its domain: Return 0 or 1, respectively.  Otherwise, let&mdash;</p>
 
 <ul>
-<li><em>M</em> be the Lipschitz constant of <em>f</em> (its derivative&#39;s maximum absolute value if <em>f</em> is continuous), or a computable number greater than this.</li>
+<li><em>M</em> be the Lipschitz constant of <em>f</em> (its derivative&#39;s absolute value of the maximum if <em>f</em> is continuous), or a computable number greater than this.
+bsolute value of the maximum/g</li>
 <li><em>l</em> be either 0 if 0 is in the domain of <em>f</em>, or 1 otherwise, and</li>
 <li><em>u</em> be either 0 if 1 is in the domain of <em>f</em>, or 1 otherwise.</li>
 </ul>
@@ -1955,7 +1964,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p><strong>Conjecture.</strong></p>
 
-<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).</p>
+<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the absolute value of the maximum of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
+bsolute value of the maximum/g</p>
 
 <p>For each integer $n\ge1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
 
@@ -1969,7 +1979,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.</p>
 
-<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
+<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the absolute value of the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
+bsolute value of the maximum/g</p>
 
 <blockquote>
 <p><strong>Note:</strong> By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3)[^1].</p>
@@ -1980,8 +1991,10 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <p>The following lower bounds on $C_0$ can be shown.  In the table:</p>
 
 <ul>
-<li>$M_{0,r}$ is the maximum absolute value of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].</li>
-<li>$M_{1,r}$ is the maximum absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.</li>
+<li>$M_{0,r}$ is the absolute value of the maximum of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].
+bsolute value of the maximum/g</li>
+<li>$M_{1,r}$ is the absolute value of the maximum of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.
+bsolute value of the maximum/g</li>
 <li>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</li>
 </ul>
 

@@ -63,7 +63,8 @@ The following terms can describe a function $f(x)$, specifically how "well-behav
 
 - If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" or "velocity" or "instantaneous-rate-of-change" function.  The derivative (or _first derivative_) is denoted as $f'$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f''$, is the derivative of $f'$; the _third derivative_ is the derivative of $f''$; and so on.
 - A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
-- A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the function's "steepness" is no greater than that of _L_\*_x_.<br>If the function has a derivative on its domain, _L_ can be the maximum absolute value of that derivative.
+- A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the function's "steepness" is no greater than that of _L_\*_x_.<br>If the function has a derivative on its domain, _L_ can be the absolute value of the maximum of that derivative.
+bsolute value of the maximum/g
 - A _convex_ function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes down, then it's convex.
 - A _concave_ function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes up, then it's concave.
 
@@ -131,7 +132,8 @@ Finding _m_ and _&alpha;_ is non-trivial in general.  But assuming _m_ and _&alp
     - is convex and has a minimum of greater than 0, or
     - is concave and has a maximum of less than 1.
 
-Let _m_ be the Lipschitz constant of _f_'s derivative, or a greater number than that constant (if _f_ has a second derivative on its domain, then _m_ can be the maximum absolute value of that second derivative).  Then for every integer _n_ that's a power of 2:
+Let _m_ be the Lipschitz constant of _f_'s derivative, or a greater number than that constant (if _f_ has a second derivative on its domain, then _m_ can be the absolute value of the maximum of that second derivative).  Then for every integer _n_ that's a power of 2:
+bsolute value of the maximum/g
 
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise,  _f_(_k_/_n_) &minus; _m_/(7\*_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _m_/(7\*_n_).
@@ -279,22 +281,21 @@ An example is given by the iterated Bernstein polynomial construction discussed 
 1. the iterated polynomial is within $\epsilon$ of $f(\lambda)$, and
 2. the polynomial $W_{n,i}$ is not less than 0 or greater than 1.
 
-&nbsp;
-
 Suppose the polynomial $W_{n,i}$ is non-negative for $f$.  Then:
 
-| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes: |
+| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes |
  --- | --- | --- | --- | --- |
-| Has continuous second derivative. | $U_{n,2}$. | _&epsilon;_ = 0.75\*_M_/_n_<sup>2</sup> | _n_ = ceil(sqrt(0.75\*_M_/_&epsilon;_)). | _M_ is not less than maximum absolute value of second derivative.  See Proposition B8 in appendix. |
+| Is concave and has continuous second derivative. | $U_{n,2}$. | _&epsilon;_ = 0.75\*_M_/_n_<sup>2</sup> | _n_ = ceil(sqrt(0.75\*_M_/_&epsilon;_)). | _M_ is not less than absolute value of the maximum of second derivative.  See Proposition B8 in appendix. |
+bsolute value of the maximum/g
 
 By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds _appear_ to be true.  In the table below, _M_<sub>_n_</sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^9]
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  |
  --- | --- | --- | --- |
-| Has continuous third derivative. | $U_{n,2}$ | _&epsilon;_ = 0.3489\*_M_<sub>3</sub>/_n_<sup>3/2</sup>. | _n_=ceil((0.3489)<sup>2/3</sup>\*(_M_<sub>4</sub>/_&epsilon;_)<sup>2/3</sup>) &lt; ceil((49561/100000)\*(_M_/_&epsilon;_)<sup>2/3</sup>). |
-| Has continuous fourth derivative. | $U_{n,2}$ | _&epsilon;_ = 0.275\*_M_<sub>4</sub>/_n_<sup>2</sup>. | _n_=ceil(sqrt(0.275)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)) &lt; ceil((52441/100000)\*sqrt(_M_/_&epsilon;_)). |
-| Has continuous fifth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.7284\*_M_<sub>5</sub>/_n_<sup>5/2</sup>. | _n_=ceil((0.7284)<sup>2/5</sup>\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>) &lt; ceil((88095/100000)\*(_M_/_&epsilon;_)<sup>2/5</sup>). |
-| Has continuous sixth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.9961\*_M_<sub>6</sub>/_n_<sup>3</sup>. | _n_=ceil((0.9961)<sup>1/3</sup>\*(_M_<sub>6</sub>/_&epsilon;_)<sup>1/3</sup>) &lt; ceil((99870/100000)\*(_M_/_&epsilon;_)<sup>1/3</sup>). |
+| Has continuous third derivative. | $U_{n,2}$ | _&epsilon;_ = 0.3489\*_M_<sub>3</sub>/_n_<sup>3/2</sup>. | _n_=ceil((0.3489)<sup>2/3</sup>\*(_M_<sub>3</sub>/_&epsilon;_)<sup>2/3</sup>) &lt; ceil((49561/100000)\*(_M_<sub>3</sub>/_&epsilon;_)<sup>2/3</sup>). |
+| Has continuous fourth derivative. | $U_{n,2}$ | _&epsilon;_ = 0.275\*_M_<sub>4</sub>/_n_<sup>2</sup>. | _n_=ceil(sqrt(0.275)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)) &lt; ceil((52441/100000)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)). |
+| Has continuous fifth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.7284\*_M_<sub>5</sub>/_n_<sup>5/2</sup>. | _n_=ceil((0.7284)<sup>2/5</sup>\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>) &lt; ceil((88095/100000)\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>). |
+| Has continuous sixth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.9961\*_M_<sub>6</sub>/_n_<sup>3</sup>. | _n_=ceil((0.9961)<sup>1/3</sup>\*(_M_<sub>6</sub>/_&epsilon;_)<sup>1/3</sup>) &lt; ceil((99870/100000)\*(_M_<sub>6</sub>/_&epsilon;_)<sup>1/3</sup>). |
 
 However, unlike with ordinary Bernstein polynomials, the polynomial $W$ (and thus $U$) is not necessarily bounded by 0 and 1.  The following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$.
 
@@ -324,7 +325,8 @@ To simulate an approximation of $f$ that comes within $\epsilon$ of $f$:
 
     If $f$'s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called "ratio test", the algorithms in Carvalho and Moreira (2022)[^11] can be used here (see also "[**Proofs on Cutting Off a Power Series**](#Proofs_on_Cutting_Off_a_Power_Series)" in the appendix).
 
-    Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor's theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the maximum absolute value of $f$'s ($n$+1)-th derivative on the domain of $f$.
+    Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor's theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the absolute value of the maximum of $f$'s ($n$+1)-th derivative on the domain of $f$.
+bsolute value of the maximum/g
 2. Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the "power" coefficients $a_0, ..., a_n$, is the so-called "matrix method" from Ray and Nataraj (2012)[^12].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial's coefficients.
 3. Flip the input coin _n_ times, then let _j_ be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.
 
@@ -764,7 +766,8 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 
 [^8]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
 
-[^9]: Güntürk and Li 2021 defines the $C^n$ norm as the maximum absolute value of $f(\lambda)$ and its _n_-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.
+[^9]: Güntürk and Li 2021 defines the $C^n$ norm as the absolute value of the maximum of $f(\lambda)$ and its _n_-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.
+bsolute value of the maximum/g
 
 [^10]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.
 
@@ -933,17 +936,19 @@ _Proof_: The critical points of $T(n, 3, p)$ (the points where the maximum might
 
 _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| < 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it's enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 < 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;
 
-**Proposition B8**:  Let _n_&ge;1 be an integer.  Suppose $f(\lambda)$ has a continuous second derivative on the closed unit interval and $U_{n,2}(f)$ is non-negative on the closed unit interval.  Then $U_{n,2}(f)$ is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the maximum absolute value of $f$'s second derivative.
+**Proposition B8**:  Let _n_&ge;1 be an integer.  Suppose $f(\lambda)$ is concave and has a continuous second derivative on the closed unit interval.  Then $U_{n,2}(f)$ (as defined in "Approximate Bernoulli Factories for Continuous Functions") is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the absolute value of the maximum of $f$'s second derivative.
 
 _Proof:_ Theorem 11 of Bustamante (2008)[^32] provides error bounds for certain polynomials that come close to a continuous function.  To use this result here, the following conditions are verified:
 
-- $U_{n,2}$ is non-negative.
-- $U_{n,2}$ equals $f$ whenever $f$ is a linear function.
+- $U_{n,2}$ is non-negative (because $f$ is concave, making $W_{n,2}$, and therefore its Bernstein polynomial $U_{n,2}$, non-negative by Proposition B1).
+- $U_{n,2}$ is a linear operator (Micchelli 1973)[^6].  Notably, it equals $f$ whenever $f$ is a linear function.
 - $U_{n,2}(\lambda) = \lambda$ and $U_{n,2}(1) = 1$.
 - $\phi(\lambda)=1$ which is positive and concave.
 - $(U_{n,2}(\lambda^2)-\lambda^2) = \lambda(1-\lambda)/n^2$.
 
-Then by Theorem 11, $U_{n,2}$ is close to $f$ by at most&mdash; $$\left(\frac32+\frac{3}{(2h^2\phi(\lambda)^2)}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h),$$ where $\omega_{2}^{\phi}(f, h)$ is a function[^33] that satisfies $\omega_{2}^{\phi}(f, h)\le M h^2$ whenever $h\le 1/2$, for the given choice of $\phi$ (Timan 1994)[^34].  So&mdash; $$\left(\frac32+\frac{3}{2h^2\phi(\lambda)^2}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h) \le \left(\frac32+\frac{3\lambda(1-\lambda)}{2h^2n^2}\right) M h^2 = \epsilon(f, h, n).$$ Finally, the change of variable $h=\sqrt{\lambda(1-\lambda)}/n$ is made (and $h$ is not less than 1/2 given $n\ge 1$).  This change of variable leads to&mdash; $$\epsilon(f,h,n)=\left(\frac32+\frac{3}{2}\right) M (\sqrt{\lambda(1-\lambda)}/n)^2 = \frac{3Mx(1-x)}{n^2} \le \frac{3M}{4n^2} = 0.75M/(n^2).$$ &#x25a1;
+Then by Theorem 11, $U_{n,2}$ is close to $f$ by at most&mdash; $$\left(\frac32+\frac{3}{(2h^2\phi(\lambda)^2)}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h),$$ where $\omega_{2}^{\phi}(f, h)$ is a function[^33] that satisfies $\omega_{2}^{\phi}(f, h)\le M h^2$ whenever $h\le 1/2$, for the given choice of $\phi$ (Timan 1994)[^34].  So&mdash; $$\left(\frac32+\frac{3}{2h^2\phi(\lambda)^2}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h) \le \left(\frac32+\frac{3\lambda(1-\lambda)}{2h^2n^2}\right) M h^2 = \epsilon(f, h, n).$$ Finally, the change of variable $h=\sqrt{\lambda(1-\lambda)}/n$ is made (and $h$ is at most 1/2 given $n\ge 1$).  This change of variable leads to&mdash; $$\epsilon(f,h,n)=\left(\frac32+\frac{3}{2}\right) M (\sqrt{\lambda(1-\lambda)}/n)^2 = \frac{3M\lambda(1-\lambda)}{n^2} \le \frac{3M}{4n^2} = 0.75M/(n^2).$$ &#x25a1;
+
+> **Note:** The requirement of being concave is needed here to ensure $U_{n,2}(f)$ is non-negative.  It is open whether this proposition's conclusion remains true if this requirement is dropped.
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
@@ -1097,7 +1102,8 @@ _Proof of Proposition 2:_  The following cases can occur:
 
 _Proof:_ If _f_ is 0 everywhere in its domain or 1 everywhere in its domain: Return 0 or 1, respectively.  Otherwise, let&mdash;
 
-- _M_ be the Lipschitz constant of _f_ (its derivative's maximum absolute value if _f_ is continuous), or a computable number greater than this.
+- _M_ be the Lipschitz constant of _f_ (its derivative's absolute value of the maximum if _f_ is continuous), or a computable number greater than this.
+bsolute value of the maximum/g
 - _l_ be either 0 if 0 is in the domain of _f_, or 1 otherwise, and
 - _u_ be either 0 if 1 is in the domain of _f_, or 1 otherwise.
 
@@ -1401,7 +1407,8 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 **Conjecture.**
 
-Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
+Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the absolute value of the maximum of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
+bsolute value of the maximum/g
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
@@ -1413,7 +1420,8 @@ Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.
 
-It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
+It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the absolute value of the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
+bsolute value of the maximum/g
 
 > **Note:** By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
 
@@ -1421,8 +1429,10 @@ It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when 
 
 The following lower bounds on $C_0$ can be shown.  In the table:
 
-- $M_{0,r}$ is the maximum absolute value of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].
-- $M_{1,r}$ is the maximum absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.
+- $M_{0,r}$ is the absolute value of the maximum of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].
+bsolute value of the maximum/g
+- $M_{1,r}$ is the absolute value of the maximum of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.
+bsolute value of the maximum/g
 - The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.
 
 &nbsp;
