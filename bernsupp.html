@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/01"><meta name="citation_online_date" content="2023/04/01"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/02"><meta name="citation_online_date" content="2023/04/02"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -433,12 +433,12 @@ bsolute value of the maximum/g</p>
 <tr>
 <td>Order-3 iterated Bernstein polynomial.</td>
 <td>$U_{n,3} = B_n(W_{n,3})$.</td>
-<td>Calculate $W_{n,3} = B_n(B_n(f(\lambda))) + 3 (f(\lambda) - B_n(f(\lambda)))$.</td>
+<td>Calculate $W_{n,3} = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$.</td>
 <td>Same.</td>
 </tr>
 <tr>
 <td>Linear Bernstein polynomial combination.</td>
-<td>$L_{2,n/2} = 2 B_{n}(f(\lambda)) - B_{n/2}(f(\lambda))$.</td>
+<td>$L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$.</td>
 <td>Treat the coefficients [$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$] as representing a polynomial in Bernstein form of degree $n/2$, elevate that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$.</td>
 <td>(Tachev 2022)[^9].  $n&gt;4$ must be even.</td>
 </tr>
@@ -471,7 +471,7 @@ bsolute value of the maximum/g</p>
 </tr>
 <tr>
 <td>Has continuous third derivative.</td>
-<td>$L_{2, n/2}$</td>
+<td>$L_{2, n/2}$.</td>
 <td><em>&epsilon;</em> = (3*sqrt(3)/16)*<em>M</em>/(<em>n</em>/2)<sup>2</sup>.</td>
 <td><em>n</em>=ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$).</td>
 <td>(Tachev 2022)[^9]. $n&gt;4$ must be even. <em>M</em> is not less than absolute value of the maximum of third derivative.</td>

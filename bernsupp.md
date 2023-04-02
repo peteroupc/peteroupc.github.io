@@ -276,8 +276,8 @@ Examples of these alternative polynomials (all of degree $n$) are given in the f
 | Name |  Polynomial | Its Bernstein coefficients are found as follows: | Notes |
  --- | --- | --- | --- |
 | Order-2 iterated Bernstein polynomial. | $U_{n,2} = B_n(W_{n,2})$. | Calculate $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$. | Micchelli (1973)[^6], Guan (2009)[^7], (Güntürk and Li 2021, sec. 3.3)[^8]. |
-| Order-3 iterated Bernstein polynomial. | $U_{n,3} = B_n(W_{n,3})$. | Calculate $W_{n,3} = B_n(B_n(f(\lambda))) + 3 (f(\lambda) - B_n(f(\lambda)))$. | Same. |
-| Linear Bernstein polynomial combination. | $L_{2,n/2} = 2 B_{n}(f(\lambda)) - B_{n/2}(f(\lambda))$. | Treat the coefficients \[$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$\] as representing a polynomial in Bernstein form of degree $n/2$, elevate that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$. |(Tachev 2022)[^9].  $n>4$ must be even.|
+| Order-3 iterated Bernstein polynomial. | $U_{n,3} = B_n(W_{n,3})$. | Calculate $W_{n,3} = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$. | Same. |
+| Linear Bernstein polynomial combination. | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | Treat the coefficients \[$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$\] as representing a polynomial in Bernstein form of degree $n/2$, elevate that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$. |(Tachev 2022)[^9].  $n>4$ must be even.|
 
 The goal is now to find a degree $n$ such that&mdash;
 
@@ -289,7 +289,7 @@ Then:
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes |
  --- | --- | --- | --- | --- |
 | Is concave and has continuous second derivative. | $U_{n,2}$. | _&epsilon;_ = 0.75\*_M_/_n_<sup>2</sup>. | _n_ = ceil(sqrt(0.75\*_M_/_&epsilon;_)). | _M_ is not less than absolute value of the maximum of second derivative.  See Proposition B8 in appendix. |
-| Has continuous third derivative. | $L_{2, n/2}$ | _&epsilon;_ = (3\*sqrt(3)/16)\*_M_/(_n_/2)<sup>2</sup>. | _n_=ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$). | (Tachev 2022)[^9]. $n>4$ must be even. _M_ is not less than absolute value of the maximum of third derivative. |
+| Has continuous third derivative. | $L_{2, n/2}$. | _&epsilon;_ = (3\*sqrt(3)/16)\*_M_/(_n_/2)<sup>2</sup>. | _n_=ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$). | (Tachev 2022)[^9]. $n>4$ must be even. _M_ is not less than absolute value of the maximum of third derivative. |
 
 By analyzing the proof of Theorem 3.3 of Güntürk and Li (2021, sec. 3.3)[^8], the following error bounds _appear_ to be true.  In the table below, _M_<sub>_n_</sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^10]
 
