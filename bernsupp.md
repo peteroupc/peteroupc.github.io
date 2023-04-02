@@ -13,6 +13,7 @@
 - [**Approximate Bernoulli Factories**](#Approximate_Bernoulli_Factories)
     - [**Approximate Bernoulli Factories for Certain Functions**](#Approximate_Bernoulli_Factories_for_Certain_Functions)
     - [**Approximate Bernoulli Factories for Power Series**](#Approximate_Bernoulli_Factories_for_Power_Series)
+    - [**Approximate Bernoulli Factories for Other "Smooth" Functions**](#Approximate_Bernoulli_Factories_for_Other_Smooth_Functions)
     - [**Approximate Bernoulli Factories for Linear Functions**](#Approximate_Bernoulli_Factories_for_Linear_Functions)
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Complexity**](#Complexity)
@@ -64,7 +65,7 @@ The following terms can describe a function $f(x)$, specifically how "well-behav
 - If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" or "velocity" or "instantaneous-rate-of-change" function.  The derivative (or _first derivative_) is denoted as $f'$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f''$, is the derivative of $f'$; the _third derivative_ is the derivative of $f''$; and so on.
 - A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 - A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the function's "steepness" is no greater than that of _L_\*_x_.<br>If the function has a derivative on its domain, _L_ can be the absolute value of the maximum of that derivative.
-bsolute value of the maximum/g
+
 - A _convex_ function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes down, then it's convex.
 - A _concave_ function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes up, then it's concave.
 
@@ -133,7 +134,6 @@ Finding _m_ and _&alpha;_ is non-trivial in general.  But assuming _m_ and _&alp
     - is concave and has a maximum of less than 1.
 
 Let _m_ be the Lipschitz constant of _f_'s derivative, or a greater number than that constant (if _f_ has a second derivative on its domain, then _m_ can be the absolute value of the maximum of that second derivative).  Then for every integer _n_ that's a power of 2:
-bsolute value of the maximum/g
 
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise,  _f_(_k_/_n_) &minus; _m_/(7\*_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _m_/(7\*_n_).
@@ -328,11 +328,27 @@ To simulate an approximation of $f$ that comes within $\epsilon$ of $f$:
     If $f$'s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called "ratio test", the algorithms in Carvalho and Moreira (2022)[^12] can be used here (see also "[**Proofs on Cutting Off a Power Series**](#Proofs_on_Cutting_Off_a_Power_Series)" in the appendix).
 
     Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor's theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the absolute value of the maximum of $f$'s ($n$+1)-th derivative on the domain of $f$.
-bsolute value of the maximum/g
-2. Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the "power" coefficients $a_0, ..., a_n$, is the so-called "matrix method" from Ray and Nataraj (2012)[^13].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial's coefficients.
+
+2. Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the "power" coefficients $a_0, ..., a_n$, is the so-called "matrix method" from Ray and Nataraj (2012)[^13].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial's coefficients.  If any of those coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the coefficents is less than 0 or greater than 1.
 3. Flip the input coin _n_ times, then let _j_ be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.
 
 In fact, if $f(\lambda)$ belongs in _Gevrey's hierarchy_ (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative's absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$), which includes functions equaling power series as a special case ($\gamma=1$), it's possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^14]; see also (Gevrey 1918)[^15]).
+
+<a id=Approximate_Bernoulli_Factories_for_Other_Smooth_Functions></a>
+### Approximate Bernoulli Factories for Other "Smooth" Functions
+
+If $f(\lambda)$ is "smooth" enough and $\epsilon$ is big enough, then Taylor's theorem shows how to a build a polynomial that comes within $\epsilon$ of $f$.
+
+Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that&mdash;
+
+- $f$ is continuous on the closed unit interval, and
+- $f$ satisfies $\epsilon\le f(\lambda)\le 1-\epsilon$ whenever $0\le\lambda\le 1$, and
+- $f$'s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M/((n+1)!)$, where $M$ is not less than the maximum of the absolute value of that derivative, and
+- $f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.
+
+Then the $n$-th _Taylor polynomial_ centered at 0, given below, is within $\epsilon$ of $f$: $$P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,$$
+
+where $a_0 = f(0)$ and $a_i = f^{(i)}(0)/(i!)$ for $i\ge 1$.  Given this $P$, the algorithm to simulate this polynomial is the same as steps 2 and 3 of the previous section's algorithm.
 
 <a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a>
 ### Approximate Bernoulli Factories for Linear Functions
@@ -771,7 +787,6 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 [^9]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 
 [^10]: Güntürk and Li 2021 defines the $C^n$ norm as the absolute value of the maximum of $f(\lambda)$ and its _n_-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.
-bsolute value of the maximum/g
 
 [^11]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.
 
@@ -1107,7 +1122,7 @@ _Proof of Proposition 2:_  The following cases can occur:
 _Proof:_ If _f_ is 0 everywhere in its domain or 1 everywhere in its domain: Return 0 or 1, respectively.  Otherwise, let&mdash;
 
 - _M_ be the Lipschitz constant of _f_ (its derivative's absolute value of the maximum if _f_ is continuous), or a computable number greater than this.
-bsolute value of the maximum/g
+
 - _l_ be either 0 if 0 is in the domain of _f_, or 1 otherwise, and
 - _u_ be either 0 if 1 is in the domain of _f_, or 1 otherwise.
 
@@ -1412,7 +1427,6 @@ The following conjecture suggests there may be a way to easily adapt other appro
 **Conjecture.**
 
 Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the absolute value of the maximum of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
-bsolute value of the maximum/g
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
@@ -1425,7 +1439,6 @@ Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.
 
 It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the absolute value of the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
-bsolute value of the maximum/g
 
 > **Note:** By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
 
@@ -1434,9 +1447,9 @@ bsolute value of the maximum/g
 The following lower bounds on $C_0$ can be shown.  In the table:
 
 - $M_{0,r}$ is the absolute value of the maximum of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].
-bsolute value of the maximum/g
+
 - $M_{1,r}$ is the absolute value of the maximum of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.
-bsolute value of the maximum/g
+
 - The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.
 
 &nbsp;

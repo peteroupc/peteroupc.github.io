@@ -26,6 +26,7 @@
 <ul>
 <li><a href="#Approximate_Bernoulli_Factories_for_Certain_Functions"><strong>Approximate Bernoulli Factories for Certain Functions</strong></a></li>
 <li><a href="#Approximate_Bernoulli_Factories_for_Power_Series"><strong>Approximate Bernoulli Factories for Power Series</strong></a></li>
+<li><a href="#Approximate_Bernoulli_Factories_for_Other_Smooth_Functions"><strong>Approximate Bernoulli Factories for Other &quot;Smooth&quot; Functions</strong></a></li>
 <li><a href="#Approximate_Bernoulli_Factories_for_Linear_Functions"><strong>Approximate Bernoulli Factories for Linear Functions</strong></a></li>
 </ul></li>
 <li><a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a></li>
@@ -95,9 +96,8 @@
 <ul>
 <li>If $f$ is continuous, its <em>derivative</em> is, roughly speaking, its &quot;slope&quot; or &quot;velocity&quot; or &quot;instantaneous-rate-of-change&quot; function.  The derivative (or <em>first derivative</em>) is denoted as $f&#39;$.  The <em>second derivative</em> (&quot;slope-of-slope&quot;) of $f$, denoted $f&#39;&#39;$, is the derivative of $f&#39;$; the <em>third derivative</em> is the derivative of $f&#39;&#39;$; and so on.</li>
 <li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Here, <em>&alpha;</em> satisfies 0 &lt; <em>&alpha;</em> &le; 1.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.</li>
-<li>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>L</em>*<em>x</em>.<br>If the function has a derivative on its domain, <em>L</em> can be the absolute value of the maximum of that derivative.
-bsolute value of the maximum/g</li>
-<li>A <em>convex</em> function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes down, then it&#39;s convex.</li>
+<li><p>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>L</em>*<em>x</em>.<br>If the function has a derivative on its domain, <em>L</em> can be the absolute value of the maximum of that derivative.</p></li>
+<li><p>A <em>convex</em> function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes down, then it&#39;s convex.</p></li>
 <li>A <em>concave</em> function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes up, then it&#39;s concave.</li>
 </ul>
 
@@ -190,8 +190,7 @@ bsolute value of the maximum/g</li>
 </ul></li>
 </ul>
 
-<p>Let <em>m</em> be the Lipschitz constant of <em>f</em>&#39;s derivative, or a greater number than that constant (if <em>f</em> has a second derivative on its domain, then <em>m</em> can be the absolute value of the maximum of that second derivative).  Then for every integer <em>n</em> that&#39;s a power of 2:
-bsolute value of the maximum/g</p>
+<p>Let <em>m</em> be the Lipschitz constant of <em>f</em>&#39;s derivative, or a greater number than that constant (if <em>f</em> has a second derivative on its domain, then <em>m</em> can be the absolute value of the maximum of that second derivative).  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
@@ -546,13 +545,31 @@ bsolute value of the maximum/g</p>
 
 <p>If $f$&#39;s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called &quot;ratio test&quot;, the algorithms in Carvalho and Moreira (2022)[^12] can be used here (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p>
 
-<p>Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor&#39;s theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the absolute value of the maximum of $f$&#39;s ($n$+1)-th derivative on the domain of $f$.
-bsolute value of the maximum/g</p></li>
-<li>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^13].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.</li>
+<p>Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor&#39;s theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the absolute value of the maximum of $f$&#39;s ($n$+1)-th derivative on the domain of $f$.</p></li>
+<li><p>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^13].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.  If any of those coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the coefficents is less than 0 or greater than 1.</p></li>
 <li>Flip the input coin <em>n</em> times, then let <em>j</em> be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.</li>
 </ol>
 
 <p>In fact, if $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$), which includes functions equaling power series as a special case ($\gamma=1$), it&#39;s possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^14]; see also (Gevrey 1918)[^15]).</p>
+
+<p><a id=Approximate_Bernoulli_Factories_for_Other_Smooth_Functions></a></p>
+
+<h3>Approximate Bernoulli Factories for Other &quot;Smooth&quot; Functions</h3>
+
+<p>If $f(\lambda)$ is &quot;smooth&quot; enough and $\epsilon$ is big enough, then Taylor&#39;s theorem shows how to a build a polynomial that comes within $\epsilon$ of $f$.</p>
+
+<p>Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that&mdash;</p>
+
+<ul>
+<li>$f$ is continuous on the closed unit interval, and</li>
+<li>$f$ satisfies $\epsilon\le f(\lambda)\le 1-\epsilon$ whenever $0\le\lambda\le 1$, and</li>
+<li>$f$&#39;s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M/((n+1)!)$, where $M$ is not less than the maximum of the absolute value of that derivative, and</li>
+<li>$f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.</li>
+</ul>
+
+<p>Then the $n$-th <em>Taylor polynomial</em> centered at 0, given below, is within $\epsilon$ of $f$: $$P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,$$</p>
+
+<p>where $a_0 = f(0)$ and $a_i = f^{(i)}(0)/(i!)$ for $i\ge 1$.  Given this $P$, the algorithm to simulate this polynomial is the same as steps 2 and 3 of the previous section&#39;s algorithm.</p>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a></p>
 
@@ -1217,8 +1234,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>[^9]: Tachev, Gancho. &quot;<a href="https://doi.org/10.3934/mfc.2022061"><strong>Linear combinations of two Bernstein polynomials</strong></a>&quot;, <em>Mathematical Foundations of Computing</em>, 2022.</p>
 
-<p>[^10]: Güntürk and Li 2021 defines the $C^n$ norm as the absolute value of the maximum of $f(\lambda)$ and its <em>n</em>-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.
-bsolute value of the maximum/g</p>
+<p>[^10]: Güntürk and Li 2021 defines the $C^n$ norm as the absolute value of the maximum of $f(\lambda)$ and its <em>n</em>-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.</p>
 
 <p>[^11]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.</p>
 
@@ -1593,9 +1609,8 @@ bsolute value of the maximum/g</p>
 <p><em>Proof:</em> If <em>f</em> is 0 everywhere in its domain or 1 everywhere in its domain: Return 0 or 1, respectively.  Otherwise, let&mdash;</p>
 
 <ul>
-<li><em>M</em> be the Lipschitz constant of <em>f</em> (its derivative&#39;s absolute value of the maximum if <em>f</em> is continuous), or a computable number greater than this.
-bsolute value of the maximum/g</li>
-<li><em>l</em> be either 0 if 0 is in the domain of <em>f</em>, or 1 otherwise, and</li>
+<li><p><em>M</em> be the Lipschitz constant of <em>f</em> (its derivative&#39;s absolute value of the maximum if <em>f</em> is continuous), or a computable number greater than this.</p></li>
+<li><p><em>l</em> be either 0 if 0 is in the domain of <em>f</em>, or 1 otherwise, and</p></li>
 <li><em>u</em> be either 0 if 1 is in the domain of <em>f</em>, or 1 otherwise.</li>
 </ul>
 
@@ -1988,8 +2003,7 @@ bsolute value of the maximum/g</li>
 
 <p><strong>Conjecture.</strong></p>
 
-<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the absolute value of the maximum of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
-bsolute value of the maximum/g</p>
+<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the absolute value of the maximum of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).</p>
 
 <p>For each integer $n\ge1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
 
@@ -2003,8 +2017,7 @@ bsolute value of the maximum/g</p>
 
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.</p>
 
-<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the absolute value of the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
-bsolute value of the maximum/g</p>
+<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the absolute value of the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 
 <blockquote>
 <p><strong>Note:</strong> By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3)[^1].</p>
@@ -2015,11 +2028,9 @@ bsolute value of the maximum/g</p>
 <p>The following lower bounds on $C_0$ can be shown.  In the table:</p>
 
 <ul>
-<li>$M_{0,r}$ is the absolute value of the maximum of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].
-bsolute value of the maximum/g</li>
-<li>$M_{1,r}$ is the absolute value of the maximum of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.
-bsolute value of the maximum/g</li>
-<li>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</li>
+<li><p>$M_{0,r}$ is the absolute value of the maximum of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].</p></li>
+<li><p>$M_{1,r}$ is the absolute value of the maximum of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.</p></li>
+<li><p>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</p></li>
 </ul>
 
 <p>&nbsp;</p>
