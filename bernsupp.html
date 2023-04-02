@@ -368,7 +368,7 @@ bsolute value of the maximum/g</p>
 
 <h3>Approximate Bernoulli Factories for Certain Functions</h3>
 
-<p>This section first discusses approximating $f$ with a <em>Bernstein polynomial</em> (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials approach $f$ slowly in general, in the order of $1/n$ (Voronovskaya 1932)[^3].</p>
+<p>This section first discusses approximating $f$ with a <em>Bernstein polynomial</em> (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials approach $f$ slowly in general, in the order of magnitude of $1/n$ (Voronovskaya 1932)[^3].</p>
 
 <p>There are results that give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> Bernstein polynomial.  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, solve the error bound&#39;s equation for <em>n</em>, then take <em>n</em> = ceil(<em>n</em>) to get the solution if it&#39;s an integer, or the nearest integer that&#39;s bigger than the solution.</p>
 
@@ -412,23 +412,46 @@ bsolute value of the maximum/g</p>
 
 <hr>
 
-<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>.</p>
+<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.</p>
 
-<p>An example is given by the iterated Bernstein polynomial construction discussed in Micchelli (1973)[^6] and Guan (2009)[^7]. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Then&mdash;</p>
+<p>Examples of these alternative polynomials (all of degree $n$) are given in the following table.</p>
 
-<ul>
-<li>the order-2 iterated Bernstein polynomial of degree $n$ is $U_{n,2} = B_n(W_{n,2})$, where $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$, and</li>
-<li>the order-3 iterated Bernstein polynomial of degree $n$ is $U_{n,3} = B_n(W_{n,3})$, where $W_{n,3} = B_n(B_n(f(\lambda))) + 3 (f(\lambda) - B_n(f(\lambda)))$</li>
-</ul>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Polynomial</th>
+<th>Its Bernstein coefficients are found as follows:</th>
+<th>Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Order-2 iterated Bernstein polynomial.</td>
+<td>$U_{n,2} = B_n(W_{n,2})$.</td>
+<td>Calculate $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$.</td>
+<td>Micchelli (1973)[^6], Guan (2009)[^7], (Güntürk and Li 2021, sec. 3.3)[^8].</td>
+</tr>
+<tr>
+<td>Order-3 iterated Bernstein polynomial.</td>
+<td>$U_{n,3} = B_n(W_{n,3})$.</td>
+<td>Calculate $W_{n,3} = B_n(B_n(f(\lambda))) + 3 (f(\lambda) - B_n(f(\lambda)))$.</td>
+<td>Same.</td>
+</tr>
+<tr>
+<td>Linear Bernstein polynomial combination.</td>
+<td>$L_{2,n/2} = 2 B_{n}(f(\lambda)) - B_{n/2}(f(\lambda))$.</td>
+<td>Treat the coefficients [$f(0/(n/2)), f(1/(n/2)), ..., f((n/2)/(n/2))] as representing a polynomial in Bernstein form of degree $n/2$, elevate that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$.</td>
+<td>(Tachev 2022)[^63].  $n&gt;4$ must be even.</td>
+</tr>
+</tbody></table>
 
-<p>(Güntürk and Li 2021, sec. 3.3)[^8]. The goal is now to find a degree $n$ such that&mdash;</p>
+<p>The goal is now to find a degree $n$ such that&mdash;</p>
 
 <ol>
-<li>the iterated polynomial is within $\epsilon$ of $f(\lambda)$, and</li>
+<li>the alternative polynomial is within $\epsilon$ of $f(\lambda)$, and</li>
 <li>the polynomial $W_{n,i}$ is not less than 0 or greater than 1.</li>
 </ol>
 
-<p>Suppose the polynomial $W_{n,i}$ is non-negative for $f$.  Then:</p>
+<p>Then:</p>
 
 <table><thead>
 <tr>
@@ -442,15 +465,20 @@ bsolute value of the maximum/g</p>
 <tr>
 <td>Is concave and has continuous second derivative.</td>
 <td>$U_{n,2}$.</td>
-<td><em>&epsilon;</em> = 0.75*<em>M</em>/<em>n</em><sup>2</sup></td>
+<td><em>&epsilon;</em> = 0.75*<em>M</em>/<em>n</em><sup>2</sup>.</td>
 <td><em>n</em> = ceil(sqrt(0.75*<em>M</em>/<em>&epsilon;</em>)).</td>
 <td><em>M</em> is not less than absolute value of the maximum of second derivative.  See Proposition B8 in appendix.</td>
 </tr>
+<tr>
+<td>Has continuous third derivative.</td>
+<td>$L_{2, n}$</td>
+<td><em>&epsilon;</em> = (3*sqrt(3)/16)*<em>M</em>/(<em>n</em>/2)<sup>2</sup>.</td>
+<td>$n=\frac{3^{3/4} \sqrt{m/\epsilon}}{2}$.</td>
+<td>(Tachev 2022)[^64]. $n&gt;4$ must be even. <em>M</em> is not less than absolute value of the maximum of third derivative.</td>
+</tr>
 </tbody></table>
 
-<p>bsolute value of the maximum/g</p>
-
-<p>By analyzing the proof of Theorem 3.3 of the paper just cited, the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^9]</p>
+<p>By analyzing the proof of Theorem 3.3 of Güntürk and Li (2021, sec. 3.3)[^8], the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^9]</p>
 
 <table><thead>
 <tr>
@@ -460,12 +488,6 @@ bsolute value of the maximum/g</p>
 <th>Where <em>n</em> is:</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>Has continuous third derivative.</td>
-<td>$U_{n,2}$</td>
-<td><em>&epsilon;</em> = 0.3489*<em>M</em><sub>3</sub>/<em>n</em><sup>3/2</sup>.</td>
-<td><em>n</em>=ceil((0.3489)<sup>2/3</sup>*(<em>M</em><sub>3</sub>/<em>&epsilon;</em>)<sup>2/3</sup>) &lt; ceil((49561/100000)*(<em>M</em><sub>3</sub>/<em>&epsilon;</em>)<sup>2/3</sup>).</td>
-</tr>
 <tr>
 <td>Has continuous fourth derivative.</td>
 <td>$U_{n,2}$</td>
@@ -486,27 +508,27 @@ bsolute value of the maximum/g</p>
 </tr>
 </tbody></table>
 
-<p>However, unlike with ordinary Bernstein polynomials, the polynomial $W$ (and thus $U$) is not necessarily bounded by 0 and 1.  The following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$.</p>
+<p>However, unlike with ordinary Bernstein polynomials, the alternative polynomial is not necessarily bounded by 0 and 1.  The following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$.</p>
 
 <ol>
-<li>Determine whether $f$ is described in the table above.  Let <em>A</em> be the minimum of $f$ on the closed unit interval and let <em>B</em> be the maximum of $f$ there.</li>
-<li>If 0 &lt; <em>A</em> &le; <em>B</em> &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.</li>
-<li>Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If <em>B</em> is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.</li>
-<li>Calculate $n$ as given in the table above.  Then, if $W_{n,i}(j/n)\lt 0$ or $W_{n,i}(j/n)\gt 1$ for some $0\le j\le n$, double the value of $n$ until this condition is no longer true.</li>
+<li>Determine whether $f$ is described in either of the two tables above.  Let <em>A</em> be the minimum of $f$ on the closed unit interval and let <em>B</em> be the maximum of $f$ there.</li>
+<li>If 0 &lt; <em>A</em> &le; <em>B</em> &lt; 1, calculate $n$ as given in either of the two tables above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.</li>
+<li>Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If <em>B</em> is less than 1 and any of those conditions is met, calculate $n$ as given in either of the two tables above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.</li>
+<li>Calculate $n$ as given in either of the two tables above.  Then, if $W_{n,i}(j/n)\lt 0$ or $W_{n,i}(j/n)\gt 1$ for some $0\le j\le n$, double the value of $n$ until this condition is no longer true.</li>
 </ol>
 
-<p>Once <em>n</em> is found, simulating the iterated polynomial is as follows:</p>
+<p>Once <em>n</em> is found, simulating the alternative polynomial is as follows:</p>
 
 <ol>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
-<li>With probability $W_{n,2}(j/n)$ or $W_{n,3}(j/n)$ (as the case may be), return 1.  Otherwise, return 0.</li>
+<li>With probability equal to the alternative polynomial&#39;s Bernstein coefficient at position <em>j</em> (0&le;<em>j</em>&le;<em>n</em>), return 1.  Otherwise, return 0.</li>
 </ol>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Providing the full proof for the error bounds shown in the table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 3.3 of Güntürk and Li (2021)[^8], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.</li>
+<li>Providing the full proof for the error bounds shown in the last table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 3.3 of Güntürk and Li (2021)[^8], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.</li>
 <li>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting $c$=floor($c/\delta$) * $\delta$ for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</li>
 </ol>
 </blockquote>
@@ -1301,6 +1323,10 @@ bsolute value of the maximum/g</p>
 <p>[^61]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
 <p>[^62]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+
+<p>[^63]: Tachev, Gancho. &quot;Linear combinations of two Bernstein polynomials.&quot; <em>Mathematical Foundations of Computing</em> (2022).</p>
+
+<p>[^64]: Tachev, Gancho. &quot;Linear combinations of two Bernstein polynomials.&quot; <em>Mathematical Foundations of Computing</em> (2022).</p>
 
 <p><a id=Appendix></a></p>
 
