@@ -269,9 +269,9 @@ Now, if _f_ belongs to any of the classes given above, the following algorithm (
 
 -------------------
 
-Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my [**question on MathOverflow**](https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions). Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.
+Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my [**question on MathOverflow**](https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions).
 
-Examples of these alternative polynomials (all of degree $n$) are given in the following table.
+Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Examples of these alternative polynomials (all of degree $n$) are given in the following table.
 
 | Name |  Polynomial | Its Bernstein coefficients are found as follows: | Notes |
  --- | --- | --- | --- |
@@ -289,7 +289,7 @@ Then:
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes |
  --- | --- | --- | --- | --- |
 | Is concave and has continuous second derivative. | $U_{n,2}$. | _&epsilon;_ = 0.75\*_M_/_n_<sup>2</sup>. | _n_ = ceil(sqrt(0.75\*_M_/_&epsilon;_)). | _M_ is not less than absolute value of the maximum of second derivative.  See Proposition B8 in appendix. |
-| Has continuous third derivative. | $L_{2, n/2}$. | _&epsilon;_ = (3\*sqrt(3)/16)\*_M_/(_n_/2)<sup>2</sup>. | _n_=ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$). | (Tachev 2022)[^9]. $n>4$ must be even. _M_ is not less than absolute value of the maximum of third derivative. |
+| Has continuous third derivative. | $L_{2, n/2}$. | _&epsilon;_ = (3\*sqrt(3)/16)\*_M_/(_n_/2)<sup>2</sup>. | _n_=ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$) &lt; ceil((113976/100000)\*sqrt(m/_&epsilon;_)). (If _n_ is now odd, add 1.) | (Tachev 2022)[^9]. $n>4$ must be even. _M_ is not less than absolute value of the maximum of third derivative. |
 
 By analyzing the proof of Theorem 3.3 of Güntürk and Li (2021, sec. 3.3)[^8], the following error bounds _appear_ to be true.  In the table below, _M_<sub>_n_</sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^10]
 

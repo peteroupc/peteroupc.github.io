@@ -412,9 +412,9 @@ bsolute value of the maximum/g</p>
 
 <hr>
 
-<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>. Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.</p>
+<p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>.</p>
 
-<p>Examples of these alternative polynomials (all of degree $n$) are given in the following table.</p>
+<p>Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Examples of these alternative polynomials (all of degree $n$) are given in the following table.</p>
 
 <table><thead>
 <tr>
@@ -473,7 +473,7 @@ bsolute value of the maximum/g</p>
 <td>Has continuous third derivative.</td>
 <td>$L_{2, n/2}$.</td>
 <td><em>&epsilon;</em> = (3*sqrt(3)/16)*<em>M</em>/(<em>n</em>/2)<sup>2</sup>.</td>
-<td><em>n</em>=ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$).</td>
+<td><em>n</em>=ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$) &lt; ceil((113976/100000)*sqrt(m/<em>&epsilon;</em>)). (If <em>n</em> is now odd, add 1.)</td>
 <td>(Tachev 2022)[^9]. $n&gt;4$ must be even. <em>M</em> is not less than absolute value of the maximum of third derivative.</td>
 </tr>
 </tbody></table>
