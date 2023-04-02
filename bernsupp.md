@@ -277,7 +277,7 @@ Let $B_n(f(\lambda))$ be the ordinary Bernstein polynomial for $f(\lambda)$.  Ex
  --- | --- | --- | --- |
 | Order-2 iterated Bernstein polynomial. | $U_{n,2} = B_n(W_{n,2})$. | Calculate $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$. | Micchelli (1973)[^6], Guan (2009)[^7], (Güntürk and Li 2021, sec. 3.3)[^8]. |
 | Order-3 iterated Bernstein polynomial. | $U_{n,3} = B_n(W_{n,3})$. | Calculate $W_{n,3} = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$. | Same. |
-| Linear Bernstein polynomial combination. | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | Treat the coefficients \[$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$\] as representing a polynomial in Bernstein form of degree $n/2$, elevate that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$. |(Tachev 2022)[^9].  $n>4$ must be even.|
+| Linear Bernstein polynomial combination. | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | Treat the coefficients \[$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$\] as representing a polynomial in Bernstein form of degree $n/2$, elevate that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$. |(Tachev 2022)[^9].  $n\ge 6$ must be even.|
 
 The goal is now to find a degree $n$ such that&mdash;
 
@@ -289,15 +289,15 @@ Then:
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes |
  --- | --- | --- | --- | --- |
 | Is concave and has continuous second derivative. | $U_{n,2}$. | _&epsilon;_ = 0.75\*_M_/_n_<sup>2</sup>. | _n_ = ceil(sqrt(0.75\*_M_/_&epsilon;_)). | _M_ is not less than absolute value of the maximum of second derivative.  See Proposition B8 in appendix. |
-| Has continuous third derivative. | $L_{2, n/2}$. | _&epsilon;_ = (3\*sqrt(3)/16)\*_M_/(_n_/2)<sup>2</sup>. | _n_=ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$) &lt; ceil((113976/100000)\*sqrt(m/_&epsilon;_)). (If _n_ is now odd, add 1.) | (Tachev 2022)[^9]. $n>4$ must be even. _M_ is not less than absolute value of the maximum of third derivative. |
+| Has continuous third derivative. | $L_{2, n/2}$. | _&epsilon;_ = (3\*sqrt(3&minus;4/_n_)/4)\*_M_/_n_<sup>2</sup> &lt; (3\*sqrt(3)/4)\*_M_/_n_<sup>2</sup>. | _n_=max(6,ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$)) &le; max(6,ceil((113976/100000) \* sqrt(M/_&epsilon;_))). (If _n_ is now odd, add 1.) | (Tachev 2022)[^9]. $n\ge 6$ must be even. _M_ is not less than absolute value of the maximum of third derivative. |
 
 By analyzing the proof of Theorem 3.3 of Güntürk and Li (2021, sec. 3.3)[^8], the following error bounds _appear_ to be true.  In the table below, _M_<sub>_n_</sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^10]
 
-| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  |
+| If _f_(_&lambda;_): |  Then the following polynomial: |  Appears to be close to _f_ with the following error bound: | Where _n_ is:  |
  --- | --- | --- | --- |
-| Has continuous fourth derivative. | $U_{n,2}$ | _&epsilon;_ = 0.275\*_M_<sub>4</sub>/_n_<sup>2</sup>. | _n_=ceil(sqrt(0.275)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)) &lt; ceil((52441/100000)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)). |
-| Has continuous fifth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.7284\*_M_<sub>5</sub>/_n_<sup>5/2</sup>. | _n_=ceil((0.7284)<sup>2/5</sup>\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>) &lt; ceil((88095/100000)\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>). |
-| Has continuous sixth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.9961\*_M_<sub>6</sub>/_n_<sup>3</sup>. | _n_=ceil((0.9961)<sup>1/3</sup>\*(_M_<sub>6</sub>/_&epsilon;_)<sup>1/3</sup>) &lt; ceil((99870/100000)\*(_M_<sub>6</sub>/_&epsilon;_)<sup>1/3</sup>). |
+| Has continuous fourth derivative. | $U_{n,2}$ | _&epsilon;_ = 0.275\*_M_<sub>4</sub>/_n_<sup>2</sup>. | _n_=ceil(sqrt(0.275)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)) &le; ceil((52441/100000)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)). |
+| Has continuous fifth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.7284\*_M_<sub>5</sub>/_n_<sup>5/2</sup>. | _n_=ceil((0.7284)<sup>2/5</sup>\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>) &le; ceil((88095/100000)\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>). |
+| Has continuous sixth derivative. | $U_{n,3}$ | _&epsilon;_ = 0.9961\*_M_<sub>6</sub>/_n_<sup>3</sup>. | _n_=ceil((0.9961)<sup>1/3</sup>\*(_M_<sub>6</sub>/_&epsilon;_)<sup>1/3</sup>) &le; ceil((99870/100000)\*(_M_<sub>6</sub>/_&epsilon;_)<sup>1/3</sup>). |
 
 However, unlike with ordinary Bernstein polynomials, the alternative polynomial is not necessarily bounded by 0 and 1.  The following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$.
 
@@ -768,7 +768,7 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 
 [^8]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
 
-[^9]: Tachev, Gancho. "Linear combinations of two Bernstein polynomials." _Mathematical Foundations of Computing_ (2022).
+[^9]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 
 [^10]: Güntürk and Li 2021 defines the $C^n$ norm as the absolute value of the maximum of $f(\lambda)$ and its _n_-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.
 bsolute value of the maximum/g
