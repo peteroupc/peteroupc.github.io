@@ -877,7 +877,7 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 > 1. Take $n$ variates from the stream and sum them.  Call the sum $X$.  (The result is then a Poisson random variate with mean $n\cdot p$.)
 > 2. With probability $f(X/n)$, return 1.  Otherwise, return 0.
 >
-> Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the _Szász operator_ (or _Szász&ndash;Mirakyan operator) of $f$ of degree $n$.  Indeed, the Szász operator can be written as a convex combination with $g(n)$ equal to the Poisson probabilities for mean $n\cdot p$ and $h_X$ equal to $f(X/n)$.
+> Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the _Szász operator_ (or _Szász&ndash;Mirakyan operator) of $f$ of degree $n$ (e.g., Szász (1950)[^74]).  Indeed, the Szász operator can be written as a convex combination with $g(n)$ equal to the Poisson probabilities for mean $n\cdot p$ and $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012\)[^6], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.
 
 The previous algorithm can be generalized further, so that an input coin that simulates the probability _&lambda;_ helps generate the random integer in step 1.  Now, the overall algorithm returns 1 with probability&mdash; $$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda).  Note that this is the same algorithm as in Goyal and Sigman (2012\)[^6], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.$$
 
@@ -2300,6 +2300,8 @@ estimation, IEEE Transactions on Information Theory 36 (1990)
 [^72]: Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.
 
 [^73]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
+
+[^74]: Szász, O., "Generalization of S. Bernstein's Polynomials to the Infinite Interval", Journal of Research of the National Bureau of Standards 45 (1950).
 
 <a id=Appendix></a>
 ## Appendix

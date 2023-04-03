@@ -1360,7 +1360,7 @@
 <li>With probability $f(X/n)$, return 1.  Otherwise, return 0.</li>
 </ol>
 
-<p>Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the <em>Szász operator</em> (or _Szász&ndash;Mirakyan operator) of $f$ of degree $n$.  Indeed, the Szász operator can be written as a convex combination with $g(n)$ equal to the Poisson probabilities for mean $n\cdot p$ and $h_X$ equal to $f(X/n)$.</p>
+<p>Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the <em>Szász operator</em> (or _Szász&ndash;Mirakyan operator) of $f$ of degree $n$ (e.g., Szász (1950)[^74]).  Indeed, the Szász operator can be written as a convex combination with $g(n)$ equal to the Poisson probabilities for mean $n\cdot p$ and $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012)[^6], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.</p>
 </blockquote>
 
 <p>The previous algorithm can be generalized further, so that an input coin that simulates the probability <em>&lambda;</em> helps generate the random integer in step 1.  Now, the overall algorithm returns 1 with probability&mdash; $$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda).  Note that this is the same algorithm as in Goyal and Sigman (2012)[^6], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.$$</p>
@@ -3480,6 +3480,8 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <p>[^72]: Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</p>
 
 <p>[^73]: Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</p>
+
+<p>[^74]: Szász, O., &quot;Generalization of S. Bernstein&#39;s Polynomials to the Infinite Interval&quot;, Journal of Research of the National Bureau of Standards 45 (1950).</p>
 
 <p><a id=Appendix></a></p>
 
