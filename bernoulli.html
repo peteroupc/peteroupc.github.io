@@ -1360,10 +1360,10 @@
 <ol>
 <li>Take $n$ variates from the stream and sum them.  Call the sum $X$.  (The result is then a Poisson random variate with mean $n\cdot p$.)</li>
 <li>With probability $f(X/n)$, return 1.  Otherwise, return 0.</li>
-</ol></li>
 </ol>
 
-<p>Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the <em>Szász operator</em> (or <em>Szász&ndash;Mirakyan operator</em>) of $f$ of degree $n$ (e.g., Szász (1950)[^44]).  Indeed, the Szász operator can be written as a convex combination with $g(n)$ equal to the Poisson probabilities for mean $n\cdot p$ and $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012)[^6], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.</p>
+<p>Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the <em>Szász operator</em> (or <em>Szász&ndash;Mirakyan operator</em>) of $f$ of degree $n$ (e.g., Szász (1950)[^44]).  Indeed, the Szász operator can be written as a convex combination with $g(i)$ equal to the probability of getting $i$ in step 1 and with $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012)[^6], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.</p></li>
+</ol>
 </blockquote>
 
 <p>The previous algorithm can be generalized further, so that an input coin that simulates the probability <em>&lambda;</em> helps generate the random integer in step 1.  Now, the overall algorithm returns 1 with probability&mdash; $$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda).$$</p>
