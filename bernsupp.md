@@ -342,7 +342,8 @@ If $f(\lambda)$ is "smooth" enough and $\epsilon$ is big enough, then Taylor's t
 Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that&mdash;
 
 - $f$ is continuous on the closed unit interval, and
-- $f$ satisfies $\epsilon\le f(\lambda)\le 1-\epsilon$ whenever $0\le\lambda\le 1$, and
+- $f$ satisfies $\epsilon\le f(0)\le 1-\epsilon$ and $\epsilon\le f(1)\le 1-\epsilon$, and
+- $f$ satisfies $\epsilon\lt f(\lambda)\lt 1-\epsilon$ whenever $0\lt\lambda\lt 1$, and
 - $f$'s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M/((n+1)!)$, where $M$ is not less than the maximum of the absolute value of that derivative, and
 - $f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.
 
