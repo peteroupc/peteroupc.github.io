@@ -304,7 +304,7 @@ However, unlike with ordinary Bernstein polynomials, the alternative polynomial 
 1. Determine whether $f$ is described in either of the two tables above.  Let _A_ be the minimum of $f$ on the closed unit interval and let _B_ be the maximum of $f$ there.
 2. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in either of the two tables above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.
 3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in either of the two tables above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.
-4. Calculate $n$ as given in either of the two tables above.  Then, if $W_{n,i}(j/n)\lt 0$ or $W_{n,i}(j/n)\gt 1$ for some $0\le j\le n$, double the value of $n$ until this condition is no longer true.
+4. Calculate $n$ as given in either of the two tables above.  Then, if $P(j/n)\lt 0$ or $P(j/n)\gt 1$ for some $0\le j\le n$, where $P$ is the alternative polynomial, double the value of $n$ until this condition is no longer true.
 
 Once _n_ is found, simulating the alternative polynomial is as follows:
 

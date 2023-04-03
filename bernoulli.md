@@ -872,8 +872,14 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 > 4. Multivariate Bernoulli factory (Huber 2016\)[^42] of the form _R_ = _C_<sub>0</sub>\*_&lambda;_<sub>0</sub> + _C_<sub>1</sub>\*_&lambda;_<sub>1</sub> + ... + _C_<sub>_m_&minus;1</sub>\*_&lambda;_<sub>_m_&minus;1</sub>, where _C_<sub>_i_</sub> are known constants greater than 0,  _&#x03F5;_ > 0, and _R_ &le; 1 &minus; _&#x03F5;_: Choose an integer in [0, _m_) uniformly at random, call it _i_, then run a linear Bernoulli factory for (_m_\*_C_<sub>_i_</sub>)\*_&lambda;_<sub>_i_</sub>.  This differs from Huber's suggestion of "thinning" a random process driven by multiple input coins.
 > 5. **Probability generating function** (PGF) (Dughmi et al. 2021\)[^43]. Generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected value ("long-run average") of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the PGF for the distribution of _X_.  The algorithm follows: (1) Generate a random integer _X_ in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
 > 6. Assume _X_ is the number of unbiased random bits that show 0 before the first 1 is generated.  Then _g_(_n_) = 1/(2<sup>_n_+1</sup>).
+> 7. **Poisson to Bernoulli.** Suppose there is an stream of independent Poisson random variates with unknown mean $p$.  Also suppose there is a continuous function $f(p)$ satisfying $0\le f(p)\le 1$ whenever $p\ge 0$.  Then consider the following simple algorithm, which takes an integer $n\gt 0$:
+>
+> 1. Take $n$ variates from the stream and sum them.  Call the sum $X$.  (The result is then a Poisson random variate with mean $n\cdot p$.)
+> 2. With probability $f(X/n)$, return 1.  Otherwise, return 0.
+>
+> Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the _Szász operator_ (or _Szász&ndash;Mirakyan operator) of $f$ of degree $n$.  Indeed, the Szász operator can be written as a convex combination with $g(n)$ equal to the Poisson probabilities for mean $n\cdot p$ and $h_X$ equal to $f(X/n)$.
 
-The previous algorithm can be generalized further, so that an input coin that simulates the probability _&lambda;_ helps generate the random integer in step 1.  Now, the overall algorithm returns 1 with probability&mdash; $$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda).$$
+The previous algorithm can be generalized further, so that an input coin that simulates the probability _&lambda;_ helps generate the random integer in step 1.  Now, the overall algorithm returns 1 with probability&mdash; $$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda).  Note that this is the same algorithm as in Goyal and Sigman (2012\)[^6], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.$$
 
 This algorithm, called **Algorithm CC** in this document, follows.
 
