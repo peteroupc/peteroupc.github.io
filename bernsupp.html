@@ -403,7 +403,7 @@
 <td>Lipschitz continuous.</td>
 <td><em>&epsilon;</em> = $\frac{4306+837\sqrt{6}}{5832} L/n^{1/2}$ &lt; $1.08989 L/n^{1/2}$.</td>
 <td><em>n</em>=ceil((<em>M</em>*1.08989/<em>&epsilon;</em>)<sup>2</sup>).</td>
-<td>(Sikkema 1961)[^64]. <em>L</em> &gt; 0 is <em>f</em>&#39;s Lipschitz constant or greater.</td>
+<td>(Sikkema 1961)[^6]. <em>L</em> &gt; 0 is <em>f</em>&#39;s Lipschitz constant or greater.</td>
 </tr>
 </tbody></table>
 
@@ -433,7 +433,7 @@
 <td>Order-2 iterated Bernstein polynomial.</td>
 <td>$U_{n,2} = B_n(W_{n,2})$.</td>
 <td>Calculate $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$.</td>
-<td>Micchelli (1973)[^6], Guan (2009)[^7], (Güntürk and Li 2021, sec. 3.3)[^8].</td>
+<td>Micchelli (1973)[^7], Guan (2009)[^8], (Güntürk and Li 2021, sec. 3.3)[^9].</td>
 </tr>
 <tr>
 <td>Order-3 iterated Bernstein polynomial.</td>
@@ -445,7 +445,7 @@
 <td>Linear Bernstein polynomial combination.</td>
 <td>$L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$.</td>
 <td>Treat the coefficients [$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$] as representing a polynomial in Bernstein form of degree $n/2$, elevate that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$.</td>
-<td>(Tachev 2022)[^9].  $n\ge 6$ must be even.</td>
+<td>(Tachev 2022)[^10].  $n\ge 6$ must be even.</td>
 </tr>
 </tbody></table>
 
@@ -479,11 +479,11 @@
 <td>$L_{2, n/2}$.</td>
 <td><em>&epsilon;</em> = (3*sqrt(3&minus;4/<em>n</em>)/4)*<em>M</em>/<em>n</em><sup>2</sup> &lt; (3*sqrt(3)/4)*<em>M</em>/<em>n</em><sup>2</sup>.</td>
 <td><em>n</em>=max(6,ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$)) &le; max(6,ceil((113976/100000) * sqrt(M/<em>&epsilon;</em>))). (If <em>n</em> is now odd, add 1.)</td>
-<td>(Tachev 2022)[^9]. $n\ge 6$ must be even. <em>M</em> is not less than absolute value of the maximum of third derivative.</td>
+<td>(Tachev 2022)[^10]. $n\ge 6$ must be even. <em>M</em> is not less than absolute value of the maximum of third derivative.</td>
 </tr>
 </tbody></table>
 
-<p>By analyzing the proof of Theorem 3.3 of Güntürk and Li (2021, sec. 3.3)[^8], the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the so-called $C^n$ norm.  Unfortunately, the $C^n$ norm is defined differently in different academic works, and the bounds are sensitive to how that norm is defined.[^10]</p>
+<p>By analyzing the proof of Theorem 2.4 of Güntürk and Li (2021, sec. 3.3)[^9], the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is not less than the maximum of the absolute value of <em>f</em>(<em>&lambda;</em>) and its derivatives up the $n$-th derivative.</p>
 
 <table><thead>
 <tr>
@@ -496,20 +496,20 @@
 <tr>
 <td>Has continuous fourth derivative.</td>
 <td>$U_{n,2}$</td>
-<td><em>&epsilon;</em> = 0.275*<em>M</em><sub>4</sub>/<em>n</em><sup>2</sup>.</td>
-<td><em>n</em>=ceil(sqrt(0.275)*sqrt(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)) &le; ceil((52441/100000)*sqrt(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)).</td>
+<td><em>&epsilon;</em> = 0.3571*<em>M</em><sub>4</sub>/<em>n</em><sup>2</sup>.</td>
+<td><em>n</em>=ceil(sqrt(0.3571)*sqrt(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)).</td>
 </tr>
 <tr>
 <td>Has continuous fifth derivative.</td>
 <td>$U_{n,3}$</td>
-<td><em>&epsilon;</em> = 0.7284*<em>M</em><sub>5</sub>/<em>n</em><sup>5/2</sup>.</td>
-<td><em>n</em>=ceil((0.7284)<sup>2/5</sup>*(<em>M</em><sub>5</sub>/<em>&epsilon;</em>)<sup>2/5</sup>) &le; ceil((88095/100000)*(<em>M</em><sub>5</sub>/<em>&epsilon;</em>)<sup>2/5</sup>).</td>
+<td><em>&epsilon;</em> = 4.0421*<em>M</em><sub>5</sub>/<em>n</em><sup>5/2</sup>.</td>
+<td><em>n</em>=ceil((4.0421)<sup>2/5</sup>*(<em>M</em><sub>5</sub>/<em>&epsilon;</em>)<sup>2/5</sup>).</td>
 </tr>
 <tr>
 <td>Has continuous sixth derivative.</td>
 <td>$U_{n,3}$</td>
-<td><em>&epsilon;</em> = 0.9961*<em>M</em><sub>6</sub>/<em>n</em><sup>3</sup>.</td>
-<td><em>n</em>=ceil((0.9961)<sup>1/3</sup>*(<em>M</em><sub>6</sub>/<em>&epsilon;</em>)<sup>1/3</sup>) &le; ceil((99870/100000)*(<em>M</em><sub>6</sub>/<em>&epsilon;</em>)<sup>1/3</sup>).</td>
+<td><em>&epsilon;</em> = 4.8457*<em>M</em><sub>6</sub>/<em>n</em><sup>3</sup>.</td>
+<td><em>n</em>=ceil((4.8457)<sup>1/3</sup>*(<em>M</em><sub>6</sub>/<em>&epsilon;</em>)<sup>1/3</sup>).</td>
 </tr>
 </tbody></table>
 
@@ -533,7 +533,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Providing the full proof for the error bounds shown in the last table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 3.3 of Güntürk and Li (2021)[^8], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.  The most significant estimate in that theorem is denoted $(B_n-I)^{\lceil (r+1)/2 \rceil}(f)$, which in this case is the error when approximating $f$ using an iterated Bernstein polynomial, when $f$ has a continuous $(r+1)$-th derivative.</li>
+<li>Providing the full proof for the error bounds shown in the last table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 2.2 of Güntürk and Li (2021)[^9], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.</li>
 <li>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting $c$=floor($c/\delta$) * $\delta$ for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</li>
 </ol>
 </blockquote>
@@ -1233,15 +1233,15 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>[^5]: Mathé, Peter. “Approximation of Hölder Continuous Functions by Bernstein Polynomials.” The American Mathematical Monthly 106, no. 6 (1999): 568–74. <a href="https://doi.org/10.2307/2589469."><strong>https://doi.org/10.2307/2589469.</strong></a></p>
 
-<p>[^6]: Micchelli, Charles. &quot;The saturation class and iterates of the Bernstein polynomials.&quot; Journal of Approximation Theory 8, no. 1 (1973): 1-18.</p>
+<p>[^6]: Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, 1961.</p>
 
-<p>[^7]: Guan, Zhong. &quot;<a href="https://arxiv.org/abs/0909.0684"><strong>Iterated Bernstein polynomial approximations</strong></a>&quot;, arXiv:0909.0684 (2009).</p>
+<p>[^7]: Micchelli, Charles. &quot;The saturation class and iterates of the Bernstein polynomials.&quot; Journal of Approximation Theory 8, no. 1 (1973): 1-18.</p>
 
-<p>[^8]: Güntürk, C.S., Li, W., &quot;<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>&quot;, arXiv:2112.09181 [cs.LG], 2021.</p>
+<p>[^8]: Guan, Zhong. &quot;<a href="https://arxiv.org/abs/0909.0684"><strong>Iterated Bernstein polynomial approximations</strong></a>&quot;, arXiv:0909.0684 (2009).</p>
 
-<p>[^9]: Tachev, Gancho. &quot;<a href="https://doi.org/10.3934/mfc.2022061"><strong>Linear combinations of two Bernstein polynomials</strong></a>&quot;, <em>Mathematical Foundations of Computing</em>, 2022.</p>
+<p>[^9]: Güntürk, C.S., Li, W., &quot;<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>&quot;, arXiv:2112.09181 [cs.LG], 2021.</p>
 
-<p>[^10]: Güntürk and Li 2021 defines the $C^n$ norm as the absolute value of the maximum of $f(\lambda)$ and its <em>n</em>-th derivative where $0\le \lambda\le 1$, but the bounds would then be false in general.  One counterexample is $2\lambda(1-\lambda)$, and another is $(\sin(\lambda)+2\lambda(1-\lambda))/2$.</p>
+<p>[^10]: Tachev, Gancho. &quot;<a href="https://doi.org/10.3934/mfc.2022061"><strong>Linear combinations of two Bernstein polynomials</strong></a>&quot;, <em>Mathematical Foundations of Computing</em>, 2022.</p>
 
 <p>[^11]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.</p>
 
@@ -1349,8 +1349,6 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <p>[^63]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
-<p>[^64]: Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, 1961.</p>
-
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1425,7 +1423,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 
 <ul>
 <li>$U_{n,2}$ is non-negative (because $f$ is concave, making $W_{n,2}$, and therefore its Bernstein polynomial $U_{n,2}$, non-negative by Proposition B1).</li>
-<li>$U_{n,2}$ is a linear operator (Micchelli 1973)[^6].  Notably, it equals $f$ whenever $f$ is a linear function.</li>
+<li>$U_{n,2}$ is a linear operator (Micchelli 1973)[^7].  Notably, it equals $f$ whenever $f$ is a linear function.</li>
 <li>$U_{n,2}(\lambda) = \lambda$ and $U_{n,2}(1) = 1$.</li>
 <li>$\phi(\lambda)=1$ which is positive and concave.</li>
 <li>$(U_{n,2}(\lambda^2)-\lambda^2) = \lambda(1-\lambda)/n^2$.</li>
@@ -1797,7 +1795,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <ol>
 <li><em>&omega;</em> is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))] &le; <strong>E</strong>[<em>&omega;</em>(abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))] &le; <em>&omega;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]) (by Jensen&#39;s inequality and because <em>&omega;</em> is concave) &le; <em>&omega;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&omega;</em>(sqrt((<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for every <em>n</em>&ge;4 that&#39;s an integer power of 2, <em>&rho;</em> &le; <em>&omega;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&omega;</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1&minus;<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>&minus;1) )).</li>
 <li>By the definition of Hölder continuous functions, take <em>&omega;</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.  Because <em>&omega;</em> is a concave modulus of continuity on the closed unit interval, the result follows from part 1.</li>
-<li>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f&#39;(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f&#39;(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^6], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f&#39;(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1&#39;s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For every integer <em>n</em>&ge;4 that&#39;s a power of 2, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
+<li>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f&#39;(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f&#39;(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^7], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f&#39;(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1&#39;s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For every integer <em>n</em>&ge;4 that&#39;s a power of 2, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
 <li>Let <em>X</em><sub><em>m</em></sub> be a hypergeometric(2 * <em>n</em>, <em>m</em>, <em>n</em>) random variable.  By Lemma 1 and the assumption that <em>f</em> is nowhere decreasing, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nowhere decreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because <em>f</em> is convex and not less than 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>)) &le; <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] (because <em>f</em> is not less than 0) &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)]. &#x25a1;</li>
 </ol>
 
@@ -2037,7 +2035,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <p>The following lower bounds on $C_0$ can be shown.  In the table:</p>
 
 <ul>
-<li><p>$M_{0,r}$ is the absolute value of the maximum of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^8].</p></li>
+<li><p>$M_{0,r}$ is the absolute value of the maximum of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^9].</p></li>
 <li><p>$M_{1,r}$ is the absolute value of the maximum of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.</p></li>
 <li><p>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</p></li>
 </ul>
@@ -2152,9 +2150,9 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 </tr>
 </tbody></table>
 
-<p>* Corresponds to the iterated Bernstein polynomial of order 2 (Güntürk and Li 2021)[^8].</p>
+<p>* Corresponds to the iterated Bernstein polynomial of order 2 (Güntürk and Li 2021)[^9].</p>
 
-<p>*** Corresponds to the iterated Bernstein polynomial of order 3 (Güntürk and Li 2021)[^8].</p>
+<p>*** Corresponds to the iterated Bernstein polynomial of order 3 (Güntürk and Li 2021)[^9].</p>
 
 <p>** The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.</p>
 
