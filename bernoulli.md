@@ -130,6 +130,7 @@ Comments on other aspects of this document are welcome.
         - [**exp(1) &minus; 2**](#exp_1_minus_2)
         - [**_&zeta;_(3) * 3 / 4 and Other Zeta-Related Constants**](#zeta___3_3_4_and_Other_Zeta_Related_Constants)
         - [**erf(_x_)/erf(1)**](#erf__x__erf_1)
+    - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1)
         - [**Euler&ndash;Mascheroni constant _&gamma;_**](#Euler_ndash_Mascheroni_constant___gamma)
         - [**exp(&minus;_x_/_y_) \* _z_/_t_**](#exp_minus__x___y___z___t)
         - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
@@ -1105,7 +1106,7 @@ The **ExpMinus** algorithm is as follows.  To flip a coin with probability of he
 > - Parameter 3: Run case 1 of the algorithm where _x_=3 and _y_=1.
 > - Parameter 7/5: Run case 1 of the algorithm where _x_=7 and _y_=5.
 >
-> **Note:** exp(&minus;_z_) = exp(1&minus;_z_)/exp(1) = 1/exp(_z_).
+> **Note:** exp(&minus;_z_) = exp(1&minus;_z_)/exp(1) = 1/exp(_z_) = 1&minus;(exp(_z_)&minus;1)/exp(_z_).
 
 <a id=LogisticExp_1_minus_expit__z__2_prec></a>
 #### LogisticExp (1 &minus; expit(_z_/2<sup>_prec_</sup>))
@@ -2035,6 +2036,29 @@ In fact, this algorithm takes advantage of a theorem related to the Forsythe met
 
 > **Note:** If the last step in the algorithm reads "Return 0" rather than "Go to step 1", then the algorithm simulates the probability erf(_x_)\*sqrt(&pi;)/2 instead.
 
+<a id=Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1></a>
+### Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).
+
+In this algorithm, _m_ must be greater than 0, and _x_ is a real number that is 0 or greater and 1 or less.
+
+1. Set _ret_ to a number distributed as the maximum of _m_ uniform random variates between 0 and 1.  (See note 1 below.)
+2. Set _k_ to 1, then set _u_ to point to the same value as _ret_.
+3. Generate a uniform random variate between 0 and 1, call it _v_.
+4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
+5. If _k_ is odd[^75], return a number that is 1 if _ret_ is less than _x_ and 0 otherwise. If _k_ is even[^76], go to step 1.  (If _ret_ is implemented as a uniform partially-sampled random number, this comparison should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+
+> **Notes:**
+>
+> 1. In step 1 of the algorithm above, _ret_ is distributed as _u_, where _u_<sup>1/_m_</sup> where _u_ is a uniform random variate between 0 and 1.(Devroye 1986, p. 431)[^77] (This formula works for every _m_ greater than 0, not just integers.)  Alternatively, _ret_ can be generated using the **kthsmallest** algorithm with the two parameters _m_ and _m_ (see "[**Partially-Sampled Random Numbers"**](https://peteroupc.github.io/exporand.html)), but then _m_ must be an integer.  Alternatively, _ret_ can be generated as follows, but then _m_ must be an integer:
+>      1. Generate _x_ and _y_, two uniform random variates between 0 and 1.
+>      2. Do the following _m_ times.  If _x_ is less than _y_, set _x_ to point to _y_; either way, set _y_ to a new uniform random variate between 0 and 1.
+>      3. Set _ret_ to point to _x_.
+>
+> 2.  Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations)", where:
+>
+>     - `ECDF(x)`  is the probability that a uniform random variate between 0 and 1 is _x_ or less, namely _x_ if _x_ is greater than 0 and less than 1; 0 if _x_ is 0 or less; and 1 otherwise.
+>     - `DPDF(x)` is the probability density function for the maximum of _m_ uniform random variates between 0 and 1, namely _m_\*_x_<sup>_m_&minus;1</sup> if _x_ is greater than 0 and less than 1, and 0 otherwise.
+
 <a id=Euler_ndash_Mascheroni_constant___gamma></a>
 #### Euler&ndash;Mascheroni constant _&gamma;_
 
@@ -2302,6 +2326,12 @@ estimation, IEEE Transactions on Information Theory 36 (1990)
 [^73]: Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.
 
 [^74]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
+
+[^75]: "_x_ is odd" means that _x_ is an integer and not divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 1, or if _x_ is an integer and the least significant bit of abs(_x_) is 1.
+
+[^76]: "_x_ is even" means that _x_ is an integer and divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 0, or if _x_ is an integer and the least significant bit of abs(_x_) is 0.
+
+[^77]: Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.
 
 <a id=Appendix></a>
 ## Appendix
