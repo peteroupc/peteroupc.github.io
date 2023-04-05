@@ -388,21 +388,21 @@
 <td>Lorentz (1966)[^4]. <em>M</em> &gt; 0 is the derivative&#39;s Lipschitz constant or greater.</td>
 </tr>
 <tr>
-<td>Hölder continuous.</td>
+<td>Is Hölder continuous.</td>
 <td><em>&epsilon;</em> = <em>M</em>*(1/(4*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.</td>
 <td><em>n</em> = ceil(1/(4<sup><em>&alpha;</em></sup>*<em>&epsilon;</em><sup>2</sup>/<em>M</em><sup>2</sup>)<sup>1/<em>&alpha;</em></sup>).</td>
 <td>Mathé (1999)[^5]. 0 &lt; <em>&alpha;</em> &le; 1 is <em>f</em>&#39;s Hölder exponent; <em>M</em> &gt; 0 is its Hölder constant or greater.</td>
 </tr>
 <tr>
-<td>Lipschitz continuous.</td>
+<td>Is Lipschitz continuous.</td>
 <td><em>&epsilon;</em> = <em>L</em>*sqrt(1/(4*<em>n</em>)).</td>
 <td><em>n</em> = ceil(<em>L</em><sup>2</sup>/(4*<em>&epsilon;</em><sup>2</sup>)).</td>
 <td>Special case of previous entry. <em>L</em> &gt; 0 is <em>f</em>&#39;s Lipschitz constant or greater.</td>
 </tr>
 <tr>
-<td>Lipschitz continuous.</td>
+<td>Is Lipschitz continuous.</td>
 <td><em>&epsilon;</em> = $\frac{4306+837\sqrt{6}}{5832} L/n^{1/2}$ &lt; $1.08989 L/n^{1/2}$.</td>
-<td><em>n</em>=ceil((<em>M</em>*1.08989/<em>&epsilon;</em>)<sup>2</sup>).</td>
+<td><em>n</em>=ceil((<em>L</em>*1.08989/<em>&epsilon;</em>)<sup>2</sup>).</td>
 <td>(Sikkema 1961)[^6]. <em>L</em> &gt; 0 is <em>f</em>&#39;s Lipschitz constant or greater.</td>
 </tr>
 </tbody></table>
@@ -1754,7 +1754,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <ul>
 <li>A <em>strictly bounded factory function</em> means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.</li>
 <li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^36].</li>
-<li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>&omega;</em> on the closed unit interval, for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) for every <em>x</em> in the closed unit interval and every <em>y</em> in the closed unit interval.  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
+<li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>&omega;</em> on the closed unit interval, for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) whenever 0&le;<em>x</em>&le;1 and 0&le;<em>y</em>&le;1.  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
 </ul>
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nowhere decreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2*n] .  Then the expected value of f(X<sub>k</sub>/n) decreases nowhere as k increases.</em></p>
@@ -2035,9 +2035,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <p>The following lower bounds on $C_0$ can be shown.  In the table:</p>
 
 <ul>
-<li><p>$M_{0,r}$ is the absolute value of the maximum of $f(\lambda)$ and its $r$-th derivative (Güntürk and Li 2021)[^9].</p></li>
-<li><p>$M_{1,r}$ is the absolute value of the maximum of $f(\lambda)$ and its derivatives up to the $r$-th derivative.  Thus, $M_{1,r}\ge M_{0,r}$.</p></li>
-<li><p>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</p></li>
+<li>$M_{1,r}$ is the absolute value of the maximum of $f(\lambda)$ and its derivatives up to the $r$-th derivative.</li>
+<li>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -2052,38 +2051,6 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) \ma
 <th>Because of this counterexample:</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>3</td>
-<td>$M=M_{0,3}$</td>
-<td>$2 f - B_n(f)$*</td>
-<td>2.62</td>
-<td>2.63</td>
-<td>$2 \lambda \left(1 - \lambda\right)$</td>
-</tr>
-<tr>
-<td>3</td>
-<td>$M=M_{0,3}$, $n\ge 4$</td>
-<td>$2 f - B_n(f)$</td>
-<td>0.66</td>
-<td>0.67</td>
-<td>$2\lambda(1-\lambda)$</td>
-</tr>
-<tr>
-<td>4</td>
-<td>$M=M_{0,4}$</td>
-<td>$2 f - B_n(f)$</td>
-<td>3.58</td>
-<td>3.59</td>
-<td>$3 \lambda^{2} \cdot \left(1 - \lambda\right)$</td>
-</tr>
-<tr>
-<td>4</td>
-<td>$M=M_{0,4}$, $n\ge 4$</td>
-<td>$2 f - B_n(f)$</td>
-<td>3.52</td>
-<td>3.53</td>
-<td>$\lambda^{2} \cdot \left(1 - \lambda\right)$</td>
-</tr>
 <tr>
 <td>3</td>
 <td>$M=M_{1,3}$</td>
