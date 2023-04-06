@@ -3190,14 +3190,14 @@ kind of irrational number.</p>
 <li>Set <em>k</em> to 1, then set <em>u</em> to point to the same value as <em>ret</em>.</li>
 <li>Generate a uniform random variate between 0 and 1, call it <em>v</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>: Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
-<li>If <em>k</em> is odd[^75], return a number that is 1 if <em>ret</em> is less than <em>x</em> and 0 otherwise. If <em>k</em> is even[^76], go to step 1.  (If <em>ret</em> is implemented as a uniform partially-sampled random number, this comparison should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>k</em> is odd[^25], return a number that is 1 if <em>ret</em> is less than <em>x</em> and 0 otherwise. If <em>k</em> is even[^27], go to step 1.  (If <em>ret</em> is implemented as a uniform partially-sampled random number, this comparison should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 </ol>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><p>In step 1 of the algorithm above, <em>ret</em> is distributed as <em>u</em>, where <em>u</em><sup>1/<em>m</em></sup> where <em>u</em> is a uniform random variate between 0 and 1.(Devroye 1986, p. 431)<a href="This%20formula%20works%20for%20every%20_m_%20greater%20than%200,%20not%20just%20integers.">^77</a>  Alternatively, <em>ret</em> can be generated using the <strong>kthsmallest</strong> algorithm with the two parameters <em>m</em> and <em>m</em> (see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers&quot;</strong></a>), but then <em>m</em> must be an integer.  Alternatively, <em>ret</em> can be generated as follows, but then <em>m</em> must be an integer:</p>
+<li><p>In step 1 of the algorithm above, <em>ret</em> is distributed as <em>u</em>, where <em>u</em><sup>1/<em>m</em></sup> where <em>u</em> is a uniform random variate between 0 and 1.(Devroye 1986, p. 431)[^30] (This formula works for every <em>m</em> greater than 0, not just integers.)  Alternatively, <em>ret</em> can be generated using the <strong>kthsmallest</strong> algorithm with the two parameters <em>m</em> and <em>m</em> (see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers&quot;</strong></a>), but then <em>m</em> must be an integer.  Alternatively, <em>ret</em> can be generated as follows, but then <em>m</em> must be an integer:</p>
 
 <ol>
 <li>Generate <em>x</em> and <em>y</em>, two uniform random variates between 0 and 1.</li>
@@ -3523,12 +3523,6 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 <p>[^73]: Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</p>
 
 <p>[^74]: Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</p>
-
-<p>[^75]: &quot;<em>x</em> is odd&quot; means that <em>x</em> is an integer and not divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 1, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 1.</p>
-
-<p>[^76]: &quot;<em>x</em> is even&quot; means that <em>x</em> is an integer and divisible by 2.  This is true if <em>x</em> &minus; 2*floor(<em>x</em>/2) equals 0, or if <em>x</em> is an integer and the least significant bit of abs(<em>x</em>) is 0.</p>
-
-<p>[^77]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
 
 <p><a id=Appendix></a></p>
 

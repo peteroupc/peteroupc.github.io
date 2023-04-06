@@ -145,6 +145,7 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 >     * **fbelow**(_n_, _k_) = 3321/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n). (Observe that _f_(_k_/4) &minus; 1/(7\*4) &ge; 3321/10000.)
 >     * **fabove**(_n_, _k_) = _f_(_k_/_n_) (because _f_ is convex).
 >
+>     This function's second derivative's absolute value can be plotted using the SymPy library as follows: `plot(diff(Abs(exp(-x)),(x,2)),(x,0,1))`.  In this plot, the maximum is 1, the same as the first derivative's Lipschitz constant.
 > 2. Take _f_(_&lambda;_) = _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise.  This function is concave, and its derivative is Lipschitz continuous with Lipschitz constant 2.  Then it can be shown that the following scheme for _f_ is valid (the value 893/2000 is slightly greater than _M_ + 2/(7\*4), where _M_ is the maximum of _f_ on its domain):
 >
 >     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
@@ -385,7 +386,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 > **Notes:**
 >
 > 1. By the results of Holtz et al., it is suspected that the target function _f_ can't be simulated using a finite number of flips on average for every probability of heads unless _f_'s fourth derivative is Hölder continuous.
-> 2. A function $f(\lambda)$ in the _Zygmund class_ if there is a constant $C>0$ such that the second symmetric difference (abs($f(\lambda-h)+f(\lambda+h)-2 f(\lambda)$) wherever defined) is no greater than $C\times h$ for every step size $h>0$. A function that's Lipschitz continuous is in the Zygmund class, but not necessarily vice versa.
+> 2. A function $f(\lambda)$ in the _Zygmund class_ if there is a constant $D>0$ with the following property for each step size $\epsilon>0$: abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that's Lipschitz continuous is in the Zygmund class, but not necessarily vice versa.
 
 <a id=Complexity></a>
 ## Complexity
@@ -436,11 +437,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
         * **fbelow**(_n_, _k_) = 517/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 2220661/(175000\*n).
         * **fabove**(_n_, _k_) = 9483/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 2220661/(175000\*n).
 
-* Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = 321/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-
 * Let _f_(_&lambda;_) = $1/2-(1-2\lambda)^{1/2})/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{1/2}/2$ otherwise. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
@@ -450,6 +446,11 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 772969563/(400000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 772969563/(400000000\*n<sup>1/4</sup>).
 
+* Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
+    * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 321/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+
 * Let _f_(_&lambda;_) = **_&lambda;_/2 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ &ge; 1/2; _&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 322613/(500000\*sqrt(n)).
@@ -458,7 +459,7 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 333/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 386562063/(400000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = 9667/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 386562063/(400000000\*n<sup>1/4</sup>).
-* Let _f_(_&lambda;_) = **_&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ < 0; _&lambda;_/4 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ &ge; 1/2; _&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
+* Let _f_(_&lambda;_) = **_&lambda;_/4 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ &ge; 1/2; _&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 443/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 322613/(1000000\*sqrt(n)).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
