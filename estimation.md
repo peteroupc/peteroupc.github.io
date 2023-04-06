@@ -258,11 +258,11 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 > **Notes:**
 >
 > 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this can happen when _f_ is only piecewise continuous, or made up of independent continuous pieces that cover _f_'s whole domain), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-> 3. _Algorithm D_ and _Algorithm E_ (when the stream's numbers lie on the closed unit interval) can be adapted to apply to streams outputting numbers in a closed interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to itself, as follows:
+> 3. If the input stream outputs numbers in a closed interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and if _f_ is a continuous function that maps the interval [_a_, _b_] to itself, then _Algorithm D_ and _Algorithm E_ can be used as follows:
 >
 >     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
 >     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
->     - If the algorithm would return _f_(_&mu;_), instead return _g_(_&mu;_) where _g_(_&mu;_) = _f_(_a_ + (_&mu;_\*(_b_ &minus; _a_))).
+>     - Run either _Algorithm E_ (calculating the sample size for the case "Bounded; lies in the closed unit interval") or _Algorithm D_. If the algorithm would return _f_(_&mu;_), instead return _g_(_&mu;_) where _g_(_&mu;_) = _f_(_a_ + (_&mu;_\*(_b_ &minus; _a_))).
 >
 > 4. _Algorithm E_ is not an unbiased estimator in general.  However, when _f_(_x_) = _x_, the sample mean used by the algorithm is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
 >

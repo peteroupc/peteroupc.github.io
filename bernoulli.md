@@ -124,6 +124,7 @@ Comments on other aspects of this document are welcome.
         - [**_&pi;_/4 &minus; 1/2 or (_&pi;_ &minus; 2)/4**](#pi___4_minus_1_2_or___pi___minus_2_4)
         - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
         - [**_&pi;_ &minus; 3**](#pi___minus_3)
+    - [**4/(3\*_&pi;_)**](#4_3___pi)
         - [**1 / _&pi;_**](#1___pi)
         - [**(_a_/_b_)<sup>_z_</sup>**](#a___b___z)
         - [**1/(exp(1) + _c_ &minus; 2)**](#1_exp_1__c__minus_2)
@@ -873,7 +874,7 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 > 4. Multivariate Bernoulli factory (Huber 2016\)[^42] of the form _R_ = _C_<sub>0</sub>\*_&lambda;_<sub>0</sub> + _C_<sub>1</sub>\*_&lambda;_<sub>1</sub> + ... + _C_<sub>_m_&minus;1</sub>\*_&lambda;_<sub>_m_&minus;1</sub>, where _C_<sub>_i_</sub> are known constants greater than 0,  _&#x03F5;_ > 0, and _R_ &le; 1 &minus; _&#x03F5;_: Choose an integer in [0, _m_) uniformly at random, call it _i_, then run a linear Bernoulli factory for (_m_\*_C_<sub>_i_</sub>)\*_&lambda;_<sub>_i_</sub>.  This differs from Huber's suggestion of "thinning" a random process driven by multiple input coins.
 > 5. **Probability generating function** (PGF) (Dughmi et al. 2021\)[^43]. Generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected value ("long-run average") of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the PGF for the distribution of _X_.  The algorithm follows: (1) Generate a random integer _X_ in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
 > 6. Assume _X_ is the number of unbiased random bits that show 0 before the first 1 is generated.  Then _g_(_n_) = 1/(2<sup>_n_+1</sup>).
-> 7. **Poisson to Bernoulli.** Suppose there is an stream of independent Poisson random variates with unknown mean $p$.  Also suppose there is a continuous function $f(p)$ satisfying $0\le f(p)\le 1$ whenever $p\ge 0$.  Then consider the following simple algorithm, which takes an integer $n\gt 0$:
+> 7. **Poisson to Bernoulli.** Suppose there is a stream of independent Poisson random variates with unknown mean $p$.  Also suppose there is a continuous function $f(p)$ satisfying $0\le f(p)\le 1$ whenever $p\ge 0$.  Then consider the following simple algorithm, which takes an integer $n\gt 0$:
 >
 >     1. Take $n$ variates from the stream and sum them.  Call the sum $X$.  (The result is then a Poisson random variate with mean $n\cdot p$.)
 >     2. With probability $f(X/n)$, return 1.  Otherwise, return 0.
@@ -1930,6 +1931,22 @@ Similar to the _&pi;_/4 algorithm.  First it samples a point inside an area cove
     4. Multiply _S_ by 2.
 
 > **Note:** Only a limited set of (_c1_, _c2_) pairs, including (0, 0) and (0, 1), will pass step 2 of this algorithm.  Thus it may be more efficient to choose one of them uniformly at random, rather than do step 2 as shown.  If (0, 0) or (0, 1) is chosen this way, the algorithm returns 1.
+
+<a id=4_3___pi></a>
+### 4/(3\*_&pi;_)
+
+Given that the point (_x_, _y_) has positive coordinates and lies inside a disk of radius 1 centered at (0, 0), the mean value of _x_ is 4/(3\*_&pi;_). This leads to the following algorithm to sample that probability:
+
+1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
+2. Do the following process repeatedly, until the algorithm returns a value:
+    1. Set _c1_ to 2\*_c1_ plus an unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
+    2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, do the following.  (Point is inside the quarter disk, whose area is _&pi;_/4.  Now _c1_, the point's _x_ coordinate, is treated as a uniform random variate between _c1_/_S_ and (_c1_+1)/_S_, and the following substeps return 1 with probability equal to that variate.)
+        1. Generate _z_, a uniform random integer in the interval [0, _S_).  If _z_ is less than _c1_, return 1.  If _z_ is greater than _c1_, return 0.
+        2. Generate two unbiased random bits (each either 0 or 1 with equal probability).  If the bits are different, return the first bit.  Otherwise, repeat this substep.
+    3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, abort these substeps and go to step 1 ("Set _S_...").  (Point is outside the quarter disk.)
+    4. Multiply _S_ by 2.
+
+> **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_, where $0\le _z_ \le 1$, is _p_(_z_) = sqrt(1 &minus; _z_\*_z_).  Now find the integral of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the integral of _p_(_z_) on the closed unit interval); see "[**Integrals**](#Integrals)".  The result is the mean value 4/(3\*_&pi;_).  The following code in the Python programming language prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
 
 <a id=1___pi></a>
 #### 1 / _&pi;_
