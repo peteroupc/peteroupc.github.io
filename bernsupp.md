@@ -461,12 +461,7 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 In this section, ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient [^25] [^26], and _&lambda;_ is the unknown probability of heads of the coin involved in the Bernoulli factory problem.
 
-For the following algorithm, which extends the end of Note 1 of Flajolet et al. (2010\)[^27], the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} \mathtt{Coin}(\lambda)^n (1-\mathtt{Coin}(\lambda))^{Hn-n} {Hn \choose n},$$ where _H_ &ge; 2 is an integer; and `Coin` is a Bernoulli factory function.
-
-1. Set _d_ to 0.
-2. Do the following process repeatedly until this run of the algorithm returns a value:
-    1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
-    2. Run a Bernoulli factory algorithm for `Coin`(_&lambda;_).  If the run returns 1, add (_H_&minus;1) to _d_.  Otherwise, subtract 1 from _d_.
+See also Flajolet et al. (2010\)[^27].
 
 The following algorithm simulates the probability&mdash; $$
 f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m=0}^n W(n,m) \mathtt{Coin}(\lambda)^m (1-\mathtt{Coin}(\lambda))^{n-m} {n \choose m}\right)$$ $$= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m=0}^n V(n,m) \mathtt{Coin}(\lambda)^m (1-\mathtt{Coin}(\lambda))^{n-m}\right),$$ where `Coin` is a Bernoulli factory function; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise; and _H_&ge;1 and _T_&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable `Coin`(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.  _V_(_n_, _m_) is the number of _n_-letter words that have _m_ heads _and_ describe a walk that ends at the beginning.)

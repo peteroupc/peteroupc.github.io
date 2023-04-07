@@ -785,17 +785,7 @@
 
 <p>In this section, ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient [^25] [^26], and <em>&lambda;</em> is the unknown probability of heads of the coin involved in the Bernoulli factory problem.</p>
 
-<p>For the following algorithm, which extends the end of Note 1 of Flajolet et al. (2010)[^27], the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} \mathtt{Coin}(\lambda)^n (1-\mathtt{Coin}(\lambda))^{Hn-n} {Hn \choose n},$$ where <em>H</em> &ge; 2 is an integer; and <code>Coin</code> is a Bernoulli factory function.</p>
-
-<ol>
-<li>Set <em>d</em> to 0.</li>
-<li>Do the following process repeatedly until this run of the algorithm returns a value:
-
-<ol>
-<li>Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if <em>d</em> is 0, or 0 otherwise.</li>
-<li>Run a Bernoulli factory algorithm for <code>Coin</code>(<em>&lambda;</em>).  If the run returns 1, add (<em>H</em>&minus;1) to <em>d</em>.  Otherwise, subtract 1 from <em>d</em>.</li>
-</ol></li>
-</ol>
+<p>See also Flajolet et al. (2010)[^27].</p>
 
 <p>The following algorithm simulates the probability&mdash; $$
 f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m=0}^n W(n,m) \mathtt{Coin}(\lambda)^m (1-\mathtt{Coin}(\lambda))^{n-m} {n \choose m}\right)$$ $$= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m=0}^n V(n,m) \mathtt{Coin}(\lambda)^m (1-\mathtt{Coin}(\lambda))^{n-m}\right),$$ where <code>Coin</code> is a Bernoulli factory function; <em>W</em>(<em>n</em>, <em>m</em>) is 1 if <em>m</em>*<em>H</em> equals (<em>n</em>&minus;<em>m</em>)*<em>T</em>, or 0 otherwise; and <em>H</em>&ge;1 and <em>T</em>&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable <code>Coin</code>(<em>&lambda;</em>) and with only zeros and ones as coefficients.  Because of the <em>&lambda;</em><sup><em>n</em></sup>, the polynomial gets smaller as <em>n</em> gets larger.  <em>V</em>(<em>n</em>, <em>m</em>) is the number of <em>n</em>-letter words that have <em>m</em> heads <em>and</em> describe a walk that ends at the beginning.)</p>
