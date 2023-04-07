@@ -171,7 +171,7 @@
 
 <ul>
 <li>Suppose <em>f</em>(<em>&lambda;</em>) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, <em>m</em> is $\max(|(3/4-0)/(2/3)|$, $|(1/4-3/4)/(1/3)|)$ = 1.5.  Moreover, <em>f</em> is concave (the first piece&#39;s slope is greater than the second piece&#39;s).</li>
-<li>Suppose <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>*<em>mult</em>, 1−<em>&epsilon;</em>), with <em>mult</em> &gt; 0 and <em>&epsilon;</em> &ge; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−<em>&epsilon;</em> at (1−<em>&epsilon;</em>)/<em>mult</em>, and 1−<em>&epsilon;</em> at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu &amp; Peres (2005)[^1] [^4].  In this example, <em>m</em> is max(<em>mult</em>, 0) = <em>mult</em>.  Moreover, <em>f</em> is concave.</li>
+<li>Suppose <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>*<em>mult</em>, 1−<em>&epsilon;</em>), with <em>mult</em> &gt; 0 and <em>&epsilon;</em> &gt; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−<em>&epsilon;</em> at (1−<em>&epsilon;</em>)/<em>mult</em>, and 1−<em>&epsilon;</em> at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu &amp; Peres (2005)[^1] [^4].  In this example, <em>m</em> is max(<em>mult</em>, 0) = <em>mult</em>.  Moreover, <em>f</em> is concave.</li>
 </ul>
 </blockquote>
 
@@ -214,6 +214,12 @@
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 893/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2/(7*<em>n</em>).</li>
+</ul></li>
+<li><p>Let $f(\lambda)=sin(z\lambda)+1/2$, where $z\ge 0$.  Then $f$ has a continuous second derivative whose absolute value is abs($-sin(z\lambda)\cdot z^2/4$).  This has a maximum of $L = z^2/4$.  Thus, the following scheme for $f$ is valid:</p>
+
+<ul>
+<li>For every $n$ such that <strong>fbelow</strong>(<em>n</em>,<em>k</em>) is 0 or greater for every <em>k</em>, <strong>fbelow</strong>(<em>n</em>,<em>k</em>) = $f(k/n)-z^2/(28\cdot n)$.  For every other $n$, <strong>fbelow</strong>(<em>n</em>,<em>k</em>) = 0.</li>
+<li>For every $n$ such that <strong>fabove</strong>(<em>n</em>,<em>k</em>) is 1 or less for every <em>k</em>, <strong>fabove</strong>(<em>n</em>,<em>k</em>) = $f(k/n)+z^2/(28\cdot n)$.  For every other $n$, <strong>fbelow</strong>(<em>n</em>,<em>k</em>) = 1.</li>
 </ul></li>
 </ol>
 </blockquote>
@@ -676,7 +682,7 @@
 <p>The following are polynomial-building schemes and hints to simulate a coin of probability <em>f</em>(<em>&lambda;</em>) given an input coin with probability of heads of <em>&lambda;</em>.  The schemes were generated automatically using <code>approxscheme2</code> and have not been rigorously verified for correctness.</p>
 
 <ul>
-<li><p>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>) &minus; 3/4</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:</p>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>) &minus; 3/4</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be convex and twice differentiable, leading to:
@@ -686,7 +692,7 @@
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
-<li><p>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:</p>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -716,27 +722,7 @@
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1229/1250 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 11346621/(700000*n).</li>
 </ul></li>
 </ul></li>
-<li><p>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(4*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:</p>
-
-<ul>
-<li>The function was detected to be twice differentiable, leading to:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 737/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1973921/(350000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 9263/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 1973921/(350000*n).</li>
-</ul></li>
-</ul></li>
-<li><p>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(6*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:</p>
-
-<ul>
-<li>The function was detected to be twice differentiable, leading to:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 517/10000 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 2220661/(175000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 9483/10000 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2220661/(175000*n).</li>
-</ul></li>
-</ul></li>
-<li><p>Let <em>f</em>(<em>&lambda;</em>) = $1/2-(1-2\lambda)^{1/2})/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{1/2}/2$ otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:</p>
+<li>Let <em>f</em>(<em>&lambda;</em>) = $1/2-(1-2\lambda)^{1/2})/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{1/2}/2$ otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:

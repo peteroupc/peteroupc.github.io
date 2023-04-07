@@ -121,7 +121,7 @@ Finding _m_ and _&alpha;_ is non-trivial in general.  But assuming _m_ and _&alp
 > **Example:** If _f_(_&lambda;_) is a _piecewise linear_ factory function (made of multiple linear functions defined on a finite number of "pieces", or subintervals, that together make up the closed unit interval), then _&alpha;_ is 1 (_f_ is Lipschitz continuous) and _m_ can equal the greatest absolute value of the slope among all pieces' slopes.  For example:
 >
 > - Suppose _f_(_&lambda;_) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, _m_ is $\max(|(3/4-0)/(2/3)|$, $|(1/4-3/4)/(1/3)|)$ = 1.5.  Moreover, _f_ is concave (the first piece's slope is greater than the second piece's).
-> - Suppose _f_(_&lambda;_) = min(_&lambda;_\*_mult_, 1−_&epsilon;_), with _mult_ &gt; 0 and _&epsilon;_ &ge; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−_&epsilon;_ at (1−_&epsilon;_)/_mult_, and 1−_&epsilon;_ at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].  In this example, _m_ is max(_mult_, 0) = _mult_.  Moreover, _f_ is concave.
+> - Suppose _f_(_&lambda;_) = min(_&lambda;_\*_mult_, 1−_&epsilon;_), with _mult_ &gt; 0 and _&epsilon;_ &gt; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−_&epsilon;_ at (1−_&epsilon;_)/_mult_, and 1−_&epsilon;_ at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].  In this example, _m_ is max(_mult_, 0) = _mult_.  Moreover, _f_ is concave.
 
 **Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -150,6 +150,11 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 >
 >     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
 >     * **fabove**(_n_, _k_) = 893/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*_n_).
+>
+> 3. Let $f(\lambda)=sin(z\lambda)+1/2$, where $z\ge 0$.  Then $f$ has a continuous second derivative whose absolute value is abs($-sin(z\lambda)\cdot z^2/4$).  This has a maximum of $L = z^2/4$.  Thus, the following scheme for $f$ is valid:
+>
+>     - For every $n$ such that **fbelow**(_n_,_k_) is 0 or greater for every _k_, **fbelow**(_n_,_k_) = $f(k/n)-z^2/(28\cdot n)$.  For every other $n$, **fbelow**(_n_,_k_) = 0.
+>     - For every $n$ such that **fabove**(_n_,_k_) is 1 or less for every _k_, **fabove**(_n_,_k_) = $f(k/n)+z^2/(28\cdot n)$.  For every other $n$, **fbelow**(_n_,_k_) = 1.
 
 **Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (`High`(_&lambda;_)) that "dominates" _f_ everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.
 
@@ -414,7 +419,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * The function was detected to be convex and twice differentiable, leading to:
         * **fbelow**(_n_, _k_) = 487/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 154309/(700000\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-
 * Let _f_(_&lambda;_) = **3/4 &minus; sqrt(_&lambda;_\*(1&minus;_&lambda;_))**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
@@ -427,16 +431,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * Detected to be twice differentiable using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 523/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 11346621/(700000\*n).
         * **fabove**(_n_, _k_) = 1229/1250 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 11346621/(700000\*n).
-* Let _f_(_&lambda;_) = **sin(4\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * The function was detected to be twice differentiable, leading to:
-        * **fbelow**(_n_, _k_) = 737/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 1973921/(350000\*n).
-        * **fabove**(_n_, _k_) = 9263/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 1973921/(350000\*n).
-
-* Let _f_(_&lambda;_) = **sin(6\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * The function was detected to be twice differentiable, leading to:
-        * **fbelow**(_n_, _k_) = 517/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 2220661/(175000\*n).
-        * **fabove**(_n_, _k_) = 9483/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 2220661/(175000\*n).
-
 * Let _f_(_&lambda;_) = $1/2-(1-2\lambda)^{1/2})/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{1/2}/2$ otherwise. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
