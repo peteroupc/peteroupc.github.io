@@ -151,10 +151,10 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 >     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
 >     * **fabove**(_n_, _k_) = 893/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*_n_).
 >
-> 3. Let $f(\lambda)=sin(z\lambda)+1/2$, where $z\ge 0$.  Then $f$ has a continuous second derivative whose absolute value is abs($-sin(z\lambda)\cdot z^2/4$).  This has a maximum of $L = z^2/4$.  Thus, the following scheme for $f$ is valid:
+> 3. Let $f(\lambda)=\sin(z\lambda)/4+1/2$, where $z\ge 0$.  Then $f$ has a continuous second derivative whose absolute value is abs($-\sin(z\lambda)\cdot z^2/4$).  This has an upper bound of $L = z^2/4$.  Thus, the following scheme for $f$ is valid:
 >
->     - For every $n$ such that **fbelow**(_n_,_k_) is 0 or greater for every _k_, **fbelow**(_n_,_k_) = $f(k/n)-z^2/(28\cdot n)$.  For every other $n$, **fbelow**(_n_,_k_) = 0.
->     - For every $n$ such that **fabove**(_n_,_k_) is 1 or less for every _k_, **fabove**(_n_,_k_) = $f(k/n)+z^2/(28\cdot n)$.  For every other $n$, **fbelow**(_n_,_k_) = 1.
+>     - For every $n$ such that **fbelow**(_n_,_k_) is 0 or greater for every _k_, **fbelow**(_n_,_k_) = $f(k/n)-z^2/(28\cdot n)$; for every other $n$, **fbelow**(_n_,_k_) = 0.
+>     - For every $n$ such that **fabove**(_n_,_k_) is 1 or less for every _k_, **fabove**(_n_,_k_) = $f(k/n)+z^2/(28\cdot n)$; for every other $n$, **fabove**(_n_,_k_) = 1.
 
 **Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (`High`(_&lambda;_)) that "dominates" _f_ everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.
 
@@ -413,12 +413,18 @@ A similar analysis to the one above can be used to find the expected ("long-run 
 <a id=Examples_of_Bernoulli_Factory_Polynomial_Building_Schemes></a>
 ## Examples of Bernoulli Factory Polynomial-Building Schemes
 
-The following are polynomial-building schemes and hints to simulate a coin of probability _f_(_&lambda;_) given an input coin with probability of heads of _&lambda;_.  The schemes were generated automatically using `approxscheme2` and have not been rigorously verified for correctness.
+The following are polynomial-building schemes and hints to simulate a coin of probability _f_(_&lambda;_) given an input coin with probability of heads of _&lambda;_.  The schemes have not been rigorously verified for correctness.
 
-* Let _f_(_&lambda;_) = **cosh(_&lambda;_) &minus; 3/4**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * The function was detected to be convex and twice differentiable, leading to:
-        * **fbelow**(_n_, _k_) = 487/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 154309/(700000\*n).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+The following scheme is valid for these functions:
+
+- For every $n$ such that **fbelow**(_n_,_k_) is 0 or greater for every _k_, **fbelow**(_n_,_k_) = $f(k/n)$ if $f$ is concave; otherwise, $f(k/n)-\delta(k,n)$. For every other $n$, **fbelow**(_n_,_k_) = 0.
+- For every $n$ such that **fabove**(_n_,_k_) is 1 or less for every _k_, **fabove**(_n_,_k_) = $f(k/n)$ if $f$ is convex; otherwise, $f(k/n)+\delta(k,n)$. For every other $n$, **fabove**(_n_,_k_) = 1.
+
+| Function $f(\lambda)$ | Value of $\delta(k, n)$ | Notes |
+ ---- | ---- | ---- |
+| cosh(_&lambda;_) &minus; 3/4. | cosh(1)/(7\*_n_) < 0.220441/_n_. | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
+| $\lambda\cdot sin(z\lambda)/4+1/2$. | $\frac{z(2+xz)}{4}\frac{1}{7n}$. | Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, assuming $\sin(\lambda)=\cos(\lambda)=1$. $z>0$. |
+
 * Let _f_(_&lambda;_) = **3/4 &minus; sqrt(_&lambda;_\*(1&minus;_&lambda;_))**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
@@ -427,10 +433,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 709907859/(100000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 709907859/(100000000\*n<sup>1/4</sup>).
-* Let _f_(_&lambda;_) = **_&lambda;_\*sin(7\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be twice differentiable using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = 523/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 11346621/(700000\*n).
-        * **fabove**(_n_, _k_) = 1229/1250 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 11346621/(700000\*n).
 * Let _f_(_&lambda;_) = $1/2-(1-2\lambda)^{1/2})/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{1/2}/2$ otherwise. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
@@ -438,15 +440,6 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 * Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 321/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-
-* Let _f_(_&lambda;_) = **_&lambda;_/2 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ &ge; 1/2; _&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 322613/(500000\*sqrt(n)).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-* Let _f_(_&lambda;_) = **_&lambda;_/4 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ &ge; 1/2; _&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = 443/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 322613/(1000000\*sqrt(n)).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
 
 <a id=Notes></a>
@@ -466,7 +459,7 @@ The following are polynomial-building schemes and hints to simulate a coin of pr
 
 [^7]: G.G. Lorentz, "Approximation of functions", 1966.
 
-[^8]: Mathé, Peter. “Approximation of Hölder Continuous Functions by Bernstein Polynomials.” The American Mathematical Monthly 106, no. 6 (1999): 568–74. [**https://doi.org/10.2307/2589469.**](https://doi.org/10.2307/2589469.)
+[^8]: Mathé, Peter. “Approximation of Hölder Continuous Functions by Bernstein Polynomials.” The American Mathematical Monthly 106, no. 6 (1999): 568–74. [**https://doi.org/10.2307/2589469**](https://doi.org/10.2307/2589469).
 
 [^9]: Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", 1961.
 
@@ -635,11 +628,16 @@ _Proof_: The critical points of $T(n, 3, p)$ (the points where the maximum might
 
 _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| < 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it's enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 < 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;
 
-**Proposition B8**:  Let _n_&ge;1 be an integer.  Suppose $f(\lambda)$ is concave and has a continuous second derivative on the closed unit interval.  Then $U_{n,2}(f)$ (as defined in "Approximate Bernoulli Factories for Continuous Functions") is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the absolute value of the maximum of $f$'s second derivative.
+**Proposition B8**:  Let _n_&ge;1 be an integer.  Suppose $f(\lambda)$ is has a continuous second derivative on the closed unit interval.  Suppose further that&mdash;
+
+- (R1) $f$ is concave, or
+- (R2) $f(0)=0$ and $f$ is nowhere decreasing and subadditive.
+
+Then $U_{n,2}(f)$ (as defined in "Approximate Bernoulli Factories for Continuous Functions") is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the absolute value of the maximum of $f$'s second derivative.
 
 _Proof:_ Theorem 11 of Bustamante (2008)[^29] provides error bounds for certain polynomials that come close to a continuous function.  To use this result here, the following conditions are verified:
 
-- $U_{n,2}$ is non-negative (because $f$ is concave, making $W_{n,2}$, and therefore its Bernstein polynomial $U_{n,2}$, non-negative by Proposition B1).
+- $U_{n,2}$ is non-negative (because $f$ satisfies R1 or R2, making $W_{n,2}$, and therefore its Bernstein polynomial $U_{n,2}$, non-negative by Propositions B1 and B2).
 - $U_{n,2}$ is a linear operator (Micchelli 1973)[^10].  Notably, it equals $f$ whenever $f$ is a linear function.
 - $U_{n,2}(\lambda) = \lambda$ and $U_{n,2}(1) = 1$.
 - $\phi(\lambda)=1$ which is positive and concave.
@@ -647,7 +645,7 @@ _Proof:_ Theorem 11 of Bustamante (2008)[^29] provides error bounds for certain 
 
 Then by Theorem 11, $U_{n,2}$ is close to $f$ by at most&mdash; $$\left(\frac32+\frac{3}{(2h^2\phi(\lambda)^2)}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h),$$ where $\omega_{2}^{\phi}(f, h)$ is a function[^30] that satisfies $\omega_{2}^{\phi}(f, h)\le M h^2$ whenever $h\le 1/2$, for the given choice of $\phi$ (Timan 1994)[^31].  So&mdash; $$\left(\frac32+\frac{3}{2h^2\phi(\lambda)^2}\frac{\lambda(1-\lambda)}{n^2}\right) \omega_{2}^{\phi}(f, h) \le \left(\frac32+\frac{3\lambda(1-\lambda)}{2h^2n^2}\right) M h^2 = \epsilon(f, h, n).$$ Finally, the change of variable $h=\sqrt{\lambda(1-\lambda)}/n$ is made (and $h$ is at most 1/2 given $n\ge 1$).  This change of variable leads to&mdash; $$\epsilon(f,h,n)=\left(\frac32+\frac{3}{2}\right) M (\sqrt{\lambda(1-\lambda)}/n)^2 = \frac{3M\lambda(1-\lambda)}{n^2} \le \frac{3M}{4n^2} = 0.75M/(n^2).$$ &#x25a1;
 
-> **Note:** The requirement of being concave is needed here to ensure $U_{n,2}(f)$ is non-negative.  It is open whether this proposition's conclusion remains true if this requirement is dropped.
+> **Note:** Requirements R1 and R2 are needed here to ensure $U_{n,2}(f)$ is non-negative.  It is open whether this proposition's conclusion remains true if these requirements are dropped.
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
