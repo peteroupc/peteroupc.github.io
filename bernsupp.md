@@ -17,7 +17,6 @@
     - [**Approximate Bernoulli Factories for Linear Functions**](#Approximate_Bernoulli_Factories_for_Linear_Functions)
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Complexity**](#Complexity)
-- [**Examples of Bernoulli Factory Polynomial-Building Schemes**](#Examples_of_Bernoulli_Factory_Polynomial_Building_Schemes)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Proofs on Cutting Off a Power Series**](#Proofs_on_Cutting_Off_a_Power_Series)
@@ -128,6 +127,7 @@ For every integer _n_ that's a power of 2:
 >
 > 2. Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $\alpha=z$ and Hölder constant $m=2^z/2$.  In this example, $f$ has a "vertical" slope at 1/2, and the maximum value of $g(\lambda)$ (see note 2) is $2^z/2$ when $\alpha=z$.
 > 3. Let $f(\lambda)=3/4-\sqrt{\lambda(1-\lambda)}$. This function is Hölder continuous with Hölder exponent $\alpha=1/2$ and Hölder constant $m=1$.  In this example, $f$ has a "vertical" slope at 0 and 1, and the maximum value of $g(\lambda)$ (see note 2) is 1 when $\alpha=1/2$.
+> 4. Let _f_(_&lambda;_) = 3\*sin(sqrt(3)\*sqrt(sin(2\*_&lambda;_)))/4 + 1/50.  This function is Hölder continuous with Hölder exponent $\alpha=1/2$, and its Hölder constant is upper bounded by $m=3\sqrt(6)/4 \lt 1.837118$.
 
 **Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -156,6 +156,17 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 >
 >     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
 >     * **fabove**(_n_, _k_) = 893/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*_n_).
+> 3. The following scheme is valid for the functions in the table below:
+>
+>     - For every $n$ such that **fbelow**(_n_,_k_) is 0 or greater for every _k_, **fbelow**(_n_,_k_) = $f(k/n)$ if $f$ is concave; otherwise, $f(k/n)-\delta(k,n)$. For every other $n$, **fbelow**(_n_,_k_) = 0.
+>     - For every $n$ such that **fabove**(_n_,_k_) is 1 or less for every _k_, **fabove**(_n_,_k_) = $f(k/n)$ if $f$ is convex; otherwise, $f(k/n)+\delta(k,n)$. For every other $n$, **fabove**(_n_,_k_) = 1.
+>
+>     | Function $f(\lambda)$ | Value of $\delta(k, n)$ | Notes |
+>      ---- | ---- | ---- |
+>     | cosh(_&lambda;_) &minus; 3/4. | cosh(1)/(7\*_n_) < 0.220441/_n_. | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
+>     | $\lambda\cdot\sin(z\lambda)/4+1/2$. | $\frac{z(2+xz)}{4}\frac{1}{7n}$. | Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, assuming $\sin(\lambda)=\cos(\lambda)=1$. $z>0$. |
+>     | $\sin(z\lambda)/4+1/2$. | $\frac{z^2}{4}\frac{1}{7n}$. | Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z>0$. |
+>     | _&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise. | $1/(7n)$. | Lipschitz continuous derivative, with Lipschitz constant 1. |
 
 **Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (`High`(_&lambda;_)) that "dominates" _f_ everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.
 
@@ -410,31 +421,6 @@ Then, since each bit is independent, **E**\[_N_\] = 2\*_&phi;_ as shown below.
 Also, on average, half of these flips (_&phi;_) show 1 and half show 0, since the bits are unbiased (the coin is fair).
 
 A similar analysis to the one above can be used to find the expected ("long-run average") time complexity of many Bernoulli factory algorithms.
-
-<a id=Examples_of_Bernoulli_Factory_Polynomial_Building_Schemes></a>
-## Examples of Bernoulli Factory Polynomial-Building Schemes
-
-The following are polynomial-building schemes and hints to simulate a coin of probability _f_(_&lambda;_) given an input coin with probability of heads of _&lambda;_.  The schemes have not been rigorously verified for correctness.
-
-The following scheme is valid for these functions:
-
-- For every $n$ such that **fbelow**(_n_,_k_) is 0 or greater for every _k_, **fbelow**(_n_,_k_) = $f(k/n)$ if $f$ is concave; otherwise, $f(k/n)-\delta(k,n)$. For every other $n$, **fbelow**(_n_,_k_) = 0.
-- For every $n$ such that **fabove**(_n_,_k_) is 1 or less for every _k_, **fabove**(_n_,_k_) = $f(k/n)$ if $f$ is convex; otherwise, $f(k/n)+\delta(k,n)$. For every other $n$, **fabove**(_n_,_k_) = 1.
-
-| Function $f(\lambda)$ | Value of $\delta(k, n)$ | Notes |
- ---- | ---- | ---- |
-| cosh(_&lambda;_) &minus; 3/4. | cosh(1)/(7\*_n_) < 0.220441/_n_. | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
-| $\lambda\cdot\sin(z\lambda)/4+1/2$. | $\frac{z(2+xz)}{4}\frac{1}{7n}$. | Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, assuming $\sin(\lambda)=\cos(\lambda)=1$. $z>0$. |
-| $\sin(z\lambda)/4+1/2$. | $\frac{z^2}{4}\frac{1}{7n}$. | Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z>0$. |
-
-* Let _f_(_&lambda;_) = **3\*sin(sqrt(3)\*sqrt(sin(2\*_&lambda;_)))/4 + 1/50**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 709907859/(100000000\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 709907859/(100000000\*n<sup>1/4</sup>).
-* Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = 321/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
 
 <a id=Notes></a>
 ## Notes

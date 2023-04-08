@@ -31,7 +31,6 @@
 </ul></li>
 <li><a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a></li>
 <li><a href="#Complexity"><strong>Complexity</strong></a></li>
-<li><a href="#Examples_of_Bernoulli_Factory_Polynomial_Building_Schemes"><strong>Examples of Bernoulli Factory Polynomial-Building Schemes</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
@@ -179,6 +178,7 @@
 </ul></li>
 <li><p>Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $\alpha=z$ and Hölder constant $m=2^z/2$.  In this example, $f$ has a &quot;vertical&quot; slope at 1/2, and the maximum value of $g(\lambda)$ (see note 2) is $2^z/2$ when $\alpha=z$.</p></li>
 <li>Let $f(\lambda)=3/4-\sqrt{\lambda(1-\lambda)}$. This function is Hölder continuous with Hölder exponent $\alpha=1/2$ and Hölder constant $m=1$.  In this example, $f$ has a &quot;vertical&quot; slope at 0 and 1, and the maximum value of $g(\lambda)$ (see note 2) is 1 when $\alpha=1/2$.</li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = 3*sin(sqrt(3)*sqrt(sin(2*<em>&lambda;</em>)))/4 + 1/50.  This function is Hölder continuous with Hölder exponent $\alpha=1/2$, and its Hölder constant is upper bounded by $m=3\sqrt(6)/4 \lt 1.837118$.</li>
 </ol>
 </blockquote>
 
@@ -222,6 +222,41 @@
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 893/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2/(7*<em>n</em>).</li>
 </ul></li>
+<li><p>The following scheme is valid for the functions in the table below:</p>
+
+<ul>
+<li>For every $n$ such that <strong>fbelow</strong>(<em>n</em>,<em>k</em>) is 0 or greater for every <em>k</em>, <strong>fbelow</strong>(<em>n</em>,<em>k</em>) = $f(k/n)$ if $f$ is concave; otherwise, $f(k/n)-\delta(k,n)$. For every other $n$, <strong>fbelow</strong>(<em>n</em>,<em>k</em>) = 0.</li>
+<li>For every $n$ such that <strong>fabove</strong>(<em>n</em>,<em>k</em>) is 1 or less for every <em>k</em>, <strong>fabove</strong>(<em>n</em>,<em>k</em>) = $f(k/n)$ if $f$ is convex; otherwise, $f(k/n)+\delta(k,n)$. For every other $n$, <strong>fabove</strong>(<em>n</em>,<em>k</em>) = 1.</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Function $f(\lambda)$</th>
+<th>Value of $\delta(k, n)$</th>
+<th>Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cosh(<em>&lambda;</em>) &minus; 3/4.</td>
+<td>cosh(1)/(7*<em>n</em>) &lt; 0.220441/<em>n</em>.</td>
+<td>Continuous second derivative, namely cosh(<em>&lambda;</em>).  Convex. <code>cosh</code> is the hyperbolic cosine function.</td>
+</tr>
+<tr>
+<td>$\lambda\cdot\sin(z\lambda)/4+1/2$.</td>
+<td>$\frac{z(2+xz)}{4}\frac{1}{7n}$.</td>
+<td>Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, assuming $\sin(\lambda)=\cos(\lambda)=1$. $z&gt;0$.</td>
+</tr>
+<tr>
+<td>$\sin(z\lambda)/4+1/2$.</td>
+<td>$\frac{z^2}{4}\frac{1}{7n}$.</td>
+<td>Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z&gt;0$.</td>
+</tr>
+<tr>
+<td><em>&lambda;</em><sup>2</sup>/2 + 1/10 if <em>&lambda;</em> &le; 1/2; <em>&lambda;</em>/2 &minus; 1/40 otherwise.</td>
+<td>$1/(7n)$.</td>
+<td>Lipschitz continuous derivative, with Lipschitz constant 1.</td>
+</tr>
+</tbody></table></li>
 </ol>
 </blockquote>
 
@@ -675,66 +710,6 @@
 <p>Also, on average, half of these flips (<em>&phi;</em>) show 1 and half show 0, since the bits are unbiased (the coin is fair).</p>
 
 <p>A similar analysis to the one above can be used to find the expected (&quot;long-run average&quot;) time complexity of many Bernoulli factory algorithms.</p>
-
-<p><a id=Examples_of_Bernoulli_Factory_Polynomial_Building_Schemes></a></p>
-
-<h2>Examples of Bernoulli Factory Polynomial-Building Schemes</h2>
-
-<p>The following are polynomial-building schemes and hints to simulate a coin of probability <em>f</em>(<em>&lambda;</em>) given an input coin with probability of heads of <em>&lambda;</em>.  The schemes have not been rigorously verified for correctness.</p>
-
-<p>The following scheme is valid for these functions:</p>
-
-<ul>
-<li>For every $n$ such that <strong>fbelow</strong>(<em>n</em>,<em>k</em>) is 0 or greater for every <em>k</em>, <strong>fbelow</strong>(<em>n</em>,<em>k</em>) = $f(k/n)$ if $f$ is concave; otherwise, $f(k/n)-\delta(k,n)$. For every other $n$, <strong>fbelow</strong>(<em>n</em>,<em>k</em>) = 0.</li>
-<li>For every $n$ such that <strong>fabove</strong>(<em>n</em>,<em>k</em>) is 1 or less for every <em>k</em>, <strong>fabove</strong>(<em>n</em>,<em>k</em>) = $f(k/n)$ if $f$ is convex; otherwise, $f(k/n)+\delta(k,n)$. For every other $n$, <strong>fabove</strong>(<em>n</em>,<em>k</em>) = 1.</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>Function $f(\lambda)$</th>
-<th>Value of $\delta(k, n)$</th>
-<th>Notes</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>cosh(<em>&lambda;</em>) &minus; 3/4.</td>
-<td>cosh(1)/(7*<em>n</em>) &lt; 0.220441/<em>n</em>.</td>
-<td>Continuous second derivative, namely cosh(<em>&lambda;</em>).  Convex. <code>cosh</code> is the hyperbolic cosine function.</td>
-</tr>
-<tr>
-<td>$\lambda\cdot\sin(z\lambda)/4+1/2$.</td>
-<td>$\frac{z(2+xz)}{4}\frac{1}{7n}$.</td>
-<td>Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, assuming $\sin(\lambda)=\cos(\lambda)=1$. $z&gt;0$.</td>
-</tr>
-<tr>
-<td>$\sin(z\lambda)/4+1/2$.</td>
-<td>$\frac{z^2}{4}\frac{1}{7n}$.</td>
-<td>Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z&gt;0$.</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3*sin(sqrt(3)*sqrt(sin(2*<em>&lambda;</em>)))/4 + 1/50</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 709907859/(100000000*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 709907859/(100000000*n<sup>1/4</sup>).</li>
-</ul></li>
-</ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em><sup>2</sup>/2 + 1/10 if <em>&lambda;</em> &le; 1/2; <em>&lambda;</em>/2 &minus; 1/40 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 321/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1/(7*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-</ul></li>
-</ul>
 
 <p><a id=Notes></a></p>
 
