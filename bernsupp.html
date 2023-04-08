@@ -139,7 +139,7 @@
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> or less and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot; as well as example 2 at the end of this section), and</li>
+<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> or less and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot; as well as note 2 at the end of this section), and</li>
 <li>on the closed unit interval&mdash;
 
 <ul>
@@ -161,7 +161,8 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>If the function <em>f</em> has a continuous first derivative on its domain, then <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous) and <em>m</em> can be the absolute value of the maximum of that derivative.</li>
+<li><strong>Lipschitz special case</strong>: If the function <em>f</em> has a continuous first derivative on its domain, then <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous) and <em>m</em> can be the absolute value of the maximum of that derivative.</li>
+<li><strong>Finding Hölder parameters</strong>: The Hölder constant and exponent are found by inspecting $g(\lambda) = \max_c \text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$ where the maximum is taken over all points $c$ where $f$ has a &quot;vertical slope&quot; or the &quot;steepest slope exhibited&quot;.  (Note that Hölder constants are greater than 0 and are usually 1 or less.)  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$&#39;s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant equal to or greater than the maximum value of $g(\lambda)$ on its domain.</li>
 <li>If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), <em>D</em>(<em>n</em>) can be <em>m</em>*322613/(250000*sqrt(<em>n</em>)), which is an upper bound.</li>
 <li>If the factory function&#39;s Hölder exponent is 1/2 or greater, <em>D</em>(<em>n</em>) can be <em>m</em>*154563/(40000*<em>n</em><sup>1/4</sup>), which is an upper bound.</li>
 <li>Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that&#39;s steeper than every &quot;nth&quot; root, and can&#39;t be handled by this method.  One example is <em>f</em>(<em>&lambda;</em>) = 1/10 if <em>&lambda;</em> is 0 and &minus;1/(2*ln(<em>&lambda;</em>/2)) + 1/10 otherwise, which has a slope near 0 that&#39;s steeper than every &quot;nth&quot; root.</li>
@@ -170,18 +171,14 @@
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li><p>If <em>f</em>(<em>&lambda;</em>) is a <em>piecewise linear</em> factory function (made of multiple linear functions defined on a finite number of &quot;pieces&quot;, or subintervals, that together make up the closed unit interval), then <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous) and <em>m</em> can equal the greatest absolute value of the slope among all pieces&#39; slopes.  For example:</p></li>
-</ol>
+<li><p>If <em>f</em>(<em>&lambda;</em>) is a <em>piecewise linear</em> factory function (made of multiple linear functions defined on a finite number of &quot;pieces&quot;, or subintervals, that together make up the closed unit interval), then <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous) and <em>m</em> can equal the greatest absolute value of the slope among all pieces&#39; slopes.  For example:</p>
 
 <ul>
 <li>Suppose <em>f</em>(<em>&lambda;</em>) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, <em>m</em> is $\max(|(3/4-0)/(2/3)|$, $|(1/4-3/4)/(1/3)|)$ = 1.5.  Moreover, <em>f</em> is concave (the first piece&#39;s slope is greater than the second piece&#39;s).</li>
-<li><p>Suppose <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>*<em>mult</em>, 1−<em>&epsilon;</em>), with <em>mult</em> &gt; 0 and <em>&epsilon;</em> &gt; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−<em>&epsilon;</em> at (1−<em>&epsilon;</em>)/<em>mult</em>, and 1−<em>&epsilon;</em> at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu &amp; Peres (2005)[^1] [^4].  In this example, <em>m</em> is max(<em>mult</em>, 0) = <em>mult</em>.  Moreover, <em>f</em> is concave.</p></li>
-</ul>
-
-<ol>
-<li><p>Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $z$ and Hölder constant $2^z/2$.</p>
-
-<p><strong>Finding Hölder parameters</strong>: The Hölder constant and exponent are found by inspecting $g(\lambda) = \max_c \frac{|f(\lambda)-f(c)|}{(|\lambda-c|)^\alpha}$ where the maximum is taken over all points $c$ where $f$ has a &quot;vertical slope&quot; or the &quot;steepest slope exhibited&quot;.  (In this example, the only such point is $c$ = 1/2.  Note that Hölder constants are greater than 0 and are usually 1 or less.)  If $g(\lambda)$ is bounded for a given $\alpha$, wherever $0\le\lambda\le 1$, then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant equal to or greater than the maximum value of $g(\lambda)$ on its domain.</p></li>
+<li>Suppose <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>*<em>mult</em>, 1−<em>&epsilon;</em>), with <em>mult</em> &gt; 0 and <em>&epsilon;</em> &gt; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−<em>&epsilon;</em> at (1−<em>&epsilon;</em>)/<em>mult</em>, and 1−<em>&epsilon;</em> at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu &amp; Peres (2005)[^1] [^4].  In this example, <em>m</em> is max(<em>mult</em>, 0) = <em>mult</em>.  Moreover, <em>f</em> is concave.</li>
+</ul></li>
+<li><p>Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $\alpha=z$ and Hölder constant $m=2^z/2$.  In this example, $f$ has a &quot;vertical&quot; slope at 1/2, and the maximum value of $g(\lambda)$ (see note 2) is $2^z/2$ when $\alpha=z$.</p></li>
+<li>Let $f(\lambda)=3/4-\sqrt{\lambda(1-\lambda)}$. This function is Hölder continuous with Hölder exponent $\alpha=1/2$ and Hölder constant $m=1$.  In this example, $f$ has a &quot;vertical&quot; slope at 0 and 1, and the maximum value of $g(\lambda)$ (see note 2) is 1 when $\alpha=1/2$.</li>
 </ol>
 </blockquote>
 
@@ -224,12 +221,6 @@
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 893/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2/(7*<em>n</em>).</li>
-</ul></li>
-<li><p>Let $f(\lambda)=\sin(z\lambda)/4+1/2$, where $z\ge 0$.  Then $f$ has a continuous second derivative whose absolute value is abs($-\sin(z\lambda)\cdot z^2/4$).  This has an upper bound of $L = z^2/4$.  Thus, the following scheme for $f$ is valid:</p>
-
-<ul>
-<li>For every $n$ such that <strong>fbelow</strong>(<em>n</em>,<em>k</em>) is 0 or greater for every <em>k</em>, <strong>fbelow</strong>(<em>n</em>,<em>k</em>) = $f(k/n)-z^2/(28\cdot n)$; for every other $n$, <strong>fbelow</strong>(<em>n</em>,<em>k</em>) = 0.</li>
-<li>For every $n$ such that <strong>fabove</strong>(<em>n</em>,<em>k</em>) is 1 or less for every <em>k</em>, <strong>fabove</strong>(<em>n</em>,<em>k</em>) = $f(k/n)+z^2/(28\cdot n)$; for every other $n$, <strong>fabove</strong>(<em>n</em>,<em>k</em>) = 1.</li>
 </ul></li>
 </ol>
 </blockquote>
@@ -711,23 +702,18 @@
 <td>Continuous second derivative, namely cosh(<em>&lambda;</em>).  Convex. <code>cosh</code> is the hyperbolic cosine function.</td>
 </tr>
 <tr>
-<td>$\lambda\cdot sin(z\lambda)/4+1/2$.</td>
+<td>$\lambda\cdot\sin(z\lambda)/4+1/2$.</td>
 <td>$\frac{z(2+xz)}{4}\frac{1}{7n}$.</td>
 <td>Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, assuming $\sin(\lambda)=\cos(\lambda)=1$. $z&gt;0$.</td>
+</tr>
+<tr>
+<td>$\sin(z\lambda)/4+1/2$.</td>
+<td>$\frac{z^2}{4}\frac{1}{7n}$.</td>
+<td>Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z&gt;0$.</td>
 </tr>
 </tbody></table>
 
 <ul>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1545784563/(400000000*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-</ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3*sin(sqrt(3)*sqrt(sin(2*<em>&lambda;</em>)))/4 + 1/50</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>

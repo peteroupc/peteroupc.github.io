@@ -99,7 +99,7 @@ A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli facto
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ or less and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)" as well as example 2 at the end of this section), and
+- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ or less and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)" as well as note 2 at the end of this section), and
 - on the closed unit interval&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
@@ -113,21 +113,21 @@ For every integer _n_ that's a power of 2:
 
 > **Notes:**
 >
-> 1. If the function _f_ has a continuous first derivative on its domain, then _&alpha;_ is 1 (_f_ is Lipschitz continuous) and _m_ can be the absolute value of the maximum of that derivative.
-> 2. If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
-> 3. If the factory function's Hölder exponent is 1/2 or greater, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
-> 4. Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that's steeper than every "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than every "nth" root.
+> 1. **Lipschitz special case**: If the function _f_ has a continuous first derivative on its domain, then _&alpha;_ is 1 (_f_ is Lipschitz continuous) and _m_ can be the absolute value of the maximum of that derivative.
+> 2. **Finding Hölder parameters**: The Hölder constant and exponent are found by inspecting $g(\lambda) = \max_c \text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$ where the maximum is taken over all points $c$ where $f$ has a "vertical slope" or the "steepest slope exhibited".  (Note that Hölder constants are greater than 0 and are usually 1 or less.)  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$'s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant equal to or greater than the maximum value of $g(\lambda)$ on its domain.
+> 3. If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
+> 4. If the factory function's Hölder exponent is 1/2 or greater, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
+> 5. Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that's steeper than every "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than every "nth" root.
 >
 > **Examples:**
 >
 > 1. If _f_(_&lambda;_) is a _piecewise linear_ factory function (made of multiple linear functions defined on a finite number of "pieces", or subintervals, that together make up the closed unit interval), then _&alpha;_ is 1 (_f_ is Lipschitz continuous) and _m_ can equal the greatest absolute value of the slope among all pieces' slopes.  For example:
 >
-> - Suppose _f_(_&lambda;_) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, _m_ is $\max(|(3/4-0)/(2/3)|$, $|(1/4-3/4)/(1/3)|)$ = 1.5.  Moreover, _f_ is concave (the first piece's slope is greater than the second piece's).
-> - Suppose _f_(_&lambda;_) = min(_&lambda;_\*_mult_, 1−_&epsilon;_), with _mult_ &gt; 0 and _&epsilon;_ &gt; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−_&epsilon;_ at (1−_&epsilon;_)/_mult_, and 1−_&epsilon;_ at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].  In this example, _m_ is max(_mult_, 0) = _mult_.  Moreover, _f_ is concave.
+>     - Suppose _f_(_&lambda;_) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, _m_ is $\max(|(3/4-0)/(2/3)|$, $|(1/4-3/4)/(1/3)|)$ = 1.5.  Moreover, _f_ is concave (the first piece's slope is greater than the second piece's).
+>     - Suppose _f_(_&lambda;_) = min(_&lambda;_\*_mult_, 1−_&epsilon;_), with _mult_ &gt; 0 and _&epsilon;_ &gt; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−_&epsilon;_ at (1−_&epsilon;_)/_mult_, and 1−_&epsilon;_ at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].  In this example, _m_ is max(_mult_, 0) = _mult_.  Moreover, _f_ is concave.
 >
-> 2. Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $z$ and Hölder constant $2^z/2$.
->
->     **Finding Hölder parameters**: The Hölder constant and exponent are found by inspecting $g(\lambda) = \max_c \frac{|f(\lambda)-f(c)|}{(|\lambda-c|)^\alpha}$ where the maximum is taken over all points $c$ where $f$ has a "vertical slope" or the "steepest slope exhibited".  (In this example, the only such point is $c$ = 1/2.  Note that Hölder constants are greater than 0 and are usually 1 or less.)  If $g(\lambda)$ is bounded for a given $\alpha$, wherever $0\le\lambda\le 1$, then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant equal to or greater than the maximum value of $g(\lambda)$ on its domain.
+> 2. Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $\alpha=z$ and Hölder constant $m=2^z/2$.  In this example, $f$ has a "vertical" slope at 1/2, and the maximum value of $g(\lambda)$ (see note 2) is $2^z/2$ when $\alpha=z$.
+> 3. Let $f(\lambda)=3/4-\sqrt{\lambda(1-\lambda)}$. This function is Hölder continuous with Hölder exponent $\alpha=1/2$ and Hölder constant $m=1$.  In this example, $f$ has a "vertical" slope at 0 and 1, and the maximum value of $g(\lambda)$ (see note 2) is 1 when $\alpha=1/2$.
 
 **Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -156,11 +156,6 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 >
 >     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
 >     * **fabove**(_n_, _k_) = 893/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*_n_).
->
-> 3. Let $f(\lambda)=\sin(z\lambda)/4+1/2$, where $z\ge 0$.  Then $f$ has a continuous second derivative whose absolute value is abs($-\sin(z\lambda)\cdot z^2/4$).  This has an upper bound of $L = z^2/4$.  Thus, the following scheme for $f$ is valid:
->
->     - For every $n$ such that **fbelow**(_n_,_k_) is 0 or greater for every _k_, **fbelow**(_n_,_k_) = $f(k/n)-z^2/(28\cdot n)$; for every other $n$, **fbelow**(_n_,_k_) = 0.
->     - For every $n$ such that **fabove**(_n_,_k_) is 1 or less for every _k_, **fabove**(_n_,_k_) = $f(k/n)+z^2/(28\cdot n)$; for every other $n$, **fabove**(_n_,_k_) = 1.
 
 **Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (`High`(_&lambda;_)) that "dominates" _f_ everywhere on the closed unit interval.  Unlike for the original function, there might be a polynomial-building scheme described earlier in this section for the transformed function.
 
@@ -429,12 +424,9 @@ The following scheme is valid for these functions:
 | Function $f(\lambda)$ | Value of $\delta(k, n)$ | Notes |
  ---- | ---- | ---- |
 | cosh(_&lambda;_) &minus; 3/4. | cosh(1)/(7\*_n_) < 0.220441/_n_. | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
-| $\lambda\cdot sin(z\lambda)/4+1/2$. | $\frac{z(2+xz)}{4}\frac{1}{7n}$. | Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, assuming $\sin(\lambda)=\cos(\lambda)=1$. $z>0$. |
+| $\lambda\cdot\sin(z\lambda)/4+1/2$. | $\frac{z(2+xz)}{4}\frac{1}{7n}$. | Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, assuming $\sin(\lambda)=\cos(\lambda)=1$. $z>0$. |
+| $\sin(z\lambda)/4+1/2$. | $\frac{z^2}{4}\frac{1}{7n}$. | Continuous second derivative; $\delta(k, n)\cdot(7n)$ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z>0$. |
 
-* Let _f_(_&lambda;_) = **3/4 &minus; sqrt(_&lambda;_\*(1&minus;_&lambda;_))**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
 * Let _f_(_&lambda;_) = **3\*sin(sqrt(3)\*sqrt(sin(2\*_&lambda;_)))/4 + 1/50**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 709907859/(100000000\*n<sup>1/4</sup>).
