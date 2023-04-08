@@ -519,7 +519,7 @@ then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil
 For example&mdash;
 
 - if _Q_ is Lipschitz continuous[^78] with Lipschitz constant _L_ or less on \[_a_, _b_\], then the function is no "steeper" than that of _&omega;_(_&delta;_) = _L_\*_&delta;_, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_, and
-- if _Q_ is Hölder continuous with Hölder constant _M_ or less and Hölder exponent _&alpha;_ on that interval [^87], then the function is no "steeper" than that of _&omega;_(_&delta;_) = _M_\*_&delta;_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
+- if _Q_ is Hölder continuous with Hölder constant _M_ or less and Hölder exponent _&alpha;_ on that interval [^81], then the function is no "steeper" than that of _&omega;_(_&delta;_) = _M_\*_&delta;_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
 
 The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance. (Indeed, for this reason, the algorithms don't satisfy [**desirable properties for PSRN samplers**](https://peteroupc.github.io/exporand.html#Properties).)  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
@@ -544,7 +544,7 @@ Devroye and Gravel (2020\)[^77] suggest the following randomness extractor to re
 
 After a sampling method produces an output _Y_, both _X_ (the number of random bits the sampler consumed) and _Y_ (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Notice that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)
 
-The issue of finding _P_(_X_ | _Y_) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976\)[^81], _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to output _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
+The issue of finding _P_(_X_ | _Y_) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976\)[^82], _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to output _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
 
 Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values _Y_ can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor (see "[**Notes on Randomness Extraction**](https://peteroupc.github.io/randextract.html)").  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
 
@@ -562,7 +562,7 @@ The Bernoulli factory problem (the problem of turning one biased coin into anoth
 - _f_ is continuous on the closed interval, and
 - _f_(_&mu;_) is greater than or equal to _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)
 
-(Jacob and Thiery 2015\)[^82]. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
+(Jacob and Thiery 2015\)[^83]. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
 
 In the algorithm below, let _K_ be a rational number greater than the maximum value of _f_ on the closed interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_ + (_b_&minus;_a_)\*_&lambda;_)/_K_.
 
@@ -577,13 +577,13 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 > 2. Generate three random variates from the oracle (which must produce random variates in the interval [3, 13]).  For each number _x_: With probability (_x_&minus;3)/(10&minus;3), add 1 to _heads_.
 > 3. Depending on _heads_, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: _heads_=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.
 
-**Algorithm 2.** Say there is an oracle in the form of a fair die.  The number of faces of the die, _n_, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than _n_.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2\)[^83], and the following are four of these distributions.
+**Algorithm 2.** Say there is an oracle in the form of a fair die.  The number of faces of the die, _n_, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than _n_.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2\)[^84], and the following are four of these distributions.
 
-**_Bernoulli 1/n._** It's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153\)[^83].
+**_Bernoulli 1/n._** It's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153\)[^84].
 
 **_Random variate with mean n._** Likewise, it's trivial to generate variates with a mean of _n_: Do "Bernoulli 1/n" trials as described above until a trial returns 0, then return the number of trials done this way.  (This is related to the ambiguously defined "geometric" random variates.)
 
-**_Binomial with parameters n and 1/n._** Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20\)[^83]\:
+**_Binomial with parameters n and 1/n._** Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20\)[^84]\:
 
 1. Take items from the oracle until the same item is taken twice.
 2. Create a list consisting of the items taken in step 1, except for the last item taken, then shuffle that list.
@@ -603,7 +603,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
     3. If the last item taken in the previous substep is in _U_ at a position **greater than _i_**, add _P_ to _L_ (if not already present).
 5. Return the number of items in _L_.
 
-> **Note:** Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown _n_ can be sampled with the oracle?[^84] The result applies to a family of (discrete) distributions with the same unknown parameter _n_, starting with either 1 or a greater integer.  Let Supp(_m_) be the set of values taken on by the distribution with parameter equal to _m_.  Then that family can be sampled using the oracle (with or without additional randomness) if and only if:
+> **Note:** Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown _n_ can be sampled with the oracle?[^85] The result applies to a family of (discrete) distributions with the same unknown parameter _n_, starting with either 1 or a greater integer.  Let Supp(_m_) be the set of values taken on by the distribution with parameter equal to _m_.  Then that family can be sampled using the oracle (with or without additional randomness) if and only if:
 
 > - There is a computable function _f_(_k_) that outputs a positive number.
 > - For each _n_, Supp(_n_) is included in Supp(_n_+1).
@@ -611,7 +611,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 >
 > Moreover, by Proposition 5.5 of Duvignau, a family meeting the conditions above can be sampled without additional randomness (besides the oracle) if and only if Supp(1) has no more than one element.
 >
-> **Example:** Let _n_&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;_n_) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/_n_)<sup>_f_(1)</sup> for any _f_.  This is consistent with the results for _Bernoulli factories_ (Keane and O'Brien 1994)[^85], where a coin that shows heads with unknown probability _&lambda;_ = 1/_n_ cannot be turned into a coin that shows heads with probability g(_&lambda;_) = exp(&minus;1/_&lambda;_) = exp(&minus;_n_) since _g_ is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability _h_(_n_) = (1+ln(_n_))/_n_ and 0 with probability 1&minus;_h_(_n_), _can_ be simulated, because min(_h_(_n_), 1&minus;_h_(_n_)) &ge; (1/_n_)<sup>3</sup>.
+> **Example:** Let _n_&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;_n_) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/_n_)<sup>_f_(1)</sup> for any _f_.  This is consistent with the results for _Bernoulli factories_ (Keane and O'Brien 1994)[^86], where a coin that shows heads with unknown probability _&lambda;_ = 1/_n_ cannot be turned into a coin that shows heads with probability g(_&lambda;_) = exp(&minus;1/_&lambda;_) = exp(&minus;_n_) since _g_ is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability _h_(_n_) = (1+ln(_n_))/_n_ and 0 with probability 1&minus;_h_(_n_), _can_ be simulated, because min(_h_(_n_), 1&minus;_h_(_n_)) &ge; (1/_n_)<sup>3</sup>.
 
 <a id=Additional_Algorithms></a>
 ### Additional Algorithms
@@ -623,24 +623,24 @@ The following algorithms are included here because they require applying an arbi
 - _f_ has a finite lower bound and a finite upper bound on its domain, and
 - the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0.
 
-The algorithm to achieve this goal follows (see Lee et al. 2014[^86]\)\:
+The algorithm to achieve this goal follows (see Lee et al. 2014[^87]\)\:
 
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
-> **Example:** An example from Lee et al. (2014\)[^86].  Say the oracle produces uniform random variates in [0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value ("long-run average") is that mean.
+> **Example:** An example from Lee et al. (2014\)[^87].  Say the oracle produces uniform random variates in [0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value ("long-run average") is that mean.
 >
 > **Notes:**
 >
 > 1. Averaging to the mean of _f_(_X_) (that is, **E**\[_f_(_X_)] where **E**\[.] means expected value or "long-run average") is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers (that is, _f_(**E**\[_X_])).  For example, if _X_ is 0 or 1 with equal probability, and _f_(_&nu;_) = exp(&minus;_&nu;_), then **E**\[_f_(_X_)] = exp(0) + (exp(&minus;1) &minus; exp(0))\*(1/2), and _f_(**E**\[_X_]) = _f_(1/2) = exp(&minus;1/2).
-> 2. (Lee et al. 2014, Corollary 4\)[^86]\: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
+> 2. (Lee et al. 2014, Corollary 4\)[^87]\: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
 >
 >     - Use _f_(_&nu;_) = _f_(_&nu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
 >     - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).
 >     - When Algorithm 2 finishes, add _b_ to its return value.
 > 3. The check "With probability abs(_f_(_x_))/_m_" is exact if the oracle produces only rational numbers _and_ if _f_(_x_) outputs only rational numbers.  If the oracle or _f_ can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then calculating the probability can lead to numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", above).
 
-**Algorithm 4.** Suppose there is an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nowhere decreasing in that interval (Jacob and Thiery 2015\)[^82].  This can be done using the algorithm below.  In the algorithm:
+**Algorithm 4.** Suppose there is an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nowhere decreasing in that interval (Jacob and Thiery 2015\)[^83].  This can be done using the algorithm below.  In the algorithm:
 
 - _f_(_&mu;_) must be a function that can be written as&mdash;<br>_c_[0]\*_z_<sup>0</sup> + _c_[1]\*_z_<sup>1</sup> + ...,<br>which is an infinite series where _z_ = _&mu;_&minus;_a_ and all _c_\[_i_\] are 0 or greater.
 - _&psi;_ is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)
@@ -653,7 +653,7 @@ The algorithm follows.
 4. Multiply _w_ by _&psi;_ and add 1 to _k_.
 5. With probability _&psi;_, go to step 2.  Otherwise, return _ret_.
 
-Now, assume the oracle's numbers are all less than or equal to _b_ (rather than greater than or equal to _a_), where _b_ is a known rational number.  Then _f_ must be 0 or greater everywhere in (&minus;_&infin;_, _b_\] and be nowhere increasing there (Jacob and Thiery 2015\)[^82], and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, _z_ = _b_ &minus;_&mu;_; (2) in step 2, multiply _prod_ by _b_ &minus; _x_ rather than _x_ &minus; _a_.
+Now, assume the oracle's numbers are all less than or equal to _b_ (rather than greater than or equal to _a_), where _b_ is a known rational number.  Then _f_ must be 0 or greater everywhere in (&minus;_&infin;_, _b_\] and be nowhere increasing there (Jacob and Thiery 2015\)[^83], and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, _z_ = _b_ &minus;_&mu;_; (2) in step 2, multiply _prod_ by _b_ &minus; _x_ rather than _x_ &minus; _a_.
 
 > **Note:** This algorithm is exact if the oracle produces only rational numbers _and_ if all _c_\[_i_\] are rational numbers.  Otherwise, the algorithm can introduce numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", above).  See also note 3 on the previous algorithm.
 
@@ -826,19 +826,19 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^80]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  For this reason, there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_), for every _&epsilon;_&gt;0, whenever _x_ and _y_ lie in that interval and whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
 
-[^81]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^81]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 
-[^82]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
+[^82]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^83]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).
+[^83]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
 
-[^84]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
+[^84]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).
 
-[^85]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^85]: There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
 
-[^86]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
+[^86]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^87]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
+[^87]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
 <a id=License></a>
 ## License
