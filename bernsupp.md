@@ -90,7 +90,7 @@ In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup
 <a id=Building_the_Lower_and_Upper_Polynomials></a>
 ### Building the Lower and Upper Polynomials
 
-A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli factory problem can be solved (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)"). The following are ways to build sequences of polynomials that appropriately converge to a factory function if that function meets certain conditions.  It would be helpful to plot that factory function using a computer algebra system to see if it belongs to any of the classes of functions described below.
+A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli factory problem can be solved (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)"). The following are ways to build sequences of polynomials that appropriately converge to a factory function if that function meets certain conditions.  To determine if the methods are right for _f_(_&lambda;_), a deep mathematical analysis of _f_ is required; it would be helpful to plot that factory function using a computer algebra system to see if it belongs to any of the classes of functions described below.
 
 **Concave functions.** If _f_ is concave, then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality. One example is _f_(_&lambda;_) = 1&minus; _&lambda;_<sup>2</sup>.
 
@@ -127,7 +127,7 @@ For every integer _n_ that's a power of 2:
 >
 > 2. Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $\alpha=z$ and Hölder constant $m=2^z/2$.  In this example, $f$ has a "vertical" slope at 1/2, and the maximum value of $g(\lambda)$ (see note 2) is $2^z/2$ when $\alpha=z$.
 > 3. Let $f(\lambda)=3/4-\sqrt{\lambda(1-\lambda)}$. This function is Hölder continuous with Hölder exponent $\alpha=1/2$ and Hölder constant $m=1$.  In this example, $f$ has a "vertical" slope at 0 and 1, and the maximum value of $g(\lambda)$ (see note 2) is 1 when $\alpha=1/2$.
-> 4. Let _f_(_&lambda;_) = 3\*sin(sqrt(3)\*sqrt(sin(2\*_&lambda;_)))/4 + 1/50.  This function is Hölder continuous with Hölder exponent $\alpha=1/2$, and its Hölder constant is upper bounded by $m=3\sqrt(6)/4 \lt 1.837118$.
+> 4. Let _f_(_&lambda;_) = 3\*sin(sqrt(3)\*sqrt(sin(2\*_&lambda;_)))/4 + 1/50.  This function is Hölder continuous with Hölder exponent $\alpha=1/2$, and its Hölder constant is upper bounded by $m=3\sqrt{6}/4 \lt 1.837118$.  In this example, f has a "vertical" slope at 0.
 
 **Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -141,8 +141,6 @@ Let _m_ be the Lipschitz constant of _f_'s derivative, or a greater number than 
 
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise,  _f_(_k_/_n_) &minus; _m_/(7\*_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _m_/(7\*_n_).
-
-My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `c2params`, to calculate the necessary values for _m_ and the bounds of these polynomials, given a factory function.
 
 > **Examples:**
 >
@@ -238,8 +236,6 @@ Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can 
 | > 0 and < 1 | 0 | Algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = _f_(1&minus;_&lambda;_).  (For example, cosh(_&lambda;_)&minus;1 becomes cosh(1&minus;_&lambda;_)&minus;1.)<br/>Inverted coin. |
 | 1 | 0 | Algorithm for **certain functions that equal 0 at 0 and 1 at 1**, but with _f_(_&lambda;_) = 1&minus;_f_(_&lambda;_).<br/>Inverted result. |
 | 1 | > 0 and &le; 1 | Algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = 1&minus;_f_(_&lambda;_).<br/>Inverted result. |
-
-**Specific functions.** My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `approxscheme2`, to build a polynomial-building scheme for certain factory functions.
 
 <a id=Approximate_Bernoulli_Factories></a>
 ## Approximate Bernoulli Factories

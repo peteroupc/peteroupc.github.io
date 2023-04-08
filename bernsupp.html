@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/07"><meta name="citation_online_date" content="2023/04/07"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/08"><meta name="citation_online_date" content="2023/04/08"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -129,7 +129,7 @@
 
 <h3>Building the Lower and Upper Polynomials</h3>
 
-<p>A <em>factory function</em> <em>f</em>(<em>&lambda;</em>) is a function for which the Bernoulli factory problem can be solved (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;). The following are ways to build sequences of polynomials that appropriately converge to a factory function if that function meets certain conditions.  It would be helpful to plot that factory function using a computer algebra system to see if it belongs to any of the classes of functions described below.</p>
+<p>A <em>factory function</em> <em>f</em>(<em>&lambda;</em>) is a function for which the Bernoulli factory problem can be solved (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;). The following are ways to build sequences of polynomials that appropriately converge to a factory function if that function meets certain conditions.  To determine if the methods are right for <em>f</em>(<em>&lambda;</em>), a deep mathematical analysis of <em>f</em> is required; it would be helpful to plot that factory function using a computer algebra system to see if it belongs to any of the classes of functions described below.</p>
 
 <p><strong>Concave functions.</strong> If <em>f</em> is concave, then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality. One example is <em>f</em>(<em>&lambda;</em>) = 1&minus; <em>&lambda;</em><sup>2</sup>.</p>
 
@@ -178,7 +178,7 @@
 </ul></li>
 <li><p>Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $\alpha=z$ and Hölder constant $m=2^z/2$.  In this example, $f$ has a &quot;vertical&quot; slope at 1/2, and the maximum value of $g(\lambda)$ (see note 2) is $2^z/2$ when $\alpha=z$.</p></li>
 <li>Let $f(\lambda)=3/4-\sqrt{\lambda(1-\lambda)}$. This function is Hölder continuous with Hölder exponent $\alpha=1/2$ and Hölder constant $m=1$.  In this example, $f$ has a &quot;vertical&quot; slope at 0 and 1, and the maximum value of $g(\lambda)$ (see note 2) is 1 when $\alpha=1/2$.</li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = 3*sin(sqrt(3)*sqrt(sin(2*<em>&lambda;</em>)))/4 + 1/50.  This function is Hölder continuous with Hölder exponent $\alpha=1/2$, and its Hölder constant is upper bounded by $m=3\sqrt(6)/4 \lt 1.837118$.</li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = 3*sin(sqrt(3)*sqrt(sin(2*<em>&lambda;</em>)))/4 + 1/50.  This function is Hölder continuous with Hölder exponent $\alpha=1/2$, and its Hölder constant is upper bounded by $m=3\sqrt{6}/4 \lt 1.837118$.  In this example, f has a &quot;vertical&quot; slope at 0.</li>
 </ol>
 </blockquote>
 
@@ -201,8 +201,6 @@
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; otherwise, max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(7*<em>n</em>).</li>
 </ul>
-
-<p>My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>c2params</code>, to calculate the necessary values for <em>m</em> and the bounds of these polynomials, given a factory function.</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
@@ -377,8 +375,6 @@
 <td>Algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1&minus;<em>f</em>(<em>&lambda;</em>).<br/>Inverted result.</td>
 </tr>
 </tbody></table>
-
-<p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial-building scheme for certain factory functions.</p>
 
 <p><a id=Approximate_Bernoulli_Factories></a></p>
 

@@ -124,7 +124,7 @@ Comments on other aspects of this document are welcome.
         - [**_&pi;_/4 &minus; 1/2 or (_&pi;_ &minus; 2)/4**](#pi___4_minus_1_2_or___pi___minus_2_4)
         - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
         - [**_&pi;_ &minus; 3**](#pi___minus_3)
-    - [**4/(3\*_&pi;_)**](#4_3___pi)
+        - [**4/(3\*_&pi;_)**](#4_3___pi)
         - [**1 / _&pi;_**](#1___pi)
         - [**(_a_/_b_)<sup>_z_</sup>**](#a___b___z)
         - [**1/(exp(1) + _c_ &minus; 2)**](#1_exp_1__c__minus_2)
@@ -1929,7 +1929,7 @@ Similar to the _&pi;_/4 algorithm.  First it samples a point inside an area cove
 > **Note:** Only a limited set of (_c1_, _c2_) pairs, including (0, 0) and (0, 1), will pass step 2 of this algorithm.  Thus it may be more efficient to choose one of them uniformly at random, rather than do step 2 as shown.  If (0, 0) or (0, 1) is chosen this way, the algorithm returns 1.
 
 <a id=4_3___pi></a>
-### 4/(3\*_&pi;_)
+#### 4/(3\*_&pi;_)
 
 Given that the point (_x_, _y_) has positive coordinates and lies inside a disk of radius 1 centered at (0, 0), the mean value of _x_ is 4/(3\*_&pi;_). This leads to the following algorithm to sample that probability:
 
