@@ -99,13 +99,13 @@ A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli facto
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ or less and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)"), and
+- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ or less and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)" as well as example 2 at the end of this section), and
 - on the closed unit interval&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
     - is concave and has a maximum of less than 1.
 
-Finding _m_ and _&alpha;_ is non-trivial in general.  But assuming _m_ and _&alpha;_ are known, then for every integer _n_ that's a power of 2:
+For every integer _n_ that's a power of 2:
 
 - _D_(_n_) = _m_\*(2/7)<sup>_&alpha;_/2</sup>/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _D_(_n_).
@@ -118,10 +118,16 @@ Finding _m_ and _&alpha;_ is non-trivial in general.  But assuming _m_ and _&alp
 > 3. If the factory function's Hölder exponent is 1/2 or greater, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
 > 4. Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that's steeper than every "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than every "nth" root.
 >
-> **Example:** If _f_(_&lambda;_) is a _piecewise linear_ factory function (made of multiple linear functions defined on a finite number of "pieces", or subintervals, that together make up the closed unit interval), then _&alpha;_ is 1 (_f_ is Lipschitz continuous) and _m_ can equal the greatest absolute value of the slope among all pieces' slopes.  For example:
+> **Examples:**
+>
+> 1. If _f_(_&lambda;_) is a _piecewise linear_ factory function (made of multiple linear functions defined on a finite number of "pieces", or subintervals, that together make up the closed unit interval), then _&alpha;_ is 1 (_f_ is Lipschitz continuous) and _m_ can equal the greatest absolute value of the slope among all pieces' slopes.  For example:
 >
 > - Suppose _f_(_&lambda;_) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, _m_ is $\max(|(3/4-0)/(2/3)|$, $|(1/4-3/4)/(1/3)|)$ = 1.5.  Moreover, _f_ is concave (the first piece's slope is greater than the second piece's).
 > - Suppose _f_(_&lambda;_) = min(_&lambda;_\*_mult_, 1−_&epsilon;_), with _mult_ &gt; 0 and _&epsilon;_ &gt; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−_&epsilon;_ at (1−_&epsilon;_)/_mult_, and 1−_&epsilon;_ at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].  In this example, _m_ is max(_mult_, 0) = _mult_.  Moreover, _f_ is concave.
+>
+> 2. Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $z$ and Hölder constant $2^z/2$.
+>
+>     **Finding Hölder parameters**: The Hölder constant and exponent are found by inspecting $g(\lambda) = \max_c \frac{|f(\lambda)-f(c)|}{(|\lambda-c|)^\alpha}$ where the maximum is taken over all points $c$ where $f$ has a "vertical slope" or the "steepest slope exhibited".  (In this example, the only such point is $c$ = 1/2.  Note that Hölder constants are greater than 0 and are usually 1 or less.)  If $g(\lambda)$ is bounded for a given $\alpha$, wherever $0\le\lambda\le 1$, then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant equal to or greater than the maximum value of $g(\lambda)$ on its domain.
 
 **Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -433,10 +439,6 @@ The following scheme is valid for these functions:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 709907859/(100000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 709907859/(100000000\*n<sup>1/4</sup>).
-* Let _f_(_&lambda;_) = $1/2-(1-2\lambda)^{1/2})/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{1/2}/2$ otherwise. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 1545784563/(400000000\*n<sup>1/4</sup>).
 * Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = 321/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).

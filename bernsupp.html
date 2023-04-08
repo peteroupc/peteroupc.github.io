@@ -139,7 +139,7 @@
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> or less and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;), and</li>
+<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> or less and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot; as well as example 2 at the end of this section), and</li>
 <li>on the closed unit interval&mdash;
 
 <ul>
@@ -149,7 +149,7 @@
 </ul></li>
 </ul>
 
-<p>Finding <em>m</em> and <em>&alpha;</em> is non-trivial in general.  But assuming <em>m</em> and <em>&alpha;</em> are known, then for every integer <em>n</em> that&#39;s a power of 2:</p>
+<p>For every integer <em>n</em> that&#39;s a power of 2:</p>
 
 <ul>
 <li><em>D</em>(<em>n</em>) = <em>m</em>*(2/7)<sup><em>&alpha;</em>/2</sup>/((2<sup><em>&alpha;</em>/2</sup>&minus;1)*<em>n</em><sup><em>&alpha;</em>/2</sup>).</li>
@@ -167,12 +167,22 @@
 <li>Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that&#39;s steeper than every &quot;nth&quot; root, and can&#39;t be handled by this method.  One example is <em>f</em>(<em>&lambda;</em>) = 1/10 if <em>&lambda;</em> is 0 and &minus;1/(2*ln(<em>&lambda;</em>/2)) + 1/10 otherwise, which has a slope near 0 that&#39;s steeper than every &quot;nth&quot; root.</li>
 </ol>
 
-<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) is a <em>piecewise linear</em> factory function (made of multiple linear functions defined on a finite number of &quot;pieces&quot;, or subintervals, that together make up the closed unit interval), then <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous) and <em>m</em> can equal the greatest absolute value of the slope among all pieces&#39; slopes.  For example:</p>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li><p>If <em>f</em>(<em>&lambda;</em>) is a <em>piecewise linear</em> factory function (made of multiple linear functions defined on a finite number of &quot;pieces&quot;, or subintervals, that together make up the closed unit interval), then <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous) and <em>m</em> can equal the greatest absolute value of the slope among all pieces&#39; slopes.  For example:</p></li>
+</ol>
 
 <ul>
 <li>Suppose <em>f</em>(<em>&lambda;</em>) equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.  In this example, <em>m</em> is $\max(|(3/4-0)/(2/3)|$, $|(1/4-3/4)/(1/3)|)$ = 1.5.  Moreover, <em>f</em> is concave (the first piece&#39;s slope is greater than the second piece&#39;s).</li>
-<li>Suppose <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>*<em>mult</em>, 1−<em>&epsilon;</em>), with <em>mult</em> &gt; 0 and <em>&epsilon;</em> &gt; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−<em>&epsilon;</em> at (1−<em>&epsilon;</em>)/<em>mult</em>, and 1−<em>&epsilon;</em> at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu &amp; Peres (2005)[^1] [^4].  In this example, <em>m</em> is max(<em>mult</em>, 0) = <em>mult</em>.  Moreover, <em>f</em> is concave.</li>
+<li><p>Suppose <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>*<em>mult</em>, 1−<em>&epsilon;</em>), with <em>mult</em> &gt; 0 and <em>&epsilon;</em> &gt; 0.  This has a rising linear piece and a constant piece, and equals 0 at 0, 1−<em>&epsilon;</em> at (1−<em>&epsilon;</em>)/<em>mult</em>, and 1−<em>&epsilon;</em> at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu &amp; Peres (2005)[^1] [^4].  In this example, <em>m</em> is max(<em>mult</em>, 0) = <em>mult</em>.  Moreover, <em>f</em> is concave.</p></li>
 </ul>
+
+<ol>
+<li><p>Let $f(\lambda) = 1/2-(1-2\lambda)^{z}/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise, where $0\lt z\le 1$.  This function is Hölder continuous with Hölder exponent $z$ and Hölder constant $2^z/2$.</p>
+
+<p><strong>Finding Hölder parameters</strong>: The Hölder constant and exponent are found by inspecting $g(\lambda) = \max_c \frac{|f(\lambda)-f(c)|}{(|\lambda-c|)^\alpha}$ where the maximum is taken over all points $c$ where $f$ has a &quot;vertical slope&quot; or the &quot;steepest slope exhibited&quot;.  (In this example, the only such point is $c$ = 1/2.  Note that Hölder constants are greater than 0 and are usually 1 or less.)  If $g(\lambda)$ is bounded for a given $\alpha$, wherever $0\le\lambda\le 1$, then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant equal to or greater than the maximum value of $g(\lambda)$ on its domain.</p></li>
+</ol>
 </blockquote>
 
 <p><strong>Functions with a Lipschitz continuous derivative.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
@@ -726,16 +736,6 @@
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 709907859/(100000000*n<sup>1/4</sup>).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 709907859/(100000000*n<sup>1/4</sup>).</li>
-</ul></li>
-</ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = $1/2-(1-2\lambda)^{1/2})/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{1/2}/2$ otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1545784563/(400000000*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 1545784563/(400000000*n<sup>1/4</sup>).</li>
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em><sup>2</sup>/2 + 1/10 if <em>&lambda;</em> &le; 1/2; <em>&lambda;</em>/2 &minus; 1/40 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
