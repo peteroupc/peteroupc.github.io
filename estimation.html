@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/04/06"><meta name="citation_online_date" content="2023/04/06"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/04/08"><meta name="citation_online_date" content="2023/04/08"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -40,30 +40,33 @@
 
 <p>Comments on other aspects of this document are welcome.</p>
 
+<p><a id=Contents></a></p>
+
+<h2>Contents</h2>
+
+<ul>
+<li><a href="#Introduction"><strong>Introduction</strong></a>
+
+<ul>
+<li><a href="#About_This_Document"><strong>About This Document</strong></a></li>
+</ul></li>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#Concepts"><strong>Concepts</strong></a></li>
+<li><a href="#A_Relative_Error_Algorithm_for_a_Bernoulli_Stream"><strong>A Relative-Error Algorithm for a Bernoulli Stream</strong></a></li>
+<li><a href="#A_Relative_Error_Algorithm_for_a_Bounded_Stream"><strong>A Relative-Error Algorithm for a Bounded Stream</strong></a></li>
+<li><a href="#An_Absolute_Error_Adaptive_Algorithm"><strong>An Absolute-Error Adaptive Algorithm</strong></a></li>
+<li><a href="#Estimating_the_Mode"><strong>Estimating the Mode</strong></a></li>
+<li><a href="#Estimating_a_Function_of_the_Mean"><strong>Estimating a Function of the Mean</strong></a></li>
+<li><a href="#Randomized_Integration"><strong>Randomized Integration</strong></a></li>
+<li><a href="#Finding_Coins_with_Maximum_Success_Probabilities"><strong>Finding Coins with Maximum Success Probabilities</strong></a></li>
+<li><a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a></li>
+<li><a href="#Notes"><strong>Notes</strong></a></li>
+<li><a href="#License"><strong>License</strong></a></li>
+</ul>
+
 <p><a id=Concepts></a></p>
 
 <h2>Concepts</h2>
-
-<p>The following concepts are used in this document.</p>
-
-<p>The <em>closed unit interval</em> (written as [0, 1]) means the set consisting of 0, 1, and every real number in between.</p>
-
-<p>Each algorithm takes a stream of independent random variates (numbers).  These variates follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers have greater probability of occurring than others.  A distribution has the following properties.</p>
-
-<ul>
-<li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the &quot;long-run average&quot; value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  If <strong>E</strong>[<em>X</em>] exists, then with probability 1, the average of the first <em>n</em> sampled items taken from the stream approaches the expected value as <em>n</em> gets large (as a result of the <em>law of large numbers</em>).</li>
-<li>An <em>n<sup>th</sup> moment</em> is the expected value of <em>X</em><sup><em>n</em></sup>.</li>
-<li>An <em>n<sup>th</sup> central moment (about the mean)</em> is the expected value of (<em>X</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>, where <em>&mu;</em> is the distribution&#39;s mean.  The 2nd central moment is called <em>variance</em>.</li>
-<li>An <em>n<sup>th</sup> central absolute moment</em> (c.a.m.) is the expected value of abs(<em>X</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>, where <em>&mu;</em> is the distribution&#39;s mean.  This is the same as the central moment when <em>n</em> is even.</li>
-</ul>
-
-<p>Some distributions don&#39;t have an <em>n</em><sup>th</sup> moment for a particular <em>n</em>.  This usually means the <em>n</em><sup>th</sup> power of the stream&#39;s numbers varies so wildly that it can&#39;t be estimated accurately.  If a distribution has an <em>n</em><sup>th</sup> moment, it also has a <em>k</em><sup>th</sup> moment for every <em>k</em> in the interval [1, <em>n</em>).</p>
-
-<p>The <em>relative error</em> of an estimation algorithm is abs(<em>est</em>/<em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.</p>
-
-<p><a id=A_Relative_Error_Algorithm_for_a_Bernoulli_Stream></a></p>
-
-<h2>A Relative-Error Algorithm for a Bernoulli Stream</h2>
 
 <p>The following algorithm from Huber (2017)[^2] estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm&#39;s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.  Specifically, the stream of numbers has the following properties:</p>
 
@@ -107,9 +110,9 @@
 </ol>
 </blockquote>
 
-<p><a id=A_Relative_Error_Algorithm_for_a_Bounded_Stream></a></p>
+<p><a id=A_Relative_Error_Algorithm_for_a_Bernoulli_Stream></a></p>
 
-<h2>A Relative-Error Algorithm for a Bounded Stream</h2>
+<h2>A Relative-Error Algorithm for a Bernoulli Stream</h2>
 
 <p>The following algorithm comes from Huber and Jones (2019)[^5]; see also Huber (2017)[^6].  It estimates the expected value of a stream of random variates with the following properties:</p>
 
@@ -178,9 +181,9 @@
 </ol>
 </blockquote>
 
-<p><a id=An_Absolute_Error_Adaptive_Algorithm></a></p>
+<p><a id=A_Relative_Error_Algorithm_for_a_Bounded_Stream></a></p>
 
-<h2>An Absolute-Error Adaptive Algorithm</h2>
+<h2>A Relative-Error Algorithm for a Bounded Stream</h2>
 
 <p>The following algorithm comes from Kunsch et al. (2019)[^7].  It estimates the mean of a stream of random variates with the following properties:</p>
 
@@ -276,9 +279,9 @@
 </ol>
 </blockquote>
 
-<p><a id=Estimating_the_Mode></a></p>
+<p><a id=An_Absolute_Error_Adaptive_Algorithm></a></p>
 
-<h2>Estimating the Mode</h2>
+<h2>An Absolute-Error Adaptive Algorithm</h2>
 
 <p>Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the <em>mode</em>.(Dutta and Goswami 2010)[^12]  This assumes the following are known:</p>
 
@@ -296,9 +299,9 @@
 <li>Take <em>m</em> items from the stream.  If one item occurs more frequently than any other item taken this way, return the most frequent item.  Otherwise, return an arbitrary but fixed item (among the items the stream can take).</li>
 </ol>
 
-<p><a id=Estimating_a_Function_of_the_Mean></a></p>
+<p><a id=Estimating_the_Mode></a></p>
 
-<h2>Estimating a Function of the Mean</h2>
+<h2>Estimating the Mode</h2>
 
 <p><em>Algorithm C</em> can be used to estimate a function of the mean of a stream of random variates with unknown mean.  Specifically, the goal is to estimate <em>f</em>(<strong>E</strong>[<strong>z</strong>]), where:</p>
 
@@ -397,9 +400,9 @@
 </ol>
 </blockquote>
 
-<p><a id=Randomized_Integration></a></p>
+<p><a id=Estimating_a_Function_of_the_Mean></a></p>
 
-<h2>Randomized Integration</h2>
+<h2>Estimating a Function of the Mean</h2>
 
 <p>Monte Carlo integration is a randomized way to estimate the integral (&quot;area under the graph&quot;) of a function.[^18]</p>
 
@@ -468,9 +471,9 @@ pprint(Max(1,kappa))
 <p>The paper (Theorem 3.9) also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is Hölder continuous with Hölder exponent <em>&beta;</em> or less [^21] and is defined on the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p>
 </blockquote>
 
-<p><a id=Finding_Coins_with_Maximum_Success_Probabilities></a></p>
+<p><a id=Randomized_Integration></a></p>
 
-<h2>Finding Coins with Maximum Success Probabilities</h2>
+<h2>Randomized Integration</h2>
 
 <p>Given <em>m</em> coins each with unknown probability of heads, the following algorithm finds the <em>k</em> coins with the greatest probability of showing heads, such that the algorithm correctly finds them with probability at least 1 &minus; <em>&delta;</em>.  It uses the following parameters:</p>
 
@@ -496,15 +499,15 @@ pprint(Max(1,kappa))
 <li>If <em>&mu;</em> &gt; 2*<em>k</em>, do a recursive run of this algorithm, using only the coins in <em>C</em> and with <em>&delta;</em> = <em>&delta;</em>/2 and <em>r</em> = <em>r</em> &minus; 1.</li>
 </ol>
 
-<p><a id=Requests_and_Open_Questions></a></p>
+<p><a id=Finding_Coins_with_Maximum_Success_Probabilities></a></p>
 
-<h2>Requests and Open Questions</h2>
+<h2>Finding Coins with Maximum Success Probabilities</h2>
 
 <p>For open questions, see &quot;<a href="https://peteroupc.github.io/requestsother.html#Questions_on_Estimation_Algorithms"><strong>Questions on Estimation Algorithms</strong></a>&quot;.</p>
 
-<p><a id=Notes></a></p>
+<p><a id=Requests_and_Open_Questions></a></p>
 
-<h2>Notes</h2>
+<h2>Requests and Open Questions</h2>
 
 <p>[^1]: Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462.</p>
 
@@ -550,9 +553,9 @@ pprint(Max(1,kappa))
 
 <p>[^22]: Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</p>
 
-<p><a id=License></a></p>
+<p><a id=Notes></a></p>
 
-<h2>License</h2>
+<h2>Notes</h2>
 
 <p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
 </div><nav id="navigation"><ul>
