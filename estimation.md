@@ -44,7 +44,6 @@ Comments on other aspects of this document are welcome.
 - [**Finding Coins with Maximum Success Probabilities**](#Finding_Coins_with_Maximum_Success_Probabilities)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Notes**](#Notes)
-- [**License**](#License)
 
 <a id=Concepts></a>
 ## Concepts
@@ -408,4 +407,46 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 <a id=Notes></a>
 ## Notes
 
-Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
+[^1]: Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462.
+
+[^2]: Huber, M., 2017. A Bernoulli mean estimate with known relative error distribution. Random Structures & Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).
+
+[^3]: Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016).
+
+[^4]: Huber, M., "[**Tight relative estimation in the mean of Bernoulli random variables**](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
+
+[^5]: Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.
+
+[^6]: Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.
+
+[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .
+
+[^8]: Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v3)", arXiv:1208.4318v3 [math.ST], 2012/2013.
+
+[^9]: As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.
+
+[^10]: "_k_ is even" means that _k_ is divisible by 2.  This is true if _k_ &minus; 2\*floor(_k_/2) equals 0, or if the least significant bit of abs(_x_) is 0.
+
+[^11]: Lee, J.C. and Valiant, P., 2022. [**Optimal Sub-Gaussian Mean Estimation in Very High Dimensions**](https://drops.dagstuhl.de/opus/volltexte/2022/15694/). In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik.
+
+[^12]: Dutta, Santanu, and Alok Goswami. "Mode estimation for discrete distributions." Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.
+
+[^13]: A _Lipschitz continuous_ function with Lipschitz constant _M_ is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_ apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_.
+
+[^14]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality.
+
+[^15]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
+
+[^16]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval \[_a_, _b_\] is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
+
+[^17]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
+
+[^18]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
+
+[^19]: J.A. Tropp, "ACM 217: Probability in High Dimensions", Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.
+
+[^20]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
+
+[^21]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
+
+[^22]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).

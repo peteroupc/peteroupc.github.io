@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/08"><meta name="citation_online_date" content="2023/04/08"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/09"><meta name="citation_online_date" content="2023/04/09"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -163,8 +163,8 @@
 <li><p><strong>Finding Hölder parameters</strong>: The following is one way to find the Hölder constant and exponent of a factory function $f(\lambda)$.  Consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a &quot;vertical slope&quot; or the &quot;steepest slope exhibited&quot;.  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$&#39;s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant equal to or greater than the maximum value of $g(\lambda)$ on its domain.</p>
 
 <p>The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: <code>lamda,c=symbols(&#39;lamda c&#39;); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c,0),h.subs(c,1)),(lamda,0,1))</code>.</p></li>
-<li>If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), <em>D</em>(<em>n</em>) can be <em>m</em>*322613/(250000*sqrt(<em>n</em>)), which is an upper bound.</li>
-<li>If the factory function&#39;s Hölder exponent is 1/2 or greater, <em>D</em>(<em>n</em>) can be <em>m</em>*154563/(40000*<em>n</em><sup>1/4</sup>), which is an upper bound.</li>
+<li>If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), <em>D</em>(<em>n</em>) can be <em>m</em>*322613/(250000*sqrt(<em>n</em>)), which is an upper bound, where <em>m</em> is not less than the function&#39;s Lipschitz constant.</li>
+<li>If the factory function admits a Hölder exponent of 1/2, <em>D</em>(<em>n</em>) can be <em>m</em>*154563/(40000*<em>n</em><sup>1/4</sup>), which is an upper bound, where <em>m</em> is not less than the function&#39;s Hölder constant (for Hölder exponent 1/2).</li>
 <li>Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that&#39;s steeper than every &quot;nth&quot; root, and can&#39;t be handled by this method.  One example is <em>f</em>(<em>&lambda;</em>) = 1/10 if <em>&lambda;</em> is 0 and &minus;1/(2*ln(<em>&lambda;</em>/2)) + 1/10 otherwise, which has a slope near 0 that&#39;s steeper than every &quot;nth&quot; root.</li>
 </ol>
 
@@ -573,15 +573,15 @@
 
 <ol>
 <li>Providing the full proof for the error bounds shown in the last table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 2.2 of Güntürk and Li (2021)[^12], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.</li>
-<li><p>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting either&mdash;</p></li>
-</ol>
+<li><p>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting either&mdash;</p>
 
 <ul>
 <li>$c$=floor($c/\delta$) * $\delta$ (rounding down), or</li>
 <li>$c$=floor($c/\delta + 1/2$) * $\delta$ (rounding to the nearest multiple),</li>
 </ul>
 
-<p>for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</p>
+<p>for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</p></li>
+</ol>
 </blockquote>
 
 <p><a id=Approximate_Bernoulli_Factories_for_Power_Series></a></p>
@@ -1499,7 +1499,9 @@
 <li>$(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.</li>
 </ol>
 
-<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.</p>
+<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.</p>
+
+<p>If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.</p>
 
 <p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the absolute value of the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 

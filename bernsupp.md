@@ -115,8 +115,8 @@ For every integer _n_ that's a power of 2:
 > 2. **Finding Hölder parameters**: The following is one way to find the Hölder constant and exponent of a factory function $f(\lambda)$.  Consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a "vertical slope" or the "steepest slope exhibited".  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$'s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant equal to or greater than the maximum value of $g(\lambda)$ on its domain.
 >
 >     The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: `lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c,0),h.subs(c,1)),(lamda,0,1))`.
-> 3. If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
-> 4. If the factory function's Hölder exponent is 1/2 or greater, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
+> 3. If the factory function has a Hölder exponent of 1 (and so is Lipschitz continuous), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound, where _m_ is not less than the function's Lipschitz constant.
+> 4. If the factory function admits a Hölder exponent of 1/2, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound, where _m_ is not less than the function's Hölder constant (for Hölder exponent 1/2).
 > 5. Some factory functions are not Hölder continuous for any Hölder exponent greater than 0.  These functions have a slope that's steeper than every "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than every "nth" root.
 >
 > **Examples:**
@@ -330,10 +330,10 @@ Once _n_ is found, simulating the alternative polynomial is as follows:
 > 1. Providing the full proof for the error bounds shown in the last table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 2.2 of Güntürk and Li (2021)[^12], finding upper bounds for so-called "central moments" of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem's proof.
 > 2. A polynomial's Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting either&mdash;
 >
-> - $c$=floor($c/\delta$) \* $\delta$ (rounding down), or
-> - $c$=floor($c/\delta + 1/2$) \* $\delta$ (rounding to the nearest multiple),
+>     - $c$=floor($c/\delta$) \* $\delta$ (rounding down), or
+>     - $c$=floor($c/\delta + 1/2$) \* $\delta$ (rounding to the nearest multiple),
 >
-> for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial's coefficients as given here.)
+>     for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial's coefficients as given here.)
 
 <a id=Approximate_Bernoulli_Factories_for_Power_Series></a>
 ### Approximate Bernoulli Factories for Power Series
@@ -1077,7 +1077,9 @@ Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $
 2. $g_n$ and $h_n$ converge to $f$ as $n$ gets large.
 3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
 
-Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.
+Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.
+
+If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.
 
 It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the absolute value of the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 

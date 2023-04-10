@@ -1430,11 +1430,11 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 <a id=arctan___lambda_____pi></a>
 #### arctan(_&lambda;_) /_&pi;_
 
-- Do the following process repeatedly, until this algorithm returns a value:
-    1. Run the **algorithm for 1/_&pi;_**.  If the run returns 0, return 0.
-    2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
-    3. Generate _u_, a uniform random variate between 0 and 1, if it wasn't generated yet.
-    4. [**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.
+1. Run the **algorithm for 1/_&pi;_**.  If the run returns 0, return 0.
+2. Do the following process repeatedly, until this algorithm returns a value:
+    1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
+    2. Generate _u_, a uniform random variate between 0 and 1, if it wasn't generated yet.
+    3. [**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.
 
 <a id=arctan___lambda></a>
 #### arctan(_&lambda;_)

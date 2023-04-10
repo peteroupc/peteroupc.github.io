@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/04/08"><meta name="citation_online_date" content="2023/04/08"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/04/09"><meta name="citation_online_date" content="2023/04/09"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -61,7 +61,6 @@
 <li><a href="#Finding_Coins_with_Maximum_Success_Probabilities"><strong>Finding Coins with Maximum Success Probabilities</strong></a></li>
 <li><a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
-<li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
 <p><a id=Concepts></a></p>
@@ -557,7 +556,49 @@ pprint(Max(1,kappa))
 
 <h2>Notes</h2>
 
-<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+<p>[^1]: Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462.</p>
+
+<p>[^2]: Huber, M., 2017. A Bernoulli mean estimate with known relative error distribution. Random Structures &amp; Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).</p>
+
+<p>[^3]: Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016).</p>
+
+<p>[^4]: Huber, M., &quot;<a href="https://arxiv.org/abs/2210.12861"><strong>Tight relative estimation in the mean of Bernoulli random variables</strong></a>&quot;, arXiv:2210.12861 [cs.LG], 2022.</p>
+
+<p>[^5]: Huber, Mark, and Bo Jones. &quot;Faster estimates of the mean of bounded random variables.&quot; Mathematics and Computers in Simulation 161 (2019): 93-101.</p>
+
+<p>[^6]: Huber, Mark, &quot;<a href="https://arxiv.org/abs/1706.01478"><strong>An optimal(<em>&epsilon;</em>, <em>&delta;</em>)-approximation scheme for the mean of random variables with bounded relative variance</strong></a>&quot;, arXiv:1706.01478, 2017.</p>
+
+<p>[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. &quot;Solvable integration problems and optimal sample size selection.&quot; Journal of Complexity 53 (2019): 40-67.  Also in <a href="https://arxiv.org/pdf/1805.08637.pdf"><strong>https://arxiv.org/pdf/1805.08637.pdf</strong></a> .</p>
+
+<p>[^8]: Hickernell, F.J., Jiang, L., et al., &quot;<a href="https://arxiv.org/abs/1208.4318v3"><strong>Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling</strong></a>&quot;, arXiv:1208.4318v3 [math.ST], 2012/2013.</p>
+
+<p>[^9]: As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.</p>
+
+<p>[^10]: &quot;<em>k</em> is even&quot; means that <em>k</em> is divisible by 2.  This is true if <em>k</em> &minus; 2*floor(<em>k</em>/2) equals 0, or if the least significant bit of abs(<em>x</em>) is 0.</p>
+
+<p>[^11]: Lee, J.C. and Valiant, P., 2022. <a href="https://drops.dagstuhl.de/opus/volltexte/2022/15694/"><strong>Optimal Sub-Gaussian Mean Estimation in Very High Dimensions</strong></a>. In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik.</p>
+
+<p>[^12]: Dutta, Santanu, and Alok Goswami. &quot;Mode estimation for discrete distributions.&quot; Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.</p>
+
+<p>[^13]: A <em>Lipschitz continuous</em> function with Lipschitz constant <em>M</em> is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em>.</p>
+
+<p>[^14]: This was given as an <a href="https://stats.stackexchange.com/questions/522429"><strong>answer to a Stack Exchange question</strong></a>; see also Jiang and Hickernell, &quot;<a href="https://arxiv.org/abs/1411.1151"><strong>Guaranteed Monte Carlo Methods for Bernoulli Random Variables</strong></a>&quot;, 2014.  As the answer notes, this sample size is based on Hoeffding&#39;s inequality.</p>
+
+<p>[^15]: Follows from Chebyshev&#39;s inequality.  The case of <em>f</em>(<em>x</em>)=<em>x</em> was mentioned as Equation 14 in Hickernell et al. (2012/2013).</p>
+
+<p>[^16]: Roughly speaking, a distribution is <em>subgaussian</em> if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval [<em>a</em>, <em>b</em>] is subgaussian.  See section 2.5 of R. Vershynin, <em>High-Dimensional Probability</em>, 2020.</p>
+
+<p>[^17]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.</p>
+
+<p>[^18]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, &quot;Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations&quot;, dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. &quot;<a href="https://arxiv.org/abs/2112.02089"><strong>Regularized Newton Method with Global $ O (1/k^2) $ Convergence</strong></a>&quot;, arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. &quot;<a href="https://arxiv.org/abs/2208.05888"><strong>Super-universal regularized Newton method</strong></a>&quot;, arXiv:2208.05888 (2022).</p>
+
+<p>[^19]: J.A. Tropp, &quot;ACM 217: Probability in High Dimensions&quot;, Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.</p>
+
+<p>[^20]: Kunsch, R.J., Rudolf, D., &quot;<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>&quot;, arXiv:1809.09890, 2018.</p>
+
+<p>[^21]: A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Here, <em>&alpha;</em> satisfies 0 &lt; <em>&alpha;</em> &le; 1.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.</p>
+
+<p>[^22]: Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
