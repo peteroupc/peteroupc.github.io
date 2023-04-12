@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/10"><meta name="citation_online_date" content="2023/04/10"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/11"><meta name="citation_online_date" content="2023/04/11"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1478,6 +1478,20 @@
 <p>This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$.  &#x25a1;</p>
 
 <p><strong>Corollary 4</strong>.  <em>If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that&#39;s a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$.</em></p>
+
+<p><strong>Lemma 5</strong>. Let $n\ge 1$ be an integer.  Suppose $g_{2n}$ and $g_{n}$ are polynomials in Bernstein form of degree $2n$ and $n$, respectively, and their domain is the closed unit interval. Suppose $g_{2n}$ and $g_n$ satisfy the property:</p>
+
+<ul>
+<li>$(g_{2n}-g_n)$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $2n$,</li>
+</ul>
+
+<p>Then for every $x\ge 1$, $g_{2n}+x$ and $g$ satisfy that property, and so do $g_{2n}\cdot x$ and $g_n$.</p>
+
+<p>The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, $g_{2n}$&#39;s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have non-negative Bernstein coefficients as required by the property.</p>
+
+<p>It is also true that, for every $x\ge 0$, $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property, but a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n\cdot x=g_{2n}\cdot x=0$, so that the property is trivially satisfied.)</p>
+
+<p>Finally, it is true that, for every real number $x$, $g_{2n}+x$ and $g_n+x$ satisfy the same property, but, again, a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n\cdot x=g_n$ and $g_{2n}\cdot x=g_{2n}$, so that the property is trivially satisfied.)</p>
 
 <p><a id=A_Conjecture_on_Polynomial_Approximation></a></p>
 
