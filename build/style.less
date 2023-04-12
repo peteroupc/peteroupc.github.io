@@ -155,6 +155,18 @@ pre {
 //////////////////////////////////////////////////////////////////////
 //  Colors
 //////////////////////////////////////////////////////////////////////
+
+// BLUE
+@primarycolor: #00b1e7;
+@secondarycolor: #e040db;
+
+// PURPLE
+//@primarycolor: #9f00e7;
+//@secondarycolor: #3674b5;
+
+@primary: @primarycolor;
+@secondary: @secondarycolor;
+
 .colors(@primary,@secondary,
    @primary50,@primary100,@primary200,@primary400,@primary600,
    @secondary50,@secondary200,@secondary700){
@@ -291,17 +303,6 @@ aside, div {
  }
 }
 }
-
-// BLUE
-@primarycolor: #00b1e7;
-@secondarycolor: #e040db;
-
-// PURPLE
-//@primarycolor: #9f00e7;
-//@secondarycolor: #3674b5;
-
-@primary: @primarycolor;
-@secondary: @secondarycolor;
 
 @primary50: mix(#fff,@primary,85%);
 @primary100: mix(#fff,@primary,70%);
