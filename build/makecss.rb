@@ -1,9 +1,9 @@
 #!/usr/bin/ruby
 Dir.chdir(File.dirname(__FILE__))
 # Install PostCSS
-`lessc style.less > ../style.css`
-plugins=%w( postcss-import postcss-cssnext postcss-colormin postcss-minify-font-values
-   postcss-merge-longhand postcss-minify-selectors
+`lessc style.less --source-map-no-annotation > ../style.css`
+plugins=%w( postcss-import postcss-colormin postcss-minify-font-values
+   postcss-merge-longhand postcss-minify-selectors postcss-preset-env
    postcss-unique-selectors postcss-zindex
    postcss-merge-rules postcss-merge-idents
    postcss-reduce-idents postcss-discard-duplicates
@@ -19,8 +19,17 @@ plugins.each{|f|
 }
 end
 cmd="postcss" # postcss-cli package
+plugins.each{|f|
  cmd+=" --use #{f}"
 }
 cmd+=" --postcss-discard-comments.removeAll true -o ../style.css < ../style.css"
 puts cmd
 `#{cmd}`
+fr=nil
+File.open("../style.css","rb"){|f|
+  fr=f.read
+}
+fr=fr.gsub(/\/\*.*/,"") # Remove source map
+File.open("../style.css","wb"){|f|
+  f.write(fr)
+}
