@@ -167,7 +167,7 @@ The following are examples of functions worth pondering for these questions:
 
 Suppose $f:[0,1]\to[0,1]$ is continuous, polynomially bounded, and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, and/or in the Zygmund class, or $f$ is real analytic or in Gevrey's hierarchy) (**see note 5 in "[**End Notes**](#End_Notes)".**).
 
-Then find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that, for each $a\ge 0$, $\gamma_a(\lambda)/\mathbb{P}(X=a)$ has a simple [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html) (and is preferably a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$).
+Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that, for each $a$ satisfying $\mathbb{P}(X=a)\gt 0$, $\gamma_a(\lambda)/\mathbb{P}(X=a)$ has a simple [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html) (and is preferably a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$).
 
 - An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 < p < 1$ is a known rational.
 - The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
