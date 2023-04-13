@@ -15,6 +15,7 @@
     - [**For Power Series**](#For_Power_Series)
     - [**For Other "Smooth" Functions**](#For_Other_Smooth_Functions)
     - [**For Linear Functions**](#For_Linear_Functions)
+    - [**Request for Additional Methods**](#Request_for_Additional_Methods)
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
@@ -76,11 +77,11 @@ These randomized upper and lower bounds come from two sequences of polynomials a
 
 1. One sequence approaches the function _f_(_&lambda;_) from above, the other from below, and both sequences must converge to _f_.
 2. For each sequence, the first polynomial has degree 1 (so is a linear function), and each other polynomial's degree is 1 higher than the previous.
-3. The _consistency requirement_ must be met: The difference&mdash;
-    - between the degree-(_n_&minus;1) upper polynomial and the degree-_n_ upper polynomial, and
-    - between the degree-_n_ lower polynomial and the degree-(_n_&minus;1) lower polynomial,
+3. The _consistency requirement_ must be met, namely&mdash;
+    - the difference between the degree-(_n_&minus;1) upper polynomial and the degree-_n_ upper polynomial, and
+    - the difference between the degree-_n_ lower polynomial and the degree-(_n_&minus;1) lower polynomial,
 
-    must have nonnegative coefficients, once the polynomials are rewritten in Bernstein form and elevated to degree _n_.
+    must have nonnegative coefficients, once each of these differences is rewritten as a polynomial in Bernstein form of degree exactly _n_.
 
 The consistency requirement ensures that the upper polynomials "decrease" and the lower polynomials "increase".  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not ensure the consistency requirement by itself.  Examples of this fact are shown in the section "[**Failures of the Consistency Requirement**](#Failures_of_the_Consistency_Requirement)" in the appendix.
 
@@ -291,7 +292,7 @@ Examples of these alternative polynomials (all of degree $n$) are given in the f
  --- | --- | --- | --- |
 | Order-2 iterated Bernstein polynomial. | $U_{n,2} = B_n(W_{n,2})$. | Calculate $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$. | Micchelli (1973)[^10], Guan (2009)[^11], (Güntürk and Li 2021, sec. 3.3)[^12]. |
 | Order-3 iterated Bernstein polynomial. | $U_{n,3} = B_n(W_{n,3})$. | Calculate $W_{n,3} = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$. | Same. |
-| Linear Bernstein polynomial combination. | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | Treat the coefficients \[$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$\] as representing a polynomial in Bernstein form of degree $n/2$, elevate that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$. |(Tachev 2022)[^13].  $n\ge 6$ must be even.|
+| Linear Bernstein polynomial combination. | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | Treat the coefficients \[$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$\] as representing a polynomial in Bernstein form of degree $n/2$, rewrite that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$. |(Tachev 2022)[^13].  $n\ge 6$ must be even.|
 
 The goal is now to find a degree $n$ such that&mdash;
 
@@ -380,6 +381,13 @@ There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_
 - I found the following approximation for _&lambda;_\*_c_[^20]\: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where the _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*_c_, 1).  If _g_(_&lambda;_) is that polynomial, then the error in approximating _f_ is no greater than 1&minus;_g_(1/_c_).
 
 - The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005\)[^1], which approximates _&lambda;_\*2.
+
+<a id=Request_for_Additional_Methods></a>
+### Request for Additional Methods
+
+Readers are requested to let me know of additional solutions to the following problem:
+
+_Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or increasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$.  The approximation error must be no more than a constant times $1/n^{r/2}$ if $f$ has a continuous $r$-th derivative.  Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev methods and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred)._
 
 <a id=Achievable_Simulation_Rates></a>
 ## Achievable Simulation Rates
@@ -629,11 +637,11 @@ For _g_, the coefficients for&mdash;
 - the degree-2 upper polynomial in Bernstein form (**fabove**(5, _k_)) are [0.6542..., 0.9042..., 0.6542...], and
 - the degree-4 upper polynomial in Bernstein form (**fabove**(6, _k_)) are [0.5771..., 0.7538..., 0.8271..., 0.7538..., 0.5771...].
 
-The degree-2 polynomial lies above the degree-4 polynomial everywhere in the closed unit interval.  However, to ensure consistency, the degree-2 polynomial, once elevated to degree 4 and rewritten in Bernstein form, must have coefficients that are greater than or equal to those of the degree-4 polynomial.
+The degree-2 polynomial lies above the degree-4 polynomial everywhere in the closed unit interval.  However, to ensure consistency, the degree-2 polynomial, once rewritten as a polynomial in Bernstein form of degree 4, must have coefficients that are greater than or equal to those of the degree-4 polynomial.
 
-- Once elevated to degree 4, the degree-2 polynomial's coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].
+- Once rewritten as a degree-4 polynomial, the degree-2 polynomial's coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].
 
-As can be seen, the elevated polynomial's coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.
+As can be seen, the rewritten polynomial's coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.
 
 **Note on "clamping".** In addition, for a polynomial-building scheme, "clamping" the values of **fbelow** and **fabove** to fit the closed unit interval won't necessarily preserve the consistency requirement, even if the original scheme met that requirement.  Here is an example that applies to any scheme.
 
@@ -642,9 +650,9 @@ Let _g_ and _h_ be two polynomials in Bernstein form as follows:
 - _g_ has degree 5 and coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000].
 - _h_ has degree 6 and coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].
 
-After elevating _g_'s degree, _g_'s coefficients are no less than _h_'s, as required by the consistency property.
+After rewriting _g_ to a degree-6 polynomial, _g_'s coefficients are no less than _h_'s, as required by the consistency property.
 
-However, by clamping coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistency property.
+However, by clamping coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and rewrite _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistency property.
 
 <a id=Which_functions_admit_a_Bernoulli_factory></a>
 ### Which functions admit a Bernoulli factory?
@@ -726,7 +734,7 @@ Thus, _f_ admits an algorithm that uses nothing but the input coin as a source o
 4. _For every &lambda; in the domain of f, except at 0 and 1, g(&lambda;) &gt; f(&lambda;)._
 5. _For every &lambda; in the domain of f, except at 0 and 1, &omega;(&lambda;) &lt; f(&lambda;)._
 
-_Proof:_ First, assume _g_ and _&omega;_ have the same degree.  If not, elevate the degree of the polynomial with lesser degree to have the same degree as the other.
+_Proof:_ First, assume _g_ and _&omega;_ have the same degree.  If not, rewrite the the polynomial with lesser degree to a polynomial in Bernstein form with the same degree as the other polynomial.
 
 Now, let _g_\[_j_\] and _&omega;_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial _g_ or _&omega;_, respectively, in Bernstein form.  Consider the following algorithm, which is similar to the algorithm in Proposition 1.
 
@@ -951,7 +959,7 @@ The solution for $\eta(n)$ given in the statement of the theorem is easy to prov
 
 Now to prove the result assuming that $n_0 > 1$.
 
-Then we can take advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start defining the polynomials at any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 or greater, but less than $n_0$, would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal. The lower constants are no greater than $g_{n_0}$'s lowest Bernstein coefficient, and the upper constants are no less than $g_{n_0}$'s highest Bernstein coefficients; they meet Item 3 because these lower and upper constants, when elevated to degree $n_0$, have Bernstein coefficients that are still no greater or no less, respectively, than the corresponding degree-$n_0$ polynomial. With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in the theorem remains nonnegative.  Moreover, since _&eta;_ is assumed to converge, _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
+Then we can take advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start defining the polynomials at any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 or greater, but less than $n_0$, would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal. The lower constants are no greater than $g_{n_0}$'s lowest Bernstein coefficient, and the upper constants are no less than $g_{n_0}$'s highest Bernstein coefficients; they meet Item 3 because these lower and upper constants, when rewritten as polynomials in Bernstein form degree $n_0$, have Bernstein coefficients that are still no greater or no less, respectively, than the corresponding degree-$n_0$ polynomial. With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in the theorem remains nonnegative.  Moreover, since _&eta;_ is assumed to converge, _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
 
 > **Notes:**
 >
