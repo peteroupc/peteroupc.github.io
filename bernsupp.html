@@ -20,6 +20,7 @@
 
 <ul>
 <li><a href="#Building_the_Lower_and_Upper_Polynomials"><strong>Building the Lower and Upper Polynomials</strong></a></li>
+<li><a href="#Request_for_Additional_Methods"><strong>Request for Additional Methods</strong></a></li>
 </ul></li>
 <li><a href="#Approximate_Bernoulli_Factories"><strong>Approximate Bernoulli Factories</strong></a>
 
@@ -28,7 +29,7 @@
 <li><a href="#For_Power_Series"><strong>For Power Series</strong></a></li>
 <li><a href="#For_Other_Smooth_Functions"><strong>For Other &quot;Smooth&quot; Functions</strong></a></li>
 <li><a href="#For_Linear_Functions"><strong>For Linear Functions</strong></a></li>
-<li><a href="#Request_for_Additional_Methods"><strong>Request for Additional Methods</strong></a></li>
+<li><a href="#Request_for_Additional_Methods_2"><strong>Request for Additional Methods</strong></a></li>
 </ul></li>
 <li><a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -378,6 +379,22 @@
 </tr>
 </tbody></table>
 
+<p><a id=Request_for_Additional_Methods></a></p>
+
+<h3>Request for Additional Methods</h3>
+
+<p>Readers are requested to let me know of additional solutions to the following problem:</p>
+
+<p>_Let $f(\lambda)$ be continuous and satisfy $0\lt f(\lambda)\lt 1$ whenever $0\le\lambda\le 1$.  Given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or increasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients for two sequences of polynomials as follows: one of them converges to $f(\lambda)$ from above, the other from below, and the consistency requirement must be met (see &quot;<a href="#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;).</p>
+
+<p><em>The polynomials need to be computed only for degrees 2, 4, 8, 16, and higher powers of 2.</em></p>
+
+<p><em>The rate of convergence must be no slower than $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative.</em></p>
+
+<p><em>Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).</em></p>
+
+<p>See also the <a href="https://peteroupc.github.io/bernreq.html#Polynomials_that_approach_a_factory_function_fast"><strong>open questions</strong></a>.</p>
+
 <p><a id=Approximate_Bernoulli_Factories></a></p>
 
 <h2>Approximate Bernoulli Factories</h2>
@@ -637,13 +654,19 @@
 <li><p>The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)[^1], which approximates <em>&lambda;</em>*2.</p></li>
 </ul>
 
-<p><a id=Request_for_Additional_Methods></a></p>
+<p><a id=Request_for_Additional_Methods_2></a></p>
 
 <h3>Request for Additional Methods</h3>
 
 <p>Readers are requested to let me know of additional solutions to the following problem:</p>
 
-<p><em>Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or increasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$.  The approximation error must be no more than a constant times $1/n^{r/2}$ if $f$ has a continuous $r$-th derivative.  Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev methods and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).</em></p>
+<p><em>Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or increasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.</em></p>
+
+<p><em>The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative.</em></p>
+
+<p><em>Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev methods and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).</em></p>
+
+<p>See also the <a href="https://peteroupc.github.io/bernreq.html#Polynomials_that_approach_a_factory_function_fast"><strong>open questions</strong></a>.</p>
 
 <p><a id=Achievable_Simulation_Rates></a></p>
 
