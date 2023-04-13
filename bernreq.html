@@ -84,7 +84,7 @@
 <li><strong>Find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ is a polynomial or rational function with Bernstein coefficients lying in [0, 1].</strong></li>
 </ul>
 
-<p><strong>The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  Methods that introduce transcendental or trigonometric functions are not preferred.</strong></p></li>
+<p><strong>The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).</strong></p></li>
 <li><p><strong>Characterize the following three categories of factory functions $f(\lambda)$:</strong></p>
 
 <ul>
@@ -116,12 +116,10 @@
 
 <h3>Main Question</h3>
 
-<p>Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$).</p>
-
-<p>Suppose $f$ belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, and/or in the Zygmund class, or $f$ is real analytic or in Gevrey&#39;s hierarchy) (<strong>see note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>).</p>
+<p>Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, and/or in the Zygmund class, or $f$ is real analytic or in Gevrey&#39;s hierarchy) (<strong>see note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>).</p>
 
 <ol>
-<li>(<em>Exact Bernoulli factory</em>): Compute the Bernstein coefficients of two sequences of polynomials ($g_n$, $h_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$, one from above and one from below ($\lim_n g_n = \lim_n h_n = f$), and satisfy: $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$.  $0\lt f(\lambda)\lt 1$ may be assumed.</li>
+<li>(<em>Exact Bernoulli factory</em>): Compute the Bernstein coefficients of two sequences of polynomials ($g_n$, $h_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$, one from above and one from below ($\lim_n g_n = \lim_n h_n = f$), and satisfy: $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$.  Assume $0\lt f(\lambda)\lt 1$ or $f$ is polynomially bounded.</li>
 <li>(<em>Approximate Bernoulli factory</em>): Given $\epsilon &gt; 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.</li>
 </ol>
 
