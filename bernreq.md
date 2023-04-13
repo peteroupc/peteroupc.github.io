@@ -49,23 +49,17 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 
 The following summarizes most of the problems raised by these open questions.
 
-1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), compute the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$ with convergence rate $O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.**
-2. **With the same assumptions and convergence rate, compute two sequences of polynomials in Bernstein form that converge to $f(\lambda)$ and meet the** [**Formal Statement**](#Formal_Statement) **given later, together with their Bernstein coefficients.** (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must "increase" and "decrease" in a specific sense.)
-3. **With the same assumptions and convergence rate, find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ is a polynomial or rational function with Bernstein coefficients lying in [0, 1].**
-4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
-5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
-6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
+1. **Suppose $f:[0,1]\to (0,1)$ is continuous and belongs to a large class of functions (e.g., the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz, concave, strictly increasing, bounded variation, and/or Zygmund, or $f$ is real analytic).**
+     - **Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$.**
+     - **Assuming $0\lt f(\lambda)\lt 1$, compute the Bernstein coefficients of two sequences of polynomials ($g_n$, $h_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$, one from above and one from below, and satisfy: $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$.**
+     - **Find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ is a polynomial or rational function with Bernstein coefficients lying in [0, 1].**
 
-Assumptions on $f(\lambda)$ can include any combination of the following:
+     **The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  Methods that introduce transcendental or trigonometric functions are not preferred.**
+2. **Characterize the following three categories of factory functions $f(\lambda)$:**
 
-- $f(\lambda)$ has a continuous $k$-th derivative for some fixed $k\ge 0$ (possibly with a known bound on it and those derivatives).
-- $f(\lambda)$ is real analytic.
-- $f(\lambda)$ is concave.
-- $f(\lambda)$ is strictly increasing and continuous.
-- $f(\lambda)$ has a $k$-th derivative of bounded variation for some fixed $k\ge 1$.
-- $f(\lambda)$ has a $k$-th derivative in the Zygmund class for some fixed $k\ge 0$. ($g(\lambda)$ is in the Zygmund class if there is $D>0$ such that $|g(x-h) + g(x+h) - 2g(x)|\le Dh$ wherever the left-hand side is defined and $0\lt h\le\epsilon$.)
-- $f(\lambda)$ has a Lipschitz-continuous $k$-th derivative for some fixed $k\ge 0$.
-- $f(\lambda)$ belongs to Gevrey's hierarchy (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes; **see note 4 in "[**End Notes**](#End_Notes)"**).
+    - **Can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
+    - **Have a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.**
+    - **Are algebraic and can be simulated by a finite-state machine with an unbounded stack.**
 
 <a id=Polynomials_that_approach_a_factory_function_fast></a>
 ## Polynomials that approach a factory function "fast"
@@ -87,25 +81,21 @@ The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernst
 <a id=Main_Question></a>
 ### Main Question
 
-Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$), let $r\ge 1$ be given, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$.
+Let $f:[0,1]\to [0,1]$ be continuous and polynomially bounded (both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$).
 
-Suppose that $f$ has a continuous $r$-th derivative, or that $f^{(r-1)}$ is Lipschitz continuous, or that $f^{(r-1)}$ is in the Zygmund class. Let $L$ be $\max |f^{(r)}|$, the Lipschitz constant of $f^{(r-1)}$, or the $D$ that puts $f^{(r-1)}$ in the Zygmund class, respectively.
+Suppose $f$ belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, and/or in the Zygmund class, or $f$ is real analytic or in Gevrey's hierarchy) (**see note 5 in "[**End Notes**](#End_Notes)".**).
 
-1. Find a practical formula to compute two sequences of polynomials $g_n$ ("lower") and $h_n$ ("upper") in Bernstein form as follows, for each integer $n\ge 1$ that's a power of 2.
+1. (_Exact Bernoulli factory_): Compute the Bernstein coefficients of two sequences of polynomials ($g_n$, $h_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$, one from above and one from below ($\lim_n g_n = \lim_n h_n = f$), and satisfy: $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$.  $0\lt f(\lambda)\lt 1$ may be assumed.
+2. (_Approximate Bernoulli factory_): Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$.
 
-    - $g_n \le h_n$.
-    - $\lim_n g_n = \lim_n h_n = f$.
-    - $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$. (**See note 5 in "[**End Notes**](#End_Notes)".**)
-    - The rate of convergence is $O(1/n^{r/2})$.
-2. With possibly extra assumptions on $f$, such as those given in "[**Key Problems**](#Key_Problems)", above, find a practical way to compute a sequence of functions $Q_n(f)$ with the following error bound: $$| f(x) - B_n(Q_n(f))(x) | \le \epsilon(f, n, x) = O(1/n^{r/2}),\tag{PA}$$ where $\epsilon(f, n, x)$ is a fully determined function, with all constants in the expression having a *known exact value or upper bound*, and $Q_n(f)$ is easily computable from $f$ using rational arithmetic only. (**See note 4 in "[**End Notes**](#End_Notes)".**)   In case this is too difficult, $B_n(Q_n(f))$ in $(PA)$ can be replaced with $Q_n(f)$, and $Q_n(f)$ can be a function with a simple [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html), such as a rational function in $\lambda$ or a power series with rational coefficients of nonincreasing magnitude (Łatuszyński et al. 2009/2011).
+The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
 
-One way to answer these questions is to find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$.
+One way to answer these questions is to find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\max_{0\le k\le 2n}\left|\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\right) {n\choose i}{n\choose {k-i}}/{2n \choose k}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$; $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$. (**See note 6 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
 
-Then $| f(x) - B_n(W_n(f))(x) | \le \frac{C_1}{1-\sqrt{2/2^{r+1}}}\frac{M}{n^{r/2}}=O(1/n^{r/2})$ (see Lemma 3 in "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)). (**See note 6 in "[**End Notes**](#End_Notes)".**) Any combination of the following special cases is of interest to me, as a relatively easy way to solve this problem may exist for them:
+Any combination of the following special cases is of interest to me, as a relatively easy way to solve this problem may exist for them:
 
 - $f$ has a continuous or Lipschitz continuous $r$-th derivative, where $r$ is 3, 4, 5, or 6 (so that the desired rate is $O(1/n^{r/2})$ or $O(1/n^{(r+1)/2})$, respectively).
-- $f$ is real analytic (and not readily covered in the "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)" section of "Bernoulli Factory Algorithms").
-- $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6. (See Güntürk and Li 2021.)
+- $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
 - $W_n$ or $B_n(W_n)$ is a linear operator that preserves polynomials of a higher degree than linear functions (e.g., the operator studied by Tachev (2022) preserves quadratic functions).
 
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
@@ -177,11 +167,13 @@ The following are examples of functions worth pondering for these questions:
 
 [**https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials**](https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials)
 
-Given that $f:[0,1]\to[0,1]$ is continuous and polynomially bounded, and given certain assumptions on $f(\lambda)$, such as those given in "[**Key Problems**](#Key_Problems)", above, find a practical way to compute a non-trivial sequence $(\gamma_n)$ and a function $\pi(a)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{PC}$$ where:
+Suppose $f:[0,1]\to[0,1]$ is continuous, polynomially bounded, and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, and/or in the Zygmund class, or $f$ is real analytic or in Gevrey's hierarchy) (**see note 5 in "[**End Notes**](#End_Notes)".**).
+
+Then find a practical way to compute a non-trivial sequence $(\gamma_n)$ and a function $\pi(a)$ satisfying&mdash;  $$f(\lambda)=\sum_{a\ge 0} \gamma_a(\lambda) = \sum_{a\ge 0} \frac{\gamma_a(\lambda)}{\pi(a)} \pi(a), \tag{PC}$$ where:
 
 - $\pi(a)$ is the probability of getting a nonnegative integer $a$, preferably a rational number for every $a$ (an example is $p (1-p)^a$ where $0 < p < 1$ is a known rational).  ($0\le\pi(a)\le 1$, $\sum \pi(a) = 1$.)
 - $\gamma_a(\lambda)$ is a polynomial equal to 0 or $\pi(a)$ or satisfying $0\lt \gamma_a(\lambda)\lt \pi(a)$ whenever $0\lt \lambda\lt 1$. Preferably, $\gamma_a$ is in Bernstein form and easily computable from $f$ using rational arithmetic only.  In case finding polynomials is too difficult, for each $a$, $\gamma_a(\lambda)/\pi(a)$ can be a function with a simple [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html), such as a rational function in $\lambda$ or a power series with rational coefficients of nonincreasing magnitude (Łatuszyński et al. 2009/2011).
-- Preferably, the rate of convergence is $O(1/a^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.
+- The rate of convergence must be $O(1/a^{r/2})$ if the class has only functions with a Lipschitz-continuous $(r-1)$-th derivative. The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
 
 Note: The series (PC) should be non-trivial; a trivial example is $\gamma_a(\lambda)/\pi(a)=f(\lambda)$ for every $a$.
 
@@ -463,6 +455,8 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 **Note 3**: On pushdown automata: Banderier and Drmota (2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
 **Note 4**: An exception is Chebyshev interpolants, but my implementation experience shows that Chebyshev interpolants are far from being readily convertible to Bernstein form without using transcendental functions or paying attention to the difference between first vs. second kind, Chebyshev points vs. coefficients, and the interval [-1, 1] vs. [0, 1].  For purposes of these open questions, Chebyshev interpolants are impractical, and so are other approximating functions that introduce transcendental functions.  By contrast, other schemes (which are of greater interest to me) involve polynomials that are already in Bernstein form or that use only rational arithmetic to transform to Bernstein form (these include iterates and linear combinations of Bernstein polynomials).  Indeed, unlike with rational arithmetic (where arbitrary precision is trivial), transcendental functions require special measures to support arbitrary accuracy, such as constructive/recursive reals &mdash; floating-point numbers won't do for purposes of these open questions.
+
+$g(\lambda)$ is in the Zygmund class if there is $D>0$ such that $|g(x-h) + g(x+h) - 2g(x)|\le Dh$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. $f(\lambda)$ is in _Gevrey's hierarchy_ if there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes).
 
 **Note 5**: This condition is also known as a "consistency requirement"; it ensures that not only the upper and lower polynomials "decrease" and "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$ whenever $0\le k\le 2n$ is an integer, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
