@@ -51,7 +51,7 @@ The following summarizes most of the problems raised by these open questions.
 
 1. **Given $\epsilon > 0$, and given certain assumptions on $f(\lambda)$ (such as those given later), compute the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$ with convergence rate $O(1/n^{r/2})$ whenever $f$ has a Lipschitz-continuous $(r-1)$-th derivative.**
 2. **With the same assumptions and convergence rate, compute two sequences of polynomials in Bernstein form that converge to $f(\lambda)$ and meet the** [**Formal Statement**](#Formal_Statement) **given later, together with their Bernstein coefficients.** (These sequences converge from above and below to $f$; not only the polynomials but also their coefficients must "increase" and "decrease" in a specific sense.)
-3. **With the same assumptions and convergence rate, find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ has a simple Bernoulli factory algorithm.**
+3. **With the same assumptions and convergence rate, find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ is a polynomial or rational function with Bernstein coefficients lying in [0, 1].**
 4. **Characterize the factory functions $f(\lambda)$ that can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.**
 5. **Characterize the factory functions $f(\lambda)$ with a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.  Describe those Bernoulli factories.**
 6. **Characterize the algebraic factory functions $f(\lambda)$ that can be simulated by a finite-state machine with an unbounded stack.**
@@ -161,7 +161,7 @@ Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that $(PB)$ holds true for each integer $n\ge 1$ that's a power of 2 (see "Main Question" above).
 
-My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially for any combination of the special cases mentioned at the end of "[**Main Question**](#Main_Question)", above
+My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially for any combination of the special cases mentioned at the end of "[**Main Question**](#Main_Question)", above.
 
 <a id=Examples_of_Functions_to_Ponder></a>
 ### Examples of Functions to Ponder

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/11"><meta name="citation_online_date" content="2023/04/11"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/13"><meta name="citation_online_date" content="2023/04/13"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -24,10 +24,10 @@
 <li><a href="#Approximate_Bernoulli_Factories"><strong>Approximate Bernoulli Factories</strong></a>
 
 <ul>
-<li><a href="#Approximate_Bernoulli_Factories_for_Certain_Functions"><strong>Approximate Bernoulli Factories for Certain Functions</strong></a></li>
-<li><a href="#Approximate_Bernoulli_Factories_for_Power_Series"><strong>Approximate Bernoulli Factories for Power Series</strong></a></li>
-<li><a href="#Approximate_Bernoulli_Factories_for_Other_Smooth_Functions"><strong>Approximate Bernoulli Factories for Other &quot;Smooth&quot; Functions</strong></a></li>
-<li><a href="#Approximate_Bernoulli_Factories_for_Linear_Functions"><strong>Approximate Bernoulli Factories for Linear Functions</strong></a></li>
+<li><a href="#For_Certain_Functions"><strong>For Certain Functions</strong></a></li>
+<li><a href="#For_Power_Series"><strong>For Power Series</strong></a></li>
+<li><a href="#For_Other_Smooth_Functions"><strong>For Other &quot;Smooth&quot; Functions</strong></a></li>
+<li><a href="#For_Linear_Functions"><strong>For Linear Functions</strong></a></li>
 </ul></li>
 <li><a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -137,7 +137,7 @@
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> or less and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot; as well as note 2 at the end of this section), and</li>
+<li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> or less and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot; as well as note 2, &quot;Finding Hölder parameters&quot;), and</li>
 <li>on the closed unit interval&mdash;
 
 <ul>
@@ -402,9 +402,9 @@
 <p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</p>
 </blockquote>
 
-<p><a id=Approximate_Bernoulli_Factories_for_Certain_Functions></a></p>
+<p><a id=For_Certain_Functions></a></p>
 
-<h3>Approximate Bernoulli Factories for Certain Functions</h3>
+<h3>For Certain Functions</h3>
 
 <p>This section first discusses approximating $f$ with a <em>Bernstein polynomial</em> (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials approach $f$ slowly in general, in the order of magnitude of $1/n$ (Voronovskaya 1932)[^6].</p>
 
@@ -584,9 +584,9 @@
 </ol>
 </blockquote>
 
-<p><a id=Approximate_Bernoulli_Factories_for_Power_Series></a></p>
+<p><a id=For_Power_Series></a></p>
 
-<h3>Approximate Bernoulli Factories for Power Series</h3>
+<h3>For Power Series</h3>
 
 <p>Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the <em>coefficients</em>, are constant rational numbers[^14].</p>
 
@@ -604,9 +604,9 @@
 
 <p>In fact, if $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$), which includes functions equaling power series as a special case ($\gamma=1$), it&#39;s possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^17]; see also (Gevrey 1918)[^18]).</p>
 
-<p><a id=Approximate_Bernoulli_Factories_for_Other_Smooth_Functions></a></p>
+<p><a id=For_Other_Smooth_Functions></a></p>
 
-<h3>Approximate Bernoulli Factories for Other &quot;Smooth&quot; Functions</h3>
+<h3>For Other &quot;Smooth&quot; Functions</h3>
 
 <p>If $f(\lambda)$ is &quot;smooth&quot; enough and $\epsilon$ is big enough, then Taylor&#39;s theorem shows how to build a polynomial that comes within $\epsilon$ of $f$.</p>
 
@@ -624,9 +624,9 @@
 
 <p>where $a_0 = f(0)$ and $a_i = f^{(i)}(0)/(i!)$ for $i\ge 1$.  Given this $P$, the algorithm to simulate this polynomial is the same as steps 2 and 3 of the previous section&#39;s algorithm.</p>
 
-<p><a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a></p>
+<p><a id=For_Linear_Functions></a></p>
 
-<h3>Approximate Bernoulli Factories for Linear Functions</h3>
+<h3>For Linear Functions</h3>
 
 <p>There are a number of approximate methods to simulate <em>&lambda;</em>*<em>c</em>, where <em>c</em> &gt; 1 and 0 &le; <em>&lambda;</em> &lt; 1/<em>c</em>.  (&quot;Approximate&quot; because this function touches 1 at 1/<em>c</em>, so it can&#39;t be a factory function.) Since the methods use only up to <em>n</em> flips, where <em>n</em> is an integer greater than 0, the approximation will be a polynomial of degree <em>n</em>.</p>
 
@@ -855,7 +855,7 @@
 
 <h3>Results Used in Approximate Bernoulli Factories</h3>
 
-<p><strong>Proposition B1</strong>: Let $f(\lambda)$ map the closed unit interval to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in &quot;Approximate Bernoulli Factories for Certain Functions&quot;) are nonnegative on the closed unit interval.</p>
+<p><strong>Proposition B1</strong>: Let $f(\lambda)$ map the closed unit interval to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in &quot;For Certain Functions&quot;) are nonnegative on the closed unit interval.</p>
 
 <p><em>Proof:</em> For $W_{n,2}$ it&#39;s enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen&#39;s inequality and because $f$ is concave.</p>
 
@@ -894,7 +894,7 @@
 <li>(R2) $f(0)=0$ and $f$ is nowhere decreasing and subadditive.</li>
 </ul>
 
-<p>Then $U_{n,2}(f)$ (as defined in &quot;Approximate Bernoulli Factories for Continuous Functions&quot;) is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the absolute value of the maximum of $f$&#39;s second derivative.</p>
+<p>Then $U_{n,2}(f)$ (as defined in &quot;For Continuous Functions&quot;) is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the absolute value of the maximum of $f$&#39;s second derivative.</p>
 
 <p><em>Proof:</em> Theorem 11 of Bustamante (2008)[^29] provides error bounds for certain polynomials that come close to a continuous function.  To use this result here, the following conditions are verified:</p>
 

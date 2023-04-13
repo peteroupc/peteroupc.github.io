@@ -69,7 +69,7 @@ Comments on other aspects of this document are welcome.
         - [**exp(_&lambda;_)*(1&minus;_&lambda;_)**](#exp___lambda___1_minus___lambda)
         - [**(1 &minus; exp(&minus;(_m_ + _&lambda;_))) / (_m_ + _&lambda;_)**](#1_minus_exp_minus__m____lambda____m____lambda)
         - [**expit(_z_) or 1&minus;1/(1+exp(_z_)) or exp(_z_)/(1+exp(_z_)) or 1/(1+exp(&minus;_z_))**](#expit__z__or_1_minus_1_1_exp__z__or_exp__z__1_exp__z__or_1_1_exp_minus__z)
-        - [**expit(_z_)\*2 &minus; 1 or tanh(_z_/2)**](#expit__z__2_minus_1_or_tanh__z__2)
+        - [**expit(_z_)\*2 &minus; 1 or tanh(_z_/2) or (exp(_z_)&minus;1)/(exp(_z_)+1)**](#expit__z__2_minus_1_or_tanh__z__2_or_exp__z__minus_1_exp__z__1)
         - [**_&lambda;_\*exp(_z_) / (_&lambda;_\*exp(_z_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_z_) / (1 + _&lambda;_\*(exp(_z_) &minus; 1))**](#lambda___exp__z____lambda___exp__z__1_minus___lambda___or___lambda___exp__z__1___lambda___exp__z__minus_1)
         - [**(1 + exp(_z_ &minus; _w_)) / (1 + exp(_z_))**](#1_exp__z__minus__w__1_exp__z)
         - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
@@ -1214,8 +1214,8 @@ _z_ is a number (positive or not) whose absolute value (abs(_z_)) is written in 
 > 1. This algorithm can be used to simulate **expit(_&lambda;_\* _z_)**, where _&lambda;_ is the probability of heads of an input coin, with 0 &le; _&lambda;_ &le; 1, except it runs the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** instead of the **ExpMinus** algorithm.
 > 2. expit(_z_) = (tanh(_z_/2)+1)/2.  `tanh` is the hyperbolic tangent function.
 
-<a id=expit__z__2_minus_1_or_tanh__z__2></a>
-#### expit(_z_)\*2 &minus; 1 or tanh(_z_/2)
+<a id=expit__z__2_minus_1_or_tanh__z__2_or_exp__z__minus_1_exp__z__1></a>
+#### expit(_z_)\*2 &minus; 1 or tanh(_z_/2) or (exp(_z_)&minus;1)/(exp(_z_)+1)
 
 In this algorithm, _z_ is 0 or greater and is written in one of the ways described in the [**"ExpMinus" section**](#ExpMinus_exp_minus__z).  `tanh` is the hyperbolic tangent function.
 

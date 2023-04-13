@@ -11,10 +11,10 @@
 - [**General Factory Functions**](#General_Factory_Functions)
     - [**Building the Lower and Upper Polynomials**](#Building_the_Lower_and_Upper_Polynomials)
 - [**Approximate Bernoulli Factories**](#Approximate_Bernoulli_Factories)
-    - [**Approximate Bernoulli Factories for Certain Functions**](#Approximate_Bernoulli_Factories_for_Certain_Functions)
-    - [**Approximate Bernoulli Factories for Power Series**](#Approximate_Bernoulli_Factories_for_Power_Series)
-    - [**Approximate Bernoulli Factories for Other "Smooth" Functions**](#Approximate_Bernoulli_Factories_for_Other_Smooth_Functions)
-    - [**Approximate Bernoulli Factories for Linear Functions**](#Approximate_Bernoulli_Factories_for_Linear_Functions)
+    - [**For Certain Functions**](#For_Certain_Functions)
+    - [**For Power Series**](#For_Power_Series)
+    - [**For Other "Smooth" Functions**](#For_Other_Smooth_Functions)
+    - [**For Linear Functions**](#For_Linear_Functions)
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
@@ -97,7 +97,7 @@ A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli facto
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ or less and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)" as well as note 2 at the end of this section), and
+- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ or less and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)" as well as note 2, "Finding Hölder parameters"), and
 - on the closed unit interval&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
@@ -259,8 +259,8 @@ To build an approximate Bernoulli factory with a polynomial:
 
 > **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)). ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 
-<a id=Approximate_Bernoulli_Factories_for_Certain_Functions></a>
-### Approximate Bernoulli Factories for Certain Functions
+<a id=For_Certain_Functions></a>
+### For Certain Functions
 
 This section first discusses approximating $f$ with a _Bernstein polynomial_ (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials approach $f$ slowly in general, in the order of magnitude of $1/n$ (Voronovskaya 1932)[^6].
 
@@ -335,8 +335,8 @@ Once _n_ is found, simulating the alternative polynomial is as follows:
 >
 >     for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial's coefficients as given here.)
 
-<a id=Approximate_Bernoulli_Factories_for_Power_Series></a>
-### Approximate Bernoulli Factories for Power Series
+<a id=For_Power_Series></a>
+### For Power Series
 
 Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the _coefficients_, are constant rational numbers[^14].
 
@@ -353,8 +353,8 @@ To simulate an approximation of $f$ that comes within $\epsilon$ of $f$:
 
 In fact, if $f(\lambda)$ belongs in _Gevrey's hierarchy_ (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative's absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$), which includes functions equaling power series as a special case ($\gamma=1$), it's possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^17]; see also (Gevrey 1918)[^18]).
 
-<a id=Approximate_Bernoulli_Factories_for_Other_Smooth_Functions></a>
-### Approximate Bernoulli Factories for Other "Smooth" Functions
+<a id=For_Other_Smooth_Functions></a>
+### For Other "Smooth" Functions
 
 If $f(\lambda)$ is "smooth" enough and $\epsilon$ is big enough, then Taylor's theorem shows how to build a polynomial that comes within $\epsilon$ of $f$.
 
@@ -370,8 +370,8 @@ Then the $n$-th _Taylor polynomial_ centered at 0, given below, is within $\epsi
 
 where $a_0 = f(0)$ and $a_i = f^{(i)}(0)/(i!)$ for $i\ge 1$.  Given this $P$, the algorithm to simulate this polynomial is the same as steps 2 and 3 of the previous section's algorithm.
 
-<a id=Approximate_Bernoulli_Factories_for_Linear_Functions></a>
-### Approximate Bernoulli Factories for Linear Functions
+<a id=For_Linear_Functions></a>
+### For Linear Functions
 
 There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_ > 1 and 0 &le; _&lambda;_ &lt; 1/_c_.  ("Approximate" because this function touches 1 at 1/_c_, so it can't be a factory function.) Since the methods use only up to _n_ flips, where _n_ is an integer greater than 0, the approximation will be a polynomial of degree _n_.
 
@@ -561,7 +561,7 @@ For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + 
 <a id=Results_Used_in_Approximate_Bernoulli_Factories></a>
 ### Results Used in Approximate Bernoulli Factories
 
-**Proposition B1**: Let $f(\lambda)$ map the closed unit interval to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in "Approximate Bernoulli Factories for Certain Functions") are nonnegative on the closed unit interval.
+**Proposition B1**: Let $f(\lambda)$ map the closed unit interval to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in "For Certain Functions") are nonnegative on the closed unit interval.
 
 _Proof:_ For $W_{n,2}$ it's enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen's inequality and because $f$ is concave.
 
@@ -596,7 +596,7 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 - (R1) $f$ is concave, or
 - (R2) $f(0)=0$ and $f$ is nowhere decreasing and subadditive.
 
-Then $U_{n,2}(f)$ (as defined in "Approximate Bernoulli Factories for Continuous Functions") is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the absolute value of the maximum of $f$'s second derivative.
+Then $U_{n,2}(f)$ (as defined in "For Continuous Functions") is within $3 M\lambda(1-\lambda)/(n^2)$ and within $0.75 M/(n^2)$ of $f$, where $M$ is the absolute value of the maximum of $f$'s second derivative.
 
 _Proof:_ Theorem 11 of Bustamante (2008)[^29] provides error bounds for certain polynomials that come close to a continuous function.  To use this result here, the following conditions are verified:
 
