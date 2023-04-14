@@ -245,7 +245,7 @@ Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can 
 
 Readers are requested to let me know of additional solutions to the following problem:
 
-_Let $f(\lambda)$ be continuous and satisfy $0\lt f(\lambda)\lt 1$ whenever $0\le\lambda\le 1$.  Given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or nowhere decreasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients for two sequences of polynomials as follows: one of them converges to $f(\lambda)$ from above, the other from below, and the consistency requirement must be met (see "[**General Factory Functions**](#General_Factory_Functions)")._
+_Let $f(\lambda)$ be continuous and satisfy $0\lt f(\lambda)\lt 1$ whenever $0\le\lambda\le 1$.  Given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or nowhere decreasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients for two sequences of polynomials as follows: one of them approaches $f(\lambda)$ from above, the other from below, and the consistency requirement must be met (see "[**General Factory Functions**](#General_Factory_Functions)")._
 
 _The polynomials need to be computed only for degrees 2, 4, 8, 16, and higher powers of 2._
 

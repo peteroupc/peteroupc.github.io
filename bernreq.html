@@ -79,13 +79,13 @@
 <li><p><strong>Suppose $f:[0,1]\to (0,1)$ is continuous and belongs to a large class of functions (e.g., the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz, concave, strictly increasing, bounded variation, and/or Zygmund, or $f$ is real analytic).</strong></p>
 
 <ul>
-<li><strong>Given $\epsilon &gt; 0$, compute the Bernstein coefficients of a polynomial or rational function of degree $n$ that is within $\epsilon$ of $f$.</strong></li>
-<li><strong>Assuming $0\lt f(\lambda)\lt 1$, compute the Bernstein coefficients of two sequences of polynomials ($g_n$, $h_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$, one from above and one from below, and satisfy: $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$.</strong></li>
-<li><strong>Find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ is a polynomial or rational function with Bernstein coefficients lying in [0, 1].</strong></li>
+<li><em>Exact Bernoulli factory</em>: <strong>Assuming $0\lt f(\lambda)\lt 1$, compute the Bernstein coefficients of two sequences of polynomials ($g_n$, $h_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$, one from above and one from below, and satisfy: $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$.</strong></li>
+<li><em>Approximate Bernoulli factory</em>: <strong>Given $\epsilon &gt; 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.</strong></li>
+<li><em>Series expansion of simple functions</em>: <strong>Find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ is a polynomial or rational function with Bernstein coefficients lying in [0, 1].</strong></li>
 </ul>
 
 <p><strong>The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).</strong></p></li>
-<li><p><strong>Characterize the following three categories of factory functions $f(\lambda)$:</strong></p>
+<li><p><strong>Characterize the following three classes of factory functions $f(\lambda)$:</strong></p>
 
 <ul>
 <li><strong>Can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.</strong></li>
@@ -223,7 +223,7 @@
 <p>Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) has a simple <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory algorithm</strong></a> (and is preferably a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$).</p>
 
 <ul>
-<li>An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational.</li>
+<li>An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational.  That is, the probability of getting $a$ is $p (1-p)^a$.</li>
 <li>The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).</li>
 </ul>
 
@@ -247,7 +247,7 @@
 
 <h3>Using a Series Expansion</h3>
 
-<p>There is another way to simulate a concave $f$.  This involves rewriting the concave function as the series $(PC)$ where&mdash;</p>
+<p>There is another way to simulate a concave $f$.  This involves rewriting the concave function as the series&mdash; $$f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)=\sum_{a\ge 0}\pi(a)\frac{\gamma_a(\lambda)}{\pi(a)},\tag{PC}$$ where&mdash;</p>
 
 <ul>
 <li>$\pi(a) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,</li>
@@ -289,7 +289,6 @@
 <li>Given that $f$ has a Lipschitz continuous $(\alpha-1)$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz&#39;s results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results that achieve this rate of convergence.</li>
 <li>Is $\max |g_n-f|$ a sufficient upward shift? (By Voronovskaya, this shift would satisfy $\Theta(1/n)$ in general.)</li>
 <li>If $f$ is symmetric about 1/2, is $|g_n(1/2)-f(1/2)|$ a sufficient upward shift?</li>
-<li>What values of $n_a$ and $p$ will allow $f$ to have the series expansion $(PC)$ or $(2)$?  I suspect that a formula for this question will depend on the smoothness of $f$, due to Holtz&#39;s results.</li>
 </ol>
 
 <p><strong>See also Note 1.</strong></p>
