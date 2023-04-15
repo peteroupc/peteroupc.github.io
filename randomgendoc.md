@@ -2492,9 +2492,13 @@ CLASSES
      |  __init__(self, coeffs)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  deriv(self, d=1)
+     |
      |  diff(self, pt, d=1)
      |
      |  fromFunc(func, n)
+     |
+     |  lipschitz(self)
      |
      |  value(self, pt)
      |
@@ -2564,13 +2568,17 @@ CLASSES
      |  __init__(self)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  deriv(self, d=1)
+     |
      |  diff(self, x, d=1)
      |
      |  fromcoeffs(coeffs)
-     |      Creates a PiecewiseBernsteinPoly given a
+     |      Creates a PiecewiseBernstein given a
      |      polynomial's Bernstein coefficients.
      |
      |  get_coeffs(self)
+     |
+     |  lipschitz(self)
      |
      |  piece(self, coeffs, mn, mx)
      |

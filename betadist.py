@@ -5,8 +5,11 @@
 #
 
 import random
-import bernoulli
-import randomgen
+try:
+  import bernoulli
+  import randomgen
+except:
+  pass
 import math
 from fractions import Fraction
 
@@ -4271,7 +4274,7 @@ def monoSecondMoment(secondMoment, pdf):
     # For distributions on the positive real line
     # with:
     # - continuous and bounded density function
-    #    that increases nowhere
+    #    that increases nowhere, and
     # - a finite second moment.
     #
     # secondMoment - Integral of pdf(x)*x^2 over
@@ -4333,6 +4336,8 @@ def bernsteinDiff(coeffs, diff):
 
 class BernsteinPoly:
     def __init__(self, coeffs):
+        # Polynomial in Bernstein form defined on the closed unit interval.
+        # 'coeffs' is a list of the Bernstein coefficients.
         self.coeffs = coeffs
         self.d = len(coeffs) - 1
         if self.d < 0:
@@ -4344,6 +4349,22 @@ class BernsteinPoly:
         if n <= 0:
             raise ValueError
         return BernsteinPoly([func.value(RealFraction(i, n)) for i in range(n + 1)])
+
+    def lipschitz(self):
+        # Calculates an upper bound of this polynomial's Lipschitz constant
+        ret=RealFraction(0)
+        for i in range(self.d):
+           ret=max(ret,abs((self.coeffs[i+1]-self.coeffs[i])*self.d))
+        return ret
+
+    def deriv(self, d=1):
+        # Gets the d-th derivative of this polynomial
+        if d<0: raise ValueError
+        if d==0: return self
+        if not d in self.diffs:
+            bd = bernsteinDiff(self.coeffs, d)
+            self.diffs[d] = BernsteinPoly(bd)
+        return self.diffs[d]
 
     def value(self, pt):
         if self.d == 0:
@@ -4359,12 +4380,7 @@ class BernsteinPoly:
         return ret
 
     def diff(self, pt, d=1):
-        if d <= 0:
-            raise ValueError
-        if not d in self.diffs:
-            bd = bernsteinDiff(self.coeffs, d)
-            self.diffs[d] = BernsteinPoly(bd)
-        return self.diffs[d].value(pt)
+        return self.deriv(d).value(pt)
 
 def minDegree(maxValue, maxDeriv, epsilon, deriv=4):
     # Minimum degree for iteratedPoly2 (for deriv=4) or
@@ -4381,12 +4397,15 @@ def minDegree(maxValue, maxDeriv, epsilon, deriv=4):
     if realIsLess(maxValue, maxDeriv):
         maxValue = maxDeriv
     if deriv == 4:
+        # NOTE: Conjectured
         return realCeiling(Fraction(52441, 100000) * RealSqrt(maxValue / epsilon))
     if deriv == 5:
+        # NOTE: Conjectured
         return realCeiling(
             Fraction(88095, 100000) * RealPow(maxValue / epsilon, Fraction(2, 5))
         )
     if deriv == 6:
+        # NOTE: Conjectured
         return realCeiling(
             Fraction(89976, 100000) * RealPow(maxValue / epsilon, Fraction(1, 3))
         )
@@ -4421,16 +4440,24 @@ class PiecewiseBernstein:
         self.pieces2 = []
 
     def fromcoeffs(coeffs):
-        """Creates a PiecewiseBernsteinPoly given a
+        """Creates a PiecewiseBernstein given a
         polynomial's Bernstein coefficients."""
-        return PiecewiseBernsteinPoly().piece(coeffs, 0, 1)
+        return PiecewiseBernstein().piece(coeffs, 0, 1)
+
+    def lipschitz(self):
+        # Calculates an upper bound of this
+        # piecewise polynomial's Lipschitz constant
+        return max(p[1].lipschitz() for p in self.pieces)
 
     def piece(self, coeffs, mn, mx):
         if len(coeffs) == 0:
             raise ValueError
         # Bernstein coefficients
+        coeffs=[c for c in coeffs]
         self.pieces.append(
-            [coeffs, BernsteinPoly(coeffs), RealFraction(mn), RealFraction(mx)]
+            [coeffs, BernsteinPoly(coeffs),
+               mn if isinstance(mn,Real) else RealFraction(mn),
+               mx if isinstance(mx,Real) else RealFraction(mx)]
         )
         return self
 
@@ -4441,12 +4468,21 @@ class PiecewiseBernstein:
         return RealFraction(0)
 
     def diff(self, x, d=1):  # Derivative of piecewise polynomial
-        if d <= 0:
+        if d < 0:
             raise ValueError
+        if d==0: return self.value(x)
         for _, poly, mn, mx in self.pieces:
             if realIsLessOrEqual(mn, x) and realIsLessOrEqual(x, mx):
                 return poly.diff(x, d=d)
         return RealFraction(0)
+
+    def deriv(self, d=1):
+        if d<0: raise ValueError
+        if d==0: return self
+        ret=PiecewiseBernstein()
+        for _, poly, mn, mx in self.pieces:
+           ret.piece(poly.deriv(d).coeffs,mn,mx)
+        return ret
 
     def get_coeffs(self):
         if len(self.pieces) != 1:
@@ -4455,8 +4491,7 @@ class PiecewiseBernstein:
 
 def c4example():
     # Example function: A C4 continuous piecewise polynomial
-    pwp2 = PiecewiseBernstein()
-    pwp2.piece(
+    return PiecewiseBernstein().piece(
         [
             Fraction(1, 384) + Fraction(1, 10),
             Fraction(953, 9600) + Fraction(1, 10),
@@ -4467,8 +4502,7 @@ def c4example():
         ],
         Fraction(1, 2),
         1,
-    )
-    pwp2.piece(
+    ).piece(
         [
             Fraction(0, 1) + Fraction(1, 10),
             Fraction(163, 1280) + Fraction(1, 10),
@@ -4479,7 +4513,6 @@ def c4example():
         0,
         Fraction(1, 2),
     )
-    return pwp2
 
 def iteratedPolyExample():
     # Example of a Bernoulli factory that simulates
