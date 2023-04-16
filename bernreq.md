@@ -49,7 +49,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 
 The following summarizes most of the problems raised by these open questions.
 
-1. **Suppose $f:[0,1]\to (0,1)$ is continuous and belongs to a large class of functions (e.g., the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz, concave, strictly increasing, bounded variation, and/or Zygmund, or $f$ is real analytic).**
+1. **Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (e.g., the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz, concave, strictly increasing, bounded variation, and/or Zygmund, or $f$ is real analytic).**
     - _Exact Bernoulli factory_: **Assuming $0\lt f(\lambda)\lt 1$, compute the Bernstein coefficients of two sequences of polynomials ($g_n$, $h_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$, one from above and one from below, and satisfy: $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$.**
     - _Approximate Bernoulli factory_: **Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.**
     - _Series expansion of simple functions_: **Find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ is a polynomial or rational function with Bernstein coefficients lying in [0, 1].**
