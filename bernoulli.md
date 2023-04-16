@@ -695,7 +695,7 @@ In the algorithm (see also (Brassard et al., 2019\)[^29], (Devroye 1986, p. 769\
 <a id=Continued_Fractions></a>
 #### Continued Fractions
 
-A _simple continued fraction_ is a way to write a real number between 0 and 1. A simple continued fraction has the form&mdash; $0 + 1 / (_a_[1] + 1 / (_a_[2] + 1 / (_a_[3] + ... ))),$ where the _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.
+A _simple continued fraction_ is a way to write a real number between 0 and 1. A simple continued fraction has the form&mdash; $$0 + 1 / (a[1] + 1 / (a[2] + 1 / (a[3] + ... ))),$$ where the _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.
 
 Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions"\)[^1], I developed the following algorithm.
 

@@ -1997,6 +1997,9 @@ class Real:
     def ev(self, n):
         raise NotImplementedError
 
+    def __abs__(a):
+        return -a if a.isNegative() else a
+
     def __neg__(a):
         return RealNegate(a)
 
@@ -3204,6 +3207,9 @@ class RealFraction(Real):
     def __repr__(self):
         return "RealFraction(%s)" % (Fraction(self.num, self.den))
 
+    def __abs__(self):
+        return -self if self.isNegative() else self
+
     def __neg__(self):
         return RealFraction(-self.num, self.den)
 
@@ -4328,7 +4334,7 @@ def bernsteinDiff(coeffs, diff):
         return coeffs
     n = len(coeffs) - 1
     if diff > n:
-        return [0]
+        return [RealFraction(0)]
     for i in range(diff):
         coeffs = [(coeffs[i + 1] - coeffs[i]) * n for i in range(n)]
         n -= 1
@@ -4338,7 +4344,7 @@ class BernsteinPoly:
     def __init__(self, coeffs):
         # Polynomial in Bernstein form defined on the closed unit interval.
         # 'coeffs' is a list of the Bernstein coefficients.
-        self.coeffs = coeffs
+        self.coeffs = [c if isinstance(c,Real) else RealFraction(c,1) for c in coeffs]
         self.d = len(coeffs) - 1
         if self.d < 0:
             raise ValueError("d=%d" % (self.d))
