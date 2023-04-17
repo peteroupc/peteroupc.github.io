@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/13"><meta name="citation_online_date" content="2023/04/13"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/17"><meta name="citation_online_date" content="2023/04/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -442,7 +442,7 @@
 <td>Has Lipschitz continuous derivative (see &quot;Definitions&quot;).</td>
 <td><em>&epsilon;</em> = <em>M</em>/(8*<em>n</em>).</td>
 <td><em>n</em> = ceil(<em>M</em>/(8*<em>&epsilon;</em>)).</td>
-<td>Lorentz (1966)[^7]. <em>M</em> &gt; 0 is the derivative&#39;s Lipschitz constant or greater.</td>
+<td>Lorentz (1963)[^7]. <em>M</em> &gt; 0 is the derivative&#39;s Lipschitz constant or greater.</td>
 </tr>
 <tr>
 <td>Is Hölder continuous.</td>
@@ -499,10 +499,10 @@
 <td>Same.</td>
 </tr>
 <tr>
-<td>Linear Bernstein polynomial combination.</td>
+<td>Butzer&#39;s linear combination (order 1).</td>
 <td>$L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$.</td>
-<td>Treat the coefficients [$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$] as representing a polynomial in Bernstein form of degree $n/2$, rewrite that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$.</td>
-<td>(Tachev 2022)[^13].  $n\ge 6$ must be even.</td>
+<td>(First, define the following operation: <strong>Get coefficients for $n$ given $m$</strong>: Treat the coefficients [$f(0/m)$, $f(1/m)$, ..., $f(m/m)$] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients, then return those coefficients.)<br><strong>Get coefficients for $n$ given $n/2$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then set the final Bernstein coefficients to $2 f(i/n) - a[i]$ for each $i$.</td>
+<td>(Tachev 2022)[^13], Butzer (1955)[^61].  $n\ge 6$ must be even.</td>
 </tr>
 </tbody></table>
 
@@ -743,7 +743,7 @@
 
 <p>[^6]: E. Voronovskaya, &quot;Détermination de la forme asymptotique d&#39;approximation des fonctions par les polynômes de M. Bernstein&quot;, 1932.</p>
 
-<p>[^7]: G.G. Lorentz, &quot;Approximation of functions&quot;, 1966.</p>
+<p>[^7]: G.G. Lorentz, &quot;Inequalities and saturation classes for Bernstein polynomials&quot;, 1963.</p>
 
 <p>[^8]: Mathé, Peter. “Approximation of Hölder Continuous Functions by Bernstein Polynomials.” The American Mathematical Monthly 106, no. 6 (1999): 568–74. <a href="https://doi.org/10.2307/2589469"><strong>https://doi.org/10.2307/2589469</strong></a>.</p>
 
@@ -851,6 +851,8 @@
 
 <p>[^60]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
+<p>[^61]: Butzer, P.L., &quot;Linear combinations of Bernstein polynomials&quot;, Canadian Journal of Mathematics 15 (1953).</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -903,7 +905,7 @@
 
 <p><strong>Proposition B3</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$&#39;s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.</p>
 
-<p><em>Proof</em>: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^7] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;</p>
+<p><em>Proof</em>: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^7] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;</p>
 
 <p>The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value (&quot;long-run average&quot;).  The following results bound the absolute value of $T$.[^27]</p>
 

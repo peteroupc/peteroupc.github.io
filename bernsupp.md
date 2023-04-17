@@ -287,7 +287,7 @@ For example:
 
 | If _f_(_&lambda;_): |  Then the degree-_n_ Bernstein polynomial is close to $f$ with the following error bound: |   Where _n_ is:  |  Notes |
  --- | --- | --- | --- |
-| Has Lipschitz continuous derivative (see "Definitions"). | _&epsilon;_ = _M_/(8\*_n_). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Lorentz (1966)[^7]. _M_ &gt; 0 is the derivative's Lipschitz constant or greater. |
+| Has Lipschitz continuous derivative (see "Definitions"). | _&epsilon;_ = _M_/(8\*_n_). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Lorentz (1963)[^7]. _M_ &gt; 0 is the derivative's Lipschitz constant or greater. |
 | Is Hölder continuous. | _&epsilon;_ = _M_\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil(1/(4<sup>_&alpha;_</sup>\*_&epsilon;_<sup>2</sup>/_M_<sup>2</sup>)<sup>1/_&alpha;_</sup>). | Mathé (1999)[^8]. 0 &lt; _&alpha;_ &le; 1 is _f_'s Hölder exponent; _M_ &gt; 0 is its Hölder constant or greater. |
 | Is Lipschitz continuous. | _&epsilon;_ = _L_\*sqrt(1/(4\*_n_)). | _n_ = ceil(_L_<sup>2</sup>/(4\*_&epsilon;_<sup>2</sup>)). | Special case of previous entry. _L_ &gt; 0 is _f_'s Lipschitz constant or greater. |
 | Is Lipschitz continuous. | _&epsilon;_ = $\frac{4306+837\sqrt{6}}{5832} L/n^{1/2}$ &lt; $1.08989 L/n^{1/2}$. | _n_=ceil((_L_\*1.08989/_&epsilon;_)<sup>2</sup>). | (Sikkema 1961)[^9]. _L_ &gt; 0 is _f_'s Lipschitz constant or greater. |
@@ -308,7 +308,7 @@ Examples of these alternative polynomials (all of degree $n$) are given in the f
  --- | --- | --- | --- |
 | Order-2 iterated Bernstein polynomial. | $U_{n,2} = B_n(W_{n,2})$. | Calculate $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$. | Micchelli (1973)[^10], Guan (2009)[^11], (Güntürk and Li 2021, sec. 3.3)[^12]. |
 | Order-3 iterated Bernstein polynomial. | $U_{n,3} = B_n(W_{n,3})$. | Calculate $W_{n,3} = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$. | Same. |
-| Linear Bernstein polynomial combination. | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | Treat the coefficients \[$f(0/(n/2))$, $f(1/(n/2))$, ..., $f((n/2)/(n/2))$\] as representing a polynomial in Bernstein form of degree $n/2$, rewrite that polynomial to one of degree $n$ with Bernstein coefficients $b_0, b_1, ..., b_n$, then set the final Bernstein coefficients to $b_i = 2 f(i/n) - b_i$ for each $i$. |(Tachev 2022)[^13].  $n\ge 6$ must be even.|
+| Butzer's linear combination (order 1). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients, then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(i/n) - a[i]$ for each $i$. |(Tachev 2022)[^13], Butzer (1955)[^61].  $n\ge 6$ must be even.|
 
 The goal is now to find a degree $n$ such that&mdash;
 
@@ -452,7 +452,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^6]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
 
-[^7]: G.G. Lorentz, "Approximation of functions", 1966.
+[^7]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
 [^8]: Mathé, Peter. “Approximation of Hölder Continuous Functions by Bernstein Polynomials.” The American Mathematical Monthly 106, no. 6 (1999): 568–74. [**https://doi.org/10.2307/2589469**](https://doi.org/10.2307/2589469).
 
@@ -560,6 +560,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^60]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^61]: Butzer, P.L., "Linear combinations of Bernstein polynomials", Canadian Journal of Mathematics 15 (1953).
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -605,7 +607,7 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^26], showi
 
 **Proposition B3**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.
 
-_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1966)[^7] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
+_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^7] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
 The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T(n, r, p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value ("long-run average").  The following results bound the absolute value of $T$.[^27]
 
