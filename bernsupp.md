@@ -565,6 +565,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^62]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^63]: Strukov, L.I., Timan, A.F., "Mathematical expectation of continuous functions of random variables. Smoothness and variance", _Siberian Mathematical Journal_ 18 (1977).
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -946,6 +948,16 @@ _Proof._
 >     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^44].
 
+**Lemma 2A.**  _Let f and X be as in Lemma 2.  If f has a continuous second derivative whose absolute value has a maximum of M or greater, then the expression (1) is less than or equal to M\*3/(8\*n), for every integer n&ge;1_.
+
+**Proof**. Strukov and Timan (1977)[^63] proved the bound:<br>abs(**E**[_f_(_Y_)] &minus; _f_(**E**[_Y_])) &le; 3\*&omega;<sub>2</sub>(sqrt(**Var**(_Y_))/2),<br>where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_.  Call this bound **2A1**.
+
+Given that _f_ has a continuous second derivative, it satisfies $\omega_{2}(f, h)\le M h^2$ whenever $0\le h\le 1/2$ (which is the case here due to the domain of _f_ and the definition of $\omega_{2}$) (Timan 1994)[^33].
+
+Suppose _Y_ = _X_/_n_.  Then _Y_'s variance (**Var**(_Y_)) is less than or equal to 1/(2\*_n_), and **2A1**'s left-hand side is the same as the expression (1), so that applying the two bounds given above leads to abs(**E**(_f_(_Y_)) - _f_(**E**(_Y_))) &le; _M_ (**Var**(_Y_)/2)<sup>2</sup> &le; 3\*_M_\*(sqrt(1/(2\*_n_))/2)<sup>2</sup> = _M_\*3/(8\*_n_). &#x25a1;
+
+> **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_), for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2((x-y)/2)$ whenever 0&le;_x_&le;1, 0&le;_y_&le;1, and 0&le;_h_&le;1/2.
+
 **Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
 $$\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),$$
@@ -1154,7 +1166,7 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 6 | $M=M_{6}$, $n\ge 4$ | $U_{n,3}$ | 0.22 | 0.23 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 | 6 | $M=M_{6}$, $n\ge 4$ | $U_{n,3}$ | 0.22 | 0.23 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 | 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.07769 | $\frac{488+976 \sqrt{2}}{45045}$ < 0.041476. | $\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.00001}/2$ if _&lambda;_ &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.00001}/2$ otherwise. |
-| 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.05985/$n^{1/2}$ | (13/(336 &minus; 84\*sqrt(2))) / $n^{1/2}$ < 0.5986. | $x^3$. |
+| 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.05985/$n^{1/2}$ | (13/(336 &minus; 84\*sqrt(2))) / $n^{1/2}$ < 0.5986. | $x^3$; $3 \lambda^{2} \cdot \left(1 - \lambda\right)$. |
 
 \* Corresponds to the iterated Boolean sum of order 2 (Güntürk and Li 2021)[^13].
 

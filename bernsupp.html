@@ -861,6 +861,8 @@
 
 <p>[^62]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
+<p>[^63]: Strukov, L.I., Timan, A.F., &quot;Mathematical expectation of continuous functions of random variables. Smoothness and variance&quot;, <em>Siberian Mathematical Journal</em> 18 (1977).</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1336,6 +1338,18 @@
 </ol>
 </blockquote>
 
+<p><strong>Lemma 2A.</strong>  <em>Let f and X be as in Lemma 2.  If f has a continuous second derivative whose absolute value has a maximum of M or greater, then the expression (1) is less than or equal to M*3/(8*n), for every integer n&ge;1</em>.</p>
+
+<p><strong>Proof</strong>. Strukov and Timan (1977)[^63] proved the bound:<br>abs(<strong>E</strong>[<em>f</em>(<em>Y</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>Y</em>])) &le; 3*&omega;<sub>2</sub>(sqrt(<strong>Var</strong>(<em>Y</em>))/2),<br>where <em>Y</em> is a random variable and &omega;<sub>2</sub>(.) is a <em>second-order modulus of continuity</em> of <em>f</em>.  Call this bound <strong>2A1</strong>.</p>
+
+<p>Given that <em>f</em> has a continuous second derivative, it satisfies $\omega_{2}(f, h)\le M h^2$ whenever $0\le h\le 1/2$ (which is the case here due to the domain of <em>f</em> and the definition of $\omega_{2}$) (Timan 1994)[^33].</p>
+
+<p>Suppose <em>Y</em> = <em>X</em>/<em>n</em>.  Then <em>Y</em>&#39;s variance (<strong>Var</strong>(<em>Y</em>)) is less than or equal to 1/(2*<em>n</em>), and <strong>2A1</strong>&#39;s left-hand side is the same as the expression (1), so that applying the two bounds given above leads to abs(<strong>E</strong>(<em>f</em>(<em>Y</em>)) - <em>f</em>(<strong>E</strong>(<em>Y</em>))) &le; <em>M</em> (<strong>Var</strong>(<em>Y</em>)/2)<sup>2</sup> &le; 3*<em>M</em>*(sqrt(1/(2*<em>n</em>))/2)<sup>2</sup> = <em>M</em>*3/(8*<em>n</em>). &#x25a1;</p>
+
+<blockquote>
+<p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>), for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2((x-y)/2)$ whenever 0&le;<em>x</em>&le;1, 0&le;<em>y</em>&le;1, and 0&le;<em>h</em>&le;1/2.</p>
+</blockquote>
+
 <p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;</em></p>
 
 <p>$$\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),$$</p>
@@ -1675,7 +1689,7 @@
 <td>$L_{2,n/2}$</td>
 <td>0.05985/$n^{1/2}$</td>
 <td>(13/(336 &minus; 84*sqrt(2))) / $n^{1/2}$ &lt; 0.5986.</td>
-<td>$x^3$.</td>
+<td>$x^3$; $3 \lambda^{2} \cdot \left(1 - \lambda\right)$.</td>
 </tr>
 </tbody></table>
 
