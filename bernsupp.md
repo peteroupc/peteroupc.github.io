@@ -1153,7 +1153,8 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 6 | $M=M_{6}$ | $U_{n,3}$ | 0.24 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 6 | $M=M_{6}$, $n\ge 4$ | $U_{n,3}$ | 0.22 | 0.23 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
 | 6 | $M=M_{6}$, $n\ge 4$ | $U_{n,3}$ | 0.22 | 0.23 | $3 \lambda^{2} \cdot \left(1 - \lambda\right)$ |
-| 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.041475 | $\frac{488+976 \sqrt{2}}{45045}$ < 0.041476. | $\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.00001}/2$ if _&lambda;_ &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.00001}/2$ otherwise. |
+| 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.07769 | $\frac{488+976 \sqrt{2}}{45045}$ < 0.041476. | $\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.00001}/2$ if _&lambda;_ &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.00001}/2$ otherwise. |
+| 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.05985/$n^{1/2}$ | (13/(336 &minus; 84\*sqrt(2))) / $n^{1/2}$ < 0.5986. | $x^3$. |
 
 \* Corresponds to the iterated Boolean sum of order 2 (Güntürk and Li 2021)[^13].
 
