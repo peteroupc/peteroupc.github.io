@@ -866,6 +866,8 @@
 
 <p>[^64]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
+<p>[^65]: Bojanic, R., Shisha, O., &quot;Degree of L<sub>1</sub> approximation to integrable functions by modified Bernstein polynomials&quot;, Journal of Approximation Theory 13 (1975).</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -933,6 +935,8 @@
 <p><strong>Proposition B7</strong>:  For every integer $n\ge 1$, $|T(n, 5, p)| \le 0.083 n^{5/2}.$  For every integer $n\ge 304$, $|T(n, 5, p)| \le n^2 \le 0.05736 n^{5/2}.$</p>
 
 <p><em>Proof</em>: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| &lt; 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it&#39;s enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 &lt; 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;</p>
+
+<p><strong>Result B7A</strong> (Bojanic and Shisha 1975)[^65]:  Let $X$ be the number of heads described above.  Then, for every integer $n\ge 2$, $\mathbb{E}[|X-\mathbb{E}[X]|^5] &lt; (1/4)/n^{5/2}$.</p>
 
 <p><strong>Proposition B8</strong>:  Let <em>n</em>&ge;1 be an integer.  Suppose $f(\lambda)$ is has a continuous second derivative on the closed unit interval.  Suppose further that&mdash;</p>
 
@@ -1681,7 +1685,7 @@
 <td>$L_{2,n/2}$</td>
 <td>0.1781/$n^{1/2}$</td>
 <td>0.19/$n^{1/2}$.</td>
-<td>$\mathcal{E}_5((\lambda+1)/2)+1$, where $\mathcal{E}_5$ is the Euler spline of order 5 (Schoenberg 1973)[^45].</td>
+<td>$\mathcal{E}_5((\lambda+1)/2)-1$, where $\mathcal{E}_5$ is the Euler spline of order 5 (Schoenberg 1973)[^45].</td>
 </tr>
 </tbody></table>
 

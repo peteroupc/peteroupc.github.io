@@ -570,6 +570,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^64]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^65]: Bojanic, R., Shisha, O., "Degree of L<sub>1</sub> approximation to integrable functions by modified Bernstein polynomials", Journal of Approximation Theory 13 (1975).
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -630,6 +632,8 @@ _Proof_: The critical points of $T(n, 3, p)$ (the points where the maximum might
 **Proposition B7**:  For every integer $n\ge 1$, $|T(n, 5, p)| \le 0.083 n^{5/2}.$  For every integer $n\ge 304$, $|T(n, 5, p)| \le n^2 \le 0.05736 n^{5/2}.$
 
 _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T(n,5,p)| < 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T(n,5,p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it's enough to take the bound $n^2$ at 304, namely 92188, so that $|T(n,5,p)|\le 304^2 = 92188 < 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;
+
+**Result B7A** (Bojanic and Shisha 1975)[^65]:  Let $X$ be the number of heads described above.  Then, for every integer $n\ge 2$, $\mathbb{E}[|X-\mathbb{E}[X]|^5] < (1/4)/n^{5/2}$.
 
 **Proposition B8**:  Let _n_&ge;1 be an integer.  Suppose $f(\lambda)$ is has a continuous second derivative on the closed unit interval.  Suppose further that&mdash;
 
@@ -1165,7 +1169,7 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 6 | $M=M_{6}$ | $U_{n,3}$ | 0.25 | 0.26 | $\lambda^{3}$ |
 | 6 | $M=M_{6}$, $n\ge 4$ | $U_{n,3}$ | 0.25 | 0.26 | $\lambda^{3}$ |
 | 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.0414 | 0.08 | $\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.00001}/2$ if _&lambda;_ &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.00001}/2$ otherwise. |
-| 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.1781/$n^{1/2}$ | 0.19/$n^{1/2}$. | $\mathcal{E}_5((\lambda+1)/2)+1$, where $\mathcal{E}_5$ is the Euler spline of order 5 (Schoenberg 1973)[^45]. |
+| 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.1781/$n^{1/2}$ | 0.19/$n^{1/2}$. | $\mathcal{E}_5((\lambda+1)/2)-1$, where $\mathcal{E}_5$ is the Euler spline of order 5 (Schoenberg 1973)[^45]. |
 
 \* Corresponds to the iterated Boolean sum of order 2 (Güntürk and Li 2021)[^13].
 
