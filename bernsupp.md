@@ -338,8 +338,8 @@ However, unlike with ordinary Bernstein polynomials, the alternative polynomial 
 
 1. Determine whether $f$ is described in either of the two tables above.  Let _A_ be the minimum of $f$ on the closed unit interval and let _B_ be the maximum of $f$ there.
 2. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in either of the two tables above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.
-3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in either of the two tables above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W$ will now be bounded by 0 and 1.
-4. Calculate $n$ as given in either of the two tables above.  Then, if $P(j/n)\lt 0$ or $P(j/n)\gt 1$ for some $0\le j\le n$, where $P$ is the alternative polynomial, double the value of $n$ until this condition is no longer true.
+3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in either of the two tables above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W_{n,2}$ or $W_{n,3}$ will now be bounded by 0 and 1.
+4. Calculate $n$ as given in either of the two tables above.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.
 
 Once _n_ is found, simulating the alternative polynomial is as follows:
 
@@ -574,8 +574,6 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^65]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
-[^66]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
-
 <a id=Appendix></a>
 ## Appendix
 
@@ -663,9 +661,9 @@ Then by Theorem 11, $U_{n,2}$ is close to $f$ by at most&mdash; $$\left(\frac32+
 
 _Proof_: The well-known result of part 1 says $f$ equals the degree-3 _Taylor polynomial_ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. $R_f(\lambda, x_0)$, in turn, [**is writable**](https://mathworld.wolfram.com/LagrangeRemainder.html) as&mdash; $$f^{(4)}(\gamma)\cdot (\lambda-x_0)^4 /(4!),$$ for some $\gamma$ between $\lambda$ and $x_0$ (and thus in the closed unit interval). Thus&mdash; $$R_f(\lambda, x_0) \le \frac{M}{4!} (\lambda-x_0)^4 = \frac{M}{24} (\lambda-x_0)^4.$$ By Result B4&mdash; $$B_n((\lambda-x_0)^4) \le \frac{3}{16}/n^2,$$ so&mdash; $$B_n(R_f(\lambda, x_0)) \le \frac{M}{24} B_n((\lambda-x_0)^4) \le \frac{M}{128 n^2}.$$ &#x25a1;
 
-**Proposition B10**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = 1/3\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + 8/3\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
+**Proposition B10**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
 
-_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^14].  It is known that $L_{3,n/4}$ preserves polynomials of degree 3 or less, that is, $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^34].  Because of this and because $f$ has a continuous fourth derivative, $f$ has the Lagrange remainder $R_f(\lambda, x_0)$ given in Lemma B9, and&mdash; $$|L_{3,n/4}(f(x_0)) - f(x_0)| = |L_{3,n/4}(R_f(\lambda, x_0))|.$$  Now denote $\sigma_n$ as the maximum of $|B_n(R_f(\lambda, x_0))|$ over $0\le x_0\le 1$.  In turn (using Lemma B9)&mdash; $$L_{3,n/4}(R_f(\lambda, x_0)) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
+_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^14].  It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^34].  Because of this and because $f$ has a continuous fourth derivative, $f$ has the Lagrange remainder $R_f(\lambda, x_0)$ given in Lemma B9, and&mdash; $$|L_{3,n/4}(f(x_0)) - f(x_0)| = |L_{3,n/4}(R_f(\lambda, x_0))|.$$  Now denote $\sigma_n$ as the maximum of $|B_n(R_f(\lambda, x_0))|$ over $0\le x_0\le 1$.  In turn (using Lemma B9)&mdash; $$L_{3,n/4}(R_f(\lambda, x_0)) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
@@ -1160,7 +1158,8 @@ It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when 
 > **Notes:**
 >
 > 1. If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).
-> 2. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
+> 2. The left-hand side of (PB) is not greater than $|(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))|$ + $|W_n(k/(2n))-f(k/(2n))|$  + $|W_{2n}(k/(2n))-f(k/(2n))|$.
+> 3. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
 
 ---------------------
 
