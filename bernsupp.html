@@ -89,7 +89,7 @@
 <li>A <em>continuous</em> function $f$ has the property that there is a function $h(x, \epsilon)$ (where $x$ is in $f$&#39;s domain and $\epsilon&gt;0$), such that $f(x)$ and $f(y)$ are no more than $\epsilon$ apart whenever $x$ and $y$ are in $f$&#39;s domain and no more than $h(x, \epsilon)$ apart.<br>Roughly speaking, for each $x$ in $f$&#39;s domain, $f(x)$ and $f(y)$ are &quot;close&quot; if $x$ and $y$ are &quot;close&quot; and belong in the domain.</li>
 <li>If $f$ is continuous, its <em>derivative</em> is, roughly speaking, its &quot;slope&quot; or &quot;velocity&quot; or &quot;instantaneous-rate-of-change&quot; function.  The derivative (or <em>first derivative</em>) is denoted as $f&#39;$.  The <em>second derivative</em> (&quot;slope-of-slope&quot;) of $f$, denoted $f&#39;&#39;$, is the derivative of $f&#39;$; the <em>third derivative</em> is the derivative of $f&#39;&#39;$; and so on.</li>
 <li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Here, <em>&alpha;</em> satisfies 0 &lt; <em>&alpha;</em> &le; 1.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.</li>
-<li>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>L</em>*<em>x</em>.<br>If the function has a derivative on its domain, <em>L</em> can be the absolute value of the maximum of that derivative.</li>
+<li>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>L</em>*<em>x</em>.<br>If the function has a derivative on its domain, <em>L</em> can be the maximum of the absolute value of that derivative.</li>
 <li>A <em>convex</em> function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes down, then it&#39;s convex.</li>
 <li>A <em>concave</em> function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes up, then it&#39;s concave.</li>
 </ul>
@@ -162,7 +162,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><strong>Lipschitz special case</strong>: If the function <em>f</em> has a continuous first derivative on its domain, then <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous) and <em>m</em> can be the absolute value of the maximum of that derivative.</li>
+<li><strong>Lipschitz special case</strong>: If the function <em>f</em> has a continuous first derivative on its domain, then <em>&alpha;</em> is 1 (<em>f</em> is Lipschitz continuous) and <em>m</em> can be the maximum of the absolute value of that derivative.</li>
 <li><p><strong>Finding Hölder parameters</strong>: The following is one way to find the Hölder constant and exponent of a factory function $f(\lambda)$.  Consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a &quot;vertical slope&quot; or the &quot;steepest slope exhibited&quot;.  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$&#39;s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant equal to or greater than the maximum value of $g(\lambda)$ on its domain.</p>
 
 <p>The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: <code>lamda,c=symbols(&#39;lamda c&#39;); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c,0),h.subs(c,1)),(lamda,0,1))</code>.</p></li>
@@ -199,7 +199,7 @@
 </ul></li>
 </ul>
 
-<p>Let <em>m</em> be the Lipschitz constant of <em>f</em>&#39;s derivative, or a greater number than that constant (if <em>f</em> has a second derivative on its domain, then <em>m</em> can be the absolute value of the maximum of that second derivative).  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
+<p>Let <em>m</em> be the Lipschitz constant of <em>f</em>&#39;s derivative, or a greater number than that constant (if <em>f</em> has a second derivative on its domain, then <em>m</em> can be the maximum of the absolute value of that second derivative).  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
@@ -513,7 +513,7 @@
 </tr>
 <tr>
 <td>Butzer&#39;s linear combination (order 2).</td>
-<td>$L_{3,n/4} = B_{n/4}(f)/3 + B_{n}(f)\cdot 8/3 - 2 B_{n/2}(f)$</td>
+<td>$L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$</td>
 <td><strong>Get coefficients for $n$ given $n/4$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then <strong>get coefficients for $n$ given $n/2$</strong>, call them <em>b</em>[0], ..., <em>b</em>[<em>n</em>], then set the final Bernstein coefficients to $a[i]/3-2 b[i]+8 f(i/n)/3$ for each $i$.</td>
 <td>Butzer (1955)[^15]. $n\ge 4$ must be divisible by 4.</td>
 </tr>
@@ -541,15 +541,15 @@
 <td>Has continuous third derivative.</td>
 <td>$L_{2, n/2}$.</td>
 <td><em>&epsilon;</em> = (3*sqrt(3&minus;4/<em>n</em>)/4)*<em>M</em>/<em>n</em><sup>2</sup> &lt; (3*sqrt(3)/4)*<em>M</em>/<em>n</em><sup>2</sup>.</td>
-<td><em>n</em>=max(6,ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$)) &le; max(6,ceil((113976/100000) * sqrt(M/<em>&epsilon;</em>))). (If <em>n</em> is now odd, add 1.)</td>
-<td>Tachev (2022)[^14]. $n\ge 6$ must be even. <em>M</em> is not less than absolute value of the maximum of third derivative.</td>
+<td><em>n</em>=max(6,ceil($\frac{3^{3/4} \sqrt{M/\epsilon}}{2}$)) &le; max(6,ceil((113976/100000) * sqrt(<em>M</em>/<em>&epsilon;</em>))). (If <em>n</em> is now odd, add 1.)</td>
+<td>Tachev (2022)[^14]. $n\ge 6$ must be even. <em>M</em> is not less than maximum of the absolute value of third derivative.</td>
 </tr>
 <tr>
 <td>Has continuous fourth derivative.</td>
 <td>$L_{3, n/4}$.</td>
 <td><em>&epsilon;</em> = <em>M</em>/(8*<em>n</em><sup>2</sup>).</td>
-<td><em>n</em>=max(4,ceil((sqrt(2)/4) * sqrt(M/<em>&epsilon;</em>))) &le; max(4,ceil((35356/100000) * sqrt(M/<em>&epsilon;</em>))). (Round <em>n</em> up to nearest multiple of 4.)</td>
-<td>$n\ge 4$ must be divisible by 4. <em>M</em> is not less than absolute value of the maximum of fourth derivative. See Proposition B10 in appendix.</td>
+<td><em>n</em>=max(4,ceil((sqrt(2)/4) * sqrt(<em>M</em>/<em>&epsilon;</em>))) &le; max(4,ceil((35356/100000) * sqrt(M/<em>&epsilon;</em>))). (Round <em>n</em> up to nearest multiple of 4.)</td>
+<td>$n\ge 4$ must be divisible by 4. <em>M</em> is not less than maximum of the absolute value of fourth derivative. See Proposition B10 in appendix.</td>
 </tr>
 </tbody></table>
 
@@ -566,8 +566,8 @@
 <tr>
 <td>Has continuous third derivative.</td>
 <td>$U_{n,2}$</td>
-<td><em>&epsilon;</em> = 0.5771*<em>M</em><sub>4</sub>/<em>n</em><sup>2</sup>.</td>
-<td><em>n</em>=ceil(sqrt(0.5771)*sqrt(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)).</td>
+<td><em>&epsilon;</em> = 0.5771*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup>.</td>
+<td><em>n</em>=ceil(sqrt(0.5771)*sqrt(<em>M</em><sub>3</sub>/<em>&epsilon;</em>)).</td>
 </tr>
 <tr>
 <td>Has continuous fourth derivative.</td>
@@ -634,7 +634,7 @@
 
 <p>If $f$&#39;s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called &quot;ratio test&quot;, the algorithms in Carvalho and Moreira (2022)[^17] can be used here (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p>
 
-<p>Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor&#39;s theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the absolute value of the maximum of $f$&#39;s ($n$+1)-th derivative on the domain of $f$.</p></li>
+<p>Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor&#39;s theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the maximum of the absolute value of $f$&#39;s ($n$+1)-th derivative on the domain of $f$.</p></li>
 <li><p>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^18].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.  If any of those coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the coefficents is less than 0 or greater than 1.</p></li>
 <li>Flip the input coin <em>n</em> times, then let <em>j</em> be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.</li>
 </ol>
@@ -1144,7 +1144,7 @@
 <p><em>Proof:</em> If <em>f</em> is 0 everywhere in its domain or 1 everywhere in its domain: Return 0 or 1, respectively.  Otherwise, let&mdash;</p>
 
 <ul>
-<li><p><em>M</em> be the Lipschitz constant of <em>f</em> (its derivative&#39;s absolute value of the maximum if <em>f</em> is continuous), or a computable number greater than this.</p></li>
+<li><p><em>M</em> be the Lipschitz constant of <em>f</em> (its derivative&#39;s maximum of the absolute value if <em>f</em> is continuous), or a computable number greater than this.</p></li>
 <li><p><em>l</em> be either 0 if 0 is in the domain of <em>f</em>, or 1 otherwise, and</p></li>
 <li><em>u</em> be either 0 if 1 is in the domain of <em>f</em>, or 1 otherwise.</li>
 </ul>
@@ -1561,7 +1561,7 @@
 
 <p><strong>Conjecture.</strong></p>
 
-<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the absolute value of the maximum of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).</p>
+<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).</p>
 
 <p>For each integer $n\ge1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
 
@@ -1575,7 +1575,7 @@
 
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
 
-<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the absolute value of the maximum of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
+<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1592,7 +1592,7 @@
 <p>The following lower bounds on $C_0$ can be shown.  In the table:</p>
 
 <ul>
-<li>$M_{r}$ is the absolute value of the maximum of $f(\lambda)$ and its derivatives up to the $r$-th derivative.</li>
+<li>$M_{r}$ is the maximum of the absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.</li>
 <li>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</li>
 </ul>
 
