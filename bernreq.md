@@ -23,6 +23,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Formal Statement**](#Formal_Statement)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**A Conjecture on Polynomial Approximation**](#A_Conjecture_on_Polynomial_Approximation)
+    - [**Strategies**](#Strategies)
     - [**Examples of Functions to Ponder**](#Examples_of_Functions_to_Ponder)
 - [**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)
     - [**Using Two Polynomial Sequences**](#Using_Two_Polynomial_Sequences)
@@ -88,14 +89,7 @@ Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functio
 
 The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
 
-----
-
-The following are some ways to answer these questions:
-
-1. Finding a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 5 and 6 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
-2. Suppose that, for each integer $n\ge 1$ that's a power of 2, there is a polynomial of degree $n$, $P_{n}(f)$, that is within $E(n)$ of $f(\lambda)$. (For example, $P_{n}(f)$ could be a linear combination of Bernstein polynomials.) Then I believe another way to answer this question is to find $C>0$ such that the non-negative polynomial $Q_{n}(f) = (P_{2n}(f) + E(n) + E(2n)) - P_{n}(f)$, when rewritten to a degree-$(2n)$ polynomial in Bernstein form, has Bernstein coefficients no greater than $CM/n^{r/2}$, where $M$ and $r$ are as above.  In that case, I believe solving the problem will rely on bounds on the derivatives of $f$, $P_{n}(f)$, and/or $Q_{n}(f)$.
-
-Any combination of the following special cases is of interest to me, as a relatively easy way to solve this problem may exist for them:
+Without loss of generality, the following special cases are of interest to me:
 
 - The class has only functions with Lipschitz continuous $r$-th derivative where $r$ is 2 to 5.
 - $B_n(W_n)$ is a linear combination or iterated Boolean sum of Bernstein polynomials.  Examples:$W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
@@ -152,9 +146,17 @@ For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such 
 
 Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (**See note 5 in "[**End Notes**](#End_Notes)".**)
 
-Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that $(PB)$ holds true for each integer $n\ge 1$ that's a power of 2 (see "Main Question" above).
+Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality $(PB)$ (see below) holds true for each integer $n\ge 1$ that's a power of 2 (see "Main Question" above).
 
 My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially for any combination of the special cases mentioned at the end of "[**Main Question**](#Main_Question)", above.
+
+<a id=Strategies></a>
+### Strategies
+
+The following are some ways to answer these questions:
+
+1. Finding a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 5 and 6 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
+2. Suppose that, for each integer $n\ge 1$ that's a power of 2, there is a polynomial of degree $n$, $P_{n}(f)$, that is within $E(n)$ of $f(\lambda)$. (For example, $P_{n}(f)$ could be a linear combination of Bernstein polynomials.) Then I believe another way to answer this question is to find $C>0$ such that the non-negative polynomial $Q_{n}(f) = (P_{2n}(f) + E(n) + E(2n)) - P_{n}(f)$, when rewritten to a degree-$(2n)$ polynomial in Bernstein form, has Bernstein coefficients no greater than $CM/n^{r/2}$, where $M$ and $r$ are as above.  In that case, I believe solving the problem will rely on bounds on the derivatives of $f$, $P_{n}(f)$, and/or $Q_{n}(f)$.
 
 <a id=Examples_of_Functions_to_Ponder></a>
 ### Examples of Functions to Ponder
