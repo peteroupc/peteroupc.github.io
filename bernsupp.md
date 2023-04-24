@@ -635,7 +635,7 @@ _Proof_: The critical points of $T_{n,3}(p)$ (the points where the maximum might
 
 _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T_{n,5}(p)| < 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T_{n,5}(p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it's enough to take the bound $n^2$ at 304, namely 92188, so that $|T_{n,5}(p)|\le 304^2 = 92188 < 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;
 
-**Proposition B8**: (Omitted.  It relied on a result that gives error bounds for certain positive operators that come close to a continuous function on the closed unit interval [theorem 11 of Bustamante (2008)[^31]]. However, $U_{n,2}$ is not _positive_ in this sense, since $U_{n,2}(f)$ is not non-negative on the closed unit interval for _every_ continuous function $f$ on that interval.)
+**Proposition B8**: (Omitted.  It relied on a result that gives error bounds for certain positive operators that come close to a continuous function on the closed unit interval [theorem 11 of Bustamante (2008)[^31]]. However, $U_{n,2}$ is not _positive_ in this sense, since $U_{n,2}(f)$ is not non-negative on the closed unit interval for _every_ non-negative continuous function $f$ on that interval.)
 
 **Lemma B9**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, where $r$ is an even integer such that $2\le r\le 44$.  Then:
 
@@ -645,6 +645,8 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 _Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. $R_f(\lambda, x_0)$, in turn, [**is writable**](https://mathworld.wolfram.com/LagrangeRemainder.html) as&mdash; $$f^{(r)}(\gamma)\cdot (\lambda-x_0)^r /(r!),$$ for some $\gamma$ between $\lambda$ and $x_0$ (and thus on $f$'s domain). Thus&mdash; $$R_f(\lambda, x_0) \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$B_n((\lambda-x_0)^r) \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$B_n(R_f(\lambda, x_0)) \le \frac{M}{r!} B_n((\lambda-x_0)^r) \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
 
 **Corollary B9A**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  Then $|B_n(R_f(\lambda, x_0))| \le M/(128 n^2)$, where $M$ is the maximum of the absolute value of that fourth derivative.
+
+**Corollary B9B**: Let $f(\lambda)$ have a continuous sixth derivative on the closed unit interval.  Then $|B_n(R_f(\lambda, x_0))| \le M/(3072 n^3)$, where $M$ is the maximum of the absolute value of that sixth derivative.
 
 **Proposition B10**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
 

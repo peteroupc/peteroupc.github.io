@@ -94,8 +94,8 @@ One way to answer these questions is to find a sequence of functions $(W_n(f))$ 
 
 Any combination of the following special cases is of interest to me, as a relatively easy way to solve this problem may exist for them:
 
-- $f$ has a continuous or Lipschitz continuous $r$-th derivative, where $r$ is 3, 4, 5, or 6 (so that the desired rate is $O(1/n^{r/2})$ or $O(1/n^{(r+1)/2})$, respectively).
-- $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
+- The class has only functions with Lipschitz continuous $r$-th derivative where $r$ is 2 to 5.
+- $B_n(W_n)$ is a linear combination or iterated Boolean sum of Bernstein polynomials.  Examples:$W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
 - $W_n$ or $B_n(W_n)$ is a linear operator that is not positive and preserves polynomials of a higher degree than linear functions (e.g., the operator studied by Tachev (2022) preserves quadratic functions).
 
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
@@ -444,7 +444,7 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 Prove or disprove:
 
 1. Let $n≥1$ be an integer, and denote the degree-$n$ Bernstein polynomial of $g$ as $B_n(g)$. Suppose $f(λ)$ is non-negative, is concave, and has a continuous second derivative on the closed unit interval. Then $U_{n,2}(f)=B_n(2f-B_n(f))$ is within $3Mλ(1−λ)/(n^2)$ and within $0.75M/(n^2)$ of f, where $M$ is the absolute value of the maximum of $f$'s second derivative. (Note that Bustamante (2008)'s theorem 11 can't be used here since $U_{n,2}$, though linear, is not a _positive_ operator for all continuous functions on the closed unit interval.)
-2. Statement 1's conclusion is true if the condition that $f$ is concave is replaced with the condition that $U_{n,2}(f) is non-negative for every $n\ge n_0$, for a fixed integer $n_0 \ge 1$.
+2. Statement 1's conclusion is true if the condition that $f$ is concave is replaced with the condition that $U_{n,2}(f)$ is non-negative for every $n\ge n_0$, for a fixed integer $n_0 \ge 1$.
 
 <a id=End_Notes></a>
 ## End Notes
