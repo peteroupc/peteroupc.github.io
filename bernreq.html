@@ -538,7 +538,7 @@
 
 <ul>
 <li>Given integer <em>m</em>&ge;0, rational number 0&lt;<em>k</em>&le;exp(1), and unknown heads probability 0&le;<em>&lambda;</em>&le;1, find a <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory</strong></a> for&mdash; $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$ that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  A solution is sought especially when <em>k</em> is 1 or 2.   Note that the right-hand side of (PD) can be implemented by <a href="https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z"><strong>ExpMinus</strong></a> and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs <strong>ExpMinus</strong>, but this is likewise far from lightweight.</li>
-<li>Special case of &quot;<a href="#Tossing_Heads_According_to_a_Concave_Function"><strong>Tossing Heads According to a Concave Function</strong></a>&quot;: Let $f(\lambda):[0,1]\to [0,1]$ be writable as the following power series: $$f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.</li>
+<li>Special case of &quot;<a href="#Tossing_Heads_According_to_a_Concave_Function"><strong>Tossing Heads According to a Concave Function</strong></a>&quot;: Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.</li>
 <li><p><a href="https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili"><strong>Simple simulation algorithms</strong></a>: What simulations exist that are &quot;relatively simple&quot; and succeed with an irrational probability between 0 and 1? What about &quot;relatively simple&quot; Bernoulli factory algorithms for factory functions?  Here, &quot;relatively simple&quot; means that the algorithm:</p>
 
 <ul>
@@ -566,6 +566,13 @@
 </ul></li>
 </ul></li>
 </ul>
+
+<p>Prove or disprove:</p>
+
+<ol>
+<li>Let $n≥1$ be an integer, and denote the degree-$n$ Bernstein polynomial of $g$ as $B_n(g)$. Suppose $f(λ)$ is non-negative, is concave, and has a continuous second derivative on the closed unit interval. Then $U_{n,2}(f)=B_n(2f-B_n(f))$ is within $3Mλ(1−λ)/(n^2)$ and within $0.75M/(n^2)$ of f, where $M$ is the absolute value of the maximum of $f$&#39;s second derivative. (Note that Bustamante (2008)&#39;s theorem 11 can&#39;t be used here since $U_{n,2}$, though linear, is not a <em>positive</em> operator for all continuous functions on the closed unit interval.)</li>
+<li>Statement 1&#39;s conclusion is true if the condition that $f$ is concave is replaced with the condition that $U_{n,2}(f) is non-negative for every $n\ge n_0$, for a fixed integer $n_0 \ge 1$.</li>
+</ol>
 
 <p><a id=End_Notes></a></p>
 
@@ -660,6 +667,7 @@ above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
 <li>Borwein, P.B., &quot;Restricted Uniform Rational Approximations&quot;, dissertation, University of British Columbia, 1979.</li>
 <li>Tachev, Gancho. &quot;<a href="https://doi.org/10.3934/mfc.2022061"><strong>Linear combinations of two Bernstein polynomials</strong></a>&quot;, <em>Mathematical Foundations of Computing</em>, 2022.</li>
 <li>Lee, Sang Kyu, Jae Ho Chang, and Hyoung-Moon Kim. &quot;Further sharpening of Jensen&#39;s inequality.&quot; Statistics 55, no. 5 (2021): 1154-1168.</li>
+<li>Bustamante, J., &quot;Estimates of positive linear operators in terms of second order moduli&quot;, J. Math. Anal. Appl. 345 (2008).</li>
 </ul>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

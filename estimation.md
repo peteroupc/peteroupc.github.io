@@ -178,7 +178,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 10. (Stage 2: Estimate of the sample mean.) Create _kp_ many blocks.  For each block:
     1. Get _mp_ samples from the stream.
     2. Add the samples and divide by _mp_ to get this block's sample mean.
-11. (Find the median of the sample means.  This is definitely an unbiased estimate of the mean when _kp_ is 1 or 2, but unfortunately, it isn't one for any _kp_ > 2.)  Sort the sample means from step 10 in ascending order, and return the value in the middle of the sorted list (at position floor(_kp_/2) with positions starting at 0); this works because _kp_ is odd.
+11. (Find the median of the sample means.  It can be shown that this is an unbiased estimate of the mean when _kp_ is 1 or 2, but not one for any _kp_ > 2.)  Sort the sample means from step 10 in ascending order, and return the value in the middle of the sorted list (at position floor(_kp_/2) with positions starting at 0); this works because _kp_ is odd.
 
 > **Notes:**
 >

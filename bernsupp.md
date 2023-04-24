@@ -623,7 +623,7 @@ _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^
 
 The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value ("long-run average").   (Traditionally, another central moment, that of $X/n$ or the ratio of heads to tosses, is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  $T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) The following results bound the absolute value of $T$.[^29]
 
-**Result B4** (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then $|T_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ for every $n\ge 1$.
+**Result B4** (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every $n\ge 1, $|T_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.
 
 **Proposition B5**: For every integer $n\ge 1$, the following is true: $$|T_{n,3}(p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$
 
@@ -637,14 +637,14 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 
 **Proposition B8**: (Omitted.  It relied on a result that gives error bounds for certain positive operators that come close to a continuous function on the closed unit interval [theorem 11 of Bustamante (2008)[^31]]. However, $U_{n,2}$ is not _positive_ in this sense, since $U_{n,2}(f)$ is not non-negative on the closed unit interval for _every_ continuous function $f$ on that interval.)
 
-**Lemma B9**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, where $r$ is an even integer with $r\ge 2$.  Then:
+**Lemma B9**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, where $r$ is an even integer such that $2\le r\le 44$.  Then:
 
 1. $f$ can be written as $f(\lambda) = R_f(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r-1} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $0\le x_0 \le 1$ and $f^{(i)}$ is the $i$-th derivative of $f$.
-2. $|B_n(R_f(\lambda, x_0))| \le \frac{M}{((r/2)!)(8n)^{r/2}}$, where $M$ is the maximum of the absolute value of that $r$-th derivative.
+2. $|B_n(R_f(\lambda, x_0))| \le M/(((r/2)!)(8n)^{r/2})$, where $M$ is the maximum of the absolute value of that $r$-th derivative.
 
-_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. $R_f(\lambda, x_0)$, in turn, [**is writable**](https://mathworld.wolfram.com/LagrangeRemainder.html) as&mdash; $$f^{(r)}(\gamma)\cdot (\lambda-x_0)^r /(r!),$$ for some $\gamma$ between $\lambda$ and $x_0$ (and thus in the closed unit interval). Thus&mdash; $$R_f(\lambda, x_0) \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$B_n((\lambda-x_0)^r) \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$B_n(R_f(\lambda, x_0)) \le \frac{M}{r!} B_n((\lambda-x_0)^r) \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
+_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. $R_f(\lambda, x_0)$, in turn, [**is writable**](https://mathworld.wolfram.com/LagrangeRemainder.html) as&mdash; $$f^{(r)}(\gamma)\cdot (\lambda-x_0)^r /(r!),$$ for some $\gamma$ between $\lambda$ and $x_0$ (and thus on $f$'s domain). Thus&mdash; $$R_f(\lambda, x_0) \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$B_n((\lambda-x_0)^r) \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$B_n(R_f(\lambda, x_0)) \le \frac{M}{r!} B_n((\lambda-x_0)^r) \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
 
-**Corollary B9A**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  Then $|B_n(R_f(\lambda, x_0))| \le \frac{M}{128 n^2}$, where $M$ is the maximum of the absolute value of that fourth derivative.
+**Corollary B9A**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  Then $|B_n(R_f(\lambda, x_0))| \le M/(128 n^2)$, where $M$ is the maximum of the absolute value of that fourth derivative.
 
 **Proposition B10**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
 

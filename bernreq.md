@@ -424,7 +424,7 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 ## Other Questions
 
 - Given integer _m_&ge;0, rational number 0&lt;_k_&le;exp(1), and unknown heads probability 0&le;_&lambda;_&le;1, find a [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) for&mdash; $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$ that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  A solution is sought especially when _k_ is 1 or 2.   Note that the right-hand side of (PD) can be implemented by [**ExpMinus**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z) and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs **ExpMinus**, but this is likewise far from lightweight.
-- Special case of "[**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)": Let $f(\lambda):[0,1]\to [0,1]$ be writable as the following power series: $$f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
+- Special case of "[**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)": Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
 - [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): What simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
     - Should use only uniform random integers (or bits) and integer arithmetic.
     - Does not use floating-point arithmetic, make direct use of irrational or transcendental functions or constants, or calculate the _p_-adic digit expansion of an irrational or transcendental function, for any real _p_.
@@ -440,6 +440,11 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
     - Bernoulli factory functions with any of the following series expansions, using rational arithmetic only:
         - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
         - Series with nonnegative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
+
+Prove or disprove:
+
+1. Let $n≥1$ be an integer, and denote the degree-$n$ Bernstein polynomial of $g$ as $B_n(g)$. Suppose $f(λ)$ is non-negative, is concave, and has a continuous second derivative on the closed unit interval. Then $U_{n,2}(f)=B_n(2f-B_n(f))$ is within $3Mλ(1−λ)/(n^2)$ and within $0.75M/(n^2)$ of f, where $M$ is the absolute value of the maximum of $f$'s second derivative. (Note that Bustamante (2008)'s theorem 11 can't be used here since $U_{n,2}$, though linear, is not a _positive_ operator for all continuous functions on the closed unit interval.)
+2. Statement 1's conclusion is true if the condition that $f$ is concave is replaced with the condition that $U_{n,2}(f) is non-negative for every $n\ge n_0$, for a fixed integer $n_0 \ge 1$.
 
 <a id=End_Notes></a>
 ## End Notes
@@ -528,3 +533,4 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Borwein, P.B., "Restricted Uniform Rational Approximations", dissertation, University of British Columbia, 1979.
 - Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 - Lee, Sang Kyu, Jae Ho Chang, and Hyoung-Moon Kim. "Further sharpening of Jensen's inequality." Statistics 55, no. 5 (2021): 1154-1168.
+- Bustamante, J., "Estimates of positive linear operators in terms of second order moduli", J. Math. Anal. Appl. 345 (2008).
