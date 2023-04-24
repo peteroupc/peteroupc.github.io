@@ -92,8 +92,8 @@ The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with
 Without loss of generality, the following special cases are of interest to me:
 
 - The class has only functions with Lipschitz continuous $r$-th derivative where $r$ is 2 to 5.
-- $B_n(W_n)$ is a linear combination or iterated Boolean sum of Bernstein polynomials.  Examples:$W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
-- $W_n$ or $B_n(W_n)$ is a linear operator that is not positive and preserves polynomials of a higher degree than linear functions (e.g., the operator studied by Tachev (2022) preserves quadratic functions).
+- The approximating polynomials are based on is a linear combination or iterated Boolean sum of Bernstein polynomials.  Examples: $B_n(2 f - B_n(f))$ and $r$ is 3 or 4, or $B_n(B_n(B_n(f))+3(f-B_n(f)))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
+- The approximating polynomial is a linear operator that is not positive and preserves polynomials of a higher degree than linear functions (e.g., the operator studied by Tachev (2022) preserves quadratic functions).
 
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
 ### Solving the Bernoulli factory problem with polynomials
@@ -212,7 +212,7 @@ Then an algorithm to toss heads with probability equal to $f$ would be:
 2. Write $\frac{\gamma_a(\lambda)}{\pi(a)}$ as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial's degree, and let $j$ be the number of heads.
 3. Return 1 with probability equal to the polynomial's $j$th Bernstein coefficient, or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).
 
-(This algorithm has similarities to the one used in the proof in Keane and O'Brien 1994.)
+> **Note:** This algorithm has similarities to the one used in the proof in Keane and O'Brien 1994.  That proof rewrites $f$ as a convex combination of polynomials in Bernstein form with only 0 and 1 as coefficients, namely as&mdash; $$f(\lambda)=\sum_{a\ge 1}\mathbb{P}(X=a) \sum_{i=0}^{k_a} \gamma_{a,i} {k_a \choose i} \lambda^i (1-\lambda)^{k_a-i},$$ where $X$ is an integer-valued random variable 1 or greater, each $\gamma_{a,i}$ is either 0 or 1, and $k_a$ is the degree of the polynomial labeled $a$.
 
 However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which _appears_ to be correct:
 
