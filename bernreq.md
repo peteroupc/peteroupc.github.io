@@ -92,7 +92,7 @@ The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with
 Without loss of generality, the following special cases are of interest to me:
 
 - The class has only functions with Lipschitz continuous $r$-th derivative where $r$ is 2 to 5.
-- The approximating polynomials are based on a linear combination or iterated Boolean sum of Bernstein polynomials.  Examples: $B_n(2 f - B_n(f))$ and $r$ is 3 or 4, or $B_n(B_n(B_n(f))+3(f-B_n(f)))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
+- The approximating polynomials are based on a linear combination or iterated Boolean sum of Bernstein polynomials (Butzer 1953; Micchelli 1973).  Examples: $B_n(2 f - B_n(f))$ and $r$ is 3 or 4, or $B_n(B_n(B_n(f))+3(f-B_n(f)))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
 - The approximating polynomial is a linear operator that is not positive and preserves polynomials of a higher degree than linear functions (e.g., the operator studied by Tachev (2022) preserves quadratic functions).
 
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
@@ -146,7 +146,7 @@ For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such 
 
 Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (**See note 5 in "[**End Notes**](#End_Notes)".**)
 
-Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality $(PB)$ (see below) holds true for each integer $n\ge 1$ that's a power of 2 (see "Main Question" above).
+Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality $(PB)$ (see below) holds true for each integer $n\ge 1$ that's a power of 2 (see "Strategies", below).
 
 My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially for any combination of the special cases mentioned at the end of "[**Main Question**](#Main_Question)", above.
 
@@ -199,11 +199,10 @@ I believe a more general solution is to somehow find the maximum difference betw
 
 There is another way to simulate a concave $f$.  This involves rewriting the concave function as the series&mdash; $$f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)=\sum_{a\ge 0}\pi(a)\frac{\gamma_a(\lambda)}{\pi(a)},\tag{PC}$$ where&mdash;
 
-- $\pi(a) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,
+- $\pi(a) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm, where $0 < p < 1$ is rational,
 - $\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,
 - $g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,
 - $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,
-- $p$ is a rational number satisfying $0 < p < 1$, and
 - $\frac{\gamma_a(\lambda)}{\pi(a)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it's a constant.  In the case of concave functions, this polynomial will always be nonnegative.
 
 Then an algorithm to toss heads with probability equal to $f$ would be:
@@ -530,6 +529,7 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - von Neumann, J., "Various techniques used in connection with random digits", 1951.
 - G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966.
 - Micchelli, C. (1973). The saturation class and iterates of the Bernstein polynomials. Journal of Approximation Theory, 8(1), 1-18.
+- Butzer, P.L., "Linear combinations of Bernstein polynomials", Canadian Journal of Mathematics 15 (1953).
 - Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/pdf/0909.0684)." arXiv preprint arXiv:0909.0684 (2009).
 - Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
 - Güntürk, C. Sinan, and Weilin Li. "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 (2021).

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/04/24"><meta name="citation_online_date" content="2023/04/24"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/04/25"><meta name="citation_online_date" content="2023/04/25"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -130,7 +130,7 @@
 
 <ul>
 <li>The class has only functions with Lipschitz continuous $r$-th derivative where $r$ is 2 to 5.</li>
-<li>The approximating polynomials are based on a linear combination or iterated Boolean sum of Bernstein polynomials.  Examples: $B_n(2 f - B_n(f))$ and $r$ is 3 or 4, or $B_n(B_n(B_n(f))+3(f-B_n(f)))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)</li>
+<li>The approximating polynomials are based on a linear combination or iterated Boolean sum of Bernstein polynomials (Butzer 1953; Micchelli 1973).  Examples: $B_n(2 f - B_n(f))$ and $r$ is 3 or 4, or $B_n(B_n(B_n(f))+3(f-B_n(f)))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)</li>
 <li>The approximating polynomial is a linear operator that is not positive and preserves polynomials of a higher degree than linear functions (e.g., the operator studied by Tachev (2022) preserves quadratic functions).</li>
 </ul>
 
@@ -195,7 +195,7 @@
 
 <p>Then, a <a href="https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation"><strong>conjecture</strong></a> is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (<strong>See note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</p>
 
-<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that the inequality $(PB)$ (see below) holds true for each integer $n\ge 1$ that&#39;s a power of 2 (see &quot;Main Question&quot; above).</p>
+<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that the inequality $(PB)$ (see below) holds true for each integer $n\ge 1$ that&#39;s a power of 2 (see &quot;Strategies&quot;, below).</p>
 
 <p>My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially for any combination of the special cases mentioned at the end of &quot;<a href="#Main_Question"><strong>Main Question</strong></a>&quot;, above.</p>
 
@@ -260,11 +260,10 @@
 <p>There is another way to simulate a concave $f$.  This involves rewriting the concave function as the series&mdash; $$f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)=\sum_{a\ge 0}\pi(a)\frac{\gamma_a(\lambda)}{\pi(a)},\tag{PC}$$ where&mdash;</p>
 
 <ul>
-<li>$\pi(a) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm,</li>
+<li>$\pi(a) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm, where $0 &lt; p &lt; 1$ is rational,</li>
 <li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,</li>
 <li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,</li>
 <li>$(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,</li>
-<li>$p$ is a rational number satisfying $0 &lt; p &lt; 1$, and</li>
 <li>$\frac{\gamma_a(\lambda)}{\pi(a)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it&#39;s a constant.  In the case of concave functions, this polynomial will always be nonnegative.</li>
 </ul>
 
@@ -669,6 +668,7 @@ above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
 <li>von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</li>
 <li>G.G. Lorentz, &quot;The degree of approximation by polynomials with positive coefficients&quot;, 1966.</li>
 <li>Micchelli, C. (1973). The saturation class and iterates of the Bernstein polynomials. Journal of Approximation Theory, 8(1), 1-18.</li>
+<li>Butzer, P.L., &quot;Linear combinations of Bernstein polynomials&quot;, Canadian Journal of Mathematics 15 (1953).</li>
 <li>Guan, Zhong. &quot;<a href="https://arxiv.org/pdf/0909.0684"><strong>Iterated Bernstein polynomial approximations</strong></a>.&quot; arXiv preprint arXiv:0909.0684 (2009).</li>
 <li>Güntürk, C. Sinan, and Weilin Li. &quot;<a href="https://arxiv.org/pdf/2112.09183"><strong>Approximation with one-bit polynomials in Bernstein form</strong></a>&quot;, arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).</li>
 <li>Güntürk, C. Sinan, and Weilin Li. &quot;<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>&quot;, arXiv:2112.09181 (2021).</li>
