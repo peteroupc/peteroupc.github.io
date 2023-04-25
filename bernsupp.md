@@ -574,6 +574,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^65]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^66]: Kantorovich, L.V., "Some remarks on the approximation of functions by means of polynomials with integer coefficients", 1931.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -642,7 +644,7 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 1. $f$ can be written as $f(\lambda) = R_f(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r-1} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $0\le x_0 \le 1$ and $f^{(i)}$ is the $i$-th derivative of $f$.
 2. $|B_n(R_f(\lambda, x_0))| \le M/(((r/2)!)(8n)^{r/2})$, where $M$ is the maximum of the absolute value of that $r$-th derivative.
 
-_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. $R_f(\lambda, x_0)$, in turn, [**is writable**](https://mathworld.wolfram.com/LagrangeRemainder.html) as&mdash; $$f^{(r)}(\gamma)\cdot (\lambda-x_0)^r /(r!),$$ for some $\gamma$ between $\lambda$ and $x_0$ (and thus on $f$'s domain). Thus&mdash; $$R_f(\lambda, x_0) \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$B_n((\lambda-x_0)^r) \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$B_n(R_f(\lambda, x_0)) \le \frac{M}{r!} B_n((\lambda-x_0)^r) \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
+_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. $R_f(\lambda, x_0)$, in turn, [**is writable**](https://mathworld.wolfram.com/LagrangeRemainder.html) as&mdash; $$f^{(r)}(\gamma)\cdot (\lambda-x_0)^r /(r!),$$ for some $\gamma$ between $\lambda$ and $x_0$ (and thus on $f$'s domain). Thus&mdash; $$|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$|B_n((\lambda-x_0)^r)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{r!} |B_n((\lambda-x_0)^r)| \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
 
 **Corollary B9A**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  Then $|B_n(R_f(\lambda, x_0))| \le M/(128 n^2)$, where $M$ is the maximum of the absolute value of that fourth derivative.
 
@@ -650,7 +652,7 @@ _Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_
 
 **Proposition B10**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
 
-_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^14].  It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^32], Butzer (1955)[^15], May (1976)[^33].  Because of this and because $f$ has a continuous fourth derivative, $f$ has the Lagrange remainder $R_f(\lambda, x_0)$ given in Lemma B9 and Corollary B9A, and&mdash; $$|L_{3,n/4}(f(x_0)) - f(x_0)| = |L_{3,n/4}(R_f(\lambda, x_0))|.$$  Now denote $\sigma_n$ as the maximum of $|B_n(R_f(\lambda, x_0))|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$L_{3,n/4}(R_f(\lambda, x_0)) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
+_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^14].  It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^32], Butzer (1955)[^15], May (1976)[^33].  Because of this and because $f$ has a continuous fourth derivative, $f$ has the Lagrange remainder $R_f(\lambda, x_0)$ given in Lemma B9 and Corollary B9A, and&mdash; $$|L_{3,n/4}(f(x_0)) - f(x_0)| = |L_{3,n/4}(R_f(\lambda, x_0))|.$$  Now denote $\sigma_n$ as the maximum of $|B_n(R_f(\lambda, x_0))|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_f(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
@@ -1022,6 +1024,8 @@ For _n_ less than _n_<sub>1</sub>, condition (i) is ensured by setting the lower
 Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The only thing to add is that for $n$ less than _n_<sub>1</sub>, the lower and upper polynomials $g_n$ and $h_n$ can be treated as 0 or 1 without affecting convergence, and that for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iii) by Remark B of Nacu and Peres (2005)[^1].
 
 Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
+
+> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0) and _f_(1) must be integers, so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^66]; see also Remark C of Nacu and Peres (2005)[^1].
 
 **Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
