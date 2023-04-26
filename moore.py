@@ -395,10 +395,10 @@ if __name__ == "__main__":
         continuous Bernoulli: fixing a pervasive error
         in variational autoencoders", 2019."""
         lamda = FInterval(lamda)  # Parameter in (0, 1)
-        return lamda ** x * (1 - lamda) ** (1 - x)
+        return lamda**x * (1 - lamda) ** (1 - x)
 
     def osciexpo(x, a=1.0 / 8, b=9.0 / 20, c=1.0 / 2):
-        axb = a * x ** b
+        axb = a * x**b
         rt = 1 + c * (axb * (b * FInterval.pi(5)).tan(5)).sin(5)
         ret = (axb).exp(5) * (rt)
         ret = ret.clampleft(0)

@@ -625,7 +625,7 @@ def bernpoly(a, x):
     for i in range(0, n + 1):
         oldret = ret
         bino = v[i] if i < len(v) else v[n - i]
-        ret += a[i] * bino * pt ** i * (1 - pt) ** (n - i)
+        ret += a[i] * bino * pt**i * (1 - pt) ** (n - i)
     return ret
 
 def dominates(func, x, hfunc, warningctx=None):

@@ -246,10 +246,10 @@ class FInterval:
             if yn == 1:
                 return self
             if yn % 2 == 1 or self.inf >= 0:
-                return FInterval(self.inf ** yn, self.sup ** yn)
+                return FInterval(self.inf**yn, self.sup**yn)
             if self.sup <= 0:
-                return FInterval(self.sup ** yn, self.inf ** yn)
-            return FInterval(0, max(self.inf ** yn, self.sup ** yn))
+                return FInterval(self.sup**yn, self.inf**yn)
+            return FInterval(0, max(self.inf**yn, self.sup**yn))
         if self.inf == self.sup and self.inf == 0:
             # Special case: 0
             return FInterval(0)
@@ -371,4 +371,4 @@ def _polynomialIntegral(p, x=1):
             d *= i + 1
         return Fraction(n, d)
     else:
-        return sum(Fraction(p[i] * x ** i, i + 1) for i in range(len(p)))
+        return sum(Fraction(p[i] * x**i, i + 1) for i in range(len(p)))

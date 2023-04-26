@@ -532,7 +532,7 @@ class LogConcaveSamplerMonotone:
         f0 = math.exp(psi(0))
         i = 0
         while True:
-            a = 2.0 ** i
+            a = 2.0**i
             fa = math.exp(psi(a))
             f2a = math.exp(psi(2 * a))
             # print([i, fa, 0.25, f2a])
@@ -543,7 +543,7 @@ class LogConcaveSamplerMonotone:
             i += 1
         i = -1
         while True:
-            a = 2.0 ** i
+            a = 2.0**i
             fa = math.exp(psi(a))
             f2a = math.exp(psi(2 * a))
             if fa / f0 >= 0.25 and 0.25 >= f2a / f0:
@@ -791,7 +791,7 @@ if __name__ == "__main__":
             xg = math.gamma(x + 1)
         except:
             return 0
-        return 5 ** x * math.exp(-5) / xg
+        return 5**x * math.exp(-5) / xg
 
     def normalpdf(x):
         return math.exp(-((x) ** 2) / 2)

@@ -5,11 +5,12 @@
 #
 
 import random
+
 try:
-  import bernoulli
-  import randomgen
+    import bernoulli
+    import randomgen
 except:
-  pass
+    pass
 import math
 from fractions import Fraction
 
@@ -116,11 +117,11 @@ def tulap(m, b, q):
         # Tulap(m,b,0) = m + Tulap(0,b,0), just assume
         # m=0 in the truncation check.
         if realIsLess(nreal, 0):
-            fn = (1 / (b ** nint * (1 + b))) * (
+            fn = (1 / (b**nint * (1 + b))) * (
                 b + (nreal - nint + Fraction(1, 2)) * (1 - b)
             )
         else:
-            fn = 1 - (b ** nint / (1 + b)) * (
+            fn = 1 - (b**nint / (1 + b)) * (
                 b + (nint - nreal + Fraction(1, 2)) * (1 - b)
             )
         # if fn < 0 or fn > 1: raise ValueError
@@ -243,14 +244,14 @@ def psrn_fill(rg, psrn, precision=53, digits=2):
         # round up
         return (
             asign
-            * (((af // digits) + 1) + (aint * digits ** precision))
-            / (digits ** precision)
+            * (((af // digits) + 1) + (aint * digits**precision))
+            / (digits**precision)
         )
     else:
         return (
             asign
-            * ((af // digits) + (aint * digits ** precision))
-            / (digits ** precision)
+            * ((af // digits) + (aint * digits**precision))
+            / (digits**precision)
         )
 
 def psrn_in_range(rg, bmin, bmax, digits=2):
@@ -518,7 +519,7 @@ def psrn_reciprocal(rg, psrn1, digits=2):
         digitcount += 1
     while True:
         dcount = digitcount
-        ddc = digits ** dcount
+        ddc = digits**dcount
         small = Fraction(ddc, frac1 + 1)
         large = Fraction(ddc, frac1)
         if small > large:
@@ -830,7 +831,7 @@ def psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2):
         frac1 = frac1 * digits + psrn1[2][i]
     while True:
         dcount = digitcount
-        ddc = digits ** dcount
+        ddc = digits**dcount
         small = Fraction(frac1, ddc) * absfrac
         large = Fraction(frac1 + 1, ddc) * absfrac
         dc = int(small * ddc)
@@ -935,7 +936,7 @@ def psrn_add(rg, psrn1, psrn2, digits=2):
             lowerbound = pw if side == 0 else b - 1 - pw
             if y < lowerbound:
                 # Success
-                sret = start * (digits ** newdigits) + pw
+                sret = start * (digits**newdigits) + pw
                 cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
                 if sret < 0:
                     sret += 1
@@ -1002,7 +1003,7 @@ def psrn_add_fraction(rg, psrn, fraction, digits=2):
         digit = int(fraction * digits)
         fraction = (fraction * digits) - digit
         frac2 = frac2 * digits + digit
-    ddc = digits ** digitcount
+    ddc = digits**digitcount
     small = Fraction(frac1 * psrn[0], ddc) + origfrac
     large = Fraction((frac1 + 1) * psrn[0], ddc) + origfrac
     minv = min(small, large)
@@ -1010,7 +1011,7 @@ def psrn_add_fraction(rg, psrn, fraction, digits=2):
     while True:
         newdigits = 0
         b = 1
-        ddc = digits ** digitcount
+        ddc = digits**digitcount
         mind = int(minv * ddc)
         maxd = int(maxv * ddc)
         rvstart = mind - 1 if minv < 0 else mind
@@ -1381,7 +1382,7 @@ def forsythe_prob(rg, m, n):
             return 1 if psrn_less_than_fraction(rg, ret, n) == 1 else 0
 
 def exp_minus_x2y(rg, f, y, pwr=2):
-    """ B(x) -> B(exp(-x*x*y)) """
+    """B(x) -> B(exp(-x*x*y))"""
     if y > 1:
         fl = int(y)
         fr = y - fl
@@ -1415,7 +1416,7 @@ def exp_minus_x2y(rg, f, y, pwr=2):
         y *= uy
 
 def exp_minus_xy(rg, f, y):
-    """ B(x) -> B(exp(-x*y)) """
+    """B(x) -> B(exp(-x*y))"""
     if y > 1:
         fl = int(y)
         fr = y - fl
@@ -1508,7 +1509,7 @@ def size_biased_poisson_ailamujia(rg, eta=1):
     eta = Fraction(eta)
     cumu = Fraction(1)
     while True:
-        pr = Fraction(4 * eta ** 3 * z * (z + 1)) / (1 + 2 * eta) ** (z + 2)
+        pr = Fraction(4 * eta**3 * z * (z + 1)) / (1 + 2 * eta) ** (z + 2)
         prc = pr / cumu
         if rndgen.zero_or_one(prc.numerator, prc.denominator) == 1:
             return z
@@ -1551,7 +1552,7 @@ def genshape(rg, inshape):
 
 class _PavingNode:
     def __init__(self, coords):
-        """ Represents a tree node of a mapped regular paving. """
+        """Represents a tree node of a mapped regular paving."""
         self.mark = 0
         self.coords = coords
         self.left = None
@@ -1655,7 +1656,7 @@ class ShapeSampler2:
         return psrn
 
     def sample(self, rg):
-        """ Generates a random point inside the shape. """
+        """Generates a random point inside the shape."""
         while True:
             box, r, d = self._traverse(self.root, rg)
             while True:
@@ -1689,7 +1690,7 @@ class ShapeSampler:
         self.base = 2
         self.k = 4
         self.inshape = inshape
-        s = self.base ** self.k
+        s = self.base**self.k
         for x in range(s * dx):
             for y in range(s * dy):
                 v = inshape(x, y, s)
@@ -1699,7 +1700,7 @@ class ShapeSampler:
                     self.maybes.append([x, y])
 
     def sample(self, rg):
-        """ Generates a random point inside the shape, in the form of a uniform PSRN. """
+        """Generates a random point inside the shape, in the form of a uniform PSRN."""
         psrnx = psrn_new_01()
         psrny = psrn_new_01()
         done = False
@@ -1713,7 +1714,7 @@ class ShapeSampler:
             if box < len(self.yeses):
                 cx = self.yeses[box][0]
                 cy = self.yeses[box][1]
-                s = self.base ** self.k
+                s = self.base**self.k
                 break
             else:
                 box -= len(self.yeses)
@@ -2059,23 +2060,23 @@ class Real:
     def __rsub__(a, b):
         return RealSubtract(b, a)
 
-    def __lt__(a,b):
-       return realIsLess(a,b)
+    def __lt__(a, b):
+        return realIsLess(a, b)
 
-    def __le__(a,b):
-       return realIsLessOrEqual(a,b)
+    def __le__(a, b):
+        return realIsLessOrEqual(a, b)
 
-    def __gt__(a,b):
-       return realIsLess(b,a)
+    def __gt__(a, b):
+        return realIsLess(b, a)
 
-    def __ge__(a,b):
-       return realIsLessOrEqual(b,a)
+    def __ge__(a, b):
+        return realIsLessOrEqual(b, a)
 
     def isNegative(self):
         raise NotImplementedError
 
     def disp(a):
-        return a.evstable(30) / 2 ** 30
+        return a.evstable(30) / 2**30
 
     def evstable(a, prec):
         r = a.ev(prec + 2)
@@ -2125,7 +2126,7 @@ class RealPi(Real):
                     - Fraction(1, 8 * k + 5)
                     - Fraction(1, 8 * k + 6)
                 )
-                / 16 ** k
+                / 16**k
             )
             cinf = fracAreClose(lower, upper, n)
             if cinf != None:
@@ -2294,7 +2295,7 @@ def loggammahelper(n, precision):
     term2 = Fraction(num, sden) * (-1) ** k
     if term1 < 0:
         raise ValueError
-    err = abs(term1 ** 2 / (term2 - term1))
+    err = abs(term1**2 / (term2 - term1))
     errintv = FPInterval(err.numerator, err.denominator, precision)
     errintv.addnumden(result.supn, result.supd)
     return (result.infn, result.infd, errintv.supn, errintv.supd)
@@ -2430,8 +2431,8 @@ class _RealErfHelper(Real):
             raise ValueError
         zval = FPInterval(x.numerator, x.denominator, bits)
         fpi = zval.copy()
-        xnsq = x.numerator ** 2
-        xdsq = x.denominator ** 2
+        xnsq = x.numerator**2
+        xdsq = x.denominator**2
         i = 1
         fac = 1
         dosub = True
@@ -2550,8 +2551,8 @@ class RealArcTan(Real):
         if x < 0:
             raise ValueError
         fpi = FPInterval(x.numerator, x.denominator, bits)
-        xnsq = x.numerator ** 2
-        xdsq = x.denominator ** 2
+        xnsq = x.numerator**2
+        xdsq = x.denominator**2
         fppow = FPInterval(x.numerator, x.denominator, bits)
         i = 3
         dosub = True
@@ -2708,8 +2709,8 @@ class RealCos(Real):
 
     def _cosbounds(x, bits):
         fpi = FPInterval(1, 1, bits)
-        xnsq = x.numerator ** 2
-        xdsq = x.denominator ** 2
+        xnsq = x.numerator**2
+        xdsq = x.denominator**2
         fppow = FPInterval(1, 1, bits)
         i = 1
         fac = 2
@@ -3024,8 +3025,8 @@ class RealPow(Real):
                 asup = Fraction(av + 1, onenv)
                 if True:
                     # Do calculation
-                    a = ainf ** self.powint
-                    c = asup ** self.powint
+                    a = ainf**self.powint
+                    c = asup**self.powint
                     # Calculate n-bit approximation of
                     # the two bounds
                     # print([av, bv, float(a), float(b), float(c), float(d)])
@@ -3797,7 +3798,7 @@ class RealLn(Real):
 
     def _truncateNumDen(infnum, infden, bittol, vtrunc):
         if infnum.bit_length() > bittol:
-            ninf = infnum << bittol if infnum > 0 else infnum * 2 ** bittol
+            ninf = infnum << bittol if infnum > 0 else infnum * 2**bittol
             ninf = (
                 -int(abs(ninf) // abs(infden)) - 1
                 if infnum < 0
@@ -4087,10 +4088,11 @@ def realNormalROU(mu=0, sigma=1):
         b = REAL_858_1000 * RandUniform()
         c = -a * a * 4 * RealLn(a)
         if realIsLess(b * b, c):
-            if sigma!=1: b*=sigma
+            if sigma != 1:
+                b *= sigma
             if random.randint(0, 1) == 0:
-                return -b / a if mu==0 else (-b/a)+mu
-            return b / a if mu==0 else (b/a)+mu
+                return -b / a if mu == 0 else (-b / a) + mu
+            return b / a if mu == 0 else (b / a) + mu
 
 def fpNormalROU(mu=0, sigma=1):
     # Generates a Gaussian random variate using
@@ -4102,10 +4104,11 @@ def fpNormalROU(mu=0, sigma=1):
         b = (858 / 1000) * random.random()
         c = -a * a * 4 * math.log(a)
         if b * b < c:
-            if sigma!=1: b*=sigma
+            if sigma != 1:
+                b *= sigma
             if random.randint(0, 1) == 0:
-                return -b / a if mu==0 else (-b/a)+mu
-            return b / a if mu==0 else (b/a)+mu
+                return -b / a if mu == 0 else (-b / a) + mu
+            return b / a if mu == 0 else (b / a) + mu
 
 def logconcave(f, c):  # Devroye 1986, chapter 7
     # Samples a random variate from an absolutely
@@ -4153,8 +4156,8 @@ def c2a(r=None):
         x2 = RandUniform()
         if random.randint(0, 1) == 0:
             x2 = -x2
-        y1 = x1 ** 2
-        y2 = x2 ** 2
+        y1 = x1**2
+        y2 = x2**2
         s = y1 + y2
         if realIsLess(s, RealFraction(1)):
             if r != None:
@@ -4179,7 +4182,7 @@ def muth(mu):
         # print([x])
         try:
             logpdf = (
-                RealLn(-mu + RealExp(x * mu)) + (x * mu ** 2 - RealExp(x * y) + 1) / y
+                RealLn(-mu + RealExp(x * mu)) + (x * mu**2 - RealExp(x * y) + 1) / y
             )
         except:
             continue
@@ -4344,7 +4347,7 @@ class BernsteinPoly:
     def __init__(self, coeffs):
         # Polynomial in Bernstein form defined on the closed unit interval.
         # 'coeffs' is a list of the Bernstein coefficients.
-        self.coeffs = [c if isinstance(c,Real) else RealFraction(c,1) for c in coeffs]
+        self.coeffs = [c if isinstance(c, Real) else RealFraction(c, 1) for c in coeffs]
         self.d = len(coeffs) - 1
         if self.d < 0:
             raise ValueError("d=%d" % (self.d))
@@ -4358,15 +4361,17 @@ class BernsteinPoly:
 
     def lipschitz(self):
         # Calculates an upper bound of this polynomial's Lipschitz constant
-        ret=RealFraction(0)
+        ret = RealFraction(0)
         for i in range(self.d):
-           ret=max(ret,abs((self.coeffs[i+1]-self.coeffs[i])*self.d))
+            ret = max(ret, abs((self.coeffs[i + 1] - self.coeffs[i]) * self.d))
         return ret
 
     def deriv(self, d=1):
         # Gets the d-th derivative of this polynomial
-        if d<0: raise ValueError
-        if d==0: return self
+        if d < 0:
+            raise ValueError
+        if d == 0:
+            return self
         if not d in self.diffs:
             bd = bernsteinDiff(self.coeffs, d)
             self.diffs[d] = BernsteinPoly(bd)
@@ -4378,7 +4383,7 @@ class BernsteinPoly:
         ret = None
         for i in range(0, self.d + 1):
             bc = self.bincos[self.d - i] if i >= len(self.bincos) else self.bincos[i]
-            r = self.coeffs[i] * (bc * pt ** i * (1 - pt) ** (self.d - i))
+            r = self.coeffs[i] * (bc * pt**i * (1 - pt) ** (self.d - i))
             if ret == None:
                 ret = r
             else:
@@ -4459,11 +4464,14 @@ class PiecewiseBernstein:
         if len(coeffs) == 0:
             raise ValueError
         # Bernstein coefficients
-        coeffs=[c for c in coeffs]
+        coeffs = [c for c in coeffs]
         self.pieces.append(
-            [coeffs, BernsteinPoly(coeffs),
-               mn if isinstance(mn,Real) else RealFraction(mn),
-               mx if isinstance(mx,Real) else RealFraction(mx)]
+            [
+                coeffs,
+                BernsteinPoly(coeffs),
+                mn if isinstance(mn, Real) else RealFraction(mn),
+                mx if isinstance(mx, Real) else RealFraction(mx),
+            ]
         )
         return self
 
@@ -4476,18 +4484,21 @@ class PiecewiseBernstein:
     def diff(self, x, d=1):  # Derivative of piecewise polynomial
         if d < 0:
             raise ValueError
-        if d==0: return self.value(x)
+        if d == 0:
+            return self.value(x)
         for _, poly, mn, mx in self.pieces:
             if realIsLessOrEqual(mn, x) and realIsLessOrEqual(x, mx):
                 return poly.diff(x, d=d)
         return RealFraction(0)
 
     def deriv(self, d=1):
-        if d<0: raise ValueError
-        if d==0: return self
-        ret=PiecewiseBernstein()
+        if d < 0:
+            raise ValueError
+        if d == 0:
+            return self
+        ret = PiecewiseBernstein()
         for _, poly, mn, mx in self.pieces:
-           ret.piece(poly.deriv(d).coeffs,mn,mx)
+            ret.piece(poly.deriv(d).coeffs, mn, mx)
         return ret
 
     def get_coeffs(self):
@@ -4497,27 +4508,31 @@ class PiecewiseBernstein:
 
 def c4example():
     # Example function: A C4 continuous piecewise polynomial
-    return PiecewiseBernstein().piece(
-        [
-            Fraction(1, 384) + Fraction(1, 10),
-            Fraction(953, 9600) + Fraction(1, 10),
-            Fraction(2681, 9600) + Fraction(1, 10),
-            Fraction(4409, 9600) + Fraction(1, 10),
-            Fraction(6137, 9600) + Fraction(1, 10),
-            Fraction(1573, 1920) + Fraction(1, 10),
-        ],
-        Fraction(1, 2),
-        1,
-    ).piece(
-        [
-            Fraction(0, 1) + Fraction(1, 10),
-            Fraction(163, 1280) + Fraction(1, 10),
-            Fraction(2167, 5760) + Fraction(1, 10),
-            Fraction(2267, 3840) + Fraction(1, 10),
-            Fraction(263, 320) + Fraction(1, 10),
-        ],
-        0,
-        Fraction(1, 2),
+    return (
+        PiecewiseBernstein()
+        .piece(
+            [
+                Fraction(1, 384) + Fraction(1, 10),
+                Fraction(953, 9600) + Fraction(1, 10),
+                Fraction(2681, 9600) + Fraction(1, 10),
+                Fraction(4409, 9600) + Fraction(1, 10),
+                Fraction(6137, 9600) + Fraction(1, 10),
+                Fraction(1573, 1920) + Fraction(1, 10),
+            ],
+            Fraction(1, 2),
+            1,
+        )
+        .piece(
+            [
+                Fraction(0, 1) + Fraction(1, 10),
+                Fraction(163, 1280) + Fraction(1, 10),
+                Fraction(2167, 5760) + Fraction(1, 10),
+                Fraction(2267, 3840) + Fraction(1, 10),
+                Fraction(263, 320) + Fraction(1, 10),
+            ],
+            0,
+            Fraction(1, 2),
+        )
     )
 
 def iteratedPolyExample():
@@ -4620,7 +4635,7 @@ if __name__ == "__main__":
     def mpdfrun():
         alpha = RealFraction(Fraction(4, 10))
         v = RealFraction(Fraction(21, 10))
-        secondmoment = 1 / (4 * alpha ** 3 * (v - 2) * (v - 1))
+        secondmoment = 1 / (4 * alpha**3 * (v - 2) * (v - 1))
         t = time.time()
         bucket = [
             monoSecondMoment(secondmoment, lambda x: mpdf(x, alpha, v))
@@ -4665,7 +4680,7 @@ if __name__ == "__main__":
         _realbits = 0
         # rou = [(sum(realGamma(2) for j in range(50))/50).ev(52) / 2 ** 52 for i in range(6000)]
         rou = [
-            (parsum([realNormalROU() for j in range(50)]) / 50).ev(52) / 2 ** 52
+            (parsum([realNormalROU() for j in range(50)]) / 50).ev(52) / 2**52
             for i in range(6000)
         ]
         print(_realbits)
@@ -4686,7 +4701,7 @@ if __name__ == "__main__":
     def gammatest():
         for i in range(300):
             g = realGamma(1.3)
-            print(g.ev(30) / 2 ** 30)
+            print(g.ev(30) / 2**30)
 
     def ccos():
         return RandUniform() ** (3.01)
@@ -4694,7 +4709,7 @@ if __name__ == "__main__":
     def routest_():
         rou = []
         for i in range(10000):
-            rou.append(ccos().ev(52) / 2 ** 52)
+            rou.append(ccos().ev(52) / 2**52)
         dobucket(rou)
 
     def routest2_():
@@ -4748,11 +4763,11 @@ if __name__ == "__main__":
         if ra == None:
             raise ValueError("%s" % (msg))
         # Quick approximation
-        evf = int(floor((2 ** 72) * frac))
+        evf = int(floor((2**72) * frac))
         evf2 = evf + 1
         for n, ret in ra:
-            if Fraction(evf, 2 ** 72) > Fraction(ret - 1, 1 << n) and Fraction(
-                evf2, 2 ** 72
+            if Fraction(evf, 2**72) > Fraction(ret - 1, 1 << n) and Fraction(
+                evf2, 2**72
             ) < Fraction(ret + 1, 1 << n):
                 continue
             # print([n,ret,evf])
@@ -4846,20 +4861,20 @@ if __name__ == "__main__":
         ru = RandUniform()
         ru.bits = bits
         ru.count = count
-        frinf = Fraction(bits - 1, 2 ** count)
-        frsup = Fraction(bits + 1, 2 ** count)
+        frinf = Fraction(bits - 1, 2**count)
+        frsup = Fraction(bits + 1, 2**count)
         for prec in [2, 3, 8, 20]:
             ev = ru.ev(prec)
-            if not realIsLess(RealFraction(Fraction(ev - 1, 2 ** prec)), ru):
+            if not realIsLess(RealFraction(Fraction(ev - 1, 2**prec)), ru):
                 raise ValueError([ru, prec])
-            if not realIsLess(ru, RealFraction(Fraction(ev + 1, 2 ** prec))):
+            if not realIsLess(ru, RealFraction(Fraction(ev + 1, 2**prec))):
                 raise ValueError([ru, prec])
-        ru = RealFraction(Fraction(bits, 2 ** count))
+        ru = RealFraction(Fraction(bits, 2**count))
         for prec in [2, 3]:
             ev = ru.ev(prec)
-            if not realIsLess(RealFraction(Fraction(ev - 1, 2 ** prec)), ru):
+            if not realIsLess(RealFraction(Fraction(ev - 1, 2**prec)), ru):
                 raise ValueError([ru, prec])
-            if not realIsLess(ru, RealFraction(Fraction(ev + 1, 2 ** prec))):
+            if not realIsLess(ru, RealFraction(Fraction(ev + 1, 2**prec))):
                 raise ValueError([ru, prec])
 
     try:

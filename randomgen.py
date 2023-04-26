@@ -770,7 +770,7 @@ class PascalTriangle:
         return aliastable
 
     def getrow(self, desiredRow):
-        """ Calculates an arbitrary row of Pascal's triangle. """
+        """Calculates an arbitrary row of Pascal's triangle."""
         r = [1 for i in range(desiredRow + 1)]
         r[0] = 1
         c = 1
@@ -874,17 +874,17 @@ class _FractionBinaryExpansion:
         self.pt = 1
 
     def reset(self):
-        """ Resets this object to the first bit in the binary expansion. """
+        """Resets this object to the first bit in the binary expansion."""
         self.fracnum = frac.numerator
         self.fracden = frac.denominator
         self.pt = 1
 
     def eof(self):
-        """ Returns True if the end of the binary expansion was reached; False otherwise. """
+        """Returns True if the end of the binary expansion was reached; False otherwise."""
         return self.fracnum == 0
 
     def nextbit(self):
-        """ Reads the next bit in the binary expansion. """
+        """Reads the next bit in the binary expansion."""
         if self.fracnum == 0:
             return 0
         # Determine whether frac >= 2**-pt
@@ -906,16 +906,16 @@ class _FloatBinaryExpansion:
         self.px = 0.5
 
     def reset(self):
-        """ Resets this object to the first bit in the binary expansion. """
+        """Resets this object to the first bit in the binary expansion."""
         self.tmpfrac = frac
         self.px = 0.5
 
     def eof(self):
-        """ Returns True if the end of the binary expansion was reached; False otherwise. """
+        """Returns True if the end of the binary expansion was reached; False otherwise."""
         return self.tmpfrac == 0
 
     def nextbit(self):
-        """ Reads the next bit in the binary expansion. """
+        """Reads the next bit in the binary expansion."""
         if self.tmpfrac == 0:
             return 0
         if self.tmpfrac >= self.px:
@@ -958,7 +958,7 @@ class BinaryExpansion:
         self.index = 0
 
     def eof(self):
-        """ Returns True if the end of the binary expansion was reached; False otherwise. """
+        """Returns True if the end of the binary expansion was reached; False otherwise."""
         return self.zerosAtEnd and self.index >= len(self.arr)
 
     def entropy(self):
@@ -1036,13 +1036,13 @@ class BinaryExpansion:
         return self.arr[index]
 
     def nextbit(self):
-        """ Reads the next bit in the binary expansion. """
+        """Reads the next bit in the binary expansion."""
         ret = self._nextbitat(self.index)
         self.index += 1
         return ret
 
     def reset(self):
-        """ Resets this object to the first bit in the binary expansion. """
+        """Resets this object to the first bit in the binary expansion."""
         self.index = 0
 
 class RandomGen:
@@ -1125,7 +1125,7 @@ class RandomGen:
         return minInclusive + self.rndint(maxExclusive - minInclusive - 1)
 
     def randbits(self, n):
-        """ Generates an n-bit random integer. """
+        """Generates an n-bit random integer."""
         return self.rndint((1 << n) - 1)
 
     def rndu01(self):
@@ -1140,7 +1140,7 @@ class RandomGen:
             e += 1
         sig = sig + (1 << (_SIGBITS - 1))
         # NOTE: Multiply by 1.0 to coerce to floating-point
-        return sig * 1.0 * (2.0 ** e)
+        return sig * 1.0 * (2.0**e)
 
     def rndu01oneexc(self):
         while True:
@@ -1198,7 +1198,7 @@ class RandomGen:
                     break
             s = 0
             if ex == MINEXP:
-                s = self.rndint(2 ** FPPRECISION - 1)
+                s = self.rndint(2**FPPRECISION - 1)
             else:
                 sm = 2 ** (FPPRECISION - 1)
                 s = self.rndint(sm - 1) + sm
@@ -1405,7 +1405,7 @@ class RandomGen:
                 return [(p / numsum) * sum for p in nums]
 
     def zero_or_one(self, px, py):
-        """ Returns 1 at probability px/py, 0 otherwise. """
+        """Returns 1 at probability px/py, 0 otherwise."""
         if py <= 0:
             raise ValueError
         if px == py:
@@ -1421,7 +1421,7 @@ class RandomGen:
                 return 0
 
     def bernoulli(self, p):
-        """ Returns 1 at probability p, 0 otherwise. """
+        """Returns 1 at probability p, 0 otherwise."""
         bexp = BinaryExpansion.fromFloat(p)
         while True:
             bp = bexp.nextbit()
@@ -1579,7 +1579,7 @@ class RandomGen:
         return retValues
 
     def normal(self, mu=0.0, sigma=1.0):
-        """ Generates a normally-distributed random number. """
+        """Generates a normally-distributed random number."""
         bmp = 0.8577638849607068  # sqrt(2/exp(1))
         if False and self.rndint(1) == 0:
             while True:
@@ -1607,7 +1607,7 @@ class RandomGen:
         return math.exp(self.normal(mu, sigma))
 
     def weibull(self, a, b):
-        """ Generates a Weibull-distributed random number. """
+        """Generates a Weibull-distributed random number."""
         return b * (self.exponential()) ** (1.0 / a)
 
     def triangular(self, startpt, midpt, endpt):
@@ -1768,7 +1768,7 @@ class RandomGen:
         return successes
 
     def poissonint(self, mx, my):
-        """ Generates a random number following a Poisson distribution with mean mx/my.  """
+        """Generates a random number following a Poisson distribution with mean mx/my."""
         if my == 0:
             raise ValueError
         if mx == 0:
@@ -1819,7 +1819,7 @@ class RandomGen:
         return count
 
     def poisson(self, mean):
-        """ Generates a random number following a Poisson distribution.  """
+        """Generates a random number following a Poisson distribution."""
         if mean < 0:
             raise ValueError
         if mean == 0:
@@ -1841,7 +1841,7 @@ class RandomGen:
                 return count - 1
 
     def rayleigh(self, a):
-        """ Generates a random number following a Rayleigh distribution.  """
+        """Generates a random number following a Rayleigh distribution."""
         return a * math.sqrt(2 * self.exponential())
 
     def truncnormal(randgen, a, b):
@@ -1870,7 +1870,7 @@ class RandomGen:
                     return math.sqrt(2 * x)
 
     def gamma(self, mean, b=1.0, c=1.0, d=0.0):
-        """ Generates a random number following a gamma distribution.  """
+        """Generates a random number following a gamma distribution."""
         if mean <= 0:
             raise ValueError
         dd = mean
@@ -1904,7 +1904,7 @@ class RandomGen:
         return stable(1, 0)
 
     def stable(self, alpha, beta):
-        """ Generates a random number following a stable distribution.  """
+        """Generates a random number following a stable distribution."""
         if alpha <= 0 or alpha > 2:
             raise ValueError
         if beta < -1 or beta > 1:
@@ -1938,7 +1938,7 @@ class RandomGen:
         )
 
     def stable0(self, alpha, beta, mu=0, sigma=1):
-        """ Generates a random number following a 'type 0' stable distribution.  """
+        """Generates a random number following a 'type 0' stable distribution."""
         x = (
             math.log(sigma) * 2.0 / pi
             if alpha == 1
@@ -2005,7 +2005,7 @@ class RandomGen:
             i = i + 1
 
     def zero_or_one_power_ratio(self, px, py, nx, ny):
-        """ Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be positive, negative, or zero); 0 otherwise. """
+        """Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be positive, negative, or zero); 0 otherwise."""
         if py <= 0 or px < 0:
             raise ValueError
         n = Fraction(nx, ny)
@@ -2058,7 +2058,7 @@ class RandomGen:
         return self._zero_or_one_power_frac(px, py, nx, ny)
 
     def zero_or_one_power(self, px, py, n):
-        """ Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise. """
+        """Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise."""
         return self.zero_or_one_power_ratio(px, py, n, 1)
 
     def polya_int(self, sx, sy, px, py):
@@ -2156,7 +2156,7 @@ class RandomGen:
                 qden *= py
                 j += 1
             r = (r << 1) + self.randbit()
-            bk = int(pnum * 2 ** b) // pden
+            bk = int(pnum * 2**b) // pden
             if r <= bk - 2:
                 if returnBitCount:
                     return m, k - b - 1
@@ -2305,7 +2305,7 @@ class RandomGen:
         return [gammas[i] / sumgammas for i in range(len(alphas) - 1)]
 
     def multipoisson(self, firstmean, othermeans):
-        """ Multivariate Poisson distribution (as found in Mathematica). """
+        """Multivariate Poisson distribution (as found in Mathematica)."""
         first = self.poisson(firstmean)
         return [first + self.poisson(m) for m in othermeans]
 
@@ -2343,7 +2343,7 @@ class RandomGen:
             return -math.log1p(self.rndrangeminmaxexc(-0.5, 0)) / lamda
 
     def _logisticexp(self, ln, ld, prec):
-        denom = ld * 2 ** prec
+        denom = ld * 2**prec
         while True:
             if self.randbit() == 0:
                 return 0
@@ -2596,7 +2596,7 @@ class RandomGen:
         return ret
 
     def _ierf(self, x):
-        """ Approximation of the inverse error function. """
+        """Approximation of the inverse error function."""
         coeffs = [
             0.3333333333333333,
             0.23333333333333333,
@@ -3007,7 +3007,7 @@ class RandomGen:
         if b < 50 and math.floor(b) == b:
             if b < 0:
                 return 0
-            return (x ** a) * sum(
+            return (x**a) * sum(
                 [
                     self._pochhammer(a, i) * pow(1 - x, i) * 1.0 / math.gamma(i + 1)
                     for i in range(int(b))
@@ -3016,7 +3016,7 @@ class RandomGen:
         if a > 0 and a < 50 and math.floor(a) == a:
             return 1.0 - ((1.0 - x) ** b) * sum(
                 [
-                    self._pochhammer(b, i) * (x ** i) * 1.0 / math.gamma(i + 1)
+                    self._pochhammer(b, i) * (x**i) * 1.0 / math.gamma(i + 1)
                     for i in range(int(a))
                 ]
             )
@@ -3048,7 +3048,7 @@ class RandomGen:
             i = i + 1
             if (i & 1) == 0:
                 k = k + 1
-        return ret * (x ** a) * ((1 - x) ** b) / (a * self._beta(a, b))
+        return ret * (x**a) * ((1 - x) ** b) / (a * self._beta(a, b))
 
     def _student_t_cdf(self, nu, x):
         if x <= 0:
@@ -3106,7 +3106,7 @@ class RandomGen:
         return sum([x * x for x in vec])
 
     def _numngrad(self, f, u, v):
-        """ Numerical norm of gradient. """
+        """Numerical norm of gradient."""
         eu = f(u, v)
         du = None
         dv = None
@@ -3228,7 +3228,7 @@ class RandomGen:
         """Generates an independent and uniform random point inside a 'dims'-dimensional
         spherical shell (donut, hollow sphere, etc.)
         centered at the origin."""
-        r = self.rndrange(innerRadius ** dims, outerRadius ** dims) ** (1.0 / dims)
+        r = self.rndrange(innerRadius**dims, outerRadius**dims) ** (1.0 / dims)
         return self.hypersphere_point(dims, r)
 
     def latlon(self):
@@ -3570,7 +3570,7 @@ class RandomGen:
         return frac
 
     def _bisectionuniform(self, a, b, bitplaces):
-        """  Devroye/Gravel bisection algorithm. """
+        """Devroye/Gravel bisection algorithm."""
         if a > b:
             raise ValueError
         if a == b:
@@ -3625,12 +3625,12 @@ class RandomGen:
         """
         u = 0
         ubits = 0
-        threshold = Fraction(1, base ** digitplaces) * 2
+        threshold = Fraction(1, base**digitplaces) * 2
         ret = [None for i in range(n)]
         k = 0
         while k < n:
             incr = precision if (ubits == 0) else 8
-            u = (u * (base ** incr)) + self.rndintexc(base ** incr)
+            u = (u * (base**incr)) + self.rndintexc(base**incr)
             ubits += incr
             lower = icdf(u, ubits, precision)
             upper = icdf(u + 1, ubits, precision)
@@ -3904,7 +3904,7 @@ class RandomGen:
         return ret
 
     def randomwalk_u01(self, n):
-        """ Random walk of uniform 0-1 random numbers. """
+        """Random walk of uniform 0-1 random numbers."""
         ret = [0 for i in range(n + 1)]
         for i in range(n):
             ret[i] = self.rndu01()
@@ -3913,7 +3913,7 @@ class RandomGen:
         return ret
 
     def randomwalk_posneg1(self, n):
-        """ Random walk of uniform positive and negative steps. """
+        """Random walk of uniform positive and negative steps."""
         ret = [0 for i in range(n + 1)]
         for i in range(n):
             ret[i] = self.rndint(1) * 2 - 1
@@ -5450,10 +5450,10 @@ if __name__ == "__main__":
     n = [randgen.normal() for i in range(10000)]
     print("Estimating expectation values of a normal distribution")
     print("Mean ~= %f" % (_mean([x for x in n])))
-    print("2nd raw moment ~= %f" % (_mean([x ** 2 for x in n])))
-    print("3rd raw moment ~= %f" % (_mean([x ** 3 for x in n])))
-    print("4th raw moment ~= %f" % (_mean([x ** 4 for x in n])))
-    print("5th raw moment ~= %f" % (_mean([x ** 5 for x in n])))
+    print("2nd raw moment ~= %f" % (_mean([x**2 for x in n])))
+    print("3rd raw moment ~= %f" % (_mean([x**3 for x in n])))
+    print("4th raw moment ~= %f" % (_mean([x**4 for x in n])))
+    print("5th raw moment ~= %f" % (_mean([x**5 for x in n])))
     print("Mean of sines (E<sin(x)>) ~= %f" % (_mean([math.sin(x) for x in n])))
 
     # Estimates expectation given

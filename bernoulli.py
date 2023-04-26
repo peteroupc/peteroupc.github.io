@@ -41,7 +41,7 @@ class Bernoulli:
     """
 
     def __init__(self):
-        """ Creates a new instance of the Bernoulli class."""
+        """Creates a new instance of the Bernoulli class."""
         self.r = random.Random()
         self.rbit = -1
         self.totalbits = 0
@@ -97,7 +97,7 @@ class Bernoulli:
         return 0
 
     def zero_or_one(self, px, py):
-        """ Returns 1 at probability px/py, 0 otherwise. """
+        """Returns 1 at probability px/py, 0 otherwise."""
         if py <= 0:
             raise ValueError
         if px == py:
@@ -113,7 +113,7 @@ class Bernoulli:
                 return 0
 
     def randbit(self):
-        """ Generates a random bit that is 1 or 0 with equal probability. """
+        """Generates a random bit that is 1 or 0 with equal probability."""
         if self.rbit < 0 or self.rbit >= 32:
             self.rbit = 0
             self.rvalue = self.r.randint(0, (1 << 32) - 1)
@@ -485,7 +485,7 @@ class Bernoulli:
             y = y + oy
 
     def rndintexc(self, maxexc):
-        """ Returns a random integer in [0, maxexc). """
+        """Returns a random integer in [0, maxexc)."""
         if maxexc <= 0:
             raise ValueError
         if maxexc == 1:
@@ -591,7 +591,7 @@ class Bernoulli:
             i = i + 1
 
     def a_div_b_bag(self, numerator, intpart, bag):
-        """ Simulates numerator/(intpart+bag). """
+        """Simulates numerator/(intpart+bag)."""
         while True:
             if self.zero_or_one(intpart, 1 + intpart) == 1:
                 return self.zero_or_one(numerator, intpart)
@@ -599,7 +599,7 @@ class Bernoulli:
                 return 0
 
     def a_bag_div_b_bag(selfnumerator, numbag, intpart, bag):
-        """ Simulates (numerator+numbag)/(intpart+bag). """
+        """Simulates (numerator+numbag)/(intpart+bag)."""
         while True:
             if self.zero_or_one(intpart, 1 + intpart) == 1:
                 while True:
@@ -1650,7 +1650,7 @@ class DiceEnterprise:
             for k in range(len(v[2])):
                 rtv = v[0][k]
                 for pv, v2 in zip(p, v[1]):
-                    rtv *= pv ** v2
+                    rtv *= pv**v2
                 rtot += rtv
                 if v[2][k] == result:
                     ret += rtv
