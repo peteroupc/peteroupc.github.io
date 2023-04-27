@@ -1336,22 +1336,22 @@
 <li><p><strong>Building convex combinations.</strong> Suppose the following:</p>
 
 <ul>
-<li>A function <em>f</em>(<em>&lambda;</em>) is written as <em>f</em>(<em>&lambda;</em>) = $w_0(\lambda)+w_1(\lambda)+...$, where $w_0, w_1, ...$ are continuous functions.</li>
-<li>Let <em>g</em>(<em>n</em>) be a number such that 0 &lt; <em>g</em>(0) + <em>g</em>(1) + ... = <em>T</em>, and <em>T</em> is 1 or less.</li>
-<li>Define <em>X</em> as a randomly chosen number as follows: <em>X</em> is 0 with probability 1&minus;<em>T</em>, and <em>X</em> is <em>n</em> (<em>n</em>&ge;1) with probability <em>g</em>(<em>n</em>&minus;1).</li>
-<li>For each integer <em>n</em>&ge; 0, $1 \ge g(n) \ge w_n(\lambda) \ge 0$, wherever $0 \le \lambda \le 1$.</li>
-<li>For each integer <em>n</em>&ge; 0, if $g(n)&gt;0$, the function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section &quot;About Bernoulli Factories&quot;.</li>
+<li>A function <em>f</em>(<em>&lambda;</em>) is written as <em>f</em>(<em>&lambda;</em>) = $w_1(\lambda)+w_2(\lambda)+...$, where $w_1, w_2, ...$ are continuous functions.</li>
+<li>Let <em>g</em>(<em>n</em>) be a number such that 0 &lt; <em>g</em>(1) + <em>g</em>(2) + ... = <em>T</em>, and <em>T</em> is 1 or less.</li>
+<li>Define <em>X</em> as a randomly chosen number as follows: <em>X</em> is 0 with probability 1&minus;<em>T</em>, and <em>X</em> is <em>n</em> (<em>n</em>&ge;1) with probability <em>g</em>(<em>n</em>).</li>
+<li>For each integer <em>n</em>&ge; 1, $1 \ge g(n) \ge w_n(\lambda) \ge 0$, wherever $0 \le \lambda \le 1$.</li>
+<li>For each integer <em>n</em>&ge; 1, if $g(n)&gt;0$, the function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section &quot;About Bernoulli Factories&quot;.</li>
 </ul>
 
-<p>Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>w</em><sub><em>X</em>&minus;1</sub>(<em>&lambda;</em>)/<em>g</em>(<em>X</em>&minus;1)</strong>, we can simulate the probability <em>f</em>(<em>&lambda;</em>) as the convex combination&mdash; $$f(\lambda)=(1-T) \frac{0}{1-T} + g(0) \frac{w_0(\lambda)}{g(0)} + g(1) \frac{w_1(\lambda)}{g(1)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019)[^24].</p></li>
-<li><p><strong>Constants writable as a sum of nonnegative numbers.</strong> A special case of note 1.  Let <em>g</em> be as in note 1 (except <em>T</em> must equal 1), and let $c$ be a constant written as&mdash; $$c=a_0+a_1+a_2+...,$$ where&mdash;</p>
+<p>Then by <strong>generating <em>X</em> and outputting 0 if <em>X</em> is 0, and otherwise flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability <em>f</em>(<em>&lambda;</em>) as the convex combination&mdash; $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019)[^24].</p></li>
+<li><p><strong>Constants writable as a sum of nonnegative numbers.</strong> A special case of note 1.  Let <em>g</em> be as in note 1 (except <em>T</em> must equal 1), and let $c$ be a constant written as&mdash; $$c=a_1+a_2+a_3+...,$$ where&mdash;</p>
 
 <ul>
 <li>$a_n$ are each 0 or greater and sum to 1 or less, and</li>
-<li>$1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 0$.</li>
+<li>$1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 1$.</li>
 </ul>
 
-<p>Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>a</em><sub><em>X</em>&minus;1</sub>/<em>g</em>(<em>X</em>&minus;1)</strong>, we can simulate the probability  <em>c</em> as the convex combination&mdash; $$f(\lambda)=g(0) \frac{a_0}{g(0)} + g(1) \frac{a_1}{g(1)} + ...,$$ letting 0/0 = 0.</p></li>
+<p>Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>a</em><sub><em>X</em>&minus;1</sub>/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability  <em>c</em> as the convex combination&mdash; $$f(\lambda)=g(1) \frac{a_1}{g(1)} + g(2) \frac{a_2}{g(2)} + ...,$$ letting 0/0 = 0.</p></li>
 </ol>
 
 <p><strong>Examples:</strong></p>

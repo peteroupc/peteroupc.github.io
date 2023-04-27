@@ -71,7 +71,7 @@ def polyshift(nrcoeffs, theta, d, alpha=2):
         )
         for i in range(n + 1)
     ]
-    phi = elevate(phi, r)
+    phi = degelev(phi, r)
     upper = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
     lower = [nrcoeffs[i] - phi[i] * d for i in range(len(phi))]
     return upper, lower
@@ -106,14 +106,6 @@ def example1():
 REALONE = RealFraction(1)
 REALZERO = RealFraction(0)
 
-def elevate1(coeffs):  # Elevate polynomial in Bernstein form by 1 degree
-    n = len(coeffs) - 1
-    return [
-        coeffs[max(0, k - 1)] * Fraction(k, n + 1)
-        + coeffs[min(n, k)] * Fraction((n + 1) - k, n + 1)
-        for k in range(n + 2)
-    ]
-
 def elevatemulti(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
     if r < 0:
         raise ValueError
@@ -129,14 +121,21 @@ def elevatemulti(coeffs, r):  # Elevate polynomial in Bernstein form by r degree
         for k in range(n + r + 1)
     ]
 
-def elevate(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
+def degelev(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
     if r < 0:
         raise ValueError
+    if r == 1:
+        n = len(coeffs) - 1
+        return [
+            coeffs[max(0, k - 1)] * Fraction(k, n + 1)
+            + coeffs[min(n, k)] * Fraction((n + 1) - k, n + 1)
+            for k in range(n + 2)
+        ]
     while r >= 256:
         coeffs = elevatemulti(coeffs, 256)
         r -= 256
     for i in range(r):
-        coeffs = elevate1(coeffs)
+        coeffs = degelev(coeffs, 1)
         coeffs = [v for v in coeffs]
     return coeffs
 
@@ -156,20 +155,20 @@ def lorentz2iter(func, coeffs, nPlusR):
     if existingNPlusR <= 0 or nPlusR < existingNPlusR:
         raise ValueError
     l4 = lorentz2poly(PolyDiff(func, BernsteinPoly(coeffs)), nPlusR - 2)
-    coeffs2 = elevate(coeffs, nPlusR - existingNPlusR)
+    coeffs2 = degelev(coeffs, nPlusR - existingNPlusR)
     if len(coeffs) != len(l4):
         raise ValueError
-    return [simplify(v + w) for v, w in zip(coeffs2, l4)]
+    return [realSimplify(v + w) for v, w in zip(coeffs2, l4)]
 
 def lorentz4iter(func, coeffs, nPlusR):
     existingNPlusR = len(coeffs) - 1
     if existingNPlusR <= 0 or nPlusR < existingNPlusR:
         raise ValueError
     l4 = lorentz4poly(PolyDiff(func, BernsteinPoly(coeffs)), nPlusR - 4)
-    coeffs2 = elevate(coeffs, nPlusR - existingNPlusR)
+    coeffs2 = degelev(coeffs, nPlusR - existingNPlusR)
     if len(coeffs) != len(l4):
         raise ValueError
-    return [simplify(v + w) for v, w in zip(coeffs2, l4)]
+    return [realSimplify(v + w) for v, w in zip(coeffs2, l4)]
 
 def lorentz4poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=4,
@@ -240,7 +239,7 @@ def lorentz2polyB(func, n, r=2):
         f0v = func.value(Frac(k) / n)  # Value
         vals[k] = f0v
     # Elevate to degree n+r
-    vals = elevate(vals, r)
+    vals = degelev(vals, r)
     # Shift downward according to Lorentz operator
     for k in range(1, n + 2):
         f2v = func.diff(Fraction(k - 1) / n, d=2)  # Second derivative
@@ -288,36 +287,36 @@ def lorentz2poly(pwpoly, n):
     # it into a Bernstein coefficient
     return [(vals[i]) / math.comb(n + r, i) for i in range(n + r + 1)]
 
-def simplify(r):
+def realSimplify(r):
     if isinstance(r, RealMultiply):
         if isinstance(r.a, RealFraction) and isinstance(r.b, RealFraction):
             return r.a.toFraction() * r.b.toFraction()
-        s1 = simplify(r.a)
-        s2 = simplify(r.b)
+        s1 = realSimplify(r.a)
+        s2 = realSimplify(r.b)
         if s1 != r.a or s2 != r.b:
-            return simplify(s1 * s2)
+            return realSimplify(s1 * s2)
         return s1 * s2
     if isinstance(r, RealAdd):
         if isinstance(r.a, RealFraction) and isinstance(r.b, RealFraction):
             return r.a.toFraction() + r.b.toFraction()
-        s1 = simplify(r.a)
-        s2 = simplify(r.b)
+        s1 = realSimplify(r.a)
+        s2 = realSimplify(r.b)
         if s1 != r.a or s2 != r.b:
-            return simplify(s1 + s2)
+            return realSimplify(s1 + s2)
         return s1 + s2
     if isinstance(r, RealSubtract):
         if isinstance(r.a, RealFraction) and isinstance(r.b, RealFraction):
             return r.a.toFraction() - r.b.toFraction()
-        s1 = simplify(r.a)
-        s2 = simplify(r.b)
+        s1 = realSimplify(r.a)
+        s2 = realSimplify(r.b)
         if s1 != r.a or s2 != r.b:
-            return simplify(s1 - s2)
+            return realSimplify(s1 - s2)
         return s1 - s2
     return r
 
 class C4Function:
     # func must map [0, 1] to (0, 1) and have at least
-    # four continuous derivatives.
+    # four continuous derivatives by default.
     def __init__(self, func, norm, lorentz=False, concave=False, contderivs=4):
         # Norm is:
         # contderivs=1 --> Lipschitz constant
@@ -336,8 +335,7 @@ class C4Function:
         self.concave = concave
         self.nextdegree = None  # Use default for nextdegree
         # Whether to use Lorentz operator of order
-        # 4 or the Micchelli--Felbecker iterated Bernstein
-        # polynomial of order 2.
+        # 4 or the Micchelli--Felbecker iterated Boolean sum of order 2.
         self.lorentz = lorentz
         if self.lorentz:
             # Lorentz operator of order 2 or 4.
@@ -412,14 +410,14 @@ class C4Function:
                         )
                     if len(up) != d + 1:
                         raise ValueError
-                    up = [simplify(v) for v in up]
+                    up = [realSimplify(v) for v in up]
                     if self.concave:
                         lo = [
-                            simplify(self.func.value(Fraction(i, d)))
+                            realSimplify(self.func.value(Fraction(i, d)))
                             for i in range(d + 1)
                         ]
                     else:
-                        lo = [simplify(v) for v in lo]
+                        lo = [realSimplify(v) for v in lo]
                         for v in lo:
                             if realIsLess(v, Fraction(0)):
                                 lo = [REALZERO for i in range(deg + 1)]
@@ -467,11 +465,11 @@ class C4Function:
         # in some cases, but this is only used in realIsLess
         # and realFloor, which both accept Fractions
         if self.concave:
-            pol = [simplify(self.func.value(Fraction(i, deg))) for i in range(deg + 1)]
+            pol = [realSimplify(self.func.value(Fraction(i, deg))) for i in range(deg + 1)]
         elif overshifted:
             pol = [REALZERO for i in range(deg + 1)]
         else:
-            pol = [simplify(v - incr) for v in ipol]
+            pol = [realSimplify(v - incr) for v in ipol]
             for v in pol:
                 if realIsLess(v, Fraction(0)):
                     pol = [REALZERO for i in range(deg + 1)]
@@ -480,7 +478,7 @@ class C4Function:
         if overshifted:
             pol = [REALONE for i in range(deg + 1)]
         else:
-            pol = [simplify(v + incr) for v in ipol]
+            pol = [realSimplify(v + incr) for v in ipol]
             for v in pol:
               if realIsLess(Fraction(1), v):
                 pol = [REALONE for i in range(deg + 1)]
@@ -623,4 +621,149 @@ def cc():
     print(ce.value(0.9))
     print(sum(f.simulate(coin) for i in range(50000)) / 50000)
 
-cc()
+# cc()
+
+from sympy import Min, Max, ceiling, S
+
+def tachevcoeffs(func, x, n):
+    coeffs = [func.subs(x, S(i) / n) for i in range(n + 1)]
+    coeffselev = [coeffs[i * 2] for i in range(n // 2 + 1)]
+    coeffselev = elevatemulti(coeffselev, n // 2)
+    return [2 * c1 - c2 for c1, c2 in zip(coeffs, coeffselev)]
+
+class C3Function:
+    def __init__(self, func, x, thirdderiv):
+        # A Bernoulli factory for functions with a continuous
+        # third derivative.
+        # Relies on the SymPy computer algebra library.
+        # 'func' must have a minimum greater than 0 and
+        # a maximum less than 1, and must have a
+        # continuous third derivative.
+        # 'x' is a SymPy symbol of the variable used by 'func'.
+        # thirdderiv is no less than max. of abs. of third deriv
+        if thirdderiv < 0:
+            raise ValueError
+        self.zz = S("1.29904")  # Constant used in approximation scheme
+        self.mm = S(thirdderiv)
+        self.startdist = 0
+        self.start_nn = 0
+        nn = start_nn
+        self.coeffarr = [None]
+        self.func = func
+        self.tc={}
+        self.x = x
+        while True:
+            # err=summation(2*self.mm*self.zz/(2**n)**2,(n,nn,oo))
+            err = 8 * self.mm * self.zz / (3 * 2 ** (2 * nn))  # Same as prev. line
+            co=None
+            coeffs = [c - err for c in tachevcoeffs(self.func, self.x, 2**nn)]
+            self.tc[nn]=coeffs
+            comin = Min(*coeffs)
+            comax = Max(*coeffs)
+            # print(["nn",nn,comin.n(),comax.n()])
+            if comin >= 0 and comax <= 1:
+                self.startdist = ceiling(comax * 65536) / 65536  # Rounded up
+                if self.startdist < 0:
+                    raise ValueError
+                self.start_nn = nn
+                self.coeffarr.append([c / self.startdist for c in coeffs])
+                # print([nn,comax.n()])
+                break
+            nn += 1
+        # self.dist=2*self.mm*self.zz/(2**n)**2 + 2*self.mm*self.zz/(2*2**n)**2
+        # self.dist=5*self.mm*self.zz/(2**(2*n+1)) # Same as prev. line
+        # totaldist=summation(dist,(n,self.start_nn,oo))+self.startdist
+        # Same as prev. line
+        self.totaldist = (
+            10 * self.mm * self.zz / (3 * 2 ** (2 * self.start_nn)) + self.startdist
+        )
+        # print(["dist",self.dist])
+        if self.totaldist > 1:
+            print(["totaldist", self.totaldist])
+            raise ValueError("Not supported")
+
+    def ensure(self, r):
+        if r < 0:
+            raise ValueError
+        if r < len(self.coeffarr) and self.coeffarr[r] != None:
+            return self.coeffarr[r]
+        while r >= len(self.coeffarr):
+            self.coeffarr.append(None)
+        nn = (r - 2) + self.start_nn
+        err = 8 * self.mm * self.zz / (3 * 2 ** (2 * nn))
+        newerr = 8 * self.mm * self.zz / (3 * 2 ** (2 * (nn + 1)))
+        # piecedist need not be strictly greater (as opp. to equal or greater)
+        # than the worst case
+        # distance between the lower and upper polynomial,
+        # since coeffs1-coeffs2 will represent a polynomial
+        # which is already polynomially bounded
+        # piecedist=2*self.mm*self.zz/(2**nn)**2 + 2*self.mm*self.zz/(2*2**nn)**2
+        piecedist = 5 * self.mm * self.zz / (2 ** (2 * nn + 1))  # Same as prev. line
+        if piecedist < 0:
+            raise ValueError
+        coeffs1=None
+        coeffs2=None
+        if nn in self.tc: coeffs1=self.tc[nn]
+        else:
+          coeffs1 = [
+            c - err for c in tachevcoeffs(self.func, self.x, 2**nn)
+          ]  # Polynomial of degree 2**nn is lower polynomial
+          self.tc[nn]=coeffs1
+        if nn+1 in self.tc: coeffs2=self.tc[nn+1]
+        else:
+          coeffs2 = [
+            c - newerr for c in tachevcoeffs(self.func, self.x, 2**(nn+1))
+          ]  # Polynomial of degree 2**(nn+1) is upper polynomial
+          self.tc[nn]=coeffs2
+        coeffs1 = degelev(coeffs1, 2**nn)  # Lower polynomial
+        coeffs = [(a - b) / piecedist for a, b in zip(coeffs2, coeffs1)]
+        # coeffs represents the Bernstein coefficients of a nonnegative polynomial
+        # bounded by 0 and 1, but the coefficients are not
+        # necessarily bounded by 0 and 1, so elevate the polynomial's
+        # degree if necessary
+        while True:
+            comin = Min(*coeffs)
+            comax = Max(*coeffs)
+            # print(["nn",nn,comin.n(),comax.n()])
+            if comin >= 0 and comax <= 1:
+                break
+            coeffs = degelev(coeffs, len(coeffs) - 1)
+        self.coeffarr[r] = coeffs
+        return coeffs
+
+    def isRandomLess(self, u, s):
+       # Determines whether 'u', a uniform random variate
+       # between 0 and 1, is less than 's'.
+       sh=16 # Number of bits from 'u' generated at a time
+       if u[1]==0:
+         u[0]=random.randint(0,(1<<sh)-1)
+         u[1]=(1<<sh)
+       while True:
+          if S(u[0])/u[1] < s: return True
+          if S(u[0]+1)/u[1] > s: return False
+          u[0]=(u[0]<<sh)|random.randint(0,(1<<sh)-1)
+          u[1]=(u[1]<<sh)
+
+    def sim(self, coin):
+        r = 0
+        s = 1 - self.totaldist
+        u = [0,0]
+        # Generate 'r'
+        # r=0 --> Remainder
+        while not self.isRandomLess(u, s):
+            r += 1
+            if r == 1:
+                s += self.startdist # r=1 --> First piece
+            else: # r>=2 --> In-between pieces
+                nn = (r - 2) + self.start_nn
+                s += (
+                    5 * self.mm * self.zz / (2 ** (2 * nn + 1))
+                )  # right hand side equals dist.subs(n,(r-2)+self.start_nn)
+        if r == 0:
+            return 0
+        # Simulate the polynomial labeled 'r'
+        coeffs = self.ensure(r)
+        heads = sum(coin() for i in range(len(coeffs) - 1))
+        if self.isRandomLess([0,0],coeffs[heads]):
+            return 1
+        return 0

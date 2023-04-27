@@ -856,20 +856,20 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 >
 > 1. **Building convex combinations.** Suppose the following:
 >
->     - A function _f_(_&lambda;_) is written as _f_(_&lambda;_) = $w_0(\lambda)+w_1(\lambda)+...$, where $w_0, w_1, ...$ are continuous functions.
->     - Let _g_(_n_) be a number such that 0 &lt; _g_(0) + _g_(1) + ... = _T_, and _T_ is 1 or less.
->     - Define _X_ as a randomly chosen number as follows: _X_ is 0 with probability 1&minus;_T_, and _X_ is _n_ (_n_&ge;1) with probability _g_(_n_&minus;1).
->     - For each integer _n_&ge; 0, $1 \ge g(n) \ge w_n(\lambda) \ge 0$, wherever $0 \le \lambda \le 1$.
->     - For each integer _n_&ge; 0, if $g(n)>0$, the function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories".
+>     - A function _f_(_&lambda;_) is written as _f_(_&lambda;_) = $w_1(\lambda)+w_2(\lambda)+...$, where $w_1, w_2, ...$ are continuous functions.
+>     - Let _g_(_n_) be a number such that 0 &lt; _g_(1) + _g_(2) + ... = _T_, and _T_ is 1 or less.
+>     - Define _X_ as a randomly chosen number as follows: _X_ is 0 with probability 1&minus;_T_, and _X_ is _n_ (_n_&ge;1) with probability _g_(_n_).
+>     - For each integer _n_&ge; 1, $1 \ge g(n) \ge w_n(\lambda) \ge 0$, wherever $0 \le \lambda \le 1$.
+>     - For each integer _n_&ge; 1, if $g(n)>0$, the function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories".
 >
->     Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_&minus;1</sub>(_&lambda;_)/_g_(_X_&minus;1)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=(1-T) \frac{0}{1-T} + g(0) \frac{w_0(\lambda)}{g(0)} + g(1) \frac{w_1(\lambda)}{g(1)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019\)[^24].
+>     Then by **generating _X_ and outputting 0 if _X_ is 0, and otherwise flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019\)[^24].
 >
-> 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1 (except _T_ must equal 1), and let $c$ be a constant written as&mdash; $$c=a_0+a_1+a_2+...,$$ where&mdash;
+> 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1 (except _T_ must equal 1), and let $c$ be a constant written as&mdash; $$c=a_1+a_2+a_3+...,$$ where&mdash;
 >
 >     - $a_n$ are each 0 or greater and sum to 1 or less, and
->     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 0$.
+>     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 1$.
 >
->     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_&minus;1</sub>/_g_(_X_&minus;1)**, we can simulate the probability  _c_ as the convex combination&mdash; $$f(\lambda)=g(0) \frac{a_0}{g(0)} + g(1) \frac{a_1}{g(1)} + ...,$$ letting 0/0 = 0.
+>     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_&minus;1</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash; $$f(\lambda)=g(1) \frac{a_1}{g(1)} + g(2) \frac{a_2}{g(2)} + ...,$$ letting 0/0 = 0.
 >
 > **Examples:**
 >
