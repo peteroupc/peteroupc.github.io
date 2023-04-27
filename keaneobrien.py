@@ -2,6 +2,9 @@ from sympy import *
 import random
 
 def roughmaxiopen(func, x):
+    # Rough version of maxiopen that samples points
+    # in the open interval (0, 1) to find an approximate
+    # maximum.
     return Max(
         *[ceiling(func.subs(x, S(i) / 100) * 1000) / 1000 for i in range(1, 100)]
     )
@@ -10,6 +13,10 @@ def maxi(func, x):
     # Finds the maximum of a function whose domain is [0,1].
     # Unfortunately, SymPy's 'maximum' does not always work
     # and naïve replacements are usually not robust enough.
+    # Others are encouraged to reimplement this method using
+    # a more robust version that works for a large class of continuous
+    # functions of practical importance (such as piecewise functions
+    # with real analytic and/or algebraic pieces).
     # func=target function; x=variable used in 'func'
     return maximum(func, x, Interval(0, 1))
 
@@ -17,6 +24,10 @@ def maxiopen(func, x):
     # Finds the maximum of a function whose domain is (0,1).
     # Unfortunately, SymPy's 'maximum' does not always work
     # and naïve replacements are usually not robust enough.
+    # Others are encouraged to reimplement this method using
+    # a more robust version that works for a large class of continuous
+    # functions of practical importance (such as piecewise functions
+    # with real analytic and/or algebraic pieces).
     # func=target function; x=variable used in 'func'
     return maximum(func, x, Interval.open(0, 1))
 
