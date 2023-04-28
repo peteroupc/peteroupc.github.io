@@ -51,7 +51,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 The following summarizes most of the problems raised by these open questions.
 
 1. **Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (e.g., the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz, concave, strictly increasing, bounded variation, and/or Zygmund, or $f$ is real analytic).**
-    - _Exact Bernoulli factory_: **Assuming $0\lt f(\lambda)\lt 1$, compute the Bernstein coefficients of two sequences of polynomials ($g_n$, $h_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$, one from above and one from below, and satisfy: $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$.**
+    - _Exact Bernoulli factory_: **Assuming $0\lt f(\lambda)\lt 1$, compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.**
     - _Approximate Bernoulli factory_: **Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.**
     - _Series expansion of simple functions_: **Find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ is a polynomial or rational function with Bernstein coefficients lying in [0, 1].**
 
@@ -84,7 +84,7 @@ The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernst
 
 Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, and/or in the Zygmund class, or $f$ is real analytic or in Gevrey's hierarchy) (**see note 4 in "[**End Notes**](#End_Notes)"**).
 
-1. (_Exact Bernoulli factory_): Compute the Bernstein coefficients of two sequences of polynomials ($g_n$, $h_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$, one from above and one from below ($\lim_n g_n = \lim_n h_n = f$), and satisfy: $(g_{2n}-g_{n})$ and $(h_{n}-h_{2n})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $2n$. (**See note 5 in "[**End Notes**](#End_Notes)".**)  Assume $0\lt f(\lambda)\lt 1$ or $f$ is polynomially bounded.
+1. (_Exact Bernoulli factory_): Compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. (**See note 5 in "[**End Notes**](#End_Notes)".**)  Assume $0\lt f(\lambda)\lt 1$ or $f$ is polynomially bounded.
 2. (_Approximate Bernoulli factory_): Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.
 
 The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
@@ -138,13 +138,11 @@ These alternative polynomials usually include results where the error bound is t
 <a id=A_Conjecture_on_Polynomial_Approximation></a>
 ### A Conjecture on Polynomial Approximation
 
-The following is a conjecture that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
+The following is a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
 Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
 
-For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.
-
-Then, a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) is that there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows: (A) $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise; (B) $\lim_n g_n =\lim_n h_n=f$; (C) $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with non-negative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$. (**See note 5 in "[**End Notes**](#End_Notes)".**)
+For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that for every $C\ge C_0$, the polynomials $(g_n)$ of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda) - CM/n^{r/2})$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. (**See note 5 in "[**End Notes**](#End_Notes)".**)
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality $(PB)$ (see below) holds true for each integer $n\ge 1$ that's a power of 2 (see "Strategies", below).
 
@@ -240,59 +238,47 @@ Suppose $f(\lambda):[0, 1] \to (0, 1)$ is a concave factory function.  To the ex
 
 The focus is now on a **specific approximation scheme**, the one **presented by [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly"**.
 
-The scheme involves building polynomials that are shifted upward and downward to approximate $f$ from above and below so that the polynomials meet the [**Formal Statement**](#Formal_Statement) given earlier.
+[**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly", studied a family of polynomials $(Q_{n,r} f)$ (which they call the _Lorentz operators_) that approximate a continuous function $f$.
 
-The scheme achieves a convergence rate that generally depends on the smoothness of $f$; in fact, it can achieve the highest convergence rate possible for functions with that smoothness.
+They used the Lorentz operators to build a family of polynomials $(g_n)$ that converge from below to $f$ and satisfy the following: $(g_{2n}−g_{n})$ is a polynomial with non-negative Bernstein coefficients, once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
 
-Specifically, Holtz et al. proved the following results:
+They proved, among other results, the following:
 
-1. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ has a Hölder continuous $\lfloor\beta\rfloor$-th derivative with Hölder exponent $\beta-\lfloor\beta\rfloor$, where $\beta>0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.
+A function $f(\lambda):[0,1]\to(0,1)$ admits a family $(g_n)$ described above that converges at the rate&mdash;
 
-2. A function $f(\lambda):[0,1]\to(0,1)$ can be approximated, in a manner that solves the Bernoulli factory problem, at the rate $O((\Delta_n(\lambda))^r)$ only if the $(r-1)$-th derivative of $f$ is in the Zygmund class, where $r\ge 1$ is an integer.
+- $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ is $\lfloor\beta\rfloor$ times differentiable and has a ($\beta-\lfloor\beta\rfloor$)-Hölder continuous $\lfloor\beta\rfloor$-th derivative, where $\beta>0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)
+- $O((\Delta_n(\lambda))^{r+1})$ only if the $r$th derivative of $f$ is in the Zygmund class, where $r\ge 0$ is an integer.
 
 The scheme is as follows:
 
-Let $f$ be a function&mdash;
+Let $f$ be a continuous and $r$-times differentiable function&mdash;
 
 - that maps [0, 1] to the open interval (0, 1), and
-- whose $r$th derivative is Hölder continuous with exponent $\beta$, where $\beta$ is in (0, 1).
+- whose $r$th derivative is $\beta$-Hölder continuous, where $\beta$ is in (0, 1).
 
-Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\ge0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ (see the paper for details on the Lorentz operator). Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
+Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\gt 0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ (see the paper for details on the Lorentz operator). Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
 
 - $f_{n_0} = Q_{n_0, r}f$.
 - $f_{n} = f_{n/b} + Q_{n, r}(f-f_{n/b})$ for each integer $n > n_0$.
 
 - $\phi(n, \alpha, \lambda) = \frac{\theta_{\alpha}}{n^{\alpha}}+(\frac{\lambda(1-\lambda)}{n})^{\alpha/2}$.
 
-Let $B_{n, k, F}$ be the $k$th coefficient of the degree-$n$ Bernstein polynomial of $F$.
+Let $B_{n}(F)$ be the degree-$n$ Bernstein polynomial of $F$.
 
-Let $C(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then elevate it to a degree-$n+r$ Bernstein polynomial.
+Let $C(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then rewrite it as a degree-$n+r$ Bernstein polynomial.
 
-Then the coefficients for the degree $n+r$ polynomial that approximates $f$ are&mdash;
+Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot C(\lambda)\tag{1}$$.
 
-- $g(n, r, k) = B_{n+r,k,f_{n}} - D * B_{n+r,k,C}$, and
-- $h(n, r, k) = B_{n+r,k,f_{n}} + D * B_{n+r,k,C}$.
-
-However, the Holtz method is not yet implementable, for the following reasons among others:
-
-- The paper doesn't give values or upper bounds for important constants, notably the three constants $s$, $\theta_{\alpha}$, and $D$. For example, the paper says only that $D$ should be chosen "large enough".
-- The method's results are only asymptotic.
-- The paper has no examples of how the scheme works for a selection of functions $f$.
-
-And I seek ways to make this solution implementable.
+However, the Holtz method is not yet implementable, in part because it relies on hidden constants with no upper bounds given.
 
 <a id=Questions_2></a>
 ### Questions
 
-1. What are practical upper bounds for $s$, $\theta_{\alpha}$, and $D$ for the "New coins from old, smoothly" method, given a factory function $f$, with or without additional assumptions on $f$ (such as assumptions given in the section "Key Problems")?
-2. Given a continuous function $f$ that maps $[0,1]$ to $(0,1)$, is the "New coins from old, smoothly" method valid in the following cases?  (Note that the method as written doesn't apply to non-integer $\alpha$; see also Conjecture 34 of Holtz et al., 2011, which claims the converse of the second result given above.)
+Let $f(\lambda):[0,1]\to (0,1)$ have a $\beta-\lfloor\beta\rfloor$)-Hölder continuous $\lfloor\beta\rfloor$-th derivative, where $\beta>0$ is a non-integer.
 
-    - With $\alpha=1, r=0$, when $f$ is Lipschitz continuous and/or differentiable.
-    - With $\alpha=2, r=1$, when $f$ has a Lipschitz continuous first derivative.
-    - With $\alpha=2, r=2$, when $f$ is twice differentiable.
-    - With $\alpha=4, r=3$, when $f$ has a Lipschitz continuous third derivative.
-    - With $\alpha=4, r=4$, when $f$ is four times differentiable.
-    - With $\alpha=5, r=4$, when $f$ has a Lipschitz continuous fourth derivative.
+1. What is an explicit upper bound (with no hidden constants) on the error in approximating $f$ with the Lorentz operators $(Q_{n,r} f)$, described below, of the form $C\cdot M\cdot\max((\lambda(1-\lambda)/n)^{1/2}, 1/n)^r$, where $C=C(r)$ and $M=M(f,r)$ are constants?
+2. Same question, but for the polynomial family $(g_n)$ given in (1), below.
+3. Same questions as 1 and 2, but $\beta$ is allowed to be an integer. (Note that the method of Holtz et al.'s paper as written doesn't apply to non-integer $\beta$; see also Conjecture 34 of that paper.)
 
 <a id=Simulable_and_strongly_simulable_functions></a>
 ## Simulable and strongly simulable functions
