@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/27"><meta name="citation_online_date" content="2023/04/27"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/04/28"><meta name="citation_online_date" content="2023/04/28"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -20,6 +20,7 @@
 
 <ul>
 <li><a href="#Building_the_Lower_and_Upper_Polynomials"><strong>Building the Lower and Upper Polynomials</strong></a></li>
+<li><a href="#Another_General_Algorithm"><strong>Another General Algorithm</strong></a></li>
 <li><a href="#Request_for_Additional_Methods"><strong>Request for Additional Methods</strong></a></li>
 </ul></li>
 <li><a href="#Approximate_Bernoulli_Factories"><strong>Approximate Bernoulli Factories</strong></a>
@@ -379,6 +380,67 @@
 <td>Algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1&minus;<em>f</em>(<em>&lambda;</em>).<br/>Inverted result.</td>
 </tr>
 </tbody></table>
+
+<p><a id=Another_General_Algorithm></a></p>
+
+<h3>Another General Algorithm</h3>
+
+<p>The following algorithm simulates $f(\lambda)$ when $f$ belongs in a large class of Bernoulli factory functions, as long as the following is known:</p>
+
+<ul>
+<li>$f$ has a minimum of greater than 0 and a maximum of less than 1.</li>
+<li>There is a family of polynomials ($L_{1}(f)$, $L_{2}(f)$, $L_{4}(f)$, ...) that come close to $f$ with a known error bound, where the number after $L$ is the degree of the polynomial.</li>
+<li>There is a way to find the <em>Bernstein coefficients</em> of each polynomial $L_{n}(f)$ in the family of polynomials.</li>
+</ul>
+
+<p>In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called <em>T</em> in the algorithm below), then simulates an appropriate <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a> of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).[^68] To simulate $f$, the algorithm&mdash;</p>
+
+<ul>
+<li>selects one of these polynomials with probability proportional to its upper bound, or a &quot;leftover&quot; zero polynomial with probability <em>T</em>, then</li>
+<li><p>simulates the chosen polynomial (which is easy to do; see Goyal and Sigman (2012)[^69]).</p></li>
+<li><p>In the algorithm, denote:</p>
+
+<ul>
+<li>$\epsilon(L_{n}(f), f)$ as an upper bound on the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(L_{n}(f), f)$ must increase nowhere as $n$ increases. For best results, this should be written as $\epsilon(L_{n}(f), f) = C/n^r$, where $C$ is a constant and $r&gt;0$ is a multiple of 1/2, since then it&#39;s easy to find the value of ErrShift(f, n), below.</li>
+<li>ErrShift(f, n) as $\sum_{i\ge n} \epsilon(L_{2^n}(f), f)$.</li>
+<li>DiffWidth(f, n) as $2 (\epsilon(L_n(f), f)$ + $\epsilon(L_{2n}(f), f))$.  This is an upper bound on the maximum difference between the degree-$n$ and the degree-$(2n)$ polynomial.</li>
+</ul></li>
+<li>The technique breaks $f$ into a <strong>starting polynomial</strong> and a family of <strong>difference polynomials</strong>.<br>To find the <strong>starting polynomial</strong>:
+
+<ol>
+<li>Set $m$ to 0.</li>
+<li>Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, 2^m$) from them.  If the coefficients now all lie in the closed unit interval, go to the next step.  Otherwise, add 1 to $m$ and repeat this step.</li>
+<li>Calculate <strong>StartWidth</strong> as ceil($c\cdot 65536$)/65536, where $c$ is the maximum Bernstein coefficient from step 2, then divide each Bernstein coefficient by <strong>StartWidth</strong>. (65536 is arbitrary and ensures <strong>StartWidth</strong> is a rational number that is close to, but no lower than, the maximum Bernstein coefficient, for convenience.)</li>
+<li>The <strong>starting polynomial&#39;s degree</strong> is now the number of Bernstein coefficients minus one.  Set <strong>StartOrder</strong> to <em>m</em>.</li>
+</ol></li>
+<li>To find the <strong>difference polynomial</strong> of order $m$:
+
+<ol>
+<li>Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, 2^m$) from them.  Rewrite them to Bernstein coefficients of degree $2^{m+1}$.  Call the coefficients <strong>LowerCoeffs</strong>.</li>
+<li>Find the Bernstein coefficients of $L_{2^{m+1}}$, then subtract ErrShift($f, 2^{m+1}$) from them.  Call the coefficients <strong>UpperCoeffs</strong>.</li>
+<li>Subtract <strong>UpperCoeffs</strong> from <strong>LowerCoeffs</strong>, and call the result <strong>DiffCoeffs</strong>.  Divide each coefficient in <strong>DiffCoeffs</strong> by DiffWidth($f, 2^m)$.  The result is the Bernstein coefficients of a nonnegative polynomial of degree $2^{m+1}$ bounded by 0 and 1, but these coefficients are not necessarily bounded by 0 and 1.  Thus, if any coefficient in <strong>DiffCoeffs</strong> is less than 0 or greater than 1, add 1 to <em>m</em> and rewrite <strong>DiffCoeffs</strong> to Bernstein coefficients of degree $2^{m+1}$ until no coefficient is less than 0 or greater than 1 anymore.</li>
+<li>The <strong>difference polynomial</strong> has Bernstein coefficients given by <strong>DiffCoeffs</strong>, and its degree is the number of those coefficients minus one.</li>
+</ol></li>
+<li>The probabilities for <em>X</em> are as follows:
+
+<ul>
+<li>First, find the <strong>starting polynomial</strong>, then calculate <em>T</em> as <strong>StartWidth</strong> + $\sum_{i=0}$ DiffWidth(f,2<sup><strong>StartOrder</strong>+<em>i</em></sup>).  If <em>T</em> is greater than 1, this algorithm can&#39;t be used.</li>
+<li><em>X</em> is 0 with probability 1 &minus; <em>T</em>.</li>
+<li><em>X</em> is 1 with probability equal to <strong>StartWidth</strong>.</li>
+<li>For each <em>m</em> &ge; 2, <em>X</em> is <em>m</em> with probability equal to DiffWidth(f,2<sup><strong>StartOrder</strong> + <em>m</em> &minus; 2</sup>).</li>
+</ul></li>
+</ul>
+
+<p>Then an algorithm to toss heads with probability equal to $f$ would be:</p>
+
+<ol>
+<li>Generate <em>X</em> at random with the probability given above.</li>
+<li>If <em>X</em> is 0, return 0.  Otherwise, if <em>X</em> is 1, find the <strong>starting polynomial</strong> and its Bernstein coefficients.  Otherwise (if <em>X</em> is 2 or greater), find the <strong>difference polynomial</strong> of order <em>m</em>, where <em>m</em> = (<em>X</em>&minus;2) + <strong>StartOrder</strong>.</li>
+<li>Flip the biased coin (with probability of heads $\lambda$), $n - 1$ times, where $n$ is the number of Bernstein coefficients in the polynomial found in step 2 (its degree plus one), and let $j$ be the number of heads.</li>
+<li>Return 1 with probability equal to the polynomial&#39;s $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).</li>
+</ol>
+
+<p>If <em>T</em> turns out to be greater than 1 in this algorithm, one way to simulate $f$ is to create a coin that simulates $f(\lambda)/T$ instead, and use that coin as the input to a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong><em>linear Bernoulli factory</em></strong></a> that simulates $T\cdot (f(\lambda)/T)$.  (This is possible especially because $f(\lambda)$ is assumed to have a maximum of less than 1.)</p>
 
 <p><a id=Request_for_Additional_Methods></a></p>
 
@@ -878,6 +940,10 @@
 <p>[^66]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
 <p>[^67]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+
+<p>[^68]: With this infinite sum and these upper bounds, Lemma 4 of Holtz et al. (2011) says that a Bernoulli factory algorithm for $f(\lambda)$ is possible.</p>
+
+<p>[^69]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
 
 <p><a id=Appendix></a></p>
 

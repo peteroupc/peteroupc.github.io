@@ -653,8 +653,8 @@ class C3Function:
         self.tc={}
         self.x = x
         while True:
-            # err=summation(2*self.mm*self.zz/(2**n)**2,(n,nn,oo))
-            err = 8 * self.mm * self.zz / (3 * 2 ** (2 * nn))  # Same as prev. line
+            # err=summation(self.mm*self.zz/(2**n)**2,(n,nn,oo))
+            err = 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))  # Same as prev. line
             co=None
             coeffs = [c - err for c in tachevcoeffs(self.func, self.x, 2**nn)]
             self.tc[nn]=coeffs
@@ -690,8 +690,8 @@ class C3Function:
         while r >= len(self.coeffarr):
             self.coeffarr.append(None)
         nn = (r - 2) + self.start_nn
-        err = 8 * self.mm * self.zz / (3 * 2 ** (2 * nn))
-        newerr = 8 * self.mm * self.zz / (3 * 2 ** (2 * (nn + 1)))
+        err = 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))
+        newerr = 4 * self.mm * self.zz / (3 * 2 ** (2 * (nn + 1)))
         # piecedist need not be strictly greater (as opp. to equal or greater)
         # than the worst case
         # distance between the lower and upper polynomial,

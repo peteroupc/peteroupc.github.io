@@ -10,6 +10,7 @@
 - [**Definitions**](#Definitions)
 - [**General Factory Functions**](#General_Factory_Functions)
     - [**Building the Lower and Upper Polynomials**](#Building_the_Lower_and_Upper_Polynomials)
+    - [**Another General Algorithm**](#Another_General_Algorithm)
     - [**Request for Additional Methods**](#Request_for_Additional_Methods)
 - [**Approximate Bernoulli Factories**](#Approximate_Bernoulli_Factories)
     - [**For Certain Functions**](#For_Certain_Functions)
@@ -240,6 +241,49 @@ Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can 
 | > 0 and < 1 | 0 | Algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = _f_(1&minus;_&lambda;_).  (For example, cosh(_&lambda;_)&minus;1 becomes cosh(1&minus;_&lambda;_)&minus;1.)<br/>Inverted coin. |
 | 1 | 0 | Algorithm for **certain functions that equal 0 at 0 and 1 at 1**, but with _f_(_&lambda;_) = 1&minus;_f_(_&lambda;_).<br/>Inverted result. |
 | 1 | > 0 and &le; 1 | Algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = 1&minus;_f_(_&lambda;_).<br/>Inverted result. |
+
+<a id=Another_General_Algorithm></a>
+### Another General Algorithm
+
+The following algorithm simulates $f(\lambda)$ when $f$ belongs in a large class of Bernoulli factory functions, as long as the following is known:
+
+- $f$ has a minimum of greater than 0 and a maximum of less than 1.
+- There is a family of polynomials ($L_{1}(f)$, $L_{2}(f)$, $L_{4}(f)$, ...) that come close to $f$ with a known error bound, where the number after $L$ is the degree of the polynomial.
+- There is a way to find the _Bernstein coefficients_ of each polynomial $L_{n}(f)$ in the family of polynomials.
+
+In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called _T_ in the algorithm below), then simulates an appropriate [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations) of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).[^68] To simulate $f$, the algorithm&mdash;
+
+- selects one of these polynomials with probability proportional to its upper bound, or a "leftover" zero polynomial with probability _T_, then
+- simulates the chosen polynomial (which is easy to do; see Goyal and Sigman (2012)[^69]).
+
+- In the algorithm, denote:
+    - $\epsilon(L_{n}(f), f)$ as an upper bound on the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(L_{n}(f), f)$ must increase nowhere as $n$ increases. For best results, this should be written as $\epsilon(L_{n}(f), f) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), below.
+    - ErrShift(f, n) as $\sum_{i\ge n} \epsilon(L_{2^n}(f), f)$.
+    - DiffWidth(f, n) as $2 (\epsilon(L_n(f), f)$ + $\epsilon(L_{2n}(f), f))$.  This is an upper bound on the maximum difference between the degree-$n$ and the degree-$(2n)$ polynomial.
+- The technique breaks $f$ into a **starting polynomial** and a family of **difference polynomials**.<br>To find the **starting polynomial**:
+    1. Set $m$ to 0.
+    2. Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, 2^m$) from them.  If the coefficients now all lie in the closed unit interval, go to the next step.  Otherwise, add 1 to $m$ and repeat this step.
+    3. Calculate **StartWidth** as ceil($c\cdot 65536$)/65536, where $c$ is the maximum Bernstein coefficient from step 2, then divide each Bernstein coefficient by **StartWidth**. (65536 is arbitrary and ensures **StartWidth** is a rational number that is close to, but no lower than, the maximum Bernstein coefficient, for convenience.)
+    4. The **starting polynomial's degree** is now the number of Bernstein coefficients minus one.  Set **StartOrder** to _m_.
+- To find the **difference polynomial** of order $m$:
+    1. Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, 2^m$) from them.  Rewrite them to Bernstein coefficients of degree $2^{m+1}$.  Call the coefficients **LowerCoeffs**.
+    2. Find the Bernstein coefficients of $L_{2^{m+1}}$, then subtract ErrShift($f, 2^{m+1}$) from them.  Call the coefficients **UpperCoeffs**.
+    3. Subtract **UpperCoeffs** from **LowerCoeffs**, and call the result **DiffCoeffs**.  Divide each coefficient in **DiffCoeffs** by DiffWidth($f, 2^m)$.  The result is the Bernstein coefficients of a nonnegative polynomial of degree $2^{m+1}$ bounded by 0 and 1, but these coefficients are not necessarily bounded by 0 and 1.  Thus, if any coefficient in **DiffCoeffs** is less than 0 or greater than 1, add 1 to _m_ and rewrite **DiffCoeffs** to Bernstein coefficients of degree $2^{m+1}$ until no coefficient is less than 0 or greater than 1 anymore.
+    4. The **difference polynomial** has Bernstein coefficients given by **DiffCoeffs**, and its degree is the number of those coefficients minus one.
+- The probabilities for _X_ are as follows:
+    - First, find the **starting polynomial**, then calculate _T_ as **StartWidth** + $\sum_{i=0}$ DiffWidth(f,2<sup>**StartOrder**+_i_</sup>).  If _T_ is greater than 1, this algorithm can't be used.
+    - _X_ is 0 with probability 1 &minus; _T_.
+    - _X_ is 1 with probability equal to **StartWidth**.
+    - For each _m_ &ge; 2, _X_ is _m_ with probability equal to DiffWidth(f,2<sup>**StartOrder** + _m_ &minus; 2</sup>).
+
+Then an algorithm to toss heads with probability equal to $f$ would be:
+
+1. Generate _X_ at random with the probability given above.
+2. If _X_ is 0, return 0.  Otherwise, if _X_ is 1, find the **starting polynomial** and its Bernstein coefficients.  Otherwise (if _X_ is 2 or greater), find the **difference polynomial** of order _m_, where _m_ = (_X_&minus;2) + **StartOrder**.
+3. Flip the biased coin (with probability of heads $\lambda$), $n - 1$ times, where $n$ is the number of Bernstein coefficients in the polynomial found in step 2 (its degree plus one), and let $j$ be the number of heads.
+4. Return 1 with probability equal to the polynomial's $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).
+
+If _T_ turns out to be greater than 1 in this algorithm, one way to simulate $f$ is to create a coin that simulates $f(\lambda)/T$ instead, and use that coin as the input to a [**_linear Bernoulli factory_**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories) that simulates $T\cdot (f(\lambda)/T)$.  (This is possible especially because $f(\lambda)$ is assumed to have a maximum of less than 1.)
 
 <a id=Request_for_Additional_Methods></a>
 ### Request for Additional Methods
@@ -574,6 +618,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 [^66]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^67]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^68]: With this infinite sum and these upper bounds, Lemma 4 of Holtz et al. (2011\) says that a Bernoulli factory algorithm for $f(\lambda)$ is possible.
+
+[^69]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
 <a id=Appendix></a>
 ## Appendix
