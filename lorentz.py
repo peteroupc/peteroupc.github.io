@@ -647,7 +647,7 @@ class C3Function:
         self.mm = S(thirdderiv)
         self.startdist = 0
         self.start_nn = 0
-        nn = start_nn
+        nn = self.start_nn
         self.coeffarr = [None]
         self.func = func
         self.tc={}
@@ -656,7 +656,11 @@ class C3Function:
             # err=summation(self.mm*self.zz/(2**n)**2,(n,nn,oo))
             err = 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))  # Same as prev. line
             co=None
-            coeffs = [c - err for c in tachevcoeffs(self.func, self.x, 2**nn)]
+            #print(["nn",nn])
+            if err>2: # Error too big to be a starting polynomial
+               nn+=1
+               continue
+            coeffs = [(c - err) for c in tachevcoeffs(self.func, self.x, 2**nn)]
             self.tc[nn]=coeffs
             comin = Min(*coeffs)
             comax = Max(*coeffs)
@@ -690,6 +694,7 @@ class C3Function:
         while r >= len(self.coeffarr):
             self.coeffarr.append(None)
         nn = (r - 2) + self.start_nn
+        #print(["r",r,"nn",nn])
         err = 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))
         newerr = 4 * self.mm * self.zz / (3 * 2 ** (2 * (nn + 1)))
         # piecedist need not be strictly greater (as opp. to equal or greater)
@@ -706,13 +711,13 @@ class C3Function:
         if nn in self.tc: coeffs1=self.tc[nn]
         else:
           coeffs1 = [
-            c - err for c in tachevcoeffs(self.func, self.x, 2**nn)
+            (c - err) for c in tachevcoeffs(self.func, self.x, 2**nn)
           ]  # Polynomial of degree 2**nn is lower polynomial
           self.tc[nn]=coeffs1
         if nn+1 in self.tc: coeffs2=self.tc[nn+1]
         else:
           coeffs2 = [
-            c - newerr for c in tachevcoeffs(self.func, self.x, 2**(nn+1))
+            (c - newerr) for c in tachevcoeffs(self.func, self.x, 2**(nn+1))
           ]  # Polynomial of degree 2**(nn+1) is upper polynomial
           self.tc[nn]=coeffs2
         coeffs1 = degelev(coeffs1, 2**nn)  # Lower polynomial

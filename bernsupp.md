@@ -251,9 +251,9 @@ Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can 
 <a id=Another_General_Algorithm></a>
 ### Another General Algorithm
 
-The algorithm in this section simulates $f(\lambda)$ when $f$ belongs in a large class of Bernoulli factory functions, as long as the following is known:
+The algorithm in this section simulates $f(\lambda)$ when $f$ belongs in a large class of functions, as long as the following is known:
 
-- $f$ has a minimum of greater than 0 and a maximum of less than 1.
+- $f$ is continuous and has a minimum of greater than 0 and a maximum of less than 1.
 - There is a family of polynomials ($L_{1}(f)$, $L_{2}(f)$, $L_{4}(f)$, $L_{8}(f)$, ...) that come close to $f$ with a known error bound, where the number after $L$ is the degree of the polynomial.
 - There is a way to find the _Bernstein coefficients_ of each polynomial $L_{n}(f)$ in the family of polynomials.
 
@@ -265,7 +265,7 @@ In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose max
 --------------
 
 - In the algorithm, denote:
-    - $\epsilon(L_{n}(f), f)$ as an upper bound on the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(L_{n}(f), f)$ must increase nowhere as $n$ increases. For best results, this should be written as $\epsilon(L_{n}(f), f) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), below.
+    - $\epsilon(L_{n}(f), f)$ as an upper bound on the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(L_{n}(f), f)$ must increase nowhere as $n$ increases. For best results, this should be written as $\epsilon(L_{n}(f), f) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), below.  For examples of error bounds, see "Approximate Bernoulli Factories", later.
     - ErrShift($f, n$) as $\sum_{i\ge n} \epsilon(L_{2^n}(f), f)$.
     - DiffWidth($f, n$) as $2 (\epsilon(L_n(f), f)$ + $\epsilon(L_{2n}(f), f))$.  This is an upper bound on the maximum difference between the shifted degree-$n$ and the shifted degree-$(2n)$ polynomial.
 - The technique breaks $f$ into a **starting polynomial** and a family of **difference polynomials**.<br>To find the **starting polynomial**:
