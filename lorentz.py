@@ -653,8 +653,8 @@ class C3Function:
         self.tc={}
         self.x = x
         while True:
-            # err=summation(self.mm*self.zz/(2**n)**2,(n,nn,oo))
-            err = 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))  # Same as prev. line
+            # err=S("1.01") * summation(self.mm*self.zz/(2**n)**2,(n,nn,oo))
+            err = S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))  # Same as prev. line
             co=None
             #print(["nn",nn])
             if err>2: # Error too big to be a starting polynomial
@@ -674,12 +674,10 @@ class C3Function:
                 # print([nn,comax.n()])
                 break
             nn += 1
-        # self.dist=2*self.mm*self.zz/(2**n)**2 + 2*self.mm*self.zz/(2*2**n)**2
-        # self.dist=5*self.mm*self.zz/(2**(2*n+1)) # Same as prev. line
-        # totaldist=summation(dist,(n,self.start_nn,oo))+self.startdist
+        # totaldist=summation(diffwidth,(n,self.start_nn,oo))+self.startdist
         # Same as prev. line
         self.totaldist = (
-            10 * self.mm * self.zz / (3 * 2 ** (2 * self.start_nn)) + self.startdist
+            S("1.01") * 10 * self.mm * self.zz / (3 * 2 ** (2 * self.start_nn)) + self.startdist
         )
         # print(["dist",self.dist])
         if self.totaldist > 1:
@@ -695,16 +693,11 @@ class C3Function:
             self.coeffarr.append(None)
         nn = (r - 2) + self.start_nn
         #print(["r",r,"nn",nn])
-        err = 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))
-        newerr = 4 * self.mm * self.zz / (3 * 2 ** (2 * (nn + 1)))
-        # piecedist need not be strictly greater (as opp. to equal or greater)
-        # than the worst case
-        # distance between the lower and upper polynomial,
-        # since coeffs1-coeffs2 will represent a polynomial
-        # which is already polynomially bounded
-        # piecedist=2*self.mm*self.zz/(2**nn)**2 + 2*self.mm*self.zz/(2*2**nn)**2
-        piecedist = 5 * self.mm * self.zz / (2 ** (2 * nn + 1))  # Same as prev. line
-        if piecedist < 0:
+        err = S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))
+        newerr = S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * (nn + 1)))
+        # diffwidth=S("1.01")*2*self.mm*self.zz/(2**nn)**2 + 2*self.mm*self.zz/(2*2**nn)**2
+        diffwidth = S("1.01")*5 * self.mm * self.zz / (2 ** (2 * nn + 1))  # Same as prev. line
+        if diffwidth < 0:
             raise ValueError
         coeffs1=None
         coeffs2=None
@@ -721,7 +714,7 @@ class C3Function:
           ]  # Polynomial of degree 2**(nn+1) is upper polynomial
           self.tc[nn]=coeffs2
         coeffs1 = degelev(coeffs1, 2**nn)  # Lower polynomial
-        coeffs = [(a - b) / piecedist for a, b in zip(coeffs2, coeffs1)]
+        coeffs = [(a - b) / diffwidth for a, b in zip(coeffs2, coeffs1)]
         # coeffs represents the Bernstein coefficients of a nonnegative polynomial
         # bounded by 0 and 1, but the coefficients are not
         # necessarily bounded by 0 and 1, so elevate the polynomial's

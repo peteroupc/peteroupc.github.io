@@ -265,24 +265,24 @@ In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose max
 --------------
 
 - In the algorithm, denote:
-    - $\epsilon(L_{n}(f), f)$ as an upper bound on the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(L_{n}(f), f)$ must increase nowhere as $n$ increases. For best results, this should be written as $\epsilon(L_{n}(f), f) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), below.  For examples of error bounds, see "Approximate Bernoulli Factories", later.
-    - ErrShift($f, n$) as $\sum_{i\ge n} \epsilon(L_{2^n}(f), f)$.
-    - DiffWidth($f, n$) as $2 (\epsilon(L_n(f), f)$ + $\epsilon(L_{2n}(f), f))$.  This is an upper bound on the maximum difference between the shifted degree-$n$ and the shifted degree-$(2n)$ polynomial.
+    - $\epsilon(f, n)$ as an upper bound on the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(f, n)$ must increase nowhere as $n$ increases, and must converge to 0. For best results, this should be written as $\epsilon(L_{n}(f), f) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), below.  For examples of error bounds, see "Approximate Bernoulli Factories", later.
+    - ErrShift($f, m$) as 1.01 \cdot $\sum_{i\ge m} \epsilon(f, 2^m)$.  The factor 1.01 is needed to ensure each difference polynomial is strictly between 0 and 1.
+    - DiffWidth($f, m$) as $1.01 \cdot 2 (\epsilon(f, 2^m)$ + $\epsilon(f, 2^{m+1}))$.  This is an upper bound on the maximum difference between the shifted degree-$2^m$ and the shifted degree-$(2^{m+1})$ polynomial.
 - The technique breaks $f$ into a **starting polynomial** and a family of **difference polynomials**.<br>To find the **starting polynomial**:
     1. Set $m$ to 0.
-    2. Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, 2^m$) from them.  If the coefficients now all lie in the closed unit interval, go to the next step.  Otherwise, add 1 to $m$ and repeat this step.
+    2. Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, m$) from them.  If the coefficients now all lie in the closed unit interval, go to the next step.  Otherwise, add 1 to _m_ and repeat this step.
     3. Calculate **StartWidth** as ceil($c\cdot 65536$)/65536, where $c$ is the maximum Bernstein coefficient from step 2, then divide each Bernstein coefficient by **StartWidth**. (65536 is arbitrary and ensures **StartWidth** is a rational number that is close to, but no lower than, the maximum Bernstein coefficient, for convenience.)
-    4. The **starting polynomial's degree** is now the number of Bernstein coefficients minus one.  Set **StartOrder** to _m_.
+    4. The **starting polynomial** now has Bernstein coefficients found in step 3.  Set **StartOrder** to _m_.
 - To find the **difference polynomial** of order $m$:
-    1. Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, 2^m$) from them.  Rewrite them to Bernstein coefficients of degree $2^{m+1}$.  Call the coefficients **LowerCoeffs**.
-    2. Find the Bernstein coefficients of $L_{2^{m+1}}$, then subtract ErrShift($f, 2^{m+1}$) from them.  Call the coefficients **UpperCoeffs**.
-    3. Subtract **UpperCoeffs** from **LowerCoeffs**, and call the result **DiffCoeffs**.  Divide each coefficient in **DiffCoeffs** by DiffWidth($f, 2^m)$.  The result is the Bernstein coefficients of a nonnegative polynomial of degree $2^{m+1}$ bounded by 0 and 1, but these coefficients are not necessarily bounded by 0 and 1.  Thus, if any coefficient in **DiffCoeffs** is less than 0 or greater than 1, add 1 to _m_ and rewrite **DiffCoeffs** to Bernstein coefficients of degree $2^{m+1}$ until no coefficient is less than 0 or greater than 1 anymore.
-    4. The **difference polynomial** has Bernstein coefficients given by **DiffCoeffs**, and its degree is the number of those coefficients minus one.
+    1. Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, m$) from them.  Rewrite them to Bernstein coefficients of degree $2^{m+1}$.  Call the coefficients **LowerCoeffs**.
+    2. Find the Bernstein coefficients of $L_{2^{m+1}}$, then subtract ErrShift($f, m+1$) from them.  Call the coefficients **UpperCoeffs**.
+    3. Subtract **UpperCoeffs** from **LowerCoeffs**, and call the result **DiffCoeffs**.  Divide each coefficient in **DiffCoeffs** by DiffWidth($f, m$).  The result is the Bernstein coefficients of a positive polynomial of degree $2^{m+1}$ bounded by 0 and 1, but these coefficients are not necessarily bounded by 0 and 1.  Thus, if any coefficient in **DiffCoeffs** is less than 0 or greater than 1, add 1 to _m_ and rewrite **DiffCoeffs** to Bernstein coefficients of degree $2^{m+1}$ until no coefficient is less than 0 or greater than 1 anymore.
+    4. The **difference polynomial** now has Bernstein coefficients given by **DiffCoeffs**.
 - The probabilities for _X_ are as follows:
-    - First, find the **starting polynomial**, then calculate _T_ as **StartWidth** + $\sum_{i=0}$ DiffWidth($f$,2<sup>**StartOrder**+_i_</sup>).  If _T_ is greater than 1, this algorithm can't be used.
+    - First, find the **starting polynomial**, then calculate _T_ as **StartWidth** + $\sum_{i=0}$ DiffWidth($f$, **StartOrder**+_i_).  If _T_ is greater than 1, this algorithm can't be used.
     - _X_ is 0 with probability 1 &minus; _T_.
     - _X_ is 1 with probability equal to **StartWidth**.
-    - For each _m_ &ge; 2, _X_ is _m_ with probability equal to DiffWidth(f,2<sup>**StartOrder** + _m_ &minus; 2</sup>).
+    - For each _m_ &ge; 2, _X_ is _m_ with probability equal to DiffWidth($f$,**StartOrder** + _m_ &minus; 2).
 
 Then an algorithm to toss heads with probability equal to $f$ would be:
 
@@ -966,6 +966,7 @@ In the following results:
 
 - A _strictly bounded factory function_ means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^36].
+    - The following are examples of functions on the closed unit interval that are not polynomially bounded, even though they are continuous:<br>exp(&minus;1/_&lambda;_) if _&lambda;_>0; 0 otherwise.<br>_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_) if _&lambda;_>0; 0 otherwise.<br>_&lambda;_\*abs(sin(1/_&lambda;_))+exp(&minus;1/_&lambda;_) if _&lambda;_>0; 0 otherwise.
 - A _modulus of continuity_ of a function _f_ means a nonnegative and nowhere decreasing function _&omega;_ on the closed unit interval, for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) whenever 0&le;_x_&le;1 and 0&le;_y_&le;1.  Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) is greater than or equal to _f_'s maximum range in a window of size _&delta;_.
 
 **Lemma 1.** Omitted.
@@ -1013,7 +1014,7 @@ Given that _f_ has a continuous second derivative, there is an $\omega_2$ for it
 
 Suppose _Y_ = _X_/_n_.  Then _Y_'s variance (**Var**(_Y_)) is less than or equal to 1/(8\*_n_&minus; 4), and **2A1**'s left-hand side is the same as the expression (1), so that applying the two bounds given above leads to abs(**E**(_f_(_Y_)) - _f_(**E**(_Y_))) &le; 3\*_M_\* (sqrt(**Var**(_Y_))/2)<sup>2</sup> &le; 3\*_M_\*(sqrt(1/(8\*_n_&minus; 4))/2)<sup>2</sup> = $\frac{3 M}{32 n - 16}$. &#x25a1;
 
-> **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2((x-y)/2)$ whenever _x_ and _y_ are in _f_'s domain and _x_&le;_y_.
+> **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2((y-x)/2)$ whenever _x_ and _y_ are in _f_'s domain and _x_&le;_y_.
 
 **Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 

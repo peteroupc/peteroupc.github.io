@@ -412,33 +412,33 @@
 <li>In the algorithm, denote:
 
 <ul>
-<li>$\epsilon(L_{n}(f), f)$ as an upper bound on the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(L_{n}(f), f)$ must increase nowhere as $n$ increases. For best results, this should be written as $\epsilon(L_{n}(f), f) = C/n^r$, where $C$ is a constant and $r&gt;0$ is a multiple of 1/2, since then it&#39;s easy to find the value of ErrShift(f, n), below.  For examples of error bounds, see &quot;Approximate Bernoulli Factories&quot;, later.</li>
-<li>ErrShift($f, n$) as $\sum_{i\ge n} \epsilon(L_{2^n}(f), f)$.</li>
-<li>DiffWidth($f, n$) as $2 (\epsilon(L_n(f), f)$ + $\epsilon(L_{2n}(f), f))$.  This is an upper bound on the maximum difference between the shifted degree-$n$ and the shifted degree-$(2n)$ polynomial.</li>
+<li>$\epsilon(f, n)$ as an upper bound on the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(f, n)$ must increase nowhere as $n$ increases, and must converge to 0. For best results, this should be written as $\epsilon(L_{n}(f), f) = C/n^r$, where $C$ is a constant and $r&gt;0$ is a multiple of 1/2, since then it&#39;s easy to find the value of ErrShift(f, n), below.  For examples of error bounds, see &quot;Approximate Bernoulli Factories&quot;, later.</li>
+<li>ErrShift($f, m$) as 1.01 \cdot $\sum_{i\ge m} \epsilon(f, 2^m)$.  The factor 1.01 is needed to ensure each difference polynomial is strictly between 0 and 1.</li>
+<li>DiffWidth($f, m$) as $1.01 \cdot 2 (\epsilon(f, 2^m)$ + $\epsilon(f, 2^{m+1}))$.  This is an upper bound on the maximum difference between the shifted degree-$2^m$ and the shifted degree-$(2^{m+1})$ polynomial.</li>
 </ul></li>
 <li>The technique breaks $f$ into a <strong>starting polynomial</strong> and a family of <strong>difference polynomials</strong>.<br>To find the <strong>starting polynomial</strong>:
 
 <ol>
 <li>Set $m$ to 0.</li>
-<li>Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, 2^m$) from them.  If the coefficients now all lie in the closed unit interval, go to the next step.  Otherwise, add 1 to $m$ and repeat this step.</li>
+<li>Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, m$) from them.  If the coefficients now all lie in the closed unit interval, go to the next step.  Otherwise, add 1 to <em>m</em> and repeat this step.</li>
 <li>Calculate <strong>StartWidth</strong> as ceil($c\cdot 65536$)/65536, where $c$ is the maximum Bernstein coefficient from step 2, then divide each Bernstein coefficient by <strong>StartWidth</strong>. (65536 is arbitrary and ensures <strong>StartWidth</strong> is a rational number that is close to, but no lower than, the maximum Bernstein coefficient, for convenience.)</li>
-<li>The <strong>starting polynomial&#39;s degree</strong> is now the number of Bernstein coefficients minus one.  Set <strong>StartOrder</strong> to <em>m</em>.</li>
+<li>The <strong>starting polynomial</strong> now has Bernstein coefficients found in step 3.  Set <strong>StartOrder</strong> to <em>m</em>.</li>
 </ol></li>
 <li>To find the <strong>difference polynomial</strong> of order $m$:
 
 <ol>
-<li>Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, 2^m$) from them.  Rewrite them to Bernstein coefficients of degree $2^{m+1}$.  Call the coefficients <strong>LowerCoeffs</strong>.</li>
-<li>Find the Bernstein coefficients of $L_{2^{m+1}}$, then subtract ErrShift($f, 2^{m+1}$) from them.  Call the coefficients <strong>UpperCoeffs</strong>.</li>
-<li>Subtract <strong>UpperCoeffs</strong> from <strong>LowerCoeffs</strong>, and call the result <strong>DiffCoeffs</strong>.  Divide each coefficient in <strong>DiffCoeffs</strong> by DiffWidth($f, 2^m)$.  The result is the Bernstein coefficients of a nonnegative polynomial of degree $2^{m+1}$ bounded by 0 and 1, but these coefficients are not necessarily bounded by 0 and 1.  Thus, if any coefficient in <strong>DiffCoeffs</strong> is less than 0 or greater than 1, add 1 to <em>m</em> and rewrite <strong>DiffCoeffs</strong> to Bernstein coefficients of degree $2^{m+1}$ until no coefficient is less than 0 or greater than 1 anymore.</li>
-<li>The <strong>difference polynomial</strong> has Bernstein coefficients given by <strong>DiffCoeffs</strong>, and its degree is the number of those coefficients minus one.</li>
+<li>Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, m$) from them.  Rewrite them to Bernstein coefficients of degree $2^{m+1}$.  Call the coefficients <strong>LowerCoeffs</strong>.</li>
+<li>Find the Bernstein coefficients of $L_{2^{m+1}}$, then subtract ErrShift($f, m+1$) from them.  Call the coefficients <strong>UpperCoeffs</strong>.</li>
+<li>Subtract <strong>UpperCoeffs</strong> from <strong>LowerCoeffs</strong>, and call the result <strong>DiffCoeffs</strong>.  Divide each coefficient in <strong>DiffCoeffs</strong> by DiffWidth($f, m$).  The result is the Bernstein coefficients of a positive polynomial of degree $2^{m+1}$ bounded by 0 and 1, but these coefficients are not necessarily bounded by 0 and 1.  Thus, if any coefficient in <strong>DiffCoeffs</strong> is less than 0 or greater than 1, add 1 to <em>m</em> and rewrite <strong>DiffCoeffs</strong> to Bernstein coefficients of degree $2^{m+1}$ until no coefficient is less than 0 or greater than 1 anymore.</li>
+<li>The <strong>difference polynomial</strong> now has Bernstein coefficients given by <strong>DiffCoeffs</strong>.</li>
 </ol></li>
 <li>The probabilities for <em>X</em> are as follows:
 
 <ul>
-<li>First, find the <strong>starting polynomial</strong>, then calculate <em>T</em> as <strong>StartWidth</strong> + $\sum_{i=0}$ DiffWidth($f$,2<sup><strong>StartOrder</strong>+<em>i</em></sup>).  If <em>T</em> is greater than 1, this algorithm can&#39;t be used.</li>
+<li>First, find the <strong>starting polynomial</strong>, then calculate <em>T</em> as <strong>StartWidth</strong> + $\sum_{i=0}$ DiffWidth($f$, <strong>StartOrder</strong>+<em>i</em>).  If <em>T</em> is greater than 1, this algorithm can&#39;t be used.</li>
 <li><em>X</em> is 0 with probability 1 &minus; <em>T</em>.</li>
 <li><em>X</em> is 1 with probability equal to <strong>StartWidth</strong>.</li>
-<li>For each <em>m</em> &ge; 2, <em>X</em> is <em>m</em> with probability equal to DiffWidth(f,2<sup><strong>StartOrder</strong> + <em>m</em> &minus; 2</sup>).</li>
+<li>For each <em>m</em> &ge; 2, <em>X</em> is <em>m</em> with probability equal to DiffWidth($f$,<strong>StartOrder</strong> + <em>m</em> &minus; 2).</li>
 </ul></li>
 </ul>
 
@@ -1359,7 +1359,11 @@
 
 <ul>
 <li>A <em>strictly bounded factory function</em> means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.</li>
-<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^36].</li>
+<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^36].
+
+<ul>
+<li>The following are examples of functions on the closed unit interval that are not polynomially bounded, even though they are continuous:<br>exp(&minus;1/<em>&lambda;</em>) if <em>&lambda;</em>&gt;0; 0 otherwise.<br><em>&lambda;</em>+<em>&lambda;</em>*sin(1/<em>&lambda;</em>)+exp(&minus;1/<em>&lambda;</em>) if <em>&lambda;</em>&gt;0; 0 otherwise.<br><em>&lambda;</em>*abs(sin(1/<em>&lambda;</em>))+exp(&minus;1/<em>&lambda;</em>) if <em>&lambda;</em>&gt;0; 0 otherwise.</li>
+</ul></li>
 <li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>&omega;</em> on the closed unit interval, for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) whenever 0&le;<em>x</em>&le;1 and 0&le;<em>y</em>&le;1.  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
 </ul>
 
@@ -1429,7 +1433,7 @@
 <p>Suppose <em>Y</em> = <em>X</em>/<em>n</em>.  Then <em>Y</em>&#39;s variance (<strong>Var</strong>(<em>Y</em>)) is less than or equal to 1/(8*<em>n</em>&minus; 4), and <strong>2A1</strong>&#39;s left-hand side is the same as the expression (1), so that applying the two bounds given above leads to abs(<strong>E</strong>(<em>f</em>(<em>Y</em>)) - <em>f</em>(<strong>E</strong>(<em>Y</em>))) &le; 3*<em>M</em>* (sqrt(<strong>Var</strong>(<em>Y</em>))/2)<sup>2</sup> &le; 3*<em>M</em>*(sqrt(1/(8*<em>n</em>&minus; 4))/2)<sup>2</sup> = $\frac{3 M}{32 n - 16}$. &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>) with <em>h</em> &ge; 0, for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2((x-y)/2)$ whenever <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain and <em>x</em>&le;<em>y</em>.</p>
+<p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>) with <em>h</em> &ge; 0, for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2((y-x)/2)$ whenever <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain and <em>x</em>&le;<em>y</em>.</p>
 </blockquote>
 
 <p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;</em></p>
