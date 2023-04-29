@@ -28,17 +28,16 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)
     - [**Using Two Polynomial Sequences**](#Using_Two_Polynomial_Sequences)
     - [**Using a Series Expansion**](#Using_a_Series_Expansion)
-    - [**Questions**](#Questions)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
-    - [**Questions**](#Questions_2)
+    - [**Questions**](#Questions)
 - [**Simulable and strongly simulable functions**](#Simulable_and_strongly_simulable_functions)
 - [**Multiple-Output Bernoulli Factories**](#Multiple_Output_Bernoulli_Factories)
-    - [**Questions**](#Questions_3)
+    - [**Questions**](#Questions_2)
     - [**Functions with Optimal Factories**](#Functions_with_Optimal_Factories)
 - [**From coin flips to algebraic functions via pushdown automata**](#From_coin_flips_to_algebraic_functions_via_pushdown_automata)
     - [**Pushdown Automata**](#Pushdown_Automata)
     - [**Algebraic Functions**](#Algebraic_Functions)
-    - [**Questions**](#Questions_4)
+    - [**Questions**](#Questions_3)
 - [**Reverse-time martingales**](#Reverse_time_martingales)
 - [**Other Questions**](#Other_Questions)
 - [**End Notes**](#End_Notes)
@@ -180,17 +179,16 @@ Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda
 <a id=Using_Two_Polynomial_Sequences></a>
 ### Using Two Polynomial Sequences
 
-If $f$ is a concave factory function, there is a simple way to approximate that function from below with polynomials in Bernstein form.  Define&mdash;
+If $f$ is a concave factory function, there is a simple way to approximate that function from below with polynomials in Bernstein form.  Indeed, when the lower polynomials $g_{n}(\lambda)$ are the Bernstein polynomials $B_n(f)$ of $f$, they will satisfy the [**formal statement**](#Formal_Statement) above.
 
-$$a(n,k) = f(k/n).$$
+The trickier part is thus to approximate $f(\lambda)$ from above (that is, to find the upper polynomials $h_n$).
 
-Then the lower polynomials $g_{n}(\lambda)$ will meet all the requirements of the [**formal statement**](#Formal_Statement) above. Indeed:
+Given that $f:[0,1]\to [0,1)$ is concave:
 
-$$g_{n}(\lambda)=\sum_{k=0}^{n}f(k/n){n \choose k}\lambda^{k}(1-\lambda)^{n-k}.$$
+1. Does the family of polynomials $(B_n(f) + \max_{0\le\lambda\le 1}|B_n(f)(x)-f(x)|)$ satisfy the formal statement for the upper polynomials? (By Voronovskaya, this shift would satisfy $\Omega(1/n)$ in general.)
+2. If $f$ is symmetric about 1/2, does the family $(B_n(f) + |B_n(f)(1/2)-f(1/2)|)$ suffice?
 
-The trickier part is thus to approximate $f(\lambda)$ from above (that is, to find the upper polynomials $h_n$).  In this sense I am aware of attempts to do so for specific functions: Nacu & Peres (2005) for linear functions, and Flegal & Herbei (2012) for a twice differentiable elbow function.  I am also aware of a result by Holtz et al. 2011, given in the section "New coins from old, smoothly".
-
-I believe a more general solution is to somehow find the maximum difference between $g_{n}(\lambda)$ and $f(\lambda)$, for each $n$, and to shift the lower polynomial $g_n$ upward by that difference to get the upper polynomial $h_{n}(\lambda)$.  I believe this solution works for the function $\min(\lambda,1-\lambda)$ (by getting the maximum difference at $\lambda=1/2$), but I don't know if it works for more general concave functions.
+**See also Note 1 in "[**End Notes**](#End_Notes)".**
 
 <a id=Using_a_Series_Expansion></a>
 ### Using a Series Expansion
@@ -219,17 +217,6 @@ However, using this technique for a given concave $f$ requires finding the appro
 Finding these parameters was far from rigorous, though, and the process will have to be repeated for each concave function.
 
 It's also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(a)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.
-
-<a id=Questions></a>
-### Questions
-
-Suppose $f(\lambda):[0, 1] \to (0, 1)$ is a concave factory function.  To the extent the questions make sense, $f$'s codomain can also be $[0, 1]$.  Then:
-
-1. Given that $f$ has a Lipschitz continuous $(\alpha-1)$-th derivative, is there a formula to find the amount by which to shift the lower polynomials $g_n$ upward so that the upper polynomials $h_n$ meet the formal statement above (or to otherwise convert the lower polynomials to upper polynomials that meet that statement)?  By Holtz's results, this formula would have to behave asymptotically like $O((\Delta_n(\lambda))^\alpha)$, but I am looking for nonasymptotic results (with no hidden constants) that achieve this rate of convergence.
-2. Is $\max |g_n-f|$ a sufficient upward shift? (By Voronovskaya, this shift would satisfy $\Omega(1/n)$ in general.)
-3. If $f$ is symmetric about 1/2, is $|g_n(1/2)-f(1/2)|$ a sufficient upward shift?
-
-**See also Note 1.**
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
@@ -271,14 +258,14 @@ Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambd
 
 However, the Holtz method is not yet implementable, in part because it relies on hidden constants with no upper bounds given.
 
-<a id=Questions_2></a>
+<a id=Questions></a>
 ### Questions
 
 Let $f(\lambda):[0,1]\to (0,1)$ have a $\beta-\lfloor\beta\rfloor$)-Hölder continuous $\lfloor\beta\rfloor$-th derivative, where $\beta>0$ is a non-integer.
 
-1. What is an explicit upper bound (with no hidden constants) on the error in approximating $f$ with the Lorentz operators $(Q_{n,r} f)$, described below, of the form $C\cdot M\cdot\max((\lambda(1-\lambda)/n)^{1/2}, 1/n)^r$, where $C=C(r)$ and $M=M(f,r)$ are constants?
-2. Same question, but for the polynomial family $(g_n)$ given in (1), below.
-3. Same questions as 1 and 2, but $\beta$ is allowed to be an integer. (Note that the method of Holtz et al.'s paper as written doesn't apply to non-integer $\beta$; see also Conjecture 34 of that paper.)
+1. What is an explicit upper bound (with no hidden constants) on the error in approximating $f$ with the Lorentz operators $(Q_{n,r} f)$, described above, of the form $C\cdot M\cdot\max((\lambda(1-\lambda)/n)^{1/2}, 1/n)^r$, where $C=C(r)$ and $M=M(f,r)$ are constants?
+2. Same question, but for the polynomial family $(g_n)$ given in (1), above.
+3. Same questions as 1 and 2, but $f$'s $(r-1)$-th derivative is in the Zygmund class. (Note that the method of Holtz et al.'s paper as written doesn't apply to non-integer $\beta$; see also Conjecture 34 of that paper.)
 
 <a id=Simulable_and_strongly_simulable_functions></a>
 ## Simulable and strongly simulable functions
@@ -332,7 +319,7 @@ Obviously, any single-output Bernoulli factory can produce multiple outputs by r
 
 Define the entropy bound as&mdash; $$h(f(\lambda))/h(\lambda),$$ where&mdash; $$h(x)=-x \ln(x)-(1-x) \ln(1-x),$$ is related to the Shannon entropy function.
 
-<a id=Questions_3></a>
+<a id=Questions_2></a>
 ### Questions
 
 1. Given that a function $f(\lambda)$ is continuous and maps a closed interval in (0, 1) to (0, 1), is there a multiple-output Bernoulli factory algorithm for $f$ with an expected number of coin flips per sample that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain? Call such a Bernoulli factory an _optimal factory_.  (See Nacu and Peres 2005, Question 1.)
@@ -397,7 +384,7 @@ The following section of my open-source page, [**Pushdown Automata and Algebraic
 - If a pushdown automaton can generate a discrete distribution of _n_-letter words of the same letter, it can generate that distribution conditioned on a finite set of word lengths, or a periodic infinite set of word lengths (e.g., odd word lengths only).
 - Every quadratic irrational in (0, 1) is in $\mathcal{D}$.
 
-<a id=Questions_4></a>
+<a id=Questions_3></a>
 ### Questions
 
 1. For every function in class $\mathcal{C}$, is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
@@ -413,7 +400,7 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 <a id=Other_Questions></a>
 ## Other Questions
 
-- Given integer _m_&ge;0, rational number 0&lt;_k_&le;exp(1), and unknown heads probability 0&le;_&lambda;_&le;1, find a [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) for&mdash; $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$ that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  A solution is sought especially when _k_ is 1 or 2.   Note that the right-hand side of (PD) can be implemented by [**ExpMinus**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z) and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs **ExpMinus**, but this is likewise far from lightweight.
+- Given integer _m_&ge;0, rational number 0&lt;_k_&le;exp(1), and unknown heads probability 0&le;_&lambda;_&le;1, find a [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) for&mdash; $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$ that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  A solution is sought especially when _k_ is 1 or 2.   Note that the right-hand side of (PD) can be implemented by [**ExpMinus**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z) and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs **ExpMinus**, but this is likewise far from lightweight.  (Calculating exp(.) with floating-point operations is not acceptable for this question.)
 - Special case of "[**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)": Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
 - [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): What simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
     - Should use only uniform random integers (or bits) and integer arithmetic.
@@ -433,13 +420,13 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 
 Prove or disprove:
 
-1. Let $n≥1$ be an integer, and denote the degree-$n$ Bernstein polynomial of $g$ as $B_n(g)$. Suppose $f(λ)$ is non-negative, is concave, and has a continuous second derivative on the closed unit interval. Then $U_{n,2}(f)=B_n(2f-B_n(f))$ is within $3Mλ(1−λ)/(n^2)$ and within $0.75M/(n^2)$ of f, where $M$ is the absolute value of the maximum of $f$'s second derivative. (Note that Bustamante (2008)'s theorem 11 can't be used here since $U_{n,2}$, though linear, is not a _positive_ operator for all continuous functions on the closed unit interval.)
+1. Let $n≥1$ be an integer, and denote the degree-$n$ Bernstein polynomial of $g$ as $B_n(g)$. Suppose $f(λ):[0,1]\to [0,1]$ is non-negative, is concave, and has a continuous second derivative. Then $U_{n,2}(f)=B_n(2f-B_n(f))$ is within $3Mλ(1−λ)/(n^2)$ and within $0.75M/(n^2)$ of f, where $M$ is the absolute value of the maximum of $f$'s second derivative. (Note that Bustamante (2008)'s theorem 11 can't be used here since $U_{n,2}$, though linear, is not a _positive_ operator for all continuous functions on the closed unit interval.)
 2. Statement 1's conclusion is true if the condition that $f$ is concave is replaced with the condition that $U_{n,2}(f)$ is non-negative for every $n\ge n_0$, for a fixed integer $n_0 \ge 1$.
 
 <a id=End_Notes></a>
 ## End Notes
 
-**Note 1**: Besides the questions on concave functions given above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu & Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it's not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given earlier.
+**Note 1**: Besides the questions on concave functions given above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu & Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it's not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given in the section "New coins from old", smoothly.
 
 **Note 2**: On pushdown automata: Etessami and Yannakakis (2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.
 

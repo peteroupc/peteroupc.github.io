@@ -299,7 +299,7 @@ If _T_ turns out to be greater than 1 in this algorithm, but still finite, one w
 > - The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)[^8].
 > - The **starting polynomial** is found as follows. Let _c_ = max($f(0), f(1)$).  Then the starting polynomial has two Bernstein coefficients both equal to $c$; **StartWidth** is equal to ceil($c\cdot 65536$)/65536, and **StartOrder** is equal to 0.
 > - ErrShift($f,m$) = 0. The reason for 0 is that $f$ is concave, so its Bernstein polynomials naturally "increase" with increasing degree (Temple 1954)[^9], (Moldovan 1962)[^10].
-> - DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always "below" $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot $\epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate _T_, below.
+> - DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always "below" $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot \epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate _T_, below.
 > - _T_ is calculated as **StartWidth** + $1.01\cdot M/4$.
 
 <a id=Request_for_Additional_Methods></a>
@@ -390,7 +390,7 @@ By analyzing the proof of Theorem 2.4 of Güntürk and Li (2021, sec. 3.3)[^17],
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Appears to be close to _f_ with the following error bound: | Where _n_ is:  |
  --- | --- | --- | --- |
-| Has continuous third derivative. | $U_{n,2}$ | _&epsilon;_ = 0.5771\*_M_<sub>3</sub>/_n_<sup>2</sup>. | _n_=ceil(sqrt(0.5771)\*sqrt(_M_<sub>3</sub>/_&epsilon;_)). |
+| Has continuous third derivative. | $U_{n,2}$ | _&epsilon;_ = 0.5771\*_M_<sub>3</sub>/_n_<sup>3/2</sup>. | _n_=ceil((0.5771)<sup>2/3</sup>\*sqrt(_M_<sub>3</sub>/_&epsilon;_)). |
 | Has continuous fourth derivative. | $U_{n,2}$ | _&epsilon;_ = 0.3571\*_M_<sub>4</sub>/_n_<sup>2</sup>. | _n_=ceil(sqrt(0.3571)\*sqrt(_M_<sub>4</sub>/_&epsilon;_)). |
 | Has continuous fifth derivative. | $U_{n,3}$ | _&epsilon;_ = 4.0421\*_M_<sub>5</sub>/_n_<sup>5/2</sup>. | _n_=ceil((4.0421)<sup>2/5</sup>\*(_M_<sub>5</sub>/_&epsilon;_)<sup>2/5</sup>). |
 | Has continuous sixth derivative. | $U_{n,3}$ | _&epsilon;_ = 4.8457\*_M_<sub>6</sub>/_n_<sup>3</sup>. | _n_=ceil((4.8457)<sup>1/3</sup>\*(_M_<sub>6</sub>/_&epsilon;_)<sup>1/3</sup>). |
@@ -691,7 +691,7 @@ _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^
 
 The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value ("long-run average").   (Traditionally, another central moment, that of $X/n$ or the ratio of heads to tosses, is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  $T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) The following results bound the absolute value of $T$.[^32]
 
-**Result B4** (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every $n\ge 1, $|T_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.
+**Result B4** (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.
 
 **Proposition B5**: For every integer $n\ge 1$, the following is true: $$|T_{n,3}(p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$
 
@@ -710,7 +710,7 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 1. $f$ can be written as $f(\lambda) = R_f(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r-1} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $0\le x_0 \le 1$ and $f^{(i)}$ is the $i$-th derivative of $f$.
 2. $|B_n(R_f(\lambda, x_0))| \le M/(((r/2)!)(8n)^{r/2})$, where $M$ is the maximum of the absolute value of that $r$-th derivative.
 
-_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. By Taylor's theorem for real variables, $R_f(\lambda, x_0)$, in turn, is writable as&mdash; $$f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^35] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36). Thus&mdash; $$|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$|B_n((\lambda-x_0)^r)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{r!} |B_n((\lambda-x_0)^r)| \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
+_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. By Taylor's theorem for real variables, $R_f(\lambda, x_0)$, in turn, is writable as&mdash; $$f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^35] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)). Thus&mdash; $$|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$|B_n((\lambda-x_0)^r)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{r!} |B_n((\lambda-x_0)^r)| \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
 
 **Corollary B9A**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  Then $|B_n(R_f(\lambda, x_0))| \le M/(128 n^2)$, where $M$ is the maximum of the absolute value of that fourth derivative.
 
@@ -979,7 +979,7 @@ In the following results:
 
 - A _strictly bounded factory function_ means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^38].
-    - The following are examples of functions on the closed unit interval that are not polynomially bounded, even though they are continuous:<br>(exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise.<br>(_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise.<br>(_&lambda;_\*abs(sin(1/_&lambda;_))+exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise.
+    - The following are examples of functions on the closed unit interval that are not polynomially bounded, even though they are continuous:<br>(exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise.<br>(_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise.<br>(_&lambda;_\*abs(sin(1/_&lambda;_))<sup>_&alpha;_</sup>+exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise, where _&alpha;_>0.
 - A _modulus of continuity_ of a function _f_ means a nonnegative and nowhere decreasing function _&omega;_ on the closed unit interval, for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) whenever 0&le;_x_&le;1 and 0&le;_y_&le;1.  Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) is greater than or equal to _f_'s maximum range in a window of size _&delta;_.
 
 **Lemma 1.** Omitted.

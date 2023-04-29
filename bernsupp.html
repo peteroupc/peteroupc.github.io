@@ -461,7 +461,7 @@
 <li>The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)[^8].</li>
 <li>The <strong>starting polynomial</strong> is found as follows. Let <em>c</em> = max($f(0), f(1)$).  Then the starting polynomial has two Bernstein coefficients both equal to $c$; <strong>StartWidth</strong> is equal to ceil($c\cdot 65536$)/65536, and <strong>StartOrder</strong> is equal to 0.</li>
 <li>ErrShift($f,m$) = 0. The reason for 0 is that $f$ is concave, so its Bernstein polynomials naturally &quot;increase&quot; with increasing degree (Temple 1954)[^9], (Moldovan 1962)[^10].</li>
-<li>DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always &quot;below&quot; $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot $\epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate <em>T</em>, below.</li>
+<li>DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always &quot;below&quot; $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot \epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate <em>T</em>, below.</li>
 <li><em>T</em> is calculated as <strong>StartWidth</strong> + $1.01\cdot M/4$.</li>
 </ul>
 </blockquote>
@@ -652,8 +652,8 @@
 <tr>
 <td>Has continuous third derivative.</td>
 <td>$U_{n,2}$</td>
-<td><em>&epsilon;</em> = 0.5771*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup>.</td>
-<td><em>n</em>=ceil(sqrt(0.5771)*sqrt(<em>M</em><sub>3</sub>/<em>&epsilon;</em>)).</td>
+<td><em>&epsilon;</em> = 0.5771*<em>M</em><sub>3</sub>/<em>n</em><sup>3/2</sup>.</td>
+<td><em>n</em>=ceil((0.5771)<sup>2/3</sup>*sqrt(<em>M</em><sub>3</sub>/<em>&epsilon;</em>)).</td>
 </tr>
 <tr>
 <td>Has continuous fourth derivative.</td>
@@ -1027,7 +1027,7 @@
 
 <p>The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value (&quot;long-run average&quot;).   (Traditionally, another central moment, that of $X/n$ or the ratio of heads to tosses, is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  $T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) The following results bound the absolute value of $T$.[^32]</p>
 
-<p><strong>Result B4</strong> (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every $n\ge 1, $|T_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.</p>
+<p><strong>Result B4</strong> (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.</p>
 
 <p><strong>Proposition B5</strong>: For every integer $n\ge 1$, the following is true: $$|T_{n,3}(p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$</p>
 
@@ -1048,7 +1048,7 @@
 <li>$|B_n(R_f(\lambda, x_0))| \le M/(((r/2)!)(8n)^{r/2})$, where $M$ is the maximum of the absolute value of that $r$-th derivative.</li>
 </ol>
 
-<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $(r-1)$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_f(\lambda, x_0)$. By Taylor&#39;s theorem for real variables, $R_f(\lambda, x_0)$, in turn, is writable as&mdash; $$f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$&#39;s domain) (DLMF [^35] <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>. Thus&mdash; $$|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$|B_n((\lambda-x_0)^r)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{r!} |B_n((\lambda-x_0)^r)| \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;</p>
+<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $(r-1)$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_f(\lambda, x_0)$. By Taylor&#39;s theorem for real variables, $R_f(\lambda, x_0)$, in turn, is writable as&mdash; $$f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$&#39;s domain) (DLMF [^35] <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>). Thus&mdash; $$|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$|B_n((\lambda-x_0)^r)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{r!} |B_n((\lambda-x_0)^r)| \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;</p>
 
 <p><strong>Corollary B9A</strong>: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  Then $|B_n(R_f(\lambda, x_0))| \le M/(128 n^2)$, where $M$ is the maximum of the absolute value of that fourth derivative.</p>
 
@@ -1379,7 +1379,7 @@
 <li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^38].
 
 <ul>
-<li>The following are examples of functions on the closed unit interval that are not polynomially bounded, even though they are continuous:<br>(exp(&minus;1/<em>&lambda;</em>))/4 if <em>&lambda;</em>&gt;0; 0 otherwise.<br>(<em>&lambda;</em>+<em>&lambda;</em>*sin(1/<em>&lambda;</em>)+exp(&minus;1/<em>&lambda;</em>))/4 if <em>&lambda;</em>&gt;0; 0 otherwise.<br>(<em>&lambda;</em>*abs(sin(1/<em>&lambda;</em>))+exp(&minus;1/<em>&lambda;</em>))/4 if <em>&lambda;</em>&gt;0; 0 otherwise.</li>
+<li>The following are examples of functions on the closed unit interval that are not polynomially bounded, even though they are continuous:<br>(exp(&minus;1/<em>&lambda;</em>))/4 if <em>&lambda;</em>&gt;0; 0 otherwise.<br>(<em>&lambda;</em>+<em>&lambda;</em>*sin(1/<em>&lambda;</em>)+exp(&minus;1/<em>&lambda;</em>))/4 if <em>&lambda;</em>&gt;0; 0 otherwise.<br>(<em>&lambda;</em>*abs(sin(1/<em>&lambda;</em>))<sup><em>&alpha;</em></sup>+exp(&minus;1/<em>&lambda;</em>))/4 if <em>&lambda;</em>&gt;0; 0 otherwise, where <em>&alpha;</em>&gt;0.</li>
 </ul></li>
 <li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>&omega;</em> on the closed unit interval, for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) whenever 0&le;<em>x</em>&le;1 and 0&le;<em>y</em>&le;1.  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
 </ul>
