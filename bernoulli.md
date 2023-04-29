@@ -184,7 +184,7 @@ The following shows some functions that are factory functions and some that are 
 | 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since _f_(_&lambda;_) approaches 0 as _&lambda;_ approaches 1/2. |
 | 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994\)[^2]. |
 | min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0, 1] | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction\)[^4]. |
-| 0 if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) otherwise | (0, 1) | No; not polynomially bounded since it moves away from 0 more slowly than any polynomial. |
+| 0 if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) otherwise | (0, 1) | No; not polynomially bounded since no nonconstant polynomial can come between the _&lambda_-axis and $f$. |
 | &#x03F5; if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) + &#x03F5; otherwise | (0, 1) | Yes; continuous, minimum greater than 0, maximum less than 1. |
 
 If _f_'s domain includes 0 and/or 1 (so that the input coin is allowed to return 0 every time or 1 every time, respectively), then _f_ can be a factory function only if&mdash;

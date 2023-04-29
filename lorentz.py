@@ -653,8 +653,7 @@ class C3Function:
         self.tc={}
         self.x = x
         while True:
-            # err=S("1.01") * summation(self.mm*self.zz/(2**n)**2,(n,nn,oo))
-            err = S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))  # Same as prev. line
+            err = self._errshift(nn)
             co=None
             #print(["nn",nn])
             if err>2: # Error too big to be a starting polynomial
@@ -676,13 +675,20 @@ class C3Function:
             nn += 1
         # totaldist=summation(diffwidth,(n,self.start_nn,oo))+self.startdist
         # Same as prev. line
-        self.totaldist = (
-            S("1.01") * 10 * self.mm * self.zz / (3 * 2 ** (2 * self.start_nn)) + self.startdist
-        )
+        self.totaldist = self._t()
         # print(["dist",self.dist])
         if self.totaldist > 1:
             print(["totaldist", self.totaldist])
             raise ValueError("Not supported")
+
+    def _t(self):
+       return S("1.01") * 10 * self.mm * self.zz / (3 * 2 ** (2 * self.start_nn)) + self.startdist
+
+    def _errshift(self, m):
+        return S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * m))
+
+    def _diffwidth(self, m):
+        return S("1.01")*5 * self.mm * self.zz / (2 ** (2 * m + 1))
 
     def ensure(self, r):
         if r < 0:
@@ -693,10 +699,9 @@ class C3Function:
             self.coeffarr.append(None)
         nn = (r - 2) + self.start_nn
         #print(["r",r,"nn",nn])
-        err = S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * nn))
-        newerr = S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * (nn + 1)))
-        # diffwidth=S("1.01")*2*self.mm*self.zz/(2**nn)**2 + 2*self.mm*self.zz/(2*2**nn)**2
-        diffwidth = S("1.01")*5 * self.mm * self.zz / (2 ** (2 * nn + 1))  # Same as prev. line
+        err = self._errshift(nn)
+        newerr = self._errshift(nn+1)
+        diffwidth = self._diffwidth(nn)
         if diffwidth < 0:
             raise ValueError
         coeffs1=None
@@ -712,8 +717,9 @@ class C3Function:
           coeffs2 = [
             (c - newerr) for c in tachevcoeffs(self.func, self.x, 2**(nn+1))
           ]  # Polynomial of degree 2**(nn+1) is upper polynomial
-          self.tc[nn]=coeffs2
+          self.tc[nn+1]=coeffs2
         coeffs1 = degelev(coeffs1, 2**nn)  # Lower polynomial
+        if len(coeffs2)!=len(coeffs1): raise ValueError
         coeffs = [(a - b) / diffwidth for a, b in zip(coeffs2, coeffs1)]
         # coeffs represents the Bernstein coefficients of a nonnegative polynomial
         # bounded by 0 and 1, but the coefficients are not
@@ -754,9 +760,7 @@ class C3Function:
                 s += self.startdist # r=1 --> First piece
             else: # r>=2 --> In-between pieces
                 nn = (r - 2) + self.start_nn
-                s += (
-                    5 * self.mm * self.zz / (2 ** (2 * nn + 1))
-                )  # right hand side equals dist.subs(n,(r-2)+self.start_nn)
+                s += self._diffwidth(nn)
         if r == 0:
             return 0
         # Simulate the polynomial labeled 'r'
