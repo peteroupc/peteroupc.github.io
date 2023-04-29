@@ -40,7 +40,6 @@
 <li><a href="#Tossing_Heads_According_to_a_Concave_Function"><strong>Tossing Heads According to a Concave Function</strong></a>
 
 <ul>
-<li><a href="#Using_Two_Polynomial_Sequences"><strong>Using Two Polynomial Sequences</strong></a></li>
 <li><a href="#Using_a_Series_Expansion"><strong>Using a Series Expansion</strong></a></li>
 </ul></li>
 <li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>
@@ -234,20 +233,9 @@
 <li>The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).</li>
 </ul>
 
-<p><a id=Using_Two_Polynomial_Sequences></a></p>
+<hr>
 
-<h3>Using Two Polynomial Sequences</h3>
-
-<p>If $f$ is a concave factory function, there is a simple way to approximate that function from below with polynomials in Bernstein form.  Indeed, when the lower polynomials $g_{n}(\lambda)$ are the Bernstein polynomials $B_n(f)$ of $f$, they will satisfy the <a href="#Formal_Statement"><strong>formal statement</strong></a> above.</p>
-
-<p>The trickier part is thus to approximate $f(\lambda)$ from above (that is, to find the upper polynomials $h_n$).</p>
-
-<p>Given that $f:[0,1]\to [0,1)$ is concave:</p>
-
-<ol>
-<li>Does the family of polynomials $(B_n(f) + \max_{0\le\lambda\le 1}|B_n(f)(x)-f(x)|)$ satisfy the formal statement for the upper polynomials? (By Voronovskaya, this shift would satisfy $\Omega(1/n)$ in general.)</li>
-<li>If $f$ is symmetric about 1/2, does the family $(B_n(f) + |B_n(f)(1/2)-f(1/2)|)$ suffice?</li>
-</ol>
+<p>Prove or disprove: Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}|B_n(f)(x)-f(x)|)$ fulfill question 1 of &quot;<a href="#Main_Questions"><strong>Main Questions</strong></a>&quot; (except for the convergence rate).  So do the polynomials $(g_n) = (B_n(f) - |B_n(f)(1/2)-f(1/2)|)$, if $f$ is also symmetric about 1/2.</p>
 
 <p><strong>See also Note 1 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong></p>
 
@@ -255,7 +243,7 @@
 
 <h3>Using a Series Expansion</h3>
 
-<p>There is another way to simulate a concave $f$.  This involves rewriting the concave function as the series&mdash; $$f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)=\sum_{a\ge 0}\pi(a)\frac{\gamma_a(\lambda)}{\pi(a)},\tag{PC}$$ where&mdash;</p>
+<p>One way to simulate a concave $f$ involves rewriting the concave function as the series&mdash; $$f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)=\sum_{a\ge 0}\pi(a)\frac{\gamma_a(\lambda)}{\pi(a)},\tag{PC}$$ where&mdash;</p>
 
 <ul>
 <li>$\pi(a) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm, where $0 &lt; p &lt; 1$ is rational,</li>
@@ -277,14 +265,12 @@
 <p><strong>Note:</strong> This algorithm has similarities to the one used in the proof in Keane and O&#39;Brien 1994.  That proof rewrites $f$ as a convex combination of polynomials in Bernstein form with only 0 and 1 as coefficients, namely as&mdash; $$f(\lambda)=\sum_{a\ge 1}\mathbb{P}(X=a) \sum_{i=0}^{k_a} \gamma_{a,i} {k_a \choose i} \lambda^i (1-\lambda)^{k_a-i},$$ where $X$ is an integer-valued random variable 1 or greater, each $\gamma_{a,i}$ is either 0 or 1, and $k_a$ is the degree of the polynomial labeled $a$.</p>
 </blockquote>
 
-<p>However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which <em>appears</em> to be correct:</p>
+<p>However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which <em>appears</em> to be correct, but finding it was far from rigorous:</p>
 
 <ul>
 <li>$n_a = 2 \cdot 2^a$.</li>
 <li>$p = 0.27$.</li>
 </ul>
-
-<p>Finding these parameters was far from rigorous, though, and the process will have to be repeated for each concave function.</p>
 
 <p>It&#39;s also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(a)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.</p>
 
