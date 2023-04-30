@@ -187,7 +187,7 @@ More specifically, `High`(_&lambda;_) must meet the following requirements:
 - 1 &gt; `High`(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
 - If _f_(1) = 0, then `High`(1) = 0. (This is required to ensure correctness in case _&lambda;_ is 1.)
 
-Also, `High` is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm.  For example, `High` can be a polynomial in Bernstein form of degree _n_ whose _n_ plus one coefficients are \[0, 1, 1, ..., 1\].  This polynomial is easy to simulate using the algorithms from the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)".[^5]
+Also, `High` is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm.  For example, `High` can be the following degree-_n_ polynomial: 1&minus;(1&minus;_&lambda;_)<sup>_n_</sup>, where _n_&ge;1 is an integer.[^5]
 
 The algorithm is now described.
 
@@ -224,7 +224,7 @@ then _f_ can be simulated using the following algorithm:
 - _q_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> `Low`(_&nu;_)/`High`(_&nu;_).
 - _r_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> (1&minus;_g_(_&nu;_))/(1&minus;_q_(_&nu;_)).
 
-Roughly speaking, `Low` is a function that bounds _f_ from below, just as `High` bounds _f_ from above. `Low` is a Bernoulli factory function (such as a polynomial) that should admit a simple Bernoulli factory algorithm.  If both `Low` and `High` are polynomials of the same degree, _q_ will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
+Roughly speaking, `Low` is a function that bounds _f_ from below, just as `High` bounds _f_ from above. `Low` is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm; one example is the polynomial _&lambda;_<sup>_n_</sup> where _n_&ge;1 is an integer.  If both `Low` and `High` are polynomials of the same degree, _q_ will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
 
 Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can be simulated using the following algorithm:
 
@@ -893,14 +893,9 @@ To build _g_ and _&omega;_, take their degree as ceil(_M_)+1 or greater (so that
 
 _Proof of Proposition 3:_ In the proof of proposition 2, replace Lemma 1 and Lemma 2 with Lemma 3 and Lemma 4, respectively. &#x25a1;
 
-**Conjecture 1**. _A function $f$ that maps the closed unit interval or a subset thereof to the closed unit interval is strongly simulable if and only if&mdash;_
+**Conjecture 1**. _The conditions of Proposition 2 are necessary for $f(\lambda)$ to be strongly simulable._
 
-- _$f$ is constant on its domain, or is continuous and polynomially bounded on its domain, and_
-- _$f(0)$ and $f(1)$ are each 0, 1, or undefined, and_
-- _0 is not in the domain of $f$, or there are $\epsilon>0$ and a Lipschitz continuous function $g(x)$ such that $g(x)=f(x)$ whenever $0\le x\lt \epsilon$ and $x$ is in $f$'s domain, and_
-- _1 is not in the domain of $f$, or there are $\epsilon>0$ and a Lipschitz continuous function $h(x)$ such that $g(x)=f(x)$ whenever $1-\epsilon\lt x\le 1$ and $x$ is in $f$'s domain._
-
-This is suspected by observing that for every integer $n>0$ and every Bernoulli factory function $f(x)$, $(1-(1-x)^n) \cdot f(x)$ is Lipschitz continuous at 0 with Lipschitz constant no more than $n$. ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)
+A condition such as "0 is not in the domain of $f$, or there is a number $\epsilon>0$ and a Lipschitz continuous function $g(x)$ on the interval $0\le x \lt \epsilon$ such that $g(x)=f(x)$ whenever $x$ is in both $g$'s and $f$'s domains" does not work.  An example that shows this is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$, which is strongly simulable at 0 even though the condition just quoted is not satisfied for $f$.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)
 
 <a id=Multiple_Output_Bernoulli_Factory></a>
 ### Multiple-Output Bernoulli Factory

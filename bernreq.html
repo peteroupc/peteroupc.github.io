@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/04/29"><meta name="citation_online_date" content="2023/04/29"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/04/30"><meta name="citation_online_date" content="2023/04/30"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -147,7 +147,7 @@
 
 <p>However, the algorithm requires the polynomial sequences to meet certain requirements; among them, the sequences must be of Bernstein-form polynomials that converge from above and below to a factory function.  Specifically:</p>
 
-<p><em>For $f(\lambda)$ there must be a sequence of polynomials ($g_n$) of degree 1, 2, 3, ... that converge to $f$ from below and satisfy: $(g</em>{n+1}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (<strong>see note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;</strong>; Nacu and Peres 2005; Holtz et al. 2011).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind._</p>
+<p><em>For $f(\lambda)$ there must be a sequence of polynomials</em> ($g_n$) <em>of degree 1, 2, 3, ... that converge to $f$ from below and satisfy:</em> $(g_{n+1}-g_{n})$ <em>is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (<strong>see note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;</strong>; Nacu and Peres 2005; Holtz et al. 2011).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind.</em></p>
 
 <p><a id=A_Matter_of_Efficiency></a></p>
 
@@ -266,9 +266,7 @@
 
 <p>They used the Lorentz operators to build a family of polynomials $(g_n)$ that converge from below to $f$ and satisfy the following: $(g_{2n}−g_{n})$ is a polynomial with non-negative Bernstein coefficients, once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $2n$.</p>
 
-<p>They proved, among other results, the following:</p>
-
-<p>A function $f(\lambda):[0,1]\to(0,1)$ admits a family $(g_n)$ described above that converges at the rate&mdash;</p>
+<p>They proved, among other results, the following.  A function $f(\lambda):[0,1]\to(0,1)$ admits a family $(g_n)$ described above that converges at the rate&mdash;</p>
 
 <ul>
 <li>$O((\Delta_n(\lambda))^\beta)$ if and only if $f$ is $\lfloor\beta\rfloor$ times differentiable and has a ($\beta-\lfloor\beta\rfloor$)-Hölder continuous $\lfloor\beta\rfloor$-th derivative, where $\beta&gt;0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)</li>
@@ -277,12 +275,7 @@
 
 <p>The scheme is as follows:</p>
 
-<p>Let $f$ be a continuous and $r$-times differentiable function&mdash;</p>
-
-<ul>
-<li>that maps [0, 1] to the open interval (0, 1), and</li>
-<li>whose $r$th derivative is $\beta$-Hölder continuous, where $\beta$ is in (0, 1).</li>
-</ul>
+<p>Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).</p>
 
 <p>Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\gt 0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a <em>Lorentz operator</em> (see the paper for details on the Lorentz operator). Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:</p>
 
@@ -296,7 +289,7 @@
 
 <p>Let $C(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then rewrite it as a degree-$n+r$ Bernstein polynomial.</p>
 
-<p>Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot C(\lambda)\tag{1}$$.</p>
+<p>Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot C(\lambda).\tag{1}$$</p>
 
 <p>However, the Holtz method is not yet implementable, in part because it relies on hidden constants with no upper bounds given.</p>
 
@@ -318,7 +311,7 @@
 
 <p><a href="https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins"><strong>https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins</strong></a></p>
 
-<p>There are two kinds of factory functions:</p>
+<p>There are two kinds of Bernoulli factory functions:</p>
 
 <ul>
 <li>A function $f(\lambda)$ is <em>simulable</em> if an algorithm exists to toss heads with probability $f(\lambda)$ given a coin with probability of heads $\lambda$ (the &quot;biased coin&quot;) as well as a fair coin.</li>
@@ -331,34 +324,18 @@
 
 <p>However, it&#39;s not so trivial to find the exact class of strongly simulable functions when $f$&#39;s domain includes 0, 1, or both.</p>
 
-<p>As one illustration of this, the proof of Keane and O&#39;Brien relies on generating a geometric random variate and using that variate to control which &quot;part&quot; of the target function $f(\lambda)$ to simulate.   This obviously works on all of [0, 1] if the algorithm uses both the biased coin and a separate fair coin.  However, if only the biased coin is used in the algorithm, the geometric random variate is generated using fair bits via the von Neumann method, which however will never terminate if $\lambda$ is either 0 or 1.</p>
+<p>As one illustration of this, the proof of Keane and O&#39;Brien relies on generating a geometric random variate and using that variate to control which &quot;part&quot; of the target function $f(\lambda)$ to simulate.   This obviously works on all of [0, 1] if the algorithm uses both the biased coin and a separate fair coin.  However, if only the biased coin is used in the algorithm, the geometric random variate is generated using fair bits via the von Neumann method, which however will never terminate if $\lambda$ is either 0 or 1.  In addition, a <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>result I found</strong></a> gives sufficient conditions for being strongly simulable when $f$&#39;s domain includes 0, 1, or both.  Its proof proceeds by showing, among other things, that the Bernoulli factory for $f$ must flip the input coin and get 0 and 1 before it simulates any fair coin flips via the von Neumann trick.</p>
 
-<p>The following <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>result</strong></a> is another illustration:</p>
-
-<ul>
-<li><p>If $f(\lambda)$ is a factory function that meets the following conditions, then $f$ is strongly simulable.</p>
-
-<ol>
-<li>$f(0)$ and $f(1)$ must each be 0, 1, or undefined.</li>
-<li>If $f(0) = 0$ or $f(1) = 0$ or both, then either $f$ must be constant on its domain or there must be a polynomial $g(\lambda)$ in Bernstein form whose coefficients are computable and in the interval [0, 1], such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(\lambda)$ &gt; $f(\lambda)$ for every $\lambda$ in the domain of $f$, except at 0 and 1.</li>
-<li>If $f(0) = 1$ or $f(1) = 1$ or both, then either $f$ must be constant on its domain or there must be a polynomial $h(\lambda)$ in Bernstein form whose coefficients are computable and in the interval [0, 1], such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $h(\lambda)$ &lt; $f(\lambda)$ for every $\lambda$ in the domain of $f$, except at 0 and 1.</li>
-</ol></li>
-</ul>
-
-<p>And the proof proceeds by showing, among other things, that the Bernoulli factory for $f$ must flip the input coin and get 0 and 1 before it simulates any fair coin flips via the von Neumann trick.</p>
-
-<p>Question: <strong>Does the result just given describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?</strong></p>
-
-<p>I suspect that $f:(D\subseteq [0, 1])\to [0,1]$ is strongly simulable if and only if&mdash;</p>
+<p>Question: <strong>Prove or disprove:</strong> Let $f:(D\subseteq [0, 1])\to [0,1]$.  Given a coin that shows heads with probability $\lambda$ (which can be 0 or 1), it is possible to toss heads with probability $f(\lambda)$ using the coin and no other sources of randomness (and, thus, $f$ is <em>strongly simulable</em>) <strong>if and only if</strong>&mdash;</p>
 
 <ul>
-<li>$f$ is constant on its domain, or is continuous and polynomially bounded on its domain, and</li>
+<li>$f$ is constant on its domain, or is continuous and polynomially bounded on its domain (<em>polynomially bounded</em> means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ [Keane and O&#39;Brien 1994]), and</li>
 <li>$f(0)$ and $f(1)$ are each 0, 1, or undefined, and</li>
-<li>0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon&gt;0$, and</li>
-<li>1 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $(1-\epsilon, 1]$ for some $\epsilon&gt;0$.</li>
+<li>if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)&gt;f(x)$ for every $x$ in the domain of f, except at 0 and 1, and</li>
+<li>if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)&lt;f(x)$ for every $x$ in the domain of f, except at 0 and 1.</li>
 </ul>
 
-<p>This is suspected by observing that for every integer $n&gt;0$ and every Bernoulli factory function $f(x)$, $(1-(1-x)^n) \cdot f(x)$ is Lipschitz continuous at 0 with Lipschitz constant no more than $n$. ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)</p>
+<p>A condition such as &quot;0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon&gt;0$&quot; does not work.  A counterexample is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$, which is strongly simulable at 0 despite not being Lipschitz at 0.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)</p>
 
 <p><a id=Multiple_Output_Bernoulli_Factories></a></p>
 

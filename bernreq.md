@@ -105,7 +105,7 @@ The result of the algorithm is 1 with probability _exactly_ equal to $f(\lambda)
 
 However, the algorithm requires the polynomial sequences to meet certain requirements; among them, the sequences must be of Bernstein-form polynomials that converge from above and below to a factory function.  Specifically:
 
-_For $f(\lambda)$ there must be a sequence of polynomials ($g_n$) of degree 1, 2, 3, ... that converge to $f$ from below and satisfy: $(g_{n+1}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (**see note 5 in "[**End Notes**](#End_Notes)"**; Nacu and Peres 2005; Holtz et al. 2011).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind._
+_For $f(\lambda)$ there must be a sequence of polynomials_ ($g_n$) _of degree 1, 2, 3, ... that converge to $f$ from below and satisfy:_ $(g_{n+1}-g_{n})$ _is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (**see note 5 in "[**End Notes**](#End_Notes)"**; Nacu and Peres 2005; Holtz et al. 2011).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind._
 
 <a id=A_Matter_of_Efficiency></a>
 ### A Matter of Efficiency
@@ -203,19 +203,14 @@ The focus is now on a **specific approximation scheme**, the one **presented by 
 
 They used the Lorentz operators to build a family of polynomials $(g_n)$ that converge from below to $f$ and satisfy the following: $(g_{2n}−g_{n})$ is a polynomial with non-negative Bernstein coefficients, once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
 
-They proved, among other results, the following:
-
-A function $f(\lambda):[0,1]\to(0,1)$ admits a family $(g_n)$ described above that converges at the rate&mdash;
+They proved, among other results, the following.  A function $f(\lambda):[0,1]\to(0,1)$ admits a family $(g_n)$ described above that converges at the rate&mdash;
 
 - $O((\Delta_n(\lambda))^\beta)$ if and only if $f$ is $\lfloor\beta\rfloor$ times differentiable and has a ($\beta-\lfloor\beta\rfloor$)-Hölder continuous $\lfloor\beta\rfloor$-th derivative, where $\beta>0$ is a non-integer and $\Delta_n(\lambda) = \max((\lambda(1-\lambda)/n)^{1/2}, 1/n)$.  (Roughly speaking, the rate is $O((1/n)^{\beta})$ when $\lambda$ is close to 0 or 1, and $O((1/n)^{\beta/2})$ elsewhere.)
 - $O((\Delta_n(\lambda))^{r+1})$ only if the $r$th derivative of $f$ is in the Zygmund class, where $r\ge 0$ is an integer.
 
 The scheme is as follows:
 
-Let $f$ be a continuous and $r$-times differentiable function&mdash;
-
-- that maps [0, 1] to the open interval (0, 1), and
-- whose $r$th derivative is $\beta$-Hölder continuous, where $\beta$ is in (0, 1).
+Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).
 
 Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\gt 0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ (see the paper for details on the Lorentz operator). Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
 
@@ -228,7 +223,7 @@ Let $B_{n}(F)$ be the degree-$n$ Bernstein polynomial of $F$.
 
 Let $C(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then rewrite it as a degree-$n+r$ Bernstein polynomial.
 
-Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot C(\lambda)\tag{1}$$.
+Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot C(\lambda).\tag{1}$$
 
 However, the Holtz method is not yet implementable, in part because it relies on hidden constants with no upper bounds given.
 
@@ -246,7 +241,7 @@ Let $f(\lambda):[0,1]\to (0,1)$ have a $\beta-\lfloor\beta\rfloor$)-Hölder cont
 
 [**https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)
 
-There are two kinds of factory functions:
+There are two kinds of Bernoulli factory functions:
 
 - A function $f(\lambda)$ is _simulable_ if an algorithm exists to toss heads with probability $f(\lambda)$ given a coin with probability of heads $\lambda$ (the "biased coin") as well as a fair coin.
 - A function $f(\lambda)$ is _strongly simulable_ if an algorithm exists to toss heads with probability $f(\lambda)$ given **only** a coin with probability of heads $\lambda$.
@@ -257,28 +252,16 @@ In fact, Keane and O'Brien (1994) showed already that $f(\lambda)$ is strongly s
 
 However, it's not so trivial to find the exact class of strongly simulable functions when $f$'s domain includes 0, 1, or both.
 
-As one illustration of this, the proof of Keane and O'Brien relies on generating a geometric random variate and using that variate to control which "part" of the target function $f(\lambda)$ to simulate.   This obviously works on all of [0, 1] if the algorithm uses both the biased coin and a separate fair coin.  However, if only the biased coin is used in the algorithm, the geometric random variate is generated using fair bits via the von Neumann method, which however will never terminate if $\lambda$ is either 0 or 1.
+As one illustration of this, the proof of Keane and O'Brien relies on generating a geometric random variate and using that variate to control which "part" of the target function $f(\lambda)$ to simulate.   This obviously works on all of [0, 1] if the algorithm uses both the biased coin and a separate fair coin.  However, if only the biased coin is used in the algorithm, the geometric random variate is generated using fair bits via the von Neumann method, which however will never terminate if $\lambda$ is either 0 or 1.  In addition, a [**result I found**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) gives sufficient conditions for being strongly simulable when $f$'s domain includes 0, 1, or both.  Its proof proceeds by showing, among other things, that the Bernoulli factory for $f$ must flip the input coin and get 0 and 1 before it simulates any fair coin flips via the von Neumann trick.
 
-The following [**result**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) is another illustration:
+Question: **Prove or disprove:** Let $f:(D\subseteq [0, 1])\to [0,1]$.  Given a coin that shows heads with probability $\lambda$ (which can be 0 or 1), it is possible to toss heads with probability $f(\lambda)$ using the coin and no other sources of randomness (and, thus, $f$ is _strongly simulable_) **if and only if**&mdash;
 
-- If $f(\lambda)$ is a factory function that meets the following conditions, then $f$ is strongly simulable.
-
-    1. $f(0)$ and $f(1)$ must each be 0, 1, or undefined.
-    2. If $f(0) = 0$ or $f(1) = 0$ or both, then either $f$ must be constant on its domain or there must be a polynomial $g(\lambda)$ in Bernstein form whose coefficients are computable and in the interval [0, 1], such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(\lambda)$ > $f(\lambda)$ for every $\lambda$ in the domain of $f$, except at 0 and 1.
-    3. If $f(0) = 1$ or $f(1) = 1$ or both, then either $f$ must be constant on its domain or there must be a polynomial $h(\lambda)$ in Bernstein form whose coefficients are computable and in the interval [0, 1], such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $h(\lambda)$ < $f(\lambda)$ for every $\lambda$ in the domain of $f$, except at 0 and 1.
-
-And the proof proceeds by showing, among other things, that the Bernoulli factory for $f$ must flip the input coin and get 0 and 1 before it simulates any fair coin flips via the von Neumann trick.
-
-Question: **Does the result just given describe all the functions that are strongly simulable (using nothing but the biased coin) when the biased coin can show heads every time and/or tails every time?  If not, what is the exact class of strongly simulable functions?**
-
-I suspect that $f:(D\subseteq [0, 1])\to [0,1]$ is strongly simulable if and only if&mdash;
-
-- $f$ is constant on its domain, or is continuous and polynomially bounded on its domain, and
+- $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ [Keane and O'Brien 1994]), and
 - $f(0)$ and $f(1)$ are each 0, 1, or undefined, and
-- 0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon>0$, and
-- 1 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $(1-\epsilon, 1]$ for some $\epsilon>0$.
+- if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)>f(x)$ for every $x$ in the domain of f, except at 0 and 1, and
+- if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)<f(x)$ for every $x$ in the domain of f, except at 0 and 1.
 
-This is suspected by observing that for every integer $n>0$ and every Bernoulli factory function $f(x)$, $(1-(1-x)^n) \cdot f(x)$ is Lipschitz continuous at 0 with Lipschitz constant no more than $n$. ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)
+A condition such as "0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon>0$" does not work.  A counterexample is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$, which is strongly simulable at 0 despite not being Lipschitz at 0.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)
 
 <a id=Multiple_Output_Bernoulli_Factories></a>
 ## Multiple-Output Bernoulli Factories
