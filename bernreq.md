@@ -20,7 +20,6 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Polynomials that approach a factory function "fast"**](#Polynomials_that_approach_a_factory_function_fast)
     - [**Main Question**](#Main_Question)
     - [**Solving the Bernoulli factory problem with polynomials**](#Solving_the_Bernoulli_factory_problem_with_polynomials)
-    - [**Formal Statement**](#Formal_Statement)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**A Conjecture on Polynomial Approximation**](#A_Conjecture_on_Polynomial_Approximation)
     - [**Strategies**](#Strategies)
@@ -104,23 +103,9 @@ An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Fu
 
 The result of the algorithm is 1 with probability _exactly_ equal to $f(\lambda)$, or 0 otherwise.
 
-However, the algorithm requires the polynomial sequences to meet certain requirements; among them, the sequences must be of Bernstein-form polynomials that converge from above and below to a factory function.  See the formal statement, next.
+However, the algorithm requires the polynomial sequences to meet certain requirements; among them, the sequences must be of Bernstein-form polynomials that converge from above and below to a factory function.  Specifically:
 
-<a id=Formal_Statement></a>
-### Formal Statement
-
-More formally, there must exist two sequences of polynomials, namely—
-
-- $g_{n}(\lambda): =\sum_{k=0}^{n}a(n, k){n \choose k}\lambda^{k}(1-\lambda)^{n-k}$, and
-- $h_{n}(\lambda): =\sum_{k=0}^{n}b(n, k){n \choose k}\lambda^{k}(1-\lambda)^{n-k}$,
-
-for every integer $n\ge1$, such that—
-
-1. $a(n, k)\le b(n, k)$,
-2. $\lim_{n}g_{n}(\lambda)=\lim_{n}h_{n}(\lambda)=f(\lambda)$ whenever $0\le\lambda\le 1$, and
-3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$ (**see note 5 in "[**End Notes**](#End_Notes)"**),
-
-where $f(\lambda)$ is continuous on $[0, 1]$ (Nacu and Peres 2005; Holtz et al. 2011), and the goal is to find the appropriate values for $a(n, k)$ and $b(n, k)$.
+_For $f(\lambda)$ there must be a sequence of polynomials ($g_n$) of degree 1, 2, 3, ... that converge to $f$ from below and satisfy: $(g_{n+1}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (**see note 5 in "[**End Notes**](#End_Notes)"**; Nacu and Peres 2005; Holtz et al. 2011).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind._
 
 <a id=A_Matter_of_Efficiency></a>
 ### A Matter of Efficiency
@@ -177,7 +162,7 @@ Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda
 
 ----------------
 
-Prove or disprove: Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}|B_n(f)(x)-f(x)|)$ fulfill question 1 of "[**Main Questions**](#Main_Questions)" (except for the convergence rate).  So do the polynomials $(g_n) = (B_n(f) - |B_n(f)(1/2)-f(1/2)|)$, if $f$ is also symmetric about 1/2.
+Prove or disprove: Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}|B_n(f)(\lambda)-f(\lambda)|)$ fulfill question 1 of "[**Main Questions**](#Main_Questions)" (except for the convergence rate).  So do the polynomials $(g_n) = (B_n(f) - |B_n(f)(1/2)-f(1/2)|)$, if $f$ is also symmetric about 1/2.
 
 **See also Note 1 in "[**End Notes**](#End_Notes)".**
 
@@ -425,7 +410,7 @@ Prove or disprove:
 
 $g(\lambda)$ is in the Zygmund class if there is $D>0$ such that $|g(x-h) + g(x+h) - 2g(x)|\le Dh$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. $f(\lambda)$ is in _Gevrey's hierarchy_ if there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that $\max |f^{(n)}(\lambda)| \le Bl^n n^{\gamma n}$ for every $n\ge 0$) (see also Kawamura et al. 2015 which however relies on Chebyshev polynomials which are undesirable for my purposes).
 
-**Note 5**: This condition is also known as a "consistency requirement"; it ensures that not only the upper and lower polynomials "decrease" and "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$ and $b(2n, k)\le\mathbb{E}[b(n, X_{n,k})]$ whenever $0\le k\le 2n$ is an integer, where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
+**Note 5**: This condition is also known as a "consistency requirement"; it ensures that not only the polynomials "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$, where $a(n,k)$ is the degree-$n$ polynomial's $k$-th Bernstein coefficient, where $0\le k\le 2n$ is an integer, and where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
 **Note 6**: If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>This question is a problem of finding the _Jensen gap_ of $W_n$ for certain kinds of hypergeometric random variables (**see Note 5**).  Lee et al. (2021) deal with a problem very similar to this one and find results that take advantage of $f$'s (here, $W_n$'s) smoothness, but unfortunately assume the variable is supported on an _open_ interval, rather than a _closed_ one (namely $[0,1]$) as in this question.
 

@@ -492,12 +492,15 @@ The following table summarizes the rate of simulation (in terms of the number of
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in the closed unit interval (Goyal and Sigman 2012\)[^7]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^27]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^28].  |
 | Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note 3) (Holtz et al. 2011\)[^29]. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011\)[^29]. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^29]. Assumes _f_ is bounded away from 0 and 1. |
-| "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^27]. | If and only if _f_ is real analytic (writable as $f(\lambda)=a_0 \lambda^0 + a_1 \lambda^1 + ...$ for real constants $a_i$) (Nacu and Peres 2005\)[^1].   |
+| "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^27]. | If and only if _f_ is real analytic (see note below) (Nacu and Peres 2005\)[^1].   |
 | Average number of flips greater than or equal to (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^28]. |
 
-> **Note:** A function $f(\lambda)$ in the _Zygmund class_ if there is a constant $D>0$ with the following property: For each step size $\epsilon>0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that's Lipschitz continuous is in the Zygmund class, but not necessarily vice versa.
+> **Note:** A function $f(\lambda)$ is:
+>
+> - _Real analytic_ if, for every _z_ in $f$'s domain, it is writable as $f(\lambda)=a_0 (\lambda-z)^0 + a_1 (\lambda-z)^1 + ...$, where $a_i$ are constant real numbers whose values depend on _z_ and _i_ only.
+> - In the _Zygmund class_ if there is a constant $D>0$ with the following property: For each step size $\epsilon>0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that's Lipschitz continuous (see "Definitions") is in the Zygmund class, but not necessarily vice versa.
 
 <a id=Notes></a>
 ## Notes
@@ -705,20 +708,23 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 
 **Proposition B8**: (Omitted.  It relied on a result that gives error bounds for certain positive operators that come close to a continuous function on the closed unit interval [theorem 11 of Bustamante (2008)[^34]]. However, $U_{n,2}$ is not _positive_ in this sense, since $U_{n,2}(f)$ is not non-negative on the closed unit interval for _every_ non-negative continuous function $f$ on that interval.)
 
-**Lemma B9**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, where $r$ is an even integer such that $2\le r\le 44$.  Then:
+**Lemma B9**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, where $r$ is an even integer such that $2\le r\le 44$.  Then, for every $0\le x_0 \le 1$:
 
-1. $f$ can be written as $f(\lambda) = R_f(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r-1} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $0\le x_0 \le 1$ and $f^{(i)}$ is the $i$-th derivative of $f$.
-2. $|B_n(R_f(\lambda, x_0))| \le M/(((r/2)!)(8n)^{r/2})$, where $M$ is the maximum of the absolute value of that $r$-th derivative.
+1. $f$ can be written as $f(\lambda) = R_f(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r-1} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where  and $f^{(i)}$ is the $i$-th derivative of $f$.
+2. $|B_n(R_f(\lambda, x_0))(x_0)| \le M/(((r/2)!)(8n)^{r/2})$, where $M$ is the maximum of the absolute value of that $r$-th derivative.
 
-_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. By Taylor's theorem for real variables, $R_f(\lambda, x_0)$, in turn, is writable as&mdash; $$f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^35] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)). Thus&mdash; $$|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$|B_n((\lambda-x_0)^r)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{r!} |B_n((\lambda-x_0)^r)| \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
+_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. By Taylor's theorem for real variables, $R_f(\lambda, x_0)$, in turn, is writable as&mdash; $$f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^35] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)). Thus&mdash; $$|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$|B_n((\lambda-x_0)^r)(x_0)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{r!} |B_n((\lambda-x_0)^r)(x_0)| \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
 
-**Corollary B9A**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  Then $|B_n(R_f(\lambda, x_0))| \le M/(128 n^2)$, where $M$ is the maximum of the absolute value of that fourth derivative.
+**Corollary B9A**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, and let $M$ be the maximum of the absolute value of that $r$-th derivative.  Then:
 
-**Corollary B9B**: Let $f(\lambda)$ have a continuous sixth derivative on the closed unit interval.  Then $|B_n(R_f(\lambda, x_0))| \le M/(3072 n^3)$, where $M$ is the maximum of the absolute value of that sixth derivative.
+| If $r$ is: | Then abs($B_n(R_f(\lambda, x_0))(x_0)$) $\le$ ... |
+ --- | --- |
+| 4. | $M/(128 n^2)$. |
+| 6. | $M/(3072 n^3)$. |
 
 **Proposition B10**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
 
-_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^18].  It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^36], Butzer (1955)[^19], May (1976)[^37].  Because of this and because $f$ has a continuous fourth derivative, $f$ has the Lagrange remainder $R_f(\lambda, x_0)$ given in Lemma B9 and Corollary B9A, and&mdash; $$|L_{3,n/4}(f(x_0)) - f(x_0)| = |L_{3,n/4}(R_f(\lambda, x_0))|.$$  Now denote $\sigma_n$ as the maximum of $|B_n(R_f(\lambda, x_0))|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_f(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
+_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^18].  It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^36], Butzer (1955)[^19], May (1976)[^37].  Because of this and because $f$ has a continuous fourth derivative, $f$ has the Lagrange remainder $R_f(\lambda, x_0)$ given in Lemma B9 and Corollary B9A, and&mdash; $$|L_{3,n/4}(f(x_0)) - f(x_0)| = |L_{3,n/4}(R_f(\lambda, x_0))|.$$  Now denote $\sigma_n$ as the maximum of $|B_n(R_f(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_f(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
