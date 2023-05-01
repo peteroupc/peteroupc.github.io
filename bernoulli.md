@@ -885,6 +885,7 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 >     2. With probability $f(X/n)$, return 1.  Otherwise, return 0.
 >
 >     Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the _Szász operator_ (or _Szász&ndash;Mirakyan operator_) of $f$ of degree $n$ (e.g., Szász (1950)[^44]).  Indeed, the Szász operator can be written as a convex combination with $g(i)$ equal to the probability of getting $i$ in step 1 and with $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012\)[^6], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.
+> 8. **The original Bernoulli factories.**  Keane and O'Brien's \(1994\)[^2] paper introducing Bernoulli factories showed that any Bernoulli factory function $f(\lambda)$ can be written as a convex combination of polynomials.  In their proof, $g(i) = (1/4)\cdot(3/4)^{i-1}$ (and $g(0)=0$), and each $h_i(\lambda)$ is a polynomial in Bernstein form (see "[**Certain Polynomials**](#Certain_Polynomials)"), not necessarily of degree _i_, whose coefficients are each either 0 or 1.
 
 The previous algorithm can be generalized further, so that an input coin that simulates the probability _&lambda;_ helps generate the random integer in step 1.  Now, the overall algorithm returns 1 with probability&mdash; $$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda).$$
 
