@@ -39,7 +39,7 @@
 <li><a href="#Tossing_Heads_According_to_a_Concave_Function"><strong>Tossing Heads According to a Concave Function</strong></a>
 
 <ul>
-<li><a href="#Using_a_Series_Expansion"><strong>Using a Series Expansion</strong></a></li>
+<li><a href="#Special_Cases"><strong>Special Cases</strong></a></li>
 </ul></li>
 <li><a href="#New_coins_from_old_smoothly"><strong>New coins from old, smoothly</strong></a>
 
@@ -215,40 +215,39 @@
 
 <p><strong>See also Note 1 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong></p>
 
-<p><a id=Using_a_Series_Expansion></a></p>
+<p><a id=Special_Cases></a></p>
 
-<h3>Using a Series Expansion</h3>
+<h3>Special Cases</h3>
 
-<p>One way to simulate a concave $f$ involves rewriting the concave function as the series&mdash; $$f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)=\sum_{a\ge 0}\pi(a)\frac{\gamma_a(\lambda)}{\pi(a)},\tag{PC}$$ where&mdash;</p>
+<p>One special case of the question above is if&mdash;</p>
 
 <ul>
-<li>$\pi(a) = p (1-p)^a$ is the probability of getting a nonnegative integer $a$ in step 1 of the following algorithm, where $0 &lt; p &lt; 1$ is rational,</li>
-<li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$,</li>
-<li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$,</li>
-<li>$(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$,</li>
-<li>$\frac{\gamma_a(\lambda)}{\pi(a)}$, which will be a polynomial, must map $[0, 1]$ to $[0, 1]$, and must not equal 0 or 1 anywhere on $(0, 1)$ unless it&#39;s a constant.  In the case of concave functions, this polynomial will always be nonnegative.</li>
+<li>$f:[0,1]\to [0,1)$ is concave, and</li>
+<li>$\mathbb{P}(X=a)=p (1-p)^a$, where $0 &lt; p &lt; 1$ is rational, and</li>
+<li>$\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$, and</li>
+<li>$g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$, and</li>
+<li>$(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$, and</li>
 </ul>
 
-<p>Then an algorithm to toss heads with probability equal to $f$ would be:</p>
+<p>However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ (such as $2^{a+s}$ for some $s\ge 0$) and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which <em>appears</em> to be correct, but finding it was far from rigorous:  $n_a = 2^{a+1}$, $p = 0.27$.</p>
+
+<blockquote>
+<p><strong>Note:</strong> There is no general solution for all concave $f:[0,1]\to [0,1]$ (note the codomain is $[0,1]$, not $[0,1)$).  Indeed, there are several counterexamples: $g(\lambda)=lim_{t\to\lambda} (1-\exp(-2/t))$ (which is smooth), or $h(\lambda)$ formed by taking $g(\lambda)$ at 0 and at all points of the form $1/n$, where $n\ge 1$ is an integer, and connecting them with linear functions (so that $h$ is not even differentiable).</p>
+</blockquote>
+
+<p>Another problem is to write $\frac{\gamma_a(\lambda)}{\mathbb{P}(X=a)}$ as a polynomial in Bernstein form with only 0 and 1 as coefficients.  However, this can be reduced to rewriting the expression to polynomials with dyadic rational coefficients, or even with coefficients whose binary expansion is easy to calculate.</p>
+
+<blockquote>
+<p><strong>Note:</strong> The proof in Keane and O&#39;Brien (1994) rewrites $f$ as the following convex combination: $f(\lambda)=\sum_{a\ge 1}\mathbb{P}(X=a) Q_a(\lambda)$, where $X$ is an integer-valued random variable 1 or greater and where each $Q_a(\lambda)$ is a polynomial in Bernstein form of degree $k_a$ with only 0 and 1 as coefficients.</p>
+</blockquote>
+
+<p>Once the appropriate series and $X$ are found, an algorithm to toss heads with probability equal to $f$ would be:</p>
 
 <ol>
 <li>Flip a coin that shows heads with probability $p$ until that coin shows heads.  Set $a$ to the number of tails.</li>
-<li>Write $\frac{\gamma_a(\lambda)}{\pi(a)}$ as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial&#39;s degree, and let $j$ be the number of heads.</li>
+<li>Write $\frac{\gamma_a(\lambda)}{\mathbb{P}(X=a)}$ (letting 0/0=0) as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial&#39;s degree, and let $j$ be the number of heads.</li>
 <li>Return 1 with probability equal to the polynomial&#39;s $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).</li>
 </ol>
-
-<blockquote>
-<p><strong>Note:</strong> This algorithm has similarities to the one used in the proof in Keane and O&#39;Brien 1994.  That proof rewrites $f$ as a the following convex combination: $f(\lambda)=\sum_{a\ge 1}\mathbb{P}(X=a) Q_a(\lambda)$, where $X$ is an integer-valued random variable 1 or greater and where each $Q_a(\lambda)$ is a polynomial in Bernstein form of degree $k_a$ with only 0 and 1 as coefficients.</p>
-</blockquote>
-
-<p>However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which <em>appears</em> to be correct, but finding it was far from rigorous:</p>
-
-<ul>
-<li>$n_a = 2 \cdot 2^a$.</li>
-<li>$p = 0.27$.</li>
-</ul>
-
-<p>It&#39;s also possible for $a$ to be generated in step 1 differently, perhaps with a Poisson distribution.  In that case, $\pi(a)$ will have to be changed to the corresponding probability of getting $a$ under the new distribution.</p>
 
 <p><a id=New_coins_from_old_smoothly></a></p>
 
