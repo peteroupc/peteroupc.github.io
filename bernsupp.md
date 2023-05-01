@@ -293,7 +293,7 @@ Then an algorithm to toss heads with probability equal to $f$ would be:
 
 If _T_ turns out to be greater than 1 in this algorithm, but still finite, one way to simulate $f$ is to create a coin that simulates $f(\lambda)/T$ instead, and use that coin as the input to a [**_linear Bernoulli factory_**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories) that simulates $T\cdot (f(\lambda)/T)$.  (This is possible especially because $f(\lambda)$ is assumed to have a maximum of less than 1.)
 
-> **Example**: The following parameters allow this algorithm to work if $f$ is concave, has a maximum of less than 1, and has a Lipschitz-continuous derivative with Lipschitz constant _M_ or less.  In this case, $f$ is allowed to have a minimum of 0.
+> **Example**: The following parameters allow this algorithm to work if $f$ is concave, has a maximum of less than 1, and has a Lipschitz-continuous derivative with Lipschitz constant _M_ or less.  In this case, it is allowed that $f(0)=0$, $f(1)=0$, or both.
 >
 > - The family of polynomials $L_n(f)$ is simply the family of Bernstein polynomials of $f$.  The Bernstein coefficients of $L_n(f)$ are $f(0/n), f(1/n), ..., f(n/n)$.
 > - The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)[^8].
@@ -307,7 +307,7 @@ If _T_ turns out to be greater than 1 in this algorithm, but still finite, one w
 
 Readers are requested to let me know of additional solutions to the following problem:
 
-_Let $f(\lambda)$ be continuous and satisfy $0\lt f(\lambda)\lt 1$ whenever $0\le\lambda\le 1$.  Given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or nowhere decreasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients for two sequences of polynomials as follows: one of them approaches $f(\lambda)$ from above, the other from below, and the consistency requirement must be met (see "[**General Factory Functions**](#General_Factory_Functions)")._
+_Let $f(\lambda)$ be continuous and satisfy $0\lt f(\lambda)\lt 1$ whenever $0\le\lambda\le 1$.  Given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients for two sequences of polynomials as follows: one of them approaches $f(\lambda)$ from above, the other from below, and the consistency requirement must be met (see "[**General Factory Functions**](#General_Factory_Functions)")._
 
 _The polynomials need to be computed only for degrees 2, 4, 8, 16, and higher powers of 2._
 
@@ -468,7 +468,7 @@ There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_
 
 Readers are requested to let me know of additional solutions to the following problem:
 
-_Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or nowhere decreasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$._
+_Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$._
 
 _The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative._
 
@@ -981,7 +981,7 @@ In the following results:
 - A _strictly bounded factory function_ means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^38].
     - The following are examples of functions on the closed unit interval that are not polynomially bounded, even though they are continuous:<br>(exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise.<br>(_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise.<br>(_&lambda;_\*abs(sin(1/_&lambda;_))<sup>_&alpha;_</sup>+exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise, where _&alpha;_>0.
-- A _modulus of continuity_ of a function _f_ means a nonnegative and nowhere decreasing function _&omega;_ on the closed unit interval, for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) whenever 0&le;_x_&le;1 and 0&le;_y_&le;1.  Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) is greater than or equal to _f_'s maximum range in a window of size _&delta;_.
+- A _modulus of continuity_ of a function _f_ means a nonnegative and nowhere decreasing function _&omega;_ on the closed unit interval, for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) whenever _x_ and _y_ are in _f_'s domain.  Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) is greater than or equal to _f_'s maximum range in a window of size _&delta;_.
 
 **Lemma 1.** Omitted.
 
@@ -1028,7 +1028,7 @@ Given that _f_ has a continuous second derivative, there is an $\omega_2$ for it
 
 Suppose _Y_ = _X_/_n_.  Then _Y_'s variance (**Var**(_Y_)) is less than or equal to 1/(8\*_n_&minus; 4), and **2A1**'s left-hand side is the same as the expression (1), so that applying the two bounds given above leads to abs(**E**(_f_(_Y_)) - _f_(**E**(_Y_))) &le; 3\*_M_\* (sqrt(**Var**(_Y_))/2)<sup>2</sup> &le; 3\*_M_\*(sqrt(1/(8\*_n_&minus; 4))/2)<sup>2</sup> = $\frac{3 M}{32 n - 16}$. &#x25a1;
 
-> **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2((y-x)/2)$ whenever _x_ and _y_ are in _f_'s domain and _x_&le;_y_.
+> **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever _x_ and _y_ are in _f_'s domain.
 
 **Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
@@ -1093,7 +1093,7 @@ Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The 
 
 Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
 
-> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0) and _f_(1), if defined, must be integers, so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^50]; see also Remark C of Nacu and Peres (2005)[^1].
+> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^50]; see also Remark C of Nacu and Peres (2005)[^1].
 
 **Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
@@ -1185,7 +1185,7 @@ This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever
 
 - $(g_{2n}-g_n)$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $2n$.
 
-Then for every $x\ge 1$, $g_{2n}+x$ and $g$ satisfy that property, and so do $g_{2n}\cdot x$ and $g_n$.
+Then for every $x\ge 0$, $g_{2n}+x$ and $g_n$ satisfy that property, and for every $x\ge 1$, $g_{2n}\cdot x$ and $g_n$ do as well.
 
 The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, $g_{2n}$'s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have non-negative Bernstein coefficients as required by the property.
 
@@ -1204,11 +1204,11 @@ Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th de
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
-Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows:
+Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:
 
-1. $g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise.
-2. $g_n$ and $h_n$ converge to $f$ as $n$ gets large.
-3. $(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.
+1. $g_n$ has Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ otherwise.
+2. $g_n$ converges to $f$ as $n$ gets large.
+3. $(g_{n+1}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $n+1$.
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
 

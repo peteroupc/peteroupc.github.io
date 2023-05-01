@@ -454,7 +454,7 @@
 <p>If <em>T</em> turns out to be greater than 1 in this algorithm, but still finite, one way to simulate $f$ is to create a coin that simulates $f(\lambda)/T$ instead, and use that coin as the input to a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong><em>linear Bernoulli factory</em></strong></a> that simulates $T\cdot (f(\lambda)/T)$.  (This is possible especially because $f(\lambda)$ is assumed to have a maximum of less than 1.)</p>
 
 <blockquote>
-<p><strong>Example</strong>: The following parameters allow this algorithm to work if $f$ is concave, has a maximum of less than 1, and has a Lipschitz-continuous derivative with Lipschitz constant <em>M</em> or less.  In this case, $f$ is allowed to have a minimum of 0.</p>
+<p><strong>Example</strong>: The following parameters allow this algorithm to work if $f$ is concave, has a maximum of less than 1, and has a Lipschitz-continuous derivative with Lipschitz constant <em>M</em> or less.  In this case, it is allowed that $f(0)=0$, $f(1)=0$, or both.</p>
 
 <ul>
 <li>The family of polynomials $L_n(f)$ is simply the family of Bernstein polynomials of $f$.  The Bernstein coefficients of $L_n(f)$ are $f(0/n), f(1/n), ..., f(n/n)$.</li>
@@ -472,7 +472,7 @@
 
 <p>Readers are requested to let me know of additional solutions to the following problem:</p>
 
-<p><em>Let $f(\lambda)$ be continuous and satisfy $0\lt f(\lambda)\lt 1$ whenever $0\le\lambda\le 1$.  Given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or nowhere decreasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients for two sequences of polynomials as follows: one of them approaches $f(\lambda)$ from above, the other from below, and the consistency requirement must be met (see &quot;<a href="#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;).</em></p>
+<p><em>Let $f(\lambda)$ be continuous and satisfy $0\lt f(\lambda)\lt 1$ whenever $0\le\lambda\le 1$.  Given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients for two sequences of polynomials as follows: one of them approaches $f(\lambda)$ from above, the other from below, and the consistency requirement must be met (see &quot;<a href="#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;).</em></p>
 
 <p><em>The polynomials need to be computed only for degrees 2, 4, 8, 16, and higher powers of 2.</em></p>
 
@@ -765,7 +765,7 @@
 
 <p>Readers are requested to let me know of additional solutions to the following problem:</p>
 
-<p><em>Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, and/or nowhere decreasing $k$-th derivative for some integer $k$), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.</em></p>
+<p><em>Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.</em></p>
 
 <p><em>The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative.</em></p>
 
@@ -1393,7 +1393,7 @@
 <ul>
 <li>The following are examples of functions on the closed unit interval that are not polynomially bounded, even though they are continuous:<br>(exp(&minus;1/<em>&lambda;</em>))/4 if <em>&lambda;</em>&gt;0; 0 otherwise.<br>(<em>&lambda;</em>+<em>&lambda;</em>*sin(1/<em>&lambda;</em>)+exp(&minus;1/<em>&lambda;</em>))/4 if <em>&lambda;</em>&gt;0; 0 otherwise.<br>(<em>&lambda;</em>*abs(sin(1/<em>&lambda;</em>))<sup><em>&alpha;</em></sup>+exp(&minus;1/<em>&lambda;</em>))/4 if <em>&lambda;</em>&gt;0; 0 otherwise, where <em>&alpha;</em>&gt;0.</li>
 </ul></li>
-<li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>&omega;</em> on the closed unit interval, for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) whenever 0&le;<em>x</em>&le;1 and 0&le;<em>y</em>&le;1.  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
+<li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>&omega;</em> on the closed unit interval, for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) whenever <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
 </ul>
 
 <p><strong>Lemma 1.</strong> Omitted.</p>
@@ -1462,7 +1462,7 @@
 <p>Suppose <em>Y</em> = <em>X</em>/<em>n</em>.  Then <em>Y</em>&#39;s variance (<strong>Var</strong>(<em>Y</em>)) is less than or equal to 1/(8*<em>n</em>&minus; 4), and <strong>2A1</strong>&#39;s left-hand side is the same as the expression (1), so that applying the two bounds given above leads to abs(<strong>E</strong>(<em>f</em>(<em>Y</em>)) - <em>f</em>(<strong>E</strong>(<em>Y</em>))) &le; 3*<em>M</em>* (sqrt(<strong>Var</strong>(<em>Y</em>))/2)<sup>2</sup> &le; 3*<em>M</em>*(sqrt(1/(8*<em>n</em>&minus; 4))/2)<sup>2</sup> = $\frac{3 M}{32 n - 16}$. &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>) with <em>h</em> &ge; 0, for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2((y-x)/2)$ whenever <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain and <em>x</em>&le;<em>y</em>.</p>
+<p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>) with <em>h</em> &ge; 0, for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.</p>
 </blockquote>
 
 <p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;</em></p>
@@ -1541,7 +1541,7 @@
 <p>Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For <em>n</em>=<em>n</em><sub>1</sub>, condition (iv) is maintained by noting that the degree-<em>n</em><sub>1</sub> polynomial&#39;s coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0) and <em>f</em>(1), if defined, must be integers, so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^50]; see also Remark C of Nacu and Peres (2005)[^1].</p>
+<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^50]; see also Remark C of Nacu and Peres (2005)[^1].</p>
 </blockquote>
 
 <p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
@@ -1660,7 +1660,7 @@
 <li>$(g_{2n}-g_n)$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $2n$.</li>
 </ul>
 
-<p>Then for every $x\ge 1$, $g_{2n}+x$ and $g$ satisfy that property, and so do $g_{2n}\cdot x$ and $g_n$.</p>
+<p>Then for every $x\ge 0$, $g_{2n}+x$ and $g_n$ satisfy that property, and for every $x\ge 1$, $g_{2n}\cdot x$ and $g_n$ do as well.</p>
 
 <p>The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, $g_{2n}$&#39;s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have non-negative Bernstein coefficients as required by the property.</p>
 
@@ -1680,12 +1680,12 @@
 
 <p>For each integer $n\ge1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
 
-<p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ and $h_n$ (for each $n\ge 1$) as follows:</p>
+<p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:</p>
 
 <ol>
-<li>$g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ and $W_n(k/n) + CM/n^{r/2}$, respectively ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ and $h_n=h_{n-1}$ otherwise.</li>
-<li>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</li>
-<li>$(g_{n+1}-g_{n})$ and $(h_{n}-h_{n+1})$ are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.</li>
+<li>$g_n$ has Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ otherwise.</li>
+<li>$g_n$ converges to $f$ as $n$ gets large.</li>
+<li>$(g_{n+1}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $n+1$.</li>
 </ol>
 
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>

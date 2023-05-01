@@ -14,7 +14,7 @@
 
 <p>Suppose there is a coin that shows heads with an unknown probability, $\lambda$. The goal is to use that coin (and possibly also a fair coin) to build a &quot;new&quot; coin that shows heads with a probability that depends on $\lambda$, call it $f(\lambda)$. This is the <em>Bernoulli factory problem</em>, and it can be solved only for certain functions $f$. (For example, flipping the coin twice and taking heads only if exactly one coin shows heads, the probability $2\lambda(1-\lambda)$ can be simulated.)</p>
 
-<p>Specifically, the only functions that can be simulated this way <strong>are continuous and polynomially bounded on their domain, and map $[0, 1]$ or a subset thereof to $[0, 1]$</strong>, as well as $f=0$ and $f=1$. These functions are called <em>factory functions</em> in this page. (A function $f(x)$ is <em>polynomially bounded</em> if both $f$ and $1-f$ are greater than or equal to min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O&#39;Brien 1994). This implies that $f$ admits no roots on (0, 1) and can&#39;t take on the value 0 or 1 except possibly at 0 and/or 1.)</p>
+<p>Specifically, the only functions that can be simulated this way <strong>are continuous and polynomially bounded on their domain, and map $[0, 1]$ or a subset thereof to $[0, 1]$</strong>, as well as $f=0$ and $f=1$. These functions are called <em>factory functions</em> in this page. (A function $f(x)$ is <em>polynomially bounded</em> if both $f$ and $1-f$ are greater than or equal to min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O&#39;Brien 1994). This implies that $f$ admits no roots on (0, 1) and can&#39;t take on the value 0 or 1 except possibly at 0, 1, or both.)</p>
 
 <p>This page contains several questions about the <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory</strong></a> problem.  Answers to them will greatly improve my pages on this site about Bernoulli factories.  If you can answer any of them, post an issue in the <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a>.</p>
 
@@ -74,7 +74,7 @@
 <p>The following summarizes most of the problems raised by these open questions.</p>
 
 <ol>
-<li><p><strong>Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (e.g., the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz, concave, strictly increasing, bounded variation, and/or Zygmund, or $f$ is real analytic).</strong></p>
+<li><p><strong>Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (e.g., the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz, concave, strictly increasing, bounded variation, or Zygmund, or $f$ is real analytic).</strong></p>
 
 <ul>
 <li><em>Exact Bernoulli factory</em>: <strong>Assuming $0\lt f(\lambda)\lt 1$, compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $2n$.</strong></li>
@@ -86,7 +86,7 @@
 <li><p><strong>Characterize the following three classes of factory functions $f(\lambda)$:</strong></p>
 
 <ul>
-<li><strong>Can be simulated using nothing but the biased coin, when the biased coin can show heads every time and/or tails every time.</strong></li>
+<li><strong>Can be simulated using nothing but the biased coin, when the biased coin can show heads every time, tails every time, or both.</strong></li>
 <li><strong>Have a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.</strong></li>
 <li><strong>Are algebraic and can be simulated by a finite-state machine with an unbounded stack.</strong></li>
 </ul></li>
@@ -114,7 +114,7 @@
 
 <h3>Main Question</h3>
 
-<p>Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, and/or in the Zygmund class, or $f$ is real analytic or in Gevrey&#39;s hierarchy) (<strong>see note 4 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;</strong>).</p>
+<p>Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, or in the Zygmund class, or $f$ is real analytic or in Gevrey&#39;s hierarchy) (<strong>see note 4 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;</strong>).</p>
 
 <ol>
 <li>(<em>Exact Bernoulli factory</em>): Compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $2n$. (<strong>See note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)  Assume $0\lt f(\lambda)\lt 1$ or $f$ is polynomially bounded.</li>
@@ -147,7 +147,7 @@
 
 <p>However, the algorithm requires the polynomial sequences to meet certain requirements; among them, the sequences must be of Bernstein-form polynomials that converge from above and below to a factory function.  Specifically:</p>
 
-<p><em>For $f(\lambda)$ there must be a sequence of polynomials</em> ($g_n$) <em>of degree 1, 2, 3, ... that converge to $f$ from below and satisfy:</em> $(g_{n+1}-g_{n})$ <em>is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (<strong>see note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;</strong>; Nacu and Peres 2005; Holtz et al. 2011).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind.</em></p>
+<p><em>For $f(\lambda)$ there must be a sequence of polynomials</em> ($g_n$) <em>in Bernstein form of degree 1, 2, 3, ... that converge to $f$ from below and satisfy:</em> $(g_{n+1}-g_{n})$ <em>is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (<strong>see note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;</strong>; Nacu and Peres 2005; Holtz et al. 2011).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind.</em></p>
 
 <p><a id=A_Matter_of_Efficiency></a></p>
 
@@ -169,7 +169,7 @@
 
 <p>Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.</p>
 
-<p>For each integer $n\ge 1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that for every $C\ge C_0$, the polynomials $(g_n)$ of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda) - CM/n^{r/2})$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $2n$. (<strong>See note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</p>
+<p>For each integer $n\ge 1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that for every $C\ge C_0$, the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda) - CM/n^{r/2})$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $2n$. (<strong>See note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</p>
 
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that the inequality $(PB)$ (see below) holds true for each integer $n\ge 1$ that&#39;s a power of 2 (see &quot;Strategies&quot;, below).</p>
 
@@ -183,7 +183,7 @@
 
 <ol>
 <li>Finding a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (<strong>See notes 5 and 6 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot; as well as &quot;<a href="https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial-Building Schemes</strong></a>.</strong>)</li>
-<li>Suppose that, for each integer $n\ge 1$ that&#39;s a power of 2, there is a polynomial of degree $n$, $P_{n}(f)$, that is within $E(n)$ of $f(\lambda)$. (For example, $P_{n}(f)$ could be a linear combination of Bernstein polynomials.) Then I believe another way to answer this question is to find $C&gt;0$ such that the non-negative polynomial $Q_{n}(f) = (P_{2n}(f) + E(n) + E(2n)) - P_{n}(f)$, when rewritten to a degree-$(2n)$ polynomial in Bernstein form, has Bernstein coefficients no greater than $CM/n^{r/2}$, where $M$ and $r$ are as above.  In that case, I believe solving the problem will rely on bounds on the derivatives of $f$, $P_{n}(f)$, and/or $Q_{n}(f)$. (See Lemma 24 of Holtz et al. 2011 for example.)</li>
+<li>Suppose that, for each integer $n\ge 1$ that&#39;s a power of 2, there is a polynomial of degree $n$, $P_{n}(f)$, that is within $E(n)$ of $f(\lambda)$. (For example, $P_{n}(f)$ could be a linear combination of Bernstein polynomials.) Then I believe another way to answer this question is to find $C&gt;0$ such that the non-negative polynomial $Q_{n}(f) = (P_{2n}(f) + E(n) + E(2n)) - P_{n}(f)$, when rewritten to a degree-$(2n)$ polynomial in Bernstein form, has Bernstein coefficients no greater than $CM/n^{r/2}$, where $M$ and $r$ are as above.  In that case, I believe solving the problem will rely on bounds on the derivatives of $f$, $P_{n}(f)$, and $Q_{n}(f) in any combination$. (See Lemma 24 of Holtz et al. 2011 for example.)</li>
 </ol>
 
 <p><a id=Examples_of_Functions_to_Ponder></a></p>
@@ -204,7 +204,7 @@
 
 <p><a href="https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials"><strong>https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials</strong></a></p>
 
-<p>Suppose $f:[0,1]\to[0,1]$ is continuous, polynomially bounded, and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, and/or in the Zygmund class, or $f$ is real analytic or in Gevrey&#39;s hierarchy) (<strong>see note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>).</p>
+<p>Suppose $f:[0,1]\to[0,1]$ is continuous, polynomially bounded, and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, or in the Zygmund class, or $f$ is real analytic or in Gevrey&#39;s hierarchy) (<strong>see note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>).</p>
 
 <p>Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) has a simple <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory algorithm</strong></a> (and is preferably a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$).</p>
 
@@ -212,10 +212,6 @@
 <li>An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational.  That is, the probability of getting $a$ is $p (1-p)^a$.</li>
 <li>The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).</li>
 </ul>
-
-<hr>
-
-<p>Prove or disprove: Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}|B_n(f)(\lambda)-f(\lambda)|)$ fulfill question 1 of &quot;<a href="#Main_Questions"><strong>Main Questions</strong></a>&quot; (except for the convergence rate).  So do the polynomials $(g_n) = (B_n(f) - |B_n(f)(1/2)-f(1/2)|)$, if $f$ is also symmetric about 1/2.</p>
 
 <p><strong>See also Note 1 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong></p>
 
@@ -320,7 +316,7 @@
 
 <p>Every strongly simulable function is simulable, but not vice versa.</p>
 
-<p>In fact, Keane and O&#39;Brien (1994) showed already that $f(\lambda)$ is strongly simulable if $f$ is simulable and neither 0 nor 1 is in $f$&#39;s domain (that is, if the biased coin doesn&#39;t show heads every time or tails every time).  And it&#39;s also easy to show that if $f$ is strongly simulable, then $f(0)$ and $f(1)$ must each be 0, 1, or undefined.</p>
+<p>In fact, Keane and O&#39;Brien (1994) showed already that $f(\lambda)$ is strongly simulable if $f$ is simulable and neither 0 nor 1 is in $f$&#39;s domain (that is, if the biased coin doesn&#39;t show heads every time or tails every time).  And it&#39;s also easy to show that if $f$ is strongly simulable, then $f(0)$ must be 0 or 1 if 0 is in $f$&#39;s domain and $f(1)$ must be 0 or 1 whenever 1 is in $f$&#39;s domain.</p>
 
 <p>However, it&#39;s not so trivial to find the exact class of strongly simulable functions when $f$&#39;s domain includes 0, 1, or both.</p>
 
@@ -330,12 +326,12 @@
 
 <ul>
 <li>$f$ is constant on its domain, or is continuous and polynomially bounded on its domain (<em>polynomially bounded</em> means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ [Keane and O&#39;Brien 1994]), and</li>
-<li>$f(0)$ and $f(1)$ are each 0, 1, or undefined, and</li>
-<li>if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)&gt;f(x)$ for every $x$ in the domain of f, except at 0 and 1, and</li>
-<li>if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)&lt;f(x)$ for every $x$ in the domain of f, except at 0 and 1.</li>
+<li>$f(0)$ is 0 or 1 if 0 is in $f$&#39;s domain and $f(1)$ is 0 or 1 whenever 1 is in $f$&#39;s domain, and</li>
+<li>if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)&gt;f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and</li>
+<li>if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $g(x)&lt;f(x)$ for every $x$ in the domain of f, except at 0 and 1.</li>
 </ul>
 
-<p>A condition such as &quot;0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon&gt;0$&quot; does not work.  A counterexample is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$, which is strongly simulable at 0 despite not being Lipschitz at 0.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)</p>
+<p>A condition such as &quot;0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon&gt;0$&quot; does not work.  A counterexample is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ ($f(0)=0$), which is strongly simulable at 0 despite not being Lipschitz at 0.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)</p>
 
 <p><a id=Multiple_Output_Bernoulli_Factories></a></p>
 
@@ -491,6 +487,7 @@
 <ol>
 <li>Let $n≥1$ be an integer, and denote the degree-$n$ Bernstein polynomial of $g$ as $B_n(g)$. Suppose $f(λ):[0,1]\to [0,1]$ is non-negative, is concave, and has a continuous second derivative. Then $U_{n,2}(f)=B_n(2f-B_n(f))$ is within $3Mλ(1−λ)/(n^2)$ and within $0.75M/(n^2)$ of f, where $M$ is the absolute value of the maximum of $f$&#39;s second derivative. (Note that Bustamante (2008)&#39;s theorem 11 can&#39;t be used here since $U_{n,2}$, though linear, is not a <em>positive</em> operator for all continuous functions on the closed unit interval.)</li>
 <li>Statement 1&#39;s conclusion is true if the condition that $f$ is concave is replaced with the condition that $U_{n,2}(f)$ is non-negative for every $n\ge n_0$, for a fixed integer $n_0 \ge 1$.</li>
+<li>Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}|B_n(f)(\lambda)-f(\lambda)|)$ (where $n\ge 1$ is an integer power of 2) are in Bernstein form of degree $n$, converge to $f$ from below, and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $2n$. The same is true for the polynomials $(g_n) = (B_n(f) - |B_n(f)(1/2)-f(1/2)|)$, if $f$ is also symmetric about 1/2.</li>
 </ol>
 
 <p><a id=End_Notes></a></p>
