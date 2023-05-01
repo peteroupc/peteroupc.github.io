@@ -169,8 +169,10 @@ A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an algorithm that takes a
 
 Keane and O'Brien (1994\)[^2] showed that a function _f_ that maps \[0, 1\] (or a subset of it) to [0, 1] admits a Bernoulli factory if and only if&mdash;
 
-- _f_ is constant on its domain, or
-- _f_ is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are not less than min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
+- _f_ is continuous and constant on its domain, or
+- _f_ is continuous and polynomially bounded on its domain.
+
+_Polynomially bounded_ means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are not less than min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_.  In other words, there are two non-constant polynomials: one can be "sandwiched" between the _&lambda;_-axis and _f_, and another between the _&lambda;_-axis and 1&minus;_f_.
 
 The following shows some functions that are factory functions and some that are not.  In the table below, _&#x03F5;_ is a number greater than 0 and less than 1/2.
 
