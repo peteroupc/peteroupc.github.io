@@ -137,7 +137,7 @@ My goal is to see not just whether this conjecture is true, but also which value
 The following are some strategies for answering these questions:
 
 1. Finding a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 5 and 6 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
-2. Suppose that, for each integer $n\ge 1$ that's a power of 2, there is a polynomial of degree $n$, $P_{n}(f)$, that is within $E(n)$ of $f(\lambda)$. (For example, $P_{n}(f)$ could be a linear combination of Bernstein polynomials.) Then I believe another way to answer this question is to find $C>0$ such that the non-negative polynomial $Q_{n}(f) = (P_{2n}(f) + E(n) + E(2n)) - P_{n}(f)$, when rewritten to a degree-$(2n)$ polynomial in Bernstein form, has Bernstein coefficients no greater than $CM/n^{r/2}$, where $M$ and $r$ are as above.  In that case, I believe solving the problem will rely on bounds on the derivatives of $f$, $P_{n}(f)$, and $Q_{n}(f) in any combination$. (See Lemma 24 of Holtz et al. 2011 for example.)
+2. Suppose that, for each integer $n\ge 1$ that's a power of 2, there is a polynomial of degree $n$, $P_{n}(f)$, that is within $E(n)$ of $f(\lambda)$. (For example, $P_{n}(f)$ could be a linear combination of Bernstein polynomials.) Then I believe another way to answer this question is to find $C>0$ such that the non-negative polynomial $Q_{n}(f) = (P_{2n}(f) + E(n) + E(2n)) - P_{n}(f)$, when rewritten to a degree-$(2n)$ polynomial in Bernstein form, has Bernstein coefficients no greater than $CM/n^{r/2}$, where $M$ and $r$ are as above.  In that case, I believe solving the problem will rely on bounds on the derivatives of $f$, $P_{n}(f)$, and $Q_{n}(f)$ in any combination$. (See Lemma 24 of Holtz et al. 2011 for example.)
 
 <a id=Examples_of_Functions_to_Ponder></a>
 ### Examples of Functions to Ponder
@@ -175,17 +175,15 @@ One special case of the question above is if&mdash;
 
 However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ (such as $2^{a+s}$ for some $s\ge 0$) and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which _appears_ to be correct, but finding it was far from rigorous:  $n_a = 2^{a+1}$, $p = 0.27$.
 
-> **Note:** There is no general solution for all concave $f:[0,1]\to [0,1]$ (note the codomain is $[0,1]$, not $[0,1)$).  Indeed, there are several counterexamples: $g(\lambda)=lim_{t\to\lambda} (1-\exp(-2/t))$ (which is smooth), or $h(\lambda)$ formed by taking $g(\lambda)$ at 0 and at all points of the form $1/n$, where $n\ge 1$ is an integer, and connecting them with linear functions (so that $h$ is not even differentiable).
-
-Another problem is to write $\frac{\gamma_a(\lambda)}{\mathbb{P}(X=a)}$ as a polynomial in Bernstein form with only 0 and 1 as coefficients.  However, this can be reduced to rewriting the expression to polynomials with dyadic rational coefficients, or even with coefficients whose binary expansion is easy to calculate.
-
-> **Note:** The proof in Keane and O'Brien (1994) rewrites $f$ as the following convex combination: $f(\lambda)=\sum_{a\ge 1}\mathbb{P}(X=a) Q_a(\lambda)$, where $X$ is an integer-valued random variable 1 or greater and where each $Q_a(\lambda)$ is a polynomial in Bernstein form of degree $k_a$ with only 0 and 1 as coefficients.
-
 Once the appropriate series and $X$ are found, an algorithm to toss heads with probability equal to $f$ would be:
 
 1. Flip a coin that shows heads with probability $p$ until that coin shows heads.  Set $a$ to the number of tails.
 2. Write $\frac{\gamma_a(\lambda)}{\mathbb{P}(X=a)}$ (letting 0/0=0) as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial's degree, and let $j$ be the number of heads.
 3. Return 1 with probability equal to the polynomial's $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).
+
+> **Note:** There is no general solution for all concave $f:[0,1]\to [0,1]$, not all of which are polynomially bounded (note the codomain is $[0,1]$, not $[0,1)$).  Indeed, there are several counterexamples: $g(\lambda)=\lim_{t\to\lambda} (1-\exp(-2/t))$ (which is smooth), or $h(\lambda)$ formed by taking $g(\lambda)$ at 0 and at all points of the form $1/n$, where $n\ge 1$ is an integer, and connecting them with linear functions (so that $h$ is not even differentiable).
+>
+> **Note:** Another problem is to write $\gamma_a(\lambda)/\mathbb{P}(X=a)$ as a polynomial in Bernstein form with only 0 and 1 as coefficients.  However, this can be reduced to rewriting the expression to polynomials with dyadic rational coefficients, or even with coefficients whose binary expansion is easy to calculate.  In fact, the proof in Keane and O'Brien (1994) rewrites $f$ as: $f(\lambda)=\sum_{a\ge 1}\mathbb{P}(X=a) Q_a(\lambda)$, where $X$ is an integer-valued random variable 1 or greater and where each $Q_a(\lambda)$ is a polynomial in Bernstein form of degree $k_a$ with only 0 and 1 as coefficients.
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly

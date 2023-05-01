@@ -1020,13 +1020,13 @@ _Proof._
 >     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^46].
 
-**Lemma 2A.**  _Let f map the closed unit interval to itself and let X be as in Lemma 2.  If f has a continuous second derivative whose absolute value has a maximum of M or greater, then the expression (1) is less than or equal to $(3\cdot M)/(32n-16)$, for every integer n&ge;1_.
+**Lemma 2A.**  _Let f(&lambda;) map the closed unit interval to itself.  If f has a continuous second derivative whose absolute value has a maximum of M or greater, then the expression (1) is less than or equal to $(3\cdot M)/(32n-16)$, for every integer n&ge;1_.
 
-_Proof._ Strukov and Timan (1977)[^47], (1975)[^48] proved the bound:<br>abs(**E**[_f_(_Y_)] &minus; _f_(**E**[_Y_])) &le; 3\*&omega;<sub>2</sub>(sqrt(**Var**(_Y_))/2),<br>where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below).  Call this bound **2A1**.
+_Proof._ Strukov and Timan (1977)[^47], (1975)[^48] proved the bound:<br>abs(**E**[_f_(_Y_)] &minus; _f_(**E**[_Y_])) &le; 3\*&omega;<sub>2</sub>(sqrt(**Var**[_Y_])/2),<br>where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below).  Call this bound **2A1**.
 
 Given that _f_ has a continuous second derivative, there is an $\omega_2$ for it such that $\omega_{2}(f, h)\le M h^2$ whenever $0\le h\le 1/2$ (which is the case here due to the domain of _f_ and the definition of $\omega_{2}$) (Timan 1994)[^49].
 
-Suppose _Y_ = _X_/_n_.  Then _Y_'s variance (**Var**(_Y_)) is less than or equal to 1/(8\*_n_&minus; 4), and **2A1**'s left-hand side is the same as the expression (1), so that applying the two bounds given above leads to abs(**E**(_f_(_Y_)) - _f_(**E**(_Y_))) &le; 3\*_M_\* (sqrt(**Var**(_Y_))/2)<sup>2</sup> &le; 3\*_M_\*(sqrt(1/(8\*_n_&minus; 4))/2)<sup>2</sup> = $\frac{3 M}{32 n - 16}$. &#x25a1;
+Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**[_Y_]) is less than or equal to 1/(8\*_n_&minus; 4), and **2A1**'s left-hand side is the same as the expression (1), so that applying the two bounds given above leads to abs(**E**[_f_(_Y_)] - _f_(**E**[_Y_])) &le; 3\*_M_\* (sqrt(**Var**[_Y_])/2)<sup>2</sup> &le; 3\*_M_\*(sqrt(1/(8\*_n_&minus; 4))/2)<sup>2</sup> = $\frac{3 M}{32 n - 16}$. &#x25a1;
 
 > **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever _x_ and _y_ are in _f_'s domain.
 
