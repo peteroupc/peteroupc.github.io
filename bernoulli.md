@@ -167,7 +167,7 @@ A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an algorithm that takes a
 
 > **Example:** A Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).  In this example, exp(&minus;_&lambda;_) is the factory function.
 
-Keane and O'Brien (1994\)[^2] showed that a function _f_ that maps \[0, 1\] (or a subset of it) to [0, 1] admits a Bernoulli factory if and only if&mdash;
+Keane and O'Brien (1994\)[^2] showed that a function _f_ that maps the closed interval \[0, 1\] (or a subset of it) to [0, 1] admits a Bernoulli factory if and only if&mdash;
 
 - _f_ is continuous and constant on its domain, or
 - _f_ is continuous and polynomially bounded on its domain.
@@ -186,8 +186,13 @@ The following shows some functions that are factory functions and some that are 
 | 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since _f_(_&lambda;_) approaches 0 as _&lambda;_ approaches 1/2. |
 | 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994\)[^2]. |
 | min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0, 1] | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction\)[^4]. |
-| 0 if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) otherwise | (0, 1) | No; not polynomially bounded since no nonconstant polynomial can come between the _&lambda_-axis and $f$. |
-| &#x03F5; if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) + &#x03F5; otherwise | (0, 1) | Yes; continuous, minimum greater than 0, maximum less than 1. |
+| exp(&minus;1/_&lambda;_) | (0, 1) | No; not polynomially bounded since no nonconstant polynomial can come between the _&lambda;_-axis and $f$. |
+| (exp(&minus;1/_&lambda;_))/4. | (0, 1) | No, for same reason. |
+| (_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4. | (0, 1) | No, for same reason. |
+| (_&lambda;_\*abs(sin(1/_&lambda;_))<sup>_&alpha;_</sup>+exp(&minus;1/_&lambda;_))/4, where _&alpha;_>0. | (0, 1) | No, for same reason. |
+| exp(&minus;1/_&lambda;_) + &#x03F5; | (0, 1) | Yes; continuous, minimum greater than 0, maximum less than 1. |
+| exp(&minus;1/_&lambda;_) | [&#x03F5;, 1) | Yes; same reason. |
+| _&lambda;_<sup>_&alpha;_</sup> where _n_&ge;2 is an integer.  | \[0, 1\] | Yes; continuous and the polynomial $\lambda^{n+1}$ can go below $f$, and the polynomial $\lambda^{n-1}$ can go above $f$. |
 
 If _f_'s domain includes 0 and/or 1 (so that the input coin is allowed to return 0 every time or 1 every time, respectively), then _f_ can be a factory function only if&mdash;
 

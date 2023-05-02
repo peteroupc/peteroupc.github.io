@@ -601,7 +601,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^48]: Strukov, L. I., and A. F. Timan. "Sharpening and generalization of some theorems of approximation by polynomials of SN Bernstein." In The Theory of the Approximation of Functions. Proc. Internat. Conf, pp. 338-341. 1975.
 
-[^49]: A.F. Timan, Theory of Approximation of Functions of a Real Variable, 1994.
+[^49]: Stancu, D.D., Agratini, O., et al. _Analiză Numerică şi Teoria Aproximării_, 2001.
 
 [^50]: Kantorovich, L.V., "Some remarks on the approximation of functions by means of polynomials with integer coefficients", 1931.
 
@@ -644,6 +644,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 [^69]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^70]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^71]: Gonska, H.H., Piţul, P., Raşa, I., "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators", In Numerical Analysis and Approximation Theory, 2006.
 
 <a id=Appendix></a>
 ## Appendix
@@ -708,23 +710,25 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 
 **Proposition B8**: (Omitted.  It relied on a result that gives error bounds for certain positive operators that come close to a continuous function on the closed unit interval [theorem 11 of Bustamante (2008)[^34]]. However, $U_{n,2}$ is not _positive_ in this sense, since $U_{n,2}(f)$ is not non-negative on the closed unit interval for _every_ non-negative continuous function $f$ on that interval.)
 
-**Lemma B9**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, where $r$ is an even integer such that $2\le r\le 44$.  Then, for every $0\le x_0 \le 1$:
+**Lemma B9**: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), where $r$ is an odd integer such that $1\le r\le 43$.  Then, for every $0\le x_0 \le 1$:
 
-1. $f$ can be written as $f(\lambda) = R_f(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r-1} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where  and $f^{(i)}$ is the $i$-th derivative of $f$.
-2. $|B_n(R_f(\lambda, x_0))(x_0)| \le M/(((r/2)!)(8n)^{r/2})$, where $M$ is the maximum of the absolute value of that $r$-th derivative.
+1. $f$ can be written as $f(\lambda) = R_f(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where  and $f^{(i)}$ is the $i$-th derivative of $f$.
+2. $|B_n(R_f(\lambda, x_0))(x_0)| \le M/((((r+1)/2)!)(8n)^{(r+1)/2})$, where $M$ is equal to or greater than $r$-th derivative's Lipschitz constant.
 
-_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $(r-1)$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. By Taylor's theorem for real variables, $R_f(\lambda, x_0)$, in turn, is writable as&mdash; $$f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^35] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)). Thus&mdash; $$|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$$ By Result B4&mdash; $$|B_n((\lambda-x_0)^r)(x_0)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}},$$ so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{r!} |B_n((\lambda-x_0)^r)(x_0)| \le \frac{M}{r!}\frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}} = \frac{M}{((r/2)!)(8n)^{r/2}}.$$ &#x25a1;
+_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. By a result found in Gonska et al. (2006)[^71], because $f$'s $r$-th derivative is Lipschitz continuous&mdash; $$|R_f(\lambda, x_0)|\le \frac{|lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}\le M\frac{(\lambda-x_0)^{r+1}}{(r+1)!}.$$  By Result B4, the Bernstein polynomial of (\lambda-x_0)^{r+1} can be bounded as follows: $$|B_n((\lambda-x_0)^{r+1})(x_0)| \le \frac{(r+1)!}{(((r+1)/2)!)8^{(r+1)/2}}\frac{1}{n^{(r+1)/2}},$$ so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{(r+1)!} |B_n((\lambda-x_0)^{r+1})(x_0)| \le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)8^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(8n)^{(r+1)/2}}.$$ &#x25a1;
 
-**Corollary B9A**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, and let $M$ be the maximum of the absolute value of that $r$-th derivative.  Then:
+> **Note:** If $f$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor's theorem for real variables, $R_f(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^35] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)).  Thus, by this estimate, $|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$
+
+**Corollary B9A**: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative's Lipschitz constant or greater.  Then:
 
 | If $r$ is: | Then abs($B_n(R_f(\lambda, x_0))(x_0)$) $\le$ ... |
  --- | --- |
-| 4. | $M/(128 n^2)$. |
-| 6. | $M/(3072 n^3)$. |
+| 3. | $M/(128 n^2)$. |
+| 5. | $M/(3072 n^3)$. |
 
-**Proposition B10**: Let $f(\lambda)$ have a continuous fourth derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
+**Proposition B10**: Let $f(\lambda)$ have a Lipschitz continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
 
-_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^18].  It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^36], Butzer (1955)[^19], May (1976)[^37].  Because of this and because $f$ has a continuous fourth derivative, $f$ has the Lagrange remainder $R_f(\lambda, x_0)$ given in Lemma B9 and Corollary B9A, and&mdash; $$|L_{3,n/4}(f(x_0)) - f(x_0)| = |L_{3,n/4}(R_f(\lambda, x_0))|.$$  Now denote $\sigma_n$ as the maximum of $|B_n(R_f(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_f(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
+_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^18].  It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^36], Butzer (1955)[^19], May (1976)[^37].  Because of this and because $f$ has a Lipschitz continuous third derivative, $f$ has the Lagrange remainder $R_f(\lambda, x_0)$ given in Lemma B9 and Corollary B9A, and&mdash; $$|L_{3,n/4}(f(x_0)) - f(x_0)| = |L_{3,n/4}(R_f(\lambda, x_0))|.$$  Now denote $\sigma_n$ as the maximum of $|B_n(R_f(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_f(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
 
 <a id=Failures_of_the_Consistency_Requirement></a>
 ### Failures of the Consistency Requirement
@@ -979,8 +983,7 @@ This section shows mathematical proofs for some of the polynomial-building schem
 In the following results:
 
 - A _strictly bounded factory function_ means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.
-- A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^38].
-    - The following are examples of functions on the closed unit interval that are not polynomially bounded, even though they are continuous:<br>(exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise.<br>(_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise.<br>(_&lambda;_\*abs(sin(1/_&lambda;_))<sup>_&alpha;_</sup>+exp(&minus;1/_&lambda;_))/4 if _&lambda;_>0; 0 otherwise, where _&alpha;_>0.
+- A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^38].  For examples, see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)".
 - A _modulus of continuity_ of a function _f_ means a nonnegative and nowhere decreasing function _&omega;_ on the closed unit interval, for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) whenever _x_ and _y_ are in _f_'s domain.  Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) is greater than or equal to _f_'s maximum range in a window of size _&delta;_.
 
 **Lemma 1.** Omitted.
@@ -1020,13 +1023,26 @@ _Proof._
 >     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^46].
 
-**Lemma 2A.**  _Let f(&lambda;) map the closed unit interval to itself.  If f has a continuous second derivative whose absolute value has a maximum of M or greater, then the expression (1) is less than or equal to $(3\cdot M)/(32n-16)$, for every integer n&ge;1_.
+**Lemma 2A.**  _Let f(&lambda;) map the closed unit interval to itself._
+
+| _If $f$:_ | _Then, for every integer $n$ &ge; 1, the expression (1) in Lemma 2 is less than or equal to:_ |
+ --- | --- |
+| (Case 1) _Is Hölder continuous, its Hölder exponent is $\alpha$, and its Hölder constant is $L$ or less, where $0\lt\alpha\lt 1$._ | $6 L \frac{{1/(8n-4)}^{\alpha/2}}{2^\alpha}$. |
+| (Case 2) _Has a Hölder continuous (first) derivative whose Hölder exponent is $\alpha$ and whose Hölder constant is $L$ or less, where $0\lt\alpha\le 1$._ | $3L(\sqrt{1/(8n-4)}/2)^{1+\alpha}$. |
+| (Case 3) _Has a Lipschitz continuous derivative whose Lipschitz constant is $M$ or less._ | $(3/4)M\frac{1}{8n-4}$. |
+| (Case 4) _Is in the Zygmund class with constant equal to or less than $D$._ | $(3/2) D\sqrt{1/(8n-4)}$. |
 
 _Proof._ Strukov and Timan (1977)[^47], (1975)[^48] proved the bound:<br>abs(**E**[_f_(_Y_)] &minus; _f_(**E**[_Y_])) &le; 3\*&omega;<sub>2</sub>(sqrt(**Var**[_Y_])/2),<br>where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below).  Call this bound **2A1**.
 
-Given that _f_ has a continuous second derivative, there is an $\omega_2$ for it such that $\omega_{2}(f, h)\le M h^2$ whenever $0\le h\le 1/2$ (which is the case here due to the domain of _f_ and the definition of $\omega_{2}$) (Timan 1994)[^49].
+Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**[_Y_]) is less than or equal to 1/(8\*_n_&minus; 4), and **2A1**'s left-hand side is the same as the expression (1).
 
-Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**[_Y_]) is less than or equal to 1/(8\*_n_&minus; 4), and **2A1**'s left-hand side is the same as the expression (1), so that applying the two bounds given above leads to abs(**E**[_f_(_Y_)] - _f_(**E**[_Y_])) &le; 3\*_M_\* (sqrt(**Var**[_Y_])/2)<sup>2</sup> &le; 3\*_M_\*(sqrt(1/(8\*_n_&minus; 4))/2)<sup>2</sup> = $\frac{3 M}{32 n - 16}$. &#x25a1;
+Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying **2A1**, the bound on _Y_'s variance, as well as a property given in Stancu et al. (2001)[^49] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le 3\omega_2(\sqrt{\text{Var}[Y]}/2)$$ $$\le 6\omega(\sqrt{\text{Var}[Y]}/2)\le 6L(\sqrt{\text{Var}[Y]}/2)^\alpha)\le 6 L \frac{{1/(8n-4)}^{\alpha/2}}{2^\alpha}.$$
+
+Case 2: Since $f$'s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^49]&mdash; $$3\omega_2(\sqrt{\text{Var}[Y]}/2)\le 3 (\sqrt{\text{Var}[Y]}/2) \omega(\sqrt{\text{Var}[Y]}/2)\le 3L(\sqrt{\text{Var}[Y]}/2)^{1+\alpha}$$ $$\le 3L(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$
+
+Case 3: Follows from case 2 since a Hölder continuous function with Hölder exponent 1 and Hölder constant $L$ is Lipschitz continuous with Lipschitz constant $M$.
+
+Case 4: Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$3\omega_2(\sqrt{\text{Var}[Y]}/2)\le 3 D (\sqrt{\text{Var}[Y]}/2) = 3D\sqrt{1/(8n-4)}/2.$$ &#x25a1;
 
 > **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever _x_ and _y_ are in _f_'s domain.
 

@@ -137,7 +137,7 @@ My goal is to see not just whether this conjecture is true, but also which value
 The following are some strategies for answering these questions:
 
 1. Finding a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 5 and 6 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
-2. Suppose that, for each integer $n\ge 1$ that's a power of 2, there is a polynomial of degree $n$, $P_{n}(f)$, that is within $E(n)$ of $f(\lambda)$. (For example, $P_{n}(f)$ could be a linear combination of Bernstein polynomials.) Then I believe another way to answer this question is to find $C>0$ such that the non-negative polynomial $Q_{n}(f) = (P_{2n}(f) + E(n) + E(2n)) - P_{n}(f)$, when rewritten to a degree-$(2n)$ polynomial in Bernstein form, has Bernstein coefficients no greater than $CM/n^{r/2}$, where $M$ and $r$ are as above.  In that case, I believe solving the problem will rely on bounds on the derivatives of $f$, $P_{n}(f)$, and $Q_{n}(f)$ in any combination$. (See Lemma 24 of Holtz et al. 2011 for example.)
+2. Suppose that, for each integer $n\ge 1$ that's a power of 2, there is a polynomial of degree $n$, $P_{n}(f)$, that is within $E(n)$ of $f(\lambda)$. (For example, $P_{n}(f)$ could be a linear combination of Bernstein polynomials.) Then I believe another way to answer this question is to find $C>0$ such that the non-negative polynomial $Q_{n}(f) = (P_{2n}(f) + E(n) + E(2n)) - P_{n}(f)$, when rewritten to a degree-$(2n)$ polynomial in Bernstein form, has Bernstein coefficients no greater than $CM/n^{r/2}$, where $M$ and $r$ are as above.  In that case, I believe solving the problem will rely on bounds on the derivatives of $f$, $P_{n}(f)$, and $Q_{n}(f)$ in any combination. (See Lemma 24 of Holtz et al. 2011 for example.)
 
 <a id=Examples_of_Functions_to_Ponder></a>
 ### Examples of Functions to Ponder
@@ -169,8 +169,7 @@ One special case of the question above is if&mdash;
 
 - $f:[0,1]\to [0,1)$ is concave, and
 - $\mathbb{P}(X=a)=p (1-p)^a$, where $0 < p < 1$ is rational, and
-- $\gamma_a(\lambda) = g_{n_{a}}(\lambda) - g_{n_{a-1}}(\lambda)$, and
-- $g_n$ is the Bernstein polynomial for $f$ of degree $n$, with $g_{0} := 0$, and
+- $\gamma_a(\lambda) = B_{n_{a}}(f)(\lambda) - B_{n_{a-1}}(f)(\lambda)$ (\gamma_a(0)=B_{n_{a}}(f)(\lambda)), where $B_n(f) is the degree-$n$ Bernstein polynomial of $f$, and
 - $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$, and
 
 However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ (such as $2^{a+s}$ for some $s\ge 0$) and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which _appears_ to be correct, but finding it was far from rigorous:  $n_a = 2^{a+1}$, $p = 0.27$.
@@ -190,11 +189,11 @@ Once the appropriate series and $X$ are found, an algorithm to toss heads with p
 
 [**https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
 
-The focus is now on a **specific approximation scheme**, the one **presented by [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly"**.
+Let $B_n(f)$ be the degree-$n$ Bernstein polynomial of $f$.
 
 [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly", studied a family of polynomials $(Q_{n,r} f)$ (which they call the _Lorentz operators_) that approximate a continuous function $f$.
 
-They used the Lorentz operators to build a family of polynomials $(g_n)$ that converge from below to $f$ and satisfy the following: $(g_{2n}−g_{n})$ is a polynomial with non-negative Bernstein coefficients, once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
+They used the Lorentz operators to build a family of polynomials $(g_n)$ that converge from below to $f$ and satisfy the following $(g_{2n}−g_{n})$ is a polynomial with non-negative Bernstein coefficients, once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
 
 They proved, among other results, the following.  A function $f(\lambda):[0,1]\to(0,1)$ admits a family $(g_n)$ described above that converges at the rate&mdash;
 
@@ -205,20 +204,16 @@ The scheme is as follows:
 
 Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).
 
-Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\gt 0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ (see the paper for details on the Lorentz operator). Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
+Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\gt 0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_. (See the paper for details on the Lorentz operator, but it should be said that, when $r$ is 0 or 1, $Q_{n,r}f$ is $B_n(f)$ rewritten to degree $n+r$, and for $r=2$ is Bernstein's 1932 modification of $B_n$.) Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
 
 - $f_{n_0} = Q_{n_0, r}f$.
 - $f_{n} = f_{n/b} + Q_{n, r}(f-f_{n/b})$ for each integer $n > n_0$.
 
 - $\phi(n, \alpha, \lambda) = \frac{\theta_{\alpha}}{n^{\alpha}}+(\frac{\lambda(1-\lambda)}{n})^{\alpha/2}$.
 
-Let $B_{n}(F)$ be the degree-$n$ Bernstein polynomial of $F$.
+Let $C(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then rewrite it as a degree-$n+r$ polynomial in Bernstein form.
 
-Let $C(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then rewrite it as a degree-$n+r$ Bernstein polynomial.
-
-Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot C(\lambda).\tag{1}$$
-
-However, the Holtz method is not yet implementable, in part because it relies on hidden constants with no upper bounds given.
+Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot C(\lambda).\tag{1}$$  Thus, $\theta_\alpha$, $s$, and $D$ are hidden constants with no upper bounds given, making the Holtz method unimplementable.  The same is true for the constants in Lemmas 15 to 22 as well as Lemma 24 in the paper.
 
 <a id=Questions></a>
 ### Questions
@@ -463,3 +458,4 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 - Lee, Sang Kyu, Jae Ho Chang, and Hyoung-Moon Kim. "Further sharpening of Jensen's inequality." Statistics 55, no. 5 (2021): 1154-1168.
 - Bustamante, J., "Estimates of positive linear operators in terms of second order moduli", J. Math. Anal. Appl. 345 (2008).
+- S.N. Bernstein, "The asymptotic behavior of the approximation of functions by their Bernstein polynomials", 1932.

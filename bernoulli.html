@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/05/01"><meta name="citation_online_date" content="2023/05/01"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/05/02"><meta name="citation_online_date" content="2023/05/02"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -217,7 +217,7 @@
 <p><strong>Example:</strong> A Bernoulli factory algorithm can take a coin that returns heads with probability <em>&lambda;</em> and produce a coin that returns heads with probability exp(&minus;<em>&lambda;</em>).  In this example, exp(&minus;<em>&lambda;</em>) is the factory function.</p>
 </blockquote>
 
-<p>Keane and O&#39;Brien (1994)[^2] showed that a function <em>f</em> that maps [0, 1] (or a subset of it) to [0, 1] admits a Bernoulli factory if and only if&mdash;</p>
+<p>Keane and O&#39;Brien (1994)[^2] showed that a function <em>f</em> that maps the closed interval [0, 1] (or a subset of it) to [0, 1] admits a Bernoulli factory if and only if&mdash;</p>
 
 <ul>
 <li><em>f</em> is continuous and constant on its domain, or</li>
@@ -276,14 +276,39 @@
 <td>Yes; continuous and polynomially bounded on domain (Huber 2014, introduction)[^4].</td>
 </tr>
 <tr>
-<td>0 if <em>&lambda;</em> = 0, or exp(&minus;1/<em>&lambda;</em>) otherwise</td>
+<td>exp(&minus;1/<em>&lambda;</em>)</td>
 <td>(0, 1)</td>
-<td>No; not polynomially bounded since no nonconstant polynomial can come between the <em>&amp;lambda</em>-axis and $f$.</td>
+<td>No; not polynomially bounded since no nonconstant polynomial can come between the <em>&lambda;</em>-axis and $f$.</td>
 </tr>
 <tr>
-<td>&#x03F5; if <em>&lambda;</em> = 0, or exp(&minus;1/<em>&lambda;</em>) + &#x03F5; otherwise</td>
+<td>(exp(&minus;1/<em>&lambda;</em>))/4.</td>
+<td>(0, 1)</td>
+<td>No, for same reason.</td>
+</tr>
+<tr>
+<td>(<em>&lambda;</em>+<em>&lambda;</em>*sin(1/<em>&lambda;</em>)+exp(&minus;1/<em>&lambda;</em>))/4.</td>
+<td>(0, 1)</td>
+<td>No, for same reason.</td>
+</tr>
+<tr>
+<td>(<em>&lambda;</em>*abs(sin(1/<em>&lambda;</em>))<sup><em>&alpha;</em></sup>+exp(&minus;1/<em>&lambda;</em>))/4, where <em>&alpha;</em>&gt;0.</td>
+<td>(0, 1)</td>
+<td>No, for same reason.</td>
+</tr>
+<tr>
+<td>exp(&minus;1/<em>&lambda;</em>) + &#x03F5;</td>
 <td>(0, 1)</td>
 <td>Yes; continuous, minimum greater than 0, maximum less than 1.</td>
+</tr>
+<tr>
+<td>exp(&minus;1/<em>&lambda;</em>)</td>
+<td>[&#x03F5;, 1)</td>
+<td>Yes; same reason.</td>
+</tr>
+<tr>
+<td><em>&lambda;</em><sup><em>&alpha;</em></sup> where <em>n</em>&ge;2 is an integer.</td>
+<td>[0, 1]</td>
+<td>Yes; continuous and the polynomial $\lambda^{n+1}$ can go below $f$, and the polynomial $\lambda^{n-1}$ can go above $f$.</td>
 </tr>
 </tbody></table>
 
