@@ -90,7 +90,7 @@ Without loss of generality, the following special cases are of interest to me:
 
 - The class has only functions with Lipschitz continuous $r$-th derivative where $r$ is 2 to 5.
 - The approximating polynomials are based on a linear combination or iterated Boolean sum of Bernstein polynomials (Butzer 1953; Micchelli 1973).  Examples: $B_n(2 f - B_n(f))$ and $r$ is 3 or 4, or $B_n(B_n(B_n(f))+3(f-B_n(f)))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
-- The approximating polynomial is a linear operator that is not positive and preserves polynomials of a higher degree than linear functions (e.g., the operator studied by Tachev (2022) preserves quadratic functions).
+- The approximating polynomial is a linear operator that is not positive and preserves polynomials of a higher degree than linear functions (e.g., the operators studied by Tachev (2022) and Han (2003)).
 
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
 ### Solving the Bernoulli factory problem with polynomials
@@ -169,7 +169,7 @@ One special case of the question above is if&mdash;
 
 - $f:[0,1]\to [0,1)$ is concave, and
 - $\mathbb{P}(X=a)=p (1-p)^a$, where $0 < p < 1$ is rational, and
-- $\gamma_a(\lambda) = B_{n_{a}}(f)(\lambda) - B_{n_{a-1}}(f)(\lambda)$ (\gamma_a(0)=B_{n_{a}}(f)(\lambda)), where $B_n(f) is the degree-$n$ Bernstein polynomial of $f$, and
+- $\gamma_a(\lambda) = B_{n_{a}}(f)(\lambda) - B_{n_{a-1}}(f)(\lambda)$ (\gamma_a(0)=B_{n_{a}}(f)(\lambda))$, where $B_n(f) is the degree-$n$ Bernstein polynomial of $f$, and
 - $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$, and
 
 However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ (such as $2^{a+s}$ for some $s\ge 0$) and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which _appears_ to be correct, but finding it was far from rigorous:  $n_a = 2^{a+1}$, $p = 0.27$.
@@ -204,7 +204,9 @@ The scheme is as follows:
 
 Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).
 
-Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\gt 0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_. (See the paper for details on the Lorentz operator, but it should be said that, when $r$ is 0 or 1, $Q_{n,r}f$ is $B_n(f)$ rewritten to degree $n+r$, and for $r=2$ is Bernstein's 1932 modification of $B_n$.) Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
+Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\gt 0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_. (See the paper for details on the Lorentz operator, but it should be said that, when $r$ is 0 or 1, $Q_{n,r}f$ is $B_n(f)$ rewritten to degree $n+r$, and for $r=2$ is Bernstein's 1932 modification of $B_n$.)
+
+Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
 
 - $f_{n_0} = Q_{n_0, r}f$.
 - $f_{n} = f_{n/b} + Q_{n, r}(f-f_{n/b})$ for each integer $n > n_0$.
@@ -459,3 +461,4 @@ Moreover, there remains to find the parameters for the Lorentz operator when $r$
 - Lee, Sang Kyu, Jae Ho Chang, and Hyoung-Moon Kim. "Further sharpening of Jensen's inequality." Statistics 55, no. 5 (2021): 1154-1168.
 - Bustamante, J., "Estimates of positive linear operators in terms of second order moduli", J. Math. Anal. Appl. 345 (2008).
 - S.N. Bernstein, "The asymptotic behavior of the approximation of functions by their Bernstein polynomials", 1932.
+- X. Han, "[**Multi-node higher order expansions of a function**](https://www.sciencedirect.com/science/article/pii/S0021904503001485)", Journal of Approximation Theory, October 2003.

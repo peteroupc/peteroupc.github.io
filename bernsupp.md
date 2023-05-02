@@ -647,10 +647,6 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^71]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
-[^72]: Adell, J.A. and Cárdenas-Morales, D., 2018. Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials. Journal of Approximation Theory, 231, pp.41-52.
-
-[^73]: Bojanic, R., Shisha, O., "Degree of L<sub>1</sub> approximation to integrable functions by modified Bernstein polynomials", Journal of Approximation Theory 13 (1975).
-
 <a id=Appendix></a>
 ## Appendix
 
@@ -700,9 +696,9 @@ _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^
 
 The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows: $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value ("long-run average").   (Traditionally, another central moment, that of $X/n$ or the ratio of heads to tosses, is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  $T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) The following results bound the absolute value of $T$.[^32]
 
-**Result B4** (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.
+**Result B4** (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.
 
-**Result B4A** (Adell and Cárdenas-Morales 2018)[^72]: If $r\ge 0$ is an even integer, then for every $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)6^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)6^{r/2}}\frac{1}{n^{r/2}}$.
+**Result B4A** (Adell and Cárdenas-Morales 2018)[^72]: If $r\ge 0$ is an even integer, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)6^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)6^{r/2}}\frac{1}{n^{r/2}}$.
 
 **Proposition B5**: For every integer $n\ge 1$, the following is true: $$|T_{n,3}(p)| \le \frac{\sqrt{3}}{18\sqrt{n}} n^{3/2} \le \frac{\sqrt{3}}{18} n^{3/2} \lt (963/10000) n^{3/2}.$$
 
@@ -721,7 +717,7 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 1. $f$ can be written as $f(\lambda) = R_f(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.
 2. $|B_n(R_f(\lambda, x_0))(x_0)| \le M/((((r+1)/2)!)(\beta n)^{(r+1)/2})$ for every $n\ge 1$, where $M$ is equal to or greater than the $r$-th derivative's Lipschitz constant, and where $\beta$ is 8 if $r\le 43$ and 6 otherwise.
 
-_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. By a result found in Gonska et al. (2006)[^35], because $f$'s $r$-th derivative is Lipschitz continuous&mdash; $$|R_f(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}\le M\frac{(\lambda-x_0)^{r+1}}{(r+1)!}.$$  By Results B4 and B4A, the Bernstein polynomial of $(\lambda-x_0)^{r+1}$ can be bounded as follows: $$|B_n((\lambda-x_0)^{r+1})(x_0)| \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}},$$ where $\beta$ is 8 if $r\le 43$ and 6 otherwise, so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{(r+1)!} |B_n((\lambda-x_0)^{r+1})(x_0)|$$ $$\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)8^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(8n)^{(r+1)/2}}.$$ &#x25a1;
+_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Lagrange remainder_,  $R_f(\lambda, x_0)$. By a result found in Gonska et al. (2006)[^35], because $f$'s $r$-th derivative is Lipschitz continuous&mdash; $$|R_f(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}\le M\frac{(\lambda-x_0)^{r+1}}{(r+1)!}.$$  By Results B4 and B4A, the Bernstein polynomial of $(\lambda-x_0)^{r+1}$ can be bounded as follows: $$|B_n((\lambda-x_0)^{r+1})(x_0)| \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}},$$ where $\beta$ is 8 if $r\le 43$ and 6 otherwise, so&mdash; $$|B_n(R_f(\lambda, x_0))| \le \frac{M}{(r+1)!} |B_n((\lambda-x_0)^{r+1})(x_0)|$$ $$\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.$$ &#x25a1;
 
 > **Note:** If $f$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor's theorem for real variables, $R_f(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^36] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)).  Thus, by this estimate, $|R_f(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$
 
