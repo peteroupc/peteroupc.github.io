@@ -1040,7 +1040,7 @@ _Proof._
 
 | _If $f$:_ | _Then, for every integer $n$ &ge; 1, the expression (1) in Lemma 2 is less than or equal to:_ |
  --- | --- |
-| (Case 1) _Is Hölder continuous, its Hölder exponent is $\alpha$, and its Hölder constant is $L$ or less, where $0\lt\alpha\lt 1$._ | $6 L \frac{{1/(8n-4)}^{\alpha/2}}{2^\alpha}$. |
+| (Case 1) _Is Hölder continuous, its Hölder exponent is $\alpha$, and its Hölder constant is $L$ or less, where $0\lt\alpha\lt 1$._ | $6 L \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}$. |
 | (Case 2) _Has a Hölder continuous (first) derivative whose Hölder exponent is $\alpha$ and whose Hölder constant is $L$ or less, where $0\lt\alpha\le 1$._ | $3L(\sqrt{1/(8n-4)}/2)^{1+\alpha}$. |
 | (Case 3) _Has a Lipschitz continuous derivative whose Lipschitz constant is $M$ or less._ | $(3/4)M\frac{1}{8n-4}$. |
 | (Case 4) _Is in the Zygmund class with constant equal to or less than $D$._ | $(3/2) D\sqrt{1/(8n-4)}$. |
