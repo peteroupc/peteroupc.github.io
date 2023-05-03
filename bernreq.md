@@ -169,7 +169,7 @@ One special case of the question above is if&mdash;
 
 - $f:[0,1]\to [0,1)$ is concave, and
 - $\mathbb{P}(X=a)=p (1-p)^a$, where $0 < p < 1$ is rational, and
-- $\gamma_a(\lambda) = B_{n_{a}}(f)(\lambda) - B_{n_{a-1}}(f)(\lambda)$ (\gamma_a(0)=B_{n_{a}}(f)(\lambda))$, where $B_n(f) is the degree-$n$ Bernstein polynomial of $f$, and
+- $\gamma_a(\lambda) = B_{n_{a}}(f)(\lambda) - B_{n_{a-1}}(f)(\lambda)$ ($\gamma_a(0)=B_{n_{a}}(f)(\lambda)$), where $B_n(f) is the degree-$n$ Bernstein polynomial of $f$, and
 - $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$, and
 
 However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ (such as $2^{a+s}$ for some $s\ge 0$) and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which _appears_ to be correct, but finding it was far from rigorous:  $n_a = 2^{a+1}$, $p = 0.27$.
