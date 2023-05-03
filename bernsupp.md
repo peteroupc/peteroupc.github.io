@@ -1049,7 +1049,7 @@ _Proof._ Strukov and Timan (1977)[^49], (1975)[^50] proved the bound:<br>abs(**E
 
 Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**[_Y_]) is less than or equal to 1/(8\*_n_&minus; 4), and **2A1**'s left-hand side is the same as the expression (1).
 
-Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying **2A1**, the bound on _Y_'s variance, as well as a property given in Stancu et al. (2001)[^51] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le 3\omega_2(\sqrt{\text{Var}[Y]}/2)$$ $$\le 6\omega(\sqrt{\text{Var}[Y]}/2)\le 6L(\sqrt{\text{Var}[Y]}/2)^\alpha)\le 6 L \frac{{1/(8n-4)}^{\alpha/2}}{2^\alpha}.$$
+Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying **2A1**, the bound on _Y_'s variance, as well as a property given in Stancu et al. (2001)[^51] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le 3\omega_2(\sqrt{\text{Var}[Y]}/2)$$ $$\le 6\omega(\sqrt{\text{Var}[Y]}/2)\le 6L(\sqrt{\text{Var}[Y]}/2)^\alpha)\le 6 L \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$
 
 Case 2: Since $f$'s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^51]&mdash; $$3\omega_2(\sqrt{\text{Var}[Y]}/2)\le 3 (\sqrt{\text{Var}[Y]}/2) \omega(\sqrt{\text{Var}[Y]}/2)\le 3L(\sqrt{\text{Var}[Y]}/2)^{1+\alpha}$$ $$\le 3L(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$
 
