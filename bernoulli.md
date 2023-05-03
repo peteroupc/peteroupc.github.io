@@ -163,11 +163,12 @@ A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an algorithm that takes a
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads.
 - The Bernoulli factory's outputs are statistically independent, and so are those of the input coin.
 - Many Bernoulli factories also use a _fair coin_ in addition to the input coin.  A fair coin shows heads or tails with equal probability, and represents a source of randomness outside the input coin.
-- A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the _closed_ interval [0, 1] or a subset of that interval, and maps an input in that interval to an output in that interval.
+- A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the _closed_ unit interval or a subset of that interval, and maps an input in that interval to an output in that interval.
+- The _closed unit interval_ is the set of numbers consisting of 0, 1, and all real numbers in between.
 
 > **Example:** A Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).  In this example, exp(&minus;_&lambda;_) is the factory function.
 
-Keane and O'Brien (1994\)[^2] showed that a function _f_ that maps the closed interval \[0, 1\] (or a subset of it) to [0, 1] admits a Bernoulli factory if and only if&mdash;
+Keane and O'Brien (1994\)[^2] showed that a function _f_ that maps the closed unit interval (or a subset of it) to the closed unit interval admits a Bernoulli factory if and only if&mdash;
 
 - _f_ is continuous and constant on its domain, or
 - _f_ is continuous and polynomially bounded on its domain.
@@ -178,19 +179,19 @@ The following shows some functions that are factory functions and some that are 
 
 | Function _f_(_&lambda;_) | Domain | Can _f_ be a factory function? |
  ---- | ---- | ---- |
-| 0 | [0, 1] | Yes; constant. |
-| 1 | [0, 1] | Yes; constant. |
-| 1/2 | (0, 1) | Yes; constant. |
-| 1/4 if _&lambda;_<1/2, and 3/4 elsewhere | (0, 1) | No; discontinuous. |
+| 0 | 0&le;_&lambda;_&le;1 Yes; constant. |
+| 1 | 0&le;_&lambda;_&le;1 Yes; constant. |
+| 1/2 | 0&lt;_&lambda;_&lt;1 Yes; constant. |
+| 1/4 if _&lambda;_<1/2, and 3/4 elsewhere | 0&lt;_&lambda;_&lt;1 No; discontinuous. |
 | 2*_&lambda;_ | \[0,&nbsp;1\] or \[0,&nbsp;1/2\) | No; not polynomially bounded since _f_(_&lambda;_) approaches 1 as _&lambda;_ approaches 1/2 (as opposed to 0 or 1).[^3]. |
 | 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since _f_(_&lambda;_) approaches 0 as _&lambda;_ approaches 1/2. |
 | 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994\)[^2]. |
-| min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0, 1] | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction\)[^4]. |
-| exp(&minus;1/_&lambda;_) | (0, 1) | No; not polynomially bounded since no nonconstant polynomial can come between the _&lambda;_-axis and $f$. |
-| (exp(&minus;1/_&lambda;_))/4. | (0, 1) | No, for same reason. |
-| (_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4. | (0, 1) | No, for same reason. |
-| (_&lambda;_\*abs(sin(1/_&lambda;_))<sup>_&alpha;_</sup>+exp(&minus;1/_&lambda;_))/4, where _&alpha;_>0. | (0, 1) | No, for same reason. |
-| exp(&minus;1/_&lambda;_) + &#x03F5; | (0, 1) | Yes; continuous, minimum greater than 0, maximum less than 1. |
+| min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | 0&le;_&lambda;_&le;1 Yes; continuous and polynomially bounded on domain (Huber 2014, introduction\)[^4]. |
+| exp(&minus;1/_&lambda;_) | 0&lt;_&lambda;_&lt;1 No; not polynomially bounded since no nonconstant polynomial can come between the _&lambda;_-axis and $f$. |
+| (exp(&minus;1/_&lambda;_))/4. | 0&lt;_&lambda;_&lt;1 No, for same reason. |
+| (_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4. | 0&lt;_&lambda;_&lt;1 No, for same reason. |
+| (_&lambda;_\*abs(sin(1/_&lambda;_))<sup>_&alpha;_</sup>+exp(&minus;1/_&lambda;_))/4, where _&alpha;_>0. | 0&lt;_&lambda;_&lt;1 No, for same reason. |
+| exp(&minus;1/_&lambda;_) + &#x03F5; | 0&lt;_&lambda;_&lt;1 Yes; continuous, minimum greater than 0, maximum less than 1. |
 | exp(&minus;1/_&lambda;_) | [&#x03F5;, 1) | Yes; same reason. |
 | _&lambda;_<sup>_&alpha;_</sup> where _n_&ge;2 is an integer.  | \[0, 1\] | Yes; continuous and the polynomial $\lambda^{n+1}$ can go below $f$, and the polynomial $\lambda^{n-1}$ can go above $f$. |
 
@@ -288,13 +289,13 @@ Because the coefficients _a_\[_i_\] must be 0 or greater, but not greater than 1
 >
 > 1. Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where _&lambda;_ is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when _&lambda;_ = 0, and 0.6 when _&lambda;_ = 1.  (The curve, however, is not at 0.3 when _&lambda;_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 > 2. The problem of simulating polynomials in Bernstein form is related to _stochastic logic_, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and exclusive-OR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for further discussion see (Qian et al. 2011\)[^7], Qian and Riedel 2008[^10]).
-> 3. These algorithms can serve as an approximate way to simulate any function _f_ that maps the interval \[0, 1] to \[0, 1], whether continuous or not.  In this case, _a_\[_j_\] is calculated as _f_(_j_/_n_), so that the resulting polynomial closely approximates the function.  In fact, if the function is continuous, it's possible to choose the polynomial degree (_n_) high enough to achieve a given maximum error (this is a result of the so-called "Weierstrass approximation theorem").  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
+> 3. These algorithms can serve as an approximate way to simulate any function _f_ that maps the closed unit interval to itself, whether continuous or not.  In this case, _a_\[_j_\] is calculated as _f_(_j_/_n_), so that the resulting polynomial closely approximates the function.  In fact, if the function is continuous, it's possible to choose the polynomial degree (_n_) high enough to achieve a given maximum error (this is a result of the so-called "Weierstrass approximation theorem").  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
 >
 > **Examples:**
 >
 > 1. Take the following parabolic function discussed in Thomas and Blanchet (2012\)[^11]\: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where 0 &lt; _c_ &lt; 1.  This is a polynomial of degree 2 that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. Rewriting the polynomial in Bernstein form (such as via the matrix method by Ray and Nataraj (2012\)[^12]) leads to coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus:
 >     - If 0 &lt; _c_ &le; 1/2, this function can be simulated as follows: "Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2\*_c_ and 0 otherwise.  Otherwise, return 0."
->     - If 1/2 &lt; _c_ &lt; 1, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in [0, 1]; the required degree approaches infinity as _c_ approaches 1.[^13]
+>     - If 1/2 &lt; _c_ &lt; 1, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in the closed unit interval; the required degree approaches infinity as _c_ approaches 1.[^13]
 >
 > 2. The _conditional_ construction, mentioned in Flajolet et al. (2010\)[^1], has the form&mdash;<br>(_&lambda;_) \* _a_\[0] + (1 &minus; _&lambda;_) \* _a_\[1].<br>This is a degree-1 polynomial in Bernstein form with variable _&lambda;_ and coefficients _a_\[0] and _a_\[1]. It has the following algorithm: "Flip the _&lambda;_ input coin.  If the result is 0, flip the _a_\[0] input coin and return the result.  Otherwise, flip the _a_\[1] input coin and return the result."  Special cases of the conditional construction include complement, mean, product, and logical OR; see "[**Other Factory Functions**](#Other_Factory_Functions)".
 
@@ -320,7 +321,7 @@ The following is a special case:
 
 A _rational function_ is a ratio of polynomials.
 
-According to Mossel and Peres (2005\)[^15], a function that maps the open interval (0, 1) to itself can be simulated by a finite-state machine if and only if the function can be written as a rational function whose coefficients are rational numbers.
+According to Mossel and Peres (2005\)[^15], if a function _f_(_&lambda;_) satisfies 0 &lt; _f_(_&lambda;_) &lt; 1 whenever 0 &lt; _&lambda;_ &lt; 1, it can be simulated by a finite-state machine if and only if the function can be written as a rational function whose coefficients are rational numbers.
 
 The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012\)[^11].  It assumes the rational function is written as _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
@@ -329,7 +330,7 @@ The following algorithm is suggested from the Mossel and Peres paper and from (T
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
 - each _d_\[_i_\] and each _e_\[_i_\] is an integer or rational number in the interval [0, choose(_n_, _i_)], where the upper bound is the total number of _n_-bit words with _i_ ones.
 
-Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  (Because of the assumptions, _D_ and _E_ are polynomials that map the closed interval [0, 1] to itself.)
+Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  (Because of the assumptions, _D_ and _E_ are polynomials that map the closed unit interval to itself.)
 
 The algorithm follows.
 
@@ -348,7 +349,7 @@ The algorithm follows.
 > 2. This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an _n_-bit word and looking up whether that word is "passing", "failing", or neither, among all _n_-bit words with _j_ ones, but this can be impractical (in general, a lookup table of size 2<sup>_n_</sup> first has to be built in a setup step; as _n_ grows, the table size grows exponentially).  Moreover, this approach works only if _d_\[_i_\] and _e_\[_i_\] are integers (or if _d_\[_i_\] is replaced with floor(_d_\[_i_\]) and _e_\[_i_\] with ceil(_e_\[_i_\]) (Nacu and Peres 2005\)[^16], but this suffers from rounding error when done in this algorithm).  See also (Thomas and Blanchet 2012\)[^11].
 > 3. As with polynomials, this algorithm (or the one given later) can serve as an approximate way to simulate any factory function, via a rational function that closely approximates that function.  The higher _n_ is, the better this approximation, and in general, a degree-_n_ rational function approximates a given function better than a degree-_n_ polynomial.  However, to achieve a given error tolerance with a rational function, the degree _n_ as well as _d_\[_i_\] and _e_\[_i_\] have to be optimized.  This is unlike the polynomial case where only the degree _n_ has to be optimized.
 >
-> **Example**: Take the function _f_(_&lambda;_) = 1/(_&lambda;_&minus;2)<sup>2</sup>.  This is a rational function, in this case a ratio of two polynomials that are both nonnegative on the interval \[0, 1].  One algorithm to simulate this function follows.<br>(1) Flip the input coin twice, and let _heads_ be the number of times the coin returned 1 this way.<br>(2) Depending on _heads_, choose 0, 1, or 2 with probability proportional to the following weights: _heads_=0 &rarr; \[3, 1, 0], _heads_=1 &rarr; \[1, 1, 2], _heads_=2 &rarr; \[0, 1, 3]; if 0 or 1 is chosen this way, return it; otherwise, go to step 1.<br>Here is how _f_ was prepared to derive this algorithm:<br>(1) Take the numerator 1, and the denominator (_&lambda;_&minus;2)<sup>2</sup>.  Rewrite the denominator as 1\*_&lambda;_<sup>2</sup> &minus; 4\*_&lambda;_ + 4.<br>(2) Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree) of degree 2; see the "homogenizing" section in "[**Preparing Rational Functions**](#Preparing_Rational_Functions)".  The result is (1, 2, 1) and (4, 4, 1) respectively.<br>(3) Divide both polynomials (actually their coefficients) by the same value so that both polynomials are 1 or less.  An easy (but not always best) choice is to divide them by their maximum coefficient, which is 4 in this case.  The result is _d_ = (1/4, 1/2, 1/4), _e_ = (1, 1, 1/4).<br>(4) Prepare the weights as given in step 2 of the original algorithm.  The result is [3/4, 1/4, 0], [1/2, 1/2, 1], and [0, 1/4, 3/4], for different counts of heads.  Because the weights in this case are multiples of 1/4, they can be simplified to integers without affecting the algorithm: [3, 1, 0], [1, 1, 2], [0, 1, 3], respectively.
+> **Example**: Take the function _f_(_&lambda;_) = 1/(_&lambda;_&minus;2)<sup>2</sup>.  This is a rational function, in this case a ratio of two polynomials that are both nonnegative on the closed unit interval.  One algorithm to simulate this function follows.<br>(1) Flip the input coin twice, and let _heads_ be the number of times the coin returned 1 this way.<br>(2) Depending on _heads_, choose 0, 1, or 2 with probability proportional to the following weights: _heads_=0 &rarr; \[3, 1, 0], _heads_=1 &rarr; \[1, 1, 2], _heads_=2 &rarr; \[0, 1, 3]; if 0 or 1 is chosen this way, return it; otherwise, go to step 1.<br>Here is how _f_ was prepared to derive this algorithm:<br>(1) Take the numerator 1, and the denominator (_&lambda;_&minus;2)<sup>2</sup>.  Rewrite the denominator as 1\*_&lambda;_<sup>2</sup> &minus; 4\*_&lambda;_ + 4.<br>(2) Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree) of degree 2; see the "homogenizing" section in "[**Preparing Rational Functions**](#Preparing_Rational_Functions)".  The result is (1, 2, 1) and (4, 4, 1) respectively.<br>(3) Divide both polynomials (actually their coefficients) by the same value so that both polynomials are 1 or less.  An easy (but not always best) choice is to divide them by their maximum coefficient, which is 4 in this case.  The result is _d_ = (1/4, 1/2, 1/4), _e_ = (1, 1, 1/4).<br>(4) Prepare the weights as given in step 2 of the original algorithm.  The result is [3/4, 1/4, 0], [1/2, 1/2, 1], and [0, 1/4, 3/4], for different counts of heads.  Because the weights in this case are multiples of 1/4, they can be simplified to integers without affecting the algorithm: [3, 1, 0], [1, 1, 2], [0, 1, 3], respectively.
 
 **"Dice Enterprise" special case.** The following algorithm implements a special case of the "Dice Enterprise" method of Morina et al. (2022\)[^17].  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)), where _&lambda;_ is the input coin's probability of heads and _m_ is 2 or greater.  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_k_</sub>(_&lambda;_) are in the form of polynomials as follows:
 - The polynomials are _homogeneous_, that is, they are written as $\sum_{i=0}^n$ _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] is a coefficient.
@@ -445,7 +446,7 @@ Then rewrite the function as&mdash; $$f(\lambda) = A(\lambda) + (g(\lambda))^{m}
 - $A(\lambda) = f(\lambda) - C(\lambda) = \sum_{i=0}^{m-1} a_i (g(\lambda))^i$ is a polynomial in $g(\lambda)$ of degree $m-1$, and
 - $B(\lambda) = C(\lambda) / (g(\lambda))^{m} = \sum_{i\ge m} a_{m+i} (g(\lambda))^i$.
 
-Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form, given the "power" coefficients $a_0, ..., a_{m-1}$, is the so-called "matrix method" from Ray and Nataraj (2012)[^20].)  Let $b_0, ..., b_{m-1}$ be the Bernstein-form polynomial's coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.
+Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form, given the "power" coefficients $a_0, ..., a_{m-1}$, is the so-called "matrix method" from Ray and Nataraj (2012)[^20].)  Let $b_0, ..., b_{m-1}$ be the Bernstein-form polynomial's coefficients.  Then if those coefficients all lie on the closed unit interval, then the following algorithm simulates $f(\lambda)$.
 
 **Algorithm 1:** Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories), with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory "flips the input coin", it runs the sub-algorithm below.
 
@@ -657,7 +658,7 @@ The algorithm implements the reverse-time martingale framework (Algorithm 4) in 
 
 1. Generate a uniform random variate between 0 and 1, call it _ret_.
 2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _lastdegree_ to 0, and set _ones_ to 0.
-3. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) with _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
+3. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has coefficients all lying in the closed unit interval.  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) with _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 4. Set _startdegree_ to _degree_.
 5. (The remaining steps are now done repeatedly until the algorithm finishes by returning a value.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
 6. Calculate _&#x2113;_ and _u_ as follows:
@@ -740,7 +741,7 @@ See the appendix for a correctness proof of Algorithm 3.
 
 > **Notes:**
 >
-> - If any of these algorithms encounters a probability outside the interval [0, 1], the entire algorithm will fail for that continued fraction.
+> - If any of these algorithms encounters a probability outside the closed unit interval, the entire algorithm will fail for that continued fraction.
 >
 > - These algorithms will work for continued fractions of the form "1 &minus; ..." (rather than "0 + ...") if&mdash;
 >     - before running the algorithm, the first partial numerator and denominator have their sign removed, and
@@ -1052,7 +1053,7 @@ Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the 
 **Algorithm 1.** (Flajolet et al., 2010\)[^1] showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the probability&mdash;
 
 - $\frac{1}{\lambda} \int_0^\lambda f(u)\,du$ ($\frac{1}{\lambda}$ times the integral of $f(u)$ on $[0, \lambda]$), or equivalently,
-- $\int_0^1 f(\lambda u)\,du$ (the integral of $f(\lambda u)$ on $[0, 1]$),
+- $\int_0^1 f(\lambda u)\,du$ (the integral of $f(\lambda u)$ on the closed unit interval),
 
 namely the following algorithm:
 
@@ -2061,7 +2062,7 @@ In the following algorithm, _x_ is a real number that is 0 or greater and 1 or l
 
 1. Generate a uniform random variate between 0 and 1, call it _ret_.
 2. Set _u_ to point to the same value as _ret_, and set _k_ to 1.
-3. (In this and the next step, _v_ is created, which is the maximum of two uniform [0, 1] random variates.) Generate two uniform random variates between 0 and 1, call them _a_ and _b_.
+3. (In this and the next step, _v_ is created, which is the maximum of two uniform random variates between 0 and 1.) Generate two uniform random variates between 0 and 1, call them _a_ and _b_.
 4. If _a_ is less than _b_, set _v_ to _b_. Otherwise, set _v_ to _a_.
 5. If _v_ is less than _u_, set _u_ to _v_, then add 1 to _k_, then go to step 3.
 6. If _k_ is odd[^25], return 1 if _ret_ is less than _x_, or 0 otherwise. (If _ret_ is implemented as a uniform PSRN, this comparison should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
@@ -2464,7 +2465,7 @@ The following algorithm returns 1 with probability sin(_&lambda;_\*_&pi;_/2) and
 
 > **Notes:**
 >
->  1.  The following is a derivation of this algorithm.  Write&mdash; $$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$ where&mdash; $$g(\mu) = 1-\sin((1-\mu) \pi/2)$$ $$= \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}$$ $$= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.$$  This is a [**convex combination**](#Convex_Combinations) of $w_n(1)$ and $\frac{w_n(\mu)}{w_n(1)}$ &mdash; to simulate $g(\mu)$, first an integer _n_ is chosen with probability $w_n(1)$ and then a coin that shows heads with probability $\frac{w_n(\mu)}{w_n(1)}$ is flipped.  Finally, to simulate $f(\lambda)$, the input coin is "inverted" ($\mu = 1-\lambda$), $g(\mu)$ is simulated using the "inverted" coin, and 1 minus the simulation result is returned.<br><br>As given above, each term $w_n(\mu)$ is a polynomial in $\mu$, and is strictly increasing and equals 1 or less everywhere on the interval $[0, 1]$, and $w_n(1)$ is a constant so that $\frac{w_n(\mu)}{w_n(1)}$ remains a polynomial.  Each polynomial $\frac{w_n(\mu)}{w_n(1)}$ can be transformed into a polynomial in Bernstein form with the following coefficients: $$(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1),$$ where the polynomial is of degree $4n+4$ and so has $4n+5$ coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}} = 16 (n+1) (4n+3)$.  These are the coefficients used in steps 4 through 7 of the algorithm above.
+>  1.  The following is a derivation of this algorithm.  Write&mdash; $$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$ where&mdash; $$g(\mu) = 1-\sin((1-\mu) \pi/2)$$ $$= \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}$$ $$= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.$$  This is a [**convex combination**](#Convex_Combinations) of $w_n(1)$ and $\frac{w_n(\mu)}{w_n(1)}$ &mdash; to simulate $g(\mu)$, first an integer _n_ is chosen with probability $w_n(1)$ and then a coin that shows heads with probability $\frac{w_n(\mu)}{w_n(1)}$ is flipped.  Finally, to simulate $f(\lambda)$, the input coin is "inverted" ($\mu = 1-\lambda$), $g(\mu)$ is simulated using the "inverted" coin, and 1 minus the simulation result is returned.<br><br>As given above, each term $w_n(\mu)$ is a polynomial in $\mu$, and is strictly increasing and equals 1 or less everywhere on the closed unit interval, and $w_n(1)$ is a constant so that $\frac{w_n(\mu)}{w_n(1)}$ remains a polynomial.  Each polynomial $\frac{w_n(\mu)}{w_n(1)}$ can be transformed into a polynomial in Bernstein form with the following coefficients: $$(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1),$$ where the polynomial is of degree $4n+4$ and so has $4n+5$ coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}} = 16 (n+1) (4n+3)$.  These are the coefficients used in steps 4 through 7 of the algorithm above.
 >
 >  2. sin(_&lambda;_\*_&pi;_/2) = cos((1&minus;_&lambda;_)\*_&pi;_/2).
 
@@ -2488,7 +2489,7 @@ Then the algorithm's behavior is given in the tables below.
 
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is _x_ or less given that _n_ is ... |
  --- | --- | --- | --- |
-| Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV\)[^30]; see also Forsythe 1972[^67]).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is a uniform random variate greater than 0 and less than 1, this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
+| Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV\)[^30]; see also Forsythe 1972[^67]).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is a uniform random variate greater than 0 and less than 1, this probability becomes the integral of _&psi;_(_z_) over the closed unit interval. |
 | Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979[^74]).  DPDF and ECDF are as above. |
 | Numbers sorted in descending order | Both uniform variates between 0 and 1 | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(&minus;1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and "cut off" to be not less than 0 and not greater than 1 (von Neumann 1951\)[^71]. |
 | Numbers sorted in descending order | _D_ is a uniform variate between 0 and 1; _E_ is max. of two uniform variates between 0 and 1. | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for 0&le;_z_&le;1; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
@@ -2515,7 +2516,7 @@ The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz (MGL) g
 
 This can be seen as running **Algorithm CC** with an input coin for a randomly generated probability (a uniform random variate between 0 and 1).  Given that step 1 generates $U$, the probability this algorithm returns 1 is&mdash; $$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the "[**integral method**](#Integrals)", so that the overall algorithm returns 1 with probability&mdash; $$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.
 
-The derivation below relies on the following fact: The probability satisfies&mdash; $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the interval $[0, 1]$ have natural sigma-finite measures.
+The derivation below relies on the following fact: The probability satisfies&mdash; $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.
 
 Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm's step 2 generates a number $k$, namely&mdash; $$C(k)=\int_0^1 g(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2}.$$  Then the MGL series for $\pi/4$ is formed by&mdash;
 

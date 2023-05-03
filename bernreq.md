@@ -86,12 +86,6 @@ Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functio
 
 The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
 
-Without loss of generality, the following special cases are of interest to me:
-
-- The class has only functions with Lipschitz continuous $r$-th derivative where $r$ is 2 to 5.
-- The approximating polynomials are based on a linear combination or iterated Boolean sum of Bernstein polynomials (Butzer 1953; Micchelli 1973).  Examples: $B_n(2 f - B_n(f))$ and $r$ is 3 or 4, or $B_n(B_n(B_n(f))+3(f-B_n(f)))$ and $r$ is 5 or 6, where $B_n(f)$ is the Bernstein polynomial of degree $n$ of a function $f$. (See Güntürk and Li 2021.)
-- The approximating polynomial is a linear operator that is not positive and preserves polynomials of a higher degree than linear functions (e.g., the operators studied by Tachev (2022) and Han (2003)).
-
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
 ### Solving the Bernoulli factory problem with polynomials
 
@@ -136,8 +130,11 @@ My goal is to see not just whether this conjecture is true, but also which value
 
 The following are some strategies for answering these questions:
 
-1. Finding a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 5 and 6 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
-2. Suppose that, for each integer $n\ge 1$ that's a power of 2, there is a polynomial of degree $n$, $P_{n}(f)$, that is within $E(n)$ of $f(\lambda)$. (For example, $P_{n}(f)$ could be a linear combination of Bernstein polynomials.) Then I believe another way to answer this question is to find $C>0$ such that the non-negative polynomial $Q_{n}(f) = (P_{2n}(f) + E(n) + E(2n)) - P_{n}(f)$, when rewritten to a degree-$(2n)$ polynomial in Bernstein form, has Bernstein coefficients no greater than $CM/n^{r/2}$, where $M$ and $r$ are as above.  In that case, I believe solving the problem will rely on bounds on the derivatives of $f$, $P_{n}(f)$, and $Q_{n}(f)$ in any combination. (See Lemma 24 of Holtz et al. 2011 for example.)
+- For iterated Boolean sums of Bernstein polynomials ($U_{n,k}$ in [**Micchelli 1973**](https://www.sciencedirect.com/science/article/pii/0021904573900282); see also [**Günturk and Li**](https://arxiv.org/abs/2112.09181)), find an explicit bound, with no hidden constants, on the approximation error for functions with continuous $r$-th derivative, or verify my [**proof of those error bounds**](https://mathoverflow.net/a/427250/171320).
+- For linear combinations of Bernstein polynomials (Butzer 1953, [**Tachev 2022**](https://doi.org/10.3934/mfc.2022061)), verify my proof of those error bounds in [**my Proposition B10**](https://peteroupc.github.io/bernsupp.html#Results_Used_in_Approximate_Bernoulli_Factories).
+- For the "[**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5)", find an explicit bound, with no hidden constants, on the approximation error for the operator $Q_{n,r}$ and for the polynomials $(f_n)$ and $(g_n)$ formed with it, and find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, and 24 in the paper.
+- Find other polynomial operators meeting the requirements of the main question (see "Main Question", above) and having explicit error bounds, with no hidden constants, especially operators that preserve polynomials of a higher degree than linear functions.
+- Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 5 and 6 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
 
 <a id=Examples_of_Functions_to_Ponder></a>
 ### Examples of Functions to Ponder
@@ -212,9 +209,9 @@ Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0
 - $f_{n} = f_{n/b} + Q_{n, r}(f-f_{n/b})$ for each integer $n > n_0$.
 - $\phi(n, \alpha, \lambda) = \frac{\theta_{\alpha}}{n^{\alpha}}+(\frac{\lambda(1-\lambda)}{n})^{\alpha/2}$.
 
-Let $C(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then rewrite it as a degree-$n+r$ polynomial in Bernstein form.
+Let $BP(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then rewrite it as a degree-$n+r$ polynomial in Bernstein form.
 
-Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot C(\lambda).\tag{1}$$  Thus, $\theta_\alpha$, $s$, and $D$ are hidden constants with no upper bounds given, making the Holtz method unimplementable.  The same is true for the constants in Lemmas 15, 17 to 22, and 24 in the paper.
+Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot BP(\lambda).\tag{1}$$  Thus, $\theta_\alpha$, $s$, and $D$ are hidden constants with no upper bounds given, making the Holtz method unimplementable.  The same is true for the constants in Lemmas 15, 17 to 22, and 24 in the paper.
 
 <a id=Questions></a>
 ### Questions
@@ -223,7 +220,7 @@ Let $f(\lambda):[0,1]\to (0,1)$ have a $\beta-\lfloor\beta\rfloor$)-Hölder cont
 
 1. What is an explicit upper bound (with no hidden constants) on the error in approximating $f$ with the Lorentz operators $(Q_{n,r} f)$, described above, of the form $C\cdot M\cdot\max((\lambda(1-\lambda)/n)^{1/2}, 1/n)^r$, where $C=C(r)$ and $M=M(f,r)$ are constants?
 2. Same question, but for the polynomial family $(g_n)$ given in (1), above.
-3. Same questions as 1 and 2, but $f$'s $(r-1)$-th derivative is in the Zygmund class. (Note that the method of Holtz et al.'s paper as written doesn't apply to non-integer $\beta$; see also Conjecture 34 of that paper.)
+3. Same questions as 1 and 2, but $f$'s $(r-1)$-th derivative is in the Zygmund class. (Note that the method of Holtz et al.'s paper as written doesn't apply to integer $\beta$; see also Conjecture 34 of that paper.)
 
 <a id=Simulable_and_strongly_simulable_functions></a>
 ## Simulable and strongly simulable functions
