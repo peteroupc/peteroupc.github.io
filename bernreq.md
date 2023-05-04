@@ -23,7 +23,6 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**A Conjecture on Polynomial Approximation**](#A_Conjecture_on_Polynomial_Approximation)
     - [**Strategies**](#Strategies)
-    - [**Examples of Functions to Ponder**](#Examples_of_Functions_to_Ponder)
 - [**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)
     - [**Special Cases**](#Special_Cases)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
@@ -130,20 +129,11 @@ My goal is to see not just whether this conjecture is true, but also which value
 
 The following are some strategies for answering these questions:
 
-- For iterated Boolean sums of Bernstein polynomials ($U_{n,k}$ in [**Micchelli 1973**](https://www.sciencedirect.com/science/article/pii/0021904573900282); see also [**Günturk and Li**](https://arxiv.org/abs/2112.09181)), find an explicit bound, with no hidden constants, on the approximation error for functions with continuous $r$-th derivative, or verify my [**proof of those error bounds**](https://mathoverflow.net/a/427250/171320).
+- For iterated Boolean sums of Bernstein polynomials ($U_{n,k}$ in [**Micchelli 1973**](https://www.sciencedirect.com/science/article/pii/0021904573900282); see also [**Güntürk and Li**](https://arxiv.org/abs/2112.09181)), find an explicit bound, with no hidden constants, on the approximation error for functions with continuous $r$-th derivative, or verify my [**proof of those error bounds**](https://mathoverflow.net/a/427250/171320).
 - For linear combinations of Bernstein polynomials (Butzer 1953, [**Tachev 2022**](https://doi.org/10.3934/mfc.2022061)), verify my proof of those error bounds in [**my Proposition B10**](https://peteroupc.github.io/bernsupp.html#Results_Used_in_Approximate_Bernoulli_Factories).
 - For the "[**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5)", find an explicit bound, with no hidden constants, on the approximation error for the operator $Q_{n,r}$ and for the polynomials $(f_n)$ and $(g_n)$ formed with it, and find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, and 24 in the paper.
 - Find other polynomial operators meeting the requirements of the main question (see "Main Question", above) and having explicit error bounds, with no hidden constants, especially operators that preserve polynomials of a higher degree than linear functions.
 - Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 5 and 6 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
-
-<a id=Examples_of_Functions_to_Ponder></a>
-### Examples of Functions to Ponder
-
-The following are examples of functions worth pondering for these questions:
-
-- $f(\lambda)=\sin(\lambda\pi/2)=\cos((1-\lambda)\pi/2)$, which equals 0 at 0 and 1 at 1.
-- Functions whose $k$-th derivative ($k\ge 0$) is continuous but not Lipschitz continuous at 0 (and $\lambda$ can equal 0), such as if that derivative is $\lambda^\alpha$, where $0<\alpha<1$, or $\lim_{z\to\lambda} z-z \ln(z)$, or $\lim_{z\to\lambda} -1/(2 \ln(z/2))$.
-- The function $1/2-(1-2\lambda)^{\alpha}\beta/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{\alpha}\beta/2$ otherwise, where $\alpha>0$ and $0\lt\beta\le 1$.
 
 <a id=Tossing_Heads_According_to_a_Concave_Function></a>
 ## Tossing Heads According to a Concave Function
@@ -166,7 +156,7 @@ One special case of the question above is if&mdash;
 
 - $f:[0,1]\to [0,1)$ is concave, and
 - $\mathbb{P}(X=a)=p (1-p)^a$, where $0 < p < 1$ is rational, and
-- $\gamma_a(\lambda) = B_{n_{a}}(f)(\lambda) - B_{n_{a-1}}(f)(\lambda)$ ($\gamma_a(0)=B_{n_{a}}(f)(\lambda)$), where $B_n(f) is the degree-$n$ Bernstein polynomial of $f$, and
+- $\gamma_a(\lambda) = B_{n_{a}}(f)(\lambda) - B_{n_{a-1}}(f)(\lambda)$ ($\gamma_a(0)=B_{n_{a}}(f)(\lambda)$), where $B_n(f)$ is the degree-$n$ Bernstein polynomial of $f$, and
 - $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$, and
 
 However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ (such as $2^{a+s}$ for some $s\ge 0$) and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which _appears_ to be correct, but finding it was far from rigorous:  $n_a = 2^{a+1}$, $p = 0.27$.

@@ -163,7 +163,7 @@ A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an algorithm that takes a
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads.
 - The Bernoulli factory's outputs are statistically independent, and so are those of the input coin.
 - Many Bernoulli factories also use a _fair coin_ in addition to the input coin.  A fair coin shows heads or tails with equal probability, and represents a source of randomness outside the input coin.
-- A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the _closed_ unit interval or a subset of that interval, and maps an input in that interval to an output in that interval.
+- A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed unit interval or a subset of that interval, and maps an input in its domain to an output in that interval.
 - The _closed unit interval_ is the set of numbers consisting of 0, 1, and all real numbers in between.
 
 > **Example:** A Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).  In this example, exp(&minus;_&lambda;_) is the factory function.
@@ -179,21 +179,21 @@ The following shows some functions that are factory functions and some that are 
 
 | Function _f_(_&lambda;_) | Domain | Can _f_ be a factory function? |
  ---- | ---- | ---- |
-| 0 | 0&le;_&lambda;_&le;1 Yes; constant. |
-| 1 | 0&le;_&lambda;_&le;1 Yes; constant. |
-| 1/2 | 0&lt;_&lambda;_&lt;1 Yes; constant. |
+| 0 | 0&le;_&lambda;_&le;1 | Yes; constant. |
+| 1 | 0&le;_&lambda;_&le;1 | Yes; constant. |
+| 1/2 | 0&lt;_&lambda;_&lt;1 | Yes; constant. |
 | 1/4 if _&lambda;_<1/2, and 3/4 elsewhere | 0&lt;_&lambda;_&lt;1 No; discontinuous. |
 | 2*_&lambda;_ | \[0,&nbsp;1\] or \[0,&nbsp;1/2\) | No; not polynomially bounded since _f_(_&lambda;_) approaches 1 as _&lambda;_ approaches 1/2 (as opposed to 0 or 1).[^3]. |
 | 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since _f_(_&lambda;_) approaches 0 as _&lambda;_ approaches 1/2. |
 | 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994\)[^2]. |
-| min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | 0&le;_&lambda;_&le;1 Yes; continuous and polynomially bounded on domain (Huber 2014, introduction\)[^4]. |
-| exp(&minus;1/_&lambda;_) | 0&lt;_&lambda;_&lt;1 No; not polynomially bounded since no nonconstant polynomial can come between the _&lambda;_-axis and $f$. |
-| (exp(&minus;1/_&lambda;_))/4. | 0&lt;_&lambda;_&lt;1 No, for same reason. |
-| (_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4. | 0&lt;_&lambda;_&lt;1 No, for same reason. |
-| (_&lambda;_\*abs(sin(1/_&lambda;_))<sup>_&alpha;_</sup>+exp(&minus;1/_&lambda;_))/4, where _&alpha;_>0. | 0&lt;_&lambda;_&lt;1 No, for same reason. |
-| exp(&minus;1/_&lambda;_) + &#x03F5; | 0&lt;_&lambda;_&lt;1 Yes; continuous, minimum greater than 0, maximum less than 1. |
+| min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | 0&le;_&lambda;_&le;1 | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction\)[^4]. |
+| exp(&minus;1/_&lambda;_) | 0&lt;_&lambda;_&lt;1 | No; not polynomially bounded since no nonconstant polynomial can come between the _&lambda;_-axis and $f$. |
+| (exp(&minus;1/_&lambda;_))/4. | 0&lt;_&lambda;_&lt;1 | No, for same reason. |
+| (_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4. | 0&lt;_&lambda;_&lt;1 | No, for same reason. |
+| (_&lambda;_\*abs(sin(1/_&lambda;_))<sup>_&alpha;_</sup>+exp(&minus;1/_&lambda;_))/4, where _&alpha;_>0. | 0&lt;_&lambda;_&lt;1 | No, for same reason. |
+| exp(&minus;1/_&lambda;_) + &#x03F5; | 0&lt;_&lambda;_&lt;1 | Yes; continuous, minimum greater than 0, maximum less than 1. |
 | exp(&minus;1/_&lambda;_) | [&#x03F5;, 1) | Yes; same reason. |
-| _&lambda;_<sup>_&alpha;_</sup> where _n_&ge;2 is an integer.  | \[0, 1\] | Yes; continuous and the polynomial $\lambda^{n+1}$ can go below $f$, and the polynomial $\lambda^{n-1}$ can go above $f$. |
+| _&lambda;_<sup>_n_</sup> where _n_&ge;2 is an integer.  | 0&le;_&lambda;_&le;1 | Yes; continuous and the polynomial $\lambda^{n+1}$ can go below $f$, and the polynomial $\lambda^{n-1}$ can go above $f$. |
 
 If _f_'s domain includes 0 and/or 1 (so that the input coin is allowed to return 0 every time or 1 every time, respectively), then _f_ can be a factory function only if&mdash;
 
