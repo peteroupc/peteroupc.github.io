@@ -721,9 +721,9 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 **Lemma B9**: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), where $r$ is an integer, and let $M$ be equal to or greater than the $r$-th derivative's Lipschitz constant.  Then, for every $0\le x_0 \le 1$:
 
 1. $f$ can be written as $f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.
-2. If $r$ is odd, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le M/((((r+1)/2)!)(\beta n)^{(r+1)/2})$ for every $n\ge 1$, where $\beta$ is 8 if $r\le 43$ and 6 otherwise.
-3. If $r=0$, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le M/(2n^{1/2})$ for every $n\ge 1$.
-4. If $r$ is even and greater than 0, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!n^{(r+1)/2}}\sqrt{\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}}$ for every $n\ge 2$, where and where $\gamma$ is 8 if $r\le 40$ and 6 otherwise.
+2. If $r$ is odd, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le M/((((r+1)/2)!)(\beta n)^{(r+1)/2})$ for every integer $n\ge 1$, where $\beta$ is 8 if $r\le 43$ and 6 otherwise.
+3. If $r=0$, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le M/(2n^{1/2})$ for every integer $n\ge 1$.
+4. If $r$ is even and greater than 0, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!n^{(r+1)/2}}\sqrt{\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}}$ for every integer $n\ge 2$, where and where $\gamma$ is 8 if $r\le 40$ and 6 otherwise.
 
 _Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Lagrange remainder_,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^36], which applies for any integer $r\ge 0$ (not just if $r$ is odd), bounds that Lagrange remainder.  By that result, because $f$'s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}\le M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.\tag{Remainder bound}$$
 
@@ -741,12 +741,12 @@ If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{
 
 | If $r$ is: | Then $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le$ ... |
  --- | --- |
-| 0. | $M/(2 n^{1/2})$ for every $n\ge 1$. |
-| 1. | $M/(8 n)$ for every $n\ge 1$. |
-| 2. | $\sqrt{3}M/(48 n^{3/2}) < 0.03609 M/n^{3/2}$ for every $n\ge 2$. |
-| 3. | $M/(128 n^2)$ for every $n\ge 1$. |
-| 4. | $\sqrt{5}M/(1280 n^{5/2}) < 0.001747 M/n^{5/2}$ for every $n\ge 2$. |
-| 5. | $M/(3072 n^3)$ for every $n\ge 1$. |
+| 0. | $M/(2 n^{1/2})$ for every integer $n\ge 1$. |
+| 1. | $M/(8 n)$ for every integer $n\ge 1$. |
+| 2. | $\sqrt{3}M/(48 n^{3/2}) < 0.03609 M/n^{3/2}$ for every integer $n\ge 2$. |
+| 3. | $M/(128 n^2)$ for every integer $n\ge 1$. |
+| 4. | $\sqrt{5}M/(1280 n^{5/2}) < 0.001747 M/n^{5/2}$ for every integer $n\ge 2$. |
+| 5. | $M/(3072 n^3)$ for every integer $n\ge 1$. |
 
 **Proposition B10**: Let $f(\lambda)$ have a Lipschitz continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
 
@@ -758,9 +758,9 @@ It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of 
 
 Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,r}(\lambda, x_0))|.$$ Now denote $\sigma_n$ as the maximum of $|B_n(R_{f,r}(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_{f,r}(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
 
-**Proposition B10:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}=B_n(f)+\frac{x(1-x)}{2n} B_n(f'')$ be the _Lorentz operator_ of order 2, which is a polynomial of degree $n+2$.  Then $Q_{n,2}$ is within $\frac{M\sqrt{3}+3)}{48 n^{3/2}}$ of $f$, where $M$ is the maximum of the absolute value of that second derivative.
+**Proposition B10A:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)-f\frac{x(1-x)}{2n} B_n(f'')$ be the _Lorentz operator_ of order 2, which is a polynomial of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}}$ of $f$, where $M$ is that second derivative's Lipschitz constant or greater.
 
-_Proof_: Since $Q_{n,2}$ preserves polynomials of degree 2 or less (Holtz et al. 2011\)[^29], $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,r}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f'',0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M\sqrt{3}+3)}{48 n^{3/2}}.$$ &#x25a1;
+_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^29], $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f'',0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}}.$$ &#x25a1;
 
 In the lemma below, $H_{n,r}(f)$ is the function described in Han (2003)[^41], equation 16, with $a=0$ and $b=1$.  This is a polynomial that approximates a continuous function $f(\lambda)$ on the closed unit interval, and, if written in Bernstein form, its degree is $n+r$.
 
