@@ -653,6 +653,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^74]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^75]: The result from Gonska et al. actually applies if the $r$-th derivative belongs to a broader class of continuous functions than Lipschitz continuous functions, but this feature is not used in this proof.
+
+[^76]: G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -723,9 +727,9 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 1. $f$ can be written as $f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.
 2. If $r$ is odd, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le M/((((r+1)/2)!)(\beta n)^{(r+1)/2})$ for every integer $n\ge 1$, where $\beta$ is 8 if $r\le 43$ and 6 otherwise.
 3. If $r=0$, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le M/(2n^{1/2})$ for every integer $n\ge 1$.
-4. If $r$ is even and greater than 0, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!n^{(r+1)/2}}\sqrt{\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}}$ for every integer $n\ge 2$, where and where $\gamma$ is 8 if $r\le 40$ and 6 otherwise.
+4. If $r$ is even and greater than 0, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}$ for every integer $n\ge 2$, where $\gamma$ is 8 if $r\le 40$ and 6 otherwise.
 
-_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Lagrange remainder_,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^36], which applies for any integer $r\ge 0$ (not just if $r$ is odd), bounds that Lagrange remainder.  By that result, because $f$'s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}\le M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.\tag{Remainder bound}$$
+_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Lagrange remainder_,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^36], which applies for any integer $r\ge 0$, bounds that Lagrange remainder [^75].  By that result, because $f$'s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}\le M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.$$
 
 The goal is now to bound the Bernstein polynomial of $|\lambda-x_0|^{r+1}$.  This is easiest to do if $r$ is odd.
 
@@ -733,7 +737,7 @@ If $r$ is odd, then $(\lambda-x_0)^{r+1} = |\lambda-x_0|^{r+1}$, so by Results B
 
 If $r$ is 0, then the Bernstein polynomial of $|\lambda-x_0|^{1}$ is bounded by $1/(2n^{1/2})$ for every $n\ge 1$ (Cheng 1983)[^37], so&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$
 
-If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{r+1}$ can be bounded as follows for every $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanic and Shisha [1975][^33] for the case $r=4$): $$B_n(|\lambda-x_0|^{r+1})(x_0)=B_n((|\lambda-x_0|^{r/2}|\lambda-x_0|^{(r+2)/2})^2)(x_0)$$ $$\le\sqrt{|S_{n,r}(x_0)|}\sqrt{|S_{n,r+2}(x_0)|}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$ $$\le\frac{1}{n^{(r+1)/2}}\sqrt{\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}},$$where $\gamma$ is 8 if $r\le 40$ and 6 otherwise. Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\sqrt{\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}}. $$&#x25a1;
+If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{r+1}$ can be bounded as follows for every $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanic and Shisha [1975][^33] for the case $r=4$): $$B_n(|\lambda-x_0|^{r+1})(x_0)=B_n((|\lambda-x_0|^{r/2}|\lambda-x_0|^{(r+2)/2})^2)(x_0)$$ $$\le\sqrt{|S_{n,r}(x_0)|}\sqrt{|S_{n,r+2}(x_0)|}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$ $$\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},$$where $\gamma$ is 8 if $r\le 40$ and 6 otherwise. Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$&#x25a1;
 
 > **Note:** If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor's theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^38] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$
 
@@ -758,7 +762,7 @@ It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of 
 
 Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,r}(\lambda, x_0))|.$$ Now denote $\sigma_n$ as the maximum of $|B_n(R_{f,r}(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_{f,r}(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
 
-**Proposition B10A:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)-f\frac{x(1-x)}{2n} B_n(f'')$ be the _Lorentz operator_ of order 2, which is a polynomial of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}}$ of $f$, where $M$ is that second derivative's Lipschitz constant or greater.
+**Proposition B10A:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)-f-\frac{x(1-x)}{2n} B_n(f'')$ be the _Lorentz operator_ of order 2 (Holtz et al. 2011\)[^29], (Lorentz 1966)[^76], which is a polynomial of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}}$ of $f$, where $M$ is that second derivative's Lipschitz constant or greater.
 
 _Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^29], $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f'',0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}}.$$ &#x25a1;
 
