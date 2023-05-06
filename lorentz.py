@@ -631,20 +631,15 @@ def tachevcoeffs(func, x, n):
     coeffselev = elevatemulti(coeffselev, n // 2)
     return [2 * c1 - c2 for c1, c2 in zip(coeffs, coeffselev)]
 
-class C3Function:
-    def __init__(self, func, x, thirdderiv):
-        # A Bernoulli factory for functions with a continuous
-        # third derivative.
+class FactoryFunction:
+    def __init__(self, func, x):
+        # A Bernoulli factory for continuous functions.
         # Relies on the SymPy computer algebra library.
         # 'func' must have a minimum greater than 0 and
-        # a maximum less than 1, and must have a
-        # continuous third derivative.
+        # a maximum less than 1.
         # 'x' is a SymPy symbol of the variable used by 'func'.
-        # thirdderiv is no less than max. of abs. of third deriv
         if thirdderiv < 0:
             raise ValueError
-        self.zz = S("1.29904")  # Constant used in approximation scheme
-        self.mm = S(thirdderiv)
         self.startdist = 0
         self.start_nn = 0
         nn = self.start_nn
@@ -659,7 +654,7 @@ class C3Function:
             if err>2: # Error too big to be a starting polynomial
                nn+=1
                continue
-            coeffs = [(c - err) for c in tachevcoeffs(self.func, self.x, 2**nn)]
+            coeffs = [(c - err) for c in self.coeffs(self.func, self.x, 2**nn)]
             self.tc[nn]=coeffs
             comin = Min(*coeffs)
             comax = Max(*coeffs)
@@ -675,20 +670,23 @@ class C3Function:
             nn += 1
         # totaldist=summation(diffwidth,(n,self.start_nn,oo))+self.startdist
         # Same as prev. line
-        self.totaldist = self._t()
+        self.totaldist = self._t(self.start_nn, self.startdist)
         # print(["dist",self.dist])
         if self.totaldist > 1:
             print(["totaldist", self.totaldist])
             raise ValueError("Not supported")
 
+    def _coeffs(self, func, x, nn):
+       raise NotImplementedError
+
     def _t(self):
-       return S("1.01") * 10 * self.mm * self.zz / (3 * 2 ** (2 * self.start_nn)) + self.startdist
+       raise NotImplementedError
 
     def _errshift(self, m):
-        return S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * m))
+       raise NotImplementedError
 
     def _diffwidth(self, m):
-        return S("1.01")*5 * self.mm * self.zz / (2 ** (2 * m + 1))
+       raise NotImplementedError
 
     def ensure(self, r):
         if r < 0:
@@ -709,13 +707,13 @@ class C3Function:
         if nn in self.tc: coeffs1=self.tc[nn]
         else:
           coeffs1 = [
-            (c - err) for c in tachevcoeffs(self.func, self.x, 2**nn)
+            (c - err) for c in self.coeffs(self.func, self.x, 2**nn)
           ]  # Polynomial of degree 2**nn is lower polynomial
           self.tc[nn]=coeffs1
         if nn+1 in self.tc: coeffs2=self.tc[nn+1]
         else:
           coeffs2 = [
-            (c - newerr) for c in tachevcoeffs(self.func, self.x, 2**(nn+1))
+            (c - newerr) for c in self.coeffs(self.func, self.x, 2**(nn+1))
           ]  # Polynomial of degree 2**(nn+1) is upper polynomial
           self.tc[nn+1]=coeffs2
         coeffs1 = degelev(coeffs1, 2**nn)  # Lower polynomial
@@ -769,3 +767,30 @@ class C3Function:
         if self.isRandomLess([0,0],coeffs[heads]):
             return 1
         return 0
+
+class C3Function(FactoryFunction):
+    def __init__(self, func, x, thirdderiv):
+        # A Bernoulli factory for functions with a continuous
+        # third derivative.
+        # 'func' must have a minimum greater than 0 and
+        # a maximum less than 1, and must have a
+        # continuous third derivative.
+        # 'x' is a SymPy symbol of the variable used by 'func'.
+        # thirdderiv is no less than max. of abs. of third deriv
+        if thirdderiv < 0:
+            raise ValueError
+        self.zz = S("1.29904")  # Constant used in approximation scheme
+        self.mm = S(thirdderiv)
+        super(func,x)
+
+    def _coeffs(self, func, x, nn):
+       return tachevcoeffs(func, x, 2**nn)
+
+    def _t(self, start_nn, start_dist):
+       return S("1.01") * 10 * self.mm * self.zz / (3 * 2 ** (2 * start_nn)) + startdist
+
+    def _errshift(self, m):
+        return S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * m))
+
+    def _diffwidth(self, m):
+        return S("1.01")*5 * self.mm * self.zz / (2 ** (2 * m + 1))
