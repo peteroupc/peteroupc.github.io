@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/06"><meta name="citation_online_date" content="2023/05/06"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/07"><meta name="citation_online_date" content="2023/05/07"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -605,7 +605,7 @@
 </tr>
 <tr>
 <td>Lorentz operator (order 2).</td>
-<td>$Q_{n-2,2}=B_n(f)+x(1-x)\cdot B_{n-2}(f&#39;&#39;)/(2(n-2))$.</td>
+<td>$Q_{n-2,2}=B_{n-2}(f)+x(1-x)\cdot$ $B_{n-2}(f&#39;&#39;)/(2(n-2))$.</td>
 <td><strong>Get coefficients for $n$ given $n-2$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>].  Then for each integer $k$ with $1\le k\lt n$, subtract $z$ from <em>a</em>[<em>k</em>], where $z=(((f&#39;&#39;((k-1)/(n-2)))$ / $(4(n-2)))\cdot 2k(n-k)/((n-1)\cdot(n))$.</td>
 <td>Holtz et al. (2011)[^20]; Bernstein (1932)[^21]; Lorentz (1966)[^22]. $n\ge 4$; $f&#39;&#39;$ is the second derivative of $f$.</td>
 </tr>
@@ -841,7 +841,7 @@
 
 <ul>
 <li><em>Real analytic</em> if, for every <em>z</em> in $f$&#39;s domain, it is writable as $f(\lambda)=a_0 (\lambda-z)^0 + a_1 (\lambda-z)^1 + ...$, where $a_i$ are constant real numbers whose values depend on <em>z</em> and <em>i</em> only.</li>
-<li>In the <em>Zygmund class</em> if there is a constant $D&gt;0$ with the following property: For each step size $\epsilon&gt;0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that&#39;s Lipschitz continuous (see &quot;Definitions&quot;) is in the Zygmund class, but not necessarily vice versa.</li>
+<li>In the <em>Zygmund class</em> if it is continuous and there is a constant $D&gt;0$ with the following property: For each step size $\epsilon&gt;0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that&#39;s Lipschitz continuous (see &quot;Definitions&quot;) is in the Zygmund class, but not necessarily vice versa.</li>
 </ul>
 </blockquote>
 
@@ -1061,6 +1061,16 @@
 
 <p><strong>Result B4</strong> (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.</p>
 
+<p><strong>Result B4A</strong>: For every integer $n\ge 1$:</p>
+
+<ul>
+<li>$|S_{n,0}(p)|=1=1\cdot(p(1-p)/n)^{0/2}$.</li>
+<li>$|S_{n,1}(p)|=0=0\cdot(p(1-p)/n)^{1/2}$.</li>
+<li>$|S_{n,2}(p)|=p(1-p)/n=1\cdot(p(1-p)/n)^{2/2}$.</li>
+</ul>
+
+<p>The proof is straightforward.</p>
+
 <p><strong>Proposition B5</strong>: For every integer $n\ge 1$, the following is true: $$|T_{n,3}(p)| \le \frac{\sqrt{3}}{18} n^{2} \lt (963/10000) n^{2}.$$</p>
 
 <p><em>Proof</em>: It is known that $T_{n,3}(p)=x(1-x)(1-2x)/n^2$ (Lorentz 1953)[^35]. The critical points of $T_{n,3}(p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T_{n,r}(p)$ is antisymmetric whenever $r$ is odd, and is nonnegative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^36], it&#39;s enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T_{n, 3}(p)|$ on either side.  By inspection, the moment at that critical point is decreasing as $n$ increases, starting with $n=1$. &#x25a1;</p>
@@ -1088,12 +1098,17 @@
 
 <p>If $r$ is odd, then $(\lambda-x_0)^{r+1} = |\lambda-x_0|^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded as follows: $$|B_n((\lambda-x_0)^{r+1})(x_0)| \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),$$ where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!} |B_n((\lambda-x_0)^{r+1})(x_0)|$$ $$\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.$$</p>
 
-<p>If $r$ is 0, then the Bernstein polynomial of $|\lambda-x_0|^{1}$ is bounded by $1/(2n^{1/2})$ for every $n\ge 1$ (Cheng 1983)[^40], so&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$</p>
+<p>If $r$ is 0, then the Bernstein polynomial of $|\lambda-x_0|^{1}$ is bounded by $\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$ (Cheng 1983)[^40], so&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$</p>
 
 <p>If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{r+1}$ can be bounded as follows for every $n\ge 2$, using <a href="https://mathworld.wolfram.com/SchwarzsInequality.html"><strong>Schwarz&#39;s inequality</strong></a> (see also Bojanic and Shisha [1975][^35] for the case $r=4$): $$B_n(|\lambda-x_0|^{r+1})(x_0)=B_n((|\lambda-x_0|^{r/2}|\lambda-x_0|^{(r+2)/2})^2)(x_0)$$ $$\le\sqrt{|S_{n,r}(x_0)|}\sqrt{|S_{n,r+2}(x_0)|}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$ $$\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},$$where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$&#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor&#39;s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$&#39;s domain) (DLMF [^41] <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor&#39;s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$&#39;s domain) (DLMF [^41] <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$</li>
+<li>Part 1 of this lemma is not true if the $r$-th derivative of $f(\lambda)$ can be any function in the Zygmund class rather than be Lipschitz continuous.  There are functions in the Zygmund class whose derivative is defined almost nowhere, so that $f$ need not meet the conditions for having the Lagrange remainder $R_{f,r}(\lambda, x_0)$.</li>
+</ol>
 </blockquote>
 
 <p><strong>Corollary B9A</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative&#39;s Lipschitz constant or greater.  Then, for every $0\le x_0 \le 1$:</p>
@@ -1107,6 +1122,10 @@
 <tr>
 <td>0.</td>
 <td>$M/(2 n^{1/2})$ for every integer $n\ge 1$.</td>
+</tr>
+<tr>
+<td>0.</td>
+<td>$M\cdot\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$.</td>
 </tr>
 <tr>
 <td>1.</td>
@@ -1142,7 +1161,7 @@
 
 <p><strong>Proposition B10A:</strong> Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-f(x)-\frac{x(1-x)}{2n} B_n(f&#39;&#39;)(x)$ be the <em>Lorentz operator</em> of order 2 (Holtz et al. 2011)[^20], (Lorentz 1966)[^22], which is a polynomial of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2})$ of $f$, where $M$ is that second derivative&#39;s Lipschitz constant or greater.</p>
 
-<p><em>Proof</em>: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14)[^20], $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f&#39;&#39;$, the second derivative of $f$, has the Lagrange remainder $R_{f&#39;&#39;,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f&#39;&#39;,0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2}).$$ &#x25a1;</p>
+<p><em>Proof</em>: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14)[^20] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f&#39;&#39;$, the second derivative of $f$, has the Lagrange remainder $R_{f&#39;&#39;,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f&#39;&#39;,0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2}).$$ &#x25a1;</p>
 
 <p>In the lemma below, $H_{n,r}(f)$ is the function described in Han (2003)[^44], equation 16, with $a=0$ and $b=1$.  This is a polynomial that approximates a continuous function $f(\lambda)$ on the closed unit interval, and, if written in Bernstein form, its degree is $n+r$.</p>
 
@@ -1561,7 +1580,7 @@
 <p>Case 4: Since <em>f</em> is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$3\omega_2(\sqrt{\text{Var}[Y]}/2)\le 3 D (\sqrt{\text{Var}[Y]}/2) = 3D\sqrt{1/(8n-4)}/2.$$ &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>) with <em>h</em> &ge; 0, for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.</p>
+<p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>) with <em>h</em> &ge; 0, for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever <em>f</em> is continuous and <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.</p>
 </blockquote>
 
 <p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;</em></p>

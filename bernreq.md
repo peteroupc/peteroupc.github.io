@@ -180,7 +180,7 @@ Let $B_n(f)$ be the degree-$n$ Bernstein polynomial of $f$.
 
 [**Holtz et al. 2011**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf), in the paper "New coins from old, smoothly", studied a family of polynomials $(Q_{n,r} f)$ (which they call the _Lorentz operators_) that approximate a continuous function $f$.
 
-They used the Lorentz operators to build a family of polynomials $(g_n)$ that converge from below to $f$ and satisfy the following $(g_{2n}−g_{n})$ is a polynomial with non-negative Bernstein coefficients, once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
+They used the Lorentz operators to build a family of polynomials $(g_n)$ that converge from below to $f$ and satisfy the following: $(g_{2n}−g_{n})$ is a polynomial with non-negative Bernstein coefficients, once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
 
 They proved, among other results, the following.  A function $f(\lambda):[0,1]\to(0,1)$ admits a family $(g_n)$ described above that converges at the rate&mdash;
 
@@ -189,19 +189,15 @@ They proved, among other results, the following.  A function $f(\lambda):[0,1]\t
 
 The scheme is as follows:
 
-Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).
-
-Let $\alpha = r+\beta$, let $b = 2^s$, and let $s\gt 0$ be an integer. Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_. (See the paper for details on the Lorentz operator, but it should be said that, when $r$ is 0 or 1, $Q_{n,r}f$ is $B_n(f)$ rewritten to degree $n+r$, and for $r=2$ is Bernstein's 1932 modification of $B_n$.)
-
-Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
+Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).  Let $\alpha = r+\beta$; $b = 2^s$; $s\gt 0$ be an integer.  Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ as described in Holtz et al. 2011.  Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
 
 - $f_{n_0} = Q_{n_0, r}f$.
 - $f_{n} = f_{n/b} + Q_{n, r}(f-f_{n/b})$ for each integer $n > n_0$.
 - $\phi(n, \alpha, \lambda) = \frac{\theta_{\alpha}}{n^{\alpha}}+(\frac{\lambda(1-\lambda)}{n})^{\alpha/2}$.
+- $BP(\lambda)$ is a polynomial defined as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then rewrite it as a degree-$n+r$ polynomial in Bernstein form.
+- $g(n, r,\lambda) = f_{n}(\lambda) - D \cdot BP(\lambda).$
 
-Let $BP(\lambda)$ be a polynomial as follows: Find the degree-$n$ Bernstein polynomial of $\phi(n, r+\beta, \lambda)$, then rewrite it as a degree-$n+r$ polynomial in Bernstein form.
-
-Then the degree $n+r$ polynomial that approximates $f$ is&mdash; $$g(n, r,\lambda) = f_{n}(\lambda) - D \cdot BP(\lambda).\tag{1}$$  Thus, $\theta_\alpha$, $s$, and $D$ are hidden constants with no upper bounds given, making the Holtz method unimplementable.  The same is true for the constants in Lemmas 15, 17 to 22, and 24 in the paper.
+Thus, $\theta_\alpha$, $s$, and $D$ are hidden constants with no upper bounds given, making the Holtz method unimplementable.  The same is true for the constants in Lemmas 15, 17 to 22, and 24 in the paper.
 
 <a id=Questions></a>
 ### Questions

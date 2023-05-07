@@ -373,7 +373,7 @@ Examples of these alternative polynomials (all of degree $n$) are given in the f
 | Order-3 iterated Boolean sum. | $U_{n,3} = B_n(W_{n,3})$. | Calculate $W_{n,3} = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$. | Same. |
 | Butzer's linear combination (order 1). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients, then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(i/n) - a[i]$ for each $i$. |Tachev (2022)[^18], Butzer (1955)[^19].  $n\ge 6$ must be even.|
 | Butzer's linear combination (order 2). | $L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$ | **Get coefficients for $n$ given $n/4$**, call them _a_[0], ..., _a_[_n_], then **get coefficients for $n$ given $n/2$**, call them _b_[0], ..., _b_[_n_], then set the final Bernstein coefficients to $a[i]/3-2 b[i]+8 f(i/n)/3$ for each $i$. | Butzer (1955)[^19]. $n\ge 4$ must be divisible by 4. |
-| Lorentz operator (order 2). | $Q_{n-2,2}=B_n(f)+x(1-x)\cdot B_{n-2}(f'')/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $k$ with $1\le k\lt n$, subtract $z$ from _a_[_k_], where $z=(((f''((k-1)/(n-2)))$ / $(4(n-2)))\cdot 2k(n-k)/((n-1)\cdot(n))$. | Holtz et al. (2011)[^20]; Bernstein (1932)[^21]; Lorentz (1966)[^22]. $n\ge 4$; $f''$ is the second derivative of $f$. |
+| Lorentz operator (order 2). | $Q_{n-2,2}=B_{n-2}(f)+x(1-x)\cdot$ $B_{n-2}(f'')/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $k$ with $1\le k\lt n$, subtract $z$ from _a_[_k_], where $z=(((f''((k-1)/(n-2)))$ / $(4(n-2)))\cdot 2k(n-k)/((n-1)\cdot(n))$. | Holtz et al. (2011)[^20]; Bernstein (1932)[^21]; Lorentz (1966)[^22]. $n\ge 4$; $f''$ is the second derivative of $f$. |
 
 The goal is now to find a polynomial of degree $n$ such that&mdash;
 
@@ -502,7 +502,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 > **Note:** A function $f(\lambda)$ is:
 >
 > - _Real analytic_ if, for every _z_ in $f$'s domain, it is writable as $f(\lambda)=a_0 (\lambda-z)^0 + a_1 (\lambda-z)^1 + ...$, where $a_i$ are constant real numbers whose values depend on _z_ and _i_ only.
-> - In the _Zygmund class_ if there is a constant $D>0$ with the following property: For each step size $\epsilon>0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that's Lipschitz continuous (see "Definitions") is in the Zygmund class, but not necessarily vice versa.
+> - In the _Zygmund class_ if it is continuous and there is a constant $D>0$ with the following property: For each step size $\epsilon>0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that's Lipschitz continuous (see "Definitions") is in the Zygmund class, but not necessarily vice versa.
 
 <a id=Notes></a>
 ## Notes
@@ -712,6 +712,14 @@ The following results deal with a useful quantity when discussing the error in a
 
 **Result B4** (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.
 
+**Result B4A**: For every integer $n\ge 1$:
+
+- $|S_{n,0}(p)|=1=1\cdot(p(1-p)/n)^{0/2}$.
+- $|S_{n,1}(p)|=0=0\cdot(p(1-p)/n)^{1/2}$.
+- $|S_{n,2}(p)|=p(1-p)/n=1\cdot(p(1-p)/n)^{2/2}$.
+
+The proof is straightforward.
+
 **Proposition B5**: For every integer $n\ge 1$, the following is true: $$|T_{n,3}(p)| \le \frac{\sqrt{3}}{18} n^{2} \lt (963/10000) n^{2}.$$
 
 _Proof_: It is known that $T_{n,3}(p)=x(1-x)(1-2x)/n^2$ (Lorentz 1953)[^35]. The critical points of $T_{n,3}(p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T_{n,r}(p)$ is antisymmetric whenever $r$ is odd, and is nonnegative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^36], it's enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T_{n, 3}(p)|$ on either side.  By inspection, the moment at that critical point is decreasing as $n$ increases, starting with $n=1$. &#x25a1;
@@ -737,17 +745,21 @@ The goal is now to bound the Bernstein polynomial of $|\lambda-x_0|^{r+1}$.  Thi
 
 If $r$ is odd, then $(\lambda-x_0)^{r+1} = |\lambda-x_0|^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded as follows: $$|B_n((\lambda-x_0)^{r+1})(x_0)| \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),$$ where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!} |B_n((\lambda-x_0)^{r+1})(x_0)|$$ $$\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.$$
 
-If $r$ is 0, then the Bernstein polynomial of $|\lambda-x_0|^{1}$ is bounded by $1/(2n^{1/2})$ for every $n\ge 1$ (Cheng 1983)[^40], so&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$
+If $r$ is 0, then the Bernstein polynomial of $|\lambda-x_0|^{1}$ is bounded by $\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$ (Cheng 1983)[^40], so&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$
 
 If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{r+1}$ can be bounded as follows for every $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanic and Shisha [1975][^35] for the case $r=4$): $$B_n(|\lambda-x_0|^{r+1})(x_0)=B_n((|\lambda-x_0|^{r/2}|\lambda-x_0|^{(r+2)/2})^2)(x_0)$$ $$\le\sqrt{|S_{n,r}(x_0)|}\sqrt{|S_{n,r+2}(x_0)|}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$ $$\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},$$where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$&#x25a1;
 
-> **Note:** If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor's theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^41] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$
+> **Notes:**
+>
+> 1. If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor's theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^41] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$
+> 2. Part 1 of this lemma is not true if the $r$-th derivative of $f(\lambda)$ can be any function in the Zygmund class rather than be Lipschitz continuous.  There are functions in the Zygmund class whose derivative is defined almost nowhere, so that $f$ need not meet the conditions for having the Lagrange remainder $R_{f,r}(\lambda, x_0)$.
 
 **Corollary B9A**: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative's Lipschitz constant or greater.  Then, for every $0\le x_0 \le 1$:
 
 | If $r$ is: | Then $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le$ ... |
  --- | --- |
 | 0. | $M/(2 n^{1/2})$ for every integer $n\ge 1$. |
+| 0. | $M\cdot\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$. |
 | 1. | $M/(8 n)$ for every integer $n\ge 1$. |
 | 2. | $\sqrt{3}M/(48 n^{3/2}) < 0.03609 M/n^{3/2}$ for every integer $n\ge 2$. |
 | 3. | $M/(128 n^2)$ for every integer $n\ge 1$. |
@@ -766,7 +778,7 @@ Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,r}(\la
 
 **Proposition B10A:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-f(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ be the _Lorentz operator_ of order 2 (Holtz et al. 2011\)[^20], (Lorentz 1966)[^22], which is a polynomial of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2})$ of $f$, where $M$ is that second derivative's Lipschitz constant or greater.
 
-_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^20], $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f'',0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2}).$$ &#x25a1;
+_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^20] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f'',0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2}).$$ &#x25a1;
 
 In the lemma below, $H_{n,r}(f)$ is the function described in Han (2003)[^44], equation 16, with $a=0$ and $b=1$.  This is a polynomial that approximates a continuous function $f(\lambda)$ on the closed unit interval, and, if written in Bernstein form, its degree is $n+r$.
 
@@ -1088,7 +1100,7 @@ Case 3: Follows from case 2 since a Hölder continuous function with Hölder exp
 
 Case 4: Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$3\omega_2(\sqrt{\text{Var}[Y]}/2)\le 3 D (\sqrt{\text{Var}[Y]}/2) = 3D\sqrt{1/(8n-4)}/2.$$ &#x25a1;
 
-> **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever _x_ and _y_ are in _f_'s domain.
+> **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever _f_ is continuous and _x_ and _y_ are in _f_'s domain.
 
 **Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
