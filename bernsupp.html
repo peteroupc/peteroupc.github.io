@@ -1003,6 +1003,10 @@
 
 <p>[^77]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
+<p>[^78]: Molteni, Giuseppe. &quot;Explicit bounds for even moments of Bernstein’s polynomials.&quot; Journal of Approximation Theory 273 (2022): 105658.</p>
+
+<p>[^79]: Adell, J.A., Cárdenas-Morales, D., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0021904518300376"><strong>Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials</strong></a>&quot;, Journal of Approximation Theory 231, July 2018.</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1059,9 +1063,9 @@
 
 <p>The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value (&quot;long-run average&quot;).   (Traditionally, another central moment, that of $X/n$ or the ratio of heads to tosses, is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  $T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) The following results bound the absolute value of $T$.[^34]</p>
 
-<p><strong>Result B4</strong> (Molteni 2022)[^66]: If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.</p>
+<p><strong>Result B4</strong> (Molteni (2022)[^78]): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.</p>
 
-<p><strong>Result B4A</strong>: For every integer $n\ge 1$:</p>
+<p><strong>Lemma B4A</strong>: For every integer $n\ge 1$:</p>
 
 <ul>
 <li>$|S_{n,0}(p)|=1=1\cdot(p(1-p)/n)^{0/2}$.</li>
@@ -1075,7 +1079,12 @@
 
 <p><em>Proof</em>: It is known that $T_{n,3}(p)=x(1-x)(1-2x)/n^2$ (Lorentz 1953)[^35]. The critical points of $T_{n,3}(p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T_{n,r}(p)$ is antisymmetric whenever $r$ is odd, and is nonnegative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^36], it&#39;s enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T_{n, 3}(p)|$ on either side.  By inspection, the moment at that critical point is decreasing as $n$ increases, starting with $n=1$. &#x25a1;</p>
 
-<p><strong>Result B6</strong> (Adell and Cárdenas-Morales 2018)[^72]: If $r\ge 0$ is an even integer, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)6^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)6^{r/2}}\frac{1}{n^{r/2}}$.</p>
+<p><strong>Result B6</strong> (Adell and Cárdenas-Morales (2018)[^79]): Let $\sigma(r,t) = \frac{r!}{((r/2)!)t^{r/2}}$.  If $r\ge 0$ is an even integer, then&mdash;</p>
+
+<ul>
+<li>for every integer $n\ge 1$, $|T_{n,r}(p)|\le \sigma(r,6)n^{r/2}$ and $|S_{n,r}(p)| \le \sigma(r,6)/n^{r/2}$, and</li>
+<li>for every integer $n\ge 1$, $|T_{n,r}(1/2)|\le \sigma(r,8)n^{r/2}$ and $|S_{n,r}(1/2)| \le \sigma(r,8)/n^{r/2}$.</li>
+</ul>
 
 <p><strong>Proposition B7</strong>:  For every integer $n\ge 1$, $|T_{n,5}(p)| \le 0.083 n^{5/2}.$  For every integer $n\ge 304$, $|T_{n,5}(p)| \le n^2 \le 0.05736 n^{5/2}.$</p>
 
@@ -1108,6 +1117,7 @@
 <ol>
 <li>If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor&#39;s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$&#39;s domain) (DLMF [^41] <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$</li>
 <li>Part 1 of this lemma is not true if the $r$-th derivative of $f(\lambda)$ can be any function in the Zygmund class rather than be Lipschitz continuous.  There are functions in the Zygmund class whose derivative is defined almost nowhere, so that $f$ need not meet the conditions for having the Lagrange remainder $R_{f,r}(\lambda, x_0)$.</li>
+<li>It would be interesting to strengthen this lemma with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded in this way (Lorentz 1966)[^22].</li>
 </ol>
 </blockquote>
 
