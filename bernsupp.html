@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/07"><meta name="citation_online_date" content="2023/05/07"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/08"><meta name="citation_online_date" content="2023/05/08"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1101,7 +1101,7 @@
 <li>If $r$ is even and greater than 0, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}$ for every integer $n\ge 2$, where $\gamma$ is 8 if $r\le 42$ and 6 otherwise.</li>
 </ol>
 
-<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^40], which applies for any integer $r\ge 0$, bounds that Lagrange remainder [^41].  By that result, because $f$&#39;s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}\le M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.$$</p>
+<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^40], which applies for any integer $r\ge 0$, bounds that Lagrange remainder [^41].  By that result, because $f$&#39;s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}=M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.$$</p>
 
 <p>The goal is now to bound the Bernstein polynomial of $|\lambda-x_0|^{r+1}$.  This is easiest to do if $r$ is odd.</p>
 
@@ -1551,7 +1551,7 @@
 </ol>
 </blockquote>
 
-<p><strong>Lemma 2A.</strong>  <em>Let f(&lambda;) map the closed unit interval to itself.</em></p>
+<p><strong>Lemma 2A.</strong>  <em>Let f(&lambda;) map the closed unit interval to itself, and let $C=15$.</em></p>
 
 <table><thead>
 <tr>
@@ -1561,33 +1561,33 @@
 </thead><tbody>
 <tr>
 <td>(Case 1) <em>Is Hölder continuous, its Hölder exponent is $\alpha$, and its Hölder constant is $L$ or less, where $0\lt\alpha\lt 1$.</em></td>
-<td>$6 L \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}$.</td>
+<td>$2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}$.</td>
 </tr>
 <tr>
 <td>(Case 2) <em>Has a Hölder continuous (first) derivative whose Hölder exponent is $\alpha$ and whose Hölder constant is $L$ or less, where $0\lt\alpha\le 1$.</em></td>
-<td>$3L(\sqrt{1/(8n-4)}/2)^{1+\alpha}$.</td>
+<td>$CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}$.</td>
 </tr>
 <tr>
 <td>(Case 3) <em>Has a Lipschitz continuous derivative whose Lipschitz constant is $M$ or less.</em></td>
-<td>$(3/4)M\frac{1}{8n-4}$.</td>
+<td>$(C/4)M\frac{1}{8n-4}$.</td>
 </tr>
 <tr>
 <td>(Case 4) <em>Is in the Zygmund class with constant equal to or less than $D$.</em></td>
-<td>$(3/2) D\sqrt{1/(8n-4)}$.</td>
+<td>$(C/2) D\sqrt{1/(8n-4)}$.</td>
 </tr>
 </tbody></table>
 
-<p><em>Proof.</em> Strukov and Timan (1977)[^56], (1975)[^57] proved the bound:<br>abs(<strong>E</strong>[<em>f</em>(<em>Y</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>Y</em>])) &le; 3*&omega;<sub>2</sub>(sqrt(<strong>Var</strong>[<em>Y</em>])/2),<br>where <em>Y</em> is a random variable and &omega;<sub>2</sub>(.) is a <em>second-order modulus of continuity</em> of <em>f</em> (see note below).  Call this bound <strong>2A1</strong>.</p>
+<p><em>Proof.</em> Strukov and Timan (1977)[^56], (1975)[^57] proved the following bound: $$\abs(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where <em>Y</em> is a random variable and &omega;<sub>2</sub>(.) is a <em>second-order modulus of continuity</em> of <em>f</em> (see note below). $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values on the closed unit interval or any other closed interval of the real line, as in this case. Call this bound <strong>2A1</strong>.</p>
 
 <p>Suppose <em>Y</em> = <em>X</em>/<em>n</em>, where <em>X</em> is as in Lemma 2.  Then <em>Y</em>&#39;s variance (<strong>Var</strong>[<em>Y</em>]) is less than or equal to 1/(8*<em>n</em>&minus; 4), and <strong>2A1</strong>&#39;s left-hand side is the same as the expression (1).</p>
 
-<p>Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying <strong>2A1</strong>, the bound on <em>Y</em>&#39;s variance, as well as a property given in Stancu et al. (2001)[^58] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le 3\omega_2(\sqrt{\text{Var}[Y]}/2)$$ $$\le 6\omega(\sqrt{\text{Var}[Y]}/2)\le 6L(\sqrt{\text{Var}[Y]}/2)^\alpha)\le 6 L \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$</p>
+<p>Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying <strong>2A1</strong>, the bound on <em>Y</em>&#39;s variance, as well as a property given in Stancu et al. (2001)[^58] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le 2C\omega((\text{Var}[Y])^{1/2}/2)\le 2CL((\text{Var}[Y])^{1/2}/2)^\alpha)\le 2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$</p>
 
-<p>Case 2: Since $f$&#39;s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^58]&mdash; $$3\omega_2(\sqrt{\text{Var}[Y]}/2)\le 3 (\sqrt{\text{Var}[Y]}/2) \omega(\sqrt{\text{Var}[Y]}/2)\le 3L(\sqrt{\text{Var}[Y]}/2)^{1+\alpha}$$ $$\le 3L(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$</p>
+<p>Case 2: Since $f$&#39;s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^58]&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le C ((\text{Var}[Y])^{1/2}/2) \omega((\text{Var}[Y])^{1/2}/2)\le CL((\text{Var}[Y])^{1/2}/2)^{1+\alpha}$$ $$\le CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$</p>
 
 <p>Case 3: Follows from case 2 since a Hölder continuous function with Hölder exponent 1 and Hölder constant $L$ is Lipschitz continuous with Lipschitz constant $M$.</p>
 
-<p>Case 4: Since <em>f</em> is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$3\omega_2(\sqrt{\text{Var}[Y]}/2)\le 3 D (\sqrt{\text{Var}[Y]}/2) = 3D\sqrt{1/(8n-4)}/2.$$ &#x25a1;</p>
+<p>Case 4: Since <em>f</em> is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$ &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>) with <em>h</em> &ge; 0, for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever <em>f</em> is continuous and <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.</p>

@@ -746,7 +746,7 @@ _Proof_: Evaluating the moment for each $1\le n \le 303$ at its critical point s
 3. If $r=0$, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le M/(2n^{1/2})$ for every integer $n\ge 1$.
 4. If $r$ is even and greater than 0, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}$ for every integer $n\ge 2$, where $\gamma$ is 8 if $r\le 42$ and 6 otherwise.
 
-_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Lagrange remainder_,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^40], which applies for any integer $r\ge 0$, bounds that Lagrange remainder [^41].  By that result, because $f$'s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}\le M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.$$
+_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Lagrange remainder_,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^40], which applies for any integer $r\ge 0$, bounds that Lagrange remainder [^41].  By that result, because $f$'s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}=M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.$$
 
 The goal is now to bound the Bernstein polynomial of $|\lambda-x_0|^{r+1}$.  This is easiest to do if $r$ is odd.
 
@@ -1087,26 +1087,26 @@ _Proof._
 >     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^55].
 
-**Lemma 2A.**  _Let f(&lambda;) map the closed unit interval to itself._
+**Lemma 2A.**  _Let f(&lambda;) map the closed unit interval to itself, and let $C=15$._
 
 | _If $f$:_ | _Then, for every integer $n$ &ge; 1, the expression (1) in Lemma 2 is less than or equal to:_ |
  --- | --- |
-| (Case 1) _Is Hölder continuous, its Hölder exponent is $\alpha$, and its Hölder constant is $L$ or less, where $0\lt\alpha\lt 1$._ | $6 L \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}$. |
-| (Case 2) _Has a Hölder continuous (first) derivative whose Hölder exponent is $\alpha$ and whose Hölder constant is $L$ or less, where $0\lt\alpha\le 1$._ | $3L(\sqrt{1/(8n-4)}/2)^{1+\alpha}$. |
-| (Case 3) _Has a Lipschitz continuous derivative whose Lipschitz constant is $M$ or less._ | $(3/4)M\frac{1}{8n-4}$. |
-| (Case 4) _Is in the Zygmund class with constant equal to or less than $D$._ | $(3/2) D\sqrt{1/(8n-4)}$. |
+| (Case 1) _Is Hölder continuous, its Hölder exponent is $\alpha$, and its Hölder constant is $L$ or less, where $0\lt\alpha\lt 1$._ | $2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}$. |
+| (Case 2) _Has a Hölder continuous (first) derivative whose Hölder exponent is $\alpha$ and whose Hölder constant is $L$ or less, where $0\lt\alpha\le 1$._ | $CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}$. |
+| (Case 3) _Has a Lipschitz continuous derivative whose Lipschitz constant is $M$ or less._ | $(C/4)M\frac{1}{8n-4}$. |
+| (Case 4) _Is in the Zygmund class with constant equal to or less than $D$._ | $(C/2) D\sqrt{1/(8n-4)}$. |
 
-_Proof._ Strukov and Timan (1977)[^56], (1975)[^57] proved the bound:<br>abs(**E**[_f_(_Y_)] &minus; _f_(**E**[_Y_])) &le; 3\*&omega;<sub>2</sub>(sqrt(**Var**[_Y_])/2),<br>where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below).  Call this bound **2A1**.
+_Proof._ Strukov and Timan (1977)[^56], (1975)[^57] proved the following bound: $$\abs(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below). $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values on the closed unit interval or any other closed interval of the real line, as in this case. Call this bound **2A1**.
 
 Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**[_Y_]) is less than or equal to 1/(8\*_n_&minus; 4), and **2A1**'s left-hand side is the same as the expression (1).
 
-Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying **2A1**, the bound on _Y_'s variance, as well as a property given in Stancu et al. (2001)[^58] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le 3\omega_2(\sqrt{\text{Var}[Y]}/2)$$ $$\le 6\omega(\sqrt{\text{Var}[Y]}/2)\le 6L(\sqrt{\text{Var}[Y]}/2)^\alpha)\le 6 L \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$
+Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying **2A1**, the bound on _Y_'s variance, as well as a property given in Stancu et al. (2001)[^58] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le 2C\omega((\text{Var}[Y])^{1/2}/2)\le 2CL((\text{Var}[Y])^{1/2}/2)^\alpha)\le 2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$
 
-Case 2: Since $f$'s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^58]&mdash; $$3\omega_2(\sqrt{\text{Var}[Y]}/2)\le 3 (\sqrt{\text{Var}[Y]}/2) \omega(\sqrt{\text{Var}[Y]}/2)\le 3L(\sqrt{\text{Var}[Y]}/2)^{1+\alpha}$$ $$\le 3L(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$
+Case 2: Since $f$'s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^58]&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le C ((\text{Var}[Y])^{1/2}/2) \omega((\text{Var}[Y])^{1/2}/2)\le CL((\text{Var}[Y])^{1/2}/2)^{1+\alpha}$$ $$\le CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$
 
 Case 3: Follows from case 2 since a Hölder continuous function with Hölder exponent 1 and Hölder constant $L$ is Lipschitz continuous with Lipschitz constant $M$.
 
-Case 4: Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$3\omega_2(\sqrt{\text{Var}[Y]}/2)\le 3 D (\sqrt{\text{Var}[Y]}/2) = 3D\sqrt{1/(8n-4)}/2.$$ &#x25a1;
+Case 4: Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$ &#x25a1;
 
 > **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever _f_ is continuous and _x_ and _y_ are in _f_'s domain.
 
