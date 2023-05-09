@@ -195,27 +195,32 @@ Specifically:
     METHOD RndIntHelperPowerOfTwo(maxInclusive)
       // NOTE: Finds the number of bits minus 1 needed
       // to represent MODULUS (in other words, the number
-      // of random bits returned by NEXTRAND() ). This will
-      // be a constant here, though.
+      // of random bits returned by NEXTRAND() ). In practice,
+      // this will be a constant and can be calculated in advance.
       modBits = ln(MODULUS)/ln(2)
       // Lumbroso's Fast Dice Roller.
       x = 1
       y = 0
       nextBit = modBits
       rngv = 0
+      maxIncMinus1 = maxInclusive - 1
       while true // until a value is returned
         if nextBit >= modBits
           nextBit = 0
           rngv = NEXTRAND()
         end
-        x = x * 2
-        y = y * 2 + rem(rngv, 2)
-        rngv = floor(rngv / 2)
         nextBit = nextBit + 1
+        // if modBits=1, this can read "bit=rngv"
+        bit = rem(rngv, 2)
+        x = x * 2
+        y = y * 2 + bit
+        // if modBits=1, the following line
+        // can be left out
+        rngv = floor(rngv / 2)
         if x > maxInclusive
+          x = x - maxIncMinus1
           if y <= maxInclusive: return y
-          x = x - maxInclusive - 1
-          y = y - maxInclusive - 1
+          y = y - maxIncMinus1
         end
       end
     END METHOD
@@ -244,6 +249,7 @@ The table below shows algorithms that have been proposed for choosing an integer
 | _Multiply-and-shift reduction_: Generate `bignumber`, an integer made of `k` unbiased bits, where `k` is much greater than `n`, then find `(bignumber * n) >> k` (see (Lemire 2016\)[^4], (Lemire 2018\)[^5], and the "Integer Multiplication" algorithm surveyed by M. O'Neill). | No | No | Constant |
 | _Modulo reduction_: Generate `bignumber` as above, then find `rem(bignumber, n)`.  | No | No | Constant |
 | _Fast Dice Roller_ (Lumbroso 2013\)[^6] \(see pseudocode above). | Yes | Yes | Runs forever in worst case |
+| Algorithm FYKY (Bacher et al. 2017)[^111].  Effectively the same as replacing the lines "`if y <= maxInclusive: return y; y = y - maxIncMinus1`" in the pseudocode above with "`if y >= x: return y-x`". | Yes | Yes | Runs forever in worst case |
 | Math Forum (2004\)[^7] or (Mennucci 2018\)[^8] \(batching/recycling random bits). | Yes | Yes | Runs forever in worst case |
 | "FP Multiply" surveyed by [**M. O'Neill**](https://www.pcg-random.org/posts/bounded-rands.html). | No | No | Constant |
 | Algorithm in "Conclusion" section by O'Neill. | No | Yes | Runs forever in worst case |
@@ -2247,6 +2253,8 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 [^109]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965)", arXiv:2108.00965.
 
 [^110]: For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
+
+[^111]: Axel Bacher, Olivier Bodini, Hsien-Kuei Hwang, and Tsung-Hsi Tsai. 2017. Generating Random Permutations by Coin Tossing: Classical Algorithms, New Analysis, and Modern Implementation. ACM Trans. Algorithms 13, 2, Article 24 (April 2017), 43 pages. [https://doi.org/10.1145/3009909](https://doi.org/10.1145/3009909) .
 
 <a id=Appendix></a>
 ## Appendix

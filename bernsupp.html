@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/08"><meta name="citation_online_date" content="2023/05/08"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/09"><meta name="citation_online_date" content="2023/05/09"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -399,6 +399,8 @@
 <li>There is a way to find the <em>Bernstein coefficients</em> of each polynomial $L_{n}(f)$ in the family of polynomials.</li>
 </ul>
 
+<p>For examples of suitable polynomials, see &quot;<a href="#Approximate_Bernoulli_Factories"><strong>Approximate Bernoulli Factories</strong></a>, later.</p>
+
 <p>In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called <em>T</em> in the algorithm below), then simulates an appropriate <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a> of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).[^6] To simulate $f$, the algorithm&mdash;</p>
 
 <ul>
@@ -504,7 +506,12 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>There are other kinds of functions, besides polynomials and rational functions, that are designed to approximate continuous functions.  But many of them work poorly as an approximate Bernoulli factory because their lack of &quot;smoothness&quot; means there is no simple Bernoulli factory for them.  For example, a <em>spline</em>, which is a continuous function made up of a finite number of polynomial pieces, is generally not &quot;smooth&quot; at the points where the spline&#39;s pieces meet.</li>
+<li>Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</li>
+</ol>
 </blockquote>
 
 <p><a id=For_Certain_Functions></a></p>

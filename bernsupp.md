@@ -257,6 +257,8 @@ The algorithm in this section simulates $f(\lambda)$ when $f$ belongs in a large
 - There is a family of polynomials ($L_{1}(f)$, $L_{2}(f)$, $L_{4}(f)$, $L_{8}(f)$, ...) that come close to $f$ with a known error bound, where the number after $L$ is the degree of the polynomial.
 - There is a way to find the _Bernstein coefficients_ of each polynomial $L_{n}(f)$ in the family of polynomials.
 
+For examples of suitable polynomials, see "[**Approximate Bernoulli Factories**](#Approximate_Bernoulli_Factories), later.
+
 In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called _T_ in the algorithm below), then simulates an appropriate [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations) of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).[^6] To simulate $f$, the algorithm&mdash;
 
 - selects a polynomial in the convex combination with probability proportional to its upper bound, or a "leftover" zero polynomial with probability _T_, then
@@ -336,7 +338,10 @@ To build an approximate Bernoulli factory with a polynomial:
 
 2. Then, use one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" to toss heads with probability equal to that polynomial, given its coefficients.
 
-> **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)). ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
+> **Notes:**
+>
+> 1. There are other kinds of functions, besides polynomials and rational functions, that are designed to approximate continuous functions.  But many of them work poorly as an approximate Bernoulli factory because their lack of "smoothness" means there is no simple Bernoulli factory for them.  For example, a _spline_, which is a continuous function made up of a finite number of polynomial pieces, is generally not "smooth" at the points where the spline's pieces meet.
+> 2. Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)). ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 
 <a id=For_Certain_Functions></a>
 ### For Certain Functions
