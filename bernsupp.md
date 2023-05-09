@@ -1097,7 +1097,7 @@ _Proof._
 | (Case 4) _Is in the Zygmund class with constant equal to or less than $D$._ | $(C/2) D\sqrt{1/(8n-4)}$. |
 
 _Proof._ Strukov and Timan (1977)[^56], (1975)[^57] proved the following bound: $$\
-|\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])|\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below). $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values greater than one real number and less than another, as in this case.
+|\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])|\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values greater than one real number and less than another, as in this case.
 
 Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**[_Y_]) is less than or equal to 1/(8\*_n_&minus; 4), and the left-hand side of Strukov and Timan's bound is the same as the expression (1).
 
