@@ -621,9 +621,8 @@ def cc():
     print(ce.value(0.9))
     print(sum(f.simulate(coin) for i in range(50000)) / 50000)
 
-# cc()
-
 from sympy import Min, Max, ceiling, S
+from sympy import Matrix,binomial,chebyshevt,pi,Piecewise,Eq,floor,ceiling
 
 def tachevcoeffs(func, x, n):
     coeffs = [func.subs(x, S(i) / n) for i in range(n + 1)]
@@ -794,3 +793,86 @@ class C3Function(FactoryFunction):
 
     def _diffwidth(self, m):
         return S("1.01")*5 * self.mm * self.zz / (2 ** (2 * m + 1))
+
+def cheb_to_bern(n):
+  # Transforms Chebyshev interp. coefficients to Bernstein coefficients
+  # Rababah, Abedallah. "Transformation of Chebyshev–Bernstein polynomial basis." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+  mat=[[sum((-1)**(k-i)*binomial(2*k,2*i)*binomial(n-k,j-i)\
+     for i in range(max(0,j+k-n),min(j,k)+1))/(binomial(n,j)) for k in range(0,n+1)]\
+     for j in range(0,n+1)]
+  return Matrix(mat)
+
+def cheb_to_bern_2(n):
+  # Transforms Chebyshev second kind interp. coefficients to Bernstein coefficients
+  # Lu, Lizheng, and Guozhao Wang. "Application of Chebyshev II–Bernstein basis transformations to degree reduction of Bézier curves." Journal of Computational and Applied Mathematics 221.1 (2008): 52-65.
+  mat=[[sum((-1)**(k-i)*binomial(2*k+2,2*i+1)*binomial(n-k,j-i)\
+     for i in range(max(0,j+k-n),min(j,k)+1))/(2*binomial(n,j)) for k in range(0,n+1)]\
+     for j in range(0,n+1)]
+  return Matrix(mat)
+
+def chebpoly(coeffs,x,a=0,b=1):
+  # Polynomial on [a,b] given Chebyshev interpolant coefficients
+  return sum(coeffs[i]*chebyshevt(i,(S(x-a)/S(b-a))*2-1) for i in range(0,len(coeffs)))
+
+def chebpoly2(coeffs,x):
+  # Polynomial on [-1,1] given Chebyshev interpolant coefficients
+  # If func^{nu} has bounded variation V, nu>=1,
+  # the error bound is 4V/(pi*nu*(n-nu)^nu).  If V has a derivative on its domain,
+  # V is the integral of abs(func^{nu}).
+  # Theorem 7.2, Trefethen, Lloyd N., Approximation theory and approximation practice, 2013.  G. Mastroianni and J. Szabados, "Jackson order of approximation by Lagrange interpolation", Acta Mathematica Hungarica, 69 (1995), 73-82.
+  return sum(coeffs[i]*chebyshevt(i,x) for i in range(0,len(coeffs)))
+
+def chebdegree(eps,totvar,nu):
+  # Upper bound on degree of polynomial to achieve error tolerance eps,
+  # given that func^{nu} has bounded variation totvar on [-1,1].
+  # nu>=1
+   if nu<1: raise ValueError("'nu' must be 1 or greater")
+  return ceiling(nu+(S(4*totvar)/(pi*eps*nu))**(1/S(nu)))
+
+def chebdegree_rough(eps,totvar,nu):
+  # Rougher upper bound on degree of polynomial to achieve error tolerance eps,
+  # given that func^{nu} has bounded variation totvar on [-1,1].
+  # nu>=1
+   if nu<1: raise ValueError("'nu' must be 1 or greater")
+  return ceiling(nu+(SR("1.2733")*(totvar)/(eps*nu))**(1/S(nu)))
+
+def chebdegree_01_rough(eps,totvar,nu):
+  # Rougher upper bound on degree of polynomial to achieve error tolerance eps,
+  # given that func^{nu} has bounded variation totvar on [0,1].
+  # nu>=1
+   if nu<1: raise ValueError("'nu' must be 1 or greater")
+  return ceiling(nu+(SR("1.2733")*(S(1)/2**nu)*(totvar)/(eps*nu))**(1/S(nu)))
+
+def chebcoeffs(func,x,n):
+  # Chebyshev interpolant coefficients of degree n
+  # for a continuous function func defined on [-1,1]
+  # Background: https://arxiv.org/pdf/2106.03456.pdf
+  ret=[(S(2) / n)
+        * sum(
+            ((S(1)/(2 if j==0 or j==n else 1)) # halve if first or last summand
+            * func.subs(x, cos(j * pi / n))
+            * chebyshevt(k, x).subs(x, cos(j * pi / n)) \
+            for j in range(0,n+1))) for k in range(0,n+1)]
+  # Halve first and last coefficient so that the coefficients
+  # are correct on chebpoly and chebpoly2
+  ret[0]/=2
+  ret[n]/=2
+  return ret
+
+def cheb_berncoeffs(func, x, eps=SR("0.001"), totvar=1, nu=3):
+   # Calculates Bernstein coefficients of a polynomial that
+   # approximates func(x) with an error tolerance 'eps',
+   # using a Chebyshev interpolant.
+   # func is continuous on [0,1], 'totvar' is 'nu'-th derivative's
+   # total variation on [0,1].
+   # Since calculating these coefficients can take seconds or more --
+   # too slowly for real-time or "online" use -- this method is best
+   # used to pregenerate coefficients of a function known
+   # in advance ("offline").
+   if nu<1: raise ValueError("'nu' must be 1 or greater")
+   nn=chebdegree_01_rough(eps, totvar, nu)
+   chc=chebcoeffs(func.subs(x,(x+1)/2),x,nn)
+   chc=[c.simplify() for c in chc]
+   cc=Matrix(chc)
+   bern=cheb_to_bern(nn)*cc
+   return [floor(c/eps+S.Half)*eps for c in bern]
