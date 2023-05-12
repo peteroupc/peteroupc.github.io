@@ -63,7 +63,7 @@ def polyshift(nrcoeffs, theta, d, alpha=2):
     theta = theta if isinstance(theta, Real) else RealFraction(theta)
     n = len(nrcoeffs) - 1 - r  # n+r+1 coefficients
     phi = [
-        (theta) / (n ** alpha)
+        (theta) / (n**alpha)
         + (
             RealSqrt(Fraction(i, n) * (1 - Fraction(i, n)) / n)
             if alpha == 1
@@ -200,22 +200,22 @@ def lorentz4poly(pwpoly, n):
         vals[k + 1] += (
             f0v
             - f2v * Fraction(1, 8 * n)
-            - f3v * Fraction(1, 24 * n ** 2)
-            - f4v * Fraction(1, 96 * n ** 3)
+            - f3v * Fraction(1, 24 * n**2)
+            - f4v * Fraction(1, 96 * n**3)
         ) * (4 * nck)
         # print("k+2")
         vals[k + 2] += (
             f0v
             - f2v * Fraction(1, 6 * n)
-            + f4v * Fraction(1, 48 * n ** 2)
-            + f4v * Fraction(1, 36 * n ** 3)
+            + f4v * Fraction(1, 48 * n**2)
+            + f4v * Fraction(1, 36 * n**3)
         ) * (6 * nck)
         # print("k+3")
         vals[k + 3] += (
             f0v
             - f2v * Fraction(1, 8 * n)
-            + f3v * Fraction(1, 24 * n ** 2)
-            - f4v * Fraction(1, 96 * n ** 3)
+            + f3v * Fraction(1, 24 * n**2)
+            - f4v * Fraction(1, 96 * n**3)
         ) * (4 * nck)
         # print("k+4")
         vals[k + 4] += ends
@@ -445,7 +445,7 @@ class C4Function:
             return self._ensurelorentz(deg)
         if self.contderivs >= 4:
             # WARNING: Conjectured bound
-            incr = Fraction(25, 100) * self.norm / deg ** 2
+            incr = Fraction(25, 100) * self.norm / deg**2
         elif self.contderivs >= 3:
             # WARNING: Conjectured bound
             incr = (Fraction(9, 100) * self.norm) / RealFraction(deg) ** Fraction(3, 2)
@@ -459,13 +459,15 @@ class C4Function:
             ) ** Fraction(1, 2)
         else:
             print("Unsupported")
-        overshifted = realIsLessOrEqual(Fraction(1), incr):
+        overshifted = realIsLessOrEqual(Fraction(1), incr)
         ipol = None if overshifted else iteratedPoly2(self.func, deg)
         # NOTE: Can return a Fraction (rather than Real*)
         # in some cases, but this is only used in realIsLess
         # and realFloor, which both accept Fractions
         if self.concave:
-            pol = [realSimplify(self.func.value(Fraction(i, deg))) for i in range(deg + 1)]
+            pol = [
+                realSimplify(self.func.value(Fraction(i, deg))) for i in range(deg + 1)
+            ]
         elif overshifted:
             pol = [REALZERO for i in range(deg + 1)]
         else:
@@ -480,9 +482,9 @@ class C4Function:
         else:
             pol = [realSimplify(v + incr) for v in ipol]
             for v in pol:
-              if realIsLess(Fraction(1), v):
-                pol = [REALONE for i in range(deg + 1)]
-                break
+                if realIsLess(Fraction(1), v):
+                    pol = [REALONE for i in range(deg + 1)]
+                    break
         self.hipolys[deg] = pol
         return [self.lopolys[deg], self.hipolys[deg]]
 
@@ -493,7 +495,7 @@ class C4Function:
         return self._ensure(n)[1][k]
 
     def simulate(self, coin):
-        """ - coin(): Function that returns 1 or 0 with a fixed probability."""
+        """- coin(): Function that returns 1 or 0 with a fixed probability."""
         return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
 
 def _fb2(fbelow, a, b, v=1):
@@ -622,7 +624,7 @@ def cc():
     print(sum(f.simulate(coin) for i in range(50000)) / 50000)
 
 from sympy import Min, Max, ceiling, S
-from sympy import Matrix,binomial,chebyshevt,pi,Piecewise,Eq,floor,ceiling
+from sympy import Matrix, binomial, chebyshevt, pi, Piecewise, Eq, floor, ceiling
 
 def tachevcoeffs(func, x, n):
     coeffs = [func.subs(x, S(i) / n) for i in range(n + 1)]
@@ -644,17 +646,17 @@ class FactoryFunction:
         nn = self.start_nn
         self.coeffarr = [None]
         self.func = func
-        self.tc={}
+        self.tc = {}
         self.x = x
         while True:
             err = self._errshift(nn)
-            co=None
-            #print(["nn",nn])
-            if err>2: # Error too big to be a starting polynomial
-               nn+=1
-               continue
+            co = None
+            # print(["nn",nn])
+            if err > 2:  # Error too big to be a starting polynomial
+                nn += 1
+                continue
             coeffs = [(c - err) for c in self.coeffs(self.func, self.x, 2**nn)]
-            self.tc[nn]=coeffs
+            self.tc[nn] = coeffs
             comin = Min(*coeffs)
             comax = Max(*coeffs)
             # print(["nn",nn,comin.n(),comax.n()])
@@ -676,16 +678,16 @@ class FactoryFunction:
             raise ValueError("Not supported")
 
     def _coeffs(self, func, x, nn):
-       raise NotImplementedError
+        raise NotImplementedError
 
     def _t(self):
-       raise NotImplementedError
+        raise NotImplementedError
 
     def _errshift(self, m):
-       raise NotImplementedError
+        raise NotImplementedError
 
     def _diffwidth(self, m):
-       raise NotImplementedError
+        raise NotImplementedError
 
     def ensure(self, r):
         if r < 0:
@@ -695,28 +697,31 @@ class FactoryFunction:
         while r >= len(self.coeffarr):
             self.coeffarr.append(None)
         nn = (r - 2) + self.start_nn
-        #print(["r",r,"nn",nn])
+        # print(["r",r,"nn",nn])
         err = self._errshift(nn)
-        newerr = self._errshift(nn+1)
+        newerr = self._errshift(nn + 1)
         diffwidth = self._diffwidth(nn)
         if diffwidth < 0:
             raise ValueError
-        coeffs1=None
-        coeffs2=None
-        if nn in self.tc: coeffs1=self.tc[nn]
+        coeffs1 = None
+        coeffs2 = None
+        if nn in self.tc:
+            coeffs1 = self.tc[nn]
         else:
-          coeffs1 = [
-            (c - err) for c in self.coeffs(self.func, self.x, 2**nn)
-          ]  # Polynomial of degree 2**nn is lower polynomial
-          self.tc[nn]=coeffs1
-        if nn+1 in self.tc: coeffs2=self.tc[nn+1]
+            coeffs1 = [
+                (c - err) for c in self.coeffs(self.func, self.x, 2**nn)
+            ]  # Polynomial of degree 2**nn is lower polynomial
+            self.tc[nn] = coeffs1
+        if nn + 1 in self.tc:
+            coeffs2 = self.tc[nn + 1]
         else:
-          coeffs2 = [
-            (c - newerr) for c in self.coeffs(self.func, self.x, 2**(nn+1))
-          ]  # Polynomial of degree 2**(nn+1) is upper polynomial
-          self.tc[nn+1]=coeffs2
+            coeffs2 = [
+                (c - newerr) for c in self.coeffs(self.func, self.x, 2 ** (nn + 1))
+            ]  # Polynomial of degree 2**(nn+1) is upper polynomial
+            self.tc[nn + 1] = coeffs2
         coeffs1 = degelev(coeffs1, 2**nn)  # Lower polynomial
-        if len(coeffs2)!=len(coeffs1): raise ValueError
+        if len(coeffs2) != len(coeffs1):
+            raise ValueError
         coeffs = [(a - b) / diffwidth for a, b in zip(coeffs2, coeffs1)]
         # coeffs represents the Bernstein coefficients of a nonnegative polynomial
         # bounded by 0 and 1, but the coefficients are not
@@ -733,29 +738,31 @@ class FactoryFunction:
         return coeffs
 
     def isRandomLess(self, u, s):
-       # Determines whether 'u', a uniform random variate
-       # between 0 and 1, is less than 's'.
-       sh=16 # Number of bits from 'u' generated at a time
-       if u[1]==0:
-         u[0]=random.randint(0,(1<<sh)-1)
-         u[1]=(1<<sh)
-       while True:
-          if S(u[0])/u[1] < s: return True
-          if S(u[0]+1)/u[1] > s: return False
-          u[0]=(u[0]<<sh)|random.randint(0,(1<<sh)-1)
-          u[1]=(u[1]<<sh)
+        # Determines whether 'u', a uniform random variate
+        # between 0 and 1, is less than 's'.
+        sh = 16  # Number of bits from 'u' generated at a time
+        if u[1] == 0:
+            u[0] = random.randint(0, (1 << sh) - 1)
+            u[1] = 1 << sh
+        while True:
+            if S(u[0]) / u[1] < s:
+                return True
+            if S(u[0] + 1) / u[1] > s:
+                return False
+            u[0] = (u[0] << sh) | random.randint(0, (1 << sh) - 1)
+            u[1] = u[1] << sh
 
     def sim(self, coin):
         r = 0
         s = 1 - self.totaldist
-        u = [0,0]
+        u = [0, 0]
         # Generate 'r'
         # r=0 --> Remainder
         while not self.isRandomLess(u, s):
             r += 1
             if r == 1:
-                s += self.startdist # r=1 --> First piece
-            else: # r>=2 --> In-between pieces
+                s += self.startdist  # r=1 --> First piece
+            else:  # r>=2 --> In-between pieces
                 nn = (r - 2) + self.start_nn
                 s += self._diffwidth(nn)
         if r == 0:
@@ -763,7 +770,7 @@ class FactoryFunction:
         # Simulate the polynomial labeled 'r'
         coeffs = self.ensure(r)
         heads = sum(coin() for i in range(len(coeffs) - 1))
-        if self.isRandomLess([0,0],coeffs[heads]):
+        if self.isRandomLess([0, 0], coeffs[heads]):
             return 1
         return 0
 
@@ -780,99 +787,141 @@ class C3Function(FactoryFunction):
             raise ValueError
         self.zz = S("1.29904")  # Constant used in approximation scheme
         self.mm = S(thirdderiv)
-        super(func,x)
+        super(func, x)
 
     def _coeffs(self, func, x, nn):
-       return tachevcoeffs(func, x, 2**nn)
+        return tachevcoeffs(func, x, 2**nn)
 
     def _t(self, start_nn, start_dist):
-       return S("1.01") * 10 * self.mm * self.zz / (3 * 2 ** (2 * start_nn)) + startdist
+        return (
+            S("1.01") * 10 * self.mm * self.zz / (3 * 2 ** (2 * start_nn)) + startdist
+        )
 
     def _errshift(self, m):
         return S("1.01") * 4 * self.mm * self.zz / (3 * 2 ** (2 * m))
 
     def _diffwidth(self, m):
-        return S("1.01")*5 * self.mm * self.zz / (2 ** (2 * m + 1))
+        return S("1.01") * 5 * self.mm * self.zz / (2 ** (2 * m + 1))
 
 def cheb_to_bern(n):
-  # Transforms Chebyshev interp. coefficients to Bernstein coefficients
-  # Rababah, Abedallah. "Transformation of Chebyshev–Bernstein polynomial basis." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
-  mat=[[sum((-1)**(k-i)*binomial(2*k,2*i)*binomial(n-k,j-i)\
-     for i in range(max(0,j+k-n),min(j,k)+1))/(binomial(n,j)) for k in range(0,n+1)]\
-     for j in range(0,n+1)]
-  return Matrix(mat)
+    # Transforms Chebyshev interp. coefficients to Bernstein coefficients
+    # Rababah, Abedallah. "Transformation of Chebyshev–Bernstein polynomial basis." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+    mat = [
+        [
+            sum(
+                (-1) ** (k - i) * binomial(2 * k, 2 * i) * binomial(n - k, j - i)
+                for i in range(max(0, j + k - n), min(j, k) + 1)
+            )
+            / (binomial(n, j))
+            for k in range(0, n + 1)
+        ]
+        for j in range(0, n + 1)
+    ]
+    return Matrix(mat)
 
 def cheb_to_bern_2(n):
-  # Transforms Chebyshev second kind interp. coefficients to Bernstein coefficients
-  # Lu, Lizheng, and Guozhao Wang. "Application of Chebyshev II–Bernstein basis transformations to degree reduction of Bézier curves." Journal of Computational and Applied Mathematics 221.1 (2008): 52-65.
-  mat=[[sum((-1)**(k-i)*binomial(2*k+2,2*i+1)*binomial(n-k,j-i)\
-     for i in range(max(0,j+k-n),min(j,k)+1))/(2*binomial(n,j)) for k in range(0,n+1)]\
-     for j in range(0,n+1)]
-  return Matrix(mat)
+    # Transforms Chebyshev second kind interp. coefficients to Bernstein coefficients
+    # Lu, Lizheng, and Guozhao Wang. "Application of Chebyshev II–Bernstein basis transformations to degree reduction of Bézier curves." Journal of Computational and Applied Mathematics 221.1 (2008): 52-65.
+    mat = [
+        [
+            sum(
+                (-1) ** (k - i)
+                * binomial(2 * k + 2, 2 * i + 1)
+                * binomial(n - k, j - i)
+                for i in range(max(0, j + k - n), min(j, k) + 1)
+            )
+            / (2 * binomial(n, j))
+            for k in range(0, n + 1)
+        ]
+        for j in range(0, n + 1)
+    ]
+    return Matrix(mat)
 
-def chebpoly(coeffs,x,a=0,b=1):
-  # Polynomial on [a,b] given Chebyshev interpolant coefficients
-  return sum(coeffs[i]*chebyshevt(i,(S(x-a)/S(b-a))*2-1) for i in range(0,len(coeffs)))
+def chebpoly(coeffs, x, a=0, b=1):
+    # Polynomial on [a,b] given Chebyshev interpolant coefficients
+    if a > b:
+        raise ValueError
+    return sum(
+        coeffs[i] * chebyshevt(i, (S(x - a) / S(b - a)) * 2 - 1)
+        for i in range(0, len(coeffs))
+    )
 
-def chebpoly2(coeffs,x):
-  # Polynomial on [-1,1] given Chebyshev interpolant coefficients
-  # If func^{nu} has bounded variation V, nu>=1,
-  # the error bound is 4V/(pi*nu*(n-nu)^nu).  If V has a derivative on its domain,
-  # V is the integral of abs(func^{nu}).
-  # Theorem 7.2, Trefethen, Lloyd N., Approximation theory and approximation practice, 2013.  G. Mastroianni and J. Szabados, "Jackson order of approximation by Lagrange interpolation", Acta Mathematica Hungarica, 69 (1995), 73-82.
-  return sum(coeffs[i]*chebyshevt(i,x) for i in range(0,len(coeffs)))
+def chebpoly2(coeffs, x):
+    # Polynomial on [-1,1] given Chebyshev interpolant coefficients
+    # If func^{nu} has bounded variation V, nu>=1,
+    # the error bound is 4V/(pi*nu*(n-nu)^nu).  If V has a derivative on its domain,
+    # V is the integral of abs(func^{nu}).
+    # Theorem 7.2, Trefethen, Lloyd N., Approximation theory and approximation practice, 2013.  G. Mastroianni and J. Szabados, "Jackson order of approximation by Lagrange interpolation", Acta Mathematica Hungarica, 69 (1995), 73-82.
+    return chebpoly(coeffs, x, a=-1, b=1)
 
-def chebdegree(eps,totvar,nu):
-  # Upper bound on degree of polynomial to achieve error tolerance eps,
-  # given that func^{nu} has bounded variation totvar on [-1,1].
-  # nu>=1
-   if nu<1: raise ValueError("'nu' must be 1 or greater")
-  return ceiling(nu+(S(4*totvar)/(pi*eps*nu))**(1/S(nu)))
+def chebdegree(eps, totvar, nu):
+    # Upper bound on degree of polynomial to achieve error tolerance eps,
+    # given that func^{nu} has bounded variation totvar on [-1,1].
+    # nu>=1
+    if nu < 1:
+        raise ValueError("'nu' must be 1 or greater")
+    return ceiling(nu + (S(4 * totvar) / (pi * eps * nu)) ** (1 / S(nu)))
 
-def chebdegree_rough(eps,totvar,nu):
-  # Rougher upper bound on degree of polynomial to achieve error tolerance eps,
-  # given that func^{nu} has bounded variation totvar on [-1,1].
-  # nu>=1
-   if nu<1: raise ValueError("'nu' must be 1 or greater")
-  return ceiling(nu+(SR("1.2733")*(totvar)/(eps*nu))**(1/S(nu)))
+def chebdegree_rough(eps, totvar, nu):
+    # Rougher upper bound on degree of polynomial to achieve error tolerance eps,
+    # given that func^{nu} has bounded variation totvar on [-1,1].
+    # nu>=1
+    return chebdegree_01_rough(eps, totvar, nu, a=-1, b=1)
 
-def chebdegree_01_rough(eps,totvar,nu):
-  # Rougher upper bound on degree of polynomial to achieve error tolerance eps,
-  # given that func^{nu} has bounded variation totvar on [0,1].
-  # nu>=1
-   if nu<1: raise ValueError("'nu' must be 1 or greater")
-  return ceiling(nu+(SR("1.2733")*(S(1)/2**nu)*(totvar)/(eps*nu))**(1/S(nu)))
+def chebdegree_01_rough(eps, totvar, nu, a=0, b=1):
+    # Rougher upper bound on degree of polynomial to achieve error tolerance eps,
+    # given that func^{nu} has bounded variation totvar on [a, b].
+    # nu>=1
+    if nu < 1:
+        raise ValueError("'nu' must be 1 or greater")
+    if a > b:
+        raise ValueError
+    return ceiling(
+        nu
+        + (SR("1.2733") * ((S(b - a) / 2) ** nu) * (totvar) / (eps * nu)) ** (1 / S(nu))
+    )
 
-def chebcoeffs(func,x,n):
-  # Chebyshev interpolant coefficients of degree n
-  # for a continuous function func defined on [-1,1]
-  # Background: https://arxiv.org/pdf/2106.03456.pdf
-  ret=[(S(2) / n)
+def chebcoeffs(func, x, n, a=0, b=1):
+    # Chebyshev interpolant coefficients of degree n
+    # for a continuous function func defined on [-1,1]
+    # Background: https://arxiv.org/pdf/2106.03456.pdf
+    ret = [
+        (S(2) / n)
         * sum(
-            ((S(1)/(2 if j==0 or j==n else 1)) # halve if first or last summand
-            * func.subs(x, cos(j * pi / n))
-            * chebyshevt(k, x).subs(x, cos(j * pi / n)) \
-            for j in range(0,n+1))) for k in range(0,n+1)]
-  # Halve first and last coefficient so that the coefficients
-  # are correct on chebpoly and chebpoly2
-  ret[0]/=2
-  ret[n]/=2
-  return ret
+            (
+                (
+                    S(1) / (2 if j == 0 or j == n else 1)
+                )  # halve if first or last summand
+                * func.subs(x, a + (b - a) * (cos(j * pi / n) + 1) / 2)
+                * chebyshevt(k, x).subs(x, cos(j * pi / n))
+                for j in range(0, n + 1)
+            )
+        )
+        for k in range(0, n + 1)
+    ]
+    # Halve first and last coefficient so that the coefficients
+    # are correct on chebpoly and chebpoly2
+    ret[0] /= 2
+    ret[n] /= 2
+    return ret
 
 def cheb_berncoeffs(func, x, eps=SR("0.001"), totvar=1, nu=3):
-   # Calculates Bernstein coefficients of a polynomial that
-   # approximates func(x) with an error tolerance 'eps',
-   # using a Chebyshev interpolant.
-   # func is continuous on [0,1], 'totvar' is 'nu'-th derivative's
-   # total variation on [0,1].
-   # Since calculating these coefficients can take seconds or more --
-   # too slowly for real-time or "online" use -- this method is best
-   # used to pregenerate coefficients of a function known
-   # in advance ("offline").
-   if nu<1: raise ValueError("'nu' must be 1 or greater")
-   nn=chebdegree_01_rough(eps, totvar, nu)
-   chc=chebcoeffs(func.subs(x,(x+1)/2),x,nn)
-   chc=[c.simplify() for c in chc]
-   cc=Matrix(chc)
-   bern=cheb_to_bern(nn)*cc
-   return [floor(c/eps+S.Half)*eps for c in bern]
+    # Calculates Bernstein coefficients of a polynomial that
+    # approximates func(x) with an error tolerance 'eps',
+    # using a Chebyshev interpolant.
+    # func is continuous on [0,1], 'totvar' is 'nu'-th derivative's
+    # total variation on [0,1].
+    # Since calculating these coefficients can take seconds or more --
+    # too slowly for real-time or "online" use -- this method is best
+    # used to pregenerate ("offline") the Bernstein approximation
+    # of a function known in advance
+    if nu < 1:
+        raise ValueError("'nu' must be 1 or greater")
+    eps = S(eps)
+    delta = eps / 2
+    nn = chebdegree_01_rough(eps / 2, totvar, nu)
+    chc = chebcoeffs(func.subs(x, (x + 1) / 2), x, nn)
+    chc = [c.simplify() for c in chc]
+    cc = Matrix(chc)
+    bern = cheb_to_bern(nn) * cc
+    return [floor(c / delta + S.Half) * delta for c in bern]

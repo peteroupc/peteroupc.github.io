@@ -24,6 +24,7 @@
     - [**Proofs on Cutting Off a Power Series**](#Proofs_on_Cutting_Off_a_Power_Series)
     - [**Results Used in Approximate Bernoulli Factories**](#Results_Used_in_Approximate_Bernoulli_Factories)
     - [**Failures of the Consistency Requirement**](#Failures_of_the_Consistency_Requirement)
+    - [**Chebyshev Interpolants**](#Chebyshev_Interpolants)
     - [**Which functions admit a Bernoulli factory?**](#Which_functions_admit_a_Bernoulli_factory)
     - [**Which functions don't require outside randomness to simulate?**](#Which_functions_don_t_require_outside_randomness_to_simulate)
     - [**Multiple-Output Bernoulli Factory**](#Multiple_Output_Bernoulli_Factory)
@@ -671,6 +672,18 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^79]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^80]: H. Wang, "[Analysis of error localization of Chebyshev spectral approximations](https://arxiv.org/abs/2106.03456v3)", arXiv:2106.03456v3 [math.NA], 2023.
+
+[^81]: Trefethen, L.N., _Approximation Theory and Approximation Practice_, 2013.
+
+[^82]: Trefethen, L.N., _Approximation Theory and Approximation Practice_, 2013.
+
+[^83]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
+
+[^84]: Trefethen, L.N., _Approximation Theory and Approximation Practice_, 2013.
+
+[^85]: Rababah, Abedallah. "Transformation of Chebyshev–Bernstein polynomial basis." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -835,6 +848,39 @@ Let _g_ and _h_ be two polynomials in Bernstein form as follows:
 After rewriting _g_ to a degree-6 polynomial, _g_'s coefficients are no less than _h_'s, as required by the consistency property.
 
 However, by clamping coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and rewrite _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistency property.
+
+<a id=Chebyshev_Interpolants></a>
+### Chebyshev Interpolants
+
+The following is a method that employs _Chebyshev interpolants_ to compute the Bernstein coefficients of a polynomial that comes within $\epsilon$ of $f(\lambda)$, as long as $f$ meets certain conditions.  Because the method introduces transcendental functions, it appears here in the appendix and it runs too slowly for real-time or "online" use; rather, this method is more suitable for pregenerating ("offline") the approximate version of a function known in advance.
+
+- $f$ must be continuous on the interval $[a, b]$ and have an $r$-th derivative of _bounded variation_, as described later.
+- Suppose $f$'s domain is the interval $[a, b]$.  Then the _Chebyshev interpolant_ of degree $n$ of $f$ (Wang 2023)[^80], (Trefethen 2013)[^81] is&mdash; $$p(\lambda)=\sum_{k=0}^n c_k T_k(\lambda)$$, where &mdash;
+
+    - $c_k=\sigma(k,n)\frac{2}{n}\sum_{j=0}^n \sigma(j,n) f(\gamma(j,n))T_k(cos(j\pi/n))$,
+    - $\gamma(j,n) = a+(b-a)(cos(j\pi/n)+1)/2$,
+    - $\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and
+    - $T_k(x)$ is the $k$-th [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) (`chebyshevt(k,x)` in the SymPy computer algebra library).
+- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is continuous on the interval $[a, b]$ and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\frac{(b-a)}{2}\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^82] as well as a statement in the note below.
+    - If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).
+    - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^83].
+    - The required degree is thus $n=\text{ceil}(r+(\frac{(b-a)}{2}4V/(pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+(\frac{(b-a)}{2} 1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon>0$ is the desired error tolerance.
+- If $f$ is real analytic on $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^84].
+
+-------------
+
+1. Compute the required degree $n$ as given above, with error tolerance $\epsilon/2$.
+2. Compute the ($n$ plus one) coefficients of $f$'s degree-$n$ Chebyshev interpolant, call them $c_0, ..., c_n$.
+3. Compute the _n_&times;_n_ matrix $M$ described in Theorem 1 of Rababah (2003)[^85].
+4. Multiply the matrix by the transposed coefficients $(c_0, ..., c_n)$ to get the polynomial's Bernstein coefficients $b_0, ..., b_n$.
+5. Replace each Bernstein coefficient $c$ with $\text{floor}(c / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$, then return those Bernstein coefficients.
+
+> **Notes:**
+>
+> 1. The following statement can be shown.  Let $f(x)$ be continuous on the interval $[a, b]$.  If the $r$-th derivative of $f$, call it $FR$, is of bounded variation $V$, where $r\ge 1$, then $g(x) = FR(a+(b-a) (x+1)/2)$ has bounded variation $V\left(\frac{b-a}{2}\right)^r$ on $[-1, 1]$.
+> 2. The method in this section doesn't require $f(\lambda)$ to have a particular minimum or maximum.  In the approximate Bernoulli factory setting, the following changes to the method are needed:
+>     - $f(\lambda)$ must be continuous on the closed unit interval ($a=0$, $b=1$) and take on only values in that interval.
+>     - If any Bernstein coefficient returned by the method is less than 0 or greater than 1, double the value of $n$ and repeat the method starting at step 2.
 
 <a id=Which_functions_admit_a_Bernoulli_factory></a>
 ### Which functions admit a Bernoulli factory?
