@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/12"><meta name="citation_online_date" content="2023/05/12"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/13"><meta name="citation_online_date" content="2023/05/13"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -541,7 +541,7 @@
 <td>Has Lipschitz continuous derivative (see &quot;Definitions&quot;).</td>
 <td><em>&epsilon;</em> = <em>M</em>/(8*<em>n</em>).</td>
 <td><em>n</em> = ceil(<em>M</em>/(8*<em>&epsilon;</em>)).</td>
-<td>Lorentz (1963)[^8]. <em>M</em> &gt; 0 is the derivative&#39;s Lipschitz constant or greater.</td>
+<td>Lorentz (1963)[^8]. <em>M</em> &gt; 0 is the derivative&#39;s Lipschitz constant or greater.[^84]</td>
 </tr>
 <tr>
 <td>Has Hölder continuous derivative.</td>
@@ -581,7 +581,7 @@
 
 <p>Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>.</p>
 
-<p>Examples of these alternative polynomials (all of degree $n$) are given in the following table.  In the table, $B_n(f(\lambda))$ is the ordinary Bernstein polynomial for $f(\lambda)$.</p>
+<p>Examples of these alternative polynomials (all of degree $n$) are given in the following table.  In the table, $B_n(f(\lambda))$ is the ordinary Bernstein polynomial for $f(\lambda)$ of degree $n$.</p>
 
 <table><thead>
 <tr>
@@ -594,13 +594,13 @@
 <tr>
 <td>Order-2 iterated Boolean sum.</td>
 <td>$U_{n,2} = B_n(W_{n,2})$.</td>
-<td>Calculate $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$.</td>
+<td>$W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2} = 2 f(\lambda) - B_n(f(\lambda))$.</td>
 <td>Micchelli (1973)[^15], Guan (2009)[^16], Güntürk and Li (2021, sec. 3.3)[^17].</td>
 </tr>
 <tr>
 <td>Order-3 iterated Boolean sum.</td>
 <td>$U_{n,3} = B_n(W_{n,3})$.</td>
-<td>Calculate $W_{n,3} = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$.</td>
+<td>$W_{n,3}(j/n)$, where $0\le j\le n$ and $W_{n,3} = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$.</td>
 <td>Same.</td>
 </tr>
 <tr>
@@ -729,6 +729,14 @@
 </ul>
 
 <p>for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</p></li>
+<li><p><em>Gevrey&#39;s hierarchy</em> is a class of smooth functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> if there are $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$&#39;s $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$ (Kawamura et al. 2015)[^23]; see also (Gevrey 1918)[^24]). In this case, for each $n\ge 1$&mdash;</p>
+
+<ul>
+<li>the $n$-th derivative of $f$ is continuous and has a maximum absolute value of $Bl^n n^{\gamma n}$, and</li>
+<li>the $(n-1)$-th derivative of $f$ is Lipschitz continuous with Lipschitz constant at most $Bl^n n^{\gamma n}$.</li>
+</ul>
+
+<p><em>Gevrey&#39;s hierarchy</em> with $\gamma=1$ is the class of functions equaling power series (see next section).</p></li>
 </ol>
 </blockquote>
 
@@ -736,21 +744,19 @@
 
 <h3>For Power Series</h3>
 
-<p>Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the <em>coefficients</em>, are constant rational numbers[^23].</p>
+<p>Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the <em>coefficients</em>, are constant rational numbers[^25].</p>
 
 <p>To simulate an approximation of $f$ that comes within $\epsilon$ of $f$:</p>
 
 <ol>
 <li><p>Find the first $n$+1 coefficients such that the polynomial $P(\lambda) = a_0 \lambda^0 + ... + a_n\lambda^n$ is within $\epsilon$ of $f$ wherever $0 \le \lambda \le 1$.</p>
 
-<p>If $f$&#39;s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called &quot;ratio test&quot;, the algorithms in Carvalho and Moreira (2022)[^24] can be used here (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p>
+<p>If $f$&#39;s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called &quot;ratio test&quot;, the algorithms in Carvalho and Moreira (2022)[^26] can be used here (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p>
 
 <p>Alternatively, if bounds on the derivatives of $f$ are known, then thanks to Taylor&#39;s theorem, $P(\lambda)$ will be close enough if $M/((n+1)!) \le \epsilon$, where $M$ is equal to or greater than the maximum of the absolute value of $f$&#39;s ($n$+1)-th derivative on the domain of $f$.</p></li>
-<li><p>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^25].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.  If any of those coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the coefficents is less than 0 or greater than 1.</p></li>
+<li><p>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^27].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.  If any of those coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the coefficients is less than 0 or greater than 1.</p></li>
 <li>Flip the input coin <em>n</em> times, then let <em>j</em> be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.</li>
 </ol>
-
-<p>In fact, if $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> (there are $B\ge 1, l\ge 1, \gamma\ge 1$ such that its $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$), which includes functions equaling power series as a special case ($\gamma=1$), it&#39;s possible to bound the derivatives and find the appropriate degree for the approximating polynomial (for details, see (Kawamura et al. 2015)[^26]; see also (Gevrey 1918)[^27]).</p>
 
 <p><a id=For_Other_Smooth_Functions></a></p>
 
@@ -852,7 +858,7 @@
 <p><strong>Note:</strong> A function $f(\lambda)$ is:</p>
 
 <ul>
-<li><em>Real analytic</em> if, for every <em>z</em> in $f$&#39;s domain, it is writable as $f(\lambda)=a_0 (\lambda-z)^0 + a_1 (\lambda-z)^1 + ...$, where $a_i$ are constant real numbers whose values depend on <em>z</em> and <em>i</em> only.</li>
+<li><em>Real analytic</em> if, for every real number <em>z</em> in $f$&#39;s domain, it is writable as $f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...$, where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
 <li>In the <em>Zygmund class</em> if it is continuous and there is a constant $D&gt;0$ with the following property: For each step size $\epsilon&gt;0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that&#39;s Lipschitz continuous (see &quot;Definitions&quot;) is in the Zygmund class, but not necessarily vice versa.</li>
 </ul>
 </blockquote>
@@ -905,15 +911,15 @@
 
 <p>[^22]: G.G. Lorentz, &quot;The degree of approximation by polynomials with positive coefficients&quot;, 1966.</p>
 
-<p>[^23]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.</p>
+<p>[^23]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. &quot;<a href="https://doi.org/10.1016/j.jco.2015.05.001"><strong>Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy</strong></a>.&quot; Journal of Complexity 31, no. 5 (2015): 689-714.</p>
 
-<p>[^24]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
+<p>[^24]: M. Gevrey, &quot;Sur la nature analytique des solutions des équations aux dérivées partielles&quot;, 1918.</p>
 
-<p>[^25]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, Reliable Computing 17(1), 2012.</p>
+<p>[^25]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.</p>
 
-<p>[^26]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. &quot;<a href="https://doi.org/10.1016/j.jco.2015.05.001"><strong>Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy</strong></a>.&quot; Journal of Complexity 31, no. 5 (2015): 689-714.</p>
+<p>[^26]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
 
-<p>[^27]: M. Gevrey, &quot;Sur la nature analytique des solutions des équations aux dérivées partielles&quot;, 1918.</p>
+<p>[^27]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, Reliable Computing 17(1), 2012.</p>
 
 <p>[^28]: Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</p>
 
@@ -1027,6 +1033,8 @@
 
 <p>[^83]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
+<p>[^84]: Qian et al. suggested an <em>n</em> which has the upper bound <em>n</em>=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial (Qian, W., Riedel, M. D., &amp; Rosenberg, I. (2011). Uniform approximation and Bernstein polynomials with coefficients in the unit interval. European Journal of Combinatorics, 32(3), 448-463).</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1057,7 +1065,7 @@
 
 <p><em>Proof:</em> $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative coefficients, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;</p>
 
-<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^24] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
+<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^26] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
 
 <p><a id=Results_Used_in_Approximate_Bernoulli_Factories></a></p>
 
@@ -1275,7 +1283,7 @@
 <ol>
 <li>Compute the required degree $n$ as given above, with error tolerance $\epsilon/2$.</li>
 <li>Compute the ($n$ plus one) coefficients of $f$&#39;s degree-$n$ Chebyshev interpolant, call them $c_0, ..., c_n$.</li>
-<li>Compute the <em>n</em>&times;<em>n</em> matrix $M$ described in Theorem 1 of Rababah (2003)[^50].</li>
+<li>Compute the (<em>n</em>+1)&times;(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^50].</li>
 <li>Multiply the matrix by the transposed coefficients $(c_0, ..., c_n)$ to get the polynomial&#39;s Bernstein coefficients $b_0, ..., b_n$.</li>
 <li>For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.</li>
 <li>Return the Bernstein coefficients $b_0, ..., b_n$.</li>
@@ -1292,6 +1300,7 @@
 <li>$f(\lambda)$ must be continuous on the closed unit interval ($a=0$, $b=1$) and take on only values in that interval.</li>
 <li>If any Bernstein coefficient returned by the method is less than 0 or greater than 1, double the value of $n$ and repeat the method starting at step 2 until that condition is no longer true.</li>
 </ul></li>
+<li>It would be of interest to build Chebyshev-like interpolants that sample $f(\lambda)$ at rational values of $\lambda$ that get closer to the Chebyshev points (e.g., $cos(j\pi/n)$) with increasing $n$, and to find results that provide explicit bounds (with no hidden constants) on the approximation error that are close to those for Chebyshev interpolants.</li>
 </ol>
 </blockquote>
 
