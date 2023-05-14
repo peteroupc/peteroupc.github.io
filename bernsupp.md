@@ -60,7 +60,7 @@ The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 
 The following terms can describe a function $f(x)$, specifically how "well-behaved" $f$ is &mdash; which can be important when designing Bernoulli factory algorithms.  This page mostly cares how $f$ behaves when its domain is the closed unit interval, that is, when $0 \le x \le 1$.
 
 - A _continuous_ function $f$ has the property that there is a function $h(x, \epsilon)$ (where $x$ is in $f$'s domain and $\epsilon>0$), such that $f(x)$ and $f(y)$ are no more than $\epsilon$ apart whenever $x$ and $y$ are in $f$'s domain and no more than $h(x, \epsilon)$ apart.<br>Roughly speaking, for each $x$ in $f$'s domain, $f(x)$ and $f(y)$ are "close" if $x$ and $y$ are "close" and belong in the domain.
-- If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" or "velocity" or "instantaneous-rate-of-change" function.  The derivative (or _first derivative_) is denoted as $f'$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f''$, is the derivative of $f'$; the _third derivative_ is the derivative of $f''$; and so on.
+- If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" or "velocity" or "instantaneous-rate-of-change" function.  The derivative (or _first derivative_) is denoted as $f'$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f''$, is the derivative of $f'$; the _third derivative_ is the derivative of $f''$; and so on.  The _0-th derivative_ of a function $f$ is $f$ itself.
 - A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 - A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the function's "steepness" is no greater than that of _L_\*_x_.<br>If the function has a derivative on its domain, _L_ can be the maximum of the absolute value of that derivative.
 - A _convex_ function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes down, then it's convex.
@@ -378,9 +378,9 @@ Examples of these alternative polynomials (all of degree $n$) are given in the f
  --- | --- | --- | --- |
 | Order-2 iterated Boolean sum. | $U_{n,2} = B_n(W_{n,2})$. | $W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f(\lambda))$. | Micchelli (1973)[^16], Guan (2009)[^17], Güntürk and Li (2021, sec. 3.3)[^18]. |
 | Order-3 iterated Boolean sum. | $U_{n,3} = B_n(W_{n,3})$. | $W_{n,3}(j/n)$, where $0\le j\le n$ and $W_{n,3}(\lambda) = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$. | Same. |
-| Butzer's linear combination (order 1). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients, then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(i/n) - a[i]$ for each $i$. |Tachev (2022)[^19], Butzer (1955)[^20].  $n\ge 6$ must be even.|
-| Butzer's linear combination (order 2). | $L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$ | **Get coefficients for $n$ given $n/4$**, call them _a_[0], ..., _a_[_n_], then **get coefficients for $n$ given $n/2$**, call them _b_[0], ..., _b_[_n_], then set the final Bernstein coefficients to $a[i]/3-2 b[i]+8 f(i/n)/3$ for each $i$. | Butzer (1955)[^20]. $n\ge 4$ must be divisible by 4. |
-| Lorentz operator (order 2). | $Q_{n-2,2}=B_{n-2}(f)+x(1-x)\cdot$ $B_{n-2}(f'')/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $k$ with $1\le k\lt n$, subtract $z$ from _a_[_k_], where $z=(((f''((k-1)/(n-2)))$ / $(4(n-2)))\cdot 2k(n-k)/((n-1)\cdot(n))$. | Holtz et al. (2011)[^21]; Bernstein (1932)[^22]; Lorentz (1966)[^23]. $n\ge 4$; $f''$ is the second derivative of $f$. |
+| Butzer's linear combination (order 1). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients, then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$. |Tachev (2022)[^19], Butzer (1955)[^20].  $n\ge 6$ must be even.|
+| Butzer's linear combination (order 2). | $L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$ | **Get coefficients for $n$ given $n/4$**, call them _a_[0], ..., _a_[_n_], then **get coefficients for $n$ given $n/2$**, call them _b_[0], ..., _b_[_n_], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$. | Butzer (1955)[^20]. $n\ge 4$ must be divisible by 4. |
+| Lorentz operator (order 2). | $Q_{n-2,2}=B_{n-2}(f)+x(1-x)\cdot$ $B_{n-2}(f'')/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from _a_[_j_], where $z=(((f''((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now _a_[0], ..., _a_[_n_]. | Holtz et al. (2011)[^21]; Bernstein (1932)[^22]; Lorentz (1966)[^23]. $n\ge 4$; $f''$ is the second derivative of $f$. |
 
 The goal is now to find a polynomial of degree $n$ such that&mdash;
 
@@ -425,8 +425,8 @@ Once _n_ is found, simulating the alternative polynomial is as follows:
 >     - $c$=floor($c/\delta + 1/2$) \* $\delta$ (rounding to the nearest multiple),
 >
 >     for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial's coefficients as given here.)
-> 3. _Gevrey's hierarchy_ is a class of smooth functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in _Gevrey's hierarchy_ if there are $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$'s $n$-th derivative's absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n$ (Kawamura et al. 2015)[^24]; see also (Gevrey 1918)[^25]). In this case, for each $n\ge 1$&mdash;
->    - the $n$-th derivative of $f$ is continuous and has a maximum absolute value of $Bl^n n^{\gamma n}$, and
+> 3. _Gevrey's hierarchy_ is a class of "smooth" functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in _Gevrey's hierarchy_ if there are $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$'s $n$-th derivative's absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n\ge 1$ (Kawamura et al. 2015)[^24]; see also (Gevrey 1918)[^25]). In this case, for each $n\ge 1$&mdash;
+>    - the $n$-th derivative of $f$ is continuous and has a maximum absolute value of at most $Bl^n n^{\gamma n}$, and
 >    - the $(n-1)$-th derivative of $f$ is Lipschitz continuous with Lipschitz constant at most $Bl^n n^{\gamma n}$.
 >
 >    _Gevrey's hierarchy_ with $\gamma=1$ is the class of functions equaling power series (see next section).
@@ -448,7 +448,7 @@ To simulate an approximation of $f$ that comes within $\epsilon$ of $f$:
 <a id=For_Other_Smooth_Functions></a>
 ### For Other "Smooth" Functions
 
-If $f(\lambda)$ is "smooth" enough and $\epsilon$ is big enough, then Taylor's theorem shows how to build a polynomial that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series.
+If $f(\lambda)$ is "smooth" enough on the closed unit interval and if $\epsilon$ is big enough, then Taylor's theorem shows how to build a polynomial that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series.
 
 Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that&mdash;
 
@@ -683,6 +683,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^84]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^85]: Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.
+
+[^86]: Knoop, H-B., Pottinger, P., "Ein Satz vom Korovkin-Typ für $C^k$-Räume", Math. Zeitschrift 148 (1976).
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -806,6 +810,16 @@ Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,r}(\la
 
 _Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^21] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f'',0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2}).$$ &#x25a1;
 
+**Corollary B10B:** Let $f(\lambda)$ have a continuous second derivative on the closed unit interval.  Then $B_n(f)$ is within $\frac{M}{8n}$ of $f$, where $M$ is the maximum of that second derivative's absolute value or greater.
+
+_Proof_: Follows from Lorentz (1963)[^8] and the well-known fact that $M$ is an upper bound of $f$'s first derivative's (minimal) Lipschitz constant. &#x25a1;
+
+**Proposition B10C:** Let $f(\lambda)$ have a Hölder continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ and Hölder constant $L$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, $U_{n,2}(f)$ is within $\frac{M_2}{8 n^{2}} + \frac{5 L}{32 n^{1+\alpha/2}}$ of $f$, where $M_2$ is the maximum of that second derivative's absolute value or greater.
+
+_Proof_: This proof is inspired by a result in Draganov (2004)[^85]
+
+The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|)$$, where $f^{(2)}$ means the second derivative of the function $f$ and $max(|f|)$ means the maximum of the absolute value of the function $f$.  It thus remains to estimate the right-hand side of the bound.  Using a result by Knoop and Pottinger (1976)[^86], which works for every $n\ge 3$: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} max(|f^{(2)}|)+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} (\frac{1}{n} max(|f^{(2)}|)+(5/4) L/n^{\alpha/2})$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}.$$. &#x25a1;
+
 In the lemma below, $H_{n,r}(f)$ is the function described in Han (2003)[^47], equation 16, with $a=0$ and $b=1$.  This is a polynomial that approximates a continuous function $f(\lambda)$ on the closed unit interval, and, if written in Bernstein form, its degree is $n+r$.
 
 **Lemma B11:** Let $f(\lambda)$ have a continuous $(2+r)$-th derivative on the closed unit interval, where $r\gt 0$ is an even integer.  Then the error in approximating $f$ with $H_{n,r}(f)$ is bounded as follows: $$|H_{n,r}(f)(\lambda) - f(\lambda)|\le M\beta\frac{1}{(r+1)\cdot((r/2+1)!)\cdot (6n)^{r/2+1}},$$ where $\beta$ is 2 if $r$ is odd, and 1 otherwise, and where $M$ is the maximum of the absolute value of $f$'s $(2+r)$-th derivative.
@@ -853,14 +867,14 @@ However, by clamping coefficients above 1 to equal 1, so that _g_ is now _g&prim
 
 The following is a method that employs _Chebyshev interpolants_ to compute the Bernstein coefficients of a polynomial that comes within $\epsilon$ of $f(\lambda)$, as long as $f$ meets certain conditions.  Because the method introduces a trigonometric function (the cosine function), it appears here in the appendix and it runs too slowly for real-time or "online" use; rather, this method is more suitable for pregenerating ("offline") the approximate version of a function known in advance.
 
-- $f$ must be continuous on the interval $[a, b]$ and have an $r$-th derivative of _bounded variation_, as described later.
+- $f$ must be continuous on the interval $[a, b]$ and must have an $r$-th derivative of _bounded variation_, as described later.
 - Suppose $f$'s domain is the interval $[a, b]$.  Then the _Chebyshev interpolant_ of degree $n$ of $f$ (Wang 2023)[^48], (Trefethen 2013)[^49] is&mdash; $$p(\lambda)=\sum_{k=0}^n c_k T_k(2\frac{\lambda-a}{b-a}-1),$$ where&mdash;
 
     - $c_k=\sigma(k,n)\frac{2}{n}\sum_{j=0}^n \sigma(j,n) f(\gamma(j,n))T_k(\cos(j\pi/n))$,
     - $\gamma(j,n) = a+(b-a)(\cos(j\pi/n)+1)/2$,
     - $\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and
     - $T_k(x)$ is the $k$-th [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) (`chebyshevt(k,x)` in the SymPy computer algebra library).
-- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is continuous on the interval $[a, b]$ and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^49] as well as a statement in note 1 at the end of this section.
+- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is continuous on the interval $[a, b]$ and $f$ has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^49] as well as a statement in note 1 at the end of this section.
     - If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).
     - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^50].
     - The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon>0$ is the desired error tolerance.

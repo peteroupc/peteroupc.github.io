@@ -38,7 +38,6 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Reverse-time martingales**](#Reverse_time_martingales)
 - [**Other Questions**](#Other_Questions)
 - [**End Notes**](#End_Notes)
-- [**My Attempt**](#My_Attempt)
 - [**References**](#References)
 
 <a id=Key_Problems></a>
@@ -190,7 +189,7 @@ They proved, among other results, the following.  A function $f(\lambda):[0,1]\t
 
 The scheme is as follows:
 
-Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).  Let $\alpha = r+\beta$; $b = 2^s$; $s\gt 0$ be an integer.  Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ as described in Holtz et al. 2011.  Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:
+Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).  Let $\alpha = r+\beta$; $b = 2^s$; $s\gt 0$ be an integer.  Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a _Lorentz operator_ as described in Holtz et al. 2011.  Let $n_0$ be the smallest $n$, divisible by $b$, such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $b$:
 
 - $f_{n_0} = Q_{n_0, r}f$.
 - $f_{n} = f_{n/b} + Q_{n, r}(f-f_{n/b})$ for each integer $n > n_0$.
@@ -370,48 +369,6 @@ $g(\lambda)$ is in the Zygmund class if there is $D>0$ such that $|g(x-h) + g(x+
 **Note 5**: This condition is also known as a "consistency requirement"; it ensures that not only the polynomials "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$, where $a(n,k)$ is the degree-$n$ polynomial's $k$-th Bernstein coefficient, where $0\le k\le 2n$ is an integer, and where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
 **Note 6**: If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>This question is a problem of finding the _Jensen gap_ of $W_n$ for certain kinds of hypergeometric random variables (**see Note 5**).  Lee et al. (2021) deal with a problem very similar to this one and find results that take advantage of $f$'s (here, $W_n$'s) smoothness, but unfortunately assume the variable is supported on an _open_ interval, rather than a _closed_ one (namely $[0,1]$) as in this question.
-
-<a id=My_Attempt></a>
-## My Attempt
-
-The Python script [**lorentz.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/lorentz.py) shows my attempt to implement the Holtz approximation scheme. It implements an algorithm to toss heads with probability equal to a piecewise polynomial factory function with continuous second or fourth derivative.  However, it relies on an unproven conjecture (Conjecture 34) in the Holtz paper.
-
-Based on this attempt, the case of four continuous derivatives is efficient enough for my purposes, but the case of functions with lesser regularity is not so efficient (such as Lipschitz or two continuous derivatives).
-
------
-
-Here is my current progress for the Lorentz operator for $\alpha=2$, so $r=2$ (which applies to twice-differentiable functions with Hölder continuous second derivative, even though the paper appears not to apply when $\alpha$ is an integer). Is the following work correct?
-
-The Lorentz operator for $r=2$ finds the degree-n Bernstein polynomial for the target function $f$, elevates it to degree $n+r$, then shifts the coefficient at $k+1$ by $-f\prime\prime(k/n) A(n,k)$ (but the coefficients at 0 and $n+r$ are not shifted this way), where:
-
-$$A(n,k) = (1/(4n)) \times  2 \times (n+2-k)/((n+1)\times (n+2)),$$
-
-where $k$ is an integer in $[0,n+r]$. Observing that $A(n,k)$ equals 0 at 0 and at $n+r$, and has a peak at $(n+r)/2$,
-the shift will be no greater (in absolute value) than
-$A(n,(n+r)/2)*F$, where $F$ is the maximum of the absolute value
-
-of the second derivative of $f(\lambda)$.  $A(n,(n+r)/2)$ is bounded
-above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.
-
-Now, find $\theta_\alpha$ for $\alpha=2$, according to Lemma 25:
-
-Let $0<\gamma<2^{\alpha/2}-1$ ($\gamma<1$ if $\alpha=2$).
-
-Solve for $K$: $$(1-(1+\gamma)/2^{\alpha/2} - 4/(4*K)) = 0.$$  The solution for $\alpha=2$ is $K = 2/(1-\gamma)$.
-
-Now find:  $$\theta_a = ((4/4) K^{\alpha/2}/n^\alpha) / ((1-(1+\gamma)/2^\alpha)/n^\alpha)$$ The solution for $\alpha=2$ is $\theta_a = 8/((\gamma-3) (\gamma-1))$.
-
-For $\gamma=1/100$ and $\alpha=2$, $\theta_a = 80000/29601 < 2.703$.
-
-There's no need to check whether the output polynomials have Bernstein coefficients in $(0, 1)$, since out-of-bounds polynomials will be replaced with 0 or 1 as necessary &mdash; which is more practical and convenient.
-
-Now all that remains is to find $D$ given $\alpha=2$. I believe this will involve the following:
-
-1. Find upper bounds for the constants $C_{19}$, $C_{21}$, and $C_{24}$ (used in Lemmas 19, 21, and 24, respectively) given $\alpha$ and $r$ (and for $C_{19}$ at least, the best I can do is a visual inspection of the plot).
-2. Calculate $t = C_{24} C_{19} (1+2 C_{21}) b^{\alpha/2} M$, where $M$ is the Hölder constant of $f$'s $r$th derivative (see "Step 4" in "The Iterative Construction").
-3. Find the maximum value of $(t (x+(1-x))^r B_n \Delta_n{\alpha}) / ((x+(1-x))^r B_n\phi_n)$ (the best I can do is a visual inspection), and set $D$ to that value.
-
-Moreover, there remains to find the parameters for the Lorentz operator when $r$ is 0, 1, 2, or 4. (When $r=0$ or $r=1$, the Lorentz operator is simply the Bernstein polynomial of degree $n$, elevated $r$ degrees to degree $n+r$.)
 
 <a id=References></a>
 ## References

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/05/12"><meta name="citation_online_date" content="2023/05/12"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2023/05/14"><meta name="citation_online_date" content="2023/05/14"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -62,7 +62,6 @@
 <li><a href="#Reverse_time_martingales"><strong>Reverse-time martingales</strong></a></li>
 <li><a href="#Other_Questions"><strong>Other Questions</strong></a></li>
 <li><a href="#End_Notes"><strong>End Notes</strong></a></li>
-<li><a href="#My_Attempt"><strong>My Attempt</strong></a></li>
 <li><a href="#References"><strong>References</strong></a></li>
 </ul>
 
@@ -248,7 +247,7 @@
 
 <p>The scheme is as follows:</p>
 
-<p>Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).  Let $\alpha = r+\beta$; $b = 2^s$; $s\gt 0$ be an integer.  Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a <em>Lorentz operator</em> as described in Holtz et al. 2011.  Let $n_0$ be the smallest $n$ such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $n_{0}b$:</p>
+<p>Let $f:[0,1]\to (0,1)$ have a $\beta$-Hölder continuous $r$-th derivative, where $\beta$ is in (0, 1).  Let $\alpha = r+\beta$; $b = 2^s$; $s\gt 0$ be an integer.  Let $Q_{n, r}f$ be a degree $n+r$ approximating polynomial called a <em>Lorentz operator</em> as described in Holtz et al. 2011.  Let $n_0$ be the smallest $n$, divisible by $b$, such that $Q_{n_0, r}f$ has coefficients within [0, 1]. Define the following for every integer $n \ge n_0$ divisible by $b$:</p>
 
 <ul>
 <li>$f_{n_0} = Q_{n_0, r}f$.</li>
@@ -478,51 +477,6 @@
 <p><strong>Note 5</strong>: This condition is also known as a &quot;consistency requirement&quot;; it ensures that not only the polynomials &quot;increase&quot; to $f(\lambda)$, but also their Bernstein coefficients do as well.  This condition is equivalent in practice to the following statement (Nacu &amp; Peres 2005). For every integer $n\ge 1$ that&#39;s a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$, where $a(n,k)$ is the degree-$n$ polynomial&#39;s $k$-th Bernstein coefficient, where $0\le k\le 2n$ is an integer, and where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of &quot;good&quot; balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are &quot;good&quot;.  See also my <a href="https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable"><strong>MathOverflow question</strong></a> on finding bounds for hypergeometric variables.</p>
 
 <p><strong>Note 6</strong>: If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>This question is a problem of finding the <em>Jensen gap</em> of $W_n$ for certain kinds of hypergeometric random variables (<strong>see Note 5</strong>).  Lee et al. (2021) deal with a problem very similar to this one and find results that take advantage of $f$&#39;s (here, $W_n$&#39;s) smoothness, but unfortunately assume the variable is supported on an <em>open</em> interval, rather than a <em>closed</em> one (namely $[0,1]$) as in this question.</p>
-
-<p><a id=My_Attempt></a></p>
-
-<h2>My Attempt</h2>
-
-<p>The Python script <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/lorentz.py"><strong>lorentz.py</strong></a> shows my attempt to implement the Holtz approximation scheme. It implements an algorithm to toss heads with probability equal to a piecewise polynomial factory function with continuous second or fourth derivative.  However, it relies on an unproven conjecture (Conjecture 34) in the Holtz paper.</p>
-
-<p>Based on this attempt, the case of four continuous derivatives is efficient enough for my purposes, but the case of functions with lesser regularity is not so efficient (such as Lipschitz or two continuous derivatives).</p>
-
-<hr>
-
-<p>Here is my current progress for the Lorentz operator for $\alpha=2$, so $r=2$ (which applies to twice-differentiable functions with Hölder continuous second derivative, even though the paper appears not to apply when $\alpha$ is an integer). Is the following work correct?</p>
-
-<p>The Lorentz operator for $r=2$ finds the degree-n Bernstein polynomial for the target function $f$, elevates it to degree $n+r$, then shifts the coefficient at $k+1$ by $-f\prime\prime(k/n) A(n,k)$ (but the coefficients at 0 and $n+r$ are not shifted this way), where:</p>
-
-<p>$$A(n,k) = (1/(4n)) \times  2 \times (n+2-k)/((n+1)\times (n+2)),$$</p>
-
-<p>where $k$ is an integer in $[0,n+r]$. Observing that $A(n,k)$ equals 0 at 0 and at $n+r$, and has a peak at $(n+r)/2$,
-the shift will be no greater (in absolute value) than
-$A(n,(n+r)/2)*F$, where $F$ is the maximum of the absolute value</p>
-
-<p>of the second derivative of $f(\lambda)$.  $A(n,(n+r)/2)$ is bounded
-above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.</p>
-
-<p>Now, find $\theta_\alpha$ for $\alpha=2$, according to Lemma 25:</p>
-
-<p>Let $0&lt;\gamma&lt;2^{\alpha/2}-1$ ($\gamma&lt;1$ if $\alpha=2$).</p>
-
-<p>Solve for $K$: $$(1-(1+\gamma)/2^{\alpha/2} - 4/(4*K)) = 0.$$  The solution for $\alpha=2$ is $K = 2/(1-\gamma)$.</p>
-
-<p>Now find:  $$\theta_a = ((4/4) K^{\alpha/2}/n^\alpha) / ((1-(1+\gamma)/2^\alpha)/n^\alpha)$$ The solution for $\alpha=2$ is $\theta_a = 8/((\gamma-3) (\gamma-1))$.</p>
-
-<p>For $\gamma=1/100$ and $\alpha=2$, $\theta_a = 80000/29601 &lt; 2.703$.</p>
-
-<p>There&#39;s no need to check whether the output polynomials have Bernstein coefficients in $(0, 1)$, since out-of-bounds polynomials will be replaced with 0 or 1 as necessary &mdash; which is more practical and convenient.</p>
-
-<p>Now all that remains is to find $D$ given $\alpha=2$. I believe this will involve the following:</p>
-
-<ol>
-<li>Find upper bounds for the constants $C_{19}$, $C_{21}$, and $C_{24}$ (used in Lemmas 19, 21, and 24, respectively) given $\alpha$ and $r$ (and for $C_{19}$ at least, the best I can do is a visual inspection of the plot).</li>
-<li>Calculate $t = C_{24} C_{19} (1+2 C_{21}) b^{\alpha/2} M$, where $M$ is the Hölder constant of $f$&#39;s $r$th derivative (see &quot;Step 4&quot; in &quot;The Iterative Construction&quot;).</li>
-<li>Find the maximum value of $(t (x+(1-x))^r B_n \Delta_n{\alpha}) / ((x+(1-x))^r B_n\phi_n)$ (the best I can do is a visual inspection), and set $D$ to that value.</li>
-</ol>
-
-<p>Moreover, there remains to find the parameters for the Lorentz operator when $r$ is 0, 1, 2, or 4. (When $r=0$ or $r=1$, the Lorentz operator is simply the Bernstein polynomial of degree $n$, elevated $r$ degrees to degree $n+r$.)</p>
 
 <p><a id=References></a></p>
 
