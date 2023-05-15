@@ -89,7 +89,7 @@
 
 <ul>
 <li>A <em>continuous</em> function $f$ has the property that there is a function $h(x, \epsilon)$ (where $x$ is in $f$&#39;s domain and $\epsilon&gt;0$), such that $f(x)$ and $f(y)$ are no more than $\epsilon$ apart whenever $x$ and $y$ are in $f$&#39;s domain and no more than $h(x, \epsilon)$ apart.<br>Roughly speaking, for each $x$ in $f$&#39;s domain, $f(x)$ and $f(y)$ are &quot;close&quot; if $x$ and $y$ are &quot;close&quot; and belong in the domain.</li>
-<li>If $f$ is continuous, its <em>derivative</em> is, roughly speaking, its &quot;slope&quot; or &quot;velocity&quot; or &quot;instantaneous-rate-of-change&quot; function.  The derivative (or <em>first derivative</em>) is denoted as $f&#39;$ or $f^{(1)}$.  The <em>second derivative</em> (&quot;slope-of-slope&quot;) of $f$, denoted $f&#39;&#39;$ or $f^{(2)}$, is the derivative of $f&#39;$; the <em>third derivative</em>, denoted $f^{(3)}$, is the derivative of $f&#39;&#39;$; and so on.  The <em>0-th derivative</em> of a function $f$ is $f$ itself and denoted $f^{(0)}$.</li>
+<li>If $f$ is continuous, its <em>derivative</em> is, roughly speaking, its &quot;slope&quot; or &quot;velocity&quot; or &quot;instantaneous-rate-of-change&quot; function.  The derivative (or <em>first derivative</em>) is denoted $f&#39;$ or $f^{(1)}$.  The <em>second derivative</em> (&quot;slope-of-slope&quot;) of $f$, denoted $f&#39;&#39;$ or $f^{(2)}$, is the derivative of $f&#39;$; the <em>third derivative</em>, denoted $f^{(3)}$, is the derivative of $f&#39;&#39;$; and so on.  The <em>0-th derivative</em> of a function $f$ is $f$ itself and denoted $f^{(0)}$.</li>
 <li>A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Here, <em>&alpha;</em> satisfies 0 &lt; <em>&alpha;</em> &le; 1.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.</li>
 <li>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>L</em>*<em>x</em>.<br>If the function has a derivative on its domain, <em>L</em> can be the maximum of the absolute value of that derivative.</li>
 <li>A <em>convex</em> function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function&#39;s domain.<br>Roughly speaking, if the function&#39;s &quot;slope&quot; never goes down, then it&#39;s convex.</li>
@@ -650,22 +650,22 @@
 <tr>
 <td>Has Hölder continuous second derivative.</td>
 <td>$U_{n, 2}$.</td>
-<td><em>&epsilon;</em> = $(5H_2+4M_2)/(32 n^{1+\alpha/2})$.</td>
-<td><em>n</em>=max(4, ceil($((5H_2+4M_2)/(32\epsilon))^{2/(2+\alpha)}$)).</td>
-<td>$n\ge 4$.  0 &lt; <em>&alpha;</em> &le; 1 is second derivative&#39;s Hölder exponent.  See Proposition B10C in appendix.</td>
+<td><em>&epsilon;</em> = $(5H_2+4M_2)$ / $(32 n^{1+\alpha/2})$.</td>
+<td><em>n</em>=max(3, ceil($((5H_2+4M_2)$ / $(32\epsilon))^{2/(2+\alpha)}$)).</td>
+<td>$n\ge 3$.  0 &lt; <em>&alpha;</em> &le; 1 is second derivative&#39;s Hölder exponent.  See Proposition B10C in appendix.</td>
 </tr>
 <tr>
 <td>Has Lipschitz continuous second derivative.</td>
 <td>$U_{n, 2}$.</td>
-<td><em>&epsilon;</em> = $(5L_2+4M_2)/(32 n^{3/2})$.</td>
-<td><em>n</em>=max(4, ceil($((5L_2+4M_2)/(32\epsilon))^{2/3}$)).</td>
-<td>$n\ge 4$.  Special case of previous entry.</td>
+<td><em>&epsilon;</em> = $(5L_2+4M_2)$ / $(32 n^{3/2})$.</td>
+<td><em>n</em>=max(3, ceil($((5L_2+4M_2)$ / $(32\epsilon))^{2/3}$)).</td>
+<td>$n\ge 3$.  Special case of previous entry.</td>
 </tr>
 <tr>
 <td>Has Lipschitz continuous second derivative.</td>
 <td>$Q_{n-2,2}$.</td>
 <td><em>&epsilon;</em> = 0.098585 <em>L</em><sub>2</sub>/((<em>n</em>&minus;2)<sup>3/2</sup>).</td>
-<td><em>n</em>=max(4, ceil($((0.098585 L_2)/(\epsilon))^{2/3}+2$)).</td>
+<td><em>n</em>=max(4, ceil($((0.098585 L_2)$ / $(\epsilon))^{2/3}+2$)).</td>
 <td>$n\ge 4$. See Proposition B10A in appendix.</td>
 </tr>
 <tr>
@@ -676,15 +676,29 @@
 <td>Tachev (2022)[^19]. $n\ge 6$ must be even.</td>
 </tr>
 <tr>
+<td>Has Hölder continuous third derivative.</td>
+<td>$U_{n, 2}$.</td>
+<td><em>&epsilon;</em> = $(9H_3+8M_2+8M_3)$ / $(64 n^{(3+\alpha)/2})$.</td>
+<td><em>n</em>=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{2/(3+\alpha)}$)).</td>
+<td>$n\ge 6$.  0 &lt; <em>&alpha;</em> &le; 1 is third derivative&#39;s Hölder exponent.  See Proposition B10D in appendix.</td>
+</tr>
+<tr>
+<td>Has Lipschitz continuous third derivative.</td>
+<td>$U_{n, 2}$.</td>
+<td><em>&epsilon;</em> = $(9H_3+8M_2+8M_3)$ / $(64 n^2)$.</td>
+<td><em>n</em>=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{1/2}$)).</td>
+<td>$n\ge 6$.  Special case of previous entry.</td>
+</tr>
+<tr>
 <td>Has Lipschitz continuous third derivative.</td>
 <td>$L_{3, n/4}$.</td>
 <td><em>&epsilon;</em> = <em>L</em><sub>3</sub>/(8*<em>n</em><sup>2</sup>).</td>
-<td><em>n</em>=max(4,ceil((sqrt(2)/4) * sqrt(<em>L</em><sub>3</sub>/<em>&epsilon;</em>))) &le; max(4,ceil((35356/100000) * sqrt(L_3/<em>&epsilon;</em>))). (Round <em>n</em> up to nearest multiple of 4.)</td>
+<td><em>n</em>=max(4,ceil((sqrt(2)/4) * sqrt(<em>L</em><sub>3</sub>/<em>&epsilon;</em>))) &le; max(4,ceil((35356/100000) * sqrt(<em>L</em><sub>3</sub>/<em>&epsilon;</em>))). (Round <em>n</em> up to nearest multiple of 4.)</td>
 <td>$n\ge 4$ must be divisible by 4. See Proposition B10 in appendix.</td>
 </tr>
 </tbody></table>
 
-<p>By analyzing the proof of Theorem 2.4 of Güntürk and Li (2021, sec. 3.3)[^18], the following error bounds <em>appear</em> to be true.  In the table below, <em>M</em><sub><em>n</em></sub> is equal to or greater than the maximum of the absolute value of <em>f</em>(<em>&lambda;</em>) and its derivatives up to the $n$-th derivative.</p>
+<p>By analyzing the proof of Theorem 2.4 of Güntürk and Li (2021, sec. 3.3)[^18], the following error bounds <em>appear</em> to be true.</p>
 
 <table><thead>
 <tr>
@@ -695,22 +709,16 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Has continuous fourth derivative.</td>
-<td>$U_{n,2}$</td>
-<td><em>&epsilon;</em> = 0.3571*<em>M</em><sub>4</sub>/<em>n</em><sup>2</sup>.</td>
-<td><em>n</em>=ceil(sqrt(0.3571)*sqrt(<em>M</em><sub>4</sub>/<em>&epsilon;</em>)).</td>
-</tr>
-<tr>
 <td>Has continuous fifth derivative.</td>
 <td>$U_{n,3}$</td>
-<td><em>&epsilon;</em> = 4.0421*<em>M</em><sub>5</sub>/<em>n</em><sup>5/2</sup>.</td>
-<td><em>n</em>=ceil((4.0421)<sup>2/5</sup>*(<em>M</em><sub>5</sub>/<em>&epsilon;</em>)<sup>2/5</sup>).</td>
+<td><em>&epsilon;</em> = 4.0421*max(<em>M</em><sub>0</sub>,...,<em>M</em><sub>5</sub>)/<em>n</em><sup>5/2</sup>.</td>
+<td><em>n</em>=ceil((4.0421)<sup>2/5</sup>*(max(<em>M</em><sub>0</sub>,...,<em>M</em><sub>5</sub>)/<em>&epsilon;</em>)<sup>2/5</sup>).</td>
 </tr>
 <tr>
 <td>Has continuous sixth derivative.</td>
 <td>$U_{n,3}$</td>
-<td><em>&epsilon;</em> = 4.8457*<em>M</em><sub>6</sub>/<em>n</em><sup>3</sup>.</td>
-<td><em>n</em>=ceil((4.8457)<sup>1/3</sup>*(<em>M</em><sub>6</sub>/<em>&epsilon;</em>)<sup>1/3</sup>).</td>
+<td><em>&epsilon;</em> = 4.8457*max(<em>M</em><sub>0</sub>,...,<em>M</em><sub>6</sub>)/<em>n</em><sup>3</sup>.</td>
+<td><em>n</em>=ceil((4.8457)<sup>1/3</sup>*(max(<em>M</em><sub>0</sub>,...,<em>M</em><sub>6</sub>)/<em>&epsilon;</em>)<sup>1/3</sup>).</td>
 </tr>
 </tbody></table>
 
@@ -734,7 +742,6 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Providing the full proof for the error bounds shown in the last table is a bit tedious, so here is a sketch.  The proof was found by analyzing Theorem 2.2 of Güntürk and Li (2021)[^18], finding upper bounds for so-called &quot;central moments&quot; of the binomial distribution (see B4 to B7 in the appendix), then plugging them in to various estimates mentioned in that theorem&#39;s proof.</li>
 <li><p>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting either&mdash;</p>
 
 <ul>
@@ -983,7 +990,7 @@
 
 <p>[^52]: H. Wang, &quot;<a href="https://arxiv.org/abs/2106.03456v3"><strong>Analysis of error localization of Chebyshev spectral approximations</strong></a>&quot;, arXiv:2106.03456v3 [math.NA], 2023.</p>
 
-<p>[^53]: Trefethen, L.N., <em>Approximation Theory and Approximation Practice</em>, 2013.</p>
+<p>[^53]: Trefethen, L.N., <a href="https://www.chebfun.org/ATAP/"><strong><em>Approximation Theory and Approximation Practice</em></strong></a>, 2013.</p>
 
 <p>[^54]: R. Kannan and C.K. Kreuger, <em>Advanced Analysis on the Real Line</em>, 1996.</p>
 
@@ -1229,11 +1236,11 @@
 
 <p><em>Proof</em>: This proof is inspired by a result in Draganov (2004)[^47].</p>
 
-<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  Using a result by Knoop and Pottinger (1976)[^48], which works for every $n\ge 3$: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} \max(|f^{(2)}|)+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} (\frac{1}{n} \max(|f^{(2)}|)+(5/4) L/n^{\alpha/2})$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
+<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  Using a result by Knoop and Pottinger (1976)[^48], which works for every $n\ge 3$: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} \max(|f^{(2)}|)+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} \max(|f^{(2)}|)+(5/4) L/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
 
-<p><strong>Proposition B10D:</strong> Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $L$ or less.  If $n\ge 6$ is an integer, $U_{n,3}(f)$ is within $\frac{\max(|f^{(2)}|)+\max(|f^{(3)}|)}{8n^2}+9L/(64 n^{2+(3+\alpha)/2})$ of $f$.</p>
+<p><strong>Proposition B10D:</strong> Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $L$ or less.  If $n\ge 6$ is an integer, , the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$|f-U_{n,2}(f)|\le \frac{\max(|f^{(2)}|)+\max(|f^{(3)}|)}{8n^2}+9L/(64 n^{2+(3+\alpha)/2})$$ $$\le \frac{9L+8\max(|f^{(2)}|)+8\max(|f^{(3)}|)}{64n^{2+(3+\alpha)/2}}.$$</p>
 
-<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different result is employed, namely a result from Kacsó (2002)[^49], which in this case works if $n\ge 6$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} \max(|f^{(2)}|)+\max(|f^{(3)}|)/n+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} \max(|f^{(2)}|)+\max(|f^{(3)}|)/n+\frac{9}{8} L/n^{(1+\alpha)/2},$$ using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^50].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} \max(|f^{(2)}|)+\max(|f^{(3)}|)/n+\frac{9}{8} L/n^{(1+\alpha)/2}\right)$$ $$\le \frac{\max(|f^{(2)}|)+\max(|f^{(3)}|)}{8n^2} + \frac{9L}{64 n^{(3+\alpha)/2}}.$$ &#x25a1;</p>
+<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different result is employed, namely a result from Kacsó (2002)[^49], which in this case works if $n\ge 6$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+M_3/n+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2},$$ where $M_2 = \max(|f^{(2)}|)$ and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^50].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9L}{64 n^{(3+\alpha)/2}}\le \frac{9L+8M_2+8M_3}{64n^{2+(3+\alpha)/2}}.$$ &#x25a1;</p>
 
 <p>In the lemma below, $H_{n,r}(f)$ is the function described in Han (2003)[^51], equation 16, with $a=0$ and $b=1$.  This is a polynomial that approximates a continuous function $f(\lambda)$ on the closed unit interval, and, if written in Bernstein form, its degree is $n+r$.</p>
 
@@ -1318,7 +1325,7 @@
 <li>Compute the required degree $n$ as given above, with error tolerance $\epsilon/2$.</li>
 <li>Compute the ($n$ plus one) coefficients of $f$&#39;s degree-$n$ Chebyshev interpolant, call them $c_0, ..., c_n$.</li>
 <li>Compute the (<em>n</em>+1)&times;(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^55].</li>
-<li>Multiply the matrix by the transposed coefficients $(c_0, ..., c_n)$ to get the polynomial&#39;s Bernstein coefficients $b_0, ..., b_n$.</li>
+<li>Multiply the matrix by the transposed coefficients $(c_0, ..., c_n)$ to get the polynomial&#39;s Bernstein coefficients $b_0, ..., b_n$.  (Transposing means turning columns to rows and vice versa.)</li>
 <li>For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.</li>
 <li>Return the Bernstein coefficients $b_0, ..., b_n$.</li>
 </ol>
