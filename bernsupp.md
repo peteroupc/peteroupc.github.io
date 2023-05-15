@@ -13,7 +13,7 @@
     - [**Another General Algorithm**](#Another_General_Algorithm)
     - [**Request for Additional Methods**](#Request_for_Additional_Methods)
 - [**Approximate Bernoulli Factories**](#Approximate_Bernoulli_Factories)
-    - [**For Certain Functions**](#For_Certain_Functions)
+    - [**Polynomials as Approximate Bernoulli Factories**](#Polynomials_as_Approximate_Bernoulli_Factories)
     - [**For Power Series**](#For_Power_Series)
     - [**For Other "Smooth" Functions**](#For_Other_Smooth_Functions)
     - [**For Linear Functions**](#For_Linear_Functions)
@@ -345,49 +345,26 @@ To build an approximate Bernoulli factory with a polynomial:
 > 1. There are other kinds of functions, besides polynomials and rational functions, that serve to approximate continuous functions.  But many of them work poorly as approximate Bernoulli factory functions because their lack of "smoothness" means there is no simple Bernoulli factory for them.  For example, a _spline_, which is a continuous function made up of a finite number of polynomial pieces, is generally not "smooth" at the points where the spline's pieces meet.
 > 2. Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)). ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 
-<a id=For_Certain_Functions></a>
-### For Certain Functions
+<a id=Polynomials_as_Approximate_Bernoulli_Factories></a>
+### Polynomials as Approximate Bernoulli Factories
 
-This section first discusses approximating $f$ with a _Bernstein polynomial_ (a degree-$n$ polynomial in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$).  The advantage is only one Bernstein coefficient has to be found per run; the disadvantage is that Bernstein polynomials approach $f$ slowly in general, at a rate no faster than a rate proportional to $1/n$ (Voronovskaya 1932)[^11].
-
-There are results that give an upper bound on the error on approximating _f_ with a degree-_n_ Bernstein polynomial.  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, solve the error bound's equation for _n_, then take _n_ = ceil(_n_) to get the solution if it's an integer, or the nearest integer that's bigger than the solution.
-
-For example:
-
-| If _f_(_&lambda;_): |  Then the degree-_n_ Bernstein polynomial is close to $f$ with the following error bound: |   Where _n_ is:  |  Notes |
- --- | --- | --- | --- |
-| Has Lipschitz continuous derivative (see "Definitions"). | _&epsilon;_ = _M_/(8\*_n_). | _n_ = ceil(_M_/(8\*_&epsilon;_)). | Lorentz (1963)[^8]. _M_ &gt; 0 is the derivative's Lipschitz constant or greater.[^12]|
-| Has Hölder continuous derivative. | _&epsilon;_ = _M_/(4\*_n_<sup>(1+_&alpha;_)/2</sup>). | _n_ = ceil((_M_/(4\*_&epsilon;_))<sup>2/(1+_&alpha;_)</sup>). | Schurer and Steutel (1975)[^13]. 0 &lt; _&alpha;_ &le; 1 is derivative's Hölder exponent; _M_ &gt; 0 is derivative's Hölder constant or greater. |
-| Is Hölder continuous. | _&epsilon;_ = _M_\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil((_M_/_&epsilon;_))<sup>2/_&alpha;_</sup>/4). | Kac (1938)[^14]. 0 &lt; _&alpha;_ &le; 1 is _f_'s Hölder exponent; _M_ &gt; 0 is its Hölder constant or greater. |
-| Is Lipschitz continuous. | _&epsilon;_ = _L_\*sqrt(1/(4\*_n_)). | _n_ = ceil(_L_<sup>2</sup>/(4\*_&epsilon;_<sup>2</sup>)). | Special case of previous entry. _L_ &gt; 0 is _f_'s Lipschitz constant or greater. |
-| Is Lipschitz continuous. | _&epsilon;_ = $\frac{4306+837\sqrt{6}}{5832} L/n^{1/2}$ &lt; $1.08989 L/n^{1/2}$. | _n_=ceil((_L_\*1.08989/_&epsilon;_)<sup>2</sup>). | Sikkema (1961)[^15]. _L_ &gt; 0 is _f_'s Lipschitz constant or greater. |
-
-Now, if _f_ belongs to any of the classes given above, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
-
-1. Calculate _n_ as described in the table above for the given class.
-2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
-3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0. (If _f_(_j_/_n_) can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to sample this irrational probability exactly.)
-
--------------------
-
-Alternatively, polynomials other than Bernstein polynomials, but written in Bernstein form, can be used to approximate $f$ with an error no more than $\epsilon$, as long as an explicit upper bound on the approximation error is available.  A ratio of two such polynomials can also approximate $f$ this way.  See my [**question on MathOverflow**](https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions).
-
-Examples of these alternative polynomials (all of degree $n$) are given in the following table.  In the table, $B_n(f(\lambda))$ is the ordinary Bernstein polynomial for $f(\lambda)$ of degree $n$.
+A polynomial can be used to approximate $f(\lambda)$ with an error no more than $\epsilon$, as long as its Bernstein coefficients can be calculated and an explicit upper bound on the approximation error is available. See my [**question on MathOverflow**](https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions).  Examples of these polynomials (all of degree $n$) are given in the following table.
 
 | Name |  Polynomial | Its Bernstein coefficients are found as follows: | Notes |
  --- | --- | --- | --- |
-| Order-2 iterated Boolean sum. | $U_{n,2} = B_n(W_{n,2})$. | $W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f(\lambda))$. | Micchelli (1973)[^16], Guan (2009)[^17], Güntürk and Li (2021, sec. 3.3)[^18]. |
+| Bernstein polynomial. | $B_n(f)$.  | $f(j/n)$, where $0\le j\le n$. | Originated with S.N. Bernstein (1912). |
+| Order-2 iterated Boolean sum. | $U_{n,2} = B_n(W_{n,2})$. | $W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f(\lambda))$. | Micchelli (1973)[^11], Guan (2009)[^12], Güntürk and Li (2021, sec. 3.3)[^13]. |
 | Order-3 iterated Boolean sum. | $U_{n,3} = B_n(W_{n,3})$. | $W_{n,3}(j/n)$, where $0\le j\le n$ and $W_{n,3}(\lambda) = B_n(B_n(f(\lambda)))$ + $3 (f(\lambda)$ &minus; $B_n(f(\lambda)))$. | Same. |
-| Butzer's linear combination (order 1). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients, then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$. |Tachev (2022)[^19], Butzer (1955)[^20].  $n\ge 6$ must be even.|
-| Butzer's linear combination (order 2). | $L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$ | **Get coefficients for $n$ given $n/4$**, call them _a_[0], ..., _a_[_n_], then **get coefficients for $n$ given $n/2$**, call them _b_[0], ..., _b_[_n_], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$. | Butzer (1955)[^20]. $n\ge 4$ must be divisible by 4. |
-| Lorentz operator (order 2). | $Q_{n-2,2}=B_{n-2}(f)+x(1-x)\cdot$ $B_{n-2}(f'')/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from _a_[_j_], where $z=(((f''((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now _a_[0], ..., _a_[_n_]. | Holtz et al. (2011)[^21]; Bernstein (1932)[^22]; Lorentz (1966)[^23]. $n\ge 4$; $f''$ is the second derivative of $f$. |
+| Butzer's linear combination (order 1). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients, then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$. |Tachev (2022)[^14], Butzer (1955)[^15].  $n\ge 6$ must be even.|
+| Butzer's linear combination (order 2). | $L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$ | **Get coefficients for $n$ given $n/4$**, call them _a_[0], ..., _a_[_n_], then **get coefficients for $n$ given $n/2$**, call them _b_[0], ..., _b_[_n_], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$. | Butzer (1955)[^15]. $n\ge 4$ must be divisible by 4. |
+| Lorentz operator (order 2). | $Q_{n-2,2}=B_{n-2}(f)+x(1-x)\cdot$ $B_{n-2}(f'')/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from _a_[_j_], where $z=(((f''((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now _a_[0], ..., _a_[_n_]. | Holtz et al. (2011)[^16]; Bernstein (1932)[^17]; Lorentz (1966)[^18]. $n\ge 4$; $f''$ is the second derivative of $f$. |
 
 The goal is now to find a polynomial of degree $n$ such that&mdash;
 
-1. the alternative polynomial is within $\epsilon$ of $f(\lambda)$, and
+1. the polynomial is within $\epsilon$ of $f(\lambda)$, and
 2. each of the polynomial's coefficients is not less than 0 or greater than 1.
 
-For some of the polynomials given above, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$.  See the table below, where:
+For some of the polynomials given above, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound's equation for $n$ and round the solution up to the nearest integer.  See the table below, where:
 
 - $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
 - $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the given Hölder exponent _&alpha;_).
@@ -395,32 +372,37 @@ For some of the polynomials given above, a degree $n$ can be found so that the d
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes |
  --- | --- | --- | --- | --- |
-| Has Hölder continuous second derivative. | $U_{n, 2}$. | _&epsilon;_ = $(5H_2+4M_2)$ / $(32 n^{1+\alpha/2})$. | _n_=max(3, ceil($((5H_2+4M_2)$ / $(32\epsilon))^{2/(2+\alpha)}$)). | $n\ge 3$.  0 &lt; _&alpha;_ &le; 1 is second derivative's Hölder exponent.  See Proposition B10C in appendix.|
+| Has Hölder continuous second derivative (see "Definitions"). | $U_{n, 2}$. | _&epsilon;_ = $(5H_2+4M_2)$ / $(32 n^{1+\alpha/2})$. | _n_=max(3, ceil($((5H_2+4M_2)$ / $(32\epsilon))^{2/(2+\alpha)}$)). | $n\ge 3$.  0 &lt; _&alpha;_ &le; 1 is second derivative's Hölder exponent.  See Proposition B10C in appendix.|
 | Has Lipschitz continuous second derivative. | $U_{n, 2}$. | _&epsilon;_ = $(5L_2+4M_2)$ / $(32 n^{3/2})$. | _n_=max(3, ceil($((5L_2+4M_2)$ / $(32\epsilon))^{2/3}$)). | $n\ge 3$.  Special case of previous entry.|
 | Has Lipschitz continuous second derivative. | $Q_{n-2,2}$. | _&epsilon;_ = 0.098585 _L_<sub>2</sub>/((_n_&minus;2)<sup>3/2</sup>). | _n_=max(4, ceil($((0.098585 L_2)$ / $(\epsilon))^{2/3}+2$)). | $n\ge 4$. See Proposition B10A in appendix. |
-| Has continuous third derivative. | $L_{2, n/2}$. | _&epsilon;_ = (3\*sqrt(3&minus;4/_n_)/4)\*_M_<sub>3</sub>/_n_<sup>2</sup> &lt; (3\*sqrt(3)/4)\*_M_<sub>3</sub>/_n_<sup>2</sup> &lt; 1.29904\*_M_<sub>3</sub>/_n_<sup>2</sup>. | _n_=max(6,ceil($\frac{3^{3/4} \sqrt{M_3/\epsilon}}{2}$)) &le; max(6,ceil((113976/100000) \* sqrt(_M_<sub>3</sub>/_&epsilon;_))). (If _n_ is now odd, add 1.) | Tachev (2022)[^19]. $n\ge 6$ must be even. |
+| Has continuous third derivative. | $L_{2, n/2}$. | _&epsilon;_ = (3\*sqrt(3&minus;4/_n_)/4)\*_M_<sub>3</sub>/_n_<sup>2</sup> &lt; (3\*sqrt(3)/4)\*_M_<sub>3</sub>/_n_<sup>2</sup> &lt; 1.29904\*_M_<sub>3</sub>/_n_<sup>2</sup>. | _n_=max(6,ceil($\frac{3^{3/4} \sqrt{M_3/\epsilon}}{2}$)) &le; max(6,ceil((113976/100000) \* sqrt(_M_<sub>3</sub>/_&epsilon;_))). (If _n_ is now odd, add 1.) | Tachev (2022)[^14]. $n\ge 6$ must be even. |
 | Has Hölder continuous third derivative. | $U_{n, 2}$. | _&epsilon;_ = $(9H_3+8M_2+8M_3)$ / $(64 n^{(3+\alpha)/2})$. | _n_=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{2/(3+\alpha)}$)). | $n\ge 6$.  0 &lt; _&alpha;_ &le; 1 is third derivative's Hölder exponent.  See Proposition B10D in appendix.|
 | Has Lipschitz continuous third derivative. | $U_{n, 2}$. | _&epsilon;_ = $(9H_3+8M_2+8M_3)$ / $(64 n^2)$. | _n_=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{1/2}$)). | $n\ge 6$.  Special case of previous entry.|
 | Has Lipschitz continuous third derivative. | $L_{3, n/4}$. | _&epsilon;_ = _L_<sub>3</sub>/(8\*_n_<sup>2</sup>). | _n_=max(4,ceil((sqrt(2)/4) \* sqrt(_L_<sub>3</sub>/_&epsilon;_))) &le; max(4,ceil((35356/100000) \* sqrt(_L_<sub>3</sub>/_&epsilon;_))). (Round _n_ up to nearest multiple of 4.) | $n\ge 4$ must be divisible by 4. See Proposition B10 in appendix. |
+| Has Lipschitz continuous derivative. | $B_n(f)$. | _&epsilon;_ = _L_<sub>1</sub>/(8\*_n_). | _n_ = ceil(_L_<sub>1</sub>/(8\*_&epsilon;_)). | Lorentz (1963)[^8].[^19]|
+| Has Hölder continuous derivative. | $B_n(f)$. | _&epsilon;_ = _H_<sub>1</sub>/(4\*_n_<sup>(1+_&alpha;_)/2</sup>). | _n_ = ceil((_H_<sub>1</sub>/(4\*_&epsilon;_))<sup>2/(1+_&alpha;_)</sup>). | Schurer and Steutel (1975)[^20]. 0 &lt; _&alpha;_ &le; 1 is derivative's Hölder exponent. |
+| Is Hölder continuous. | $B_n(f)$. | _&epsilon;_ = _H_<sub>0</sub>\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil((_H_<sub>0</sub>/_&epsilon;_))<sup>2/_&alpha;_</sup>/4). | Kac (1938)[^21]. 0 &lt; _&alpha;_ &le; 1 is _f_'s Hölder exponent. |
+| Is Lipschitz continuous. | $B_n(f)$. | _&epsilon;_ = _L_<sub>0</sub>\*sqrt(1/(4\*_n_)). | _n_ = ceil((_L_<sub>0</sub>)<sup>2</sup>/(4\*_&epsilon;_<sup>2</sup>)). | Special case of previous entry. |
+| Is Lipschitz continuous. | $B_n(f)$. | _&epsilon;_ = $\frac{4306+837\sqrt{6}}{5832} L_0/n^{1/2}$ &lt; $1.08989 L_0/n^{1/2}$. | _n_=ceil((_L_<sub>0</sub>\*1.08989/_&epsilon;_)<sup>2</sup>). | Sikkema (1961)[^22]. |
 
-By analyzing the proof of Theorem 2.4 of Güntürk and Li (2021, sec. 3.3)[^18], the following error bounds _appear_ to be true.
+> **Note:** In addition, by analyzing the proof of Theorem 2.4 of Güntürk and Li (2021, sec. 3.3)[^13], the following error bounds for $U_{n, 3}$ _appear_ to be true:
+>
+> - If $f(\lambda)$ has continuous fifth derivative: _&epsilon;_ = 4.0421\*max(_M_<sub>0</sub>,...,_M_<sub>5</sub>)/_n_<sup>5/2</sup>.
+> - If $f(\lambda)$ has continuous sixth derivative: _&epsilon;_ = 4.8457\*max(_M_<sub>0</sub>,...,_M_<sub>6</sub>)/_n_<sup>3</sup>.
 
-| If _f_(_&lambda;_): |  Then the following polynomial: |  Appears to be close to _f_ with the following error bound: | Where _n_ is:  |
- --- | --- | --- | --- |
-| Has continuous fifth derivative. | $U_{n,3}$ | _&epsilon;_ = 4.0421\*max(_M_<sub>0</sub>,...,_M_<sub>5</sub>)/_n_<sup>5/2</sup>. | _n_=ceil((4.0421)<sup>2/5</sup>\*(max(_M_<sub>0</sub>,...,_M_<sub>5</sub>)/_&epsilon;_)<sup>2/5</sup>). |
-| Has continuous sixth derivative. | $U_{n,3}$ | _&epsilon;_ = 4.8457\*max(_M_<sub>0</sub>,...,_M_<sub>6</sub>)/_n_<sup>3</sup>. | _n_=ceil((4.8457)<sup>1/3</sup>\*(max(_M_<sub>0</sub>,...,_M_<sub>6</sub>)/_&epsilon;_)<sup>1/3</sup>). |
+Bernstein polynomials ($B_n(f)$) have the advantages that only one Bernstein coefficient has to be found per run and that the coefficient will be bounded by 0 and 1 if $f(\lambda)$ is.  But their disadvantage is that they approach $f$ slowly in general, at a rate no faster than a rate proportional to $1/n$ (Voronovskaya 1932)[^23].
 
-However, unlike with ordinary Bernstein polynomials, the alternative polynomial is not necessarily bounded by 0 and 1.  The following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$.
+On the other hand, polynomials other than Bernstein polynomials ($B_n(f)$) can approach $f$ faster in many cases than $B_n(f)$, but are not necessarily bounded by 0 and 1.  For these polynomials, the following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$.
 
-1. Determine whether $f$ is described in either of the two tables above.  Let _A_ be the minimum of $f$ on the closed unit interval and let _B_ be the maximum of $f$ there.
-2. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in either of the two tables above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.
-3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in either of the two tables above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W_{n,2}$ or $W_{n,3}$ will now be bounded by 0 and 1.
-4. Calculate $n$ as given in either of the two tables above.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.
+1. Determine whether $f$ is described in the table above.  Let _A_ be the minimum of $f$ on the closed unit interval and let _B_ be the maximum of $f$ there.
+2. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.
+3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W_{n,2}$ or $W_{n,3}$ will now be bounded by 0 and 1.
+4. Calculate $n$ as given in the table above.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.
 
-Once _n_ is found, simulating the alternative polynomial is as follows:
+Once _n_ is found, simulating the polynomial is as follows:
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
-2. With probability equal to the alternative polynomial's Bernstein coefficient at position _j_ (0&le;_j_&le;_n_), return 1.  Otherwise, return 0.
+2. With probability equal to the polynomial's Bernstein coefficient at position _j_ (0&le;_j_&le;_n_), return 1.  Otherwise, return 0.  (This coefficient will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$.  If the coefficient can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to exactly sample a probability equal to that irrational number.)
 
 > **Notes:**
 >
@@ -439,9 +421,7 @@ Once _n_ is found, simulating the alternative polynomial is as follows:
 <a id=For_Power_Series></a>
 ### For Power Series
 
-Some functions can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ where $a_i$, the _coefficients_, are constant rational numbers[^26].
-
-To simulate an approximation of $f$ that comes within $\epsilon$ of $f$:
+If $f(\lambda)$ can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ whenever $0\le\lambda\le 1$, where $a_i$, the _coefficients_, are constant rational numbers[^26], then the following algorithm simulates an approximation of $f$ that comes within $\epsilon$ of $f$:
 
 1. Find the first $n$+1 coefficients such that the polynomial $P(\lambda) = a_0 \lambda^0 + ... + a_n\lambda^n$ is within $\epsilon$ of $f$ wherever $0 \le \lambda \le 1$.
 
@@ -507,8 +487,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in the closed unit interval (Goyal and Sigman 2012\)[^7]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^31]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^32].  |
 | Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011\)[^21]. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^21]. Assumes _f_ is bounded away from 0 and 1. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011\)[^16]. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^16]. Assumes _f_ is bounded away from 0 and 1. |
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^31]. | If and only if _f_ is real analytic (see note below) (Nacu and Peres 2005\)[^1].   |
 | Average number of flips greater than or equal to (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^32]. |
 
@@ -540,31 +520,31 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^10]: Moldovan, E., "Observations sur la suite des polynômes de S. N. Bernstein d'une fonction continue", 1962.
 
-[^11]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
+[^11]: Micchelli, Charles. "The saturation class and iterates of the Bernstein polynomials." Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^12]: Qian et al. suggested an _n_ which has the upper bound _n_=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial (Qian, W., Riedel, M. D., & Rosenberg, I. (2011). Uniform approximation and Bernstein polynomials with coefficients in the unit interval. European Journal of Combinatorics, 32(3), 448-463).
+[^12]: Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/abs/0909.0684)", arXiv:0909.0684 (2009).
 
-[^13]: Schurer and Steutel, "On an inequality of Lorentz in the theory of Bernstein polynomials", 1975.
+[^13]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
 
-[^14]: Kac, M., "Une remarque sur les polynômes de M. S. Bernstein", Studia Math. 7, 1938.
+[^14]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 
-[^15]: Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", 1961.
+[^15]: Butzer, P.L., "Linear combinations of Bernstein polynomials", Canadian Journal of Mathematics 15 (1953).
 
-[^16]: Micchelli, Charles. "The saturation class and iterates of the Bernstein polynomials." Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^16]: Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).
 
-[^17]: Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/abs/0909.0684)", arXiv:0909.0684 (2009).
+[^17]: Bernstein, S. N. (1932). "Complément a l’article de E. Voronovskaya." CR Acad. URSS, 86-92.
 
-[^18]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
+[^18]: G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966.
 
-[^19]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
+[^19]: Qian et al. suggested an _n_ which has the upper bound _n_=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial (Qian, W., Riedel, M. D., & Rosenberg, I. (2011). Uniform approximation and Bernstein polynomials with coefficients in the unit interval. European Journal of Combinatorics, 32(3), 448-463).
 
-[^20]: Butzer, P.L., "Linear combinations of Bernstein polynomials", Canadian Journal of Mathematics 15 (1953).
+[^20]: Schurer and Steutel, "On an inequality of Lorentz in the theory of Bernstein polynomials", 1975.
 
-[^21]: Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).
+[^21]: Kac, M., "Une remarque sur les polynômes de M. S. Bernstein", Studia Math. 7, 1938.
 
-[^22]: Bernstein, S. N. (1932). "Complément a l’article de E. Voronovskaya." CR Acad. URSS, 86-92.
+[^22]: Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", 1961.
 
-[^23]: G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966.
+[^23]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
 
 [^24]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. "[**Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy**](https://doi.org/10.1016/j.jco.2015.05.001)." Journal of Complexity 31, no. 5 (2015): 689-714.
 
@@ -789,7 +769,7 @@ If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{
 >
 > 1. If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor's theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^44] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$
 > 2. Part 1 of this lemma is not true if the $r$-th derivative of $f(\lambda)$ can be any function in the Zygmund class rather than be Lipschitz continuous.  There are functions in the Zygmund class whose derivative is defined almost nowhere, so that $f$ need not meet the conditions for having the Lagrange remainder $R_{f,r}(\lambda, x_0)$.
-> 3. It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded in this way (Lorentz 1966)[^23].
+> 3. It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded in this way (Lorentz 1966)[^18].
 
 **Corollary B9A**: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative's Lipschitz constant or greater.  Then, for every $0\le x_0 \le 1$:
 
@@ -805,17 +785,17 @@ If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{
 
 **Proposition B10**: Let $f(\lambda)$ have a Lipschitz continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M/(8 n^2)$ of $f$, where $M$ is the maximum of the absolute value of that fourth derivative.
 
-_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^19].
+_Proof_: This proof is inspired by the proof technique in Tachev (2022)[^14].
 
-Because $f$ has a Lipschitz continuous third derivative, $f$ has the Lagrange remainder $R_{f,r}(\lambda, x_0)$ given in Lemma B9 and Corollary B9A.
+Because $f$ has a Lipschitz continuous third derivative, $f$ has the Lagrange remainder $R_{f,3}(\lambda, x_0)$ given in Lemma B9 and Corollary B9A.
 
-It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^45], Butzer (1955)[^20], May (1976)[^46].  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.
+It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^45], Butzer (1955)[^15], May (1976)[^46].  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.
 
-Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,r}(\lambda, x_0))|.$$ Now denote $\sigma_n$ as the maximum of $|B_n(R_{f,r}(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_{f,r}(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
+Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,3}(\lambda, x_0))|.$$ Now denote $\sigma_n$ as the maximum of $|B_n(R_{f,3}(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_{f,3}(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;
 
-**Proposition B10A:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-f(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ be the _Lorentz operator_ of order 2 (Holtz et al. 2011\)[^21], (Lorentz 1966)[^23], which is a polynomial of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2})$ of $f$, where $M$ is that second derivative's Lipschitz constant or greater.
+**Proposition B10A:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-f(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ be the _Lorentz operator_ of order 2 (Holtz et al. 2011\)[^16], (Lorentz 1966)[^18], which is a polynomial of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2})$ of $f$, where $M$ is that second derivative's Lipschitz constant or greater.
 
-_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^21] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f'',0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2}).$$ &#x25a1;
+_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^16] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f'',0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2}).$$ &#x25a1;
 
 **Corollary B10B:** Let $f(\lambda)$ have a continuous second derivative on the closed unit interval.  Then $B_n(f)$ is within $\frac{M}{8n}$ of $f$, where $M$ is the maximum of that second derivative's absolute value or greater.
 
@@ -827,11 +807,15 @@ In the following propositions, $f^{(r)}$ means the $r$-th derivative of the func
 
 _Proof_: This proof is inspired by a result in Draganov (2004)[^47].
 
-The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  Using a result by Knoop and Pottinger (1976)[^48], which works for every $n\ge 3$: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} \max(|f^{(2)}|)+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} \max(|f^{(2)}|)+(5/4) L/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;
+The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  Using a result by Knoop and Pottinger (1976)[^48], which works for every $n\ge 3$: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) L/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;
 
-**Proposition B10D:** Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $L$ or less.  If $n\ge 6$ is an integer, , the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$|f-U_{n,2}(f)|\le \frac{\max(|f^{(2)}|)+\max(|f^{(3)}|)}{8n^2}+9L/(64 n^{2+(3+\alpha)/2})$$ $$\le \frac{9L+8\max(|f^{(2)}|)+8\max(|f^{(3)}|)}{64n^{2+(3+\alpha)/2}}.$$
+**Proposition B10D:** Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $L$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$|f-U_{n,2}(f)|\le \frac{\max(|f^{(2)}|)+\max(|f^{(3)}|)}{8n^2}+9L/(64 n^{(3+\alpha)/2})$$ $$\le \frac{9L+8\max(|f^{(2)}|)+8\max(|f^{(3)}|)}{64n^{(3+\alpha)/2}}.$$
 
-_Proof_: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different result is employed, namely a result from Kacsó (2002)[^49], which in this case works if $n\ge 6$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+M_3/n+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2},$$ where $M_2 = \max(|f^{(2)}|)$ and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^50].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9L}{64 n^{(3+\alpha)/2}}\le \frac{9L+8M_2+8M_3}{64n^{2+(3+\alpha)/2}}.$$ &#x25a1;
+_Proof_: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different result is employed, namely a result from Kacsó (2002)[^49], which in this case works if $n\ge 6$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{2(2-1)}{2n} M_2+\frac{2 M_3}/{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2},$$ where $M_2 = \max(|f^{(2)}|)$ and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^50].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9L}{64 n^{(3+\alpha)/2}}\le \frac{9L+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$ &#x25a1;
+
+In a similar way, it's possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder continuous fourth or fifth derivative, by expressing the error bound as $|(B_n(f)-f)((B_n(f)-f)(B_n(f)-f))|$ and replacing the values for $M_2$, $M_3$, and $L$ in the bound proved at the end of Proposition B10D with upper bounds for $|(B_n(f))^{(2)}-f^{(2)}|$, $|(B_n(f))^{(3)}-f^{(3)}|$, and $|(B_n(f))^{(4)}-f^{(4)}|$, respectively.
+
+----------
 
 In the lemma below, $H_{n,r}(f)$ is the function described in Han (2003)[^51], equation 16, with $a=0$ and $b=1$.  This is a polynomial that approximates a continuous function $f(\lambda)$ on the closed unit interval, and, if written in Bernstein form, its degree is $n+r$.
 
@@ -1154,7 +1138,7 @@ _Proof._
 
 1. _&omega;_ is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2 \* _n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2 \* _n_))] &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for every _n_&ge;4 that's an integer power of 2, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).  To prove the fourth bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt( (_k_/(2\*_n_)) \* (1&minus;_k_/(2\*_n_)) / (2\*_n_&minus;1) )).
 2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on the closed unit interval, the result follows from part 1.
-3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f'(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^16], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4 that's a power of 2, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
+3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f'(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^11], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4 that's a power of 2, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
 
 > **Notes:**
 >
@@ -1403,9 +1387,9 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.0414 | 0.08 | $\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.00001}/2$ if _&lambda;_ &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.00001}/2$ otherwise. |
 | 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.1781/$n^{1/2}$ | 0.19/$n^{1/2}$. | $\mathcal{E}_5((\lambda+1)/2)-1$, where $\mathcal{E}_5$ is the Euler spline of order 5 (Schoenberg 1973)[^68]. |
 
-\* Corresponds to the iterated Boolean sum of order 2 (Güntürk and Li 2021)[^18].
+\* Corresponds to the iterated Boolean sum of order 2 (Güntürk and Li 2021)[^13].
 
-\*\*\* Corresponds to the iterated Boolean sum of order 3 (Güntürk and Li 2021)[^18].
+\*\*\* Corresponds to the iterated Boolean sum of order 3 (Güntürk and Li 2021)[^13].
 
 \*\* The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.
 
