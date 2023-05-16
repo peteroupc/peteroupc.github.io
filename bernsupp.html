@@ -27,8 +27,7 @@
 
 <ul>
 <li><a href="#Polynomials_as_Approximate_Bernoulli_Factories"><strong>Polynomials as Approximate Bernoulli Factories</strong></a></li>
-<li><a href="#For_Power_Series"><strong>For Power Series</strong></a></li>
-<li><a href="#For_Other_Smooth_Functions"><strong>For Other &quot;Smooth&quot; Functions</strong></a></li>
+<li><a href="#For_Smooth_Functions"><strong>For &quot;Smooth&quot; Functions</strong></a></li>
 <li><a href="#For_Linear_Functions"><strong>For Linear Functions</strong></a></li>
 <li><a href="#Request_for_Additional_Methods_2"><strong>Request for Additional Methods</strong></a></li>
 </ul></li>
@@ -731,39 +730,44 @@
 </ol>
 </blockquote>
 
-<p><a id=For_Power_Series></a></p>
+<p><a id=For_Smooth_Functions></a></p>
 
-<h3>For Power Series</h3>
-
-<p>If $f(\lambda)$ can be rewritten as a power series, namely: $$f(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_i \lambda^i + ...,$$ whenever $0\le\lambda\le 1$, where $a_i$, the <em>coefficients</em>, are constant rational numbers[^26], then the following algorithm simulates an approximation of $f$ that comes within $\epsilon$ of $f$:</p>
-
-<ol>
-<li><p>Find the first $n$+1 coefficients such that the polynomial $P(\lambda) = a_0 \lambda^0 + ... + a_n\lambda^n$ is within $\epsilon$ of $f$ wherever $0 \le \lambda \le 1$.</p>
-
-<p>If $f$&#39;s coefficients are each greater than 0, form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and meet the so-called &quot;ratio test&quot;, the algorithms in Carvalho and Moreira (2022)[^27] can be used here (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p></li>
-<li><p>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^28].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.  If any of those coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the coefficients is less than 0 or greater than 1.</p></li>
-<li>Flip the input coin <em>n</em> times, then let <em>j</em> be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.</li>
-</ol>
-
-<p><a id=For_Other_Smooth_Functions></a></p>
-
-<h3>For Other &quot;Smooth&quot; Functions</h3>
+<h3>For &quot;Smooth&quot; Functions</h3>
 
 <p>If $f(\lambda)$ is &quot;smooth&quot; enough on the closed unit interval and if $\epsilon$ is big enough, then Taylor&#39;s theorem shows how to build a polynomial that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series.</p>
 
 <p>Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that&mdash;</p>
 
-<ul>
+<ol>
 <li>$f$ is continuous on the closed unit interval, and</li>
 <li>$f$ satisfies $\epsilon\le f(0)\le 1-\epsilon$ and $\epsilon\le f(1)\le 1-\epsilon$, and</li>
 <li>$f$ satisfies $\epsilon\lt f(\lambda)\lt 1-\epsilon$ whenever $0\lt\lambda\lt 1$, and</li>
 <li>$f$&#39;s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M/((n+1)!)$, where $M$ is not less than the maximum of the absolute value of that derivative, and</li>
 <li>$f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.</li>
-</ul>
+</ol>
 
 <p>Then the $n$-th <em>Taylor polynomial</em> centered at 0, given below, is within $\epsilon$ of $f$: $$P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,$$</p>
 
-<p>where $a_0 = f(0)$ and $a_i = f^{(i)}(0)/(i!)$ for $i\ge 1$.  Given this $P$, the algorithm to simulate this polynomial is the same as steps 2 and 3 of the previous section&#39;s algorithm.</p>
+<p>where $a_0 = f(0)$ and $a_i = f^{(i)}(0)/(i!)$ for $i\ge 1$.  (Items 2 and 3 above are needed to ensure the Taylor polynomial can be simulated by a Bernoulli factory.)</p>
+
+<blockquote>
+<p><strong>Note:</strong> If $f(\lambda)$ can be rewritten as a power series, namely $f(\lambda) = c_0 \lambda^0 + c_1 \lambda^1 + ... + c_i \lambda^i + ...$ whenever $0\le\lambda\le 1$ (so that $f$ has a continuous $k$-th derivative for every $k$), and if the coefficients $c_i$&mdash;</p>
+
+<ul>
+<li>are each greater than 0,</li>
+<li>form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and</li>
+<li>meet the so-called &quot;ratio test&quot;,</li>
+</ul>
+
+<p>then the algorithms in Carvalho and Moreira (2022)[^26] can be used to find the first $n$+1 coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p>
+</blockquote>
+
+<p>Given the polynomial $P$, the algorithm to simulate this polynomial is as follows:</p>
+
+<ol>
+<li>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^27].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.  If any of those coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the coefficients is less than 0 or greater than 1.</li>
+<li>Flip the input coin <em>n</em> times, then let <em>j</em> be the number of times the coin returned 1 this way, then return either 1 with probability $b_j$, or 0 otherwise.</li>
+</ol>
 
 <p><a id=For_Linear_Functions></a></p>
 
@@ -772,8 +776,8 @@
 <p>There are a number of approximate methods to simulate <em>&lambda;</em>*<em>c</em>, where <em>c</em> &gt; 1 and 0 &le; <em>&lambda;</em> &lt; 1/<em>c</em>.  (&quot;Approximate&quot; because this function touches 1 at 1/<em>c</em>, so it can&#39;t be a factory function.) Since the methods use only up to <em>n</em> flips, where <em>n</em> is an integer greater than 0, the approximation will be a polynomial of degree <em>n</em>.</p>
 
 <ul>
-<li><p>Henderson and Glynn (2003, Remark 4)[^29] approximates the function <em>&lambda;</em>*2 using a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</p></li>
-<li><p>I found the following approximation for <em>&lambda;</em>*<em>c</em>[^30]: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/<em>c</em>).</p></li>
+<li><p>Henderson and Glynn (2003, Remark 4)[^28] approximates the function <em>&lambda;</em>*2 using a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</p></li>
+<li><p>I found the following approximation for <em>&lambda;</em>*<em>c</em>[^29]: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/<em>c</em>).</p></li>
 <li><p>The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)[^1], which approximates <em>&lambda;</em>*2.</p></li>
 </ul>
 
@@ -802,7 +806,7 @@
 <ul>
 <li><em>&lambda;</em>, the unknown probability of heads, is <em>&epsilon;</em> or greater and (1&minus;<em>&epsilon;</em>) or less for some <em>&epsilon;</em> &gt; 0.</li>
 <li>The simulation makes use of unbiased random bits in addition to input coin flips.</li>
-<li><em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere. (<em>O</em>(<em>h</em>(<em>n</em>)) roughly means &quot;less than or equal to <em>h</em>(<em>n</em>) times a constant when <em>n</em> is large enough&quot;.)</li>
+<li><em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>.</li>
 </ul>
 
 <table><thead>
@@ -816,28 +820,28 @@
 <td>If and only if <em>f</em> can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in the closed unit interval (Goyal and Sigman 2012)[^7].</td>
 </tr>
 <tr>
-<td>Requires a finite number of flips on average. Also known as &quot;realizable&quot; by Flajolet et al. (2010)[^31].</td>
-<td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)[^1].<br/>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^32].</td>
+<td>Requires a finite number of flips on average. Also known as &quot;realizable&quot; by Flajolet et al. (2010)[^30].</td>
+<td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)[^1].<br/>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^31].</td>
 </tr>
 <tr>
 <td>Number of flips required, raised to power of <em>r</em>, is bounded by a finite number on average and has a tail that drops off uniformly over <em>f</em>&#39;s domain.</td>
 <td>Only if <em>f</em> has continuous <em>r</em>-th derivative (Nacu and Peres 2005)[^1].</td>
 </tr>
 <tr>
-<td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and every <em>&lambda;</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
+<td>Requires more than <em>n</em> flips with at most a probability proportional to <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and every <em>&lambda;</em>, and for large enough <em>n</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
 <td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011)[^16].</td>
 </tr>
 <tr>
-<td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and every <em>&lambda;</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
+<td>Requires more than <em>n</em> flips with at most a probability proportional to <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and every <em>&lambda;</em>, and for large enough <em>n</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
 <td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with Hölder exponent (<em>&alpha;</em> &minus; <em>r</em>) or greater, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)[^16]. Assumes <em>f</em> is bounded away from 0 and 1.</td>
 </tr>
 <tr>
-<td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)[^31].</td>
+<td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)[^30].</td>
 <td>If and only if <em>f</em> is real analytic (see note below) (Nacu and Peres 2005)[^1].</td>
 </tr>
 <tr>
 <td>Average number of flips greater than or equal to (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
-<td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^32].</td>
+<td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^31].</td>
 </tr>
 </tbody></table>
 
@@ -904,129 +908,127 @@
 
 <p>[^25]: M. Gevrey, &quot;Sur la nature analytique des solutions des équations aux dérivées partielles&quot;, 1918.</p>
 
-<p>[^26]: More generally, the coefficients can be real numbers, but there are computational issues.  Rational numbers more easily support arbitrary precision than other real numbers, where special measures are required such as so-called constructive/recursive reals.</p>
+<p>[^26]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
 
-<p>[^27]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
+<p>[^27]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, Reliable Computing 17(1), 2012.</p>
 
-<p>[^28]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, Reliable Computing 17(1), 2012.</p>
+<p>[^28]: Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</p>
 
-<p>[^29]: Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</p>
+<p>[^29]: For this approximation, if <em>n</em> were infinity, the method would return 1 with probability 1 and so would not approximate <em>&lambda;</em>*<em>c</em>, of course.</p>
 
-<p>[^30]: For this approximation, if <em>n</em> were infinity, the method would return 1 with probability 1 and so would not approximate <em>&lambda;</em>*<em>c</em>, of course.</p>
+<p>[^30]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560 [math.PR], 2010.</p>
 
-<p>[^31]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560 [math.PR], 2010.</p>
+<p>[^31]: Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</p>
 
-<p>[^32]: Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</p>
+<p>[^32]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. &quot;Uniform approximation and Bernstein polynomials with coefficients in the unit interval.&quot; European Journal of Combinatorics 32, no. 3 (2011): 448-463.</p>
 
-<p>[^33]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. &quot;Uniform approximation and Bernstein polynomials with coefficients in the unit interval.&quot; European Journal of Combinatorics 32, no. 3 (2011): 448-463.</p>
+<p>[^33]: Li, Zhongkai. &quot;Bernstein polynomials and modulus of continuity.&quot; Journal of Approximation Theory 102, no. 1 (2000): 171-174.</p>
 
-<p>[^34]: Li, Zhongkai. &quot;Bernstein polynomials and modulus of continuity.&quot; Journal of Approximation Theory 102, no. 1 (2000): 171-174.</p>
+<p>[^34]: <em>Summation notation</em>, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.</p>
 
-<p>[^35]: <em>Summation notation</em>, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.</p>
+<p>[^35]: Molteni, Giuseppe. &quot;Explicit bounds for even moments of Bernstein’s polynomials.&quot; Journal of Approximation Theory 273 (2022): 105658.</p>
 
-<p>[^36]: Molteni, Giuseppe. &quot;Explicit bounds for even moments of Bernstein’s polynomials.&quot; Journal of Approximation Theory 273 (2022): 105658.</p>
+<p>[^36]: G.G. Lorentz, <em>Bernstein polynomials</em>, 1953.</p>
 
-<p>[^37]: G.G. Lorentz, <em>Bernstein polynomials</em>, 1953.</p>
+<p>[^37]: Skorski, Maciej. &quot;<a href="https://arxiv.org/abs/2012.06270"><strong>Handy formulas for binomial moments</strong></a>&quot;, arXiv:2012.06270 (2020).</p>
 
-<p>[^38]: Skorski, Maciej. &quot;<a href="https://arxiv.org/abs/2012.06270"><strong>Handy formulas for binomial moments</strong></a>&quot;, arXiv:2012.06270 (2020).</p>
+<p>[^38]: Adell, J.A., Cárdenas-Morales, D., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0021904518300376"><strong>Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials</strong></a>&quot;, Journal of Approximation Theory 231, July 2018.</p>
 
-<p>[^39]: Adell, J.A., Cárdenas-Morales, D., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0021904518300376"><strong>Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials</strong></a>&quot;, Journal of Approximation Theory 231, July 2018.</p>
+<p>[^39]: Bustamante, J., &quot;Estimates of positive linear operators in terms of second order moduli&quot;, J. Math. Anal. Appl. 345 (2008).</p>
 
-<p>[^40]: Bustamante, J., &quot;Estimates of positive linear operators in terms of second order moduli&quot;, J. Math. Anal. Appl. 345 (2008).</p>
+<p>[^40]: Gonska, H.H., Piţul, P., Raşa, I., &quot;On Peano&#39;s form of the Taylor remainder, Voronovskaja&#39;s theorem and the commutator of positive linear operators&quot;, In Numerical Analysis and Approximation Theory, 2006.</p>
 
-<p>[^41]: Gonska, H.H., Piţul, P., Raşa, I., &quot;On Peano&#39;s form of the Taylor remainder, Voronovskaja&#39;s theorem and the commutator of positive linear operators&quot;, In Numerical Analysis and Approximation Theory, 2006.</p>
+<p>[^41]: The result from Gonska et al. actually applies if the $r$-th derivative belongs to a broader class of continuous functions than Lipschitz continuous functions, but this feature is not used in this proof.</p>
 
-<p>[^42]: The result from Gonska et al. actually applies if the $r$-th derivative belongs to a broader class of continuous functions than Lipschitz continuous functions, but this feature is not used in this proof.</p>
+<p>[^42]: Cheng, F., &quot;On the rate of convergence of Bernstein polynomials of functions of bounded variation&quot;, Journal of Approximation Theory 39 (1983).</p>
 
-<p>[^43]: Cheng, F., &quot;On the rate of convergence of Bernstein polynomials of functions of bounded variation&quot;, Journal of Approximation Theory 39 (1983).</p>
+<p>[^43]: <em>NIST Digital Library of Mathematical Functions</em>, <a href="https://dlmf.nist.gov/"><strong>https://dlmf.nist.gov/</strong></a> , Release 1.1.9 of 2023-03-15.</p>
 
-<p>[^44]: <em>NIST Digital Library of Mathematical Functions</em>, <a href="https://dlmf.nist.gov/"><strong>https://dlmf.nist.gov/</strong></a> , Release 1.1.9 of 2023-03-15.</p>
+<p>[^44]: Ditzian, Z., Totik, V., <em>Moduli of Smoothness</em>, 1987.</p>
 
-<p>[^45]: Ditzian, Z., Totik, V., <em>Moduli of Smoothness</em>, 1987.</p>
+<p>[^45]: May, C.P., &quot;Saturation and inverse theorems for a class of exponential-type operators&quot;, Canadian Journal of Mathematics 28 (1976).</p>
 
-<p>[^46]: May, C.P., &quot;Saturation and inverse theorems for a class of exponential-type operators&quot;, Canadian Journal of Mathematics 28 (1976).</p>
+<p>[^46]: Draganov, Borislav R. &quot;On simultaneous approximation by iterated Boolean sums of Bernstein operators.&quot; Results in Mathematics 66, no. 1 (2014): 21-41.</p>
 
-<p>[^47]: Draganov, Borislav R. &quot;On simultaneous approximation by iterated Boolean sums of Bernstein operators.&quot; Results in Mathematics 66, no. 1 (2014): 21-41.</p>
+<p>[^47]: Knoop, H-B., Pottinger, P., &quot;Ein Satz vom Korovkin-Typ für $C^k$-Räume&quot;, Math. Zeitschrift 148 (1976).</p>
 
-<p>[^48]: Knoop, H-B., Pottinger, P., &quot;Ein Satz vom Korovkin-Typ für $C^k$-Räume&quot;, Math. Zeitschrift 148 (1976).</p>
+<p>[^48]: Kacsó, D.P., &quot;Simultaneous approximation by almost convex operators&quot;, 2002.</p>
 
-<p>[^49]: Kacsó, D.P., &quot;Simultaneous approximation by almost convex operators&quot;, 2002.</p>
+<p>[^49]: Stancu, D.D., Agratini, O., et al. <em>Analiză Numerică şi Teoria Aproximării</em>, 2001.</p>
 
-<p>[^50]: Stancu, D.D., Agratini, O., et al. <em>Analiză Numerică şi Teoria Aproximării</em>, 2001.</p>
+<p>[^50]: Han, X., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0021904503001485"><strong>Multi-node higher expansions of a function</strong></a>&quot;, <em>Journal of Approximation Theory</em> 124 (2003).</p>
 
-<p>[^51]: Han, X., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0021904503001485"><strong>Multi-node higher expansions of a function</strong></a>&quot;, <em>Journal of Approximation Theory</em> 124 (2003).</p>
+<p>[^51]: H. Wang, &quot;<a href="https://arxiv.org/abs/2106.03456v3"><strong>Analysis of error localization of Chebyshev spectral approximations</strong></a>&quot;, arXiv:2106.03456v3 [math.NA], 2023.</p>
 
-<p>[^52]: H. Wang, &quot;<a href="https://arxiv.org/abs/2106.03456v3"><strong>Analysis of error localization of Chebyshev spectral approximations</strong></a>&quot;, arXiv:2106.03456v3 [math.NA], 2023.</p>
+<p>[^52]: Trefethen, L.N., <a href="https://www.chebfun.org/ATAP/"><strong><em>Approximation Theory and Approximation Practice</em></strong></a>, 2013.</p>
 
-<p>[^53]: Trefethen, L.N., <a href="https://www.chebfun.org/ATAP/"><strong><em>Approximation Theory and Approximation Practice</em></strong></a>, 2013.</p>
+<p>[^53]: R. Kannan and C.K. Kreuger, <em>Advanced Analysis on the Real Line</em>, 1996.</p>
 
-<p>[^54]: R. Kannan and C.K. Kreuger, <em>Advanced Analysis on the Real Line</em>, 1996.</p>
+<p>[^54]: Rababah, Abedallah. &quot;Transformation of Chebyshev–Bernstein polynomial basis.&quot; Computational Methods in Applied Mathematics 3.4 (2003): 608-622.</p>
 
-<p>[^55]: Rababah, Abedallah. &quot;Transformation of Chebyshev–Bernstein polynomial basis.&quot; Computational Methods in Applied Mathematics 3.4 (2003): 608-622.</p>
+<p>[^55]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
 
-<p>[^56]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
+<p>[^56]: von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</p>
 
-<p>[^57]: von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</p>
+<p>[^57]: Peres, Y., &quot;<a href="https://projecteuclid.org/euclid.aos/1176348543"><strong>Iterating von Neumann&#39;s procedure for extracting random bits</strong></a>&quot;, Annals of Statistics 1992,20,1, p. 590-597.</p>
 
-<p>[^58]: Peres, Y., &quot;<a href="https://projecteuclid.org/euclid.aos/1176348543"><strong>Iterating von Neumann&#39;s procedure for extracting random bits</strong></a>&quot;, Annals of Statistics 1992,20,1, p. 590-597.</p>
+<p>[^58]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^59]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^59]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</p>
 
-<p>[^60]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</p>
+<p>[^60]: S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS], 2018.</p>
 
-<p>[^61]: S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS], 2018.</p>
+<p>[^61]: Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</p>
 
-<p>[^62]: Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</p>
+<p>[^62]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</p>
 
-<p>[^63]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</p>
+<p>[^63]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
 
-<p>[^64]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
+<p>[^64]: Strukov, L.I., Timan, A.F., &quot;Mathematical expectation of continuous functions of random variables. Smoothness and variance&quot;, <em>Siberian Mathematical Journal</em> 18 (1977).</p>
 
-<p>[^65]: Strukov, L.I., Timan, A.F., &quot;Mathematical expectation of continuous functions of random variables. Smoothness and variance&quot;, <em>Siberian Mathematical Journal</em> 18 (1977).</p>
+<p>[^65]: Strukov, L. I., and A. F. Timan. &quot;Sharpening and generalization of some theorems of approximation by polynomials of SN Bernstein.&quot; In The Theory of the Approximation of Functions. Proc. Internat. Conf, pp. 338-341. 1975.</p>
 
-<p>[^66]: Strukov, L. I., and A. F. Timan. &quot;Sharpening and generalization of some theorems of approximation by polynomials of SN Bernstein.&quot; In The Theory of the Approximation of Functions. Proc. Internat. Conf, pp. 338-341. 1975.</p>
+<p>[^66]: Kantorovich, L.V., &quot;Some remarks on the approximation of functions by means of polynomials with integer coefficients&quot;, 1931.</p>
 
-<p>[^67]: Kantorovich, L.V., &quot;Some remarks on the approximation of functions by means of polynomials with integer coefficients&quot;, 1931.</p>
+<p>[^67]: Schoenberg, I.J., &quot;Cardinal spline interpolation&quot;, 1973.</p>
 
-<p>[^68]: Schoenberg, I.J., &quot;Cardinal spline interpolation&quot;, 1973.</p>
+<p>[^68]: This formula applies to functions with Lipschitz-continuous derivative (a weaker assumption than having three continuous derivatives), but that derivative&#39;s Lipschitz constant is a lower bound on $M_{3}$, so that formula is useful here.</p>
 
-<p>[^69]: This formula applies to functions with Lipschitz-continuous derivative (a weaker assumption than having three continuous derivatives), but that derivative&#39;s Lipschitz constant is a lower bound on $M_{3}$, so that formula is useful here.</p>
+<p>[^69]: Le Gruyer, Erwan. &quot;Minimal Lipschitz extensions to differentiable functions defined on a Hilbert space.&quot; Geometric and Functional Analysis 19, no. 4 (2009): 1101-1118.</p>
 
-<p>[^70]: Le Gruyer, Erwan. &quot;Minimal Lipschitz extensions to differentiable functions defined on a Hilbert space.&quot; Geometric and Functional Analysis 19, no. 4 (2009): 1101-1118.</p>
+<p>[^70]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. &quot;Computing minimal interpolants in C1, 1 (Rd).&quot; Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.</p>
 
-<p>[^71]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. &quot;Computing minimal interpolants in C1, 1 (Rd).&quot; Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.</p>
+<p>[^71]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.</p>
 
-<p>[^72]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.</p>
+<p>[^72]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</p>
 
-<p>[^73]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</p>
+<p>[^73]: Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy&quot;, <em>Journal of Mathematical Psychology</em> 95 (2020): 102308.</p>
 
-<p>[^74]: Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy&quot;, <em>Journal of Mathematical Psychology</em> 95 (2020): 102308.</p>
+<p>[^74]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</p>
 
-<p>[^75]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</p>
+<p>[^75]: Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</p>
 
-<p>[^76]: Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</p>
+<p>[^76]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</p>
 
-<p>[^77]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</p>
+<p>[^77]: Levy, H., <em>Stochastic dominance</em>, 1998.</p>
 
-<p>[^78]: Levy, H., <em>Stochastic dominance</em>, 1998.</p>
+<p>[^78]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In <em>Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science</em>, 2004. (pp. 12-21). IEEE.</p>
 
-<p>[^79]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In <em>Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science</em>, 2004. (pp. 12-21). IEEE.</p>
+<p>[^79]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</p>
 
-<p>[^80]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</p>
+<p>[^80]: Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</p>
 
-<p>[^81]: Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</p>
+<p>[^81]: Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</p>
 
-<p>[^82]: Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</p>
+<p>[^82]: Vatan (2001) claims that a finite-state generator has a continuous <code>CDF</code> (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.</p>
 
-<p>[^83]: Vatan (2001) claims that a finite-state generator has a continuous <code>CDF</code> (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.</p>
+<p>[^83]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</p>
 
-<p>[^84]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</p>
+<p>[^84]: Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</p>
 
-<p>[^85]: Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</p>
+<p>[^85]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
-<p>[^86]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
-
-<p>[^87]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+<p>[^86]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -1058,7 +1060,7 @@
 
 <p><em>Proof:</em> $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative coefficients, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;</p>
 
-<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^27] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
+<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, the algorithms given in Carvalho and Moreira (2022)[^26] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
 
 <p><a id=Results_Used_in_Approximate_Bernoulli_Factories></a></p>
 
@@ -1068,11 +1070,11 @@
 
 <p><em>Proof:</em> For $W_{n,2}$ it&#39;s enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen&#39;s inequality and because $f$ is concave.</p>
 
-<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each coefficient is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)[^33].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. &#x25a1;</p>
+<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f(\lambda)))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each coefficient is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)[^32].  Thus, by induction, $B_n(B_n(f(\lambda)))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. &#x25a1;</p>
 
 <p><strong>Proposition B2</strong>: Let $f(\lambda)$ map the closed unit interval to itself, be continuous, nowhere decreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is nonnegative on the closed unit interval.</p>
 
-<p><em>Proof:</em> The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^34], showing that $W_{n,2}$ is nonnegative on the closed unit interval.  &#x25a1;</p>
+<p><em>Proof:</em> The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^33], showing that $W_{n,2}$ is nonnegative on the closed unit interval.  &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$&#39;s domain.</p>
@@ -1082,9 +1084,9 @@
 
 <p><em>Proof</em>: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^8] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;</p>
 
-<p>The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value (&quot;long-run average&quot;).   (Traditionally, another central moment, that of $X/n$ or the ratio of heads to tosses, is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  $T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) The following results bound the absolute value of $T$.[^35]</p>
+<p>The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value (&quot;long-run average&quot;).   (Traditionally, another central moment, that of $X/n$ or the ratio of heads to tosses, is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  $T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) The following results bound the absolute value of $T$.[^34]</p>
 
-<p><strong>Result B4</strong> (Molteni (2022)[^36]): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le \frac{r!}{((r/2)!)8^{r/2}} n^{r/2}$ and $|S_{n,r}(p)| \le \frac{r!}{((r/2)!)8^{r/2}}\frac{1}{n^{r/2}}$.</p>
+<p><strong>Result B4</strong> (Molteni (2022)[^35]): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le (r!)/(((r/2)!)t^{r/2}) n^{r/2}$ and $|S_{n,r}(p)| \le (r!)/(((r/2)!)t^{r/2})\cdot(1/n^{r/2})$.</p>
 
 <p><strong>Lemma B4A</strong>: For every integer $n\ge 1$:</p>
 
@@ -1098,9 +1100,9 @@
 
 <p><strong>Proposition B5</strong>: For every integer $n\ge 1$, the following is true: $$|T_{n,3}(p)| \le \frac{\sqrt{3}}{18} n^{2} \lt (963/10000) n^{2}.$$</p>
 
-<p><em>Proof</em>: It is known that $T_{n,3}(p)=x(1-x)(1-2x)/n^2$ (Lorentz 1953)[^37]. The critical points of $T_{n,3}(p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T_{n,r}(p)$ is antisymmetric whenever $r$ is odd, and is nonnegative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^38], it&#39;s enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T_{n, 3}(p)|$ on either side.  By inspection, the moment at that critical point is decreasing as $n$ increases, starting with $n=1$. &#x25a1;</p>
+<p><em>Proof</em>: It is known that $T_{n,3}(p)=x(1-x)(1-2x)/n^2$ (Lorentz 1953)[^36]. The critical points of $T_{n,3}(p)$ (the points where the maximum might be) are at $p=0$, $p=1$, $p=1/2-\sqrt{3}/6$, and $p=1/2+\sqrt{3}/6$.  The moment equals 0 at the points 0 and 1, so that leaves the last two.  Since $T_{n,r}(p)$ is antisymmetric whenever $r$ is odd, and is nonnegative whenever $r$ is odd and $0\le p \le 1/2$ (Skorski 2020)[^37], it&#39;s enough to take the critical point $0 \le p=1/2-\sqrt{3}/6 \le 1/2$ to bound $|T_{n, 3}(p)|$ on either side.  By inspection, the moment at that critical point is decreasing as $n$ increases, starting with $n=1$. &#x25a1;</p>
 
-<p><strong>Result B6</strong> (Adell and Cárdenas-Morales (2018)[^39]): Let $\sigma(r,t) = \frac{r!}{((r/2)!)t^{r/2}}$.  If $r\ge 0$ is an even integer, then&mdash;</p>
+<p><strong>Result B6</strong> (Adell and Cárdenas-Morales (2018)[^38]): Let $\sigma(r,t) = (r!)/(((r/2)!)t^{r/2})$.  If $r\ge 0$ is an even integer, then&mdash;</p>
 
 <ul>
 <li>for every integer $n\ge 1$, $|T_{n,r}(p)|\le \sigma(r,6)n^{r/2}$ and $|S_{n,r}(p)| \le \sigma(r,6)/n^{r/2}$, and</li>
@@ -1111,7 +1113,7 @@
 
 <p><em>Proof</em>: Evaluating the moment for each $1\le n \le 303$ at its critical point shows that $|T_{n,5}(p)| &lt; 0.083 n^{5/2}$ for every such $n$.  An upper bound given in sec. 3.1 of Skorski (2020) leads to $|T_{n,5}(p)| \le n/4+2 {n \choose 2} = n/4+2\frac{n!}{(n-2)!} = n^2 - \frac{3}{4}n \le n^2$ whenever $n\ge 2$, and $n^2/n^{5/2}$ is decreasing as $n$ increases, starting with $n=2$, because its derivative $\frac{-n}{2n^{5/2}}$ is negative whenever $n\ge 2$. Thus it&#39;s enough to take the bound $n^2$ at 304, namely 92188, so that $|T_{n,5}(p)|\le 304^2 = 92188 &lt; 0.05736/n^{5/2}$ for every $n\ge 304$.  This is still less than $0.083 n^{5/2}$, so that bound stands for the first part.  &#x25a1;</p>
 
-<p><strong>Proposition B8</strong>: (Omitted.  It relied on a result that gives error bounds for certain positive operators that come close to a continuous function on the closed unit interval [theorem 11 of Bustamante (2008)[^40]]. However, $U_{n,2}$ is not <em>positive</em> in this sense, since $U_{n,2}(f)$ is not non-negative on the closed unit interval for <em>every</em> non-negative continuous function $f$ on that interval.)</p>
+<p><strong>Proposition B8</strong>: (Omitted.  It relied on a result that gives error bounds for certain positive operators that come close to a continuous function on the closed unit interval [theorem 11 of Bustamante (2008)[^39]]. However, $U_{n,2}$ is not <em>positive</em> in this sense, since $U_{n,2}(f)$ is not non-negative on the closed unit interval for <em>every</em> non-negative continuous function $f$ on that interval.)</p>
 
 <p><strong>Lemma B9</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;), where $r$ is an integer, and let $M$ be equal to or greater than the $r$-th derivative&#39;s Lipschitz constant.  Then, for every $0\le x_0 \le 1$:</p>
 
@@ -1122,21 +1124,21 @@
 <li>If $r$ is even and greater than 0, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}$ for every integer $n\ge 2$, where $\gamma$ is 8 if $r\le 42$ and 6 otherwise.</li>
 </ol>
 
-<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^41], which applies for any integer $r\ge 0$, bounds that Lagrange remainder [^42].  By that result, because $f$&#39;s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}=M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.$$</p>
+<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^40], which applies for any integer $r\ge 0$, bounds that Lagrange remainder [^41].  By that result, because $f$&#39;s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}=M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.$$</p>
 
 <p>The goal is now to bound the Bernstein polynomial of $|\lambda-x_0|^{r+1}$.  This is easiest to do if $r$ is odd.</p>
 
 <p>If $r$ is odd, then $(\lambda-x_0)^{r+1} = |\lambda-x_0|^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded as follows: $$|B_n((\lambda-x_0)^{r+1})(x_0)| \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),$$ where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!} |B_n((\lambda-x_0)^{r+1})(x_0)|$$ $$\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.$$</p>
 
-<p>If $r$ is 0, then the Bernstein polynomial of $|\lambda-x_0|^{1}$ is bounded by $\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$ (Cheng 1983)[^43], so&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$</p>
+<p>If $r$ is 0, then the Bernstein polynomial of $|\lambda-x_0|^{1}$ is bounded by $\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$ (Cheng 1983)[^42], so&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$</p>
 
-<p>If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{r+1}$ can be bounded as follows for every $n\ge 2$, using <a href="https://mathworld.wolfram.com/SchwarzsInequality.html"><strong>Schwarz&#39;s inequality</strong></a> (see also Bojanic and Shisha [1975][^37] for the case $r=4$): $$B_n(|\lambda-x_0|^{r+1})(x_0)=B_n((|\lambda-x_0|^{r/2}|\lambda-x_0|^{(r+2)/2})^2)(x_0)$$ $$\le\sqrt{|S_{n,r}(x_0)|}\sqrt{|S_{n,r+2}(x_0)|}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$ $$\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},$$where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$&#x25a1;</p>
+<p>If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{r+1}$ can be bounded as follows for every $n\ge 2$, using <a href="https://mathworld.wolfram.com/SchwarzsInequality.html"><strong>Schwarz&#39;s inequality</strong></a> (see also Bojanic and Shisha [1975][^36] for the case $r=4$): $$B_n(|\lambda-x_0|^{r+1})(x_0)=B_n((|\lambda-x_0|^{r/2}|\lambda-x_0|^{(r+2)/2})^2)(x_0)$$ $$\le\sqrt{|S_{n,r}(x_0)|}\sqrt{|S_{n,r+2}(x_0)|}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$ $$\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},$$where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$&#x25a1;</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor&#39;s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$&#39;s domain) (DLMF [^44] <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$</li>
+<li>If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor&#39;s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$&#39;s domain) (DLMF [^43] <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$</li>
 <li>Part 1 of this lemma is not true if the $r$-th derivative of $f(\lambda)$ can be any function in the Zygmund class rather than be Lipschitz continuous.  There are functions in the Zygmund class whose derivative is defined almost nowhere, so that $f$ need not meet the conditions for having the Lagrange remainder $R_{f,r}(\lambda, x_0)$.</li>
 <li>It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded in this way (Lorentz 1966)[^18].</li>
 </ol>
@@ -1186,7 +1188,7 @@
 
 <p>Because $f$ has a Lipschitz continuous third derivative, $f$ has the Lagrange remainder $R_{f,3}(\lambda, x_0)$ given in Lemma B9 and Corollary B9A.</p>
 
-<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^45], Butzer (1955)[^15], May (1976)[^46].  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.</p>
+<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^44], Butzer (1955)[^15], May (1976)[^45].  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.</p>
 
 <p>Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,3}(\lambda, x_0))|.$$ Now denote $\sigma_n$ as the maximum of $|B_n(R_{f,3}(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_{f,3}(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;</p>
 
@@ -1202,19 +1204,19 @@
 
 <p><strong>Proposition B10C:</strong> Let $f(\lambda)$ have a Hölder continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $L$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$&#39;s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$|f-U_{n,2}(f)|\le \frac{M_2}{8 n^{2}} + 5 L/(32 n^{1+\alpha/2}) \le ((5L+4M_2)/32)/n^{1+\alpha/2},$$ where $M_2$ is the maximum of that second derivative&#39;s absolute value or greater.</p>
 
-<p><em>Proof</em>: This proof is inspired by a result in Draganov (2004)[^47].</p>
+<p><em>Proof</em>: This proof is inspired by a result in Draganov (2004)[^46].</p>
 
-<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  Using a result by Knoop and Pottinger (1976)[^48], which works for every $n\ge 3$: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) L/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
+<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  Using a result by Knoop and Pottinger (1976)[^47], which works for every $n\ge 3$: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) L/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
 
 <p><strong>Proposition B10D:</strong> Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $L$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$|f-U_{n,2}(f)|\le \frac{\max(|f^{(2)}|)+\max(|f^{(3)}|)}{8n^2}+9L/(64 n^{(3+\alpha)/2})$$ $$\le \frac{9L+8\max(|f^{(2)}|)+8\max(|f^{(3)}|)}{64n^{(3+\alpha)/2}}.$$</p>
 
-<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different result is employed, namely a result from Kacsó (2002)[^49], which in this case works if $n\ge 6$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{2(2-1)}{2n} M_2+\frac{2 M_3}/{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2},$$ where $M_2 = \max(|f^{(2)}|)$ and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^50].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9L}{64 n^{(3+\alpha)/2}}\le \frac{9L+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$ &#x25a1;</p>
+<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different result is employed, namely a result from Kacsó (2002)[^48], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2},$$ where $r=2$, $M_2 = \max(|f^{(2)}|)$, and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^49].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9L}{64 n^{(3+\alpha)/2}}\le \frac{9L+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$ &#x25a1;</p>
 
 <p>In a similar way, it&#39;s possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder continuous fourth or fifth derivative, by expressing the error bound as $|(B_n(f)-f)((B_n(f)-f)(B_n(f)-f))|$ and replacing the values for $M_2$, $M_3$, and $L$ in the bound proved at the end of Proposition B10D with upper bounds for $|(B_n(f))^{(2)}-f^{(2)}|$, $|(B_n(f))^{(3)}-f^{(3)}|$, and $|(B_n(f))^{(4)}-f^{(4)}|$, respectively.</p>
 
 <hr>
 
-<p>In the lemma below, $H_{n,r}(f)$ is the function described in Han (2003)[^51], equation 16, with $a=0$ and $b=1$.  This is a polynomial that approximates a continuous function $f(\lambda)$ on the closed unit interval, and, if written in Bernstein form, its degree is $n+r$.</p>
+<p>In the lemma below, $H_{n,r}(f)$ is the function described in Han (2003)[^50], equation 16, with $a=0$ and $b=1$.  This is a polynomial that approximates a continuous function $f(\lambda)$ on the closed unit interval, and, if written in Bernstein form, its degree is $n+r$.</p>
 
 <p><strong>Lemma B11:</strong> Let $f(\lambda)$ have a continuous $(2+r)$-th derivative on the closed unit interval, where $r\gt 0$ is an even integer.  Then the error in approximating $f$ with $H_{n,r}(f)$ is bounded as follows: $$|H_{n,r}(f)(\lambda) - f(\lambda)|\le M\beta\frac{1}{(r+1)\cdot((r/2+1)!)\cdot (6n)^{r/2+1}},$$ where $\beta$ is 2 if $r$ is odd, and 1 otherwise, and where $M$ is the maximum of the absolute value of $f$&#39;s $(2+r)$-th derivative.</p>
 
@@ -1273,7 +1275,7 @@
 
 <ul>
 <li>$f$ must be continuous on the interval $[a, b]$ and must have an $r$-th derivative of <em>bounded variation</em>, as described later.</li>
-<li><p>Suppose $f$&#39;s domain is the interval $[a, b]$.  Then the <em>Chebyshev interpolant</em> of degree $n$ of $f$ (Wang 2023)[^52], (Trefethen 2013)[^53] is&mdash; $$p(\lambda)=\sum_{k=0}^n c_k T_k(2\frac{\lambda-a}{b-a}-1),$$ where&mdash;</p>
+<li><p>Suppose $f$&#39;s domain is the interval $[a, b]$.  Then the <em>Chebyshev interpolant</em> of degree $n$ of $f$ (Wang 2023)[^51], (Trefethen 2013)[^52] is&mdash; $$p(\lambda)=\sum_{k=0}^n c_k T_k(2\frac{\lambda-a}{b-a}-1),$$ where&mdash;</p>
 
 <ul>
 <li>$c_k=\sigma(k,n)\frac{2}{n}\sum_{j=0}^n \sigma(j,n) f(\gamma(j,n))T_k(\cos(j\pi/n))$,</li>
@@ -1281,14 +1283,14 @@
 <li>$\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and</li>
 <li>$T_k(x)$ is the $k$-th <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> (<code>chebyshevt(k,x)</code> in the SymPy computer algebra library).</li>
 </ul></li>
-<li>Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is continuous on the interval $[a, b]$ and $f$ has an $r$-th derivative of <em>bounded variation</em>, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative&#39;s <em>total variation</em> or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^53] as well as a statement in note 1 at the end of this section.
+<li>Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is continuous on the interval $[a, b]$ and $f$ has an $r$-th derivative of <em>bounded variation</em>, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative&#39;s <em>total variation</em> or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^52] as well as a statement in note 1 at the end of this section.
 
 <ul>
 <li>If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).</li>
-<li>If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^54].</li>
+<li>If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^53].</li>
 <li>The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon&gt;0$ is the desired error tolerance.</li>
 </ul></li>
-<li>If $f$ is real analytic on $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^53].</li>
+<li>If $f$ is real analytic on $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^52].</li>
 </ul>
 
 <hr>
@@ -1296,7 +1298,7 @@
 <ol>
 <li>Compute the required degree $n$ as given above, with error tolerance $\epsilon/2$.</li>
 <li>Compute the ($n$ plus one) coefficients of $f$&#39;s degree-$n$ Chebyshev interpolant, call them $c_0, ..., c_n$.</li>
-<li>Compute the (<em>n</em>+1)&times;(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^55].</li>
+<li>Compute the (<em>n</em>+1)&times;(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^54].</li>
 <li>Multiply the matrix by the transposed coefficients $(c_0, ..., c_n)$ to get the polynomial&#39;s Bernstein coefficients $b_0, ..., b_n$.  (Transposing means turning columns to rows and vice versa.)</li>
 <li>For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.</li>
 <li>Return the Bernstein coefficients $b_0, ..., b_n$.</li>
@@ -1323,7 +1325,7 @@
 
 <p>Let <em>f</em>(<em>&lambda;</em>) be a function whose domain is the closed unit interval or a subset of it, and that maps its domain to the closed unit interval.  The domain of <em>f</em> gives the allowable values of <em>&lambda;</em>, which is the input coin&#39;s probability of heads.</p>
 
-<p><em>f</em> admits a Bernoulli factory if and only if <em>f</em> is constant on its domain, or is continuous and <em>polynomially bounded</em> on its domain, as defined later in the section &quot;Proofs for Polynomial-Building Schemes&quot; (Keane and O&#39;Brien 1994)[^56].</p>
+<p><em>f</em> admits a Bernoulli factory if and only if <em>f</em> is constant on its domain, or is continuous and <em>polynomially bounded</em> on its domain, as defined later in the section &quot;Proofs for Polynomial-Building Schemes&quot; (Keane and O&#39;Brien 1994)[^55].</p>
 
 <p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;):</p>
 
@@ -1340,7 +1342,7 @@
 
 <h3>Which functions don&#39;t require outside randomness to simulate?</h3>
 
-<p>The function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O&#39;Brien 1994)[^56].  See &quot;<a href="https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a>&quot;.</p>
+<p>The function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O&#39;Brien 1994)[^55].  See &quot;<a href="https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a>&quot;.</p>
 
 <p><strong>Strong Simulability Statement.</strong> A function <em>f</em>(<em>&lambda;</em>) is strongly simulable only if&mdash;</p>
 
@@ -1370,7 +1372,7 @@
 
 <p>(By the properties of the Bernstein form, <em>a</em>[0] will equal <em>f</em>(0) and <em>a</em>[<em>n</em>] will equal <em>f</em>(1) whenever 0 or 1 is in the domain of <em>f</em>, respectively.)</p>
 
-<p>Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)[^57]), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
+<p>Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)[^56]), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
 
 <p><strong>Proposition 2.</strong> <em>If f(&lambda;) is described in the strong simulability statement, and if either f is constant on its domain or f meets the additional conditions below, then f is strongly simulable.</em></p>
 
@@ -1490,14 +1492,14 @@
 
 <ul>
 <li>The functions <em>&lambda;</em> and 1 &minus; <em>&lambda;</em>.</li>
-<li>Constants <em>c</em> satisfying 0 &le; <em>c</em> &le; 1.  As Nacu and Peres (2005)[^1] already showed, any such constant admits an optimal factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)[^58], then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)[^59].</li>
+<li>Constants <em>c</em> satisfying 0 &le; <em>c</em> &le; 1.  As Nacu and Peres (2005)[^1] already showed, any such constant admits an optimal factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)[^57], then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)[^58].</li>
 </ul>
 
 <p>It is easy to see that if an <em>optimal factory</em> exists for <em>f</em>(<em>&lambda;</em>), then one also exists for 1 &minus; <em>f</em>(<em>&lambda;</em>): simply change all ones returned by the <em>f</em>(<em>&lambda;</em>) factory into zeros and vice versa.</p>
 
-<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>&lambda;</em>) = <em>&lambda;</em>/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)[^32], then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0.</p>
+<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>&lambda;</em>) = <em>&lambda;</em>/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)[^31], then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0.</p>
 
-<p>This algorithm, though, doesn&#39;t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)[^58].  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
+<p>This algorithm, though, doesn&#39;t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)[^57].  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
 
 <ol>
 <li>If the number of outputs generated so far is divisible by 20, do the following:
@@ -1525,7 +1527,7 @@
 <li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is a nonnegative integer.</li>
 </ul>
 
-<p>The algorithm is a modified version of the &quot;block simulation&quot; in Mossel and Peres (2005, Proposition 2.5)[^60], which also &quot;extracts&quot; residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
+<p>The algorithm is a modified version of the &quot;block simulation&quot; in Mossel and Peres (2005, Proposition 2.5)[^59], which also &quot;extracts&quot; residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
 
 <ol>
 <li>Set <em>iter</em> to 0.</li>
@@ -1571,7 +1573,7 @@
 
 <p>While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if <em>f</em>(<em>&lambda;</em>) maps each value <em>a</em> or greater and <em>b</em> or less to a small range of values, so that the algorithm could, for example, generate a uniform random variate between 0 and 1 using unbiased random bits and see whether that variate lies outside that range of values &mdash; and thus produce a sample from <em>f</em>(<em>&lambda;</em>) without flipping the input coin again.</p>
 
-<p><small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)[^61].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>&lambda;</em>.</small></p>
+<p><small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)[^60].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>&lambda;</em>.</small></p>
 
 <p><a id=Proofs_for_Polynomial_Building_Schemes></a></p>
 
@@ -1583,7 +1585,7 @@
 
 <ul>
 <li>A <em>strictly bounded factory function</em> means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.</li>
-<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^56].  For examples, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;.</li>
+<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^55].  For examples, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;.</li>
 <li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>&omega;</em> on the closed unit interval, for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) whenever <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
 </ul>
 
@@ -1635,11 +1637,11 @@
 <li>All continuous functions that map the closed unit interval to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>&omega;</em>(0) &gt; 0, because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple modulus of continuity that satisfies the lemma:
 
 <ol>
-<li>If <em>f</em> is strictly increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)[^62]; (Gal 1995)[^63].</li>
-<li>If <em>f</em> is strictly decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)[^62]; (Gal 1995)[^63].</li>
+<li>If <em>f</em> is strictly increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)[^61]; (Gal 1995)[^62].</li>
+<li>If <em>f</em> is strictly decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)[^61]; (Gal 1995)[^62].</li>
 <li>If <em>f</em> is strictly increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
 <li>If <em>f</em> is strictly decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
-<li>If <em>f</em> is concave and is strictly increasing then strictly decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)[^64].</li>
+<li>If <em>f</em> is concave and is strictly increasing then strictly decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)[^63].</li>
 </ol></li>
 </ol>
 </blockquote>
@@ -1670,14 +1672,14 @@
 </tr>
 </tbody></table>
 
-<p><em>Proof.</em> Strukov and Timan (1977)[^65], (1975)[^66] proved the following bound: $$\
+<p><em>Proof.</em> Strukov and Timan (1977)[^64], (1975)[^65] proved the following bound: $$\
 |\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])|\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where <em>Y</em> is a random variable and &omega;<sub>2</sub>(.) is a <em>second-order modulus of continuity</em> of <em>f</em> (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values greater than one real number and less than another, as in this case.</p>
 
 <p>Suppose <em>Y</em> = <em>X</em>/<em>n</em>, where <em>X</em> is as in Lemma 2.  Then <em>Y</em>&#39;s variance (<strong>Var</strong>[<em>Y</em>]) is less than or equal to 1/(8*<em>n</em>&minus; 4), and the left-hand side of Strukov and Timan&#39;s bound is the same as the expression (1).</p>
 
-<p>Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying Strukov and Timan&#39;s bound, the bound on <em>Y</em>&#39;s variance, as well as a property given in Stancu et al. (2001)[^50] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le 2C\omega((\text{Var}[Y])^{1/2}/2)\le 2CL((\text{Var}[Y])^{1/2}/2)^\alpha)\le 2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$</p>
+<p>Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying Strukov and Timan&#39;s bound, the bound on <em>Y</em>&#39;s variance, as well as a property given in Stancu et al. (2001)[^49] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le 2C\omega((\text{Var}[Y])^{1/2}/2)\le 2CL((\text{Var}[Y])^{1/2}/2)^\alpha)\le 2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$</p>
 
-<p>Case 2: Since $f$&#39;s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^50]&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le C ((\text{Var}[Y])^{1/2}/2) \omega((\text{Var}[Y])^{1/2}/2)\le CL((\text{Var}[Y])^{1/2}/2)^{1+\alpha}$$ $$\le CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$</p>
+<p>Case 2: Since $f$&#39;s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^49]&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le C ((\text{Var}[Y])^{1/2}/2) \omega((\text{Var}[Y])^{1/2}/2)\le CL((\text{Var}[Y])^{1/2}/2)^{1+\alpha}$$ $$\le CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$</p>
 
 <p>Case 3: Follows from case 2 since a Hölder continuous function with Hölder exponent 1 and Hölder constant $L$ is Lipschitz continuous with Lipschitz constant $M$.</p>
 
@@ -1763,7 +1765,7 @@
 <p>Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For <em>n</em>=<em>n</em><sub>1</sub>, condition (iv) is maintained by noting that the degree-<em>n</em><sub>1</sub> polynomial&#39;s coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^67]; see also Remark C of Nacu and Peres (2005)[^1].</p>
+<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^66]; see also Remark C of Nacu and Peres (2005)[^1].</p>
 </blockquote>
 
 <p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
@@ -2023,7 +2025,7 @@
 <td>$L_{2,n/2}$</td>
 <td>0.1781/$n^{1/2}$</td>
 <td>0.19/$n^{1/2}$.</td>
-<td>$\mathcal{E}_5((\lambda+1)/2)-1$, where $\mathcal{E}_5$ is the Euler spline of order 5 (Schoenberg 1973)[^68].</td>
+<td>$\mathcal{E}_5((\lambda+1)/2)-1$, where $\mathcal{E}_5$ is the Euler spline of order 5 (Schoenberg 1973)[^67].</td>
 </tr>
 </tbody></table>
 
@@ -2046,7 +2048,7 @@
 
 <p>Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(0)=g(1)=0$ and $g(1/2)=1/2$, and has an $M_{3}$ of 4.  Given that $\frac{|0-g(1/2)|}{y}=\frac{|0-1/2|}{y}=1/8$, the goal is now to see whether any function $f$ satisfying (1) and (2) has $\max(0, f(1/2)) &lt; M_{3} &lt; 8\cdot |0-f(1/2)|=8 f(1/2)$.</p>
 
-<p>To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$&#39;s first derivative (see &quot;Definitions&quot;)[^69], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f&#39;$ at those points (Le Gruyer 2009)[^70]; see also (Herbert-Voss et al. 2017)[^71]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3]) = \max(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|,$$ $$\sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|,$$ $$2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|)$$ (where $t$ is greater than 0 and less than 1), so only $f&#39;$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.</p>
+<p>To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$&#39;s first derivative (see &quot;Definitions&quot;)[^68], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f&#39;$ at those points (Le Gruyer 2009)[^69]; see also (Herbert-Voss et al. 2017)[^70]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3]) = \max(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|,$$ $$\sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|,$$ $$2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|)$$ (where $t$ is greater than 0 and less than 1), so only $f&#39;$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.</p>
 
 <p>Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in the closed unit interval have to be checked and only $f&#39;$ values in $[-H, H]$ have to be checked.</p>
 
@@ -2128,7 +2130,7 @@ for i in range(20):
 <p>It is not yet known whether the following functions can be simulated:</p>
 
 <ul>
-<li><em>&lambda;</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)[^72] proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose coefficients are non-negative real numbers.</li>
+<li><em>&lambda;</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)[^71] proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose coefficients are non-negative real numbers.</li>
 <li>min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>).</li>
 </ul>
 
@@ -2161,12 +2163,12 @@ for i in range(20):
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Mossel and Peres (2005)[^73] defined pushdown automata to start with a non-empty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
-<li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)[^74] and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)[^74], as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
+<li>Mossel and Peres (2005)[^72] defined pushdown automata to start with a non-empty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
+<li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)[^73] and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)[^73], as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
 </ol>
 </blockquote>
 
-<p><strong>Proposition 0</strong> (Mossel and Peres 2005[^73], Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
+<p><strong>Proposition 0</strong> (Mossel and Peres 2005[^72], Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
 
 <p>It is not known whether <strong>ALGRAT</strong> and <strong>PDA</strong> are equal, but the following can be established about <strong>PDA</strong>:</p>
 
@@ -2227,11 +2229,11 @@ for i in range(20):
 
 <p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or (f&#x2218;g)(&lambda;).</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>&lambda;</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^73] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>&lambda;</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^72] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
 <p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps the open interval (0, 1) to itself is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)[^73].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;</p>
+<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)[^72].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> An unbounded stack size is necessary for a pushdown automaton to simulate functions that a finite-state machine can&#39;t.  With a bounded stack size, there is a finite-state machine where each state not only holds the pushdown automaton&#39;s original state, but also encodes the contents of the stack (which is possible because the stack&#39;s size is bounded); each operation that would push, pop, or change the top symbol transitions to a state with the appropriate encoding of the stack instead.</p>
@@ -2253,9 +2255,9 @@ for i in range(20):
 (S&prime;, HEADS, <em>stacksymbol</em>) &rarr; (T, <em>newstack</em>), and<br/>
 (S&prime;, TAILS, <em>stacksymbol</em>) &rarr; (FAILURE, {}).</p>
 
-<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)[^75], the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of Mossel and Peres (2005)[^73] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)[^74], the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of Mossel and Peres (2005)[^72] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
-<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^76]):</p>
+<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^75]):</p>
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> (rewrite <em>X</em> to the letter <em>a</em>).</li>
@@ -2271,7 +2273,7 @@ for i in range(20):
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> becomes the two rules&mdash;<br>(START, HEADS, <em>X</em>) &rarr; (<em>letter</em>, {}), and<br>(START, TAILS, <em>X</em>) &rarr; (<em>letter</em>, {}).<br>Here, <em>letter</em> is either START or a unique state in <em>F</em> that &quot;detours&quot; to a letter-generating operation for <em>a</em> and sets the state back to START when finished (see Proposition 4).  If <em>a</em> is <em>&epsilon;</em>, <em>letter</em> is START and no letter-generating operation is done.</li>
-<li><em>X</em> &rarr;<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)[^73].  If <em>a</em><sub><em>i</em></sub> is <em>&epsilon;</em>, no letter-generating operation is done.</li>
+<li><em>X</em> &rarr;<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)[^72].  If <em>a</em><sub><em>i</em></sub> is <em>&epsilon;</em>, no letter-generating operation is done.</li>
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) becomes the two rules&mdash;<br>(START, HEADS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}), and<br>(START, TAILS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}).</li>
 </ul>
 
@@ -2283,16 +2285,16 @@ for i in range(20):
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) becomes <em>X</em> = <em>Y</em>*<em>Z</em>.</li>
 </ul>
 
-<p>Solving this system for the grammar&#39;s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar&#39;s word distribution.  (See also Flajolet et al. 2010[^77], Icard 2020[^78].) &#x25a1;</p>
+<p>Solving this system for the grammar&#39;s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar&#39;s word distribution.  (See also Flajolet et al. 2010[^76], Icard 2020[^77].) &#x25a1;</p>
 
 <blockquote>
-<p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)[^77], corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
+<p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)[^76], corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
 
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010)[^77].  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p></li>
-<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)[^73]; see also Esparza et al. (2004)[^79].  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
+<li><p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010)[^76].  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p></li>
+<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)[^72]; see also Esparza et al. (2004)[^78].  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
 
 <ul>
 <li>(<em>st</em>, <em>p</em>, <em>sy</em>) &rarr; (<em>s2</em>, {}) becomes either <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = <em>p</em> if <em>s2</em> is <em>en</em>, or <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = 0 otherwise.</li>
@@ -2309,7 +2311,7 @@ for i in range(20):
 <li>When the stack is empty, output 0 if <em>G</em> is in the FAILURE state, or 1 otherwise.</li>
 </ol>
 
-<p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called &quot;end-of-string&quot; symbol, so that a pushdown automaton can be built that accepts &quot;empty strings&quot;; an example is Elder et al. (2015)[^80].</p></li>
+<p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called &quot;end-of-string&quot; symbol, so that a pushdown automaton can be built that accepts &quot;empty strings&quot;; an example is Elder et al. (2015)[^79].</p></li>
 </ol>
 </blockquote>
 
@@ -2335,7 +2337,7 @@ for i in range(20):
 
 <p><em>Proof:</em>  By Lagrange&#39;s continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last &quot;few&quot; of which repeat forever.  The following example describes a periodic continued fraction expansion: [0; 1, 2, (5, 4, 3)], which is the same as [0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, ...].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (<code>(5, 4, 3)</code>) is 3; and the size of the non-period (<code>1, 2</code>) is 2.</p>
 
-<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)[^76] can be described as follows.  The chain&#39;s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
+<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)[^75] can be described as follows.  The chain&#39;s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
 
 <ul>
 <li>From E: Go to N with probability <em>x</em>, or to the box&#39;s call port with probability 1 &minus; <em>x</em>.</li>
@@ -2350,11 +2352,11 @@ for i in range(20):
 <li>For each <em>i</em> in [1, <em>n</em>+1], there is a component labeled <em>i</em>.  It is the same as the template component, except <em>x</em> = <em>a</em>[<em>i</em>]/(1 + <em>a</em>[<em>i</em>]), and <em>y</em> = 1/<em>a</em>[<em>i</em>].  The component&#39;s single box goes to the component labeled <em>i</em>+1, <em>except</em> that for component <em>n</em>+<em>p</em>, the component&#39;s single box goes to the component labeled <em>n</em>+1.</li>
 </ul>
 
-<p>According to Etessami and Yannakakis (2009)[^76], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
+<p>According to Etessami and Yannakakis (2009)[^75], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
 
 <p><strong>Lemma 1:</strong> <em>The square root function sqrt(&lambda;) is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> See Mossel and Peres (2005)[^73]. &#x25a1;</p>
+<p><em>Proof:</em> See Mossel and Peres (2005)[^72]. &#x25a1;</p>
 
 <p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class <strong>PDA</strong>.</em></p>
 
@@ -2362,7 +2364,7 @@ for i in range(20):
 
 <p>For general <em>m</em> and <em>n</em>, write <em>f</em> as ((sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt)(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
-<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^73] because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^72] because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
 <p><a id=Finite_State_and_Pushdown_Generators></a></p>
 
@@ -2383,7 +2385,7 @@ for i in range(20):
 <li><code>PDF(z)</code> is the probability density function of <em>X</em>, or the derivative of <code>CDF(z)</code>, or the relative probability of choosing a number &quot;close&quot; to <em>z</em> at random.</li>
 </ul>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^59] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 &le; <code>z</code> &le; 1 is irrational (Vatan 2001)[^81], (Kindler and Romik 2004)[^82], and it can be shown that the expected value (mean or &quot;long-run average&quot;) of <em>X</em> must be a rational number. [^83]</p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^58] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 &le; <code>z</code> &le; 1 is irrational (Vatan 2001)[^80], (Kindler and Romik 2004)[^81], and it can be shown that the expected value (mean or &quot;long-run average&quot;) of <em>X</em> must be a rational number. [^82]</p>
 
 <p><strong>Proposition 8.</strong> <em>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:</em></p>
 
@@ -2396,7 +2398,7 @@ for i in range(20):
 
 <p>Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:</p>
 
-<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)[^84] section 5.3), for some k equal to 2 or greater.</em></p>
+<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)[^83] section 5.3), for some k equal to 2 or greater.</em></p>
 
 <p><em>Proof Sketch:</em> There are two cases.</p>
 
@@ -2407,15 +2409,15 @@ for i in range(20):
 <li>The <em>output function</em> takes a configuration described above and returns a digit.  If the coin wasn&#39;t flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).</li>
 </ol>
 
-<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)[^81].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.  Now at this point the generator&#39;s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  &#x25a1;</p>
+<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)[^80].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.  Now at this point the generator&#39;s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  &#x25a1;</p>
 
-<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)[^74].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)[^74].  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
+<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)[^73].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)[^73].  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
 
-<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)[^84], the generator can generate a real number&#39;s binary expansion only if that number is rational or transcendental (see also Cobham (1968)[^85]; Adamczewski and Bugeaud (2007)[^86]).  &#x25a1;</p>
+<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)[^83], the generator can generate a real number&#39;s binary expansion only if that number is rational or transcendental (see also Cobham (1968)[^84]; Adamczewski and Bugeaud (2007)[^85]).  &#x25a1;</p>
 
 <p><strong>Proposition 9.</strong> <em>If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function on that interval.</em></p>
 
-<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)[^82] and Knuth and Yao (1976)[^59] with Richman (2012)[^87], who proved that a continuous algebraic function on an open interval is piecewise analytic (&quot;analytic&quot; means writable as $c_0 x^0+ ... +c_i x^i + ...$ where $c_i$ are real numbers).</p>
+<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)[^81] and Knuth and Yao (1976)[^58] with Richman (2012)[^86], who proved that a continuous algebraic function on an open interval is piecewise analytic (&quot;analytic&quot; means writable as $c_0 x^0+ ... +c_i x^i + ...$ where $c_i$ are real numbers).</p>
 
 <p><a id=License></a></p>
 
