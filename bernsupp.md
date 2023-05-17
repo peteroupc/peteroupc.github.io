@@ -1365,7 +1365,7 @@ The following lower bounds on $C_0$ can be shown.  In the table:
 | If $r$ is... | And... | With the Bernstein coefficients of... | Then $C_0$ must be greater than: | And $C_0$ is conjectured to be: | Because of this counterexample: |
  --- | --- | --- | --- | --- | --- |
 | 3 | $M=M_{3}$ | $U_{2,n}$\* | 0.29 | $\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
-| 3 | $M=M_{3}$, $n\ge 4$ | $U_{2,n}$ | 0.08 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_{3}$, $n\ge 4$ | $U_{2,n}$ | 0.08287 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_{4}$ | $U_{2,n}$ | 0.24999 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_{4}$, $n\ge 4$ | $U_{2,n}$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
 | 5 | $M=M_{5}$ | $U_{n,3}$\*\*\* | 0.26 | 0.27 | $2 \lambda \left(1 - \lambda\right)$ |
