@@ -251,7 +251,7 @@ Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can 
 <a id=Another_General_Algorithm></a>
 ### Another General Algorithm
 
-The algorithm in this section simulates $f(\lambda)$ when $f$ belongs in a large class of functions, as long as the following is known:
+The algorithm I've developed in this section simulates $f(\lambda)$ when $f$ belongs in a large class of functions, as long as the following is known:
 
 - $f$ is continuous and has a minimum of greater than 0 and a maximum of less than 1.
 - There is a family of polynomials ($L_{1}(f)$, $L_{2}(f)$, $L_{4}(f)$, $L_{8}(f)$, ...) that come close to $f$ with a known error bound, where the number after $L$ is the degree of the polynomial.
@@ -269,7 +269,7 @@ In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose max
 - In the algorithm, denote:
     - $\epsilon(f, n)$ as an upper bound on the absolute value of the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(f, n)$ must increase nowhere as $n$ increases, and must converge to 0. For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), below.  For examples of error bounds, see "Approximate Bernoulli Factories", later.
     - ErrShift($f, m$) as 1.01 $\cdot\sum_{i\ge m} \epsilon(f, 2^i)$.  The factor 1.01 is needed to ensure each difference polynomial is strictly between 0 and 1.
-        - **Example:** If $\epsilon(f, n) = C/n^r$, then ErrShift($f, m)$ = $1.01\cdot C 2^r/(((2^r)-1)\cdot 2^{rm}))$.
+        - **Example:** If $\epsilon(f, n) = C/n^r$, then ErrShift($f, m)$ = $1.01\cdot C 2^r/(((2^r)-1)\cdot 2^{rm})$.
     - DiffWidth($f, m$) as 1.01 $\cdot 2 (\epsilon(f, 2^m)$ + $\epsilon(f, 2^{m+1}))$.  This is an upper bound on the maximum difference between the shifted degree-$2^m$ and the shifted degree-$(2^{m+1})$ polynomial.
 - The technique breaks $f$ into a **starting polynomial** and a family of **difference polynomials**.<br>To find the **starting polynomial**:
     1. Set $m$ to 0.
@@ -282,7 +282,8 @@ In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose max
     3. Subtract **UpperCoeffs** from **LowerCoeffs**, and call the result **DiffCoeffs**.  Divide each coefficient in **DiffCoeffs** by DiffWidth($f, m$).  The result is the Bernstein coefficients of a positive polynomial of degree $2^{m+1}$ bounded by 0 and 1, but these coefficients are not necessarily bounded by 0 and 1.  Thus, if any coefficient in **DiffCoeffs** is less than 0 or greater than 1, add 1 to _m_ and rewrite **DiffCoeffs** to Bernstein coefficients of degree $2^{m+1}$ until no coefficient is less than 0 or greater than 1 anymore.
     4. The **difference polynomial** now has Bernstein coefficients given by **DiffCoeffs**.
 - The probabilities for _X_ are as follows:
-    - First, find the **starting polynomial**, then calculate _T_ as **StartWidth** + $\sum_{i=0}$ DiffWidth($f$, **StartOrder**+_i_).  If _T_ is greater than 1, this algorithm can't be used.
+    - First, find the **starting polynomial**, then calculate _T_ as **StartWidth** + $\sum_{i\ge 0}$ DiffWidth($f$, **StartOrder**+_i_).  If _T_ is greater than 1, this algorithm can't be used.
+        - **Example:** If $\epsilon(f, n) = C/n^r$, then _T_ = **StartWidth** + 1.01 $\cdot(2 \cdot 2^{-r\cdot\text{StartOrder}} C (1 + 2^{- r}))/(1 - 2^{- r})$.
     - _X_ is 0 with probability 1 &minus; _T_.
     - _X_ is 1 with probability equal to **StartWidth**.
     - For each _m_ &ge; 2, _X_ is _m_ with probability equal to DiffWidth($f$,**StartOrder** + _m_ &minus; 2).

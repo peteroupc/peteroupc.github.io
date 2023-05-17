@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/16"><meta name="citation_online_date" content="2023/05/16"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/17"><meta name="citation_online_date" content="2023/05/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -391,7 +391,7 @@
 
 <h3>Another General Algorithm</h3>
 
-<p>The algorithm in this section simulates $f(\lambda)$ when $f$ belongs in a large class of functions, as long as the following is known:</p>
+<p>The algorithm I&#39;ve developed in this section simulates $f(\lambda)$ when $f$ belongs in a large class of functions, as long as the following is known:</p>
 
 <ul>
 <li>$f$ is continuous and has a minimum of greater than 0 and a maximum of less than 1.</li>
@@ -418,7 +418,7 @@
 <li>ErrShift($f, m$) as 1.01 $\cdot\sum_{i\ge m} \epsilon(f, 2^i)$.  The factor 1.01 is needed to ensure each difference polynomial is strictly between 0 and 1.
 
 <ul>
-<li><strong>Example:</strong> If $\epsilon(f, n) = C/n^r$, then ErrShift($f, m)$ = $1.01\cdot C 2^r/(((2^r)-1)\cdot 2^{rm}))$.</li>
+<li><strong>Example:</strong> If $\epsilon(f, n) = C/n^r$, then ErrShift($f, m)$ = $1.01\cdot C 2^r/(((2^r)-1)\cdot 2^{rm})$.</li>
 </ul></li>
 <li>DiffWidth($f, m$) as 1.01 $\cdot 2 (\epsilon(f, 2^m)$ + $\epsilon(f, 2^{m+1}))$.  This is an upper bound on the maximum difference between the shifted degree-$2^m$ and the shifted degree-$(2^{m+1})$ polynomial.</li>
 </ul></li>
@@ -441,7 +441,11 @@
 <li>The probabilities for <em>X</em> are as follows:
 
 <ul>
-<li>First, find the <strong>starting polynomial</strong>, then calculate <em>T</em> as <strong>StartWidth</strong> + $\sum_{i=0}$ DiffWidth($f$, <strong>StartOrder</strong>+<em>i</em>).  If <em>T</em> is greater than 1, this algorithm can&#39;t be used.</li>
+<li>First, find the <strong>starting polynomial</strong>, then calculate <em>T</em> as <strong>StartWidth</strong> + $\sum_{i\ge 0}$ DiffWidth($f$, <strong>StartOrder</strong>+<em>i</em>).  If <em>T</em> is greater than 1, this algorithm can&#39;t be used.
+
+<ul>
+<li><strong>Example:</strong> If $\epsilon(f, n) = C/n^r$, then <em>T</em> = <strong>StartWidth</strong> + 1.01 $\cdot(2 \cdot 2^{-r\cdot\text{StartOrder}} C (1 + 2^{- r}))/(1 - 2^{- r})$.</li>
+</ul></li>
 <li><em>X</em> is 0 with probability 1 &minus; <em>T</em>.</li>
 <li><em>X</em> is 1 with probability equal to <strong>StartWidth</strong>.</li>
 <li>For each <em>m</em> &ge; 2, <em>X</em> is <em>m</em> with probability equal to DiffWidth($f$,<strong>StartOrder</strong> + <em>m</em> &minus; 2).</li>
