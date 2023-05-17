@@ -173,7 +173,7 @@ Keane and O'Brien (1994\)[^2] showed that a function _f_ that maps the closed un
 - _f_ is continuous and constant on its domain, or
 - _f_ is continuous and polynomially bounded on its domain.
 
-_Polynomially bounded_ means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are not less than min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_.  In other words, there are two non-constant polynomials: one can be "sandwiched" between the _&lambda;_-axis and _f_, and another between the _&lambda;_-axis and 1&minus;_f_.
+_Polynomially bounded_ means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are not less than min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_.  In other words, there are two non-constant, non-negative polynomials: one can be "sandwiched" between the _&lambda;_-axis and _f_, and another between the _&lambda;_-axis and 1&minus;_f_.
 
 The following shows some functions that are factory functions and some that are not.  In the table below, _&#x03F5;_ is a number greater than 0 and less than 1/2.
 
@@ -182,7 +182,7 @@ The following shows some functions that are factory functions and some that are 
 | 0 | 0&le;_&lambda;_&le;1 | Yes; constant. |
 | 1 | 0&le;_&lambda;_&le;1 | Yes; constant. |
 | 1/2 | 0&lt;_&lambda;_&lt;1 | Yes; constant. |
-| 1/4 if _&lambda;_<1/2, and 3/4 elsewhere | 0&lt;_&lambda;_&lt;1 No; discontinuous. |
+| 1/4 if _&lambda;_<1/2, and 3/4 elsewhere | 0&lt;_&lambda;_&lt;1 | No; discontinuous. |
 | 2*_&lambda;_ | \[0,&nbsp;1\] or \[0,&nbsp;1/2\) | No; not polynomially bounded since _f_(_&lambda;_) approaches 1 as _&lambda;_ approaches 1/2 (as opposed to 0 or 1).[^3]. |
 | 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since _f_(_&lambda;_) approaches 0 as _&lambda;_ approaches 1/2. |
 | 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994\)[^2]. |
