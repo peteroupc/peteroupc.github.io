@@ -177,7 +177,7 @@ Suppose there is a list called _weights_.  This is a list of _n_ weights, with l
 
 Each weight&mdash;
 
-1. can store an integer part _m_ and have _&nu;_ represent a "coin" that implements an algorithm that returns 1 (or outputs heads) with probability equal to the fractional part _&nu;_, also known as a _Bernoulli factory algorithm_ (_m_ &ge; 0, and 0 &le; _&nu;_ &le; 1), or
+1. can store an integer part _m_ and have _&nu;_ represent a "coin" that implements an algorithm that returns 1 (or outputs heads) with probability exactly equal to the fractional part _&nu;_ (_m_ &ge; 0, and 0 &le; _&nu;_ &le; 1), or
 2. can store a [**partially-sampled random number**](https://peteroupc.github.io/exporand.html) (PSRN), with the integer part equal to _m_ and the fractional part equal to _&nu;_ (_m_ &ge; 0, and 0 &le; _&nu;_ &le; 1), or
 3. can store a rational number _x_/_y_, where _x_&ge;0 and _y_&gt;0 are integers, such that _m_ = floor(_x_/_y_) and _&nu;_ = _x_/_y_&minus;_m_.
 
@@ -187,7 +187,7 @@ Given this list of weights, the following algorithm chooses an integer in [0, _n
 2. Choose an integer _i_ with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of **WeightedChoice**(_list_), where _list_ is the rounded weights list and **WeightedChoice** is given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".  Let _w_ be the original weight for integer _i_, and let _rw_ be the rounded weight for integer _i_ in the rounded weights list.
 3. Generate _j_, a uniform random integer that is 0 or greater and less than _rw_. If _j_ is less than _rw_&minus;1, return _i_.  Otherwise:
 
-    - If _w_ is written as in case 1, above, run the Bernoulli factory algorithm for _&nu;_ (the weight's fractional part).  If it returns 1, return _i_.  Otherwise, go to step 2.
+    - If _w_ is written as in case 1, above, flip the "coin" represented by _&nu;_ (the weight's fractional part).  If it returns 1, return _i_.  Otherwise, go to step 2.
     - If _w_ is written as in case 2, run **SampleGeometricBag** on the PSRN.  If the result is 1, return _i_.  Otherwise, go to step 2.
     - If _w_ is written as in case 3, let _r_ = rem(_x_, _y_) = _x_&minus;floor(_x_/_y_)\*_y_, then with probability _r_/_y_, return _i_. (For example, generate _z_, a uniform random integer satisfying 0&le;_z_&lt;_y_, then if _z_&lt;_r_, return _i_.) Otherwise, go to step 2.
 

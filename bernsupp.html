@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/17"><meta name="citation_online_date" content="2023/05/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/19"><meta name="citation_online_date" content="2023/05/19"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -505,18 +505,22 @@
 <p>To build an approximate Bernoulli factory with a polynomial:</p>
 
 <ol>
-<li><p>First, find a polynomial in Bernstein form of degree <em>n</em> that is close to the desired function <em>f</em>(<em>&lambda;</em>).</p>
+<li><p>First, find a polynomial in Bernstein form of degree <em>n</em> that is close enough to the desired function <em>f</em>(<em>&lambda;</em>).</p>
 
 <p>The simplest choice for this polynomial, known simply as a <em>Bernstein polynomial</em>, has <em>n</em>+1 coefficients and its <em>j</em><sup>th</sup> coefficient (starting at 0) is found as <em>f</em>(<em>j</em>/<em>n</em>).  For this choice, if <em>f</em> is continuous, the polynomial can be brought arbitrarily close to <em>f</em> by choosing <em>n</em> high enough.</p>
 
+<p>Other choices for this polynomial are given in the sections &quot;Polynomials as Approximate Bernoulli Factories&quot; and &quot;For &#39;Smooth&#39; Functions&quot;, later.</p>
+
 <p>Whatever polynomial is used, the polynomial&#39;s coefficients must all lie on the closed unit interval.</p></li>
-<li><p>Then, use one of the algorithms in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; to toss heads with probability equal to that polynomial, given its coefficients.</p></li>
+<li><p>The rest of the process is to toss heads with probability equal to that polynomial, given its coefficients.  To do this, first flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</p></li>
+<li><p>Then, with probability equal to the polynomial&#39;s Bernstein coefficient at position <em>j</em> (0&le;<em>j</em>&le;<em>n</em>), return 1.  Otherwise, return 0.  (This coefficient will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$.  If the coefficient can be an irrational number, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants"><strong>Algorithms for General Irrational Constants</strong></a>&quot; for ways to exactly sample a probability equal to that irrational number.)</p></li>
 </ol>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
 
 <ol>
+<li>More sophisticated ways to implement steps 2 and 3 are found in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; in the main article &quot;Bernoulli Factory Algorithms&quot;.</li>
 <li>There are other kinds of functions, besides polynomials and rational functions, that serve to approximate continuous functions.  But many of them work poorly as approximate Bernoulli factory functions because their lack of &quot;smoothness&quot; means there is no simple Bernoulli factory for them.  For example, a <em>spline</em>, which is a continuous function made up of a finite number of polynomial pieces, is generally not &quot;smooth&quot; at the points where the spline&#39;s pieces meet.</li>
 <li>Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</li>
 </ol>
@@ -526,7 +530,7 @@
 
 <h3>Polynomials as Approximate Bernoulli Factories</h3>
 
-<p>A polynomial can be used to approximate $f(\lambda)$ with an error no more than $\epsilon$, as long as its Bernstein coefficients can be calculated and an explicit upper bound on the approximation error is available. See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>.  Examples of these polynomials (all of degree $n$) are given in the following table.</p>
+<p>A polynomial of a high enough degree (called $n$) can be used to approximate $f(\lambda)$ with an error no more than $\epsilon$, as long as its Bernstein coefficients can be calculated and an explicit upper bound on the approximation error is available. See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>.  Examples of these polynomials (all of degree $n$) are given in the following table.</p>
 
 <table><thead>
 <tr>
@@ -704,12 +708,7 @@
 <li>Calculate $n$ as given in the table above.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.</li>
 </ol>
 
-<p>Once <em>n</em> is found, simulating the polynomial is as follows:</p>
-
-<ol>
-<li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
-<li>With probability equal to the polynomial&#39;s Bernstein coefficient at position <em>j</em> (0&le;<em>j</em>&le;<em>n</em>), return 1.  Otherwise, return 0.  (This coefficient will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$.  If the coefficient can be an irrational number, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants"><strong>Algorithms for General Irrational Constants</strong></a>&quot; for ways to exactly sample a probability equal to that irrational number.)</li>
-</ol>
+<p>The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1194,9 +1193,9 @@
 
 <p><strong>Proposition B10C:</strong> Let $f(\lambda)$ have a Hölder continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $L$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$&#39;s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$|f-U_{n,2}(f)|\le \frac{M_2}{8 n^{2}} + 5 L/(32 n^{1+\alpha/2}) \le ((5L+4M_2)/32)/n^{1+\alpha/2},$$ where $M_2$ is the maximum of that second derivative&#39;s absolute value or greater.</p>
 
-<p><em>Proof</em>: This proof is inspired by a result in Draganov (2004)[^44].</p>
+<p><em>Proof</em>: This proof is inspired by a result in Draganov (2004, Theorem 4.1)[^44].</p>
 
-<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  Using a result by Knoop and Pottinger (1976)[^45], which works for every $n\ge 3$: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) L/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
+<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  A result by Knoop and Pottinger (1976)[^45], which works for every $n\ge 3$, is what is known as a <em>simultaneous approximation</em> error bound, showing that the second derivative of the Bernstein polynomial approaches that of $f$.  Using this result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) L/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note</strong>: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be non-negative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda &lt;1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.</p>
@@ -1204,7 +1203,7 @@
 
 <p><strong>Proposition B10D:</strong> Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $L$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$|f-U_{n,2}(f)|\le \frac{\max(|f^{(2)}|)+\max(|f^{(3)}|)}{8n^2}+9L/(64 n^{(3+\alpha)/2})$$ $$\le \frac{9L+8\max(|f^{(2)}|)+8\max(|f^{(3)}|)}{64n^{(3+\alpha)/2}}.$$</p>
 
-<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different result is employed, namely a result from Kacsó (2002)[^46], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2},$$ where $r=2$, $M_2 = \max(|f^{(2)}|)$, and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^47].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9L}{64 n^{(3+\alpha)/2}}\le \frac{9L+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$ &#x25a1;</p>
+<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^46], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2},$$ where $r=2$, $M_2 = \max(|f^{(2)}|)$, and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^47].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9L}{64 n^{(3+\alpha)/2}}\le \frac{9L+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$ &#x25a1;</p>
 
 <p>In a similar way, it&#39;s possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder continuous fourth or fifth derivative, by expressing the error bound as $|(B_n(f)-f)((B_n(f)-f)(B_n(f)-f))|$ and replacing the values for $M_2$, $M_3$, and $L$ in the bound proved at the end of Proposition B10D with upper bounds for $|(B_n(f))^{(2)}-f^{(2)}|$, $|(B_n(f))^{(3)}-f^{(3)}|$, and $|(B_n(f))^{(4)}-f^{(4)}|$, respectively.</p>
 
