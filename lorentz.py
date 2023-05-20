@@ -819,24 +819,6 @@ def cheb_to_bern(n):
     ]
     return Matrix(mat)
 
-def cheb_to_bern_2(n):
-    # Transforms Chebyshev second kind interp. coefficients to Bernstein coefficients
-    # Lu, Lizheng, and Guozhao Wang. "Application of Chebyshev II–Bernstein basis transformations to degree reduction of Bézier curves." Journal of Computational and Applied Mathematics 221.1 (2008): 52-65.
-    mat = [
-        [
-            sum(
-                (-1) ** (k - i)
-                * binomial(2 * k + 2, 2 * i + 1)
-                * binomial(n - k, j - i)
-                for i in range(max(0, j + k - n), min(j, k) + 1)
-            )
-            / (2 * binomial(n, j))
-            for k in range(0, n + 1)
-        ]
-        for j in range(0, n + 1)
-    ]
-    return Matrix(mat)
-
 def chebpoly(coeffs, x, a=0, b=1):
     # Polynomial on [a,b] given Chebyshev interpolant coefficients
     if a > b:
