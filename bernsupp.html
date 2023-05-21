@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/20"><meta name="citation_online_date" content="2023/05/20"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/21"><meta name="citation_online_date" content="2023/05/21"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -39,15 +39,14 @@
 <ul>
 <li><a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a></li>
 <li><a href="#Results_Used_in_Approximate_Bernoulli_Factories"><strong>Results Used in Approximate Bernoulli Factories</strong></a></li>
-<li><a href="#Failures_of_the_Consistency_Requirement"><strong>Failures of the Consistency Requirement</strong></a></li>
 <li><a href="#Chebyshev_Interpolants"><strong>Chebyshev Interpolants</strong></a></li>
-<li><a href="#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>Which functions don&#39;t require outside randomness to simulate?</strong></a></li>
-<li><a href="#Multiple_Output_Bernoulli_Factory"><strong>Multiple-Output Bernoulli Factory</strong></a></li>
 <li><a href="#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial-Building Schemes</strong></a>
 
 <ul>
 <li><a href="#A_Conjecture_on_Polynomial_Approximation"><strong>A Conjecture on Polynomial Approximation</strong></a></li>
 </ul></li>
+<li><a href="#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>Which functions don&#39;t require outside randomness to simulate?</strong></a></li>
+<li><a href="#Multiple_Output_Bernoulli_Factory"><strong>Multiple-Output Bernoulli Factory</strong></a></li>
 <li><a href="#Example_of_Polynomial_Building_Scheme"><strong>Example of Polynomial-Building Scheme</strong></a></li>
 <li><a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>Pushdown Automata and Algebraic Functions</strong></a>
 
@@ -124,7 +123,11 @@
 <p>must have nonnegative coefficients, once each of these differences is rewritten as a polynomial in Bernstein form of degree exactly <em>n</em>.</p></li>
 </ol>
 
-<p>The consistency requirement ensures that the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot;.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not ensure the consistency requirement by itself.  Examples of this fact are shown in the section &quot;<a href="#Failures_of_the_Consistency_Requirement"><strong>Failures of the Consistency Requirement</strong></a>&quot; in the appendix.</p>
+<p>The consistency requirement ensures that the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot;.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not ensure the consistency requirement by itself.</p>
+
+<blockquote>
+<p><strong>Example (Nacu &amp; Peres [2005][^1]):</strong> The polynomial $x^2+(1-x)^2$ is of degree 2 with Bernstein coefficients [1, 0, 1].  The polynomial $x(1-x)$ is of degree 2 with Bernstein coefficients [0, 1/2, 0]. Although $(x^2+(1-x)^2)$ minus $(x(1-x))$ is non-negative, this difference&#39;s Bernstein coefficients of degree 2 are not always non-negative, namely, the coefficients are [1, -1/2, 1].</p>
+</blockquote>
 
 <p>In this document, <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) mean the <em>k</em><sup>th</sup> coefficient for the lower or upper degree-<em>n</em> polynomial in Bernstein form, respectively, where 0 &le; <em>k</em> &le; <em>n</em> is an integer.</p>
 
@@ -191,7 +194,7 @@
 <tr>
 <td>$1/2-(1-2\lambda)^{z}/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise.</td>
 <td><em>&alpha;</em>=<em>z</em>.<br><em>L</em>=$2^z/2$.</td>
-<td>$0\lt z\le 1$.  In this example, $f$ has a &quot;vertical&quot; slope at 1/2.</td>
+<td>$0\lt z\le 1$.  In this example, $f$ has a &quot;vertical&quot; slope at 1/2, unless <em>z</em> is 1.</td>
 </tr>
 <tr>
 <td>$3/4-\sqrt{\lambda(1-\lambda)}$.</td>
@@ -211,7 +214,7 @@
 <tr>
 <td>min(<em>&lambda;</em>*<em>mult</em>, 1−<em>&epsilon;</em>).</td>
 <td><em>&alpha;</em>=1.<br><em>L</em> = <em>mult</em>.</td>
-<td><em>mult</em> &gt; 0, <em>&epsilon;</em> &gt; 0.  Piecewise linear; equals 0 at 0, 1−<em>&epsilon;</em> at (1−<em>&epsilon;</em>)/<em>mult</em>, and 1−<em>&epsilon;</em> at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^1] [^2] and Nacu &amp; Peres (2005)[^3] [^4].<br><em>L</em>=max(<em>mult</em>, 0).<br>Concave.</td>
+<td><em>mult</em> &gt; 0, <em>&epsilon;</em> &gt; 0.  Piecewise linear; equals 0 at 0, 1−<em>&epsilon;</em> at (1−<em>&epsilon;</em>)/<em>mult</em>, and 1−<em>&epsilon;</em> at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu &amp; Peres (2005)[^1] [^4].<br><em>L</em>=max(<em>mult</em>, 0).<br>Concave.</td>
 </tr>
 <tr>
 <td>1/10 if <em>&lambda;</em> is 0; &minus;1/(2*ln(<em>&lambda;</em>/2)) + 1/10 otherwise.</td>
@@ -220,7 +223,7 @@
 </tr>
 </tbody></table>
 
-<p><strong>Finding parameters <em>&alpha;</em> and <em>L</em> for Hölder continuous functions.</strong> The following is one way to find the Hölder exponent (<em>&alpha;</em>) and Hölder constant (<em>L</em>) of $f(\lambda)$, to determine whether $f$ is Hölder continuous.</p>
+<p><strong>Finding parameters <em>&alpha;</em> and <em>L</em> for Hölder continuous functions.</strong> If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (<em>&alpha;</em>) and Hölder constant (<em>L</em>) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.</p>
 
 <p>First, if $f$ has a continuous first derivative on its domain, then <em>&alpha;</em> is 1 ($f$ is <strong>Lipschitz continuous</strong>) and <em>L</em> is the maximum of the absolute value of that derivative.</p>
 
@@ -289,7 +292,7 @@
 
 <p><strong>Convex functions.</strong> If <em>f</em> is convex, then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.</p>
 
-<p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^3] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
+<p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
 <li>is <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> or less and Hölder exponent <em>&alpha;</em> (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot; as well as &quot;<a href="#Examples_of_Well-Behaved_Functions"><strong>Examples of Well-Behaved Functions</strong></a>&quot;, above), and</li>
@@ -637,7 +640,7 @@
 </tr>
 <tr>
 <td>Lorentz operator (order 2).</td>
-<td>$Q_{n-2,2}=B_{n-2}(f)+x(1-x)\cdot$ $B_{n-2}(f&#39;&#39;)/(2(n-2))$.</td>
+<td>$Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f&#39;&#39;)/(2(n-2))$.</td>
 <td><strong>Get coefficients for $n$ given $n-2$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from <em>a</em>[<em>j</em>], where $z=(((f&#39;&#39;((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now <em>a</em>[0], ..., <em>a</em>[<em>n</em>].</td>
 <td>Holtz et al. (2011)[^17]; Bernstein (1932)[^18]; Lorentz (1966)[^19]. $n\ge 4$; $f&#39;&#39;$ is the second derivative of $f$.</td>
 </tr>
@@ -843,7 +846,7 @@
 
 <ul>
 <li><p>Henderson and Glynn (2003, Remark 4)[^29] approximates the function <em>&lambda;</em>*2 using a polynomial of degree <em>n</em> where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</p></li>
-<li><p>An algorithm given in section 6 of Nacu and Peres (2005)[^3] approximates <em>&lambda;</em>*2: Flip the input coin <em>n</em> times or until the ratio of &quot;heads&quot; to &quot;flips&quot; becomes at least 1/2, whichever comes first, then if <em>n</em> flips were made without the ratio becoming at least 1/2, return 0; otherwise, return 1.  Here, <em>&lambda;</em>*2 is approximated by a polynomial of degree <em>n</em> where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>i</em>)*2, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/2).</p></li>
+<li><p>An algorithm given in section 6 of Nacu and Peres (2005)[^1] approximates <em>&lambda;</em>*2: Flip the input coin <em>n</em> times or until the ratio of &quot;heads&quot; to &quot;flips&quot; becomes at least 1/2, whichever comes first, then if <em>n</em> flips were made without the ratio becoming at least 1/2, return 0; otherwise, return 1.  Here, <em>&lambda;</em>*2 is approximated by a polynomial of degree <em>n</em> where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>i</em>)*2, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/2).</p></li>
 </ul>
 
 <p><a id=Request_for_Additional_Methods_2></a></p>
@@ -886,11 +889,11 @@
 </tr>
 <tr>
 <td>Requires a finite number of flips on average. Also known as &quot;realizable&quot; by Flajolet et al. (2010)[^30].</td>
-<td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)[^3].<br/>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^31].</td>
+<td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)[^1].<br/>Whenever <em>f</em> admits a fast simulation (Mendo 2019)[^31].</td>
 </tr>
 <tr>
 <td>Number of flips required, raised to power of <em>r</em>, is bounded by a finite number on average and has a tail that drops off uniformly over <em>f</em>&#39;s domain.</td>
-<td>Only if <em>f</em> has continuous <em>r</em>-th derivative (Nacu and Peres 2005)[^3].</td>
+<td>Only if <em>f</em> has continuous <em>r</em>-th derivative (Nacu and Peres 2005)[^1].</td>
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with at most a probability proportional to <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and every <em>&lambda;</em>, and for large enough <em>n</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
@@ -902,7 +905,7 @@
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)[^30].</td>
-<td>If and only if <em>f</em> is real analytic (see note below) (Nacu and Peres 2005)[^3].</td>
+<td>If and only if <em>f</em> is real analytic (see note below) (Nacu and Peres 2005)[^1].</td>
 </tr>
 <tr>
 <td>Average number of flips greater than or equal to (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
@@ -923,11 +926,11 @@
 
 <h2>Notes</h2>
 
-<p>[^1]: Thomas, A.C., Blanchet, J., &quot;<a href="https://arxiv.org/abs/1106.2508v3"><strong>A Practical Implementation of the Bernoulli Factory</strong></a>&quot;, arXiv:1106.2508v3  [stat.AP], 2012.</p>
+<p>[^1]: Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</p>
 
-<p>[^2]: Thomas and Blanchet (2012) dealt with building polynomials that approach piecewise linear functions &quot;fast&quot;.  Their strategy for $f(\lambda)=\min(mult\times\lambda, 1-2\varepsilon)$ is to first compute a low-degree polynomial $P$ satisfying $P(0)=0$ and otherwise greater than $f$, and then compute further polynomials of increasing degree that each come between $f$ and the previous polynomial and satisfy the consistency requirement. These polynomials approach $f$ rapidly when $\lambda$ is near 0, and extremely slowly when $\lambda$ is near 1. In their strategy, <strong>fbelow(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>mult</em>, 1&minus;<em>&epsilon;</em>), and <strong>fabove(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>y</em>/<em>x</em>,<em>y</em>), where:<br><em>x</em> = &minus;((<em>y</em>&minus;(1&minus;<em>&epsilon;</em>))/<em>&epsilon;</em>)<sup>5</sup>/<em>mult</em> + <em>y</em>/<em>mult</em>. (This formula doesn&#39;t appear in their paper, but in the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)<br><em>y</em> satisfies 0&lt;<em>y</em>&lt;1 and is chosen so that the degree-<em>n</em> polynomial is between $f$ and the previous polynomial and meets the consistency requirement. The supplemental source code seems to choose <em>y</em> in an <em>ad hoc</em> manner.<br><em>n</em> is the polynomial&#39;s degree.</p>
+<p>[^2]: Thomas, A.C., Blanchet, J., &quot;<a href="https://arxiv.org/abs/1106.2508v3"><strong>A Practical Implementation of the Bernoulli Factory</strong></a>&quot;, arXiv:1106.2508v3  [stat.AP], 2012.</p>
 
-<p>[^3]: Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</p>
+<p>[^3]: Thomas and Blanchet (2012) dealt with building polynomials that approach piecewise linear functions &quot;fast&quot;.  Their strategy for $f(\lambda)=\min(mult\times\lambda, 1-2\varepsilon)$ is to first compute a low-degree polynomial $P$ satisfying $P(0)=0$ and otherwise greater than $f$, and then compute further polynomials of increasing degree that each come between $f$ and the previous polynomial and satisfy the consistency requirement. These polynomials approach $f$ rapidly when $\lambda$ is near 0, and extremely slowly when $\lambda$ is near 1. In their strategy, <strong>fbelow(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>mult</em>, 1&minus;<em>&epsilon;</em>), and <strong>fabove(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>y</em>/<em>x</em>,<em>y</em>), where:<br><em>x</em> = &minus;((<em>y</em>&minus;(1&minus;<em>&epsilon;</em>))/<em>&epsilon;</em>)<sup>5</sup>/<em>mult</em> + <em>y</em>/<em>mult</em>. (This formula doesn&#39;t appear in their paper, but in the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)<br><em>y</em> satisfies 0&lt;<em>y</em>&lt;1 and is chosen so that the degree-<em>n</em> polynomial is between $f$ and the previous polynomial and meets the consistency requirement. The supplemental source code seems to choose <em>y</em> in an <em>ad hoc</em> manner.<br><em>n</em> is the polynomial&#39;s degree.</p>
 
 <p>[^4]: In Nacu and Peres (2005), the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$ (using the algorithms from the section &quot;General Factory Functions&quot; in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;), provided $\varepsilon \lt 1/8$, where <em>n</em> is a power of 2.  However, with these sequences, each simulation will require an extraordinary number of input coin flips. <strong>fbelow(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)$. <strong>fabove(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)$ + $\frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})}$ $\sqrt{2/n}$ + $\frac{72\times\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-2n\times\varepsilon^2)$.</p>
 
@@ -1027,71 +1030,67 @@
 
 <p>[^52]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
 
-<p>[^53]: von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</p>
+<p>[^53]: Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</p>
 
-<p>[^54]: Peres, Y., &quot;<a href="https://projecteuclid.org/euclid.aos/1176348543"><strong>Iterating von Neumann&#39;s procedure for extracting random bits</strong></a>&quot;, Annals of Statistics 1992,20,1, p. 590-597.</p>
+<p>[^54]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</p>
 
-<p>[^55]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
+<p>[^55]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
 
-<p>[^56]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</p>
+<p>[^56]: Strukov, L.I., Timan, A.F., &quot;Mathematical expectation of continuous functions of random variables. Smoothness and variance&quot;, <em>Siberian Mathematical Journal</em> 18 (1977).</p>
 
-<p>[^57]: S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS], 2018.</p>
+<p>[^57]: Kantorovich, L.V., &quot;Some remarks on the approximation of functions by means of polynomials with integer coefficients&quot;, 1931.</p>
 
-<p>[^58]: Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</p>
+<p>[^58]: This formula applies to functions with Lipschitz-continuous derivative (a weaker assumption than having three continuous derivatives), but that derivative&#39;s Lipschitz constant is a lower bound on $M_{3}$, so that formula is useful here.</p>
 
-<p>[^59]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</p>
+<p>[^59]: Le Gruyer, Erwan. &quot;Minimal Lipschitz extensions to differentiable functions defined on a Hilbert space.&quot; Geometric and Functional Analysis 19, no. 4 (2009): 1101-1118.</p>
 
-<p>[^60]: Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</p>
+<p>[^60]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. &quot;Computing minimal interpolants in C1, 1 (Rd).&quot; Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.</p>
 
-<p>[^61]: Strukov, L.I., Timan, A.F., &quot;Mathematical expectation of continuous functions of random variables. Smoothness and variance&quot;, <em>Siberian Mathematical Journal</em> 18 (1977).</p>
+<p>[^61]: von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</p>
 
-<p>[^62]: Kantorovich, L.V., &quot;Some remarks on the approximation of functions by means of polynomials with integer coefficients&quot;, 1931.</p>
+<p>[^62]: Peres, Y., &quot;<a href="https://projecteuclid.org/euclid.aos/1176348543"><strong>Iterating von Neumann&#39;s procedure for extracting random bits</strong></a>&quot;, Annals of Statistics 1992,20,1, p. 590-597.</p>
 
-<p>[^63]: Schoenberg, I.J., &quot;Cardinal spline interpolation&quot;, 1973.</p>
+<p>[^63]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^64]: This formula applies to functions with Lipschitz-continuous derivative (a weaker assumption than having three continuous derivatives), but that derivative&#39;s Lipschitz constant is a lower bound on $M_{3}$, so that formula is useful here.</p>
+<p>[^64]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</p>
 
-<p>[^65]: Le Gruyer, Erwan. &quot;Minimal Lipschitz extensions to differentiable functions defined on a Hilbert space.&quot; Geometric and Functional Analysis 19, no. 4 (2009): 1101-1118.</p>
+<p>[^65]: S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS], 2018.</p>
 
-<p>[^66]: Herbert-Voss, Ariel, Matthew J. Hirn, and Frederick McCollum. &quot;Computing minimal interpolants in C1, 1 (Rd).&quot; Rev. Mat. Iberoam 33, no. 1 (2017): 29-66.</p>
+<p>[^66]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.</p>
 
-<p>[^67]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.</p>
+<p>[^67]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</p>
 
-<p>[^68]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</p>
+<p>[^68]: Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy&quot;, <em>Journal of Mathematical Psychology</em> 95 (2020): 102308.</p>
 
-<p>[^69]: Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy&quot;, <em>Journal of Mathematical Psychology</em> 95 (2020): 102308.</p>
+<p>[^69]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</p>
 
-<p>[^70]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</p>
+<p>[^70]: Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</p>
 
-<p>[^71]: Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</p>
+<p>[^71]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</p>
 
-<p>[^72]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</p>
+<p>[^72]: Levy, H., <em>Stochastic dominance</em>, 1998.</p>
 
-<p>[^73]: Levy, H., <em>Stochastic dominance</em>, 1998.</p>
+<p>[^73]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In <em>Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science</em>, 2004. (pp. 12-21). IEEE.</p>
 
-<p>[^74]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In <em>Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science</em>, 2004. (pp. 12-21). IEEE.</p>
+<p>[^74]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</p>
 
-<p>[^75]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</p>
+<p>[^75]: Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</p>
 
-<p>[^76]: Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</p>
+<p>[^76]: Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</p>
 
-<p>[^77]: Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</p>
+<p>[^77]: Vatan (2001) claims that a finite-state generator has a continuous <code>CDF</code> (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.</p>
 
-<p>[^78]: Vatan (2001) claims that a finite-state generator has a continuous <code>CDF</code> (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.</p>
+<p>[^78]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</p>
 
-<p>[^79]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</p>
+<p>[^79]: Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</p>
 
-<p>[^80]: Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</p>
+<p>[^80]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
-<p>[^81]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
-
-<p>[^82]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+<p>[^81]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
-
-<p>&nbsp;</p>
 
 <p><a id=Proofs_on_Cutting_Off_a_Power_Series></a></p>
 
@@ -1143,7 +1142,7 @@
 
 <p>The following results deal with a useful quantity when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value (&quot;long-run average&quot;).   (Traditionally, another central moment, that of $X/n$ or the ratio of heads to tosses, is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  $T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) The following results bound the absolute value of $T$ and $S$.[^34]</p>
 
-<p><strong>Result B4</strong> (Molteni (2022)[^35]): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le (r!)/(((r/2)!)t^{r/2}) n^{r/2}$ and $|S_{n,r}(p)| \le (r!)/(((r/2)!)t^{r/2})\cdot(1/n^{r/2})$.</p>
+<p><strong>Result B4</strong> (Molteni (2022)[^35]): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le (r!)/(((r/2)!)8^{r/2}) n^{r/2}$ and $|S_{n,r}(p)| \le (r!)/(((r/2)!)8^{r/2})\cdot(1/n^{r/2})$.</p>
 
 <p><strong>Lemma B5</strong>: For every integer $n\ge 1$:</p>
 
@@ -1186,7 +1185,6 @@
 
 <ol>
 <li>If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor&#39;s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$&#39;s domain) (DLMF [^41] <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$</li>
-<li>Part 1 of this lemma is not true if the $r$-th derivative of $f(\lambda)$ can be any function in the Zygmund class rather than be Lipschitz continuous.  There are functions in the Zygmund class whose derivative is defined almost nowhere, so that $f$ need not meet the conditions for having the Lagrange remainder $R_{f,r}(\lambda, x_0)$.</li>
 <li>It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded in this way (Lorentz 1966)[^19].</li>
 </ol>
 </blockquote>
@@ -1239,7 +1237,7 @@
 
 <p>Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,3}(\lambda, x_0))|.$$ Now denote $\sigma_n$ as the maximum of $|B_n(R_{f,3}(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_{f,3}(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;</p>
 
-<p><strong>Proposition B10A:</strong> Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-f(x)-\frac{x(1-x)}{2n} B_n(f&#39;&#39;)(x)$ be the <em>Lorentz operator</em> of order 2 (Holtz et al. 2011)[^17], (Lorentz 1966)[^19], which is a polynomial of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2})$ of $f$, where $M$ is that second derivative&#39;s Lipschitz constant or greater.</p>
+<p><strong>Proposition B10A:</strong> Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f&#39;&#39;)(x)$ be the <em>Lorentz operator</em> of order 2 (Holtz et al. 2011)[^17], (Lorentz 1966)[^19], which is a polynomial of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2})$ of $f$, where $M$ is that second derivative&#39;s Lipschitz constant or greater.</p>
 
 <p><em>Proof</em>: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14)[^17] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f&#39;&#39;$, the second derivative of $f$, has the Lagrange remainder $R_{f&#39;&#39;,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f&#39;&#39;,0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}M}{48 n^{3/2}} + \frac{1}{8n} \frac{M}{2 n^{1/2}} = \frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2}).$$ &#x25a1;</p>
 
@@ -1253,7 +1251,7 @@
 
 <p><em>Proof</em>: This proof is inspired by a result in Draganov (2004, Theorem 4.1)[^44].</p>
 
-<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  A result by Knoop and Pottinger (1976)[^45], which works for every $n\ge 3$, is what is known as a <em>simultaneous approximation</em> error bound, showing that the second derivative of the Bernstein polynomial approaches that of $f$.  Using this result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) L/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
+<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  A result by Knoop and Pottinger (1976)[^45], which works for every $n\ge 3$, is what is known as a <em>simultaneous approximation</em> error bound, showing that the second derivative of the Bernstein polynomial approaches that of $f$ as $n$ increases.  Using this result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) L/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) L/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5L}{32 n^{1+\alpha/2}}\le \frac{5L+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note</strong>: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be non-negative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda &lt;1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.</p>
@@ -1264,53 +1262,6 @@
 <p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^46], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2},$$ where $r=2$, $M_2 = \max(|f^{(2)}|)$, and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^47].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} L/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9L}{64 n^{(3+\alpha)/2}}\le \frac{9L+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$ &#x25a1;</p>
 
 <p>In a similar way, it&#39;s possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder continuous fourth or fifth derivative, by expressing the error bound as $|(B_n(f)-f)((B_n(f)-f)(B_n(f)-f))|$ and replacing the values for $M_2$, $M_3$, and $L$ in the bound proved at the end of Proposition B10D with upper bounds for $|(B_n(f))^{(2)}-f^{(2)}|$, $|(B_n(f))^{(3)}-f^{(3)}|$, and $|(B_n(f))^{(4)}-f^{(4)}|$, respectively.</p>
-
-<hr>
-
-<p><a id=Failures_of_the_Consistency_Requirement></a></p>
-
-<h3>Failures of the Consistency Requirement</h3>
-
-<p>In the academic literature (papers and books), there are many results showing that a polynomial comes within a given error bound of a function <em>f</em>(<em>&lambda;</em>), when <em>f</em> meets certain conditions.  Unfortunately, these error bounds don&#39;t necessarily mean that a sequence of polynomials far from these bounds will obey the consistency requirement, a requirement for simulating <em>f</em> in the Bernoulli factory setting.</p>
-
-<p>Here is one such error bound. Let <em>f</em> have a Lipschitz continuous derivative on the closed unit interval with Lipschitz constant <em>M</em>.  Then the <em>Bernstein polynomial</em> for <em>f</em> of degree <em>n</em> (which is in Bernstein form with coefficients $f(k/n)$ with $0\le k\le n$) is within <em>M</em>*<em>x</em>*(1&minus;<em>x</em>)/(2*<em>n</em>) of <em>f</em> (and thus within <em>M</em>/(8*<em>n</em>) of <em>f</em>) whenever $0\le x\le 1$ (Lorentz 1966)[^9]. Thus, for every <em>n</em>&ge;1:</p>
-
-<ul>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>M</em> / (8*<em>n</em>).</li>
-</ul>
-
-<p>Where <em>k</em> is an integer and 0 &le; <em>k</em> &le; <em>n</em>.</p>
-
-<p>The example against the consistency requirement involves the function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, which has a Lipschitz continuous derivative.</p>
-
-<p>For <em>g</em>, the coefficients for&mdash;</p>
-
-<ul>
-<li>the degree-2 upper polynomial in Bernstein form (<strong>fabove</strong>(5, <em>k</em>)) are [0.6542..., 0.9042..., 0.6542...], and</li>
-<li>the degree-4 upper polynomial in Bernstein form (<strong>fabove</strong>(6, <em>k</em>)) are [0.5771..., 0.7538..., 0.8271..., 0.7538..., 0.5771...].</li>
-</ul>
-
-<p>The degree-2 polynomial lies above the degree-4 polynomial everywhere in the closed unit interval.  However, to ensure consistency, the degree-2 polynomial, once rewritten as a polynomial in Bernstein form of degree 4, must have coefficients that are greater than or equal to those of the degree-4 polynomial.</p>
-
-<ul>
-<li>Once rewritten as a degree-4 polynomial, the degree-2 polynomial&#39;s coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].</li>
-</ul>
-
-<p>As can be seen, the rewritten polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
-
-<p><strong>Note on &quot;clamping&quot;.</strong> In addition, for a polynomial-building scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the closed unit interval won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.  Here is an example that applies to any scheme.</p>
-
-<p>Let <em>g</em> and <em>h</em> be two polynomials in Bernstein form as follows:</p>
-
-<ul>
-<li><em>g</em> has degree 5 and coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000].</li>
-<li><em>h</em> has degree 6 and coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].</li>
-</ul>
-
-<p>After rewriting <em>g</em> to a degree-6 polynomial, <em>g</em>&#39;s coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.</p>
-
-<p>However, by clamping coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and rewrite <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistency property.</p>
 
 <p><a id=Chebyshev_Interpolants></a></p>
 
@@ -1364,6 +1315,485 @@
 </ol>
 </blockquote>
 
+<p><a id=Proofs_for_Polynomial_Building_Schemes></a></p>
+
+<h3>Proofs for Polynomial-Building Schemes</h3>
+
+<p>This section shows mathematical proofs for some of the polynomial-building schemes of this page.</p>
+
+<p>In the following results:</p>
+
+<ul>
+<li>A <em>strictly bounded factory function</em> means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.</li>
+<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^52].  For examples, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;.</li>
+<li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>&omega;</em> on the closed unit interval, for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) whenever <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
+</ul>
+
+<p><strong>Lemma 1.</strong> Omitted.</p>
+
+<p>Lemma 6(i) of Nacu and Peres (2005)[^1] can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes the larger class of <em>Hölder continuous</em> functions (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;).</p>
+
+<p><strong>Lemma 2.</strong> <em>Let f(&lambda;) be a continuous function that maps the closed unit interval to itself, and let X be a hypergeometric(2*n, k, n) random variable.</em></p>
+
+<ol>
+<li><em>Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave, then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1)<br>is less than or equal to&mdash;</em>
+
+<ul>
+<li><em>&omega;(sqrt(1/(8*n&minus;4))), for every integer n&ge;1 that&#39;s a power of 2,</em></li>
+<li><em>&omega;(sqrt(1/(7*n))), for every integer n&ge;4 that&#39;s a power of 2,</em></li>
+<li><em>&omega;(sqrt(1/(2*n))), for every integer n&ge;1 that&#39;s a power of 2, and</em></li>
+<li><em>&omega;(sqrt( (k/(2*n)) * (1&minus;k/(2*n)) / (2*n&minus;1) )), for every n&ge;1 that&#39;s a power of 2.</em></li>
+</ul></li>
+<li><em>If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; such that 0 &lt; &alpha; &le; 1, then the expression (1) is less than or equal to&mdash;</em>
+
+<ul>
+<li><em>M*(1/(2*n))<sup>&alpha;/2</sup>, for every integer n&ge;1 that&#39;s a power of 2,</em></li>
+<li><em>M*(1/(7*n))<sup>&alpha;/2</sup>, for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
+<li><em>M*(1/(8*n&minus;4))<sup>&alpha;/2</sup>, for every integer n&ge;1 that&#39;s a power of 2.</em></li>
+</ul></li>
+<li><em>If f has a Lipschitz continuous derivative with Lipschitz constant M, then the expression (1) is less than or equal to&mdash;</em>
+
+<ul>
+<li><em>(M/2)*(1/(7*n)), for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
+<li><em>(M/2)*(1/(8*n&minus;4)), for every integer n&ge;1 that&#39;s a power of 2.</em></li>
+</ul></li>
+<li>Omitted.</li>
+</ol>
+
+<p><em>Proof.</em></p>
+
+<ol>
+<li><em>&omega;</em> is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))] &le; <strong>E</strong>[<em>&omega;</em>(abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))] &le; <em>&omega;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]) (by Jensen&#39;s inequality and because <em>&omega;</em> is concave) &le; <em>&omega;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&omega;</em>(sqrt((<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for every <em>n</em>&ge;4 that&#39;s an integer power of 2, <em>&rho;</em> &le; <em>&omega;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&omega;</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1&minus;<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>&minus;1) )).</li>
+<li>By the definition of Hölder continuous functions, take <em>&omega;</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.  Because <em>&omega;</em> is a concave modulus of continuity on the closed unit interval, the result follows from part 1.</li>
+<li>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f&#39;(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f&#39;(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^12], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f&#39;(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1&#39;s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For every integer <em>n</em>&ge;4 that&#39;s a power of 2, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
+</ol>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li><strong>E</strong>[.] means expected value (&quot;long-run average&quot;), and <strong>Var</strong>[.] means variance.  A hypergeometric(2 * <em>n</em>, <em>k</em>, <em>n</em>) random variable is the number of &quot;good&quot; balls out of <em>n</em> balls taken uniformly at random, all at once, from a bag containing 2 * <em>n</em> balls, <em>k</em> of which are &quot;good&quot;.</li>
+<li>Parts 1 through 3 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)[^1].  However, for technical reasons, different bounds are proved for different ranges of integers <em>n</em>.</li>
+<li>All continuous functions that map the closed unit interval to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>&omega;</em>(0) &gt; 0, because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple modulus of continuity that satisfies the lemma:
+
+<ol>
+<li>If <em>f</em> is strictly increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)[^53]; (Gal 1995)[^54].</li>
+<li>If <em>f</em> is strictly decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)[^53]; (Gal 1995)[^54].</li>
+<li>If <em>f</em> is strictly increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
+<li>If <em>f</em> is strictly decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
+<li>If <em>f</em> is concave and is strictly increasing then strictly decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)[^55].</li>
+</ol></li>
+</ol>
+</blockquote>
+
+<p><strong>Lemma 2A.</strong>  <em>Let f(&lambda;) map the closed unit interval to itself, and let $C=15$.</em></p>
+
+<table><thead>
+<tr>
+<th><em>If $f$:</em></th>
+<th><em>Then, for every integer $n$ &ge; 1, the expression (1) in Lemma 2 is less than or equal to:</em></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>(Case 1) <em>Is Hölder continuous, its Hölder exponent is $\alpha$, and its Hölder constant is $L$ or less, where $0\lt\alpha\lt 1$.</em></td>
+<td>$2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}$.</td>
+</tr>
+<tr>
+<td>(Case 2) <em>Has a Hölder continuous (first) derivative whose Hölder exponent is $\alpha$ and whose Hölder constant is $L$ or less, where $0\lt\alpha\le 1$.</em></td>
+<td>$CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}$.</td>
+</tr>
+<tr>
+<td>(Case 3) <em>Has a Lipschitz continuous derivative whose Lipschitz constant is $M$ or less.</em></td>
+<td>$(C/4)M\frac{1}{8n-4}$.</td>
+</tr>
+<tr>
+<td>(Case 4) <em>Is in the Zygmund class with constant equal to or less than $D$.</em></td>
+<td>$(C/2) D\sqrt{1/(8n-4)}$.</td>
+</tr>
+</tbody></table>
+
+<p><em>Proof.</em> Strukov and Timan (1977)[^56] proved the following bound: $$\
+|\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])|\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where <em>Y</em> is a random variable and &omega;<sub>2</sub>(.) is a <em>second-order modulus of continuity</em> of <em>f</em> (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values greater than one real number and less than another, as in this case.</p>
+
+<p>Suppose <em>Y</em> = <em>X</em>/<em>n</em>, where <em>X</em> is as in Lemma 2.  Then <em>Y</em>&#39;s variance (<strong>Var</strong>[<em>Y</em>]) is less than or equal to 1/(8*<em>n</em>&minus; 4), and the left-hand side of Strukov and Timan&#39;s bound is the same as the expression (1).</p>
+
+<p>Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying Strukov and Timan&#39;s bound, the bound on <em>Y</em>&#39;s variance, as well as a property given in Stancu et al. (2001)[^47] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le 2C\omega((\text{Var}[Y])^{1/2}/2)\le 2CL((\text{Var}[Y])^{1/2}/2)^\alpha)\le 2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$</p>
+
+<p>Case 2: Since $f$&#39;s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^47]&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le C ((\text{Var}[Y])^{1/2}/2) \omega((\text{Var}[Y])^{1/2}/2)\le CL((\text{Var}[Y])^{1/2}/2)^{1+\alpha}$$ $$\le CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$</p>
+
+<p>Case 3: Follows from case 2 since a Hölder continuous function with Hölder exponent 1 and Hölder constant $L$ is Lipschitz continuous with Lipschitz constant $M$.</p>
+
+<p>Case 4: Since <em>f</em> is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$ &#x25a1;</p>
+
+<blockquote>
+<p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>) with <em>h</em> &ge; 0, for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever <em>f</em> is continuous and <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.</p>
+</blockquote>
+
+<p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;</em></p>
+
+<p>$$\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),$$</p>
+
+<p><em>for every integer n&ge;1 that&#39;s a power of 2.  If the series &eta;(n) converges to a finite value for each such $n$, and if it converges to 0 as $n$ gets large, then the following scheme for f(&lambda;) is valid in the following sense:</em></p>
+
+<p><em>There are polynomials $g_n$ and $h_n$ (where $n\ge 1$ is an integer power of 2) as follows. The $k$-th Bernstein coefficient of $g_n$ and $h_n$ is <strong>fbelow</strong>(n, k) and <strong>fabove</strong>(n, k), respectively (where $0\le k\le n$), where:</em></p>
+
+<p><em>If $n_0 = 1$:</em></p>
+
+<ul>
+<li><em><strong>fbelow</strong>(n, k) =</em> $f(k/n)-\eta(n)$.</li>
+<li><em><strong>fabove</strong>(n, k) =</em> $f(k/n)+\eta(n)$.</li>
+</ul>
+
+<p><em>If $n_0 &gt; 1$:</em></p>
+
+<ul>
+<li><em><strong>fbelow</strong>(n, k) =</em> min(<strong>fbelow</strong>($n_0$,0), <strong>fbelow</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) <em>if</em> $n &lt; n_0$; $f(k/n)-\eta(n)$ <em>otherwise.</em></li>
+<li><em><strong>fabove</strong>(n, k) =</em> max(<strong>fabove</strong>($n_0$,0), <strong>fabove</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) <em>if</em> $n &lt; n_0$; $f(k/n)+\eta(n)$ <em>otherwise.</em></li>
+</ul>
+
+<p><em>The polynomials $g_n$ and $h_n$ satisfy:</em></p>
+
+<ol>
+<li><em>$g_n \le h_n$.</em></li>
+<li><em>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</em></li>
+<li>$(g_{n+1}-g_n)$ <em>and</em> $(h_{n}-h_{n+1})$ <em>are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.</em></li>
+</ol>
+
+<p><em>Proof.</em> For simplicity, this proof assumes first that $n_0 = 1$.</p>
+
+<p>For the series <em>&eta;</em>(<em>n</em>) in the theorem, because $\phi(n)$ is nonnegative, each term of the series is nonnegative making the series nonnegative and, by the assumption that the series converges, <em>&eta;</em>(<em>n</em>) is nowhere increasing with increasing <em>n</em>.</p>
+
+<p>Item 1 is trivial.  If $n\ge n_0$, $g_n$ is simply the Bernstein polynomial of $f$ minus a nonnegative value, and $h_n$ is the Bernstein polynomial of $f$ plus that same value, and if $n$ is less than $n_0$, $g_n$ is a constant value not less than the lowest point reachable by the lower polynomials, and $h_n$ is a constant value not less than the highest point reachable by the upper polynomials.</p>
+
+<p>Item 2 is likewise trivial. A well known result is that the Bernstein polynomials of $f$ converge to $f$ as their degree $n$ gets large.  And because the series <em>&eta;</em> (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, the upper and lower shifts will converge to 0 so that $g_n$ and $h_n$ converge to the degree-$n$ Bernstein polynomials and thus to $f$.</p>
+
+<p>Item 3 is the <em>consistency requirement</em> described earlier in this page. This is ensured as in Proposition 10 of Nacu and Peres (2005)[^1] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is <em>&eta;</em>(<em>n</em>), a solution to the equation 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(2 * <em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) (see note below), where <em>&phi;</em>(<em>n</em>) is a function that takes on a nonnegative value.</p>
+
+<p><em>&phi;</em>(<em>n</em>) is, roughly speaking, the minimum distance between one polynomial and the next so that the consistency requirement is met between those two polynomials.  Compare the assumptions on <em>&phi;</em> in Theorem 1 with equations (10) and (11) in Nacu and Peres (2005).</p>
+
+<p>The solution for $\eta(n)$ given in the statement of the theorem is easy to prove by noting that this is a recursive process: we start by calculating the series for <em>n</em> = 2*<em>n</em>, then adding <em>&phi;</em>(<em>n</em>) to it (which will be positive), in effect working backwards and recursively, and we can easily see that we can calculate the series for <em>n</em> = 2*<em>n</em> only if the series converges, hence the assumption of a converging series.</p>
+
+<p>Now to prove the result assuming that $n_0 &gt; 1$.</p>
+
+<p>Doing this involves taking advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start defining the polynomials at any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 or greater, but less than $n_0$, would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal. The lower constants are no greater than $g_{n_0}$&#39;s lowest Bernstein coefficient, and the upper constants are no less than $g_{n_0}$&#39;s highest Bernstein coefficients; they meet Item 3 because these lower and upper constants, when rewritten as polynomials in Bernstein form degree $n_0$, have Bernstein coefficients that are still no greater or no less, respectively, than the corresponding degree-$n_0$ polynomial. With the <em>&phi;</em> given in this theorem, the series <em>&eta;</em>(<em>n</em>) in the theorem remains nonnegative.  Moreover, since <em>&eta;</em> is assumed to converge, <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>There is only one solution <em>&eta;</em>(<em>n</em>) in the case at hand.  Unlike so-called <a href="https://math.stackexchange.com/questions/3993739"><strong><em>functional equations</em></strong></a> and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in the case at hand, namely the solution that makes the series converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(4 * <em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(8 * <em>n</em>) &minus; <em>&phi;</em>(4*<em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = ...</li>
+<li>$\log_2(n)$ is the number $x$ such that $2^x = n$.</li>
+</ol>
+</blockquote>
+
+<p><strong>Proposition 1A.</strong> <em>If a scheme satisfies Theorem 1, the polynomials $g_n$ and $h_n$ in the scheme can be made to satisfy conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)[^1] as follows:</em></p>
+
+<ul>
+<li>$g_n$ = $g_{n-1}$ <em>and</em> $h_n$ = $h_{n-1}$ <em>whenever $n$ is an integer greater than 1 and not a power of 2.</em></li>
+<li><em>If <strong>fabove</strong>(n, k) &gt; 1 for a given $n$ and some $k$, the coefficients of $h_n$ (the upper polynomial) are all 1.</em></li>
+<li><em>If <strong>fbelow</strong>(n, k) &lt; 0 for a given $n$ and some $k$, the coefficients of $g_n$ (the lower polynomial) are all 0.</em></li>
+</ul>
+
+<p><em>Proof:</em> Condition (i) of Proposition 3 says that each coefficient of the polynomials must be 0 or greater and 1 or less.  This is ensured starting with a large enough value of <em>n</em> greater than 0 that&#39;s a power of 2, call it <em>n</em><sub>1</sub>, as shown next.</p>
+
+<p>Let <em>&epsilon;</em> be a positive distance between 0 and the minimum or between 1 and the maximum of <em>f</em>, whichever is smaller.  This <em>&epsilon;</em> exists by the assumption that <em>f</em> is bounded away from 0 and 1. Because the series <em>&eta;</em> (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, <em>&eta;</em>(<em>n</em>) will eventually stay less than <em>&epsilon;</em>.  And if $n\ge n_0$ is a power of 2 (where $n_0$ is as in Theorem 1), the <code>f(k/n)</code> term is bounded by the minimum and maximum of <em>f</em> by construction. This combined means that the lower and upper polynomials&#39; Bernstein coefficients will eventually be bounded by 0 and 1 for every integer <em>n</em> starting with <em>n</em><sub>1</sub>.</p>
+
+<p>For <em>n</em> less than <em>n</em><sub>1</sub>, condition (i) is ensured by setting the lower or upper polynomial&#39;s coefficient to 0 or 1, respectively, whenever a coefficient of the degree-<em>n</em> polynomial would otherwise be less than 0 or greater than 1, respectively.</p>
+
+<p>Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The only thing to add is that for $n$ less than <em>n</em><sub>1</sub>, the lower and upper polynomials $g_n$ and $h_n$ can be treated as 0 or 1 without affecting convergence, and that for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iii) by Remark B of Nacu and Peres (2005)[^1].</p>
+
+<p>Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For <em>n</em>=<em>n</em><sub>1</sub>, condition (iv) is maintained by noting that the degree-<em>n</em><sub>1</sub> polynomial&#39;s coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;</p>
+
+<blockquote>
+<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^57]; see also Remark C of Nacu and Peres (2005)[^1].</p>
+</blockquote>
+
+<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
+
+<ul>
+<li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; D(n).</em></li>
+<li><em><strong>fabove</strong>(n, k) = f(k/n) + D(n).</em></li>
+</ul>
+
+<p><em>Where</em> $D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$.</p>
+
+<p><em>Or:</em></p>
+
+<ul>
+<li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; &eta;(n).</em></li>
+<li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + &eta;(n).</em></li>
+</ul>
+
+<p><em>Where &eta;(n) = M*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)*n<sup>&alpha;/2</sup>).</em></p>
+
+<p><em>Proof.</em> Because $f$ is Hölder continuous, it admits the modulus of continuity $\omega(x)=Mx^{\alpha}$.  By part 1 of lemma 2:</p>
+
+<ul>
+<li>For each integer $n\ge 1$ that&#39;s a power of 2 ($n_0=1$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(2n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$ (where $\eta(n)$ is as in Theorem 1).</li>
+<li>For each integer $n\ge 4$ that&#39;s a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(7n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=$ M*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)*n<sup>&alpha;/2</sup>).</li>
+</ul>
+
+<p>In both cases $\eta(n)$ is finite and converges to 0 as $n$ increases.</p>
+
+<p>The result then follows from Theorem 1. &#x25a1;</p>
+
+<blockquote>
+<p><strong>Note:</strong> For specific values of <em>&alpha;</em>, the equation <em>D</em>(<em>n</em>) = <em>D</em>(2 * <em>n</em>) + <em>&phi;</em>(<em>n</em>) can be solved via linear recurrences; an example for <em>&alpha;</em> = 1/2 is the following code in Python that uses the SymPy computer algebra library: <code>alpha=(S(1)/2); rsolve(Eq(f(n), f(n+1)+z*(1/(2*2**n))**(alpha/2)), f(n)).subs(n,ln(n,2)).simplify()</code>.  Trying different values of <em>&alpha;</em> suggested the following formula for Hölder continuous functions with <em>&alpha;</em> of 1/<em>j</em> or greater: (<em>M</em>* $\sum_{i=0}^{2j-1} 2^{i/(2j)})/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>&minus;1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>
+</blockquote>
+
+<p><strong>Corollary 2.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If that function is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
+
+<ul>
+<li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
+<li><em><strong>fabove</strong>(n, k) = f(k/n) + M/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
+</ul>
+
+<p><em>Or:</em></p>
+
+<ul>
+<li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M*sqrt(2/7)/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
+<li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + M*sqrt(2/7)/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
+</ul>
+
+<p><em>Proof.</em> Because Lipschitz continuous functions are Hölder continuous with Hölder constant <em>M</em> and exponent 1, the result follows from Corollary 1. &#x25a1;</p>
+
+<blockquote>
+<p><strong>Note:</strong> The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005)[^1].</p>
+</blockquote>
+
+<p><strong>Corollary 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If that function has a Lipschitz continuous derivative with Lipschitz constant L, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
+
+<ul>
+<li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; L/(7*n).</em></li>
+<li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + L/(7*n).</em></li>
+</ul>
+
+<p><em>Proof.</em> By part 3 of lemma 2, for each integer $n\ge 4$ that&#39;s a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1). $\eta(n)$ is finite and converges to 0 as $n$ increases. The result then follows from Theorem 1. &#x25a1;</p>
+
+<blockquote>
+<p><strong>Note:</strong> Nacu and Peres (2005)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the closed unit interval that is not greater than a constant (a slightly stronger condition than having a Lipschitz continuous derivative on that domain).</p>
+</blockquote>
+
+<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If that function is convex and nowhere decreasing, then Theorem 1 remains valid with &phi;(n) = <strong>E</strong>[f(Y/n)] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem.</em></p>
+
+<p><em>Proof.</em>  Follows from Theorem 1 and part 4 of Lemma 2 above. With the <em>&phi;</em> given in this theorem, the series <em>&eta;</em>(<em>n</em>) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1&#39;s assumption that the series converges, so that <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
+
+<p><strong>Proposition 1.</strong></p>
+
+<ol>
+<li><em>Let f be as given in Theorem 1 or 2 or Corollary 1 to 3, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the schemes of those results remain valid if <strong>fbelow</strong>(n, k) = f(k/n), rather than as given in those results.</em></li>
+<li><em>Let f be as given in Theorem 1 or 2 or Corollary 1 to 3, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the schemes of those results remain valid if <strong>fabove</strong>(n, k) = f(k/n), rather than as given in those results.</em></li>
+<li><p><em>Theorems 1 and 2 and Corollaries 1 to 3 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;</em></p>
+
+<ul>
+<li><em><strong>fbelow</strong>(n, k) = (k/n)*<strong>fbelow</strong>(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)*<strong>fbelow</strong>(n&minus;1, min(n&minus;1, k)), and</em></li>
+<li><em><strong>fabove</strong>(n, k) = (k/n)*<strong>fabove</strong>(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)*<strong>fabove</strong>(n&minus;1, min(n&minus;1, k)),</em></li>
+</ul>
+
+<p><em>for every integer n&ge;1 other than a power of 2. Parts 1 and 2 of this proposition still apply to the modified scheme.</em></p></li>
+</ol>
+
+<p><em>Proof.</em> Parts 1 and 2 follow from Theorem 1 or 2 or Corollary 1 to 3, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein polynomials of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)[^1]. &#x25a1;</p>
+
+<p>The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.</p>
+
+<p><strong>Lemma 3.</strong> <em>Let $f$ be a strictly bounded factory function. Let $S$ be an infinite set of positive integers.  For each integer $n\ge 1$, let $W_n(\lambda)$ be a function, and let $\epsilon_n(f)$ be a nonnegative constant that depends on $f$ and $n$.  Suppose that there are polynomials $g_n$ and $h_n$ (for each $n$ in $S$) as follows:</em></p>
+
+<ol>
+<li><em>$g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f)$ and $W_n(k/n) + \epsilon_n(f)$, respectively ($0\le k\le n$).</em></li>
+<li><em>$g_n \le h_n$.</em></li>
+<li><em>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</em></li>
+<li>$(g_{m}-g_n)$ <em>and</em> $(h_{n}-h_{m})$ <em>are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$.</em></li>
+</ol>
+
+<p><em>Then for each $n$ in $S$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$.</em></p>
+
+<p><em>Proof:</em> $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, property 4 in the lemma corresponds to condition (iv) of Nacu and Peres (2005)[^1], which implies that, for every $m&gt;n$, $g_{n}(\lambda)\le g_{m}(\lambda)\le f(\lambda)$ (the lower polynomials &quot;increase&quot;) and $h_{n}(\lambda)\ge h_{m}(\lambda)\ge f(\lambda)$ (the upper polynomials &quot;decrease&quot;) for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].</p>
+
+<p>Then if $B_n(W_n(\lambda)) &lt; f(\lambda)$ for some $\lambda$ in the closed unit interval, shifting the left-hand side upward by $\epsilon_n(f)$ (a nonnegative constant) means that $h_n = B_n(W_n(\lambda))+\epsilon_n(f) \ge f(\lambda)$, and rearranging this expression leads to $f(\lambda) - B_n(W_n(\lambda)) \le \epsilon_n(f)$.</p>
+
+<p>Likewise, if $B_n(W_n(\lambda)) &gt; f(\lambda)$ for some $\lambda$ in the closed unit interval, shifting the left-hand side downward by $\epsilon_n(f)$ means that $g_n = B_n(W_n(\lambda))-\epsilon_n(f) \le f(\lambda)$, and rearranging this expression leads to $B_n(W_n(\lambda)) - f(\lambda) \le \epsilon_n(f)$.</p>
+
+<p>This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$.  &#x25a1;</p>
+
+<p><strong>Corollary 4</strong>.  <em>If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that&#39;s a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$.</em></p>
+
+<p><strong>Lemma 5</strong>. Let $n\ge 1$ be an integer.  Suppose $g_{2n}$ and $g_{n}$ are polynomials in Bernstein form of degree $2n$ and $n$, respectively, and their domain is the closed unit interval. Suppose $g_{2n}$ and $g_n$ satisfy the property:</p>
+
+<ul>
+<li>$(g_{2n}-g_n)$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $2n$.</li>
+</ul>
+
+<p>Then for every $x\ge 0$, $g_{2n}+x$ and $g_n$ satisfy that property, and for every $x\ge 1$, $g_{2n}\cdot x$ and $g_n$ do as well.</p>
+
+<p>The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, $g_{2n}$&#39;s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have non-negative Bernstein coefficients as required by the property.</p>
+
+<p>It is also true that, for every $x\ge 0$, $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property, but a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n\cdot x=g_{2n}\cdot x=0$, so that the property is trivially satisfied.)</p>
+
+<p>Finally, it is true that, for every real number $x$, $g_{2n}+x$ and $g_n+x$ satisfy the same property, but, again, a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n+x=g_n$ and $g_{2n}+x=g_{2n}$, so that the property is trivially satisfied.)</p>
+
+<p><a id=A_Conjecture_on_Polynomial_Approximation></a></p>
+
+<h4>A Conjecture on Polynomial Approximation</h4>
+
+<p>The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
+
+<p><strong>Conjecture.</strong></p>
+
+<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).</p>
+
+<p>For each integer $n\ge1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
+
+<p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:</p>
+
+<ol>
+<li>$g_n$ has Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ otherwise.</li>
+<li>$g_n$ converges to $f$ as $n$ gets large.</li>
+<li>$(g_{n+1}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $n+1$.</li>
+</ol>
+
+<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
+
+<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).</li>
+<li>The left-hand side of (PB) is not greater than $|(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))|$ + $|W_n(k/(2n))-f(k/(2n))|$  + $|W_{2n}(k/(2n))-f(k/(2n))|$.</li>
+<li>By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3)[^1].</li>
+</ol>
+</blockquote>
+
+<hr>
+
+<p>The following lower bounds on $C_0$ can be shown.  In the table:</p>
+
+<ul>
+<li>$M_{r}$ is the maximum of the absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.</li>
+<li>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<table><thead>
+<tr>
+<th>If $r$ is...</th>
+<th>And...</th>
+<th>With the Bernstein coefficients of...</th>
+<th>Then $C_0$ must be greater than:</th>
+<th>And $C_0$ is conjectured to be:</th>
+<th>Because of this counterexample:</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>3</td>
+<td>$M=M_{3}$</td>
+<td>$U_{n,2}$*</td>
+<td>0.29</td>
+<td>$\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.**</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$M=M_{3}$, $n\ge 4$</td>
+<td>$U_{n,2}$</td>
+<td>0.08287</td>
+<td>0.09</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$M=M_{4}$</td>
+<td>$U_{n,2}$</td>
+<td>0.24999</td>
+<td>0.25</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$M=M_{4}$, $n\ge 4$</td>
+<td>$U_{n,2}$</td>
+<td>0.14</td>
+<td>0.15</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
+</tr>
+<tr>
+<td>5</td>
+<td>$M=M_{5}$</td>
+<td>$U_{n,3}$***</td>
+<td>0.26</td>
+<td>0.27</td>
+<td>$2 \lambda \left(1 - \lambda\right)$</td>
+</tr>
+<tr>
+<td>5</td>
+<td>$M=M_{5}$, $n\ge 4$</td>
+<td>$U_{n,3}$</td>
+<td>0.1226</td>
+<td>0.13</td>
+<td>$\lambda^{3}$</td>
+</tr>
+<tr>
+<td>6</td>
+<td>$M=M_{6}$</td>
+<td>$U_{n,3}$</td>
+<td>0.25</td>
+<td>0.26</td>
+<td>$\lambda^{3}$</td>
+</tr>
+<tr>
+<td>6</td>
+<td>$M=M_{6}$, $n\ge 4$</td>
+<td>$U_{n,3}$</td>
+<td>0.25</td>
+<td>0.26</td>
+<td>$\lambda^{3}$</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$M=M_{3}$, $n\ge 8$</td>
+<td>$L_{2,n/2}$</td>
+<td>0.0414</td>
+<td>0.08</td>
+<td>$\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.00001}/2$ if <em>&lambda;</em> &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.00001}/2$ otherwise.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$M=M_{3}$, $n\ge 8$</td>
+<td>$L_{2,n/2}$</td>
+<td>1.54/$n^{1/2}$</td>
+<td>2/$n^{1/2}$.</td>
+<td>$\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.001}/2$ if <em>&lambda;</em> &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.001}/2$ otherwise.</td>
+</tr>
+</tbody></table>
+
+<p>* Corresponds to the iterated Boolean sum of order 2 (Güntürk and Li 2021)[^14].</p>
+
+<p>*** Corresponds to the iterated Boolean sum of order 3 (Güntürk and Li 2021)[^14].</p>
+
+<p>** The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.</p>
+
+<p>The Bernstein polynomials $B_n(f)$ satisfy the partition-of-unity property: $\sum_{k=0}^n (c+f(k/n)) p_{n,k} = c+\sum_{k=0}^n f(k/n) p_{n,k}$ for every $c$, where $\sum_{k=0}^n p_{n,k}=1$.  So do the hypergeometric probabilities $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$.  Thus, rewrite $\sum_{k=0}^n (c+W_n(i/n)) \sigma_{n,k,i}$ = $\sum_{k=0}^n (2 (c+f) - B_n(c+f)) \sigma_{n,k,i}$ = $\sum_{k=0}^n (2c + 2f - c - B_n(f)) \sigma_{n,k,i}$ = $\sum_{k=0}^n (c + 2f - B_n(f)) \sigma_{n,k,i}$ = $c + \sum_{k=0}^n W_n(i/n) \sigma_{n,k,i}$.  And rewrite $c + \sum_{k=0}^n W_n(i/n) \sigma_{n,k,i} - (c+W_{2n}(k/(2n))) = \sum_{k=0}^n W_n(i/n) \sigma_{n,k,i} - W_{2n}(k/(2n))$. Thus, when $W_n = 2f-B_n(f)$, $f(0)$ can equal 0 without loss of generality.</p>
+
+<p>Suppose $f(0) = f(1) = 0$, then $W_1(f)$ will equal 0.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal 0.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|0 - (2f(1/2) - B_2(f)(1/2))| = |- 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_{3}$. To get the minimum $C_0$ that works, solve $C_0 y/1^{3/2} - C_0 y/2^{3/2}$ = z for $C_0$.  The solution is&mdash; $$C_0=\frac{z}{y} \frac{4}{4-\sqrt{2}} = \frac{|0-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}.$$</p>
+
+<p>The solution shows that if $y = M_{3}$ can come arbitrarily close to 0, then no value for $C_0$ will work.  Which is why the goal is now to find a tight upper bound on the least possible value of $M_{3}$ for $r=3$ such that:</p>
+
+<ol>
+<li>$f(\lambda)$ has a continuous third derivative.</li>
+<li>$f(0)=f(1)=0$ and $0 &lt; f(1/2) &lt; 1$.</li>
+</ol>
+
+<p>Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(0)=g(1)=0$ and $g(1/2)=1/2$, and has an $M_{3}$ of 4.  Given that $\frac{|0-g(1/2)|}{y}=\frac{|0-1/2|}{y}=1/8$, the goal is now to see whether any function $f$ satisfying (1) and (2) has $\max(0, f(1/2)) &lt; M_{3} &lt; 8\cdot |0-f(1/2)|=8 f(1/2)$.</p>
+
+<p>To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$&#39;s first derivative (see &quot;Definitions&quot;)[^58], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f&#39;$ at those points (Le Gruyer 2009)[^59]; see also (Herbert-Voss et al. 2017)[^60]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3]) = \max(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|,$$ $$\sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|,$$ $$2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|)$$ (where $t$ is greater than 0 and less than 1), so only $f&#39;$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.</p>
+
+<p>Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in the closed unit interval have to be checked and only $f&#39;$ values in $[-H, H]$ have to be checked.</p>
+
+<p>Assuming that no $M_{3}$ less than $8\cdot |0-f(1/2)|$ is found, then&mdash; $$C_0=\frac{|0-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{|0-f(1/2)|}{H} \frac{12}{2\cdot (4-\sqrt{2})}=(1/8) \frac{12}{2\cdot (4-\sqrt{2})}$$ $$=3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.</p>
+
 <p><a id=Which_functions_don_t_require_outside_randomness_to_simulate></a></p>
 
 <h3>Which functions don&#39;t require outside randomness to simulate?</h3>
@@ -1398,7 +1828,7 @@
 
 <p>(By the properties of the Bernstein form, <em>a</em>[0] will equal <em>f</em>(0) and <em>a</em>[<em>n</em>] will equal <em>f</em>(1) whenever 0 or 1 is in the domain of <em>f</em>, respectively.)</p>
 
-<p>Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)[^53]), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
+<p>Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)[^61]), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
 
 <p><strong>Proposition 2.</strong> <em>If f(&lambda;) is described in the strong simulability statement, and if either f is constant on its domain or f meets the additional conditions below, then f is strongly simulable.</em></p>
 
@@ -1512,20 +1942,20 @@
 
 <p><em>When the probability &lambda; is such that a &le; &lambda; &le; b, is there a multiple-output Bernoulli factory for f(&lambda;) with an expected (&quot;long-run average&quot;) number of input coin flips per sample that is arbitrarily close to the entropy bound?  Call such a Bernoulli factory an <strong>optimal factory</strong>.</em></p>
 
-<p>(See Nacu and Peres (2005, Question 2)[^3].)</p>
+<p>(See Nacu and Peres (2005, Question 2)[^1].)</p>
 
 <p>So far, the following functions do admit an <em>optimal factory</em>:</p>
 
 <ul>
 <li>The functions <em>&lambda;</em> and 1 &minus; <em>&lambda;</em>.</li>
-<li>Constants <em>c</em> satisfying 0 &le; <em>c</em> &le; 1.  As Nacu and Peres (2005)[^3] already showed, any such constant admits an optimal factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)[^54], then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)[^55].</li>
+<li>Constants <em>c</em> satisfying 0 &le; <em>c</em> &le; 1.  As Nacu and Peres (2005)[^1] already showed, any such constant admits an optimal factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)[^62], then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)[^63].</li>
 </ul>
 
 <p>It is easy to see that if an <em>optimal factory</em> exists for <em>f</em>(<em>&lambda;</em>), then one also exists for 1 &minus; <em>f</em>(<em>&lambda;</em>): simply change all ones returned by the <em>f</em>(<em>&lambda;</em>) factory into zeros and vice versa.</p>
 
 <p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>&lambda;</em>) = <em>&lambda;</em>/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)[^31], then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0.</p>
 
-<p>This algorithm, though, doesn&#39;t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)[^54].  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
+<p>This algorithm, though, doesn&#39;t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)[^62].  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
 
 <ol>
 <li>If the number of outputs generated so far is divisible by 20, do the following:
@@ -1553,7 +1983,7 @@
 <li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is a nonnegative integer.</li>
 </ul>
 
-<p>The algorithm is a modified version of the &quot;block simulation&quot; in Mossel and Peres (2005, Proposition 2.5)[^56], which also &quot;extracts&quot; residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
+<p>The algorithm is a modified version of the &quot;block simulation&quot; in Mossel and Peres (2005, Proposition 2.5)[^64], which also &quot;extracts&quot; residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
 
 <ol>
 <li>Set <em>iter</em> to 0.</li>
@@ -1599,486 +2029,7 @@
 
 <p>While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if <em>f</em>(<em>&lambda;</em>) maps each value <em>a</em> or greater and <em>b</em> or less to a small range of values, so that the algorithm could, for example, generate a uniform random variate between 0 and 1 using unbiased random bits and see whether that variate lies outside that range of values &mdash; and thus produce a sample from <em>f</em>(<em>&lambda;</em>) without flipping the input coin again.</p>
 
-<p><small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)[^57].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>&lambda;</em>.</small></p>
-
-<p><a id=Proofs_for_Polynomial_Building_Schemes></a></p>
-
-<h3>Proofs for Polynomial-Building Schemes</h3>
-
-<p>This section shows mathematical proofs for some of the polynomial-building schemes of this page.</p>
-
-<p>In the following results:</p>
-
-<ul>
-<li>A <em>strictly bounded factory function</em> means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.</li>
-<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are greater than or equal to min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)[^52].  For examples, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;.</li>
-<li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>&omega;</em> on the closed unit interval, for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) whenever <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.  Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>&delta;</em>) is greater than or equal to <em>f</em>&#39;s maximum range in a window of size <em>&delta;</em>.</li>
-</ul>
-
-<p><strong>Lemma 1.</strong> Omitted.</p>
-
-<p>Lemma 6(i) of Nacu and Peres (2005)[^3] can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes the larger class of <em>Hölder continuous</em> functions (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;).</p>
-
-<p><strong>Lemma 2.</strong> <em>Let f(&lambda;) be a continuous function that maps the closed unit interval to itself, and let X be a hypergeometric(2*n, k, n) random variable.</em></p>
-
-<ol>
-<li><em>Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave, then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1)<br>is less than or equal to&mdash;</em>
-
-<ul>
-<li><em>&omega;(sqrt(1/(8*n&minus;4))), for every integer n&ge;1 that&#39;s a power of 2,</em></li>
-<li><em>&omega;(sqrt(1/(7*n))), for every integer n&ge;4 that&#39;s a power of 2,</em></li>
-<li><em>&omega;(sqrt(1/(2*n))), for every integer n&ge;1 that&#39;s a power of 2, and</em></li>
-<li><em>&omega;(sqrt( (k/(2*n)) * (1&minus;k/(2*n)) / (2*n&minus;1) )), for every n&ge;1 that&#39;s a power of 2.</em></li>
-</ul></li>
-<li><em>If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; such that 0 &lt; &alpha; &le; 1, then the expression (1) is less than or equal to&mdash;</em>
-
-<ul>
-<li><em>M*(1/(2*n))<sup>&alpha;/2</sup>, for every integer n&ge;1 that&#39;s a power of 2,</em></li>
-<li><em>M*(1/(7*n))<sup>&alpha;/2</sup>, for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
-<li><em>M*(1/(8*n&minus;4))<sup>&alpha;/2</sup>, for every integer n&ge;1 that&#39;s a power of 2.</em></li>
-</ul></li>
-<li><em>If f has a Lipschitz continuous derivative with Lipschitz constant M, then the expression (1) is less than or equal to&mdash;</em>
-
-<ul>
-<li><em>(M/2)*(1/(7*n)), for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
-<li><em>(M/2)*(1/(8*n&minus;4)), for every integer n&ge;1 that&#39;s a power of 2.</em></li>
-</ul></li>
-<li>Omitted.</li>
-</ol>
-
-<p><em>Proof.</em></p>
-
-<ol>
-<li><em>&omega;</em> is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))] &le; <strong>E</strong>[<em>&omega;</em>(abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))] &le; <em>&omega;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]) (by Jensen&#39;s inequality and because <em>&omega;</em> is concave) &le; <em>&omega;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&omega;</em>(sqrt((<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for every <em>n</em>&ge;4 that&#39;s an integer power of 2, <em>&rho;</em> &le; <em>&omega;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&omega;</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1&minus;<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>&minus;1) )).</li>
-<li>By the definition of Hölder continuous functions, take <em>&omega;</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.  Because <em>&omega;</em> is a concave modulus of continuity on the closed unit interval, the result follows from part 1.</li>
-<li>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^3].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f&#39;(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f&#39;(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^12], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f&#39;(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1&#39;s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For every integer <em>n</em>&ge;4 that&#39;s a power of 2, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
-</ol>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li><strong>E</strong>[.] means expected value (&quot;long-run average&quot;), and <strong>Var</strong>[.] means variance.  A hypergeometric(2 * <em>n</em>, <em>k</em>, <em>n</em>) random variable is the number of &quot;good&quot; balls out of <em>n</em> balls taken uniformly at random, all at once, from a bag containing 2 * <em>n</em> balls, <em>k</em> of which are &quot;good&quot;.</li>
-<li>Parts 1 through 3 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)[^3].  However, for technical reasons, different bounds are proved for different ranges of integers <em>n</em>.</li>
-<li>All continuous functions that map the closed unit interval to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>&omega;</em>(0) &gt; 0, because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple modulus of continuity that satisfies the lemma:
-
-<ol>
-<li>If <em>f</em> is strictly increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)[^58]; (Gal 1995)[^59].</li>
-<li>If <em>f</em> is strictly decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)[^58]; (Gal 1995)[^59].</li>
-<li>If <em>f</em> is strictly increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
-<li>If <em>f</em> is strictly decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
-<li>If <em>f</em> is concave and is strictly increasing then strictly decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)[^60].</li>
-</ol></li>
-</ol>
-</blockquote>
-
-<p><strong>Lemma 2A.</strong>  <em>Let f(&lambda;) map the closed unit interval to itself, and let $C=15$.</em></p>
-
-<table><thead>
-<tr>
-<th><em>If $f$:</em></th>
-<th><em>Then, for every integer $n$ &ge; 1, the expression (1) in Lemma 2 is less than or equal to:</em></th>
-</tr>
-</thead><tbody>
-<tr>
-<td>(Case 1) <em>Is Hölder continuous, its Hölder exponent is $\alpha$, and its Hölder constant is $L$ or less, where $0\lt\alpha\lt 1$.</em></td>
-<td>$2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}$.</td>
-</tr>
-<tr>
-<td>(Case 2) <em>Has a Hölder continuous (first) derivative whose Hölder exponent is $\alpha$ and whose Hölder constant is $L$ or less, where $0\lt\alpha\le 1$.</em></td>
-<td>$CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}$.</td>
-</tr>
-<tr>
-<td>(Case 3) <em>Has a Lipschitz continuous derivative whose Lipschitz constant is $M$ or less.</em></td>
-<td>$(C/4)M\frac{1}{8n-4}$.</td>
-</tr>
-<tr>
-<td>(Case 4) <em>Is in the Zygmund class with constant equal to or less than $D$.</em></td>
-<td>$(C/2) D\sqrt{1/(8n-4)}$.</td>
-</tr>
-</tbody></table>
-
-<p><em>Proof.</em> Strukov and Timan (1977)[^61] proved the following bound: $$\
-|\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])|\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where <em>Y</em> is a random variable and &omega;<sub>2</sub>(.) is a <em>second-order modulus of continuity</em> of <em>f</em> (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values greater than one real number and less than another, as in this case.</p>
-
-<p>Suppose <em>Y</em> = <em>X</em>/<em>n</em>, where <em>X</em> is as in Lemma 2.  Then <em>Y</em>&#39;s variance (<strong>Var</strong>[<em>Y</em>]) is less than or equal to 1/(8*<em>n</em>&minus; 4), and the left-hand side of Strukov and Timan&#39;s bound is the same as the expression (1).</p>
-
-<p>Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying Strukov and Timan&#39;s bound, the bound on <em>Y</em>&#39;s variance, as well as a property given in Stancu et al. (2001)[^47] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le 2C\omega((\text{Var}[Y])^{1/2}/2)\le 2CL((\text{Var}[Y])^{1/2}/2)^\alpha)\le 2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$</p>
-
-<p>Case 2: Since $f$&#39;s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^47]&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le C ((\text{Var}[Y])^{1/2}/2) \omega((\text{Var}[Y])^{1/2}/2)\le CL((\text{Var}[Y])^{1/2}/2)^{1+\alpha}$$ $$\le CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$</p>
-
-<p>Case 3: Follows from case 2 since a Hölder continuous function with Hölder exponent 1 and Hölder constant $L$ is Lipschitz continuous with Lipschitz constant $M$.</p>
-
-<p>Case 4: Since <em>f</em> is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$ &#x25a1;</p>
-
-<blockquote>
-<p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>&omega;</em><sub>2</sub>(<em>h</em>) with <em>h</em> &ge; 0, for which <em>&omega;<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever <em>f</em> is continuous and <em>x</em> and <em>y</em> are in <em>f</em>&#39;s domain.</p>
-</blockquote>
-
-<p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;</em></p>
-
-<p>$$\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),$$</p>
-
-<p><em>for every integer n&ge;1 that&#39;s a power of 2.  If the series &eta;(n) converges to a finite value for each such $n$, and if it converges to 0 as $n$ gets large, then the following scheme for f(&lambda;) is valid in the following sense:</em></p>
-
-<p><em>There are polynomials $g_n$ and $h_n$ (where $n\ge 1$ is an integer power of 2) as follows. The $k$-th Bernstein coefficient of $g_n$ and $h_n$ is <strong>fbelow</strong>(n, k) and <strong>fabove</strong>(n, k), respectively (where $0\le k\le n$), where:</em></p>
-
-<p><em>If $n_0 = 1$:</em></p>
-
-<ul>
-<li><em><strong>fbelow</strong>(n, k) =</em> $f(k/n)-\eta(n)$.</li>
-<li><em><strong>fabove</strong>(n, k) =</em> $f(k/n)+\eta(n)$.</li>
-</ul>
-
-<p><em>If $n_0 &gt; 1$:</em></p>
-
-<ul>
-<li><em><strong>fbelow</strong>(n, k) =</em> min(<strong>fbelow</strong>($n_0$,0), <strong>fbelow</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) <em>if</em> $n &lt; n_0$; $f(k/n)-\eta(n)$ <em>otherwise.</em></li>
-<li><em><strong>fabove</strong>(n, k) =</em> max(<strong>fabove</strong>($n_0$,0), <strong>fabove</strong>($n_0$,1), ..., <strong>fbelow</strong>($n_0$,$n_0$)) <em>if</em> $n &lt; n_0$; $f(k/n)+\eta(n)$ <em>otherwise.</em></li>
-</ul>
-
-<p><em>The polynomials $g_n$ and $h_n$ satisfy:</em></p>
-
-<ol>
-<li><em>$g_n \le h_n$.</em></li>
-<li><em>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</em></li>
-<li>$(g_{n+1}-g_n)$ <em>and</em> $(h_{n}-h_{n+1})$ <em>are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $n+1$.</em></li>
-</ol>
-
-<p><em>Proof.</em> For simplicity, this proof assumes first that $n_0 = 1$.</p>
-
-<p>For the series <em>&eta;</em>(<em>n</em>) in the theorem, because $\phi(n)$ is nonnegative, each term of the series is nonnegative making the series nonnegative and, by the assumption that the series converges, <em>&eta;</em>(<em>n</em>) is nowhere increasing with increasing <em>n</em>.</p>
-
-<p>Item 1 is trivial.  If $n\ge n_0$, $g_n$ is simply the Bernstein polynomial of $f$ minus a nonnegative value, and $h_n$ is the Bernstein polynomial of $f$ plus that same value, and if $n$ is less than $n_0$, $g_n$ is a constant value not less than the lowest point reachable by the lower polynomials, and $h_n$ is a constant value not less than the highest point reachable by the upper polynomials.</p>
-
-<p>Item 2 is likewise trivial. A well known result is that the Bernstein polynomials of $f$ converge to $f$ as their degree $n$ gets large.  And because the series <em>&eta;</em> (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, the upper and lower shifts will converge to 0 so that $g_n$ and $h_n$ converge to the degree-$n$ Bernstein polynomials and thus to $f$.</p>
-
-<p>Item 3 is the <em>consistency requirement</em> described earlier in this page. This is ensured as in Proposition 10 of Nacu and Peres (2005)[^3] by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is <em>&eta;</em>(<em>n</em>), a solution to the equation 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(2 * <em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) (see note below), where <em>&phi;</em>(<em>n</em>) is a function that takes on a nonnegative value.</p>
-
-<p><em>&phi;</em>(<em>n</em>) is, roughly speaking, the minimum distance between one polynomial and the next so that the consistency requirement is met between those two polynomials.  Compare the assumptions on <em>&phi;</em> in Theorem 1 with equations (10) and (11) in Nacu and Peres (2005).</p>
-
-<p>The solution for $\eta(n)$ given in the statement of the theorem is easy to prove by noting that this is a recursive process: we start by calculating the series for <em>n</em> = 2*<em>n</em>, then adding <em>&phi;</em>(<em>n</em>) to it (which will be positive), in effect working backwards and recursively, and we can easily see that we can calculate the series for <em>n</em> = 2*<em>n</em> only if the series converges, hence the assumption of a converging series.</p>
-
-<p>Now to prove the result assuming that $n_0 &gt; 1$.</p>
-
-<p>Doing this involves taking advantage of the observation in Remark B of Nacu and Peres (2005)[^3] that we can start defining the polynomials at any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 or greater, but less than $n_0$, would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal. The lower constants are no greater than $g_{n_0}$&#39;s lowest Bernstein coefficient, and the upper constants are no less than $g_{n_0}$&#39;s highest Bernstein coefficients; they meet Item 3 because these lower and upper constants, when rewritten as polynomials in Bernstein form degree $n_0$, have Bernstein coefficients that are still no greater or no less, respectively, than the corresponding degree-$n_0$ polynomial. With the <em>&phi;</em> given in this theorem, the series <em>&eta;</em>(<em>n</em>) in the theorem remains nonnegative.  Moreover, since <em>&eta;</em> is assumed to converge, <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li>There is only one solution <em>&eta;</em>(<em>n</em>) in the case at hand.  Unlike so-called <a href="https://math.stackexchange.com/questions/3993739"><strong><em>functional equations</em></strong></a> and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in the case at hand, namely the solution that makes the series converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(4 * <em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(8 * <em>n</em>) &minus; <em>&phi;</em>(4*<em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = ...</li>
-<li>$\log_2(n)$ is the number $x$ such that $2^x = n$.</li>
-</ol>
-</blockquote>
-
-<p><strong>Proposition 1A.</strong> <em>If a scheme satisfies Theorem 1, the polynomials $g_n$ and $h_n$ in the scheme can be made to satisfy conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)[^3] as follows:</em></p>
-
-<ul>
-<li>$g_n$ = $g_{n-1}$ <em>and</em> $h_n$ = $h_{n-1}$ <em>whenever $n$ is an integer greater than 1 and not a power of 2.</em></li>
-<li><em>If <strong>fabove</strong>(n, k) &gt; 1 for a given $n$ and some $k$, the coefficients of $h_n$ (the upper polynomial) are all 1.</em></li>
-<li><em>If <strong>fbelow</strong>(n, k) &lt; 0 for a given $n$ and some $k$, the coefficients of $g_n$ (the lower polynomial) are all 0.</em></li>
-</ul>
-
-<p><em>Proof:</em> Condition (i) of Proposition 3 says that each coefficient of the polynomials must be 0 or greater and 1 or less.  This is ensured starting with a large enough value of <em>n</em> greater than 0 that&#39;s a power of 2, call it <em>n</em><sub>1</sub>, as shown next.</p>
-
-<p>Let <em>&epsilon;</em> be a positive distance between 0 and the minimum or between 1 and the maximum of <em>f</em>, whichever is smaller.  This <em>&epsilon;</em> exists by the assumption that <em>f</em> is bounded away from 0 and 1. Because the series <em>&eta;</em> (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, <em>&eta;</em>(<em>n</em>) will eventually stay less than <em>&epsilon;</em>.  And if $n\ge n_0$ is a power of 2 (where $n_0$ is as in Theorem 1), the <code>f(k/n)</code> term is bounded by the minimum and maximum of <em>f</em> by construction. This combined means that the lower and upper polynomials&#39; Bernstein coefficients will eventually be bounded by 0 and 1 for every integer <em>n</em> starting with <em>n</em><sub>1</sub>.</p>
-
-<p>For <em>n</em> less than <em>n</em><sub>1</sub>, condition (i) is ensured by setting the lower or upper polynomial&#39;s coefficient to 0 or 1, respectively, whenever a coefficient of the degree-<em>n</em> polynomial would otherwise be less than 0 or greater than 1, respectively.</p>
-
-<p>Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The only thing to add is that for $n$ less than <em>n</em><sub>1</sub>, the lower and upper polynomials $g_n$ and $h_n$ can be treated as 0 or 1 without affecting convergence, and that for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iii) by Remark B of Nacu and Peres (2005)[^3].</p>
-
-<p>Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For <em>n</em>=<em>n</em><sub>1</sub>, condition (iv) is maintained by noting that the degree-<em>n</em><sub>1</sub> polynomial&#39;s coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^3].  &#x25a1;</p>
-
-<blockquote>
-<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^62]; see also Remark C of Nacu and Peres (2005)[^3].</p>
-</blockquote>
-
-<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
-
-<ul>
-<li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; D(n).</em></li>
-<li><em><strong>fabove</strong>(n, k) = f(k/n) + D(n).</em></li>
-</ul>
-
-<p><em>Where</em> $D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$.</p>
-
-<p><em>Or:</em></p>
-
-<ul>
-<li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; &eta;(n).</em></li>
-<li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + &eta;(n).</em></li>
-</ul>
-
-<p><em>Where &eta;(n) = M*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)*n<sup>&alpha;/2</sup>).</em></p>
-
-<p><em>Proof.</em> Because $f$ is Hölder continuous, it admits the modulus of continuity $\omega(x)=Mx^{\alpha}$.  By part 1 of lemma 2:</p>
-
-<ul>
-<li>For each integer $n\ge 1$ that&#39;s a power of 2 ($n_0=1$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(2n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$ (where $\eta(n)$ is as in Theorem 1).</li>
-<li>For each integer $n\ge 4$ that&#39;s a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(7n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=$ M*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)*n<sup>&alpha;/2</sup>).</li>
-</ul>
-
-<p>In both cases $\eta(n)$ is finite and converges to 0 as $n$ increases.</p>
-
-<p>The result then follows from Theorem 1. &#x25a1;</p>
-
-<blockquote>
-<p><strong>Note:</strong> For specific values of <em>&alpha;</em>, the equation <em>D</em>(<em>n</em>) = <em>D</em>(2 * <em>n</em>) + <em>&phi;</em>(<em>n</em>) can be solved via linear recurrences; an example for <em>&alpha;</em> = 1/2 is the following code in Python that uses the SymPy computer algebra library: <code>alpha=(S(1)/2); rsolve(Eq(f(n), f(n+1)+z*(1/(2*2**n))**(alpha/2)), f(n)).subs(n,ln(n,2)).simplify()</code>.  Trying different values of <em>&alpha;</em> suggested the following formula for Hölder continuous functions with <em>&alpha;</em> of 1/<em>j</em> or greater: (<em>M</em>* $\sum_{i=0}^{2j-1} 2^{i/(2j)})/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>&minus;1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>
-</blockquote>
-
-<p><strong>Corollary 2.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If that function is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
-
-<ul>
-<li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
-<li><em><strong>fabove</strong>(n, k) = f(k/n) + M/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
-</ul>
-
-<p><em>Or:</em></p>
-
-<ul>
-<li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M*sqrt(2/7)/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
-<li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + M*sqrt(2/7)/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
-</ul>
-
-<p><em>Proof.</em> Because Lipschitz continuous functions are Hölder continuous with Hölder constant <em>M</em> and exponent 1, the result follows from Corollary 1. &#x25a1;</p>
-
-<blockquote>
-<p><strong>Note:</strong> The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005)[^3].</p>
-</blockquote>
-
-<p><strong>Corollary 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If that function has a Lipschitz continuous derivative with Lipschitz constant L, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
-
-<ul>
-<li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; L/(7*n).</em></li>
-<li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + L/(7*n).</em></li>
-</ul>
-
-<p><em>Proof.</em> By part 3 of lemma 2, for each integer $n\ge 4$ that&#39;s a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1). $\eta(n)$ is finite and converges to 0 as $n$ increases. The result then follows from Theorem 1. &#x25a1;</p>
-
-<blockquote>
-<p><strong>Note:</strong> Nacu and Peres (2005)[^3] already proved a looser scheme in the case when $f$ has a second derivative on the closed unit interval that is not greater than a constant (a slightly stronger condition than having a Lipschitz continuous derivative on that domain).</p>
-</blockquote>
-
-<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If that function is convex and nowhere decreasing, then Theorem 1 remains valid with &phi;(n) = <strong>E</strong>[f(Y/n)] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem.</em></p>
-
-<p><em>Proof.</em>  Follows from Theorem 1 and part 4 of Lemma 2 above. With the <em>&phi;</em> given in this theorem, the series <em>&eta;</em>(<em>n</em>) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1&#39;s assumption that the series converges, so that <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
-
-<p><strong>Proposition 1.</strong></p>
-
-<ol>
-<li><em>Let f be as given in Theorem 1 or 2 or Corollary 1 to 3, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the schemes of those results remain valid if <strong>fbelow</strong>(n, k) = f(k/n), rather than as given in those results.</em></li>
-<li><em>Let f be as given in Theorem 1 or 2 or Corollary 1 to 3, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the schemes of those results remain valid if <strong>fabove</strong>(n, k) = f(k/n), rather than as given in those results.</em></li>
-<li><p><em>Theorems 1 and 2 and Corollaries 1 to 3 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;</em></p>
-
-<ul>
-<li><em><strong>fbelow</strong>(n, k) = (k/n)*<strong>fbelow</strong>(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)*<strong>fbelow</strong>(n&minus;1, min(n&minus;1, k)), and</em></li>
-<li><em><strong>fabove</strong>(n, k) = (k/n)*<strong>fabove</strong>(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)*<strong>fabove</strong>(n&minus;1, min(n&minus;1, k)),</em></li>
-</ul>
-
-<p><em>for every integer n&ge;1 other than a power of 2. Parts 1 and 2 of this proposition still apply to the modified scheme.</em></p></li>
-</ol>
-
-<p><em>Proof.</em> Parts 1 and 2 follow from Theorem 1 or 2 or Corollary 1 to 3, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein polynomials of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)[^3]. &#x25a1;</p>
-
-<p>The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.</p>
-
-<p><strong>Lemma 3.</strong> <em>Let $f$ be a strictly bounded factory function. Let $S$ be an infinite set of positive integers.  For each integer $n\ge 1$, let $W_n(\lambda)$ be a function, and let $\epsilon_n(f)$ be a nonnegative constant that depends on $f$ and $n$.  Suppose that there are polynomials $g_n$ and $h_n$ (for each $n$ in $S$) as follows:</em></p>
-
-<ol>
-<li><em>$g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f)$ and $W_n(k/n) + \epsilon_n(f)$, respectively ($0\le k\le n$).</em></li>
-<li><em>$g_n \le h_n$.</em></li>
-<li><em>$g_n$ and $h_n$ converge to $f$ as $n$ gets large.</em></li>
-<li>$(g_{m}-g_n)$ <em>and</em> $(h_{n}-h_{m})$ <em>are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$.</em></li>
-</ol>
-
-<p><em>Then for each $n$ in $S$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$.</em></p>
-
-<p><em>Proof:</em> $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, property 4 in the lemma corresponds to condition (iv) of Nacu and Peres (2005)[^3], which implies that, for every $m&gt;n$, $g_{n}(\lambda)\le g_{m}(\lambda)\le f(\lambda)$ (the lower polynomials &quot;increase&quot;) and $h_{n}(\lambda)\ge h_{m}(\lambda)\ge f(\lambda)$ (the upper polynomials &quot;decrease&quot;) for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^3].</p>
-
-<p>Then if $B_n(W_n(\lambda)) &lt; f(\lambda)$ for some $\lambda$ in the closed unit interval, shifting the left-hand side upward by $\epsilon_n(f)$ (a nonnegative constant) means that $h_n = B_n(W_n(\lambda))+\epsilon_n(f) \ge f(\lambda)$, and rearranging this expression leads to $f(\lambda) - B_n(W_n(\lambda)) \le \epsilon_n(f)$.</p>
-
-<p>Likewise, if $B_n(W_n(\lambda)) &gt; f(\lambda)$ for some $\lambda$ in the closed unit interval, shifting the left-hand side downward by $\epsilon_n(f)$ means that $g_n = B_n(W_n(\lambda))-\epsilon_n(f) \le f(\lambda)$, and rearranging this expression leads to $B_n(W_n(\lambda)) - f(\lambda) \le \epsilon_n(f)$.</p>
-
-<p>This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$.  &#x25a1;</p>
-
-<p><strong>Corollary 4</strong>.  <em>If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that&#39;s a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$.</em></p>
-
-<p><strong>Lemma 5</strong>. Let $n\ge 1$ be an integer.  Suppose $g_{2n}$ and $g_{n}$ are polynomials in Bernstein form of degree $2n$ and $n$, respectively, and their domain is the closed unit interval. Suppose $g_{2n}$ and $g_n$ satisfy the property:</p>
-
-<ul>
-<li>$(g_{2n}-g_n)$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $2n$.</li>
-</ul>
-
-<p>Then for every $x\ge 0$, $g_{2n}+x$ and $g_n$ satisfy that property, and for every $x\ge 1$, $g_{2n}\cdot x$ and $g_n$ do as well.</p>
-
-<p>The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, $g_{2n}$&#39;s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have non-negative Bernstein coefficients as required by the property.</p>
-
-<p>It is also true that, for every $x\ge 0$, $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property, but a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n\cdot x=g_{2n}\cdot x=0$, so that the property is trivially satisfied.)</p>
-
-<p>Finally, it is true that, for every real number $x$, $g_{2n}+x$ and $g_n+x$ satisfy the same property, but, again, a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n+x=g_n$ and $g_{2n}+x=g_{2n}$, so that the property is trivially satisfied.)</p>
-
-<p><a id=A_Conjecture_on_Polynomial_Approximation></a></p>
-
-<h4>A Conjecture on Polynomial Approximation</h4>
-
-<p>The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
-
-<p><strong>Conjecture.</strong></p>
-
-<p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).</p>
-
-<p>For each integer $n\ge1$ that&#39;s a power of 2, suppose that there is $D&gt;0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
-
-<p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:</p>
-
-<ol>
-<li>$g_n$ has Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ otherwise.</li>
-<li>$g_n$ converges to $f$ as $n$ gets large.</li>
-<li>$(g_{n+1}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $n+1$.</li>
-</ol>
-
-<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
-
-<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li>If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).</li>
-<li>The left-hand side of (PB) is not greater than $|(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))|$ + $|W_n(k/(2n))-f(k/(2n))|$  + $|W_{2n}(k/(2n))-f(k/(2n))|$.</li>
-<li>By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3)[^3].</li>
-</ol>
-</blockquote>
-
-<hr>
-
-<p>The following lower bounds on $C_0$ can be shown.  In the table:</p>
-
-<ul>
-<li>$M_{r}$ is the maximum of the absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.</li>
-<li>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</li>
-</ul>
-
-<p>&nbsp;</p>
-
-<table><thead>
-<tr>
-<th>If $r$ is...</th>
-<th>And...</th>
-<th>With the Bernstein coefficients of...</th>
-<th>Then $C_0$ must be greater than:</th>
-<th>And $C_0$ is conjectured to be:</th>
-<th>Because of this counterexample:</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>3</td>
-<td>$M=M_{3}$</td>
-<td>$U_{n,2}$*</td>
-<td>0.29</td>
-<td>$\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.**</td>
-<td>$2 \lambda \left(1 - \lambda\right)$</td>
-</tr>
-<tr>
-<td>3</td>
-<td>$M=M_{3}$, $n\ge 4$</td>
-<td>$U_{n,2}$</td>
-<td>0.08287</td>
-<td>0.09</td>
-<td>$2 \lambda \left(1 - \lambda\right)$</td>
-</tr>
-<tr>
-<td>4</td>
-<td>$M=M_{4}$</td>
-<td>$U_{n,2}$</td>
-<td>0.24999</td>
-<td>0.25</td>
-<td>$2 \lambda \left(1 - \lambda\right)$</td>
-</tr>
-<tr>
-<td>4</td>
-<td>$M=M_{4}$, $n\ge 4$</td>
-<td>$U_{n,2}$</td>
-<td>0.14</td>
-<td>0.15</td>
-<td>$2 \lambda \left(1 - \lambda\right)$</td>
-</tr>
-<tr>
-<td>5</td>
-<td>$M=M_{5}$</td>
-<td>$U_{n,3}$***</td>
-<td>0.26</td>
-<td>0.27</td>
-<td>$2 \lambda \left(1 - \lambda\right)$</td>
-</tr>
-<tr>
-<td>5</td>
-<td>$M=M_{5}$, $n\ge 4$</td>
-<td>$U_{n,3}$</td>
-<td>0.1226</td>
-<td>0.13</td>
-<td>$\lambda^{3}$</td>
-</tr>
-<tr>
-<td>6</td>
-<td>$M=M_{6}$</td>
-<td>$U_{n,3}$</td>
-<td>0.25</td>
-<td>0.26</td>
-<td>$\lambda^{3}$</td>
-</tr>
-<tr>
-<td>6</td>
-<td>$M=M_{6}$, $n\ge 4$</td>
-<td>$U_{n,3}$</td>
-<td>0.25</td>
-<td>0.26</td>
-<td>$\lambda^{3}$</td>
-</tr>
-<tr>
-<td>3</td>
-<td>$M=M_{3}$, $n\ge 8$</td>
-<td>$L_{2,n/2}$</td>
-<td>0.0414</td>
-<td>0.08</td>
-<td>$\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.00001}/2$ if <em>&lambda;</em> &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.00001}/2$ otherwise.</td>
-</tr>
-<tr>
-<td>3</td>
-<td>$M=M_{3}$, $n\ge 8$</td>
-<td>$L_{2,n/2}$</td>
-<td>0.1781/$n^{1/2}$</td>
-<td>0.19/$n^{1/2}$.</td>
-<td>$\mathcal{E}_5((\lambda+1)/2)-1$, where $\mathcal{E}_5$ is the Euler spline of order 5 (Schoenberg 1973)[^63].</td>
-</tr>
-</tbody></table>
-
-<p>* Corresponds to the iterated Boolean sum of order 2 (Güntürk and Li 2021)[^14].</p>
-
-<p>*** Corresponds to the iterated Boolean sum of order 3 (Güntürk and Li 2021)[^14].</p>
-
-<p>** The following is evidence for the conjectured bound, at least if $f(0)=f(1)$.</p>
-
-<p>The Bernstein polynomials $B_n(f)$ satisfy the partition-of-unity property: $\sum_{k=0}^n (c+f(k/n)) p_{n,k} = c+\sum_{k=0}^n f(k/n) p_{n,k}$ for every $c$, where $\sum_{k=0}^n p_{n,k}=1$.  So do the hypergeometric probabilities $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$.  Thus, rewrite $\sum_{k=0}^n (c+W_n(i/n)) \sigma_{n,k,i}$ = $\sum_{k=0}^n (2 (c+f) - B_n(c+f)) \sigma_{n,k,i}$ = $\sum_{k=0}^n (2c + 2f - c - B_n(f)) \sigma_{n,k,i}$ = $\sum_{k=0}^n (c + 2f - B_n(f)) \sigma_{n,k,i}$ = $c + \sum_{k=0}^n W_n(i/n) \sigma_{n,k,i}$.  And rewrite $c + \sum_{k=0}^n W_n(i/n) \sigma_{n,k,i} - (c+W_{2n}(k/(2n))) = \sum_{k=0}^n W_n(i/n) \sigma_{n,k,i} - W_{2n}(k/(2n))$. Thus, when $W_n = 2f-B_n(f)$, $f(0)$ can equal 0 without loss of generality.</p>
-
-<p>Suppose $f(0) = f(1) = 0$, then $W_1(f)$ will equal 0.  Let $X$ be a hypergeometric(2,k,1) random variable (for $k$ equal to 0, 1, or 2). Then $E[f(X/1)]$ will likewise equal 0.  Thus, since $W_n(f)(0)=f(0)$ and $W_n(f)(1)=f(1)$ for every $n$, and since $W_2(f)(1/2) = 2f(1/2) - B_2(f)(1/2)$ (and thus considers only the values of $f$ at 0, 1/2, and 1), $|E[f(X/1)] - f(k/2)|$ will take its maximum at $k=1$, namely $|0 - (2f(1/2) - B_2(f)(1/2))| = |- 3f(1/2)/2|$. That right-hand side is the minimum shift needed for the consistency requirement to hold; call it $z$, and let $y$ be $M_{3}$. To get the minimum $C_0$ that works, solve $C_0 y/1^{3/2} - C_0 y/2^{3/2}$ = z for $C_0$.  The solution is&mdash; $$C_0=\frac{z}{y} \frac{4}{4-\sqrt{2}} = \frac{|0-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}.$$</p>
-
-<p>The solution shows that if $y = M_{3}$ can come arbitrarily close to 0, then no value for $C_0$ will work.  Which is why the goal is now to find a tight upper bound on the least possible value of $M_{3}$ for $r=3$ such that:</p>
-
-<ol>
-<li>$f(\lambda)$ has a continuous third derivative.</li>
-<li>$f(0)=f(1)=0$ and $0 &lt; f(1/2) &lt; 1$.</li>
-</ol>
-
-<p>Take the function $g(\lambda)=2\lambda(1-\lambda)$, which satisfies (1), (2), and $g(0)=g(1)=0$ and $g(1/2)=1/2$, and has an $M_{3}$ of 4.  Given that $\frac{|0-g(1/2)|}{y}=\frac{|0-1/2|}{y}=1/8$, the goal is now to see whether any function $f$ satisfying (1) and (2) has $\max(0, f(1/2)) &lt; M_{3} &lt; 8\cdot |0-f(1/2)|=8 f(1/2)$.</p>
-
-<p>To aid in this goal, there is a formula to find the least possible Lipschitz constant for $f$&#39;s first derivative (see &quot;Definitions&quot;)[^64], given a finite set of points (0, 1/2, and 1 in the case at hand) and the values of $f$ and $f&#39;$ at those points (Le Gruyer 2009)[^65]; see also (Herbert-Voss et al. 2017)[^66]. Denote $L(.,.,.)$ as this least possible Lipschitz constant.  Then according to that formula&mdash; $$L([0, 1/2, 1], [0, t, 0], [z_1, z_2, z_3]) = \max(2 \sqrt{\left|{z_{1} - z_{2}}\right|^{2} + \left|{- 4 t + z_{1} + z_{2}}\right|^{2}} + 2 \left|{- 4 t + z_{1} + z_{2}}\right|,$$ $$\sqrt{\left|{z_{1} - z_{3}}\right|^{2} + \left|{z_{1} + z_{3}}\right|^{2}} + \left|{z_{1} + z_{3}}\right|,$$ $$2 \sqrt{\left|{z_{2} - z_{3}}\right|^{2} + \left|{4 t + z_{2} + z_{3}}\right|^{2}} + 2 \left|{4 t + z_{2} + z_{3}}\right|)$$ (where $t$ is greater than 0 and less than 1), so only $f&#39;$ values in the interval $[-8f(1/2), 8f(1/2)]$ have to be checked.</p>
-
-<p>Let $H = 8\cdot |\beta-f(1/2)|$. In this case, only values of $f$ in the closed unit interval have to be checked and only $f&#39;$ values in $[-H, H]$ have to be checked.</p>
-
-<p>Assuming that no $M_{3}$ less than $8\cdot |0-f(1/2)|$ is found, then&mdash; $$C_0=\frac{|0-f(1/2)|}{y} \frac{12}{2\cdot (4-\sqrt{2})}=\frac{|0-f(1/2)|}{H} \frac{12}{2\cdot (4-\sqrt{2})}=(1/8) \frac{12}{2\cdot (4-\sqrt{2})}$$ $$=3/(16-4\sqrt{2}),$$ which is the conjectured lower bound for $C_0$.</p>
+<p><small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)[^65].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>&lambda;</em>.</small></p>
 
 <p><a id=Example_of_Polynomial_Building_Scheme></a></p>
 
@@ -2156,7 +2107,7 @@ for i in range(20):
 <p>It is not yet known whether the following functions can be simulated:</p>
 
 <ul>
-<li><em>&lambda;</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)[^67] proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose coefficients are non-negative real numbers.</li>
+<li><em>&lambda;</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)[^66] proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose coefficients are non-negative real numbers.</li>
 <li>min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>).</li>
 </ul>
 
@@ -2189,12 +2140,12 @@ for i in range(20):
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Mossel and Peres (2005)[^68] defined pushdown automata to start with a non-empty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
-<li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)[^69] and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)[^69], as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
+<li>Mossel and Peres (2005)[^67] defined pushdown automata to start with a non-empty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
+<li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)[^68] and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)[^68], as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
 </ol>
 </blockquote>
 
-<p><strong>Proposition 0</strong> (Mossel and Peres 2005[^68], Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
+<p><strong>Proposition 0</strong> (Mossel and Peres 2005[^67], Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
 
 <p>It is not known whether <strong>ALGRAT</strong> and <strong>PDA</strong> are equal, but the following can be established about <strong>PDA</strong>:</p>
 
@@ -2255,11 +2206,11 @@ for i in range(20):
 
 <p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or (f&#x2218;g)(&lambda;).</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>&lambda;</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^68] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>&lambda;</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^67] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
 <p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps the open interval (0, 1) to itself is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)[^68].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;</p>
+<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)[^67].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> An unbounded stack size is necessary for a pushdown automaton to simulate functions that a finite-state machine can&#39;t.  With a bounded stack size, there is a finite-state machine where each state not only holds the pushdown automaton&#39;s original state, but also encodes the contents of the stack (which is possible because the stack&#39;s size is bounded); each operation that would push, pop, or change the top symbol transitions to a state with the appropriate encoding of the stack instead.</p>
@@ -2281,9 +2232,9 @@ for i in range(20):
 (S&prime;, HEADS, <em>stacksymbol</em>) &rarr; (T, <em>newstack</em>), and<br/>
 (S&prime;, TAILS, <em>stacksymbol</em>) &rarr; (FAILURE, {}).</p>
 
-<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)[^70], the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of Mossel and Peres (2005)[^68] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)[^69], the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of Mossel and Peres (2005)[^67] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
-<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^71]):</p>
+<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^70]):</p>
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> (rewrite <em>X</em> to the letter <em>a</em>).</li>
@@ -2299,7 +2250,7 @@ for i in range(20):
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> becomes the two rules&mdash;<br>(START, HEADS, <em>X</em>) &rarr; (<em>letter</em>, {}), and<br>(START, TAILS, <em>X</em>) &rarr; (<em>letter</em>, {}).<br>Here, <em>letter</em> is either START or a unique state in <em>F</em> that &quot;detours&quot; to a letter-generating operation for <em>a</em> and sets the state back to START when finished (see Proposition 4).  If <em>a</em> is <em>&epsilon;</em>, <em>letter</em> is START and no letter-generating operation is done.</li>
-<li><em>X</em> &rarr;<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)[^68].  If <em>a</em><sub><em>i</em></sub> is <em>&epsilon;</em>, no letter-generating operation is done.</li>
+<li><em>X</em> &rarr;<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)[^67].  If <em>a</em><sub><em>i</em></sub> is <em>&epsilon;</em>, no letter-generating operation is done.</li>
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) becomes the two rules&mdash;<br>(START, HEADS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}), and<br>(START, TAILS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}).</li>
 </ul>
 
@@ -2311,16 +2262,16 @@ for i in range(20):
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) becomes <em>X</em> = <em>Y</em>*<em>Z</em>.</li>
 </ul>
 
-<p>Solving this system for the grammar&#39;s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar&#39;s word distribution.  (See also Flajolet et al. 2010[^72], Icard 2020[^73].) &#x25a1;</p>
+<p>Solving this system for the grammar&#39;s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar&#39;s word distribution.  (See also Flajolet et al. 2010[^71], Icard 2020[^72].) &#x25a1;</p>
 
 <blockquote>
-<p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)[^72], corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
+<p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)[^71], corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
 
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010)[^72].  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p></li>
-<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)[^68]; see also Esparza et al. (2004)[^74].  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
+<li><p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010)[^71].  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p></li>
+<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)[^67]; see also Esparza et al. (2004)[^73].  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
 
 <ul>
 <li>(<em>st</em>, <em>p</em>, <em>sy</em>) &rarr; (<em>s2</em>, {}) becomes either <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = <em>p</em> if <em>s2</em> is <em>en</em>, or <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = 0 otherwise.</li>
@@ -2337,7 +2288,7 @@ for i in range(20):
 <li>When the stack is empty, output 0 if <em>G</em> is in the FAILURE state, or 1 otherwise.</li>
 </ol>
 
-<p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called &quot;end-of-string&quot; symbol, so that a pushdown automaton can be built that accepts &quot;empty strings&quot;; an example is Elder et al. (2015)[^75].</p></li>
+<p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called &quot;end-of-string&quot; symbol, so that a pushdown automaton can be built that accepts &quot;empty strings&quot;; an example is Elder et al. (2015)[^74].</p></li>
 </ol>
 </blockquote>
 
@@ -2363,7 +2314,7 @@ for i in range(20):
 
 <p><em>Proof:</em>  By Lagrange&#39;s continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last &quot;few&quot; of which repeat forever.  The following example describes a periodic continued fraction expansion: [0; 1, 2, (5, 4, 3)], which is the same as [0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, ...].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (<code>(5, 4, 3)</code>) is 3; and the size of the non-period (<code>1, 2</code>) is 2.</p>
 
-<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)[^71] can be described as follows.  The chain&#39;s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
+<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)[^70] can be described as follows.  The chain&#39;s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
 
 <ul>
 <li>From E: Go to N with probability <em>x</em>, or to the box&#39;s call port with probability 1 &minus; <em>x</em>.</li>
@@ -2378,11 +2329,11 @@ for i in range(20):
 <li>For each <em>i</em> in [1, <em>n</em>+1], there is a component labeled <em>i</em>.  It is the same as the template component, except <em>x</em> = <em>a</em>[<em>i</em>]/(1 + <em>a</em>[<em>i</em>]), and <em>y</em> = 1/<em>a</em>[<em>i</em>].  The component&#39;s single box goes to the component labeled <em>i</em>+1, <em>except</em> that for component <em>n</em>+<em>p</em>, the component&#39;s single box goes to the component labeled <em>n</em>+1.</li>
 </ul>
 
-<p>According to Etessami and Yannakakis (2009)[^71], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
+<p>According to Etessami and Yannakakis (2009)[^70], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
 
 <p><strong>Lemma 1:</strong> <em>The square root function sqrt(&lambda;) is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> See Mossel and Peres (2005)[^68]. &#x25a1;</p>
+<p><em>Proof:</em> See Mossel and Peres (2005)[^67]. &#x25a1;</p>
 
 <p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class <strong>PDA</strong>.</em></p>
 
@@ -2390,7 +2341,7 @@ for i in range(20):
 
 <p>For general <em>m</em> and <em>n</em>, write <em>f</em> as ((sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt)(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
-<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^68] because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^67] because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
 <p><a id=Finite_State_and_Pushdown_Generators></a></p>
 
@@ -2411,7 +2362,7 @@ for i in range(20):
 <li><code>PDF(z)</code> is the probability density function of <em>X</em>, or the derivative of <code>CDF(z)</code>, or the relative probability of choosing a number &quot;close&quot; to <em>z</em> at random.</li>
 </ul>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^55] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 &le; <code>z</code> &le; 1 is irrational (Vatan 2001)[^76], (Kindler and Romik 2004)[^77], and it can be shown that the expected value (mean or &quot;long-run average&quot;) of <em>X</em> must be a rational number. [^78]</p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^63] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 &le; <code>z</code> &le; 1 is irrational (Vatan 2001)[^75], (Kindler and Romik 2004)[^76], and it can be shown that the expected value (mean or &quot;long-run average&quot;) of <em>X</em> must be a rational number. [^77]</p>
 
 <p><strong>Proposition 8.</strong> <em>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:</em></p>
 
@@ -2424,7 +2375,7 @@ for i in range(20):
 
 <p>Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:</p>
 
-<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)[^79] section 5.3), for some k equal to 2 or greater.</em></p>
+<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)[^78] section 5.3), for some k equal to 2 or greater.</em></p>
 
 <p><em>Proof Sketch:</em> There are two cases.</p>
 
@@ -2435,15 +2386,15 @@ for i in range(20):
 <li>The <em>output function</em> takes a configuration described above and returns a digit.  If the coin wasn&#39;t flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).</li>
 </ol>
 
-<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)[^76].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.  Now at this point the generator&#39;s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  &#x25a1;</p>
+<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)[^75].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.  Now at this point the generator&#39;s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  &#x25a1;</p>
 
-<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)[^69].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)[^69].  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
+<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)[^68].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)[^68].  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
 
-<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)[^79], the generator can generate a real number&#39;s binary expansion only if that number is rational or transcendental (see also Cobham (1968)[^80]; Adamczewski and Bugeaud (2007)[^81]).  &#x25a1;</p>
+<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)[^78], the generator can generate a real number&#39;s binary expansion only if that number is rational or transcendental (see also Cobham (1968)[^79]; Adamczewski and Bugeaud (2007)[^80]).  &#x25a1;</p>
 
 <p><strong>Proposition 9.</strong> <em>If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function on that interval.</em></p>
 
-<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)[^77] and Knuth and Yao (1976)[^55] with Richman (2012)[^82], who proved that a continuous algebraic function on an open interval is piecewise analytic (&quot;analytic&quot; means writable as $c_0 x^0+ ... +c_i x^i + ...$ where $c_i$ are real numbers).</p>
+<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)[^76] and Knuth and Yao (1976)[^63] with Richman (2012)[^81], who proved that a continuous algebraic function on an open interval is piecewise analytic (&quot;analytic&quot; means writable as $c_0 x^0+ ... +c_i x^i + ...$ where $c_i$ are real numbers).</p>
 
 <p><a id=License></a></p>
 
