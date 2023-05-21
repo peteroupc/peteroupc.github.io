@@ -242,7 +242,7 @@ A condition such as "0 is not in the domain of $f$, or $f$ can be extended to a 
 
 Let $J$ be a closed interval on $(0, 1)$, and let $f(\lambda):J \to (0, 1)$ be continuous.
 
-Then by Keane and O'Brien, $f$ admits an algorithm that solves the Bernoulli factory problem for $f$ (using only the biased coin, in fact). A related problem is a Bernoulli factory that takes a coin with unknown probability of heads $\lambda \in J$ and produces _one or more_ samples, at a time, of the probability $f(\lambda)$. This question calls it a _multiple-output Bernoulli factory_.
+Then by Keane and O'Brien, $f$ admits a _Bernoulli factory algorithm_, an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$, and no other source of randomness. A related problem is a Bernoulli factory that takes a coin with unknown probability of heads $\lambda \in J$ and produces _one or more_ samples, at a time, of the probability $f(\lambda)$. This question calls it a _multiple-output Bernoulli factory_.
 
 Obviously, any single-output Bernoulli factory can produce multiple outputs by running itself multiple times. But for some functions $f$, it may be that producing multiple outputs at a time may use fewer coin flips than producing one output multiple times.
 
