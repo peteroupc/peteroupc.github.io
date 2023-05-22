@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/21"><meta name="citation_online_date" content="2023/05/21"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/22"><meta name="citation_online_date" content="2023/05/22"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -133,7 +133,9 @@
 
 <p>The section &quot;Building the Lower and Upper Polynomials&quot; are ways to build sequences of polynomials that appropriately converge to a factory function if that function meets certain conditions.</p>
 
-<p>To determine if the methods are right for <em>f</em>(<em>&lambda;</em>), a deep mathematical analysis of <em>f</em> is required; it would be helpful to plot that factory function using a computer algebra system to see if it belongs to any of the classes of functions described below.  The next section gives examples of well-behaved factory functions.</p>
+<p>To determine if the methods are right for <em>f</em>(<em>&lambda;</em>), a deep mathematical analysis of <em>f</em> is required; it would be helpful to plot that  function using a computer algebra system to see if it is described in the section &quot;Building the Upper and Lower Polynomials&quot;, later.</p>
+
+<p>The next section gives examples of well-behaved functions.</p>
 
 <p><a id=Examples_of_Well_Behaved_Functions></a></p>
 
@@ -192,9 +194,19 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>$\lambda^z$.</td>
-<td><em>&alpha;</em>=1.<br><em>L</em>=<em>z</em>.</td>
-<td>$z\ge 1$.</td>
+<td>$\lambda^z/t$.</td>
+<td><em>&alpha;</em>=<em>z</em>.<br><em>L</em>=1/<em>t</em>.</td>
+<td>$0\lt z\le 1$, $t\ge 1$.</td>
+</tr>
+<tr>
+<td>$\lambda^z/t$.</td>
+<td><em>&alpha;</em>=1 (Lipschitz continuous).<br><em>L</em>=<em>z</em>/<em>t</em>.</td>
+<td>$z\ge 1$, $t\ge 1$.</td>
+</tr>
+<tr>
+<td>$\lambda^{1/3}/4 + \lambda^{2/3}$/5.</td>
+<td><em>&alpha;</em>=1/3.<br><em>L</em>=9/20.</td>
+<td><em>&alpha;</em> is the minimum of Hölder exponents, min(1/3, 2/3), and <em>L</em> is the sum of Hölder constants, 1/4+1/5.</td>
 </tr>
 <tr>
 <td>$1/2-(1-2\lambda)^{z}/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise.</td>
@@ -208,7 +220,7 @@
 </tr>
 <tr>
 <td>Continuous and <strong>piecewise linear</strong>.</td>
-<td><em>&alpha;</em>=1 (Lipschitz continuous).<br><em>L</em> is the greatest absolute value of the slope among all pieces&#39; slopes.</td>
+<td><em>&alpha;</em>=1.<br><em>L</em> is the greatest absolute value of the slope among all pieces&#39; slopes.</td>
 <td><em>f</em>(<em>&lambda;</em>) is <em>piecewise linear</em> if it&#39;s made up of multiple linear functions defined on a finite number of &quot;pieces&quot;, or subintervals, that together make up the closed unit interval.</td>
 </tr>
 <tr>
@@ -490,7 +502,7 @@
 <li>$\epsilon(f, n)$ as an upper bound on the absolute value of the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(f, n)$ must increase nowhere as $n$ increases, and must converge to 0.
 
 <ul>
-<li>For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r&gt;0$ is a multiple of 1/2, since then it&#39;s easy to find the value of ErrShift(f, n), below.  In addition, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz continuous $(2r-1)$-th derivative.  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz continuous third derivative.)</li>
+<li>For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r&gt;0$ is a multiple of 1/2, since then it&#39;s easy to find the value of ErrShift(f, n), below.  In this case, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz continuous $(2r-1)$-th derivative (see &quot;<a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a>&quot;, later).  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz continuous third derivative.)</li>
 <li>For examples of error bounds, see &quot;Approximate Bernoulli Factories&quot;, later.</li>
 </ul></li>
 <li>ErrShift($f, m$) as 1.01 $\cdot\sum_{i\ge m} \epsilon(f, 2^i)$.  The factor 1.01 is needed to ensure each difference polynomial is strictly between 0 and 1.
@@ -907,11 +919,11 @@
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with at most a probability proportional to <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and every <em>&lambda;</em>, and for large enough <em>n</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
-<td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011)[^17].</td>
+<td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011, Theorem 13)[^17].</td>
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with at most a probability proportional to <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and every <em>&lambda;</em>, and for large enough <em>n</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
-<td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with Hölder exponent (<em>&alpha;</em> &minus; <em>r</em>) or greater, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)[^17]. Assumes <em>f</em> is bounded away from 0 and 1.</td>
+<td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with Hölder exponent (<em>&alpha;</em> &minus; <em>r</em>) or greater, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011, Theorem 8)[^17]. Assumes <em>f</em> is bounded away from 0 and 1.</td>
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)[^30].</td>
@@ -928,7 +940,7 @@
 
 <ul>
 <li><em>Real analytic</em> if, for every real number <em>z</em> in $f$&#39;s domain, it is writable as $f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...$, where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
-<li>In the <em>Zygmund class</em> if it is continuous and there is a constant $D&gt;0$ with the following property: For each step size $\epsilon&gt;0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that&#39;s Lipschitz continuous (see &quot;Definitions&quot;) is in the Zygmund class, but not necessarily vice versa.</li>
+<li>In the <em>Zygmund class</em> if it is continuous and there is a constant $D&gt;0$ with the following property: For each step size $\epsilon&gt;0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two smaller classes of Lipschitz continuous functions (see &quot;Definitions&quot;) and functions with a continuous derivative.</li>
 </ul>
 </blockquote>
 

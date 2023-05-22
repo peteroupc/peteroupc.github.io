@@ -93,7 +93,9 @@ In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup
 
 The section "Building the Lower and Upper Polynomials" are ways to build sequences of polynomials that appropriately converge to a factory function if that function meets certain conditions.
 
-To determine if the methods are right for _f_(_&lambda;_), a deep mathematical analysis of _f_ is required; it would be helpful to plot that factory function using a computer algebra system to see if it belongs to any of the classes of functions described below.  The next section gives examples of well-behaved factory functions.
+To determine if the methods are right for _f_(_&lambda;_), a deep mathematical analysis of _f_ is required; it would be helpful to plot that  function using a computer algebra system to see if it is described in the section "Building the Upper and Lower Polynomials", later.
+
+The next section gives examples of well-behaved functions.
 
 <a id=Examples_of_Well_Behaved_Functions></a>
 ### Examples of Well-Behaved Functions
@@ -115,10 +117,12 @@ In the following examples, _f_(_&lambda;_) is a function defined on the closed u
 
 | Function _f_(_&lambda;_): | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_L_): | Notes |
     --- | --- | --- |
-|$\lambda^z$. | _&alpha;_=1.<br>_L_=_z_. | $z\ge 1$. |
+|$\lambda^z/t$. | _&alpha;_=_z_.<br>_L_=1/_t_. | $0\lt z\le 1$, $t\ge 1$. |
+|$\lambda^z/t$. | _&alpha;_=1 (Lipschitz continuous).<br>_L_=_z_/_t_. | $z\ge 1$, $t\ge 1$. |
+|$\lambda^{1/3}/4 + \lambda^{2/3}$/5. | _&alpha;_=1/3.<br>_L_=9/20. |  _&alpha;_ is the minimum of Hölder exponents, min(1/3, 2/3), and _L_ is the sum of Hölder constants, 1/4+1/5. |
 |$1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise. | _&alpha;_=_z_.<br>_L_=$2^z/2$. | $0\lt z\le 1$.  In this example, $f$ has a "vertical" slope at 1/2, unless _z_ is 1. |
 |$3/4-\sqrt{\lambda(1-\lambda)}$. | _&alpha;_=1/2.<br>_L_=1. | Has a "vertical" slope at 0 and 1. |
-| Continuous and **piecewise linear**. | _&alpha;_=1 (Lipschitz continuous).<br>_L_ is the greatest absolute value of the slope among all pieces' slopes. | _f_(_&lambda;_) is _piecewise linear_ if it's made up of multiple linear functions defined on a finite number of "pieces", or subintervals, that together make up the closed unit interval. |
+| Continuous and **piecewise linear**. | _&alpha;_=1.<br>_L_ is the greatest absolute value of the slope among all pieces' slopes. | _f_(_&lambda;_) is _piecewise linear_ if it's made up of multiple linear functions defined on a finite number of "pieces", or subintervals, that together make up the closed unit interval. |
 | Piecewise linear; equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions. | _&alpha;_=1.<br>_L_ = 1.5. | _L_ = $\max(\text{abs}((3/4-0)/(2/3))$, $\text{abs}((1/4-3/4)/(1/3)))$.<br>Concave because the first piece's slope is greater than the second piece's. |
 | min(_&lambda;_\*_mult_, 1−_&epsilon;_). | _&alpha;_=1.<br>_L_ = _mult_. | _mult_ &gt; 0, _&epsilon;_ &gt; 0.  Piecewise linear; equals 0 at 0, 1−_&epsilon;_ at (1−_&epsilon;_)/_mult_, and 1−_&epsilon;_ at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].<br>_L_=max(_mult_, 0).<br>Concave. |
 | 1/10 if _&lambda;_ is 0; &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise. | Not Hölder continuous. | Has a slope near 0 that's steeper than every "nth" root. |
@@ -273,7 +277,7 @@ In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose max
 
 - In the algorithm, denote:
     - $\epsilon(f, n)$ as an upper bound on the absolute value of the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(f, n)$ must increase nowhere as $n$ increases, and must converge to 0.
-        - For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), below.  In addition, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz continuous $(2r-1)$-th derivative.  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz continuous third derivative.)
+        - For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), below.  In this case, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz continuous $(2r-1)$-th derivative (see "[**Achievable Simulation Rates**](#Achievable_Simulation_Rates)", later).  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz continuous third derivative.)
         - For examples of error bounds, see "Approximate Bernoulli Factories", later.
     - ErrShift($f, m$) as 1.01 $\cdot\sum_{i\ge m} \epsilon(f, 2^i)$.  The factor 1.01 is needed to ensure each difference polynomial is strictly between 0 and 1.
         - **Example:** If $\epsilon(f, n) = C/n^r$, then ErrShift($f, m)$ = $1.01\cdot C 2^r/(((2^r)-1)\cdot 2^{rm})$.
@@ -493,15 +497,15 @@ The following table summarizes the rate of simulation (in terms of the number of
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in the closed unit interval (Goyal and Sigman 2012\)[^8]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^30]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^31].  |
 | Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
-| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_, and for large enough _n_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011\)[^17]. |
-| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_, and for large enough _n_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011\)[^17]. Assumes _f_ is bounded away from 0 and 1. |
+| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_, and for large enough _n_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011, Theorem 13\)[^17]. |
+| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_, and for large enough _n_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011, Theorem 8\)[^17]. Assumes _f_ is bounded away from 0 and 1. |
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^30]. | If and only if _f_ is real analytic (see note below) (Nacu and Peres 2005\)[^1].   |
 | Average number of flips greater than or equal to (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^31]. |
 
 > **Note:** A function $f(\lambda)$ is:
 >
 > - _Real analytic_ if, for every real number _z_ in $f$'s domain, it is writable as $f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...$, where $f^{(i)}$ is the $i$-th derivative of $f$.
-> - In the _Zygmund class_ if it is continuous and there is a constant $D>0$ with the following property: For each step size $\epsilon>0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. A function that's Lipschitz continuous (see "Definitions") is in the Zygmund class, but not necessarily vice versa.
+> - In the _Zygmund class_ if it is continuous and there is a constant $D>0$ with the following property: For each step size $\epsilon>0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two smaller classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
 
 <a id=Notes></a>
 ## Notes
