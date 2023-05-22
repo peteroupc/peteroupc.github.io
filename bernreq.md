@@ -27,7 +27,6 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Special Cases**](#Special_Cases)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
     - [**Questions**](#Questions)
-- [**Simulable and strongly simulable functions**](#Simulable_and_strongly_simulable_functions)
 - [**Multiple-Output Bernoulli Factories**](#Multiple_Output_Bernoulli_Factories)
     - [**Questions**](#Questions_2)
     - [**Functions with Optimal Factories**](#Functions_with_Optimal_Factories)
@@ -208,33 +207,6 @@ Let $f(\lambda):[0,1]\to (0,1)$ have a $\beta-\lfloor\beta\rfloor$)-Hölder cont
 2. Same question, but for the polynomial family $(g_n)$ given in (1), above.
 3. Same questions as 1 and 2, but $f$'s $(r-1)$-th derivative is in the Zygmund class. (Note that the method of Holtz et al.'s paper as written doesn't apply to integer $\beta$; see also Conjecture 34 of that paper.)
 
-<a id=Simulable_and_strongly_simulable_functions></a>
-## Simulable and strongly simulable functions
-
-[**https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)
-
-There are two kinds of Bernoulli factory functions:
-
-- A function $f(\lambda)$ is _simulable_ if an algorithm exists to toss heads with probability $f(\lambda)$ given a coin with probability of heads $\lambda$ (the "biased coin") as well as a fair coin.
-- A function $f(\lambda)$ is _strongly simulable_ if an algorithm exists to toss heads with probability $f(\lambda)$ given **only** a coin with probability of heads $\lambda$.
-
-Every strongly simulable function is simulable, but not vice versa.
-
-In fact, Keane and O'Brien (1994) showed already that $f(\lambda)$ is strongly simulable if $f$ is simulable and neither 0 nor 1 is in $f$'s domain (that is, if the biased coin doesn't show heads every time or tails every time).  And it's also easy to show that if $f$ is strongly simulable, then $f(0)$ must be 0 or 1 if 0 is in $f$'s domain and $f(1)$ must be 0 or 1 whenever 1 is in $f$'s domain.
-
-However, it's not so trivial to find the exact class of strongly simulable functions when $f$'s domain includes 0, 1, or both.
-
-As one illustration of this, the proof of Keane and O'Brien relies on generating a geometric random variate and using that variate to control which "part" of the target function $f(\lambda)$ to simulate.   This obviously works on all of [0, 1] if the algorithm uses both the biased coin and a separate fair coin.  However, if only the biased coin is used in the algorithm, the geometric random variate is generated using fair bits via the von Neumann method, which however will never terminate if $\lambda$ is either 0 or 1.  In addition, a [**result I found**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) gives sufficient conditions for being strongly simulable when $f$'s domain includes 0, 1, or both.  Its proof proceeds by showing, among other things, that the Bernoulli factory for $f$ must flip the input coin and get 0 and 1 before it simulates any fair coin flips via the von Neumann trick.
-
-Question: **Prove or disprove:** Let $f:(D\subseteq [0, 1])\to [0,1]$.  Given a coin that shows heads with probability $\lambda$ (which can be 0 or 1), it is possible to toss heads with probability $f(\lambda)$ using the coin and no other sources of randomness (and, thus, $f$ is _strongly simulable_) **if and only if**&mdash;
-
-- $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ [Keane and O'Brien 1994]), and
-- $f(0)$ is 0 or 1 if 0 is in $f$'s domain and $f(1)$ is 0 or 1 whenever 1 is in $f$'s domain, and
-- if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)\gt f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
-- if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $g(x)\lt f(x)$ for every $x$ in the domain of f, except at 0 and 1.
-
-A condition such as "0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon>0$" does not work.  A counterexample is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ ($f(0)=0$), which is strongly simulable at 0 despite not being Lipschitz at 0.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)
-
 <a id=Multiple_Output_Bernoulli_Factories></a>
 ## Multiple-Output Bernoulli Factories
 
@@ -350,6 +322,14 @@ This section is withdrawn. For the Bernoulli factory problem, rational functions
 Prove or disprove:
 
 - Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}|B_n(f)(\lambda)-f(\lambda)|)$ (where $n\ge 1$ is an integer power of 2) are in Bernstein form of degree $n$, converge to $f$ from below, and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. The same is true for the polynomials $(g_n) = (B_n(f) - |B_n(f)(1/2)-f(1/2)|)$, if $f$ is also symmetric about 1/2.
+- Let $f:(D\subseteq [0, 1])\to [0,1]$.  Given a coin that shows heads with probability $\lambda$ (which can be 0 or 1), it is possible to toss heads with probability $f(\lambda)$ using the coin and no other sources of randomness (and, thus, $f$ is [**_strongly simulable_**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)) **if and only if**&mdash;
+
+    - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ [Keane and O'Brien 1994]), and
+    - $f(0)$ is 0 or 1 if 0 is in $f$'s domain and $f(1)$ is 0 or 1 whenever 1 is in $f$'s domain, and
+    - if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)\gt f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
+    - if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $g(x)\lt f(x)$ for every $x$ in the domain of f, except at 0 and 1.
+
+    A condition such as "0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon>0$" does not work.  A counterexample is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ ($f(0)=0$), which is strongly simulable at 0 despite not being Lipschitz at 0.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)  Keane and O'Brien already showed strong simulability when $D$ contains neither 0 nor 1.
 
 <a id=End_Notes></a>
 ## End Notes
