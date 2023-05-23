@@ -23,8 +23,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**A Conjecture on Polynomial Approximation**](#A_Conjecture_on_Polynomial_Approximation)
     - [**Strategies**](#Strategies)
-- [**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)
-    - [**Special Cases**](#Special_Cases)
+- [**Building Series Expansions of Polynomials**](#Building_Series_Expansions_of_Polynomials)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
     - [**Questions**](#Questions)
 - [**Multiple-Output Bernoulli Factories**](#Multiple_Output_Bernoulli_Factories)
@@ -34,7 +33,6 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Pushdown Automata**](#Pushdown_Automata)
     - [**Algebraic Functions**](#Algebraic_Functions)
     - [**Questions**](#Questions_3)
-- [**Reverse-time martingales**](#Reverse_time_martingales)
 - [**Other Questions**](#Other_Questions)
 - [**End Notes**](#End_Notes)
 - [**References**](#References)
@@ -134,41 +132,18 @@ The following are some strategies for answering these questions:
 - Find other polynomial operators meeting the requirements of the main question (see "Main Question", above) and having explicit error bounds, with no hidden constants, especially operators that preserve polynomials of a higher degree than linear functions.
 - Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 5 and 6 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
 
-<a id=Tossing_Heads_According_to_a_Concave_Function></a>
-## Tossing Heads According to a Concave Function
+<a id=Building_Series_Expansions_of_Polynomials></a>
+## Building Series Expansions of Polynomials
 
 [**https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials**](https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials)
 
 Suppose $f:[0,1]\to[0,1]$ is continuous, polynomially bounded, and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, or in the Zygmund class, or $f$ is real analytic).
 
-Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) has a simple [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html) (and is preferably a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$).
+Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$.
 
 - An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 < p < 1$ is a known rational.  That is, the probability of getting $a$ is $p (1-p)^a$.
 - The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
-
-**See also Note 1 in "[**End Notes**](#End_Notes)".**
-
-<a id=Special_Cases></a>
-### Special Cases
-
-One special case of the question above is if&mdash;
-
-- $f:[0,1]\to [0,1)$ is concave, and
-- $\mathbb{P}(X=a)=p (1-p)^a$, where $0 < p < 1$ is rational, and
-- $\gamma_a(\lambda) = B_{n_{a}}(f)(\lambda) - B_{n_{a-1}}(f)(\lambda)$ ($\gamma_a(0)=B_{n_{a}}(f)(\lambda)$), where $B_n(f)$ is the degree-$n$ Bernstein polynomial of $f$, and
-- $(n_a)$ is an increasing sequence of positive integers, with $n_{-1} := 0$, and
-
-However, using this technique for a given concave $f$ requires finding the appropriate sequence for $n_a$ (such as $2^{a+s}$ for some $s\ge 0$) and the appropriate value of $p$ so that the series expansion can be formed.  Here is an example for $\min(\lambda, 1-\lambda)$ which _appears_ to be correct, but finding it was far from rigorous:  $n_a = 2^{a+1}$, $p = 0.27$.
-
-Once the appropriate series and $X$ are found, an algorithm to toss heads with probability equal to $f$ would be:
-
-1. Flip a coin that shows heads with probability $p$ until that coin shows heads.  Set $a$ to the number of tails.
-2. Write $\frac{\gamma_a(\lambda)}{\mathbb{P}(X=a)}$ (letting 0/0=0) as a polynomial in Bernstein form of degree $n_{a}$ (or a higher degree such that the Bernstein coefficients are all in [0, 1]). Flip the biased coin (with probability of heads $\lambda$) $n$ times, where $n$ is the polynomial's degree, and let $j$ be the number of heads.
-3. Return 1 with probability equal to the polynomial's $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).
-
-> **Note:** There is no general solution for all concave $f:[0,1]\to [0,1]$, not all of which are polynomially bounded (note the codomain is $[0,1]$, not $[0,1)$).  Indeed, there are several counterexamples: $g(\lambda)=\lim_{t\to\lambda} (1-\exp(-2/t))$ (which is smooth), or $h(\lambda)$ formed by taking $g(\lambda)$ at 0 and at all points of the form $1/n$, where $n\ge 1$ is an integer, and connecting them with linear functions (so that $h$ is not even differentiable).
->
-> **Note:** Another problem is to write $\gamma_a(\lambda)/\mathbb{P}(X=a)$ as a polynomial in Bernstein form with only 0 and 1 as coefficients.  However, this can be reduced to rewriting the expression to polynomials with dyadic rational coefficients, or even with coefficients whose binary expansion is easy to calculate.  In fact, the proof in Keane and O'Brien (1994) rewrites $f$ as: $f(\lambda)=\sum_{a\ge 1}\mathbb{P}(X=a) Q_a(\lambda)$, where $X$ is an integer-valued random variable 1 or greater and where each $Q_a(\lambda)$ is a polynomial in Bernstein form of degree $k_a$ with only 0 and 1 as coefficients.
+- Note that the proof of Keane and O'Brien (1994) is difficult to construct (it requires finding maximums, for example) and does not appropriately answer this question.
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
@@ -292,11 +267,6 @@ The following section of my open-source page, [**Pushdown Automata and Algebraic
 2. In particular, is min($\lambda$, $1-\lambda$) in class $\mathcal{D}$? What about $\lambda^{1/p}$ for some prime $p\ge 3$?
 
 **See also Notes 2 and 3.**
-
-<a id=Reverse_time_martingales></a>
-## Reverse-time martingales
-
-This section is withdrawn. For the Bernoulli factory problem, rational functions are probably not much better than polynomials when approximating functions with low smoothness (e.g., those with only three continuous derivatives).  This follows from Borwein (1979, theorem 29) and Holtz et al. (2011) (which disproved a theorem of Lorentz relied on by Borwein but maintained it with an extra assumption used in the Bernoulli factory setting).
 
 <a id=Other_Questions></a>
 ## Other Questions
