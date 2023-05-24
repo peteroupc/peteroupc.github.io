@@ -148,7 +148,7 @@ Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda
 
 [**https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
 
-- [https://mathoverflow.net/questions/447064/explicit-bounds-on-derivatives-of-moments-related-to-bernstein-polynomials](https://mathoverflow.net/questions/447064/explicit-bounds-on-derivatives-of-moments-related-to-bernstein-polynomials)
+- [**https://mathoverflow.net/questions/447064/explicit-bounds-on-derivatives-of-moments-related-to-bernstein-polynomials**](https://mathoverflow.net/questions/447064/explicit-bounds-on-derivatives-of-moments-related-to-bernstein-polynomials)
 
 Let $B_n(f)$ be the degree-$n$ Bernstein polynomial of $f$.
 
@@ -236,27 +236,20 @@ The following section of my open-source page, [**Pushdown Automata and Algebraic
 - Given integer _m_&ge;0, rational number 0&lt;_k_&le;exp(1), and unknown heads probability 0&le;_&lambda;_&le;1, find a [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) for&mdash; $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$ that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  A solution is sought especially when _k_ is 1 or 2.   Note that the right-hand side of (PD) can be implemented by [**ExpMinus**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z) and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs **ExpMinus**, but this is likewise far from lightweight.  (Calculating exp(.) with floating-point operations is not acceptable for this question.)
 - Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
 - For each $r>0$, characterize the functions $f(\lambda)$ that admit a Bernoulli factory where the expected number of coin flips, raised to the power of $r$, where $r>0$, is finite.
-- [**Multiple-Output Bernoulli Factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let $f(\lambda):\[a, b\] \to (0, 1)$ be continuous, where $0\lt a\lt b\lt 1$**.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where&mdash; $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness.
+- [**Multiple-Output Bernoulli Factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let $f(\lambda):\[a, b\] \to (0, 1)$ be continuous, where $0\lt a\lt b\lt 1$**.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness (Keane and O'Brien 1994).
 
     But, **is there an algorithm for $f$ that produces _multiple_ outputs rather than one and has an expected number of coin flips per output that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain**? Call such an algorithm an _optimal factory_.  (See Nacu and Peres 2005, Question 1.)  And, does the answer change if the algorithm has access to a fair coin in addition to the biased coin?
 
     So far, constants as well as $\lambda$ and $1-\lambda$ do admit an optimal factory (see same work), and, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output algorithm for $f(\lambda) = \lambda/2$.  But are there others?  See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp.html#Multiple_Output_Bernoulli_Factory) for more information on my progress on the problem.
 
-- [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): What simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
-    - Should use only uniform random integers (or bits) and integer arithmetic.
-    - Does not use floating-point arithmetic, make direct use of irrational or transcendental functions or constants, or calculate the _p_-adic digit expansion of an irrational or transcendental function, for any real _p_.
-    - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
-
-    See also Flajolet et al., "On Buffon machines and numbers", 2010.  There are many ways to describe the irrational probability or factory function. References are sought to papers or books that describe irrational constants or factory functions in any of the following ways:
-
-    - For irrational constants:
-        - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions.
-        - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/bernoulli.html#pi___4)
-        - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/bernsupp.html#4_3___pi)
-        - Functions that map [0, 1] to [0, 1] whose integral is an irrational number.
-    - Bernoulli factory functions with any of the following series expansions, using rational arithmetic only:
-        - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
-        - Series with nonnegative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
+- [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): References are sought to papers and books that describe irrational constants or Bernoulli factory functions (continuous functions mapping (0,1) to itself) in any of the following ways.  Ideally they should involve only rational numbers and should not calculate _p_-adic digit expansions.
+    - Simulation experiments that succeed with an irrational probability.
+    - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions of irrational constants.
+    - Functions written as infinite power series with rational coefficients (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
+    - Irrational numbers written as series expansions with rational coefficients (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
+    - Functions whose integral is an irrational number.
+    - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/bernoulli.html#pi___4)
+    - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/bernsupp.html#4_3___pi).
 
 Prove or disprove:
 
