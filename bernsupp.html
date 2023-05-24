@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/23"><meta name="citation_online_date" content="2023/05/23"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/05/24"><meta name="citation_online_date" content="2023/05/24"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -194,14 +194,14 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>$\lambda^z/t$.</td>
-<td><em>&alpha;</em>=<em>z</em>.<br><em>L</em>=1/<em>t</em>.</td>
-<td>$0\lt z\le 1$, $t\ge 1$.</td>
+<td>$\lambda^z\cdot t$.</td>
+<td><em>&alpha;</em>=<em>z</em>.<br><em>L</em>=abs(<em>t</em>).</td>
+<td>$0\lt z\le 1$, $t\ne 0$.</td>
 </tr>
 <tr>
-<td>$\lambda^z/t$.</td>
-<td><em>&alpha;</em>=1 (Lipschitz continuous).<br><em>L</em>=<em>z</em>/<em>t</em>.</td>
-<td>$z\ge 1$, $t\ge 1$.</td>
+<td>$\lambda^z\cdot t$.</td>
+<td><em>&alpha;</em>=1 (Lipschitz continuous).<br><em>L</em>=<em>z</em>*abs(<em>t</em>).</td>
+<td>$z\ge 1$, $t$ is a real number.</td>
 </tr>
 <tr>
 <td>$\lambda^{1/3}/4 + \lambda^{2/3}$/5.</td>
@@ -252,7 +252,7 @@
 
 <p>The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: <code>lamda,c=symbols(&#39;lamda c&#39;); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c,0),h.subs(c,1)),(lamda,0,1))</code>.</p>
 
-<p><strong>Functions with a Hölder continuous or Lipschitz continuous derivative.</strong> The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case.  In the table below, if $f$ has a continuous <em>second</em> derivative on its domain, then <em>&alpha;</em> is 1 (the first derivative is Lipschitz continuous) and <em>L</em> is the maximum of the absolute value of that <em>second</em> derivative.</p>
+<p><strong>Functions with a Hölder continuous or Lipschitz continuous derivative.</strong> The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function&#39;s derivative can be found using the <code>diff</code> method.) In the table below, if $f$ has a continuous <em>second</em> derivative on its domain, then <em>&alpha;</em> is 1 (the first derivative is Lipschitz continuous) and <em>L</em> is the maximum of the absolute value of that <em>second</em> derivative.</p>
 
 <table><thead>
 <tr>
@@ -1714,9 +1714,9 @@
 <tr>
 <td>3</td>
 <td>$M=M_{3}$</td>
-<td>$U_{n,2}$*</td>
+<td>$U_{n,2}$</td>
 <td>0.29004</td>
-<td>$\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.**</td>
+<td>$\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.</td>
 <td>$2 \lambda \left(1 - \lambda\right)$</td>
 </tr>
 <tr>
@@ -1746,7 +1746,7 @@
 <tr>
 <td>5</td>
 <td>$M=M_{5}$</td>
-<td>$U_{n,3}$***</td>
+<td>$U_{n,3}$</td>
 <td>0.26</td>
 <td>0.27</td>
 <td>$2 \lambda \left(1 - \lambda\right)$</td>

@@ -26,13 +26,10 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Building Series Expansions of Polynomials**](#Building_Series_Expansions_of_Polynomials)
 - [**New coins from old, smoothly**](#New_coins_from_old_smoothly)
     - [**Questions**](#Questions)
-- [**Multiple-Output Bernoulli Factories**](#Multiple_Output_Bernoulli_Factories)
-    - [**Questions**](#Questions_2)
-    - [**Functions with Optimal Factories**](#Functions_with_Optimal_Factories)
 - [**From coin flips to algebraic functions via pushdown automata**](#From_coin_flips_to_algebraic_functions_via_pushdown_automata)
     - [**Pushdown Automata**](#Pushdown_Automata)
     - [**Algebraic Functions**](#Algebraic_Functions)
-    - [**Questions**](#Questions_3)
+    - [**Questions**](#Questions_2)
 - [**Other Questions**](#Other_Questions)
 - [**End Notes**](#End_Notes)
 - [**References**](#References)
@@ -45,7 +42,7 @@ The following summarizes most of the problems raised by these open questions.
 1. **Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (e.g., the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz, concave, strictly increasing, bounded variation, or Zygmund, or $f$ is real analytic).**
     - _Exact Bernoulli factory_: **Assuming $0\lt f(\lambda)\lt 1$, compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.**
     - _Approximate Bernoulli factory_: **Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.**
-    - _Series expansion of simple functions_: **Find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ is a polynomial or rational function with Bernstein coefficients lying in [0, 1].**
+    - _Series expansion of simple functions_: **Find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with Bernstein coefficients lying in [0, 1].**
 
     **The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).**
 2. **Characterize the following three classes of factory functions $f(\lambda)$:**
@@ -143,12 +140,15 @@ Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda
 
 - An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 < p < 1$ is a known rational.  That is, the probability of getting $a$ is $p (1-p)^a$.
 - The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
-- Note that the proof of Keane and O'Brien (1994) is difficult to construct (it requires finding maximums, for example) and does not appropriately answer this question.
+- The requirements imply that $\sum_{a\ge 0}\max |\gamma_a(\lambda)| \le 1$.
+- The proof of Keane and O'Brien (1994) produces a convex combination of polynomials with 0 and 1 as Bernstein coefficients, but the combination is difficult to construct (it requires finding maximums, for example) and so this proof does not appropriately answer this question.
 
 <a id=New_coins_from_old_smoothly></a>
 ## New coins from old, smoothly
 
 [**https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
+
+- [https://mathoverflow.net/questions/447064/explicit-bounds-on-derivatives-of-moments-related-to-bernstein-polynomials](https://mathoverflow.net/questions/447064/explicit-bounds-on-derivatives-of-moments-related-to-bernstein-polynomials)
 
 Let $B_n(f)$ be the degree-$n$ Bernstein polynomial of $f$.
 
@@ -181,44 +181,6 @@ Let $f(\lambda):[0,1]\to (0,1)$ have a $\beta-\lfloor\beta\rfloor$)-Hölder cont
 1. What is an explicit upper bound (with no hidden constants) on the error in approximating $f$ with the Lorentz operators $(Q_{n,r} f)$, described above, of the form $C\cdot M\cdot\max((\lambda(1-\lambda)/n)^{1/2}, 1/n)^r$, where $C=C(r)$ and $M=M(f,r)$ are constants?
 2. Same question, but for the polynomial family $(g_n)$ given in (1), above.
 3. Same questions as 1 and 2, but $f$'s $(r-1)$-th derivative is in the Zygmund class. (Note that the method of Holtz et al.'s paper as written doesn't apply to integer $\beta$; see also Conjecture 34 of that paper.)
-
-<a id=Multiple_Output_Bernoulli_Factories></a>
-## Multiple-Output Bernoulli Factories
-
-[**https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible)
-
-Let $J$ be a closed interval on $(0, 1)$, and let $f(\lambda):J \to (0, 1)$ be continuous.
-
-Then by Keane and O'Brien, $f$ admits a _Bernoulli factory algorithm_, an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$, and no other source of randomness. A related problem is a Bernoulli factory that takes a coin with unknown probability of heads $\lambda \in J$ and produces _one or more_ samples, at a time, of the probability $f(\lambda)$. This question calls it a _multiple-output Bernoulli factory_.
-
-Obviously, any single-output Bernoulli factory can produce multiple outputs by running itself multiple times. But for some functions $f$, it may be that producing multiple outputs at a time may use fewer coin flips than producing one output multiple times.
-
-Define the entropy bound as&mdash; $$h(f(\lambda))/h(\lambda),$$ where&mdash; $$h(x)=-x \ln(x)-(1-x) \ln(1-x),$$ is related to the Shannon entropy function.
-
-<a id=Questions_2></a>
-### Questions
-
-1. Given that a function $f(\lambda)$ is continuous and maps a closed interval in (0, 1) to (0, 1), is there a multiple-output Bernoulli factory algorithm for $f$ with an expected number of coin flips per sample that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain? Call such a Bernoulli factory an _optimal factory_.  (See Nacu and Peres 2005, Question 1.)
-2. Does the answer to question 1 change if the algorithm can also use a fair coin in addition to the biased coin?
-
-<a id=Functions_with_Optimal_Factories></a>
-### Functions with Optimal Factories
-
-So far, the following functions do admit an optimal factory:
-
-- The functions $\lambda$ and $1-\lambda$.
-- Constants in [0, 1]. As Nacu and Peres (2005) already showed, any such constant $c$ admits an optimal factory: generate unbiased random bits using Peres's iterated von Neumann extractor (Peres 1992), then build a binary tree that generates 1 with probability $c$ and 0 otherwise (Knuth and Yao 1976).
-
-It is easy to see that if an optimal factory exists for $f(\lambda)$, then one also exists for $1-f(\lambda)$: simply change all ones returned by the $f(\lambda)$ factory into zeros and vice versa.
-
-Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for $f(\lambda) = \lambda/2$: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992), then multiply each unbiased bit with another input coin flip to get a sample from $\lambda/2$. Given that the sample is equal to 0, there are three possibilities that can "be extracted to produce more fair bits": either the unbiased bit is 0, or the coin flip is 0, or both are 0.  This algorithm, though, might not count as an _optimal factory_, and Peres described this algorithm only incompletely.  Indeed, the correctness might depend on how the three possibilities are "extracted to produce more fair bits"; after all, the number of coin flips per sample, for every $\lambda$, must not surpass the entropy bound.
-
-In any case, I believe that not all factory functions admit an optimal factory described here; especially because&mdash;
-
-- the question may depend on $f$'s range, and
-- the efficiency of even a _single-output_ Bernoulli factory depends on $f$'s smoothness (e.g., $O(1/n^{(r+\alpha)/2})$ only if $f$'s $r$th derivative is Hölder continuous with Hölder exponent $\alpha$; Holtz et al. 2011).
-
-See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp.html#Multiple_Output_Bernoulli_Factory) for more information on my progress on the problem.
 
 <a id=From_coin_flips_to_algebraic_functions_via_pushdown_automata></a>
 ## From coin flips to algebraic functions via pushdown automata
@@ -260,7 +222,7 @@ The following section of my open-source page, [**Pushdown Automata and Algebraic
 - If a pushdown automaton can generate a discrete distribution of _n_-letter words of the same letter, it can generate that distribution conditioned on a finite set of word lengths, or a periodic infinite set of word lengths (e.g., odd word lengths only).
 - Every quadratic irrational in (0, 1) is in $\mathcal{D}$.
 
-<a id=Questions_3></a>
+<a id=Questions_2></a>
 ### Questions
 
 1. For every function in class $\mathcal{C}$, is there a pushdown automaton that can simulate that function? (In other words, is $\mathcal{D}=\mathcal{C}$?).
@@ -272,7 +234,14 @@ The following section of my open-source page, [**Pushdown Automata and Algebraic
 ## Other Questions
 
 - Given integer _m_&ge;0, rational number 0&lt;_k_&le;exp(1), and unknown heads probability 0&le;_&lambda;_&le;1, find a [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) for&mdash; $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$ that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  A solution is sought especially when _k_ is 1 or 2.   Note that the right-hand side of (PD) can be implemented by [**ExpMinus**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z) and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs **ExpMinus**, but this is likewise far from lightweight.  (Calculating exp(.) with floating-point operations is not acceptable for this question.)
-- Special case of "[**Tossing Heads According to a Concave Function**](#Tossing_Heads_According_to_a_Concave_Function)": Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
+- Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
+- For each $r>0$, characterize the functions $f(\lambda)$ that admit a Bernoulli factory where the expected number of coin flips, raised to the power of $r$, where $r>0$, is finite.
+- [**Multiple-Output Bernoulli Factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let $f(\lambda):\[a, b\] \to (0, 1)$ be continuous, where $0\lt a\lt b\lt 1$**.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where&mdash; $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness.
+
+    But, **is there an algorithm for $f$ that produces _multiple_ outputs rather than one and has an expected number of coin flips per output that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain**? Call such an algorithm an _optimal factory_.  (See Nacu and Peres 2005, Question 1.)  And, does the answer change if the algorithm has access to a fair coin in addition to the biased coin?
+
+    So far, constants as well as $\lambda$ and $1-\lambda$ do admit an optimal factory (see same work), and, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output algorithm for $f(\lambda) = \lambda/2$.  But are there others?  See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp.html#Multiple_Output_Bernoulli_Factory) for more information on my progress on the problem.
+
 - [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): What simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
     - Should use only uniform random integers (or bits) and integer arithmetic.
     - Does not use floating-point arithmetic, make direct use of irrational or transcendental functions or constants, or calculate the _p_-adic digit expansion of an irrational or transcendental function, for any real _p_.
@@ -303,8 +272,6 @@ Prove or disprove:
 
 <a id=End_Notes></a>
 ## End Notes
-
-**Note 1**: Besides the questions on concave functions given above, there is also the question of whether the solution terminates with a finite expected running time.  In this sense, Nacu & Peres showed that a finite expected time is possible only if $f$ is Lipschitz continuous, and I strongly suspect it's not possible either unless $f$ has a Hölder continuous fourth derivative, in view of the results by Holtz given in the section "New coins from old", smoothly.
 
 **Note 2**: On pushdown automata: Etessami and Yannakakis (2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.
 

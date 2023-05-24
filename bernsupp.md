@@ -117,8 +117,8 @@ In the following examples, _f_(_&lambda;_) is a function defined on the closed u
 
 | Function _f_(_&lambda;_): | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_L_): | Notes |
     --- | --- | --- |
-|$\lambda^z/t$. | _&alpha;_=_z_.<br>_L_=1/_t_. | $0\lt z\le 1$, $t\ge 1$. |
-|$\lambda^z/t$. | _&alpha;_=1 (Lipschitz continuous).<br>_L_=_z_/_t_. | $z\ge 1$, $t\ge 1$. |
+|$\lambda^z\cdot t$. | _&alpha;_=_z_.<br>_L_=abs(_t_). | $0\lt z\le 1$, $t\ne 0$. |
+|$\lambda^z\cdot t$. | _&alpha;_=1 (Lipschitz continuous).<br>_L_=_z_\*abs(_t_). | $z\ge 1$, $t$ is a real number. |
 |$\lambda^{1/3}/4 + \lambda^{2/3}$/5. | _&alpha;_=1/3.<br>_L_=9/20. |  _&alpha;_ is the minimum of Hölder exponents, min(1/3, 2/3), and _L_ is the sum of Hölder constants, 1/4+1/5. |
 |$1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise. | _&alpha;_=_z_.<br>_L_=$2^z/2$. | $0\lt z\le 1$.  In this example, $f$ has a "vertical" slope at 1/2, unless _z_ is 1. |
 |$3/4-\sqrt{\lambda(1-\lambda)}$. | _&alpha;_=1/2.<br>_L_=1. | Has a "vertical" slope at 0 and 1. |
@@ -137,7 +137,7 @@ Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\t
 
 The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: `lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c,0),h.subs(c,1)),(lamda,0,1))`.
 
-**Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case.  In the table below, if $f$ has a continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
+**Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the table below, if $f$ has a continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
 
 | Function $f(\lambda)$ | Derivative's Hölder exponent (_&alpha;_) and an upper bound of the derivative's Hölder constant (_L_): | Notes |
      ---- | ---- | ---- |
@@ -1110,11 +1110,11 @@ For a description of the polynomials in the third column, see [**"Polynomials as
 
 | If $r$ is... | And... | With the following polynomial's Bernstein coefficients: | Then $C_0$ must be greater than: | And $C_0$ is conjectured to be: | Because of this counterexample: |
  --- | --- | --- | --- | --- | --- |
-| 3 | $M=M_{3}$ | $U_{n,2}$\* | 0.29004 | $\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.\*\* | $2 \lambda \left(1 - \lambda\right)$ |
+| 3 | $M=M_{3}$ | $U_{n,2}$ | 0.29004 | $\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005. | $2 \lambda \left(1 - \lambda\right)$ |
 | 3 | $M=M_{3}$, $n\ge 4$ | $U_{n,2}$ | 0.08287 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_{4}$ | $U_{n,2}$ | 0.24999 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
 | 4 | $M=M_{4}$, $n\ge 4$ | $U_{n,2}$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
-| 5 | $M=M_{5}$ | $U_{n,3}$\*\*\* | 0.26 | 0.27 | $2 \lambda \left(1 - \lambda\right)$ |
+| 5 | $M=M_{5}$ | $U_{n,3}$ | 0.26 | 0.27 | $2 \lambda \left(1 - \lambda\right)$ |
 | 5 | $M=M_{5}$, $n\ge 4$ | $U_{n,3}$ | 0.1226 | 0.13 | $\lambda^{3}$ |
 | 6 | $M=M_{6}$ | $U_{n,3}$ | 0.25 | 0.26 | $\lambda^{3}$ |
 | 6 | $M=M_{6}$, $n\ge 4$ | $U_{n,3}$ | 0.25 | 0.26 | $\lambda^{3}$ |
