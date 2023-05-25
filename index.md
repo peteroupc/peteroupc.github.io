@@ -44,6 +44,7 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**A Wish for a New Atlas**](./newatlas.html)
 * [**A Note on Hash Functions**](./hash.html)
 * [**Pseudocode Conventions**](./pseudocode.html)
+* [**Approximations in Bernstein Form**](./bernapprox.html)
 * [**File Name Support in Applications**](./filenames.html)
 * [**Color Topics for Programmers**](./colorgen.html)
 * [**Supplemental Color Topics for Programmers**](./suppcolor.html)
