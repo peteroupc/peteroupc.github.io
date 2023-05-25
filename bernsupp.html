@@ -771,6 +771,8 @@
 
 <p>[^44]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
+<p>[^45]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Manolopoulos 2002)[^5].  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.<br><em>n</em>! = 1*2*3*...*<em>n</em> is also known as <em>n</em> factorial; in this document, (0!) = 1.</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -965,7 +967,7 @@
 <p>Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For <em>n</em>=<em>n</em><sub>1</sub>, condition (iv) is maintained by noting that the degree-<em>n</em><sub>1</sub> polynomial&#39;s coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers.  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^23]; see also Remark C of Nacu and Peres (2005)[^1].</p>
+<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers.[^45]  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^23]; see also Remark C of Nacu and Peres (2005)[^1].</p>
 </blockquote>
 
 <p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
