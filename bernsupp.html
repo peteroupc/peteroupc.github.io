@@ -36,8 +36,7 @@
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
-<li><a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a></li>
-<li><a href="#Results_Used_in_Approximate_Bernoulli_Factories"><strong>Results Used in Approximate Bernoulli Factories</strong></a></li>
+<li><a href="#Results_Used_in_Approximations_by_Polynomials"><strong>Results Used in Approximations by Polynomials</strong></a></li>
 <li><a href="#Chebyshev_Interpolants"><strong>Chebyshev Interpolants</strong></a></li>
 <li><a href="#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial-Building Schemes</strong></a>
 
@@ -487,7 +486,7 @@
 <li>There is a way to find the <em>Bernstein coefficients</em> of each polynomial $L_{n}(f)$ in the family of polynomials.</li>
 </ul>
 
-<p>For examples of suitable polynomials, see &quot;<a href="#Approximations_by_Polynomials_in_Bernstein_Form"><strong>&quot;Approximations by Polynomials in Bernstein Form&quot;</strong></a>, later.</p>
+<p>For examples of suitable polynomials, see <a href="#Approximations_by_Polynomials_in_Bernstein_Form"><strong>&quot;Approximations by Polynomials in Bernstein Form&quot;</strong></a>, later.</p>
 
 <p>In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called <em>T</em> in the algorithm below), then simulates an appropriate <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a> of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).[^7] To simulate $f$, the algorithm&mdash;</p>
 
@@ -616,11 +615,11 @@
 <li>More sophisticated ways to implement steps 2 and 3 are found in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; in the main article &quot;Bernoulli Factory Algorithms&quot;.</li>
 <li>There are other kinds of functions, besides polynomials and rational functions, that serve to approximate continuous functions.  But many of them work poorly as approximate Bernoulli factory functions because their lack of &quot;smoothness&quot; means there is no simple Bernoulli factory for them.  For example, a <em>spline</em>, which is a continuous function made up of a finite number of polynomial pieces, is generally not &quot;smooth&quot; at the points where the spline&#39;s pieces meet.</li>
 <li>Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>&lambda;</em>) be an approximation of <em>f</em>(<em>&lambda;</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>&lambda;</em>) &minus; <em>f</em>(<em>&lambda;</em>) and variance <em>g</em>(<em>&lambda;</em>)*(1&minus;<em>g</em>(<em>&lambda;</em>)). (&quot;Variance reduction&quot; methods are outside the scope of this document.)  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</li>
-<li>There are two known approximations to the linear function $f(\lambda) = 2\lambda$ using a polynomial of degree $n$ defined on the closed unit interval.  In each case, if <em>g</em>(<em>&lambda;</em>) is that polynomial and if $0\le\lambda\le 1/2$, then the error in approximating <em>f</em>(<em>&amp;lambda</em>) is no greater than 1&minus;<em>g</em>(1/2).
+<li>There are two known approximations to the linear function $f(\lambda) = 2\lambda$ using a polynomial of degree $n$ that maps the closed unit interval to itself.  In each case, if <em>g</em>(<em>&lambda;</em>) is that polynomial and if $0\le\lambda\le 1/2$, then the error in approximating <em>f</em>(<em>&lambda;</em>) is no greater than 1&minus;<em>g</em>(1/2).
 
 <ul>
 <li>In Henderson and Glynn (2003, Remark 4)[^12], the polynomial&#39;s <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  The polynomial <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</li>
-<li>In Nacu and Peres (2005, section 6)[^1], the polynomial&#39;s <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>i</em>)*2, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error in approximating <em>f</em> is no greater than 1&minus;<em>g</em>(1/2).  It corresponds to the following algorithm: Flip the input coin <em>n</em> times or until the ratio of &quot;heads&quot; to &quot;flips&quot; becomes at least 1/2, whichever comes first, then if <em>n</em> flips were made without the ratio becoming at least 1/2, return 0; otherwise, return 1.</li>
+<li>In Nacu and Peres (2005, section 6)[^1], the polynomial&#39;s <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>i</em>)*2, 1). It corresponds to the following algorithm: Flip the input coin <em>n</em> times or until the ratio of &quot;heads&quot; to &quot;flips&quot; becomes at least 1/2, whichever comes first, then if <em>n</em> flips were made without the ratio becoming at least 1/2, return 0; otherwise, return 1.</li>
 </ul></li>
 </ol>
 </blockquote>
@@ -869,7 +868,7 @@
 <li>meet the so-called &quot;ratio test&quot;,</li>
 </ul>
 
-<p>then the algorithms in Carvalho and Moreira (2022)[^28] can be used to find the first $n$+1 coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also &quot;<a href="#Proofs_on_Cutting_Off_a_Power_Series"><strong>Proofs on Cutting Off a Power Series</strong></a>&quot; in the appendix).</p>
+<p>then the algorithms in Carvalho and Moreira (2022)[^28] can be used to find the first $n$+1 coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also the appendix).</p>
 </blockquote>
 
 <p>Given the Taylor polynomial $P$, the algorithm to find the polynomial&#39;s Bernstein coefficients is as follows:</p>
@@ -1119,9 +1118,9 @@
 
 <h2>Appendix</h2>
 
-<p><a id=Proofs_on_Cutting_Off_a_Power_Series></a></p>
+<p><a id=Results_Used_in_Approximations_by_Polynomials></a></p>
 
-<h3>Proofs on Cutting Off a Power Series</h3>
+<h3>Results Used in Approximations by Polynomials</h3>
 
 <p><strong>Lemma A1:</strong> Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and sum to a finite value and where $0\le x\le 1$ (the domain is the closed unit interval). Then $f$ is convex and has a maximum at 1.</p>
 
@@ -1144,10 +1143,6 @@
 <p><em>Proof:</em> $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative coefficients, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;</p>
 
 <p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, so the algorithms given in Carvalho and Moreira (2022)[^28] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
-
-<p><a id=Results_Used_in_Approximate_Bernoulli_Factories></a></p>
-
-<h3>Results Used in Approximate Bernoulli Factories</h3>
 
 <p><strong>Proposition B1</strong>: Let $f(\lambda)$ map the closed unit interval to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in &quot;For Certain Functions&quot;) are nonnegative on the closed unit interval.</p>
 
@@ -1340,7 +1335,7 @@
 <li>$f(\lambda)$ must be continuous on the closed unit interval ($a=0$, $b=1$) and take on only values in that interval.</li>
 <li>If any Bernstein coefficient returned by the method is less than 0 or greater than 1, double the value of $n$ and repeat the method starting at step 2 until that condition is no longer true.</li>
 </ul></li>
-<li>It would be of interest to build Chebyshev-like interpolants that sample $f(\lambda)$ at rational values of $\lambda$ that get closer to the Chebyshev points (e.g., $cos(j\pi/n)$) with increasing $n$, and to find results that provide explicit bounds (with no hidden constants) on the approximation error that are close to those for Chebyshev interpolants.</li>
+<li>It would be of interest to build Chebyshev-like interpolants that sample $f(\lambda)$ at <em>rational</em> values of $\lambda$ that get closer to the Chebyshev points (e.g., $\cos(j\pi/n)$) with increasing $n$, and to find results that provide explicit bounds (with no hidden constants) on the approximation error that are close to those for Chebyshev interpolants.</li>
 </ol>
 </blockquote>
 
