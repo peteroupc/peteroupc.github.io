@@ -887,6 +887,16 @@ def chebcoeffs(func, x, n, a=0, b=1):
     ret[n] /= 2
     return ret
 
+def cheb_berncoeffs_deg(func, x, delta=SR("0.001"), nn=10):
+    if nn < 1:
+        raise ValueError("'nn' must be 1 or greater")
+    delta = S(delta)
+    chc = chebcoeffs(func.subs(x, (x + 1) / 2), x, nn)
+    chc = [c.simplify() for c in chc]
+    cc = Matrix(chc)
+    bern = cheb_to_bern(nn) * cc
+    return [floor(c / delta + S.Half) * delta for c in bern]
+
 def cheb_berncoeffs(func, x, eps=SR("0.001"), totvar=1, nu=3):
     # Calculates Bernstein coefficients of a polynomial that
     # approximates func(x) with an error tolerance 'eps',
@@ -902,8 +912,4 @@ def cheb_berncoeffs(func, x, eps=SR("0.001"), totvar=1, nu=3):
     eps = S(eps)
     delta = eps / 2
     nn = chebdegree_01_rough(eps / 2, totvar, nu)
-    chc = chebcoeffs(func.subs(x, (x + 1) / 2), x, nn)
-    chc = [c.simplify() for c in chc]
-    cc = Matrix(chc)
-    bern = cheb_to_bern(nn) * cc
-    return [floor(c / delta + S.Half) * delta for c in bern]
+    return cheb_berncoeffs_deg(func, x, delta=delta, nn=nn)
