@@ -2185,15 +2185,7 @@ Special case of the algorithm for **ln(_c_+_&lambda;_)/(_c_+_&lambda;_)**.
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-See my page "[**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)" for open questions, answers to which will greatly improve my articles on Bernoulli factories.  These questions include:
-
-- [**Polynomials that approach a factory function "fast"**](https://peteroupc.github.io/bernreq.html#Polynomials_that_approach_a_factory_function_fast).
-- [**New coins from old, smoothly**](https://peteroupc.github.io/bernreq.html#New_coins_from_old_smoothly).
-- [**Tossing Heads According to a Concave Function**](https://peteroupc.github.io/bernreq.html#Tossing_Heads_According_to_a_Concave_Function).
-- [**Simulable and strongly simulable functions**](https://peteroupc.github.io/bernreq.html#Simulable_and_strongly_simulable_functions).
-- [**Multiple-Output Bernoulli Factories**](https://peteroupc.github.io/bernreq.html#Multiple_Output_Bernoulli_Factories).
-- [**From coin flips to algebraic functions via pushdown automata**](https://peteroupc.github.io/bernreq.html#From_coin_flips_to_algebraic_functions_via_pushdown_automata).
-
+See my page "[**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)" for open questions, answers to which will greatly improve my articles on Bernoulli factories.
 Other questions:
 
 - [**Probabilities arising from permutations**](https://peteroupc.github.io/requestsother.html#Probabilities_arising_from_permutations).

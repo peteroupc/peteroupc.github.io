@@ -124,7 +124,7 @@ The following are some strategies for answering these questions:
 
 - [**Pushdown automata and algebraic functions**](https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata): A _pushdown automaton_ is a finite state machine with an unbounded stack, driven by a biased coin with an unknown probability of heads, $\lambda$. Its stack starts with a single symbol.  On each step, the machine flips the coin, then, based on the coin flip, the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero or more symbols. When the stack is empty, the machine stops and returns either 0 or 1 depending on the state it ends up at.
 
-    Let $f: (0, 1) \to (0, 1)$ be continuous. Mossel and Peres (2005) showed that a pushdown automaton can output 1 with probability $f(\lambda)$ only if $f$ is _algebraic over the rational numbers_ (there is a nonzero polynomial $P(x, y)$ in two variables and whose coefficients are rational numbers, such that $P(x, f(x)) = 0$ for every $x$ in the domain of $f$).  See also: [**Pushdown Automata and Algebraic Functions**](https://peteroupc.github.io/bernsupp.html#Pushdown_Automata_and_Algebraic_Functions).
+    Let $f(\lambda)$ be continuous and map the open interval (0, 1) to itself. Mossel and Peres (2005) showed that a pushdown automaton can output 1 with probability $f(\lambda)$ only if $f$ is _algebraic over the rational numbers_ (there is a nonzero polynomial $P(x, y)$ in two variables and whose coefficients are rational numbers, such that $P(x, f(x)) = 0$ for every $x$ in the domain of $f$).  See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp.html#Pushdown_Automata_and_Algebraic_Functions for more information on my progress on the problem.
 
     Prove or disprove:
 
@@ -175,7 +175,6 @@ Prove or disprove:
 - Nacu, Şerban, and Yuval Peres. "Fast simulation of new coins from old", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
 - Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.
 - Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
-- Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
 - Etessami, K. And Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", Journal of the ACM 56(1), pp.1-66, 2009.
 - Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
 - Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science, 2004. (pp. 12-21). IEEE.
