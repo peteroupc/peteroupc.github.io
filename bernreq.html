@@ -25,7 +25,6 @@
 <ul>
 <li><a href="#Background"><strong>Background</strong></a></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
-<li><a href="#Key_Problems"><strong>Key Problems</strong></a></li>
 <li><a href="#Polynomials_that_approach_a_factory_function_fast"><strong>Polynomials that approach a factory function &quot;fast&quot;</strong></a>
 
 <ul>
@@ -35,36 +34,10 @@
 <li><a href="#A_Conjecture_on_Polynomial_Approximation"><strong>A Conjecture on Polynomial Approximation</strong></a></li>
 <li><a href="#Strategies"><strong>Strategies</strong></a></li>
 </ul></li>
-<li><a href="#Building_Series_Expansions_of_Polynomials"><strong>Building Series Expansions of Polynomials</strong></a></li>
 <li><a href="#Other_Questions"><strong>Other Questions</strong></a></li>
 <li><a href="#End_Notes"><strong>End Notes</strong></a></li>
 <li><a href="#References"><strong>References</strong></a></li>
 </ul>
-
-<p><a id=Key_Problems></a></p>
-
-<h2>Key Problems</h2>
-
-<p>The following summarizes most of the problems raised by these open questions.</p>
-
-<ol>
-<li><p><strong>Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (e.g., the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz, concave, strictly increasing, bounded variation, or Zygmund, or $f$ is real analytic).</strong></p>
-
-<ul>
-<li><em>Exact Bernoulli factory</em>: <strong>Assuming $0\lt f(\lambda)\lt 1$, compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $2n$.</strong></li>
-<li><em>Approximate Bernoulli factory</em>: <strong>Given $\epsilon &gt; 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.</strong></li>
-<li><em>Series expansion of simple functions</em>: <strong>Find a random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with Bernstein coefficients lying in [0, 1].</strong></li>
-</ul>
-
-<p><strong>The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).</strong></p></li>
-<li><p><strong>Characterize the following three classes of factory functions $f(\lambda)$:</strong></p>
-
-<ul>
-<li><strong>Can be simulated using nothing but the biased coin, when the biased coin can show heads every time, tails every time, or both.</strong></li>
-<li><strong>Have a Bernoulli factory that can come arbitrarily close to the entropy limit if it produces multiple $f$-coin flips at a time, rather than just one.</strong></li>
-<li><strong>Are algebraic and can be simulated by a finite-state machine with an unbounded stack.</strong></li>
-</ul></li>
-</ol>
 
 <p><a id=Polynomials_that_approach_a_factory_function_fast></a></p>
 
@@ -82,6 +55,8 @@
 
 <p><a href="https://mathoverflow.net/questions/447064/explicit-bounds-on-derivatives-of-moments-related-to-bernstein-polynomials"><strong>https://mathoverflow.net/questions/447064/explicit-bounds-on-derivatives-of-moments-related-to-bernstein-polynomials</strong></a></p>
 
+<p><a href="https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials"><strong>https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials</strong></a></p>
+
 <p>This question involves solving the Bernoulli factory problem with polynomials.</p>
 
 <p>In this question, a polynomial $P(x)$ is written in <em>Bernstein form of degree $n$</em> if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_n$ are the polynomial&#39;s <em>Bernstein coefficients</em>.</p>
@@ -97,6 +72,7 @@
 <ol>
 <li>(<em>Exact Bernoulli factory</em>): Compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it&#39;s rewritten to a polynomial in Bernstein form of degree exactly $2n$. (<strong>See note 5 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)  Assume $0\lt f(\lambda)\lt 1$ or $f$ is polynomially bounded.</li>
 <li>(<em>Approximate Bernoulli factory</em>): Given $\epsilon &gt; 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.</li>
+<li>(<em>Series expansion of simple functions</em>): Find a non-negative random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$. (<strong>See note 1 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot;.</strong>)</li>
 </ol>
 
 <p>The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).</p>
@@ -160,29 +136,11 @@
 <li>Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1&gt;0$ such that, for each integer $n\ge 1$ that&#39;s a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (<strong>See notes 5 and 6 in &quot;<a href="#End_Notes"><strong>End Notes</strong></a>&quot; as well as &quot;<a href="https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial-Building Schemes</strong></a>.</strong>)</li>
 </ul>
 
-<p><a id=Building_Series_Expansions_of_Polynomials></a></p>
-
-<h2>Building Series Expansions of Polynomials</h2>
-
-<p><a href="https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials"><strong>https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials</strong></a></p>
-
-<p>Suppose $f:[0,1]\to[0,1]$ is continuous, polynomially bounded, and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, bounded variation, or in the Zygmund class, or $f$ is real analytic).</p>
-
-<p>Then find a non-negative random variable $X$ and a non-trivial series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$.</p>
-
-<ul>
-<li>An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational.  That is, the probability of getting $a$ is $p (1-p)^a$.</li>
-<li>The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).</li>
-<li>The requirements imply that $\sum_{a\ge 0}\max_\lambda |\gamma_a(\lambda)| \le 1$.</li>
-<li>The proof of Keane and O&#39;Brien (1994) produces a convex combination of polynomials with 0 and 1 as Bernstein coefficients, but the combination is difficult to construct (it requires finding maximums, for example) and so this proof does not appropriately answer this question.</li>
-</ul>
-
 <p><a id=Other_Questions></a></p>
 
 <h2>Other Questions</h2>
 
 <ul>
-<li>Given integer <em>m</em>&ge;0, rational number 0&lt;<em>k</em>&le;exp(1), and unknown heads probability 0&le;<em>&lambda;</em>&le;1, find a <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory</strong></a> for&mdash; $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$ that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  A solution is sought especially when <em>k</em> is 1 or 2.   Note that the right-hand side of (PD) can be implemented by <a href="https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z"><strong>ExpMinus</strong></a> and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs <strong>ExpMinus</strong>, but this is likewise far from lightweight.  (Calculating exp(.) with floating-point operations is not acceptable for this question.)</li>
 <li>Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.</li>
 <li>For each $r&gt;0$, characterize the functions $f(\lambda)$ that admit a Bernoulli factory where the expected number of coin flips, raised to the power of $r$, is finite.</li>
 <li><p><a href="https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible"><strong>Multiple-output Bernoulli factories</strong></a>: <strong>Let $f(\lambda):[a, b] \to (0, 1)$ be continuous, where $0\lt a\lt b\lt 1$</strong>.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness (Keane and O&#39;Brien 1994).</p>
@@ -190,7 +148,7 @@
 <p>But, <strong>is there an algorithm for $f$ that produces <em>multiple</em> outputs rather than one and has an expected number of coin flips per output that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$&#39;s domain</strong>? Call such an algorithm an <em>optimal factory</em>.  (See Nacu and Peres 2005, Question 1.)  And, does the answer change if the algorithm has access to a fair coin in addition to the biased coin?</p>
 
 <p>So far, constants as well as $\lambda$ and $1-\lambda$ do admit an optimal factory (see same work), and, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output algorithm for $f(\lambda) = \lambda/2$.  But are there others?  See an <a href="https://peteroupc.github.io/bernsupp.html#Multiple_Output_Bernoulli_Factory"><strong>appendix in one of my articles</strong></a> for more information on my progress on the problem.</p></li>
-<li><p><a href="https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata"><strong>Pushdown automata and algebraic functions</strong></a> A <em>pushdown automaton</em> is a finite state machine with an unbounded stack, driven by a biased coin with an unknown probability of heads, $\lambda$. Its stack starts with a single symbol.  On each step, the machine flips the coin, then, based on the coin flip, the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero or more symbols. When the stack is empty, the machine stops and returns either 0 or 1 depending on the state it ends up at.</p>
+<li><p><a href="https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata"><strong>Pushdown automata and algebraic functions</strong></a>: A <em>pushdown automaton</em> is a finite state machine with an unbounded stack, driven by a biased coin with an unknown probability of heads, $\lambda$. Its stack starts with a single symbol.  On each step, the machine flips the coin, then, based on the coin flip, the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero or more symbols. When the stack is empty, the machine stops and returns either 0 or 1 depending on the state it ends up at.</p>
 
 <p>Let $f: (0, 1) \to (0, 1)$ be continuous. Mossel and Peres (2005) showed that a pushdown automaton can output 1 with probability $f(\lambda)$ only if $f$ is <em>algebraic over the rational numbers</em> (there is a nonzero polynomial $P(x, y)$ in two variables and whose coefficients are rational numbers, such that $P(x, f(x)) = 0$ for every $x$ in the domain of $f$).  See also: <a href="https://peteroupc.github.io/bernsupp.html#Pushdown_Automata_and_Algebraic_Functions"><strong>Pushdown Automata and Algebraic Functions</strong></a>.</p>
 
@@ -199,9 +157,9 @@
 <ol>
 <li>If $f$ is algebraic over rational numbers it can be simulated by a pushdown automaton.</li>
 <li>min($\lambda$, $1-\lambda$) and $\lambda^{1/p}$, for every prime $p\ge 3$, can be simulated by a pushdown automaton.</li>
-<li>Given that $f$ is algebraic over rational numbers, it can be simulated by a pushdown automaton if and only if its &quot;critical exponent&quot; is a dyadic number greater than 1 or has the form $1-1/2^k$ for some integer $k\ge 1$. (See notes 2 and 3.)</li>
+<li>Given that $f$ is algebraic over rational numbers, it can be simulated by a pushdown automaton if and only if its &quot;critical exponent&quot; is a dyadic number greater than &minus;1 or has the form $-1-1/2^k$ for some integer $k\ge 1$. (See notes 2 and 3.)</li>
 </ol></li>
-<li><p><a href="https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili"><strong>Simple simulation algorithms</strong></a>: References are sought to papers and books that describe irrational constants or Bernoulli factory functions (continuous functions mapping (0,1) to itself) in any of the following ways.  Ideally they should involve only rational numbers and should not calculate <em>p</em>-adic digit expansions.</p>
+<li><p><a href="https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili"><strong>Simple simulation algorithms</strong></a>: References are sought to papers and books that describe irrational constants or Bernoulli factory functions (continuous functions mapping (0,1) to itself) in any of the following ways.  Ideally they should involve only rational numbers and should not compute <em>p</em>-adic digit expansions.</p>
 
 <ul>
 <li>Simulation experiments that succeed with an irrational probability.</li>
@@ -212,6 +170,7 @@
 <li>Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    <a href="https://peteroupc.github.io/bernoulli.html#pi___4"><strong>Example.</strong></a></li>
 <li>Generate a uniform (<em>x</em>, <em>y</em>) point inside a closed shape, then return 1 with probability <em>x</em>.  For what shapes is the expected value of <em>x</em> an irrational number?  <a href="https://peteroupc.github.io/bernsupp.html#4_3___pi"><strong>Example.</strong></a>.</li>
 </ul></li>
+<li>Given integer <em>m</em>&ge;0, rational number 0&lt;<em>k</em>&le;exp(1), and unknown heads probability 0&le;<em>&lambda;</em>&le;1, find a <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory</strong></a> for&mdash; $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$ that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  A solution is sought especially when <em>k</em> is 1 or 2.   Note that the right-hand side of (PD) can be implemented by <a href="https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z"><strong>ExpMinus</strong></a> and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs <strong>ExpMinus</strong>, but this is likewise far from lightweight.  (Calculating exp(.) with floating-point operations is not acceptable for this question.)</li>
 </ul>
 
 <p>Prove or disprove:</p>
@@ -233,6 +192,8 @@
 <p><a id=End_Notes></a></p>
 
 <h2>End Notes</h2>
+
+<p><strong>Note 1</strong>: An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 &lt; p &lt; 1$ is a known rational.  This question&#39;s requirements imply that $\sum_{a\ge 0}\max_\lambda |\gamma_a(\lambda)| \le 1$.  The proof of Keane and O&#39;Brien (1994) produces a convex combination of polynomials with 0 and 1 as Bernstein coefficients, but the combination is difficult to construct (it requires finding maximums, for example) and so this proof does not appropriately answer this question.</p>
 
 <p><strong>Note 2</strong>: On pushdown automata: Etessami and Yannakakis (2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn&#39;t deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.</p>
 

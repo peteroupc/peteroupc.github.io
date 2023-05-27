@@ -6,7 +6,7 @@ def roughmaxiopen(func, x):
     # in the open interval (0, 1) to find an approximate
     # maximum.
     return Max(
-        *[ceiling(func.subs(x, S(i) / 100) * 1000) / 1000 for i in range(1, 100)]
+        *[ceiling(func.subs(x, S(i) / 100) * 100000) / 100000 for i in range(1, 100)]
     )
 
 def maxi(func, x):
@@ -110,12 +110,17 @@ def kobevents(func, p, numpolys=12):
                 lo = 1 - roughmaxiopen(1 - ff, p)
                 print(["lo", lo.n()])
                 if lo <= S(0):
-                    continue
+                    aob = False
                 else:
                     if not accuracyWarning:
                         accuracyWarning = True
                         print("Warning: May be inaccurate")
                     aob = True
+            # if not aob:
+            #   pprint(ff)
+            #   print(ff)
+            #   plot(ff,(p,0,1))
+            #   return
             # Note that we ought to stop when 0 <= ff <= 3/4, and not
             # after a set number of iterations.
             if aob == True:

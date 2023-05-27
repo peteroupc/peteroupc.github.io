@@ -10,6 +10,8 @@
 
 <p>This page describes how to compute a polynomial in Bernstein form that comes close to a function $f(\lambda)$ with a user-defined error tolerance, so that the polynomial&#39;s coefficients will lie in the closed unit interval if $f$&#39;s values lie in that interval.  The polynomial is often simpler to calculate than the original function $f$ and can often be accurate enough for an application&#39;s purposes.</p>
 
+<p>The goal of these approximations is to avoid introducing transcendental and trigonometric functions to the approximation method. (For this reason, although this page also discusses approximation by so-called <em>Chebyshev interpolants</em>, that method is relegated to the appendix.)</p>
+
 <blockquote>
 <p><strong>Note:</strong> This page was originally developed as part of a section on <em>approximate Bernoulli factories</em>, or algorithms that toss heads with probability equal to a polynomial that comes close to a continuous function.  However, the information in this page is of much broader interest than the approximate Bernoulli factory problem.</p>
 </blockquote>
@@ -511,7 +513,7 @@
 
 <p><strong>Result B4</strong> (Molteni (2022)[^28]): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le (r!)/(((r/2)!)8^{r/2}) n^{r/2}$ and $|S_{n,r}(p)| \le (r!)/(((r/2)!)8^{r/2})\cdot(1/n^{r/2})$.</p>
 
-<p><strong>Result B4A</strong> (Adell et al. (2015)[^29]):  For every odd integer $r\ge 1$, $T_{n,r}(p)$ is positive whenever $0\le p\le 1/2$, and negative whenever $1/2\le p\le 1$.</p>
+<p><strong>Result B4A</strong> (Adell et al. (2015)[^29]):  For every odd integer $r\ge 1$, $T_{n,r}(p)$ is positive whenever $0\le p\lt 1/2$, and negative whenever $1/2\lt p\le 1$.</p>
 
 <p><strong>Lemma B5</strong>: For every integer $n\ge 1$:</p>
 
