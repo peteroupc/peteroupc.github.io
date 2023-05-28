@@ -101,13 +101,13 @@
 <td>Same.</td>
 </tr>
 <tr>
-<td>Butzer&#39;s linear combination (order 1).</td>
+<td>Butzer&#39;s linear combination (order 2).</td>
 <td>$L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$.</td>
 <td>(First, define the following operation: <strong>Get coefficients for $n$ given $m$</strong>: Treat the coefficients [$f(0/m)$, $f(1/m)$, ..., $f(m/m)$] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients [see note 3 at the end of this section], then return those coefficients.)<br><strong>Get coefficients for $n$ given $n/2$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$.</td>
 <td>Tachev (2022)[^5], Butzer (1955)[^6].  $n\ge 6$ must be even.</td>
 </tr>
 <tr>
-<td>Butzer&#39;s linear combination (order 2).</td>
+<td>Butzer&#39;s linear combination (order 3).</td>
 <td>$L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$</td>
 <td><strong>Get coefficients for $n$ given $n/4$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then <strong>get coefficients for $n$ given $n/2$</strong>, call them <em>b</em>[0], ..., <em>b</em>[<em>n</em>], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$.</td>
 <td>Butzer (1955)[^6]. $n\ge 4$ must be divisible by 4.</td>
@@ -120,7 +120,7 @@
 </tr>
 </tbody></table>
 
-<p>The goal is now to find a polynomial of degree $n$ such that&mdash;</p>
+<p>The goal is now to find a polynomial of degree $n$, written in Bernstein form, such that&mdash;</p>
 
 <ol>
 <li>the polynomial is within $\epsilon$ of $f(\lambda)$, and</li>
@@ -280,7 +280,7 @@
 
 <h3>Taylor Polynomials for &quot;Smooth&quot; Functions</h3>
 
-<p>If $f(\lambda)$ is &quot;smooth&quot; enough on the closed unit interval and if $\epsilon$ is big enough, then Taylor&#39;s theorem shows how to build a polynomial that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series.</p>
+<p>If $f(\lambda)$ is &quot;smooth&quot; enough on the closed unit interval and if $\epsilon$ is big enough, then Taylor&#39;s theorem shows how to build a polynomial that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series (see note).</p>
 
 <p>Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that&mdash;</p>
 
@@ -299,7 +299,7 @@
 <p>Items 2 and 3 above are not needed to find a polynomial within $\epsilon$ of $f$, but they <em>are</em> needed to ensure the Taylor polynomial&#39;s Bernstein coefficients will lie in the closed unit interval, as described after the note.</p>
 
 <blockquote>
-<p><strong>Note:</strong> If $f(\lambda)$ can be rewritten as a power series, namely $f(\lambda) = c_0 \lambda^0 + c_1 \lambda^1 + ... + c_i \lambda^i + ...$ whenever $0\le\lambda\le 1$ (so that $f$ has a continuous $k$-th derivative for every $k$), and if the coefficients $c_i$&mdash;</p>
+<p><strong>Note:</strong> If $f(\lambda)$ can be rewritten as a <em>power series</em>, namely $f(\lambda) = c_0 \lambda^0 + c_1 \lambda^1 + ... + c_i \lambda^i + ...$ whenever $0\le\lambda\le 1$ (so that $f$ has a continuous $k$-th derivative for every $k$), and if the coefficients $c_i$&mdash;</p>
 
 <ul>
 <li>are each greater than 0,</li>
@@ -363,7 +363,7 @@
 
 <p><em>The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative.</em></p>
 
-<p><em>Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev methods and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).</em></p>
+<p><em>Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev interpolants and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).</em></p>
 
 <p>See also the <a href="https://peteroupc.github.io/bernreq.html#Polynomials_that_approach_a_factory_function_fast"><strong>open questions</strong></a>.</p>
 

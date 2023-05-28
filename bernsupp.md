@@ -9,7 +9,6 @@
 - [**About This Document**](#About_This_Document)
 - [**Definitions**](#Definitions)
 - [**General Factory Functions**](#General_Factory_Functions)
-    - [**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)
     - [**Building the Lower and Upper Polynomials**](#Building_the_Lower_and_Upper_Polynomials)
     - [**Another General Algorithm**](#Another_General_Algorithm)
     - [**Request for Additional Methods**](#Request_for_Additional_Methods)
@@ -17,6 +16,7 @@
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
+    - [**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)
     - [**Results Used in Approximate Bernoulli Factories**](#Results_Used_in_Approximate_Bernoulli_Factories)
     - [**Proofs for Polynomial-Building Schemes**](#Proofs_for_Polynomial_Building_Schemes)
         - [**A Conjecture on Polynomial Approximation**](#A_Conjecture_on_Polynomial_Approximation)
@@ -89,67 +89,12 @@ In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup
 
 The section "Building the Lower and Upper Polynomials" are ways to build sequences of polynomials that appropriately converge to a factory function if that function meets certain conditions.
 
-To determine if the methods are right for _f_(_&lambda;_), a deep mathematical analysis of _f_ is required; it would be helpful to plot that  function using a computer algebra system to see if it is described in the section "Building the Upper and Lower Polynomials", later.
-
-The next section gives examples of well-behaved functions.
-
-<a id=Examples_of_Well_Behaved_Functions></a>
-### Examples of Well-Behaved Functions
-
-In the following examples, _f_(_&lambda;_) is a function defined on the closed unit interval.
-
-**Concave and convex functions.**  The following table shows examples of functions that are convex, concave, or neither.  Also, review the [**definitions**](#Definitions).
-
-| Function _f_(_&lambda;_)| Convex or concave? | Notes |
- --- | --- | --- |
-| 1&minus; _&lambda;_<sup>2</sup>. | Concave. | |
-| _&lambda;_<sup>2</sup>. | Convex. | |
-| _&lambda;_<sup>2</sup> &minus; _&lambda;_<sup>3</sup>. | Neither. | |
-| _&lambda;_<sup>_z_</sup>, where 0&lt; _z_&le; 1. | Concave. | |
-| _&lambda;_<sup>_z_</sup>, where _z_&ge; 1. | Convex. ||
-| exp(&minus;_&lambda;_/4). | Concave. | |
-
-**Hölder and Lipschitz continuous functions.** The following table shows some functions that are Hölder continuous and some that are not.  Also, review the [**definitions**](#Definitions).
-
-| Function _f_(_&lambda;_): | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_L_): | Notes |
-    --- | --- | --- |
-|$\lambda^z\cdot t$. | _&alpha;_=_z_.<br>_L_=abs(_t_). | $0\lt z\le 1$, $t\ne 0$. |
-|$\lambda^z\cdot t$. | _&alpha;_=1 (Lipschitz continuous).<br>_L_=_z_\*abs(_t_). | $z\ge 1$, $t$ is a real number. |
-|$\lambda^{1/3}/4 + \lambda^{2/3}$/5. | _&alpha;_=1/3.<br>_L_=9/20. |  _&alpha;_ is the minimum of Hölder exponents, min(1/3, 2/3), and _L_ is the sum of Hölder constants, 1/4+1/5. |
-|$1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise. | _&alpha;_=_z_.<br>_L_=$2^z/2$. | $0\lt z\le 1$.  In this example, $f$ has a "vertical" slope at 1/2, unless _z_ is 1. |
-|$3/4-\sqrt{\lambda(1-\lambda)}$. | _&alpha;_=1/2.<br>_L_=1. | Has a "vertical" slope at 0 and 1. |
-| Continuous and **piecewise linear**. | _&alpha;_=1.<br>_L_ is the greatest absolute value of the slope among all pieces' slopes. | _f_(_&lambda;_) is _piecewise linear_ if it's made up of multiple linear functions defined on a finite number of "pieces", or subintervals, that together make up $f$'s domain (in this case, the closed unit interval). |
-| Piecewise linear; equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions. | _&alpha;_=1.<br>_L_ = 1.5. | _L_ = $\max(\text{abs}((3/4-0)/(2/3))$, $\text{abs}((1/4-3/4)/(1/3)))$.<br>Concave because the first piece's slope is greater than the second piece's. |
-| min(_&lambda;_\*_mult_, 1−_&epsilon;_). | _&alpha;_=1.<br>_L_ = _mult_. | _mult_ &gt; 0, _&epsilon;_ &gt; 0.  Piecewise linear; equals 0 at 0, 1−_&epsilon;_ at (1−_&epsilon;_)/_mult_, and 1−_&epsilon;_ at 1.  Functions of this kind were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].<br>_L_=max(_mult_, 0).<br>Concave. |
-| 1/10 if _&lambda;_ is 0; &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise. | Not Hölder continuous. | Has a slope near 0 that's steeper than every "nth" root. |
-
-> **Note:** A Hölder continuous function with Hölder exponent _&alpha;_ and Hölder constant _L_ is also Hölder continuous with Hölder exponent _&beta;_ and Hölder constant bounded above by _L_, where 0 &lt; _&beta;_ &lt; _&alpha;_.
-
-**Finding parameters _&alpha;_ and _L_ for Hölder continuous functions.** If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (_&alpha;_) and Hölder constant (_L_) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.
-
-First, if $f$ has a continuous first derivative on its domain, then _&alpha;_ is 1 ($f$ is **Lipschitz continuous**) and _L_ is the maximum of the absolute value of that derivative.
-
-Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a "vertical slope" or the "steepest slope exhibited".  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$'s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant (_L_) equal to or greater than the maximum value of $g(\lambda)$ on its domain.
-
-The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: `lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c,0),h.subs(c,1)),(lamda,0,1))`.
-
-**Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the table below, if $f$ has a continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
-
-| Function $f(\lambda)$ | Derivative's Hölder exponent (_&alpha;_) and an upper bound of the derivative's Hölder constant (_L_): | Notes |
-     ---- | ---- | ---- |
-| _&lambda;_<sup>1+_&beta;_</sup> | _&alpha;_=_&beta;_.<br>_L_ = 1+_&beta;_. | 0 &lt; _&beta;_ &le; 1. |
-|$3/4-\sqrt{\lambda(1-\lambda)}$. | Derivative is not Hölder continuous. | Derivative is not Hölder continuous because $f$ is not Lipschitz continuous. |
-| cosh(_&lambda;_) &minus; 3/4. | _&alpha;_=1 (derivative is Lipschitz continuous).<br>_L_ = cosh(1). | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
-| $\lambda\cdot\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_L_ = $z(2+z\lambda)/4$. | Continuous second derivative. _L_ is an upper bound of its absolute value. $z>0$. |
-| $\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_L_ = $(z^2)/4$. | Continuous second derivative; _L_ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z>0$. |
-| _&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise. | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1. |
-| exp(&minus;_&lambda;_). | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1.[^5] |
-| _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise. |_&alpha;_=1.<br>_L_=1.| Concave. Lipschitz continuous derivative with Lipschitz constant 2. |
+To determine if the methods are right for _f_(_&lambda;_), a deep mathematical analysis of _f_ is required; it would be helpful to plot that  function using a computer algebra system to see if it is described in the next section.
 
 <a id=Building_the_Lower_and_Upper_Polynomials></a>
 ### Building the Lower and Upper Polynomials
 
-The rest of this section assumes _f_(_&lambda;_) is not a constant.  For examples of functions, see "Examples of Well-Behaved Functions", earlier.
+The rest of this section assumes _f_(_&lambda;_) is not a constant.  For examples of functions, see "[**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)", in the appendix.
 
 **Concave functions.** If _f_ is concave, then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
 
@@ -157,7 +102,7 @@ The rest of this section assumes _f_(_&lambda;_) is not a constant.  For example
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ or less and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)" as well as "[**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)", above), and
+- is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ or less and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)" as well as "[**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)", in the appendix), and
 - on the closed unit interval&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
@@ -169,11 +114,14 @@ For every integer _n_ that's a power of 2:
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _D_(_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _D_(_n_).
 
-> **Note:**  If _&alpha;_ is 1, _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.  If _&alpha;_ is 1/2, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
+> **Notes:**
+>
+> 1. If _&alpha;_ is 1, _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.  If _&alpha;_ is 1/2, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
+> 2. The function $f(x)=\min(\lambda t, 1-\epsilon)$, where $\epsilon\ge 0$ and $t\ge 0$, is Lipschitz continuous with Lipschitz constant _t_.  Because $f$ is linear between 0 and 1/_t_, ways to build polynomials that converge to this kind of function were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].
 
 **Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- has a Lipschitz continuous derivative (see "[**Definitions**](#Definitions)" as well as "[**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)", above), and
+- has a Lipschitz continuous derivative (see "[**Definitions**](#Definitions)" as well as "[**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)", in the appendix), and
 - in the closed unit interval&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
@@ -194,7 +142,7 @@ More specifically, `High`(_&lambda;_) must meet the following requirements:
 - 1 &gt; `High`(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
 - If _f_(1) = 0, then `High`(1) = 0. (This is required to ensure correctness in case _&lambda;_ is 1.)
 
-Also, `High` is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm.  For example, `High` can be the following degree-_n_ polynomial: 1&minus;(1&minus;_&lambda;_)<sup>_n_</sup>, where _n_&ge;1 is an integer.[^6]
+Also, `High` is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm.  For example, `High` can be the following degree-_n_ polynomial: 1&minus;(1&minus;_&lambda;_)<sup>_n_</sup>, where _n_&ge;1 is an integer.[^5]
 
 The algorithm is now described.
 
@@ -266,10 +214,10 @@ The algorithm I've developed in this section simulates $f(\lambda)$ when $f$ bel
 
 For examples of suitable polynomials, see [**"Approximations in Bernstein Form"**](https://peteroupc.github.io/bernapprox.html).
 
-In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called _T_ in the algorithm below), then simulates an appropriate [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations) of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).[^7] To simulate $f$, the algorithm&mdash;
+In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called _T_ in the algorithm below), then simulates an appropriate [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations) of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).[^6] To simulate $f$, the algorithm&mdash;
 
 - selects a polynomial in the convex combination with probability proportional to its upper bound, or a "leftover" zero polynomial with probability _T_, then
-- simulates the chosen polynomial (which is easy to do; see Goyal and Sigman (2012)[^8]).
+- simulates the chosen polynomial (which is easy to do; see Goyal and Sigman (2012)[^7]).
 
 --------------
 
@@ -309,9 +257,9 @@ If _T_ turns out to be greater than 1 in this algorithm, but still finite, one w
 > **Example**: The following parameters allow this algorithm to work if $f$ is concave, has a maximum of less than 1, and has a Lipschitz-continuous derivative with Lipschitz constant _M_ or less.  In this case, it is allowed that $f(0)=0$, $f(1)=0$, or both.
 >
 > - The family of polynomials $L_n(f)$ is simply the family of Bernstein polynomials of $f$.  The Bernstein coefficients of $L_n(f)$ are $f(0/n), f(1/n), ..., f(n/n)$.
-> - The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)[^9].
+> - The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)[^8].
 > - The **starting polynomial** is found as follows. Let _c_ = max($f(0), f(1)$).  Then the starting polynomial has two Bernstein coefficients both equal to $c$; **StartWidth** is equal to ceil($c\cdot 65536$)/65536, and **StartOrder** is equal to 0.
-> - ErrShift($f,m$) = 0. The reason for 0 is that $f$ is concave, so its Bernstein polynomials naturally "increase" with increasing degree (Temple 1954)[^10], (Moldovan 1962)[^11].
+> - ErrShift($f,m$) = 0. The reason for 0 is that $f$ is concave, so its Bernstein polynomials naturally "increase" with increasing degree (Temple 1954)[^9], (Moldovan 1962)[^10].
 > - DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always "below" $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot \epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate _T_, below.
 > - _T_ is calculated as **StartWidth** + $1.01\cdot M/4$.
 
@@ -359,7 +307,7 @@ To build an approximate Bernoulli factory with a polynomial:
 > 2. There are other kinds of functions, besides polynomials and rational functions, that serve to approximate continuous functions.  But many of them work poorly as approximate Bernoulli factory functions because their lack of "smoothness" means there is no simple Bernoulli factory for them.  For example, a _spline_, which is a continuous function made up of a finite number of polynomial pieces, is generally not "smooth" at the points where the spline's pieces meet.
 > 3. Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)). ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 > 4. There are two known approximations to the linear function $f(\lambda) = 2\lambda$ using a polynomial in Bernstein form of degree $n$ that maps the closed unit interval to itself.  In each case, if _g_(_&lambda;_) is that polynomial and if $0\le\lambda\le 1/2$, then the error in approximating _f_(_&lambda;_) is no greater than 1&minus;_g_(1/2).
->     - In Henderson and Glynn (2003, Remark 4\)[^12], the polynomial's _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*2, 1&minus;1/_n_).  The polynomial _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
+>     - In Henderson and Glynn (2003, Remark 4\)[^11], the polynomial's _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*2, 1&minus;1/_n_).  The polynomial _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
 >     - In Nacu and Peres (2005, section 6\)[^1], the polynomial's _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_i_)\*2, 1). It corresponds to the following algorithm: Flip the input coin _n_ times or until the ratio of "heads" to "flips" becomes at least 1/2, whichever comes first, then if _n_ flips were made without the ratio becoming at least 1/2, return 0; otherwise, return 1.
 
 <a id=Achievable_Simulation_Rates></a>
@@ -375,13 +323,13 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 |   Property of simulation   |   Property of _f_
   ------------- |  ------------------------
-| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in the closed unit interval (Goyal and Sigman 2012\)[^8]. |
-| Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^13]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^14].  |
+| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in the closed unit interval (Goyal and Sigman 2012\)[^7]. |
+| Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^12]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^13].  |
 | Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
-| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_, and for large enough _n_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011, Theorem 13\)[^15]. |
-| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_, and for large enough _n_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011, Theorem 8\)[^15]. Assumes _f_ is bounded away from 0 and 1. |
-| "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^13]. | If and only if _f_ is real analytic (see note below) (Nacu and Peres 2005\)[^1].   |
-| Average number of flips greater than or equal to (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^14]. |
+| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_, and for large enough _n_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011, Theorem 13\)[^14]. |
+| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_, and for large enough _n_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011, Theorem 8\)[^14]. Assumes _f_ is bounded away from 0 and 1. |
+| "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^12]. | If and only if _f_ is real analytic (see note below) (Nacu and Peres 2005\)[^1].   |
+| Average number of flips greater than or equal to (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^13]. |
 
 > **Note:** A function $f(\lambda)$ is:
 >
@@ -399,27 +347,27 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^4]: In Nacu and Peres (2005), the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$ (using the algorithms from the section "General Factory Functions" in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)"), provided $\varepsilon \lt 1/8$, where _n_ is a power of 2.  However, with these sequences, each simulation will require an extraordinary number of input coin flips. **fbelow(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)$. **fabove(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)$ + $\frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})}$ $\sqrt{2/n}$ + $\frac{72\times\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-2n\times\varepsilon^2)$.
 
-[^5]: This function's second derivative's absolute value can be plotted using the SymPy library as follows: `plot(diff(Abs(exp(-x)),(x,2)),(x,0,1))`.  In this plot, the maximum is 1, the same as the first derivative's Lipschitz constant.
+[^5]: In this case, an algorithm to simulate `High`(_&lambda;_) is: Flip the input coin _n_ times or until a flip returns 1, whichever comes first, then output the last coin flip result.
 
-[^6]: In this case, an algorithm to simulate `High`(_&lambda;_) is: Flip the input coin _n_ times or until a flip returns 1, whichever comes first, then output the last coin flip result.
+[^6]: With this infinite sum and these upper bounds, Lemma 4 of Holtz et al. (2011\) says that a Bernoulli factory algorithm for $f(\lambda)$ is possible.
 
-[^7]: With this infinite sum and these upper bounds, Lemma 4 of Holtz et al. (2011\) says that a Bernoulli factory algorithm for $f(\lambda)$ is possible.
+[^7]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
-[^8]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
+[^8]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
-[^9]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
+[^9]: Temple, W.B., "Steltjes integral representation of convex functions", 1954.
 
-[^10]: Temple, W.B., "Steltjes integral representation of convex functions", 1954.
+[^10]: Moldovan, E., "Observations sur la suite des polynômes de S. N. Bernstein d'une fonction continue", 1962.
 
-[^11]: Moldovan, E., "Observations sur la suite des polynômes de S. N. Bernstein d'une fonction continue", 1962.
+[^11]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).
 
-[^12]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).
+[^12]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.
 
-[^13]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.
+[^13]: Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.
 
-[^14]: Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.
+[^14]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
 
-[^15]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
+[^15]: This function's second derivative's absolute value can be plotted using the SymPy library as follows: `plot(diff(Abs(exp(-x)),(x,2)),(x,0,1))`.  In this plot, the maximum is 1, the same as the first derivative's Lipschitz constant.
 
 [^16]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
@@ -484,6 +432,59 @@ The following table summarizes the rate of simulation (in terms of the number of
 <a id=Appendix></a>
 ## Appendix
 
+<a id=Examples_of_Well_Behaved_Functions></a>
+### Examples of Well-Behaved Functions
+
+In the following examples, _f_(_&lambda;_) is a function defined on the closed unit interval.
+
+**Concave and convex functions.**  The following table shows examples of functions that are convex, concave, or neither.  Also, review the [**definitions**](#Definitions).
+
+| Function _f_(_&lambda;_)| Convex or concave? | Notes |
+ --- | --- | --- |
+| 1&minus; _&lambda;_<sup>2</sup>. | Concave. | |
+| _&lambda;_<sup>2</sup>. | Convex. | |
+| _&lambda;_<sup>2</sup> &minus; _&lambda;_<sup>3</sup>. | Neither. | |
+| _&lambda;_<sup>_z_</sup>, where 0&lt; _z_&le; 1. | Concave. | |
+| _&lambda;_<sup>_z_</sup>, where _z_&ge; 1. | Convex. ||
+| exp(&minus;_&lambda;_/4). | Concave. | |
+
+**Hölder and Lipschitz continuous functions.** The following table shows some functions that are Hölder continuous and some that are not.  Also, review the [**definitions**](#Definitions).
+
+| Function _f_(_&lambda;_): | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_L_): | Notes |
+    --- | --- | --- |
+|$\lambda^z\cdot t$. | _&alpha;_=_z_.<br>_L_=abs(_t_). | $0\lt z\le 1$, $t\ne 0$. |
+|$\lambda^z\cdot t$. | _&alpha;_=1 (Lipschitz continuous).<br>_L_=_z_\*abs(_t_). | $z\ge 1$, $t$ is a real number. |
+|$\lambda^{1/3}/4 + \lambda^{2/3}$/5. | _&alpha;_=1/3.<br>_L_=9/20. |  _&alpha;_ is the minimum of Hölder exponents, min(1/3, 2/3), and _L_ is the sum of Hölder constants, 1/4+1/5. |
+|$1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise. | _&alpha;_=_z_.<br>_L_=$2^z/2$. | $0\lt z\le 1$.  In this example, $f$ has a "vertical" slope at 1/2, unless _z_ is 1. |
+|$3/4-\sqrt{\lambda(1-\lambda)}$. | _&alpha;_=1/2.<br>_L_=1. | Has a "vertical" slope at 0 and 1. |
+| Continuous and **piecewise linear**. | _&alpha;_=1.<br>_L_ is the greatest absolute value of the slope among all pieces' slopes. | _f_(_&lambda;_) is _piecewise linear_ if it's made up of multiple linear functions defined on a finite number of "pieces", or subintervals, that together make up $f$'s domain (in this case, the closed unit interval). |
+| Piecewise linear; equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions. | _&alpha;_=1.<br>_L_ = 1.5. | _L_ = $\max(\text{abs}((3/4-0)/(2/3))$, $\text{abs}((1/4-3/4)/(1/3)))$.<br>Concave because the first piece's slope is greater than the second piece's. |
+| min(_&lambda;_\*_mult_, 1−_&epsilon;_). | _&alpha;_=1.<br>_L_ = _mult_. | _mult_ &gt; 0, _&epsilon;_ &gt; 0.  Piecewise linear; equals 0 at 0, 1−_&epsilon;_ at (1−_&epsilon;_)/_mult_, and 1−_&epsilon;_ at 1.<br>_L_=max(_mult_, 0).<br>Concave. |
+| 1/10 if _&lambda;_ is 0; &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise. | Not Hölder continuous. | Has a slope near 0 that's steeper than every "nth" root. |
+
+> **Note:** A Hölder continuous function with Hölder exponent _&alpha;_ and Hölder constant _L_ is also Hölder continuous with Hölder exponent _&beta;_ and Hölder constant bounded above by _L_, where 0 &lt; _&beta;_ &lt; _&alpha;_.
+
+**Finding parameters _&alpha;_ and _L_ for Hölder continuous functions.** If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (_&alpha;_) and Hölder constant (_L_) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.
+
+First, if $f$ has a continuous first derivative on its domain, then _&alpha;_ is 1 ($f$ is **Lipschitz continuous**) and _L_ is the maximum of the absolute value of that derivative.
+
+Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a "vertical slope" or the "steepest slope exhibited".  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$'s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant (_L_) equal to or greater than the maximum value of $g(\lambda)$ on its domain.
+
+The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: `lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c,0),h.subs(c,1)),(lamda,0,1))`.
+
+**Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the table below, if $f$ has a continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
+
+| Function $f(\lambda)$ | Derivative's Hölder exponent (_&alpha;_) and an upper bound of the derivative's Hölder constant (_L_): | Notes |
+     ---- | ---- | ---- |
+| _&lambda;_<sup>1+_&beta;_</sup> | _&alpha;_=_&beta;_.<br>_L_ = 1+_&beta;_. | 0 &lt; _&beta;_ &le; 1. |
+|$3/4-\sqrt{\lambda(1-\lambda)}$. | Derivative is not Hölder continuous. | Derivative is not Hölder continuous because $f$ is not Lipschitz continuous. |
+| cosh(_&lambda;_) &minus; 3/4. | _&alpha;_=1 (derivative is Lipschitz continuous).<br>_L_ = cosh(1). | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
+| $\lambda\cdot\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_L_ = $z(2+z\lambda)/4$. | Continuous second derivative. _L_ is an upper bound of its absolute value. $z>0$. |
+| $\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_L_ = $(z^2)/4$. | Continuous second derivative; _L_ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z>0$. |
+| _&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise. | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1. |
+| exp(&minus;_&lambda;_). | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1.[^15] |
+| _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise. |_&alpha;_=1.<br>_L_=1.| Concave. Lipschitz continuous derivative with Lipschitz constant 2. |
+
 <a id=Results_Used_in_Approximate_Bernoulli_Factories></a>
 ### Results Used in Approximate Bernoulli Factories
 
@@ -518,7 +519,6 @@ Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions 
 3. _If f has a Lipschitz continuous derivative with Lipschitz constant M, then the expression (1) is less than or equal to&mdash;_
     - _(M/2)\*(1/(7\*n)), for every integer n&ge;4 that's a power of 2, and_
     - _(M/2)\*(1/(8\*n&minus;4)), for every integer n&ge;1 that's a power of 2._
-4. Omitted.
 
 _Proof._
 
@@ -620,7 +620,7 @@ Let _&epsilon;_ be a positive distance between 0 and the minimum or between 1 an
 
 For _n_ less than _n_<sub>1</sub>, condition (i) is ensured by setting the lower or upper polynomial's coefficient to 0 or 1, respectively, whenever a coefficient of the degree-_n_ polynomial would otherwise be less than 0 or greater than 1, respectively.
 
-Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The only thing to add is that for $n$ less than _n_<sub>1</sub>, the lower and upper polynomials $g_n$ and $h_n$ can be treated as 0 or 1 without affecting convergence, and that for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iii) by Remark B of Nacu and Peres (2005)[^1].
+Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The only thing to add is that for $n$ less than _n_<sub>1</sub>, the lower and upper polynomials $g_n$ and $h_n$ can be treated as 0 or 1, respectively, without affecting convergence, and that for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iii) by Remark B of Nacu and Peres (2005)[^1].
 
 Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
 
@@ -841,7 +841,7 @@ To show that _f_ is strongly simulable, it's enough to show that there is a Bern
 
 _Proof:_ If _f_ is the constant 0 or 1, the proof is trivial: simply return 0 or 1, respectively.
 
-Otherwise: Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012\)[^8].
+Otherwise: Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012\)[^7].
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0). (By condition 3, _f_(0) must be either 0 or 1.)
@@ -960,7 +960,7 @@ So far, the following functions do admit an _optimal factory_:
 
 It is easy to see that if an _optimal factory_ exists for _f_(_&lambda;_), then one also exists for 1 &minus; _f_(_&lambda;_): simply change all ones returned by the _f_(_&lambda;_) factory into zeros and vice versa.
 
-Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for _f_(_&lambda;_) = _&lambda;_/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992\)[^14], then multiply each unbiased bit with another input coin flip to get a sample from _&lambda;_/2.  Given that the sample is equal to 0, there are three possibilities that can "be extracted to produce more fair bits": either the unbiased bit is 0, or the coin flip is 0, or both are 0.
+Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for _f_(_&lambda;_) = _&lambda;_/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992\)[^13], then multiply each unbiased bit with another input coin flip to get a sample from _&lambda;_/2.  Given that the sample is equal to 0, there are three possibilities that can "be extracted to produce more fair bits": either the unbiased bit is 0, or the coin flip is 0, or both are 0.
 
 This algorithm, though, doesn't count as an _optimal factory_, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992\)[^26].  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.
 
@@ -1104,7 +1104,7 @@ $${n\choose 0}f(\lambda)^0 (1-f(\lambda))^{n-0} a[0] + {n\choose 1}f(\lambda)^1 
 
 _where n is the polynomial's degree and a\[0], a\[1], ..., a\[n] are functions in the class **PDA**._
 
-_Proof Sketch_: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)[^8]\: The first stage counts the number of "heads" shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability _a_\[_i_\], where _i_ is the number of "heads". The automaton's transitions take advantage of Lemma 1A.  &#x25a1;
+_Proof Sketch_: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)[^7]\: The first stage counts the number of "heads" shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability _a_\[_i_\], where _i_ is the number of "heads". The automaton's transitions take advantage of Lemma 1A.  &#x25a1;
 
 **Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class **PDA**, then so is their product, namely f(&lambda;)\*g(&lambda;)._
 
