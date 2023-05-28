@@ -373,7 +373,7 @@
 
 <p>[^1]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> satisfying <em>n</em>&minus;<em>k</em>+1 &le; <em>i</em> &le; <em>n</em>, then multiplying the results (Yannis Manolopoulos. 2002. &quot;Binomial coefficient computation: recursion or iteration?&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: <a href="https://doi.org/10.1145/820127.820168"><strong>https://doi.org/10.1145/820127.820168</strong></a>).  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.<br><em>n</em>! = 1*2*3*...*<em>n</em> is also known as <em>n</em> factorial; in this document, (0!) = 1.</p>
 
-<p>[^2]: Micchelli, Charles. &quot;The saturation class and iterates of the Bernstein polynomials.&quot; Journal of Approximation Theory 8, no. 1 (1973): 1-18.</p>
+<p>[^2]: Micchelli, Charles. &quot;<a href="https://www.sciencedirect.com/science/article/pii/0021904573900282"><strong>The saturation class and iterates of the Bernstein polynomials</strong></a>&quot;, Journal of Approximation Theory 8, no. 1 (1973): 1-18.</p>
 
 <p>[^3]: Guan, Zhong. &quot;<a href="https://arxiv.org/abs/0909.0684"><strong>Iterated Bernstein polynomial approximations</strong></a>&quot;, arXiv:0909.0684 (2009).</p>
 
@@ -532,7 +532,7 @@
 <li>for every integer $n\ge 1$, $|T_{n,r}(1/2)|\le \sigma(r,8)n^{r/2}$ and $|S_{n,r}(1/2)| \le \sigma(r,8)/n^{r/2}$.</li>
 </ul>
 
-<p><strong>Lemma B9</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;), where $r\ge 0$ is an integer, and let $M$ be equal to or greater than the $r$-th derivative&#39;s Lipschitz constant.  Then, for every $0\le x_0 \le 1$:</p>
+<p><strong>Lemma B9</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;), where $r\ge 0$ is an integer, and let $M$ be equal to or greater than the $r$-th derivative&#39;s Lipschitz constant.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then, for every $0\le x_0 \le 1$:</p>
 
 <ol>
 <li>$f$ can be written as $f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
