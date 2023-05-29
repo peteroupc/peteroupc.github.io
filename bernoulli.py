@@ -184,7 +184,8 @@ class Bernoulli:
         """Generates 1 with probability log(1+x/y); 0 otherwise.
         Reference: Flajolet et al. 2010.  Uses a uniformly-fast special case of
         the two-coin Bernoulli factory, rather than the even-parity construction in
-        Flajolet's paper, which does not have bounded expected running time for all heads probabilities."""
+        Flajolet's paper, which does not have bounded expected running time for all heads probabilities.
+        """
         bag = []
         while True:
             if self.randbit() == 0:

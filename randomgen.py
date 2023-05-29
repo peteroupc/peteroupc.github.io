@@ -982,7 +982,8 @@ class BinaryExpansion:
 
     def getOrReset(f):
         """Creates a binary expansion object from a fraction, 'int', or
-        'float' in the interval [0, 1]; resets 'f' (calls its reset method) otherwise."""
+        'float' in the interval [0, 1]; resets 'f' (calls its reset method) otherwise.
+        """
         if f == 0:
             return BinaryExpansion([], True)
         if f == 1:
@@ -5339,6 +5340,7 @@ if __name__ == "__main__":
     for ks in ksample:
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)
+
     # exit()
     def verify_derangement(x):
         for i in range(len(x)):

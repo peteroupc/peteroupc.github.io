@@ -1850,7 +1850,6 @@ class _BitFetchingRandomGen:
         self.fetchedbits = 0
 
 def _test_rand_extraction(rg, func, digits=2, nofill=False):
-
     func(rg)
     return
 
@@ -2301,7 +2300,6 @@ def loggammahelper(n, precision):
     return (result.infn, result.infd, errintv.supn, errintv.supd)
 
 class RealLogGammaInt(Real):
-
     _logPi = None
 
     def __init__(self, a):
@@ -4555,7 +4553,6 @@ def iteratedPolyExample():
 ######################
 
 if __name__ == "__main__":
-
     # The following code tests some of the methods in this module.
 
     import time

@@ -562,12 +562,12 @@ Examples 1 to 4 show how **Algorithm 1** leads to algorithms for simulating cert
 - $a_i$ is $3/4$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{i/2}$ if $i$ is even and greater than 0; and 0 otherwise.
 - The Bernstein-form coefficients for $A$, in order, are [3/4, 3/4, 255/364, 219/364, 267/572, 1293/4004, 4107/20020, 417/2860, 22683/140140, 6927/28028, 263409/700700, 2523/4900, 442797/700700, 38481/53900, 497463/700700].
 
-**Example 4:** Take $f(\lambda) = 1/2 + \sin(\pi\lambda)/4$ = $1/2 + \sin(6 g(\lambda))/4$, where $g=\lambda\pi/6$.  To simulate this probability:
+**Example 4:** Take $f(\lambda) = 1/2 + \sin(\pi\lambda)/4$ = $1/2 + \sin(6 g(\lambda))/4$, where $g(\lambda)=\lambda\pi/6$.  To simulate this probability:
 
 1. Create a _&mu;_ coin that does the following: "Flip the input coin.  If it returns 0, return 0.  Otherwise: With probability 1/3, return 0.  Otherwise, run the algorithm for **_&pi;_/4** (in 'Bernoulli Factory Algorithms') and return the result." (Simulates _&lambda;_ &times; _&pi;_/6.)
 2. Run the algorithm for $1/2 + \sin(6\lambda)/4$ in Example 2, using the _&mu;_ coin.
 
-**Example 5:** Take $f(\lambda) = 1/2 + \cos(\pi\lambda)/4$ = $1/2 + \cos(6 g(\lambda))/4$, where $g=\lambda\pi/6$.  This is as in Example 4, except step 2 runs the algorithm for $1/2 + \cos(6\lambda)/4$ in Example 3.
+**Example 5:** Take $f(\lambda) = 1/2 + \cos(\pi\lambda)/4$ = $1/2 + \cos(6 g(\lambda))/4$, where $g(\lambda)=\lambda\pi/6$.  This is as in Example 4, except step 2 runs the algorithm for $1/2 + \cos(6\lambda)/4$ in Example 3.
 
 **Examples 6:** The following functions can be written as power series that satisfy the **general martingale algorithm**.  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table), and ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient.
 

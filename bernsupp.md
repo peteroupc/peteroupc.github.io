@@ -429,6 +429,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^45]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^46]: Pascu, M.N., Pascu, N.R., Tripşa, F., "[A new Bernstein-type operator based on Pólya's urn model with negative replacement](https://arxiv.org/abs/1710.08818)", arXiv:1710.08818 [math.CA], 2017.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -505,26 +507,26 @@ In the following results:
 
 Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes the larger class of _Hölder continuous_ functions (see "[**Definitions**](#Definitions)").
 
-**Lemma 2.** _Let f(&lambda;) be a continuous function that maps the closed unit interval to itself, and let X be a hypergeometric(2\*n, k, n) random variable._
+**Lemma 2.** _Let f(&lambda;) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2\*n, k, n) random variable, and let $n\ge 1$ be an integer._
 
-1. _Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave, then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is less than or equal to&mdash;_
-    - _&omega;(sqrt(1/(8\*n&minus;4))), for every integer n&ge;1 that's a power of 2,_
-    - _&omega;(sqrt(1/(7\*n))), for every integer n&ge;4 that's a power of 2,_
-    - _&omega;(sqrt(1/(2\*n))), for every integer n&ge;1 that's a power of 2, and_
-    - _&omega;(sqrt( (k/(2\*n)) \* (1&minus;k/(2\*n)) / (2\*n&minus;1) )), for every n&ge;1 that's a power of 2._
+1. _Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave, then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is less than or equal to each of the following:_
+    - _&omega;(sqrt(1/(8\*n&minus;4)))._
+    - _&omega;(sqrt(1/(7\*n))) if n&ge;4._
+    - _&omega;(sqrt(1/(2\*n)))._
+    - _&omega;(sqrt( (k/(2\*n)) \* (1&minus;k/(2\*n)) / (2\*n&minus;1) ))._
 2. _If f is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; such that 0 < &alpha; &le; 1, then the expression (1) is less than or equal to&mdash;_
-    - _M\*(1/(2\*n))<sup>&alpha;/2</sup>, for every integer n&ge;1 that's a power of 2,_
-    - _M\*(1/(7\*n))<sup>&alpha;/2</sup>, for every integer n&ge;4 that's a power of 2, and_
-    - _M\*(1/(8\*n&minus;4))<sup>&alpha;/2</sup>, for every integer n&ge;1 that's a power of 2._
+    - _M\*(1/(2\*n))<sup>&alpha;/2</sup>,_
+    - _M\*(1/(7\*n))<sup>&alpha;/2</sup> if n&ge;4, and_
+    - _M\*(1/(8\*n&minus;4))<sup>&alpha;/2</sup>._
 3. _If f has a Lipschitz continuous derivative with Lipschitz constant M, then the expression (1) is less than or equal to&mdash;_
-    - _(M/2)\*(1/(7\*n)), for every integer n&ge;4 that's a power of 2, and_
-    - _(M/2)\*(1/(8\*n&minus;4)), for every integer n&ge;1 that's a power of 2._
+    - _(M/2)\*(1/(7\*n)) if n&ge;4, and_
+    - _(M/2)\*(1/(8\*n&minus;4))._
 
 _Proof._
 
-1. _&omega;_ is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2 \* _n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2 \* _n_))] &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for every _n_&ge;4 that's an integer power of 2, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).  To prove the fourth bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt( (_k_/(2\*_n_)) \* (1&minus;_k_/(2\*_n_)) / (2\*_n_&minus;1) )).
+1. _&omega;_ is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2 \* _n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2 \* _n_))] (by the definition of _&omega;_) &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for every integer _n_&ge;4, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).  To prove the fourth bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt( (_k_/(2\*_n_)) \* (1&minus;_k_/(2\*_n_)) / (2\*_n_&minus;1) )).
 2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on the closed unit interval, the result follows from part 1.
-3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f'(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^17], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4 that's a power of 2, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
+3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f'(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^17], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)). &#x25a1;
 
 > **Notes:**
 >
@@ -537,27 +539,20 @@ _Proof._
 >     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^20].
 
-**Lemma 2A.**  _Let f(&lambda;) map the closed unit interval to itself, and let $C=15$._
+There are weaker bounds for Lemma 2, part 1, which work even if $f$'s modulus of continuity $\omega$ is not concave. According to Pascu et al. (2017, Lemma 5.1)[^46]\: $$|E[f(Y)] - f(E[Y])| \le \omega(\delta) + \omega(\delta)\text{Var}[X]/\delta^2,$$ where $f$ is a continuous function, $Y$ is a discrete random variable on a closed interval, and $\delta>0$.  Given that $Y = X/n$ (where $X$ is as in Lemma 2), taking $\delta=1/n^{1/2}$ leads to: $$|E[f(Y)]-f(E[Y])|\le\omega(1/n^{1/2}) (1+n\cdot\text{Var}[Y])$$, and in turn, plugging in bounds for $\text{Var}[Y]$ leads to the following bounds for Lemma 2, part 1:
 
-| _If $f$:_ | _Then, for every integer $n$ &ge; 1, the expression (1) in Lemma 2 is less than or equal to:_ |
- --- | --- |
-| (Case 1) _Is Hölder continuous, its Hölder exponent is $\alpha$, and its Hölder constant is $L$ or less, where $0\lt\alpha\lt 1$._ | $2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}$. |
-| (Case 2) _Has a Hölder continuous (first) derivative whose Hölder exponent is $\alpha$ and whose Hölder constant is $L$ or less, where $0\lt\alpha\le 1$._ | $CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}$. |
-| (Case 3) _Has a Lipschitz continuous derivative whose Lipschitz constant is $M$ or less._ | $(C/4)M\frac{1}{8n-4}$. |
-| (Case 4) _Is in the Zygmund class with constant equal to or less than $D$._ | $(C/2) D\sqrt{1/(8n-4)}$. |
+    - $\omega(1/n^{1/2}) (1+n/(8n-4))$.
+    - $\omega(1/n^{1/2}) (1+n/(7n)) = \frac{8}{7}\omega(1/n^{1/2})$ if n&ge;4.
+    - $\omega(1/n^{1/2}) (1+n/(2n)) = \frac{3}{2}\omega(1/n^{1/2})$.
+
+**Lemma 2A.**  _Let f(&lambda;) map the closed unit interval to itself, and let $C=15$.  Suppose $f$ is in the Zygmund class with constant $D$ or less.  Then, for every integer $n$ &ge; 1, the expression (1) in Lemma 2 is less than or equal to: $(C/2) D\sqrt{1/(8n-4)}$.
 
 _Proof._ Strukov and Timan (1977)[^21] proved the following bound: $$\
-|\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])|\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values greater than one real number and less than another, as in this case.
+|\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])|\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values in a closed interval, such as the closed unit interval in this case.
 
 Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**[_Y_]) is less than or equal to 1/(8\*_n_&minus; 4), and the left-hand side of Strukov and Timan's bound is the same as the expression (1).
 
-Case 1: Since $f$ is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Therefore, applying Strukov and Timan's bound, the bound on _Y_'s variance, as well as a property given in Stancu et al. (2001)[^22] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le 2C\omega((\text{Var}[Y])^{1/2}/2)\le 2CL((\text{Var}[Y])^{1/2}/2)^\alpha)\le 2CL \frac{(1/(8n-4))^{\alpha/2}}{2^\alpha}.$$
-
-Case 2: Since $f$'s derivative is Hölder continuous, there is an ordinary modulus of continuity $\omega$ for it such that $\omega(h)\le Lh^\alpha$. Thus, by the proof of Case 1 as well as a property given in Stancu et al. (2001)[^22]&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le C ((\text{Var}[Y])^{1/2}/2) \omega((\text{Var}[Y])^{1/2}/2)\le CL((\text{Var}[Y])^{1/2}/2)^{1+\alpha}$$ $$\le CL(\sqrt{1/(8n-4)}/2)^{1+\alpha}.$$
-
-Case 3: Follows from case 2 since a Hölder continuous function with Hölder exponent 1 and Hölder constant $L$ is Lipschitz continuous with Lipschitz constant $M$.
-
-Case 4: Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Thus, by the proof of Case 1&mdash; $$C\omega_2((\text{Var}[Y])^{1/2}/2)\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$ &#x25a1;
+Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Therefore, applying Strukov and Timan's bound, the bound on _Y_'s variance, as well as a property given in Stancu et al. (2001)[^22] leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le 2C\omega((\text{Var}[Y])^{1/2}/2)\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$ &#x25a1;
 
 > **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever _f_ is continuous and _x_ and _y_ are in _f_'s domain.
 

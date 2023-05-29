@@ -1140,7 +1140,7 @@ END METHOD
 <a id=P_lya_ndash_Eggenberger_Distribution></a>
 ### Pólya&ndash;Eggenberger Distribution
 
-Suppose items are drawn at random from a collection of items each labeled either `1` or `0`, and after drawing an item, it's put back and `m` more items of the same label are added.  Then:
+Suppose items are drawn at random from a collection of items each labeled either `1` or `0`, and after drawing an item, it's put back and `m` more items of the same label as the drawn item are added.  Then:
 
 - The _Pólya&ndash;Eggenberger distribution_ models the number of items drawn this way that are labeled `1`.
 - The _inverse Pólya&ndash;Eggenberger distribution_ models the number of `0`-labeled items drawn before `successes` many `1`-labeled items are drawn.
