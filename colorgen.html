@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2023/01/22"><meta name="citation_online_date" content="2023/01/22"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2023/05/30"><meta name="citation_online_date" content="2023/05/30"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1285,8 +1285,8 @@ END METHOD
 <li><strong>Tetradic</strong>: Double complementary with Y = &pi;/2.</li>
 <li><strong>N-color</strong>: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.</li>
 </ul></li>
-<li><strong>Monochrome colors</strong>: Colors with the same hue; for example, different <a href="#Alpha_Blending"><strong>shades, tints, and/or tones</strong></a> of a given color are monochrome colors.</li>
-<li><strong>Achromatic colors</strong>: Colors without hue; that is, black, white, and/or shades of gray.</li>
+<li><strong>Monochrome colors</strong>: Colors with the same hue; for example, different <a href="#Alpha_Blending"><strong>shades, tints, or tones</strong></a> of a given color are monochrome colors.</li>
+<li><strong>Achromatic colors</strong>: Colors without hue; that is, black, white, and shades of gray.</li>
 </ul>
 
 <p><a id=Contrast_Between_Two_Colors></a></p>
@@ -1660,7 +1660,7 @@ END METHOD
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot;[^38] and/or &quot;<a href="#Defective_and_Animal_Color_Vision"><strong>color blind friendly</strong></a>&quot; suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
+<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot;[^38], &quot;<a href="#Defective_and_Animal_Color_Vision"><strong>color blind friendly</strong></a>&quot;, or both suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
 </blockquote>
 
 <p><a id=Color_Collections></a></p>
@@ -1906,7 +1906,7 @@ END METHOD
 
 <ol>
 <li>Although <code>lightFunc</code>, <code>reflFunc</code>, and <code>cmfFunc</code> are actually continuous functions, in practice tristimulus values are calculated based on measurements at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of <code>cmfFunc</code> and <code>lightFunc</code>).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.</li>
-<li><strong>Metamerism</strong> occurs when two materials match the same color under one viewing situation (such as light source, <code>lightFunc</code>, and/or viewer, <code>cmfFunc</code>), but not under another.  If this happens, the two materials&#39; reflectance or transmittance curves (<code>reflFunc</code>) are called <em>metamers</em>.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (<code>reflFunc</code>) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors). (See also <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38"><strong>B. MacEvoy&#39;s principle 38</strong></a>.)</li>
+<li><strong>Metamerism</strong> occurs when two materials match the same color under one viewing situation (such as light source, <code>lightFunc</code>, or viewer, <code>cmfFunc</code>, or both), but not under another.  If this happens, the two materials&#39; reflectance or transmittance curves (<code>reflFunc</code>) are called <em>metamers</em>.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (<code>reflFunc</code>) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors). (See also <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38"><strong>B. MacEvoy&#39;s principle 38</strong></a>.)</li>
 </ol>
 
 <p><strong>Examples:</strong>  In these examples, <code>D65</code> is the D65 illuminant, <code>D50</code> is the D50 illuminant, <code>CIE1931</code> is the CIE 1931 standard observer, and <code>refl</code> is an arbitrary reflectance curve.</p>
@@ -2032,7 +2032,7 @@ END METHOD
 <p>The following topics would greatly enrich this document:</p>
 
 <ul>
-<li>A method for performing color calibration and color matching using a smartphone&#39;s camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any active patents or pending patent applications.</li>
+<li>A method for performing color calibration and color matching using a smartphone&#39;s camera and, possibly, a color calibration card or white balance card, provided that method is not covered by any active patents or pending patent applications.</li>
 <li>Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.</li>
 </ul>
 
@@ -2128,7 +2128,7 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p>[^38]: In general, a color can be considered &quot;print friendly&quot; if it lies within the extent of colors (<em>color gamut</em>) that can be reproduced under a given or standardized printing condition (see also &quot;<a href="#CMYK_and_Other_Ink_Mixture_Color_Models"><strong>CMYK and Other Ink-Mixture Color Models</strong></a>&quot;).</p>
 
-<p>[^39]: Many color collections are represented by printed or dyed color swatches and/or found in printed &quot;fan decks&quot;.  Most color collections of this kind, however, are proprietary. &quot;5RP 5/6&quot; is an example from a famous color system and color space from the early 20th century.</p>
+<p>[^39]: Many color collections are represented by printed or dyed color swatches, are found in printed &quot;fan decks&quot;, or both.  Most color collections of this kind, however, are proprietary. &quot;5RP 5/6&quot; is an example from a famous color system and color space from the early 20th century.</p>
 
 <p>[^40]: Venn, A., et al. &quot;Das Farbw&ouml;rterbuch / The Colour Dictionary&quot;.</p>
 

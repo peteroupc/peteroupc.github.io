@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Other Open Questions on Probability</title><meta name="citation_title" content="Other Open Questions on Probability"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requestsother.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requestsother.html"><meta name="citation_date" content="2023/03/23"><meta name="citation_online_date" content="2023/03/23"><meta name="og:title" content="Other Open Questions on Probability"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requestsother.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Other Open Questions on Probability"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Other Open Questions on Probability</title><meta name="citation_title" content="Other Open Questions on Probability"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requestsother.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requestsother.html"><meta name="citation_date" content="2023/05/30"><meta name="citation_online_date" content="2023/05/30"><meta name="og:title" content="Other Open Questions on Probability"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requestsother.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Other Open Questions on Probability"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -149,7 +149,7 @@
 <li>The shape is closed, has nonzero finite volume, and has a boundary of measure zero.</li>
 <li>The <strong>InShape</strong> implementation can determine only <em>pointwise</em> whether a point is either outside the shape, or on or inside the shape.</li>
 <li>The <strong>InShape</strong> implementation has access to arbitrary-precision arithmetic, as well as interval arithmetic using arbitrary-precision rational numbers. See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py"><strong>my library</strong></a>, for example.</li>
-<li>Other than this, it doesn&#39;t matter how the shape is described -- it could be described as a sequence of line and/or curve segments describing the shape&#39;s outline; as a signed distance function; as an inequality; as a union or intersection of multiple shapes; etc.</li>
+<li>Other than this, it doesn&#39;t matter how the shape is described -- it could be described as a sequence of line segments, curve segments, or both describing the shape&#39;s outline; as a signed distance function; as an inequality; as a union or intersection of multiple shapes; etc.</li>
 </ul>
 
 <p>The <strong>InShape</strong> implementation is given an axis-aligned bounding box as input. The goal is to correctly classify the box just by evaluating the shape <em>pointwise</em>.</p>
@@ -202,8 +202,8 @@
 <p>Thus my questions are:</p>
 
 <ol>
-<li>What are necessary and/or sufficient conditions (such as convexity or regularity conditions, or other requirements on the shape) that allow Algorithm 1 to work correctly? Are the sufficient conditions I gave above for this algorithm correct? If so, can they be relaxed?</li>
-<li>What are necessary and/or sufficient conditions that allow Algorithm 2 to work correctly, if the <strong>InShape</strong> method can only evaluate the shape point-by-point? In particular, how can Algorithm 2 robustly check for intersections as required to determine whether to return <em>NO</em> or <em>MAYBE</em>?</li>
+<li>What are necessary or sufficient conditions (such as convexity or regularity conditions, or other requirements on the shape) that allow Algorithm 1 to work correctly? Are the sufficient conditions I gave above for this algorithm correct? If so, can they be relaxed?</li>
+<li>What are necessary or sufficient conditions that allow Algorithm 2 to work correctly, if the <strong>InShape</strong> method can only evaluate the shape point-by-point? In particular, how can Algorithm 2 robustly check for intersections as required to determine whether to return <em>NO</em> or <em>MAYBE</em>?</li>
 <li>What are other conditions that allow <strong>InShape</strong> to correctly classify whether a box is outside or on or inside a shape when <strong>InShape</strong> can only evaluate the shape point-by-point, or when <strong>InShape</strong> proceeds as in Algorithm 3?</li>
 <li><p>Is it possible (or what additional conditions make it possible) to correctly classify a bounding box as <em>NO</em> or <em>MAYBE</em>, using only <em>pointwise</em> evaluation of the shape, if&mdash;</p>
 
@@ -308,12 +308,12 @@ $$= \frac{V(n) (n+1)-V(n+1)}{V(0) (n+1)!},$$</p>
 <li><p>Suppose $f(x)$ is continuous, and suppose $X$ is unbounded and meets additional assumptions, such as&mdash;</p>
 
 <ul>
-<li>being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or</li>
-<li>following a geometric distribution, and/or</li>
-<li>having decreasing or nowhere increasing probabilities.</li>
+<li>being unimodal (having one peak) and symmetric (mirrored on each side of the peak), or</li>
+<li>following a geometric distribution, or</li>
+<li>having decreasing or nowhere increasing probabilities,</li>
 </ul>
 
-<p>Then, is there an algorithm, besides the algorithm of Kunsch et al. (2019)&mdash;</p>
+<p>or any combination of these.  Then, is there an algorithm, besides the algorithm of Kunsch et al. (2019)&mdash;</p>
 
 <ul>
 <li>whose output is within $\epsilon$ of $f(\mathbb{E}[X])$ in terms of absolute error with probability at least 1 minus $\delta$, or</li>

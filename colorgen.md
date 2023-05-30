@@ -1084,8 +1084,8 @@ The following techniques generate new colors that are related to existing colors
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
     - **Tetradic**: Double complementary with Y = &pi;/2.
     - **N-color**: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.
-- **Monochrome colors**: Colors with the same hue; for example, different [**shades, tints, and/or tones**](#Alpha_Blending) of a given color are monochrome colors.
-- **Achromatic colors**: Colors without hue; that is, black, white, and/or shades of gray.
+- **Monochrome colors**: Colors with the same hue; for example, different [**shades, tints, or tones**](#Alpha_Blending) of a given color are monochrome colors.
+- **Achromatic colors**: Colors without hue; that is, black, white, and shades of gray.
 
 <a id=Contrast_Between_Two_Colors></a>
 ### Contrast Between Two Colors
@@ -1389,7 +1389,7 @@ The [**_ColorBrewer 2.0_**](http://colorbrewer2.org/) Web site's suggestions for
 - **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [**recommends**](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
 - **Qualitative color maps** for showing discrete categories of data (see also "[**Visually Distinct Colors**](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
 
-> **Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"[^38] and/or "[**color blind friendly**](#Defective_and_Animal_Color_Vision)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
+> **Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"[^38], "[**color blind friendly**](#Defective_and_Animal_Color_Vision)", or both suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
 
 <a id=Color_Collections></a>
 ### Color Collections
@@ -1583,7 +1583,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 > **Notes:**
 >
 > 1. Although `lightFunc`, `reflFunc`, and `cmfFunc` are actually continuous functions, in practice tristimulus values are calculated based on measurements at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `cmfFunc` and `lightFunc`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
-> 2. **Metamerism** occurs when two materials match the same color under one viewing situation (such as light source, `lightFunc`, and/or viewer, `cmfFunc`), but not under another.  If this happens, the two materials' reflectance or transmittance curves (`reflFunc`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`reflFunc`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors). (See also [**B. MacEvoy's principle 38**](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
+> 2. **Metamerism** occurs when two materials match the same color under one viewing situation (such as light source, `lightFunc`, or viewer, `cmfFunc`, or both), but not under another.  If this happens, the two materials' reflectance or transmittance curves (`reflFunc`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`reflFunc`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors). (See also [**B. MacEvoy's principle 38**](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
 >
 > **Examples:**  In these examples, `D65` is the D65 illuminant, `D50` is the D50 illuminant, `CIE1931` is the CIE 1931 standard observer, and `refl` is an arbitrary reflectance curve.
 >
@@ -1685,7 +1685,7 @@ The following topics may be added in the future based on reader interest:
 
 The following topics would greatly enrich this document:
 
-- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any active patents or pending patent applications.
+- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card or white balance card, provided that method is not covered by any active patents or pending patent applications.
 - Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
 
 <a id=Notes></a>
@@ -1779,7 +1779,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 [^38]: In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").
 
-[^39]: Many color collections are represented by printed or dyed color swatches and/or found in printed "fan decks".  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.
+[^39]: Many color collections are represented by printed or dyed color swatches, are found in printed "fan decks", or both.  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.
 
 [^40]: Venn, A., et al. "Das Farbw&ouml;rterbuch / The Colour Dictionary".
 

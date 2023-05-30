@@ -10,10 +10,10 @@ Most apps that use randomly generated or pseudorandom numbers care about either 
 Many applications rely on random number generators (RNGs) to produce a sequence of numbers that seemingly occur by chance;
 however, it's not enough for this sequence to merely "look random".  But unfortunately, most popular programming languages today&mdash;
 
-- specify few and weak requirements on their built-in RNGs (such as [**C's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)),
-- specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`),
-- implement RNGs by default that leave something to be desired (such as Mersenne Twister),
-- initialize RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), and/or
+- specify few and weak requirements on their built-in RNGs (such as [**C's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)), or
+- specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`), or
+- implement RNGs by default that leave something to be desired (such as Mersenne Twister), or
+- initialize RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), or
 - use RNGs that are initialized with a fixed value by default (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html) and C[^1]),
 
 so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.   That is why this document discusses high-quality RNGs and suggests [**existing implementations**](#Existing_RNG_APIs_in_Programming_Languages) of them.
@@ -83,7 +83,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 
 In this document:
 
-- **Random number generator (RNG)** means software and/or hardware that seeks to generate integers in a bounded range that behave as if each possible outcome occurs with the same chance as any other without influence by anything else[^4].
+- **Random number generator (RNG)** means software, hardware, or a combination of them that seeks to generate integers in a bounded range that behave as if each possible outcome occurs with the same chance as any other without influence by anything else[^4].
 - **Pseudorandom number generator (PRNG)** means a random number generator that produces numbers by an algorithm that mathematically expands its input.
 - **Seed** means arbitrary data serving as a PRNG's input.
 - **Information security** means keeping information safe from attacks that could access, use, delay, or manipulate that information.[^5]
@@ -242,7 +242,7 @@ RNGs ultimately rely on so-called _nondeterministic sources_; without such sourc
 A _nondeterministic source_ is a source that doesn't give the same output for the same input each time (for example, a clock that doesn't always give the same time).  There are many kinds of them, but sources useful for generating numbers at random have hard-to-guess output (that is, they have high _entropy_; see the next section).  They include&mdash;
 
 - timings of interrupts and disk accesses,
-- timings of keystrokes and/or other input device interactions,
+- timings of keystrokes, of other input device interactions, or of both,
 - thermal noise,
 - the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and
 - differences between two high-resolution counter values taken in quick succession (such as in "Jitter RNG"; see (M&uuml;ller\)[^11]).
@@ -451,7 +451,7 @@ This section doesn't discuss how to format a unique value into a text string (su
 <a id=Verifiable_Random_Numbers></a>
 ### Verifiable Random Numbers
 
-_Verifiable random numbers_ are randomly generated numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes randomly generated values and/or uncertain data to be determined and publicly disclosed in the future.  Techniques to generate _verifiable random numbers_ (as opposed to cryptographic RNGs alone) are used whenever one party alone can't be trusted to produce a number at random.  _Verifiable random numbers_ that are disclosed _publicly_ should not be used as encryption keys or other secret parameters.
+_Verifiable random numbers_ are randomly generated numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes randomly generated values, or uncertain data, or both, to be determined and publicly disclosed in the future.  Techniques to generate _verifiable random numbers_ (as opposed to cryptographic RNGs alone) are used whenever one party alone can't be trusted to produce a number at random.  _Verifiable random numbers_ that are disclosed _publicly_ should not be used as encryption keys or other secret parameters.
 
 > **Examples:**
 >
@@ -469,7 +469,7 @@ This section contains suggested requirements on cryptographic and high-quality R
 
 <a id=Cryptographic_RNGs_Requirements></a>
 ### Cryptographic RNGs: Requirements
-A cryptographic RNG generates bits that behave like independent uniform random bits, such that an outside party has no more than negligible advantage in correctly guessing prior or future unseen output bits of that RNG even after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen output bits of that RNG after compromising its security, such as reading its internal state.[^38]
+A cryptographic RNG generates bits that behave like independent uniform random bits, such that an outside party has no more than negligible advantage in correctly guessing prior or future unseen output bits of that RNG even after knowing how the RNG works or knowing extremely many outputs of the RNG, or correctly guessing prior unseen output bits of that RNG after compromising its security, such as reading its internal state.[^38]
 
 If a cryptographic RNG implementation uses a PRNG:
 
@@ -631,7 +631,7 @@ I acknowledge&mdash;
 
     (A) "Post-Spectre Threat Model Re-Think" in the Chromium source code repository (May 29, 2018).<br/>(B) Bernstein, D.J. "Entropy Attacks!", Feb. 5, 2014.<br/>(C) Everspaugh, A., Zhai, Y., et al. "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br/>(D) Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.<br/>For a detailed notion of a secure RNG, see Coretti, Dodis, et al., "Seedless Fruit is the Sweetest: Random Number Generation, Revisited", 2019.
 
-[^39]: This data can come from nondeterministic sources, and also include process identifiers, time stamps, environment variables, pseudorandom numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note.
+[^39]: This data can come from nondeterministic sources, and also include any combination of process identifiers, time stamps, environment variables, pseudorandom numbers, virtual machine guest identifiers, and other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note.
 
 [^40]: Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.
 

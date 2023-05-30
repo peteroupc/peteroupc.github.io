@@ -3839,8 +3839,8 @@ class RandomGen:
     def numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None):
         """Transforms one or more random numbers into numbers
         (called quantiles) that follow a non-discrete probability distribution, based on its PDF
-        (probability density function) and/or its CDF (cumulative distribution
-        function).
+        (probability density function), its CDF (cumulative distribution
+        function), or both.
 
         - u01: List of uniform random numbers in [0, 1] that will be
         transformed into numbers that follow the distribution.
@@ -4453,7 +4453,7 @@ class RatioOfUniformsTiling:
        random number close to that number is chosen.  The area under
        the PDF need not be 1; this method works even if the PDF
        is only known up to a normalizing constant, and even if
-       the distribution has infinitely extending tails to the left and/or right.
+       the distribution has infinitely extending tails to the left, to the right, or both.
        However, for the ratio of uniforms method to work, both pdf(x) and
        x*x*pdf(x) must be less than or equal to a finite number (thus, if the distribution has
        tails, they must drop off at a faster than quadratic rate).

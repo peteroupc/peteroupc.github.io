@@ -278,7 +278,7 @@ Specifically, the probability of returning 1 is the _cumulative distribution fun
 <a id=Bit_Vectors_with_Random_Bit_Flips></a>
 ### Bit Vectors with Random Bit Flips
 
-Chakraborty and Vardeman (2021)[^18] describes distributions of bit vectors with a random number of bit flips. Given three parameters &mdash; _&mu;_ is a _p_-item vector (list) with only zeros and/or ones; _p_ is the size of _&mu;_; and _&alpha;_ is a spread parameter greater than 0 and less than 1 &mdash; do the following to generate such a vector:
+Chakraborty and Vardeman (2021)[^18] describes distributions of bit vectors with a random number of bit flips. Given three parameters &mdash; _&mu;_ is a _p_-item vector (list) with only zeros and ones in any combination; _p_ is the size of _&mu;_; and _&alpha;_ is a spread parameter greater than 0 and less than 1 &mdash; do the following to generate such a vector:
 
 1. Generate a random integer _c_ in the interval \[0, _p_] in some way.  (_c_ need not be uniformly distributed.  This is the number of bit flips.)
 2. Create a _p_-item list _&nu;_, where the first _c_ items are ones and the rest are zeros.  [**Shuffle**](https://peteroupc.github.io/randomfunc.html#Shuffling) the list.

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2023/01/21"><meta name="citation_online_date" content="2023/01/21"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2023/05/30"><meta name="citation_online_date" content="2023/05/30"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -18,10 +18,10 @@
 however, it&#39;s not enough for this sequence to merely &quot;look random&quot;.  But unfortunately, most popular programming languages today&mdash;</p>
 
 <ul>
-<li>specify few and weak requirements on their built-in RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>C&#39;s <code>rand</code></strong></a>),</li>
-<li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>),</li>
-<li>implement RNGs by default that leave something to be desired (such as Mersenne Twister),</li>
-<li>initialize RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), and/or</li>
+<li>specify few and weak requirements on their built-in RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>C&#39;s <code>rand</code></strong></a>), or</li>
+<li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>), or</li>
+<li>implement RNGs by default that leave something to be desired (such as Mersenne Twister), or</li>
+<li>initialize RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), or</li>
 <li>use RNGs that are initialized with a fixed value by default (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a> and C[^1]),</li>
 </ul>
 
@@ -123,7 +123,7 @@ however, it&#39;s not enough for this sequence to merely &quot;look random&quot;
 <p>In this document:</p>
 
 <ul>
-<li><strong>Random number generator (RNG)</strong> means software and/or hardware that seeks to generate integers in a bounded range that behave as if each possible outcome occurs with the same chance as any other without influence by anything else[^4].</li>
+<li><strong>Random number generator (RNG)</strong> means software, hardware, or a combination of them that seeks to generate integers in a bounded range that behave as if each possible outcome occurs with the same chance as any other without influence by anything else[^4].</li>
 <li><strong>Pseudorandom number generator (PRNG)</strong> means a random number generator that produces numbers by an algorithm that mathematically expands its input.</li>
 <li><strong>Seed</strong> means arbitrary data serving as a PRNG&#39;s input.</li>
 <li><strong>Information security</strong> means keeping information safe from attacks that could access, use, delay, or manipulate that information.[^5]</li>
@@ -358,7 +358,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ul>
 <li>timings of interrupts and disk accesses,</li>
-<li>timings of keystrokes and/or other input device interactions,</li>
+<li>timings of keystrokes, of other input device interactions, or of both,</li>
 <li>thermal noise,</li>
 <li>the output generated with A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and</li>
 <li>differences between two high-resolution counter values taken in quick succession (such as in &quot;Jitter RNG&quot;; see (M&uuml;ller)[^11]).</li>
@@ -685,7 +685,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <h3>Verifiable Random Numbers</h3>
 
-<p><em>Verifiable random numbers</em> are randomly generated numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes randomly generated values and/or uncertain data to be determined and publicly disclosed in the future.  Techniques to generate <em>verifiable random numbers</em> (as opposed to cryptographic RNGs alone) are used whenever one party alone can&#39;t be trusted to produce a number at random.  <em>Verifiable random numbers</em> that are disclosed <em>publicly</em> should not be used as encryption keys or other secret parameters.</p>
+<p><em>Verifiable random numbers</em> are randomly generated numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes randomly generated values, or uncertain data, or both, to be determined and publicly disclosed in the future.  Techniques to generate <em>verifiable random numbers</em> (as opposed to cryptographic RNGs alone) are used whenever one party alone can&#39;t be trusted to produce a number at random.  <em>Verifiable random numbers</em> that are disclosed <em>publicly</em> should not be used as encryption keys or other secret parameters.</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
@@ -710,7 +710,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <h3>Cryptographic RNGs: Requirements</h3>
 
-<p>A cryptographic RNG generates bits that behave like independent uniform random bits, such that an outside party has no more than negligible advantage in correctly guessing prior or future unseen output bits of that RNG even after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen output bits of that RNG after compromising its security, such as reading its internal state.[^38]</p>
+<p>A cryptographic RNG generates bits that behave like independent uniform random bits, such that an outside party has no more than negligible advantage in correctly guessing prior or future unseen output bits of that RNG even after knowing how the RNG works or knowing extremely many outputs of the RNG, or correctly guessing prior unseen output bits of that RNG after compromising its security, such as reading its internal state.[^38]</p>
 
 <p>If a cryptographic RNG implementation uses a PRNG:</p>
 
@@ -906,7 +906,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <pre>(A) &quot;Post-Spectre Threat Model Re-Think&quot; in the Chromium source code repository (May 29, 2018).&lt;br/&gt;(B) Bernstein, D.J. &quot;Entropy Attacks!&quot;, Feb. 5, 2014.&lt;br/&gt;(C) Everspaugh, A., Zhai, Y., et al. &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.&lt;br/&gt;(D) Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.&lt;br/&gt;For a detailed notion of a secure RNG, see Coretti, Dodis, et al., &quot;Seedless Fruit is the Sweetest: Random Number Generation, Revisited&quot;, 2019.
 </pre>
 
-<p>[^39]: This data can come from nondeterministic sources, and also include process identifiers, time stamps, environment variables, pseudorandom numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note.</p>
+<p>[^39]: This data can come from nondeterministic sources, and also include any combination of process identifiers, time stamps, environment variables, pseudorandom numbers, virtual machine guest identifiers, and other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note.</p>
 
 <p>[^40]: Bernstein, D.J.  &quot;Fast-key-erasure random number generators&quot;, Jun. 23, 2017.</p>
 

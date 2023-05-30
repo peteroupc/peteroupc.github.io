@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2023/05/28"><meta name="citation_online_date" content="2023/05/28"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2023/05/30"><meta name="citation_online_date" content="2023/05/30"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -716,7 +716,7 @@ END METHOD
 <p>To generate a random string of characters:</p>
 
 <ol>
-<li>Prepare a list of the letters, digits, and/or other characters the string can have.  Examples are given later in this section.</li>
+<li>Prepare a list of the characters (including letters or digits) the string can have.  Examples are given later in this section.</li>
 <li>Build a new string whose characters are chosen at random from that character list.  The method, shown in the pseudocode below, demonstrates this. The method samples characters at random with replacement, and returns a list of the sampled characters. (How to convert this list to a text string depends on the programming language and is outside the scope of this page.) The method takes two parameters: <code>characterList</code> is the list from step 1, and <code>stringSize</code> is the number of random characters.</li>
 </ol>
 
@@ -1268,7 +1268,7 @@ END METHOD
 
 <h3>Transformations of Random Variates</h3>
 
-<p>Random variates can be generated by combining and/or transforming one or more random variates and/or discarding some of them.</p>
+<p>Random variates can be generated by combining one or more random variates, by transforming them, by discarding some of them, or any combination of these.</p>
 
 <p>As an example, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Damage Rolls&quot;</strong></a> by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.[^49]  These and similar distributions can be generalized as follows.</p>
 
@@ -1301,9 +1301,11 @@ END METHOD
 <li><p><strong>Clamped random variates.</strong>  These are one example of transformed random variates.  To generate a clamped random variate, generate a number at random as usual, then&mdash;</p>
 
 <ul>
-<li>if that number is less than a minimum threshold, use the minimum threshold instead (<em>left-censoring</em>), and/or</li>
-<li>if that number is greater than a maximum threshold, use the maximum threshold instead (<em>right-censoring</em>).</li>
+<li>if that number is less than a minimum threshold, use the minimum threshold instead (<em>left-censoring</em>), or</li>
+<li>if that number is greater than a maximum threshold, use the maximum threshold instead (<em>right-censoring</em>),</li>
 </ul>
+
+<p>or both.</p>
 
 <p>An example of a clamped random variate is <code>min(200, RNDINT(255))</code>.</p></li>
 <li>A <strong>compound Poisson distribution</strong> models the sum of <em>n</em> numbers each chosen at random in the same way, where <em>n</em> follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> (for example, <code>n = PoissonInt(10, 1)</code> for an average of 10 numbers) (strategy 7, sum).</li>
@@ -1927,7 +1929,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (for example, multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the simplest kind that shows an acceptable <em>predictive performance</em> for the data set (for example, information criterion, precision, recall) should be chosen.</li>
+<li>Usually, more than one kind of data model or machine learning model is a possible choice to fit to a given data set (for example, multiple kinds of density estimation models, regression models, parametric distributions, decision trees, or combinations of these).  If several kinds of model are fitting choices, then the simplest kind that shows an acceptable <em>predictive performance</em> for the data set (for example, information criterion, precision, recall) should be chosen.</li>
 <li>If the existing data points each belong in one of several <em>categories</em>, choosing a random category could be done by choosing a number at random with probability proportional to the number of data points in each category (see &quot;<a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>&quot;).</li>
 <li>If the existing data points each belong in one of several <em>categories</em>, choosing a random data point <em>and</em> its category could be done&mdash;
 

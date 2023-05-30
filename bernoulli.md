@@ -195,7 +195,7 @@ The following shows some functions that are factory functions and some that are 
 | exp(&minus;1/_&lambda;_) | [&#x03F5;, 1) | Yes; same reason. |
 | _&lambda;_<sup>_n_</sup> where _n_&ge;2 is an integer.  | 0&le;_&lambda;_&le;1 | Yes; continuous and the polynomial $\lambda^{n+1}$ can go below $f$, and the polynomial $\lambda^{n-1}$ can go above $f$. |
 
-If _f_'s domain includes 0 and/or 1 (so that the input coin is allowed to return 0 every time or 1 every time, respectively), then _f_ can be a factory function only if&mdash;
+If _f_'s domain includes 0, 1, or both (so that the input coin is allowed to return 0 every time, 1 every time, or either, respectively), then _f_ can be a factory function only if&mdash;
 
 1. the function is constant on its domain, or is continuous and polynomially bounded on its domain, and
 2. _f_(0) equals 0 or 1 whenever 0 is in the function's domain, and
@@ -354,7 +354,7 @@ The algorithm follows.
 **"Dice Enterprise" special case.** The following algorithm implements a special case of the "Dice Enterprise" method of Morina et al. (2022\)[^17].  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)), where _&lambda;_ is the input coin's probability of heads and _m_ is 2 or greater.  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_k_</sub>(_&lambda;_) are in the form of polynomials as follows:
 - The polynomials are _homogeneous_, that is, they are written as $\sum_{i=0}^n$ _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] is a coefficient.
 - The polynomials have the same degree (namely _n_) and all _a_\[_i_\] are 0 or greater.
-- The sum of _j_<sup>th</sup> coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin and/or end with zeros.  Call this list _R_.  For example, this condition holds true if _R_ is (2, 4, 4, 2) or (0, 2, 4, 0), but not if _R_ is (2, 0, 4, 3).
+- The sum of _j_<sup>th</sup> coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin with zeros, end with zeros, or both.  Call this list _R_.  For example, this condition holds true if _R_ is (2, 4, 4, 2) or (0, 2, 4, 0), but not if _R_ is (2, 0, 4, 3).
 
 Any rational function that admits a Bernoulli factory can be brought into the form just described, as detailed in the appendix under "[**Preparing Rational Functions**](#Preparing_Rational_Functions)".  In this algorithm, let _R_\[_j_\] be the sum of _j_<sup>th</sup> coefficients of the polynomials (with _j_ starting at 0).  First, define the following operation:
 
@@ -703,7 +703,7 @@ A _simple continued fraction_ is a way to write a real number between 0 and 1. A
 
 Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions"\)[^1], I developed the following algorithm.
 
-**Algorithm 1.** The following algorithm simulates a probability expressed as a simple continued fraction.  This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is greater than 0, but otherwise, each  _a_\[_i_\] may be negative and/or a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+**Algorithm 1.** The following algorithm simulates a probability expressed as a simple continued fraction.  This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is greater than 0, but otherwise, each  _a_\[_i_\] may be negative, be a non-integer, or both.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. Set _k_ to _a_\[_pos_\].
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
@@ -716,7 +716,7 @@ Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational 
 
 A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.
 
-The following algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has an absolute value of 1 or less, but otherwise, each _b_\[_i_\] and each  _a_\[_i_\] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
+The following algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has an absolute value of 1 or less, but otherwise, each _b_\[_i_\] and each  _a_\[_i_\] may be negative, be a non-integer, or both.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
 
 1. Set _r_ to 1 / (_r_ * _b_\[_pos_\]), then set _k_ to _a_\[_pos_\] * _r_. (_k_ is the partial denominator for the equivalent simple continued fraction.)
 2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/abs(_k_) and 0 otherwise.
@@ -2205,7 +2205,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^2]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^3]: There is an analogue to the Bernoulli factory problem called the _quantum Bernoulli factory_, with the same goal of simulating functions of unknown probabilities, but this time with algorithms that employ quantum-mechanical operations (unlike _classical_ algorithms that employ no such operations).  However, quantum-mechanical programming is far from being accessible to most programmers at the same level as classical programming, and will likely remain so for the foreseeable future.  For this reason, the _quantum Bernoulli factory_ is outside the scope of this document, but it should be noted that more factory functions can be "constructed" using quantum-mechanical operations than by classical algorithms.  For example, a factory function whose domain is \[0, 1\] has to meet the requirements proved by Keane and O'Brien except it can touch 0 and/or 1 at a finite number of points in the domain (Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4).
+[^3]: There is an analogue to the Bernoulli factory problem called the _quantum Bernoulli factory_, with the same goal of simulating functions of unknown probabilities, but this time with algorithms that employ quantum-mechanical operations (unlike _classical_ algorithms that employ no such operations).  However, quantum-mechanical programming is far from being accessible to most programmers at the same level as classical programming, and will likely remain so for the foreseeable future.  For this reason, the _quantum Bernoulli factory_ is outside the scope of this document, but it should be noted that more factory functions can be "constructed" using quantum-mechanical operations than by classical algorithms.  For example, a factory function whose domain is \[0, 1\] has to meet the requirements proved by Keane and O'Brien except it can touch 0, 1, or both at a finite number of points in the domain (Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4).
 
 [^4]: Huber, M., "[**Nearly optimal Bernoulli factories for linear functions**](https://arxiv.org/abs/1308.1562v2)", arXiv:1308.1562v2  [math.PR], 2014.
 
@@ -2365,7 +2365,7 @@ If a Bernoulli factory algorithm uses a fair coin, it can often generate flips o
 
 > **Example:** If a Bernoulli factory algorithm would generate an unbiased random bit, instead it could flip the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then take the result as 0 or 1, respectively (von Neumann 1951\)[^71].  But this trick works only if the input coin's probability of heads is neither 0 nor 1.
 
-When Keane and O'Brien (1994\)[^24] introduced Bernoulli factories, they showed already that _f_(_&lambda;_) is strongly simulable whenever it admits a Bernoulli factory and its domain includes neither 0 nor 1 (so the input coin doesn't show heads every time or tails every time) &mdash; just use the von Neumann trick as in the example above.  But does _f_ remain strongly simulable if its domain includes 0 and/or 1?  That's a complexer question; see the [**supplemental notes**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate).
+When Keane and O'Brien (1994\)[^24] introduced Bernoulli factories, they showed already that _f_(_&lambda;_) is strongly simulable whenever it admits a Bernoulli factory and its domain includes neither 0 nor 1 (so the input coin doesn't show heads every time or tails every time) &mdash; just use the von Neumann trick as in the example above.  But does _f_ remain strongly simulable if its domain includes 0, 1, or both?  That's a complexer question; see the [**supplemental notes**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate).
 
 <a id=The_Entropy_Bound></a>
 ### The Entropy Bound
@@ -2588,7 +2588,7 @@ If the polynomial is written in so-called "power form" as _c\[0\]_ + _c\[1\]_\*_
 
 - the polynomials have the same degree, namely _n_,
 - their coefficients are all 0 or greater, and
-- the sum of _j_<sup>th</sup> coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin and/or end with zeros.
+- the sum of _j_<sup>th</sup> coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin with zeros, end with zeros, or both.
 
 If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2022\)[^17].  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001[^61]).  It is implemented as follows:
 

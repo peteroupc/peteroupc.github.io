@@ -107,7 +107,7 @@ Now, take a particular implementation of **InShape** that has certain knowledge 
 - The shape is closed, has nonzero finite volume, and has a boundary of measure zero.
 - The **InShape** implementation can determine only _pointwise_ whether a point is either outside the shape, or on or inside the shape.
 - The **InShape** implementation has access to arbitrary-precision arithmetic, as well as interval arithmetic using arbitrary-precision rational numbers. See [**my library**](https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py), for example.
-- Other than this, it doesn't matter how the shape is described -- it could be described as a sequence of line and/or curve segments describing the shape's outline; as a signed distance function; as an inequality; as a union or intersection of multiple shapes; etc.
+- Other than this, it doesn't matter how the shape is described -- it could be described as a sequence of line segments, curve segments, or both describing the shape's outline; as a signed distance function; as an inequality; as a union or intersection of multiple shapes; etc.
 
 The **InShape** implementation is given an axis-aligned bounding box as input. The goal is to correctly classify the box just by evaluating the shape _pointwise_.
 
@@ -147,8 +147,8 @@ This is not so easy because checking whether a box intersects a shape might not 
 
 Thus my questions are:
 
-1. What are necessary and/or sufficient conditions (such as convexity or regularity conditions, or other requirements on the shape) that allow Algorithm 1 to work correctly? Are the sufficient conditions I gave above for this algorithm correct? If so, can they be relaxed?
-2. What are necessary and/or sufficient conditions that allow Algorithm 2 to work correctly, if the **InShape** method can only evaluate the shape point-by-point? In particular, how can Algorithm 2 robustly check for intersections as required to determine whether to return _NO_ or _MAYBE_?
+1. What are necessary or sufficient conditions (such as convexity or regularity conditions, or other requirements on the shape) that allow Algorithm 1 to work correctly? Are the sufficient conditions I gave above for this algorithm correct? If so, can they be relaxed?
+2. What are necessary or sufficient conditions that allow Algorithm 2 to work correctly, if the **InShape** method can only evaluate the shape point-by-point? In particular, how can Algorithm 2 robustly check for intersections as required to determine whether to return _NO_ or _MAYBE_?
 3. What are other conditions that allow **InShape** to correctly classify whether a box is outside or on or inside a shape when **InShape** can only evaluate the shape point-by-point, or when **InShape** proceeds as in Algorithm 3?
 4. Is it possible (or what additional conditions make it possible) to correctly classify a bounding box as _NO_ or _MAYBE_, using only _pointwise_ evaluation of the shape, if&mdash;
 
@@ -232,11 +232,11 @@ Let $X$ be a random variable that does not take on a single value with probabili
 
 1. Suppose $f(x)$ is continuous, and suppose $X$ is unbounded and meets additional assumptions, such as&mdash;
 
-    - being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
-    - following a geometric distribution, and/or
-    - having decreasing or nowhere increasing probabilities.
+    - being unimodal (having one peak) and symmetric (mirrored on each side of the peak), or
+    - following a geometric distribution, or
+    - having decreasing or nowhere increasing probabilities,
 
-    Then, is there an algorithm, besides the algorithm of Kunsch et al. (2019)&mdash;
+    or any combination of these.  Then, is there an algorithm, besides the algorithm of Kunsch et al. (2019)&mdash;
 
     - whose output is within $\epsilon$ of $f(\mathbb{E}[X])$ in terms of absolute error with probability at least 1 minus $\delta$, or
     - whose output has an expected absolute error or mean squared error not more than $\epsilon$,

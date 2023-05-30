@@ -86,7 +86,7 @@ Should this document cover the following topics, and if so, how?
 
 Does any of the following exist?
 
-- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any active patents or pending patent applications.
+- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card or white balance card, provided that method is not covered by any active patents or pending patent applications.
 - Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
 
 <a id=Notes></a>
