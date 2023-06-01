@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/05/27"><meta name="citation_online_date" content="2023/05/27"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/05/31"><meta name="citation_online_date" content="2023/05/31"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -65,6 +65,8 @@
 <p>$${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$</p>
 
 <p>where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], ..., <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>coefficients</em>.[^1]</p>
+
+<p>A function $f(\lambda)$ is <em>piecewise continuous</em> if it&#39;s made up of multiple continuous functions defined on a finite number of &quot;pieces&quot;, or subintervals, that together make up f&#39;s domain.</p>
 
 <p><a id=Approximations_by_Polynomials></a></p>
 
@@ -328,7 +330,13 @@
 
 <ul>
 <li>The polynomial&#39;s integral on the closed unit interval is equal to the average of its $(n+1)$ Bernstein coefficients; that is, the integral is found by adding those coefficients together, then dividing by $(n+1)$ (Tsai and Farouki 2001)[^18].</li>
-<li>If the polynomial is within $\epsilon$ of a function $f(\lambda)$ on the closed unit interval, then its integral on that interval will be within $\epsilon$ of the integral of $f$.</li>
+</ul>
+
+<p>Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval $[<em>a</em>, <em>b</em>]$, and let $f(\lambda)$ be a piecewise continuous function on that interval.</p>
+
+<ul>
+<li>If $P$ is within $\epsilon$ of $f$ at every point on the interval, then its integral is within $\epsilon\times(b-a)$ of $f$&#39;s integral.</li>
+<li>If $P$ is within $\epsilon/(b-a)$ of $f$ at every point on the interval, then its integral is within $\epsilon$ of $f$&#39;s integral.</li>
 </ul>
 
 <blockquote>
@@ -411,7 +419,7 @@
 
 <p>[^20]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, Reliable Computing 17(1), 2012.</p>
 
-<p>[^21]: Konečný, Michal, and Eike Neumann. &quot;Representations and evaluation strategies for feasibly approximable functions.&quot; Computability 10, no. 1 (2021): 63-89. Also in arXiv: <a href="https://arxiv.org/pdf/1710.03702"><strong>https://arxiv.org/pdf/1710.03702</strong></a></p>
+<p>[^21]: Konečný, Michal, and Eike Neumann. &quot;Representations and evaluation strategies for feasibly approximable functions.&quot; Computability 10, no. 1 (2021): 63-89. Also in arXiv: <a href="https://arxiv.org/abs/1710.03702"><strong>https://arxiv.org/abs/1710.03702</strong></a></p>
 
 <p>[^22]: Konečný, Michal, and Eike Neumann. &quot;<a href="https://arxiv.org/abs/1910.04891"><strong>Implementing evaluation strategies for continuous real functions</strong></a>&quot;, arXiv:1910.04891 (2019).</p>
 

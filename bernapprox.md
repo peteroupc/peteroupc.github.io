@@ -47,6 +47,8 @@ $${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambd
 
 where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _coefficients_.[^1]
 
+A function $f(\lambda)$ is _piecewise continuous_ if it's made up of multiple continuous functions defined on a finite number of "pieces", or subintervals, that together make up f's domain.
+
 <a id=Approximations_by_Polynomials></a>
 ## Approximations by Polynomials
 
@@ -161,7 +163,11 @@ Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the 
 If a polynomial is in Bernstein form of degree $n$, and is defined on the closed unit interval:
 
 - The polynomial's integral on the closed unit interval is equal to the average of its $(n+1)$ Bernstein coefficients; that is, the integral is found by adding those coefficients together, then dividing by $(n+1)$ (Tsai and Farouki 2001)[^18].
-- If the polynomial is within $\epsilon$ of a function $f(\lambda)$ on the closed unit interval, then its integral on that interval will be within $\epsilon$ of the integral of $f$.
+
+Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval $\[_a_, _b_\]$, and let $f(\lambda)$ be a piecewise continuous function on that interval.
+
+- If $P$ is within $\epsilon$ of $f$ at every point on the interval, then its integral is within $\epsilon\times(b-a)$ of $f$'s integral.
+- If $P$ is within $\epsilon/(b-a)$ of $f$ at every point on the interval, then its integral is within $\epsilon$ of $f$'s integral.
 
 > **Note:** A pair of articles by Konečný and Neumann discuss approximating the integral (and maximum) of a class of functions efficiently using polynomials or piecewise functions with polynomials as the pieces: Konečný and Neumann (2021)[^21], Konečný and Neumann (2019)[^22].
 
@@ -234,7 +240,7 @@ See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polyn
 
 [^20]: S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", Reliable Computing 17(1), 2012.
 
-[^21]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021): 63-89. Also in arXiv: [**https://arxiv.org/pdf/1710.03702**](https://arxiv.org/pdf/1710.03702)
+[^21]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021): 63-89. Also in arXiv: [**https://arxiv.org/abs/1710.03702**](https://arxiv.org/abs/1710.03702)
 
 [^22]: Konečný, Michal, and Eike Neumann. "[**Implementing evaluation strategies for continuous real functions**](https://arxiv.org/abs/1910.04891)", arXiv:1910.04891 (2019).
 
