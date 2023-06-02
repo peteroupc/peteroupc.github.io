@@ -190,6 +190,8 @@ The following shows some functions that are factory functions and some that are 
 | exp(&minus;1/_&lambda;_) | 0&lt;_&lambda;_&lt;1 | No; not polynomially bounded since no nonconstant polynomial can come between the _&lambda;_-axis and $f$. |
 | (exp(&minus;1/_&lambda;_))/4. | 0&lt;_&lambda;_&lt;1 | No, for same reason. |
 | (_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4. | 0&lt;_&lambda;_&lt;1 | No, for same reason. |
+| (_&lambda;_+_&lambda;_\*sin(1/_&lambda;_)+exp(&minus;1/_&lambda;_))/4. | 0&lt;_&lambda;_&lt;1 | No, for same reason. |
+| _&lambda;_\*min(1/_&lambda;_&minus;floor(1/_&lambda;_),1-(1/_&lambda;_&minus;floor(1/_&lambda;_)))+exp(&minus;1/_&lambda;_). | 0&lt;_&lambda;_&lt;1 | No, for same reason. |
 | (_&lambda;_\*abs(sin(1/_&lambda;_))<sup>_&alpha;_</sup>+exp(&minus;1/_&lambda;_))/4, where _&alpha;_>0. | 0&lt;_&lambda;_&lt;1 | No, for same reason. |
 | exp(&minus;1/_&lambda;_) + &#x03F5; | 0&lt;_&lambda;_&lt;1 | Yes; continuous, minimum greater than 0, maximum less than 1. |
 | exp(&minus;1/_&lambda;_) | [&#x03F5;, 1) | Yes; same reason. |
