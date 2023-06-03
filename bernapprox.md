@@ -186,9 +186,15 @@ If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (
 
 3. The result is a degree-$n$ polynomial, with Bernstein coefficients $a[0], ..., a[n]$, that approximates the $r$-th derivative of $f(\lambda)$.
 
+In the table below:
+
+- $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
+- $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the given Hölder exponent _&alpha;_).
+- $L_r$ is not less than $f$'s $r$-th derivative's Lipschitz constant.
+
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes |
  --- | --- | --- | --- | --- |
-| ... | $B_n$. | ... | ... | Knoop and Pottinger (1976)[^23]. |
+| Has Hölder continuous $r$-th derivative. | $B_n$. | $\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$. | $n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r r^{2} - 2 m r\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$. | Knoop and Pottinger (1976)[^23]. $0\lt\alpha\le 1$ is $r$-th derivative's Hölder exponent. |
 
 > **Note:** In general, it is not possible to approximate a continuous function's derivative unless upper and lower bounds on the derivative are known (Konečný and Neumann (2019)[^22]).
 

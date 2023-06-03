@@ -362,6 +362,14 @@
 <li><p>The result is a degree-$n$ polynomial, with Bernstein coefficients $a[0], ..., a[n]$, that approximates the $r$-th derivative of $f(\lambda)$.</p></li>
 </ol>
 
+<p>In the table below:</p>
+
+<ul>
+<li>$M_r$ is not less than the maximum of the absolute value of $f$&#39;s $r$-th derivative.</li>
+<li>$H_r$ is not less than $f$&#39;s $r$-th derivative&#39;s Hölder constant (for the given Hölder exponent <em>&alpha;</em>).</li>
+<li>$L_r$ is not less than $f$&#39;s $r$-th derivative&#39;s Lipschitz constant.</li>
+</ul>
+
 <table><thead>
 <tr>
 <th>If <em>f</em>(<em>&lambda;</em>):</th>
@@ -372,11 +380,11 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>...</td>
+<td>Has Hölder continuous $r$-th derivative.</td>
 <td>$B_n$.</td>
-<td>...</td>
-<td>...</td>
-<td>Knoop and Pottinger (1976)[^23].</td>
+<td>$\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$.</td>
+<td>$n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r r^{2} - 2 m r\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$.</td>
+<td>Knoop and Pottinger (1976)[^23]. $0\lt\alpha\le 1$ is $r$-th derivative&#39;s Hölder exponent.</td>
 </tr>
 </tbody></table>
 
