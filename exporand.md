@@ -111,6 +111,7 @@ Comments on other aspects of this document are welcome.
     - [**Probability Transformations**](#Probability_Transformations)
     - [**Ratio of Uniforms**](#Ratio_of_Uniforms)
     - [**Setting Digits by Digit Probabilities**](#Setting_Digits_by_Digit_Probabilities)
+    - [**Security Considerations**](#Security_Considerations)
 - [**License**](#License)
 
 <a id=About_the_Beta_Distribution></a>
@@ -2327,6 +2328,14 @@ The following are some additional articles I have written on the topic of random
 
 [^65]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.
 
+[^66]: No note text yet.
+
+[^67]: For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485)
+
+[^68]: Ben Dov, Y., David, L., et al., "Resistance to Timing Attacks for Sampling and Privacy Preserving Schemes", FORC 2023.
+
+[^69]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965)", arXiv:2108.00965.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -2525,6 +2534,16 @@ Case 2 has several special cases, including:
 - More general, the fractional part of an exponential variate with rate _&lambda;_ (_w_ = &minus;_&lambda;_).
 - 1 minus the fractional part of an exponential variate with rate _w_ when _w_ > 0.
 - _a_<sub>_j_</sub> = _y_<sup>_v_/2<sup>_j_</sup></sup>/(1 + _y_<sup>_v_/2<sup>_j_</sup></sup>), with _w_ = ln(_y_)\*_v_ where _y_ > 0 and _v_ are constants.
+
+<a id=Security_Considerations></a>
+### Security Considerations
+
+This document is concerned with ways to sample exactly from certain continuous distributions.
+
+However, if an application samples at random at all for information security purposes (such as to generate secret values), it is very rare that it will sample this way from a continuous distribution or with floating-point numbers [^67].  Nevertheless, the following applies to any sampler used for information security purposes:
+
+1. **"Cryptographic generators".** An information security application has to use a device or program that generates random-behaving numbers that are hard to guess for information security purposes (a so-called "cryptographic generator").  Choosing such a device or program is outside the scope of this document.
+2. **Timing attacks.**  Certain security and privacy attacks have exploited timing and other differences to recover cleartext, encryption keys, or other secret or private data.  Thus, security algorithms have been developed to have no timing differences that reveal anything about any secret or private inputs, such as keys, passwords, or "seeds" for pseudorandom number generators.  But this kind of algorithm does not exist for all sampling distributions (Ben Dov et al. 2023)[^68]; [^66] [^69].
 
 <a id=License></a>
 ## License
