@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/06/03"><meta name="citation_online_date" content="2023/06/03"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/06/04"><meta name="citation_online_date" content="2023/06/04"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -8,7 +8,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>This page describes how to compute a polynomial in Bernstein form that comes close to a known function $f(\lambda)$ with a user-defined error tolerance, so that the polynomial&#39;s coefficients will lie in the closed unit interval if $f$&#39;s values lie in that interval.  The polynomial is often simpler to calculate than the original function $f$ and can often be accurate enough for an application&#39;s purposes.</p>
+<p>This page describes how to compute a polynomial in Bernstein form that comes close to a known function $f(\lambda)$ with a user-defined error tolerance, so that the polynomial&#39;s Bernstein coefficients will lie in the closed unit interval if $f$&#39;s values lie in that interval.  The polynomial is often simpler to calculate than the original function $f$ and can often be accurate enough for an application&#39;s purposes.</p>
 
 <p>The goal of these approximations is to avoid introducing transcendental and trigonometric functions to the approximation method. (For this reason, although this page also discusses approximation by so-called <em>Chebyshev interpolants</em>, that method is relegated to the appendix.)</p>
 
@@ -65,7 +65,7 @@
 
 <p>$${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$</p>
 
-<p>where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], ..., <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>coefficients</em>.[^1]</p>
+<p>where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], ..., <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>Bernstein coefficients</em> (which this document may simply call <em>coefficients</em> if the meaning is obvious from the context).[^1]</p>
 
 <p>A function $f(\lambda)$ is <em>piecewise continuous</em> if it&#39;s made up of multiple continuous functions defined on a finite number of &quot;pieces&quot;, or non-empty subintervals, that together make up f&#39;s domain.</p>
 
@@ -170,28 +170,28 @@
 </tr>
 <tr>
 <td>Has continuous third derivative.</td>
-<td>$L_{2, n/2}$.</td>
+<td>$L_{2, n/2}(f)$.</td>
 <td><em>&epsilon;</em> = (3*sqrt(3&minus;4/<em>n</em>)/4)*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &lt; (3*sqrt(3)/4)*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &lt; 1.29904*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &le; 1.29904*<em>M</em><sub>3</sub>/<em>n</em><sup>3/2</sup>.</td>
 <td><em>n</em>=max(6,ceil($\frac{3^{3/4} \sqrt{M_3/\epsilon}}{2}$)) &le; max(6,ceil((113976/100000) * sqrt(<em>M</em><sub>3</sub>/<em>&epsilon;</em>))) &le; max(6, ceil($((1.29904 M_3)$ / $\epsilon)^{2/3}$)). (If <em>n</em> is now odd, add 1.)</td>
 <td>Tachev (2022)[^5]. $n\ge 6$ must be even.</td>
 </tr>
 <tr>
 <td>Has Hölder continuous third derivative.</td>
-<td>$U_{n, 2}$.</td>
+<td>$U_{n, 2}(f)$.</td>
 <td><em>&epsilon;</em> = $(9H_3+8M_2+8M_3)$ / $(64 n^{(3+\alpha)/2})$.</td>
 <td><em>n</em>=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{2/(3+\alpha)}$)).</td>
 <td>$n\ge 6$.  0 &lt; <em>&alpha;</em> &le; 1 is third derivative&#39;s Hölder exponent.  See Proposition B10D in appendix.</td>
 </tr>
 <tr>
 <td>Has Lipschitz continuous third derivative.</td>
-<td>$U_{n, 2}$.</td>
+<td>$U_{n, 2}(f)$.</td>
 <td><em>&epsilon;</em> = $(9H_3+8M_2+8M_3)$ / $(64 n^2)$.</td>
 <td><em>n</em>=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{1/2}$)).</td>
 <td>$n\ge 6$.  Special case of previous entry.</td>
 </tr>
 <tr>
 <td>Has Lipschitz continuous third derivative.</td>
-<td>$L_{3, n/4}$.</td>
+<td>$L_{3, n/4}(f)$.</td>
 <td><em>&epsilon;</em> = <em>L</em><sub>3</sub>/(8*<em>n</em><sup>2</sup>).</td>
 <td><em>n</em>=max(4,ceil((sqrt(2)/4) * sqrt(<em>L</em><sub>3</sub>/<em>&epsilon;</em>))) &le; max(4,ceil((35356/100000) * sqrt(<em>L</em><sub>3</sub>/<em>&epsilon;</em>))). (Round <em>n</em> up to nearest multiple of 4.)</td>
 <td>$n\ge 4$ must be divisible by 4. See Proposition B10 in appendix.</td>
@@ -266,7 +266,7 @@
 <li>$c$=floor($c/\delta + 1/2$) * $\delta$ (rounding to the nearest multiple),</li>
 </ul>
 
-<p>for each coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s coefficients as given here.)</p></li>
+<p>for each Bernstein coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ Bernstein coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s Bernstein coefficients as given here.)</p></li>
 <li><p><em>Gevrey&#39;s hierarchy</em> is a class of &quot;smooth&quot; functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> if there are $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$&#39;s $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n\ge 1$ (Kawamura et al. 2015)[^16]; see also (Gevrey 1918)[^17]). In this case, for each $n\ge 1$&mdash;</p>
 
 <ul>
@@ -302,7 +302,7 @@
 <p>Items 2 and 3 above are not needed to find a polynomial within $\epsilon$ of $f$, but they <em>are</em> needed to ensure the Taylor polynomial&#39;s Bernstein coefficients will lie in the closed unit interval, as described after the note.</p>
 
 <blockquote>
-<p><strong>Note:</strong> If $f(\lambda)$ can be rewritten as a <em>power series</em>, namely $f(\lambda) = c_0 \lambda^0 + c_1 \lambda^1 + ... + c_i \lambda^i + ...$ whenever $0\le\lambda\le 1$ (so that $f$ has a continuous $k$-th derivative for every $k$), and if the coefficients $c_i$&mdash;</p>
+<p><strong>Note:</strong> If $f(\lambda)$ can be rewritten as a <em>power series</em>, namely $f(\lambda) = c_0 \lambda^0 + c_1 \lambda^1 + ... + c_i \lambda^i + ...$ whenever $0\le\lambda\le 1$ (so that $f$ has a continuous $k$-th derivative for every $k$), and if the power series coefficients $c_i$&mdash;</p>
 
 <ul>
 <li>are each greater than 0,</li>
@@ -310,13 +310,13 @@
 <li>meet the so-called &quot;ratio test&quot;,</li>
 </ul>
 
-<p>then the algorithms in Carvalho and Moreira (2022)[^19] can be used to find the first $n$+1 coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also the appendix).</p>
+<p>then the algorithms in Carvalho and Moreira (2022)[^19] can be used to find the first $n$+1 power series coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also the appendix).</p>
 </blockquote>
 
 <p>Given the Taylor polynomial $P$, the algorithm to find the polynomial&#39;s Bernstein coefficients is as follows:</p>
 
 <ul>
-<li>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^20].)  Let $b_0, ..., b_n$ be the Bernstein-form polynomial&#39;s coefficients.  If any of those coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the coefficients is less than 0 or greater than 1.</li>
+<li>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^20].)  Let $b_0, ..., b_n$ be the polynomial&#39;s Bernstein coefficients.  If any of those Bernstein coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the Bernstein coefficients is less than 0 or greater than 1.</li>
 </ul>
 
 <p>The result will be a polynomial of degree $n$ with $(n+1)$ Bernstein coefficients.</p>
@@ -342,6 +342,8 @@
 
 <blockquote>
 <p><strong>Note:</strong> A pair of articles by Konečný and Neumann discuss approximating the integral (and maximum) of a class of functions efficiently using polynomials or piecewise functions with polynomials as the pieces: Konečný and Neumann (2021)[^21], Konečný and Neumann (2019)[^22].</p>
+
+<p>Muñoz and Narkawicz (2013)[^47] also discuss finding the minimum and maximum of a polynomial in Bernstein form &mdash; indeed, a polynomial is bounded above by its highest Bernstein coefficient and below by its lowest.</p>
 </blockquote>
 
 <p><a id=Approximating_a_Derivative></a></p>
@@ -381,9 +383,9 @@
 </thead><tbody>
 <tr>
 <td>Has Hölder continuous $r$-th derivative.</td>
-<td>$B_n$.</td>
+<td>$B_n(f)$.</td>
 <td>$\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$.</td>
-<td>$n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r r^{2} - 2 m r\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$.</td>
+<td>$n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$.</td>
 <td>Knoop and Pottinger (1976)[^23]. $0\lt\alpha\le 1$ is $r$-th derivative&#39;s Hölder exponent.</td>
 </tr>
 </tbody></table>
@@ -520,6 +522,8 @@
 
 <p>[^46]: Rababah, Abedallah. &quot;Transformation of Chebyshev–Bernstein polynomial basis.&quot; Computational Methods in Applied Mathematics 3.4 (2003): 608-622.</p>
 
+<p>[^47]: Muñoz, César, and Anthony Narkawicz. &quot;Formalization of Bernstein polynomials and applications to global optimization.&quot; Journal of Automated Reasoning 51, no. 2 (2013): 151-196.</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -546,7 +550,7 @@
 
 <p><strong>Proposition A2:</strong> For a function $f(x)$ as in Lemma A1, let&mdash; $$g_n(x)=a_0 x^0 + ... + a_n x^n,$$ and have the same domain as $f$.  Then for every $n\ge 1$, $g_n(x)$ is within $\epsilon$ of $f(x)$, where $\epsilon = f(1) - g_n(1)$.</p>
 
-<p><em>Proof:</em> $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative coefficients, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;</p>
+<p><em>Proof:</em> $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative values for $a_0, ..., a_n$, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;</p>
 
 <p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, so the algorithms given in Carvalho and Moreira (2022)[^19] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
 
@@ -554,7 +558,7 @@
 
 <p><em>Proof:</em> For $W_{n,2}$ it&#39;s enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen&#39;s inequality and because $f$ is concave.</p>
 
-<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f)(\lambda))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each coefficient is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)[^26].  Thus, by induction, $B_n(B_n(f)(\lambda))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. &#x25a1;</p>
+<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f)(\lambda))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each of those coefficients is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)[^26].  Thus, by induction, $B_n(B_n(f)(\lambda))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. &#x25a1;</p>
 
 <p><strong>Proposition B2</strong>: Let $f(\lambda)$ map the closed unit interval to itself, be continuous, nowhere decreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is nonnegative on the closed unit interval.</p>
 
@@ -583,6 +587,12 @@
 </ul>
 
 <p>The proof is straightforward.</p>
+
+<p><strong>Result B5A</strong>:  Let $\Delta_n(x)=\max(1/n,(x(1-x)/n)^{1/2})$.  For every real number $r\gt 0$, $B_n(|\lambda-x|^r)(x) \le (c+d)\Delta_n(x)^r$, where $c=2\cdot 4^{r/2}\Gamma(r/2+1)$, $d=2\cdot 8^r\Gamma(r+1)$, and $\Gamma(x)$ is the gamma function.</p>
+
+<p><em>Proof</em>: By Theorem 1 of Adell et al. (2015)[^30] with $\delta=1/2$, $B_n(|\lambda-x|)(x) \le c(x(1-x)/n)^{r/2}+d/n^r$, and in turn, $c(x(1-x)/n)^{r/2}+d/n^r\le c\Delta_n(x)^r+d\Delta_n(x)^r$ = $(c+d)\Delta_n(x)^r$.  &#x25a1;</p>
+
+<p>By Result B5A, $c+d=264$ when $r=2$, $c+d\lt 6165.27$ when $r=3$, and $c+d=196672$ when $r=4$.</p>
 
 <p><strong>Result B6</strong> (Adell and Cárdenas-Morales (2018)[^31]): Let $\sigma(r,t) = (r!)/(((r/2)!)t^{r/2})$.  If $r\ge 0$ is an even integer, then&mdash;</p>
 
@@ -667,7 +677,7 @@
 
 <p>Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,3}(\lambda, x_0))|.$$ Now denote $\sigma_n$ as the maximum of $|B_n(R_{f,3}(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_{f,3}(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M}{128 (n/4)^2} + 2\frac{M}{128 (n/2)^2} + (8/3)\frac{M}{128 n^2} =M/(8 n^2).$$ &#x25a1;</p>
 
-<p>The proof of Proposition B10 shows how to prove an upper bound on the approximation error for polynomials written as&mdash; $$P(f)(x) = \alpha(n,0) B_{n(0)}(f)(x) + \alpha(n,1) B_{n(1)}(f)(x) + ... + \alpha(n,k) B_{n(k)}(f)(x)$$ (where $\alpha(n,i)$ is a function returning a real number, and $n(i)\ge 1$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^39].</p>
+<p>The proof of Proposition B10 shows how to prove an upper bound on the approximation error for polynomials written as&mdash; $$P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B_{n(k)}(f)(x)$$ (where $\alpha_i$ are real numbers and $n(i)\ge 1$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^39].</p>
 
 <p><strong>Proposition B10A:</strong> Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f&#39;&#39;)(x)$ be the <em>Lorentz operator</em> of order 2 (Holtz et al. 2011)[^7], (Lorentz 1966)[^9], which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{M(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 M/(n^{3/2})$ of $f$, where $M$ is that second derivative&#39;s Lipschitz constant or greater.</p>
 
@@ -725,9 +735,9 @@
 
 <ol>
 <li>Compute the required degree $n$ as given above, with error tolerance $\epsilon/2$.</li>
-<li>Compute the ($n$ plus one) coefficients of $f$&#39;s degree-$n$ Chebyshev interpolant, call them $c_0, ..., c_n$.</li>
+<li>Compute the values $c_k$ as given above, which relate to $f$&#39;s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, ..., c_n$.</li>
 <li>Compute the (<em>n</em>+1)&times;(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^46].</li>
-<li>Multiply the matrix by the transposed coefficients $(c_0, ..., c_n)$ to get the polynomial&#39;s Bernstein coefficients $b_0, ..., b_n$.  (Transposing means turning columns to rows and vice versa.)</li>
+<li>Multiply the matrix by the transposed vector of values $(c_0, ..., c_n)$ to get the polynomial&#39;s Bernstein coefficients $b_0, ..., b_n$.  (Transposing means turning columns to rows and vice versa.)</li>
 <li>For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.</li>
 <li>Return the Bernstein coefficients $b_0, ..., b_n$.</li>
 </ol>

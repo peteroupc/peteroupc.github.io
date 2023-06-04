@@ -117,7 +117,7 @@ For every integer _n_ that's a power of 2:
 > **Notes:**
 >
 > 1. If _&alpha;_ is 1, _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.  If _&alpha;_ is 1/2, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
-> 2. The function $f(x)=\min(\lambda t, 1-\epsilon)$, where $\epsilon\ge 0$ and $t\ge 0$, is Lipschitz continuous with Lipschitz constant _t_.  Because $f$ is linear between 0 and 1/_t_, ways to build polynomials that converge to this kind of function were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].
+> 2. The function $f(x)=\min(\lambda t, 1-\epsilon)$, where $\epsilon\ge 0$ and $t\ge 1$, is Lipschitz continuous with Lipschitz constant _t_.  Because $f$ is linear between 0 and 1/_t_, ways to build polynomials that converge to this kind of function were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].
 
 **Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
