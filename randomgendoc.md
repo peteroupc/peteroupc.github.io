@@ -116,7 +116,7 @@ CLASSES
     class BringmannLarsen(builtins.object)
      |  BringmannLarsen(weights)
      |
-     |  Implements Bringmann and Larsen's sampler, which chooses a random number in [0, n)
+     |  Implements Bringmann and Larsen's sampler, which chooses a random variate in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
      |  list of weights each 0 or greater; the higher the weight, the greater
      |  the probability.  This sampler supports only integer weights.
@@ -181,7 +181,7 @@ CLASSES
      |    only the probability density function (PDF) is known,
      |    using the inversion method.  This sampler
      |    allows quantiles for the distribution to be calculated
-     |    from pregenerated uniform random numbers in [0, 1].
+     |    from pregenerated uniform random variates in [0, 1].
      |
      |  - pdf: A function that specifies the PDF. It takes a single
      |    number and outputs a single number. The area under
@@ -220,24 +220,24 @@ CLASSES
      |              "An Automatic Code Generator for
      |              Nonuniform Random Variate Generation", 2001.
      |      - name: Distribution name.  Generates Python methods called
-     |         sample_X (samples one random number), and quantile_X
+     |         sample_X (samples one random variate), and quantile_X
      |         (finds the quantile
-     |         for a uniform random number in [0, 1]),
+     |         for a uniform random variate in [0, 1]),
      |         where X is the name given here.
      |
      |  quantile(self, v)
-     |      Calculates quantiles from uniform random numbers
+     |      Calculates quantiles from uniform random variates
      |            in the interval [0, 1].
-     |      - v: A list of uniform random numbers.
+     |      - v: A list of uniform random variates.
      |      Returns a list of the quantiles corresponding to the
-     |      uniform random numbers.  The returned list will have
+     |      uniform random variates.  The returned list will have
      |      the same number of entries as 'v'.
      |
      |  sample(self, rg, n=1)
-     |      Generates random numbers that (approximately) follow the
+     |      Generates random variates that (approximately) follow the
      |            distribution modeled by this class.
-     |      - n: The number of random numbers to generate.
-     |      Returns a list of 'n' random numbers.
+     |      - n: The number of random variates to generate.
+     |      Returns a list of 'n' random variates.
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
@@ -252,7 +252,7 @@ CLASSES
      |  DensityTiling(pdf, bl, br, cycles=8)
      |
      |  Produces a tiling of a probability density function (PDF)
-     |       for the purposes of random number generation.  The PDF is
+     |       for the purposes of random variate generation.  The PDF is
      |       decomposed into tiles; these tiles will either cross the PDF
      |       or go below the PDF.  In each recursion cycle, each tile is
      |       split into four tiles, and tiles that end up above the PDF are
@@ -297,7 +297,7 @@ CLASSES
      |              Nonuniform Random Variate Generation", 2001.
      |      - name: Distribution name.  Generates a Python method called
      |         sample_X where X is the name given here (samples one
-     |         random number).
+     |         random variate).
      |      - pdfcall: Name of the method representing pdf (for more information,
      |         see the __init__ method of this class).  Optional; if not given
      |         the name is pdf_X where X is the name given in the name parameter.
@@ -305,10 +305,10 @@ CLASSES
      |  maybeAppend(self, pdfevals, newtiles, xmn, xmx, ymn, ymx)
      |
      |  sample(self, rg, n=1)
-     |      Generates random numbers that (approximately) follow the
+     |      Generates random variates that (approximately) follow the
      |            distribution modeled by this class.
-     |      - n: The number of random numbers to generate.
-     |      Returns a list of 'n' random numbers.
+     |      - n: The number of random variates to generate.
+     |      Returns a list of 'n' random variates.
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
@@ -322,7 +322,7 @@ CLASSES
     class FastLoadedDiceRoller(builtins.object)
      |  FastLoadedDiceRoller(weights)
      |
-     |  Implements the Fast Loaded Dice Roller, which chooses a random number in [0, n)
+     |  Implements the Fast Loaded Dice Roller, which chooses a random variate in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
      |  list of weights each 0 or greater; the higher the weight, the greater
      |  the probability.  This sampler supports only integer weights.
@@ -375,10 +375,10 @@ CLASSES
      |      Parameters:
      |      - cdf: Cumulative distribution function (CDF) of the
      |         distribution.  The CDF must be
-     |         strictly increasing everywhere in the
+     |         nowhere decreasing everywhere in the
      |         interval [xmin, xmax] and must output values in [0, 1];
      |         for best results, the CDF should
-     |         be increasing everywhere in [xmin, xmax].
+     |         be strictly increasing everywhere in [xmin, xmax].
      |      - xmin: Maximum x-value to generate.
      |      - xmax: Maximum x-value to generate.  For best results,
      |         the range given by xmin and xmax should cover all or
@@ -391,7 +391,7 @@ CLASSES
      |
      |  quantile(self, uniforms)
      |      Returns a list of 'n' numbers that correspond
-     |      to the given uniform random numbers and follow
+     |      to the given uniform random variates and follow
      |      the distribution represented by this sampler.  'uniforms'
      |      is a list of uniform random values in the interval
      |      [0, 1].  For best results, this sampler's range
@@ -409,7 +409,7 @@ CLASSES
      |      values with the minimum CDF value covered.
      |
      |  sample(self, rg, n)
-     |      Returns a list of 'n' random numbers of
+     |      Returns a list of 'n' random variates of
      |      the distribution represented by this sampler.
      |      - rg: A random generator (RandGen) object.
      |
@@ -425,7 +425,7 @@ CLASSES
     class OptimalSampler(builtins.object)
      |  OptimalSampler(m)
      |
-     |  Implements a sampler which chooses a random number in [0, n)
+     |  Implements a sampler which chooses a random variate in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
      |  list of weights each 0 or greater; the higher the weight, the greater
      |  the probability.  This sampler supports only integer weights, but the sampler is
@@ -535,7 +535,7 @@ CLASSES
      |  RandomGen(rng=None)
      |
      |  A class that implements many methods for
-     |  random number generation and sampling.  It takes
+     |  random variate generation and sampling.  It takes
      |  an underlying RNG as specified in the constructor.
      |
      |  Methods defined here:
@@ -549,9 +549,9 @@ CLASSES
      |      integer in the interval [a, b].  Currently, this
      |      class assumes 'a' is always 0.
      |      2. 'rndint' (and functions that ultimately call it) may be
-     |      slower than desirable if many random numbers are
+     |      slower than desirable if many random variates are
      |      needed at once.  Ways to improve the performance
-     |      of generating many random numbers at once include
+     |      of generating many random variates at once include
      |      vectorization (which is often PRNG specific) and multithreading
      |      (which is too complicated to show here).
      |
@@ -563,7 +563,7 @@ CLASSES
      |      Returns 1 at probability p, 0 otherwise.
      |
      |  beta(self, a, b, nc=0)
-     |      Generates a beta-distributed random number.
+     |      Generates a beta-distributed random variate.
      |      `a` and `b` are the two parameters of the beta distribution,
      |      and `nc` is a parameter such that `nc` other than 0
      |      indicates a _noncentral_ distribution.
@@ -573,7 +573,7 @@ CLASSES
      |  binomial_int(self, trials, px, py)
      |
      |  boundedGeometric(self, px, py, n)
-     |      Generates a bounded geometric random number, defined
+     |      Generates a bounded geometric random variate, defined
      |      here as the number of failures before the first success (but no more than n),
      |      where the probability of success in
      |      each trial is px/py.
@@ -665,7 +665,7 @@ CLASSES
      |      random digits", 1951).
      |
      |  expoRatio(self, base, rx=1, ry=1)
-     |      Generates an exponential random number
+     |      Generates an exponential random variate
      |      (in the form of a ratio, or two-element list) given
      |      the rate `rx`/`ry` and the base `base`.
      |      The number will have the denominator `base*rx`.
@@ -673,7 +673,7 @@ CLASSES
      |  exponential(self, lamda=1.0)
      |
      |  exprandfill(self, a, bits)
-     |      Fills the unsampled bits of the given exponential random number
+     |      Fills the unsampled bits of the given exponential random variate
      |      'a' as necessary to make a number whose fractional part
      |      has 'bits' many bits.  If the number's fractional part already has
      |      that many bits or more, the number is rounded using the round-to-nearest,
@@ -689,7 +689,7 @@ CLASSES
      |
      |  exprandnew(self, lamdanum=1, lamdaden=1)
      |      Returns an object to serve as a partially-sampled
-     |      exponential random number with the given
+     |      exponential random variate with the given
      |      rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
      |      the first is a multiple of 1/(2^X), the second is X, the third is the integer
      |      part (initially -1 to indicate the integer part wasn't sampled yet),
@@ -702,7 +702,7 @@ CLASSES
      |  frechet(self, a, b, mu=0)
      |
      |  fromDyadicDecompCode(self, code, precision=53)
-     |      Generates a uniform random number contained in a box described
+     |      Generates a uniform random variate contained in a box described
      |          by the given universal dyadic decomposition code.
      |          - code: A list returned by the getDyadicDecompCode
      |            or getDyadicDecompCodePdf method.
@@ -714,7 +714,7 @@ CLASSES
      |      arXiv:1603.05238v1  [cs.IT], 2016.
      |
      |  gamma(self, mean, b=1.0, c=1.0, d=0.0)
-     |      Generates a random number following a gamma distribution.
+     |      Generates a random variate following a gamma distribution.
      |
      |  gaussian_copula(self, cov)
      |
@@ -735,7 +735,7 @@ CLASSES
      |        Both algorithms use the fact that (k-1)/(X1+...+Xk) is an unbiased estimator
      |        of p, namely 1 divided by the mean of an Expo(p) random variable (X1, X2, ... Xk
      |        are i.i.d. Expo(p) random variates), with p>0.  In the same way, any algorithm to turn
-     |        an endless sequence of random numbers with mean M into k many i.i.d. Expo(M)
+     |        an endless sequence of random variates with mean M into k many i.i.d. Expo(M)
      |        random variates will work, as with the Poisson distribution, for example.
      |        Note that GammaDist(r,1) is distributed as the sum of _r_ many i.i.d. Expo(1) variates.]]]
      |      References: Huber, M., 2017. A Bernoulli mean estimate with
@@ -783,7 +783,7 @@ CLASSES
      |
      |  getDyadicDecompCode(self, point, f=None, fbox=None)
      |      Finds a code describing the position and size of a box that covers the given
-     |      point in the universal dyadic decomposition for random number generation.
+     |      point in the universal dyadic decomposition for random variate generation.
      |      - point: A list of coordinates of a point in space.  This method assumes
      |        the point was a randomly generated member of a geometric set (such as a
      |        sphere, ellipse, polygon, or any other volume).  Let N be the number
@@ -815,9 +815,9 @@ CLASSES
      |
      |  getDyadicDecompCodePdf(self, point, pdf=None, pdfbounds=None, precision=53)
      |      Finds a code describing the position and size of a box that covers the given
-     |      point in the universal dyadic decomposition for random number generation,
+     |      point in the universal dyadic decomposition for random variate generation,
      |      based on a non-uniform probability density function.  It generates a
-     |      random number for this purpose, so the return value may differ from call to
+     |      random variate for this purpose, so the return value may differ from call to
      |      call.
      |      - point: A list of coordinates of a point in space.  This method assumes
      |        the point was random generated and within the support of a continuous
@@ -838,7 +838,7 @@ CLASSES
      |        PDF anywhere in the given box.  If this parameter is
      |        given, this method assumes the PDF is continuous almost everywhere and bounded
      |        from above; the dyadic decomposition will generally work only if that is the case.
-     |      - precision: Precision of random numbers generated by this method, in binary digits
+     |      - precision: Precision of random variates generated by this method, in binary digits
      |        after the point.  Default is 53.
      |      Returns a list containing two items. The first describes the size of the box
      |      (as a negative power of 2). The second is a list of coordinates describing the
@@ -883,14 +883,14 @@ CLASSES
      |      By default, `n` is 1.
      |
      |  integers_from_u01(self, u01, pmf)
-     |      Transforms one or more random numbers into numbers
+     |      Transforms one or more random variates into numbers
      |      (called quantiles) that
      |      follow a discrete distribution, assuming the distribution
      |            produces only integers 0 or greater.
-     |            - `u01` is a list of uniform random numbers, in [0, 1].
+     |            - `u01` is a list of uniform random variates, in [0, 1].
      |            - `pmf` is the probability mass function (PMF)
      |            of the discrete distribution; it takes one parameter and returns,
-     |            for that parameter, the probability that a random number is
+     |            for that parameter, the probability that a random variate is
      |            equal to that parameter (each probability is in the interval [0, 1]).
      |            The area under the PMF must be 1; it
      |            is not enough for the PMF to be correct up to a constant.
@@ -946,7 +946,7 @@ CLASSES
      |      parameters.
      |
      |  kth_smallest_of_n_u01(self, k, n)
-     |      Generates the kth smallest number among n random numbers
+     |      Generates the kth smallest number among n random variates
      |      in the interval [0, 1].
      |
      |  kthsmallest(self, n, k, b)
@@ -956,7 +956,7 @@ CLASSES
      |  kthsmallest_psrn(self, n, k)
      |      Generates the 'k'th smallest 'b'-bit uniform random
      |      number out of 'n' of them; returns the result in
-     |      the form of a uniform partially-sampled random number.
+     |      the form of a uniform partially-sampled random variate.
      |
      |  latlon(self)
      |      Generates an independent and uniform random latitude and
@@ -968,10 +968,10 @@ CLASSES
      |  lower_bound_copula(self)
      |
      |  mcmc(self, pdf, n)
-     |      Generates 'n' random numbers that follow
+     |      Generates 'n' random variates that follow
      |      the probability density given in 'pdf' using
      |      a Markov-chain Monte Carlo algorithm, currently
-     |      Metropolis--Hastings.  The resulting random numbers
+     |      Metropolis--Hastings.  The resulting random variates
      |      are not independent, but are often close to
      |      being independent.  'pdf' takes one number as
      |      a parameter and returns a number 0 or greater.
@@ -979,7 +979,7 @@ CLASSES
      |      need not be equal to 1.
      |
      |  mcmc2(self, pdf, n)
-     |      Generates 'n' pairs of random numbers that follow
+     |      Generates 'n' pairs of random variates that follow
      |      the probability density given in 'pdf' using
      |      a Markov-chain Monte Carlo algorithm, currently
      |      Metropolis--Hastings.  The resulting random pairs
@@ -1032,13 +1032,13 @@ CLASSES
      |      succ: Number of successes.
      |      failures: Contains probabilities for each kind of failure.
      |      The sum of probabilities must be less than 1.
-     |      Returns: A list containing a random number
+     |      Returns: A list containing a random variate
      |      of failures of each kind of failure.
      |
      |  negativebinomial(self, successes, p)
      |
      |  negativebinomialint(self, successes, px, py)
-     |      Generates a negative binomial random number, defined
+     |      Generates a negative binomial random variate, defined
      |      here as the number of failures before 'successes' many
      |      successful trials, where the probability of success in
      |      each trial is px/py.
@@ -1049,91 +1049,89 @@ CLASSES
      |      possible combinations.
      |
      |  normal(self, mu=0.0, sigma=1.0)
-     |      Generates a normally-distributed random number.
+     |      Generates a normally-distributed random variate.
      |
      |  numbersWithSum(self, count, sum=1.0)
      |
      |  numbers_from_cdf(self, cdf, mn, mx, n=1)
-     |      Generates one or more random numbers from a non-discrete probability
+     |      Generates one or more random variates from a non-discrete probability
      |      distribution by numerically inverting its cumulative
      |      distribution function (CDF).
      |
      |      - cdf: The CDF; it takes one parameter and returns,
-     |      for that parameter, the probability that a random number will
+     |      for that parameter, the probability that a random variate will
      |      be less than or equal to that parameter.
-     |      - mn, mx: Sampling domain.  The random number
+     |      - mn, mx: Sampling domain.  The random variate
      |      will be in the interval [mn, mx].
-     |      - n: How many random numbers to generate. Default is 1.
+     |      - n: How many random variates to generate. Default is 1.
      |
      |  numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53)
-     |      Generates 'n' random numbers that follow a continuous
+     |      Generates 'n' random variates that follow a continuous
      |      distribution in an interval [mn, mx].  The distribution must have a
      |      PDF (probability density function) and the PDF must be less than or equal to a finite number and be continuous almost everywhere
      |      in the interval.  Implements section 4 of Devroye and Gravel,
      |      "The expected bit complexity of the von Neumann rejection
      |      algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
-     |      - 'n' is the number of random numbers to generate.  Default is 1.
+     |      - 'n' is the number of random variates to generate.  Default is 1.
      |      - 'pdf' is a procedure that takes three arguments: xmin, xmax, bitplaces,
      |         and returns an array of two items: the greatest lower bound of f(x) anywhere
      |         in the interval [xmin, xmax] (where f(x) is the PDF), and the least upper
      |         bound of f(x) anywhere there.  Both bounds are multiples of 2^-bitplaces.
      |      - 'bitplaces' is an accuracy expressed as a number of bits after the
-     |         binary point. The random number will be a multiple of 2^-bitplaces,
+     |         binary point. The random variate will be a multiple of 2^-bitplaces,
      |         or have a smaller granularity. Default is 53.
      |      - 'mn' and 'mx' express the interval.  Both are optional and
      |         are set to 0 and 1, respectively, by default.
      |
      |  numbers_from_dist_inversion(self, icdf, n=1, digitplaces=53, base=2)
-     |      Generates 'n' random numbers that follow a discrete or non-discrete
+     |      Generates 'n' random variates that follow a discrete or non-discrete
      |      probability distribution, using the inversion method.
      |      Implements section 5 of Devroye and Gravel,
      |      "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
-     |      - 'n' is the number of random numbers to generate.  Default is 1.
+     |      - 'n' is the number of random variates to generate.  Default is 1.
      |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
      |         and returns a number within base^-digitplaces of the True inverse
      |         CDF (inverse cumulative distribution function, or quantile function)
      |         of u/base^ubits. For a given value of `digitplaces`, icdf(x)<=icdf(y)
      |         whenever 0<=x<y<=1.
      |      - 'digitplaces' is an accuracy expressed as a number of digits after the
-     |         point. Each random number will be a multiple of base^-digitplaces,
+     |         point. Each random variate will be a multiple of base^-digitplaces,
      |         or have a smaller granularity. Default is 53.
      |      - base is the digit base in which the accuracy is expressed. Default is 2
      |         (binary). (Note that 10 means decimal.)
      |
      |  numbers_from_pdf(self, pdf, mn, mx, n=1, steps=100)
-     |      Generates one or more random numbers from a continuous probability
+     |      Generates one or more random variates from a continuous probability
      |      distribution expressed as a probability density
-     |      function (PDF).  The random number
-     |      will be in the interval [mn, mx].  `n` random numbers will be
+     |      function (PDF).  The random variate
+     |      will be in the interval [mn, mx].  `n` random variates will be
      |      generated. `pdf` is the PDF; it takes one parameter and returns,
      |      for that parameter, a weight indicating the relative probability
-     |       that a random number will be close to that parameter. `steps`
+     |       that a random variate will be close to that parameter. `steps`
      |      is the number of subintervals between sample points of the PDF.
      |      The area under the curve of the PDF need not be 1.
      |      By default, `n` is 1 and `steps` is 100.
      |
      |  numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None)
-     |      Transforms one or more random numbers into numbers
+     |      Transforms one or more random variates in [0, 1] into numbers
      |      (called quantiles) that follow a non-discrete probability distribution, based on its PDF
      |      (probability density function), its CDF (cumulative distribution
      |      function), or both.
      |
-     |      - u01: List of uniform random numbers in [0, 1] that will be
+     |      - u01: List of uniform random variates in [0, 1] that will be
      |      transformed into numbers that follow the distribution.
      |      - pdf: The PDF; it takes one parameter and returns,
      |      for that parameter, the relative probability that a
-     |      random number close to that number is chosen.  The area under
+     |      random variate close to that number is chosen.  The area under
      |      the PDF need not be 1 (this method works even if the PDF
      |      is only known up to a normalizing constant). Optional if a CDF is given.
      |      - cdf: The CDF; it takes one parameter and returns,
-     |      for that parameter, the probability that a random number will
+     |      for that parameter, the probability that a random variate will
      |      be less than or equal to that parameter. Optional if a PDF is given.
      |      For best results, the CDF should be
      |      strictly increasing everywhere in the
-     |      interval [xmin, xmax] and must output values in [0, 1];
-     |      for best results, the CDF should
-     |      be increasing everywhere in [xmin, xmax].
-     |      - mn, mx: Sampling domain.  The random number
+     |      interval [xmin, xmax].  The CDF must output values in [0, 1].
+     |      - mn, mx: Sampling domain.  The random variate
      |      will be in the interval [mn, mx].  For best results,
      |      the range given by mn and mx should cover all or
      |      almost all of the distribution.
@@ -1157,13 +1155,13 @@ CLASSES
      |  piecewise_linear_n(self, values, weights, n=1)
      |
      |  poisson(self, mean)
-     |      Generates a random number following a Poisson distribution.
+     |      Generates a random variate following a Poisson distribution.
      |
      |  poissonint(self, mx, my)
-     |      Generates a random number following a Poisson distribution with mean mx/my.
+     |      Generates a random variate following a Poisson distribution with mean mx/my.
      |
      |  polya_int(self, sx, sy, px, py)
-     |      Generates a negative binomial (Polya) random number, defined
+     |      Generates a negative binomial (Polya) random variate, defined
      |      here as the number of failures before 'successes' many
      |      successful trials (sx/sy), where the probability of success in
      |      each trial is px/py.
@@ -1189,10 +1187,10 @@ CLASSES
      |      Random walk of uniform positive and negative steps.
      |
      |  randomwalk_u01(self, n)
-     |      Random walk of uniform 0-1 random numbers.
+     |      Random walk of uniform 0-1 random variates.
      |
      |  rayleigh(self, a)
-     |      Generates a random number following a Rayleigh distribution.
+     |      Generates a random variate following a Rayleigh distribution.
      |
      |  rndint(self, maxInclusive)
      |
@@ -1243,9 +1241,9 @@ CLASSES
      |
      |  slicesample(self, pdf, n, xstart=0.1)
      |      Slice sampling of R. M. Neal.
-     |      Generates 'n' random numbers that follow
+     |      Generates 'n' random variates that follow
      |      the probability density given in 'pdf' using
-     |      slice sampling.  The resulting random numbers
+     |      slice sampling.  The resulting random variates
      |      are not independent, but are often close to
      |        being independent.  'pdf' takes one number as
      |        a parameter and returns a number 0 or greater.
@@ -1284,10 +1282,10 @@ CLASSES
      |        integer greater than 0.
      |
      |  stable(self, alpha, beta)
-     |      Generates a random number following a stable distribution.
+     |      Generates a random variate following a stable distribution.
      |
      |  stable0(self, alpha, beta, mu=0, sigma=1)
-     |      Generates a random number following a 'type 0' stable distribution.
+     |      Generates a random variate following a 'type 0' stable distribution.
      |
      |  surface_point(self, f, bounds, ngrad, gmax)
      |      Generates a uniform random point on
@@ -1328,7 +1326,7 @@ CLASSES
      |  vonmises(self, mean, kappa)
      |
      |  weibull(self, a, b)
-     |      Generates a Weibull-distributed random number.
+     |      Generates a Weibull-distributed random variate.
      |
      |  weighted_choice(self, weights)
      |
@@ -1340,9 +1338,9 @@ CLASSES
      |  weighted_choice_n(self, weights, n=1)
      |
      |  wiener(self, st, en, step=1.0, mu=0.0, sigma=1.0)
-     |      Generates random numbers following a Wiener
+     |      Generates random variates following a Wiener
      |      process (Brownian motion). Each element of the return
-     |      value contains a timestamp and a random number in that order.
+     |      value contains a timestamp and a random variate in that order.
      |
      |  zero_or_one(self, px, py)
      |      Returns 1 at probability px/py, 0 otherwise.
@@ -1386,7 +1384,7 @@ CLASSES
      |
      |  - pdf: The probability density function (PDF); it takes one parameter and returns,
      |     for that parameter, the relative probability that a
-     |     random number close to that number is chosen.  The area under
+     |     random variate close to that number is chosen.  The area under
      |     the PDF need not be 1; this method works even if the PDF
      |     is only known up to a normalizing constant, and even if
      |     the distribution has infinitely extending tails to the left, to the right, or both.
@@ -1425,7 +1423,7 @@ CLASSES
      |              Nonuniform Random Variate Generation", 2001.
      |      - name: Distribution name.  Generates a Python method called
      |         sample_X where X is the name given here (samples one
-     |         random number).
+     |         random variate).
      |      - pdfcall: Name of the method representing pdf (for more information,
      |         see the __init__ method of this class).  Optional; if not given
      |         the name is pdf_X where X is the name given in the name parameter.
@@ -1433,10 +1431,10 @@ CLASSES
      |  maybeAppend(self, newtiles, xmn, xmx, ymn, ymx, depth=0)
      |
      |  sample(self, rg, n=1)
-     |      Generates random numbers that (approximately) follow the
+     |      Generates random variates that (approximately) follow the
      |            distribution modeled by this class.
-     |      - n: The number of random numbers to generate.
-     |      Returns a list of 'n' random numbers.
+     |      - n: The number of random variates to generate.
+     |      Returns a list of 'n' random variates.
      |
      |  svg(self)
      |
@@ -1484,13 +1482,13 @@ CLASSES
     class VoseAlias(builtins.object)
      |  VoseAlias(weights)
      |
-     |  Implements Vose's version of the alias sampler, which chooses a random number in [0, n)
+     |  Implements Vose's version of the alias sampler, which chooses a random variate in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
      |  list of weights each 0 or greater; the higher the weight, the greater
      |  the probability.  This sampler supports integer or non-integer weights.
      |
      |  Reference:
-     |  Vose, Michael D. "A linear algorithm for generating random numbers with a given
+     |  Vose, Michael D. "A linear algorithm for generating random variates with a given
      |  distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.
      |
      |  Methods defined here:

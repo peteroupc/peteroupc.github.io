@@ -75,13 +75,13 @@ def numericalTable(func, x, y, n=100):
 
 class VoseAlias:
     """
-    Implements Vose's version of the alias sampler, which chooses a random number in [0, n)
+    Implements Vose's version of the alias sampler, which chooses a random variate in [0, n)
     where the probability that each number is chosen is weighted.  The 'weights' is the
     list of weights each 0 or greater; the higher the weight, the greater
     the probability.  This sampler supports integer or non-integer weights.
 
     Reference:
-    Vose, Michael D. "A linear algorithm for generating random numbers with a given
+    Vose, Michael D. "A linear algorithm for generating random variates with a given
     distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.
     """
 
@@ -137,7 +137,7 @@ class VoseAlias:
 
 class BringmannLarsen:
     """
-    Implements Bringmann and Larsen's sampler, which chooses a random number in [0, n)
+    Implements Bringmann and Larsen's sampler, which chooses a random variate in [0, n)
     where the probability that each number is chosen is weighted.  The 'weights' is the
     list of weights each 0 or greater; the higher the weight, the greater
     the probability.  This sampler supports only integer weights.
@@ -211,7 +211,7 @@ class BringmannLarsen:
 
 class FastLoadedDiceRoller:
     """
-    Implements the Fast Loaded Dice Roller, which chooses a random number in [0, n)
+    Implements the Fast Loaded Dice Roller, which chooses a random variate in [0, n)
     where the probability that each number is chosen is weighted.  The 'weights' is the
     list of weights each 0 or greater; the higher the weight, the greater
     the probability.  This sampler supports only integer weights.
@@ -377,7 +377,7 @@ class SortedAliasMethod:
 
 class OptimalSampler:
     """
-    Implements a sampler which chooses a random number in [0, n)
+    Implements a sampler which chooses a random variate in [0, n)
     where the probability that each number is chosen is weighted.  The 'weights' is the
     list of weights each 0 or greater; the higher the weight, the greater
     the probability.  This sampler supports only integer weights, but the sampler is
@@ -1048,7 +1048,7 @@ class BinaryExpansion:
 
 class RandomGen:
     """A class that implements many methods for
-    random number generation and sampling.  It takes
+    random variate generation and sampling.  It takes
     an underlying RNG as specified in the constructor."""
 
     def __init__(self, rng=None):
@@ -1060,9 +1060,9 @@ class RandomGen:
         integer in the interval [a, b].  Currently, this
         class assumes 'a' is always 0.
         2. 'rndint' (and functions that ultimately call it) may be
-        slower than desirable if many random numbers are
+        slower than desirable if many random variates are
         needed at once.  Ways to improve the performance
-        of generating many random numbers at once include
+        of generating many random variates at once include
         vectorization (which is often PRNG specific) and multithreading
         (which is too complicated to show here)."""
         if rng == None:
@@ -1580,7 +1580,7 @@ class RandomGen:
         return retValues
 
     def normal(self, mu=0.0, sigma=1.0):
-        """Generates a normally-distributed random number."""
+        """Generates a normally-distributed random variate."""
         bmp = 0.8577638849607068  # sqrt(2/exp(1))
         if False and self.rndint(1) == 0:
             while True:
@@ -1608,7 +1608,7 @@ class RandomGen:
         return math.exp(self.normal(mu, sigma))
 
     def weibull(self, a, b):
-        """Generates a Weibull-distributed random number."""
+        """Generates a Weibull-distributed random variate."""
         return b * (self.exponential()) ** (1.0 / a)
 
     def triangular(self, startpt, midpt, endpt):
@@ -1621,7 +1621,7 @@ class RandomGen:
         return b * pow(self.exponential(), -1.0 / a) + mu
 
     def beta(self, a, b, nc=0):
-        """Generates a beta-distributed random number.
+        """Generates a beta-distributed random variate.
         `a` and `b` are the two parameters of the beta distribution,
         and `nc` is a parameter such that `nc` other than 0
         indicates a _noncentral_ distribution."""
@@ -1769,7 +1769,7 @@ class RandomGen:
         return successes
 
     def poissonint(self, mx, my):
-        """Generates a random number following a Poisson distribution with mean mx/my."""
+        """Generates a random variate following a Poisson distribution with mean mx/my."""
         if my == 0:
             raise ValueError
         if mx == 0:
@@ -1795,13 +1795,13 @@ class RandomGen:
             hmx = mx // 2
             return self.poissonint(hmx, my) + self.poissonint(mx - hmx, my)
         while True:
-            # Generate n, a geometric random number
+            # Generate n, a geometric random variate
             # (NOTE: Flajolet et al. define a geometric
             # distribution as number of SUCCESSES BEFORE
             # FAILURE, not counting the failure, so we
             # have to complement the probability here)
             n = self.negativebinomialint(1, my - mx, my)
-            # If n uniform random numbers turn out
+            # If n uniform random variates turn out
             # to be sorted, accept n
             if n <= 1:
                 return n
@@ -1820,7 +1820,7 @@ class RandomGen:
         return count
 
     def poisson(self, mean):
-        """Generates a random number following a Poisson distribution."""
+        """Generates a random variate following a Poisson distribution."""
         if mean < 0:
             raise ValueError
         if mean == 0:
@@ -1842,7 +1842,7 @@ class RandomGen:
                 return count - 1
 
     def rayleigh(self, a):
-        """Generates a random number following a Rayleigh distribution."""
+        """Generates a random variate following a Rayleigh distribution."""
         return a * math.sqrt(2 * self.exponential())
 
     def truncnormal(randgen, a, b):
@@ -1871,7 +1871,7 @@ class RandomGen:
                     return math.sqrt(2 * x)
 
     def gamma(self, mean, b=1.0, c=1.0, d=0.0):
-        """Generates a random number following a gamma distribution."""
+        """Generates a random variate following a gamma distribution."""
         if mean <= 0:
             raise ValueError
         dd = mean
@@ -1905,7 +1905,7 @@ class RandomGen:
         return stable(1, 0)
 
     def stable(self, alpha, beta):
-        """Generates a random number following a stable distribution."""
+        """Generates a random variate following a stable distribution."""
         if alpha <= 0 or alpha > 2:
             raise ValueError
         if beta < -1 or beta > 1:
@@ -1939,7 +1939,7 @@ class RandomGen:
         )
 
     def stable0(self, alpha, beta, mu=0, sigma=1):
-        """Generates a random number following a 'type 0' stable distribution."""
+        """Generates a random variate following a 'type 0' stable distribution."""
         x = (
             math.log(sigma) * 2.0 / pi
             if alpha == 1
@@ -1989,7 +1989,7 @@ class RandomGen:
             y = y + oy
 
     def _zero_or_one_power_frac(self, px, py, nx, ny):
-        # Generates a random number, namely 1 with
+        # Generates a random variate, namely 1 with
         # probability (px/py)^(nx/ay) (where nx/ny is in (0, 1)),
         # and 1 otherwise.  Returns 1 if nx/ny is 0.  Reference:
         # Mendo, Luis. "An asymptotically optimal Bernoulli
@@ -2063,7 +2063,7 @@ class RandomGen:
         return self.zero_or_one_power_ratio(px, py, n, 1)
 
     def polya_int(self, sx, sy, px, py):
-        """Generates a negative binomial (Polya) random number, defined
+        """Generates a negative binomial (Polya) random variate, defined
         here as the number of failures before 'successes' many
         successful trials (sx/sy), where the probability of success in
         each trial is px/py."""
@@ -2180,7 +2180,7 @@ class RandomGen:
             return -1
 
     def boundedGeometric(self, px, py, n):
-        """Generates a bounded geometric random number, defined
+        """Generates a bounded geometric random variate, defined
         here as the number of failures before the first success (but no more than n),
         where the probability of success in
         each trial is px/py.
@@ -2229,7 +2229,7 @@ class RandomGen:
                 return min(n, (d << k) + m)
 
     def negativebinomialint(self, successes, px, py):
-        """Generates a negative binomial random number, defined
+        """Generates a negative binomial random variate, defined
         here as the number of failures before 'successes' many
         successful trials, where the probability of success in
         each trial is px/py."""
@@ -2311,7 +2311,7 @@ class RandomGen:
         return [first + self.poisson(m) for m in othermeans]
 
     # The von Neumann exponential generator,
-    # but using uniform partially-sampled random numbers.
+    # but using uniform partially-sampled random variates.
     def _expovnbits(self, bits=53):
         count = 0
         while True:
@@ -2353,7 +2353,7 @@ class RandomGen:
 
     def exprandnew(self, lamdanum=1, lamdaden=1):
         """Returns an object to serve as a partially-sampled
-        exponential random number with the given
+        exponential random variate with the given
         rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
         the first is a multiple of 1/(2^X), the second is X, the third is the integer
         part (initially -1 to indicate the integer part wasn't sampled yet),
@@ -2366,7 +2366,7 @@ class RandomGen:
         return [0, 0, -1, lamdanum, lamdaden]
 
     def exprandfill(self, a, bits):
-        """Fills the unsampled bits of the given exponential random number
+        """Fills the unsampled bits of the given exponential random variate
         'a' as necessary to make a number whose fractional part
         has 'bits' many bits.  If the number's fractional part already has
         that many bits or more, the number is rounded using the round-to-nearest,
@@ -2432,7 +2432,7 @@ class RandomGen:
             index += 1
 
     def expoRatio(self, base, rx=1, ry=1):
-        """Generates an exponential random number
+        """Generates an exponential random variate
         (in the form of a ratio, or two-element list) given
         the rate `rx`/`ry` and the base `base`.
         The number will have the denominator `base*rx`."""
@@ -2497,7 +2497,7 @@ class RandomGen:
         succ: Number of successes.
         failures: Contains probabilities for each kind of failure.
         The sum of probabilities must be less than 1.
-        Returns: A list containing a random number
+        Returns: A list containing a random variate
         of failures of each kind of failure.
         """
         ret = [0 for _ in failures]
@@ -2691,9 +2691,9 @@ class RandomGen:
     def slicesample(self, pdf, n, xstart=0.1):
         """
         Slice sampling of R. M. Neal.
-        Generates 'n' random numbers that follow
+        Generates 'n' random variates that follow
         the probability density given in 'pdf' using
-        slice sampling.  The resulting random numbers
+        slice sampling.  The resulting random variates
         are not independent, but are often close to
           being independent.  'pdf' takes one number as
           a parameter and returns a number 0 or greater.
@@ -2731,10 +2731,10 @@ class RandomGen:
         return ret
 
     def mcmc(self, pdf, n):
-        """Generates 'n' random numbers that follow
+        """Generates 'n' random variates that follow
         the probability density given in 'pdf' using
         a Markov-chain Monte Carlo algorithm, currently
-        Metropolis--Hastings.  The resulting random numbers
+        Metropolis--Hastings.  The resulting random variates
         are not independent, but are often close to
         being independent.  'pdf' takes one number as
         a parameter and returns a number 0 or greater.
@@ -2746,7 +2746,7 @@ class RandomGen:
         return self._mhc(pdf, n, s)
 
     def mcmc2(self, pdf, n):
-        """Generates 'n' pairs of random numbers that follow
+        """Generates 'n' pairs of random variates that follow
         the probability density given in 'pdf' using
         a Markov-chain Monte Carlo algorithm, currently
         Metropolis--Hastings.  The resulting random pairs
@@ -2923,7 +2923,7 @@ class RandomGen:
         return [volume * xm, volume * math.sqrt(xs * 1.0 / (i * i))]
 
     def kth_smallest_of_n_u01(self, k, n):
-        """Generates the kth smallest number among n random numbers
+        """Generates the kth smallest number among n random variates
         in the interval [0, 1]."""
         if k > n or n < 1:
             raise ValueError
@@ -2975,7 +2975,7 @@ class RandomGen:
         mvn = self.multinormal(None, cov)
         for i in range(len(cov)):
             # Apply the normal distribution's CDF
-            # to get uniform random number
+            # to get uniform random variate
             mvn[i] = (
                 math.erf(mvn[i] / (math.sqrt(2) * math.sqrt(cov[i][i]))) + 1
             ) * 0.5
@@ -3260,7 +3260,7 @@ class RandomGen:
           Both algorithms use the fact that (k-1)/(X1+...+Xk) is an unbiased estimator
           of p, namely 1 divided by the mean of an Expo(p) random variable (X1, X2, ... Xk
           are i.i.d. Expo(p) random variates), with p>0.  In the same way, any algorithm to turn
-          an endless sequence of random numbers with mean M into k many i.i.d. Expo(M)
+          an endless sequence of random variates with mean M into k many i.i.d. Expo(M)
           random variates will work, as with the Poisson distribution, for example.
           Note that GammaDist(r,1) is distributed as the sum of _r_ many i.i.d. Expo(1) variates.]]]
         References: Huber, M., 2017. A Bernoulli mean estimate with
@@ -3608,18 +3608,18 @@ class RandomGen:
 
     def numbers_from_dist_inversion(self, icdf, n=1, digitplaces=53, base=2):
         """
-        Generates 'n' random numbers that follow a discrete or non-discrete
+        Generates 'n' random variates that follow a discrete or non-discrete
         probability distribution, using the inversion method.
         Implements section 5 of Devroye and Gravel,
         "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
-        - 'n' is the number of random numbers to generate.  Default is 1.
+        - 'n' is the number of random variates to generate.  Default is 1.
         - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
            and returns a number within base^-digitplaces of the True inverse
            CDF (inverse cumulative distribution function, or quantile function)
            of u/base^ubits. For a given value of `digitplaces`, icdf(x)<=icdf(y)
            whenever 0<=x<y<=1.
         - 'digitplaces' is an accuracy expressed as a number of digits after the
-           point. Each random number will be a multiple of base^-digitplaces,
+           point. Each random variate will be a multiple of base^-digitplaces,
            or have a smaller granularity. Default is 53.
         - base is the digit base in which the accuracy is expressed. Default is 2
            (binary). (Note that 10 means decimal.)
@@ -3648,19 +3648,19 @@ class RandomGen:
 
     def numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53):
         """
-        Generates 'n' random numbers that follow a continuous
+        Generates 'n' random variates that follow a continuous
         distribution in an interval [mn, mx].  The distribution must have a
         PDF (probability density function) and the PDF must be less than or equal to a finite number and be continuous almost everywhere
         in the interval.  Implements section 4 of Devroye and Gravel,
         "The expected bit complexity of the von Neumann rejection
         algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
-        - 'n' is the number of random numbers to generate.  Default is 1.
+        - 'n' is the number of random variates to generate.  Default is 1.
         - 'pdf' is a procedure that takes three arguments: xmin, xmax, bitplaces,
            and returns an array of two items: the greatest lower bound of f(x) anywhere
            in the interval [xmin, xmax] (where f(x) is the PDF), and the least upper
            bound of f(x) anywhere there.  Both bounds are multiples of 2^-bitplaces.
         - 'bitplaces' is an accuracy expressed as a number of bits after the
-           binary point. The random number will be a multiple of 2^-bitplaces,
+           binary point. The random variate will be a multiple of 2^-bitplaces,
            or have a smaller granularity. Default is 53.
         - 'mn' and 'mx' express the interval.  Both are optional and
            are set to 0 and 1, respectively, by default.
@@ -3807,13 +3807,13 @@ class RandomGen:
             nodesInLevel = min(maxNodes, nodesInLevel)
 
     def numbers_from_pdf(self, pdf, mn, mx, n=1, steps=100):
-        """Generates one or more random numbers from a continuous probability
+        """Generates one or more random variates from a continuous probability
         distribution expressed as a probability density
-        function (PDF).  The random number
-        will be in the interval [mn, mx].  `n` random numbers will be
+        function (PDF).  The random variate
+        will be in the interval [mn, mx].  `n` random variates will be
         generated. `pdf` is the PDF; it takes one parameter and returns,
         for that parameter, a weight indicating the relative probability
-         that a random number will be close to that parameter. `steps`
+         that a random variate will be close to that parameter. `steps`
         is the number of subintervals between sample points of the PDF.
         The area under the curve of the PDF need not be 1.
         By default, `n` is 1 and `steps` is 100."""
@@ -3822,42 +3822,40 @@ class RandomGen:
         return self.piecewise_linear_n(values, weights, n)
 
     def numbers_from_cdf(self, cdf, mn, mx, n=1):
-        """Generates one or more random numbers from a non-discrete probability
+        """Generates one or more random variates from a non-discrete probability
         distribution by numerically inverting its cumulative
         distribution function (CDF).
 
         - cdf: The CDF; it takes one parameter and returns,
-        for that parameter, the probability that a random number will
+        for that parameter, the probability that a random variate will
         be less than or equal to that parameter.
-        - mn, mx: Sampling domain.  The random number
+        - mn, mx: Sampling domain.  The random variate
         will be in the interval [mn, mx].
-        - n: How many random numbers to generate. Default is 1."""
+        - n: How many random variates to generate. Default is 1."""
         return self.numbers_from_u01(
             [self.rndu01() for i in range(n)], None, cdf, mn, mx
         )
 
     def numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None):
-        """Transforms one or more random numbers into numbers
+        """Transforms one or more random variates in [0, 1] into numbers
         (called quantiles) that follow a non-discrete probability distribution, based on its PDF
         (probability density function), its CDF (cumulative distribution
         function), or both.
 
-        - u01: List of uniform random numbers in [0, 1] that will be
+        - u01: List of uniform random variates in [0, 1] that will be
         transformed into numbers that follow the distribution.
         - pdf: The PDF; it takes one parameter and returns,
         for that parameter, the relative probability that a
-        random number close to that number is chosen.  The area under
+        random variate close to that number is chosen.  The area under
         the PDF need not be 1 (this method works even if the PDF
         is only known up to a normalizing constant). Optional if a CDF is given.
         - cdf: The CDF; it takes one parameter and returns,
-        for that parameter, the probability that a random number will
+        for that parameter, the probability that a random variate will
         be less than or equal to that parameter. Optional if a PDF is given.
         For best results, the CDF should be
         strictly increasing everywhere in the
-        interval [xmin, xmax] and must output values in [0, 1];
-        for best results, the CDF should
-        be increasing everywhere in [xmin, xmax].
-        - mn, mx: Sampling domain.  The random number
+        interval [xmin, xmax].  The CDF must output values in [0, 1].
+        - mn, mx: Sampling domain.  The random variate
         will be in the interval [mn, mx].  For best results,
         the range given by mn and mx should cover all or
         almost all of the distribution.
@@ -3879,14 +3877,14 @@ class RandomGen:
             raise ValueError
 
     def integers_from_u01(self, u01, pmf):
-        """Transforms one or more random numbers into numbers
+        """Transforms one or more random variates into numbers
         (called quantiles) that
         follow a discrete distribution, assuming the distribution
               produces only integers 0 or greater.
-              - `u01` is a list of uniform random numbers, in [0, 1].
+              - `u01` is a list of uniform random variates, in [0, 1].
               - `pmf` is the probability mass function (PMF)
               of the discrete distribution; it takes one parameter and returns,
-              for that parameter, the probability that a random number is
+              for that parameter, the probability that a random variate is
               equal to that parameter (each probability is in the interval [0, 1]).
               The area under the PMF must be 1; it
               is not enough for the PMF to be correct up to a constant.
@@ -3905,7 +3903,7 @@ class RandomGen:
         return ret
 
     def randomwalk_u01(self, n):
-        """Random walk of uniform 0-1 random numbers."""
+        """Random walk of uniform 0-1 random variates."""
         ret = [0 for i in range(n + 1)]
         for i in range(n):
             ret[i] = self.rndu01()
@@ -3923,9 +3921,9 @@ class RandomGen:
         return ret
 
     def wiener(self, st, en, step=1.0, mu=0.0, sigma=1.0):
-        """Generates random numbers following a Wiener
+        """Generates random variates following a Wiener
         process (Brownian motion). Each element of the return
-        value contains a timestamp and a random number in that order."""
+        value contains a timestamp and a random variate in that order."""
         if st == en:
             return [[st, self.normal(mu * st, sigma * math.sqrt(st))]]
         ret = []
@@ -3953,7 +3951,7 @@ class RandomGen:
         # Early exit if we go beyond the kth smallest index
         if index >= k:
             return
-        # Each uniform (0, 1) random number is equally likely to
+        # Each uniform (0, 1) random variate is equally likely to
         # be less than half or greater than half; thus, the number
         # of uniform numbers that are less than half vs. greater
         # than half follows a binomial(n, 1/2) distribution.
@@ -3980,7 +3978,7 @@ class RandomGen:
     def kthsmallest_psrn(self, n, k):
         """Generates the 'k'th smallest 'b'-bit uniform random
         number out of 'n' of them; returns the result in
-        the form of a uniform partially-sampled random number."""
+        the form of a uniform partially-sampled random variate."""
         if k <= 0 or k > n:
             raise ValueError
         ret = [psrn_new_01() for i in range(n)]
@@ -4001,7 +3999,7 @@ class RandomGen:
         return psrn_fill(self, self.kthsmallest_psrn(n, k), precision=b)
 
     def fromDyadicDecompCode(self, code, precision=53):
-        """Generates a uniform random number contained in a box described
+        """Generates a uniform random variate contained in a box described
             by the given universal dyadic decomposition code.
             - code: A list returned by the getDyadicDecompCode
               or getDyadicDecompCodePdf method.
@@ -4042,9 +4040,9 @@ class RandomGen:
     def getDyadicDecompCodePdf(self, point, pdf=None, pdfbounds=None, precision=53):
         """
         Finds a code describing the position and size of a box that covers the given
-        point in the universal dyadic decomposition for random number generation,
+        point in the universal dyadic decomposition for random variate generation,
         based on a non-uniform probability density function.  It generates a
-        random number for this purpose, so the return value may differ from call to
+        random variate for this purpose, so the return value may differ from call to
         call.
         - point: A list of coordinates of a point in space.  This method assumes
           the point was random generated and within the support of a continuous
@@ -4065,7 +4063,7 @@ class RandomGen:
           PDF anywhere in the given box.  If this parameter is
           given, this method assumes the PDF is continuous almost everywhere and bounded
           from above; the dyadic decomposition will generally work only if that is the case.
-        - precision: Precision of random numbers generated by this method, in binary digits
+        - precision: Precision of random variates generated by this method, in binary digits
           after the point.  Default is 53.
         Returns a list containing two items. The first describes the size of the box
         (as a negative power of 2). The second is a list of coordinates describing the
@@ -4106,7 +4104,7 @@ class RandomGen:
     def getDyadicDecompCode(self, point, f=None, fbox=None):
         """
         Finds a code describing the position and size of a box that covers the given
-        point in the universal dyadic decomposition for random number generation.
+        point in the universal dyadic decomposition for random variate generation.
         - point: A list of coordinates of a point in space.  This method assumes
           the point was a randomly generated member of a geometric set (such as a
           sphere, ellipse, polygon, or any other volume).  Let N be the number
@@ -4450,7 +4448,7 @@ class RatioOfUniformsTiling:
 
     - pdf: The probability density function (PDF); it takes one parameter and returns,
        for that parameter, the relative probability that a
-       random number close to that number is chosen.  The area under
+       random variate close to that number is chosen.  The area under
        the PDF need not be 1; this method works even if the PDF
        is only known up to a normalizing constant, and even if
        the distribution has infinitely extending tails to the left, to the right, or both.
@@ -4587,10 +4585,10 @@ class RatioOfUniformsTiling:
         return ret
 
     def sample(self, rg, n=1):
-        """Generates random numbers that (approximately) follow the
+        """Generates random variates that (approximately) follow the
               distribution modeled by this class.
-        - n: The number of random numbers to generate.
-        Returns a list of 'n' random numbers."""
+        - n: The number of random variates to generate.
+        Returns a list of 'n' random variates."""
         # self.iters=0
         ret = [self._sampleOne(rg) for i in range(n)]
         # print(n*1.0/self.iters)
@@ -4604,7 +4602,7 @@ class RatioOfUniformsTiling:
                 Nonuniform Random Variate Generation", 2001.
         - name: Distribution name.  Generates a Python method called
            sample_X where X is the name given here (samples one
-           random number).
+           random variate).
         - pdfcall: Name of the method representing pdf (for more information,
            see the __init__ method of this class).  Optional; if not given
            the name is pdf_X where X is the name given in the name parameter."""
@@ -4647,7 +4645,7 @@ class RatioOfUniformsTiling:
 
 class DensityTiling:
     """Produces a tiling of a probability density function (PDF)
-         for the purposes of random number generation.  The PDF is
+         for the purposes of random variate generation.  The PDF is
          decomposed into tiles; these tiles will either cross the PDF
          or go below the PDF.  In each recursion cycle, each tile is
          split into four tiles, and tiles that end up above the PDF are
@@ -4778,7 +4776,7 @@ class DensityTiling:
                 Nonuniform Random Variate Generation", 2001.
         - name: Distribution name.  Generates a Python method called
            sample_X where X is the name given here (samples one
-           random number).
+           random variate).
         - pdfcall: Name of the method representing pdf (for more information,
            see the __init__ method of this class).  Optional; if not given
            the name is pdf_X where X is the name given in the name parameter."""
@@ -4824,10 +4822,10 @@ class DensityTiling:
         return ret
 
     def sample(self, rg, n=1):
-        """Generates random numbers that (approximately) follow the
+        """Generates random variates that (approximately) follow the
               distribution modeled by this class.
-        - n: The number of random numbers to generate.
-        Returns a list of 'n' random numbers."""
+        - n: The number of random variates to generate.
+        Returns a list of 'n' random variates."""
         return [self._sampleOne(rg) for i in range(n)]
 
     def _sampleOne(self, rg):
@@ -4846,7 +4844,7 @@ class DensityInversionSampler:
       only the probability density function (PDF) is known,
       using the inversion method.  This sampler
       allows quantiles for the distribution to be calculated
-      from pregenerated uniform random numbers in [0, 1].
+      from pregenerated uniform random variates in [0, 1].
 
     - pdf: A function that specifies the PDF. It takes a single
       number and outputs a single number. The area under
@@ -4979,11 +4977,11 @@ class DensityInversionSampler:
         return p
 
     def quantile(self, v):
-        """Calculates quantiles from uniform random numbers
+        """Calculates quantiles from uniform random variates
               in the interval [0, 1].
-        - v: A list of uniform random numbers.
+        - v: A list of uniform random variates.
         Returns a list of the quantiles corresponding to the
-        uniform random numbers.  The returned list will have
+        uniform random variates.  The returned list will have
         the same number of entries as 'v'."""
         return [self._onequantile(x * self.integral) for x in v]
 
@@ -4994,9 +4992,9 @@ class DensityInversionSampler:
                 "An Automatic Code Generator for
                 Nonuniform Random Variate Generation", 2001.
         - name: Distribution name.  Generates Python methods called
-           sample_X (samples one random number), and quantile_X
+           sample_X (samples one random variate), and quantile_X
            (finds the quantile
-           for a uniform random number in [0, 1]),
+           for a uniform random variate in [0, 1]),
            where X is the name given here."""
         ret = "import random\n\n"
         ret += "TABLE_" + name + " = ["
@@ -5037,10 +5035,10 @@ class DensityInversionSampler:
         return ret
 
     def sample(self, rg, n=1):
-        """Generates random numbers that (approximately) follow the
+        """Generates random variates that (approximately) follow the
               distribution modeled by this class.
-        - n: The number of random numbers to generate.
-        Returns a list of 'n' random numbers."""
+        - n: The number of random variates to generate.
+        Returns a list of 'n' random variates."""
         return [self._onequantile(rg.rndu01() * self.integral) for i in range(n)]
 
     def _onequantile(self, r):
@@ -5125,10 +5123,10 @@ class KVectorSampler:
         Parameters:
         - cdf: Cumulative distribution function (CDF) of the
            distribution.  The CDF must be
-           strictly increasing everywhere in the
+           nowhere decreasing everywhere in the
            interval [xmin, xmax] and must output values in [0, 1];
            for best results, the CDF should
-           be increasing everywhere in [xmin, xmax].
+           be strictly increasing everywhere in [xmin, xmax].
         - xmin: Maximum x-value to generate.
         - xmax: Maximum x-value to generate.  For best results,
            the range given by xmin and xmax should cover all or
@@ -5199,7 +5197,7 @@ class KVectorSampler:
 
     def quantile(self, uniforms):
         """Returns a list of 'n' numbers that correspond
-        to the given uniform random numbers and follow
+        to the given uniform random variates and follow
         the distribution represented by this sampler.  'uniforms'
         is a list of uniform random values in the interval
         [0, 1].  For best results, this sampler's range
@@ -5218,7 +5216,7 @@ class KVectorSampler:
         return [self._invertone(u) for u in uniforms]
 
     def sample(self, rg, n):
-        """Returns a list of 'n' random numbers of
+        """Returns a list of 'n' random variates of
         the distribution represented by this sampler.
         - rg: A random generator (RandGen) object."""
         return [self._sampleone(rg) for i in range(n)]
@@ -5316,9 +5314,9 @@ if __name__ == "__main__":
         ls = linspace(mn, mx, 30)
         showbuckets(ls, [f(x) for x in ls])
 
-    # Generate normal random numbers
+    # Generate normal random variates
     def uu():
-        print("Generating normal random numbers with numbers_from_dist")
+        print("Generating normal random variates with numbers_from_dist")
         ls = linspace(-3.3, 3.3, 30)
         buckets = [0 for x in ls]
         t = time.time()
@@ -5328,7 +5326,7 @@ if __name__ == "__main__":
             bucket(ks, ls, buckets)
         showbuckets(ls, buckets)
 
-    print("# Generating binomial random numbers")
+    print("# Generating binomial random variates")
     import cProfile
     import numpy
 
@@ -5358,7 +5356,7 @@ if __name__ == "__main__":
     print("multinomial: Took %f seconds" % (time.time() - t))
     uu()
 
-    print("Generating normal random numbers with numbers_from_pdf")
+    print("Generating normal random variates with numbers_from_pdf")
     ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
     t = time.time()
@@ -5368,7 +5366,7 @@ if __name__ == "__main__":
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)
 
-    print("Generating normal random numbers with KVectorSampler")
+    print("Generating normal random variates with KVectorSampler")
     kvs = KVectorSampler(normalcdf, -4, 4, nd=1000)  # , pdf=normalpdf)
     t = time.time()
     ksample = kvs.sample(randgen, 1000)
