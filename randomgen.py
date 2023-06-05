@@ -3849,7 +3849,7 @@ class RandomGen:
         random variate close to that number is chosen.  The area under
         the PDF need not be 1 (this method works even if the PDF
         is only known up to a normalizing constant). Optional if a CDF is given.
-        - cdf: The CDF; it takes one parameter and returns,
+        - cdf: [[Not used.]] The CDF; it takes one parameter and returns,
         for that parameter, the probability that a random variate will
         be less than or equal to that parameter. Optional if a PDF is given.
         For best results, the CDF should be
@@ -3871,8 +3871,9 @@ class RandomGen:
             )
             return sampler.quantile(u01)
         elif cdf != None:
-            sampler = KVectorSampler(cdf, mn, mx, pdf)
-            return sampler.quantile(u01)
+            raise ValueError
+            # sampler = KVectorSampler(cdf, mn, mx, pdf)
+            # return sampler.quantile(u01)
         else:
             raise ValueError
 
@@ -4208,117 +4209,43 @@ class ConvexPolygonSampler:
         tri = self.triangles[index]
         return self.randgen.simplex_point(tri)
 
-class _KVectorRootSolver:
-    def _derivcdf(self, cdf, x):
-        eps = 0.0001
-        return (cdf(x + eps) - cdf(x - eps)) / (2 * eps)
+def _derivcdf(self, cdf, x):
+    # Numerical derivative
+    eps = 0.0001
+    return (cdf(x + eps) - cdf(x - eps)) / (2 * eps)
 
-    def _linspace(self, a, b, size):
-        return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
-
-    def _findroot(self, f, df, y, x, x2):
-        if df != None:
-            # Use Newton method if df is given
-            for i in range(5):
-                fv = f(x) - y
-                dfv = df(x)
-                if dfv == 0:
-                    return x
-                fv /= dfv
-                if abs(fv) < 2.22e-16:
-                    return x
-                x -= fv
-            return x
-        else:
-            # Use regula falsi (secant) method if df is not given
-            nx = x
-            if x == x2:
+def _findroot(self, f, df, y, x, x2):
+    if df != None:
+        # Use Newton method if df is given
+        for i in range(5):
+            fv = f(x) - y
+            dfv = df(x)
+            if dfv == 0:
                 return x
-            for i in range(10):
-                fa = f(x)
-                fb = f(x2)
-                if fb == fa:
-                    return nx
-                nx = x + (x2 - x) * (y - fa) / (fb - fa)
-                fnx = f(nx)
-                if fnx <= y:
-                    x = nx
-                else:
-                    x2 = nx
-                if abs(x2 - x) < 2.22e-16:
-                    return nx
-            return nx
-
-    def __init__(self, cdf, xmin, xmax, pdf=None):
-        self.pdf = pdf
-        self.cdf = cdf
-        self.numElements = 1
-        if self.pdf == None:
-            self.numElements = 2
-            # self.pdf = lambda x: self._derivcdf(self.cdf, x)
-        eps = 2.22e-16
-        x = self._linspace(xmin, xmax, 2000)
-        n = len(x)
-        xy = [[cdf(v), v] for v in x]
-        ys = [v[0] for v in xy]
-        deltas = [abs(ys[i + 1] - ys[i]) for i in range(n - 1)]
-        self.delta = max(deltas) * 4 * eps
-        xy.sort()
-        xs = [v[1] for v in xy]  # x's corresponding to sorted y's
-        ys.sort()  # sorted y's
-        self.delta_x = (xmax - xmin) * 1.0 / (n - 1)
-        ymax = ys[n - 1]
-        ymin = ys[0]
-        xi = eps * max(abs(ymin), abs(ymax))
-        self.m = ((ymax - ymin) + 2.0 * xi) / (n - 1)
-        self.q = ymin - self.m - xi
-        self.xs = xs
-        self.ys = ys
-        self.k = [0 for i in range(n + 1)]  # One-based
-        self.k[1] = 0
-        self.k[n] = n
-        for i in range(1, n + 1):
-            self.k[i] = n
-            for j in range(1, n + 1):
-                if self.ys[j - 1] > self.m * i + self.q:
-                    self.k[i] = j - 1
-                    break
-
-    def solve(self, ylist):
-        return [self._solveone(v) for v in ylist]
-
-    def _solveone(self, yr):
-        halfdelta = self.delta * 0.5
-        ya = yr - halfdelta * self.numElements
-        yb = yr + halfdelta * self.numElements
-        n = len(self.ys)
-        ja = int(math.floor((ya - self.q) / self.m))
-        jb = int(math.ceil((yb - self.q) / self.m))
-        ja = max(1, min(n, ja))
-        jb = max(1, min(n, jb))
-        ja = self.k[ja] + 1  # One-based
-        jb = self.k[jb]  # One-based
-        ka = min(ja, jb)
-        kb = max(ja, jb)
-        xy = [[self.xs[i - 1], self.ys[i - 1]] for i in range(ka, kb + 1)]
-        if len(xy) == 1:
-            return self._findroot(self.cdf, self.pdf, yr, xy[0][0], xy[0][0])
-        elif len(xy) == 2 and self.numElements == 2:
-            return self._findroot(self.cdf, self.pdf, yr, xy[0][0], xy[1][0])
-        xy.sort()
-        roots = []
-        delta_x_and_half = self.delta_x * 1.5
-        for i in range(len(xy) - 1):
-            xdiff = xy[i + 1][0] - xy[i][0]
-            if xdiff >= delta_x_and_half:
-                # New potential root found
-                roots.append(self._findroot(self.cdf, self.pdf, yr, xy[i][0], xy[i][0]))
-            if xdiff < delta_x_and_half and i == 0:
-                # New potential root found
-                roots.append(
-                    self._findroot(self.cdf, self.pdf, yr, xy[i][0], xy[i + 1][0])
-                )
-        return roots[0]  # Return the first root found
+            fv /= dfv
+            if abs(fv) < 2.22e-16:
+                return x
+            x -= fv
+        return x
+    else:
+        # Use regula falsi (secant) method if df is not given
+        nx = x
+        if x == x2:
+            return x
+        for i in range(10):
+            fa = f(x)
+            fb = f(x2)
+            if fb == fa:
+                return nx
+            nx = x + (x2 - x) * (y - fa) / (fb - fa)
+            fnx = f(nx)
+            if fnx <= y:
+                x = nx
+            else:
+                x2 = nx
+            if abs(x2 - x) < 2.22e-16:
+                return nx
+        return nx
 
 class _GaussLobatto:
     NODES = [0, 0.17267316464601146, 0.5, 0.8273268353539885, 1]
@@ -5105,121 +5032,6 @@ class PrefixDistributionSampler:
                     prefix <<= 1
                     prefix |= rg.rndint(1)
                     prefixLength += 1
-
-class KVectorSampler:
-    """A K-Vector-like sampler of a non-discrete distribution
-    with a known cumulative distribution function (CDF).
-    Uses algorithms
-    described in Arnas, D., Leake, C., Mortari, D., "Random
-    Sampling using k-vector", Computing in Science &
-    Engineering 21(1) pp. 94-107, 2019, and Mortari, D.,
-    Neta, B., "k-Vector Range Searching Techniques"."""
-
-    def _linspace(self, a, b, size):
-        return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
-
-    def __init__(self, cdf, xmin, xmax, pdf=None, nd=200):
-        """Initializes the K-Vector-like sampler.
-        Parameters:
-        - cdf: Cumulative distribution function (CDF) of the
-           distribution.  The CDF must be
-           nowhere decreasing everywhere in the
-           interval [xmin, xmax] and must output values in [0, 1];
-           for best results, the CDF should
-           be strictly increasing everywhere in [xmin, xmax].
-        - xmin: Maximum x-value to generate.
-        - xmax: Maximum x-value to generate.  For best results,
-           the range given by xmin and xmax should cover all or
-           almost all of the distribution.
-        - pdf: Optional. Distribution's probability density
-           function (PDF), to improve accuracy in the root-finding
-           process.
-        - nd: Optional. Size of tables used in the sampler.
-           Default is 200.
-        """
-        eps = 2.22e-16
-        ymin = cdf(xmin)
-        ymax = cdf(xmax)
-        xi = max(abs(ymin), abs(ymax)) * eps
-        self.ys = self._linspace(ymin, ymax, nd - 1)
-        # NOTE: Using the K-vector function inversion approach
-        # in Arnas et al., but any other root-finding method
-        # will work well here, especially since we're only doing
-        # root-finding in the setup phase, not the sampling phase.
-        # This is perhaps the only non-trivial part of the algorithm.
-        roots = _KVectorRootSolver(cdf, xmin, xmax, pdf).solve(self.ys)
-        roots = [[self.ys[i], roots[i]] for i in range(len(roots))]
-        # Clamp roots for robustness, then
-        # recalculate CDFs for the roots,
-        # in case some parts of the
-        # CDF have zero derivative
-        for i in range(len(roots)):
-            r = min(xmax, max(xmin, roots[i][1]))
-            roots[i][1] = r
-            roots[i][0] = cdf(r)
-        roots.sort()
-        self.xs = [v[1] for v in roots]
-        self.ys = [v[0] for v in roots]
-        self.ymin = self.ys[0]
-        self.ymax = self.ys[len(self.ys) - 1]
-        self.ys = [cdf(x) for x in self.xs]
-        self.m = (nd - 1) * 1.0 / (self.ymax - self.ymin + 2 * xi)
-        self.q = 1 - self.m * (self.ymin - xi)
-
-    def _sampleone(self, rg):
-        while True:
-            a = rg.rndrange(self.ymin, self.ymax)
-            # Do a "search" for 'a'
-            b = int(math.floor(self.m * a + self.q))
-            x0 = self.xs[b - 1]
-            x1 = self.xs[b]
-            y0 = self.ys[b - 1]
-            y1 = self.ys[b]
-            # print([a,x0, x1, y0, y1])
-            # Reject "empty" regions
-            if y1 == y0 or x1 == x0:
-                continue
-            return x0 + (a - y0) * (x1 - x0) / (y1 - y0)
-
-    def _invertone(self, a):
-        a = self.ymin + (self.ymax - self.ymin) * a
-        # Do a "search" for 'a'
-        b = int(math.floor(self.m * a + self.q))
-        x0 = self.xs[b - 1]
-        x1 = self.xs[b]
-        y0 = self.ys[b - 1]
-        y1 = self.ys[b]
-        # print([a,x0, x1, y0, y1])
-        # Handle "empty" regions
-        if y1 == y0 or x1 == x0:
-            return self.xs[0]
-        return x0 + (a - y0) * (x1 - x0) / (y1 - y0)
-
-    def quantile(self, uniforms):
-        """Returns a list of 'n' numbers that correspond
-        to the given uniform random variates and follow
-        the distribution represented by this sampler.  'uniforms'
-        is a list of uniform random values in the interval
-        [0, 1].  For best results, this sampler's range
-        (xmin and xmax in the constructor)
-        should cover all or almost all of the desired distribution and
-        the distribution's CDF should be strictly
-        increasing everywhere (every number that can be taken on
-        by the distribution has nonzero probability of occurring), since
-        among other things,
-        this method maps each uniform value to the
-        range of CDFs covered by this distribution (that is,
-        [0, 1] is mapped to [minCDF, maxCDF]), and
-        uniform values in "empty" regions (regions with
-        constant CDF) are handled by replacing those
-        values with the minimum CDF value covered."""
-        return [self._invertone(u) for u in uniforms]
-
-    def sample(self, rg, n):
-        """Returns a list of 'n' random variates of
-        the distribution represented by this sampler.
-        - rg: A random generator (RandGen) object."""
-        return [self._sampleone(rg) for i in range(n)]
 
 class AlmostRandom:
     def __init__(self, randgen, list):

@@ -25,7 +25,6 @@ CLASSES
         DensityInversionSampler
         DensityTiling
         FastLoadedDiceRoller
-        KVectorSampler
         OptimalSampler
         PascalTriangle
         PrefixDistributionSampler
@@ -347,71 +346,6 @@ CLASSES
      |      - name: Method name. Default: 'sample_discrete'.
      |
      |  next(self, randgen)
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-
-    class KVectorSampler(builtins.object)
-     |  KVectorSampler(cdf, xmin, xmax, pdf=None, nd=200)
-     |
-     |  A K-Vector-like sampler of a non-discrete distribution
-     |  with a known cumulative distribution function (CDF).
-     |  Uses algorithms
-     |  described in Arnas, D., Leake, C., Mortari, D., "Random
-     |  Sampling using k-vector", Computing in Science &
-     |  Engineering 21(1) pp. 94-107, 2019, and Mortari, D.,
-     |  Neta, B., "k-Vector Range Searching Techniques".
-     |
-     |  Methods defined here:
-     |
-     |  __init__(self, cdf, xmin, xmax, pdf=None, nd=200)
-     |      Initializes the K-Vector-like sampler.
-     |      Parameters:
-     |      - cdf: Cumulative distribution function (CDF) of the
-     |         distribution.  The CDF must be
-     |         nowhere decreasing everywhere in the
-     |         interval [xmin, xmax] and must output values in [0, 1];
-     |         for best results, the CDF should
-     |         be strictly increasing everywhere in [xmin, xmax].
-     |      - xmin: Maximum x-value to generate.
-     |      - xmax: Maximum x-value to generate.  For best results,
-     |         the range given by xmin and xmax should cover all or
-     |         almost all of the distribution.
-     |      - pdf: Optional. Distribution's probability density
-     |         function (PDF), to improve accuracy in the root-finding
-     |         process.
-     |      - nd: Optional. Size of tables used in the sampler.
-     |         Default is 200.
-     |
-     |  quantile(self, uniforms)
-     |      Returns a list of 'n' numbers that correspond
-     |      to the given uniform random variates and follow
-     |      the distribution represented by this sampler.  'uniforms'
-     |      is a list of uniform random values in the interval
-     |      [0, 1].  For best results, this sampler's range
-     |      (xmin and xmax in the constructor)
-     |      should cover all or almost all of the desired distribution and
-     |      the distribution's CDF should be strictly
-     |      increasing everywhere (every number that can be taken on
-     |      by the distribution has nonzero probability of occurring), since
-     |      among other things,
-     |      this method maps each uniform value to the
-     |      range of CDFs covered by this distribution (that is,
-     |      [0, 1] is mapped to [minCDF, maxCDF]), and
-     |      uniform values in "empty" regions (regions with
-     |      constant CDF) are handled by replacing those
-     |      values with the minimum CDF value covered.
-     |
-     |  sample(self, rg, n)
-     |      Returns a list of 'n' random variates of
-     |      the distribution represented by this sampler.
-     |      - rg: A random generator (RandGen) object.
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
@@ -1125,7 +1059,7 @@ CLASSES
      |      random variate close to that number is chosen.  The area under
      |      the PDF need not be 1 (this method works even if the PDF
      |      is only known up to a normalizing constant). Optional if a CDF is given.
-     |      - cdf: The CDF; it takes one parameter and returns,
+     |      - cdf: [[Not used.]] The CDF; it takes one parameter and returns,
      |      for that parameter, the probability that a random variate will
      |      be less than or equal to that parameter. Optional if a PDF is given.
      |      For best results, the CDF should be

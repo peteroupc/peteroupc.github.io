@@ -609,6 +609,8 @@ END METHOD
 
 [^29]: Baccetti, Valentina, and Matt Visser. "Infinite Shannon entropy." Journal of Statistical Mechanics: Theory and Experiment 2013, no. 04 (2013): P04010, also in arXiv:1212.5630.
 
+[^30]: Giammatteo, P., and Di Mascio, T., "Wilson-Hilferty-type approximation for Poisson Random Variable", Advances in Science, Technology and Engineering Systems Journal 5(2), 2020.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -634,14 +636,14 @@ There are three kinds of randomization algorithms:
     Most algorithms on this page, though, are not _error-bounded_ when naïvely implemented in most number formats (including floating-point numbers).  (There are number formats such as "constructive reals" or "recursive reals" that allow real numbers to be approximated to a user-specified error (Boehm 2020)[^24].)
 3. An _inexact_, _approximate_, or _biased algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2\)[^16].  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
-There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020\)[^25] is Wasserstein distance (or "earth-mover distance").  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.
+There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020\)[^25] is Wasserstein distance (or "earth-mover distance"), which they proved has a simple definition in terms of the quantile function (Theorem 8).  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.
 
 >
 > **Examples:**
 >
 > 1. Sampling from the exponential distribution via `-ln(RNDRANGEMinMaxExc(0, 1))` is an _exact algorithm_ (in theory), but not an _error-bounded_ one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.
 > 2. Karney's algorithm for the normal distribution (Karney 2016\)[^1], as well as Karney's implementation of von Neumann's exponential distribution sampler (Karney 2016\)[^1] are both _error-bounded_, because they return a result that can be made to come close to the normal or exponential distribution, respectively, within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018\)[^26].
-> 3. Examples of _approximate algorithms_ include sampling from a Gaussian-like distribution via a sum of `RNDRANGEMinMaxExc(0, 1)`, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section "[**RNDINT**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)").
+> 3. Examples of _approximate algorithms_ include sampling from a Gaussian-like distribution via a sum of `RNDRANGEMinMaxExc(0, 1)`, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section "[**RNDINT**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)").  The following approximate algorithm for the Poisson distribution is another example (Giammatteo and Di Mascio (2020)[^30])\: `floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))`.
 >
 > **Note:** A discrete distribution can be sampled in finite time on average if and only if its so-called _Shannon entropy_ is finite (Knuth and Yao 1976)[^27]. Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)[^25].  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)[^28] discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution has finite Shannon entropy whenever&mdash;
 >
