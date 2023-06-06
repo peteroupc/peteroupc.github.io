@@ -216,13 +216,19 @@ In addition, rational functions are not much better than polynomials in approxim
 <a id=Request_for_Additional_Methods></a>
 ## Request for Additional Methods
 
-Readers are requested to let me know of additional solutions to the following problem:
+Readers are requested to let me know of additional solutions to the following problems:
 
-_Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$._
+1. Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.
 
-_The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative._
+    The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative.
 
-_Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev interpolants and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred)._
+    Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev interpolants and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).
+
+2. Find a polynomial $P$ in Bernstein form that approximates a strictly increasing polynomial $Q$ on $[0, 1]$ such that the _inverse_ of $P$ is within $\epsilon$ of the inverse of $Q$.
+
+3. Find a polynomial $P$ in Bernstein form that approximates a strictly increasing real analytic function $f$ on $[0, 1]$ such that the _inverse_ of $P$ is within $\epsilon$ of the inverse of $f$.
+
+    (Note: There is no bounded convergence rate for $P$ if $f$ is assumed only to have a continuous $k$-th derivative for every $k$; a counterexample is $h(x)=\exp(-1/x)$, $h(h(x))$, $h(h(h(x)))$, and so on.)
 
 See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polynomials_that_approach_a_factory_function_fast).
 
