@@ -424,10 +424,10 @@
 <p>The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative.</p>
 
 <p>Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev interpolants and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).</p></li>
-<li><p>Find a polynomial $P$ in Bernstein form that approximates a strictly increasing polynomial $Q$ on $[0, 1]$ such that the <em>inverse</em> of $P$ is within $\epsilon$ of the inverse of $Q$.</p></li>
-<li><p>Find a polynomial $P$ in Bernstein form that approximates a strictly increasing real analytic function $f$ on $[0, 1]$ such that the <em>inverse</em> of $P$ is within $\epsilon$ of the inverse of $f$.</p>
+<li><p>Find a polynomial $P$ in Bernstein form that approximates a strictly increasing polynomial $Q$ on the closed unit interval such that the <em>inverse</em> of $P$ is within $\epsilon$ of the inverse of $Q$.</p></li>
+<li><p>Find a polynomial $P$ in Bernstein form that approximates a strictly increasing real analytic function $f$ on the closed unit interval such that the <em>inverse</em> of $P$ is within $\epsilon$ of the inverse of $f$.</p>
 
-<p>(Note: There is no bounded convergence rate for $P$ if $f$ is assumed only to have a continuous $k$-th derivative for every $k$; a counterexample is $h(x)=\exp(-1/x)$, $h(h(x))$, $h(h(h(x)))$, and so on.)</p></li>
+<p>(Note: There is no bounded convergence rate for $P$ if $f$ is assumed only to have a continuous $k$-th derivative for every $k$; a counterexample is $h(x)=\exp(-1/x)$ ($h(0)=0$), $h(h(x))$, $h(h(h(x)))$, and so on.)</p></li>
 </ol>
 
 <p>See also the <a href="https://peteroupc.github.io/bernreq.html#Polynomials_that_approach_a_factory_function_fast"><strong>open questions</strong></a>.</p>

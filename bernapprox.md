@@ -224,11 +224,11 @@ Readers are requested to let me know of additional solutions to the following pr
 
     Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev interpolants and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).
 
-2. Find a polynomial $P$ in Bernstein form that approximates a strictly increasing polynomial $Q$ on $[0, 1]$ such that the _inverse_ of $P$ is within $\epsilon$ of the inverse of $Q$.
+2. Find a polynomial $P$ in Bernstein form that approximates a strictly increasing polynomial $Q$ on the closed unit interval such that the _inverse_ of $P$ is within $\epsilon$ of the inverse of $Q$.
 
-3. Find a polynomial $P$ in Bernstein form that approximates a strictly increasing real analytic function $f$ on $[0, 1]$ such that the _inverse_ of $P$ is within $\epsilon$ of the inverse of $f$.
+3. Find a polynomial $P$ in Bernstein form that approximates a strictly increasing real analytic function $f$ on the closed unit interval such that the _inverse_ of $P$ is within $\epsilon$ of the inverse of $f$.
 
-    (Note: There is no bounded convergence rate for $P$ if $f$ is assumed only to have a continuous $k$-th derivative for every $k$; a counterexample is $h(x)=\exp(-1/x)$, $h(h(x))$, $h(h(h(x)))$, and so on.)
+    (Note: There is no bounded convergence rate for $P$ if $f$ is assumed only to have a continuous $k$-th derivative for every $k$; a counterexample is $h(x)=\exp(-1/x)$ ($h(0)=0$), $h(h(x))$, $h(h(h(x)))$, and so on.)
 
 See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polynomials_that_approach_a_factory_function_fast).
 
