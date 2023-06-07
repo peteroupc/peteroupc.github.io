@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2023/05/31"><meta name="citation_online_date" content="2023/05/31"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2023/06/07"><meta name="citation_online_date" content="2023/06/07"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -43,8 +43,11 @@ however, it&#39;s not enough for this sequence to merely &quot;look random&quot;
 <li>Testing an RNG implementation for correctness[^3] or statistical quality.  See my document on <a href="https://peteroupc.github.io/randomtest.html"><strong>testing PRNGs</strong></a>.</li>
 <li>Generating numbers with unequal probabilities; I discuss this topic in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document</strong></a>.</li>
 <li>Generators of low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  They are not RNGs since the numbers they produce depend on prior results.</li>
-<li>Applications for which the selection of RNGs is limited by regulatory requirements.</li>
 </ul>
+
+<blockquote>
+<p><strong>Note</strong>: For some applications, such as the gambling industry or the financial industry, the selection of RNGs may be limited by regulatory requirements.  This document does not take precedence over such requirements.</p>
+</blockquote>
 
 <p><a id=About_This_Document></a></p>
 
@@ -461,7 +464,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p>As much as possible, <strong>applications should use existing libraries and techniques</strong> for cryptographic and high-quality RNGs. The following table lists application programming interfaces (APIs) for such RNGs for popular programming languages.</p>
 
 <ul>
-<li>PRNGs mentioned in the &quot;High-Quality&quot; column need to be initialized with a seed (see &quot;<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>&quot;).</li>
+<li>PRNGs mentioned in the &quot;High-quality&quot; column need to be initialized with a seed (see &quot;<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>&quot;).</li>
 <li>The mention of a third-party library in this section does not imply that the library is the best one available for any particular purpose. The list is not comprehensive.</li>
 <li>See also <a href="https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages"><strong>Paragon&#39;s blog post</strong></a> on existing cryptographic RNGs.</li>
 </ul>
@@ -470,7 +473,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <tr>
 <th>Language</th>
 <th>Cryptographic</th>
-<th>High-Quality</th>
+<th>High-quality (noncryptographic, not for information security)</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -486,7 +489,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <tr>
 <td>Python (A)</td>
 <td><code>secrets.SystemRandom</code> (since Python 3.6); <code>os.urandom()</code></td>
-<td><a href="https://github.com/ihaque/xorshift"><strong>ihaque/xorshift</strong></a> library (default seed uses <code>os.urandom()</code>); <a href="https://docs.scipy.org/doc/numpy/reference/random/index.html"><strong><code>numpy.random.Generator</code></strong></a> with <code>Philox</code> or <code>SFC64</code> (since ver. 1.7); <code>hashlib.md5(b&quot;%d_%d&quot; % (seed, counter)).digest()</code>, <code>hashlib.sha1(b&quot;%d_%d&quot; % (seed, counter)).digest()</code></td>
+<td><a href="https://docs.scipy.org/doc/numpy/reference/random/index.html"><strong><code>numpy.random.Generator</code></strong></a> with <code>Philox</code> or <code>SFC64</code> (since ver. 1.7); <code>hashlib.md5(b&quot;%d_%d&quot; % (seed, counter)).digest()</code>, <code>hashlib.sha1(b&quot;%d_%d&quot; % (seed, counter)).digest()</code></td>
 </tr>
 <tr>
 <td>Java (A) (D)</td>

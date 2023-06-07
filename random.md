@@ -31,7 +31,8 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - Testing an RNG implementation for correctness[^3] or statistical quality.  See my document on [**testing PRNGs**](https://peteroupc.github.io/randomtest.html).
 - Generating numbers with unequal probabilities; I discuss this topic in [**another document**](https://peteroupc.github.io/randomfunc.html).
 - Generators of low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  They are not RNGs since the numbers they produce depend on prior results.
-- Applications for which the selection of RNGs is limited by regulatory requirements.
+
+> **Note**: For some applications, such as the gambling industry or the financial industry, the selection of RNGs may be limited by regulatory requirements.  This document does not take precedence over such requirements.
 
 <a id=About_This_Document></a>
 ### About This Document
@@ -320,15 +321,15 @@ Multiple processes can be seeded for pseudorandom number generation as follows.[
 
 As much as possible, **applications should use existing libraries and techniques** for cryptographic and high-quality RNGs. The following table lists application programming interfaces (APIs) for such RNGs for popular programming languages.
 
-- PRNGs mentioned in the "High-Quality" column need to be initialized with a seed (see "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)").
+- PRNGs mentioned in the "High-quality" column need to be initialized with a seed (see "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)").
 - The mention of a third-party library in this section does not imply that the library is the best one available for any particular purpose. The list is not comprehensive.
 - See also [**Paragon's blog post**](https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages) on existing cryptographic RNGs.
 
-| Language   | Cryptographic   | High-Quality |
+| Language   | Cryptographic   | High-quality (noncryptographic, not for information security) |
  --------|-----------------------------------------------|------|
 | .NET (incl. C# and VB.NET) (H) | `RandomNumberGenerator.Create()` in `System.Security.Cryptography` namespace; [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (CryptographicRandomGenerator) | `XoshiroPRNG.Net` package (XoRoShiRo128starstar, XoShiRo256plus, XoShiRo256starstar); `Data.HashFunction.MurmurHash` or `Data.HashFunction.CityHash` package (hash the string `seed + "_" + counter`) |
 | C/C++ (G)  | (C) | [**`xoroshiro128plusplus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c); [**`xoshiro256starstar.c`**](http://xoroshiro.di.unimi.it/xoshiro256starstar.c) |
-| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (default seed uses `os.urandom()`); [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `Philox` or `SFC64` (since ver. 1.7); `hashlib.md5(b"%d_%d" % (seed, counter)).digest()`, `hashlib.sha1(b"%d_%d" % (seed, counter)).digest()` |
+| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `Philox` or `SFC64` (since ver. 1.7); `hashlib.md5(b"%d_%d" % (seed, counter)).digest()`, `hashlib.sha1(b"%d_%d" % (seed, counter)).digest()` |
 | Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**`it.unimi.dsi/dsiutils` artifact**](http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html) (XoRoShiRo128PlusPlusRandom, XoRoShiRo128StarStarRandom, XoShiRo256StarStarRandom, XorShift1024StarPhiRandom); [**`org.apache.commons/commons-rng-simple`**](https://commons.apache.org/proper/commons-rng/commons-rng-simple/apidocs/) artifact (`RandomSource` of `SFC_64`, `XO_RO_SHI_RO_128_PP`, `XO_RO_SHI_RO_128_SS`, `XO_SHI_RO_256_PP`, or `XO_SHI_RO_256_SS`) |
 | JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `xoroshiro128starstar` package; `md5` package (`md5(seed+"_"+counter, {asBytes: true})`); `murmurhash3js` package (`murmurhash3js.x86.hash32(seed+"_"+counter)`); `crypto.createHash("sha1")` (node.js only) |
 | Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  `Digest::MD5.digest("#{seed}_#{counter}")`, `Digest::SHA1.digest("#{seed}_#{counter}")` (for both, `require 'digest'`) |
