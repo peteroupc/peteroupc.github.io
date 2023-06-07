@@ -84,7 +84,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 
 In this document:
 
-- **Random number generator (RNG)** means software, hardware, or a combination of both that seeks to generate integers in a bounded range that behave as if each possible outcome occurs with the same chance as any other without influence by anything else[^4].
+- **Random number generator (RNG)** means software, hardware, or a combination of both that seeks to generate integers in a bounded range that behave as if each possible outcome occurs with the same chance as any other without influence by anything else[^4].  (In this document, the term RNG includes pseudorandom number generators, defined next.)
 - **Pseudorandom number generator (PRNG)** means a random number generator that produces numbers by an algorithm that mathematically expands its input.
 - **Seed** means arbitrary data serving as a PRNG's input.
 - **Information security** means keeping information safe from attacks that could access, use, delay, or manipulate that information.[^5]
@@ -106,7 +106,7 @@ In this document:
 <a id=Cryptographic_RNGs></a>
 ## Cryptographic RNGs
 
-Cryptographic RNGs (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate numbers that not only "look random", but are cost-prohibitive to guess.  An application should use a cryptographic RNG whenever the application&mdash;
+Cryptographic RNGs (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate numbers that not only "look random", but are cost-prohibitive to guess. An application should use a cryptographic RNG whenever the application&mdash;
 
 - generates random-behaving numbers for information security purposes, or
 - generates random-behaving numbers so infrequently that the RNG's speed is not a concern.
@@ -319,10 +319,11 @@ Multiple processes can be seeded for pseudorandom number generation as follows.[
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
 
-As much as possible, **applications should use existing libraries and techniques** for cryptographic and high-quality RNGs. The following table lists application programming interfaces (APIs) for such RNGs for popular programming languages.
+As much as possible, **applications should use existing libraries and techniques** for cryptographic and high-quality RNGs and PRNGs. The following table lists application programming interfaces (APIs) for such generators for popular programming languages.
 
+- The list is not comprehensive and does not include all possible RNGs (including PRNGs) for each programming language that are appropriate.
 - PRNGs mentioned in the "High-quality" column need to be initialized with a seed (see "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)").
-- The mention of a third-party library in this section does not imply that the library is the best one available for any particular purpose. The list is not comprehensive.
+- The mention of a third-party library in this section does not imply that the library is the best one available for any particular purpose.
 - See also [**Paragon's blog post**](https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages) on existing cryptographic RNGs.
 
 | Language   | Cryptographic   | High-quality (noncryptographic, not for information security) |
@@ -345,12 +346,12 @@ As much as possible, **applications should use existing libraries and techniques
     - read from the `/dev/urandom` device in Linux-based systems (using the `open` and `read` system calls where available\)[^21],
     - call the `arc4random` or `arc4random_buf` method on FreeBSD or macOS,
     - call the `getentropy` method on OpenBSD, or
-    - call the `BCryptGenRandom` API in Windows 7 and later,</small>
+    - call the `BCryptGenRandom` API in Windows 10 and later,</small>
 
     <small>and only use other techniques if the existing ones are inadequate for the application.  But unfortunately, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available compared to general-purpose computing devices such as desktop computers and smartphones (Wetzels 2017\)[^22], although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017\)[^23].</small>
 - <small>(D) Java's `java.util.Random` class uses a 48-bit seed, so is not considered a high-quality RNG.  However, a subclass of `java.util.Random` might be implemented as a high-quality RNG.</small>
 - <small>(E) Ruby's `SecureRandom.rand` method presents a beautiful and simple API for generating numbers at random, in my opinion.  Namely, `rand()` returns a number 0 or greater and less than 1, and `rand(N)` returns an integer 0 or greater and less than N.</small>
-- <small>(F) In Java 8 and later, use `SecureRandom.getInstanceStrong()`.  In Java earlier than 8, call `SecureRandom.getInstance("NativePRNGNonBlocking")` or, if that fails, `SecureRandom.getInstance("NativePRNG")`.  For Android, especially versions 4.3 and earlier, see (Klyubin 2013\)[^24].  Using the `SecureRandom` implementation `"SHA1PRNG"` is not recommended, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013\)[^25].</small>
+- <small>(F) In Java 8 and later, use `SecureRandom.getInstanceStrong()`. For Android, especially versions 4.3 and earlier, see (Klyubin 2013\)[^24].  Using the `SecureRandom` implementation `"SHA1PRNG"` is not recommended for information security applications, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013\)[^25].</small>
 - <small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device) was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a PRNG of unspecified quality without much warning.  At best, `std::random_device` should not be used except to supplement other techniques for generating random-behaving numbers.</small>
 - <small>(H) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of `System.Random` might be implemented as a high-quality RNG.</small>
 
@@ -588,7 +589,7 @@ I acknowledge&mdash;
     - An application can handle a rejected seed by hashing with a different value or by using a backup seed instead, depending on how tolerant the application is to bias.
     - See also Matsumoto, M., et al., "Common defects in initialization of pseudorandom number generators", _ACM Transactions on Modeling and Computer Simulation_ 17(4), Sep. 2007.
 
-[^21]: Using the similar `/dev/random` is not recommended, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).
+[^21]: Some implementations of `/dev/random`, such as the one traditionally used by the Linux operating system, can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).
 
 [^22]: Wetzels, J., "33C3: Analyzing Embedded Operating System Random Number Generators", samvartaka.github.io, Jan. 3, 2017.
 
