@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/06/06"><meta name="citation_online_date" content="2023/06/06"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/06/08"><meta name="citation_online_date" content="2023/06/08"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -31,7 +31,11 @@
 <li><a href="#Approximating_an_Integral"><strong>Approximating an Integral</strong></a></li>
 <li><a href="#Approximating_a_Derivative"><strong>Approximating a Derivative</strong></a></li>
 </ul></li>
-<li><a href="#Approximations_by_Rational_Functions"><strong>Approximations by Rational Functions</strong></a></li>
+<li><a href="#Approximations_by_Rational_Functions"><strong>Approximations by Rational Functions</strong></a>
+
+<ul>
+<li><a href="#Computational_Issues"><strong>Computational Issues</strong></a></li>
+</ul></li>
 <li><a href="#Request_for_Additional_Methods"><strong>Request for Additional Methods</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
@@ -106,7 +110,7 @@
 <tr>
 <td>Butzer&#39;s linear combination (order 2).</td>
 <td>$L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$.</td>
-<td>(First, define the following operation: <strong>Get coefficients for $n$ given $m$</strong>: Treat the coefficients [$f(0/m)$, $f(1/m)$, ..., $f(m/m)$] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients [see note 3 at the end of this section], then return those coefficients.)<br><strong>Get coefficients for $n$ given $n/2$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$.</td>
+<td>(First, define the following operation: <strong>Get coefficients for $n$ given $m$</strong>: Treat the coefficients [$f(0/m)$, $f(1/m)$, ..., $f(m/m)$] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients [<strong>see &quot;<a href="#Computational_Issues">Computational Issues**</a>&quot;], then return those coefficients.)<br></strong>Get coefficients for $n$ given $n/2$**, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$.</td>
 <td>Tachev (2022)[^5], Butzer (1955)[^6].  $n\ge 6$ must be even.</td>
 </tr>
 <tr>
@@ -275,7 +279,6 @@
 </ul>
 
 <p><em>Gevrey&#39;s hierarchy</em> with $\gamma=1$ is the class of functions equaling power series (see next section).</p></li>
-<li>Tsai and Farouki (2001, section 3.2)[^18], describes how to rewrite a polynomial of degree $m$ in Bernstein form to a polynomial of higher degree in Bernstein form.  This is also known as <em>degree elevation</em>.</li>
 </ol>
 </blockquote>
 
@@ -310,14 +313,19 @@
 <li>meet the so-called &quot;ratio test&quot;,</li>
 </ul>
 
-<p>then the algorithms in Carvalho and Moreira (2022)[^19] can be used to find the first $n$+1 power series coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also the appendix).</p>
+<p>then the algorithms in Carvalho and Moreira (2022)[^18] can be used to find the first $n$+1 power series coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also the appendix).</p>
 </blockquote>
 
-<p>Given the Taylor polynomial $P$, the algorithm to find the polynomial&#39;s Bernstein coefficients is as follows:</p>
+<p>Now, the Taylor polynomial $P$, when written in its &quot;power&quot; form or &quot;monomial&quot; form, has &quot;power&quot; coefficients $a_0, ..., a_n$.</p>
+
+<p>Now, rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (See &quot;<a href="#Computational_Issues"><strong>Computational Issues</strong></a>&quot; for details.)  Let $b_0, ..., b_n$ be the resulting Bernstein coefficients.  If any of those Bernstein coefficients is less than 0 or greater than 1, then&mdash;</p>
 
 <ul>
-<li>Rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_n$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^20].)  Let $b_0, ..., b_n$ be the polynomial&#39;s Bernstein coefficients.  If any of those Bernstein coefficients is less than 0 or greater than 1, double the value of $n$ and rewrite $P$ to Bernstein form of degree $n$, until none of the Bernstein coefficients is less than 0 or greater than 1.</li>
+<li>double the value of $n$, then</li>
+<li>rewrite the Bernstein coefficients of degree $n/2$ to the corresponding Bernstein coefficients of degree $n$,</li>
 </ul>
+
+<p>until none of the Bernstein coefficients is less than 0 or greater than 1.</p>
 
 <p>The result will be a polynomial of degree $n$ with $(n+1)$ Bernstein coefficients.</p>
 
@@ -330,7 +338,7 @@
 <p>If a polynomial is in Bernstein form of degree $n$, and is defined on the closed unit interval:</p>
 
 <ul>
-<li>The polynomial&#39;s integral on the closed unit interval is equal to the average of its $(n+1)$ Bernstein coefficients; that is, the integral is found by adding those coefficients together, then dividing by $(n+1)$ (Tsai and Farouki 2001, section 3.4)[^18].</li>
+<li>The polynomial&#39;s integral on the closed unit interval is equal to the average of its $(n+1)$ Bernstein coefficients; that is, the integral is found by adding those coefficients together, then dividing by $(n+1)$ (Tsai and Farouki 2001, section 3.4)[^19].</li>
 </ul>
 
 <p>Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval [<em>a</em>, <em>b</em>], and let $f(\lambda)$ be a piecewise continuous function on that interval.</p>
@@ -341,9 +349,9 @@
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> A pair of articles by Konečný and Neumann discuss approximating the integral (and maximum) of a class of functions efficiently using polynomials or piecewise functions with polynomials as the pieces: Konečný and Neumann (2021)[^21], Konečný and Neumann (2019)[^22].</p>
+<p><strong>Note:</strong> A pair of articles by Konečný and Neumann discuss approximating the integral (and maximum) of a class of functions efficiently using polynomials or piecewise functions with polynomials as the pieces: Konečný and Neumann (2021)[^20], Konečný and Neumann (2019)[^21].</p>
 
-<p>Muñoz and Narkawicz (2013)[^23] also discuss finding the minimum and maximum of a polynomial in Bernstein form &mdash; indeed, a polynomial is bounded above by its highest Bernstein coefficient and below by its lowest.</p>
+<p>Muñoz and Narkawicz (2013)[^22] also discuss finding the minimum and maximum of a polynomial in Bernstein form &mdash; indeed, a polynomial is bounded above by its highest Bernstein coefficient and below by its lowest.</p>
 </blockquote>
 
 <p><a id=Approximating_a_Derivative></a></p>
@@ -354,7 +362,7 @@
 
 <ol>
 <li>Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user defined error tolerance.  See the table below.</li>
-<li><p>Let $a[0], ..., a[n]$ be the polynomial&#39;s Bernstein coefficients. Now, to compute the polynomial&#39;s $r$-th derivative, do the following $r$ times or until the process stops, whichever happens first (Tsai and Farouki 2001, section 3.4)[^18].</p>
+<li><p>Let $a[0], ..., a[n]$ be the polynomial&#39;s Bernstein coefficients. Now, to compute the polynomial&#39;s $r$-th derivative, do the following $r$ times or until the process stops, whichever happens first (Tsai and Farouki 2001, section 3.4)[^19].</p>
 
 <ul>
 <li>If $n$ is 0, set $a[0]=0$ and stop.</li>
@@ -386,12 +394,12 @@
 <td>$B_n(f)$.</td>
 <td>$\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$.</td>
 <td>$n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$.</td>
-<td>Knoop and Pottinger (1976)[^24]. $0\lt\alpha\le 1$ is $r$-th derivative&#39;s Hölder exponent.</td>
+<td>Knoop and Pottinger (1976)[^23]. $0\lt\alpha\le 1$ is $r$-th derivative&#39;s Hölder exponent.</td>
 </tr>
 </tbody></table>
 
 <blockquote>
-<p><strong>Note:</strong> In general, it is not possible to approximate a continuous function&#39;s derivative unless upper and lower bounds on the derivative are known (Konečný and Neumann (2019)[^22]).</p>
+<p><strong>Note:</strong> In general, it is not possible to approximate a continuous function&#39;s derivative unless upper and lower bounds on the derivative are known (Konečný and Neumann (2019)[^21]).</p>
 </blockquote>
 
 <p><a id=Approximations_by_Rational_Functions></a></p>
@@ -401,15 +409,38 @@
 <p>Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the closed unit interval to itself, where $q(\lambda)$ is in Bernstein form with non-negative coefficients.  Then rational functions of this kind are not much better than polynomials in approximating $f(\lambda)$ when&mdash;</p>
 
 <ul>
-<li>the $k$-th derivative of $f$ is continuous on the open interval (0, 1), but not the $(k+1)$-th derivative (Borwein 1979, section 3)[^25], <em>or</em></li>
-<li>$f(\lambda)$ is writable as $a_0 \lambda^0 + a_1 \lambda^1 + ...$, where $a_k\ge(k+1) a_{k+1}\ge 0$ whenever $k\ge 0$ (Borwein 1980)[^26].</li>
+<li>the $k$-th derivative of $f$ is continuous on the open interval (0, 1), but not the $(k+1)$-th derivative (Borwein 1979, section 3)[^24], <em>or</em></li>
+<li>$f(\lambda)$ is writable as $a_0 \lambda^0 + a_1 \lambda^1 + ...$, where $a_k\ge(k+1) a_{k+1}\ge 0$ whenever $k\ge 0$ (Borwein 1980)[^25].</li>
 </ul>
 
 <p>In addition, rational functions are not much better than polynomials in approximating $f(\lambda)$ when&mdash;</p>
 
 <ul>
 <li>the $k$-th derivative of $f$ is continuous on the half-open interval (0, 1], but not the $(k+1)$-th derivative, <em>and</em></li>
-<li>the rational function has no root that is a complex number whose real part is between 0 and 1 (Borwein 1979, theorem 29)[^25].</li>
+<li>the rational function has no root that is a complex number whose real part is between 0 and 1 (Borwein 1979, theorem 29)[^24].</li>
+</ul>
+
+<p><a id=Computational_Issues></a></p>
+
+<h3>Computational Issues</h3>
+
+<p>Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as <em>degree elevation</em>.</p>
+
+<ul>
+<li>This can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)[^19].</li>
+<li>This can also be done through an intermediate form called the <em>scaled Bernstein form</em>(Farouki and Rajan 1988)[^48], as described in Sánchez-Reyes (2003)[^49].  (A polynomial in scaled Bernstein form is also known as a <em>homogeneous polynomial</em>.)
+
+<ul>
+<li>The <em>i</em>-th Bernstein coefficient of degree <em>m</em> is turned to a scaled Bernstein coefficient by multiplying it by choose(<em>m</em>,<em>i</em>).</li>
+<li>The <em>i</em>-th scaled Bernstein coefficient of degree <em>m</em> is turned to a Bernstein coefficient by dividing it by choose(<em>m</em>,<em>i</em>).</li>
+</ul></li>
+</ul>
+
+<p>Some methods in this document require rewriting a polynomial in &quot;power&quot; form of degree $m$ (also known as &quot;monomial&quot; form) to Bernstein form of degree $m$.</p>
+
+<ul>
+<li>This can be done directly using the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^26].</li>
+<li>This can also be done by rewriting the polynomial from &quot;power&quot; form to scaled Bernstein form; see Sánchez-Reyes (2003, section 2.6)[^50], then converting the scaled Bernstein form to Bernstein form.</li>
 </ul>
 
 <p><a id=Request_for_Additional_Methods></a></p>
@@ -470,23 +501,23 @@
 
 <p>[^17]: M. Gevrey, &quot;Sur la nature analytique des solutions des équations aux dérivées partielles&quot;, 1918.</p>
 
-<p>[^18]: Tsai, Y., Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object- Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, ACM Transactions on Mathematical Software, June 2001.</p>
+<p>[^18]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
 
-<p>[^19]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
+<p>[^19]: Tsai, Y., Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object- Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, ACM Transactions on Mathematical Software, June 2001.</p>
 
-<p>[^20]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, Reliable Computing 17(1), 2012.</p>
+<p>[^20]: Konečný, Michal, and Eike Neumann. &quot;Representations and evaluation strategies for feasibly approximable functions.&quot; Computability 10, no. 1 (2021): 63-89. Also in arXiv: <a href="https://arxiv.org/abs/1710.03702"><strong>https://arxiv.org/abs/1710.03702</strong></a></p>
 
-<p>[^21]: Konečný, Michal, and Eike Neumann. &quot;Representations and evaluation strategies for feasibly approximable functions.&quot; Computability 10, no. 1 (2021): 63-89. Also in arXiv: <a href="https://arxiv.org/abs/1710.03702"><strong>https://arxiv.org/abs/1710.03702</strong></a></p>
+<p>[^21]: Konečný, Michal, and Eike Neumann. &quot;<a href="https://arxiv.org/abs/1910.04891"><strong>Implementing evaluation strategies for continuous real functions</strong></a>&quot;, arXiv:1910.04891 (2019).</p>
 
-<p>[^22]: Konečný, Michal, and Eike Neumann. &quot;<a href="https://arxiv.org/abs/1910.04891"><strong>Implementing evaluation strategies for continuous real functions</strong></a>&quot;, arXiv:1910.04891 (2019).</p>
+<p>[^22]: Muñoz, César, and Anthony Narkawicz. &quot;Formalization of Bernstein polynomials and applications to global optimization.&quot; Journal of Automated Reasoning 51, no. 2 (2013): 151-196.</p>
 
-<p>[^23]: Muñoz, César, and Anthony Narkawicz. &quot;Formalization of Bernstein polynomials and applications to global optimization.&quot; Journal of Automated Reasoning 51, no. 2 (2013): 151-196.</p>
+<p>[^23]: Knoop, H-B., Pottinger, P., &quot;Ein Satz vom Korovkin-Typ für $C^k$-Räume&quot;, Math. Zeitschrift 148 (1976).</p>
 
-<p>[^24]: Knoop, H-B., Pottinger, P., &quot;Ein Satz vom Korovkin-Typ für $C^k$-Räume&quot;, Math. Zeitschrift 148 (1976).</p>
+<p>[^24]: Borwein, P. B. (1979). Restricted uniform rational approximations (Doctoral dissertation, University of British Columbia).</p>
 
-<p>[^25]: Borwein, P. B. (1979). Restricted uniform rational approximations (Doctoral dissertation, University of British Columbia).</p>
+<p>[^25]: Borwein, Peter B. &quot;Approximations by rational functions with positive coefficients.&quot; Journal of Mathematical Analysis and Applications 74, no. 1 (1980): 144-151.</p>
 
-<p>[^26]: Borwein, Peter B. &quot;Approximations by rational functions with positive coefficients.&quot; Journal of Mathematical Analysis and Applications 74, no. 1 (1980): 144-151.</p>
+<p>[^26]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, Reliable Computing 17(1), 2012.</p>
 
 <p>[^27]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. &quot;Uniform approximation and Bernstein polynomials with coefficients in the unit interval.&quot; European Journal of Combinatorics 32, no. 3 (2011): 448-463.</p>
 
@@ -528,7 +559,13 @@
 
 <p>[^46]: R. Kannan and C.K. Kreuger, <em>Advanced Analysis on the Real Line</em>, 1996.</p>
 
-<p>[^47]: Rababah, Abedallah. &quot;Transformation of Chebyshev–Bernstein polynomial basis.&quot; Computational Methods in Applied Mathematics 3.4 (2003): 608-622.</p>
+<p>[^47]: Rababah, Abedallah. &quot;<a href="https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html"><strong>Transformation of Chebyshev–Bernstein polynomial basis</strong></a>.&quot; Computational Methods in Applied Mathematics 3.4 (2003): 608-622.</p>
+
+<p>[^48]: Farouki, Rida T., and V. T. Rajan. &quot;<a href="https://www.sciencedirect.com/science/article/pii/0167839688900167"><strong>Algorithms for polynomials in Bernstein form</strong></a>&quot;. Computer Aided Geometric Design 5, no. 1 (1988): 1-26.</p>
+
+<p>[^49]: Sánchez-Reyes, J. (2003). <a href="https://www.sciencedirect.com/science/article/pii/S0010448503000216"><strong>Algebraic manipulation in the Bernstein form made simple via convolutions</strong></a>. Computer-Aided Design, 35(10), 959-967.</p>
+
+<p>[^50]: Sánchez-Reyes, J. (2003). <a href="https://www.sciencedirect.com/science/article/pii/S0010448503000216"><strong>Algebraic manipulation in the Bernstein form made simple via convolutions</strong></a>. Computer-Aided Design, 35(10), 959-967.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -558,7 +595,7 @@
 
 <p><em>Proof:</em> $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative values for $a_0, ..., a_n$, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;</p>
 
-<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, so the algorithms given in Carvalho and Moreira (2022)[^19] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
+<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, so the algorithms given in Carvalho and Moreira (2022)[^18] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
 
 <p><strong>Proposition B1</strong>: Let $f(\lambda)$ map the closed unit interval to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in &quot;For Certain Functions&quot;) are nonnegative on the closed unit interval.</p>
 
@@ -699,7 +736,7 @@
 
 <p><em>Proof</em>: This proof is inspired by a result in Draganov (2004, Theorem 4.1)[^41].</p>
 
-<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  A result by Knoop and Pottinger (1976)[^24], which works for every $n\ge 3$, is what is known as a <em>simultaneous approximation</em> error bound, showing that the second derivative of the Bernstein polynomial approaches that of $f$ as $n$ increases.  Using this result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
+<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  A result by Knoop and Pottinger (1976)[^23], which works for every $n\ge 3$, is what is known as a <em>simultaneous approximation</em> error bound, showing that the second derivative of the Bernstein polynomial approaches that of $f$ as $n$ increases.  Using this result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note</strong>: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be non-negative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda &lt;1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.</p>

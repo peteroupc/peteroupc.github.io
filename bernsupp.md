@@ -291,15 +291,24 @@ To build an approximate Bernoulli factory with a polynomial:
 
 1. First, find a polynomial in Bernstein form of degree _n_ that is close enough to the desired function _f_(_&lambda;_).
 
-    The simplest choice for this polynomial, known simply as a _Bernstein polynomial_, has _n_+1 coefficients and its _j_<sup>th</sup> coefficient (starting at 0) is found as _f_(_j_/_n_).  For this choice, if _f_ is continuous, the polynomial can be brought arbitrarily close to _f_ by choosing _n_ high enough.
+    The simplest choice for this polynomial, known simply as a _Bernstein polynomial_, has _n_+1 Bernstein coefficients and its _j_<sup>th</sup> coefficient (starting at 0) is found as _f_(_j_/_n_).  For this choice, if _f_ is continuous, the polynomial can be brought arbitrarily close to _f_ by choosing _n_ high enough.
 
     Other choices for this polynomial are given in the page [**"Approximations in Bernstein Form"**](https://peteroupc.github.io/bernapprox.html).
 
     Whatever polynomial is used, the polynomial's coefficients must all lie on the closed unit interval.
 
+    The polynomial can be in _homogeneous form_ (also known as _scaled Bernstein_ form (Farouki and Rajan 1988)[^47]) instead of in Bernstein form, with _scaled Bernstein coefficients_ $s_0, ..., s_n$, as long as $0\le s_i\le\{n\choose i}$ where $0\le i\le n$.
+
 2. The rest of the process is to toss heads with probability equal to that polynomial, given its coefficients.  To do this, first flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 
-3. Then, with probability equal to the polynomial's Bernstein coefficient at position _j_ (0&le;_j_&le;_n_), return 1.  Otherwise, return 0.  (This coefficient will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$.  If the coefficient can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to exactly sample a probability equal to that irrational number.)
+3. Then, with probability equal to&mdash;
+
+    - the polynomial's Bernstein coefficient at position _j_, or
+    - the polynomial's scaled Bernstein coefficient at position _j_, divided by choose(_n_, _j_)
+
+    (0&le;_j_&le;_n_), return 1.  Otherwise, return 0.
+
+    This coefficient will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$.  If the coefficient can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to exactly sample a probability equal to that irrational number.
 
 > **Notes:**
 >
@@ -430,6 +439,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 [^45]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^46]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^47]: Farouki, Rida T., and V. T. Rajan. "[**Algorithms for polynomials in Bernstein form**](https://www.sciencedirect.com/science/article/pii/0167839688900167)". Computer Aided Geometric Design 5, no. 1 (1988): 1-26.
 
 <a id=Appendix></a>
 ## Appendix

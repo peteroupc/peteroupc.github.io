@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/03"><meta name="citation_online_date" content="2023/06/03"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/08"><meta name="citation_online_date" content="2023/06/08"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -433,13 +433,24 @@
 <ol>
 <li><p>First, find a polynomial in Bernstein form of degree <em>n</em> that is close enough to the desired function <em>f</em>(<em>&lambda;</em>).</p>
 
-<p>The simplest choice for this polynomial, known simply as a <em>Bernstein polynomial</em>, has <em>n</em>+1 coefficients and its <em>j</em><sup>th</sup> coefficient (starting at 0) is found as <em>f</em>(<em>j</em>/<em>n</em>).  For this choice, if <em>f</em> is continuous, the polynomial can be brought arbitrarily close to <em>f</em> by choosing <em>n</em> high enough.</p>
+<p>The simplest choice for this polynomial, known simply as a <em>Bernstein polynomial</em>, has <em>n</em>+1 Bernstein coefficients and its <em>j</em><sup>th</sup> coefficient (starting at 0) is found as <em>f</em>(<em>j</em>/<em>n</em>).  For this choice, if <em>f</em> is continuous, the polynomial can be brought arbitrarily close to <em>f</em> by choosing <em>n</em> high enough.</p>
 
 <p>Other choices for this polynomial are given in the page <a href="https://peteroupc.github.io/bernapprox.html"><strong>&quot;Approximations in Bernstein Form&quot;</strong></a>.</p>
 
-<p>Whatever polynomial is used, the polynomial&#39;s coefficients must all lie on the closed unit interval.</p></li>
+<p>Whatever polynomial is used, the polynomial&#39;s coefficients must all lie on the closed unit interval.</p>
+
+<p>The polynomial can be in <em>homogeneous form</em> (also known as <em>scaled Bernstein</em> form (Farouki and Rajan 1988)[^47]) instead of in Bernstein form, with <em>scaled Bernstein coefficients</em> $s_0, ..., s_n$, as long as $0\le s_i\le{n\choose i}$ where $0\le i\le n$.</p></li>
 <li><p>The rest of the process is to toss heads with probability equal to that polynomial, given its coefficients.  To do this, first flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</p></li>
-<li><p>Then, with probability equal to the polynomial&#39;s Bernstein coefficient at position <em>j</em> (0&le;<em>j</em>&le;<em>n</em>), return 1.  Otherwise, return 0.  (This coefficient will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$.  If the coefficient can be an irrational number, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants"><strong>Algorithms for General Irrational Constants</strong></a>&quot; for ways to exactly sample a probability equal to that irrational number.)</p></li>
+<li><p>Then, with probability equal to&mdash;</p>
+
+<ul>
+<li>the polynomial&#39;s Bernstein coefficient at position <em>j</em>, or</li>
+<li>the polynomial&#39;s scaled Bernstein coefficient at position <em>j</em>, divided by choose(<em>n</em>, <em>j</em>)</li>
+</ul>
+
+<p>(0&le;<em>j</em>&le;<em>n</em>), return 1.  Otherwise, return 0.</p>
+
+<p>This coefficient will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$.  If the coefficient can be an irrational number, see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants"><strong>Algorithms for General Irrational Constants</strong></a>&quot; for ways to exactly sample a probability equal to that irrational number.</p></li>
 </ol>
 
 <blockquote>
@@ -612,6 +623,8 @@
 <p>[^45]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
 <p>[^46]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+
+<p>[^47]: Farouki, Rida T., and V. T. Rajan. &quot;<a href="https://www.sciencedirect.com/science/article/pii/0167839688900167"><strong>Algorithms for polynomials in Bernstein form</strong></a>&quot;. Computer Aided Geometric Design 5, no. 1 (1988): 1-26.</p>
 
 <p><a id=Appendix></a></p>
 
