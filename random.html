@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2023/06/07"><meta name="citation_online_date" content="2023/06/07"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2023/06/08"><meta name="citation_online_date" content="2023/06/08"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -312,7 +312,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <h3>Single Random Value</h3>
 
-<p>If an application requires only one random value, with a fixed number of bits, then the application can pass the seed to a hash function rather than a PRNG.  Examples of this include the following:</p>
+<p>If an application requires only one pseudorandom value, with a fixed number of bits, then the application can pass the seed to a hash function rather than a PRNG.  Examples of this include the following:</p>
 
 <ul>
 <li>Generating a color pseudorandomly, by passing the seed to the MD5 hash function, which outputs a 128-bit hash code, and taking the first 24 bits of the hash code as the pseudorandom color.</li>
@@ -490,7 +490,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <tr>
 <td>Python (A)</td>
 <td><code>secrets.SystemRandom</code> (since Python 3.6); <code>os.urandom()</code></td>
-<td><a href="https://docs.scipy.org/doc/numpy/reference/random/index.html"><strong><code>numpy.random.Generator</code></strong></a> with <code>Philox</code> or <code>SFC64</code> (since ver. 1.7); <code>hashlib.md5(b&quot;%d_%d&quot; % (seed, counter)).digest()</code>, <code>hashlib.sha1(b&quot;%d_%d&quot; % (seed, counter)).digest()</code></td>
+<td><a href="https://docs.scipy.org/doc/numpy/reference/random/index.html"><strong><code>numpy.random.Generator</code></strong></a> with <code>Philox</code> or <code>SFC64</code> (since ver. 1.7); <a href="https://docs.python.org/3/library/hashlib.html"><strong>hashlib</strong></a>: <code>hashlib.md5(b&quot;%d_%d&quot; % (seed, counter)).digest()</code>, <code>hashlib.sha1(b&quot;%d_%d&quot; % (seed, counter)).digest()</code></td>
 </tr>
 <tr>
 <td>Java (A) (D)</td>
@@ -548,10 +548,10 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p><small>and only use other techniques if the existing ones are inadequate for the application.  But unfortunately, resource-constrained devices (&quot;embedded&quot; devices) are much less likely to have a cryptographic RNG available compared to general-purpose computing devices such as desktop computers and smartphones (Wetzels 2017)[^22], although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)[^23].</small></p></li>
 <li><small>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so is not considered a high-quality RNG.  However, a subclass of <code>java.util.Random</code> might be implemented as a high-quality RNG.</small></li>
-<li><small>(E) Ruby&#39;s <code>SecureRandom.rand</code> method presents a beautiful and simple API for generating numbers at random, in my opinion.  Namely, <code>rand()</code> returns a number 0 or greater and less than 1, and <code>rand(N)</code> returns an integer 0 or greater and less than N.</small></li>
+<li><small>(E) Ruby&#39;s <code>SecureRandom.rand</code> method presents a beautiful and simple API for generating numbers at random, in my opinion.  For example, <code>rand(N)</code> returns an integer 0 or greater and less than N.</small></li>
 <li><small>(F) In Java 8 and later, use <code>SecureRandom.getInstanceStrong()</code>. For Android, especially versions 4.3 and earlier, see (Klyubin 2013)[^24].  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is not recommended for information security applications, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)[^25].</small></li>
 <li><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a> was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a PRNG of unspecified quality without much warning.  At best, <code>std::random_device</code> should not be used except to supplement other techniques for generating random-behaving numbers.</small></li>
-<li><small>(H) The .NET Framework&#39;s <code>System.Random</code> class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of <code>System.Random</code> might be implemented as a high-quality RNG.</small></li>
+<li><small>(H) The .NET Framework&#39;s <code>System.Random</code> class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of <code>System.Random</code> might be implemented as a high-quality RNG.  However, as of .NET 6, the <a href="https://github.com/dotnet/runtime/pull/47085"><strong>algorithm for <code>System.Random</code></strong></a> was changed to xoshiro128** or xoshiro256** (both high-quality PRNGs) when <code>System.Random</code> is called without a seed (that is, when it&#39;s <em>automatically seeded</em>).</small></li>
 </ul>
 
 <p><a id=Hash_Functions></a></p>
@@ -865,7 +865,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
     - An application can handle a rejected seed by hashing with a different value or by using a backup seed instead, depending on how tolerant the application is to bias.
     - See also Matsumoto, M., et al., &quot;Common defects in initialization of pseudorandom number generators&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 17(4), Sep. 2007.</p>
 
-<p>[^21]: Some implementations of <code>/dev/random</code>, such as the one traditionally used by the Linux operating system, can block for seconds at a time, especially if not enough randomness is available.  See also <a href="https://www.2uo.de/myths-about-urandom"><strong>&quot;Myths about /dev/urandom&quot;</strong></a>.</p>
+<p>[^21]: Some implementations of the similar <code>/dev/random</code>, such as the one traditionally used by the Linux operating system, can block for seconds at a time, especially if not enough randomness is available.  See also <a href="https://www.2uo.de/myths-about-urandom"><strong>&quot;Myths about /dev/urandom&quot;</strong></a>.</p>
 
 <p>[^22]: Wetzels, J., &quot;33C3: Analyzing Embedded Operating System Random Number Generators&quot;, samvartaka.github.io, Jan. 3, 2017.</p>
 

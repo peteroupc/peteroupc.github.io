@@ -49,6 +49,7 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**Color Topics for Programmers**](./colorgen.html)
 * [**Supplemental Color Topics for Programmers**](./suppcolor.html)
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
+* [**On a claim of computational complexity**](https://peteroupc.github.io/complexity.html)
 
 <a id=PDF_Versions></a>
 #### PDF Versions

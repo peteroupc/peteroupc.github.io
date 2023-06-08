@@ -207,7 +207,7 @@ In general, the bigger that "random" content is, the greater the justification t
 <a id=Single_Random_Value></a>
 ### Single Random Value
 
-If an application requires only one random value, with a fixed number of bits, then the application can pass the seed to a hash function rather than a PRNG.  Examples of this include the following:
+If an application requires only one pseudorandom value, with a fixed number of bits, then the application can pass the seed to a hash function rather than a PRNG.  Examples of this include the following:
 
 - Generating a color pseudorandomly, by passing the seed to the MD5 hash function, which outputs a 128-bit hash code, and taking the first 24 bits of the hash code as the pseudorandom color.
 - Generating a pseudorandom number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or "pixel") as well as a seed (which is the same for all fragments) to the Wang hash, which outputs a 32-bit integer.[^6]
@@ -330,7 +330,7 @@ As much as possible, **applications should use existing libraries and techniques
  --------|-----------------------------------------------|------|
 | .NET (incl. C# and VB.NET) (H) | `RandomNumberGenerator.Create()` in `System.Security.Cryptography` namespace; [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (CryptographicRandomGenerator) | `XoshiroPRNG.Net` package (XoRoShiRo128starstar, XoShiRo256plus, XoShiRo256starstar); `Data.HashFunction.MurmurHash` or `Data.HashFunction.CityHash` package (hash the string `seed + "_" + counter`) |
 | C/C++ (G)  | (C) | [**`xoroshiro128plusplus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c); [**`xoshiro256starstar.c`**](http://xoroshiro.di.unimi.it/xoshiro256starstar.c) |
-| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `Philox` or `SFC64` (since ver. 1.7); `hashlib.md5(b"%d_%d" % (seed, counter)).digest()`, `hashlib.sha1(b"%d_%d" % (seed, counter)).digest()` |
+| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `Philox` or `SFC64` (since ver. 1.7); [**hashlib**](https://docs.python.org/3/library/hashlib.html): `hashlib.md5(b"%d_%d" % (seed, counter)).digest()`, `hashlib.sha1(b"%d_%d" % (seed, counter)).digest()` |
 | Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**`it.unimi.dsi/dsiutils` artifact**](http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html) (XoRoShiRo128PlusPlusRandom, XoRoShiRo128StarStarRandom, XoShiRo256StarStarRandom, XorShift1024StarPhiRandom); [**`org.apache.commons/commons-rng-simple`**](https://commons.apache.org/proper/commons-rng/commons-rng-simple/apidocs/) artifact (`RandomSource` of `SFC_64`, `XO_RO_SHI_RO_128_PP`, `XO_RO_SHI_RO_128_SS`, `XO_SHI_RO_256_PP`, or `XO_SHI_RO_256_SS`) |
 | JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `xoroshiro128starstar` package; `md5` package (`md5(seed+"_"+counter, {asBytes: true})`); `murmurhash3js` package (`murmurhash3js.x86.hash32(seed+"_"+counter)`); `crypto.createHash("sha1")` (node.js only) |
 | Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  `Digest::MD5.digest("#{seed}_#{counter}")`, `Digest::SHA1.digest("#{seed}_#{counter}")` (for both, `require 'digest'`) |
@@ -350,10 +350,10 @@ As much as possible, **applications should use existing libraries and techniques
 
     <small>and only use other techniques if the existing ones are inadequate for the application.  But unfortunately, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available compared to general-purpose computing devices such as desktop computers and smartphones (Wetzels 2017\)[^22], although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017\)[^23].</small>
 - <small>(D) Java's `java.util.Random` class uses a 48-bit seed, so is not considered a high-quality RNG.  However, a subclass of `java.util.Random` might be implemented as a high-quality RNG.</small>
-- <small>(E) Ruby's `SecureRandom.rand` method presents a beautiful and simple API for generating numbers at random, in my opinion.  Namely, `rand()` returns a number 0 or greater and less than 1, and `rand(N)` returns an integer 0 or greater and less than N.</small>
+- <small>(E) Ruby's `SecureRandom.rand` method presents a beautiful and simple API for generating numbers at random, in my opinion.  For example, `rand(N)` returns an integer 0 or greater and less than N.</small>
 - <small>(F) In Java 8 and later, use `SecureRandom.getInstanceStrong()`. For Android, especially versions 4.3 and earlier, see (Klyubin 2013\)[^24].  Using the `SecureRandom` implementation `"SHA1PRNG"` is not recommended for information security applications, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013\)[^25].</small>
 - <small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device) was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a PRNG of unspecified quality without much warning.  At best, `std::random_device` should not be used except to supplement other techniques for generating random-behaving numbers.</small>
-- <small>(H) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of `System.Random` might be implemented as a high-quality RNG.</small>
+- <small>(H) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of `System.Random` might be implemented as a high-quality RNG.  However, as of .NET 6, the [**algorithm for `System.Random`**](https://github.com/dotnet/runtime/pull/47085) was changed to xoshiro128\*\* or xoshiro256\*\* (both high-quality PRNGs) when `System.Random` is called without a seed (that is, when it's _automatically seeded_).</small>
 
 <a id=Hash_Functions></a>
 ## Hash Functions
@@ -589,7 +589,7 @@ I acknowledge&mdash;
     - An application can handle a rejected seed by hashing with a different value or by using a backup seed instead, depending on how tolerant the application is to bias.
     - See also Matsumoto, M., et al., "Common defects in initialization of pseudorandom number generators", _ACM Transactions on Modeling and Computer Simulation_ 17(4), Sep. 2007.
 
-[^21]: Some implementations of `/dev/random`, such as the one traditionally used by the Linux operating system, can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).
+[^21]: Some implementations of the similar `/dev/random`, such as the one traditionally used by the Linux operating system, can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).
 
 [^22]: Wetzels, J., "33C3: Analyzing Embedded Operating System Random Number Generators", samvartaka.github.io, Jan. 3, 2017.
 
