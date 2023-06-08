@@ -99,7 +99,7 @@ Although the following are technically high-quality PRNGs, they are not preferre
 | PRNG | Notes |
  ----------| --- |
 | C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | Usually takes about 192 8-bit bytes of memory. Admits up to 2^577 - 2 seeds; seed's bits cannot be all zeros or all ones (L&uuml;scher 1994\)[^8].  The maximum cycle length for `ranlux48`'s underlying generator is very close to 2^576.  |
-| A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | If the modulus is a power of 2, this PRNG can produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short cycles. What PCG calls "streams" does not produce independent sequences. |
+| A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | If the modulus is a power of 2, this PRNG can produce highly correlated pseudorandom number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short cycles. (What PCG calls "streams" does not produce independent sequences.) |
 
 <a id=Not_High_Quality_PRNGs></a>
 ### Not High-Quality PRNGs
