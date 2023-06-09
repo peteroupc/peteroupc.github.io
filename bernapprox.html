@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/06/08"><meta name="citation_online_date" content="2023/06/08"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/06/09"><meta name="citation_online_date" content="2023/06/09"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -90,13 +90,13 @@
 <td>Bernstein polynomial.</td>
 <td>$B_n(f)$.</td>
 <td>$f(j/n)$, where $0\le j\le n$.</td>
-<td>Originated with S.N. Bernstein (1912).</td>
+<td>Originated with S.N. Bernstein (1912).  Evaluates $f$ at $n$ evenly-spaced points.</td>
 </tr>
 <tr>
 <td>Order-2 iterated Boolean sum.</td>
 <td>$U_{n,2} = B_n(W_{n,2})$.</td>
 <td>$W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f)(\lambda)$.</td>
-<td>Micchelli (1973)[^2], Guan (2009)[^3], Güntürk and Li (2021, sec. 3.3)[^4].</td>
+<td>Micchelli (1973)[^2], Guan (2009)[^3], Güntürk and Li (2021, sec. 3.3)[^4].  Evaluates $f$ at $n$ evenly-spaced points.</td>
 </tr>
 <tr>
 <td>Order-3 iterated Boolean sum.</td>
@@ -108,19 +108,19 @@
 <td>Butzer&#39;s linear combination (order 2).</td>
 <td>$L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$.</td>
 <td>(First, define the following operation: <strong>Get coefficients for $n$ given $m$</strong>: Treat the coefficients [$f(0/m)$, $f(1/m)$, ..., $f(m/m)$] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients (see &quot;<a href="#Computational_Issues"><strong>Computational Issues</strong></a>&quot;), then return those coefficients.)<br><strong>Get coefficients for $n$ given $n/2$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$.</td>
-<td>Tachev (2022)[^5], Butzer (1955)[^6].  $n\ge 6$ must be even.</td>
+<td>Tachev (2022)[^5], Butzer (1955)[^6].  $n\ge 6$ must be even.  Evaluates $f$ at $n/2$ evenly-spaced points.</td>
 </tr>
 <tr>
 <td>Butzer&#39;s linear combination (order 3).</td>
 <td>$L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$</td>
 <td><strong>Get coefficients for $n$ given $n/4$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then <strong>get coefficients for $n$ given $n/2$</strong>, call them <em>b</em>[0], ..., <em>b</em>[<em>n</em>], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$.</td>
-<td>Butzer (1955)[^6]. $n\ge 4$ must be divisible by 4.</td>
+<td>Butzer (1955)[^6]. $n\ge 4$ must be divisible by 4. Evaluates $f$ at $n/2$ evenly-spaced points.</td>
 </tr>
 <tr>
 <td>Lorentz operator (order 2).</td>
 <td>$Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f&#39;&#39;)/(2(n-2))$.</td>
 <td><strong>Get coefficients for $n$ given $n-2$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from <em>a</em>[<em>j</em>], where $z=(((f&#39;&#39;((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now <em>a</em>[0], ..., <em>a</em>[<em>n</em>].</td>
-<td>Holtz et al. (2011)[^7]; Bernstein (1932)[^8]; Lorentz (1966)[^9]. $n\ge 4$; $f&#39;&#39;$ is the second derivative of $f$.</td>
+<td>Holtz et al. (2011)[^7]; Bernstein (1932)[^8]; Lorentz (1966)[^9]. $n\ge 4$; $f&#39;&#39;$ is the second derivative of $f$. Evaluates $f$ at $n-2$ evenly-spaced points.</td>
 </tr>
 </tbody></table>
 
