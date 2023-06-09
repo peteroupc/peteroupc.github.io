@@ -515,9 +515,9 @@ See the appendix of the page [**"Approximations in Bernstein Form"**](https://pe
 
 Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself.
 
-Then its _coin-flipping degree_ (Wästlund 1999)[^17] is the smallest value of $n$ such that $p$'s Bernstein coefficients of degree $n$ lie in the closed unit interval. [^18]
+Then its _coin-flipping degree_ (Wästlund 1999)[^17] is the smallest value of $n$ such that $p$'s Bernstein coefficients of degree $n$ lie in the closed unit interval. [^18]   \(This is broader than the use of the term in Wästlund, where a polynomial can have a coin-flipping degree only if its "power" coefficients are integers.)
 
-Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0, ..., b_m$.  (As Wästlund uses the term, a polynomial can have a coin-flipping degree only if its "power" coefficients are integers.)  Then:
+Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0, ..., b_m$.  Then:
 
 - If $0\le\min(b_0, ..., b_m)\le\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by $m$.
 - If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or $ceil(x)$ otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
