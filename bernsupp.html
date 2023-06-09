@@ -31,6 +31,7 @@
 <ul>
 <li><a href="#Examples_of_Well_Behaved_Functions"><strong>Examples of Well-Behaved Functions</strong></a></li>
 <li><a href="#Results_Used_in_Approximate_Bernoulli_Factories"><strong>Results Used in Approximate Bernoulli Factories</strong></a></li>
+<li><a href="#Coin_Flipping_Degrees"><strong>Coin-Flipping Degrees</strong></a></li>
 <li><a href="#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial-Building Schemes</strong></a>
 
 <ul>
@@ -626,6 +627,14 @@
 
 <p>[^47]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
+<p>[^48]: Wästlund, J., &quot;<a href="http://www.math.chalmers.se/%7Ewastlund/coinFlip.pdf"><strong>Functions arising by coin flipping</strong></a>&quot;, 1999.</p>
+
+<p>[^49]: The coin-flipping degree is very similar to the so-called <em>Bernstein degree</em> or <em>Lorentz degree</em>, which is the smallest $n$ such that $p$&#39;s Bernstein coefficients of degree $n$ are all non-negative.</p>
+
+<p>[^50]: Powers, V., Reznick, B., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0022404900001559"><strong>A new bound for Pólya&#39;s Theorem with applications to polynomials positive on polyhedra</strong></a>, <em>Journal of Pure and Applied Algebra</em> 164 (24 October 2001).</p>
+
+<p>[^51]: Powers, V., Reznick, B., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0022404900001559"><strong>A new bound for Pólya&#39;s Theorem with applications to polynomials positive on polyhedra</strong></a>, <em>Journal of Pure and Applied Algebra</em> 164 (24 October 2001).</p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -801,6 +810,22 @@
 <h3>Results Used in Approximate Bernoulli Factories</h3>
 
 <p>See the appendix of the page <a href="https://peteroupc.github.io/bernapprox.html"><strong>&quot;Approximations in Bernstein Form&quot;</strong></a>.</p>
+
+<p><a id=Coin_Flipping_Degrees></a></p>
+
+<h3>Coin-Flipping Degrees</h3>
+
+<p>Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself.</p>
+
+<p>Then its <em>coin-flipping degree</em> (Wästlund 1999)[^48] is the smallest value of $n$ such that $p$&#39;s Bernstein coefficients of degree $n$ lie in the closed unit interval.  [^49]</p>
+
+<p>Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0, ..., b_m$.  Then:</p>
+
+<ul>
+<li>If $0\le\min(b_0, ..., b_m)\le\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by $m$.</li>
+<li>If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-MX} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or $ceil(x)$ otherwise, and where $MX$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^50].</li>
+<li>If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{MN} - m\right),$$ where $MN$ is the <em>minimum</em> value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^51].</li>
+</ul>
 
 <p><a id=Proofs_for_Polynomial_Building_Schemes></a></p>
 
