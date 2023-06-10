@@ -131,7 +131,7 @@ The following are some strategies for answering these questions:
     1. If $f$ is algebraic over rational numbers it can be simulated by a pushdown automaton.
     2. min($\lambda$, $1-\lambda$) and $\lambda^{1/p}$, for every prime $p\ge 3$, can be simulated by a pushdown automaton.
     3. Given that $f$ is algebraic over rational numbers, it can be simulated by a pushdown automaton if and only if its "critical exponent" is a dyadic number greater than &minus;1 or has the form $-1-1/2^k$ for some integer $k\ge 1$. (**See note 2 in** [**"End Notes"**](#End_Notes)**.**)
-
+- [**Coin-flipping degree**](https://mathoverflow.net/questions/448538/bounds-on-the-coin-flipping-degree): Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  Then its _coin-flipping degree_ (Wästlund 1999)[^16] is the smallest value of $n$ such that $p$'s _Bernstein_ coefficients of degree $n$ lie in the closed unit interval.  There are upper bounds on $p$ coin-flipping degree in many cases (thanks to Powers and Reznick (2001)[^17]), but not in all.  Thus, what are upper bounds on the coin flipping degree (1) where $p(0)=0$, $p(1)=1$, and the "standard" coefficients are real numbers; (2) where the "standard" coefficients are integers?  And, what are bounds on the "standard" coefficients of $p$ of degree $m$ such that $p$ has coin-flipping degree $m$, at least when those coefficients must be integers?
 - [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): References are sought to papers and books that describe irrational constants or Bernoulli factory functions (continuous functions mapping (0,1) to itself) in any of the following ways.  Ideally they should involve only rational numbers and should not compute _p_-adic digit expansions.
     - Simulation experiments that succeed with an irrational probability.
     - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions of irrational constants.
@@ -197,3 +197,7 @@ Prove or disprove:
 [^14]: Etessami, K. And Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", Journal of the ACM 56(1), pp.1-66, 2009.
 
 [^15]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
+
+[^16]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+
+[^17]: Powers, V., Reznick, B., "[**A new bound for Pólya's Theorem with applications to polynomials positive on polyhedra**](https://www.sciencedirect.com/science/article/pii/S0022404900001559), _Journal of Pure and Applied Algebra_ 164 (24 October 2001).
