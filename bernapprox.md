@@ -15,7 +15,9 @@ The goal of these approximations is to avoid introducing transcendental and trig
 - [**About This Document**](#About_This_Document)
 - [**Definitions**](#Definitions)
 - [**Approximations by Polynomials**](#Approximations_by_Polynomials)
+    - [**Approximations on the Closed Unit Interval**](#Approximations_on_the_Closed_Unit_Interval)
     - [**Taylor Polynomials for "Smooth" Functions**](#Taylor_Polynomials_for_Smooth_Functions)
+    - [**Approximations on Any Closed Interval**](#Approximations_on_Any_Closed_Interval)
     - [**Approximating an Integral**](#Approximating_an_Integral)
     - [**Approximating a Derivative**](#Approximating_a_Derivative)
     - [**Computational Issues**](#Computational_Issues)
@@ -43,9 +45,9 @@ The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 
 
 For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder continuous_, and _Lipschitz continuous_, see the definitions section in "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html#Definitions)".
 
-Any polynomial can be written in _Bernstein form_ as&mdash;
+Any polynomial $p(\lambda)$ can be written in _Bernstein form_ as&mdash;
 
-$${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$
+$$p(\lambda) = {n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$
 
 where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _Bernstein coefficients_ (which this document may simply call _coefficients_ if the meaning is obvious from the context).[^1]
 
@@ -53,6 +55,11 @@ A function $f(\lambda)$ is _piecewise continuous_ if it's made up of multiple co
 
 <a id=Approximations_by_Polynomials></a>
 ## Approximations by Polynomials
+
+This section first shows how to approximate a function on the closed unit interval, then shows how to approximate a function on _any_ closed interval.
+
+<a id=Approximations_on_the_Closed_Unit_Interval></a>
+### Approximations on the Closed Unit Interval
 
 Suppose $f(\lambda)$ is continuous and maps the closed unit interval to the closed unit interval.
 
@@ -121,7 +128,7 @@ The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$
 >    - the $n$-th derivative of $f$ is continuous and has a maximum absolute value of at most $Bl^n n^{\gamma n}$, and
 >    - the $(n-1)$-th derivative of $f$ is Lipschitz continuous with Lipschitz constant at most $Bl^n n^{\gamma n}$.
 >
->    _Gevrey's hierarchy_ with $\gamma=1$ is the class of functions equaling power series (see next section).
+>    _Gevrey's hierarchy_ with $\gamma=1$ is the class of functions equaling power series (see note in next section).
 
 <a id=Taylor_Polynomials_for_Smooth_Functions></a>
 ### Taylor Polynomials for "Smooth" Functions
@@ -161,6 +168,34 @@ until none of the Bernstein coefficients is less than 0 or greater than 1.
 
 The result will be a polynomial of degree $n$ with $(n+1)$ Bernstein coefficients.
 
+<a id=Approximations_on_Any_Closed_Interval></a>
+### Approximations on Any Closed Interval
+
+Now, let $f(\lambda)$ be continuous on the closed interval $[a, b]$.  This section shows how to adapt the previous two sections to approximate $f$ on the interval, to the user-defined error tolerance $\epsilon$, by a polynomial in Bernstein form on the interval $[a, b]$.
+
+Any polynomial $p(\lambda)$ can be written in _Bernstein form on the interval $[a,b]$_ as&mdash;
+
+$$p(\lambda) = \frac{1}{(b-a)^n}\left({n\choose 0}(\lambda-a)^0 (b-\lambda)^{n-0} a[0] + {n\choose 1}(\lambda-a)^1 (b-\lambda)^{n-1} a[1] + ... + {n\choose n}(\lambda-a)^n (b-\lambda)^{n-n} a[n]\right),$$
+
+where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _Bernstein coefficients for the interval $[a,b]$_ (Bărbosu 2020)[^50].
+
+The necessary changes are as follows:
+
+- Let $g(\lambda)$ be the original function $f(\lambda)$.
+- In the previous two sections, define $f$, $M_r$, and $L_r$ as follows:
+    - $f(\lambda) = g(a+(b-a)\lambda)$.  This will make $f$ continuous on the closed unit interval.
+    - $M_r$ is not less than $(b-a)^r$ times the maximum of the absolute value of $f$'s $r$-th derivative.
+    - $L_r$ is not less than $(b-a)^{r+1}$ times $f$'s $r$-th derivative's Lipschitz constant.
+
+(The error bounds that rely on $H_r$ won't work for the time being unless $[a, b]$ is the closed unit interval.)
+
+The result will be in the form of Bernstein coefficients for the interval $[a, b]$ rather than the interval $[0, 1]$.
+
+> **Note:** The following statements can be shown.  Let $g(x)$ be continuous on the interval $[a, b]$, and let $f(x) = g(a+(b-a) x)$.
+>
+>     - If the $r$-th derivative of $g$ is continuous and has a maximum absolute value of $M$, where $r\ge 1$, then the $r$-th derivative of $f(x)$ has a maximum absolute value of $M(b-a)^r$ on the interval $[0, 1]$.
+>     - If the $r$-th derivative of $g$ is Lipschitz continuous with Lipschitz constant $L$, where $r\ge 0$, then the $r$-th derivative of $f(x)$ is Lipschitz continuous with Lipschitz constant $L(b-a)^{r+1}$ on the interval $[0, 1]$.
+
 <a id=Approximating_an_Integral></a>
 ### Approximating an Integral
 
@@ -169,6 +204,10 @@ Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the 
 If a polynomial is in Bernstein form of degree $n$, and is defined on the closed unit interval:
 
 - The polynomial's integral on the closed unit interval is equal to the average of its $(n+1)$ Bernstein coefficients; that is, the integral is found by adding those coefficients together, then dividing by $(n+1)$ (Tsai and Farouki 2001, section 3.4)[^19].
+
+If a polynomial is in Bernstein form on the interval $[a, b]$, of degree $n$:
+
+- The polynomial's integral on $[a, b]$ is found by adding its Bernstein coefficients for $[a, b]$ together, then dividing by $(n+1)\cdot(b-a)$.
 
 Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval \[_a_, _b_\], and let $f(\lambda)$ be a piecewise continuous function on that interval.
 
@@ -184,7 +223,7 @@ Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval
 
 If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it's possible to approximate $f$'s $r$-th derivative as follows:
 
-1. Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user defined error tolerance.  See the table below.
+1. Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user-defined error tolerance.  See the table below.
 2. Let $a[0], ..., a[n]$ be the polynomial's Bernstein coefficients. Now, to compute the polynomial's $r$-th derivative, do the following $r$ times or until the process stops, whichever happens first (Tsai and Farouki 2001, section 3.4)[^19].
 
     - If $n$ is 0, set $a[0]=0$ and stop.
@@ -208,17 +247,17 @@ In the table below:
 <a id=Computational_Issues></a>
 ### Computational Issues
 
-Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as _degree elevation_.
+Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as _degree elevation_.  This method works for polynomials in Bernstein form on any closed interval.
 
 - This can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)[^19].
 - This can also be done through an intermediate form called the _scaled Bernstein form_ (Farouki and Rajan 1988)[^24], as described in Sánchez-Reyes (2003)[^25].  (A polynomial in scaled Bernstein form is also known as a _homogeneous polynomial_.)
     - The _i_-th Bernstein coefficient of degree _m_ is turned to a scaled Bernstein coefficient by multiplying it by choose(_m_,_i_).
     - The _i_-th scaled Bernstein coefficient of degree _m_ is turned to a Bernstein coefficient by dividing it by choose(_m_,_i_).
 
-Some methods in this document require rewriting a polynomial in "power" form of degree $m$ (also known as "monomial" form) to Bernstein form of degree $m$.
+Some methods in this document require rewriting a polynomial in "power" form of degree $m$ (also known as "monomial" form) to Bernstein form of degree $m$.  This method works only for polynomials in Bernstein form on the closed unit interval.
 
 - This can be done directly using the so-called "matrix method" from Ray and Nataraj (2012)[^26].
-- This can also be done by rewriting the polynomial from "power" form to scaled Bernstein form; see Sánchez-Reyes (2003, section 2.6)[^25], then converting the scaled Bernstein form to Bernstein form.
+- This can also be done by rewriting the polynomial from "power" form to scaled Bernstein form (see Sánchez-Reyes (2003, section 2.6)[^25]), then converting the scaled Bernstein form to Bernstein form.
 
 <a id=Approximations_by_Rational_Functions></a>
 ## Approximations by Rational Functions
@@ -352,6 +391,8 @@ See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polyn
 [^48]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
 
 [^49]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+
+[^50]: Bărbosu, D., "The Bernstein operators on any finite interval revisited", Creat. Math. Inform. 20 (2020).
 
 <a id=Appendix></a>
 ## Appendix
@@ -502,7 +543,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
     - $\gamma(j,n) = a+(b-a)(\cos(j\pi/n)+1)/2$,
     - $\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and
     - $T_k(x)$ is the $k$-th [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) (`chebyshevt(k,x)` in the SymPy computer algebra library).
-- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is continuous on the interval $[a, b]$ and $f$ has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^47] as well as a statement in note 1 at the end of this section.
+- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz continuous $(r-1)$-th derivative, and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^47] as well as a statement in note 1 at the end of this section.
     - If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).
     - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^48].
     - The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon>0$ is the desired error tolerance.
@@ -519,7 +560,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
 
 > **Notes:**
 >
-> 1. The following statement can be shown.  Let $f(x)$ be continuous on the interval $[a, b]$.  If the $r$-th derivative of $f$, call it $FR$, has total variation $V$, where $r\ge 1$, then $g(x) = FR(a+(b-a) (x+1)/2)$ has total variation $V\left(\frac{b-a}{2}\right)^r$ on the interval $[-1, 1]$.
+> 1. The following statement can be shown.  Let $f(x)$ have a Lipschitz continuous $(r-1)$-th derivative on the interval $[a, b]$, where $r\ge 1$.  If the $r$-th derivative of $f$ has total variation $V$, then the $r$-th derivative of $g(x)$, where $g(x) = f(a+(b-a) (x+1)/2)$, has total variation $V\left(\frac{b-a}{2}\right)^r$ on the interval $[-1, 1]$.
 > 2. The method in this section doesn't require $f(\lambda)$ to have a particular minimum or maximum.  If $f$ must map the closed unit interval to itself and the Bernstein coefficients must lie on that interval, the following changes to the method are needed:
 >     - $f(\lambda)$ must be continuous on the closed unit interval ($a=0$, $b=1$) and take on only values in that interval.
 >     - If any Bernstein coefficient returned by the method is less than 0 or greater than 1, double the value of $n$ and repeat the method starting at step 2 until that condition is no longer true.
