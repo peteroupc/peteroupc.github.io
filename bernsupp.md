@@ -385,7 +385,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^18]: The coin-flipping degree is very similar to the so-called _Bernstein degree_ or _Lorentz degree_, which is the smallest integer $n$ such that $p$'s Bernstein coefficients of degree $n$ are all non-negative, assuming that $p$ is non-negative.
 
-[^19]: Powers, V., Reznick, B., "[**A new bound for Pólya's Theorem with applications to polynomials positive on polyhedra**](https://www.sciencedirect.com/science/article/pii/S0022404900001559), _Journal of Pure and Applied Algebra_ 164 (24 October 2001).
+[^19]: Powers, V., Reznick, B., "[**A new bound for Pólya's Theorem with applications to polynomials positive on polyhedra**](https://www.sciencedirect.com/science/article/pii/S0022404900001559)", _Journal of Pure and Applied Algebra_ 164 (24 October 2001).
 
 [^20]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
