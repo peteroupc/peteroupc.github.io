@@ -529,9 +529,9 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 
 _Proof_:  This can be seen by evaluating $p(1)$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;
 
-**Lemma:** Let $p(\lambda)=a_0 x^0 + ... + a_n x^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  If $p$'s coin-flipping degree is $n$ or less, then $|a_i|\le 2^i {n\choose i}$.
+**Lemma:** Let $p(\lambda)=a_0 x^0 + ... + a_n x^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  If $p$'s coin-flipping degree is $n$, then $|a_i|\le 2^i {n\choose i}$.
 
-_Proof_: Consider the matrix that transforms a polynomial's Bernstein coefficients to "power" coefficients, which is $n\times n$ if the polynomial's degree is $n$ (Ray and Nataraj 2012, eq. (8))[^20].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is not more than $p$'s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding "power" coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;
+_Proof_: Consider the matrix that transforms a polynomial's Bernstein coefficients to "power" coefficients, which is $n\times n$ if the polynomial's degree is $n$ (Ray and Nataraj 2012, eq. (8))[^20].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$'s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding "power" coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;
 
 <a id=Proofs_for_Polynomial_Building_Schemes></a>
 ### Proofs for Polynomial-Building Schemes
