@@ -447,6 +447,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^49]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^50]: S. Ray, P.S.V. Nataraj, "[**A Matrix Method for Efficient Computation of Bernstein Coefficients**](https://interval.louisiana.edu/reliable-computing-journal/volume-17/reliable-computing-17-pp-40-71.pdf)", Reliable Computing 17(1), 2012.
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -523,9 +525,13 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 - If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
 - If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$ where $\text{Pmin}$ is the _minimum_ value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
 
-**Lemma:** Let $p(\lambda)=a_0 x^0 + ... + a_m x^m$ be a polynomial that maps the closed unit interval to itself.  Then the coefficients $a_0, ..., a_m$ must sum to a value that is 0 or greater and 1 or less.
+**Lemma:** Let $p(\lambda)=a_0 x^0 + ... + a_n x^n$ be a polynomial that maps the closed unit interval to itself.  Then the coefficients $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.
 
 _Proof_:  This can be seen by evaluating $p(1)$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;
+
+**Lemma:** Let $p(\lambda)=a_0 x^0 + ... + a_n x^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  If $p$'s coin-flipping degree is $n$ or less, then $|a_i|\le 2^i {n\choose i}$.
+
+_Proof_: Consider the matrix that transforms a polynomial's Bernstein coefficients to "power" coefficients, which is $n\times n$ if the polynomial's degree is $n$ (Ray and Nataraj 2012, eq. (8))[^50].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is not more than $p$'s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding "power" coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{{n-m}\choose{i-m}} = 2^i {n\choose i}$.  &#x25a1;
 
 <a id=Proofs_for_Polynomial_Building_Schemes></a>
 ### Proofs for Polynomial-Building Schemes

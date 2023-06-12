@@ -209,7 +209,7 @@ If a polynomial is in Bernstein form of degree $n$, and is defined on the closed
 
 If a polynomial is in Bernstein form on the interval $[a, b]$, of degree $n$:
 
-- The polynomial's integral on $[a, b]$ is found by adding the polynomial's Bernstein coefficients for $[a, b]$ together, then dividing by $(n+1)\cdot(b-a)$.
+- The polynomial's integral on $[a, b]$ is found by adding the polynomial's Bernstein coefficients for $[a, b]$ together, then multiplying by $(b-a)/(n+1)$.
 
 Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval \[_a_, _b_\], and let $f(\lambda)$ be a piecewise continuous function on that interval.
 
