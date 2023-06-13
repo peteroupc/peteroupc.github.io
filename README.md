@@ -7,6 +7,7 @@ on several of my projects on GitHub.
 --Peter O.
 
 <a id=Articles></a>
+
 ### Articles
 
 Open-source articles on programming subjects.  Help me on my:
@@ -54,6 +55,7 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
 
 <a id=PDF_Versions></a>
+
 #### PDF Versions
 
 * [**Pseudocode Conventions**](https://peteroupc.github.io/pseudocode.pdf)
@@ -76,6 +78,7 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.pdf)
 
 <a id=HTML_JavaScript></a>
+
 ### HTML/JavaScript
 
 * [**html3dutil**](https://peteroupc.github.io/html3dutil): A public domain JavaScript library for easing the development of HTML 3D applications.

@@ -1,4 +1,5 @@
 <a id=Correctness_and_Performance_Charts></a>
+
 ## Correctness and Performance Charts
 
 The following charts show the correctness of many of the algorithms in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.md)" and show their performance in terms of the number of bits they use on average.  For each algorithm, and for each of 100 &lambda; values evenly spaced from 0.0001 to 0.9999:
@@ -16,6 +17,7 @@ In addition, for each algorithm, a chart appears showing the minimum number of i
 Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm, an _m_ of max(0.49999, _x_*_c_*1.02) was used unless noted otherwise.
 
 <a id=The_Charts></a>
+
 ### The Charts
 
 | Algorithm | Simulated Mean | Average Bits Consumed | Coin Flips |

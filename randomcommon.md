@@ -5,6 +5,7 @@
 **Abstract**: This article goes over some of the most common topics involving randomization in programming, and serves as a guide to programmers looking to solve their randomization problems.  They were based on the most commonly pointed-to questions involving randomization on a Q&A site.  The topics included generating uniform random variates, unique random values, choosing one or more random items, shuffling, and querying random records from a database.
 
 <a id=Introduction></a>
+
 ## Introduction
 
 This page goes over some of the most common topics involving randomization (including "random number generation") in programming, and serves as a guide to programmers looking to solve their randomization problems.
@@ -34,6 +35,7 @@ The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) ap
 All the randomization methods presented on this page assume we have a source of "truly" random and unbiased numbers.
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Introduction**](#Introduction)
@@ -50,6 +52,7 @@ All the randomization methods presented on this page assume we have a source of 
 - [**License**](#License)
 
 <a id=Uniform_Numbers_in_a_Range></a>
+
 ## Uniform Numbers in a Range
 
 For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most pseudorandom number generators in common use output 32- or 64-bit nonnegative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases to generate bits (zeros and ones) at random.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013\)[^1]:
@@ -80,6 +83,7 @@ Many common programming languages have no convenient or correct way to generate 
 For algorithms on generating uniform random _floating-point numbers_ in a range, see [**"For Floating-Point Number Formats"**](https://peteroupc.github.io/randomfunc.html#For_Floating_Point_Number_Formats).  Floating-point number generation has a myriad of issues not present with integer generation.  For example, no computer can choose from all real numbers between two others, since there are infinitely many of them, and also, naïvely multiplying or dividing an integer by a constant (for example, `Math.random()*x` in JavaScript) will necessarily miss many representable floating-point numbers (for details, see Goualard (2020\)[^1]).
 
 <a id=Choosing_Random_Items></a>
+
 ## Choosing Random Items
 
 In general, choosing a random item from a list is trivial: choose a random integer in `[0, n)`, where `n` is the size of the list, then take the item at the chosen position.  The previous section already discussed how to generate a random integer.
@@ -93,6 +97,7 @@ However, if the number of items is not known in advance, then a technique called
 See "[**Pseudocode for Random Sampling**](https://peteroupc.github.io/randomfunc.html#Pseudocode_for_Random_Sampling)" for an algorithm for reservoir sampling.
 
 <a id=Unique_Integers_or_Items></a>
+
 ## Unique Integers or Items
 
 Generating unique random integers or items is also known as sampling _without replacement_, _without repetition_, or _without duplicates_.
@@ -102,11 +107,13 @@ There are many ways to generate unique items, depending on the number of items t
 Some applications require generating unique values that identify something, such as database records, user accounts, and so on.  However, there are certain things to keep in mind when generating unique values for this purpose; see "[**Unique Random Identifiers**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers)" for more information.
 
 <a id=Shuffling></a>
+
 ## Shuffling
 
 An algorithm to randomize (_shuffle_) the order of a list is given in [**"Shuffling"**](https://peteroupc.github.io/randomfunc.html#Shuffling).  It should be noted that the algorithm is easy to implement incorrectly.  Also, the choice of random number generator is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
 
 <a id=Random_Records_from_a_Database></a>
+
 ## Random Records from a Database
 
 Querying random records (_rows_) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to produce randomly generated or pseudorandom numbers.  Thus, the correct way to query random records from a database will vary from DBMS to DBMS.
@@ -118,6 +125,7 @@ With that said, the following specific situations tend to come up in random reco
 - Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: `ln(R) / W` (where `W` is the record's weight greater than 0, itself its own column, and `R` is a per-record uniform random variate in the open interval (0, 1)) (see also (Arratia 2002\)[^2]), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.
 
 <a id=Random_Character_Strings></a>
+
 ## Random Character Strings
 
 Many applications need to generate a random string whose characters are chosen from a restricted set of characters.  Popular choices include so-called _alphanumeric strings_, where the restricted character set is A to Z, a to z, 0 to 9.  An algorithm for generating random strings is given in "[**Random Character Strings**](https://peteroupc.github.io/randomfunc.html#Random_Character_Strings)".
@@ -129,6 +137,7 @@ However, the following are some of the many considerations involving random stri
 - If the string is a secret value of any kind, including a password, a bearer credential, a session identifier, a nonce, a "confirmation code", a "verification code", or a "forgot-password" code, then the string has to be generated using a [**cryptographic RNG**](https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages) (such as the `secrets` module in Python or the `random_bytes` function in PHP).
 
 <a id=Choosing_Items_with_Separate_Probabilities></a>
+
 ## Choosing Items with Separate Probabilities
 
 _Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.
@@ -147,6 +156,7 @@ However, these methods do not necessarily ensure that a random sample of _n_ ite
 Note that choosing _true_ with a given probability, or _false_ otherwise, is a special case of weighted sampling involving two items (also known as a _Bernoulli trial_).  But there are much simpler ways of choosing _true_ or _false_ this way; see "[**Boolean (True/False) Conditions**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions)".  Perhaps the most practical is the idiom `RNDINTEXC(Y) < X`, which chooses _true_ with probability `X/Y`, _false_ otherwise.
 
 <a id=Other_Topics></a>
+
 ## Other Topics
 
 Other topics showed up in the analysis, and it's worth mentioning them here.  These topics included:
@@ -161,6 +171,7 @@ Other topics showed up in the analysis, and it's worth mentioning them here.  Th
 - Generating a [**random point inside a circle**](https://peteroupc.github.io/randomfunc.html#Random_Points_Inside_a_Ball_Shell_or_Cone).
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Goualard F. (2020) Generating Random Floating-Point Numbers by Dividing Integers: A Case Study. In: Krzhizhanovskaya V. et al. (eds) Computational Science – ICCS 2020. ICCS 2020. Lecture Notes in Computer Science, vol 12138. Springer, Cham. [**https://doi.org/10.1007/978-3-030-50417-5_2**](https://doi.org/10.1007/978-3-030-50417-5_2)
@@ -170,6 +181,7 @@ Other topics showed up in the analysis, and it's worth mentioning them here.  Th
 [^3]: Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions", in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.
 
 <a id=License></a>
+
 ## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

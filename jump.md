@@ -1,4 +1,5 @@
 <a id=Notes_on_Jumping_PRNGs_Ahead></a>
+
 ## Notes on Jumping PRNGs Ahead
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
@@ -6,6 +7,7 @@
 Some pseudorandom number generators (PRNGs) have an efficient way to advance their state as though a huge number of PRNG outputs were discarded.  Notes on how they work are described in the following sections.
 
 <a id=F2_linear_PRNGs></a>
+
 ### F<sub>2</sub>-linear PRNGs
 
 For some PRNGs, each bit of the PRNG's state can be described as a linear recurrence on its entire state.  These PRNGs are called _F<sub>2</sub>-linear PRNGs_, and they include the following:
@@ -31,11 +33,13 @@ For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (
     An example of its use is found in the `jump` and `long_jump` functions in the [**`xoroshiro128plus` source code**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), which are identical except for the jump polynomial.  In both functions, the jump polynomial's coefficients are packed into a 128-bit integer (as described in "Jump Parameters for Some PRNGs"), which is then split into the lower 64 bits and the upper 64 bits, in that order.
 
 <a id=Counter_Based_PRNGs></a>
+
 ### Counter-Based PRNGs
 
 Counter-based PRNGs, in which their state is updated simply by incrementing a counter, can be trivially jumped ahead just by changing the seed, the counter, or both (Salmon et al. 2011\)[^4].
 
 <a id=Multiple_Recursive_Generators></a>
+
 ### Multiple Recursive Generators
 
 A _multiple recursive generator_ (MRG) generates numbers by transforming its state using the following formula: `x(k) = (x(k-1)*A(1) + x(k-2)*A(2) + ... + x(k-n)*A(n)) mod modulus`, where `A(i)` are the _multipliers_ and `modulus` is the _modulus_.
@@ -56,6 +60,7 @@ Then, to jump the MRG ahead N steps, calculate `J * S` mod `modulus`, where `J` 
 This technique was mentioned (but for binary matrices) in Haramoto, in sections 1 and 3.1.  They point out, though, that it isn't efficient if the transition matrix is large.  See also (L'Ecuyer et al., 2002\)[^5].
 
 <a id=Example></a>
+
 #### Example
 
 A multiple recursive generator with a modulus of 1449 has the following transition matrix:
@@ -78,6 +83,7 @@ The resulting J is a _jump matrix_ as follows:
 Transforming the MRG's state with J (and taking its elements mod 1449) will transform the state as though 100 outputs were discarded from the MRG.
 
 <a id=Linear_Congruential_Generators></a>
+
 ### Linear Congruential Generators
 
 A _linear congruential generator_ (LCG) generates numbers by transforming its state using the following formula: `x(k) = (x(k-1)*a + c) mod modulus`, where `a` is the _multiplier_, `c` is the additive constant, and `modulus` is the _modulus_.
@@ -92,6 +98,7 @@ An MRG with only one multiplier expresses the special case of an LCG with `c = 0
 Jumping the LCG ahead can then be done using this matrix as described in the previous section.
 
 <a id=Multiply_with_Carry_Add_with_Carry_Subtract_with_Borrow></a>
+
 ### Multiply-with-Carry, Add-with-Carry, Subtract-with-Borrow
 
 There are implementations for jumping a multiply-with-carry (MWC) PRNG ahead, but [**only in source-code form**](https://github.com/rsaucier/Random/blob/3a7981bd6a8ac6d4507e9630393303b18e8967ca/kiss.h).  I am not aware of an article or paper that describes how jumping an MWC PRNG ahead works.
@@ -99,11 +106,13 @@ There are implementations for jumping a multiply-with-carry (MWC) PRNG ahead, bu
 I am not aware of any efficient ways to jump an add-with-carry or subtract-with-borrow PRNG ahead an arbitrary number of steps.
 
 <a id=Combined_PRNGs></a>
+
 ### Combined PRNGs
 
 A combined PRNG can be jumped ahead N steps by jumping each of its components ahead N steps.
 
 <a id=Jump_Parameters_for_Some_PRNGs></a>
+
 ### Jump Parameters for Some PRNGs
 
 The following table shows the characteristic polynomial and jump polynomials for some PRNG families.  In the table:
@@ -124,11 +133,13 @@ The following table shows the characteristic polynomial and jump polynomials for
 | xoshiro256 |     0x10003c03c3f3ecb1904b4edcf26259f85&shy;0280002bcefd1a5e9d116f2bb0f0f001 | 2<sup>32</sup>: 0xe055d3520fdb9d7214fafc0fbdbc2087d8d0632bd08e6ac58120d583c112f69<br/>2<sup>48</sup>: 0x5f728be2c97e9066474579292f705634f825539dee5e4763f11fb4faea62c7f1<br/>2<sup>64</sup>: 0x12e4a2fbfc19bff934faff184785c20ab60d6c5b8c78f106b13c16e8096f0754<br/>2<sup>96</sup>: 0x31eebb6c82a9615fb27c05962ea56a13cdb45d7def42c317148c356c3114b7a9<br/>2<sup>128</sup>: 0x39abdc4529b1661ca9582618e03fc9aad5a61266f0c9392c180ec6d33cfd0aba<br/>2<sup>160</sup>: 0xf567382197055bf04823b45b89dc689c69e6e6e431a2d40bc04b4f9c5d26c200<br/>2<sup>192</sup>: 0x39109bb02acbe63577710069854ee241c5004e441c522fb376e15d3efefdcbbf<br/>2<sup>224</sup>: 0xa2b5d83a373c7ac2f31d2e03157bc387d317530723ab526a0c7840cbc3b121ad<br/>"Period"/&phi;: 0x294e2bac089b06c7d4ce5d1a031b6cf8787f49127b37f506ac1c9e5f5f53046c
 
 <a id=Acknowledgments></a>
+
 ### Acknowledgments
 
 Sebastiano Vigna reviewed this page and gave comments.
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Haramoto, Matsumoto, Nishimura, Panneton, L'Ecuyer, "Efficient Jump Ahead for F<sub>2</sub>-Linear Random Number Generators", _INFORMS Journal on Computing_ 20(3), Summer 2008.

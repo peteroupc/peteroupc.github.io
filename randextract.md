@@ -5,6 +5,7 @@
 _Randomness extraction_ (also known as _unbiasing_, _debiasing_, _deskewing_, _whitening_, or _entropy extraction_) is a set of techniques for generating unbiased random bits from biased sources.  This note covers some useful extraction techniques.
 
 <a id=In_Information_Security></a>
+
 ## In Information Security
 
 In information security, randomness extraction serves to generate a seed, password, encryption key, or other secret value from hard-to-predict nondeterministic sources.
@@ -24,6 +25,7 @@ Some papers also refer to two-source extractors and resilient functions (especia
 > 3. Take the first 170 (or fewer) bits as the seed (512 divided by 3, rounded down).
 
 <a id=Outside_of_Information_Security></a>
+
 ## Outside of Information Security
 
 Outside of information security, randomness extraction serves the purpose of recycling randomly generated numbers or, more generally, to transform those numbers from one form to another while preserving their randomness.  This can be done, for example, to reduce calls to a pseudorandom number generator (PRNG) or to generate a new seed for such a PRNG.
@@ -70,6 +72,7 @@ Some additional notes:
 Devroye and Gravel (2020\)[^14] suggest a special randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits to produce a specific output _Y_.  Since the algorithm seems not to be well developed, I discuss this extractor in detail elsewhere, in "[**Miscellaneous Notes on Randomization**](https://peteroupc.github.io/randmisc.html)".
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Cliff, Y., Boyd, C., Gonzalez Nieto, J. "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.
@@ -107,11 +110,13 @@ Devroye and Gravel (2020\)[^14] suggest a special randomness extractor to reduce
 [^17]: Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.
 
 <a id=Appendix></a>
+
 ## Appendix
 
 &nbsp;
 
 <a id=On_Algorithm_M></a>
+
 ### On Algorithm M
 
 Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" for _X_ and _Y_ are loaded differently, as long as&mdash;
@@ -155,6 +160,7 @@ Here are some of the many examples where this algorithm works:
 See also a procedure given as a remark near the end of a paper by Camion (1974\)[^17].
 
 <a id=License></a>
+
 ## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

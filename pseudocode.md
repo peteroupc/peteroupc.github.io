@@ -3,11 +3,13 @@
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Introduction></a>
+
 ## Introduction
 
 This document explains the conventions and common functions used in some of my articles that use pseudocode.
 
 <a id=Symbols></a>
+
 ## Symbols
 
 In addition to the familiar `+`, `-`, `*` (multiplication), and `/` (division) operators, other symbols are defined below.
@@ -23,6 +25,7 @@ In addition to the familiar `+`, `-`, `*` (multiplication), and `/` (division) o
 * The `|` operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.
 
 <a id=Loops></a>
+
 ## Loops
 
 Pseudocode may use `while` loops, which are self-explanatory.
@@ -33,6 +36,7 @@ Pseudocode may also use `for` loops, defined as follows:
 - `for X in Y...Z: [[Single-Statement]]` is shorthand for `X = Y; while X < Z; [[Single-Statement]]; X = X + 1; end`.
 
 <a id=Lists_and_Files></a>
+
 ## Lists and Files
 
 In the pseudocode, lists are indexed starting with 0.  That means the first item in the list has index 0, the second item in the list has index 1, and so on, up to the last item, whose index is the list's size minus 1.
@@ -48,6 +52,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 * `GetNextLine(file)` is a method that gets the next line from a file, or returns `nothing` if the end of the file was reached.
 
 <a id=Functions></a>
+
 ## Functions
 
 * `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
@@ -77,6 +82,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 - An integer `n` is _even_ if `rem(n, 2)` is 0.
 
 <a id=Pseudocode_Notes></a>
+
 ## Pseudocode Notes
 
 In the pseudocode:
@@ -87,5 +93,6 @@ In the pseudocode:
 * In general, computer implementations of the operators and functions above risk numerical errors, since computers generally can't operate "exactly" on real numbers. (This is less of an issue if the implementation uses an arbitrary-precision rational number format and the pseudocode uses only rational arithmetic and inputs.  In addition, an implementation can work with _symbolic_ representations of real numbers instead of those numbers.)
 
 <a id=License></a>
+
 ## License
 This page is licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

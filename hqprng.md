@@ -1,4 +1,5 @@
 <a id=Examples_of_High_Quality_PRNGs></a>
+
 ## Examples of High-Quality PRNGs
 
 Besides cryptographic random number generators (RNGs), the following are examples of [**high-quality pseudorandom number generators (PRNGs)**](https://peteroupc.github.io/random.html#High_Quality_RNGs_Requirements).  The "Fails PractRand Starting At" column in this and other tables in this page means the number of bytes (rounded up to the nearest power of two) at which PractRand detects a failure in the PRNG.  (Note that high-quality PRNGs, as I define them, are not necessarily appropriate for information security.)
@@ -26,6 +27,7 @@ Besides cryptographic random number generators (RNGs), the following are example
 | XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1  | ??? TiB | 64-bit state. Described by M. O'Neill in "You don't have to use PCG!", 2017. |
 
 <a id=PRNGs_with_Stream_Support></a>
+
 ### PRNGs with Stream Support
 
 Some PRNGs support multiple "streams" that behave like independent uniform random bit sequences.  The test for independence involves interleaving two "streams"' outputs and sending the interleaved outputs to the PractRand tests.
@@ -44,6 +46,7 @@ The following lists high-quality PRNGs that support streams and their PractRand 
 | ???  | Jump-ahead by period/&phi;: ??? TiB | |
 
 <a id=Counter_Based_PRNGs></a>
+
 ### Counter-Based PRNGs
 
 Constructions for counter-based PRNGs (using the definition from (Salmon et al. 2011, section 2\)[^7] include:
@@ -66,6 +69,7 @@ The following lists hash functions and block ciphers that form high-quality coun
 | ??? | ??? TiB (Consecutive seeds: ??? TiB) | |
 
 <a id=Combined_PRNGs></a>
+
 ### Combined PRNGs
 
 The following lists high-quality combined PRNGs.  See "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)" for more information on combining PRNGs.
@@ -81,6 +85,7 @@ The following lists high-quality combined PRNGs.  See "[**Testing PRNGs for High
 | ??? combined with ??? | ??? TiB | |
 
 <a id=Splittable_PRNGs></a>
+
 ### Splittable PRNGs
 
 The following lists high-quality splittable PRNGs.  See "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)" for more information on testing splittable PRNGs, and see the appendix for splittable PRNG constructions.
@@ -92,6 +97,7 @@ The following lists high-quality splittable PRNGs.  See "[**Testing PRNGs for Hi
 | ??? | ??? TiB | |
 
 <a id=PRNGs_Not_Preferred></a>
+
 ### PRNGs Not Preferred
 
 Although the following are technically high-quality PRNGs, they are not preferred:
@@ -102,6 +108,7 @@ Although the following are technically high-quality PRNGs, they are not preferre
 | A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | If the modulus is a power of 2, this PRNG can produce highly correlated pseudorandom number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short cycles. (What PCG calls "streams" does not produce independent sequences.) |
 
 <a id=Not_High_Quality_PRNGs></a>
+
 ### Not High-Quality PRNGs
 
 The following are not considered high-quality PRNGs:
@@ -123,6 +130,7 @@ The following are not considered high-quality PRNGs:
 | ISAAC ("ISAAC and RC4" by B. Jenkins) | Proven minimum cycle length is only 2<sup>40</sup> or more |
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2019 (xoroshiro and xoshiro families); S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016 (scrambled xorshift family).
@@ -154,9 +162,11 @@ The following are not considered high-quality PRNGs:
 [^14]: Claessen, K, Pa&#x142;ka, M., "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _ACM SIGPLAN Notices_ 48(12), December 2013.
 
 <a id=Appendix></a>
+
 ## Appendix
 
 <a id=Implementation_Notes_Splittable_PRNGs></a>
+
 ### Implementation Notes: Splittable PRNGs
 
 Here are implementation notes on splittable PRNGs.  The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this section.  In addition, the following notation is used:

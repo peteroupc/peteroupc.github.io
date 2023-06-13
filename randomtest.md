@@ -1,4 +1,5 @@
 <a id=Testing_PRNGs_for_High_Quality_Randomness></a>
+
 ## Testing PRNGs for High-Quality Randomness
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
@@ -68,6 +69,7 @@ The Schaathun paper suggests the following four pseudorandom number sequences fo
     3. Go to the first step.
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Bauke and Mertens, "Random numbers for large-scale distributed Monte Carlo simulations", 2007

@@ -3,6 +3,7 @@
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Contents**](#Contents)
@@ -25,6 +26,7 @@
 - [**License**](#License)
 
 <a id=About_This_Document></a>
+
 ### About This Document
 
 **This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/randomnotes.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
@@ -40,11 +42,13 @@ I encourage readers to implement any of the algorithms given in this page, and r
 Comments on other aspects of this document are welcome.
 
 <a id=Specific_Distributions></a>
+
 ### Specific Distributions
 
 **Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the [**appendix**](#Exact_Error_Bounded_and_Approximate_Algorithms) for more information.
 
 <a id=Normal_Gaussian_Distribution></a>
+
 #### Normal (Gaussian) Distribution
 
 The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) takes the following two parameters:
@@ -98,6 +102,7 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007\)[^2], and (Malik and 
 > 5. A well-known result says that adding `n` many `Normal(0, 1)` variates, and dividing by `sqrt(n)`, results in a new `Normal(0, 1)` variate.
 
 <a id=Gamma_Distribution></a>
+
 #### Gamma Distribution
 
 The following method samples a number from a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000[^10] and (Liu et al. 2015\)[^11].  Usually, the number expresses either&mdash;
@@ -163,6 +168,7 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0.
 > **Example:** **Moment exponential** distribution (Dara and Ahmad 2012)[^30]: `GammaDist(2)*beta` (or `(Expo(1)+Expo(1))*beta`), where `beta > 0`.
 
 <a id=Beta_Distribution></a>
+
 #### Beta Distribution
 
 The beta distribution takes on values on the interval (0, 1).  Its two parameters, `a` and `b`, are both greater than 0 and describe the distribution's shape.  Depending on `a` and `b`, the shape can be a smooth peak or a smooth valley.
@@ -184,6 +190,7 @@ The following method samples a number from a _beta distribution_, in the interva
 I give an [**error-bounded sampler**](https://peteroupc.github.io/exporand.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
 
 <a id=Uniform_Partition_with_a_Positive_Sum></a>
+
 #### Uniform Partition with a Positive Sum
 
 The following algorithm chooses at random a uniform partition of the number `sum` into `n` parts, and returns an `n`-item list of the chosen numbers, which sum to `sum` assuming no rounding error.  In this algorithm, `n` must be an integer greater than 0, and `sum` must be greater than 0.  The method was described in Bini and Buttazzo (2005)[^14] and Mai et al. (2022)[^15].
@@ -202,6 +209,7 @@ END METHOD
 ```
 
 <a id=Noncentral_Hypergeometric_Distributions></a>
+
 #### Noncentral Hypergeometric Distributions
 
 The following variants of the hypergeometric distribution are described in detail by Agner Fog in "[**Biased Urn Theory**](https://cran.r-project.org/web/packages/BiasedUrn/vignettes/UrnTheory.pdf)".
@@ -218,6 +226,7 @@ For both distributions, if there are two colors, there are four parameters: _m_,
 - the random variate is the number of chosen balls of the first color.
 
 <a id=von_Mises_Distribution></a>
+
 #### von Mises Distribution
 
 The _von Mises distribution_ describes a distribution of circular angles and uses two parameters: `mean` is the mean angle and `kappa` is a shape parameter.  The distribution is uniform at `kappa = 0` and approaches a normal distribution with increasing `kappa`.
@@ -251,6 +260,7 @@ The algorithm below samples a number from the von Mises distribution, and is bas
     END METHOD
 
 <a id=Stable_Distribution></a>
+
 #### Stable Distribution
 
 As more and more numbers, sampled independently at random in the same way, are added together, their distribution tends to a [**_stable distribution_**](https://en.wikipedia.org/wiki/Stable_distribution), which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  (Here, the stable distribution means the "alpha-stable distribution".) The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
@@ -309,6 +319,7 @@ Methods implementing the strictly geometric stable and general geometric stable 
     END METHOD
 
 <a id=Phase_Type_Distributions></a>
+
 #### Phase-Type Distributions
 
 A _phase-type distribution_ models a sum of exponential random variates driven by a [**Markov chain**](https://peteroupc.github.io/randomnotes.html).  The Markov chain has `n` normal states and one "absorbing" or terminating state.  This distribution has two parameters:
@@ -353,6 +364,7 @@ END METHOD
 > **Note:** An **inhomogeneous phase-type** random variate has the form `G(PhaseType(alpha, s))`, where `G(x)` is a function designed to control the heaviness of the distribution's tail (Bladt 2021)[^18].  For example, `G(x) = pow(x, 1.0/beta)`, where `beta>0`, leads to a tail as heavy as a Weibull distribution.
 
 <a id=Multivariate_Normal_Multinormal_Distribution></a>
+
 #### Multivariate Normal (Multinormal) Distribution
 
 The following pseudocode generates a random vector (list of numbers) that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
@@ -459,6 +471,7 @@ The following pseudocode generates a random vector (list of numbers) that follow
 > 11. **Mean mixture of normal distributions** (Bhagwat and Marchand 2022)[^4]: `MultivariateNormal(VecAdd(theta,VecScale(a,v)), cov)` where `theta` is an `n`-dimensional location vector, `a` is an `n`-dimensional "perturbation vector", `cov` is a covariance matrix, and `v` is an arbitrary random variate.
 
 <a id=Gaussian_and_Other_Copulas></a>
+
 #### Gaussian and Other Copulas
 
 A _copula_ is a way to describe the dependence between randomly sampled numbers.
@@ -524,6 +537,7 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 - the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011\)[^22].
 
 <a id=Multivariate_Phase_Type_Distributions></a>
+
 #### Multivariate Phase-Type Distributions
 
 The following pseudocode generates a random vector (of `d` coordinates) following a _multivariate phase-type distribution_ called MPH\*.  In addition to parameters `alpha` and `s`, there is also a _reward matrix_ `r`, such that `r[i][j]` is the probability of adding to coordinate `j` when state `i` is visited. (The pseudocode assumes each number in `alpha`, `s`, and `r` is a rational number, because it uses `NormalizeRatios`.)
@@ -549,6 +563,7 @@ END METHOD
 > **Note:** An inhomogeneous version of MPH\* can be as follows: `[G1(mph[1]), G2(mph[2]), ..., GD(mph[d])]`, where `mph` is a `d`-dimensional MPH\* vector and `G1`, `G2`, ..., `GD` are strictly increasing functions whose domain and range are the positive real line and whose "slope" is defined on the whole domain (Albrecher et al. 2022)[^23].
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
@@ -612,9 +627,11 @@ END METHOD
 [^30]: Baccetti, Valentina, and Matt Visser. "Infinite Shannon entropy." Journal of Statistical Mechanics: Theory and Experiment 2013, no. 04 (2013): P04010, also in arXiv:1212.5630.
 
 <a id=Appendix></a>
+
 ## Appendix
 
 <a id=Exact_Error_Bounded_and_Approximate_Algorithms></a>
+
 ### Exact, Error-Bounded, and Approximate Algorithms
 
 There are three kinds of randomization algorithms:
@@ -652,6 +669,7 @@ There are many ways to describe closeness between two distributions.  One sugges
 > - it has the form _X_ + _n_, where _n_ is a constant and _X_ is a random variate whose distribution has finite Shannon entropy.
 
 <a id=License></a>
+
 ## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

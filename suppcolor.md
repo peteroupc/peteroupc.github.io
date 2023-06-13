@@ -3,11 +3,13 @@
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Introduction></a>
+
 ## Introduction
 
 This document presents supplemental topics about color.  They add to my article on [**color topics for programmers**](https://peteroupc.github.io/colorgen.html).
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Introduction**](#Introduction)
@@ -27,6 +29,7 @@ This document presents supplemental topics about color.  They add to my article 
 - [**License**](#License)
 
 <a id=Notation_and_Definitions></a>
+
 ## Notation and Definitions
 
 - The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
@@ -34,6 +37,7 @@ This document presents supplemental topics about color.  They add to my article 
 - **RGB.** Red&ndash;green&ndash;blue.
 
 <a id=Kinds_of_Color_Spaces></a>
+
 ## Kinds of Color Spaces
 
 _Color spaces_ are designed to organize colors.  They can be categorized as any of the following:
@@ -46,6 +50,7 @@ _Color spaces_ are designed to organize colors.  They can be categorized as any 
 - It's discouraged to speak of **"device-dependent"** and **"device-independent"** color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered "device independent", some RGB color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (_colorimetric color spaces_).
 
 <a id=Primary_Colors></a>
+
 ## "Primary Colors"
 
 In general, so-called "primary colors" are not relevant to programming except in the context of light-mixture, colorant-mixture, or opponent color spaces.
@@ -57,6 +62,7 @@ For opponent color spaces, the four so-called _unique hues_ red, green, blue, an
 "Primary colors" can be, and often are, imaginary.  For example, the [**ACES2065-1 RGB color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), and certain other RGB color spaces, include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.
 
 <a id=Calculating_the_Mean_Hue_Angle></a>
+
 ## Calculating the Mean Hue Angle
 
 The `MeanAngle` method, as given in the pseudocode below, finds the average of one or more angles expressed in radians (which is important when averaging colors in hue-based color models such as HSL, HSV, and CIE _L\*C\*h_, which contain hue components that are angles).
@@ -77,6 +83,7 @@ The `MeanAngle` method, as given in the pseudocode below, finds the average of o
     END
 
 <a id=Additional_Text_based_RGB_colors></a>
+
 ## Additional Text-based RGB colors
 
 The following color formats express [**8-bpc _encoded RGB_ colors**](https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats) as text strings:
@@ -87,9 +94,11 @@ The following color formats express [**8-bpc _encoded RGB_ colors**](https://pet
 - **PowerBuilder** format: Consists of the integer form of the 8-bpc format color, packed red/green/blue, in that order from lowest to highest bits.
 
 <a id=Additional_Color_Models></a>
+
 ## Additional Color Models
 
 <a id=HSI></a>
+
 ### HSI
 
 A color following the HSI color model consists of three components, in the following order:
@@ -127,6 +136,7 @@ The conversions given below are independent of RGB color space, but should be do
     END METHOD
 
 <a id=Hunter_L_a_b></a>
+
 ### Hunter L,a,b
 
 The conversion between XYZ and Hunter L,a,b colors is as given below.
@@ -158,6 +168,7 @@ Hunter L, a, b colors analogously to CIELAB colors.
 The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delta;b_, or _&Delta;C_, respectively), between two Hunter L, a, b colors is simply the difference between the corresponding value of the second Hunter L, a, b color and that of the first.
 
 <a id=Additional_Color_Formulas></a>
+
 ## Additional Color Formulas
 
 **CIE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or _&Delta;E\*_<sub>94</sub>, between two [**CIELAB**](https://peteroupc.github.io/colorgen.html#CIELAB) colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, `TEXTILES` is `true` for a color difference suitable for textile applications, and `false` otherwise.
@@ -184,6 +195,7 @@ The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delt
     END METHOD
 
 <a id=Terminal_Graphics></a>
+
 ## Terminal Graphics
 
 Some command-line terminals (or terminal emulators) support coloring the background or foreground of text.  In such programs that support [**"ANSI" (American National Standards Institute) color codes**](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "&#x5b;" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
@@ -204,6 +216,7 @@ Some command-line terminals (or terminal emulators) support coloring the backgro
 The _color number_ is one of the following: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all terminals or terminal emulators support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
 
 <a id=Color_Measurement_Devices></a>
+
 ## Color Measurement Devices
 
 Measuring color is not like pointing and shooting with a camera, and it's not like measuring height or weight.  In general, special devices or technologies are needed to measure color.
@@ -227,6 +240,7 @@ Several [**application notes**](https://www.hunterlab.com/application-notes.html
 At the time of this writing, most color measurement devices are still expensive and mostly for professional use.  However, [**several colorimeters**](https://www.coltechcon.com/publication/overview-low-cost-color-capture-devices/) are available in the consumer market, as is a limited selection of spectrophotometers.  G. W. Gill describes a [**selection**](http://www.argyllcms.com/doc/instruments.html) of color measurement devices.
 
 <a id=Irrelevant_Topics></a>
+
 ## Irrelevant Topics
 
 The following topics on color are rarely relevant to programmers:
@@ -236,5 +250,6 @@ The following topics on color are rarely relevant to programmers:
 - "Color forecasting", or predicting which colors will be in high demand, especially in the fashion and design realms.
 
 <a id=License></a>
+
 ## License
 This page is licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

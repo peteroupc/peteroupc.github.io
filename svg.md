@@ -21,6 +21,7 @@ In this simple example, we can already see several useful things:
 An SVG document can have any number of `path` elements, `ellipse` elements, or both, and each of these elements is a separate shape. Finally, each `path` and `ellipse` element can have a `transform` attribute, which describes an optional geometric transformation.  The attribute's value is made up of [**one or more commands**](https://www.w3.org/TR/SVG11/coords.html#TransformAttribute) described further in the SVG specification.  The commands, which are followed in the order written, include "translate(x,y)" which moves the zero-point; "rotate(d)" which rotates the coordinate system by _d_ degrees, and "scale(x)" which scales the coordinates by a factor of _x_. Examples of the attribute include `transform='translate(3, 5)'`, `transform='rotate(90)'`, and `transform=' translate(2, 2) scale(2)'`.
 
 <a id=License></a>
+
 ## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

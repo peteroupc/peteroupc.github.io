@@ -6,6 +6,7 @@ on several of my programming projects on GitHub.  View [**this site's repository
 to see this site's source code.
 
 <a id=Articles></a>
+
 ### Articles
 
 Open-source articles on programming subjects.  Help me on my [**requests and open questions**](./requests.html) (and [**open questions on the Bernoulli factory problem**](./bernreq.html), and [**other open questions on probability**](./requestsother.html)).
@@ -52,6 +53,7 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**On a claim of computational complexity**](https://peteroupc.github.io/complexity.html)
 
 <a id=PDF_Versions></a>
+
 #### PDF Versions
 
 * [**Pseudocode Conventions**](./pseudocode.pdf)
@@ -74,6 +76,7 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.pdf)
 
 <a id=HTML_JavaScript></a>
+
 ### HTML/JavaScript
 
 * [**html3dutil**](./html3dutil): A public domain JavaScript library for easing the development of HTML 3D applications.
@@ -84,6 +87,7 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**BigNumber**](./BigNumber): An arbitrary-precision arithmetic library for JavaScript
 
 <a id=C_sharp></a>
+
 ### C-sharp
 
 * [**Fuzzer**](./Fuzzer): This is a program that generates slightly altered versions

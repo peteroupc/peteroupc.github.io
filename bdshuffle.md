@@ -1,4 +1,5 @@
 <a id=A_Note_on_the_Bays_ndash_Durham_Shuffle></a>
+
 ## A Note on the Bays&ndash;Durham Shuffle
 
 The Bays&ndash;Durham shuffle extends a pseudorandom number generator's (PRNG) maximum cycle length by giving it a bigger state. Generally, for a size of `tablesize`, this maximum is at most the factorial of `tablesize`, which is about the number of ways to arrange a list of size `tablesize`.

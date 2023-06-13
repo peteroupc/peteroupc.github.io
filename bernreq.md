@@ -3,6 +3,7 @@
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Background></a>
+
 ## Background
 
 Suppose there is a coin that shows heads with an unknown probability, $\lambda$. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on $\lambda$, call it $f(\lambda)$. This is the _Bernoulli factory problem_, and it can be solved only for certain functions $f$. (For example, flipping the coin twice and taking heads only if exactly one coin shows heads, the probability $2\lambda(1-\lambda)$ can be simulated.)
@@ -12,6 +13,7 @@ Specifically, the only functions that can be simulated this way **are continuous
 This page contains several questions about the [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) problem.  Answers to them will greatly improve my pages on this site about Bernoulli factories.  If you can answer any of them, post an issue in the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Background**](#Background)
@@ -27,6 +29,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 - [**Notes**](#Notes)
 
 <a id=Polynomials_that_approach_a_factory_function_fast></a>
+
 ## Polynomials that approach a factory function "fast"
 
 [**https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
@@ -50,17 +53,19 @@ In this question, a polynomial $P(x)$ is written in _Bernstein form of degree $n
 The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.
 
 <a id=Main_Question></a>
+
 ### Main Question
 
 Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, or bounded variation, or $f$ is real analytic).
 
-1. (_Exact Bernoulli factory_): Compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. (**See Note 3 in "[**End Notes**](#End_Notes)".**)  Assume $0\lt f(\lambda)\lt 1$ or $f$ is polynomially bounded.
+1. (_Exact Bernoulli factory_): Compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. (**See Note 3 in "[**End Notes**](#End_Notes)".**)  Assume $0\less f(\lambda)\less 1$ or $f$ is polynomially bounded.
 2. (_Approximate Bernoulli factory_): Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.
 3. (_Series expansion of simple functions_): Find a non-negative random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$. (**See note 1 in "[**End Notes**](#End_Notes)".**)
 
 The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
 
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
+
 ### Solving the Bernoulli factory problem with polynomials
 
 An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) (Łatuszyński et al. 2009/2011)[^2] simulates a factory function $f(\lambda)$ via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
@@ -76,6 +81,7 @@ However, the algorithm requires the polynomial sequences to meet certain require
 _For $f(\lambda)$ there must be a sequence of polynomials_ ($g_n$) _in Bernstein form of degree 1, 2, 3, ... that converge to $f$ from below and satisfy:_ $(g_{n+1}-g_{n})$ _is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (**see Note 3 in "[**End Notes**](#End_Notes)"**; Nacu and Peres (2005)[^3]; Holtz et al. (2011)[^4]).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind._
 
 <a id=A_Matter_of_Efficiency></a>
+
 ### A Matter of Efficiency
 
 However, ordinary Bernstein polynomials converge to a function at the rate $\Omega(1/n)$ in general, a result known since Voronovskaya (1932)[^5] and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
@@ -87,6 +93,7 @@ Thus, people have developed alternatives, including linear combinations and iter
 These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but most of those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).
 
 <a id=A_Conjecture_on_Polynomial_Approximation></a>
+
 ### A Conjecture on Polynomial Approximation
 
 The following is a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
@@ -100,6 +107,7 @@ Equivalently (see also Nacu and Peres (2005)[^3]), there is $C_1>0$ such that th
 My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially for any combination of the special cases mentioned at the end of "[**Main Question**](#Main_Question)", above.
 
 <a id=Strategies></a>
+
 ### Strategies
 
 The following are some strategies for answering these questions:
@@ -112,11 +120,12 @@ The following are some strategies for answering these questions:
 - Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|=|\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n])|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max|f^{(0)}|, ...,\max|f^{(r-1)}|)$, $L$ is $\max|f^{(r)}|$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 3 and 4 in "[**End Notes**](#End_Notes)" as well as "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes).**)
 
 <a id=Other_Questions></a>
+
 ## Other Questions
 
-- Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
+- Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\less p\less 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\greater p\ge a_0$.
 - For each $r>0$, characterize the functions $f(\lambda)$ that admit a Bernoulli factory where the expected number of coin flips, raised to the power of $r$, is finite.
-- [**Multiple-output Bernoulli factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let $f(\lambda):\[a, b\] \to (0, 1)$ be continuous, where $0\lt a\lt b\lt 1$**.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness (Keane and O'Brien 1994)[^1].
+- [**Multiple-output Bernoulli factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let** $f(\lambda):\[a, b\] \to (0, 1)$ **be continuous, where** $0\less a$, $a\less b$, $b\less 1$.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness (Keane and O'Brien 1994)[^1].
 
     But, **is there an algorithm for $f$ that produces _multiple_ outputs rather than one and has an expected number of coin flips per output that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain**? Call such an algorithm an _optimal factory_.  (See Nacu and Peres (2005, Question 1)[^3].)  And, does the answer change if the algorithm has access to a fair coin in addition to the biased coin?
 
@@ -131,7 +140,7 @@ The following are some strategies for answering these questions:
     1. If $f$ is algebraic over rational numbers it can be simulated by a pushdown automaton.
     2. min($\lambda$, $1-\lambda$) and $\lambda^{1/p}$, for every prime $p\ge 3$, can be simulated by a pushdown automaton.
     3. Given that $f$ is algebraic over rational numbers, it can be simulated by a pushdown automaton if and only if its "critical exponent" is a dyadic number greater than &minus;1 or has the form $-1-1/2^k$ for some integer $k\ge 1$. (**See note 2 in** [**"End Notes"**](#End_Notes)**.**)
-- [**Coin-flipping degree**](https://mathoverflow.net/questions/448538/bounds-on-the-coin-flipping-degree): Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  Then its _coin-flipping degree_ (Wästlund 1999)[^14] is the smallest value of $n$ such that $p$'s _Bernstein_ coefficients of degree $n$ lie in the closed unit interval.  There are upper bounds on $p$'s coin-flipping degree in many cases (thanks to Powers and Reznick (2001)[^15]), but not in all.  Thus, what are upper bounds on the coin flipping degree (1) where $p(0)=0$, $p(1)=1$, and the "standard" coefficients are real numbers; (2) where the "standard" coefficients are integers?
+- [**Coin-flipping degree**](https://mathoverflow.net/questions/448538/bounds-on-the-coin-flipping-degree): Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself and satisfies $0\less p(\lambda)\less 1$ whenever $0\less\lambda\less 1$.  Then its _coin-flipping degree_ (Wästlund 1999)[^14] is the smallest value of $n$ such that $p$'s _Bernstein_ coefficients of degree $n$ lie in the closed unit interval.  There are upper bounds on $p$'s coin-flipping degree in many cases (thanks to Powers and Reznick (2001)[^15]), but not in all.  Thus, what are upper bounds on the coin flipping degree (1) where $p(0)=0$, $p(1)=1$, and the "standard" coefficients are real numbers; (2) where the "standard" coefficients are integers?
 - [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): References are sought to papers and books that describe irrational constants or Bernoulli factory functions (continuous functions mapping (0,1) to itself) in any of the following ways.  Ideally they should involve only rational numbers and should not compute _p_-adic digit expansions.
     - Simulation experiments that succeed with an irrational probability.
     - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions of irrational constants.
@@ -149,12 +158,13 @@ Prove or disprove:
 
     - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O'Brien 1994)[^1]), and
     - $f(0)$ is 0 or 1 if 0 is in $f$'s domain and $f(1)$ is 0 or 1 whenever 1 is in $f$'s domain, and
-    - if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)\gt f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
-    - if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $g(x)\lt f(x)$ for every $x$ in the domain of f, except at 0 and 1.
+    - if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)\greater f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
+    - if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $g(x)\less f(x)$ for every $x$ in the domain of f, except at 0 and 1.
 
     A condition such as "0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz continuous function on $[0, \epsilon)$ for some $\epsilon>0$" does not work.  A counterexample is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ ($f(0)=0$), which is strongly simulable at 0 despite not being Lipschitz at 0.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)  Keane and O'Brien already showed strong simulability when $D$ contains neither 0 nor 1.
 
 <a id=End_Notes></a>
+
 ## End Notes
 
 **Note 1**: An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 < p < 1$ is a known rational.  This question's requirements imply that $\sum_{a\ge 0}\max_\lambda |\gamma_a(\lambda)| \le 1$.  The proof of Keane and O'Brien (1994)[^1] produces a convex combination of polynomials with 0 and 1 as Bernstein coefficients, but the combination is difficult to construct (it requires finding maximums, for example) and so this proof does not appropriately answer this question.
@@ -163,9 +173,10 @@ Prove or disprove:
 
 **Note 3**: This condition is also known as a "consistency requirement"; it ensures that not only the polynomials "increase" to $f(\lambda)$, but also their Bernstein coefficients do as well.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005)[^3]. For every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$, where $a(n,k)$ is the degree-$n$ polynomial's $k$-th Bernstein coefficient, where $0\le k\le 2n$ is an integer, and where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $n$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $k$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
-**Note 4**: If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>This question is a problem of finding the _Jensen gap_ of $W_n$ for certain kinds of hypergeometric random variables (**see Note 3**).  Lee et al. (2021) deal with a problem very similar to this one and find results that take advantage of $f$'s (here, $W_n$'s) smoothness, but unfortunately assume the variable is supported on an _open_ interval, rather than a _closed_ one (namely $[0,1]$) as in this question.<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6.<p>Particularly for the case $W_n=2f-B_n(f)$, the right-hand side of $(PB)$ is believed to be $O(1/n^{3/2})$ when $f$ has a Lipschitz continuous second derivative on $[0,1]$, but I have been unable to find a bound better than $O(1/n)$, especially because in one form or another my attempts at the bound seem to require an estimate of $|B_{2n}(f)-B_{n}(f)|$, which in general is no better than $O(1/n)$.  Thus, a proof or counterexample of a bound of $O(1/n^{3/2})$ in this case would be appreciated.
+**Note 4**: If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\less k\less 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\less k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>This question is a problem of finding the _Jensen gap_ of $W_n$ for certain kinds of hypergeometric random variables (**see Note 3**).  Lee et al. (2021) deal with a problem very similar to this one and find results that take advantage of $f$'s (here, $W_n$'s) smoothness, but unfortunately assume the variable is supported on an _open_ interval, rather than a _closed_ one (namely $[0,1]$) as in this question.<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6.<p>Particularly for the case $W_n=2f-B_n(f)$, the right-hand side of $(PB)$ is believed to be $O(1/n^{3/2})$ when $f$ has a Lipschitz continuous second derivative on $[0,1]$, but I have been unable to find a bound better than $O(1/n)$, especially because in one form or another my attempts at the bound seem to require an estimate of $|B_{2n}(f)-B_{n}(f)|$, which in general is no better than $O(1/n)$.  Thus, a proof or counterexample of a bound of $O(1/n^{3/2})$ in this case would be appreciated.
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.

@@ -1,4 +1,5 @@
 <a id=On_a_claim_of_computational_complexity></a>
+
 ## On a claim of computational complexity
 
 There are well-known unsolved problems of computational complexity.  One of them is the problem of whether any problem whose solution can be verified in polynomial time is solvable in polynomial time.  That is, whether the class NP equals the class P.  I have become aware that someone has tried to resolve this problem.  Although it was refuted early, in 2009, they updated the algorithm that supposedly supported the "resolution" (the most recent version is from 2017) and, unfortunately, the updated version hasn't been discussed or refuted since 2009. (And I believe the updated "resolution" should be refuted, but I don't see how.)

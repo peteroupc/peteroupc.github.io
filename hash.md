@@ -1,4 +1,5 @@
 <a id=A_Note_on_Hash_Functions></a>
+
 ## A Note on Hash Functions
 
 A _hash function_ is a function that maps an input of arbitrary size into an output with a fixed number of bits, called a _hash code_.
@@ -20,6 +21,7 @@ There are security attacks that serve to trigger worst-case performance on hash 
 Bret Mulvey has written a page on [**how hash functions are built**](https://papa.bretmulvey.com/post/124027987928).  According to him, hash functions have as their core a _mixing function_ (a function that maps N-bit inputs to N-bit outputs), and for hash functions the "best" mixing functions tend to produce wildly dispersed outputs for similar inputs.
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Richter, Alvarez, Dittrich, "A Seven-Dimensional Analysis of Hashing Methods and its Implications on Query Processing", _Proceedings of the VLDB Endowment_ 9(3), 2015.

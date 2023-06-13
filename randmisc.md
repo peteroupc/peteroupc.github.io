@@ -8,6 +8,7 @@ This page should be read in conjunction with the following articles:
 - [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html).
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Contents**](#Contents)
@@ -37,6 +38,7 @@ This page should be read in conjunction with the following articles:
 - [**License**](#License)
 
 <a id=About_This_Document></a>
+
 ## About This Document
 
 **This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/randmisc.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randmisc.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
@@ -52,11 +54,13 @@ I encourage readers to implement any of the algorithms given in this page, and r
 Comments on other aspects of this document are welcome.
 
 <a id=Samplers_for_Certain_Discrete_Distributions></a>
+
 ## Samplers for Certain Discrete Distributions
 
 The following are exact samplers for certain _discrete distributions_, or probability distributions that take on values each mappable to a different integer.
 
 <a id=On_a_Binomial_Sampler></a>
+
 ### On a Binomial Sampler
 
 The binomial(_n_, _p_) distribution models the number of successful trials ("coin flips") out of _n_ of them, where the trials are independent and have success probability _p_.
@@ -92,6 +96,7 @@ Also, according to the Bringmann paper, _m_ can be set such that _m_ is in the i
 >     3. If _n_ is greater than 0, add 1 to _k_ and go to step 2; otherwise, return _ret_. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)
 
 <a id=On_Geometric_Samplers></a>
+
 ### On Geometric Samplers
 
 As used in Bringmann and Friedrich (2013\)[^7], a geometric(_p_) random variate expresses the number of failing trial before the first success, where each trial ("coin flip") is independent and has success probability _p_, satisfying 0 &lt; _p_ &le; 1.
@@ -130,6 +135,7 @@ The second sub-algorithm returns an integer _m_ in [0, 2<sup>_k_</sup>) with pro
 9. Run the first sub-algorithm with _n_ = _m_, except in step 1 of that sub-algorithm, set _r_ to the value of _r_ built up by this algorithm, rather than 0, and set _i_ to 2<sup>_k_</sup>, rather than 2.  If that sub-algorithm returns 1, return _m_ (and, if requested, the number &minus;1).  Otherwise, return &minus;1 (and, if requested, an arbitrary value).
 
 <a id=Bounded_Geometric_Distribution></a>
+
 #### Bounded Geometric Distribution
 
 As used in the Bringmann paper, a bounded geometric(_p_, _n_) random variate is a geometric(_p_) random variate or _n_ (an integer greater than 0), whichever is less.  The following algorithm is equivalent to the algorithm given in that paper, but adapted to be more programmer-friendly.
@@ -145,6 +151,7 @@ As used in the Bringmann paper, a bounded geometric(_p_, _n_) random variate is 
     5. Add a uniform random integer in [0, 2<sup>_mbit_+1</sup>) to _m_, then return min(_n_, _d_\*2<sup>_k_</sup>+_m_).
 
 <a id=Symmetric_Geometric_Distribution></a>
+
 #### Symmetric Geometric Distribution
 
 Samples from the symmetric geometric distribution from (Ghosh et al. 2012)[^9], with parameter _&lambda;_ (a real number satisfying 0 &lt; _&lambda;_ &le; 1), in the form of an input coin with unknown probability of heads of _&lambda;_.
@@ -166,11 +173,13 @@ The algorithm of Li generates a variate from the _discrete Laplace distribution_
 5. Generate an unbiased random bit (either zero or one with equal probability).  If the bit is 0, return _y_.  Otherwise, if _y_ is 0, go to step 1.  Otherwise, return &minus;_y_.
 
 <a id=Weighted_Choice_for_Special_Distributions></a>
+
 ### Weighted Choice for Special Distributions
 
 The following are algorithms to sample items whose "weights" (which are related to the probability of sampling each item) are given in a special way.  They supplement the section "[**Weighted Choice**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice)" in my article "Randomization and Sampling Methods".
 
 <a id=Weighted_Choice_with_Weights_Written_as_an_Integer_and_Fraction></a>
+
 #### Weighted Choice with Weights Written as an Integer and Fraction
 
 Suppose there is a list called _weights_.  This is a list of _n_ weights, with labels starting at 0 and ending at _n_&minus;1.
@@ -192,6 +201,7 @@ Given this list of weights, the following algorithm chooses an integer in [0, _n
     - If _w_ is written as in case 3, let _r_ = rem(_x_, _y_) = _x_&minus;floor(_x_/_y_)\*_y_, then with probability _r_/_y_, return _i_. (For example, generate _z_, a uniform random integer satisfying 0&le;_z_&lt;_y_, then if _z_&lt;_r_, return _i_.) Otherwise, go to step 2.
 
 <a id=Distributions_with_nowhere_increasing_or_nowhere_decreasing_weights></a>
+
 #### Distributions with nowhere increasing or nowhere decreasing weights
 
 An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nowhere increasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2022\)[^12].  It has a logarithmic time complexity in terms of setup and sampling.
@@ -219,6 +229,7 @@ For _nowhere decreasing_ rather than nowhere increasing weights, the algorithm i
 > 2. If an algorithm will operate on potentially irrational numbers, then to avoid numerical errors, it should store and operate on real numbers in the form of constructive reals or recursive reals (see, e.g., Boehm 1987[^13], 2020[^14]), or in the form of partially-sampled random numbers (PSRNs) together with algorithms with [**desirable properties for PSRN samplers**](https://peteroupc.github.io/exporand.html#Properties).
 
 <a id=Unimodal_distributions_of_weights></a>
+
 #### Unimodal distributions of weights
 
 The following is an algorithm for sampling an integer in the interval \[_a_, _b_\) with probability proportional to a _unimodal distribution_ of weights (that is, nowhere decreasing on the left and nowhere increasing on the right) (Chewi et al. 2022\)[^12].  It assumes the mode (the point with the highest weight) is known.  An example is \[1, 3, 9, 4, 4\] when _a_ = 0 and _b_ = 5, and the _mode_ is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.
@@ -229,6 +240,7 @@ The following is an algorithm for sampling an integer in the interval \[_a_, _b_
 - The sampling is the same as for the algorithms in the previous section.
 
 <a id=Weighted_Choice_with_Log_Probabilities></a>
+
 #### Weighted Choice with Log Probabilities
 
 Huijben et al. (2022)[^15] reviews the Gumbel max trick and Gumbel softmax distributions.
@@ -256,6 +268,7 @@ an integer in the closed interval [0, _n_] can be sampled as follows:
 The algorithm's result is a vector _q_, which can be used only once to sample _i_ with probability proportional to _q_<sub>_i_</sub> (which is not a "log probability"). (In this case, steps 3 and 4 above can be omitted if that sampling method can work with weights that need not sum to 1.)
 
 <a id=Bernoulli_Distribution_for_Cumulative_Distribution_Functions></a>
+
 ### Bernoulli Distribution for Cumulative Distribution Functions
 
 Suppose a real number _z_ is given (which might be a partially-sampled random number [PSRN] or a rational number).  If a probability distribution&mdash;
@@ -276,6 +289,7 @@ Specifically, the probability of returning 1 is the _cumulative distribution fun
 > 2. All probability distributions have a CDF, not just those with a PDF, but also discrete ones such as Poisson or binomial.
 
 <a id=Bit_Vectors_with_Random_Bit_Flips></a>
+
 ### Bit Vectors with Random Bit Flips
 
 Chakraborty and Vardeman (2021)[^18] describes distributions of bit vectors with a random number of bit flips. Given three parameters &mdash; _&mu;_ is a _p_-item vector (list) with only zeros and ones in any combination; _p_ is the size of _&mu;_; and _&alpha;_ is a spread parameter greater than 0 and less than 1 &mdash; do the following to generate such a vector:
@@ -290,6 +304,7 @@ The paper describes two ways to establish the weights for _c_ in step 1 (there a
 - Generate _c_ with probability proportional to the following weights: [_&alpha;_<sup>0</sup>\*choose(_p_,0), _&alpha;_<sup>1</sup>\*choose(_p_,1), ..., _&alpha;_<sup>_p_</sup>\*choose(_p_,_p_)].  (Since the sum of weights is no more than $2^p$, each weight can be divided by $2^p$ to get weights that are 1 or less, so that this can be implemented as follows, for example.  Generate a uniform random integer in \[0, _p_\], call it _d_, then flip a coin that shows heads with probability _&alpha;_, _d_ times, and a coin that shows heads with probability choose(_p_, _d_)/2<sup>_p_</sup> once, then either return _d_ if all the flips are heads, or repeat this process otherwise.  Note that the probability choose(_p_, _d_)/2<sup>_p_</sup> is simple to simulate for being a rational number.)
 
 <a id=Log_Uniform_Distribution></a>
+
 ### Log-Uniform Distribution
 
 Samples from the so-called "log uniform distribution" as used by the Abseil programming library.  This algorithm takes a maximum _mx_ and a logarithmic base _b_, and chooses an integer in \[0, _mx_\] such that two values are chosen with the same probability if their base-_b_ logarithms are equal in their integer parts (which roughly means that lower numbers occur with an exponentially greater probability).  Although this algorithm works, in principle, for every _b_ > 0, Abseil supports only integer bases _b_.
@@ -301,6 +316,7 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 5. Choose a uniform random integer in the closed interval [_st_, _en_], and return it.
 
 <a id=Sampling_Unbounded_Monotone_Density_Functions></a>
+
 ## Sampling Unbounded Monotone Density Functions
 
 This section shows a preprocessing algorithm to generate a random variate in the closed interval [0, 1] from a distribution whose probability density function (PDF)&mdash;
@@ -325,6 +341,7 @@ By the way, this algorithm arose while trying to devise an algorithm that can ge
 In the case of powers of a uniform random variate between 0 and 1, call the variate _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>.  Note that this formula is the same regardless of _i_. (To return 1 with probability (1/2)<sup>1/_n_</sup>, the algorithm for **(_a_/_b_)<sup>_z_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)" can be used with _a_=1, _b_=2, and _z_=1/_n_.)  This is found by taking the PDF _f_(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
 
 <a id=Certain_Families_of_Distributions></a>
+
 ## Certain Families of Distributions
 
 This section is a note on certain families of univariate (one-variable) probability distributions, with emphasis on generating random variates from them.  Some of these families are described in Ahmad et al. (2019\)[^19], Jones (2015)[^20].
@@ -438,6 +455,7 @@ In this algorithm:
 > **Note:** An important property for use in statistical estimation is _identifiability_.  A family of distributions is _identifiable_ if it has the property that if two parameter vectors (_&theta;_<sub>1</sub> and _&theta;_<sub>2</sub>) determine the same distribution, then _&theta;_<sub>1</sub> must equal _&theta;_<sub>2</sub>.
 
 <a id=Certain_Distributions></a>
+
 ## Certain Distributions
 
 In the table below, _U_ is a uniform random variate between 0 and 1, and all random variates are independently generated.
@@ -474,6 +492,7 @@ In the table below, _U_ is a uniform random variate between 0 and 1, and all ran
 | Tilted beta (Hahn and López Martín 2005)[^76] | (1) With probability _&theta;_, return a beta(_&alpha;_, _&beta;_) variate; (2) Generate a uniform variate in (0, 1), call it _x_; (3) Flip coin that returns 1 with probability _x_, and another that returns 1 with probability _v_; (4) If both coins return 1 or both return 0, return _x_; otherwise go to step 2. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0; _&beta;_>0. |
 
 <a id=Random_Variate_Generation_via_Quantiles></a>
+
 ## Random Variate Generation via Quantiles
 
 This note is about generating random variates from a non-discrete distribution via _inverse transform sampling_, using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
@@ -534,6 +553,7 @@ Here is a sketch of how this rejection sampler might work:
 4. If _y_ doesn't clearly fall in any of the cases in the previous step, generate more digits of _y_, uniformly at random, and go to the previous step.
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
+
 ## Batching Random Samples via Randomness Extraction
 
 Devroye and Gravel (2020\)[^77] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits given that it produces a specific output _Y_ (or _P_(_X_ | _Y_) for short):
@@ -553,6 +573,7 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 3. Now, when the sampler consumes a random bit, it checks the input queue.  As long as 64 bits or more are in the input queue, the sampler dequeues 64 bits from it, runs the extractor on those bits, and adds the extracted bits to an output queue. (The number 64 can instead be any even number greater than 2.)  Then, if the output queue is not empty, the sampler dequeues a bit from that queue and uses that bit; otherwise it generates an unbiased random bit as usual.
 
 <a id=Sampling_Distributions_Using_Incomplete_Information></a>
+
 ## Sampling Distributions Using Incomplete Information
 
 The Bernoulli factory problem (the problem of turning one biased coin into another biased coin; see "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an _oracle_ (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a _coin that shows heads or tails where the probability of heads is unknown_.  The rest of this section deals with oracles that go beyond coins.
@@ -614,6 +635,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 > **Example:** Let _n_&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;_n_) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/_n_)<sup>_f_(1)</sup> for any _f_.  This is consistent with the results for _Bernoulli factories_ (Keane and O'Brien 1994)[^86], where a coin that shows heads with unknown probability _&lambda;_ = 1/_n_ cannot be turned into a coin that shows heads with probability g(_&lambda;_) = exp(&minus;1/_&lambda;_) = exp(&minus;_n_) since _g_ is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability _h_(_n_) = (1+ln(_n_))/_n_ and 0 with probability 1&minus;_h_(_n_), _can_ be simulated, because min(_h_(_n_), 1&minus;_h_(_n_)) &ge; (1/_n_)<sup>3</sup>.
 
 <a id=Additional_Algorithms></a>
+
 ### Additional Algorithms
 
 The following algorithms are included here because they require applying an arbitrary function (such as _f_(_&lambda;_)) to a potentially irrational number.
@@ -658,11 +680,13 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 > **Note:** This algorithm is exact if the oracle produces only rational numbers _and_ if all _c_\[_i_\] are rational numbers.  Otherwise, the algorithm can introduce numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", above).  See also note 3 on the previous algorithm.
 
 <a id=Acknowledgments></a>
+
 ## Acknowledgments
 
 Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" in this and related articles, some sections that related to geometric distributions were moved here.  He also noticed a minor error which was corrected.
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
@@ -841,6 +865,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^87]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
 <a id=License></a>
+
 ## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

@@ -2,7 +2,8 @@ def prepareMarkdown(data)
   contents=""
   headings=[]
   slugs=[]
-  data=data.gsub(/<a\s+(id|name)[^>]*>\s*<\/a>/,"")
+  data=data.gsub(/<a\s+(id|name)[^>]*>\s*<\/a>\n+/,"")
+  data=data.gsub(/\#\n*\#\#/,"###")
   data=data.gsub(/\t/," "*8)
   notetexts={}
   textstorefs={} # to help remove duplicate note texts
@@ -84,7 +85,7 @@ def prepareMarkdown(data)
   data.scan(/^(\#\#+)\s+(.*)\s+?/){|heading|
    h0=heading[0]
    h1=heading[1]
-   h1=h1.gsub(/<a\s+(id|name)[^>]*>\s*<\/a>/,"").gsub(/\s+$/,"")
+   h1=h1.gsub(/<a\s+(id|name)[^>]*>\s*<\/a>\s+/,"").gsub(/\s+$/,"")
    headings.push(h1)
    indent=" "*(4*(h0.length-2))+"- "
    h1slug=h1.gsub(/<[^>]*>/,"").gsub(/\W+/,"_").gsub(/^_+|_+$/,"")
@@ -123,13 +124,13 @@ def prepareMarkdown(data)
   data=data.gsub(/\*\*\*\*+\]\(/,"**](")
   index=0
   data=data.gsub(/^(\#\#+)\s+(.*)\r?/){
-   ret="<a id=#{slugs[index]}></a>\n#{$1} #{headings[index]}"
+   ret="<a id=#{slugs[index]}></a>\n\n#{$1} #{headings[index]}"
    index+=1
    next ret
   }
   if data.include?("<<Index:") && data.include?("## Index")
-    headingre= /(<a\s+(?:id|name)\s*=\s*([^>]+)>\s*<\/a>\s*\#\#+\s+(.*)\s+?)/
-    headingres= /(?:<a\s+(?:id|name)\s*=\s*(?:[^>]+)>\s*<\/a>\s*\#\#+\s+(?:.*)\s+?)/
+    headingre= /(<a\s+(?:id|name)\s*=\s*([^>]+)>\s*<\/a>[\n\s]*\#\#+\s+(.*)\s+?)/
+    headingres= /(?:<a\s+(?:id|name)\s*=\s*(?:[^>]+)>\s*<\/a>[\n\s]*\#\#+\s+(?:.*)\s+?)/
     sections=data.split(headingres)
     iheadings=[];data.scan(headingre){|m|
       iheadings.push(m)
@@ -166,10 +167,40 @@ end
 
 def preparePandoc(markdown)
   markdown=markdown.gsub(/^(?:\#)\s+(.*)\n+/) { "<h1>" + $1+"</h1>\n\n" }
-  markdown=markdown.gsub(/^(?:\#\#)\s+(.*)\n+/) { "<small>\n# " + $1+"</small>\n\n" }
-  markdown=markdown.gsub(/^(?:\#\#\#)\s+(.*)\n+/) { "## " + $1+"\n\n" }
-  markdown=markdown.gsub(/^(?:\#\#\#\#)\s+(.*)\n+/) { "### " + $1+"\n\n" }
+  markdown=markdown.gsub(/^(?:\#\#)\s+(.*)\n+/) { "<small>\n\n# " + $1+"</small>\n\n" }
+  markdown=markdown.gsub(/^(?:\#\#\#)\s+(.*)\n+/) { "\n## " + $1+"\n\n" }
+  markdown=markdown.gsub(/^(?:\#\#\#\#)\s+(.*)\n+/) { "\n### " + $1+"\n\n" }
   markdown=markdown.gsub(/\[([^\]]+)\]\(\#[^\)]+\)/) { $1 }
+  markdown=markdown.gsub(/\u2212/) { "\n" }
+  markdown=markdown.gsub(/&minus;/) { " $-$ " }
+  markdown=markdown.gsub(/&ge;/) { " $\\ge$ " }
+  markdown=markdown.gsub(/&ne;/) { " $\\ne$ " }
+  markdown=markdown.gsub(/&le;/) { " $\\le$ " }
+  markdown=markdown.gsub(/&Sigma;/) { " $\\Sigma$ " }
+  markdown=markdown.gsub(/_&alpha;_/) { " $\\alpha$ " }
+  markdown=markdown.gsub(/_&beta;_/) { " $\\beta$ " }
+  markdown=markdown.gsub(/_&eta;_/) { " $\\eta$ " }
+  markdown=markdown.gsub(/_&phi;_/) { " $\\phi$ " }
+  markdown=markdown.gsub(/_&pi;_/) { " $\\pi$ " }
+  markdown=markdown.gsub(/&pi;/) { " $\\pi$ " }
+  markdown=markdown.gsub(/_&zeta;_/) { " $\\zeta$ " }
+  markdown=markdown.gsub(/_&nu;_/) { " $\\nu$ " }
+  markdown=markdown.gsub(/_&gamma;_/) { " $\\gamma$ " }
+  markdown=markdown.gsub(/&gamma;/) { " $\\gamma$ " }
+  markdown=markdown.gsub(/_&delta;_/) { " $\\delta$ " }
+  markdown=markdown.gsub(/_&Delta;_/) { " $\\Delta$ " }
+  markdown=markdown.gsub(/&prime;/) { " $\\prime$ " }
+  markdown=markdown.gsub(/&rho;/) { " $\\rho$ " }
+  markdown=markdown.gsub(/_&Gamma;_/) { " $\\Gamma$ " }
+  markdown=markdown.gsub(/_&mu;_|\u03bc/) { " $\\mu$ " }
+  markdown=markdown.gsub(/&#x25a1;|\u25a1/i) { " [  ] " } # TODO
+  markdown=markdown.gsub(/&#x2113;|\u2113/i) { " $l$ " } # TODO
+  markdown=markdown.gsub(/_&#x03f5;_|\u03f5/i) { " $\\epsilon$ " }
+  markdown=markdown.gsub(/&#x03f5;|\u03f5/i) { " $\\epsilon$ " }
+  markdown=markdown.gsub(/_&epsilon;_|\u03b5/) { " $\\varepsilon$ " }
+  markdown=markdown.gsub(/&epsilon;|\u03f5/) { " $\\epsilon$ " }
+  markdown=markdown.gsub(/_&lambda;_/) { " $\\lambda$ " }
+  markdown=markdown.gsub(/&lambda;/) { " $\\lambda$ " }
   markdown=markdown.gsub(/(dash;|\:)(\n+)-\s+/) { $1+"\n\n- " }
   return markdown
 end
@@ -215,18 +246,26 @@ Dir.glob("*.md").sort.each{|fn|
     rtmppdf=Dir::tmpdir()+"/#{file}#{ii}.pdf"
     p rtmppdf
     p rpdf
-    outputengine="html5"
+    # outputengine="markdown_github"
     #outputengine="latex"
+    if r.include?(".svg")
+       outputengine="html5"
+    else
+       outputengine="latex"
+    end
     output="-o '#{rtmppdf}'"
     #output="-o '#{rtex}'"
     File.delete(rtex) rescue nil
-    cmd="pandoc -V papersize=letter -f gfm --number-sections --number-offset=0 --top-level-division=" + (outputengine=="html5" ? "chapter" : "section")
+    cmd="pandoc -V papersize=letter --number-sections --number-offset=0 --top-level-division=" + (outputengine=="html5" ? "chapter" : "section")
     cmd+=" -t #{outputengine}"
-    cmd+=" --pdf-engine=wkhtmltopdf"
+    cmd+=" --from=markdown"
     cmd+=" #{output} --metadata pagetitle=\"#{title}\""
     if outputengine!="html5"
+      cmd+=" --pdf-engine=xelatex"
       cmd+=" --variable=title:\"#{title}\""
       cmd+=" --variable=author:\"Peter Occil\""
+    else
+      cmd+=" --pdf-engine=wkhtmltopdf"
     end
     cmd+=" -s #{tmpfilemd}"
     puts cmd

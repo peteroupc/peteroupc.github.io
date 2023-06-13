@@ -3,6 +3,7 @@
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Introduction></a>
+
 ## Introduction
 
 Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called _random variates_.  This page presents general-purpose algorithms for estimating the mean value ("long-run average") of those variates, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.
@@ -14,9 +15,10 @@ Not yet covered are the following algorithms:
 - Unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (for example, estimators that average an increasing number of sample points).  See, for example, Vihola (2018\)[^1].
 
 <a id=About_This_Document></a>
+
 ### About This Document
 
-**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/estimation.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/estimation.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/estimation.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/estimation.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.
 
 My audience for this article is **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.
 
@@ -28,25 +30,28 @@ I encourage readers to implement any of the algorithms given in this page, and r
 
 Comments on other aspects of this document are welcome.
 
-<a id=Contents></a>
-## Contents
-
-- [**Introduction**](#Introduction)
-    - [**About This Document**](#About_This_Document)
-- [**Contents**](#Contents)
-- [**Concepts**](#Concepts)
-- [**A Relative-Error Algorithm for a Bernoulli Stream**](#A_Relative_Error_Algorithm_for_a_Bernoulli_Stream)
-- [**A Relative-Error Algorithm for a Bounded Stream**](#A_Relative_Error_Algorithm_for_a_Bounded_Stream)
-- [**An Absolute-Error Adaptive Algorithm**](#An_Absolute_Error_Adaptive_Algorithm)
-- [**Estimating the Mode**](#Estimating_the_Mode)
-- [**Estimating a Function of the Mean**](#Estimating_a_Function_of_the_Mean)
-- [**Randomized Integration**](#Randomized_Integration)
-- [**Finding Coins with Maximum Success Probabilities**](#Finding_Coins_with_Maximum_Success_Probabilities)
-- [**Requests and Open Questions**](#Requests_and_Open_Questions)
-- [**Notes**](#Notes)
-
 <a id=Concepts></a>
+
 ## Concepts
+
+The following concepts are used in this document.
+
+The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 1, and every real number in between.
+
+Each algorithm takes a stream of independent random variates (numbers).  These variates follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers have greater probability of occurring than others.  A distribution has the following properties.
+
+- The _expectation_, _expected value_, or _mean_ is the "long-run average" value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  If **E**\[_X_\] exists, then with probability 1, the average of the first _n_ sampled items taken from the stream approaches the expected value as _n_ gets large (as a result of the _law of large numbers_).
+- An _n<sup>th</sup> moment_ is the expected value of _X_<sup>_n_</sup>.
+- An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_.
+- An _n<sup>th</sup> central absolute moment_ (c.a.m.) is the expected value of abs(_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.
+
+Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the stream's numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for every _k_ in the interval [1, _n_).
+
+The _relative error_ of an estimation algorithm is abs(_est_/_trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
+
+<a id=A_Relative_Error_Algorithm_for_a_Bernoulli_Stream></a>
+
+## A Relative-Error Algorithm for a Bernoulli Stream
 
 The following algorithm from Huber (2017\)[^2] estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm's relative error is independent of that probability, however, and the algorithm produces _unbiased_ estimates.  Specifically, the stream of numbers has the following properties:
 
@@ -78,8 +83,9 @@ The algorithm, called **Algorithm A** in this document, follows.
 > 3. The generation of a gamma random variate and the division by that variate can cause numerical errors in practice, such as rounding and cancellations, unless care is taken.
 > 4. Huber proposes another algorithm that claims to be faster when the mean is bounded away from zero; see (Huber 2022)[^4].
 
-<a id=A_Relative_Error_Algorithm_for_a_Bernoulli_Stream></a>
-## A Relative-Error Algorithm for a Bernoulli Stream
+<a id=A_Relative_Error_Algorithm_for_a_Bounded_Stream></a>
+
+## A Relative-Error Algorithm for a Bounded Stream
 
 The following algorithm comes from Huber and Jones (2019\)[^5]; see also Huber (2017\)[^6].  It estimates the expected value of a stream of random variates with the following properties:
 
@@ -130,8 +136,9 @@ The standard deviation sub-algorithm follows.
 > 1. As noted in Huber and Jones, if the stream of random variates takes on values in the interval [0, _m_], where _m_ is a known number, we can divide the stream's numbers by _m_ before using them in _Algorithm B_, and the algorithm will still work.
 > 2. While this algorithm is exact in theory (assuming computers can store real numbers of any precision), practical implementations of it can cause numerical errors, such as rounding and cancellations, unless care is taken.
 
-<a id=A_Relative_Error_Algorithm_for_a_Bounded_Stream></a>
-## A Relative-Error Algorithm for a Bounded Stream
+<a id=An_Absolute_Error_Adaptive_Algorithm></a>
+
+## An Absolute-Error Adaptive Algorithm
 
 The following algorithm comes from Kunsch et al. (2019\)[^7].  It estimates the mean of a stream of random variates with the following properties:
 
@@ -196,8 +203,9 @@ The algorithm, called **Algorithm C** in this document, follows.
 > 2. The kurtosis of a Poisson distribution with mean _&mu;_ is (3 + 1/_&mu;_).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or greater but otherwise unknown, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (3 + 1/_&nu;_)<sup>1/4</sup>.
 > 3. The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; 9<sup>1/4</sup> = sqrt(3).
 
-<a id=An_Absolute_Error_Adaptive_Algorithm></a>
-## An Absolute-Error Adaptive Algorithm
+<a id=Estimating_the_Mode></a>
+
+## Estimating the Mode
 
 Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the _mode_.(Dutta and Goswami 2010)[^12]  This assumes the following are known:
 
@@ -211,8 +219,9 @@ The following algorithm correctly estimates the mode with probability $1-\delta$
 1. Calculate _m_ = ceil($\frac{(4\epsilon+3)(\ln(\frac{n}{\delta})+\ln(2))}{6\epsilon^2}$).
 2. Take _m_ items from the stream.  If one item occurs more frequently than any other item taken this way, return the most frequent item.  Otherwise, return an arbitrary but fixed item (among the items the stream can take).
 
-<a id=Estimating_the_Mode></a>
-## Estimating the Mode
+<a id=Estimating_a_Function_of_the_Mean></a>
+
+## Estimating a Function of the Mean
 
 _Algorithm C_ can be used to estimate a function of the mean of a stream of random variates with unknown mean.  Specifically, the goal is to estimate _f_(**E**[**z**]), where:
 
@@ -275,8 +284,9 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 > 2. Take _f_(_x_) = _x_.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/1.
 > 3. The variance of a Poisson distribution with mean _&mu;_ is _&mu;_.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or less but otherwise unknown, we can take _&sigma;_ = sqrt(_&nu;_) so that the sample size _n_ is ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&epsilon;_<sup>2</sup>)), in accordance with the second case of _Algorithm E_.
 
-<a id=Estimating_a_Function_of_the_Mean></a>
-## Estimating a Function of the Mean
+<a id=Randomized_Integration></a>
+
+## Randomized Integration
 
 Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.[^18]
 
@@ -329,8 +339,9 @@ Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if 
 >
 > The paper (Theorem 3.9) also implied a sample size _n_ for use in stratified sampling when _f_ is Hölder continuous with Hölder exponent _&beta;_ or less [^21] and is defined on the _d_-dimensional hypercube \[0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
 
-<a id=Randomized_Integration></a>
-## Randomized Integration
+<a id=Finding_Coins_with_Maximum_Success_Probabilities></a>
+
+## Finding Coins with Maximum Success Probabilities
 
 Given _m_ coins each with unknown probability of heads, the following algorithm finds the _k_ coins with the greatest probability of showing heads, such that the algorithm correctly finds them with probability at least 1 &minus; _&delta;_.  It uses the following parameters:
 
@@ -352,59 +363,14 @@ Agarwal et al. (2017\)[^22] called this algorithm "aggressive elimination", and 
 6. If _&mu;_ &le; 2\*_k_, do a recursive run of this algorithm, using only the coins in _C_ and with _&delta;_ = _&delta;_/2 and _r_ = 1.
 7. If _&mu;_ > 2\*_k_, do a recursive run of this algorithm, using only the coins in _C_ and with _&delta;_ = _&delta;_/2 and _r_ = _r_ &minus; 1.
 
-<a id=Finding_Coins_with_Maximum_Success_Probabilities></a>
-## Finding Coins with Maximum Success Probabilities
+<a id=Requests_and_Open_Questions></a>
+
+## Requests and Open Questions
 
 For open questions, see "[**Questions on Estimation Algorithms**](https://peteroupc.github.io/requestsother.html#Questions_on_Estimation_Algorithms)".
 
-<a id=Requests_and_Open_Questions></a>
-## Requests and Open Questions
-
-[^1]: Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462.
-
-[^2]: Huber, M., 2017. A Bernoulli mean estimate with known relative error distribution. Random Structures & Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).
-
-[^3]: Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016).
-
-[^4]: Huber, M., "[**Tight relative estimation in the mean of Bernoulli random variables**](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
-
-[^5]: Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.
-
-[^6]: Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.
-
-[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .
-
-[^8]: Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v3)", arXiv:1208.4318v3 [math.ST], 2012/2013.
-
-[^9]: As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.
-
-[^10]: "_k_ is even" means that _k_ is divisible by 2.  This is true if _k_ &minus; 2\*floor(_k_/2) equals 0, or if the least significant bit of abs(_x_) is 0.
-
-[^11]: Lee, J.C. and Valiant, P., 2022. [**Optimal Sub-Gaussian Mean Estimation in Very High Dimensions**](https://drops.dagstuhl.de/opus/volltexte/2022/15694/). In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik.
-
-[^12]: Dutta, Santanu, and Alok Goswami. "Mode estimation for discrete distributions." Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.
-
-[^13]: A _Lipschitz continuous_ function with Lipschitz constant _M_ is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_ apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_.
-
-[^14]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality.
-
-[^15]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
-
-[^16]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval \[_a_, _b_\] is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
-
-[^17]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
-
-[^18]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
-
-[^19]: J.A. Tropp, "ACM 217: Probability in High Dimensions", Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.
-
-[^20]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
-
-[^21]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
-
-[^22]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
-
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462.
@@ -450,3 +416,9 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 [^21]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 
 [^22]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+
+<a id=License></a>
+
+## License
+
+Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

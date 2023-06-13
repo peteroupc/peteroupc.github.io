@@ -5,6 +5,7 @@
 This page lists questions and issues relating to my articles posted on this site.  Any answers to these questions will greatly improve those articles.  If you can answer any of them, post an issue in the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Contents**](#Contents)
@@ -18,6 +19,7 @@ This page lists questions and issues relating to my articles posted on this site
 - [**License**](#License)
 
 <a id=My_Probability_Questions></a>
+
 ## My Probability Questions
 
 The following two pages describe questions I have also posted on _MathOverflow_ and other _Stack Exchange_ sites.  Can you help answer any of these?  Answers to them will greatly improve my articles on this site.
@@ -26,6 +28,7 @@ The following two pages describe questions I have also posted on _MathOverflow_ 
 - [**Other Open Questions on Probability**](https://peteroupc.github.io/requestsother.html)
 
 <a id=Randomization_and_Sampling_Methods></a>
+
 ## Randomization and Sampling Methods
 
 **Size Reduction Sought:**
@@ -44,6 +47,7 @@ Here are my goals for both articles:
 - To ensure the documents are easy for programmers to understand and implement.
 
 <a id=Bernoulli_Factory_Algorithms></a>
+
 ## Bernoulli Factory Algorithms
 
 - [**https://peteroupc.github.io/bernoulli.html**](https://peteroupc.github.io/bernoulli.html)
@@ -53,6 +57,7 @@ This page shows algorithms to turn a coin with an unknown probability of heads i
 For open questions, see "[**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)".
 
 <a id=Partially_Sampled_Random_Numbers></a>
+
 ## Partially-Sampled Random Numbers
 
 - [**https://peteroupc.github.io/exporand.html**](https://peteroupc.github.io/exporand.html)
@@ -68,6 +73,7 @@ This page describes a structure for storing a random variate with arbitrary prec
 For other open questions, see "[**Other Open Questions on Probability**](https://peteroupc.github.io/requestsother.html)".
 
 <a id=Randomized_Estimation_Algorithms></a>
+
 ## Randomized Estimation Algorithms
 
 [**https://peteroupc.github.io/estimation.html**](https://peteroupc.github.io/estimation.html)
@@ -75,6 +81,7 @@ For other open questions, see "[**Other Open Questions on Probability**](https:/
 For open questions, see "[**Questions on Estimation Algorithms**](https://peteroupc.github.io/requestsother.html#Questions_on_Estimation_Algorithms)".
 
 <a id=Color_Topics_for_Programmers></a>
+
 ## Color Topics for Programmers
 
 [**https://peteroupc.github.io/colorgen.html**](https://peteroupc.github.io/colorgen.html)
@@ -90,11 +97,13 @@ Does any of the following exist?
 - Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
 
 <a id=Notes></a>
+
 ## Notes
 
 [^1]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994.
 
 <a id=License></a>
+
 ## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
