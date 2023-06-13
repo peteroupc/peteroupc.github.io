@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/12"><meta name="citation_online_date" content="2023/06/12"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/13"><meta name="citation_online_date" content="2023/06/13"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -345,7 +345,7 @@
 <li>ErrShift($f, m$) as 1.01 $\cdot\sum_{i\ge m} \epsilon(f, 2^i)$.  The factor 1.01 is needed to ensure each difference polynomial is strictly between 0 and 1.
 
 <ul>
-<li><strong>Example:</strong> If $\epsilon(f, n) = C/n^r$, then ErrShift($f, m)$ = $1.01\cdot C 2^r/(((2^r)-1)\cdot 2^{rm})$.</li>
+<li><strong>Example:</strong> If $\epsilon(f, n) = C/n^r$, then ErrShift($f, m)$ = $1.01\cdot C\cdot 2^r/(((2^r)-1)\cdot 2^{rm})$.</li>
 </ul></li>
 <li>DiffWidth($f, m$) as 1.01 $\cdot 2 (\epsilon(f, 2^m)$ + $\epsilon(f, 2^{m+1}))$.  This is an upper bound on the maximum difference between the shifted degree-$2^m$ and the shifted degree-$(2^{m+1})$ polynomial.</li>
 </ul></li>
@@ -599,41 +599,39 @@
 
 <p>[^33]: Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</p>
 
-<p>[^34]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</p>
+<p>[^34]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</p>
 
 <p>[^35]: S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS], 2018.</p>
 
 <p>[^36]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.</p>
 
-<p>[^37]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</p>
+<p>[^37]: Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy&quot;, <em>Journal of Mathematical Psychology</em> 95 (2020): 102308.</p>
 
-<p>[^38]: Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy&quot;, <em>Journal of Mathematical Psychology</em> 95 (2020): 102308.</p>
+<p>[^38]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</p>
 
-<p>[^39]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</p>
+<p>[^39]: Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</p>
 
-<p>[^40]: Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</p>
+<p>[^40]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</p>
 
-<p>[^41]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</p>
+<p>[^41]: Levy, H., <em>Stochastic dominance</em>, 1998.</p>
 
-<p>[^42]: Levy, H., <em>Stochastic dominance</em>, 1998.</p>
+<p>[^42]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In <em>Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science</em>, 2004. (pp. 12-21). IEEE.</p>
 
-<p>[^43]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In <em>Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science</em>, 2004. (pp. 12-21). IEEE.</p>
+<p>[^43]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</p>
 
-<p>[^44]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</p>
+<p>[^44]: Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</p>
 
-<p>[^45]: Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</p>
+<p>[^45]: Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</p>
 
-<p>[^46]: Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</p>
+<p>[^46]: Vatan (2001) claims that a finite-state generator has a continuous <code>CDF</code> (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.</p>
 
-<p>[^47]: Vatan (2001) claims that a finite-state generator has a continuous <code>CDF</code> (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.</p>
+<p>[^47]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</p>
 
-<p>[^48]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</p>
+<p>[^48]: Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</p>
 
-<p>[^49]: Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</p>
+<p>[^49]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
-<p>[^50]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
-
-<p>[^51]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+<p>[^50]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -831,11 +829,11 @@
 where $\text{Qmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the interval $[0, r]$, $r=(m b_{m-1})/(m b_{m-1}+C)$, $s=\frac{m b_{m-1}}{2}(C/(m b_{m-1}+C))^{m-1}$, $C=2 (|b_0|{m\choose 0} + ... + |b_m|{m\choose m})$, $M=\max(|b_0|{m\choose 0}, ...,|b_{m-1}|{m\choose m-1})$, $z=P(0)P(m) + P(1)P(m-1) + ... + P(m-1)P(1)$, and $P(b)=b(b-1)/2$ if $b\ge 2$, or 1 otherwise (Powers and Reznick 2006)[^20].</li>
 </ul>
 
-<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 x^0 + ... + a_n x^n$ be a polynomial that maps the closed unit interval to itself.  Then the coefficients $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.</p>
+<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the coefficients $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.</p>
 
-<p><em>Proof</em>:  This can be seen by evaluating $p(1)$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;</p>
+<p><em>Proof</em>:  This can be seen by evaluating $p(1) = a_0 + ... + a_n$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;</p>
 
-<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 x^0 + ... + a_n x^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  If $p$&#39;s coin-flipping degree is $n$, then $|a_i|\le 2^i {n\choose i}$.</p>
+<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + ... + a_n\lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  If $p$&#39;s coin-flipping degree is $n$, then $|a_i|\le 2^i {n\choose i}$.</p>
 
 <p><em>Proof</em>: Consider the matrix that transforms a polynomial&#39;s Bernstein coefficients to &quot;power&quot; coefficients, which is $n\times n$ if the polynomial&#39;s degree is $n$ (Ray and Nataraj 2012, eq. (8))[^21].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$&#39;s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding &quot;power&quot; coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;</p>
 
@@ -1609,12 +1607,12 @@ for i in range(20):
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Mossel and Peres (2005)[^37] defined pushdown automata to start with a non-empty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
-<li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)[^38] and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)[^38], as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
+<li>Mossel and Peres (2005)[^34] defined pushdown automata to start with a non-empty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
+<li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)[^37] and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)[^37], as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
 </ol>
 </blockquote>
 
-<p><strong>Proposition 0</strong> (Mossel and Peres 2005[^37], Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
+<p><strong>Proposition 0</strong> (Mossel and Peres 2005[^34], Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
 
 <p>It is not known whether <strong>ALGRAT</strong> and <strong>PDA</strong> are equal, but the following can be established about <strong>PDA</strong>:</p>
 
@@ -1675,11 +1673,11 @@ for i in range(20):
 
 <p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or (f&#x2218;g)(&lambda;).</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>&lambda;</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^37] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>&lambda;</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^34] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
 <p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps the open interval (0, 1) to itself is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)[^37].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;</p>
+<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)[^34].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> An unbounded stack size is necessary for a pushdown automaton to simulate functions that a finite-state machine can&#39;t.  With a bounded stack size, there is a finite-state machine where each state not only holds the pushdown automaton&#39;s original state, but also encodes the contents of the stack (which is possible because the stack&#39;s size is bounded); each operation that would push, pop, or change the top symbol transitions to a state with the appropriate encoding of the stack instead.</p>
@@ -1701,9 +1699,9 @@ for i in range(20):
 (S&prime;, HEADS, <em>stacksymbol</em>) &rarr; (T, <em>newstack</em>), and<br/>
 (S&prime;, TAILS, <em>stacksymbol</em>) &rarr; (FAILURE, {}).</p>
 
-<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)[^39], the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of Mossel and Peres (2005)[^37] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)[^38], the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of Mossel and Peres (2005)[^34] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
-<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^40]):</p>
+<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^39]):</p>
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> (rewrite <em>X</em> to the letter <em>a</em>).</li>
@@ -1719,7 +1717,7 @@ for i in range(20):
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> becomes the two rules&mdash;<br>(START, HEADS, <em>X</em>) &rarr; (<em>letter</em>, {}), and<br>(START, TAILS, <em>X</em>) &rarr; (<em>letter</em>, {}).<br>Here, <em>letter</em> is either START or a unique state in <em>F</em> that &quot;detours&quot; to a letter-generating operation for <em>a</em> and sets the state back to START when finished (see Proposition 4).  If <em>a</em> is <em>&epsilon;</em>, <em>letter</em> is START and no letter-generating operation is done.</li>
-<li><em>X</em> &rarr;<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)[^37].  If <em>a</em><sub><em>i</em></sub> is <em>&epsilon;</em>, no letter-generating operation is done.</li>
+<li><em>X</em> &rarr;<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)[^34].  If <em>a</em><sub><em>i</em></sub> is <em>&epsilon;</em>, no letter-generating operation is done.</li>
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) becomes the two rules&mdash;<br>(START, HEADS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}), and<br>(START, TAILS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}).</li>
 </ul>
 
@@ -1731,16 +1729,16 @@ for i in range(20):
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) becomes <em>X</em> = <em>Y</em>*<em>Z</em>.</li>
 </ul>
 
-<p>Solving this system for the grammar&#39;s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar&#39;s word distribution.  (See also Flajolet et al. 2010[^41], Icard 2020[^42].) &#x25a1;</p>
+<p>Solving this system for the grammar&#39;s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar&#39;s word distribution.  (See also Flajolet et al. 2010[^40], Icard 2020[^41].) &#x25a1;</p>
 
 <blockquote>
-<p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)[^41], corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
+<p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)[^40], corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
 
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010)[^41].  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p></li>
-<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)[^37]; see also Esparza et al. (2004)[^43].  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
+<li><p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010)[^40].  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p></li>
+<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)[^34]; see also Esparza et al. (2004)[^42].  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
 
 <ul>
 <li>(<em>st</em>, <em>p</em>, <em>sy</em>) &rarr; (<em>s2</em>, {}) becomes either <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = <em>p</em> if <em>s2</em> is <em>en</em>, or <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = 0 otherwise.</li>
@@ -1757,7 +1755,7 @@ for i in range(20):
 <li>When the stack is empty, output 0 if <em>G</em> is in the FAILURE state, or 1 otherwise.</li>
 </ol>
 
-<p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called &quot;end-of-string&quot; symbol, so that a pushdown automaton can be built that accepts &quot;empty strings&quot;; an example is Elder et al. (2015)[^44].</p></li>
+<p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called &quot;end-of-string&quot; symbol, so that a pushdown automaton can be built that accepts &quot;empty strings&quot;; an example is Elder et al. (2015)[^43].</p></li>
 </ol>
 </blockquote>
 
@@ -1783,7 +1781,7 @@ for i in range(20):
 
 <p><em>Proof:</em>  By Lagrange&#39;s continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last &quot;few&quot; of which repeat forever.  The following example describes a periodic continued fraction expansion: [0; 1, 2, (5, 4, 3)], which is the same as [0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, ...].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (<code>(5, 4, 3)</code>) is 3; and the size of the non-period (<code>1, 2</code>) is 2.</p>
 
-<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)[^40] can be described as follows.  The chain&#39;s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
+<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)[^39] can be described as follows.  The chain&#39;s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
 
 <ul>
 <li>From E: Go to N with probability <em>x</em>, or to the box&#39;s call port with probability 1 &minus; <em>x</em>.</li>
@@ -1798,11 +1796,11 @@ for i in range(20):
 <li>For each <em>i</em> in [1, <em>n</em>+1], there is a component labeled <em>i</em>.  It is the same as the template component, except <em>x</em> = <em>a</em>[<em>i</em>]/(1 + <em>a</em>[<em>i</em>]), and <em>y</em> = 1/<em>a</em>[<em>i</em>].  The component&#39;s single box goes to the component labeled <em>i</em>+1, <em>except</em> that for component <em>n</em>+<em>p</em>, the component&#39;s single box goes to the component labeled <em>n</em>+1.</li>
 </ul>
 
-<p>According to Etessami and Yannakakis (2009)[^40], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
+<p>According to Etessami and Yannakakis (2009)[^39], the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
 
 <p><strong>Lemma 1:</strong> <em>The square root function sqrt(&lambda;) is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> See Mossel and Peres (2005)[^37]. &#x25a1;</p>
+<p><em>Proof:</em> See Mossel and Peres (2005)[^34]. &#x25a1;</p>
 
 <p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class <strong>PDA</strong>.</em></p>
 
@@ -1810,7 +1808,7 @@ for i in range(20):
 
 <p>For general <em>m</em> and <em>n</em>, write <em>f</em> as ((sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt)(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
-<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^37] because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)[^34] because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
 <p><a id=Finite_State_and_Pushdown_Generators></a></p>
 
@@ -1831,7 +1829,7 @@ for i in range(20):
 <li><code>PDF(z)</code> is the probability density function of <em>X</em>, or the derivative of <code>CDF(z)</code>, or the relative probability of choosing a number &quot;close&quot; to <em>z</em> at random.</li>
 </ul>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^33] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 &le; <code>z</code> &le; 1 is irrational (Vatan 2001)[^45], (Kindler and Romik 2004)[^46], and it can be shown that the expected value (mean or &quot;long-run average&quot;) of <em>X</em> must be a rational number. [^47]</p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)[^33] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 &le; <code>z</code> &le; 1 is irrational (Vatan 2001)[^44], (Kindler and Romik 2004)[^45], and it can be shown that the expected value (mean or &quot;long-run average&quot;) of <em>X</em> must be a rational number. [^46]</p>
 
 <p><strong>Proposition 8.</strong> <em>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:</em></p>
 
@@ -1844,7 +1842,7 @@ for i in range(20):
 
 <p>Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:</p>
 
-<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)[^48] section 5.3), for some k equal to 2 or greater.</em></p>
+<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)[^47] section 5.3), for some k equal to 2 or greater.</em></p>
 
 <p><em>Proof Sketch:</em> There are two cases.</p>
 
@@ -1855,15 +1853,15 @@ for i in range(20):
 <li>The <em>output function</em> takes a configuration described above and returns a digit.  If the coin wasn&#39;t flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).</li>
 </ol>
 
-<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)[^45].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.  Now at this point the generator&#39;s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  &#x25a1;</p>
+<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)[^44].  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.  Now at this point the generator&#39;s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  &#x25a1;</p>
 
-<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)[^38].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)[^38].  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
+<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)[^37].  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)[^37].  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
 
-<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)[^48], the generator can generate a real number&#39;s binary expansion only if that number is rational or transcendental (see also Cobham (1968)[^49]; Adamczewski and Bugeaud (2007)[^50]).  &#x25a1;</p>
+<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)[^47], the generator can generate a real number&#39;s binary expansion only if that number is rational or transcendental (see also Cobham (1968)[^48]; Adamczewski and Bugeaud (2007)[^49]).  &#x25a1;</p>
 
 <p><strong>Proposition 9.</strong> <em>If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function on that interval.</em></p>
 
-<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)[^46] and Knuth and Yao (1976)[^33] with Richman (2012)[^51], who proved that a continuous algebraic function on an open interval is piecewise analytic (&quot;analytic&quot; means writable as $c_0 x^0+ ... +c_i x^i + ...$ where $c_i$ are real numbers).</p>
+<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)[^45] and Knuth and Yao (1976)[^33] with Richman (2012)[^50], who proved that a continuous algebraic function on an open interval is piecewise analytic (&quot;analytic&quot; means writable as $c_0 x^0+ ... +c_i x^i + ...$ where $c_i$ are real numbers).</p>
 
 <p><a id=License></a></p>
 
