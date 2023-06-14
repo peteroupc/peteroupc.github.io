@@ -70,7 +70,7 @@ Take the following sampler of a binomial(_n_, 1/2) distribution, where _n_ is ev
 1. If _n_ is less than 4, generate _n_ unbiased random bits (each bit is zero or one with equal probability) and return their sum.  Otherwise, if _n_ is odd[^2], set _ret_ to the result of this algorithm with _n_ = _n_ &minus; 1, then add an unbiased random bit's value to _ret_, then return _ret_.
 2. Set _m_ to floor(sqrt(_n_)) + 1.
 3. (First, sample from an envelope of the binomial curve.) Generate unbiased random bits until a zero is generated this way.  Set _k_ to the number of ones generated this way.
-4. Set _s_ to an integer in [0, _m_) chosen uniformly at random, then set _i_ to _k_\*_m_ + _s_.
+4. Set _s_ to an integer in \[0, _m_) chosen uniformly at random, then set _i_ to _k_\*_m_ + _s_.
 5. Generate an unbiased random bit.  If that bit is 0, set _ret_ to (_n_/2)+_i_.  Otherwise, set _ret_ to (_n_/2)&minus;_i_&minus;1.
 6. (Second, accept or reject _ret_.) If _ret_ < 0 or _ret_ > _n_, go to step 3.
 7. With probability choose(_n_, _ret_)\*_m_\*2<sup>_k_&minus;_n_&minus;2</sup>, return _ret_.  Otherwise, go to step 3. (Here, choose(_n_, _k_) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.[^3])
@@ -110,7 +110,7 @@ The following algorithm is equivalent to the geometric(_px_/_py_) sampler that a
 1. Set _pn_ to _px_, _k_ to 0, and _d_ to 0.
 2. While _pn_\*2 &le; _py_, add 1 to _k_ and multiply _pn_ by 2.  (Equivalent to finding the largest _k_ &ge; 0 such that _p_\*2<sup>_k_</sup> &le; 1.  For the case when _p_ need not be rational, enough of its binary expansion can be calculated to carry out this step accurately, but in this case any _k_ such that _p_ is greater than 1/(2<sup>_k_+2</sup>) and less than or equal to 1/(2<sup>_k_</sup>) will suffice, as the Bringmann paper points out.)
 3. With probability (1&minus;_px_/_py_)<sup>2<sup>_k_</sup></sup>, add 1 to _d_ and repeat this step. (To simulate this probability, the first sub-algorithm below can be used.)
-4. Generate a uniform random integer in [0, 2<sup>_k_</sup>), call it _m_, then with probability (1&minus;_px_/_py_)<sup>_m_</sup>, return _d_\*2<sup>_k_</sup>+_m_. Otherwise, repeat this step. (The Bringmann paper, though, suggests to simulate this probability by sampling only as many bits of _m_ as needed to do so, rather than just generating _m_ in one go, then using the first sub-algorithm on _m_.  However, the implementation, given as the second sub-algorithm below, is much more complicated and is not crucial for correctness.)
+4. Generate a uniform random integer in \[0, 2<sup>_k_</sup>), call it _m_, then with probability (1&minus;_px_/_py_)<sup>_m_</sup>, return _d_\*2<sup>_k_</sup>+_m_. Otherwise, repeat this step. (The Bringmann paper, though, suggests to simulate this probability by sampling only as many bits of _m_ as needed to do so, rather than just generating _m_ in one go, then using the first sub-algorithm on _m_.  However, the implementation, given as the second sub-algorithm below, is much more complicated and is not crucial for correctness.)
 
 The first sub-algorithm returns 1 with probability (1&minus;_px_/_py_)<sup>_n_</sup>, assuming that _n_\*_px_/_py_ &le; 1.  It implements the approach from the Bringmann paper by rewriting the probability using the binomial theorem. (More generally, to return 1 with probability (1&minus;_p_)<sup>_n_</sup>, it's enough to flip a coin that shows heads with probability _p_, _n_ times or until it shows heads, whichever comes first, and then return either 1 if all the flips showed tails, or 0 otherwise.  See also "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".)
 
@@ -122,7 +122,7 @@ The first sub-algorithm returns 1 with probability (1&minus;_px_/_py_)<sup>_n_</
 6. Multiply _r_ by 2, then add an unbiased random bit's value (either 0 or 1 with equal probability) to _r_.
 7. If _r_ &le; floor((_pnum_\*_i_)/_pden_) &minus; 2, return 1. If _r_ &ge; floor((_pnum_\*_i_)/_pden_) + 1, return 0.  If neither is the case, multiply _i_ by 2 and go to step 2.
 
-The second sub-algorithm returns an integer _m_ in [0, 2<sup>_k_</sup>) with probability (1&minus;_px_/_py_)<sup>_m_</sup>, or &minus;1 with the opposite probability.  It assumes that $2^k (px/py)\le 1$.
+The second sub-algorithm returns either an integer _m_ that satisfies $0\le m\less 2^k$, with probability (1&minus;_px_/_py_)<sup>_m_</sup>, or &minus;1 with the opposite probability.  It assumes that $2^k (px/py)\le 1$.
 
 1. Set _r_ and _m_ to 0.
 2. Set _b_ to 0, then while _b_ is less than _k_:
@@ -132,7 +132,7 @@ The second sub-algorithm returns an integer _m_ in [0, 2<sup>_k_</sup>) with pro
     4. If _j_ is even[^8], set _pnum_ to _pnum_\*_qden_ + _pden_\*_qnum_\*choose(_m_,_j_). Otherwise, set _pnum_ to _pnum_\*_qden_ &minus; _pden_\*_qnum_\*choose(_m_,_j_).
     5. Multiply _pden_ by _qden_, then multiply _qnum_ by _px_, then multiply _qden_ by _py_, then add 1 to _j_, then go to the third substep.
     6. (Now check the probability.) Multiply _r_ by 2, then add an unbiased random bit's value (either 0 or 1 with equal probability) to _r_.
-    7. If _r_ &le; floor((_pnum_\*2<sup>_b_</sup>)/_pden_) &minus; 2, add a uniform random integer in [0, 2<sup>_k_\*_b_</sup>) to _m_ and return _m_ (and, if requested, the number _k_&minus;_b_&minus;1). If _r_ &ge; floor((_pnum_\*2<sup>_b_</sup>)/_pden_) + 1, return &minus;1 (and, if requested, an arbitrary value).  If neither is the case, add 1 to _b_.
+    7. If _r_ &le; floor((_pnum_\*2<sup>_b_</sup>)/_pden_) &minus; 2, add a uniform random integer in \[0, 2<sup>_k_\*_b_</sup>) to _m_ and return _m_ (and, if requested, the number _k_&minus;_b_&minus;1). If _r_ &ge; floor((_pnum_\*2<sup>_b_</sup>)/_pden_) + 1, return &minus;1 (and, if requested, an arbitrary value).  If neither is the case, add 1 to _b_.
 8. Add an unbiased random bit to _m_. (At this point, _m_ is fully sampled.)
 9. Run the first sub-algorithm with _n_ = _m_, except in step 1 of that sub-algorithm, set _r_ to the value of _r_ built up by this algorithm, rather than 0, and set _i_ to 2<sup>_k_</sup>, rather than 2.  If that sub-algorithm returns 1, return _m_ (and, if requested, the number &minus;1).  Otherwise, return &minus;1 (and, if requested, an arbitrary value).
 
@@ -145,12 +145,12 @@ As used in the Bringmann paper, a bounded geometric(_p_, _n_) random variate is 
 1. Set _pn_ to _px_, _k_ to 0, _d_ to 0, and _m2_ to the smallest power of 2 that is greater than _n_ (or equivalently, 2<sup>_bits_</sup> where _bits_ is the minimum number of bits needed to store _n_).
 2. While _pn_\*2 &le; _py_, add 1 to _k_ and multiply _pn_ by 2.
 3. With probability (1&minus;_px_/_py_)<sup>2<sup>_k_</sup></sup>, add 1 to _d_ and then either return _n_ if _d_\*2<sup>_k_</sup> is greater than or equal to _m2_, or repeat this step if less. (To simulate this probability, the first sub-algorithm above can be used.)
-4. Generate a uniform random integer in [0, 2<sup>_k_</sup>), call it _m_, then with probability (1&minus;_px_/_py_)<sup>_m_</sup>, return min(_n_, _d_\*2<sup>_k_</sup>+_m_). In the Bringmann paper, this step is implemented in a manner equivalent to the following (this alternative implementation, though, is not crucial for correctness):
+4. Generate a uniform random integer in \[0, 2<sup>_k_</sup>), call it _m_, then with probability (1&minus;_px_/_py_)<sup>_m_</sup>, return min(_n_, _d_\*2<sup>_k_</sup>+_m_). In the Bringmann paper, this step is implemented in a manner equivalent to the following (this alternative implementation, though, is not crucial for correctness):
     1. Run the second sub-algorithm above, except return two values, rather than one, in the situations given in the sub-algorithm.  Call these two values _m_ and _mbit_.
     2. If _m_ < 0, go to the first substep.
     3. If _mbit_ &ge; 0, add 2<sup>_mbit_</sup> times an unbiased random bit to _m_ and subtract 1 from _mbit_.  If that bit is 1 or _mbit_ < 0, go to the next substep; otherwise, repeat this substep.
     4. Return _n_ if _d_\*2<sup>_k_</sup> is greater than or equal to _m2_.
-    5. Add a uniform random integer in [0, 2<sup>_mbit_+1</sup>) to _m_, then return min(_n_, _d_\*2<sup>_k_</sup>+_m_).
+    5. Add a uniform random integer in \[0, 2<sup>_mbit_+1</sup>) to _m_, then return min(_n_, _d_\*2<sup>_k_</sup>+_m_).
 
 <a id=Symmetric_Geometric_Distribution></a>
 
@@ -192,7 +192,7 @@ Each weight&mdash;
 2. can store a [**partially-sampled random number**](https://peteroupc.github.io/exporand.html) (PSRN), with the integer part equal to _m_ and the fractional part equal to _&nu;_ (_m_ &ge; 0, and 0 &le; _&nu;_ &le; 1), or
 3. can store a rational number _x_/_y_, where _x_&ge;0 and _y_&gt;0 are integers, such that _m_ = floor(_x_/_y_) and _&nu;_ = _x_/_y_&minus;_m_.
 
-Given this list of weights, the following algorithm chooses an integer in [0, _n_) with probability proportional to its weight.
+Given this list of weights, the following algorithm chooses an integer in \[0, _n_\) with probability proportional to its weight.
 
 1. Create an empty list, then for each weight starting with weight 0, append the weight's integer part (_m_) plus 1 to that list.  For example, if the weights are PSRNs written as [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the _rounded weights list_.
 2. Choose an integer _i_ with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of **WeightedChoice**(_list_), where _list_ is the rounded weights list and **WeightedChoice** is given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".  Let _w_ be the original weight for integer _i_, and let _rw_ be the rounded weight for integer _i_ in the rounded weights list.
@@ -213,7 +213,7 @@ An algorithm for sampling an integer in the interval \[_a_, _b_) with probabilit
     2. (Envelope chunk weights.) Build a list _r_ as follows: The first item is _q_\[0\], then set _j_ to 1 and _m_ to 1, then while _j_ &lt; _b_&minus;_a_, append _q_\[_m_\]\*min((_b_&minus;_a_) &minus; _j_, _j_) and multiply _j_ by 2 and add 1 to _m_.
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_a_, _a_+1\], then set _j_ to 1, then while _j_ &lt; _n_, append the list \[_j_, _j_ + min((_b_&minus;_a_) &minus; _j_, _j_)\] and multiply _j_ by 2.
 - Sampling:
-    1. Choose an integer in [0, _s_) with probability proportional to the weights in _r_, where _s_ is the number of items in _r_.  Call the chosen integer _k_.
+    1. Choose an integer in \[0, _s_) with probability proportional to the weights in _r_, where _s_ is the number of items in _r_.  Call the chosen integer _k_.
     2. Set _x_ to an integer chosen uniformly at random such that _x_ is greater than or equal to _D_\[_k_\]\[0\] and is less than _D_\[_k_\]\[1\].
     3. With probability _w_\[_x_\] / _q_\[_k_\], return _x_.  Otherwise, go to step 1.
 
@@ -324,10 +324,10 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 This section shows a preprocessing algorithm to generate a random variate in the closed interval [0, 1] from a distribution whose probability density function (PDF)&mdash;
 
 - is continuous in the interval [0, 1],
-- is strictly decreasing in [0, 1], and
+- is strictly decreasing in \[0, 1], and
 - has an unbounded peak at 0.
 
-The trick here is to sample the peak in such a way that the result is either forced to be 0 or forced to belong to the bounded part of the PDF.  This algorithm does not require the area under the curve of the PDF in [0, 1] to be 1; in other words, this algorithm works even if the PDF is known up to a normalizing constant.  The algorithm is as follows.
+The trick here is to sample the peak in such a way that the result is either forced to be 0 or forced to belong to the bounded part of the PDF.  This algorithm does not require the area under the curve of the PDF in \[0, 1] to be 1; in other words, this algorithm works even if the PDF is known up to a normalizing constant.  The algorithm is as follows.
 
 1. Set _i_ to 1.
 2. Calculate the cumulative probability of the interval [0, 2<sup>&minus;_i_</sup>] and that of [0, 2<sup>&minus;(_i_ &minus; 1)</sup>], call them _p_ and _t_, respectively.
@@ -370,7 +370,7 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 - One family uses a shape parameter _a_ > 0; step 1 is modified to read: "Generate _u_, a uniform random variate between 0 and 1, then set _x_ to _u_<sup>1/_a_</sup>."  This family is mentioned in Lehmann (1953)[^25], Durrans (1992)[^26], and Mudholkar and Srivastava (1993\)[^27], which called it _exponentiated_.
 - The _transmuted-G_ family (Shaw and Buckley 2007\)[^28]. The family uses a shape parameter _&eta;_ satisfying &minus;1 &le; _&eta;_ &le; 1; step 1 is modified to read: "Generate a piecewise linear random variate between 0 and 1 with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^4]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate between 0 and 1. Otherwise, generate two uniform random variates between 0 and 1, set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^29] mentions the same distribution, but with a parameter _&lambda;_ = _&eta;_ + 1 satisfying 0 &le; _&lambda;_ &le; 2.)
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^29] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates between 0 and 1, then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
-- Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: "Generate a uniform random variate _x_ in [0, 1], then with probability (1&minus;_x_<sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process."; or "Create a uniform PSRN _x_ with positive sign and integer part 0, then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process."
+- Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: "Generate a uniform random variate _x_ in \[0, 1], then with probability (1&minus;_x_<sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process."; or "Create a uniform PSRN _x_ with positive sign and integer part 0, then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process."
 
 **Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^30] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a probability density function; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nowhere decreasing function that, among other conditions, maps a number in the closed interval [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:
 
@@ -420,7 +420,7 @@ A variate following a distribution of minimums or of maximums can be generated a
 
 **Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982\)[^47] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform random variate between 0 and 1) and may be multiplied by a parameter _&theta;_ > 0.
 
-**Weighted distributions.** A _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47\)[^4]):
+**Weighted distributions.** A _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in \[0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47\)[^4]):
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. With probability _w_(_x_), return _x_.  Otherwise, go to step 1.
@@ -466,7 +466,7 @@ In the table below, _U_ is a uniform random variate between 0 and 1, and all ran
  --- | --- | --- |
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
 | Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020\)[^53]. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or (_E_/_&beta;_)<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is an exponential random variate with rate 1. |
-| Marshall&ndash;Olkin(_&alpha;_) (Marshall and Olkin 1997\)[^54] | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
+| Marshall&ndash;Olkin(_&alpha;_) (Marshall and Olkin 1997\)[^54] | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in \[0, 1]. |
 | Lomax(_&alpha;_). | (1&minus;_U_)<sup>&minus;1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016\)[^55]. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
 | Topp&ndash;Leone(_&alpha;_). | 1&minus;sqrt(1&minus;_U_<sup>1/_&alpha;_</sup>). | _&alpha;_ > 0. |
@@ -652,7 +652,7 @@ The algorithm to achieve this goal follows (see Lee et al. 2014[^87]\)\:
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
-> **Example:** An example from Lee et al. (2014\)[^87].  Say the oracle produces uniform random variates in [0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value ("long-run average") is that mean.
+> **Example:** An example from Lee et al. (2014\)[^87].  Say the oracle produces uniform random variates in \[0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value ("long-run average") is that mean.
 >
 > **Notes:**
 >

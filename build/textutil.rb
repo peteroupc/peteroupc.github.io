@@ -172,6 +172,12 @@ def preparePandoc(markdown)
   markdown=markdown.gsub(/^(?:\#\#\#\#)\s+(.*)\n+/) { "\n### " + $1+"\n\n" }
   markdown=markdown.gsub(/\[([^\]]+)\]\(\#[^\)]+\)/) { $1 }
   markdown=markdown.gsub(/\u2212/) { "\n" }
+  markdown=markdown.gsub(/<sup>\s*_?([0-9]+)_?\s*<\/sup>/) { "$^{#{$1}}$" }
+  markdown=markdown.gsub(/<sup>\s*_&([A-Za-z0-9]+);_\s*<\/sup>/) { "$^\\#{$1}$" }
+  markdown=markdown.gsub(/<sup>\s*_([A-Za-z0-9\+\(\)]+)_\s*<\/sup>/) { "$^{#{$1}}$" }
+  markdown=markdown.gsub(/<sub>\s*_?([0-9]+)_?\s*<\/sub>/) { "$_{#{$1}}$" }
+  markdown=markdown.gsub(/<sub>\s*_&([A-Za-z0-9]+);_\s*<\/sub>/) { "$_\\#{$1}$" }
+  markdown=markdown.gsub(/<sub>\s*_([A-Za-z0-9\+\(\)]+)_\s*<\/sub>/) { "$_{#{$1}}$" }
   markdown=markdown.gsub(/&minus;/) { " $-$ " }
   markdown=markdown.gsub(/&ge;/) { " $\\ge$ " }
   markdown=markdown.gsub(/&ne;/) { " $\\ne$ " }
@@ -201,6 +207,8 @@ def preparePandoc(markdown)
   markdown=markdown.gsub(/&epsilon;|\u03f5/) { " $\\epsilon$ " }
   markdown=markdown.gsub(/_&lambda;_/) { " $\\lambda$ " }
   markdown=markdown.gsub(/&lambda;/) { " $\\lambda$ " }
+  markdown=markdown.gsub(/<sup>([^<]+)<\/sup>/) { " $^{"+($1).gsub(/\\\[/,"[")
+              .gsub(/\\\]/,"]").gsub(/\$/,"").gsub(/_([A-Za-z0-9]+)_/,"#{$1}")+"}$ " }
   markdown=markdown.gsub(/(dash;|\:)(\n+)-\s+/) { $1+"\n\n- " }
   return markdown
 end
@@ -224,8 +232,6 @@ def preparePdfs()
 Dir.glob("*.md").sort.each{|fn|
   next if fn=="README.md"
   next if fn=="index.md"
-
-  next if fn!="randmisc.md"
 
   file=File.basename(fn).gsub(/\.md$/,"")
   r=IO.read("#{file}.md")

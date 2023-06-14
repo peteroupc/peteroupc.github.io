@@ -75,8 +75,8 @@ Comments on other aspects of this document are welcome.
         - [**expit(_z_)\*2 &minus; 1 or tanh(_z_/2) or (exp(_z_)&minus;1)/(exp(_z_)+1)**](#expit__z__2_minus_1_or_tanh__z__2_or_exp__z__minus_1_exp__z__1)
         - [**_&lambda;_\*exp(_z_) / (_&lambda;_\*exp(_z_) + (1 &minus; _&lambda;_)) or _&lambda;_\*exp(_z_) / (1 + _&lambda;_\*(exp(_z_) &minus; 1))**](#lambda___exp__z____lambda___exp__z__1_minus___lambda___or___lambda___exp__z__1___lambda___exp__z__minus_1)
         - [**(1 + exp(_z_ &minus; _w_)) / (1 + exp(_z_))**](#1_exp__z__minus__w__1_exp__z)
-        - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
-        - [**1/(2<sup>(_x_/_y_)\*(_&lambda;_)</sup>) or exp(&minus;(_&lambda;_)\*ln(2<sup>_x_/_y_</sup>))**](#1_2__x___y____lambda___or_exp_minus___lambda___ln_2_x___y)
+        - [**$1/(2^{m(k+\lambda)})$ or exp($-(k+\lambda)\cdot\ln(2^m)$)**](#1_2_m_k_lambda_or_exp_k_lambda_cdot_ln_2_m)
+        - [**$1/(2^{(x/y)\cdot\lambda})$ or exp($-\lambda\cdot\ln(2^{x/y})$)**](#1_2_x_y_cdot_lambda_or_exp_lambda_cdot_ln_2_x_y)
         - [**Two-Coin Algorithm (_c_ * _&lambda;_ * _&beta;_ / (_&beta;_ * (_c_ * _&lambda;_ + _d_ * _&mu;_) &minus; (_&beta;_ &minus; 1) * (_c_ + _d_)))**](#Two_Coin_Algorithm__c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d)
         - [**_c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_) or (_c_/_d_) * _&lambda;_ / (1 + (_c_/_d_) * _&lambda;_))**](#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda)
         - [**(_d_ + _&lambda;_) / _c_**](#d____lambda____c)
@@ -88,7 +88,7 @@ Comments on other aspects of this document are welcome.
         - [**1/(2 &minus; _&lambda;_)**](#1_2_minus___lambda)
         - [**1/(1+(_m_+_&lambda;_)<sup>2</sup>)**](#1_1__m____lambda___2)
         - [**1 / (1 + (_x_/_y_)\*_&lambda;_)**](#1_1__x___y____lambda)
-        - [**_&lambda;_<sup>_x_/_y_</sup>**](#lambda___x___y)
+        - [**$\lambda^{x/y}$**](#lambda_x_y)
         - [**sqrt(_&lambda;_)**](#sqrt___lambda)
         - [**arctan(_&lambda;_) /_&lambda;_**](#arctan___lambda_____lambda)
         - [**arctan(_&lambda;_) /_&pi;_**](#arctan___lambda_____pi)
@@ -110,7 +110,7 @@ Comments on other aspects of this document are welcome.
         - [**_&lambda;_ * _x_/_y_**](#lambda____x___y)
         - [**(_&lambda;_ * _x_/_y_)<sup>_i_</sup>**](#lambda____x___y___i)
         - [**Linear Bernoulli Factories**](#Linear_Bernoulli_Factories)
-        - [**_&lambda;_<sup>_&mu;_</sup>**](#lambda____mu)
+        - [**$\lambda^{\mu}$**](#lambda_mu)
         - [**(1&minus;_&lambda;_)/cos(_&lambda;_)**](#1_minus___lambda___cos___lambda)
         - [**(1&minus;_&lambda;_) * tan(_&lambda;_)**](#1_minus___lambda___tan___lambda)
         - [**ln((_c_ + _d_ + _&lambda;_)/_c_)**](#ln__c___d____lambda____c)
@@ -1302,19 +1302,19 @@ In this algorithm, _z_ is a number (positive or not), and _w_ is 0 or greater, a
 > 1. (1 + exp(_z_&minus;1)) / (1 + exp(_z_)) = $1-\frac{1 - e^{-1}}{e^{-z} + 1}$. (1 + exp(1&minus;1)) / (1 + exp(1)) = 2 / (1 + exp(2)) = (1 + exp(0)) / (1 + exp(1)).
 > 2. For the similar function **(1 + exp(_z_)) / (1 + exp(_z_+1))**, use this algorithm with _w_ = 1, except add 1 to _z_ (if _z_ is written as an integer and fractional part, add 1 to the integer part; if written as a sum of numbers, append 1 to those numbers).
 
-<a id=1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a>
+<a id=1_2_m_k_lambda_or_exp_k_lambda_cdot_ln_2_m></a>
 
-#### 1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))
+#### $1/(2^{m(k+\lambda)})$ or exp($-(k+\lambda)\cdot\ln(2^m)$)
 
 This new algorithm uses the base-2 logarithm _k_ + _&lambda;_ and is useful when this logarithm is very large.  In this algorithm, _k_ &ge; 0 is an integer, and _m_ &ge; 0 is an integer.
 
 1. (Factor function in two parts.  First, simulate 1/(2<sup>_mk_</sup>).) If _k_ &gt; 0, generate unbiased random bits until a zero bit or _k_\*_m_ bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.
-2. (Rest of algorithm simulates 1/(2<sup>_m&lambda;_</sup>).) Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(1+_y_/_z_)** (given later) with _y_/_z_ = 1/1.  If both the call and the flip return 1, return 1.  Otherwise, return 0." (Simulates $\ln(2) \lambda$.)
+2. (Rest of algorithm simulates $1/(2^{m\lambda})$.) Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(1+_y_/_z_)** (given later) with _y_/_z_ = 1/1.  If both the call and the flip return 1, return 1.  Otherwise, return 0." (Simulates $\ln(2) \lambda$.)
 3. Run the **ExpMinus** algorithm, with parameter 0 + _&mu;_ (using the _&mu;_ input coin), _m_ times.  If any of the runs returns 0, return 0.  Otherwise, return 1.
 
-<a id=1_2__x___y____lambda___or_exp_minus___lambda___ln_2_x___y></a>
+<a id=1_2_x_y_cdot_lambda_or_exp_lambda_cdot_ln_2_x_y></a>
 
-#### 1/(2<sup>(_x_/_y_)\*(_&lambda;_)</sup>) or exp(&minus;(_&lambda;_)\*ln(2<sup>_x_/_y_</sup>))
+#### $1/(2^{(x/y)\cdot\lambda})$ or exp($-\lambda\cdot\ln(2^{x/y})$)
 
 Based on the previous algorithm.  In this algorithm, _x_ &ge; 0 and _y_ &gt; 0 are integers.
 
@@ -1441,9 +1441,9 @@ Another special case of the two-coin algorithm.  In this algorithm, _x_/_y_ must
 >
 > **Example**:  **_&mu;_ / (1 + (_x_/_y_)\*_&lambda;_)** (takes two input coins that simulate _&lambda;_ or _&mu;_, respectively): Run the **algorithm for 1 / (1 + (_x_/_y_)\*_&lambda;_)** using the _&lambda;_ input coin.  If it returns 0, return 0.  Otherwise, flip the _&mu;_ input coin and return the result.
 
-<a id=lambda___x___y></a>
+<a id=lambda_x_y></a>
 
-#### _&lambda;_<sup>_x_/_y_</sup>
+#### $\lambda^{x/y}$
 
 In the algorithm below, the case where 0 &lt; _x_/_y_ &lt; 1 is due to Mendo (2019\)[^24].  The algorithm works only when _x_/_y_ is 0 or greater.
 
@@ -1777,9 +1777,9 @@ In this document, a **linear Bernoulli factory** refers to one of the following:
 - The first algorithm for [**_&lambda;_ * _x_/_y_**](#lambda____x___y) with the stated parameters _x_, _y_, and _&#x03F5;_.
 - The [**algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>**](#lambda____x___y___i) with the stated parameters _x_, _y_, and _&#x03F5;_, and with _i_ = 1 (see previous section).
 
-<a id=lambda____mu></a>
+<a id=lambda_mu></a>
 
-#### _&lambda;_<sup>_&mu;_</sup>
+#### $\lambda^{\mu}$
 
 This algorithm is based on the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, but changed to accept a second input coin (which outputs heads with probability _&mu;_) rather than a fixed value for the exponent.  For this algorithm, _&lambda;_ and _&mu;_ may not both be 0.
 

@@ -163,7 +163,7 @@
 <li>If <em>r</em> &le; floor((<em>pnum</em>*<em>i</em>)/<em>pden</em>) &minus; 2, return 1. If <em>r</em> &ge; floor((<em>pnum</em>*<em>i</em>)/<em>pden</em>) + 1, return 0.  If neither is the case, multiply <em>i</em> by 2 and go to step 2.</li>
 </ol>
 
-<p>The second sub-algorithm returns an integer <em>m</em> in [0, 2<sup><em>k</em></sup>) with probability (1&minus;<em>px</em>/<em>py</em>)<sup><em>m</em></sup>, or &minus;1 with the opposite probability.  It assumes that $2^k (px/py)\le 1$.</p>
+<p>The second sub-algorithm returns either an integer <em>m</em> that satisfies $0\le m\less 2^k$, with probability (1&minus;<em>px</em>/<em>py</em>)<sup><em>m</em></sup>, or &minus;1 with the opposite probability.  It assumes that $2^k (px/py)\le 1$.</p>
 
 <ol>
 <li>Set <em>r</em> and <em>m</em> to 0.</li>
