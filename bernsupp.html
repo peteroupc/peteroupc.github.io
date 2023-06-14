@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/13"><meta name="citation_online_date" content="2023/06/13"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/14"><meta name="citation_online_date" content="2023/06/14"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -409,7 +409,7 @@
 
 <p>Readers are requested to let me know of additional solutions to the following problem:</p>
 
-<p><em>Let $f(\lambda)$ be continuous and satisfy $0\less f(\lambda)\less 1$ whenever $0\le\lambda\le 1$.  Given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients for two sequences of polynomials as follows: one of them approaches $f(\lambda)$ from above, the other from below, and the consistency requirement must be met (see &quot;<a href="#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;).</em></p>
+<p><em>Let $f(\lambda)$ be continuous and satisfy $0\lt f(\lambda)\lt 1$ whenever $0\le\lambda\le 1$.  Given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients for two sequences of polynomials as follows: one of them approaches $f(\lambda)$ from above, the other from below, and the consistency requirement must be met (see &quot;<a href="#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;).</em></p>
 
 <p><em>The polynomials need to be computed only for degrees 2, 4, 8, 16, and higher powers of 2.</em></p>
 
@@ -525,7 +525,7 @@
 
 <ul>
 <li><em>Real analytic</em> if, for every real number <em>z</em> in $f$&#39;s domain, it is writable as $f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...$, where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
-<li>In the <em>Zygmund class</em> if it is continuous and there is a constant $D&gt;0$ with the following property: For each step size $\epsilon&gt;0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\less h\le\epsilon$. The Zygmund class includes the two smaller classes of Lipschitz continuous functions (see &quot;Definitions&quot;) and functions with a continuous derivative.</li>
+<li>In the <em>Zygmund class</em> if it is continuous and there is a constant $D&gt;0$ with the following property: For each step size $\epsilon&gt;0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two smaller classes of Lipschitz continuous functions (see &quot;Definitions&quot;) and functions with a continuous derivative.</li>
 </ul>
 </blockquote>
 
@@ -539,7 +539,7 @@
 
 <p>[^3]: Thomas and Blanchet (2012) dealt with building polynomials that approach piecewise linear functions &quot;fast&quot;.  Their strategy for $f(\lambda)=\min(mult\times\lambda, 1-2\varepsilon)$ is to first compute a low-degree polynomial $P$ satisfying $P(0)=0$ and otherwise greater than $f$, and then compute further polynomials of increasing degree that each come between $f$ and the previous polynomial and satisfy the consistency requirement. These polynomials approach $f$ rapidly when $\lambda$ is near 0, and extremely slowly when $\lambda$ is near 1. In their strategy, <strong>fbelow(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>mult</em>, 1&minus;<em>&epsilon;</em>), and <strong>fabove(<em>n</em>, <em>k</em>)</strong> is min((<em>k</em>/<em>n</em>)*<em>y</em>/<em>x</em>,<em>y</em>), where:<br><em>x</em> = &minus;((<em>y</em>&minus;(1&minus;<em>&epsilon;</em>))/<em>&epsilon;</em>)<sup>5</sup>/<em>mult</em> + <em>y</em>/<em>mult</em>. (This formula doesn&#39;t appear in their paper, but in the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)<br><em>y</em> satisfies 0&lt;<em>y</em>&lt;1 and is chosen so that the degree-<em>n</em> polynomial is between $f$ and the previous polynomial and meets the consistency requirement. The supplemental source code seems to choose <em>y</em> in an <em>ad hoc</em> manner.<br><em>n</em> is the polynomial&#39;s degree.</p>
 
-<p>[^4]: In Nacu and Peres (2005), the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$ (using the algorithms from the section &quot;General Factory Functions&quot; in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;), provided $\varepsilon \less 1/8$, where <em>n</em> is a power of 2.  However, with these sequences, each simulation will require an extraordinary number of input coin flips. <strong>fbelow(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)$. <strong>fabove(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)$ + $\frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})}$ $\sqrt{2/n}$ + $\frac{72\times\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-2n\times\varepsilon^2)$.</p>
+<p>[^4]: In Nacu and Peres (2005), the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$ (using the algorithms from the section &quot;General Factory Functions&quot; in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;), provided $\varepsilon \lt 1/8$, where <em>n</em> is a power of 2.  However, with these sequences, each simulation will require an extraordinary number of input coin flips. <strong>fbelow(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)$. <strong>fabove(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)$ + $\frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})}$ $\sqrt{2/n}$ + $\frac{72\times\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-2n\times\varepsilon^2)$.</p>
 
 <p>[^5]: In this case, an algorithm to simulate <code>High</code>(<em>&lambda;</em>) is: Flip the input coin <em>n</em> times or until a flip returns 1, whichever comes first, then output the last coin flip result.</p>
 
@@ -696,7 +696,7 @@
 <tr>
 <td>$\lambda^z\cdot t$.</td>
 <td><em>&alpha;</em>=<em>z</em>.<br><em>L</em>=abs(<em>t</em>).</td>
-<td>$0\less z\le 1$, $t\ne 0$.</td>
+<td>$0\lt z\le 1$, $t\ne 0$.</td>
 </tr>
 <tr>
 <td>$\lambda^z\cdot t$.</td>
@@ -711,7 +711,7 @@
 <tr>
 <td>$1/2-(1-2\lambda)^{z}/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise.</td>
 <td><em>&alpha;</em>=<em>z</em>.<br><em>L</em>=$2^z/2$.</td>
-<td>$0\less z\le 1$.  In this example, $f$ has a &quot;vertical&quot; slope at 1/2, unless <em>z</em> is 1.</td>
+<td>$0\lt z\le 1$.  In this example, $f$ has a &quot;vertical&quot; slope at 1/2, unless <em>z</em> is 1.</td>
 </tr>
 <tr>
 <td>$3/4-\sqrt{\lambda(1-\lambda)}$.</td>
@@ -748,7 +748,7 @@
 
 <p>First, if $f$ has a continuous first derivative on its domain, then <em>&alpha;</em> is 1 ($f$ is <strong>Lipschitz continuous</strong>) and <em>L</em> is the maximum of the absolute value of that derivative.</p>
 
-<p>Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\less\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a &quot;vertical slope&quot; or the &quot;steepest slope exhibited&quot;.  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$&#39;s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant (<em>L</em>) equal to or greater than the maximum value of $g(\lambda)$ on its domain.</p>
+<p>Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a &quot;vertical slope&quot; or the &quot;steepest slope exhibited&quot;.  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$&#39;s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant (<em>L</em>) equal to or greater than the maximum value of $g(\lambda)$ on its domain.</p>
 
 <p>The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: <code>lamda,c=symbols(&#39;lamda c&#39;); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c,0),h.subs(c,1)),(lamda,0,1))</code>.</p>
 
@@ -813,7 +813,7 @@
 
 <h3>How Many Coin Flips Are Needed to Simulate a Polynomial?</h3>
 
-<p>Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself and satisfies $0\less p(\lambda)\less 1$ whenever $0\less\lambda\less 1$.</p>
+<p>Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.</p>
 
 <p>Then its <em>coin-flipping degree</em> (Wästlund 1999)[^17] is the smallest value of $n$ such that $p$&#39;s Bernstein coefficients of degree $n$ lie in the closed unit interval. [^18]   (This is broader than the use of the term in Wästlund, where a polynomial can have a coin-flipping degree only if its &quot;power&quot; coefficients are integers.)</p>
 
@@ -823,9 +823,9 @@
 
 <ul>
 <li>If $0\le\min(b_0, ..., b_m)\le\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by $m$.</li>
-<li>If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\greater 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].</li>
-<li>If $\min(b_0, ..., b_m)\less 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$ where $\text{Pmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].</li>
-<li>If $m\ge 2$, $b_0 = 1$, $b_m = 0$, and $b_{m-1}\greater 0$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\max\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Qmin}}, zM/s\right) - m\right),$$
+<li>If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].</li>
+<li>If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$ where $\text{Pmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].</li>
+<li>If $m\ge 2$, $b_0 = 1$, $b_m = 0$, and $b_{m-1}\gt 0$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\max\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Qmin}}, zM/s\right) - m\right),$$
 where $\text{Qmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the interval $[0, r]$, $r=(m b_{m-1})/(m b_{m-1}+C)$, $s=\frac{m b_{m-1}}{2}(C/(m b_{m-1}+C))^{m-1}$, $C=2 (|b_0|{m\choose 0} + ... + |b_m|{m\choose m})$, $M=\max(|b_0|{m\choose 0}, ...,|b_{m-1}|{m\choose m-1})$, $z=P(0)P(m) + P(1)P(m-1) + ... + P(m-1)P(1)$, and $P(b)=b(b-1)/2$ if $b\ge 2$, or 1 otherwise (Powers and Reznick 2006)[^20].</li>
 </ul>
 
@@ -833,7 +833,7 @@ where $\text{Qmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the interva
 
 <p><em>Proof</em>:  This can be seen by evaluating $p(1) = a_0 + ... + a_n$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;</p>
 
-<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + ... + a_n\lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\less p(\lambda)\less 1$ whenever $0\less\lambda\less 1$.  If $p$&#39;s coin-flipping degree is $n$, then $|a_i|\le 2^i {n\choose i}$.</p>
+<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + ... + a_n\lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  If $p$&#39;s coin-flipping degree is $n$, then $|a_i|\le 2^i {n\choose i}$.</p>
 
 <p><em>Proof</em>: Consider the matrix that transforms a polynomial&#39;s Bernstein coefficients to &quot;power&quot; coefficients, which is $n\times n$ if the polynomial&#39;s degree is $n$ (Ray and Nataraj 2012, eq. (8))[^21].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$&#39;s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding &quot;power&quot; coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;</p>
 
@@ -1159,7 +1159,7 @@ where $\text{Qmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the interva
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\less k\less 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\less k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).</li>
+<li>If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).</li>
 <li>If $W_n$ is a &quot;linear operator&quot;, the left-hand side of (PB) is not greater than $|(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))|$ + $|W_n(k/(2n))-f(k/(2n))|$  + $|W_{2n}(k/(2n))-f(k/(2n))|$.</li>
 <li>If $W_n$ is a &quot;linear operator&quot; and satisfies $|f(\lambda)-W_n(\lambda)|\le DM/n^{r/2}$, then the left-hand side of (PB) is not greater than $|(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))|$ + $\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}$.</li>
 <li>By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3)[^1].</li>
@@ -1450,7 +1450,7 @@ for i in range(20):
 
 <p><strong>Conjecture 1</strong>. <em>The conditions of Proposition 2 are necessary for $f(\lambda)$ to be strongly simulable.</em></p>
 
-<p>A condition such as &quot;0 is not in the domain of $f$, or there is a number $\epsilon&gt;0$ and a Lipschitz continuous function $g(x)$ on the interval $0\le x \less \epsilon$ such that $g(x)=f(x)$ whenever $x$ is in both $g$&#39;s and $f$&#39;s domains&quot; does not work.  An example that shows this is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ (and $f(0)=0$), which is strongly simulable at 0 even though the condition just quoted is not satisfied for $f$.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)</p>
+<p>A condition such as &quot;0 is not in the domain of $f$, or there is a number $\epsilon&gt;0$ and a Lipschitz continuous function $g(x)$ on the interval $0\le x \lt \epsilon$ such that $g(x)=f(x)$ whenever $x$ is in both $g$&#39;s and $f$&#39;s domains&quot; does not work.  An example that shows this is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ (and $f(0)=0$), which is strongly simulable at 0 even though the condition just quoted is not satisfied for $f$.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)</p>
 
 <p><a id=Multiple_Output_Bernoulli_Factory></a></p>
 

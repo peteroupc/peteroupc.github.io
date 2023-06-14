@@ -182,6 +182,8 @@ def preparePandoc(markdown)
   markdown=markdown.gsub(/&ge;/) { " $\\ge$ " }
   markdown=markdown.gsub(/&ne;/) { " $\\ne$ " }
   markdown=markdown.gsub(/&le;/) { " $\\le$ " }
+  markdown=markdown.gsub(/\\lt/) { "\\less" }
+  markdown=markdown.gsub(/\\gt/) { "\\greater" }
   markdown=markdown.gsub(/&Sigma;/) { " $\\Sigma$ " }
   markdown=markdown.gsub(/_&alpha;_/) { " $\\alpha$ " }
   markdown=markdown.gsub(/_&beta;_/) { " $\\beta$ " }
@@ -245,8 +247,6 @@ Dir.glob("*.md").sort.each{|fn|
   #r="---\ntitle: #{title}\nauthor: Peter Occil\n---\n\n"+r
   tmpfilemd=Dir::tmpdir()+"/#{file}.md"
   IO.write(tmpfilemd,r)
-  tmpfilemd=Dir::tmpdir()+"/#{file}.md"
-  IO.write(tmpfilemd+"_.md",r)
   puts(r[0,100])
   i=0
   while true
