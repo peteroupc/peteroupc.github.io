@@ -224,6 +224,9 @@ def preparePdfs()
 Dir.glob("*.md").sort.each{|fn|
   next if fn=="README.md"
   next if fn=="index.md"
+
+  next if fn!="randmisc.md"
+
   file=File.basename(fn).gsub(/\.md$/,"")
   r=IO.read("#{file}.md")
   mtime=File.mtime("#{file}.md")
@@ -236,6 +239,8 @@ Dir.glob("*.md").sort.each{|fn|
   #r="---\ntitle: #{title}\nauthor: Peter Occil\n---\n\n"+r
   tmpfilemd=Dir::tmpdir()+"/#{file}.md"
   IO.write(tmpfilemd,r)
+  tmpfilemd=Dir::tmpdir()+"/#{file}.md"
+  IO.write(tmpfilemd+"_.md",r)
   puts(r[0,100])
   i=0
   while true

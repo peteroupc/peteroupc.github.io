@@ -95,6 +95,8 @@ Also, according to the Bringmann paper, _m_ can be set such that _m_ is in the i
 >     2. If the binary digit at position _k_ after the point in _p_'s binary expansion (that is, 0.bbbb... where each b is a zero or one) is 1, add a binomial(_n_, 1/2) random variate to _ret_ and subtract the same variate from _n_; otherwise, set _n_ to a binomial(_n_, 1/2) random variate.
 >     3. If _n_ is greater than 0, add 1 to _k_ and go to step 2; otherwise, return _ret_. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)
 
+&nbsp;
+
 <a id=On_Geometric_Samplers></a>
 
 ### On Geometric Samplers
@@ -120,7 +122,7 @@ The first sub-algorithm returns 1 with probability (1&minus;_px_/_py_)<sup>_n_</
 6. Multiply _r_ by 2, then add an unbiased random bit's value (either 0 or 1 with equal probability) to _r_.
 7. If _r_ &le; floor((_pnum_\*_i_)/_pden_) &minus; 2, return 1. If _r_ &ge; floor((_pnum_\*_i_)/_pden_) + 1, return 0.  If neither is the case, multiply _i_ by 2 and go to step 2.
 
-The second sub-algorithm returns an integer _m_ in [0, 2<sup>_k_</sup>) with probability (1&minus;_px_/_py_)<sup>_m_</sup>, or &minus;1 with the opposite probability.  It assumes that 2<sup>_k_</sup>\*_px_/_py_ &le; 1.
+The second sub-algorithm returns an integer _m_ in [0, 2<sup>_k_</sup>) with probability (1&minus;_px_/_py_)<sup>_m_</sup>, or &minus;1 with the opposite probability.  It assumes that $2^k (px/py)\le 1$.
 
 1. Set _r_ and _m_ to 0.
 2. Set _b_ to 0, then while _b_ is less than _k_:

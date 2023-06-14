@@ -2399,7 +2399,7 @@ The following are some additional articles I have written on the topic of random
 
 [^67]: Ben Dov, Y., David, L., et al., "Resistance to Timing Attacks for Sampling and Privacy Preserving Schemes", FORC 2023.
 
-[^68]: In the privacy context, see, for example, Awan, J. and Rao, V., 2021. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965)", arXiv:2108.00965. Also, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
+[^68]: In the privacy context, see, for example, Awan, J. and Rao, V., 2022. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965)", arXiv:2108.00965. Also, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
 
 <a id=Appendix></a>
 

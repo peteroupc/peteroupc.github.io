@@ -45,7 +45,7 @@ Each algorithm takes a stream of independent random variates (numbers).  These v
 - An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_.
 - An _n<sup>th</sup> central absolute moment_ (c.a.m.) is the expected value of abs(_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.
 
-Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the stream's numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for every _k_ in the interval [1, _n_).
+Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the stream's numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for every integer _k_ greater than 0 and less than _n_.
 
 The _relative error_ of an estimation algorithm is abs(_est_/_trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
 
