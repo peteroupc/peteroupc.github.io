@@ -163,9 +163,9 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0.
 >
 > 1. The following is a useful identity for the gamma distribution: `GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)` (Stuart 1962\)[^12].
 > 2. The gamma distribution is usually defined to have a second parameter (called `theta` here), which is unfortunately defined differently in different works.  For example, the gamma variate can be either multiplied or divided by `theta` depending on the work.
-> 3. For other algorithms to sample from the gamma distribution, see Luengo (2022)[^13]
+> 3. For other algorithms to sample from the gamma distribution, see Luengo (2022)[^13].
 >
-> **Example:** **Moment exponential** distribution (Dara and Ahmad 2012)[^30]: `GammaDist(2)*beta` (or `(Expo(1)+Expo(1))*beta`), where `beta > 0`.
+> **Example:** **Moment exponential** distribution (Dara and Ahmad 2012)\: `GammaDist(2)*beta` (or `(Expo(1)+Expo(1))*beta`), where `beta > 0`.
 
 <a id=Beta_Distribution></a>
 
