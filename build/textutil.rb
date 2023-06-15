@@ -298,6 +298,9 @@ Dir.glob("*.md").sort.each{|fn|
       cmd+=" --pdf-engine=xelatex"
       cmd+=" --variable=title:\"#{title}\""
       cmd+=" --variable=author:\"Peter Occil\""
+      cmd+=" --variable=margin-left:1in"
+      cmd+=" --variable=margin-right:1in"
+      cmd+=" --variable=margin-bottom:1in"
     else
       cmd+=" --pdf-engine=wkhtmltopdf"
     end

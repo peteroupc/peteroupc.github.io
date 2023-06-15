@@ -482,8 +482,8 @@ In the following examples, _f_(_&lambda;_) is a function defined on the closed u
 
 **Hölder and Lipschitz continuous functions.** The following table shows some functions that are Hölder continuous and some that are not.  Also, review the [**definitions**](#Definitions).
 
-| Function _f_(_&lambda;_): | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_L_): | Notes |
-    --- | --- | --- |
+| Function _f_(_&lambda;_)\: | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_L_)\: | Notes |
+ --- | --- | --- |
 |$\lambda^z\cdot t$. | _&alpha;_=_z_.<br>_L_=abs(_t_). | $0\lt z\le 1$, $t\ne 0$. |
 |$\lambda^z\cdot t$. | _&alpha;_=1 (Lipschitz continuous).<br>_L_=_z_\*abs(_t_). | $z\ge 1$, $t$ is a real number. |
 |$\lambda^{1/3}/4 + \lambda^{2/3}$/5. | _&alpha;_=1/3.<br>_L_=9/20. |  _&alpha;_ is the minimum of Hölder exponents, min(1/3, 2/3), and _L_ is the sum of Hölder constants, 1/4+1/5. |
@@ -507,7 +507,7 @@ The following example, which uses the SymPy computer algebra library, plots $\ma
 **Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the table below, if $f$ has a continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
 
 | Function $f(\lambda)$ | Derivative's Hölder exponent (_&alpha;_) and an upper bound of the derivative's Hölder constant (_L_): | Notes |
-     ---- | ---- | ---- |
+ ---- | ---- | ---- |
 | _&lambda;_<sup>1+_&beta;_</sup> | _&alpha;_=_&beta;_.<br>_L_ = 1+_&beta;_. | 0 &lt; _&beta;_ &le; 1. |
 |$3/4-\sqrt{\lambda(1-\lambda)}$. | Derivative is not Hölder continuous. | Derivative is not Hölder continuous because $f$ is not Lipschitz continuous. |
 | cosh(_&lambda;_) &minus; 3/4. | _&alpha;_=1 (derivative is Lipschitz continuous).<br>_L_ = cosh(1). | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
