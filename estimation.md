@@ -144,7 +144,7 @@ The following algorithm comes from Kunsch et al. (2019\)[^7].  It estimates the 
 
 - The distribution of numbers in the stream has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m.
 - The exact _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. need not be known in advance.
-- The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater. (The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean absolute deviation_ if _q_ = 1; similarly for _p_.)
+- The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater. (The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean absolute deviation_ if _q_ = 1; similarly for _p_.)
 
 The algorithm works by first estimating the _p_<sup>th</sup> c.a.m. of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
 
@@ -155,27 +155,27 @@ The algorithm has the following parameters:
 - _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be less than 1.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
 - _p_: The degree of the _p_<sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.
 - _q_: The degree of the _q_<sup>th</sup> c.a.m.  _q_ must be greater than _p_.
-- _&kappa;_: Maximum value allowed for the following value: the _q_<sup>th</sup> c.a.m.'s  _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012\)[^8] [^9].) _&kappa;_ may not be less than 1.
+- $\kappa$: Maximum value allowed for the following value: the _q_<sup>th</sup> c.a.m.'s  _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012\)[^8] [^9].) $\kappa$ may not be less than 1.
 
 Both _p_ and _q_ must be 1 or greater and are usually integers.
 
 For example:
 
-- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 1.1, the algorithm assumes the stream's numbers are distributed so that the kurtosis's 4th root, that is, the 4th c.a.m.'s 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
-- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 2, the algorithm assumes the stream's numbers are distributed so that the standard deviation (_q_=2) divided by the mean deviation (_p_=1) is no more than 2, and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
+- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream's numbers are distributed so that the kurtosis's 4th root, that is, the 4th c.a.m.'s 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
+- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, $\kappa$ = 2, the algorithm assumes the stream's numbers are distributed so that the standard deviation (_q_=2) divided by the mean deviation (_p_=1) is no more than 2, and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
 
 The algorithm, called **Algorithm C** in this document, follows.
 
-1. If _&kappa;_ is 1:
+1. If $\kappa$ is 1:
     1. Set _n_ to ceil(ln(1/_&delta;_)/ln(2))+1 (or an integer greater than this).
     2. Get _n_ samples from the stream and return (_mn_ + _mx_)/2, where _mx_ is the highest sample and _mn_ is the lowest.
 2. Set _k_ to ceil((2*ln(1/_&delta;_))/ln(4/3)).  If _k_ is even[^10], add 1 to _k_.
 3. Set _kp_ to _k_.
-4. Set _&kappa;_ to _&kappa;_<sup>(_p_\*_q_/(_q_&minus;_p_))</sup>.
+4. Set $\kappa$ to $\kappa$<sup>(_p_\*_q_/(_q_&minus;_p_))</sup>.
 5. If _q_ is 2 or less:
-    - Set _m_ to ceil(3\*_&kappa;_\*48<sup>1/(_q_&minus;1)</sup>) (or an integer greater than this); set _s_ to 1+1/(_q_&minus;1); set _h_ to 16<sup>1/(_q_&minus;1)</sup>\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
+    - Set _m_ to ceil(3\*$\kappa$\*48<sup>1/(_q_&minus;1)</sup>) (or an integer greater than this); set _s_ to 1+1/(_q_&minus;1); set _h_ to 16<sup>1/(_q_&minus;1)</sup>\*$\kappa$/_&epsilon;_<sup>_s_</sup>.
 6. If _q_ is greater than 2:
-    - Set _m_ to ceil(144\*_&kappa;_); set _s_ to 2; set _h_ to 16\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
+    - Set _m_ to ceil(144\*$\kappa$); set _s_ to 2; set _h_ to 16\*$\kappa$/_&epsilon;_<sup>_s_</sup>.
 7. (Stage 1: Estimate _p_<sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create _k_ many blocks.  For each block:
     1. Get _m_ samples from the stream.
     2. Add the samples and divide by _m_ to get this block's sample mean, _mean_.
@@ -190,7 +190,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 > **Notes:**
 >
 > 1. The interval $[\hat{\mu} - \epsilon, \hat{\mu} + \epsilon]$ is also known as a _confidence interval_ for the mean, with _confidence level_ at least 1 &minus; _&delta;_ (where $\hat{\mu}$ is an estimate of the mean returned by _Algorithm C_).
-> 2. If the stream of random variates meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.
+> 2. If the stream of random variates meets the condition for _Algorithm C_ for a given _q_, _p_, and $\kappa$, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.
 > 3. Theorem 3.4 of Kunsch et al. (2019\)[^7] shows that there is no mean estimation algorithm that&mdash;
 >      - produces an estimate within a user-specified error tolerance with probability greater than a user-specified value, and
 >      - works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).
@@ -199,9 +199,9 @@ The algorithm, called **Algorithm C** in this document, follows.
 >
 > **Examples:**
 >
-> 1. To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
-> 2. The kurtosis of a Poisson distribution with mean _&mu;_ is (3 + 1/_&mu;_).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or greater but otherwise unknown, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (3 + 1/_&nu;_)<sup>1/4</sup>.
-> 3. The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; 9<sup>1/4</sup> = sqrt(3).
+> 1. To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can take _q_ = 4, _p_ = 2, and $\kappa$ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
+> 2. The kurtosis of a Poisson distribution with mean _&mu;_ is (3 + 1/_&mu;_).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or greater but otherwise unknown, we can take _q_ = 4, _p_ = 2, and $\kappa$ &ge; (3 + 1/_&nu;_)<sup>1/4</sup>.
+> 3. The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take _q_ = 4, _p_ = 2, and $\kappa$ &ge; 9<sup>1/4</sup> = sqrt(3).
 
 <a id=Estimating_the_Mode></a>
 
@@ -231,14 +231,14 @@ _Algorithm C_ can be used to estimate a function of the mean of a stream of rand
 
 The following algorithm takes the following parameters:
 
-- _p_, _q_, and _&kappa;_ are as defined in _Algorithm C_.
+- _p_, _q_, and $\kappa$ are as defined in _Algorithm C_.
 - _&epsilon;_, _&delta;_: The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the closed unit interval.
 
 The algorithm works only if:
 
 - Each number produced by the stream **z** satisfies 0 &le; **z** &le; 1.
 - _f_(_x_) maps the closed unit interval to itself.
-- Like _Algorithm C_, the _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.
+- Like _Algorithm C_, the _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.
 
 The algorithm, called **Algorithm D** in this document, follows.
 
@@ -246,7 +246,7 @@ The algorithm, called **Algorithm D** in this document, follows.
     - Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the maximum range of _f_ in a window of size _h_.
     - For example, _f_ is _Lipschitz continuous_ with Lipschitz constant _M_ or less[^13], its modulus of continuity is _&omega;_(_h_) = _M_\*_h_. The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
     - Because _f_ is continuous on a closed interval, it's guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-2. Run _Algorithm C_ with the given parameters _p_, _q_, _&kappa;_, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
+2. Run _Algorithm C_ with the given parameters _p_, _q_, $\kappa$, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).
 
 A simpler version of _Algorithm D_ takes the sample mean as the basis for the randomized estimate, that is, _n_ samples are taken from the stream and averaged.  As with _Algorithm D_, the following algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm, called **Algorithm E** in this document, follows:
@@ -280,7 +280,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 >
 > **Examples:**
 >
-> 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if we have a coin that produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or the bounded case of _Algorithm E_ with _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
+> 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if we have a coin that produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or the bounded case of _Algorithm E_ with _q_ = 4, _p_ = 2, and $\kappa$ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
 > 2. Take _f_(_x_) = _x_.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/1.
 > 3. The variance of a Poisson distribution with mean _&mu;_ is _&mu;_.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or less but otherwise unknown, we can take _&sigma;_ = sqrt(_&nu;_) so that the sample size _n_ is ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&epsilon;_<sup>2</sup>)), in accordance with the second case of _Algorithm E_.
 
@@ -300,7 +300,7 @@ Suppose the goal is to estimate an integral of a function _h_(**z**), where **z*
 Then _Algorithm C_ will take the new stream and generate an estimate that comes within _&epsilon;_ of the true integral with probability 1 &minus; _&delta;_ or greater, as long as the following conditions are met:
 
 - The _q_<sup>th</sup> c.a.m. for _h_(**z**) is finite.  That is, **E**\[abs(_h_(**z**)&minus;**E**\[_h_(**z**)\])<sup>_q_</sup>\] is finite.
-- The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.
+- The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.
 
 > **Note:** Unfortunately, these conditions may be hard to verify in practice, especially when the distribution of _h_(**z**) is not known.  (In fact, **E**\[_h_(**z**)\], as seen above, is the unknown integral to be estimated.)
 
@@ -309,7 +309,7 @@ To use _Algorithm C_ for this purpose, each number in the stream of random varia
 1. Set **z** to an _n_-dimensional vector (list of _n_ numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, **z** is chosen _uniformly_ at random this way (see note later in this section).
 2. Calculate _h_(**z**), and set the next number in the stream to that value.
 
-> **Example:** The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter _&kappa;_ for estimating the integral of min(_Z1_, _Z2_) where _Z1_ and _Z2_ are each uniformly chosen at random in the closed unit interval.  It assumes _p_ = 2 and _q_ = 4. (This is a trivial example because the integral can be calculated directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)
+> **Example:** The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter $\kappa$ for estimating the integral of min(_Z1_, _Z2_) where _Z1_ and _Z2_ are each uniformly chosen at random in the closed unit interval.  It assumes _p_ = 2 and _q_ = 4. (This is a trivial example because the integral can be calculated directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)
 >
 > ```
 > # Distribution of Z1 and Z2

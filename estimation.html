@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/06/14"><meta name="citation_online_date" content="2023/06/14"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/06/16"><meta name="citation_online_date" content="2023/06/16"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -187,7 +187,7 @@
 <ul>
 <li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m.</li>
 <li>The exact <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. need not be known in advance.</li>
-<li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater. (The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean absolute deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
+<li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater. (The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean absolute deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
 </ul>
 
 <p>The algorithm works by first estimating the <em>p</em><sup>th</sup> c.a.m. of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream&#39;s mean.</p>
@@ -200,7 +200,7 @@
 <li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be less than 1.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
 <li><em>p</em>: The degree of the <em>p</em><sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.</li>
 <li><em>q</em>: The degree of the <em>q</em><sup>th</sup> c.a.m.  <em>q</em> must be greater than <em>p</em>.</li>
-<li><em>&kappa;</em>: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> c.a.m.&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis&#39;s 4th root (Hickernell et al. 2012)[^8] [^9].) <em>&kappa;</em> may not be less than 1.</li>
+<li>$\kappa$: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> c.a.m.&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis&#39;s 4th root (Hickernell et al. 2012)[^8] [^9].) $\kappa$ may not be less than 1.</li>
 </ul>
 
 <p>Both <em>p</em> and <em>q</em> must be 1 or greater and are usually integers.</p>
@@ -208,14 +208,14 @@
 <p>For example:</p>
 
 <ul>
-<li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 1.1, the algorithm assumes the stream&#39;s numbers are distributed so that the kurtosis&#39;s 4th root, that is, the 4th c.a.m.&#39;s 4th root (<em>q</em>=4) divided by the standard deviation (<em>p</em>=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that&#39;s within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.</li>
-<li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 2, the algorithm assumes the stream&#39;s numbers are distributed so that the standard deviation (<em>q</em>=2) divided by the mean deviation (<em>p</em>=1) is no more than 2, and will return an estimate that&#39;s within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.</li>
+<li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream&#39;s numbers are distributed so that the kurtosis&#39;s 4th root, that is, the 4th c.a.m.&#39;s 4th root (<em>q</em>=4) divided by the standard deviation (<em>p</em>=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that&#39;s within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.</li>
+<li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, $\kappa$ = 2, the algorithm assumes the stream&#39;s numbers are distributed so that the standard deviation (<em>q</em>=2) divided by the mean deviation (<em>p</em>=1) is no more than 2, and will return an estimate that&#39;s within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.</li>
 </ul>
 
 <p>The algorithm, called <strong>Algorithm C</strong> in this document, follows.</p>
 
 <ol>
-<li>If <em>&kappa;</em> is 1:
+<li>If $\kappa$ is 1:
 
 <ol>
 <li>Set <em>n</em> to ceil(ln(1/<em>&delta;</em>)/ln(2))+1 (or an integer greater than this).</li>
@@ -223,16 +223,16 @@
 </ol></li>
 <li>Set <em>k</em> to ceil((2*ln(1/<em>&delta;</em>))/ln(4/3)).  If <em>k</em> is even[^10], add 1 to <em>k</em>.</li>
 <li>Set <em>kp</em> to <em>k</em>.</li>
-<li>Set <em>&kappa;</em> to <em>&kappa;</em><sup>(<em>p</em>*<em>q</em>/(<em>q</em>&minus;<em>p</em>))</sup>.</li>
+<li>Set $\kappa$ to $\kappa$<sup>(<em>p</em>*<em>q</em>/(<em>q</em>&minus;<em>p</em>))</sup>.</li>
 <li>If <em>q</em> is 2 or less:
 
 <ul>
-<li>Set <em>m</em> to ceil(3*<em>&kappa;</em>*48<sup>1/(<em>q</em>&minus;1)</sup>) (or an integer greater than this); set <em>s</em> to 1+1/(<em>q</em>&minus;1); set <em>h</em> to 16<sup>1/(<em>q</em>&minus;1)</sup>*<em>&kappa;</em>/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
+<li>Set <em>m</em> to ceil(3*$\kappa$*48<sup>1/(<em>q</em>&minus;1)</sup>) (or an integer greater than this); set <em>s</em> to 1+1/(<em>q</em>&minus;1); set <em>h</em> to 16<sup>1/(<em>q</em>&minus;1)</sup>*$\kappa$/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
 </ul></li>
 <li>If <em>q</em> is greater than 2:
 
 <ul>
-<li>Set <em>m</em> to ceil(144*<em>&kappa;</em>); set <em>s</em> to 2; set <em>h</em> to 16*<em>&kappa;</em>/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
+<li>Set <em>m</em> to ceil(144*$\kappa$); set <em>s</em> to 2; set <em>h</em> to 16*$\kappa$/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
 </ul></li>
 <li>(Stage 1: Estimate <em>p</em><sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create <em>k</em> many blocks.  For each block:
 
@@ -257,7 +257,7 @@
 
 <ol>
 <li>The interval $[\hat{\mu} - \epsilon, \hat{\mu} + \epsilon]$ is also known as a <em>confidence interval</em> for the mean, with <em>confidence level</em> at least 1 &minus; <em>&delta;</em> (where $\hat{\mu}$ is an estimate of the mean returned by <em>Algorithm C</em>).</li>
-<li>If the stream of random variates meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.</li>
+<li>If the stream of random variates meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and $\kappa$, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.</li>
 <li>Theorem 3.4 of Kunsch et al. (2019)[^7] shows that there is no mean estimation algorithm that&mdash;
 
 <ul>
@@ -270,9 +270,9 @@
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).</li>
-<li>The kurtosis of a Poisson distribution with mean <em>&mu;</em> is (3 + 1/<em>&mu;</em>).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>&nu;</em> or greater but otherwise unknown, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (3 + 1/<em>&nu;</em>)<sup>1/4</sup>.</li>
-<li>The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; 9<sup>1/4</sup> = sqrt(3).</li>
+<li>To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can take <em>q</em> = 4, <em>p</em> = 2, and $\kappa$ &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).</li>
+<li>The kurtosis of a Poisson distribution with mean <em>&mu;</em> is (3 + 1/<em>&mu;</em>).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>&nu;</em> or greater but otherwise unknown, we can take <em>q</em> = 4, <em>p</em> = 2, and $\kappa$ &ge; (3 + 1/<em>&nu;</em>)<sup>1/4</sup>.</li>
+<li>The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take <em>q</em> = 4, <em>p</em> = 2, and $\kappa$ &ge; 9<sup>1/4</sup> = sqrt(3).</li>
 </ol>
 </blockquote>
 
@@ -311,7 +311,7 @@
 <p>The following algorithm takes the following parameters:</p>
 
 <ul>
-<li><em>p</em>, <em>q</em>, and <em>&kappa;</em> are as defined in <em>Algorithm C</em>.</li>
+<li><em>p</em>, <em>q</em>, and $\kappa$ are as defined in <em>Algorithm C</em>.</li>
 <li><em>&epsilon;</em>, <em>&delta;</em>: The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the closed unit interval.</li>
 </ul>
 
@@ -320,7 +320,7 @@
 <ul>
 <li>Each number produced by the stream <strong>z</strong> satisfies 0 &le; <strong>z</strong> &le; 1.</li>
 <li><em>f</em>(<em>x</em>) maps the closed unit interval to itself.</li>
-<li>Like <em>Algorithm C</em>, the <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.</li>
+<li>Like <em>Algorithm C</em>, the <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.</li>
 </ul>
 
 <p>The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
@@ -333,7 +333,7 @@
 <li>For example, <em>f</em> is <em>Lipschitz continuous</em> with Lipschitz constant <em>M</em> or less[^13], its modulus of continuity is <em>&omega;</em>(<em>h</em>) = <em>M</em>*<em>h</em>. The solution for <em>&psi;</em> is then <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>M</em>.</li>
 <li>Because <em>f</em> is continuous on a closed interval, it&#39;s guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
 </ul></li>
-<li>Run <em>Algorithm C</em> with the given parameters <em>p</em>, <em>q</em>, <em>&kappa;</em>, and <em>&delta;</em>, but with <em>&epsilon;</em> = <em>&gamma;</em>.  Let <em>&mu;</em> be the result.</li>
+<li>Run <em>Algorithm C</em> with the given parameters <em>p</em>, <em>q</em>, $\kappa$, and <em>&delta;</em>, but with <em>&epsilon;</em> = <em>&gamma;</em>.  Let <em>&mu;</em> be the result.</li>
 <li>Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
@@ -391,7 +391,7 @@
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if we have a coin that produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run <em>Algorithm D</em> or the bounded case of <em>Algorithm E</em> with <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see the section on <em>Algorithm C</em>).</li>
+<li>Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if we have a coin that produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run <em>Algorithm D</em> or the bounded case of <em>Algorithm E</em> with <em>q</em> = 4, <em>p</em> = 2, and $\kappa$ &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see the section on <em>Algorithm C</em>).</li>
 <li>Take <em>f</em>(<em>x</em>) = <em>x</em>.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/1.</li>
 <li>The variance of a Poisson distribution with mean <em>&mu;</em> is <em>&mu;</em>.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>&nu;</em> or less but otherwise unknown, we can take <em>&sigma;</em> = sqrt(<em>&nu;</em>) so that the sample size <em>n</em> is ceil(<em>&sigma;</em><sup>2</sup>/(<em>&delta;</em>*<em>&epsilon;</em><sup>2</sup>)), in accordance with the second case of <em>Algorithm E</em>.</li>
 </ol>
@@ -416,7 +416,7 @@
 
 <ul>
 <li>The <em>q</em><sup>th</sup> c.a.m. for <em>h</em>(<strong>z</strong>) is finite.  That is, <strong>E</strong>[abs(<em>h</em>(<strong>z</strong>)&minus;<strong>E</strong>[<em>h</em>(<strong>z</strong>)])<sup><em>q</em></sup>] is finite.</li>
-<li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.</li>
+<li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.</li>
 </ul>
 
 <blockquote>
@@ -431,7 +431,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter <em>&kappa;</em> for estimating the integral of min(<em>Z1</em>, <em>Z2</em>) where <em>Z1</em> and <em>Z2</em> are each uniformly chosen at random in the closed unit interval.  It assumes <em>p</em> = 2 and <em>q</em> = 4. (This is a trivial example because the integral can be calculated directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)</p>
+<p><strong>Example:</strong> The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter $\kappa$ for estimating the integral of min(<em>Z1</em>, <em>Z2</em>) where <em>Z1</em> and <em>Z2</em> are each uniformly chosen at random in the closed unit interval.  It assumes <em>p</em> = 2 and <em>q</em> = 4. (This is a trivial example because the integral can be calculated directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)</p>
 
 <pre># Distribution of Z1 and Z2
 u1=Uniform(&#39;U1&#39;,0,1)

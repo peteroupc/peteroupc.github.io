@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/06/14"><meta name="citation_online_date" content="2023/06/14"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/06/16"><meta name="citation_online_date" content="2023/06/16"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -13,7 +13,20 @@
 <p>The goal of these approximations is to avoid introducing transcendental and trigonometric functions to the approximation method. (For this reason, although this page also discusses approximation by so-called <em>Chebyshev interpolants</em>, that method is relegated to the appendix.)</p>
 
 <blockquote>
-<p><strong>Note:</strong> This page was originally developed as part of a section on <em>approximate Bernoulli factories</em>, or algorithms that toss heads with probability equal to a polynomial that comes close to a continuous function.  However, the information in this page is of much broader interest than the approximate Bernoulli factory problem.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>This page was originally developed as part of a section on <em>approximate Bernoulli factories</em>, or algorithms that toss heads with probability equal to a polynomial that comes close to a continuous function.  However, the information in this page is of much broader interest than the approximate Bernoulli factory problem.</li>
+<li><p>In practice, the level at which the function $f(\lambda)$ is known may vary:</p>
+
+<ol>
+<li>$f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$).  Or...</li>
+<li>$f$ may be given as a &quot;black box&quot;, but it&#39;s possible to find the exact value of $f(\lambda)$ for any $\lambda$ in the closed unit interval.  Or...</li>
+<li>Only the values of $f$ at equally spaced points may be known.</li>
+</ol>
+
+<p>In the last two cases, additional assumptions on $f$ may have to be made in practice, such as upper bounds on $f$&#39;s first or second derivative, or whether $f$ has a continuous $r$-th derivative for every $r$ (see &quot;Definitions&quot;).  If $f$ does not meet those assumptions, the polynomial that approximates $f$ will not necessarily achieve the desired accuracy.</p></li>
+</ol>
 </blockquote>
 
 <p><a id=Contents></a></p>
@@ -369,9 +382,11 @@
 <p><strong>Note:</strong> The following statements can be shown.  Let $g(x)$ be continuous on the interval $[a, b]$, and let $f(x) = g(a+(b-a) x)$.</p>
 
 <ul>
-<li>If the $r$-th derivative of $g$ is continuous and has a maximum absolute value of $M$, where $r\ge 1$, then the $r$-th derivative of $f(x)$ has a maximum absolute value of $M(b-a)^r$ on the interval $[0, 1]$.</li>
-<li>If the $r$-th derivative of $g$ is Lipschitz continuous with Lipschitz constant $L$, where $r\ge 0$, then the $r$-th derivative of $f(x)$ is Lipschitz continuous with Lipschitz constant $L(b-a)^{r+1}$ on the interval $[0, 1]$.</li>
+<li>If the $r$-th derivative of $g$ is continuous and has a maximum absolute value of $M$ on the interval, where $r\ge 1$, then the $r$-th derivative of $f(x)$ has a maximum absolute value of $M(b-a)^r$ on the interval $[0, 1]$.</li>
+<li>If the $r$-th derivative of $g$ is Lipschitz continuous with Lipschitz constant $L$ on the interval, where $r\ge 0$, then the $r$-th derivative of $f(x)$ is Lipschitz continuous with Lipschitz constant $L(b-a)^{r+1}$ on the interval $[0, 1]$.</li>
 </ul>
+
+<p><strong>Example:</strong> Suppose $g(x)$ is defined on the interval $[1,3]$ and has a Lipschitz continuous derivative with Lipschitz constant $L$.  Let $f(x)=g(1+(3-1) x)$.  Then $f(x)$ has a Lipschitz continuous derivative with Lipschitz constant $L(3-1)^{r+1} = L(3-1)^2 = 4L$ (where $r$ is 1 in this case).  Further, the Bernstein polynomial $B_n(f)$ admits the following error bound $\epsilon$ and a degree $n$ that achieves the error tolerance $\epsilon$: $\epsilon=(4L)\cdot 1/(8n)$ and $n=\text{ceil}((4L)\cdot 1/(8\epsilon))$.  (Compare with the row starting with &quot;Has Lipschitz continuous derivative&quot; in the previous section.)  The error bound carries over to $g(x)$ on the interval $[1, 3]$.</p>
 </blockquote>
 
 <p><a id=Approximating_an_Integral></a></p>

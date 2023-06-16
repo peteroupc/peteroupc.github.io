@@ -348,7 +348,7 @@ As much as possible, **applications should use existing libraries and techniques
 - See also [**Paragon's blog post**](https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages) on existing cryptographic RNGs.
 
 | Language   | Cryptographic   | High-quality (noncryptographic, not for information security) |
- --------|-----------------------------------------------|------|
+ ---|-----|-----|
 | .NET (incl. C# and VB.NET) (H) | `RandomNumberGenerator.Create()` in `System.Security.Cryptography` namespace | `XoshiroPRNG.Net` package (XoRoShiRo128starstar, XoShiRo256plus, XoShiRo256starstar); `Data.HashFunction.MurmurHash` or `Data.HashFunction.CityHash` package (hash the string `seed + "_" + counter`) |
 | C/C++ (G)  | (C) | [**`xoroshiro128plusplus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c); [**`xoshiro256starstar.c`**](http://xoroshiro.di.unimi.it/xoshiro256starstar.c) |
 | Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `Philox` or `SFC64` (since ver. 1.7); [**hashlib**](https://docs.python.org/3/library/hashlib.html): `hashlib.md5(b"%d_%d" % (seed, counter)).digest()`, `hashlib.sha1(b"%d_%d" % (seed, counter)).digest()` |

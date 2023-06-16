@@ -6,7 +6,16 @@ This page describes how to compute a polynomial in Bernstein form that comes clo
 
 The goal of these approximations is to avoid introducing transcendental and trigonometric functions to the approximation method. (For this reason, although this page also discusses approximation by so-called _Chebyshev interpolants_, that method is relegated to the appendix.)
 
-> **Note:** This page was originally developed as part of a section on _approximate Bernoulli factories_, or algorithms that toss heads with probability equal to a polynomial that comes close to a continuous function.  However, the information in this page is of much broader interest than the approximate Bernoulli factory problem.
+> **Notes:**
+>
+> 1. This page was originally developed as part of a section on _approximate Bernoulli factories_, or algorithms that toss heads with probability equal to a polynomial that comes close to a continuous function.  However, the information in this page is of much broader interest than the approximate Bernoulli factory problem.
+> 2. In practice, the level at which the function $f(\lambda)$ is known may vary:
+>
+>     1. $f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$).  Or...
+>     2. $f$ may be given as a "black box", but it's possible to find the exact value of $f(\lambda)$ for any $\lambda$ in the closed unit interval.  Or...
+>     3. Only the values of $f$ at equally spaced points may be known.
+>
+>     In the last two cases, additional assumptions on $f$ may have to be made in practice, such as upper bounds on $f$'s first or second derivative, or whether $f$ has a continuous $r$-th derivative for every $r$ (see "Definitions").  If $f$ does not meet those assumptions, the polynomial that approximates $f$ will not necessarily achieve the desired accuracy.
 
 <a id=Contents></a>
 
@@ -202,8 +211,10 @@ The result will be in the form of Bernstein coefficients for the interval $[a, b
 
 > **Note:** The following statements can be shown.  Let $g(x)$ be continuous on the interval $[a, b]$, and let $f(x) = g(a+(b-a) x)$.
 >
-> - If the $r$-th derivative of $g$ is continuous and has a maximum absolute value of $M$, where $r\ge 1$, then the $r$-th derivative of $f(x)$ has a maximum absolute value of $M(b-a)^r$ on the interval $[0, 1]$.
-> - If the $r$-th derivative of $g$ is Lipschitz continuous with Lipschitz constant $L$, where $r\ge 0$, then the $r$-th derivative of $f(x)$ is Lipschitz continuous with Lipschitz constant $L(b-a)^{r+1}$ on the interval $[0, 1]$.
+> - If the $r$-th derivative of $g$ is continuous and has a maximum absolute value of $M$ on the interval, where $r\ge 1$, then the $r$-th derivative of $f(x)$ has a maximum absolute value of $M(b-a)^r$ on the interval $[0, 1]$.
+> - If the $r$-th derivative of $g$ is Lipschitz continuous with Lipschitz constant $L$ on the interval, where $r\ge 0$, then the $r$-th derivative of $f(x)$ is Lipschitz continuous with Lipschitz constant $L(b-a)^{r+1}$ on the interval $[0, 1]$.
+>
+> **Example:** Suppose $g(x)$ is defined on the interval $[1,3]$ and has a Lipschitz continuous derivative with Lipschitz constant $L$.  Let $f(x)=g(1+(3-1) x)$.  Then $f(x)$ has a Lipschitz continuous derivative with Lipschitz constant $L(3-1)^{r+1} = L(3-1)^2 = 4L$ (where $r$ is 1 in this case).  Further, the Bernstein polynomial $B_n(f)$ admits the following error bound $\epsilon$ and a degree $n$ that achieves the error tolerance $\epsilon$: $\epsilon=(4L)\cdot 1/(8n)$ and $n=\text{ceil}((4L)\cdot 1/(8\epsilon))$.  (Compare with the row starting with "Has Lipschitz continuous derivative" in the previous section.)  The error bound carries over to $g(x)$ on the interval $[1, 3]$.
 
 <a id=Approximating_an_Integral></a>
 

@@ -218,6 +218,8 @@ def preparePandoc(markdown)
   markdown=markdown.gsub(/_&nu;_/) { " $\\nu$ " }
   markdown=markdown.gsub(/_&gamma;_/) { " $\\gamma$ " }
   markdown=markdown.gsub(/&gamma;/) { " $\\gamma$ " }
+  markdown=markdown.gsub(/_&sigma;_/) { " $\\sigma$ " }
+  markdown=markdown.gsub(/&sigma;/) { " $\\sigma$ " }
   markdown=markdown.gsub(/_&delta;_/) { " $\\delta$ " }
   markdown=markdown.gsub(/_&Delta;_/) { " $\\Delta$ " }
   markdown=markdown.gsub(/&prime;/) { " $\\prime$ " }
