@@ -276,7 +276,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 >
 > 5. In _Algorithm E_, for an estimate in terms of relative error, rather than absolute error, multiply _&gamma;_ by _M_ after step 1 is complete, where _M_ is the smallest absolute value of the mean that the stream's distribution is allowed to have (Wainwright 2019)[^17].
 >
-> 6. Finding the sample size needed to produce an estimate that is close to the true value with a user-specified error bound, as with _Algorithm E_, is also known as _offline learning_, _statistical learning_, or _provably approximately correct (PAC) learning_.
+> 6. Finding the sample size needed to produce an estimate that is close to the true value with a user-specified error bound and a user-specified probability, as with _Algorithm E_, is also known as _offline learning_, _statistical learning_, or _provably approximately correct (PAC) learning_.
 >
 > **Examples:**
 >
