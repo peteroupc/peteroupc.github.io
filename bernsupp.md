@@ -397,7 +397,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^19]: Powers, V., Reznick, B., "[**A new bound for Pólya's Theorem with applications to polynomials positive on polyhedra**](https://www.sciencedirect.com/science/article/pii/S0022404900001559)", _Journal of Pure and Applied Algebra_ 164 (24 October 2001).
 
-[^20]: Powers, V., & Reznick, B. (2006, July). "A quantitative Pólya's theorem with corner zeros", in _Proceedings of the 2006 international symposium on Symbolic and algebraic computation_ (pp. 285-289).
+[^20]: Mok, H-N., To, W-K., "[**Effective Pólya semi-positivity for non-negative polynomials on the simplex**](https://doi.org/10.1016/j.jco.2008.01.003)", _Journal of Complexity_ 24 (2008).
 
 [^21]: S. Ray, P.S.V. Nataraj, "[**A Matrix Method for Efficient Computation of Bernstein Coefficients**](https://interval.louisiana.edu/reliable-computing-journal/volume-17/reliable-computing-17-pp-40-71.pdf)", Reliable Computing 17(1), 2012.
 
@@ -538,8 +538,21 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 - If $0\le\min(b_0, ..., b_m)\le\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by $m$.
 - If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
 - If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$ where $\text{Pmin}$ is the _minimum_ value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
-- If $m\ge 2$, $b_0 = 1$, $b_m = 0$, and $b_{m-1}\gt 0$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\max\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Qmin}}, zM/s\right) - m\right),$$
-where $\text{Qmin}$ is the _minimum_ value of $p(\lambda)$ on the interval $[0, r]$, $r=(m b_{m-1})/(m b_{m-1}+C)$, $s=\frac{m b_{m-1}}{2}(C/(m b_{m-1}+C))^{m-1}$, $C=2 (|b_0|{m\choose 0} + ... + |b_m|{m\choose m})$, $M=\max(|b_0|{m\choose 0}, ...,|b_{m-1}|{m\choose m-1})$, $z=P(0)P(m) + P(1)P(m-1) + ... + P(m-1)P(1)$, and $P(b)=b(b-1)/2$ if $b\ge 2$, or 1 otherwise (Powers and Reznick 2006)[^20].
+- Suppose $m\ge 2$, and that $b_0=0$ or $b_m=0$ or both, and the following necessary conditions are satisfied (Mok and To 2008; Theorem 1 and Corollary 3)[^20]\:
+
+    - If there is $b_i\lt 0$ and $b_m=0$, there must be $j\gt i$ such that $b_j\gt 0$.
+    - If there is $b_i\lt 0$ and $b_0=0$, there must be $j\lt i$ such that $b_j\gt 0$.
+    - If there is $1-b_i\lt 0$ and $1-b_m=0$, there must be $j\gt i$ such that $1-b_j\gt 0$.
+    - If there is $1-b_i\lt 0$ and $1-b_0=1$, there must be $j\lt i$ such that $1-b_j\gt 0$.
+
+    Then the coin-flipping degree is bounded above by&mdash; $$m = \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$ where&mdash; $$M(\beta_0, ..., \beta_m) = \max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right),$$ and where:
+    - $a_{\max} = \max(\max(0,\beta_0),  ..., \max(0, \beta_m))$.
+    - $a_{\min} = \min(\max(0,\beta_0){m\choose 0},  ..., \max(0, \beta_m){m\choose m})$.
+    - $c$ is the maximum of $FN(\lambda)/FP(\lambda)$ where $0\lt\lambda\lt 1$.
+    - $FP(\lambda) = \sum_{k=0}^m \max(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
+    - $FN(\lambda) = \sum_{k=0}^m |\min(0,\beta_k)|{m\choose k}\lambda^k(1-\lambda)^{m-k}$.
+
+    (Mok and To 2008; Theorem 2 and remark 1.5(v))[^20].
 
 **Lemma:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the coefficients $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.
 
@@ -677,9 +690,9 @@ Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The 
 
 Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
 
-> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers.[^29]  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^30]; see also Remark C of Nacu and Peres (2005)[^1].
+> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers. [^29] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^30]; see also Remark C of Nacu and Peres (2005)[^1].
 
-**Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
+**Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent $\alpha$, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; D(n)._
 - _**fabove**(n, k) = f(k/n) + D(n)._
@@ -691,12 +704,12 @@ _Or:_
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + &eta;(n)._
 
-_Where &eta;(n) = M\*(2/7)$\alpha/2$/((2$\alpha/2$&minus;1)\*n$\alpha/2$)._
+_Where $\eta(n)=M(2/7)^{\alpha-2}/((2^{\alpha/2}-1)n^{\alpha/2})$._
 
 _Proof._ Because $f$ is Hölder continuous, it admits the modulus of continuity $\omega(x)=Mx^{\alpha}$.  By part 1 of lemma 2:
 
 - For each integer $n\ge 1$ that's a power of 2 ($n_0=1$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(2n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$ (where $\eta(n)$ is as in Theorem 1).
-- For each integer $n\ge 4$ that's a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(7n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=$ M\*(2/7)$\alpha/2$/((2$\alpha/2$&minus;1)\*n$\alpha/2$).
+- For each integer $n\ge 4$ that's a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(7n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=$ M\*(2/7)$^{\alpha/2}$/((2$^{\alpha/2}$&minus;1)\*n$^{\alpha/2}$).
 
 In both cases $\eta(n)$ is finite and converges to 0 as $n$ increases.
 

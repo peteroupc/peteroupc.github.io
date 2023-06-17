@@ -268,7 +268,7 @@ $${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambd
 
 where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _Bernstein coefficients_.
 
-But a polynomial admits a Bernoulli factory only if each of its Bernstein coefficients is 0 or greater and less than 1 (once the polynomial is written in Bernstein form), and a function can be simulated with a fixed number of coin flips only if it's a polynomial of that kind (Goyal and Sigman 2012[^6]; Qian et al. 2011\)[^7]; see also Wästlund 1999, section 4[^8]).
+But a polynomial admits a Bernoulli factory only if each of its Bernstein coefficients is 0 or greater and less than 1, and a function can be simulated with a fixed number of coin flips only if it's a polynomial of that kind (Goyal and Sigman 2012[^6]; Qian et al. 2011\)[^7]; see also Wästlund 1999, section 4[^8]).
 
 Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.
 

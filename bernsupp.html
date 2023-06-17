@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/15"><meta name="citation_online_date" content="2023/06/15"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/17"><meta name="citation_online_date" content="2023/06/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -571,7 +571,7 @@
 
 <p>[^19]: Powers, V., Reznick, B., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0022404900001559"><strong>A new bound for Pólya&#39;s Theorem with applications to polynomials positive on polyhedra</strong></a>&quot;, <em>Journal of Pure and Applied Algebra</em> 164 (24 October 2001).</p>
 
-<p>[^20]: Powers, V., &amp; Reznick, B. (2006, July). &quot;A quantitative Pólya&#39;s theorem with corner zeros&quot;, in <em>Proceedings of the 2006 international symposium on Symbolic and algebraic computation</em> (pp. 285-289).</p>
+<p>[^20]: Mok, H-N., To, W-K., &quot;<a href="https://doi.org/10.1016/j.jco.2008.01.003"><strong>Effective Pólya semi-positivity for non-negative polynomials on the simplex</strong></a>&quot;, <em>Journal of Complexity</em> 24 (2008).</p>
 
 <p>[^21]: S. Ray, P.S.V. Nataraj, &quot;<a href="https://interval.louisiana.edu/reliable-computing-journal/volume-17/reliable-computing-17-pp-40-71.pdf"><strong>A Matrix Method for Efficient Computation of Bernstein Coefficients</strong></a>&quot;, Reliable Computing 17(1), 2012.</p>
 
@@ -825,8 +825,26 @@
 <li>If $0\le\min(b_0, ..., b_m)\le\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by $m$.</li>
 <li>If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].</li>
 <li>If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$ where $\text{Pmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].</li>
-<li>If $m\ge 2$, $b_0 = 1$, $b_m = 0$, and $b_{m-1}\gt 0$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\max\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Qmin}}, zM/s\right) - m\right),$$
-where $\text{Qmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the interval $[0, r]$, $r=(m b_{m-1})/(m b_{m-1}+C)$, $s=\frac{m b_{m-1}}{2}(C/(m b_{m-1}+C))^{m-1}$, $C=2 (|b_0|{m\choose 0} + ... + |b_m|{m\choose m})$, $M=\max(|b_0|{m\choose 0}, ...,|b_{m-1}|{m\choose m-1})$, $z=P(0)P(m) + P(1)P(m-1) + ... + P(m-1)P(1)$, and $P(b)=b(b-1)/2$ if $b\ge 2$, or 1 otherwise (Powers and Reznick 2006)[^20].</li>
+<li><p>Suppose $m\ge 2$, and that $b_0=0$ or $b_m=0$ or both, and the following necessary conditions are satisfied (Mok and To 2008; Theorem 1 and Corollary 3)[^20]:</p>
+
+<ul>
+<li>If there is $b_i\lt 0$ and $b_m=0$, there must be $j\gt i$ such that $b_j\gt 0$.</li>
+<li>If there is $b_i\lt 0$ and $b_0=0$, there must be $j\lt i$ such that $b_j\gt 0$.</li>
+<li>If there is $1-b_i\lt 0$ and $1-b_m=0$, there must be $j\gt i$ such that $1-b_j\gt 0$.</li>
+<li>If there is $1-b_i\lt 0$ and $1-b_0=1$, there must be $j\lt i$ such that $1-b_j\gt 0$.</li>
+</ul>
+
+<p>Then the coin-flipping degree is bounded above by&mdash; $$m = \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$ where&mdash; $$M(\beta_0, ..., \beta_m) = \max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right),$$ and where:</p>
+
+<ul>
+<li>$a_{\max} = \max(\max(0,\beta_0),  ..., \max(0, \beta_m))$.</li>
+<li>$a_{\min} = \min(\max(0,\beta_0){m\choose 0},  ..., \max(0, \beta_m){m\choose m})$.</li>
+<li>$c$ is the maximum of $FN(\lambda)/FP(\lambda)$ where $0\lt\lambda\lt 1$.</li>
+<li>$FP(\lambda) = \sum_{k=0}^m \max(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.</li>
+<li>$FN(\lambda) = \sum_{k=0}^m |\min(0,\beta_k)|{m\choose k}\lambda^k(1-\lambda)^{m-k}$.</li>
+</ul>
+
+<p>(Mok and To 2008; Theorem 2 and remark 1.5(v))[^20].</p></li>
 </ul>
 
 <p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the coefficients $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.</p>
@@ -1004,10 +1022,10 @@ where $\text{Qmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the interva
 <p>Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For <em>n</em>=<em>n</em><sub>1</sub>, condition (iv) is maintained by noting that the degree-<em>n</em><sub>1</sub> polynomial&#39;s coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers.[^29]  But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^30]; see also Remark C of Nacu and Peres (2005)[^1].</p>
+<p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers. [^29] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn&#39;t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^30]; see also Remark C of Nacu and Peres (2005)[^1].</p>
 </blockquote>
 
-<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent &alpha;, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
+<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent $\alpha$, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; D(n).</em></li>
@@ -1023,13 +1041,13 @@ where $\text{Qmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the interva
 <li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + &eta;(n).</em></li>
 </ul>
 
-<p><em>Where &eta;(n) = M*(2/7)$\alpha/2$/((2$\alpha/2$&minus;1)*n$\alpha/2$).</em></p>
+<p><em>Where $\eta(n)=M(2/7)^{\alpha-2}/((2^{\alpha/2}-1)n^{\alpha/2})$.</em></p>
 
 <p><em>Proof.</em> Because $f$ is Hölder continuous, it admits the modulus of continuity $\omega(x)=Mx^{\alpha}$.  By part 1 of lemma 2:</p>
 
 <ul>
 <li>For each integer $n\ge 1$ that&#39;s a power of 2 ($n_0=1$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(2n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=D(n)=\frac{M}{((2^{\alpha/2}-1) n^{\alpha/2}}$ (where $\eta(n)$ is as in Theorem 1).</li>
-<li>For each integer $n\ge 4$ that&#39;s a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(7n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=$ M*(2/7)$\alpha/2$/((2$\alpha/2$&minus;1)*n$\alpha/2$).</li>
+<li>For each integer $n\ge 4$ that&#39;s a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=\omega(\sqrt{1/(2n)})=M (1/(7n))^{\alpha/2}$ can be taken for each such integer $n$, and thus $\eta(n)=$ M*(2/7)$^{\alpha/2}$/((2$^{\alpha/2}$&minus;1)*n$^{\alpha/2}$).</li>
 </ul>
 
 <p>In both cases $\eta(n)$ is finite and converges to 0 as $n$ increases.</p>
