@@ -84,13 +84,13 @@ These randomized upper and lower bounds come from two sequences of polynomials a
     - the difference between the degree-(_n_&minus;1) upper polynomial and the degree-_n_ upper polynomial, and
     - the difference between the degree-_n_ lower polynomial and the degree-(_n_&minus;1) lower polynomial,
 
-    must have nonnegative coefficients, once each of these differences is rewritten as a polynomial in Bernstein form of degree exactly _n_.
+    must have nonnegative Bernstein coefficients, once each of these differences is rewritten as a polynomial of degree exactly _n_.
 
 The consistency requirement ensures that the upper polynomials "decrease" and the lower polynomials "increase".  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not ensure the consistency requirement by itself.
 
-> **Example (Nacu & Peres [2005][^1]):** The polynomial $x^2+(1-x)^2$ is of degree 2 with Bernstein coefficients [1, 0, 1].  The polynomial $x(1-x)$ is of degree 2 with Bernstein coefficients [0, 1/2, 0]. Although $(x^2+(1-x)^2)$ minus $(x(1-x))$ is non-negative, this difference's Bernstein coefficients of degree 2 are not always non-negative, namely, the coefficients are [1, -1/2, 1].
+> **Example (Nacu & Peres [2005][^1]):** The polynomial $x^2+(1-x)^2$ is of degree 2 with Bernstein coefficients [1, 0, 1].  The polynomial $x(1-x)$ is of degree 2 with Bernstein coefficients [0, 1/2, 0]. Although $(x^2+(1-x)^2)$ minus $(x(1-x))$ is non-negative, this difference's Bernstein coefficients of degree 2 are not always non-negative, namely, the Bernstein coefficients are [1, -1/2, 1].
 
-In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup>th</sup> coefficient for the lower or upper degree-_n_ polynomial in Bernstein form, respectively, where 0 &le; _k_ &le; _n_ is an integer.
+In this document, **fbelow**(_n_, _k_) and **fabove**(_n_, _k_) mean the _k_<sup>th</sup> Bernstein coefficient for the lower or upper degree-_n_ polynomial, respectively, where 0 &le; _k_ &le; _n_ is an integer.
 
 The section "Building the Lower and Upper Polynomials" are ways to build sequences of polynomials that appropriately converge to a factory function if that function meets certain conditions.
 
@@ -170,7 +170,7 @@ then _f_ can be simulated using the following algorithm:
 > **Examples:**
 >
 > 1. If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, then _f_ is less than or equal to `High`(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following code in Python that uses the SymPy computer algebra library computes this example: `fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))`.
-> 2. If _f_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, then _f_ is less than or equal to `High`(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 0 if _&lambda;_ = 0, and (cosh(_&lambda;_)&minus;1)/_&lambda;_ otherwise.  Now, since _g_(0) = 0, find new functions _g_ and `High` based on the current _g_.  The current _g_ is less than or equal to `High`(_&lambda;_) = _&lambda;_\*3\*(2&minus;_&lambda;_)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so _G_(_&lambda;_) = 5/12 if _&lambda;_ = 0, and &minus;(5\*cosh(_&lambda;_) &minus; 5)/(3\*_&lambda;_<sup>2</sup>\*(_&lambda;_&minus;2)) otherwise. _G_ is bounded away from 0 and 1, resulting in the following algorithm:
+> 2. If _f_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, then _f_ is less than or equal to `High`(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 0 if _&lambda;_ = 0, and (cosh(_&lambda;_)&minus;1)/_&lambda;_ otherwise.  Now, since _g_(0) = 0, find new functions _g_ and `High` based on the current _g_.  The current _g_ is less than or equal to `High`(_&lambda;_) = _&lambda;_\*3\*(2&minus;_&lambda;_)/5 (a degree-2 polynomial that has Bernstein coefficients [0, 6/10, 6/10]), so _G_(_&lambda;_) = 5/12 if _&lambda;_ = 0, and &minus;(5\*cosh(_&lambda;_) &minus; 5)/(3\*_&lambda;_<sup>2</sup>\*(_&lambda;_&minus;2)) otherwise. _G_ is bounded away from 0 and 1, resulting in the following algorithm:
 >
 >     1. (Simulate `High`.) Flip the input coin.  If it returns 0, return 0.
 >     2. (Simulate `High`.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
@@ -237,12 +237,12 @@ In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose max
     - DiffWidth($f, m$) as 1.01 $\cdot 2 (\epsilon(f, 2^m)$ + $\epsilon(f, 2^{m+1}))$.  This is an upper bound on the maximum difference between the shifted degree-$2^m$ and the shifted degree-$(2^{m+1})$ polynomial.
 - The technique breaks $f$ into a **starting polynomial** and a family of **difference polynomials**.<br>To find the **starting polynomial**:
     1. Set $m$ to 0.
-    2. Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, m$) from them.  If the coefficients now all lie in the closed unit interval, go to the next step.  Otherwise, add 1 to _m_ and repeat this step.
+    2. Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, m$) from them.  If those coefficients now all lie in the closed unit interval, go to the next step.  Otherwise, add 1 to _m_ and repeat this step.
     3. Calculate **StartWidth** as ceil($c\cdot 65536$)/65536, where $c$ is the maximum Bernstein coefficient from step 2, then divide each Bernstein coefficient by **StartWidth**. (65536 is arbitrary and ensures **StartWidth** is a rational number that is close to, but no lower than, the maximum Bernstein coefficient, for convenience.)
     4. The **starting polynomial** now has Bernstein coefficients found in step 3.  Set **StartOrder** to _m_.
 - To find the **difference polynomial** of order $m$:
     1. Find the Bernstein coefficients of $L_{2^m}$, then subtract ErrShift($f, m$) from them.  Rewrite them to Bernstein coefficients of degree $2^{m+1}$.  Call the coefficients **LowerCoeffs**.
-    2. Find the Bernstein coefficients of $L_{2^{m+1}}$, then subtract ErrShift($f, m+1$) from them.  Call the coefficients **UpperCoeffs**.
+    2. Find the Bernstein coefficients of $L_{2^{m+1}}$, then subtract ErrShift($f, m+1$) from them.  Call the resulting values **UpperCoeffs**.
     3. Subtract **UpperCoeffs** from **LowerCoeffs**, and call the result **DiffCoeffs**.  Divide each coefficient in **DiffCoeffs** by DiffWidth($f, m$).  The result is the Bernstein coefficients of a positive polynomial of degree $2^{m+1}$ bounded by 0 and 1, but these coefficients are not necessarily bounded by 0 and 1.  Thus, if any coefficient in **DiffCoeffs** is less than 0 or greater than 1, add 1 to _m_ and rewrite **DiffCoeffs** to Bernstein coefficients of degree $2^{m+1}$ until no coefficient is less than 0 or greater than 1 anymore.
     4. The **difference polynomial** now has Bernstein coefficients given by **DiffCoeffs**.
 - The probabilities for _X_ are as follows:
@@ -304,20 +304,20 @@ To build an approximate Bernoulli factory with a polynomial:
 
     Other choices for this polynomial are given in the page [**"Approximations in Bernstein Form"**](https://peteroupc.github.io/bernapprox.html).
 
-    Whatever polynomial is used, the polynomial's coefficients must all lie on the closed unit interval.
+    Whatever polynomial is used, the polynomial's Bernstein coefficients must all lie on the closed unit interval.
 
     The polynomial can be in _homogeneous form_ (also known as _scaled Bernstein_ form (Farouki and Rajan 1988)[^11]) instead of in Bernstein form, with _scaled Bernstein coefficients_ $s_0, ..., s_n$, as long as $0\le s_i\le{n\choose i}$ where $0\le i\le n$.
 
-2. The rest of the process is to toss heads with probability equal to that polynomial, given its coefficients.  To do this, first flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
+2. The rest of the process is to toss heads with probability equal to that polynomial, given its Bernstein coefficients.  To do this, first flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 
 3. Then, with probability equal to&mdash;
 
-    - the polynomial's Bernstein coefficient at position _j_, or
+    - the polynomial's Bernstein coefficient at position _j_ (which will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$), or
     - the polynomial's scaled Bernstein coefficient at position _j_, divided by choose(_n_, _j_)
 
     (0&le;_j_&le;_n_), return 1.  Otherwise, return 0.
 
-    This coefficient will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$.  If the coefficient can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to exactly sample a probability equal to that irrational number.
+    If the Bernstein or scaled Bernstein coefficient can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to exactly sample a probability equal to that irrational number.
 
 > **Notes:**
 >
@@ -325,8 +325,8 @@ To build an approximate Bernoulli factory with a polynomial:
 > 2. There are other kinds of functions, besides polynomials and rational functions, that serve to approximate continuous functions.  But many of them work poorly as approximate Bernoulli factory functions because their lack of "smoothness" means there is no simple Bernoulli factory for them.  For example, a _spline_, which is a continuous function made up of a finite number of polynomial pieces, is generally not "smooth" at the points where the spline's pieces meet.
 > 3. Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)). ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 > 4. There are two known approximations to the linear function $f(\lambda) = 2\lambda$ using a polynomial in Bernstein form of degree $n$ that maps the open interval (0, 1) to itself.  In each case, if _g_(_&lambda;_) is that polynomial and if $0\le\lambda\le 1/2$, then the error in approximating _f_(_&lambda;_) is no greater than 1&minus;_g_(1/2).
->     - In Henderson and Glynn (2003, Remark 4\)[^12], the polynomial's _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*2, 1&minus;1/_n_).  The polynomial _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
->     - In Nacu and Peres (2005, section 6\)[^1], the polynomial's _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_i_)\*2, 1). It corresponds to the following algorithm: Flip the input coin _n_ times or until the ratio of "heads" to "flips" becomes at least 1/2, whichever comes first, then if _n_ flips were made without the ratio becoming at least 1/2, return 0; otherwise, return 1.
+>     - In Henderson and Glynn (2003, Remark 4\)[^12], the polynomial's _j_<sup>th</sup> Bernstein coefficient (starting at 0) is min((_j_/_n_)\*2, 1&minus;1/_n_).  The polynomial _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
+>     - In Nacu and Peres (2005, section 6\)[^1], the polynomial's _j_<sup>th</sup> Bernstein coefficient (starting at 0) is min((_j_/_i_)\*2, 1). It corresponds to the following algorithm: Flip the input coin _n_ times or until the ratio of "heads" to "flips" becomes at least 1/2, whichever comes first, then if _n_ flips were made without the ratio becoming at least 1/2, return 0; otherwise, return 1.
 
 <a id=Achievable_Simulation_Rates></a>
 
@@ -342,7 +342,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 |   Property of simulation   |   Property of _f_
   ------------- |  ------------------------
-| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in the closed unit interval (Goyal and Sigman 2012\)[^7]. |
+| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial of degree _n_ with Bernstein coefficients in the closed unit interval (Goyal and Sigman 2012\)[^7]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^13]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^14].  |
 | Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
 | Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_, and for large enough _n_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011, Theorem 13\)[^15]. |
@@ -531,7 +531,7 @@ Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself an
 
 Then its _coin-flipping degree_ (Wästlund 1999)[^17] is the smallest value of $n$ such that $p$'s Bernstein coefficients of degree $n$ lie in the closed unit interval. [^18]   \(This is broader than the use of the term in Wästlund, where a polynomial can have a coin-flipping degree only if its "power" coefficients are integers.)
 
-In some cases, there are upper bounds on this coin-flipping degree.
+The following results give upper bounds on this coin-flipping degree.
 
 Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0, ..., b_m$.  Then:
 
@@ -543,18 +543,18 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
     - If there is $b_i\lt 0$ and $b_m=0$, there must be $j\gt i$ such that $b_j\gt 0$.
     - If there is $b_i\lt 0$ and $b_0=0$, there must be $j\lt i$ such that $b_j\gt 0$.
     - If there is $1-b_i\lt 0$ and $1-b_m=0$, there must be $j\gt i$ such that $1-b_j\gt 0$.
-    - If there is $1-b_i\lt 0$ and $1-b_0=1$, there must be $j\lt i$ such that $1-b_j\gt 0$.
+    - If there is $1-b_i\lt 0$ and $1-b_0=0$, there must be $j\lt i$ such that $1-b_j\gt 0$.
 
-    Then the coin-flipping degree is bounded above by&mdash; $$m = \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$ where&mdash; $$M(\beta_0, ..., \beta_m) = \max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right),$$ and where:
+    Then the coin-flipping degree is bounded above by&mdash; $$m = \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$ where&mdash; $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),$$ and where:
     - $a_{\max} = \max(\max(0,\beta_0),  ..., \max(0, \beta_m))$.
     - $a_{\min} = \min(\max(0,\beta_0){m\choose 0},  ..., \max(0, \beta_m){m\choose m})$.
-    - $c$ is the maximum of $FN(\lambda)/FP(\lambda)$ where $0\lt\lambda\lt 1$.
+    - $c$ is the smallest number $r$ that satisfies $FN(\lambda)/FP(\lambda)\le r$ where $0\lt\lambda\lt 1$.
     - $FP(\lambda) = \sum_{k=0}^m \max(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
     - $FN(\lambda) = \sum_{k=0}^m |\min(0,\beta_k)|{m\choose k}\lambda^k(1-\lambda)^{m-k}$.
 
     (Mok and To 2008; Theorem 2 and remark 1.5(v))[^20].
 
-**Lemma:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the coefficients $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.
+**Lemma:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the values $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.
 
 _Proof_:  This can be seen by evaluating $p(1) = a_0 + ... + a_n$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;
 
@@ -667,7 +667,7 @@ The solution for $\eta(n)$ given in the statement of the theorem is easy to prov
 
 Now to prove the result assuming that $n_0 > 1$.
 
-Doing this involves taking advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start defining the polynomials at any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 or greater, but less than $n_0$, would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal. The lower constants are no greater than $g_{n_0}$'s lowest Bernstein coefficient, and the upper constants are no less than $g_{n_0}$'s highest Bernstein coefficients; they meet Item 3 because these lower and upper constants, when rewritten as polynomials in Bernstein form degree $n_0$, have Bernstein coefficients that are still no greater or no less, respectively, than the corresponding degree-$n_0$ polynomial. With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in the theorem remains nonnegative.  Moreover, since _&eta;_ is assumed to converge, _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
+Doing this involves taking advantage of the observation in Remark B of Nacu and Peres (2005)[^1] that we can start defining the polynomials at any $n$ greater than 0, including $n = n_0$; in that case, the upper and lower polynomials of degree 1 or greater, but less than $n_0$, would be constant functions, so that the Bernstein coefficients of each polynomial would be equal. The lower constants are no greater than $g_{n_0}$'s lowest Bernstein coefficient, and the upper constants are no less than $g_{n_0}$'s highest Bernstein coefficients; they meet Item 3 because these lower and upper constants, when rewritten as polynomials in Bernstein form of degree $n_0$, have Bernstein coefficients that are still no greater or no less, respectively, than the corresponding degree-$n_0$ polynomial. With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in the theorem remains nonnegative.  Moreover, since _&eta;_ is assumed to converge, _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
 
 > **Notes:**
 >
@@ -677,18 +677,18 @@ Doing this involves taking advantage of the observation in Remark B of Nacu and 
 **Proposition 1A.** _If a scheme satisfies Theorem 1, the polynomials $g_n$ and $h_n$ in the scheme can be made to satisfy conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)[^1] as follows:_
 
 - $g_n$ = $g_{n-1}$ _and_ $h_n$ = $h_{n-1}$ _whenever $n$ is an integer greater than 1 and not a power of 2._
-- _If **fabove**(n, k) > 1 for a given $n$ and some $k$, the coefficients of $h_n$ (the upper polynomial) are all 1._
-- _If **fbelow**(n, k) < 0 for a given $n$ and some $k$, the coefficients of $g_n$ (the lower polynomial) are all 0._
+- _If **fabove**(n, k) > 1 for a given $n$ and some $k$, the Bernstein coefficients of $h_n$ (the upper polynomial) are all 1._
+- _If **fbelow**(n, k) < 0 for a given $n$ and some $k$, the Bernstein coefficients of $g_n$ (the lower polynomial) are all 0._
 
-_Proof:_ Condition (i) of Proposition 3 says that each coefficient of the polynomials must be 0 or greater and 1 or less.  This is ensured starting with a large enough value of _n_ greater than 0 that's a power of 2, call it _n_<sub>1</sub>, as shown next.
+_Proof:_ Condition (i) of Proposition 3 says that each Bernstein coefficient of the polynomials must be 0 or greater and 1 or less.  This is ensured starting with a large enough value of _n_ greater than 0 that's a power of 2, call it _n_<sub>1</sub>, as shown next.
 
 Let _&epsilon;_ be a positive distance between 0 and the minimum or between 1 and the maximum of _f_, whichever is smaller.  This _&epsilon;_ exists by the assumption that _f_ is bounded away from 0 and 1. Because the series _&eta;_ (in Theorem 1) sums to a finite value that goes to 0 as $n$ increases, _&eta;_(_n_) will eventually stay less than _&epsilon;_.  And if $n\ge n_0$ is a power of 2 (where $n_0$ is as in Theorem 1), the `f(k/n)` term is bounded by the minimum and maximum of _f_ by construction. This combined means that the lower and upper polynomials' Bernstein coefficients will eventually be bounded by 0 and 1 for every integer _n_ starting with _n_<sub>1</sub>.
 
-For _n_ less than _n_<sub>1</sub>, condition (i) is ensured by setting the lower or upper polynomial's coefficient to 0 or 1, respectively, whenever a coefficient of the degree-_n_ polynomial would otherwise be less than 0 or greater than 1, respectively.
+For _n_ less than _n_<sub>1</sub>, condition (i) is ensured by setting the lower or upper polynomial's Bernstein coefficient to 0 or 1, respectively, whenever a Bernstein coefficient of the degree-_n_ polynomial would otherwise be less than 0 or greater than 1, respectively.
 
 Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The only thing to add is that for $n$ less than _n_<sub>1</sub>, the lower and upper polynomials $g_n$ and $h_n$ can be treated as 0 or 1, respectively, without affecting convergence, and that for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iii) by Remark B of Nacu and Peres (2005)[^1].
 
-Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
+Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's Bernstein coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their Bernstein coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
 
 > **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers. [^29] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^30]; see also Remark C of Nacu and Peres (2005)[^1].
 
@@ -907,16 +907,16 @@ Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 
 
 To show that _f_ is strongly simulable, it's enough to show that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
 
-**Proposition 1.** _If f(&lambda;) is described in the strong simulability statement and is a polynomial with computable coefficients, it is strongly simulable._
+**Proposition 1.** _If f(&lambda;) is described in the strong simulability statement and is a polynomial with computable Bernstein coefficients, it is strongly simulable._
 
 _Proof:_ If _f_ is the constant 0 or 1, the proof is trivial: simply return 0 or 1, respectively.
 
-Otherwise: Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012\)[^7].
+Otherwise: Let _a_\[_j_\] be the _j_<sup>th</sup> Bernstein coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012\)[^7].
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0). (By condition 3, _f_(0) must be either 0 or 1.)
 3. If 1 is in the domain of _f_ and if _j_ is _n_, return _f_(1). (By condition 4, _f_(1) must be either 0 or 1.)
-4. With probability _a_\[_j_\], return 1.  Otherwise, return 0. (For example, generate a uniformly distributed random variate, greater than 0 and less than 1, then return 1 if that variate is less than _a_\[_j_\], or 0 otherwise.  _a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
+4. With probability _a_\[_j_\], return 1.  Otherwise, return 0. (For example, generate a uniformly distributed random variate, greater than 0 and less than 1, then return 1 if that variate is less than _a_\[_j_\], or 0 otherwise.  _a_\[_j_\] is the Bernstein coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
 
 (By the properties of the Bernstein form, _a_\[0\] will equal _f_(0) and _a_\[_n_\] will equal _f_(1) whenever 0 or 1 is in the domain of _f_, respectively.)
 
@@ -924,12 +924,12 @@ Step 4 is done by first generating unbiased bits (such as with the von Neumann t
 
 **Proposition 2.** _If f(&lambda;) is described in the strong simulability statement, and if either f is constant on its domain or f meets the additional conditions below, then f is strongly simulable._
 
-1. _If f(0) = 0 or f(1) = 0 or both, then there is a polynomial g(&lambda;) in Bernstein form whose coefficients are computable and in the closed unit interval, such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &gt; f(&lambda;) for every &lambda; in the domain of f, except at 0 and 1._
-2. _If f(0) = 1 or f(1) = 1 or both, then there is a polynomial h(&lambda;) in Bernstein form whose coefficients are computable and in the closed unit interval, such that h(0) = f(0) and h(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that h(&lambda;) &lt; f(&lambda;) for every &lambda; in the domain of f, except at 0 and 1._
+1. _If f(0) = 0 or f(1) = 0 or both, then there is a polynomial g(&lambda;) whose Bernstein coefficients are computable and in the closed unit interval, such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &gt; f(&lambda;) for every &lambda; in the domain of f, except at 0 and 1._
+2. _If f(0) = 1 or f(1) = 1 or both, then there is a polynomial h(&lambda;) whose Bernstein coefficients are computable and in the closed unit interval, such that h(0) = f(0) and h(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that h(&lambda;) &lt; f(&lambda;) for every &lambda; in the domain of f, except at 0 and 1._
 
 **Lemma 1.** _If f(&lambda;) is described in the strong simulability statement and meets the additional condition below, then f is strongly simulable._
 
-- _There is a polynomial g(&lambda;) in Bernstein form whose coefficients are computable and in the closed unit interval, such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &gt; f(&lambda;) for every &lambda; in the domain of f, except at 0 and 1._
+- _There is a polynomial g(&lambda;) whose Bernstein coefficients are computable and in the closed unit interval, such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &gt; f(&lambda;) for every &lambda; in the domain of f, except at 0 and 1._
 
 _Proof:_  Consider the following algorithm.
 
@@ -949,7 +949,7 @@ Thus, _f_ admits an algorithm that uses nothing but the input coin as a source o
 
 **Lemma 2.** _If f(&lambda;) is described in the strong simulability statement and meets the additional conditions below, then f is strongly simulable._
 
-1. _There are two polynomials g(&lambda;) and &omega;(&lambda;) in Bernstein form, such that both polynomials' coefficients are computable and all in the closed unit interval._
+1. _There are two polynomials g(&lambda;) and &omega;(&lambda;) such that both polynomials' Bernstein coefficients are computable and all in the closed unit interval._
 2. _g(0) = &omega;(0) = f(0) = 0 (so that 0 is in the domain of f)._
 3. _g(1) = &omega;(1) = f(1) = 1 (so that 1 is in the domain of f)._
 4. _For every &lambda; in the domain of f, except at 0 and 1, g(&lambda;) &gt; f(&lambda;)._
@@ -957,7 +957,7 @@ Thus, _f_ admits an algorithm that uses nothing but the input coin as a source o
 
 _Proof:_ First, assume _g_ and _&omega;_ have the same degree.  If not, rewrite the the polynomial with lesser degree to a polynomial in Bernstein form with the same degree as the other polynomial.
 
-Now, let _g_\[_j_\] and _&omega;_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial _g_ or _&omega;_, respectively, in Bernstein form.  Consider the following algorithm, which is similar to the algorithm in Proposition 1.
+Now, let _g_\[_j_\] and _&omega;_\[_j_\] be the _j_<sup>th</sup> Bernstein coefficient of the polynomial _g_ or _&omega;_, respectively.  Consider the following algorithm, which is similar to the algorithm in Proposition 1.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If 0 is in the domain of _f_ and if _j_ is 0, return _g_(0) = _&omega;_(0) = 0.
@@ -996,13 +996,13 @@ _Proof:_ If _f_ is 0 everywhere in its domain or 1 everywhere in its domain: Ret
 - _l_ be either 0 if 0 is in the domain of _f_, or 1 otherwise, and
 - _u_ be either 0 if 1 is in the domain of _f_, or 1 otherwise.
 
-To build _g_, take its degree as ceil(_M_)+1 or greater (so that _g_'s Lipschitz constant is greater than _M_ and _g_ has ceil(_M_) + 2 coefficients), then set the first coefficient as _l_, the last coefficient as _u_, and the remaining coefficients as 1. (As a result, the polynomial _g_ will have computable coefficients.) Then _g_ will meet the additional condition for Lemma 1 and the result follows from that lemma. &#x25a1;
+To build _g_, take its degree as ceil(_M_)+1 or greater (so that _g_'s Lipschitz constant is greater than _M_ and _g_ has ceil(_M_) + 2 Bernstein coefficients), then set the first Bernstein coefficient as _l_, the last one as _u_, and the remaining ones as 1. (As a result, the polynomial _g_ will have computable Bernstein coefficients.) Then _g_ will meet the additional condition for Lemma 1 and the result follows from that lemma. &#x25a1;
 
 **Lemma 4.** _If f(&lambda;) is described in the strong simulability statement, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1 (so that 0 and 1 are in the domain of f), then f is strongly simulable._
 
 _Proof:_ Let _M_ and _l_ be as in Lemma 3.
 
-To build _g_ and _&omega;_, take their degree as ceil(_M_)+1 or greater (so that their Lipschitz constant is greater than _M_ and each polynomial has ceil(_M_) + 2 coefficients), then for each polynomial, set its first coefficient as _l_ and the last coefficient as 1. The remaining coefficients of _g_ are set as 1 and the remaining coefficients of _&omega;_ are set as 0.  (As a result, the polynomial _g_ will have computable coefficients.)  Then _g_ and _&omega;_ will meet the additional conditions for Lemma 2 and the result follows from that lemma. &#x25a1;
+To build _g_ and _&omega;_, take their degree as ceil(_M_)+1 or greater (so that their Lipschitz constant is greater than _M_ and each polynomial has ceil(_M_) + 2 Bernstein coefficients), then for each polynomial, set its first Bernstein coefficient as _l_ and its last as 1. The remaining Bernstein coefficients of _g_ are set as 1 and the remaining ones of _&omega;_ are set as 0.  (As a result, the polynomial _g_ will have computable Bernstein coefficients.)  Then _g_ and _&omega;_ will meet the additional conditions for Lemma 2 and the result follows from that lemma. &#x25a1;
 
 _Proof of Proposition 3:_ In the proof of proposition 2, replace Lemma 1 and Lemma 2 with Lemma 3 and Lemma 4, respectively. &#x25a1;
 
@@ -1094,8 +1094,8 @@ This section has mathematical proofs showing which kinds of algebraic functions 
 The following summarizes what can be established about these algebraic functions:
 
 - sqrt(_&lambda;_) can be simulated.
-- Every rational function with rational coefficients that maps the open interval (0, 1) to itself can be simulated.
-- If _f_(_&lambda;_) can be simulated, so can any Bernstein-form polynomial in the variable _f_(_&lambda;_) with coefficients that can be simulated.
+- Every rational function with rational Bernstein coefficients that maps the open interval (0, 1) to itself can be simulated.
+- If _f_(_&lambda;_) can be simulated, so can any Bernstein-form polynomial in the variable _f_(_&lambda;_) with Bernstein coefficients that can be simulated.
 - If _f_(_&lambda;_) and _g_(_&lambda;_) can be simulated, so can _f_(_&lambda;_)\*_g_(_&lambda;_), _f_(_g_(_&lambda;_)), and _g_(_f_(_&lambda;_)).
 - If a full-domain pushdown automaton (defined later) can generate words of a given length with a given probability (a _probability distribution_ of word lengths), then the probability generating function for that distribution can be simulated, as well as for that distribution conditioned on a finite set or periodic infinite set of word lengths (for example, all odd word lengths only).
 - If a stochastic context-free grammar (defined later) can generate a probability distribution of word lengths, and terminates with probability 1, then the probability generating function for that distribution can be simulated.
@@ -1103,7 +1103,7 @@ The following summarizes what can be established about these algebraic functions
 
 It is not yet known whether the following functions can be simulated:
 
-- _&lambda;_<sup>1/_p_</sup> for prime numbers _p_ greater than 2. The answer may be no; Banderier and Drmota (2015)[^36] proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose coefficients are non-negative real numbers.
+- _&lambda;_<sup>1/_p_</sup> for prime numbers _p_ greater than 2. The answer may be no; Banderier and Drmota (2015)[^36] proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose "power" coefficients are non-negative real numbers.
 - min(_&lambda;_, 1&minus;_&lambda;_).
 
 --------------------------------
@@ -1121,8 +1121,8 @@ The following definitions are used in this section:
 
 2. A _full-domain pushdown automaton_ means a pushdown automaton that terminates with probability 1 given a coin with probability of heads _&lambda;_, for every _&lambda;_ greater than 0 and less than 1.
 3. **PDA** is the class of functions _f_(_&lambda;_) that satisfy 0<_f_(_&lambda;_)<1 whenever 0<_&lambda;_<1, and can be simulated by a full-domain pushdown automaton.  **PDA** also includes the constant functions 0 and 1.
-4. **ALGRAT** is the class of functions that satisfy 0<_f_(_&lambda;_)<1 whenever 0<_&lambda;_<1, are continuous, and are algebraic over the rational numbers (they satisfy a nonzero polynomial system whose coefficients are rational numbers; specifically, there is a nonzero polynomial _P_(_x_, _y_) in two variables and whose coefficients are rational numbers, such that _P_(_x_, _f_(_x_)) = 0 for every _x_ in the domain of _f_). **ALGRAT** also includes the constant functions 0 and 1.
-5. A _probability generating function_ has the form _p_<sub>0</sub>\*_&lambda;_<sup>0</sup> + _p_<sub>1</sub>\*_&lambda;_<sup>1</sup> + ..., where _p_<sub>_i_</sub> (a _coefficient_) is the probability of getting _i_.
+4. **ALGRAT** is the class of functions that satisfy 0<_f_(_&lambda;_)<1 whenever 0<_&lambda;_<1, are continuous, and are algebraic over the rational numbers (they satisfy a nonzero polynomial system whose "power" coefficients are rational numbers; specifically, there is a nonzero polynomial _P_(_x_, _y_) in two variables and whose "power" coefficients are rational numbers, such that _P_(_x_, _f_(_x_)) = 0 for every _x_ in the domain of _f_). **ALGRAT** also includes the constant functions 0 and 1.
+5. A _probability generating function_ has the form _p_<sub>0</sub>\*_&lambda;_<sup>0</sup> + _p_<sub>1</sub>\*_&lambda;_<sup>1</sup> + ..., where _p_<sub>_i_</sub> is the probability of getting _i_.
 
 > **Notes:**
 >
@@ -1190,7 +1190,7 @@ _Proof:_ Special case of Proposition 1A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda
 
 _Proof:_ Let _F_ be the full-domain pushdown automaton for _f_. For each state/symbol pair among the left-hand sides of _F_'s rules, apply Lemma 1A to the automaton _F_, using the function _g_.  Then the new machine _F_ terminates with probability 1 because the original _F_ and the original automaton for _g_ do for every _&lambda;_ greater than 0 and less than 1, and because the automaton for _g_ never outputs the same value with probability 0 or 1 for any _&lambda;_ greater than 0 or less than 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005\)[^34] because the machine is a full-domain pushdown automaton.  &#x25a1;
 
-**Proposition 3:** _Every rational function with rational coefficients that maps the open interval (0, 1) to itself is in class **PDA**._
+**Proposition 3:** _Every rational function with rational Bernstein coefficients that maps the open interval (0, 1) to itself is in class **PDA**._
 
 _Proof:_ These functions can be simulated by a finite-state machine (Mossel and Peres 2005\)[^34].  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;
 
@@ -1318,14 +1318,14 @@ The "output" of the machine is now a real number _X_ in the form of the base-_N_
 - `CDF(z)` is the cumulative distribution function of _X_, or the probability that _X_ is _z_ or less.
 - `PDF(z)` is the probability density function of _X_, or the derivative of `CDF(z)`, or the relative probability of choosing a number "close" to _z_ at random.
 
-A _finite-state generator_ (Knuth and Yao 1976)[^33] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational coefficients and satisfy `PDF(z) > 0` whenever 0 &le; `z` &le; 1 is irrational (Vatan 2001)[^44], (Kindler and Romik 2004)[^45], and it can be shown that the expected value (mean or "long-run average") of _X_ must be a rational number. [^46]
+A _finite-state generator_ (Knuth and Yao 1976)[^33] is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational Bernstein coefficients and satisfy `PDF(z) > 0` whenever 0 &le; `z` &le; 1 is irrational (Vatan 2001)[^44], (Kindler and Romik 2004)[^45], and it can be shown that the expected value (mean or "long-run average") of _X_ must be a rational number. [^46]
 
 **Proposition 8.** _Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:_
 
 1. _Each value occurs with a rational probability._
 2. _Each value is either rational or transcendental._
 
-A real number is _transcendental_ if it can't be a root of a nonzero polynomial with integer coefficients.  Thus, part 2 means, for example, that irrational, non-transcendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can't be generated exactly.
+A real number is _transcendental_ if it can't be a root of a nonzero polynomial with integer "power" coefficients.  Thus, part 2 means, for example, that irrational, non-transcendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can't be generated exactly.
 
 Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:
 

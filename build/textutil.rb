@@ -210,6 +210,7 @@ def preparePandoc(markdown)
   markdown=markdown.gsub(/&Sigma;/) { " $\\Sigma$ " }
   markdown=markdown.gsub(/_&alpha;_/) { " $\\alpha$ " }
   markdown=markdown.gsub(/_&beta;_/) { " $\\beta$ " }
+  markdown=markdown.gsub(/&beta;/) { " $\\beta$ " }
   markdown=markdown.gsub(/_&eta;_/) { " $\\eta$ " }
   markdown=markdown.gsub(/_&phi;_/) { " $\\phi$ " }
   markdown=markdown.gsub(/_&pi;_/) { " $\\pi$ " }
@@ -219,6 +220,15 @@ def preparePandoc(markdown)
   markdown=markdown.gsub(/_&gamma;_/) { " $\\gamma$ " }
   markdown=markdown.gsub(/&gamma;/) { " $\\gamma$ " }
   markdown=markdown.gsub(/_&sigma;_/) { " $\\sigma$ " }
+  markdown=markdown.gsub(/_&alpha;_/) { " $\\alpha$ " }
+  markdown=markdown.gsub(/&alpha;/) { " $\\alpha$ " }
+  markdown=markdown.gsub(/_&kappa;_/) { " $\\kappa$ " }
+  markdown=markdown.gsub(/_&phi;_/) { " $\\varphi$ " }
+  markdown=markdown.gsub(/&phi;/) { " $\\varphi$ " }
+  markdown=markdown.gsub(/_&rho;_/) { " $\\rho$ " }
+  markdown=markdown.gsub(/&rho;/) { " $\\rho$ " }
+  markdown=markdown.gsub(/_&omega;_/) { " $\\omega$ " }
+  markdown=markdown.gsub(/&omega;/) { " $\\omega$ " }
   markdown=markdown.gsub(/&sigma;/) { " $\\sigma$ " }
   markdown=markdown.gsub(/_&delta;_/) { " $\\delta$ " }
   markdown=markdown.gsub(/_&Delta;_/) { " $\\Delta$ " }
