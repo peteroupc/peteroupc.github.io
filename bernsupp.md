@@ -317,7 +317,7 @@ To build an approximate Bernoulli factory with a polynomial:
 
     (0&le;_j_&le;_n_), return 1.  Otherwise, return 0.
 
-    If the Bernstein or scaled Bernstein coefficient can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to exactly sample a probability equal to that irrational number.
+    If the probability can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to exactly sample a probability equal to that irrational number.
 
 > **Notes:**
 >
@@ -540,25 +540,27 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 - If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$ where $\text{Pmin}$ is the _minimum_ value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
 - Suppose $m\ge 2$, that $b_0=0$ or $b_m=0$ or both, and that the following necessary conditions are satisfied (Mok and To 2008; Theorem 1 and Corollary 3)[^20]\:
 
-    - If there is $b_i\lt 0$ and $b_m=0$, there must be $j\gt i$ such that $b_j\gt 0$.
-    - If there is $b_i\lt 0$ and $b_0=0$, there must be $j\lt i$ such that $b_j\gt 0$.
-    - If there is $1-b_i\lt 0$ and $1-b_m=0$, there must be $j\gt i$ such that $1-b_j\gt 0$.
-    - If there is $1-b_i\lt 0$ and $1-b_0=0$, there must be $j\lt i$ such that $1-b_j\gt 0$.
+    - For every $i$ such that $b_i\lt 0$, if $b_m=0$, there must be $j\gt i$ such that $b_j\gt 0$.
+    - For every $i$ such that $b_i\lt 0$, if $b_0=0$, there must be $j\lt i$ such that $b_j\gt 0$.
+    - For every $i$ such that $1-b_i\lt 0$, if $1-b_m=0$, there must be $j\gt i$ such that $1-b_j\gt 0$.
+    - For every $i$ such that $1-b_i\lt 0$, if $1-b_0=0$, there must be $j\lt i$ such that $1-b_j\gt 0$.
 
     Then the coin-flipping degree is bounded above by&mdash; $$ \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$ where&mdash; $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),$$ and where:
     - $a_{\max} = \max(\max(0,\beta_0),  ..., \max(0, \beta_m))$.
     - $a_{\min}$ is the minimum of $(\beta_i{m\choose i})$ over all values of $i$ such that $\beta_i>0$.
-    - $c$ is the smallest number $r$ that satisfies $FN(\lambda)/FP(\lambda)\le r$ where $0\lt\lambda\lt 1$ ($c$ can also be a number greater than $r$ but less than 1).
+    - $c$ is the smallest number $r$ that satisfies $FN(\lambda)/FP(\lambda)\le r$ where $0\lt\lambda\lt 1$.  $c$ can also be a greater number but less than 1.
     - $FP(\lambda) = \sum_{k=0}^m \max(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
     - $FN(\lambda) = \sum_{k=0}^m \text{abs}(\min(0,\beta_k)){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
 
     (Mok and To 2008; Theorem 2 and remark 1.5(v))[^20].
 
-> **Example:** Let $p(\lambda)=1 -8\lambda+20\lambda +^2-13\lambda +^3$, a polynomial of degree $m=3$.  $p$'s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)[^17].  $p$ meets the conditions to use the coin-flipping degree from Mok and To (2008)[^20].  In this case, after some calculations, the coin-flipping degree is bounded above by&mdash; $$\text{ceil}\left(\max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.94492)}\frac{7/3}{1}\right), \max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.70711)}\frac{8/3}{1}\right)\right)\le 128.$$
+> **Example:** Let $p(\lambda)=1 -8\lambda+20\lambda +^2-13\lambda +^3$, a polynomial of degree $m=3$.  $p$'s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)[^17].  $p$ meets the conditions to use the coin-flipping degree derived from Mok and To (2008)[^20].  In this case, after some calculations, the coin-flipping degree is bounded above by&mdash; $$\text{ceil}\left(\max\left(\max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.94492)}\frac{7/3}{1}\right), \max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.70711)}\frac{8/3}{1}\right)\right)\right)\le 128.$$
 
 **Lemma:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the values $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.
 
 _Proof_:  This can be seen by evaluating $p(1) = a_0 + ... + a_n$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;
+
+**Conjecture:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n\lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  Then $|a_i|\le |b_i|$, where $b_i$ is a power coefficient of the following polynomial: $$q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = ((T_n(1-2\lambda)+1)/2),$$ and where $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.
 
 **Lemma:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n\lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  If $p$'s coin-flipping degree is $n$, then $|a_i|\le 2^i {n\choose i}$.
 
