@@ -1752,12 +1752,7 @@ The following topics would greatly enrich this document:
 
 [^3]: It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.
 
-[^4]: Color perception is influenced by the three things that make color possible:
-    - _Light._ For example, natural daylight and sunlight change how they render colors depending on time of day and year, place, and weather.
-    - _Objects._ A material's surface properties such as gloss, transparency, haze, and more affect color perception.
-    - _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [**wide observer variation**](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.
-
-For a detailed overview on phenomena involving human color vision, see section 9 of Kirk, R., "Standard Colour Spaces", [**FilmLight Technical Note**](https://www.filmlight.ltd.uk/support/documents/other/legacy_tl.php), version 4.0, 2004-2018.
+[^4]: Color perception is influenced by the three things that make color possible:<br> _Light._ For example, natural daylight and sunlight change how they render colors depending on time of day and year, place, and weather. <br> _Objects._ A material's surface properties such as gloss, transparency, haze, and more affect color perception. <br> _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [**wide observer variation**](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision. <br> For a detailed overview on phenomena involving human color vision, see section 9 of Kirk, R., "Standard Colour Spaces", [**FilmLight Technical Note**](https://www.filmlight.ltd.uk/support/documents/other/legacy_tl.php), version 4.0, 2004-2018.
 
 [^5]: For example, the light&ndash;dark signal is roughly the sum of the three cone responses.  The theory of opponent colors is largely due to E. Hering's work and was reconciled with the three-cone theory around the mid-20th century (for example, through work by Hurvich and Jameson).
 
@@ -1787,9 +1782,7 @@ For a detailed overview on phenomena involving human color vision, see section 9
 
 [^17]: Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (for example, (_r_, _g_, _b_) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (_x_, _y_, _z_) coordinates.
 
-[^18]: [**CIE Technical Note 001:2014**](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [**Euclidean distance**](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
-
-(_u_, _v_) coordinates, a former 1960 version of _u&prime;_ and _v&prime;_, are found by taking _u_ as _u&prime;_ and _v_ as (_v&prime;_ \* 2.0 / 3).
+[^18]: [**CIE Technical Note 001:2014**](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [**Euclidean distance**](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".  (_u_, _v_) coordinates, a former 1960 version of _u&prime;_ and _v&prime;_, are found by taking _u_ as _u&prime;_ and _v_ as (_v&prime;_ \* 2.0 / 3).
 
 [^19]: Although the CIELAB color model is also often called "perceptually uniform"&mdash;
     - CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [**B. Lindbloom**](http://www.brucelindbloom.com/index.html?UPLab.html), and

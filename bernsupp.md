@@ -557,7 +557,7 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 > **Examples:**
 >
 > 1. Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$'s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)[^17].  $p$ meets the conditions to use the coin-flipping degree derived from Mok and To (2008)[^20].  In this case, after some calculations, the coin-flipping degree is bounded above by&mdash; $$\text{ceil}\left(\max\left(\max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.94492)}\frac{7/3}{1}\right), \max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.70711)}\frac{8/3}{1}\right)\right)\right)\le 128.$$
-> 2. An exhaustive search shows that 46 is the highest possible coin-flipping degree of degree-3 polynomial whose "power" coefficients are integers.
+> 2. An exhaustive search shows that 46 is the highest possible coin-flipping degree for a degree-3 polynomial whose "power" coefficients are integers.
 > 3. The degree-4 polynomial $-43\lambda^4 + 81\lambda^3 - 47\lambda^2 + 9\lambda$ has a coin-flipping degree of 5284.
 
 **Lemma:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the values $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.

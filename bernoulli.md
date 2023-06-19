@@ -306,7 +306,7 @@ Because the Bernstein coefficients _a_\[_i_\] must be 0 or greater, but not grea
 >     - If 0 &lt; _c_ &le; 1/2, this function can be simulated as follows: "Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2\*_c_ and 0 otherwise.  Otherwise, return 0."
 >     - If 1/2 &lt; _c_ &lt; 1, the algorithm requires rewriting the polynomial to Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its Bernstein coefficients in the closed unit interval; the required degree approaches infinity as _c_ approaches 1.[^13]
 >
-> 2. The _conditional_ construction, mentioned in Flajolet et al. (2010\)[^1], has the form&mdash;<br>(_&lambda;_) \* _a_\[0] + (1 &minus; _&lambda;_) \* _a_\[1].<br>This is a degree-1 polynomial with variable _&lambda;_ and Bernstein coefficients _a_\[0] and _a_\[1]. It has the following algorithm: "Flip the _&lambda;_ input coin.  If the result is 0, flip the _a_\[0] input coin and return the result.  Otherwise, flip the _a_\[1] input coin and return the result."  Special cases of the conditional construction include complement, mean, product, and logical OR; see "[**Other Factory Functions**](#Other_Factory_Functions)".
+> 2. The _conditional_ construction, mentioned in Flajolet et al. (2010\)[^1], has the form $\lambda a[0] + (1-\lambda) a[1]$.  This is a degree-1 polynomial with variable _&lambda;_ and Bernstein coefficients _a_\[0] and _a_\[1]. It has the following algorithm: "Flip the _&lambda;_ input coin.  If the result is 0, flip the _a_\[0] input coin and return the result.  Otherwise, flip the _a_\[1] input coin and return the result."  Special cases of the conditional construction include complement, mean, product, and logical OR; see "[**Other Factory Functions**](#Other_Factory_Functions)".
 
 &nbsp;
 
@@ -335,8 +335,8 @@ According to Mossel and Peres (2005\)[^15], if a function _f_(_&lambda;_) satisf
 
 The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012\)[^11].  It assumes the rational function is written as _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
-- _D_(_&lambda;_) = $\sum_{i=0}^n$ _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _d_\[_i_\],
-- _E_(_&lambda;_) = $\sum_{i=0}^n$ _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _e_\[_i_\],
+- _D_(_&lambda;_) = $\sum_{i=0}^n \lambda^i (1-\lambda)^{n-i} d[i]$,
+- _E_(_&lambda;_) = $\sum_{i=0}^n \lambda^i (1-\lambda)^{n-i} e[i]$,
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
 - each _d_\[_i_\] and each _e_\[_i_\] is an integer or rational number in the interval [0, choose(_n_, _i_)], where the upper bound is the total number of _n_-bit words with _i_ ones.
 
@@ -513,7 +513,7 @@ To get to an algorithm equivalent to Mendo's, first **Algorithm 2** is modified 
 Mendo's algorithm and extensions of it mentioned by him cover several variations of functions writable as power series as follows:
 
 | Type |   Power Series  |   Algorithm  |
-  --- | --- | --- |
+  -- | --- | ------ |
 | 1 | $f(\lambda)=1-f_0(1-\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=1-\lambda$ and return 1 minus the result.  Otherwise, return 1. |
 | 2 | $f(\lambda)=f_0(1-\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=1-\lambda$ and return the result.  Otherwise, return 0. |
 | 3 | $f(\lambda)=f_0(\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=\lambda$ and return the result.  Otherwise, return 0. |
