@@ -219,6 +219,8 @@ def preparePandoc(markdown)
   markdown=markdown.gsub(/_&nu;_/) { " $\\nu$ " }
   markdown=markdown.gsub(/_&gamma;_/) { " $\\gamma$ " }
   markdown=markdown.gsub(/&gamma;/) { " $\\gamma$ " }
+  markdown=markdown.gsub(/_&tau;_/) { " $\\tau$ " }
+  markdown=markdown.gsub(/&tau;/) { " $\\tau$ " }
   markdown=markdown.gsub(/_&sigma;_/) { " $\\sigma$ " }
   markdown=markdown.gsub(/_&alpha;_/) { " $\\alpha$ " }
   markdown=markdown.gsub(/&alpha;/) { " $\\alpha$ " }
@@ -244,6 +246,8 @@ def preparePandoc(markdown)
   markdown=markdown.gsub(/&epsilon;|\u03f5/) { " $\\epsilon$ " }
   markdown=markdown.gsub(/_&lambda;_/) { " $\\lambda$ " }
   markdown=markdown.gsub(/&lambda;/) { " $\\lambda$ " }
+  markdown=markdown.gsub(/\(\s+\$/) { "($" }
+  markdown=markdown.gsub(/\$\s+\)/) { "$)" }
   markdown=markdown.gsub(/<sup>([^<]+)<\/sup>/) { " $^{"+($1).gsub(/\\\[/,"[")
               .gsub(/\\\]/,"]").gsub(/\$/,"").gsub(/_([A-Za-z0-9]+)_/,"#{$1}")+"}$ " }
   markdown=markdown.gsub(/(dash;|\:)(\n+)-\s+/) { $1+"\n\n- " }
