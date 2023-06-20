@@ -513,7 +513,7 @@ To get to an algorithm equivalent to Mendo's, first **Algorithm 2** is modified 
 Mendo's algorithm and extensions of it mentioned by him cover several variations of functions writable as power series as follows:
 
 | Type |   Power Series  |   Algorithm  |
-  -- | --- | ------ |
+  --- | --- | ------ |
 | 1 | $f(\lambda)=1-f_0(1-\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=1-\lambda$ and return 1 minus the result.  Otherwise, return 1. |
 | 2 | $f(\lambda)=f_0(1-\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=1-\lambda$ and return the result.  Otherwise, return 0. |
 | 3 | $f(\lambda)=f_0(\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=\lambda$ and return the result.  Otherwise, return 0. |
@@ -886,14 +886,14 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 >     - For each integer _n_&ge;1, $1 \ge g(n) \ge w_n(\lambda) \ge 0$, wherever $0 \le \lambda \le 1$.
 >     - For each integer _n_&ge;1, if $g(n)>0$, the function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories".
 >
->     Then by **generating _X_ and outputting 0 if _X_ is 0, and otherwise flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash; $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019\)[^23].
+>     Then by **generating _X_ and outputting 0 if _X_ is 0, and otherwise flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, the probability _f_(_&lambda;_) can be simulated as the convex combination&mdash; $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019\)[^23].
 >
 > 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1 (except _T_ must equal 1), and let $c$ be a constant written as&mdash; $$c=a_1+a_2+a_3+...,$$ where&mdash;
 >
 >     - $a_n$ are each 0 or greater and sum to 1 or less, and
 >     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 1$.
 >
->     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_&minus;1</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash; $$f(\lambda)=g(1) \frac{a_1}{g(1)} + g(2) \frac{a_2}{g(2)} + ...,$$ letting 0/0 = 0.
+>     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_&minus;1</sub>/_g_(_X_)**, the probability  _c_ can be simulated as the convex combination&mdash; $$f(\lambda)=g(1) \frac{a_1}{g(1)} + g(2) \frac{a_2}{g(2)} + ...,$$ letting 0/0 = 0.
 >
 > **Examples:**
 >
@@ -2527,13 +2527,13 @@ Since both conditions of Huber's theorem are satisfied, this completes the proof
 _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the proof of correctness.
 
 - The algorithm finishes with probability 1 because with each recursion, the method does a recursive run with no greater probability than not; observe that _a_\[_i_\] can never be more than 1, so that _a_\[_i_\]/(1+_a_\[_i_\]), that is, the probability of finishing the run in each iteration, is always 1/2 or greater.
-- If the recursive call in the loop is replaced with a "black box" that simulates the correct "sub-fraction", the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability _b_\[_i_\] / (_a_\[_i_\] + _x_), where _x_ is the "continued sub-fraction" and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to _h_ = _a_\[_i_\]/(_a_\[_i_\] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to _x_ * (1 &minus; _h_)), and the last piece is the "rejection piece".  The algorithm will pass at the first substep with probability _p_ = (_b_\[_i_\] / _a_\[_pos_\]) * _h_ and fail either at the first substep of the loop with probability _f1_ = (1 &minus; _b_\[_i_\] / _a_\[_pos_\]) * _h_, or at the second substep with probability _f2_ = _x_ * (1 &minus; _h_) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to _b_\[_i_\] / (_a_\[_i_\] + _x_), which is the probability we wanted, so that both of Huber's conditions are satisfied and we are done.  &#x25a1;
+- If the recursive call in the loop is replaced with a "black box" that simulates the correct "sub-fraction", the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability _b_\[_i_\] / (_a_\[_i_\] + _x_), where _x_ is the "continued sub-fraction" and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to _h_ = _a_\[_i_\]/(_a_\[_i_\] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to _x_ * (1 &minus; _h_)), and the last piece is the "rejection piece".  The algorithm will pass at the first substep with probability _p_ = (_b_\[_i_\] / _a_\[_pos_\]) * _h_ and fail either at the first substep of the loop with probability _f1_ = (1 &minus; _b_\[_i_\] / _a_\[_pos_\]) * _h_, or at the second substep with probability _f2_ = _x_ * (1 &minus; _h_) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to _b_\[_i_\] / (_a_\[_i_\] + _x_), which is the desired probability wanted, so that both of Huber's conditions are satisfied and the proof is complete.  &#x25a1;
 
 <a id=Proof_of_the_General_Martingale_Algorithm></a>
 
 ### Proof of the General Martingale Algorithm
 
-This proof of the **general martingale algorithm** is similar to the proof for certain alternating series with only nonzero power coefficients, given in Łatuszyński et al. (2019/2011)[^20], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
+This proof of the **general martingale algorithm** is similar to the proof for certain alternating series with only nonzero power coefficients, given in Łatuszyński et al. (2019/2011)[^20], section 3.1.  Suppose a coin that shows heads with probability $g(\lambda)$ is flipped repeatedly and the following results are achieved: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
 
 - $U_0=d_0$ and $L_0=0$.
 - For each $n>0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n > 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if no nonzero power coefficients follow $a_n$ and $a_n < 0$, otherwise $U_{n-1}$.
@@ -2662,7 +2662,7 @@ This section describes how to turn a single-variable rational function (ratio of
 
 then the function can be separated into two polynomials that sum to the denominator.  (Here, _i_+_j_ is the term's _degree_, and the polynomial's degree is the highest degree among its terms.)  To do this separation, subtract the numerator from the denominator to get a new polynomial (_G_) such that _G_ = _E_ &minus; _D_ (or _D_ + _G_ = _E_).  (Then _D_ and _G_ are the two polynomials that will be used.) Similarly, if we have multiple rational functions with a common denominator, namely (_D1_/_E_), ..., (_DN_/_E_), where _D1_, ..., _DN_ and _E_ are written in form 1, then they can be separated into _N_ + 1 polynomials by subtracting the numerators from the denominator, so that _G_ = _E_ &minus; _D1_ &minus; ... &minus; _DN_.  (Then _D1_, ..., _DN_ and _G_ are the polynomials that will be used.) To use the polynomials in the algorithm, however, they need to be _homogenized_, then _augmented_, as described next.
 
-> **Example:** We have the rational function  (4\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>) /  (7 &minus; 5\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>).  Subtracting the numerator from the denominator leads to: 7 &minus; 1\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>.
+> **Example:** Take the rational function  (4\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>) /  (7 &minus; 5\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>).  Subtracting the numerator from the denominator leads to: 7 &minus; 1\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>.
 
 **Homogenizing.** The next step is to _homogenize_ the polynomials so they have the same degree and a particular form.  For this step, choose _n_ to be an integer no less than the highest degree among the polynomials.
 
@@ -2674,7 +2674,7 @@ Suppose a polynomial&mdash;
 
 Then the polynomial can be turned into a _homogeneous polynomial_ of degree _n_ (all its terms have degree _n_) as follows. (Homogeneous polynomials are also known as polynomials in _scaled Bernstein form_ (Farouki and Rajan 1988)[^17].)
 
-- For each integer _m_ in [0, _n_], the new polynomial's homogeneous coefficient at _m_ is found as follows:
+- For each integer _m_ satisfying 0 &le; _m_ &le; _n_, the new polynomial's homogeneous coefficient at _m_ is found as follows:
     1. Set _r_ to 0.
     2. For each term (in the old polynomial) of the form _z_\*_&lambda;_<sup>_i_</sup>\*(1&minus;_&lambda;_)<sup>_j_</sup>:
         - If _i_ &le; _m_, and (_n_&minus;_m_) &ge; _j_, and _i_ + _j_ &le; _n_, add _z_\*choose(_n_&minus;(_i_+_j_), (_n_&minus;_m_)&minus;_j_) to _r_.
@@ -2682,9 +2682,9 @@ Then the polynomial can be turned into a _homogeneous polynomial_ of degree _n_ 
 
 If the polynomial is written in so-called "power form" as _c\[0\]_ + _c\[1\]_\*_&lambda;_ + _c\[2\]_\*_&lambda;_<sup>2</sup> + ... + _c\[n\]_\*_&lambda;_<sup>_n_</sup>, then the method is instead as follows:
 
-- For each integer _m_ in [0, _n_], the new polynomial's homogeneous coefficient at _m_ is found as follows:
+- For each integer _m_ satisfying 0 &le; _m_ &le; _n_, the new polynomial's homogeneous coefficient at _m_ is found as follows:
     1. Set _r_ to 0.
-    2. For each integer _i_ in [0, _m_], if there is a homogeneous coefficient _c\[i\]_, add _c\[i\]_\*choose(_n_&minus;_i_, _n_&minus;_m_) to _r_.
+    2. For each integer _i_ satisfying 0 &le; _i_ &le; _m_, if there is a homogeneous coefficient _c\[i\]_, add _c\[i\]_\*choose(_n_&minus;_i_, _n_&minus;_m_) to _r_.
     3. Now, _r_ is the new homogeneous coefficient (corresponding to the term _r_\* _&lambda;_<sup>_m_</sup>\*(1&minus;_&lambda;_)<sup>_n_&minus;_m_</sup>).
 
 > **Example:** Let the following polynomial be given: 3\*_&lambda;_<sup>2</sup> + 10\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>.  This is a degree-3 polynomial, and we seek to turn it into a degree-5 homogeneous polynomial.  The result becomes the sum of the terms&mdash;
@@ -2706,7 +2706,7 @@ If the polynomial is written in so-called "power form" as _c\[0\]_ + _c\[1\]_\*_
 
 If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2022\)[^18].  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001[^60]).  It is implemented as follows:
 
-- Let _n_ be the polynomial's old degree.  For each _k_ in [0, _n_+1], the new polynomial's homogeneous coefficient at _k_ is found as follows:
+- Let _n_ be the polynomial's old degree.  For each integer _k_ satisfying 0 &le; _k_ &le; _n_+1, the new polynomial's homogeneous coefficient at _k_ is found as follows:
     - Let _c_\[_j_\] be the old polynomial's _j_<sup>th</sup> homogeneous coefficient (starting at 0).  Calculate _c_\[_j_\] \* choose(1, _k_&minus;_j_) for each integer _j_ satisfying max(0, _k_&minus;1) &le; _j_ &le; min(_n_, _k_), then add them together.  The sum is the new homogeneous coefficient.
 
 According to the Morina paper, it's enough to do _n_ augmentations on each polynomial for the whole array to meet the conditions above (although fewer than _n_ will often suffice).
