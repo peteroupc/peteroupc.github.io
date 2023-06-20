@@ -2580,21 +2580,21 @@ Let a _permutation class_ (defined in [**"Flajolet's Probability Simulation Sche
 Then the algorithm's behavior is given in the tables below.
 
 | Permutation Class | Distributions _D_ and _E_ | The algorithm returns _n_ with this probability: | The probability that _n_ is ... |
- --- | --- | --- | --- | --- |
+ --- | --- | ---- | ---- |
 | Numbers sorted in descending order | Arbitrary; _D_ = _E_ | _n_ / ((_n_ + 1)!). | Odd is 1&minus;exp(&minus;1); even is exp(&minus;1). See note 3. |
 | Numbers sorted in descending order | Each arbitrary | (&int;<sub>(&minus;&infin;,&infin;)</sub> DPDF(_z_) \* ((ECDF(_z_))<sup>_n_&minus;1</sup>/((_n_&minus;1)!) &minus; (ECDF(_z_))<sup>_n_</sup>/(_n_!)) _dz_), for every _n_ > 0 (see also proof of Theorem 2.1 of (Devroye 1986, Chapter IV\)[^29]. DPDF and ECDF are defined later. | Odd is denominator of formula 1 below. |
 | Alternating numbers | Arbitrary; _D_ = _E_ | (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!, where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_. | Odd is 1&minus;cos(1)/(sin(1)+1); even is cos(1)/(sin(1)+1).  See note 3. |
 | Any | Arbitrary; _D_ = _E_ | (&int;<sub>\[0, 1\]</sub> 1 \* (_z_<sup>_n_&minus;1</sup>\*V(_n_)/((_n_&minus;1)!) &minus; _z_<sup>_n_</sup>\*V(_n_+1)/(_n_!)) _dz_), for every _n_ > 0.  _V_(_n_) is the number of permutations of size _n_ that belong in the permutation class. For this algorithm, _V_(_n_) must be greater than 0 and less than or equal to _n_ factorial; this algorithm won't work, for example, if there are 0 permutations of odd size.  | Odd is 1 &minus; 1 / EGF(1); even is 1/EGF(1).<br/>Less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).  See note 3. |
 
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is _x_ or less given that _n_ is ... |
- --- | --- | --- | --- |
+ --- | --- | ----- |
 | Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV\)[^29]; see also Forsythe 1972[^66]).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is a uniform random variate greater than 0 and less than 1, this probability becomes the integral of _&psi;_(_z_) over the closed unit interval. |
 | Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979[^73]).  DPDF and ECDF are as above. |
 | Numbers sorted in descending order | Both uniform variates between 0 and 1 | Odd is ((1&minus;exp(&minus;_x_)))/(1&minus;exp(&minus;1)).  Therefore, the first number in the sequence is distributed as exponential with rate 1 and "cut off" to be not less than 0 and not greater than 1 (von Neumann 1951\)[^70]. |
 | Numbers sorted in descending order | _D_ is a uniform variate between 0 and 1; _E_ is max. of two uniform variates between 0 and 1. | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for 0&le;_z_&le;1; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is...|
- --- | --- | --- | --- |
+ --- | --- | ----- |
 | Numbers sorted in descending order | _D_ is an exponential variate with rate 1; _E_ is a uniform variate between 0 and 1. | 1 or less given that _n_ is even is 1 &minus; 2 / (1 + exp(2)) = 1 &minus; (1 + exp(0)) / (1 + exp(1)) = (exp(1)&minus;1)/(exp(1)+1) (uses Formula 2, where DPDF(_z_) = exp(&minus;_z_) and ECDF(_z_) = min(1,_z_) for _z_&ge;0). |
 | Numbers sorted in descending order | _D_ is an exponential variate with rate 1; _E_ is a uniform variate between 0 and 1. | 1/2 or less given that _n_ is odd is 1 &minus; (1 + exp(1)) / (1 + exp(2)) = (exp(2) &minus; exp(1)) / (exp(2)+1) (uses Formula 1, where DPDF(_z_) = exp(&minus;_z_) and ECDF(_z_) = min(1,_z_) for _z_&ge;0). |
 
