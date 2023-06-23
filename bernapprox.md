@@ -12,7 +12,7 @@ The goal of these approximations is to avoid introducing transcendental and trig
 > 2. In practice, the level at which the function $f(\lambda)$ is known may vary:
 >
 >     1. $f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$).  Or...
->     2. $f$ may be given as a "black box", but it's possible to find the exact value of $f(\lambda)$ for any $\lambda$ in the closed unit interval.  Or...
+>     2. $f$ may be given as a "black box", but it's possible to find the exact value of $f(\lambda)$ for any $\lambda$ in $f$'s domain.  Or...
 >     3. Only the values of $f$ at equally spaced points may be known.
 >
 >     In the last two cases, additional assumptions on $f$ may have to be made in practice, such as upper bounds on $f$'s first or second derivative, or whether $f$ has a continuous $r$-th derivative for every $r$ (see "Definitions").  If $f$ does not meet those assumptions, the polynomial that approximates $f$ will not necessarily achieve the desired accuracy.
@@ -235,7 +235,7 @@ Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval
 - If $P$ is within $\epsilon$ of $f$ at every point on the interval, then its integral is within $\epsilon\times(b-a)$ of $f$'s integral on that interval.
 - If $P$ is within $\epsilon/(b-a)$ of $f$ at every point on the interval, then its integral is within $\epsilon$ of $f$'s integral on that interval.
 
-> **Note:** A pair of articles by Konečný and Neumann discuss approximating the integral (and maximum) of a class of functions efficiently using polynomials or piecewise functions with polynomials as the pieces: Konečný and Neumann (2021)[^22], Konečný and Neumann (2019)[^23].
+> **Note:** A pair of articles by Konečný and Neumann discuss approximating the integral (and maximum) of a class of functions efficiently using polynomials or piecewise functions with polynomials as the pieces: Konečný and Neumann (2021)[^22]; Konečný and Neumann (2019)[^23].
 >
 > Muñoz and Narkawicz (2013)[^24] also discuss finding the minimum and maximum of a polynomial in Bernstein form &mdash; indeed, a polynomial is bounded above by its highest Bernstein coefficient and below by its lowest.
 
@@ -364,7 +364,7 @@ See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polyn
 
 [^21]: As an example, Mastroianni and Occorsio (1977) approximate an integral this way using iterated Boolean sums of Bernstein polynomials (which include $U_{n,2}$). G. Mastroianni, M.R. Occorsio, "Una generalizzazione dell'operatore di Bernstein", 1977.
 
-[^22]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021): 63-89. Also in arXiv: [**https://arxiv.org/abs/1710.03702**](https://arxiv.org/abs/1710.03702)
+[^22]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021)\: 63-89. Also in arXiv\: [**1710.03702**](https://arxiv.org/abs/1710.03702).
 
 [^23]: Konečný, Michal, and Eike Neumann. "[**Implementing evaluation strategies for continuous real functions**](https://arxiv.org/abs/1910.04891)", arXiv:1910.04891 (2019).
 

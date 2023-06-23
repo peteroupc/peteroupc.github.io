@@ -174,17 +174,17 @@ def preparePandoc(markdown)
   footnotes=""
   footindex=0
   markdown=markdown.gsub(/^\[\^([A-Za-z\d]+)\]\:\s+([\s\S]+?)(?=\[\^[A-Za-z\d]+\]\:|\#\#|\z|<a\s+id)/){
-    next $& if !$&.include?("https")
     note=$&
     notetext=$2
     noteref=$1
+    next note if !note.include?("https")
     notetext=notetext.gsub(/\s+\z/,"")
     noteurls=[]
     notetext=notetext.gsub(/\[(?!\**https)([^\]]+)\]\((https[^\)]+)\)([\(\:]?)/) {
       noteurls.append("[#{$2}](#{$2})")
       next $1+($3||"")
     }
-    next $& if noteurls.length==0
+    next note if noteurls.length==0
     notetext+=" "+noteurls.join(" ")
     next "[^#{noteref}]: #{notetext}\n\n"
   }

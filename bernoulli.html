@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/06/20"><meta name="citation_online_date" content="2023/06/20"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2023/06/23"><meta name="citation_online_date" content="2023/06/23"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -525,7 +525,7 @@
 </ul>
 
 <p>and then <em>&delta;</em>[<em>i</em>] and <em>&eta;</em>[<em>i</em>] can be seen as control points for two different 1-dimensional <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"><strong>Bézier curves</strong></a>, where the <em>&delta;</em> curve is always on or &quot;below&quot; the <em>&eta;</em> curve.  For each curve, <em>&lambda;</em> is the relative position on that curve, the curve begins at  <em>&delta;</em>[0] or <em>&eta;</em>[0], and the curve ends at <em>&delta;</em>[<em>n</em>] or <em>&eta;</em>[<em>n</em>]. See also the next section.</p></li>
-<li><p>This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an <em>n</em>-bit word and looking up whether that word is &quot;passing&quot;, &quot;failing&quot;, or neither, among all <em>n</em>-bit words with <em>j</em> ones, but this can be impractical (in general, a lookup table of size 2<sup><em>n</em></sup> first has to be built in a setup step; as <em>n</em> grows, the table size grows exponentially).  Moreover, this approach works only if <em>d</em>[<em>i</em>] and <em>e</em>[<em>i</em>] are integers (or if <em>d</em>[<em>i</em>] is replaced with floor(<em>d</em>[<em>i</em>]) and <em>e</em>[<em>i</em>] with ceil(<em>e</em>[<em>i</em>]) (Nacu and Peres 2005)[^16], but this suffers from rounding error when done in this algorithm for simulating rational numbers).  See also (Thomas and Blanchet 2012)[^11].</p></li>
+<li><p>This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an <em>n</em>-bit word and looking up whether that word is &quot;passing&quot;, &quot;failing&quot;, or neither, among all <em>n</em>-bit words with <em>j</em> ones, but this can be impractical (in general, a lookup table of size 2<sup>n</sup> first has to be built in a setup step; as <em>n</em> grows, the table size grows exponentially).  Moreover, this approach works only if <em>d</em>[<em>i</em>] and <em>e</em>[<em>i</em>] are integers (or if <em>d</em>[<em>i</em>] is replaced with floor(<em>d</em>[<em>i</em>]) and <em>e</em>[<em>i</em>] with ceil(<em>e</em>[<em>i</em>]) (Nacu and Peres 2005)[^16], but this suffers from rounding error when done in this algorithm for simulating rational numbers).  See also (Thomas and Blanchet 2012)[^11].</p></li>
 <li>In the formulas above, <em>e</em>[<em>i</em>] can be replaced with choose(<em>n</em>,<em>i</em>).  In that case, the algorithm will simulate a polynomial equal to <em>D</em>, and the values <em>d</em>[0], ..., <em>d</em>[<em>n</em>] are the polynomial&#39;s coefficients in <em>homogeneous form</em>, also known as <em>scaled Bernstein form</em> (Farouki and Rajan 1988)[^17].</li>
 </ol>
 
@@ -939,42 +939,42 @@
 <td>2*<em>n</em> + 2.</td>
 <td>1/(<em>n</em>!).</td>
 <td>1/(2<sup>(n&minus;2)/2+1</sup>).</td>
-<td>2<sup><em>n</em>/2</sup>/(<em>n</em>!).</td>
+<td>2<sup>n/2</sup>/(<em>n</em>!).</td>
 </tr>
 <tr>
 <td>exp(<em>&lambda;</em>/4)/2.</td>
 <td><em>n</em>.</td>
 <td>1/(<em>n</em>!*2*4<sup><em>n</em></sup>)</td>
-<td>1/(2<sup><em>n</em>+1</sup>).</td>
-<td>1/(2<sup><em>n</em></sup>*(<em>n</em>!)).</td>
+<td>$1/(2^{n+1})$.</td>
+<td>1/(2<sup>n</sup>*(<em>n</em>!)).</td>
 </tr>
 <tr>
 <td>exp(<em>&lambda;</em>)/4.</td>
 <td><em>n</em>.</td>
 <td>1/(<em>n</em>!*4).</td>
-<td>1/(2<sup><em>n</em>+1</sup>).</td>
-<td>2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!).</td>
+<td>$1/(2^{n+1})$.</td>
+<td>2<sup>n&minus;1</sup>/(<em>n</em>!).</td>
 </tr>
 <tr>
 <td>exp(<em>&lambda;</em>)/6.</td>
 <td><em>n</em>.</td>
 <td>1/(<em>n</em>!*6).</td>
-<td>1/(2<sup><em>n</em>+1</sup>).</td>
-<td>2<sup><em>n</em></sup>/(3*(<em>n</em>!)).</td>
+<td>$1/(2^{n+1})$.</td>
+<td>2<sup>n</sup>/(3*(<em>n</em>!)).</td>
 </tr>
 <tr>
 <td>exp(<em>&lambda;</em>/2)/2.</td>
 <td><em>n</em>.</td>
-<td>1/(<em>n</em>!*2*2<sup><em>n</em></sup>)</td>
-<td>1/(2<sup><em>n</em>+1</sup>).</td>
+<td>1/(<em>n</em>!*2*2<sup>n</sup>)</td>
+<td>$1/(2^{n+1})$.</td>
 <td>1/(<em>n</em>!).</td>
 </tr>
 <tr>
 <td>(exp(<em>&lambda;</em>)&minus;1)/2.</td>
 <td><em>n</em> + 1.</td>
 <td>1/((<em>n</em>+1)!*4).</td>
-<td>1/(2<sup><em>n</em></sup>).</td>
-<td>2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!).</td>
+<td>1/(2<sup>n</sup>).</td>
+<td>2<sup>n&minus;1</sup>/(<em>n</em>!).</td>
 </tr>
 <tr>
 <td>sinh(<em>&lambda;</em>)/2</td>
@@ -987,8 +987,8 @@
 <td>cosh(<em>&lambda;</em>)/2</td>
 <td>2*<em>n</em>.</td>
 <td>1/(<em>n</em>!*2).</td>
-<td>1/(2<sup><em>n</em>/2+1</sup>).</td>
-<td>2<sup><em>n</em>/2</sup>/(<em>n</em>!).</td>
+<td>1/(2<sup>n/2+1</sup>).</td>
+<td>2<sup>n/2</sup>/(<em>n</em>!).</td>
 </tr>
 </tbody></table>
 
@@ -1010,13 +1010,13 @@
 <td>exp(<em>&lambda;</em>)/4.</td>
 <td><em>&phi;</em>(<em>&lambda;</em>) &minus; <em>D</em>.</td>
 <td><em>n</em>.</td>
-<td>(1/4&minus;<em>D</em>)*2 or (<em>&phi;</em>(0)&minus;<em>D</em>)*2 if <em>n</em> = 0;<br>2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!) otherwise.</td>
+<td>(1/4&minus;<em>D</em>)*2 or (<em>&phi;</em>(0)&minus;<em>D</em>)*2 if <em>n</em> = 0;<br>2<sup>n&minus;1</sup>/(<em>n</em>!) otherwise.</td>
 </tr>
 <tr>
 <td>exp(<em>&lambda;</em>)/6.</td>
 <td><em>&phi;</em>(<em>&lambda;</em>) &minus; <em>D</em>.</td>
 <td><em>n</em>.</td>
-<td>(1/6&minus;<em>D</em>)*2 if <em>n</em> = 0;<br>2<sup><em>n</em></sup>/(3*(<em>n</em>!)) otherwise.</td>
+<td>(1/6&minus;<em>D</em>)*2 if <em>n</em> = 0;<br>2<sup>n</sup>/(3*(<em>n</em>!)) otherwise.</td>
 </tr>
 <tr>
 <td>exp(<em>&lambda;</em>/2)/2.</td>
@@ -1028,7 +1028,7 @@
 <td>cosh(<em>&lambda;</em>)/4.</td>
 <td><em>&phi;</em>(<em>&lambda;</em>) &minus; <em>D</em>.</td>
 <td>2*<em>n</em>.</td>
-<td>(1/4&minus;<em>D</em>)*2 if <em>n</em> = 0;<br>2<sup><em>n</em>/2</sup>/(2*(<em>n</em>!)) otherwise.</td>
+<td>(1/4&minus;<em>D</em>)*2 if <em>n</em> = 0;<br>2<sup>n/2</sup>/(2*(<em>n</em>!)) otherwise.</td>
 </tr>
 </tbody></table>
 
@@ -1066,7 +1066,7 @@
 
 <ol>
 <li>Generate a uniform random variate between 0 and 1, call it <em>ret</em>.</li>
-<li>Set <em>&#x2113;</em> and <em>&#x2113;t</em> to 0.  Set <em>u</em> and <em>ut</em> to 1. Set <em>lastdegree</em> to 0, and set <em>ones</em> to 0.</li>
+<li>Set <em>&#x2113;</em> and <em>LT</em> to 0.  Set <em>u</em> and <em>ut</em> to 1. Set <em>lastdegree</em> to 0, and set <em>ones</em> to 0.</li>
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has Bernstein coefficients all lying in the closed unit interval.  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) with <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
 <li>(The remaining steps are now done repeatedly until the algorithm finishes by returning a value.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
@@ -1077,16 +1077,16 @@
 <li>Define <strong>FA</strong>(<em>a</em>, <em>b</em>) as follows: Let <em>c</em> be choose(<em>a</em>, <em>b</em>). (Optionally, multiply <em>c</em> by 2<sup><em>a</em></sup>; see note 3.)  Calculate <strong>fabove</strong>(<em>a</em>, <em>b</em>) as lower and upper bounds <em>LB</em> and <em>UB</em> that are accurate enough that ceil(<em>LB</em>*<em>c</em>) = ceil(<em>UB</em>*<em>c</em>), then return ceil(<em>LB</em>*<em>c</em>)/<em>c</em>.</li>
 <li>Set <em>&#x2113;</em> to <strong>FB</strong>(<em>degree</em>, <em>ones</em>) and set <em>u</em> to <strong>FA</strong>(<em>degree</em>, <em>ones</em>).</li>
 </ol></li>
-<li>(This step and the next find the means of the previous <em>&#x2113;</em> and of <em>u</em> given the current coin flips.) If <em>degree</em> equals <em>startdegree</em>, set <em>&#x2113;s</em> to 0 and <em>us</em> to 1. (Algorithm I of Flegal and Herbei 2012 doesn&#39;t take this into account.)</li>
+<li>(This step and the next find the means of the previous <em>&#x2113;</em> and of <em>u</em> given the current coin flips.) If <em>degree</em> equals <em>startdegree</em>, set <em>LS</em> to 0 and <em>us</em> to 1. (Algorithm I of Flegal and Herbei 2012 doesn&#39;t take this into account.)</li>
 <li>If <em>degree</em> is greater than <em>startdegree</em>:
 
 <ol>
 <li>Let <em>nh</em> be choose(<em>degree</em>, <em>ones</em>), and let <em>k</em> be min(<em>lastdegree</em>, <em>ones</em>).</li>
-<li>Set <em>&#x2113;s</em> to $\sum_{j=0}^k$ <strong>FB</strong>(<em>lastdegree</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>lastdegree</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>lastdegree</em>,<em>j</em>)/<em>nh</em>.</li>
+<li>Set <em>LS</em> to $\sum_{j=0}^k$ <strong>FB</strong>(<em>lastdegree</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>lastdegree</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>lastdegree</em>,<em>j</em>)/<em>nh</em>.</li>
 <li>Set <em>us</em> to $\sum_{j=0}^k$ <strong>FA</strong>(<em>lastdegree</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>lastdegree</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>lastdegree</em>,<em>j</em>)/<em>nh</em>.</li>
 </ol></li>
-<li>Let <em>m</em> be (<em>ut</em>&minus;<em>&#x2113;t</em>)/(<em>us</em>&minus;<em>&#x2113;s</em>).  Set <em>&#x2113;t</em> to <em>&#x2113;t</em>+(<em>&#x2113;</em>&minus;<em>&#x2113;s</em>)*<em>m</em>, and set <em>ut</em> to <em>ut</em>&minus;(<em>us</em>&minus;<em>u</em>)*<em>m</em>.</li>
-<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;t</em>, return 1.  If <em>ret</em> is less than <em>ut</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>Let <em>m</em> be (<em>ut</em>&minus;<em>LT</em>)/(<em>us</em>&minus;<em>LS</em>).  Set <em>LT</em> to <em>LT</em>+(<em>&#x2113;</em>&minus;<em>LS</em>)*<em>m</em>, and set <em>ut</em> to <em>ut</em>&minus;(<em>us</em>&minus;<em>u</em>)*<em>m</em>.</li>
+<li>If <em>ret</em> is less than (or equal to) <em>LT</em>, return 1.  If <em>ret</em> is less than <em>ut</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>(Find the next pair of polynomials and restart the loop.) Set <em>lastdegree</em> to <em>degree</em>, then increase <em>degree</em> so that the next pair of polynomials has degree equal to a higher value of <em>degree</em> and gets closer to the target function (for example, multiply <em>degree</em> by 2).  Then, go to step 5.</li>
 </ol>
 
@@ -1336,7 +1336,7 @@
 
 <ul>
 <li>Let <em>f</em>(<em>&lambda;</em>) = cosh(1)&minus;1, namely, the hyperbolic cosine, minus 1, of 1.  This function can be rewritten as a sum required by the first algorithm in this section, namely <em>f</em>&#39;s <em>Taylor series</em> at 0.  Then this algorithm can be used with <em>a</em>[<em>i</em>] = 1/(((<em>i</em>+1)*2)!) and <em>err</em>[<em>i</em>] = 2/((((<em>i</em>+1)*2)+1)!). [^38]</li>
-<li>Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (for example, as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), a binomial coefficient, will generally require a growing amount of storage that depends on <em>n</em> and <em>k</em>. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)[^39].  Instead of calculating binomial coefficients directly, a series can be calculated that sums to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>. See also an appendix in (Bringmann et al. 2014)[^40].</li>
+<li>Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup>n</sup> when <em>n</em> can be very large (for example, as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), a binomial coefficient, will generally require a growing amount of storage that depends on <em>n</em> and <em>k</em>. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)[^39].  Instead of calculating binomial coefficients directly, a series can be calculated that sums to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>. See also an appendix in (Bringmann et al. 2014)[^40].</li>
 </ul>
 </blockquote>
 
@@ -1390,7 +1390,7 @@
 <li>Generate <em>X</em>, a Poisson random variate with mean <em>&mu;</em>, run the <strong>ExpMinus</strong> algorithm with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
 <li>A multivariate Bernoulli factory (Huber 2016)[^41] of the form <em>R</em> = <em>C</em><sub>0</sub>*<em>&lambda;</em><sub>0</sub> + <em>C</em><sub>1</sub>*<em>&lambda;</em><sub>1</sub> + ... + <em>C</em><sub><em>m</em>&minus;1</sub>*<em>&lambda;</em><sub><em>m</em>&minus;1</sub>, where <em>C</em><sub><em>i</em></sub> are known constants greater than 0,  <em>&#x03F5;</em> &gt; 0, and <em>R</em> &le; 1 &minus; <em>&#x03F5;</em>: Choose an integer in [0, <em>m</em>) uniformly at random, call it <em>i</em>, then run a linear Bernoulli factory for (<em>m</em>*<em>C</em><sub><em>i</em></sub>)*<em>&lambda;</em><sub><em>i</em></sub>.  This differs from Huber&#39;s suggestion of &quot;thinning&quot; a random process driven by multiple input coins.</li>
 <li><strong>Probability generating function</strong> (PGF) (Dughmi et al. 2021)[^42]. Generates heads with probability <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>], that is, the expected value (&quot;long-run average&quot;) of <em>&lambda;</em><sup><em>X</em></sup>.  <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>] is the PGF for the distribution of <em>X</em>.  The algorithm follows: (1) Generate a random integer <em>X</em> in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
-<li>Assume <em>X</em> is the number of unbiased random bits that show 0 before the first 1 is generated.  Then <em>g</em>(<em>n</em>) = 1/(2<sup><em>n</em>+1</sup>).</li>
+<li>Assume <em>X</em> is the number of unbiased random bits that show 0 before the first 1 is generated.  Then <em>g</em>(<em>n</em>) = $1/(2^{n+1})$.</li>
 <li><p><strong>Poisson to Bernoulli.</strong> Suppose there is a stream of independent Poisson random variates with unknown mean $p$.  Also suppose there is a continuous function $f(p)$ satisfying $0\le f(p)\le 1$ whenever $p\ge 0$.  Then consider the following simple algorithm, which takes an integer $n\gt 0$:</p>
 
 <ol>
@@ -2857,7 +2857,7 @@
 </tr>
 <tr>
 <td>exp(1)/4</td>
-<td>Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way, then set <em>n</em> to the number of ones generated this way.<br>Set <em>n</em> to 2*<em>n</em> + 2.<br>With probability 2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!), return 1.  Otherwise return 0.</td>
+<td>Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way, then set <em>n</em> to the number of ones generated this way.<br>Set <em>n</em> to 2*<em>n</em> + 2.<br>With probability 2<sup>n&minus;1</sup>/(<em>n</em>!), return 1.  Otherwise return 0.</td>
 </tr>
 <tr>
 <td><em>r</em>*<em>&lambda;</em> &minus; <em>r</em> + <em>r</em>*exp(&minus;<em>&lambda;</em>)</td>
@@ -3466,7 +3466,7 @@ Due to a suggestion by Michael Shoemate who suggested it was &quot;easy to get l
 
 <p>[^17]: Farouki, Rida T., and V. T. Rajan. &quot;<a href="https://www.sciencedirect.com/science/article/pii/0167839688900167"><strong>Algorithms for polynomials in Bernstein form</strong></a>&quot;. Computer Aided Geometric Design 5, no. 1 (1988): 1-26.</p>
 
-<p>[^18]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. &quot;From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains.&quot; Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. <a href="https://doi.org/10.1214/21-AAP1679"><strong>https://doi.org/10.1214/21-AAP1679</strong></a></p>
+<p>[^18]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. &quot;<a href="https://doi.org/10.1214/21-AAP1679"><strong>From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains</strong></a>&quot;, Ann. Appl. Probab. 32 (1) 327 - 359, February 2022.</p>
 
 <p>[^19]: Propp, J.G., Wilson, D.B., &quot;Exact sampling with coupled Markov chains and applications to statistical mechanics&quot;, 1996.</p>
 
@@ -3611,7 +3611,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 
 <p>For example, if <em>f</em>(<em>&lambda;</em>) is a constant, an algorithm whose only randomness comes from the input coin will require more coin flips to simulate that constant, the more strongly that coin leans towards heads or tails.  But this formula works only for such algorithms, even if <em>f</em> isn&#39;t a constant.</p>
 
-<p>For certain values of <em>&lambda;</em>, Kozen (2014)[^39] showed a tighter lower bound of this kind, but in general, this bound is not so easy to describe and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant <em>&tau;</em>, except when <em>&tau;</em> is a multiple of 1/(2<sup><em>n</em></sup>) for some integer <em>n</em>.</p>
+<p>For certain values of <em>&lambda;</em>, Kozen (2014)[^39] showed a tighter lower bound of this kind, but in general, this bound is not so easy to describe and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant <em>&tau;</em>, except when <em>&tau;</em> is a multiple of 1/(2<sup>n</sup>) for some integer <em>n</em>.</p>
 
 <p><a id=Bernoulli_Factories_and_Unbiased_Estimation></a></p>
 
@@ -3863,7 +3863,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)</p>
 </ul>
 
 <p>This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / <em>&pi;</em> algorithm.  (This also shows that there is an error in the identity for 1 / <em>&pi;</em> given in the Flajolet paper: the &quot;8 <em>n</em> + 4&quot; should read &quot;8 <em>n</em> + 2&quot;.)</p></li>
-<li><em>h</em><sub><em>n</em></sub>(): (choose(<em>n</em> * 2, <em>n</em>) / 2<sup><em>n</em> * 2</sup>)<sup>3</sup>, which is the probability of heads of the &quot;coin&quot; numbered <em>n</em>.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / <em>&pi;</em> algorithm.</li>
+<li><em>h</em><sub><em>n</em></sub>(): (choose(<em>n</em> * 2, <em>n</em>) / 2<sup>n * 2</sup>)<sup>3</sup>, which is the probability of heads of the &quot;coin&quot; numbered <em>n</em>.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / <em>&pi;</em> algorithm.</li>
 </ul>
 
 <blockquote>
