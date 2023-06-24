@@ -354,6 +354,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 >
 > - _Real analytic_ if, for every real number _z_ in $f$'s domain, it is writable as $f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...$, where $f^{(i)}$ is the $i$-th derivative of $f$.
 > - In the _Zygmund class_ if it is continuous and there is a constant $D>0$ with the following property: For each step size $\epsilon>0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two smaller classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
+>
+> **Note:** A related result is found in Bhandari and Bose (1990)[^51].
 
 <a id=Notes></a>
 
@@ -458,6 +460,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 [^49]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^50]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^51]: Bhandari, S. K., & Bose, A. (1990). Existence of unbiased estimates in sequential binomial experiments. Sankhyā: The Indian Journal of Statistics, Series A, 127-130.
 
 <a id=Appendix></a>
 
