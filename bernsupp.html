@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/20"><meta name="citation_online_date" content="2023/06/20"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/06/24"><meta name="citation_online_date" content="2023/06/24"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -815,9 +815,9 @@
 
 <p>Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.</p>
 
-<p>Then its <em>coin-flipping degree</em> (Wästlund 1999)[^17] is the smallest value of $n$ such that $p$&#39;s Bernstein coefficients of degree $n$ lie in the closed unit interval. [^18]   (This is broader than the use of the term in Wästlund, where a polynomial can have a coin-flipping degree only if its &quot;power&quot; coefficients are integers.)</p>
+<p>Then $p$&#39;s <em>coin-flipping degree</em> (Wästlund 1999)[^17] is the smallest value of $n$ such that $p$&#39;s Bernstein coefficients of degree $n$ lie in the closed unit interval. [^18]  (This is broader than the use of the term in Wästlund, where a polynomial can have a coin-flipping degree only if its &quot;power&quot; coefficients are integers.)  The coin-flipping degree is the smallest value of $n$ such that the algorithm of Goyal and Sigman (2012)[^7] can toss heads with probability $p(\lambda)$ using exactly $n$ biased coin flips (in addition to a fair coin).</p>
 
-<p>The following results give upper bounds on this coin-flipping degree.</p>
+<p>The following results give upper bounds on $p$&#39;s coin-flipping degree.</p>
 
 <p>Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0, ..., b_m$.  Then:</p>
 
@@ -855,17 +855,21 @@
 <li>An exhaustive search shows that 46 is the highest possible coin-flipping degree for a degree-3 polynomial whose &quot;power&quot; coefficients are integers.</li>
 <li>The degree-4 polynomial $-43\lambda^4 + 81\lambda^3 - 47\lambda^2 + 9\lambda$ has a coin-flipping degree of 5284.</li>
 </ol>
+
+<p><strong>Note:</strong> If a polynomial&#39;s &quot;power&quot; coefficients can be rational numbers (ratios of two integers), even a degree-2 polynomial can have an arbitrarily high coin-flipping degree.  An example is the family of degree-2 polynomials $r\lambda-r\lambda^2$, where $r$ is a rational number greater than 0 and less than 4.</p>
 </blockquote>
 
 <p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the values $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.</p>
 
 <p><em>Proof</em>:  This can be seen by evaluating $p(1) = a_0 + ... + a_n$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;</p>
 
-<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + ... + a_n\lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  If $p$&#39;s coin-flipping degree is $n$, then $|a_i|\le 2^i {n\choose i}$.</p>
+<p>In the following lemmas, let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.</p>
+
+<p><strong>Lemma:</strong> If $p$&#39;s coin-flipping degree is $n$, then $|a_i|\le 2^i {n\choose i}$.</p>
 
 <p><em>Proof</em>: Consider the matrix that transforms a polynomial&#39;s Bernstein coefficients to &quot;power&quot; coefficients, which is $n\times n$ if the polynomial&#39;s degree is $n$ (Ray and Nataraj 2012, eq. (8))[^21].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$&#39;s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding &quot;power&quot; coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;</p>
 
-<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + ... + a_n\lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  Then $|a_i|\le |b_i|$, where $b_i$ is the corresponding power coefficient of the following polynomial: $$q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,$$ and where $T_n(x)$ is the <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> of degree $n$.</p>
+<p><strong>Lemma:</strong>  $|a_i|\le |b_i|$, where $b_i$ is the corresponding power coefficient of the following polynomial: $$q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,$$ and where $T_n(x)$ is the <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> of degree $n$.</p>
 
 <p>See <em>MathOverflow</em> for a <a href="https://mathoverflow.net/questions/449135"><strong>proof of this lemma</strong></a> by Fedor Petrov.</p>
 
