@@ -171,6 +171,8 @@ A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an algorithm that takes a
 - The _closed unit interval_ is the set of numbers consisting of 0, 1, and all real numbers in between.
 
 > **Example:** A Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).  In this example, exp(&minus;_&lambda;_) is the factory function.
+>
+> **Note:** Although Keane and O'Brien introduced the term "Bernoulli factory", the problem was first raised much earlier than 1994, such as by Basu (1975)[^74].
 
 Keane and O'Brien (1994\)[^2] showed that a function _f_ that maps the closed unit interval (or a subset of it) to the closed unit interval admits a Bernoulli factory if and only if&mdash;
 
@@ -1464,6 +1466,7 @@ In the algorithm below, the case where 0 &lt; _x_/_y_ &lt; 1 is due to Mendo (20
 >
 > 1. When _x_/_y_ is less than 1, the expected number of flips grows without bound as _&lambda;_ approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on _&lambda;_ (Mendo 2019\)[^23].
 > 2. Another algorithm is discussed in the online community [**Cross Validated**](https://stats.stackexchange.com/questions/50272).
+> 3. The problem of simulating $\lambda^{x/y}$ where $0\le x/y$, was also treated by Banerjee and Sinha (1979)[^75].
 
 <a id=sqrt___lambda></a>
 
@@ -2452,6 +2455,10 @@ estimation, IEEE Transactions on Information Theory 36 (1990)
 [^72]: Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.
 
 [^73]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
+
+[^74]: Basu, D., "Statistical information and likelihood", Sankhyā A 37 (1975).
+
+[^75]: Banerjee, P. K., & Sinha, B. K. (1979). Generating an Event with Probability $p^\alpha$, $\alpha\ge 0$. Sankhyā: The Indian Journal of Statistics, Series B, 282-285.
 
 <a id=Appendix></a>
 
