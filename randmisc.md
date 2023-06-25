@@ -636,17 +636,17 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 >
 > **Example:** Let _n_&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;_n_) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/_n_)<sup>_f_(1)</sup> for any _f_.  This is consistent with the results for _Bernoulli factories_ (Keane and O'Brien 1994)[^86], where a coin that shows heads with unknown probability _&lambda;_ = 1/_n_ cannot be turned into a coin that shows heads with probability g(_&lambda;_) = exp(&minus;1/_&lambda;_) = exp(&minus;_n_) since _g_ is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability _h_(_n_) = (1+ln(_n_))/_n_ and 0 with probability 1&minus;_h_(_n_), _can_ be simulated, because min(_h_(_n_), 1&minus;_h_(_n_)) &ge; (1/_n_)<sup>3</sup>.
 
-**Algorithm 2A.** Suppose there is a coin that shows heads (or 1) with the unknown probability _&lambda;_, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose expected value is _f_(_&lambda;_), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)[^88], (Akahira et al. 1992)[^89].
+**Algorithm 2A.** Suppose there is a coin that shows heads (or 1) with the unknown probability _&lambda;_, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose expected value is _f_(_&lambda;_), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)[^87], (Akahira et al. 1992)[^88].
 
 - First, define a sequence $g_1(\lambda), g_2(\lambda), g_3(\lambda), ...$ of polynomials in Bernstein form, where the number after $g$ is the degree of the polynomial.  For every point $\lambda$ satisfying $0\le\lambda\le 1$, $g_n(\lambda)$ must approach $f(\lambda)$ with increasing $n$ (that is, $g_n$ must converge pointwise to $f$).  Denote $g_n[k]$ as the $k$-th Bernstein coefficient of the polynomial $g_n$, where $0\le k\le n$.  See also my article "[**Approximations in Bernstein Form**](https://peteroupc.github.io/bernapprox.html)".
 - Second, define probabilities $p_0, p_1, p_2, ...$ that are positive and sum to 1 (except $p_0$ can be 0).
 
 1. Generate at random an integer (which is 0 or greater) that equals $i$ with probability $p_i$.  Call the integer $n$.
 2. Flip the input coin $n$ times, then set $k$ to the number of times 1 is returned this way.
-3. If $n$ is 0, define $E(n, k)$ as 0.  Otherwise, define $E(n, k)$ as $(g_n(k)-k\cdot g_{n-1}(k-1)/n - (n-k) g_{n-1}(k)/n)/p_n$ (letting $g_0(k)=0$ and letting $g_n(k)=0$ whenever $k\lt 0$ or $k\gt n$).
+3. If $n$ is 0, define $E(n, k)$ as 0.  Otherwise, define $E(n, k)$ as $(g_n[k]-k\cdot g_{n-1}[k-1]/n - (n-k) g_{n-1}[k]/n)/p_n$ (letting $g_0[k]=0$ and letting $g_n[k]=0$ whenever $k\lt 0$ or $k\gt n$).
 4. Return $E(n, k)$.
 
-This algorithm works if $E(n, k)$ stays bounded as $n$ increases.
+The output returned in step 4 will have expected value $f(\lambda)$ if the sum of the polynomials&mdash; $$p_n|E(n,0)|{n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n|E(n,n)|{n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite (Akahira et al. 1992)[^88].  (Here, the polynomial for $n$ is of degree $n$ with Bernstein coefficients $p_n|E(n,k)|$, and can be seen as the "contribution" of $n$ to the output.)
 
 <a id=Additional_Algorithms></a>
 
@@ -659,17 +659,17 @@ The following algorithms are included here because they require applying an arbi
 - _f_ has a finite lower bound and a finite upper bound on its domain, and
 - the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0.
 
-The algorithm to achieve this goal follows (see Lee et al. 2014[^87]\)\:
+The algorithm to achieve this goal follows (see Lee et al. 2014[^89]\)\:
 
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
-> **Example:** An example from Lee et al. (2014\)[^87].  Say the oracle produces uniform random variates in \[0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value ("long-run average") is that mean.
+> **Example:** An example from Lee et al. (2014\)[^89].  Say the oracle produces uniform random variates in \[0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value ("long-run average") is that mean.
 >
 > **Notes:**
 >
 > 1. Averaging to the mean of _f_(_X_) (that is, **E**\[_f_(_X_)] where **E**\[.] means expected value or "long-run average") is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers (that is, _f_(**E**\[_X_])).  For example, if _X_ is 0 or 1 with equal probability, and _f_(_&nu;_) = exp(&minus;_&nu;_), then **E**\[_f_(_X_)] = exp(0) + (exp(&minus;1) &minus; exp(0))\*(1/2), and _f_(**E**\[_X_]) = _f_(1/2) = exp(&minus;1/2).
-> 2. (Lee et al. 2014, Corollary 4\)[^87]\: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
+> 2. (Lee et al. 2014, Corollary 4\)[^89]\: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
 >
 >     - Use _f_(_&nu;_) = _f_(_&nu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
 >     - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).
@@ -876,11 +876,11 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^86]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^87]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
+[^87]: Akahira, M., & Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2).
 
-[^88]: Akahira, M., & Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2).
+[^88]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling", 1992.
 
-[^89]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling", 1992.  In _Joint Statistical Papers Of Akahira And Takeuchi_, 2003.
+[^89]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
 <a id=License></a>
 
