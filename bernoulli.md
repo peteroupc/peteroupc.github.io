@@ -1465,8 +1465,7 @@ In the algorithm below, the case where 0 &lt; _x_/_y_ &lt; 1 is due to Mendo (20
 > **Notes:**
 >
 > 1. When _x_/_y_ is less than 1, the expected number of flips grows without bound as _&lambda;_ approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on _&lambda;_ (Mendo 2019\)[^24].
-> 2. Another algorithm is discussed in the online community [**Cross Validated**](https://stats.stackexchange.com/questions/50272).
-> 3. The problem of simulating $\lambda^{x/y}$ where $0\lt x/y$, was also treated by Banerjee and Sinha (1979)[^59].
+> 2. The problem of simulating $\lambda^{x/y}$ where $0\lt x/y$, was also treated by Banerjee and Sinha (1979)[^59].
 
 <a id=sqrt___lambda></a>
 

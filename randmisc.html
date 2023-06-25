@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2023/06/14"><meta name="citation_online_date" content="2023/06/14"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2023/06/24"><meta name="citation_online_date" content="2023/06/24"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -979,6 +979,22 @@
 <p><strong>Example:</strong> Let <em>n</em>&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;<em>n</em>) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/<em>n</em>)<sup><em>f</em>(1)</sup> for any <em>f</em>.  This is consistent with the results for <em>Bernoulli factories</em> (Keane and O&#39;Brien 1994)[^86], where a coin that shows heads with unknown probability <em>&lambda;</em> = 1/<em>n</em> cannot be turned into a coin that shows heads with probability g(<em>&lambda;</em>) = exp(&minus;1/<em>&lambda;</em>) = exp(&minus;<em>n</em>) since <em>g</em> is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability <em>h</em>(<em>n</em>) = (1+ln(<em>n</em>))/<em>n</em> and 0 with probability 1&minus;<em>h</em>(<em>n</em>), <em>can</em> be simulated, because min(<em>h</em>(<em>n</em>), 1&minus;<em>h</em>(<em>n</em>)) &ge; (1/<em>n</em>)<sup>3</sup>.</p>
 </blockquote>
 
+<p><strong>Algorithm 2A.</strong> Suppose there is a coin that shows heads (or 1) with the unknown probability <em>&lambda;</em>, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose expected value is <em>f</em>(<em>&lambda;</em>), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)[^88], (Akahira et al. 1992)[^89].</p>
+
+<ul>
+<li>First, define a sequence $g_1(\lambda), g_2(\lambda), g_3(\lambda), ...$ of polynomials in Bernstein form, where the number after $g$ is the degree of the polynomial.  For every point $\lambda$ satisfying $0\le\lambda\le 1$, $g_n(\lambda)$ must approach $f(\lambda)$ with increasing $n$ (that is, $g_n$ must converge pointwise to $f$).  Denote $g_n[k]$ as the $k$-th Bernstein coefficient of the polynomial $g_n$, where $0\le k\le n$.  See also my article &quot;<a href="https://peteroupc.github.io/bernapprox.html"><strong>Approximations in Bernstein Form</strong></a>&quot;.</li>
+<li><p>Second, define probabilities $p_0, p_1, p_2, ...$ that are positive and sum to 1 (except $p_0$ can be 0).</p></li>
+</ul>
+
+<ol>
+<li>Generate at random an integer (which is 0 or greater) that equals $i$ with probability $p_i$.  Call the integer $n$.</li>
+<li>Flip the input coin $n$ times, then set $k$ to the number of times 1 is returned this way.</li>
+<li>If $n$ is 0, define $E(n, k)$ as 0.  Otherwise, define $E(n, k)$ as $(g_n(k)-k\cdot g_{n-1}(k-1)/n - (n-k) g_{n-1}(k)/n)/p_n$ (letting $g_0(k)=0$ and letting $g_n(k)=0$ whenever $k\lt 0$ or $k\gt n$).</li>
+<li>Return $E(n, k)$.</li>
+</ol>
+
+<p>This algorithm works if $E(n, k)$ stays bounded as $n$ increases.</p>
+
 <p><a id=Additional_Algorithms></a></p>
 
 <h3>Additional Algorithms</h3>
@@ -1224,6 +1240,10 @@
 <p>[^86]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
 
 <p>[^87]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
+
+<p>[^88]: Akahira, M., &amp; Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2).</p>
+
+<p>[^89]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. &quot;Unbiased estimation in sequential binomial sampling&quot;, 1992.  In <em>Joint Statistical Papers Of Akahira And Takeuchi</em>, 2003.</p>
 
 <p><a id=License></a></p>
 
