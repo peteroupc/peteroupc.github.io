@@ -684,7 +684,7 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 **Algorithm 5.** Suppose there is a coin that shows heads (or 1) with the unknown probability _&lambda;_, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose expected value is _f_(_&lambda;_), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)[^88], (Akahira et al. 1992)[^89].
 
 - First, define a sequence $g_1(\lambda), g_2(\lambda), g_3(\lambda), ...$ of polynomials in Bernstein form, where the number after $g$ is the degree of the polynomial.  For every point $\lambda$ satisfying $0\le\lambda\le 1$, $g_n(\lambda)$ must approach $f(\lambda)$ with increasing $n$ (that is, $g_n$ must _converge pointwise_ to $f$).  Denote $g_n[k]$ as the $k$-th Bernstein coefficient of the polynomial $g_n$, where $0\le k\le n$.  See also my article "[**Approximations in Bernstein Form**](https://peteroupc.github.io/bernapprox.html)".
-- Second, define probabilities $p_0, p_1, p_2, ...$ that are positive and sum to 1 (except $p_0$ can be 0).
+- Second, define probabilities $p_0, p_1, p_2, ...$ that are positive and sum to 1 (except $p_0$ can be 0).  An example is $p_n = p(1-p)^n$, where $0\lt p\lt 1$.
 
 1. Generate at random an integer (which is 0 or greater) that equals $i$ with probability $p_i$.  Call the integer $n$.
 2. Flip the input coin $n$ times, then set $k$ to the number of times 1 is returned this way.
@@ -692,6 +692,13 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 4. Return $E(n, k)$.
 
 The output returned in step 4 will have expected value $f(\lambda)$ if the sum of the polynomials&mdash; $$p_n|E(n,0)|{n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n|E(n,n)|{n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^89].  It can be shown that this condition is the same as: $g_1(\lambda) + (g_2(\lambda) - g_1(\lambda)) + (g_3(\lambda) - g_2(\lambda)) + ...$ is finite whenever $0\lt\lambda\lt 1$.
+
+> **Note:** A random variate with expected value of $f(\lambda)$ is called an _unbiased estimator_ of $f(\lambda)$.  With a fixed number of coin flips, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983)[^90].  Thus, if the number $n$ of coin flips is random, where $n$ is determined using only outside randomness, a function $f(\lambda)$ has an unbiased estimator if and only if&mdash;
+>
+> - $f$ is continuous, or
+> - there is a sequence of continuous functions that converge pointwise to $f$
+>
+> (Singh 1964)[^91].  Singh (1964) built an algorithm similar to **Algorithm 5** which also applies to streams of independent random inputs other than biased coin flips.
 
 <a id=Acknowledgments></a>
 
@@ -881,6 +888,10 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^88]: Akahira, M., & Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2).
 
 [^89]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling", 1992.
+
+[^90]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
+
+[^91]: Singh, R., "Existence of unbiased estimates", Sankhyā A 26 (1964).
 
 <a id=License></a>
 
