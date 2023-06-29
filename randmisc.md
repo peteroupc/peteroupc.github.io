@@ -578,9 +578,15 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 
 ## Sampling Distributions Using Incomplete Information
 
-The Bernoulli factory problem (the problem of turning one biased coin into another biased coin; see "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an _oracle_ (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a _coin that shows heads or tails where the probability of heads is unknown_.  The rest of this section deals with oracles that go beyond coins.
+The Bernoulli factory problem (the problem of turning one biased coin into another biased coin; see "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an endless stream of random variates from an incompletely known distribution.
 
-**Algorithm 1.** Suppose there is an oracle that produces independent random variates on a closed interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce nonnegative random variates whose expected value ("long-run average") is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
+In this section:
+
+- An _oracle_ (or black box) is an endless stream of independent random variates of an incompletely known probability distribution.  In the Bernoulli factory problem, this oracle is a _coin that shows heads or tails where the probability of heads is unknown_.
+
+The rest of this section deals with oracles that go beyond coins.
+
+**Algorithm 1.** Suppose the oracle produces random variates on a closed interval \[_a_, _b_\], with an unknown mean of _&mu;_. The goal is now to produce nonnegative random variates whose expected value ("long-run average") is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
 - _f_ is continuous on the closed interval, and
 - _f_(_&mu;_) is greater than or equal to _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)
@@ -600,7 +606,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 > 2. Generate three random variates from the oracle (which must produce random variates in the interval [3, 13]).  For each number _x_: With probability (_x_&minus;3)/(10&minus;3), add 1 to _heads_.
 > 3. Depending on _heads_, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: _heads_=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.
 
-**Algorithm 2.** Say there is an oracle in the form of a fair die.  The number of faces of the die, _n_, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than _n_.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2\)[^84], and the following are four of these distributions.
+**Algorithm 2.** Suppose the oracle is in the form of a fair die.  The number of faces of the die, _n_, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than _n_.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2\)[^84], and the following are four of these distributions.
 
 **_Bernoulli 1/n._** It's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153\)[^84].
 
@@ -642,7 +648,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 
 The following algorithms are included here because they require applying an arbitrary function (such as _f_(_&lambda;_)) to a potentially irrational number.
 
-**Algorithm 3.** Suppose there is an _oracle_ that produces independent random real numbers whose expected value ("long-run average") is a known or unknown mean. The goal is now to produce nonnegative random variates whose expected value is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever&mdash;
+**Algorithm 3.** Suppose the oracle produces random variates with a known or unknown  expected value ("long-run average" or mean). The goal is now to produce nonnegative random variates whose expected value is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever&mdash;
 
 - _f_ has a finite lower bound and a finite upper bound on its domain, and
 - the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0.
@@ -664,7 +670,7 @@ The algorithm to achieve this goal follows (see Lee et al. 2014[^87]\)\:
 >     - When Algorithm 2 finishes, add _b_ to its return value.
 > 3. The check "With probability abs(_f_(_x_))/_m_" is exact if the oracle produces only rational numbers _and_ if _f_(_x_) outputs only rational numbers.  If the oracle or _f_ can produce irrational numbers (such as numbers that follow a beta distribution or another non-discrete distribution), then calculating the probability can lead to numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", above).
 
-**Algorithm 4.** Suppose there is an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown.  The goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nowhere decreasing in that interval (Jacob and Thiery 2015\)[^83].  This can be done using the algorithm below.  In the algorithm:
+**Algorithm 4.** Suppose the oracle produces random variates all greater than or equal to _a_ (which is a known rational number), and with an unknown mean (_&mu;_).  The goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nowhere decreasing in that interval (Jacob and Thiery 2015\)[^83].  This can be done using the algorithm below.  In the algorithm:
 
 - _f_(_&mu;_) must be a function that can be written as&mdash;<br>_c_[0]\*_z_<sup>0</sup> + _c_[1]\*_z_<sup>1</sup> + ...,<br>which is an infinite series where _z_ = _&mu;_&minus;_a_ and all _c_\[_i_\] are 0 or greater.
 - _&psi;_ is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)
@@ -693,14 +699,16 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 
 The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash; $$p_n|E(n,0)|{n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n|E(n,n)|{n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^89].  It can be shown that this condition is the same as: $g_1(\lambda) + (g_2(\lambda) - g_1(\lambda)) + (g_3(\lambda) - g_2(\lambda)) + ...$ is finite whenever $0\lt\lambda\lt 1$.
 
+> 1. Suppose an oracle produces random variates with  there is an _oracle_ that produces independent random real numbers with unknown expected value $\lambda$.  If the values come from a finite set (such as 0, 1, ..., $n$) and a fixed number of random values are taken, the the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983)[^90].
+
 > **Notes:**
 >
-> 1. A random variate that is produced from coin flips and has expected value $f(\lambda)$ is also called an _unbiased estimator_ of $f(\lambda)$.  With a fixed number of coin flips, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983)[^90].  Thus, if the number $n$ of coin flips is random, where $n$ is determined using only outside randomness, a function $f(\lambda)$ has an unbiased estimator if and only if&mdash;
+> 1. Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an _unbiased estimator_ of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^90], (Paninski 2003, proof of Proposition 8, more generally)[^92]. Thus, if the number $n$ of oracle values is random, where $n$ is determined using only outside randomness, a function $f(\lambda)$ has an unbiased estimator if and only if&mdash;
 >
 >     - $f$ is continuous, or
 >     - there is a sequence of continuous functions that converge pointwise to $f$
 >
->     (Singh 1964)[^91].  Singh (1964) built an algorithm similar to **Algorithm 5** which also applies to streams of independent random inputs other than biased coin flips.
+>     (Singh 1964)[^91].  Singh (1964) built an algorithm similar to **Algorithm 5** which also applies to oracles more general than biased coins.
 >
 > 2. It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
 
@@ -896,6 +904,8 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^90]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
 
 [^91]: Singh, R., "Existence of unbiased estimates", Sankhyā A 26 (1964).
+
+[^92]: Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253.
 
 <a id=License></a>
 

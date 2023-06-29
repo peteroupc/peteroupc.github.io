@@ -201,8 +201,8 @@ The necessary changes are as follows:
 
 - In the previous two sections, define $f$, $M_r$, $a_i$, and $L_r$ as follows:
     - $f(\lambda) = g(a+(b-a)\lambda)$.  This will make $f$ continuous on the closed unit interval.
-    - $M_r$ is not less than $(b-a)^r$ times the maximum of the absolute value of $f$'s $r$-th derivative.
-    - $L_r$ is not less than $(b-a)^{r+1}$ times $f$'s $r$-th derivative's Lipschitz constant.
+    - $M_r$ is not less than $(b-a)^r$ times the maximum of the absolute value of $g$'s $r$-th derivative on $[a,b]$.
+    - $L_r$ is not less than $(b-a)^{r+1}$ times the Lipschitz constant of $g$'s $r$-th derivative on $[a,b]$.
     - $a_i = (b-a)^i f^{(i)}(0)/(i!)$.
 
 (The error bounds that rely on $H_r$ won't work for the time being unless $[a, b]$ is the closed unit interval.)
