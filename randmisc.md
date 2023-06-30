@@ -699,16 +699,14 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 
 The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash; $$p_n|E(n,0)|{n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n|E(n,n)|{n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^89].  It can be shown that this condition is the same as: $g_1(\lambda) + (g_2(\lambda) - g_1(\lambda)) + (g_3(\lambda) - g_2(\lambda)) + ...$ is finite whenever $0\lt\lambda\lt 1$.
 
-> 1. Suppose an oracle produces random variates with  there is an _oracle_ that produces independent random real numbers with unknown expected value $\lambda$.  If the values come from a finite set (such as 0, 1, ..., $n$) and a fixed number of random values are taken, the the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983)[^90].
-
 > **Notes:**
 >
-> 1. Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an _unbiased estimator_ of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^90], (Paninski 2003, proof of Proposition 8, more generally)[^92]. Thus, if the number $n$ of oracle values is random, where $n$ is determined using only outside randomness, a function $f(\lambda)$ has an unbiased estimator if and only if&mdash;
+> 1. Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an _unbiased estimator_ of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^90], (Paninski 2003, proof of Proposition 8, more generally)[^91]. Thus, if the number $n$ of oracle values is random, where $n$ is determined using only outside randomness, a function $f(\lambda)$ has an unbiased estimator if and only if&mdash;
 >
 >     - $f$ is continuous, or
 >     - there is a sequence of continuous functions that converge pointwise to $f$
 >
->     (Singh 1964)[^91].  Singh (1964) built an algorithm similar to **Algorithm 5** which also applies to oracles more general than biased coins.
+>     (Singh 1964)[^92].  Singh (1964) built an algorithm similar to **Algorithm 5** which also applies to oracles more general than biased coins.
 >
 > 2. It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
 
@@ -903,9 +901,9 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^90]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
 
-[^91]: Singh, R., "Existence of unbiased estimates", Sankhyā A 26 (1964).
+[^91]: Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253.
 
-[^92]: Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253.
+[^92]: Singh, R., "Existence of unbiased estimates", Sankhyā A 26 (1964).
 
 <a id=License></a>
 
