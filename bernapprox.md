@@ -99,7 +99,7 @@ For some of the polynomials given above, a degree $n$ can be found so that the d
 - $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the given Hölder exponent _&alpha;_).
 - $L_r$ is not less than $f$'s $r$-th derivative's Lipschitz constant.
 
-| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes |
+| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | And a value of _n_ that achieves the bound is:  | Notes |
  --- | --- | --- | --- | --- |
 | Has Hölder continuous second derivative (see "Definitions"). | $U_{n, 2}(f)$. | _&epsilon;_ = $(5H_2+4M_2)$ / $(32 n^{1+\alpha/2})$. | _n_=max(3, ceil($((5H_2+4M_2)$ / $(32\epsilon))^{2/(2+\alpha)}$)). | $n\ge 3$.  0 &lt; _&alpha;_ &le; 1 is second derivative's Hölder exponent.  See Proposition B10C in appendix.|
 | Has Lipschitz continuous second derivative. | $U_{n, 2}(f)$. | _&epsilon;_ = $(5L_2+4M_2)$ / $(32 n^{3/2})$. | _n_=max(3, ceil($((5L_2+4M_2)$ / $(32\epsilon))^{2/3}$)). | $n\ge 3$.  Special case of previous entry.|
@@ -262,7 +262,7 @@ In the table below:
 - $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the given Hölder exponent _&alpha;_).
 - $L_r$ is not less than $f$'s $r$-th derivative's Lipschitz constant.
 
-| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | Where _n_ is:  | Notes |
+| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | And a value of _n_ that achieves the bound is:  | Notes |
  --- | --- | --- | --- | --- |
 | Has Hölder continuous $r$-th derivative. | $B_n(f)$. | $\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$. | $n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$. | Knoop and Pottinger (1976)[^25]. $0\lt\alpha\le 1$ is $r$-th derivative's Hölder exponent. |
 
@@ -593,7 +593,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
 2. Compute the values $c_k$ as given above, which relate to $f$'s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, ..., c_n$.
 3. Compute the (_n_+1)&times;(_n_+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^51].
 4. Multiply the matrix by the transposed vector of values $(c_0, ..., c_n)$ to get the polynomial's Bernstein coefficients $b_0, ..., b_n$.  (Transposing means turning columns to rows and vice versa.)
-5. For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.
+5. (Rounding.) For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.
 6. Return the Bernstein coefficients $b_0, ..., b_n$.
 
 > **Notes:**

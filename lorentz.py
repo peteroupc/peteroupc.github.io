@@ -632,6 +632,21 @@ def tachevcoeffs(func, x, n):
     coeffselev = elevatemulti(coeffselev, n // 2)
     return [2 * c1 - c2 for c1, c2 in zip(coeffs, coeffselev)]
 
+def _isRandomLess(u, s):
+    # Determines whether 'u', a uniform random variate
+    # between 0 and 1, is less than 's'.
+    sh = 16  # Number of bits from 'u' generated at a time
+    if u[1] == 0:
+        u[0] = random.randint(0, (1 << sh) - 1)
+        u[1] = 1 << sh
+    while True:
+        if S(u[0]) / u[1] < s:
+            return True
+        if S(u[0] + 1) / u[1] > s:
+            return False
+        u[0] = (u[0] << sh) | random.randint(0, (1 << sh) - 1)
+        u[1] = u[1] << sh
+
 class FactoryFunction:
     def __init__(self, func, x):
         # A Bernoulli factory for continuous functions.
@@ -737,28 +752,13 @@ class FactoryFunction:
         self.coeffarr[r] = coeffs
         return coeffs
 
-    def isRandomLess(self, u, s):
-        # Determines whether 'u', a uniform random variate
-        # between 0 and 1, is less than 's'.
-        sh = 16  # Number of bits from 'u' generated at a time
-        if u[1] == 0:
-            u[0] = random.randint(0, (1 << sh) - 1)
-            u[1] = 1 << sh
-        while True:
-            if S(u[0]) / u[1] < s:
-                return True
-            if S(u[0] + 1) / u[1] > s:
-                return False
-            u[0] = (u[0] << sh) | random.randint(0, (1 << sh) - 1)
-            u[1] = u[1] << sh
-
     def sim(self, coin):
         r = 0
         s = 1 - self.totaldist
         u = [0, 0]
         # Generate 'r'
         # r=0 --> Remainder
-        while not self.isRandomLess(u, s):
+        while not _isRandomLess(u, s):
             r += 1
             if r == 1:
                 s += self.startdist  # r=1 --> First piece
@@ -770,7 +770,7 @@ class FactoryFunction:
         # Simulate the polynomial labeled 'r'
         coeffs = self.ensure(r)
         heads = sum(coin() for i in range(len(coeffs) - 1))
-        if self.isRandomLess([0, 0], coeffs[heads]):
+        if _isRandomLess([0, 0], coeffs[heads]):
             return 1
         return 0
 
@@ -860,13 +860,19 @@ def chebdegree_01_rough(eps, totvar, nu, a=0, b=1):
         raise ValueError
     return ceiling(
         nu
-        + (SR("1.2733") * ((S(b - a) / 2) ** nu) * (totvar) / (eps * nu)) ** (1 / S(nu))
+        + ((S(12733) / 10000) * ((S(b - a) / 2) ** nu) * (totvar) / (eps * nu))
+        ** (1 / S(nu))
     )
 
 def chebcoeffs(func, x, n, a=0, b=1):
     # Chebyshev interpolant coefficients of degree n
     # for a continuous function func defined on [-1,1]
     # Background: https://arxiv.org/pdf/2106.03456.pdf
+    tm = time.time()
+    cosines = [cos(j * pi / n) for j in range(n + 1)]
+    funcsub = [func.subs(x, a + (b - a) * (cosines[j] + 1) / 2) for j in range(n + 1)]
+    chebpolys = [chebyshevt(k, x) for k in range(n + 1)]
+    print(time.time() - tm)
     ret = [
         (S(2) / n)
         * sum(
@@ -874,8 +880,8 @@ def chebcoeffs(func, x, n, a=0, b=1):
                 (
                     S(1) / (2 if j == 0 or j == n else 1)
                 )  # halve if first or last summand
-                * func.subs(x, a + (b - a) * (cos(j * pi / n) + 1) / 2)
-                * chebyshevt(k, x).subs(x, cos(j * pi / n))
+                * funcsub[j]
+                * chebpolys[k].subs(x, cosines[j])
                 for j in range(0, n + 1)
             )
         )
@@ -885,9 +891,14 @@ def chebcoeffs(func, x, n, a=0, b=1):
     # are correct on chebpoly and chebpoly2
     ret[0] /= 2
     ret[n] /= 2
+    print(time.time() - tm)
     return ret
 
-def cheb_berncoeffs_deg(func, x, delta=SR("0.001"), nn=10):
+# fun=exp(-(x + S(49)/10)**2 / (S(1) / 12))
+# fun1=fun.subs(x,x*24-12)
+# cc=chebcoeffs(fun1.subs(x,(x+1)/2),x,100)
+
+def cheb_berncoeffs_deg(func, x, delta=S(1) / 1000, nn=10):
     if nn < 1:
         raise ValueError("'nn' must be 1 or greater")
     delta = S(delta)
@@ -897,7 +908,7 @@ def cheb_berncoeffs_deg(func, x, delta=SR("0.001"), nn=10):
     bern = cheb_to_bern(nn) * cc
     return [floor(c / delta + S.Half) * delta for c in bern]
 
-def cheb_berncoeffs(func, x, eps=SR("0.001"), totvar=1, nu=3):
+def cheb_berncoeffs(func, x, eps=S(1) / 1000, totvar=1, nu=3):
     # Calculates Bernstein coefficients of a polynomial that
     # approximates func(x) with an error tolerance 'eps',
     # using a Chebyshev interpolant.
@@ -913,3 +924,43 @@ def cheb_berncoeffs(func, x, eps=SR("0.001"), totvar=1, nu=3):
     delta = eps / 2
     nn = chebdegree_01_rough(eps / 2, totvar, nu)
     return cheb_berncoeffs_deg(func, x, delta=delta, nn=nn)
+
+def akahiraest(func, x, p):
+    # Akahira et al. (1992) unbiased estimator of func(x) where
+    # x is the expected value of a Bernoulli random variate
+    # (probability of success).
+    #
+    # func - function to estimate
+    # x - variable used in func.
+    # p - probability of success
+    deg = 0
+    pp = S(1) / 4
+    p = S(p)
+    u = [0, 0]
+    while not _isRandomLess(u, pp):
+        deg += 1
+    pn = S(pp) * (1 - pp) ** deg
+    if deg == 0:
+        return 0
+    if deg != 1 << (deg.bit_length() - 1):
+        return 0
+    prevdeg = deg // 2
+    i = sum(1 if _isRandomLess([0, 0], p) else 0 for _ in range(deg))
+    d0 = [0 if j > i else func.subs(x, S(j) / deg) for j in range(deg + 1)]
+    d1 = [
+        0 if (deg == 1 or j > i) else func.subs(x, S(j) / (prevdeg))
+        for j in range((prevdeg) + 1)
+    ]
+    d1 = degelev(d1, len(d0) - len(d1) - 1)
+    try:
+        return (
+            S(
+                d0[i]
+                - i * (0 if i == 0 else d1[i - 1]) / deg
+                - (deg - i) * (0 if i > (deg - 1) else d1[i]) / deg
+            )
+            / pn
+        )
+    except:
+        print([deg, i, len(d0), len(d1)])
+        raise ValueError

@@ -1118,7 +1118,8 @@ In this document, the **ExpMinus** algorithm is a Bernoulli factory taking a par
 
 1. As a rational number, namely _x_/_y_ where _x_&ge;0 and _y_>0 are integers.
 2. As an integer and fractional part, namely _m_ + _&nu;_ where _m_ &ge; 0 is an integer and _&nu;_ (0 &le; _&nu;_ &le; 1) is the probability of heads of a coin.  (Specifically, the "coin" must implement a Bernoulli factory algorithm that returns 1 \[or outputs heads\] with probability equal to the fractional part _&nu;_.[^51])
-3. As a finite sum of positive numbers, each of which can be written in either of the preceding ways.  For example, if _z_ = &pi;, it can be written as a sum of four numbers, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).  (This case makes use of the identity exp(&minus;(_b_+_c_)) = exp(&minus;_b_) \* exp(&minus;_c_).  Here, &pi;/4 has a not-so-trivial Bernoulli factory algorithm described in this article.)
+3. As a finite sum of positive numbers, each of which can be written as in case 1, case 2, or case 4.  For example, if _z_ = &pi;, it can be written as a sum of four numbers, each of which is (&pi; / 4), that is, _m_ = 0 and _&nu;_ = (&pi; / 4).  (This case makes use of the identity exp(&minus;(_b_+_c_)) = exp(&minus;_b_) \* exp(&minus;_c_).  Here, &pi;/4 has a not-so-trivial Bernoulli factory algorithm described in this article.)
+4. As the expression _&rho;_\*(_m_+_&nu;_), where _m_ and _&nu;_ are described in case 2, and where _&rho;_ (0 &le; _&rho;_ &le; 1) is the probability of heads of another coin.
 
 The **ExpMinus** algorithm is as follows.  To flip a coin with probability of heads of exp(&minus;_z_):
 
@@ -1132,8 +1133,9 @@ The **ExpMinus** algorithm is as follows.  To flip a coin with probability of he
     Or the following algorithm:
 
     - If _x_ is 0, return 1.  Otherwise, generate _N_, a Poisson random variate with mean _x_/_y_ (see "[**Poisson Distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution)" for one way to do this), and return a number that is 1 if _N_ is 0, or 0 otherwise.
-- In case 2, use case 2 of the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** with parameter _z_, where _&lambda;_ represents a coin that always returns 1.
-- In case 3, rewrite the _z_ parameter as a sum of positive numbers.  For each number, run either case 1 or case 2 (depending on how the number is written) of the **ExpMinus** algorithm with that number as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.  (See also (Canonne et al. 2020\)[^52].)
+- In case 2, use case 2 of the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** with parameter _z_ = _m_ + _&nu;_, where _&lambda;_ represents a coin that always returns 1.
+- In case 3, rewrite the _z_ parameter as a sum of positive numbers.  For each number, run either case 1, case 2, or case 4 (depending on how the number is written) of the **ExpMinus** algorithm with that number as the parameter.  If any of these runs returns 0, return 0; otherwise, return 1.  (See also (Canonne et al. 2020\)[^52].)
+- In case 4, use case 2 of the **algorithm for exp(&minus;(_&lambda;_ \* _z_))** with parameter _z_ = _m_ + _&nu;_, where _&lambda;_ represents the coin for _&rho;_.
 
 > **Examples:** The **ExpMinus** algorithm with the following parameters can be implemented as follows:
 >
