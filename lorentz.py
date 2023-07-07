@@ -131,13 +131,19 @@ def degelev(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
             + coeffs[min(n, k)] * Fraction((n + 1) - k, n + 1)
             for k in range(n + 2)
         ]
-    while r >= 256:
-        coeffs = elevatemulti(coeffs, 256)
-        r -= 256
-    for i in range(r):
-        coeffs = degelev(coeffs, 1)
-        coeffs = [v for v in coeffs]
-    return coeffs
+    # Multiply coefficients by the degree-r Bernstein
+    # polynomial of the constant 1.  This is the
+    # convolution method from Sánchez-Reyes (2003)
+    n = len(coeffs) - 1
+    coeffs = [coeffs[i] * math.comb(n, i) for i in range(n + 1)]
+    ret = [0 for i in range(n + r + 1)]
+    for j in range(0, r + 1):
+        # Correction from paper ((~b)_k should read (~b)_j)
+        # in the paper's convolution pseudocode
+        binrj = math.comb(r, j)
+        for k in range(j, n + j + 1):
+            ret[k] += coeffs[k - j] * binrj
+    return [ret[i] / math.comb(n + r, i) for i in range(n + r + 1)]
 
 class PolyDiff:
     def __init__(self, a, b):
@@ -626,11 +632,116 @@ def cc():
 from sympy import Min, Max, ceiling, S
 from sympy import Matrix, binomial, chebyshevt, pi, Piecewise, Eq, floor, ceiling
 
+BOUNDMULT = 1000000000000000
+
+def upperbound(x, boundmult=BOUNDMULT):
+    # Calculates a limited-precision upper bound of x.
+    boundmult = S(boundmult)
+    return S(int(ceiling(x * boundmult))) / boundmult
+
+def lowerbound(x, boundmult=BOUNDMULT):
+    # Calculates a limited-precision lower bound of x.
+    boundmult = S(boundmult)
+    return S(int(floor(x * boundmult))) / boundmult
+
+class Intv:
+    def __init__(self, v, w=None, boundmult=BOUNDMULT):
+        if w != None:
+            self.inf = v
+            self.sup = w
+            if v > w:
+                raise ValueError
+        elif isinstance(v, Intv):
+            self.inf = v.inf
+            self.sup = v.sup
+            if self.inf > self.sup:
+                raise ValueError
+        else:
+            self.sup = upperbound(v, boundmult=boundmult)
+            self.inf = lowerbound(v, boundmult=boundmult)
+            if self.inf < 0 and self.sup >= 0 and v > 0:
+                self.inf = S(0)
+            if isinstance(self.sup, Intv):
+                raise ValueError
+            if isinstance(self.inf, Intv):
+                raise ValueError
+
+    def mid(self):
+        return (self.inf + self.sup) / 2
+
+    def __add__(a, b):
+        a = a if isinstance(a, Intv) else Intv(a)
+        b = b if isinstance(b, Intv) else Intv(b)
+        return Intv(a.inf + b.inf, a.sup + b.sup)
+
+    def __sub__(a, b):
+        a = a if isinstance(a, Intv) else Intv(a)
+        b = b if isinstance(b, Intv) else Intv(b)
+        return Intv(a.inf - b.sup, a.sup - b.inf)
+
+    def __rsub__(a, b):
+        a = a if isinstance(a, Intv) else Intv(a)
+        b = b if isinstance(b, Intv) else Intv(b)
+        return Intv(b.inf - a.sup, b.sup - a.inf)
+
+    def __mul__(a, b):
+        if (isinstance(a, int) or isinstance(a, Integer)) and a > 0:
+            b = b if isinstance(b, Intv) else Intv(b)
+            return Intv(b.inf * a, b.sup * a)
+        if (isinstance(b, int) or isinstance(b, Integer)) and b > 0:
+            a = a if isinstance(a, Intv) else Intv(a)
+            return Intv(a.inf * b, a.sup * b)
+        a = a if isinstance(a, Intv) else Intv(a)
+        b = b if isinstance(b, Intv) else Intv(b)
+        a1 = a.inf * b.inf
+        a2 = a.sup * b.inf
+        a3 = a.inf * b.sup
+        a4 = a.sup * b.sup
+        return Intv(min(a1, a2, a3, a4), max(a1, a2, a3, a4))
+
+    def __radd__(a, b):
+        return Intv.__add__(a, b)
+
+    def __rmul__(a, b):
+        return Intv.__mul__(a, b)
+
+    def __truediv__(a, b):
+        a = a if isinstance(a, Intv) else Intv(a)
+        b = b if isinstance(b, Intv) else Intv(b)
+        a1 = a.inf * S(1) / b.inf
+        a2 = a.sup * S(1) / b.inf
+        a3 = a.inf * S(1) / b.sup
+        a4 = a.sup * S(1) / b.sup
+        return Intv(min(a1, a2, a3, a4), max(a1, a2, a3, a4))
+
 def tachevcoeffs(func, x, n):
+    # Sample from func at (n+1) equidistant points
     coeffs = [func.subs(x, S(i) / n) for i in range(n + 1)]
     coeffselev = [coeffs[i * 2] for i in range(n // 2 + 1)]
-    coeffselev = elevatemulti(coeffselev, n // 2)
+    coeffselev = degelev(coeffselev, n // 2)
     return [2 * c1 - c2 for c1, c2 in zip(coeffs, coeffselev)]
+
+def tachevcoeffsapprox(func, x, n, err=S(1) / 1000):
+    # Same as tachevcoeffs, but coefficients are within
+    # 'err' of the ones returned by tachevcoeffs.
+    err = min(err, S(1))
+    delta = S(err) / 2
+    boundmult = ceiling(1 / delta)
+    while True:
+        # Sample from func at (n+1) equidistant points
+        coeffs = [
+            Intv(func.subs(x, S(i) / n), boundmult=boundmult) for i in range(n + 1)
+        ]
+        coeffselev = [coeffs[i * 2] for i in range(n // 2 + 1)]
+        coeffselev = degelev(coeffselev, n // 2)
+        ret = [2 * c1 - c2 for c1, c2 in zip(coeffs, coeffselev)]
+        if max(v.sup - v.inf for v in ret) <= err - delta:
+            # All calculated coefficients are within err-delta of each other
+            break
+        else:
+            boundmult *= 2
+    # Round to nearest multiple of delta=err/2
+    return [floor(v.mid() / delta + S.Half) * delta for v in ret]
 
 def _isRandomLess(u, s):
     # Determines whether 'u', a uniform random variate
@@ -684,8 +795,6 @@ class FactoryFunction:
                 # print([nn,comax.n()])
                 break
             nn += 1
-        # totaldist=summation(diffwidth,(n,self.start_nn,oo))+self.startdist
-        # Same as prev. line
         self.totaldist = self._t(self.start_nn, self.startdist)
         # print(["dist",self.dist])
         if self.totaldist > 1:
@@ -871,6 +980,8 @@ def chebcoeffs(func, x, n, a=0, b=1):
     tm = time.time()
     cosines = [cos(j * pi / n) for j in range(n + 1)]
     funcsub = [func.subs(x, a + (b - a) * (cosines[j] + 1) / 2) for j in range(n + 1)]
+    funcsub = [Intv(v) for v in funcsub]
+    # cosines = [Intv(v) for v in cosines]
     chebpolys = [chebyshevt(k, x) for k in range(n + 1)]
     print(time.time() - tm)
     ret = [
@@ -946,6 +1057,7 @@ def akahiraest(func, x, p):
         return 0
     prevdeg = deg // 2
     i = sum(1 if _isRandomLess([0, 0], p) else 0 for _ in range(deg))
+    # Bernstein polynomial
     d0 = [0 if j > i else func.subs(x, S(j) / deg) for j in range(deg + 1)]
     d1 = [
         0 if (deg == 1 or j > i) else func.subs(x, S(j) / (prevdeg))
