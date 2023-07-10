@@ -701,12 +701,7 @@ The output returned in step 4 will have expected value $f(\lambda)$ if the follo
 
 > **Notes:**
 >
-> 1. Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an _unbiased estimator_ of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^90], (Paninski 2003, proof of Proposition 8, more generally)[^91]. Thus, if the number $n$ of oracle values is random, where $n$ is determined using only outside randomness, a function $f(\lambda)$ has an unbiased estimator if and only if&mdash;
->
->     - $f$ is continuous, or
->     - there is a sequence of continuous functions that converge pointwise to $f$
->
->     (Singh 1964)[^92].  Singh (1964) built an algorithm similar to **Algorithm 5** which also applies to oracles more general than biased coins.
+> 1. Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an _unbiased estimator_ of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^90], (Paninski 2003, proof of Proposition 8, more generally)[^91].
 >
 > 2. It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
 
@@ -897,13 +892,11 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^88]: Akahira, M., & Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2).
 
-[^89]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling", 1992.
+[^89]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
 
 [^90]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
 
 [^91]: Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253.
-
-[^92]: Singh, R., "Existence of unbiased estimates", Sankhyā A 26 (1964).
 
 <a id=License></a>
 
