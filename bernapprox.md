@@ -585,7 +585,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
     - If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).
     - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^50].
     - The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon>0$ is the desired error tolerance.
-- If $f$ is real analytic on $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^49].
+- If $f$ is so "smooth" to be _analytic_ (see note 4 below) at every point in the interval $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^49].
 
 -------------
 
@@ -603,6 +603,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
 >     - $f(\lambda)$ must be continuous on the closed unit interval ($a=0$, $b=1$) and take on only values in that interval.
 >     - If any Bernstein coefficient returned by the method is less than 0 or greater than 1, double the value of $n$ and repeat the method starting at step 2 until that condition is no longer true.
 > 3. It would be of interest to build Chebyshev-like interpolants that sample $f(\lambda)$ at _rational_ values of $\lambda$ that get closer to the Chebyshev points (e.g., $\cos(j\pi/n)$) with increasing $n$, and to find results that provide explicit bounds (with no hidden constants) on the approximation error that are close to those for Chebyshev interpolants.
+> 4. A function $f(x)$ is _analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $|\lambda-z|<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The smallest upper bound for an $r$ that makes $f$ analytic at $z$ is the _radius of convergence_ of $f$ at $z$.
 
 <a id=License></a>
 
