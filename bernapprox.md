@@ -603,7 +603,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
 >     - $f(\lambda)$ must be continuous on the closed unit interval ($a=0$, $b=1$) and take on only values in that interval.
 >     - If any Bernstein coefficient returned by the method is less than 0 or greater than 1, double the value of $n$ and repeat the method starting at step 2 until that condition is no longer true.
 > 3. It would be of interest to build Chebyshev-like interpolants that sample $f(\lambda)$ at _rational_ values of $\lambda$ that get closer to the Chebyshev points (e.g., $\cos(j\pi/n)$) with increasing $n$, and to find results that provide explicit bounds (with no hidden constants) on the approximation error that are close to those for Chebyshev interpolants.
-> 4. A function $f(x)$ is _analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $|\lambda-z|<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The smallest upper bound for an $r$ that makes $f$ analytic at $z$ is the _radius of convergence_ of $f$ at $z$.
+> 4. A function $f(x)$ is _analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $|\lambda-z|<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the _radius of convergence_ of $f$ at $z$.
 
 <a id=License></a>
 

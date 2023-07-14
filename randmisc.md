@@ -648,7 +648,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 
 The following algorithms are included here because they require applying an arbitrary function (such as _f_(_&lambda;_)) to a potentially irrational number.
 
-**Algorithm 3.** Suppose the oracle produces random variates with a known or unknown  expected value ("long-run average" or mean). The goal is now to produce nonnegative random variates whose expected value is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever&mdash;
+**Algorithm 3.** Suppose the oracle produces random variates with a known or unknown expected value ("long-run average" or mean). The goal is now to produce nonnegative random variates whose expected value is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever&mdash;
 
 - _f_ has a finite lower bound and a finite upper bound on its domain, and
 - the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0.
@@ -697,13 +697,28 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 3. If $n$ is 0, define $E(n, k)$ as 0.  Otherwise, define $E(n, k)$ as $(g_n[k]-k\cdot g_{n-1}[k-1]/n - (n-k) g_{n-1}[k]/n)/p_n$ (letting $g_0[k]=0$ letting $g_m[j]=0$ whenever $j\lt 0$ or $j\gt m$).  (**Note:** This implies that if $g_n = g_{n-1}$, then $E(n,k)$ is 0.)
 4. Return $E(n, k)$.
 
-The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash; $$p_n|E(n,0)|{n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n|E(n,n)|{n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^89].  It can be shown that this condition is the same as: $g_1(\lambda) + (g_2(\lambda) - g_1(\lambda)) + (g_3(\lambda) - g_2(\lambda)) + ...$ is finite whenever $0\lt\lambda\lt 1$.
+The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash; $$p_n|E(n,0)|{n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n|E(n,n)|{n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^89].  It can be shown that this condition is the same as: $g_1(\lambda) + |g_2(\lambda) - g_1(\lambda)| + |g_3(\lambda) - g_2(\lambda)| + ...$ is finite whenever $0\lt\lambda\lt 1$. [^92]
 
 > **Notes:**
 >
 > 1. Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an _unbiased estimator_ of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^90], (Paninski 2003, proof of Proposition 8, more generally)[^91].
 >
 > 2. It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
+
+**The Sampling Problem.** Let $D$ be the distribution of random variates produced from the oracle, and let $\lambda$ be an unknown parameter that determines the distribution $D$, such as its expected value.  Suppose the problem is to produce a random variate with an expected value of $f(\lambda)$, perhaps with a distribution $E$.  Then:
+
+- In Algorithm 1, $D$ is arbitrary but must be bounded above and below, $\lambda$ is the expected value of $D$, and $E$ is arbitrary but must be non-negative.
+- In Algorithm 4, $D$ is arbitrary but must be bounded below, $\lambda$ is the expected value of $D$, and $E$ is arbitrary but must be non-negative.
+- In Algorithm 5, $D$ is Bernoulli, $\lambda$ is the expected value of $D$, and $E$ is arbitrary.
+- In the Bernoulli factory problem, $D$ is Bernoulli, $\lambda$ is the expected value of $D$, and $E$ is likewise Bernoulli.
+
+There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of Algorithm 5 except D is any discrete distribution, or where D is any distribution, discrete or not.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
+
+- ...when the number of values taken from the oracle is finite with probability 1 (a _sequential unbiased_ estimator)?
+- ...when only a fixed number $n$ of oracle values can be taken (a fixed-sample-size unbiased estimator)?
+- ...using an algorithm that produces variates whose expected value _approaches_ $f(\lambda)$ as more values from the oracle are taken (an _asymptotically unbiased_ estimator)?
+
+The answers to these questions will depend on the allowed distributions for D, those for E, and which parameter $\lambda$ is unknown.   It should be noted that many of these cases have been studied and resolved in academic papers and books (e.g., Keane and O'Brien (1994)[^86] for the Bernoulli factory problem).
 
 <a id=Acknowledgments></a>
 
@@ -897,6 +912,8 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^90]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
 
 [^91]: Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253.
+
+[^92]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists given an oracle of variates with unknown mean $\lambda$ if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
 
 <a id=License></a>
 
