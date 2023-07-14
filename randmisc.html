@@ -1069,29 +1069,30 @@
 
 <ol>
 <li><p>Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an <em>unbiased estimator</em> of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^91], (Paninski 2003, proof of Proposition 8, more generally)[^92].</p></li>
-<li><p>It can be shown that <strong>Algorithm 5</strong> works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).</p></li>
+<li><p>It can be shown that <strong>Algorithm 5</strong> works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
+$D$ is a fair die with two or more faces, $\lambda$ is the number of faces, and
+<strong>The Sampling Problem.</strong> Let <code>InDist</code> be the distribution of random variates produced from the oracle, and let $\lambda$ be an unknown parameter that determines the distribution <code>InDist</code>, such as its expected value.  Suppose the problem is to produce a random variate with a distribution <code>OutDist</code> that depends on $\lambda$.  Then:</p></li>
 </ol>
 </blockquote>
 
-<p><strong>The Sampling Problem.</strong> Let $D$ be the distribution of random variates produced from the oracle, and let $\lambda$ be an unknown parameter that determines the distribution $D$, such as its expected value.  Suppose the problem is to produce a random variate with an expected value of $f(\lambda)$, perhaps with a distribution $E$.  Then:</p>
-
 <ul>
-<li>In <strong>Algorithm 1</strong>, $D$ is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of $D$, and $E$ is arbitrary but must be non-negative.</li>
-<li>In <strong>Algorithm 4</strong>, $D$ is arbitrary but must have a known minimum, $\lambda$ is the expected value of $D$, and $E$ is arbitrary but must be non-negative.</li>
-<li>In <strong>Algorithm 5</strong>, $D$ is Bernoulli, $\lambda$ is the expected value of $D$, and $E$ is arbitrary.</li>
-<li>In the Bernoulli factory problem, $D$ is Bernoulli, $\lambda$ is the expected value of $D$, and $E$ is likewise Bernoulli.</li>
+<li>In <strong>Algorithm 1</strong>, <code>InDist</code> is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is non-negative and has an expected value of $f(\lambda)$.</li>
+<li>In <strong>Algorithm 2</strong>, <code>InDist</code> is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and <code>OutDist</code> is a specific distribution that depends on the number of faces.</li>
+<li>In <strong>Algorithm 3</strong>, <code>InDist</code> is arbitrary, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is a value taken from the oracle.</li>
+<li>In <strong>Algorithm 4</strong>, <code>InDist</code> is arbitrary but must have a known minimum, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is non-negative and has an expected value of $f(\lambda)$.</li>
+<li>In <strong>Algorithm 5</strong>, <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.</li>
+<li>In the Bernoulli factory problem, <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and $E$ is Bernoulli with an expected value of $f(\lambda)$.</li>
 </ul>
 
-<p>There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of <strong>Algorithm 5</strong> except $D$ is any discrete distribution, or $D$ is any distribution, discrete or not.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...</p>
+<p>There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of <strong>Algorithm 5</strong> except <code>InDist</code> is any discrete distribution, not just Bernoulli.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...</p>
 
 <ul>
 <li>...when the number of values taken from the oracle is finite with probability 1 (a <em>sequential unbiased</em> estimator)?</li>
 <li>...when only a fixed number $n$ of oracle values can be taken (a fixed-sample-size unbiased estimator)?</li>
-<li>...using an algorithm that produces variates whose expected value <em>approaches</em> $f(\lambda)$ as more values from the oracle are taken (an <em>asymptotically unbiased</em> estimator)?</li>
-<li>...for any of the three cases given above, except $f(\lambda)$ is replaced with the mean of $f(X)$, where $X$ is a value taken from the oracle (an example is <strong>Algorithm 3</strong>)?</li>
+<li>...using an algorithm that produces outputs whose expected value <em>approaches</em> $f(\lambda)$ as more inputs from the oracle are taken (an <em>asymptotically unbiased</em> estimator)?</li>
 </ul>
 
-<p>The answers to these questions will depend on the allowed distributions for D, those for E, and which parameter $\lambda$ is unknown.   It should be noted that many of these cases have been studied and resolved in academic papers and books (e.g., Keane and O&#39;Brien (1994)[^86] for the Bernoulli factory problem).  An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^93]).</p>
+<p>The answers to these questions will depend on the allowed distributions for <code>InDist</code>, those for <code>OutDist</code>, which parameter $\lambda$ is unknown, and whether the inputs are independent.   It should be noted that many of these cases have been studied and resolved in academic papers and books (e.g., Keane and O&#39;Brien (1994)[^86] for the Bernoulli factory problem).  An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^93]).</p>
 
 <p><a id=Acknowledgments></a></p>
 

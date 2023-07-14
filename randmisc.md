@@ -704,22 +704,23 @@ The output returned in step 4 will have expected value $f(\lambda)$ if the follo
 > 1. Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an _unbiased estimator_ of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^91], (Paninski 2003, proof of Proposition 8, more generally)[^92].
 >
 > 2. It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
+$D$ is a fair die with two or more faces, $\lambda$ is the number of faces, and
+**The Sampling Problem.** Let `InDist` be the distribution of random variates produced from the oracle, and let $\lambda$ be an unknown parameter that determines the distribution `InDist`, such as its expected value.  Suppose the problem is to produce a random variate with a distribution `OutDist` that depends on $\lambda$.  Then:
 
-**The Sampling Problem.** Let $D$ be the distribution of random variates produced from the oracle, and let $\lambda$ be an unknown parameter that determines the distribution $D$, such as its expected value.  Suppose the problem is to produce a random variate with an expected value of $f(\lambda)$, perhaps with a distribution $E$.  Then:
+- In **Algorithm 1**, `InDist` is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
+- In **Algorithm 2**, `InDist` is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and `OutDist` is a specific distribution that depends on the number of faces.
+- In **Algorithm 3**, `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is a value taken from the oracle.
+- In **Algorithm 4**, `InDist` is arbitrary but must have a known minimum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
+- In **Algorithm 5**, `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
+- In the Bernoulli factory problem, `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and $E$ is Bernoulli with an expected value of $f(\lambda)$.
 
-- In **Algorithm 1**, $D$ is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of $D$, and $E$ is arbitrary but must be non-negative.
-- In **Algorithm 4**, $D$ is arbitrary but must have a known minimum, $\lambda$ is the expected value of $D$, and $E$ is arbitrary but must be non-negative.
-- In **Algorithm 5**, $D$ is Bernoulli, $\lambda$ is the expected value of $D$, and $E$ is arbitrary.
-- In the Bernoulli factory problem, $D$ is Bernoulli, $\lambda$ is the expected value of $D$, and $E$ is likewise Bernoulli.
-
-There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of **Algorithm 5** except $D$ is any discrete distribution, or $D$ is any distribution, discrete or not.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
+There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of **Algorithm 5** except `InDist` is any discrete distribution, not just Bernoulli.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
 
 - ...when the number of values taken from the oracle is finite with probability 1 (a _sequential unbiased_ estimator)?
 - ...when only a fixed number $n$ of oracle values can be taken (a fixed-sample-size unbiased estimator)?
-- ...using an algorithm that produces variates whose expected value _approaches_ $f(\lambda)$ as more values from the oracle are taken (an _asymptotically unbiased_ estimator)?
-- ...for any of the three cases given above, except $f(\lambda)$ is replaced with the mean of $f(X)$, where $X$ is a value taken from the oracle (an example is **Algorithm 3**)?
+- ...using an algorithm that produces outputs whose expected value _approaches_ $f(\lambda)$ as more inputs from the oracle are taken (an _asymptotically unbiased_ estimator)?
 
-The answers to these questions will depend on the allowed distributions for D, those for E, and which parameter $\lambda$ is unknown.   It should be noted that many of these cases have been studied and resolved in academic papers and books (e.g., Keane and O'Brien (1994)[^86] for the Bernoulli factory problem).  An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^93]).
+The answers to these questions will depend on the allowed distributions for `InDist`, those for `OutDist`, which parameter $\lambda$ is unknown, and whether the inputs are independent.   It should be noted that many of these cases have been studied and resolved in academic papers and books (e.g., Keane and O'Brien (1994)[^86] for the Bernoulli factory problem).  An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^93]).
 
 <a id=Acknowledgments></a>
 
