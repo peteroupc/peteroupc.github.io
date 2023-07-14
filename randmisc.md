@@ -704,7 +704,7 @@ The output returned in step 4 will have expected value $f(\lambda)$ if the follo
 > 1. Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an _unbiased estimator_ of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^91], (Paninski 2003, proof of Proposition 8, more generally)[^92].
 >
 > 2. It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
-$D$ is a fair die with two or more faces, $\lambda$ is the number of faces, and
+
 **The Sampling Problem.** Let `InDist` be the distribution of random variates produced from the oracle, and let $\lambda$ be an unknown parameter that determines the distribution `InDist`, such as its expected value.  Suppose the problem is to produce a random variate with a distribution `OutDist` that depends on $\lambda$.  Then:
 
 - In **Algorithm 1**, `InDist` is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
@@ -712,7 +712,7 @@ $D$ is a fair die with two or more faces, $\lambda$ is the number of faces, and
 - In **Algorithm 3**, `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is a value taken from the oracle.
 - In **Algorithm 4**, `InDist` is arbitrary but must have a known minimum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
 - In **Algorithm 5**, `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
-- In the Bernoulli factory problem, `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and $E$ is Bernoulli with an expected value of $f(\lambda)$.
+- In the Bernoulli factory problem, `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
 
 There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of **Algorithm 5** except `InDist` is any discrete distribution, not just Bernoulli.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
 

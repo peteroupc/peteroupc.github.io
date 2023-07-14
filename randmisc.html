@@ -1069,11 +1069,11 @@
 
 <ol>
 <li><p>Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an <em>unbiased estimator</em> of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^91], (Paninski 2003, proof of Proposition 8, more generally)[^92].</p></li>
-<li><p>It can be shown that <strong>Algorithm 5</strong> works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
-$D$ is a fair die with two or more faces, $\lambda$ is the number of faces, and
-<strong>The Sampling Problem.</strong> Let <code>InDist</code> be the distribution of random variates produced from the oracle, and let $\lambda$ be an unknown parameter that determines the distribution <code>InDist</code>, such as its expected value.  Suppose the problem is to produce a random variate with a distribution <code>OutDist</code> that depends on $\lambda$.  Then:</p></li>
+<li><p>It can be shown that <strong>Algorithm 5</strong> works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).</p></li>
 </ol>
 </blockquote>
+
+<p><strong>The Sampling Problem.</strong> Let <code>InDist</code> be the distribution of random variates produced from the oracle, and let $\lambda$ be an unknown parameter that determines the distribution <code>InDist</code>, such as its expected value.  Suppose the problem is to produce a random variate with a distribution <code>OutDist</code> that depends on $\lambda$.  Then:</p>
 
 <ul>
 <li>In <strong>Algorithm 1</strong>, <code>InDist</code> is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is non-negative and has an expected value of $f(\lambda)$.</li>
@@ -1081,7 +1081,7 @@ $D$ is a fair die with two or more faces, $\lambda$ is the number of faces, and
 <li>In <strong>Algorithm 3</strong>, <code>InDist</code> is arbitrary, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is a value taken from the oracle.</li>
 <li>In <strong>Algorithm 4</strong>, <code>InDist</code> is arbitrary but must have a known minimum, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is non-negative and has an expected value of $f(\lambda)$.</li>
 <li>In <strong>Algorithm 5</strong>, <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.</li>
-<li>In the Bernoulli factory problem, <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and $E$ is Bernoulli with an expected value of $f(\lambda)$.</li>
+<li>In the Bernoulli factory problem, <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is Bernoulli with an expected value of $f(\lambda)$.</li>
 </ul>
 
 <p>There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of <strong>Algorithm 5</strong> except <code>InDist</code> is any discrete distribution, not just Bernoulli.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...</p>
