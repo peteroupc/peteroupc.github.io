@@ -6,14 +6,14 @@ This page is about a mathematical problem of **sampling a probability distributi
 
 Suppose $(X_0, X_1, X_2, X_3, ...)$ is an endless stream of random variates, or _input values_.
 
-Let `InDist` be the probability distribution of these input values, and let $\lambda$ be an unknown parameter that determines the distribution `InDist`, such as its expected value.  Suppose the problem is to **produce a random variate with a distribution** `OutDist` **that depends on the unknown parameter $\lambda$**.  Then, of the algorithms in the section "[**Sampling Distributions Using Incomplete Information**](https://peteroupc.github.io/randmisc.md#Sampling_Distributions_Using_Incomplete_Information)"
+Let `InDist` be the probability distribution of these input values, and let $\lambda$ be an unknown parameter that determines the distribution `InDist`, such as its expected value (or mean or "long-run average").  Suppose the problem is to **produce a random variate with a distribution** `OutDist` **that depends on the unknown parameter $\lambda$**.  Then, of the algorithms in the section "[**Sampling Distributions Using Incomplete Information**](https://peteroupc.github.io/randmisc.md#Sampling_Distributions_Using_Incomplete_Information)"
 
 - In **Algorithm 1** (Jacob and Thiery 2015)[^1], `InDist` is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
 - In **Algorithm 2** (Duvignau 2015)[^2], `InDist` is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and `OutDist` is a specific distribution that depends on the number of faces.
 - In **Algorithm 3** (Lee et al. 2014)[^3], `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken.
 - In **Algorithm 4** (Jacob and Thiery 2015)[^1], `InDist` is arbitrary but must have a known minimum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
 - In **Algorithm 5** (Akahira et al. 1992)[^4], `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$. [^5]
-- In the [**Bernoulli factory problem**](https://peteroupc.github.io/bernoulli.html), `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
+- In the [**Bernoulli factory problem**](https://peteroupc.github.io/bernoulli.html) (a problem of turning biased coins to biased coins), `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
 
 In all cases given above, each input value is independent of everything else.
 
@@ -40,7 +40,7 @@ It should be noted that many of these cases have been studied and resolved in ac
 The following is an example of results for this problem.
 
 - Suppose `InDist` takes on numbers from a finite set; $\lambda$ is the expected value of `InDist`; and `OutDist` has an expected value of $f(\lambda)$.
-    - Then a fixed-size unbiased estimator exists only if $f$ is a polynomial of degree $n$ or less, where $n$ is the number of inputs taken ((Lehmann 1983, for coin flips)[^8], Paninski (2003, proof of Proposition 8, more generally)[^9]).
+    - Then a fixed-size unbiased estimator exists only if $f$ is a polynomial of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^8], Paninski (2003, proof of Proposition 8, more generally)[^9]).
     - The existence of sequential unbiased estimators is claimed by Singh (1964).  But see Akahira et al. (1992)[^4].
 
 <a id=Notes></a>
