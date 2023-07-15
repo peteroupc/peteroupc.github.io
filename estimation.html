@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/07/09"><meta name="citation_online_date" content="2023/07/09"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/07/15"><meta name="citation_online_date" content="2023/07/15"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -257,7 +257,7 @@
 
 <ol>
 <li>The interval $[\hat{\mu} - \epsilon, \hat{\mu} + \epsilon]$ is also known as a <em>confidence interval</em> for the mean, with <em>confidence level</em> at least 1 &minus; <em>&delta;</em> (where $\hat{\mu}$ is an estimate of the mean returned by <em>Algorithm C</em>).</li>
-<li>If the stream of random variates meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and $\kappa$, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.</li>
+<li>If the stream of random variates meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and $\kappa$, then it still meets that condition when those variates are multiplied by a constant, when a constant is added to them, or both.</li>
 <li>Theorem 3.4 of Kunsch et al. (2019)[^7] shows that there is no mean estimation algorithm that&mdash;
 
 <ul>
@@ -283,8 +283,8 @@
 <p>Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the <em>mode</em>.(Dutta and Goswami 2010)[^12]  This assumes the following are known:</p>
 
 <ul>
-<li>Exactly one item must occur more frequently than the others.</li>
-<li>$\epsilon$ is greater than 0 and less than one half of the smallest possible difference between the mode&#39;s probability and the next most frequent item&#39;s probability.</li>
+<li>Exactly one item has a greater probability of occurring than the others.</li>
+<li>$\epsilon$ is greater than 0 and less than one half of the smallest possible difference between the mode&#39;s probability and the next most probable item&#39;s probability.</li>
 <li>$\delta$ is greater than 0 and less than 1.</li>
 <li><em>n</em> is the number of distinct items that can be taken.</li>
 </ul>

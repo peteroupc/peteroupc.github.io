@@ -190,7 +190,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 > **Notes:**
 >
 > 1. The interval $[\hat{\mu} - \epsilon, \hat{\mu} + \epsilon]$ is also known as a _confidence interval_ for the mean, with _confidence level_ at least 1 &minus; _&delta;_ (where $\hat{\mu}$ is an estimate of the mean returned by _Algorithm C_).
-> 2. If the stream of random variates meets the condition for _Algorithm C_ for a given _q_, _p_, and $\kappa$, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.
+> 2. If the stream of random variates meets the condition for _Algorithm C_ for a given _q_, _p_, and $\kappa$, then it still meets that condition when those variates are multiplied by a constant, when a constant is added to them, or both.
 > 3. Theorem 3.4 of Kunsch et al. (2019\)[^7] shows that there is no mean estimation algorithm that&mdash;
 >      - produces an estimate within a user-specified error tolerance with probability greater than a user-specified value, and
 >      - works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).
@@ -209,8 +209,8 @@ The algorithm, called **Algorithm C** in this document, follows.
 
 Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the _mode_.(Dutta and Goswami 2010)[^12]  This assumes the following are known:
 
-- Exactly one item must occur more frequently than the others.
-- $\epsilon$ is greater than 0 and less than one half of the smallest possible difference between the mode's probability and the next most frequent item's probability.
+- Exactly one item has a greater probability of occurring than the others.
+- $\epsilon$ is greater than 0 and less than one half of the smallest possible difference between the mode's probability and the next most probable item's probability.
 - $\delta$ is greater than 0 and less than 1.
 - _n_ is the number of distinct items that can be taken.
 
