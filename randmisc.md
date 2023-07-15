@@ -33,6 +33,7 @@ This page should be read in conjunction with the following articles:
 - [**Batching Random Samples via Randomness Extraction**](#Batching_Random_Samples_via_Randomness_Extraction)
 - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Additional Algorithms**](#Additional_Algorithms)
+    - [**The Sampling Problem**](#The_Sampling_Problem)
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
 - [**License**](#License)
@@ -705,22 +706,28 @@ The output returned in step 4 will have expected value $f(\lambda)$ if the follo
 >
 > 2. It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
 
-**The Sampling Problem.** Let `InDist` be the distribution of random variates produced from the oracle, and let $\lambda$ be an unknown parameter that determines the distribution `InDist`, such as its expected value.  Suppose the problem is to produce a random variate with a distribution `OutDist` that depends on $\lambda$.  Then:
+<a id=The_Sampling_Problem></a>
 
-- In **Algorithm 1**, `InDist` is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
-- In **Algorithm 2**, `InDist` is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and `OutDist` is a specific distribution that depends on the number of faces.
-- In **Algorithm 3**, `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is a value taken from the oracle.
-- In **Algorithm 4**, `InDist` is arbitrary but must have a known minimum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
-- In **Algorithm 5**, `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
-- In the Bernoulli factory problem, `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
+### The Sampling Problem
+
+Suppose $(X_0, X_1, X_2, X_3, ...)$ is an endless stream of random variates, or _input values_.  Let `InDist` be the distribution of these input values, and let $\lambda$ be an unknown parameter that determines the distribution `InDist`, such as its expected value.  Suppose the problem is to produce a random variate with a distribution `OutDist` that depends on $\lambda$.  Then:
+
+- In **Algorithm 1** (Jacob and Thiery 2015\)[^83], `InDist` is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
+- In **Algorithm 2**(Duvignau 2015, Algorithm 20\)[^84], `InDist` is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and `OutDist` is a specific distribution that depends on the number of faces.
+- In **Algorithm 3** (Lee et al. 2014\)[^87], `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken.
+- In **Algorithm 4** (Jacob and Thiery 2015\)[^83], `InDist` is arbitrary but must have a known minimum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
+- In **Algorithm 5** (Akahira et al. 1992\)[^89], `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
+- In the [**Bernoulli factory problem**](https://peteroupc.github.io/bernoulli.html), `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
+
+In all cases given above, each input value is independent of everything else.
 
 There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of **Algorithm 5** except `InDist` is any discrete distribution, not just Bernoulli.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
 
-- ...when the number of values taken from the oracle is finite with probability 1 (a _sequential unbiased_ estimator)?
-- ...when only a fixed number $n$ of oracle values can be taken (a fixed-sample-size unbiased estimator)?
-- ...using an algorithm that produces outputs whose expected value _approaches_ $f(\lambda)$ as more inputs from the oracle are taken (an _asymptotically unbiased_ estimator)?
+- ...when the number of input values taken is finite with probability 1 (a _sequential unbiased_ estimator)?
+- ...when only a fixed number $n$ of input values can be taken (a fixed-sample-size unbiased estimator)?
+- ...using an algorithm that produces outputs whose expected value _approaches_ $f(\lambda)$ as more input values are taken (an _asymptotically unbiased_ estimator)?
 
-The answers to these questions will depend on the allowed distributions for `InDist`, those for `OutDist`, which parameter $\lambda$ is unknown, and whether the inputs are independent.   It should be noted that many of these cases have been studied and resolved in academic papers and books (e.g., Keane and O'Brien (1994)[^86] for the Bernoulli factory problem).  An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^93]).
+The answers to these questions will depend on the allowed distributions for `InDist`, those for `OutDist`, which parameter $\lambda$ is unknown, and whether the inputs are independent.   It should be noted that many of these cases have been studied and resolved in academic papers and books (e.g., Keane and O'Brien (1994)[^86] for the Bernoulli factory problem) &mdash; the problem here is one of bringing all these results together in one place.  An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^93]).
 
 <a id=Acknowledgments></a>
 
