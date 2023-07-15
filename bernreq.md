@@ -12,6 +12,8 @@ Specifically, the only functions that can be simulated this way **are continuous
 
 This page contains several questions about the [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) problem.  Answers to them will greatly improve my pages on this site about Bernoulli factories.  If you can answer any of them, post an issue in the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
+> **Note:** The Bernoulli factory problem is a special case of a more general mathematical problem that I call "[**The Sampling Problem**](https://peteroupc.github.io/sampling.html)".
+
 <a id=Contents></a>
 
 ## Contents

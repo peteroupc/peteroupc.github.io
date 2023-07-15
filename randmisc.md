@@ -578,7 +578,7 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 
 ## Sampling Distributions Using Incomplete Information
 
-The Bernoulli factory problem (the problem of turning one biased coin into another biased coin; see "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an endless stream of random variates from an incompletely known distribution.  The problem is described in more detail in "[**The Sampling Problem**](https://peteroupc.github.io/sampling.html).
+The Bernoulli factory problem (the problem of turning one biased coin into another biased coin; see "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an endless stream of random variates from an incompletely known distribution.  The problem is described in more detail in "[**The Sampling Problem**](https://peteroupc.github.io/sampling.html)".
 
 In this section:
 
