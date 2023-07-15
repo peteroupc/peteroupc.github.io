@@ -29,6 +29,7 @@ Open-source articles on programming subjects.  Help me on my [**requests and ope
 * [**Supplemental Notes for Bernoulli Factory Algorithms**](./bernsupp.html)
 * [**Miscellaneous Observations on Randomization**](./randmisc.html)
 * [**Randomized Estimation Algorithms**](./estimation.html)
+* [**The Sampling Problem**](./sampling.html)
 * More:
     * [**The Most Common Topics Involving Randomization**](./randomcommon.html)
     * [**Code Generator for Discrete Distributions**](./autodist.html)

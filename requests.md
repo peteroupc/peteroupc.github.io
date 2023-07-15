@@ -78,7 +78,7 @@ For other open questions, see "[**Other Open Questions on Probability**](https:/
 
 [**https://peteroupc.github.io/estimation.html**](https://peteroupc.github.io/estimation.html)
 
-For open questions, see "[**Questions on Estimation Algorithms**](https://peteroupc.github.io/requestsother.html#Questions_on_Estimation_Algorithms)".
+For open questions, see "[**Questions on Estimation Algorithms**](https://peteroupc.github.io/requestsother.html#Questions_on_Estimation_Algorithms)" and "[**The Sampling Problem**](https://peteroupc.github.io/sampling.html)".
 
 <a id=Color_Topics_for_Programmers></a>
 

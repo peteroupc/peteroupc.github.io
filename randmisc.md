@@ -33,7 +33,6 @@ This page should be read in conjunction with the following articles:
 - [**Batching Random Samples via Randomness Extraction**](#Batching_Random_Samples_via_Randomness_Extraction)
 - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Additional Algorithms**](#Additional_Algorithms)
-    - [**The Sampling Problem**](#The_Sampling_Problem)
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
 - [**License**](#License)
@@ -579,7 +578,7 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 
 ## Sampling Distributions Using Incomplete Information
 
-The Bernoulli factory problem (the problem of turning one biased coin into another biased coin; see "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an endless stream of random variates from an incompletely known distribution.
+The Bernoulli factory problem (the problem of turning one biased coin into another biased coin; see "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)") is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an endless stream of random variates from an incompletely known distribution.  The problem is described in more detail in "[**The Sampling Problem**](https://peteroupc.github.io/sampling.html).
 
 In this section:
 
@@ -700,34 +699,7 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 
 The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash; $$p_n|E(n,0)|{n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n|E(n,n)|{n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^89].  It can be shown that this condition is the same as: $g_1(\lambda) + |g_2(\lambda) - g_1(\lambda)| + |g_3(\lambda) - g_2(\lambda)| + ...$ is finite whenever $0\lt\lambda\lt 1$. [^90]
 
-> **Notes:**
->
-> 1. Suppose an oracle produces random variates from a finite set (such as {0, 1, 2, ..., $n$}) with an unknown expected value $\lambda$, and the goal is to produce a random variate with expected value $f(\lambda)$, also called an _unbiased estimator_ of $f(\lambda)$, from the oracle.  With a fixed number of oracle values, the only functions $f(\lambda)$ with unbiased estimators are polynomials (Lehmann 1983, for coin flips)[^91], (Paninski 2003, proof of Proposition 8, more generally)[^92].
->
-> 2. It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
-
-<a id=The_Sampling_Problem></a>
-
-### The Sampling Problem
-
-Suppose $(X_0, X_1, X_2, X_3, ...)$ is an endless stream of random variates, or _input values_.  Let `InDist` be the distribution of these input values, and let $\lambda$ be an unknown parameter that determines the distribution `InDist`, such as its expected value.  Suppose the problem is to produce a random variate with a distribution `OutDist` that depends on $\lambda$.  Then:
-
-- In **Algorithm 1** (Jacob and Thiery 2015\)[^83], `InDist` is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
-- In **Algorithm 2**(Duvignau 2015, Algorithm 20\)[^84], `InDist` is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and `OutDist` is a specific distribution that depends on the number of faces.
-- In **Algorithm 3** (Lee et al. 2014\)[^87], `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken.
-- In **Algorithm 4** (Jacob and Thiery 2015\)[^83], `InDist` is arbitrary but must have a known minimum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
-- In **Algorithm 5** (Akahira et al. 1992\)[^89], `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
-- In the [**Bernoulli factory problem**](https://peteroupc.github.io/bernoulli.html), `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
-
-In all cases given above, each input value is independent of everything else.
-
-There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of **Algorithm 5** except `InDist` is any discrete distribution, not just Bernoulli.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
-
-- ...when the number of input values taken is finite with probability 1 (a _sequential unbiased_ estimator)?
-- ...when only a fixed number $n$ of input values can be taken (a fixed-sample-size unbiased estimator)?
-- ...using an algorithm that produces outputs whose expected value _approaches_ $f(\lambda)$ as more input values are taken (an _asymptotically unbiased_ estimator)?
-
-The answers to these questions will depend on the allowed distributions for `InDist`, those for `OutDist`, which parameter $\lambda$ is unknown, and whether the inputs are independent.   It should be noted that many of these cases have been studied and resolved in academic papers and books (e.g., Keane and O'Brien (1994)[^86] for the Bernoulli factory problem) &mdash; the problem here is one of bringing all these results together in one place.  An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^93]).
+> **Note:** It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
 
 <a id=Acknowledgments></a>
 
@@ -919,12 +891,6 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^89]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
 
 [^90]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists given an oracle of variates with unknown mean $\lambda$ if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
-
-[^91]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
-
-[^92]: Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253.
-
-[^93]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
 
 <a id=License></a>
 
