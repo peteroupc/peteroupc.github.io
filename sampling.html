@@ -19,13 +19,13 @@
 <li>In <strong>Algorithm 2</strong> (Duvignau 2015)[^2], <code>InDist</code> is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and <code>OutDist</code> is a specific distribution that depends on the number of faces.</li>
 <li>In <strong>Algorithm 3</strong> (Lee et al. 2014)[^3], <code>InDist</code> is arbitrary, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken.</li>
 <li>In <strong>Algorithm 4</strong> (Jacob and Thiery 2015)[^1], <code>InDist</code> is arbitrary but must have a known minimum, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is non-negative and has an expected value of $f(\lambda)$.</li>
-<li>In <strong>Algorithm 5</strong> (Akahira et al. 1992)[^4], <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$. [^5]</li>
+<li>In <strong>Algorithm 5</strong> (Akahira et al. 1992)[^4], <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.</li>
 <li>In the <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory problem</strong></a> (a problem of turning biased coins to biased coins), <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is Bernoulli with an expected value of $f(\lambda)$.</li>
 </ul>
 
 <p>In all cases given above, each input value is independent of everything else.</p>
 
-<p>There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of <strong>Algorithm 5</strong> except <code>InDist</code> is any discrete distribution, not just Bernoulli.  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...</p>
+<p>There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of <strong>Algorithm 5</strong> except <code>InDist</code> is any discrete distribution, not just Bernoulli. [^5]  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...</p>
 
 <ul>
 <li>...when the number of input values taken is finite with probability 1 (a <em>sequential unbiased</em> estimator)?</li>
@@ -66,7 +66,7 @@
 
 <p>[^1]: Jacob, P.E., Thiery, A.H., &quot;On nonnegative unbiased estimators&quot;, Ann. Statist., Volume 43, Number 2 (2015), 769-784.</p>
 
-<p>[^2]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).</p>
+<p>[^2]: Duvignau, R., &quot;Maintenance et simulation de graphes aléatoires dynamiques&quot;, Doctoral dissertation, Université de Bordeaux, 2015.</p>
 
 <p>[^3]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</p>
 
