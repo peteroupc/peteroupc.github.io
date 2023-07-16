@@ -50,7 +50,9 @@ The following are examples of results for this problem.
     - Let $D$ be the set of allowed values for $\lambda$.  Thus, $D$ is either the closed unit interval or a subset thereof.
     - A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O'Brien 1994)[^10].
     - Then a fixed-size unbiased estimator exists if and only if $f$ is a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^11].
-    - Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, ...$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, the $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials' Bernstein coefficients lie in the closed unit interval (see also Singh (1964)[^9]).
+    - Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, ...$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials' Bernstein coefficients lie in the closed unit interval (see also Singh (1964)[^9]).
+
+There are also two other results on the existence of fixed-sample and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^12], Hirano and Porter (2012)[^13].
 
 <a id=Notes></a>
 
@@ -77,3 +79,7 @@ The following are examples of results for this problem.
 [^10]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
 [^11]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
+
+[^12]: Liu., R.C., Brown, L.D., "Nonexistence of informative unbiased estimators in singular problems", Annals of Statistics 21(1), 1993.
+
+[^13]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
