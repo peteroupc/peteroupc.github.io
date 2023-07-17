@@ -20,7 +20,7 @@ In 2009, Ferraro et al. published a response to J. Aslam's P=NP "proof", version
 
 - [**https://arxiv.org/abs/0904.3912**](https://arxiv.org/abs/0904.3912)
 
-After 2009, however, J. Aslam updated the "proof" that P=NP and the algorithm that supposedly supports it; the latest version, version 26, dates from 2017 and is found at:
+This refutation would have provided the needed closure to the matter.  However, after 2009, J. Aslam updated the "proof" that P=NP and the algorithm that supposedly supports it; the latest version, version 26, dates from 2017 and is found at:
 
 - [**https://arxiv.org/abs/0812.1385v26**](https://arxiv.org/abs/0812.1385v26)
 

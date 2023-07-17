@@ -5,7 +5,7 @@
 Besides cryptographic random number generators (RNGs), the following are examples of [**high-quality pseudorandom number generators (PRNGs)**](https://peteroupc.github.io/random.html#High_Quality_RNGs_Requirements).  The "Fails PractRand Starting At" column in this and other tables in this page means the number of bytes (rounded up to the nearest power of two) at which PractRand detects a failure in the PRNG.  (Note that high-quality PRNGs, as I define them, are not necessarily appropriate for information security.)
 
 | PRNG | Seeds Allowed | Cycle Length | Fails PractRand Starting At | Notes |
- ----------| --- | --- | --- | --- |
+ ----| --- | --- | --- | ----- |
 | xoshiro256\*\* | 2^256 - 1 | 2^256 - 1 | ??? TiB | |
 | xoshiro256+ | 2^256 - 1 | 2^256 - 1   | ??? TiB | Lowest bits have low linear complexity (see (Blackman and Vigna 2019\)[^1] and see also "[**Testing low bits in isolation**](http://xoshiro.di.unimi.it/lowcomp.php)"); if the application or library cares, it can discard those bits before using this PRNG's output. |
 | xoshiro256++ | 2^256 - 1 | 2^256 - 1  | ??? TiB  |  |
@@ -35,7 +35,7 @@ Some PRNGs support multiple "streams" that behave like independent uniform rando
 The following lists high-quality PRNGs that support streams and their PractRand results for different strategies of forming pseudorandom number "streams".
 
 | PRNG | Fails PractRand Starting At | Notes |
- ----------| --- | --- |
+ ---| ----- | ----- |
 | xoshiro256** | Jump-ahead by 2^64: ??? TiB<br>Jump-ahead by 2^128: ??? TiB<br>Jump-ahead by 2^256/&phi;: ???  TiB<br>Consecutive seeds: ??? TiB |  |
 | xoshiro256++ | Jump-ahead by 2^64: ??? TiB<br>Jump-ahead by 2^128: ??? TiB<br>Jump-ahead by 2^256/&phi;: ???  TiB<br>Consecutive seeds: ??? TiB |  |
 | xoroshiro128**  | Jump-ahead by 2^64: ??? TiB<br>Jump-ahead by 2^128/&phi;: ??? TiB<br>Consecutive seeds: ??? TiB |  |
@@ -62,7 +62,7 @@ More specifically, let C and S each be 64 or greater and divisible by 8.  Then:
 The following lists hash functions and block ciphers that form high-quality counter-based PRNGs.  It's possible that reduced-round versions of these and other functions will also produce high-quality counter-based PRNGs.
 
 | Function | Fails PractRand Starting At | Notes |
- ----------| --- | --- |
+ -----| --- | ----- |
 | Hash Functions: BEBB4185; BLAKE2S-256; BLAKE3; CityHash64; Falkhash; FarmHash128; FarmHash32; FarmHash64; Farsh32; Farsh64; Floppsyhash; GoodOAAT; Half-SipHash; Hasshe2; MD5 (low 32 bits); Metrohash128; Mirhash; Mirhashstrict (low 32 bits); MUM; MurmurHash64A for x64; MurmurHash3 (128-bit) for x64; Seahash; Seahash (low 32 bits); SHA-256; SHA-256 (low 64 bits); SHA3-256; SipHash; Spooky64; Fast Positive Hash (32-bit big-endian); TSip; xxHash v3 64-bit (both full and low 32 bits)  | > 1 TiB |  S = 64, C = 128. Failure figure applies to regular sequence; 2, 4, and 11 interleaved streams from consecutive seeds; 2, 4, and 11 interleaved streams from counters incremented by 2<sup>64</sup>; 2, 4, and 11 interleaved streams from counters incremented by 2<sup>96</sup>. |
 | ??? | ??? TiB (Consecutive seeds: ??? TiB) | |
 | ??? | ??? TiB (Consecutive seeds: ??? TiB) | |
@@ -75,7 +75,7 @@ The following lists hash functions and block ciphers that form high-quality coun
 The following lists high-quality combined PRNGs.  See "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)" for more information on combining PRNGs.
 
 | Function | Fails PractRand Starting At | Notes |
- ----------| --- | --- |
+ ---| --- | --- |
 | ??? combined with Weyl sequence | ??? TiB | |
 | ??? combined with 128-bit LCG | ??? TiB | |
 | JSF64 combined with ??? | ??? TiB | |
@@ -91,7 +91,7 @@ The following lists high-quality combined PRNGs.  See "[**Testing PRNGs for High
 The following lists high-quality splittable PRNGs.  See "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)" for more information on testing splittable PRNGs, and see the appendix for splittable PRNG constructions.
 
 | Function | Fails PractRand Starting At | Notes |
- ----------| --- |  --- |
+ ---| --- |  --- |
 | ??? | ??? TiB | |
 | ??? | ??? TiB | |
 | ??? | ??? TiB | |
@@ -103,7 +103,7 @@ The following lists high-quality splittable PRNGs.  See "[**Testing PRNGs for Hi
 Although the following are technically high-quality PRNGs, they are not preferred:
 
 | PRNG | Notes |
- ----------| --- |
+ ---| --- |
 | C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | Usually takes about 192 8-bit bytes of memory. Admits up to 2^577 - 2 seeds; seed's bits cannot be all zeros or all ones (L&uuml;scher 1994\)[^8].  The maximum cycle length for `ranlux48`'s underlying generator is very close to 2^576.  |
 | A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | If the modulus is a power of 2, this PRNG can produce highly correlated pseudorandom number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short cycles. (What PCG calls "streams" does not produce independent sequences.) |
 
@@ -114,7 +114,7 @@ Although the following are technically high-quality PRNGs, they are not preferre
 The following are not considered high-quality PRNGs:
 
 |  Algorithm  |  Notes  |
-  ---------- |  ---- |
+  ---- |  ---- |
 | Sequential counter | Doesn't behave like independent random sequence |
 | A linear congruential generator with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) | Admits fewer than 2<sup>63</sup> seeds |
 | Mersenne Twister (MT19937) | Shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019\)[^9].) Moreover, it usually takes about 2500 8-bit bytes of memory. |

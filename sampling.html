@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Sampling Problem</title><meta name="citation_title" content="The Sampling Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/sampling.pdf"><meta name="citation_url" content="https://peteroupc.github.io/sampling.html"><meta name="citation_date" content="2023/07/16"><meta name="citation_online_date" content="2023/07/16"><meta name="og:title" content="The Sampling Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/sampling.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Sampling Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Sampling Problem</title><meta name="citation_title" content="The Sampling Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/sampling.pdf"><meta name="citation_url" content="https://peteroupc.github.io/sampling.html"><meta name="citation_date" content="2023/07/17"><meta name="citation_online_date" content="2023/07/17"><meta name="og:title" content="The Sampling Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/sampling.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Sampling Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -28,7 +28,7 @@
 <p>There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of <strong>Algorithm 5</strong> except <code>InDist</code> is any discrete distribution, not just Bernoulli. [^5]  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...</p>
 
 <ul>
-<li>...when the number of input values taken is finite with probability 1 (a <em>sequential unbiased</em> estimator)?</li>
+<li>...when the number of input values taken is random, but finite with probability 1 (a <em>sequential unbiased</em> estimator)?</li>
 <li>...when only a fixed number $n$ of input values can be taken (a fixed-sample-size unbiased estimator)?</li>
 <li>...using an algorithm that produces outputs whose expected value <em>approaches</em> $f(\lambda)$ as more input values are taken (an <em>asymptotically unbiased</em> estimator)?</li>
 </ul>
@@ -69,7 +69,7 @@
 <ul>
 <li>Let $D$ be the set of allowed values for $\lambda$.  Thus, $D$ is either the closed unit interval or a subset thereof.</li>
 <li>A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O&#39;Brien 1994)[^10].</li>
-<li>Then a fixed-size unbiased estimator exists if and only if $f$ is a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^11].</li>
+<li>A fixed-size unbiased estimator exists if and only if $f$ is a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^11].</li>
 <li>Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, ...$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials&#39; Bernstein coefficients lie in the closed unit interval (see also Singh (1964)[^9]).</li>
 </ul></li>
 </ul>

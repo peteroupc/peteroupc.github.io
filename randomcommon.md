@@ -32,7 +32,7 @@ The following sections will detail the topics given above, with suggestions on h
 
 The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 
-All the randomization methods presented on this page assume we have a source of "truly" random and unbiased numbers.
+All the randomization methods presented on this page assume there is a source of "truly" random and unbiased numbers.
 
 <a id=Contents></a>
 
