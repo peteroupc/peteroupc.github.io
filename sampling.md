@@ -33,6 +33,8 @@ The answers to these questions will depend on&mdash;
 
 An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^6]).
 
+My interest on the problem is in the existence and construction of simple-to-implement algorithms that solve the _sampling problem_ given here.
+
 <a id=Results></a>
 
 ## Results
