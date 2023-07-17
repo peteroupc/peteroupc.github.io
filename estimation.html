@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/07/15"><meta name="citation_online_date" content="2023/07/15"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/07/17"><meta name="citation_online_date" content="2023/07/17"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -360,6 +360,11 @@
 <td><em>n</em> = ceil(ln(2/<em>&delta;</em>)/(2*<em>&gamma;</em><sup>2</sup>)).</td>
 </tr>
 <tr>
+<td>Bernoulli (that is, zero or one with unknown probability).</td>
+<td>Continuous; maps the closed unit interval to itself.</td>
+<td><em>n</em> can be computed by a method given in Chen (2011)[^23], letting the <em>&epsilon;</em> in that paper equal <em>&gamma;</em>.  See also Table 1 in that paper.</td>
+</tr>
+<tr>
 <td>Unbounded (can take on any real number) and has a known upper bound on the standard deviation <em>&sigma;</em> (or the variance <em>&sigma;</em><sup>2</sup>).[^15]</td>
 <td>Bounded and continuous on every closed interval of the real line.</td>
 <td><em>n</em> = ceil(<em>&sigma;</em><sup>2</sup>/(<em>&delta;</em>*<em>&gamma;</em><sup>2</sup>)).</td>
@@ -391,7 +396,7 @@
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if we have a coin that produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run <em>Algorithm D</em> or the bounded case of <em>Algorithm E</em> with <em>q</em> = 4, <em>p</em> = 2, and $\kappa$ &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see the section on <em>Algorithm C</em>).</li>
+<li>Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if a coin produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run <em>Algorithm D</em> or the bounded case of <em>Algorithm E</em> with <em>q</em> = 4, <em>p</em> = 2, and $\kappa$ &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see the section on <em>Algorithm C</em>).</li>
 <li>Take <em>f</em>(<em>x</em>) = <em>x</em>.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/1.</li>
 <li>The variance of a Poisson distribution with mean <em>&mu;</em> is <em>&mu;</em>.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>&nu;</em> or less but otherwise unknown, we can take <em>&sigma;</em> = sqrt(<em>&nu;</em>) so that the sample size <em>n</em> is ceil(<em>&sigma;</em><sup>2</sup>/(<em>&delta;</em>*<em>&epsilon;</em><sup>2</sup>)), in accordance with the second case of <em>Algorithm E</em>.</li>
 </ol>
@@ -426,7 +431,7 @@
 <p>To use <em>Algorithm C</em> for this purpose, each number in the stream of random variates is generated as follows (see also Kunsch et al.):</p>
 
 <ol>
-<li>Set <strong>z</strong> to an <em>n</em>-dimensional vector (list of <em>n</em> numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, <strong>z</strong> is chosen <em>uniformly</em> at random this way (see note later in this section).</li>
+<li>Set <strong>z</strong> to an <em>n</em>-dimensional vector (list of <em>n</em> numbers) chosen uniformly at random in the sampling domain, independently of any other choice. (See note 2 later in this section for an alternative way to sample <strong>z</strong> at random.)</li>
 <li>Calculate <em>h</em>(<strong>z</strong>), and set the next number in the stream to that value.</li>
 </ol>
 
@@ -450,9 +455,11 @@ pprint(Max(1,kappa))
 <p>Rather than <em>Algorithm C</em>, <em>Algorithm E</em> can be used (taking <em>f</em>(<em>x</em>) = <em>x</em>) if the distribution of <em>h</em>(<strong>z</strong>), the newly generated stream, satisfies the properties given in the table for <em>Algorithm E</em>.</p>
 
 <blockquote>
-<p><strong>Note:</strong> If <em>h</em>(<strong>z</strong>) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for <em>Algorithm E</em> can be <em>n</em> = ceil(23.42938/<em>&epsilon;</em><sup>2</sup>).  (<em>n</em> is an upper bound calculated using Theorem 15.1 of Tropp (2021)[^19], one example of a <em>uniform law of large numbers</em>).  This sample size ensures an estimate of the integral with an expected absolute error of <em>&epsilon;</em> or less.</p>
+<p><strong>Notes:</strong></p>
 
-<p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)[^20], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
+<ol>
+<li><p>If <em>h</em>(<strong>z</strong>) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for <em>Algorithm E</em> can be <em>n</em> = ceil(23.42938/<em>&epsilon;</em><sup>2</sup>).  (<em>n</em> is an upper bound calculated using Theorem 15.1 of Tropp (2021)[^19], one example of a <em>uniform law of large numbers</em>).  This sample size ensures an estimate of the integral with an expected absolute error of <em>&epsilon;</em> or less.</p></li>
+<li><p>As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)[^20], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
 
 <ol>
 <li>For a sample size <em>n</em>, set <em>m</em> to floor(<em>n</em><sup>1/<em>d</em></sup>), where <em>d</em> is the number of dimensions in the sampling domain (number of components of each point).  Set <em>s</em> to 0.</li>
@@ -465,7 +472,8 @@ pprint(Max(1,kappa))
 <li>Return <em>s</em>/<em>m</em><sup><em>d</em></sup>.</li>
 </ol>
 
-<p>The paper (Theorem 3.9) also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is Hölder continuous with Hölder exponent <em>&beta;</em> or less [^21] and is defined on the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p>
+<p>The paper (Theorem 3.9) also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is Hölder continuous with Hölder exponent <em>&beta;</em> or less [^21] and is defined on the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p></li>
+</ol>
 </blockquote>
 
 <p><a id=Finding_Coins_with_Maximum_Success_Probabilities></a></p>
@@ -549,6 +557,8 @@ pprint(Max(1,kappa))
 <p>[^21]: A <a href="https://en.wikipedia.org/wiki/H%C3%B6lder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>&alpha;</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function&#39;s domain and no more than <em>&delta;</em> apart.<br>Here, <em>&alpha;</em> satisfies 0 &lt; <em>&alpha;</em> &le; 1.<br>Roughly speaking, the function&#39;s &quot;steepness&quot; is no greater than that of <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.</p>
 
 <p>[^22]: Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</p>
+
+<p>[^23]: Chen, Xinjia. &quot;Exact computation of minimum sample size for estimation of binomial parameters.&quot; Journal of Statistical Planning and Inference 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007.</p>
 
 <p><a id=License></a></p>
 

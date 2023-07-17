@@ -260,6 +260,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 | Stream's distribution | Property of _f_ | Sample size |
   ---- | ---- | ---- |
 | Bounded; lies in the closed unit interval.[^14] | Continuous; maps the closed unit interval to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
+| Bernoulli (that is, zero or one with unknown probability). | Continuous; maps the closed unit interval to itself. | _n_ can be computed by a method given in Chen (2011)[^23], letting the _&epsilon;_ in that paper equal _&gamma;_.  See also Table 1 in that paper. |
 | Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^15] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
 | Unbounded and subgaussian[^16]; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^17] | _f_(_x_) = _x_. | _n_ = $\frac{2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$. |
 
@@ -280,7 +281,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 >
 > **Examples:**
 >
-> 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if we have a coin that produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or the bounded case of _Algorithm E_ with _q_ = 4, _p_ = 2, and $\kappa$ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
+> 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if a coin produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or the bounded case of _Algorithm E_ with _q_ = 4, _p_ = 2, and $\kappa$ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
 > 2. Take _f_(_x_) = _x_.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/1.
 > 3. The variance of a Poisson distribution with mean _&mu;_ is _&mu;_.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or less but otherwise unknown, we can take _&sigma;_ = sqrt(_&nu;_) so that the sample size _n_ is ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&epsilon;_<sup>2</sup>)), in accordance with the second case of _Algorithm E_.
 
@@ -306,7 +307,7 @@ Then _Algorithm C_ will take the new stream and generate an estimate that comes 
 
 To use _Algorithm C_ for this purpose, each number in the stream of random variates is generated as follows (see also Kunsch et al.):
 
-1. Set **z** to an _n_-dimensional vector (list of _n_ numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, **z** is chosen _uniformly_ at random this way (see note later in this section).
+1. Set **z** to an _n_-dimensional vector (list of _n_ numbers) chosen uniformly at random in the sampling domain, independently of any other choice. (See note 2 later in this section for an alternative way to sample **z** at random.)
 2. Calculate _h_(**z**), and set the next number in the stream to that value.
 
 > **Example:** The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter $\kappa$ for estimating the integral of min(_Z1_, _Z2_) where _Z1_ and _Z2_ are each uniformly chosen at random in the closed unit interval.  It assumes _p_ = 2 and _q_ = 4. (This is a trivial example because the integral can be calculated directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)
@@ -327,17 +328,19 @@ To use _Algorithm C_ for this purpose, each number in the stream of random varia
 
 Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if the distribution of _h_(**z**), the newly generated stream, satisfies the properties given in the table for _Algorithm E_.
 
-> **Note:** If _h_(**z**) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for _Algorithm E_ can be _n_ = ceil(23.42938/_&epsilon;_<sup>2</sup>).  (_n_ is an upper bound calculated using Theorem 15.1 of Tropp (2021)[^19], one example of a _uniform law of large numbers_).  This sample size ensures an estimate of the integral with an expected absolute error of _&epsilon;_ or less.
+> **Notes:**
 >
-> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^20], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
+> 1. If _h_(**z**) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for _Algorithm E_ can be _n_ = ceil(23.42938/_&epsilon;_<sup>2</sup>).  (_n_ is an upper bound calculated using Theorem 15.1 of Tropp (2021)[^19], one example of a _uniform law of large numbers_).  This sample size ensures an estimate of the integral with an expected absolute error of _&epsilon;_ or less.
 >
-> 1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
-> 2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
->     1. For each dimension _j_ in \[1, _d_], set _p\[j]_ to a number in the half-open interval \[_i\[j]_/_m_, (_i\[j]_+1)/_m_) chosen uniformly at random.
->     2. Add _f_((_p\[1]_, _p\[2]_, ..., _p\[j]_)) to _s_.
-> 3. Return _s_/_m_<sup>_d_</sup>.
+> 2. As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^20], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
 >
-> The paper (Theorem 3.9) also implied a sample size _n_ for use in stratified sampling when _f_ is Hölder continuous with Hölder exponent _&beta;_ or less [^21] and is defined on the _d_-dimensional hypercube \[0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
+>     1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
+>     2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
+>         1. For each dimension _j_ in \[1, _d_], set _p\[j]_ to a number in the half-open interval \[_i\[j]_/_m_, (_i\[j]_+1)/_m_) chosen uniformly at random.
+>         2. Add _f_((_p\[1]_, _p\[2]_, ..., _p\[j]_)) to _s_.
+>     3. Return _s_/_m_<sup>_d_</sup>.
+>
+>     The paper (Theorem 3.9) also implied a sample size _n_ for use in stratified sampling when _f_ is Hölder continuous with Hölder exponent _&beta;_ or less [^21] and is defined on the _d_-dimensional hypercube \[0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
 
 <a id=Finding_Coins_with_Maximum_Success_Probabilities></a>
 
@@ -416,6 +419,8 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 [^21]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 
 [^22]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+
+[^23]: Chen, Xinjia. "Exact computation of minimum sample size for estimation of binomial parameters." Journal of Statistical Planning and Inference 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007.
 
 <a id=License></a>
 
