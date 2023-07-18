@@ -19,7 +19,7 @@ In all cases given above, each input value is independent of everything else.
 
 There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of **Algorithm 5** except `InDist` is any discrete distribution, not just Bernoulli. [^5]  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
 
-- ...when the number of input values taken is random, but finite with probability 1 (a _sequential unbiased_ estimator)?
+- ...when the number of input values taken is random, but finite with probability 1 (a _sequential unbiased_ estimator)?[^14]
 - ...when only a fixed number $n$ of input values can be taken (a fixed-sample-size unbiased estimator)?
 - ...using an algorithm that produces outputs whose expected value _approaches_ $f(\lambda)$ as more input values are taken (an _asymptotically unbiased_ estimator)?
 
@@ -50,8 +50,13 @@ The problem here is one of bringing all these results together in one place.
 
 The following are examples of results for this problem.
 
+- Suppose `InDist` takes an unknown finite number $n$ of values with unknown probabilities ($n\ge 1$), $\lambda$ is $n$, and `OutDist` has an expected value of $\lambda$.
+    - No sequential unbiased estimator exists, even if $n$ is known to have a maximum of 2 or greater (Christman and Nayak 1994)[^15]. [^16]
+- Suppose `InDist` is a fair die with an unknown number of faces (1 or greater), $\lambda$ is the number of faces, and `OutDist` has an expected value of f($\lambda$).
+    - If there is no maximum sample size, a sequential unbiased estimator exists for every $f$ (Christman and Nayak 1994)[^17].
+    - If $f$ is unbounded (including when $f = \lambda$), there is no fixed-size unbiased estimator that is based only on the sample size and the number of unique items sampled (Christman and Nayak 1994)[^18].
 - Suppose `InDist` takes on numbers from a finite set; $\lambda$ is the expected value of `InDist`; and `OutDist` has an expected value of $f(\lambda)$.
-    - A fixed-size unbiased estimator exists only if $f$ is a homogeneous polynomial of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^7], Paninski (2003, proof of Proposition 8, more generally)[^8]).
+    - A fixed-size unbiased estimator exists only if $f$ is a polynomial in homogeneous form of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^7], Paninski (2003, proof of Proposition 8, more generally)[^8]).
     - The existence of sequential unbiased estimators is claimed by Singh (1964)[^9].  But see Akahira et al. (1992)[^4].
 - Suppose `InDist` has a finite mean, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
     - There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)[^1].
@@ -96,3 +101,13 @@ There are also two other results on the existence of fixed-sample and asymptotic
 [^12]: Liu., R.C., Brown, L.D., "Nonexistence of informative unbiased estimators in singular problems", Annals of Statistics 21(1), 1993.
 
 [^13]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
+
+[^14]: An algorithm that takes a finite number of inputs with probability 1 is also known as a _closed sampling plan_ in papers and books about sequential estimation.
+
+[^15]: Christman, M.C., Nayak, T.K., "[**Sequential unbiased estimation of the number of classes in a population**](https://www.jstor.org/stable/24305291)", Statistica Sinica 4(1), 1994.
+
+[^16]: Christman and Nayak (1994) did not study the case when the estimator can use outside randomness or the case when $n$ is known to have a _minimum_ of 2 or greater.  Duvignau (2015) studied a closely related problem.
+
+[^17]: Christman, M.C., Nayak, T.K., "[**Sequential unbiased estimation of the number of classes in a population**](https://www.jstor.org/stable/24305291)", Statistica Sinica 4(1), 1994.
+
+[^18]: Christman, M.C., Nayak, T.K., "[**Sequential unbiased estimation of the number of classes in a population**](https://www.jstor.org/stable/24305291)", Statistica Sinica 4(1), 1994.
