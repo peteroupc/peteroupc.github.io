@@ -49,7 +49,7 @@
 
 <ul>
 <li>$\lambda$ is <code>InDist</code>&#39;s expected value, and</li>
-<li><code>OutDist</code> has an expected value of $f(\mathbb{E}[X])$ or $\mathbb{E}[f(X)])$, where $X$ is an input value taken,</li>
+<li><code>OutDist</code> has an expected value of $f(\mathbb{E}[X])$ or $\mathbb{E}[f(X)]$, where $X$ is an input value taken,</li>
 </ul>
 
 <p>with or without other conditions.</p>
@@ -68,20 +68,20 @@
 <li>Suppose <code>InDist</code> takes on numbers from a finite set; $\lambda$ is the expected value of <code>InDist</code>; and <code>OutDist</code> has an expected value of $f(\lambda)$.
 
 <ul>
-<li>A fixed-size unbiased estimator exists only if $f$ is a polynomial of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^7], Paninski (2003, proof of Proposition 8, more generally)[^8]).</li>
+<li>A fixed-size unbiased estimator exists only if $f$ is a homogeneous polynomial of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^7], Paninski (2003, proof of Proposition 8, more generally)[^8]).</li>
 <li>The existence of sequential unbiased estimators is claimed by Singh (1964)[^9].  But see Akahira et al. (1992)[^4].</li>
 </ul></li>
-<li>Suppose <code>InDist</code> is arbitrary, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.
+<li>Suppose <code>InDist</code> has a finite mean, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.
 
 <ul>
 <li>There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)[^1].</li>
 </ul></li>
-<li>Suppose <code>InDist</code> is supported on $[a, \infty)$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.
+<li>Suppose <code>InDist</code> has a finite mean and is supported on $[a, \infty)$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.
 
 <ul>
 <li>A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)[^1].</li>
 </ul></li>
-<li>Suppose <code>InDist</code> is supported on $(a, \infty]$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.
+<li>Suppose <code>InDist</code> has a finite mean and is supported on $(\infty, a]$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.
 
 <ul>
 <li>A sequential unbiased estimator exists only if $f$ is nowhere increasing (Jacob and Thiery 2015)[^1].</li>

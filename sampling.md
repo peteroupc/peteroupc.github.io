@@ -36,7 +36,7 @@ An additional question is to find lower bounds on the input/output ratio that an
 My interest on the problem is in the existence and construction of simple-to-implement algorithms that solve the _sampling problem_ given here.  In addition, the cases that most interest me are when&mdash;
 
 - $\lambda$ is `InDist`'s expected value, and
-- `OutDist` has an expected value of $f(\mathbb{E}[X])$ or $\mathbb{E}[f(X)])$, where $X$ is an input value taken,
+- `OutDist` has an expected value of $f(\mathbb{E}[X])$ or $\mathbb{E}[f(X)]$, where $X$ is an input value taken,
 
 with or without other conditions.
 
@@ -51,13 +51,13 @@ The problem here is one of bringing all these results together in one place.
 The following are examples of results for this problem.
 
 - Suppose `InDist` takes on numbers from a finite set; $\lambda$ is the expected value of `InDist`; and `OutDist` has an expected value of $f(\lambda)$.
-    - A fixed-size unbiased estimator exists only if $f$ is a polynomial of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^7], Paninski (2003, proof of Proposition 8, more generally)[^8]).
+    - A fixed-size unbiased estimator exists only if $f$ is a homogeneous polynomial of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^7], Paninski (2003, proof of Proposition 8, more generally)[^8]).
     - The existence of sequential unbiased estimators is claimed by Singh (1964)[^9].  But see Akahira et al. (1992)[^4].
-- Suppose `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
+- Suppose `InDist` has a finite mean, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
     - There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)[^1].
-- Suppose `InDist` is supported on $[a, \infty)$, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
+- Suppose `InDist` has a finite mean and is supported on $[a, \infty)$, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
     - A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)[^1].
-- Suppose `InDist` is supported on $(a, \infty]$, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
+- Suppose `InDist` has a finite mean and is supported on $(\infty, a]$, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
     - A sequential unbiased estimator exists only if $f$ is nowhere increasing (Jacob and Thiery 2015)[^1].
 - Suppose `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
     - Let $D$ be the set of allowed values for $\lambda$.  Thus, $D$ is either the closed unit interval or a subset thereof.
