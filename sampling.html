@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Sampling Problem</title><meta name="citation_title" content="The Sampling Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/sampling.pdf"><meta name="citation_url" content="https://peteroupc.github.io/sampling.html"><meta name="citation_date" content="2023/07/17"><meta name="citation_online_date" content="2023/07/17"><meta name="og:title" content="The Sampling Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/sampling.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Sampling Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Sampling Problem</title><meta name="citation_title" content="The Sampling Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/sampling.pdf"><meta name="citation_url" content="https://peteroupc.github.io/sampling.html"><meta name="citation_date" content="2023/07/18"><meta name="citation_online_date" content="2023/07/18"><meta name="og:title" content="The Sampling Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/sampling.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Sampling Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -45,7 +45,14 @@
 
 <p>An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^6]).</p>
 
-<p>My interest on the problem is in the existence and construction of simple-to-implement algorithms that solve the <em>sampling problem</em> given here.</p>
+<p>My interest on the problem is in the existence and construction of simple-to-implement algorithms that solve the <em>sampling problem</em> given here.  In addition, the cases that most interest me are when&mdash;</p>
+
+<ul>
+<li>$\lambda$ is <code>InDist</code>&#39;s expected value, and</li>
+<li><code>OutDist</code> has an expected value of $f(\mathbb{E}[X])$ or $\mathbb{E}[f(X)])$, where $X$ is an input value taken,</li>
+</ul>
+
+<p>with or without other conditions.</p>
 
 <p><a id=Results></a></p>
 
@@ -63,6 +70,21 @@
 <ul>
 <li>A fixed-size unbiased estimator exists only if $f$ is a polynomial of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^7], Paninski (2003, proof of Proposition 8, more generally)[^8]).</li>
 <li>The existence of sequential unbiased estimators is claimed by Singh (1964)[^9].  But see Akahira et al. (1992)[^4].</li>
+</ul></li>
+<li>Suppose <code>InDist</code> is arbitrary, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.
+
+<ul>
+<li>There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)[^1].</li>
+</ul></li>
+<li>Suppose <code>InDist</code> is supported on $[a, \infty)$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.
+
+<ul>
+<li>A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)[^1].</li>
+</ul></li>
+<li>Suppose <code>InDist</code> is supported on $(a, \infty]$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.
+
+<ul>
+<li>A sequential unbiased estimator exists only if $f$ is nowhere increasing (Jacob and Thiery 2015)[^1].</li>
 </ul></li>
 <li>Suppose <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is Bernoulli with an expected value of $f(\lambda)$.
 

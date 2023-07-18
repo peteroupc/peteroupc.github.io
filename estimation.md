@@ -260,9 +260,9 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 | Stream's distribution | Property of _f_ | Sample size |
   ---- | ---- | ---- |
 | Bounded; lies in the closed unit interval.[^14] | Continuous; maps the closed unit interval to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
-| Bernoulli (that is, zero or one with unknown probability). | Continuous; maps the closed unit interval to itself. | _n_ can be computed by a method given in Chen (2011)[^23], letting the _&epsilon;_ in that paper equal _&gamma;_.  See also Table 1 in that paper. |
-| Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^15] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
-| Unbounded and subgaussian[^16]; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^17] | _f_(_x_) = _x_. | _n_ = $\frac{2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)}}{\epsilon^{2}}$. |
+| Bernoulli (that is, zero or one with unknown probability). | Continuous; maps the closed unit interval to itself. | _n_ can be computed by a method given in Chen (2011)[^15], letting the _&epsilon;_ in that paper equal _&gamma;_.  See also Table 1 in that paper.  For example, _n_=101 if _&gamma;_=1/10 and _&delta;_=1/20. |
+| Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^16] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
+| Unbounded and subgaussian[^17]; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^18] | _f_(_x_) = _x_. | _n_ = $(2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)})/(\epsilon^{2})$. |
 
 > **Notes:**
 >
@@ -275,7 +275,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 >
 > 4. _Algorithm E_ is not an unbiased estimator in general.  However, when _f_(_x_) = _x_, the sample mean used by the algorithm is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
 >
-> 5. In _Algorithm E_, for an estimate in terms of relative error, rather than absolute error, multiply _&gamma;_ by _M_ after step 1 is complete, where _M_ is the smallest absolute value of the mean that the stream's distribution is allowed to have (Wainwright 2019)[^17].
+> 5. In _Algorithm E_, for an estimate in terms of relative error, rather than absolute error, multiply _&gamma;_ by _M_ after step 1 is complete, where _M_ is the smallest absolute value of the mean that the stream's distribution is allowed to have (Wainwright 2019)[^18].
 >
 > 6. Finding the sample size needed to produce an estimate that is close to the true value with a user-specified error bound and a user-specified probability, as with _Algorithm E_, is also known as _offline learning_, _statistical learning_, or _provably approximately correct (PAC) learning_.
 >
@@ -289,7 +289,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 
 ## Randomized Integration
 
-Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.[^18]
+Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.[^19]
 
 This time, suppose there is an endless stream of _vectors_ (_d_-dimensional points), each generated at random and independently from each other, and as many vectors can be sampled from the stream as wanted.
 
@@ -330,9 +330,9 @@ Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if 
 
 > **Notes:**
 >
-> 1. If _h_(**z**) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for _Algorithm E_ can be _n_ = ceil(23.42938/_&epsilon;_<sup>2</sup>).  (_n_ is an upper bound calculated using Theorem 15.1 of Tropp (2021)[^19], one example of a _uniform law of large numbers_).  This sample size ensures an estimate of the integral with an expected absolute error of _&epsilon;_ or less.
+> 1. If _h_(**z**) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for _Algorithm E_ can be _n_ = ceil(23.42938/_&epsilon;_<sup>2</sup>).  (_n_ is an upper bound calculated using Theorem 15.1 of Tropp (2021)[^20], one example of a _uniform law of large numbers_).  This sample size ensures an estimate of the integral with an expected absolute error of _&epsilon;_ or less.
 >
-> 2. As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^20], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
+> 2. As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018\)[^21], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
 >
 >     1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
 >     2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
@@ -340,7 +340,7 @@ Rather than _Algorithm C_, _Algorithm E_ can be used (taking _f_(_x_) = _x_) if 
 >         2. Add _f_((_p\[1]_, _p\[2]_, ..., _p\[j]_)) to _s_.
 >     3. Return _s_/_m_<sup>_d_</sup>.
 >
->     The paper (Theorem 3.9) also implied a sample size _n_ for use in stratified sampling when _f_ is Hölder continuous with Hölder exponent _&beta;_ or less [^21] and is defined on the _d_-dimensional hypercube \[0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
+>     The paper (Theorem 3.9) also implied a sample size _n_ for use in stratified sampling when _f_ is Hölder continuous with Hölder exponent _&beta;_ or less [^22] and is defined on the _d_-dimensional hypercube \[0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
 
 <a id=Finding_Coins_with_Maximum_Success_Probabilities></a>
 
@@ -355,7 +355,7 @@ Given _m_ coins each with unknown probability of heads, the following algorithm 
 
 In this section, ilog(_a_, _r_) means either _a_ if _r_ is 0, or max(ln(ilog(_a_, _r_&minus;1)), 1) otherwise.
 
-Agarwal et al. (2017\)[^22] called this algorithm "aggressive elimination", and it can be described as follows.
+Agarwal et al. (2017\)[^23] called this algorithm "aggressive elimination", and it can be described as follows.
 
 1. Let _t_ be ceil((ilog(_m_, _r_) + ln(8\*_k_/_&delta;_)) \* 2/(_D_\*_D_)).
 2. For each integer _i_ in \[1, _m_\], flip the coin labeled _i_, _t_ many times, then set _P_\[_i_\] to a list of two items: first is the number of times coin _i_ showed heads, and second is the label _i_.
@@ -404,23 +404,23 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^14]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality.
 
-[^15]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
+[^15]: Chen, Xinjia. "Exact computation of minimum sample size for estimation of binomial parameters." Journal of Statistical Planning and Inference 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007.
 
-[^16]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval \[_a_, _b_\] is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
+[^16]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
 
-[^17]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
+[^17]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval \[_a_, _b_\] is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
 
-[^18]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
+[^18]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
 
-[^19]: J.A. Tropp, "ACM 217: Probability in High Dimensions", Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.
+[^19]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
 
-[^20]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
+[^20]: J.A. Tropp, "ACM 217: Probability in High Dimensions", Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.
 
-[^21]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
+[^21]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
-[^22]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+[^22]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 
-[^23]: Chen, Xinjia. "Exact computation of minimum sample size for estimation of binomial parameters." Journal of Statistical Planning and Inference 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007.
+[^23]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
 
 <a id=License></a>
 
