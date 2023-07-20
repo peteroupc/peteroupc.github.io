@@ -61,19 +61,19 @@ The following are examples of results for this problem.   The estimators are all
 - Suppose `InDist` has a finite mean, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
     - There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)[^1].
 - Suppose `InDist` has a finite mean and is supported on $[a, \infty)$, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
-    - A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)[^1].[^18]
+    - A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)[^1].[^13]
 - Suppose `InDist` has a finite mean and is supported on $(\infty, a]$, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
     - A sequential unbiased estimator exists only if $f$ is nowhere increasing (Jacob and Thiery 2015)[^1].
 - Suppose `InDist` is Bernoulli (a "biased coin"), $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
     - Let $D$ be the set of allowed values for $\lambda$.  Thus, $D$ is either the closed unit interval or a subset thereof.
-    - A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O'Brien 1994)[^13].
-        - The estimator can be nonrandomized whenever $D$ contains neither 0 nor 1 (Keane and O'Brien 1994)[^13].  See [**this section**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) for results when $\lambda$ is allowed to be 0 or 1 (the coin can show heads every time or tails every time).
-    - A fixed-size unbiased estimator exists if and only if $f$ is a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^14].
+    - A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O'Brien 1994)[^14].
+        - The estimator can be nonrandomized whenever $D$ contains neither 0 nor 1 (Keane and O'Brien 1994)[^14].  See [**this section**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) for results when $\lambda$ is allowed to be 0 or 1 (the coin can show heads every time or tails every time).
+    - A fixed-size unbiased estimator exists if and only if $f$ is a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^15].
     - Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, ...$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials' Bernstein coefficients lie in the closed unit interval (see also Singh (1964)[^12]).
 
-There are also two other results on the existence of fixed-sample and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^15], Hirano and Porter (2012)[^16].
+There are also two other results on the existence of fixed-sample and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17].
 
-In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^17].
+In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^18].
 
 <a id=Notes></a>
 
@@ -103,14 +103,14 @@ In a result closely related to the sampling problem, given a stream of independe
 
 [^12]: R. Singh, "Existence of unbiased estimates", Sankhyā A 26, 1964.
 
-[^13]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^13]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.
 
-[^14]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
+[^14]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^15]: Liu., R.C., Brown, L.D., "Nonexistence of informative unbiased estimators in singular problems", Annals of Statistics 21(1), 1993.
+[^15]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
-[^16]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
+[^16]: Liu., R.C., Brown, L.D., "Nonexistence of informative unbiased estimators in singular problems", Annals of Statistics 21(1), 1993.
 
-[^17]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
+[^17]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
 
-[^18]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.
+[^18]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
