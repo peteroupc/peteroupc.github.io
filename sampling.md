@@ -19,7 +19,7 @@ In all cases given above, each input value is independent of everything else.
 
 There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of **Algorithm 5** except `InDist` is any discrete distribution, not just Bernoulli. [^5]  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
 
-- ...when the number of input values taken is random, but finite with probability 1 (a _sequential unbiased_ estimator)?[^6]
+- ...when the number of input values taken is random (and may depend on already taken inputs), but is finite with probability 1 (a _sequential unbiased_ estimator)?[^6]
 - ...when only a fixed number $n$ of input values can be taken (a fixed-sample-size unbiased estimator)?
 - ...using an algorithm that produces outputs whose expected value _approaches_ $f(\lambda)$ as more input values are taken (an _asymptotically unbiased_ estimator)?
 
@@ -68,12 +68,18 @@ The following are examples of results for this problem.   The estimators are all
     - Let $D$ be the set of allowed values for $\lambda$.  Thus, $D$ is either the closed unit interval or a subset thereof.
     - A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O'Brien 1994)[^14].
         - The estimator can be nonrandomized whenever $D$ contains neither 0 nor 1 (Keane and O'Brien 1994)[^14].  See [**this section**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) for results when $\lambda$ is allowed to be 0 or 1 (the coin can show heads every time or tails every time).
-    - A fixed-size unbiased estimator exists if and only if $f$ is a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^15].
+    - A fixed-size unbiased estimator exists if and only if $f$ is writable as a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^15].
     - Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, ...$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials' Bernstein coefficients lie in the closed unit interval (see also Singh (1964)[^12]).
 
-There are also two other results on the existence of fixed-sample and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17].
+There are also two other results on the existence of fixed-sample and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17].  Other results include Gajek (1995)[^19] (which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^20].
 
 In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^18].
+
+<a id=Question></a>
+
+### Question
+
+For any case of the sampling problem, suppose the number of input values taken is random.  Do more sequential unbiased estimators exist if the number of inputs is allowed to depend on previously taken inputs than not?
 
 <a id=Notes></a>
 
@@ -114,3 +120,7 @@ In a result closely related to the sampling problem, given a stream of independe
 [^17]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
 
 [^18]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
+
+[^19]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.
+
+[^20]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22, no. 4 (1995): 485-497.
