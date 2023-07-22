@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Sampling Problem</title><meta name="citation_title" content="The Sampling Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/sampling.pdf"><meta name="citation_url" content="https://peteroupc.github.io/sampling.html"><meta name="citation_date" content="2023/07/21"><meta name="citation_online_date" content="2023/07/21"><meta name="og:title" content="The Sampling Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/sampling.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Sampling Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Sampling Problem</title><meta name="citation_title" content="The Sampling Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/sampling.pdf"><meta name="citation_url" content="https://peteroupc.github.io/sampling.html"><meta name="citation_date" content="2023/07/22"><meta name="citation_online_date" content="2023/07/22"><meta name="og:title" content="The Sampling Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/sampling.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Sampling Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -29,7 +29,7 @@
 
 <ul>
 <li>...when the number of input values taken is random (and may depend on already taken inputs), but is finite with probability 1 (a <em>sequential unbiased</em> estimator)?[^6]</li>
-<li>...when only a fixed number $n$ of input values can be taken (a fixed-sample-size unbiased estimator)?</li>
+<li>...when only a fixed number $n$ of input values can be taken (a <em>fixed-size unbiased</em> estimator)?</li>
 <li>...using an algorithm that produces outputs whose expected value <em>approaches</em> $f(\lambda)$ as more input values are taken (an <em>asymptotically unbiased</em> estimator)?</li>
 </ul>
 
@@ -69,18 +69,26 @@
 
 <ul>
 <li>No sequential non-randomized unbiased estimator exists, even if $n$ is known to have a maximum of 2 or greater (Christman and Nayak 1994)[^8]. [^9]</li>
+<li>Not aware of conditions for sequential randomized unbiased estimators.</li>
+<li>Not aware of conditions for fixed-size unbiased estimators.</li>
+<li>Not aware of conditions for asymptotically unbiased estimators.</li>
 </ul></li>
 <li>Suppose <code>InDist</code> is a fair die with an unknown number of faces (1 or greater), $\lambda$ is the number of faces, and <code>OutDist</code> has an expected value of $f(\lambda)$.
 
 <ul>
 <li>If there is no maximum sample size, a sequential unbiased estimator exists for every $f$ (Christman and Nayak 1994)[^8].</li>
 <li>If $f$ is unbounded (including when $f = \lambda$), there is no fixed-size non-randomized unbiased estimator that is based only on the sample size and the number of unique items sampled (Christman and Nayak 1994)[^8].</li>
+<li>Not aware of conditions for more general fixed-size unbiased estimators.</li>
+<li>Not aware of conditions for asymptotically unbiased estimators.</li>
 </ul></li>
 <li>Suppose <code>InDist</code> takes on numbers from a finite set; $\lambda$ is the expected value of <code>InDist</code>; and <code>OutDist</code> has an expected value of $f(\lambda)$.
 
 <ul>
 <li>A fixed-size nonrandomized unbiased estimator exists only if $f$ is a polynomial in homogeneous form of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^10], Paninski (2003, proof of Proposition 8, more generally)[^11]).</li>
-<li>The existence of sequential unbiased estimators is claimed by Singh (1964)[^12].  But see Akahira et al. (1992)[^4].</li>
+<li>The existence of randomized sequential unbiased estimators is claimed by Singh (1964)[^12].  But see Akahira et al. (1992)[^4].</li>
+<li>Not aware of conditions for sequential nonrandomized unbiased estimators.</li>
+<li>Not aware of conditions for fixed-size randomized unbiased estimators.</li>
+<li>Not aware of conditions for asymptotically unbiased estimators.</li>
 </ul></li>
 <li>Suppose <code>InDist</code> has a finite mean, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.
 
@@ -91,11 +99,15 @@
 
 <ul>
 <li>A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)[^1].[^13]</li>
+<li>Not aware of conditions for fixed-size unbiased estimators.</li>
+<li>Not aware of conditions for asymptotically unbiased estimators.</li>
 </ul></li>
 <li>Suppose <code>InDist</code> has a finite mean and is supported on $(\infty, a]$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.
 
 <ul>
 <li>A sequential unbiased estimator exists only if $f$ is nowhere increasing (Jacob and Thiery 2015)[^1].</li>
+<li>Not aware of conditions for fixed-size unbiased estimators.</li>
+<li>Not aware of conditions for asymptotically unbiased estimators.</li>
 </ul></li>
 <li>Suppose <code>InDist</code> is Bernoulli (a &quot;biased coin&quot;), $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is Bernoulli with an expected value of $f(\lambda)$.
 
@@ -111,15 +123,15 @@
 </ul></li>
 </ul>
 
-<p>There are also two other results on the existence of fixed-sample and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17].  Other results include Gajek (1995)<a href="which%20has%20a%20result%20on%20building%20unbiased%20estimators%20from%20asymptotically%20unbiased%20ones">^19</a>, Rychlik (1995)[^20].</p>
+<p>There are also two other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17].  Other results include Gajek (1995)[^18] (which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^19].</p>
 
-<p>In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^18].</p>
+<p>In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^20].</p>
 
 <p><a id=Question></a></p>
 
 <h3>Question</h3>
 
-<p>For any case of the sampling problem, suppose the number of input values taken is random.  Do more sequential unbiased estimators exist if the number of inputs is allowed to depend on previously taken inputs than not?</p>
+<p>For any case of the sampling problem, suppose the number of input values taken is random.  If the number of inputs is allowed to depend on previously taken inputs, do more sequential unbiased estimators exist than otherwise?</p>
 
 <p><a id=Notes></a></p>
 
@@ -149,7 +161,7 @@
 
 <p>[^12]: R. Singh, &quot;Existence of unbiased estimates&quot;, Sankhyā A 26, 1964.</p>
 
-<p>[^13]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.</p>
+<p>[^13]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.  In that case, they showed that the random number of inputs need not depend on inputs already taken.</p>
 
 <p>[^14]: Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</p>
 
@@ -159,11 +171,11 @@
 
 <p>[^17]: Hirano, Keisuke, and Jack R. Porter. &quot;Impossibility results for nondifferentiable functionals.&quot; Econometrica 80, no. 4 (2012): 1769-1790.</p>
 
-<p>[^18]: Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).  It is also believed that the paper&#39;s Theorem 2 remains true even if $Q$ must be a polynomial.</p>
+<p>[^18]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.</p>
 
-<p>[^19]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.</p>
+<p>[^19]: Rychlik, Tomasz. &quot;A class of unbiased kernel estimates of a probability density function.&quot; Applicationes Mathematicae 22, no. 4 (1995): 485-497.</p>
 
-<p>[^20]: Rychlik, Tomasz. &quot;A class of unbiased kernel estimates of a probability density function.&quot; Applicationes Mathematicae 22, no. 4 (1995): 485-497.</p>
+<p>[^20]: Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).  It is also believed that the paper&#39;s Theorem 2 remains true even if $Q$ must be a polynomial.</p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>

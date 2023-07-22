@@ -20,7 +20,7 @@ In all cases given above, each input value is independent of everything else.
 There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of **Algorithm 5** except `InDist` is any discrete distribution, not just Bernoulli. [^5]  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
 
 - ...when the number of input values taken is random (and may depend on already taken inputs), but is finite with probability 1 (a _sequential unbiased_ estimator)?[^6]
-- ...when only a fixed number $n$ of input values can be taken (a fixed-sample-size unbiased estimator)?
+- ...when only a fixed number $n$ of input values can be taken (a _fixed-size unbiased_ estimator)?
 - ...using an algorithm that produces outputs whose expected value _approaches_ $f(\lambda)$ as more input values are taken (an _asymptotically unbiased_ estimator)?
 
 The answers to these questions will depend on&mdash;
@@ -52,18 +52,30 @@ The following are examples of results for this problem.   The estimators are all
 
 - Suppose `InDist` takes an unknown finite number $n$ of values with unknown probabilities ($n\ge 1$), $\lambda$ is $n$, and `OutDist` has an expected value of $\lambda$.
     - No sequential non-randomized unbiased estimator exists, even if $n$ is known to have a maximum of 2 or greater (Christman and Nayak 1994)[^8]. [^9]
+    - Not aware of conditions for sequential randomized unbiased estimators.
+    - Not aware of conditions for fixed-size unbiased estimators.
+    - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` is a fair die with an unknown number of faces (1 or greater), $\lambda$ is the number of faces, and `OutDist` has an expected value of $f(\lambda)$.
     - If there is no maximum sample size, a sequential unbiased estimator exists for every $f$ (Christman and Nayak 1994)[^8].
     - If $f$ is unbounded (including when $f = \lambda$), there is no fixed-size non-randomized unbiased estimator that is based only on the sample size and the number of unique items sampled (Christman and Nayak 1994)[^8].
+    - Not aware of conditions for more general fixed-size unbiased estimators.
+    - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` takes on numbers from a finite set; $\lambda$ is the expected value of `InDist`; and `OutDist` has an expected value of $f(\lambda)$.
     - A fixed-size nonrandomized unbiased estimator exists only if $f$ is a polynomial in homogeneous form of degree $n$ or less, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^10], Paninski (2003, proof of Proposition 8, more generally)[^11]).
-    - The existence of sequential unbiased estimators is claimed by Singh (1964)[^12].  But see Akahira et al. (1992)[^4].
+    - The existence of randomized sequential unbiased estimators is claimed by Singh (1964)[^12].  But see Akahira et al. (1992)[^4].
+    - Not aware of conditions for sequential nonrandomized unbiased estimators.
+    - Not aware of conditions for fixed-size randomized unbiased estimators.
+    - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` has a finite mean, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
     - There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)[^1].
 - Suppose `InDist` has a finite mean and is supported on $[a, \infty)$, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
     - A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)[^1].[^13]
+    - Not aware of conditions for fixed-size unbiased estimators.
+    - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` has a finite mean and is supported on $(\infty, a]$, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
     - A sequential unbiased estimator exists only if $f$ is nowhere increasing (Jacob and Thiery 2015)[^1].
+    - Not aware of conditions for fixed-size unbiased estimators.
+    - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` is Bernoulli (a "biased coin"), $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
     - Let $D$ be the set of allowed values for $\lambda$.  Thus, $D$ is either the closed unit interval or a subset thereof.
     - A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O'Brien 1994)[^14].
@@ -71,15 +83,15 @@ The following are examples of results for this problem.   The estimators are all
     - A fixed-size unbiased estimator exists if and only if $f$ is writable as a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^15].
     - Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, ...$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials' Bernstein coefficients lie in the closed unit interval (see also Singh (1964)[^12]).
 
-There are also two other results on the existence of fixed-sample and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17].  Other results include Gajek (1995)[^19] (which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^20].
+There are also two other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17].  Other results include Gajek (1995)[^18] \(which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^19].
 
-In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^18].
+In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^20].
 
 <a id=Question></a>
 
 ### Question
 
-For any case of the sampling problem, suppose the number of input values taken is random.  Do more sequential unbiased estimators exist if the number of inputs is allowed to depend on previously taken inputs than not?
+For any case of the sampling problem, suppose the number of input values taken is random.  If the number of inputs is allowed to depend on previously taken inputs, do more sequential unbiased estimators exist than otherwise?
 
 <a id=Notes></a>
 
@@ -109,7 +121,7 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^12]: R. Singh, "Existence of unbiased estimates", Sankhyā A 26, 1964.
 
-[^13]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.
+[^13]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.  In that case, they showed that the random number of inputs need not depend on inputs already taken.
 
 [^14]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
@@ -119,8 +131,8 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^17]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
 
-[^18]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
+[^18]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.
 
-[^19]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.
+[^19]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22, no. 4 (1995): 485-497.
 
-[^20]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22, no. 4 (1995): 485-497.
+[^20]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
