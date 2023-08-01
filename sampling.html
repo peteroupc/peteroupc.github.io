@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Sampling Problem</title><meta name="citation_title" content="The Sampling Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/sampling.pdf"><meta name="citation_url" content="https://peteroupc.github.io/sampling.html"><meta name="citation_date" content="2023/07/22"><meta name="citation_online_date" content="2023/07/22"><meta name="og:title" content="The Sampling Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/sampling.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Sampling Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Sampling Problem</title><meta name="citation_title" content="The Sampling Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/sampling.pdf"><meta name="citation_url" content="https://peteroupc.github.io/sampling.html"><meta name="citation_date" content="2023/08/01"><meta name="citation_online_date" content="2023/08/01"><meta name="og:title" content="The Sampling Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/sampling.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Sampling Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -77,7 +77,7 @@
 
 <ul>
 <li>If there is no maximum sample size, a sequential unbiased estimator exists for every $f$ (Christman and Nayak 1994)[^8].</li>
-<li>If $f$ is unbounded (including when $f = \lambda$), there is no fixed-size non-randomized unbiased estimator that is based only on the sample size and the number of unique items sampled (Christman and Nayak 1994)[^8].</li>
+<li>If $f$ is unbounded (including when $f(\lambda)=\lambda$), there is no fixed-size non-randomized unbiased estimator that is based only on the sample size and the number of unique items sampled (Christman and Nayak 1994)[^8].</li>
 <li>Not aware of conditions for more general fixed-size unbiased estimators.</li>
 <li>Not aware of conditions for asymptotically unbiased estimators.</li>
 </ul></li>
@@ -94,6 +94,7 @@
 
 <ul>
 <li>There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)[^1].</li>
+<li>Not aware of conditions for asymptotically unbiased estimators.</li>
 </ul></li>
 <li>Suppose <code>InDist</code> has a finite mean and is supported on $[a, \infty)$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.
 
@@ -123,7 +124,7 @@
 </ul></li>
 </ul>
 
-<p>There are also two other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17].  Other results include Gajek (1995)[^18] (which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^19].</p>
+<p>There are also three other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17], (Bickel and Lehmann 1969)[^21].  Other results include Gajek (1995)[^18] (which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^19].</p>
 
 <p>In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^20].</p>
 
@@ -176,6 +177,8 @@
 <p>[^19]: Rychlik, Tomasz. &quot;A class of unbiased kernel estimates of a probability density function.&quot; Applicationes Mathematicae 22, no. 4 (1995): 485-497.</p>
 
 <p>[^20]: Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).  It is also believed that the paper&#39;s Theorem 2 remains true even if $Q$ must be a polynomial.</p>
+
+<p>[^21]:  P. J. Bickel. E. L. Lehmann. &quot;Unbiased Estimation in Convex Families.&quot; Ann. Math. Statist. 40 (5) 1523 - 1535, October, 1969. <a href="https://doi.org/10.1214/aoms/1177697370">https://doi.org/10.1214/aoms/1177697370</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>

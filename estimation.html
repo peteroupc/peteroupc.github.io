@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/07/18"><meta name="citation_online_date" content="2023/07/18"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/08/01"><meta name="citation_online_date" content="2023/08/01"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -12,7 +12,7 @@
 
 <h2>Introduction</h2>
 
-<p>Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called <em>random variates</em>.  This page presents general-purpose algorithms for estimating the mean value (&quot;long-run average&quot;) of those variates, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.</p>
+<p>Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called <em>random variates</em>.  This page presents general-purpose algorithms for estimating the mean value (&quot;long-run average&quot;) of those variates, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (they have no systematic bias from the ideal mean value), or they come close to the ideal value with a user-specified error tolerance.</p>
 
 <p>The algorithms are described to make them easy to implement by programmers.</p>
 
@@ -59,7 +59,7 @@
 
 <p>Some distributions don&#39;t have an <em>n</em><sup>th</sup> moment for a particular <em>n</em>.  This usually means the <em>n</em><sup>th</sup> power of the stream&#39;s numbers varies so wildly that it can&#39;t be estimated accurately.  If a distribution has an <em>n</em><sup>th</sup> moment, it also has a <em>k</em><sup>th</sup> moment for every integer <em>k</em> greater than 0 and less than <em>n</em>.</p>
 
-<p>The <em>relative error</em> of an estimation algorithm is abs(<em>est</em>/<em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.</p>
+<p>The <em>relative error</em> of an estimation algorithm is abs(<em>est</em>/<em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the ideal expected value.</p>
 
 <p><a id=A_Relative_Error_Algorithm_for_a_Bernoulli_Stream></a></p>
 
@@ -197,7 +197,7 @@
 <p>The algorithm has the following parameters:</p>
 
 <ul>
-<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be less than 1.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
+<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be less than 1.  The algorithm will return an estimate within <em>&epsilon;</em> of the ideal expected value with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
 <li><em>p</em>: The degree of the <em>p</em><sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.</li>
 <li><em>q</em>: The degree of the <em>q</em><sup>th</sup> c.a.m.  <em>q</em> must be greater than <em>p</em>.</li>
 <li>$\kappa$: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> c.a.m.&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis&#39;s 4th root (Hickernell et al. 2012)[^8] [^9].) $\kappa$ may not be less than 1.</li>
@@ -208,8 +208,8 @@
 <p>For example:</p>
 
 <ul>
-<li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream&#39;s numbers are distributed so that the kurtosis&#39;s 4th root, that is, the 4th c.a.m.&#39;s 4th root (<em>q</em>=4) divided by the standard deviation (<em>p</em>=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that&#39;s within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.</li>
-<li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, $\kappa$ = 2, the algorithm assumes the stream&#39;s numbers are distributed so that the standard deviation (<em>q</em>=2) divided by the mean deviation (<em>p</em>=1) is no more than 2, and will return an estimate that&#39;s within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.</li>
+<li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream&#39;s numbers are distributed so that the kurtosis&#39;s 4th root, that is, the 4th c.a.m.&#39;s 4th root (<em>q</em>=4) divided by the standard deviation (<em>p</em>=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that&#39;s within 1/10 of the ideal mean with probability at least (1 &minus; 1/16) or 15/16.</li>
+<li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, $\kappa$ = 2, the algorithm assumes the stream&#39;s numbers are distributed so that the standard deviation (<em>q</em>=2) divided by the mean deviation (<em>p</em>=1) is no more than 2, and will return an estimate that&#39;s within 1/10 of the ideal mean with probability at least (1 &minus; 1/16) or 15/16.</li>
 </ul>
 
 <p>The algorithm, called <strong>Algorithm C</strong> in this document, follows.</p>
@@ -390,7 +390,7 @@
 </ul></li>
 <li><p><em>Algorithm E</em> is not an unbiased estimator in general.  However, when <em>f</em>(<em>x</em>) = <em>x</em>, the sample mean used by the algorithm is an unbiased estimator of the mean as long as the sample size <em>n</em> is unchanged.</p></li>
 <li><p>In <em>Algorithm E</em>, for an estimate in terms of relative error, rather than absolute error, multiply <em>&gamma;</em> by <em>M</em> after step 1 is complete, where <em>M</em> is the smallest absolute value of the mean that the stream&#39;s distribution is allowed to have (Wainwright 2019)[^18].</p></li>
-<li><p>Finding the sample size needed to produce an estimate that is close to the true value with a user-specified error bound and a user-specified probability, as with <em>Algorithm E</em>, is also known as <em>offline learning</em>, <em>statistical learning</em>, or <em>provably approximately correct (PAC) learning</em>.</p></li>
+<li><p>Finding the sample size needed to produce an estimate that is close to the ideal value with a user-specified error bound and a user-specified probability, as with <em>Algorithm E</em>, is also known as <em>offline learning</em>, <em>statistical learning</em>, or <em>provably approximately correct (PAC) learning</em>.</p></li>
 </ol>
 
 <p><strong>Examples:</strong></p>
@@ -417,7 +417,7 @@
 <li><strong>z</strong> is a <em>d</em>-dimensional vector chosen at random in the sampling domain.</li>
 </ul>
 
-<p>Then <em>Algorithm C</em> will take the new stream and generate an estimate that comes within <em>&epsilon;</em> of the true integral with probability 1 &minus; <em>&delta;</em> or greater, as long as the following conditions are met:</p>
+<p>Then <em>Algorithm C</em> will take the new stream and generate an estimate that comes within <em>&epsilon;</em> of the ideal integral with probability 1 &minus; <em>&delta;</em> or greater, as long as the following conditions are met:</p>
 
 <ul>
 <li>The <em>q</em><sup>th</sup> c.a.m. for <em>h</em>(<strong>z</strong>) is finite.  That is, <strong>E</strong>[abs(<em>h</em>(<strong>z</strong>)&minus;<strong>E</strong>[<em>h</em>(<strong>z</strong>)])<sup><em>q</em></sup>] is finite.</li>

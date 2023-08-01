@@ -209,7 +209,7 @@ Given this list of weights, the following algorithm chooses an integer in \[0, _
 An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nowhere increasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2022\)[^12].  It has a logarithmic time complexity in terms of setup and sampling.
 
 - Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
-    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
+    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the ideal values, if possible, or overestimate them if not.
     2. (Envelope chunk weights.) Build a list _r_ as follows: The first item is _q_\[0\], then set _j_ to 1 and _m_ to 1, then while _j_ &lt; _b_&minus;_a_, append _q_\[_m_\]\*min((_b_&minus;_a_) &minus; _j_, _j_) and multiply _j_ by 2 and add 1 to _m_.
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_a_, _a_+1\], then set _j_ to 1, then while _j_ &lt; _n_, append the list \[_j_, _j_ + min((_b_&minus;_a_) &minus; _j_, _j_)\] and multiply _j_ by 2.
 - Sampling:
@@ -220,7 +220,7 @@ An algorithm for sampling an integer in the interval \[_a_, _b_) with probabilit
 For _nowhere decreasing_ rather than nowhere increasing weights, the algorithm is as follows instead:
 
 - Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
-    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_b_&minus;1\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append _w_\[_b_&minus;1&minus;_j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
+    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_b_&minus;1\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append _w_\[_b_&minus;1&minus;_j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the ideal values, if possible, or overestimate them if not.
     2. (Envelope chunk weights.) Build a list _r_ as given in step 2 of the previous algorithm's setup.
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_b_&minus;1, _b_\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append the list \[(_b_&minus;_j_) &minus; min((_b_&minus;_a_) &minus; _j_, _j_), _b_&minus;_j_\] and multiply _j_ by 2.
 - The sampling is the same as for the previous algorithm.
@@ -522,7 +522,7 @@ In some cases, it may be possible to calculate the needed digit size in advance.
 As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ with Lipschitz constant _L_ or less on the interval \[_a_, _b_\][^78], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
 
 1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(_&epsilon;_)) / ln(_&beta;_)). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
-2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of _Q_(_a_) and _Q_(_b_), respectively, that are within _&epsilon;_/2 of the true quantiles, call the bounds _low_ and _high_, respectively.
+2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of _Q_(_a_) and _Q_(_b_), respectively, that are within _&epsilon;_/2 of the ideal quantiles, call the bounds _low_ and _high_, respectively.
 3. Return _low_+(_high_&minus;_low_)/2.
 
 This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020[^77]).

@@ -121,7 +121,7 @@ For some of the polynomials given above, a degree $n$ can be found so that the d
 
 Bernstein polynomials ($B_n(f)$) have the advantages that only one Bernstein coefficient has to be found per run and that the coefficient will be bounded by 0 and 1 if $f(\lambda)$ is.  But their disadvantage is that they approach $f$ slowly in general, at a rate no faster than a rate proportional to $1/n$ (Voronovskaya 1932)[^15].
 
-On the other hand, polynomials other than Bernstein polynomials ($B_n(f)$) can approach $f$ faster in many cases than $B_n(f)$, but are not necessarily bounded by 0 and 1.  For these polynomials, the following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$, assuming none of $f$'s values is less than 0 or greater than 1.
+On the other hand, polynomials other than Bernstein polynomials can approach $f$ faster in many cases than Bernstein polynomials, but are not necessarily bounded by 0 and 1.  For these polynomials, the following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$, assuming none of $f$'s values is less than 0 or greater than 1.
 
 1. Determine whether $f$ is described in the table above.  Let _A_ be the minimum of $f$ on the closed unit interval and let _B_ be the maximum of $f$ there.
 2. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.

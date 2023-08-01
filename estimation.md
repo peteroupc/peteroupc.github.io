@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called _random variates_.  This page presents general-purpose algorithms for estimating the mean value ("long-run average") of those variates, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.
+Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called _random variates_.  This page presents general-purpose algorithms for estimating the mean value ("long-run average") of those variates, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (they have no systematic bias from the ideal mean value), or they come close to the ideal value with a user-specified error tolerance.
 
 The algorithms are described to make them easy to implement by programmers.
 
@@ -47,7 +47,7 @@ Each algorithm takes a stream of independent random variates (numbers).  These v
 
 Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the stream's numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for every integer _k_ greater than 0 and less than _n_.
 
-The _relative error_ of an estimation algorithm is abs(_est_/_trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
+The _relative error_ of an estimation algorithm is abs(_est_/_trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the ideal expected value.
 
 <a id=A_Relative_Error_Algorithm_for_a_Bernoulli_Stream></a>
 
@@ -152,7 +152,7 @@ This algorithm is not guaranteed to produce unbiased estimates.
 
 The algorithm has the following parameters:
 
-- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be less than 1.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
+- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be less than 1.  The algorithm will return an estimate within _&epsilon;_ of the ideal expected value with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
 - _p_: The degree of the _p_<sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.
 - _q_: The degree of the _q_<sup>th</sup> c.a.m.  _q_ must be greater than _p_.
 - $\kappa$: Maximum value allowed for the following value: the _q_<sup>th</sup> c.a.m.'s  _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012\)[^8] [^9].) $\kappa$ may not be less than 1.
@@ -161,8 +161,8 @@ Both _p_ and _q_ must be 1 or greater and are usually integers.
 
 For example:
 
-- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream's numbers are distributed so that the kurtosis's 4th root, that is, the 4th c.a.m.'s 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
-- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, $\kappa$ = 2, the algorithm assumes the stream's numbers are distributed so that the standard deviation (_q_=2) divided by the mean deviation (_p_=1) is no more than 2, and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
+- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream's numbers are distributed so that the kurtosis's 4th root, that is, the 4th c.a.m.'s 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the ideal mean with probability at least (1 &minus; 1/16) or 15/16.
+- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, $\kappa$ = 2, the algorithm assumes the stream's numbers are distributed so that the standard deviation (_q_=2) divided by the mean deviation (_p_=1) is no more than 2, and will return an estimate that's within 1/10 of the ideal mean with probability at least (1 &minus; 1/16) or 15/16.
 
 The algorithm, called **Algorithm C** in this document, follows.
 
@@ -277,7 +277,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 >
 > 5. In _Algorithm E_, for an estimate in terms of relative error, rather than absolute error, multiply _&gamma;_ by _M_ after step 1 is complete, where _M_ is the smallest absolute value of the mean that the stream's distribution is allowed to have (Wainwright 2019)[^18].
 >
-> 6. Finding the sample size needed to produce an estimate that is close to the true value with a user-specified error bound and a user-specified probability, as with _Algorithm E_, is also known as _offline learning_, _statistical learning_, or _provably approximately correct (PAC) learning_.
+> 6. Finding the sample size needed to produce an estimate that is close to the ideal value with a user-specified error bound and a user-specified probability, as with _Algorithm E_, is also known as _offline learning_, _statistical learning_, or _provably approximately correct (PAC) learning_.
 >
 > **Examples:**
 >
@@ -298,7 +298,7 @@ Suppose the goal is to estimate an integral of a function _h_(**z**), where **z*
 - _h_(**z**) is a multidimensional function that takes a _d_-dimensional vector and returns a real number.  _h_(**z**) is usually a function that's easy to evaluate but whose integral is hard to calculate.
 - **z** is a _d_-dimensional vector chosen at random in the sampling domain.
 
-Then _Algorithm C_ will take the new stream and generate an estimate that comes within _&epsilon;_ of the true integral with probability 1 &minus; _&delta;_ or greater, as long as the following conditions are met:
+Then _Algorithm C_ will take the new stream and generate an estimate that comes within _&epsilon;_ of the ideal integral with probability 1 &minus; _&delta;_ or greater, as long as the following conditions are met:
 
 - The _q_<sup>th</sup> c.a.m. for _h_(**z**) is finite.  That is, **E**\[abs(_h_(**z**)&minus;**E**\[_h_(**z**)\])<sup>_q_</sup>\] is finite.
 - The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.
