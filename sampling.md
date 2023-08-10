@@ -84,9 +84,9 @@ The following are examples of results for this problem.   The estimators are all
     - A fixed-size unbiased estimator exists if and only if $f$ is writable as a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^15].
     - Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, ...$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials' Bernstein coefficients lie in the closed unit interval (see also Singh (1964)[^12]).
 
-There are also three other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17], (Bickel and Lehmann 1969)[^21].  Other results include Gajek (1995)[^18] \(which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^19].
+There are also three other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17], Bickel and Lehmann (1969)[^18].  Other results include Gajek (1995)[^19] \(which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^20].
 
-In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^20].
+In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^21].
 
 <a id=Question></a>
 
@@ -132,10 +132,10 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^17]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
 
-[^18]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.
+[^18]: P. J. Bickel. E. L. Lehmann. "Unbiased Estimation in Convex Families." Ann. Math. Statist. 40 (5) 1523 - 1535, October, 1969. [**https://doi.org/10.1214/aoms/1177697370**](https://doi.org/10.1214/aoms/1177697370)
 
-[^19]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22, no. 4 (1995): 485-497.
+[^19]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.
 
-[^20]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
+[^20]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22, no. 4 (1995): 485-497.
 
-[^21]:  P. J. Bickel. E. L. Lehmann. "Unbiased Estimation in Convex Families." Ann. Math. Statist. 40 (5) 1523 - 1535, October, 1969. [https://doi.org/10.1214/aoms/1177697370](https://doi.org/10.1214/aoms/1177697370)
+[^21]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
