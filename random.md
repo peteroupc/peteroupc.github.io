@@ -618,7 +618,7 @@ I acknowledge&mdash;
 
 [^19]: Bauke and Mertens, "Random numbers for large-scale distributed Monte Carlo simulations", 2007.
 
-[^20]: Besides the seed, other things are hashed that together serve as a _domain separation tag_ (see, for example, the work-in-progress document "draft-irtf-cfrg-hash-to-curve").  Note the following:
+[^20]: Besides the seed, other things are hashed that together serve as a _domain separation tag_ (for example, see RFC 9380, "Hashing to Elliptic Curves", section 2.2.5).  Note the following:
     - In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a _collision risk_) or that a seed not allowed by the PRNG is produced (a "rejection risk"), but this risk decreases the more seeds the PRNG admits (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
     - M. O'Neill (in "Developing a `seed_seq` Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, `seed_seq_fe128` hashes 128-bit seeds to 128-bit or longer unique values.
     - An application can handle a rejected seed by hashing with a different value or by using a backup seed instead, depending on how tolerant the application is to bias.
