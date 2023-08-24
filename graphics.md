@@ -20,19 +20,20 @@ Limit 3D graphics to the following:
 
 Limit 2D graphics to the following:
 
-1. Three tile-based 2D layers.  If 3D graphics are not being displayed, there is a fourth 2D layer.  Otherwise, there is a layer for the 3D graphics.
-2. Sixteen palettes of 16 colors each (using the color format for vertex colors).
-3. Each tile is 8&times;8 pixels and uses the colors of one of the palettes.
+1. Up to three tile-based 2D layers can be displayed at a time.  If 3D graphics are not being displayed, a fourth 2D layer can also be displayed.  Otherwise, a layer for the 3D graphics can be displayed.
+2. There are sixteen palettes of 16 colors each (using the color format for vertex colors).
+3. Each tile is 8&times;8 pixels and uses the colors of one of the sixteen palettes just described.
 4. One of the 2D layers can undergo a 2D affine transformation.
-5. Separate from layers, 2D sprites can be displayed.  No more than 128 sprites may be shown on the screen. Each sprite may be tile-based or bitmap-based and cover an area of no more than 64&times;64 pixels.  Sprites may contain transparent parts.
+5. Separate from layers, 2D sprites can be displayed.  No more than 128 sprites may be displayed at a time. Each sprite may be tile-based or bitmap-based and cover an area of no more than 64&times;64 pixels.  Sprites may contain transparent parts.
 
 General:
 
-- The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any rder.
+- The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order.
 - 256&times;192 screen resolution with 60 frames per second, or 256&times;384 screen resolution with 30 frames per second.
+- A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size, say, 1000 kibibytes.  This does not limit the size or number of graphics assets a game can have.
 - Music:  Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer, using either FM or wavetable synthesis.  As much as possible, instruments should match their usual MIDI meanings.
 
-A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count will change in proportion to the new resolution.
+A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution.
 
 These limitations were inspired by the graphics limitations of classic handheld game consoles.
 
