@@ -29,15 +29,15 @@ Limit 2D graphics to the following:
 General:
 
 - The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order.
-- 256&times;192 screen resolution with 60 frames per second, or 256&times;384 screen resolution with 30 frames per second.
-- A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size, say, 1000 kibibytes.  This does not limit the size or number of graphics assets a game can have.
+- 256&times;192 screen resolution with up to 60 frames per second, or 256&times;384 screen resolution with up to 30 frames per second.
+- A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size, say, 2048 kibibytes.  This does not limit the size or number of graphics assets a game can have.
 - Music:  Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer, using either FM or wavetable synthesis.  As much as possible, instruments should match their usual MIDI meanings.
 
-A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution.
+A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution. (For example, if the resolution is 640&times;480 with up to 60 frames per second, these maximums are multiplied by 6.25 = (640&times;480) / (256&times;192).)
 
 These limitations were inspired by the graphics limitations of classic handheld game consoles.
 
-A game may impose further limitations to the specifications given here (for example, to reduce the maximum number of 3D polygons or reduce the number of colors per tile allowed).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about an open-source graphics library that implements this specification.
+A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons or reduce the number of colors per tile allowed).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about an open-source graphics library that implements this specification.
 
 <a id=License></a>
 
