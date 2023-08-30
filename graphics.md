@@ -31,16 +31,20 @@ General:
 - The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order.
 - 256&times;192 screen resolution with up to 60 frames per second, or 256&times;384 screen resolution with up to 30 frames per second.
 - A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size, say, 2048 kibibytes.  This does not limit the size or number of graphics assets a game can have.
-- Music:  Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer, using either FM or wavetable synthesis.  As much as possible, instruments should match their usual MIDI meanings.
+- Music:  Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer, using either FM or wavetable synthesis.[^1]  As much as possible, instruments should match their usual MIDI meanings.
 
 A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution. (For example, if the resolution is 640&times;480 with up to 60 frames per second, these maximums are multiplied by 6.25 = (640&times;480) / (256&times;192).)
 
 These limitations were inspired by the graphics limitations of classic handheld game consoles.
 
-A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons or reduce the number of colors per tile allowed).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about an open-source graphics library that implements this specification.
+A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons or reduce the number of colors per tile allowed).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^2]
 
 <a id=License></a>
 
 ## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
+
+[^1]: I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
+
+[^2]: Especially if the library is self-contained and implements the specification with as little source code as possible.  It would not be within the spirit of this document to, say, display more polygons or vertices at a time than the maximum allowed using programming tricks, but any such tricks should not be hardware-accelerated.
