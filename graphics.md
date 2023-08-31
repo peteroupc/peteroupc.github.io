@@ -23,8 +23,9 @@ Limit 2D graphics to the following:
 1. Up to three tile-based 2D layers can be displayed at a time.  If 3D graphics are not being displayed, a fourth 2D layer can also be displayed.  Otherwise, a layer for the 3D graphics can be displayed.
 2. There are sixteen palettes of 16 colors each (using the color format for vertex colors).
 3. Each tile is 8&times;8 pixels and uses the colors of one of the sixteen palettes just described.
-4. One of the 2D layers can undergo a 2D affine transformation.
-5. Separate from layers, 2D sprites can be displayed.  No more than 128 sprites may be displayed at a time. Each sprite may be tile-based or bitmap-based and cover an area of no more than 64&times;64 pixels.  Sprites may contain transparent parts.
+4. The 2D and 3D layers may contain transparent parts.
+5. One of the 2D layers can undergo a 2D affine transformation.
+6. Separate from layers, 2D sprites can be displayed.  No more than 128 sprites may be displayed at a time. Each sprite may be tile-based or bitmap-based and must have a width and height of no more than 64 pixels each.  Sprites may contain transparent parts.
 
 General:
 
@@ -37,7 +38,7 @@ A game might use a different resolution than shown.  In that case, the maximum a
 
 These limitations were inspired by the graphics limitations of classic handheld game consoles.
 
-A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons or reduce the number of colors per tile allowed).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^2]
+A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, or to reduce the number of colors per tile allowed).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^2]
 
 <a id=License></a>
 
@@ -45,6 +46,8 @@ A game may impose further resource limits to the specifications given here (for 
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
 
+----------------
+
 [^1]: I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
 
-[^2]: Especially if the library is self-contained and implements the specification with as little source code as possible.  It would not be within the spirit of this document to, say, display more polygons or vertices at a time than the maximum allowed using programming tricks, but any such tricks should not be hardware-accelerated.
+[^2]: Especially if the library is self-contained and implements the specification with as little source code as possible.  It would not be within the spirit of this document to, say, display more polygons or vertices at a time than the maximum allowed using programming tricks, but any such tricks should not be hardware-accelerated.  An example of a 2D library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly, is called [**_Tilengine_**](https://github.com/megamarc/Tilengine).

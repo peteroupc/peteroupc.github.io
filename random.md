@@ -422,9 +422,9 @@ This section discusses several important points on the use and selection of RNGs
 
 In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * ... * N`, or `N!`) ways to arrange the items in that list.  These ways are called _permutations_[^28].
 
-In practice, an application can **shuffle a list** by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle), which is unfortunately easy to mess up &mdash; see (Atwood 2007\)[^29] &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html).
+In practice, an application can **shuffle a list** by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle), which is unfortunately easy to mess up &mdash; see (Atwood 2007\)[^29] &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html), assuming there is a way to choose _perfectly_ independent uniform random integers.
 
-However, if a PRNG admits fewer seeds (and thus can produce fewer number sequences) than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
+However, if a PRNG admits fewer seeds (and thus can produce fewer number sequences) than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.  Nothing is said here about PRNGs that admit as many or more seeds than the number of permutations or whether the permutations the PRNG _can_ choose have an equal probability of occurring, as opposed to an ideal process of generating _perfectly_ independent uniform random integers.)
 
 On the other hand, for a list big enough, it's generally **more important to have shuffles act random** than to choose from among all permutations.
 
