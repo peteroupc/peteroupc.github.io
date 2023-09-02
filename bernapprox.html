@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/07/24"><meta name="citation_online_date" content="2023/07/24"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/09/02"><meta name="citation_online_date" content="2023/09/02"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -83,7 +83,7 @@
 
 <p>where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], ..., <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>Bernstein coefficients</em> (which this document may simply call <em>coefficients</em> if the meaning is obvious from the context).[^1]</p>
 
-<p>A function $f(\lambda)$ is <em>piecewise continuous</em> if it&#39;s made up of multiple continuous functions defined on a finite number of &quot;pieces&quot;, or non-empty subintervals, that together make up f&#39;s domain.</p>
+<p>A function $f(\lambda)$ is <em>piecewise continuous</em> if it&#39;s made up of multiple continuous functions defined on a finite number of &quot;pieces&quot;, or non-empty subintervals, that together make up $f$&#39;s domain.</p>
 
 <p><a id=Approximations_by_Polynomials></a></p>
 
@@ -289,7 +289,7 @@
 </ul>
 
 <p>for each Bernstein coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ Bernstein coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s Bernstein coefficients as given here.)</p></li>
-<li><p><em>Gevrey&#39;s hierarchy</em> is a class of &quot;smooth&quot; functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> if there are $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$&#39;s $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n\ge 1$ (Kawamura et al. 2015)[^16]; see also (Gevrey 1918)[^17]). In this case, for each $n\ge 1$&mdash;</p>
+<li><p><em>Gevrey&#39;s hierarchy</em> is a class of &quot;smooth&quot; functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> if there are values $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$&#39;s $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n\ge 1$ (Kawamura et al. 2015)[^16]; see also (Gevrey 1918)[^17]). In this case, for each $n\ge 1$&mdash;</p>
 
 <ul>
 <li>the $n$-th derivative of $f$ is continuous and has a maximum absolute value of at most $Bl^n n^{\gamma n}$, and</li>
@@ -474,11 +474,11 @@
 
 <h3>Computational Issues</h3>
 
-<p>Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as <em>degree elevation</em>.  This method works for polynomials in Bernstein form on any closed interval.</p>
+<p>Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as <em>degree elevation</em>.  This rewriting works for polynomials in Bernstein form on any closed interval.</p>
 
 <ul>
-<li>This can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)[^20].</li>
-<li>This can also be done through an intermediate form called the <em>scaled Bernstein form</em> (Farouki and Rajan 1988)[^26], as described in Sánchez-Reyes (2003)[^27].  (A polynomial in scaled Bernstein form is also known as a <em>homogeneous polynomial</em>.)
+<li>This rewriting can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)[^20].</li>
+<li>This rewriting can also be done through an intermediate form called the <em>scaled Bernstein form</em> (Farouki and Rajan 1988)[^26], as described in Sánchez-Reyes (2003)[^27].  (A polynomial in scaled Bernstein form is also known as a <em>homogeneous polynomial</em>.)
 
 <ul>
 <li>The <em>i</em>-th Bernstein coefficient of degree <em>m</em> is turned to a scaled Bernstein coefficient by multiplying it by choose(<em>m</em>,<em>i</em>).</li>
@@ -486,11 +486,11 @@
 </ul></li>
 </ul>
 
-<p>Some methods in this document require rewriting a polynomial in &quot;power&quot; form of degree $m$ (also known as &quot;monomial&quot; form) to Bernstein form of degree $m$.  This method works only for polynomials in Bernstein form on the closed unit interval.</p>
+<p>Some methods in this document require rewriting a polynomial in &quot;power&quot; form of degree $m$ (also known as &quot;monomial&quot; form) to Bernstein form of degree $m$.  This rewriting works only for polynomials in Bernstein form on the closed unit interval.</p>
 
 <ul>
-<li>This can be done directly using the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^28].</li>
-<li>This can also be done by rewriting the polynomial from &quot;power&quot; form to scaled Bernstein form (see Sánchez-Reyes (2003, section 2.6)[^27]), then converting the scaled Bernstein form to Bernstein form.</li>
+<li>This rewriting can be done directly using the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^28].</li>
+<li>This rewriting can also be done by rewriting the polynomial from &quot;power&quot; form to scaled Bernstein form (see Sánchez-Reyes (2003, section 2.6)[^27]), then converting the scaled Bernstein form to Bernstein form.</li>
 </ul>
 
 <p><a id=Approximations_by_Rational_Functions></a></p>
@@ -500,14 +500,14 @@
 <p>Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the closed unit interval to itself, where $q(\lambda)$ is in Bernstein form with non-negative coefficients.  Then rational functions of this kind are not much better than polynomials in approximating $f(\lambda)$ when&mdash;</p>
 
 <ul>
-<li>the $k$-th derivative of $f$ is continuous on the open interval (0, 1), but not the $(k+1)$-th derivative (Borwein 1979, section 3)[^29], <em>or</em></li>
+<li>$f$ has only a finite number of continuous derivatives on the open interval (0, 1) (Borwein 1979, section 3)[^29], <em>or</em></li>
 <li>$f(\lambda)$ is writable as $a_0 \lambda^0 + a_1 \lambda^1 + ...$, where $a_k\ge(k+1) a_{k+1}\ge 0$ whenever $k\ge 0$ (Borwein 1980)[^30].</li>
 </ul>
 
 <p>In addition, rational functions are not much better than polynomials in approximating $f(\lambda)$ when&mdash;</p>
 
 <ul>
-<li>the $k$-th derivative of $f$ is continuous on the half-open interval (0, 1], but not the $(k+1)$-th derivative, <em>and</em></li>
+<li>$f$ has only a finite number of continuous derivatives on the half-open interval (0, 1], <em>and</em></li>
 <li>the rational function has no root that is a complex number whose real part is between 0 and 1 (Borwein 1979, theorem 29)[^29].</li>
 </ul>
 

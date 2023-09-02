@@ -63,7 +63,7 @@ $$p(\lambda) = {n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambd
 
 where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _Bernstein coefficients_ (which this document may simply call _coefficients_ if the meaning is obvious from the context).[^1]
 
-A function $f(\lambda)$ is _piecewise continuous_ if it's made up of multiple continuous functions defined on a finite number of "pieces", or non-empty subintervals, that together make up f's domain.
+A function $f(\lambda)$ is _piecewise continuous_ if it's made up of multiple continuous functions defined on a finite number of "pieces", or non-empty subintervals, that together make up $f$'s domain.
 
 <a id=Approximations_by_Polynomials></a>
 
@@ -138,7 +138,7 @@ The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$
 >     - $c$=floor($c/\delta + 1/2$) \* $\delta$ (rounding to the nearest multiple),
 >
 >     for each Bernstein coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ Bernstein coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial's Bernstein coefficients as given here.)
-> 2. _Gevrey's hierarchy_ is a class of "smooth" functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in _Gevrey's hierarchy_ if there are $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$'s $n$-th derivative's absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n\ge 1$ (Kawamura et al. 2015)[^16]; see also (Gevrey 1918)[^17]). In this case, for each $n\ge 1$&mdash;
+> 2. _Gevrey's hierarchy_ is a class of "smooth" functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in _Gevrey's hierarchy_ if there are values $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$'s $n$-th derivative's absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n\ge 1$ (Kawamura et al. 2015)[^16]; see also (Gevrey 1918)[^17]). In this case, for each $n\ge 1$&mdash;
 >    - the $n$-th derivative of $f$ is continuous and has a maximum absolute value of at most $Bl^n n^{\gamma n}$, and
 >    - the $(n-1)$-th derivative of $f$ is Lipschitz continuous with Lipschitz constant at most $Bl^n n^{\gamma n}$.
 >
@@ -272,17 +272,17 @@ In the table below:
 
 ### Computational Issues
 
-Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as _degree elevation_.  This method works for polynomials in Bernstein form on any closed interval.
+Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as _degree elevation_.  This rewriting works for polynomials in Bernstein form on any closed interval.
 
-- This can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)[^20].
-- This can also be done through an intermediate form called the _scaled Bernstein form_ (Farouki and Rajan 1988)[^26], as described in Sánchez-Reyes (2003)[^27].  (A polynomial in scaled Bernstein form is also known as a _homogeneous polynomial_.)
+- This rewriting can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)[^20].
+- This rewriting can also be done through an intermediate form called the _scaled Bernstein form_ (Farouki and Rajan 1988)[^26], as described in Sánchez-Reyes (2003)[^27].  (A polynomial in scaled Bernstein form is also known as a _homogeneous polynomial_.)
     - The _i_-th Bernstein coefficient of degree _m_ is turned to a scaled Bernstein coefficient by multiplying it by choose(_m_,_i_).
     - The _i_-th scaled Bernstein coefficient of degree _m_ is turned to a Bernstein coefficient by dividing it by choose(_m_,_i_).
 
-Some methods in this document require rewriting a polynomial in "power" form of degree $m$ (also known as "monomial" form) to Bernstein form of degree $m$.  This method works only for polynomials in Bernstein form on the closed unit interval.
+Some methods in this document require rewriting a polynomial in "power" form of degree $m$ (also known as "monomial" form) to Bernstein form of degree $m$.  This rewriting works only for polynomials in Bernstein form on the closed unit interval.
 
-- This can be done directly using the so-called "matrix method" from Ray and Nataraj (2012)[^28].
-- This can also be done by rewriting the polynomial from "power" form to scaled Bernstein form (see Sánchez-Reyes (2003, section 2.6)[^27]), then converting the scaled Bernstein form to Bernstein form.
+- This rewriting can be done directly using the so-called "matrix method" from Ray and Nataraj (2012)[^28].
+- This rewriting can also be done by rewriting the polynomial from "power" form to scaled Bernstein form (see Sánchez-Reyes (2003, section 2.6)[^27]), then converting the scaled Bernstein form to Bernstein form.
 
 <a id=Approximations_by_Rational_Functions></a>
 
@@ -290,12 +290,12 @@ Some methods in this document require rewriting a polynomial in "power" form of 
 
 Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the closed unit interval to itself, where $q(\lambda)$ is in Bernstein form with non-negative coefficients.  Then rational functions of this kind are not much better than polynomials in approximating $f(\lambda)$ when&mdash;
 
-- the $k$-th derivative of $f$ is continuous on the open interval (0, 1), but not the $(k+1)$-th derivative (Borwein 1979, section 3)[^29], _or_
+- $f$ has only a finite number of continuous derivatives on the open interval (0, 1) (Borwein 1979, section 3)[^29], _or_
 - $f(\lambda)$ is writable as $a_0 \lambda^0 + a_1 \lambda^1 + ...$, where $a_k\ge(k+1) a_{k+1}\ge 0$ whenever $k\ge 0$ (Borwein 1980)[^30].
 
 In addition, rational functions are not much better than polynomials in approximating $f(\lambda)$ when&mdash;
 
-- the $k$-th derivative of $f$ is continuous on the half-open interval (0, 1], but not the $(k+1)$-th derivative, _and_
+- $f$ has only a finite number of continuous derivatives on the half-open interval (0, 1], _and_
 - the rational function has no root that is a complex number whose real part is between 0 and 1 (Borwein 1979, theorem 29)[^29].
 
 <a id=Request_for_Additional_Methods></a>
