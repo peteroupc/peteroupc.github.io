@@ -10,7 +10,7 @@ Limit 3D graphics to the following:
     * Each polygon can be translucent and/or wireframed.
 
 2. Polygons undergo perspective-correct rendering.
-3. No more than 6144 vertices can be used at a time.
+3. The maximum number of vertices can be used at a time is 3 times the maximum number of polygons.
     * A vertex consists of an XYZ position, an XY texture coordinate, and an RGB vertex color.
     * For each color, the red component is 5 bits, the green, 5 bits, and the blue, 5 bits.
 
@@ -20,7 +20,7 @@ Limit 3D graphics to the following:
 
 Limit 2D graphics to the following:
 
-1. Up to three tile-based 2D layers can be displayed at a time.  If 3D graphics are not being displayed, a fourth 2D layer can also be displayed.  Otherwise, a layer for the 3D graphics can be displayed.
+1. Up to three tile-based 2D layers can be displayed at a time.  If 3D graphics are not being displayed, a fourth tile-based 2D layer can also be displayed.  Otherwise, a layer for the 3D graphics can be displayed.
 2. There are sixteen palettes of 16 colors each (using the color format for vertex colors).
 3. Each tile is 8&times;8 pixels and uses the colors of one of the sixteen palettes just described.
 4. The 2D and 3D layers may contain transparent parts.

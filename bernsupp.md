@@ -482,7 +482,7 @@ In the following examples, _f_(_&lambda;_) is a function defined on the closed u
 
 **Hölder and Lipschitz continuous functions.** The following table shows some functions that are Hölder continuous and some that are not.  Also, review the [**definitions**](#Definitions).
 
-| Function _f_(_&lambda;_)\: | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_L_)\: | Notes |
+| Function _f_(_&lambda;_)\: | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_H_)\: | Notes |
  --- | --- | --- |
 |$\lambda^z\cdot t$. | _&alpha;_=_z_.<br>_L_=abs(_t_). | $0\lt z\le 1$, $t\ne 0$. |
 |$\lambda^z\cdot t$. | _&alpha;_=1 (Lipschitz continuous).<br>_L_=_z_\*abs(_t_). | $z\ge 1$, $t$ is a real number. |
@@ -516,6 +516,41 @@ The following example, which uses the SymPy computer algebra library, plots $\ma
 | _&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise. | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1. |
 | exp(&minus;_&lambda;_). | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1.[^16] |
 | _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise. |_&alpha;_=1.<br>_L_=1.| Concave. Lipschitz continuous derivative with Lipschitz constant 2. |
+
+| Function _f_(_&lambda;_)\: | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_H_)\: | Notes |
+ --- | --- | --- |
+|$\lambda^z\cdot t$. | _&alpha;_=_z_.<br>_H_=abs(_t_). | $0\lt z\le 1$, $t\ne 0$. |
+|$\lambda^z\cdot t$. | _&alpha;_=1 (Lipschitz continuous).<br>_H_=_z_\*abs(_t_). | $z\ge 1$, $t$ is a real number. |
+|$\lambda^{1/3}/4 + \lambda^{2/3}$/5. | _&alpha;_=1/3.<br>_H_=9/20. |  _&alpha;_ is the minimum of Hölder exponents, min(1/3, 2/3), and _H_ is the sum of Hölder constants, 1/4+1/5. |
+|$1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise. | _&alpha;_=_z_.<br>_H_=$2^z/2$. | $0\lt z\le 1$.  In this example, $f$ has a "vertical" slope at 1/2, unless _z_ is 1. |
+|$3/4-\sqrt{\lambda(1-\lambda)}$. | _&alpha;_=1/2.<br>_H_=1. | Has a "vertical" slope at 0 and 1. |
+| Continuous and **piecewise linear**. | _&alpha;_=1.<br>_H_ is the greatest absolute value of the slope among all pieces' slopes. | _f_(_&lambda;_) is _piecewise linear_ if it's made up of multiple linear functions defined on a finite number of "pieces", or non-empty subintervals, that together make up $f$'s domain (in this case, the closed unit interval). |
+| Piecewise linear; equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions. | _&alpha;_=1.<br>_H_ = 1.5. | _H_ = $\max(\text{abs}((3/4-0)/(2/3))$, $\text{abs}((1/4-3/4)/(1/3)))$.<br>Concave because the first piece's slope is greater than the second piece's. |
+| min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). | _&alpha;_=1.<br>_H_ = _mult_. | _mult_ &gt; 0, _&epsilon;_ &gt; 0.  Piecewise linear; equals 0 at 0, 1&minus;_&epsilon;_ at (1&minus;_&epsilon;_)/_mult_, and 1&minus;_&epsilon;_ at 1.<br>_H_=max(_mult_, 0).<br>Concave. |
+| 1/10 if _&lambda;_ is 0; &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise. | Not Hölder continuous. | Has a slope near 0 that's steeper than every "nth" root. |
+
+> **Note:** A Hölder continuous function with Hölder exponent _&alpha;_ and Hölder constant _H_ is also Hölder continuous with Hölder exponent _&beta;_ and Hölder constant bounded above by _H_, where 0 &lt; _&beta;_ &lt; _&alpha;_.
+
+**Finding parameters _&alpha;_ and _H_ for Hölder continuous functions.** If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (_&alpha;_) and Hölder constant (_H_) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.
+
+First, if $f$ has a continuous first derivative on its domain, then _&alpha;_ is 1 ($f$ is **Lipschitz continuous**) and _H_ is the maximum of the absolute value of that derivative.
+
+Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a "vertical slope" or the "steepest slope exhibited".  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$'s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant (_H_) equal to or greater than the maximum value of $g(\lambda)$ on its domain.
+
+The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: `lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c, 0), h.subs(c,1)), (lamda, 0, 1))`.
+
+**Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the table below, if $f$ has a continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _H_ is the maximum of the absolute value of that _second_ derivative.
+
+| Function $f(\lambda)$ | Derivative's Hölder exponent (_&alpha;_) and an upper bound of the derivative's Hölder constant (_H_): | Notes |
+ ---- | ---- | ---- |
+| _&lambda;_<sup>1+_&beta;_</sup> | _&alpha;_=_&beta;_.<br>_H_ = 1+_&beta;_. | 0 &lt; _&beta;_ &le; 1. |
+|$3/4-\sqrt{\lambda(1-\lambda)}$. | Derivative is not Hölder continuous. | Derivative is not Hölder continuous because $f$ is not Lipschitz continuous. |
+| cosh(_&lambda;_) &minus; 3/4. | _&alpha;_=1 (derivative is Lipschitz continuous).<br>_H_ = cosh(1). | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
+| $\lambda\cdot\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_H_ = $z(2+z\lambda)/4$. | Continuous second derivative. _H_ is an upper bound of its absolute value. $z>0$. |
+| $\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_H_ = $(z^2)/4$. | Continuous second derivative; _H_ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z>0$. |
+| _&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise. | _&alpha;_=1.<br>_H_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1. |
+| exp(&minus;_&lambda;_). | _&alpha;_=1.<br>_H_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1.[^16] |
+| _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise. |_&alpha;_=1.<br>_H_=2.| Concave. Lipschitz continuous derivative with Lipschitz constant 2. |
 
 <a id=Results_Used_in_Approximate_Bernoulli_Factories></a>
 
