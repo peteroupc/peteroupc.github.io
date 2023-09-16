@@ -76,3 +76,9 @@ The string returned by `MakeFilename` is normalized using Unicode normalization 
 ### Directory Names
 
 The guidance given here applies to names of directories as they do to file names.
+
+<a id=License></a>
+
+## License
+
+Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

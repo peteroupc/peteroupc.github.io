@@ -3,6 +3,7 @@
 To improve support for MIDI (Musical Instrument Digital Interface) music playback in open-source and other applications, I challenge the community to write the following items, all of which must be released to the public domain (Creative Commons Zero).
 
 - A cross-platform open-source library for _software_ synthesis of MIDI data stored in standard MIDI files (SMF, .mid), using instrument sound banks in SoundFont 2 (.sf2), downloadable sounds (.dls), and in OPL2, OPL3, and other FM synthesis sound banks.  (Similar to _Fluidsynth_, but in the public domain.)
+    - The library should support popular loop-point conventions found in MIDI files.
 - An instrument sound bank for wavetable synthesis of all instruments and drum noises in the General MIDI specification.
     - Instruments should correspond as closely as possible to those in the General MIDI specification, but should be small in file size or be algorithmically generated.
     - Instruments can be generated using the public-domain single-cycle wave forms found in the AdventureKid Wave Form collection, found at: [**AKWF-FREE**](https://github.com/KristofferKarlAxelEkstrand/AKWF-FREE).
@@ -10,3 +11,9 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
     - The instrument sound bank should be in either SoundFont 2 (.sf2) or downloadable sounds (.dls) format.
     - The volume of all instruments in the sound bank should be normalized; some instruments should not sound louder than others.
 - An instrument sound bank for FM synthesis of all instruments and drum noises in the General MIDI specification. Instruments should correspond as closely as possible to those in the General MIDI specification.
+
+<a id=License></a>
+
+## License
+
+Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
