@@ -44,6 +44,7 @@ In the articles above, I put an emphasis on random variate generation that:
 **Other Articles**
 
 * [**Graphics Challenge for Retro Style Games**](./graphics.html)
+* [**A request for a Public-Domain music synthesis library and sound banks**](./music.html)
 * [**A Wish for a New Atlas**](./newatlas.html)
 * [**A Note on Hash Functions**](./hash.html)
 * [**Pseudocode Conventions**](./pseudocode.html)
