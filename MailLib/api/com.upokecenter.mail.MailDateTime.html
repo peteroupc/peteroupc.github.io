@@ -8,32 +8,41 @@
 
 <h1>com.upokecenter.mail.MailDateTime</h1>
 
+<pre>public final class MailDateTime extends Object
+</pre>
+
+<p>Contains methods for parsing and generating date-time strings following the
+ Internet Message Format (RFC 5322).</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>static java.lang.String GenerateDateString​(int[] dateTime)</code><br>
+<li><p><code>static String GenerateDateString(int[] dateTime)</code><br>
 Generates a date-time string following the Internet Message Format (RFC
-5322) from an 8-element array.</li>
-<li><code>static java.lang.String GenerateDateString​(int[] dateTime,
+5322) from an 8-element array.</p></li>
+<li><p><code>static String GenerateDateString(int[] dateTime,
 boolean gmt)</code><br>
 Generates a date-time string following the Internet Message Format (RFC
-5322) from an 8-element array.</li>
-<li><code>static int[] ParseDateString​(java.lang.String str)</code><br>
+5322) from an 8-element array.</p></li>
+<li><p><code>static int[] ParseDateString(String str)</code><br>
 Gets the date and time extracted from a date-time string following the
-Internet Message Format (RFC 5322).</li>
-<li><code>static int[] ParseDateString​(java.lang.String str,
+Internet Message Format (RFC 5322).</p></li>
+<li><p><code>static int[] ParseDateString(String str,
 boolean parseObsoleteZones)</code><br>
 Gets the date and time extracted from a date-time string following the
-Internet Message Format (RFC 5322), with an option to allow obsolete
-time zone strings to appear in the date-time string.</li>
-<li><code>static int[] ParseDateStringHttp​(java.lang.String v)</code><br>
+Internet Message Format (RFC 5322), with an option to allow obsolete time
+zone strings to appear in the date-time string.</p></li>
+<li><p><code>static int[] ParseDateStringHttp(String v)</code><br>
 Parses a date string in one of the three formats allowed by HTTP/1.1 (RFC
-7231).</li>
+7231).</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='GenerateDateString(int[])'>GenerateDateString</a></h3>
+<h3>GenerateDateString</h3>
+
+<pre>public static String GenerateDateString(int[] dateTime)
+</pre>
 
 <p>Generates a date-time string following the Internet Message Format (RFC
  5322) from an 8-element array.</p>
@@ -42,8 +51,8 @@ Parses a date string in one of the three formats allowed by HTTP/1.1 (RFC
 
 <ul>
 <li><code>dateTime</code> - The date and time in the form of an 8-element array. See
-<code>ParseDateString(string, boolean)</code> for information on the
-format of this parameter.</li>
+<code>ParseDateString(string, boolean)</code> for information on the format of
+this parameter.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -55,11 +64,14 @@ format of this parameter.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
+<li><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
 (see <code>ParseDateString(string, boolean)</code>).</li>
 </ul>
 
-<h3><a id='GenerateDateString(int[],boolean)'>GenerateDateString</a></h3>
+<h3>GenerateDateString</h3>
+
+<pre>public static String GenerateDateString(int[] dateTime, boolean gmt)
+</pre>
 
 <p>Generates a date-time string following the Internet Message Format (RFC
  5322) from an 8-element array.</p>
@@ -68,8 +80,8 @@ format of this parameter.</li>
 
 <ul>
 <li><p><code>dateTime</code> - The date and time in the form of an 8-element array. See
-<code>ParseDateString(string, boolean)</code> for information on the
-format of this parameter.</p></li>
+<code>ParseDateString(string, boolean)</code> for information on the format of
+this parameter.</p></li>
 <li><p><code>gmt</code> - If true, uses the string &quot;GMT&quot; as the time zone offset.</p></li>
 </ul>
 
@@ -82,63 +94,65 @@ format of this parameter.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
+<li><p><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
 (see <code>ParseDateString(string, boolean)</code>).</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>dateTime</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>dateTime</code> is null.</p></li>
 </ul>
 
-<h3><a id='ParseDateString(java.lang.String,boolean)'>ParseDateString</a></h3>
+<h3>ParseDateString</h3>
+
+<pre>public static int[] ParseDateString(String str, boolean parseObsoleteZones)
+</pre>
 
 <p>Gets the date and time extracted from a date-time string following the
- Internet Message Format (RFC 5322), with an option to allow obsolete
- time zone strings to appear in the date-time string. If an array is
- returned, the elements of that array (starting from 0) are as
- follows: <ul> <li>0 - The year. For example, the value 2000 means
- 2000 C.E. This value cannot be less than 1900 (a restriction
- specified by RFC 5322).</li> <li>1 - Month of the year, from 1
- (January) through 12 (December).</li> <li>2 - Day of the month, from
- 1 through 31.</li> <li>3 - Hour of the day, from 0 through 23.</li>
- <li>4 - Minute of the hour, from 0 through 59.</li> <li>5 - Second
- of the minute, from 0 through 59, except this value can be 60 if the
- hour of the day is 23 and the minute of the hour is 59, to
- accommodate leap seconds. (Leap seconds are additional seconds added
- to adjust international atomic time, or TAI, to an approximation of
- astronomical time known as coordinated universal time, or UTC.)</li>
- <li>6 - Fractional seconds. The return value will always have this
- value set to 0, since fractional seconds cannot be expressed in the
- date-time format specified by RFC 5322. This value cannot be less
- than 0.</li> <li>7 - Number of minutes to subtract from this date
- and time to get global time. This number can be positive or
- negative, but cannot be less than -1439 or greater than
- 1439.</li></ul> <p>If a method or property uses an array of this
- format and refers to this method&#39;s documentation, that array may
- have any number of elements 8 or greater.</p></p>
+ Internet Message Format (RFC 5322), with an option to allow obsolete time
+ zone strings to appear in the date-time string. If an array is returned, the
+ elements of that array (starting from 0) are as follows: </p><ul> <li>0 -
+ The year. For example, the value 2000 means 2000 C.E. This value cannot be
+ less than 1900 (a restriction specified by RFC 5322).</li><li>1 - Month of
+ the year, from 1 (January) through 12 (December).</li><li>2 - Day of the
+ month, from 1 through 31.</li><li>3 - Hour of the day, from 0 through
+ 23.</li><li>4 - Minute of the hour, from 0 through 59.</li><li>5 - Second of
+ the minute, from 0 through 59, except this value can be 60 if the hour of
+ the day is 23 and the minute of the hour is 59, to accommodate leap seconds.
+ (Leap seconds are additional seconds added to adjust international atomic
+ time, or TAI, to an approximation of astronomical time known as coordinated
+ universal time, or UTC.)</li><li>6 - Fractional seconds. The return value
+ will always have this value set to 0, since fractional seconds cannot be
+ expressed in the date-time format specified by RFC 5322. This value cannot
+ be less than 0.</li><li>7 - Number of minutes to subtract from this date and
+ time to get global time. This number can be positive or negative, but cannot
+ be less than -1439 or greater than 1439.</li></ul> <p>If a method or
+ property uses an array of this format and refers to this method's
+ documentation, that array may have any number of elements 8 or greater.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>str</code> - A date-time string.</p></li>
 <li><p><code>parseObsoleteZones</code> - If set to <code>true</code>, this method allows
-obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and
-certain three-letter combinations) to appear in the date-time
-string.</p></li>
+obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain
+three-letter combinations) to appear in the date-time string.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>An 8-element array containing the date and time, or <code>null</code> if
-<code>str</code> is null, empty, or syntactically invalid, or if the
-string&#39;s year would overflow the range of a 32-bit signed integer.</li>
+<code>str</code> is null, empty, or syntactically invalid, or if the string&#39;s
+year would overflow the range of a 32-bit signed integer.</li>
 </ul>
 
-<h3><a id='ParseDateString(java.lang.String)'>ParseDateString</a></h3>
+<h3>ParseDateString</h3>
+
+<pre>public static int[] ParseDateString(String str)
+</pre>
 
 <p>Gets the date and time extracted from a date-time string following the
- Internet Message Format (RFC 5322). Obsolete time zone strings are
- not allowed to appear in the date-time string. See
- <code>ParseDateString(string, boolean)</code> for information on this
- method&#39;s return value.</p>
+ Internet Message Format (RFC 5322). Obsolete time zone strings are not
+ allowed to appear in the date-time string. See <code>
+ ParseDateString(string, boolean)</code> for information on this method&#39;s return
+ value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -150,11 +164,14 @@ string&#39;s year would overflow the range of a 32-bit signed integer.</li>
 
 <ul>
 <li>An 8-element array containing the date and time, or <code>null</code> if
-<code>str</code> is null, empty, or syntactically invalid, or if the
-string&#39;s year would overflow the range of a 32-bit signed integer.</li>
+<code>str</code> is null, empty, or syntactically invalid, or if the string&#39;s
+year would overflow the range of a 32-bit signed integer.</li>
 </ul>
 
-<h3><a id='ParseDateStringHttp(java.lang.String)'>ParseDateStringHttp</a></h3>
+<h3>ParseDateStringHttp</h3>
+
+<pre>public static int[] ParseDateStringHttp(String v)
+</pre>
 
 <p>Parses a date string in one of the three formats allowed by HTTP/1.1 (RFC
  7231).</p>
@@ -183,15 +200,4 @@ ParseDateString(string, boolean)</code> method.</li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

@@ -8,35 +8,46 @@
 
 <h1>com.upokecenter.text.Normalizer</h1>
 
-<h2>Constructors</h2>
+<pre>@Deprecated public final class Normalizer extends Object
+</pre>
 
-<ul>
-<li><code>Normalizer​(java.lang.String str,
-Normalization form) Normalizer</code><br>
-Deprecated. Initializes a new instance of the Normalizer
-class.</li>
-</ul>
+<p>Implements the Unicode normalization algorithm and contains methods and
+ functionality to test and convert Unicode strings for Unicode
+ normalization.</p> <p>NOTICE: While this class's source code is in the
+ public domain, the class uses an class, called NormalizationData,
+ that includes data derived from the Unicode Character Database. See the
+ documentation for the NormalizerInput class for the permission notice for
+ the Unicode Character Database.</p>
+
+<h2>Constructors</h2>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>static boolean IsNormalized​(java.lang.String str,
+<li><p><code>static boolean IsNormalized(String str,
 Normalization form)</code><br>
-Deprecated. Returns whether this string is normalized.</li>
-<li><code>static java.lang.String Normalize​(java.lang.String str,
+Deprecated.
+Returns whether this string is normalized.</p></li>
+<li><p><code>static String Normalize(String str,
 Normalization form)</code><br>
-Deprecated. Converts a string to the given Unicode normalization form.</li>
-<li><code>int Read​(int[] chars,
+Deprecated.
+Converts a string to the given Unicode normalization form.</p></li>
+<li><p><code>int Read(int[] chars,
 int index,
 int length)</code><br>
-Deprecated. Reads a sequence of Unicode code points from a data source.</li>
-<li><code>int ReadChar()</code><br>
-Deprecated. Reads a Unicode character from a data source.</li>
+Deprecated.
+Reads a sequence of Unicode code points from a data source.</p></li>
+<li><p><code>int ReadChar()</code><br>
+Deprecated.
+Reads a Unicode character from a data source.</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='Normalize(java.lang.String,com.upokecenter.text.Normalization)'>Normalize</a></h3>
+<h3>Normalize</h3>
+
+<pre>public static String Normalize(String str, Normalization form)
+</pre>
 
 <p>Converts a string to the given Unicode normalization form.</p>
 
@@ -56,10 +67,13 @@ Deprecated. Reads a Unicode character from a data source.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
-<h3><a id='IsNormalized(java.lang.String,com.upokecenter.text.Normalization)'>IsNormalized</a></h3>
+<h3>IsNormalized</h3>
+
+<pre>public static boolean IsNormalized(String str, Normalization form)
+</pre>
 
 <p>Returns whether this string is normalized.</p>
 
@@ -74,11 +88,14 @@ Deprecated. Reads a Unicode character from a data source.</li>
 
 <ul>
 <li><code>true</code> if this string is normalized; otherwise, <code>false</code>.
-Returns <code>false</code> if the string contains an unpaired surrogate
-code point.</li>
+Returns <code>false</code> if the string contains an unpaired surrogate code
+point.</li>
 </ul>
 
-<h3><a id='ReadChar()'>ReadChar</a></h3>
+<h3>ReadChar</h3>
+
+<pre>public int ReadChar()
+</pre>
 
 <p>Reads a Unicode character from a data source.</p>
 
@@ -89,7 +106,10 @@ code point.</li>
 0x10ffff), or the value -1 indicating the end of the source.</li>
 </ul>
 
-<h3><a id='Read(int[],int,int)'>Read</a></h3>
+<h3>Read</h3>
+
+<pre>public int Read(int[] chars, int index, int length)
+</pre>
 
 <p>Reads a sequence of Unicode code points from a data source.</p>
 
@@ -111,10 +131,10 @@ source is reached.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
-than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s
-length minus <code>index</code> is less than <code>length</code>.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
+than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s length
+minus <code>index</code> is less than <code>length</code>.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
@@ -128,15 +148,4 @@ length minus <code>index</code> is less than <code>length</code>.</p></li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

@@ -8,52 +8,95 @@
 
 <h1>com.upokecenter.text.NormalizerInput</h1>
 
-<h2>Constructors</h2>
+<pre>public final class NormalizerInput extends Object implements com.upokecenter.text.ICharacterInput
+</pre>
 
-<ul>
-<li><code>NormalizerInput​(com.upokecenter.text.ICharacterInput input) NormalizerInput</code><br>
-Initializes a new instance of the NormalizerInput class using Normalization Form
-C.</li>
-<li><code>NormalizerInput​(com.upokecenter.text.ICharacterInput stream,
-Normalization form) NormalizerInput</code><br>
-Initializes a new instance of the NormalizerInput class.</li>
-<li><code>NormalizerInput​(java.lang.String str) NormalizerInput</code><br>
-Initializes a new instance of the NormalizerInput class using Normalization Form
-C.</li>
-<li><code>NormalizerInput​(java.lang.String str,
-int index,
-int length,
-Normalization form) NormalizerInput</code><br>
-Initializes a new instance of the NormalizerInput class.</li>
-<li><code>NormalizerInput​(java.lang.String str,
-Normalization form) NormalizerInput</code><br>
-Initializes a new instance of the NormalizerInput class.</li>
-</ul>
+<p>A character input class that implements the Unicode normalization
+ algorithm and contains methods and functionality to test and convert text
+ strings for normalization. This is similar to the deprecated Normalizer
+ class, except it implements the ICharacterInput interface.</p> <p>The
+ Unicode Standard includes characters, such as an acute accent, that can be
+ combined with other characters to make new characters. For example, the
+ letter E combines with an acute accent to make E-acute (É). In some cases,
+ the combined form (E-acute) should be treated as equivalent to the
+ uncombined form (E plus acute). For this reason, the standard defines four
+ <i>normalization forms</i> that convert strings to a single equivalent
+ form:</p> <ul> <li><b>NFD</b> (Normalization Form D) decomposes combined
+ forms to their constituent characters (E plus acute, for example), then
+ reorders combining marks to a standardized order. This is called canonical
+ decomposition.</li><li><b>NFC</b> does canonical decomposition, then
+ combines certain constituent characters to their composites (E-acute, for
+ example). This is called canonical composition.</li><li>Two normalization
+ forms, <b>NFKC</b> and <b>NFKD</b>, are similar to NFC and NFD, except they
+ also "decompose" certain characters, such as ligatures, font or positional
+ variants, and subscripts, whose visual distinction can matter in some
+ contexts. This is called compatibility decomposition.</li></ul> <p>For more
+ information, see Standard Annex 15 at <code>
+ http://www.unicode.org/reports/tr15/</code>.</p> <p><b>Thread safety:</b> This
+ class is mutable; its properties can be changed. None of its instance
+ methods are designed to be thread safe. Therefore, access to objects from
+ this class must be synchronized if multiple threads can access them at the
+ same time.</p> <p>NOTICE: While this class's source code is in the public
+ domain, the class uses an class, called NormalizationData, that
+ includes data derived from the Unicode Character Database. In case doing so
+ is required, the permission notice for the Unicode Character Database is
+ given here:</p> <p>COPYRIGHT AND PERMISSION NOTICE.</p> <p>Copyright (c)
+ 1991-2014 Unicode, Inc. All rights reserved. Distributed under the Terms of
+ Use in http://www.unicode.org/copyright.html.</p> <p>Permission is hereby
+ granted, free of charge, to any person obtaining a copy of the Unicode data
+ files and any associated documentation (the "Data Files") or Unicode
+ software and any associated documentation (the "Software") to deal in the
+ Data Files or Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, and/or sell copies
+ of the Data Files or Software, and to permit persons to whom the Data Files
+ or Software are furnished to do so, provided that (a) this copyright and
+ permission notice appear with all copies of the Data Files or Software, (b)
+ this copyright and permission notice appear in associated documentation, and
+ (c) there is clear notice in each modified Data File or in the Software as
+ well as in the documentation associated with the Data File(s) or Software
+ that the data or software has been modified.</p> <p>THE DATA FILES AND
+ SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS.
+ IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE BE
+ LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES, OR
+ ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
+ IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA FILES OR
+ SOFTWARE.</p> <p>Except as contained in this notice, the name of a copyright
+ holder shall not be used in advertising or otherwise to promote the sale,
+ use or other dealings in these Data Files or Software without prior written
+ authorization of the copyright holder.</p>
+
+<h2>Constructors</h2>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>static boolean IsNormalized​(com.upokecenter.text.ICharacterInput chars,
+<li><p><code>static boolean IsNormalized(com.upokecenter.text.ICharacterInput chars,
 Normalization form)</code><br>
-Determines whether the text provided by a character input is normalized.</li>
-<li><code>static boolean IsNormalized​(java.lang.String str,
+Determines whether the text provided by a character input is normalized.</p></li>
+<li><p><code>static boolean IsNormalized(String str,
 Normalization form)</code><br>
 Determines whether the given string is in the given Unicode normalization
-form.</li>
-<li><code>static java.lang.String Normalize​(java.lang.String str,
+form.</p></li>
+<li><p><code>static String Normalize(String str,
 Normalization form)</code><br>
-Converts a string to the given Unicode normalization form.</li>
-<li><code>int Read​(int[] chars,
+Converts a string to the given Unicode normalization form.</p></li>
+<li><p><code>int Read(int[] chars,
 int index,
 int length)</code><br>
-Reads a sequence of Unicode code points from a data source.</li>
-<li><code>int ReadChar()</code><br>
-Reads a Unicode character from a data source.</li>
+Reads a sequence of Unicode code points from a data source.</p></li>
+<li><p><code>int ReadChar()</code><br>
+Reads a Unicode character from a data source.</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='IsNormalized(com.upokecenter.text.ICharacterInput,com.upokecenter.text.Normalization)'>IsNormalized</a></h3>
+<h3>IsNormalized</h3>
+
+<pre>public static boolean IsNormalized(com.upokecenter.text.ICharacterInput chars, Normalization form)
+</pre>
 
 <p>Determines whether the text provided by a character input is normalized.</p>
 
@@ -73,10 +116,13 @@ Reads a Unicode character from a data source.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>chars</code> is null.</li>
 </ul>
 
-<h3><a id='Normalize(java.lang.String,com.upokecenter.text.Normalization)'>Normalize</a></h3>
+<h3>Normalize</h3>
+
+<pre>public static String Normalize(String str, Normalization form)
+</pre>
 
 <p>Converts a string to the given Unicode normalization form.</p>
 
@@ -96,12 +142,15 @@ Reads a Unicode character from a data source.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>str</code> contains an unpaired
+<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> contains an unpaired
 surrogate code point.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
-<h3><a id='IsNormalized(java.lang.String,com.upokecenter.text.Normalization)'>IsNormalized</a></h3>
+<h3>IsNormalized</h3>
+
+<pre>public static boolean IsNormalized(String str, Normalization form)
+</pre>
 
 <p>Determines whether the given string is in the given Unicode normalization
  form.</p>
@@ -118,17 +167,20 @@ text.</p></li>
 
 <ul>
 <li><code>true</code> if the given string is in the given Unicode
-normalization form; otherwise, <code>false</code>. Returns <code>false</code>
-if the string contains an unpaired surrogate code point.</li>
+normalization form; otherwise, <code>false</code>. Returns <code>false</code> if the
+string contains an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
-<h3><a id='ReadChar()'>ReadChar</a></h3>
+<h3>ReadChar</h3>
+
+<pre>public int ReadChar()
+</pre>
 
 <p>Reads a Unicode character from a data source.</p>
 
@@ -145,7 +197,10 @@ if the string contains an unpaired surrogate code point.</li>
 0x10ffff), or the value -1 indicating the end of the source.</li>
 </ul>
 
-<h3><a id='Read(int[],int,int)'>Read</a></h3>
+<h3>Read</h3>
+
+<pre>public int Read(int[] chars, int index, int length)
+</pre>
 
 <p>Reads a sequence of Unicode code points from a data source.</p>
 
@@ -175,10 +230,10 @@ source is reached.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
-than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s
-length minus <code>index</code> is less than <code>length</code>.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
+than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s length
+minus <code>index</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
@@ -192,15 +247,4 @@ length minus <code>index</code> is less than <code>length</code>.</p></li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

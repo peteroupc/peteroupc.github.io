@@ -8,17 +8,19 @@
 
 <h1>com.upokecenter.mail.MessageDataException</h1>
 
-<h2>Constructors</h2>
+<pre>public final class MessageDataException extends RuntimeException
+</pre>
 
-<ul>
-<li><code>MessageDataException() MessageDataException</code><br>
-Initializes a new instance of the MessageDataException class.</li>
-<li><code>MessageDataException​(java.lang.String message) MessageDataException</code><br>
-Initializes a new instance of the MessageDataException class.</li>
-<li><code>MessageDataException​(java.lang.String message,
-java.lang.Throwable innerException) MessageDataException</code><br>
-Initializes a new instance of the MessageDataException class.</li>
-</ul>
+<p>Exception thrown when a message has invalid syntax. </p> <p>This library
+ may throw exceptions of this type in certain cases, notably when errors
+ occur, and may supply messages to those exceptions (the message can be
+ accessed through the <code>Message</code> property in.NET or the <code>
+ getMessage()</code> method in Java). These messages are intended to be read by
+ humans to help diagnose the error (or other cause of the exception); they
+ are not intended to be parsed by computer programs, and the exact text of
+ the messages may change at any time between versions of this library.</p>
+
+<h2>Constructors</h2>
 
 <h2>Methods</h2>
 
@@ -33,15 +35,4 @@ Initializes a new instance of the MessageDataException class.</li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

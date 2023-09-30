@@ -8,26 +8,30 @@
 
 <h1>com.upokecenter.mail.StringAndQuality</h1>
 
-<h2>Constructors</h2>
+<pre>public final class StringAndQuality extends Object
+</pre>
 
-<ul>
-<li><code>StringAndQuality​(java.lang.String value,
-int quality) StringAndQuality</code><br>
-Initializes a new instance of the StringAndQuality class.</li>
-</ul>
+<p>Stores an arbitrary string and a &quot;quality value&quot; for that string. For
+ instance, the string can be a language tag, and the &quot;quality value&quot; can be
+ the degree of preference for that language.</p>
+
+<h2>Constructors</h2>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>int getQuality()</code><br>
-Gets the quality value stored by this object.</li>
-<li><code>java.lang.String getValue()</code><br>
-Gets the arbitrary string stored by this object.</li>
+<li><p><code>final int getQuality()</code><br>
+Gets the quality value stored by this object.</p></li>
+<li><p><code>final String getValue()</code><br>
+Gets the arbitrary string stored by this object.</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='getValue()'>getValue</a></h3>
+<h3>getValue</h3>
+
+<pre>public final String getValue()
+</pre>
 
 <p>Gets the arbitrary string stored by this object.</p>
 
@@ -37,7 +41,10 @@ Gets the arbitrary string stored by this object.</li>
 <li>The arbitrary string stored by this object.</li>
 </ul>
 
-<h3><a id='getQuality()'>getQuality</a></h3>
+<h3>getQuality</h3>
+
+<pre>public final int getQuality()
+</pre>
 
 <p>Gets the quality value stored by this object.</p>
 
@@ -58,15 +65,4 @@ Gets the arbitrary string stored by this object.</li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

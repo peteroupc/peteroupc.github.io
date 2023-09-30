@@ -8,32 +8,44 @@
 
 <h1>com.upokecenter.mail.DataUris</h1>
 
+<pre>public final class DataUris extends Object
+</pre>
+
+<p><p>Contains methods for parsing and generating Data URIs (uniform resource
+ identifiers). Data URIs are described in RFC 2397. Examples for Data URIs
+ follow. </p><pre>data:, hello%20world</pre> <pre>data:text/markdown,
+ hello%20world</pre> <pre>data:application/octet-stream;base64,
+ AAAAAA==</pre>.</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>static byte[] DataUriBytes​(java.lang.String uri)</code><br>
+<li><p><code>static byte[] DataUriBytes(String uri)</code><br>
 Extracts the data from a Data URI (uniform resource identifier) in the form
-of a byte array.</li>
-<li><code>static byte[] DataUriBytes​(java.net.URI uri)</code><br>
+of a byte array.</p></li>
+<li><p><code>static byte[] DataUriBytes(URI uri)</code><br>
 Extracts the data from a Data URI (uniform resource identifier) in the form
-of a byte array, where the Data URI is given as a URI object.</li>
-<li><code>static MediaType DataUriMediaType​(java.lang.String uri)</code><br>
+of a byte array, where the Data URI is given as a URI object.</p></li>
+<li><p><code>static MediaType DataUriMediaType(String uri)</code><br>
 Extracts the media type from a Data URI (uniform resource identifier) in the
-form of a text string.</li>
-<li><code>static MediaType DataUriMediaType​(java.net.URI uri)</code><br>
+form of a text string.</p></li>
+<li><p><code>static MediaType DataUriMediaType(URI uri)</code><br>
 Extracts the media type from a Data URI (uniform resource identifier) in the
-form of a URI object.</li>
-<li><code>static java.lang.String MakeDataUri​(byte[] bytes,
+form of a URI object.</p></li>
+<li><p><code>static String MakeDataUri(byte[] bytes,
 MediaType mediaType)</code><br>
 Encodes data with the given media type in a Data URI (uniform resource
-identifier).</li>
-<li><code>static java.lang.String MakeDataUri​(java.lang.String textString)</code><br>
-Encodes text as a Data URI (uniform resource identifier).</li>
+identifier).</p></li>
+<li><p><code>static String MakeDataUri(String textString)</code><br>
+Encodes text as a Data URI (uniform resource identifier).</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='DataUriMediaType(java.lang.String)'>DataUriMediaType</a></h3>
+<h3>DataUriMediaType</h3>
+
+<pre>public static MediaType DataUriMediaType(String uri)
+</pre>
 
 <p>Extracts the media type from a Data URI (uniform resource identifier) in the
  form of a text string.</p>
@@ -54,10 +66,13 @@ syntactically invalid, or is not a Data URI.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
-<h3><a id='DataUriMediaType(java.net.URI)'>DataUriMediaType</a></h3>
+<h3>DataUriMediaType</h3>
+
+<pre>public static MediaType DataUriMediaType(URI uri)
+</pre>
 
 <p>Extracts the media type from a Data URI (uniform resource identifier) in the
  form of a URI object.</p>
@@ -78,10 +93,13 @@ syntactically invalid, or is not a Data URI.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
-<h3><a id='DataUriBytes(java.net.URI)'>DataUriBytes</a></h3>
+<h3>DataUriBytes</h3>
+
+<pre>public static byte[] DataUriBytes(URI uri)
+</pre>
 
 <p>Extracts the data from a Data URI (uniform resource identifier) in the form
  of a byte array, where the Data URI is given as a URI object.</p>
@@ -102,10 +120,13 @@ syntactically invalid, or is not a data URI.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
-<h3><a id='DataUriBytes(java.lang.String)'>DataUriBytes</a></h3>
+<h3>DataUriBytes</h3>
+
+<pre>public static byte[] DataUriBytes(String uri)
+</pre>
 
 <p>Extracts the data from a Data URI (uniform resource identifier) in the form
  of a byte array.</p>
@@ -126,10 +147,13 @@ syntactically invalid, or is not a data URI.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
-<h3><a id='MakeDataUri(java.lang.String)'>MakeDataUri</a></h3>
+<h3>MakeDataUri</h3>
+
+<pre>public static String MakeDataUri(String textString)
+</pre>
 
 <p>Encodes text as a Data URI (uniform resource identifier).</p>
 
@@ -148,10 +172,13 @@ syntactically invalid, or is not a data URI.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>textString</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>textString</code> is null.</li>
 </ul>
 
-<h3><a id='MakeDataUri(byte[],com.upokecenter.mail.MediaType)'>MakeDataUri</a></h3>
+<h3>MakeDataUri</h3>
+
+<pre>public static String MakeDataUri(byte[] bytes, MediaType mediaType)
+</pre>
 
 <p>Encodes data with the given media type in a Data URI (uniform resource
  identifier).</p>
@@ -172,7 +199,7 @@ syntactically invalid, or is not a data URI.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> or <code>
+<li><code>NullPointerException</code> - The parameter <code>bytes</code> or <code>
 mediaType</code> is null.</li>
 </ul>
 
@@ -187,15 +214,4 @@ mediaType</code> is null.</li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

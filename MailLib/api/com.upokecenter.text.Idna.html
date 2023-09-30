@@ -8,28 +8,61 @@
 
 <h1>com.upokecenter.text.Idna</h1>
 
+<pre>public final class Idna extends Object
+</pre>
+
+<p>Contains methods that implement Internationalized Domain Names in
+ Applications (IDNA). IDNA enables using a wider range of letters, numbers,
+ and certain other characters in domain names. This class implements the 2008
+ revision of IDNA, also known as IDNA2008.</p> <p>The following summarizes
+ the rules for domain names in IDNA2008; see RFC5890 for more information and
+ additional terminology.</p> <p>A domain name is divided into one or more
+ strings separated by dots ("."), called <b>labels</b>. For IDNA2008's
+ purposes, a valid label can be an <b>NR-LDH label</b>, an <b>A-label</b>, or
+ a <b>U-label</b>.</p> <p>An LDH label contains only basic uppercase letters,
+ basic lowercase letters, basic digits, and/or "-", and neither begins nor
+ ends with "-". For example, "exa-mple", "EXAMPLE", and "1example" are LDH
+ labels, but not "-example".</p> <p>An NR-LDH label is an LDH label whose
+ third and fourth characters are not both "-". For example, "ex--ample" is
+ not an NR-LDH label.</p> <p>A U-label contains one or more characters
+ outside the Basic Latin range (U+0000 to U+007F) and meets IDNA2008
+ requirements for labels with such characters. An example is "eá".</p> <p>An
+ A-label is an LDH label beginning with "xn--" where the letters can be any
+ combination of basic upper-case and/or basic lower-case letters, and is
+ convertible to a U-label. An example is "xn--e-ufa".</p> <p>An XN-label is
+ an LDH label beginning with "xn--" where the letters can be any combination
+ of basic upper-case and/or basic lower-case letters.</p> <p>NOTICE: While
+ this class's source code is in the public domain, the class uses two
+ internal classes, called <code>NormalizationData</code> and <code>IdnaData</code>,
+ that include data derived from the Unicode Character Database. See the
+ documentation for the NormalizerInput class for the permission notice for
+ the Unicode Character Database.</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>static java.lang.String DecodeDomainName​(java.lang.String value)</code><br>
-Tries to encode each XN-label of the given domain name into Unicode.</li>
-<li><code>static java.lang.String EncodeDomainName​(java.lang.String value)</code><br>
+<li><p><code>static String DecodeDomainName(String value)</code><br>
+Tries to encode each XN-label of the given domain name into Unicode.</p></li>
+<li><p><code>static String EncodeDomainName(String value)</code><br>
 Tries to encode each label of a domain name with code points outside the
-Basic Latin range (U+0000 to U+007F) into an XN-label.</li>
-<li><code>static boolean IsValidDomainName​(java.lang.String str,
+Basic Latin range (U+0000 to U+007F) into an XN-label.</p></li>
+<li><p><code>static boolean IsValidDomainName(String str,
 boolean lookupRules)</code><br>
 Determines whether the given string is a domain name containing only
-U-labels, A-labels, NR-LDH labels, or any combination of these,
-separated by dots (&quot;.&quot;).</li>
+U-labels, A-labels, NR-LDH labels, or any combination of these, separated by
+dots (&quot;.&quot;).</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='DecodeDomainName(java.lang.String)'>DecodeDomainName</a></h3>
+<h3>DecodeDomainName</h3>
+
+<pre>public static String DecodeDomainName(String value)
+</pre>
 
 <p>Tries to encode each XN-label of the given domain name into Unicode. This
- method does not check the syntactic validity of the domain name
- before proceeding.</p>
+ method does not check the syntactic validity of the domain name before
+ proceeding.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -47,15 +80,17 @@ where this is not possible remain unchanged.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>value</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>value</code> is null.</li>
 </ul>
 
-<h3><a id='EncodeDomainName(java.lang.String)'>EncodeDomainName</a></h3>
+<h3>EncodeDomainName</h3>
+
+<pre>public static String EncodeDomainName(String value)
+</pre>
 
 <p>Tries to encode each label of a domain name with code points outside the
- Basic Latin range (U+0000 to U+007F) into an XN-label. This method
- does not check the syntactic validity of the domain name before
- proceeding.</p>
+ Basic Latin range (U+0000 to U+007F) into an XN-label. This method does not
+ check the syntactic validity of the domain name before proceeding.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -67,29 +102,32 @@ where this is not possible remain unchanged.</li>
 
 <ul>
 <li>The domain name where each label with code points outside the Basic
-Latin range (U+0000 to U+007F) is encoded into an XN-label. Labels
-where this is not possible remain unchanged.</li>
+Latin range (U+0000 to U+007F) is encoded into an XN-label. Labels where
+this is not possible remain unchanged.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>value</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>value</code> is null.</li>
 </ul>
 
-<h3><a id='IsValidDomainName(java.lang.String,boolean)'>IsValidDomainName</a></h3>
+<h3>IsValidDomainName</h3>
+
+<pre>public static boolean IsValidDomainName(String str, boolean lookupRules)
+</pre>
 
 <p>Determines whether the given string is a domain name containing only
- U-labels, A-labels, NR-LDH labels, or any combination of these,
-  separated by dots (&quot;.&quot;).</p>
+ U-labels, A-labels, NR-LDH labels, or any combination of these, separated by
+ dots (&quot;.&quot;).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>lookupRules</code> - If true, uses rules to apply when looking up the string
-as a domain name. If false, uses rules to apply when registering the
-string as a domain name.</p></li>
+as a domain name. If false, uses rules to apply when registering the string
+as a domain name.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -102,7 +140,7 @@ name; otherwise; false.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
@@ -116,15 +154,4 @@ name; otherwise; false.</li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

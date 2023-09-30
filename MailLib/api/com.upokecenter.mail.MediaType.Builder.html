@@ -8,51 +8,46 @@
 
 <h1>com.upokecenter.mail.MediaType.Builder</h1>
 
-<h2>Constructors</h2>
+<pre>public static final class MediaType.Builder extends Object
+</pre>
 
-<ul>
-<li><code>Builder()</code><br>
-Initializes a new instance of the {@link
-com.upokecenter.mail.MediaType.getBuilder()} class, using the type
-&quot;application/octet-stream&quot; .</li>
-<li><code>Builder​(MediaType mt)</code><br>
-Initializes a new instance of the {@link
-com.upokecenter.mail.MediaType.getBuilder()} class using the data from
-another media type.</li>
-<li><code>Builder​(java.lang.String type,
-java.lang.String subtype)</code><br>
-Initializes a new instance of the {@link
-com.upokecenter.mail.MediaType.getBuilder()} class.</li>
-</ul>
+<p>A mutable data type that allows a media type object to be built.</p>
+
+<h2>Constructors</h2>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>java.lang.String getSubType()</code><br>
-Gets this value&#39;s subtype.</li>
-<li><code>java.lang.String getTopLevelType()</code><br>
-Gets this value&#39;s top-level type.</li>
-<li><code>MediaType.Builder RemoveParameter​(java.lang.String name)</code><br>
-Removes a parameter from this builder object.</li>
-<li><code>MediaType.Builder SetParameter​(java.lang.String name,
-java.lang.String value)</code><br>
-Sets a parameter&#39;s name and value for this media type.</li>
-<li><code>void setSubType​(java.lang.String value)</code><br></li>
-<li><code>MediaType.Builder SetSubType​(java.lang.String str)</code><br>
-Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
-<li><code>void setTopLevelType​(java.lang.String value)</code><br></li>
-<li><code>MediaType.Builder SetTopLevelType​(java.lang.String str)</code><br>
-Sets this media type&#39;s top-level type.</li>
-<li><code>MediaType ToMediaType()</code><br>
-Converts this builder to an immutable media type object.</li>
-<li><code>java.lang.String toString() MediaType.toString</code><br>
+<li><p><code>final String getSubType()</code><br>
+Gets this value&#39;s subtype.</p></li>
+<li><p><code>final String getTopLevelType()</code><br>
+Gets this value&#39;s top-level type.</p></li>
+<li><p><code>MediaType.Builder RemoveParameter(String name)</code><br>
+Removes a parameter from this builder object.</p></li>
+<li><p><code>MediaType.Builder SetParameter(String name,
+String value)</code><br>
+Sets a parameter&#39;s name and value for this media type.</p></li>
+<li><p><code>final void setSubType(String value)</code><br>
+ </p></li>
+<li><p><code>MediaType.Builder SetSubType(String str)</code><br>
+Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p></li>
+<li><p><code>final void setTopLevelType(String value)</code><br>
+ </p></li>
+<li><p><code>MediaType.Builder SetTopLevelType(String str)</code><br>
+Sets this media type&#39;s top-level type.</p></li>
+<li><p><code>MediaType ToMediaType()</code><br>
+Converts this builder to an immutable media type object.</p></li>
+<li><p><code>String toString()</code><br>
 Converts this object to a text string of the media type it represents, in
-the same form as MediaType.toString.</li>
+the same form as MediaType.toString.</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='getTopLevelType()'>getTopLevelType</a></h3>
+<h3>getTopLevelType</h3>
+
+<pre>public final String getTopLevelType()
+</pre>
 
 <p>Gets this value&#39;s top-level type.</p>
 
@@ -66,15 +61,21 @@ the same form as MediaType.toString.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The property is being set and the value is
+<li><p><code>NullPointerException</code> - The property is being set and the value is
 null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The property is being set and the value is
+<li><p><code>IllegalArgumentException</code> - The property is being set and the value is
 syntactically invalid for a top-level type.</p></li>
 </ul>
 
-<h3><a id='setTopLevelType(java.lang.String)'>setTopLevelType</a></h3>
+<h3>setTopLevelType</h3>
 
-<h3><a id='getSubType()'>getSubType</a></h3>
+<pre>public final void setTopLevelType(String value)
+</pre>
+
+<h3>getSubType</h3>
+
+<pre>public final String getSubType()
+</pre>
 
 <p>Gets this value&#39;s subtype.</p>
 
@@ -88,15 +89,21 @@ syntactically invalid for a top-level type.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The property is being set and the value is
+<li><p><code>NullPointerException</code> - The property is being set and the value is
 null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The property is being set and the value is
+<li><p><code>IllegalArgumentException</code> - The property is being set and the value is
 syntactically invalid for a subtype.</p></li>
 </ul>
 
-<h3><a id='setSubType(java.lang.String)'>setSubType</a></h3>
+<h3>setSubType</h3>
 
-<h3><a id='ToMediaType()'>ToMediaType</a></h3>
+<pre>public final void setSubType(String value)
+</pre>
+
+<h3>ToMediaType</h3>
+
+<pre>public MediaType ToMediaType()
+</pre>
 
 <p>Converts this builder to an immutable media type object.</p>
 
@@ -106,12 +113,15 @@ syntactically invalid for a subtype.</p></li>
 <li>A MediaType object.</li>
 </ul>
 
-<h3><a id='SetTopLevelType(java.lang.String)'>SetTopLevelType</a></h3>
+<h3>SetTopLevelType</h3>
+
+<pre>public MediaType.Builder SetTopLevelType(String str)
+</pre>
 
 <p>Sets this media type&#39;s top-level type. This method enables the pattern of
- method chaining (e.g., <code>new...().getSet()...().getSet()...()</code>) unlike
- with the TopLevelType property in.NET or the setTopLevelType method
- (with small s) in Java.</p>
+ method chaining (e.g., <code>new...().getSet()...().getSet()...()</code>) unlike with the
+ TopLevelType property in.NET or the setTopLevelType method (with small s) in
+ Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -129,12 +139,15 @@ syntactically invalid for a subtype.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>str</code> is syntactically invalid
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> is syntactically invalid
 for a top-level type.</p></li>
 </ul>
 
-<h3><a id='RemoveParameter(java.lang.String)'>RemoveParameter</a></h3>
+<h3>RemoveParameter</h3>
+
+<pre>public MediaType.Builder RemoveParameter(String name)
+</pre>
 
 <p>Removes a parameter from this builder object. Does nothing if the
  parameter&#39;s name doesn&#39;t exist.</p>
@@ -144,9 +157,8 @@ for a top-level type.</p></li>
 <ul>
 <li><code>name</code> - Name of the parameter to remove. The name is compared using a
 basic case-insensitive comparison. (Two strings are equal in such a
-comparison, if they match after converting the basic upper-case
-letters A to Z (U+0041 to U+005A) in both strings to basic
-lower-case letters.).</li>
+comparison, if they match after converting the basic upper-case letters A to
+Z (U+0041 to U+005A) in both strings to basic lower-case letters.).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -158,10 +170,13 @@ lower-case letters.).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>name</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
 </ul>
 
-<h3><a id='SetParameter(java.lang.String,java.lang.String)'>SetParameter</a></h3>
+<h3>SetParameter</h3>
+
+<pre>public MediaType.Builder SetParameter(String name, String value)
+</pre>
 
 <p>Sets a parameter&#39;s name and value for this media type.</p>
 
@@ -169,10 +184,10 @@ lower-case letters.).</li>
 
 <ul>
 <li><p><code>name</code> - Name of the parameter to set, such as &quot;charset&quot; . The name is
-compared using a basic case-insensitive comparison. (Two strings are
-equal in such a comparison, if they match after converting the basic
-upper-case letters A to Z (U+0041 to U+005A) in both strings to
-basic lower-case letters.).</p></li>
+compared using a basic case-insensitive comparison. (Two strings are equal
+in such a comparison, if they match after converting the basic upper-case
+letters A to Z (U+0041 to U+005A) in both strings to basic lower-case
+letters.).</p></li>
 <li><p><code>value</code> - A text string giving the parameter&#39;s value.</p></li>
 </ul>
 
@@ -185,18 +200,21 @@ basic lower-case letters.).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>value</code> or <code>name</code> is
+<li><p><code>NullPointerException</code> - The parameter <code>value</code> or <code>name</code> is
 null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>name</code> is empty or
+<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty or
 syntactically invalid.</p></li>
 </ul>
 
-<h3><a id='SetSubType(java.lang.String)'>SetSubType</a></h3>
+<h3>SetSubType</h3>
+
+<pre>public MediaType.Builder SetSubType(String str)
+</pre>
 
 <p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; . This method
- enables the pattern of method chaining (e.g.,
- <code>new...().getSet()...().getSet()...()</code>) unlike with the SubType property
- in.NET or the setSubType method (with small s) in Java.</p>
+ enables the pattern of method chaining (e.g., <code>
+ new...().getSet()...().getSet()...()</code>) unlike with the SubType property in.NET or the
+ setSubType method (with small s) in Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -213,12 +231,15 @@ syntactically invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>str</code> is empty or
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> is empty or
 syntactically invalid.</p></li>
 </ul>
 
-<h3><a id='toString()'>toString</a></h3>
+<h3>toString</h3>
+
+<pre>public String toString()
+</pre>
 
 <p>Converts this object to a text string of the media type it represents, in
  the same form as <code>MediaType.toString</code>.</p>
@@ -226,7 +247,7 @@ syntactically invalid.</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>java.lang.Object</code></li>
+<li><code>toString</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -246,15 +267,4 @@ syntactically invalid.</p></li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>
