@@ -8,38 +8,41 @@
 
 <h1>com.upokecenter.util.ArrayWriter</h1>
 
-<h2>Constructors</h2>
+<pre>public final class ArrayWriter extends Object implements IWriter
+</pre>
 
-<ul>
-<li><code>ArrayWriter() com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class
-with a default backing store size of 16.</li>
-<li><code>ArrayWriter​(int initialSize) com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class.</li>
-</ul>
+<p>An array of bytes that grows as needed.</p>
+
+<h2>Constructors</h2>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>void Clear()</code><br>
-Offers a fast way to reset the length of the array writer&#39;s data to 0.</li>
-<li><code>byte[] ToArray()</code><br>
-Generates an array of all bytes written so far to it.</li>
-<li><code>void write​(byte[] src,
+<li><p><code>void Clear()</code><br>
+Offers a fast way to reset the length of the array writer&#39;s data to 0.</p></li>
+<li><p><code>byte[] ToArray()</code><br>
+Generates an array of all bytes written so far to it.</p></li>
+<li><p><code>void write(byte[] src,
 int offset,
 int length)</code><br>
-Writes a series of bytes to the array.</li>
-<li><code>void write​(int byteValue)</code><br>
-Writes an 8-bit byte to the array.</li>
+Writes a series of bytes to the array.</p></li>
+<li><p><code>void write(int byteValue)</code><br>
+Writes an 8-bit byte to the array.</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='Clear()'>Clear</a></h3>
+<h3>Clear</h3>
+
+<pre>public void Clear()
+</pre>
 
 <p>Offers a fast way to reset the length of the array writer&#39;s data to 0.</p>
 
-<h3><a id='ToArray()'>ToArray</a></h3>
+<h3>ToArray</h3>
+
+<pre>public byte[] ToArray()
+</pre>
 
 <p>Generates an array of all bytes written so far to it.</p>
 
@@ -49,7 +52,10 @@ Writes an 8-bit byte to the array.</li>
 <li>A byte array.</li>
 </ul>
 
-<h3><a id='write(int)'>write</a></h3>
+<h3>write</h3>
+
+<pre>public void write(int byteValue)
+</pre>
 
 <p>Writes an 8-bit byte to the array.</p>
 
@@ -66,7 +72,10 @@ Writes an 8-bit byte to the array.</li>
 bits of this value will be used.</li>
 </ul>
 
-<h3><a id='write(byte[],int,int)'>write</a></h3>
+<h3>write</h3>
+
+<pre>public void write(byte[] src, int offset, int length)
+</pre>
 
 <p>Writes a series of bytes to the array.</p>
 
@@ -89,10 +98,10 @@ bits of this value will be used.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>src</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
-than 0 or greater than <code>src</code> &#39;s length, or <code>src</code> &#39;s
-length minus <code>offset</code> is less than <code>length</code>.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>src</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>src</code> &#39;s length, or <code>src</code> &#39;s length minus
+<code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
@@ -106,15 +115,4 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

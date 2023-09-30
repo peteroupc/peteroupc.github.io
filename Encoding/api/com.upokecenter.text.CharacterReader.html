@@ -8,65 +8,33 @@
 
 <h1>com.upokecenter.text.CharacterReader</h1>
 
-<h2>Constructors</h2>
+<pre>public final class CharacterReader extends Object implements ICharacterInput
+</pre>
 
-<ul>
-<li><code>CharacterReader​(java.io.InputStream stream) CharacterReader</code><br>
-Initializes a new instance of the CharacterReader class; will read the stream as
-UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the
-stream, and replace invalid byte sequences with replacement
-characters (U+FFFD).</li>
-<li><code>CharacterReader​(java.io.InputStream stream,
-int mode) CharacterReader</code><br>
-Initializes a new instance of the CharacterReader class; will skip the
-byte-order mark (U+FEFF) if it appears first in the stream and
-replace invalid byte sequences with replacement characters (U+FFFD).</li>
-<li><code>CharacterReader​(java.io.InputStream stream,
-int mode,
-boolean errorThrow) CharacterReader</code><br>
-Initializes a new instance of the CharacterReader class; will skip the
-byte-order mark (U+FEFF) if it appears first in the stream and a
-UTF-8 stream is detected.</li>
-<li><code>CharacterReader​(java.io.InputStream stream,
-int mode,
-boolean errorThrow,
-boolean dontSkipUtf8Bom) CharacterReader</code><br>
-Initializes a new instance of the CharacterReader class.</li>
-<li><code>CharacterReader​(java.lang.String str) CharacterReader</code><br>
-Initializes a new instance of the CharacterReader class.</li>
-<li><code>CharacterReader​(java.lang.String str,
-boolean skipByteOrderMark) CharacterReader</code><br>
-Initializes a new instance of the CharacterReader class.</li>
-<li><code>CharacterReader​(java.lang.String str,
-boolean skipByteOrderMark,
-boolean errorThrow) CharacterReader</code><br>
-Initializes a new instance of the CharacterReader class.</li>
-<li><code>CharacterReader​(java.lang.String str,
-int offset,
-int length) CharacterReader</code><br>
-Initializes a new instance of the CharacterReader class.</li>
-<li><code>CharacterReader​(java.lang.String str,
-int offset,
-int length,
-boolean skipByteOrderMark,
-boolean errorThrow) CharacterReader</code><br>
-Initializes a new instance of the CharacterReader class.</li>
-</ul>
+<p>A general-purpose character input for reading text from byte streams and
+ text strings. When reading byte streams, this class supports the UTF-8
+ character encoding by default, but can be configured to support UTF-16 and
+ UTF-32 as well.</p>
+
+<h2>Constructors</h2>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>int Read​(int[] chars,
+<li><p><code>int Read(int[] chars,
 int index,
 int length)</code><br>
-Reads a series of code points from a Unicode stream or a string.</li>
-<li><code>int ReadChar()</code><br>
-Reads the next character from a Unicode stream or a string.</li>
+Reads a series of code points from a Unicode stream or a string.</p></li>
+<li><p><code>int ReadChar()</code><br>
+Reads the next character from a Unicode stream or a string.</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='Read(int[],int,int)'>Read</a></h3>
+<h3>Read</h3>
+
+<pre>public int Read(int[] chars, int index, int length)
+</pre>
 
 <p>Reads a series of code points from a Unicode stream or a string.</p>
 
@@ -90,20 +58,22 @@ Reads the next character from a Unicode stream or a string.</li>
 
 <ul>
 <li>The number of code points read from the stream. This can be less
-than the <code>length</code> parameter if the end of the stream is
-reached.</li>
+than the <code>length</code> parameter if the end of the stream is reached.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
-than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s
-length minus <code>index</code> is less than <code>length</code>.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
+than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s length
+minus <code>index</code> is less than <code>length</code>.</p></li>
 </ul>
 
-<h3><a id='ReadChar()'>ReadChar</a></h3>
+<h3>ReadChar</h3>
+
+<pre>public int ReadChar()
+</pre>
 
 <p>Reads the next character from a Unicode stream or a string.</p>
 
@@ -131,15 +101,4 @@ reached.</li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

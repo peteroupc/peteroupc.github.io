@@ -8,22 +8,31 @@
 
 <h1>com.upokecenter.text.ICharacterEncoding</h1>
 
+<pre>public interface ICharacterEncoding
+</pre>
+
+<p>Defines methods that can be implemented by classes that convert to and from
+ bytes and character code points.</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>ICharacterDecoder GetDecoder()</code><br>
-Creates a decoder for this character encoding with initial state.</li>
-<li><code>ICharacterEncoder GetEncoder()</code><br>
-Creates an encoder for this character encoding with initial state.</li>
+<li><p><code>ICharacterDecoder GetDecoder()</code><br>
+Creates a decoder for this character encoding with initial state.</p></li>
+<li><p><code>ICharacterEncoder GetEncoder()</code><br>
+Creates an encoder for this character encoding with initial state.</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='GetEncoder()'>GetEncoder</a></h3>
+<h3>GetEncoder</h3>
+
+<pre>ICharacterEncoder GetEncoder()
+</pre>
 
 <p>Creates an encoder for this character encoding with initial state. If the
- encoder is stateless, multiple calls of this method can return the
- same encoder.</p>
+ encoder is stateless, multiple calls of this method can return the same
+ encoder.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -31,11 +40,14 @@ Creates an encoder for this character encoding with initial state.</li>
 <li>A character encoder object.</li>
 </ul>
 
-<h3><a id='GetDecoder()'>GetDecoder</a></h3>
+<h3>GetDecoder</h3>
+
+<pre>ICharacterDecoder GetDecoder()
+</pre>
 
 <p>Creates a decoder for this character encoding with initial state. If the
- decoder is stateless, multiple calls of this method can return the
- same decoder.</p>
+ decoder is stateless, multiple calls of this method can return the same
+ decoder.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -54,15 +66,4 @@ Creates an encoder for this character encoding with initial state.</li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

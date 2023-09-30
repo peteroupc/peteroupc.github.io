@@ -8,20 +8,28 @@
 
 <h1>com.upokecenter.text.ICharacterInput</h1>
 
+<pre>public interface ICharacterInput
+</pre>
+
+<p>An interface for reading Unicode code points from a data source.</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>int Read​(int[] chars,
+<li><p><code>int Read(int[] chars,
 int index,
 int length)</code><br>
-Reads a sequence of Unicode code points from a data source.</li>
-<li><code>int ReadChar()</code><br>
-Reads a Unicode code point from a data source.</li>
+Reads a sequence of Unicode code points from a data source.</p></li>
+<li><p><code>int ReadChar()</code><br>
+Reads a Unicode code point from a data source.</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='ReadChar()'>ReadChar</a></h3>
+<h3>ReadChar</h3>
+
+<pre>int ReadChar()
+</pre>
 
 <p>Reads a Unicode code point from a data source.</p>
 
@@ -32,7 +40,10 @@ Reads a Unicode code point from a data source.</li>
 0x10ffff), or the value -1 indicating the end of the source.</li>
 </ul>
 
-<h3><a id='Read(int[],int,int)'>Read</a></h3>
+<h3>Read</h3>
+
+<pre>int Read(int[] chars, int index, int length)
+</pre>
 
 <p>Reads a sequence of Unicode code points from a data source.</p>
 
@@ -56,10 +67,10 @@ Reads a Unicode code point from a data source.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - Should be thrown if <code>chars</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;index&quot; or &quot;length&quot; is less than 0 or
-greater than &quot;chars&quot;&#39;s length, or &quot;chars&quot;&#39;s length minus &quot;index&quot; is
-less than &quot;length&quot;.</p></li>
+<li><p><code>NullPointerException</code> - Should be thrown if <code>chars</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either &quot;index&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;chars&quot;&#39;s length, or &quot;chars&quot;&#39;s length minus &quot;index&quot; is less
+than &quot;length&quot;.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
@@ -73,15 +84,4 @@ less than &quot;length&quot;.</p></li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>

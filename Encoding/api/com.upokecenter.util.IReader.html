@@ -8,10 +8,15 @@
 
 <h1>com.upokecenter.util.IReader</h1>
 
+<pre>public interface IReader extends IByteReader
+</pre>
+
+<p>A generic interface for reading bytes of data from a data source.</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>int Read​(byte[] bytes,
+<li><code>int Read(byte[] bytes,
 int offset,
 int length)</code><br>
 Reads a portion of a byte array from the data source.</li>
@@ -19,7 +24,10 @@ Reads a portion of a byte array from the data source.</li>
 
 <h2>Method Details</h2>
 
-<h3><a id='Read(byte[],int,int)'>Read</a></h3>
+<h3>Read</h3>
+
+<pre>int Read(byte[] bytes, int offset, int length)
+</pre>
 
 <p>Reads a portion of a byte array from the data source.</p>
 
@@ -44,12 +52,11 @@ data source.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - Should be thrown if the parameter <code>
+<li><p><code>NullPointerException</code> - Should be thrown if the parameter <code>
 bytes</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Should be thrown if either <code>offset</code> or
-<code>length</code> is less than 0 or greater than <code>bytes</code> &#39;s
-length, or <code>bytes</code> &#39;s length minus <code>offset</code> is less than
-<code>length</code>.</p></li>
+<li><p><code>IllegalArgumentException</code> - Should be thrown if either <code>offset</code> or
+<code>length</code> is less than 0 or greater than <code>bytes</code> &#39;s length, or
+<code>bytes</code> &#39;s length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
@@ -63,15 +70,4 @@ length, or <code>bytes</code> &#39;s length minus <code>offset</code> is less th
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav><script>
-if("share" in navigator){
- document.getElementById("sharer").href="javascript:void(null)";
- document.getElementById("sharer").innerHTML="Share This Page";
- navigator.share({title:document.title,url:document.location.href}).then(
-   function(){});
-} else {
- document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
-    encodeURIComponent(document.location.href)
-}
-</script>
-</body></html>
+</nav></body></html>
