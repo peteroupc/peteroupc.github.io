@@ -8,13 +8,13 @@ NAME
 
 DESCRIPTION
     Sample code for the article "Randomization and Sampling Methods"
-    https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods
+    [https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods](https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods)
 
     Written by Peter O.
     Any copyright to this work is released to the Public Domain.
     In case this is not possible, this work is also
     licensed under Creative Commons Zero (CC0):
-    https://creativecommons.org/publicdomain/zero/1.0/
+    [https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)
 
 CLASSES
     builtins.object
@@ -1101,12 +1101,12 @@ CLASSES
      |
      |  powerlognormal(self, p, sigma=1.0)
      |      Power lognormal distribution, as described in NIST/SEMATECH
-     |      e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+     |      e-Handbook of Statistical Methods, [http://www.itl.nist.gov/div898/handbook/,](http://www.itl.nist.gov/div898/handbook/,)
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.14.
      |
      |  powernormal(self, p)
      |      Power normal distribution, as described in NIST/SEMATECH
-     |      e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+     |      e-Handbook of Statistical Methods, [http://www.itl.nist.gov/div898/handbook/,](http://www.itl.nist.gov/div898/handbook/,)
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.13.
      |
      |  product_copula(self, n=2)
@@ -1713,7 +1713,7 @@ CLASSES
      |  - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
      |  polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
      |  Article 12 (March 2012), 5 pages.
-     |  -  Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. https://doi.org/10.1214/21-AAP1679
+     |  -  Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [https://doi.org/10.1214/21-AAP1679](https://doi.org/10.1214/21-AAP1679)
      |  - Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli factories and black-box reductions in mechanism design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
      |  - Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte
      |  Carlo likelihood-based inference for jump-diffusion processes.
@@ -4486,4 +4486,3 @@ FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
 
 ```
-
