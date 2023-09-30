@@ -16,18 +16,18 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>int GetMarkPosition()</code><br>
-Gets the zero-based character position in the stream from the last-set mark.</li>
-<li><code>void MoveBack​(int count)</code><br>
-Moves the stream position back the given number of characters.</li>
-<li><code>int SetHardMark()</code><br>
-Sets a mark on the stream&#39;s current position.</li>
-<li><code>void SetMarkPosition​(int pos)</code><br>
-Sets the stream&#39;s position from the last set mark.</li>
-<li><code>int SetSoftMark()</code><br>
+<li><p><code>int GetMarkPosition()</code><br>
+Gets the zero-based character position in the stream from the last-set mark.</p></li>
+<li><p><code>void MoveBack(int count)</code><br>
+Moves the stream position back the given number of characters.</p></li>
+<li><p><code>int SetHardMark()</code><br>
+Sets a mark on the stream&#39;s current position.</p></li>
+<li><p><code>void SetMarkPosition(int pos)</code><br>
+Sets the stream&#39;s position from the last set mark.</p></li>
+<li><p><code>int SetSoftMark()</code><br>
 If no mark is set, sets a mark on the stream, and characters read before the
-currently set mark are no longer available, while characters read
-after will be available if MoveBack is called.</li>
+currently set mark are no longer available, while characters read after will
+be available if MoveBack is called.</p></li>
 </ul>
 
 <h2>Method Details</h2>
@@ -47,7 +47,7 @@ after will be available if MoveBack is called.</li>
 
 <h3>MoveBack</h3>
 
-<pre>void MoveBack​(int count)
+<pre>void MoveBack(int count)
 </pre>
 
 <p>Moves the stream position back the given number of characters.</p>
@@ -73,11 +73,10 @@ after will be available if MoveBack is called.</li>
 
 <h3>SetMarkPosition</h3>
 
-<pre>void SetMarkPosition​(int pos)
+<pre>void SetMarkPosition(int pos)
 </pre>
 
-<p>Sets the stream&#39;s position from the last set mark. <param name='pos'/>Zero-based character offset from the last set
- mark..</p>
+<p>Sets the stream&#39;s position from the last set mark.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -91,9 +90,8 @@ after will be available if MoveBack is called.</li>
 </pre>
 
 <p>If no mark is set, sets a mark on the stream, and characters read before the
- currently set mark are no longer available, while characters read
- after will be available if MoveBack is called. Otherwise, behaves
- like GetMarkPosition.</p>
+ currently set mark are no longer available, while characters read after will
+ be available if MoveBack is called. Otherwise, behaves like GetMarkPosition.</p>
 
 <p><strong>Returns:</strong></p>
 
