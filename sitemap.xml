@@ -369,12 +369,12 @@
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORDateConverter.ConversionType.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/APIDocs.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.BigInteger.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORDataUtilities.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORDataUtilities.html</loc><lastmod>2023-09-30T09:21:34Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBOREncodeOptions.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORException.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORNumber.NumberKind.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORNumber.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORObject.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORObject.html</loc><lastmod>2023-09-30T09:21:34Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORType.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORTypeFilter.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORTypeMapper.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
@@ -384,7 +384,7 @@
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.ICBORToFromConverter-T.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.JSONOptions.ConversionKind.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.JSONOptions.ConversionMode.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.JSONOptions.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.JSONOptions.html</loc><lastmod>2023-09-30T09:21:34Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.PODOptions.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.DataUtilities.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.ExtendedDecimal.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
