@@ -8,92 +8,61 @@
 
 <h1>com.upokecenter.cbor.CBORType</h1>
 
+<pre>public enum CBORType extends Enum&lt;CBORType&gt;
+</pre>
+
+<p>Represents a type that a CBOR object can have.</p>
+
 <h2>Nested Classes</h2>
 
 <h2>Enum Constants</h2>
 
 <ul>
-<li><code>Array</code><br>
-An array of CBOR objects.</li>
-<li><code>Boolean</code><br>
-The simple values true and false.</li>
-<li><code>ByteString</code><br>
-An array of bytes.</li>
-<li><code>FloatingPoint</code><br>
-A 16-, 32-, or 64-bit binary floating-point number.</li>
-<li><code>Integer</code><br>
+<li><p><code>Array</code><br>
+An array of CBOR objects.</p></li>
+<li><p><code>Boolean</code><br>
+The simple values true and false.</p></li>
+<li><p><code>ByteString</code><br>
+An array of bytes.</p></li>
+<li><p><code>FloatingPoint</code><br>
+A 16-, 32-, or 64-bit binary floating-point number.</p></li>
+<li><p><code>Integer</code><br>
 An integer in the interval [-(2^64), 2^64 - 1], or an integer of major type
-0 and 1.</li>
-<li><code>Map</code><br>
-A map of CBOR objects.</li>
-<li><code>Number</code><br>
+0 and 1.</p></li>
+<li><p><code>Map</code><br>
+A map of CBOR objects.</p></li>
+<li><p><code>Number</code><br>
 Deprecated.
 Since version 4.0, CBORObject.Type no longer returns this value for any
 CBOR Object - this is a breaking change from earlier
-versions.
-Since version 4.0, CBORObject.Type no longer returns this value for any
-CBOR Object - this is a breaking change from earlier
-versions.</li>
-<li><code>SimpleValue</code><br>
-A &quot;simple value&quot; other than floating point values, true, and false.</li>
-<li><code>TextString</code><br>
-A text string.</li>
+versions.</p></li>
+<li><p><code>SimpleValue</code><br>
+A &quot;simple value&quot; other than floating point values, true, and false.</p></li>
+<li><p><code>TextString</code><br>
+A text string.</p></li>
 </ul>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>static CBORType valueOf​(java.lang.String name)</code><br>
-Returns the enum constant of this type with the specified name.</li>
-<li><code>static CBORType[] values()</code><br>
-Returns an array containing the constants of this enum type, in
-the order they are declared.</li>
+<li><p><code>static CBORType valueOf(String name)</code><br>
+Returns the enum constant of this class with the specified name.</p></li>
+<li><p><code>static CBORType[] values()</code><br>
+Returns an array containing the constants of this enum class, in
+the order they are declared.</p></li>
 </ul>
-
-<h2>Enum Constant Details</h2>
-
-<h3><a id='Number'>Number</a></h3>
-
-<p>This property is no longer used.</p>
-
-<h3><a id='Boolean'>Boolean</a></h3>
-
-<p>The simple values true and false.</p>
-
-<h3><a id='SimpleValue'>SimpleValue</a></h3>
-
-<p>A &quot;simple value&quot; other than floating point values, true, and false.</p>
-
-<h3><a id='ByteString'>ByteString</a></h3>
-
-<p>An array of bytes.</p>
-
-<h3><a id='TextString'>TextString</a></h3>
-
-<p>A text string.</p>
-
-<h3><a id='Array'>Array</a></h3>
-
-<p>An array of CBOR objects.</p>
-
-<h3><a id='Map'>Map</a></h3>
-
-<p>A map of CBOR objects.</p>
-
-<h3><a id='Integer'>Integer</a></h3>
-
-<p>An integer in the interval [-(2^64), 2^64 - 1], or an integer of major type
- 0 and 1.</p>
-
-<h3><a id='FloatingPoint'>FloatingPoint</a></h3>
-
-<p>A 16-, 32-, or 64-bit binary floating-point number.</p>
 
 <h2>Method Details</h2>
 
-<h3><a id='values()'>values</a></h3>
+<h3>values</h3>
 
-<h3><a id='valueOf(java.lang.String)'>valueOf</a></h3>
+<pre>public static CBORType[] values()
+</pre>
+
+<h3>valueOf</h3>
+
+<pre>public static CBORType valueOf(String name)
+</pre>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

@@ -8,16 +8,25 @@
 
 <h1>com.upokecenter.cbor.ICBORToFromConverter</h1>
 
+<pre>public interface ICBORToFromConverter&lt;T&gt; extends ICBORConverter&lt;T&gt;
+</pre>
+
+<p>Classes that implement this interface can support conversions from CBOR
+ objects to a custom type and back.</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>T FromCBORObject​(CBORObject obj)</code><br>
+<li><code>T FromCBORObject(CBORObject obj)</code><br>
 Converts a CBOR object to a custom type.</li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='FromCBORObject(com.upokecenter.cbor.CBORObject)'>FromCBORObject</a></h3>
+<h3>FromCBORObject</h3>
+
+<pre>T FromCBORObject(CBORObject obj)
+</pre>
 
 <p>Converts a CBOR object to a custom type.</p>
 
