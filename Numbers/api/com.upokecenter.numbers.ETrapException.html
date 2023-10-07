@@ -8,47 +8,45 @@
 
 <h1>com.upokecenter.numbers.ETrapException</h1>
 
-<h2>Constructors</h2>
+<pre>public final class ETrapException extends ArithmeticException
+</pre>
 
-<ul>
-<li><code>ETrapException() ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
-<li><code>ETrapException​(int flags,
-int flag,
-EContext ctx,
-java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
-<li><code>ETrapException​(int flag,
-EContext ctx,
-java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
-<li><code>ETrapException​(java.lang.String message) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
-<li><code>ETrapException​(java.lang.String message,
-java.lang.Throwable innerException) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
-</ul>
+<p>Exception thrown for arithmetic trap errors. (The "E" stands for
+ "extended", and has this prefix to group it with the other classes common to
+ this library, particularly EDecimal, EFloat, and ERational.). </p> <p>This
+ library may throw exceptions of this type in certain cases, notably when
+ errors occur, and may supply messages to those exceptions (the message can
+ be accessed through the <code>Message</code> property in.NET or the <code>
+ getMessage()</code> method in Java). These messages are intended to be read by
+ humans to help diagnose the error (or other cause of the exception); they
+ are not intended to be parsed by computer programs, and the exact text of
+ the messages may change at any time between versions of this library.</p>
+
+<h2>Constructors</h2>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>EContext getContext()</code><br>
+<li><p><code>final EContext getContext()</code><br>
 Gets the arithmetic context used during the operation that triggered the
-trap.</li>
-<li><code>int getError()</code><br>
+trap.</p></li>
+<li><p><code>final int getError()</code><br>
 Gets the flag that specifies the primary kind of error in one or more
-operations (EContext.FlagXXX).</li>
-<li><code>int getErrors()</code><br>
-Gets the flags that were signaled as the result of one or more operations.</li>
-<li><code>java.lang.Object getResult()</code><br>
-Gets the defined result of the operation that caused the trap.</li>
-<li><code>boolean HasError​(int flag)</code><br>
-Returns whether this trap exception specifies all the flags given.</li>
+operations (EContext.FlagXXX).</p></li>
+<li><p><code>final int getErrors()</code><br>
+Gets the flags that were signaled as the result of one or more operations.</p></li>
+<li><p><code>final Object getResult()</code><br>
+Gets the defined result of the operation that caused the trap.</p></li>
+<li><p><code>boolean HasError(int flag)</code><br>
+Returns whether this trap exception specifies all the flags given.</p></li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3><a id='getContext()'>getContext</a></h3>
+<h3>getContext</h3>
+
+<pre>public final EContext getContext()
+</pre>
 
 <p>Gets the arithmetic context used during the operation that triggered the
  trap. May be null.</p>
@@ -60,7 +58,10 @@ Returns whether this trap exception specifies all the flags given.</li>
 trap. May be null.</li>
 </ul>
 
-<h3><a id='getResult()'>getResult</a></h3>
+<h3>getResult</h3>
+
+<pre>public final Object getResult()
+</pre>
 
 <p>Gets the defined result of the operation that caused the trap.</p>
 
@@ -70,11 +71,14 @@ trap. May be null.</li>
 <li>The defined result of the operation that caused the trap.</li>
 </ul>
 
-<h3><a id='getError()'>getError</a></h3>
+<h3>getError</h3>
+
+<pre>public final int getError()
+</pre>
 
 <p>Gets the flag that specifies the primary kind of error in one or more
- operations (EContext.FlagXXX). This will only be one flag, such as
- <code>FlagInexact</code> or FlagSubnormal.</p>
+ operations (EContext.FlagXXX). This will only be one flag, such as <code>
+ FlagInexact</code> or FlagSubnormal.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -83,13 +87,15 @@ trap. May be null.</li>
 operations.</li>
 </ul>
 
-<h3><a id='getErrors()'>getErrors</a></h3>
+<h3>getErrors</h3>
+
+<pre>public final int getErrors()
+</pre>
 
 <p>Gets the flags that were signaled as the result of one or more operations.
-  This includes the flag specified in the &quot;flag&quot; parameter, but can
-  include other flags. For instance, if &quot;flag&quot; is
- <code>EContext.FlagInexact</code>, this parameter might be
- <code>EContext.FlagInexact | EContext.FlagRounded</code>.</p>
+ This includes the flag specified in the &quot;flag&quot; parameter, but can include
+ other flags. For instance, if &quot;flag&quot; is <code>EContext.FlagInexact</code>, this
+ parameter might be <code>EContext.FlagInexact | EContext.FlagRounded</code>.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -97,12 +103,15 @@ operations.</li>
 <li>The flags that specify the errors in one or more operations.</li>
 </ul>
 
-<h3><a id='HasError(int)'>HasError</a></h3>
+<h3>HasError</h3>
+
+<pre>public boolean HasError(int flag)
+</pre>
 
 <p>Returns whether this trap exception specifies all the flags given. (Flags
- are signaled in a trap exception as the result of one or more
- operations involving arbitrary-precision numbers, such as
- multiplication of two EDecimals.).</p>
+ are signaled in a trap exception as the result of one or more operations
+ involving arbitrary-precision numbers, such as multiplication of two
+ EDecimals.).</p>
 
 <p><strong>Parameters:</strong></p>
 
