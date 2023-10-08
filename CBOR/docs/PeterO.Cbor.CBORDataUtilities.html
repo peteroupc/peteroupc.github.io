@@ -38,7 +38,7 @@
     byte[] bytes);
 </pre>
 
-<p>Parses a number from a byte sequence whose format follows the JSON specification. The method uses a JSONOptions with all default properties except for a PreserveNegativeZero property of false.</p>
+<p>Parses a number from a byte sequence whose format follows the JSON specification. The method uses a JSONOptions with all default properties.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -48,7 +48,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the byte sequence is null or empty.</p>
+<p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the byte sequence is null or empty.</p>
 
 <p><a id="ParseJSONNumber_byte_int_int"></a></p>
 
@@ -169,7 +169,7 @@ Unsupported conversion kind.</p></li>
     char[] chars);
 </pre>
 
-<p>Parses a number from a sequence of  <code>char</code>  s whose format follows the JSON specification. The method uses a JSONOptions with all default properties except for a PreserveNegativeZero property of false.</p>
+<p>Parses a number from a sequence of  <code>char</code>  s whose format follows the JSON specification. The method uses a JSONOptions with all default properties.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -179,7 +179,7 @@ Unsupported conversion kind.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the sequence of  <code>char</code>  s is null or empty.</p>
+<p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the sequence of  <code>char</code>  s is null or empty.</p>
 
 <p><a id="ParseJSONNumber_char_int_int"></a></p>
 
@@ -300,7 +300,7 @@ Unsupported conversion kind.</p></li>
     string str);
 </pre>
 
-<p>Parses a number whose format follows the JSON specification. The method uses a JSONOptions with all default properties except for a PreserveNegativeZero property of false.</p>
+<p>Parses a number whose format follows the JSON specification. The method uses a JSONOptions with all default properties.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -310,7 +310,7 @@ Unsupported conversion kind.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null or empty.</p>
+<p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the string is null or empty.</p>
 
 <p><a id="ParseJSONNumber_string_int_int"></a></p>
 
