@@ -84,8 +84,7 @@ and converts that number to a CBOR object.</p></li>
 </pre>
 
 <p>Parses a number whose format follows the JSON specification. The method uses
- a JSONOptions with all default properties except for a PreserveNegativeZero
- property of false.</p>
+ a JSONOptions with all default properties.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -96,10 +95,8 @@ and converts that number to a CBOR object.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBOR object that represents the parsed number. Returns positive
-zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or
-&quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null
-or empty.</li>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the string is null or empty.</li>
 </ul>
 
 <h3>ParseJSONNumber</h3>
@@ -340,8 +337,7 @@ minus <code>offset</code> is less than <code>count</code>.</p></li>
 </pre>
 
 <p>Parses a number from a byte sequence whose format follows the JSON
- specification. The method uses a JSONOptions with all default properties
- except for a PreserveNegativeZero property of false.</p>
+ specification. The method uses a JSONOptions with all default properties.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -352,10 +348,8 @@ minus <code>offset</code> is less than <code>count</code>.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBOR object that represents the parsed number. Returns positive
-zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or
-&quot;-0.0&quot;). Returns null if the parsing fails, including if the byte sequence
-is null or empty.</li>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the byte sequence is null or empty.</li>
 </ul>
 
 <h3>ParseJSONNumber</h3>
@@ -480,7 +474,7 @@ minus <code>offset</code> is less than <code>count</code>.</p></li>
 
 <p>Parses a number from a sequence of <code>char</code> s whose format follows the
  JSON specification. The method uses a JSONOptions with all default
- properties except for a PreserveNegativeZero property of false.</p>
+ properties.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -491,10 +485,8 @@ minus <code>offset</code> is less than <code>count</code>.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBOR object that represents the parsed number. Returns positive
-zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or
-&quot;-0.0&quot;). Returns null if the parsing fails, including if the sequence of
-<code>char</code> s is null or empty.</li>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the sequence of <code>char</code> s is null or empty.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

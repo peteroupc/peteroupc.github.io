@@ -349,7 +349,7 @@
 <url><loc>https://peteroupc.github.io/CBOR/rational.html</loc><lastmod>2021-05-28T19:26:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/rationalv1.html</loc><lastmod>2021-05-28T19:26:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/Home.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORDataUtilities.html</loc><lastmod>2023-10-01T00:09:54Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORDataUtilities.html</loc><lastmod>2023-10-09T18:40:38Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBOREncodeOptions.html</loc><lastmod>2023-10-01T00:09:54Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORException.html</loc><lastmod>2023-10-01T00:09:54Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORNumber.NumberKind.html</loc><lastmod>2023-10-01T00:09:54Z</lastmod></url>
@@ -365,7 +365,7 @@
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.util.DataUtilities.html</loc><lastmod>2023-10-01T00:09:54Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/index.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORDateConverter.ConversionType.html</loc><lastmod>2023-10-01T00:09:54Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORDateConverter.html</loc><lastmod>2023-10-01T00:09:54Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORDateConverter.html</loc><lastmod>2023-10-09T18:40:38Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.Cbor.CBORDateConverter.ConversionType.html</loc><lastmod>2023-03-20T06:26:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/APIDocs.html</loc><lastmod>2023-10-08T22:13:27Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/docs/PeterO.BigInteger.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
