@@ -1778,11 +1778,11 @@ deep, or another error occurred when serializing the object.</p></li>
  the given number or name, respectively. (Enumeration constants made up of
  multiple enumeration constants, as allowed by .NET, can only be matched by
  number this way.)</li><li>If the type is <code>java.util.Date</code> (or <code>Date</code>
- in Java) , returns a date/time object if the CBOR object's outermost tag is
- 0 or 1. For tag 1, this method treats the CBOR object as a number of seconds
- since the start of 1970, which is based on the POSIX definition of "seconds
- since the Epoch", a definition that does not count leap seconds. In this
- method, this number of seconds assumes the use of a proleptic Gregorian
+ in Java) , returns a date/time object if the CBOR object's outermost tag ==
+ 0 || tag == 1. For tag 1, this method treats the CBOR object as a number of
+ seconds since the start of 1970, which is based on the POSIX definition of
+ "seconds since the Epoch", a definition that does not count leap seconds. In
+ this method, this number of seconds assumes the use of a proleptic Gregorian
  calendar, in which the rules regarding the number of days in each month and
  which years are leap years are the same for all years as they were in 1970
  (including without regard to time zone differences or transitions from other
@@ -1830,7 +1830,7 @@ deep, or another error occurred when serializing the object.</p></li>
  ToObject method assumes the CBOR object is an untagged number giving the
  number of seconds since the start of 1970.</p> <pre>CBORTypeMapper conv =
  new CBORTypeMapper().AddConverter(java.util.Date.class,
- CBORDateConverter.UntaggedNumber); var obj =
+ CBORDateConverter.UntaggedNumber); CBORObject obj =
  CBORObject.FromObject().getToObject()&lt;java.util.Date&gt;(conv);</pre> <p>Java offers
  no easy way to express a generic type, at least none as easy as C#'s <code>
  typeof</code> operator. The following example, written in Java, is a way to
@@ -4964,7 +4964,7 @@ LimitedMemoryStream ms = null;
 try {
 ms = new LimitedMemoryStream(maxSize);
 
- cborObject.WriteJSONTo(ms); var bytes = ms.toByteArray();
+ cborObject.WriteJSONTo(ms); Array bytes = ms.toByteArray();
 }
 finally {
 try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
@@ -5259,7 +5259,7 @@ follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value
 is 1 plus this number; 2: length in bytes of the byte string; 3: length in
 bytes of the UTF-8 text string; 4: number of items in the array; 5: number
 of key-value pairs in the map; 6: tag number; 7: simple value number, which
-must be in the interval [0, 23] or [32, 255].</p></li>
+must be in the interval [0, 23] or.charAt(32, 255).</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -5303,7 +5303,7 @@ must be in the interval [0, 23] or [32, 255].</p></li>
  stream); /* key 2*/ CBORObject.Write("hello", stream); /* value 2*/</pre>
  <p>In the following example (originally written in C# for the.NET Framework
  version), a text string is written as CBOR to a data stream.</p> <pre>string
- str = "hello world"; byte[] bytes = DataUtilities.GetUtf8Bytes(str, true);
+ str = "hello world"; byte[] bytes = com.upokecenter.util.DataUtilities.GetUtf8Bytes(str, true);
  CBORObject.WriteValue(stream, 4, bytes.length); stream.write(bytes, 0, * bytes.length);</pre> .
 
 **Parameters:**
@@ -5320,7 +5320,7 @@ must be in the interval [0, 23] or [32, 255].</p></li>
  is 1 plus this number; 2: length in bytes of the byte string; 3: length in
  bytes of the UTF-8 text string; 4: number of items in the array; 5: number
  of key-value pairs in the map; 6: tag number; 7: simple value number, which
- must be in the interval [0, 23] or [32, 255].
+ must be in the interval [0, 23] or.charAt(32, 255).
 
 **Returns:**
 
@@ -5361,8 +5361,8 @@ as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute
 value is 1 plus this number; 2: length in bytes of the byte string; 3:
 length in bytes of the UTF-8 text string; 4: number of items in the array;
 5: number of key-value pairs in the map; 6: tag number; 7: simple value
-number, which must be in the interval [0, 23] or [32, 255]. For major types
-0 to 6, this number may not be greater than 2^64 - 1.</p></li>
+number, which must be in the interval [0, 23] or.charAt(32, 255). For major
+types 0 to 6, this number may not be greater than 2^64 - 1.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -5439,7 +5439,7 @@ LimitedMemoryStream ms = null;
 try {
 ms = new
  LimitedMemoryStream(maxSize);
- cborObject.WriteTo(ms); var bytes =
+ cborObject.WriteTo(ms); Array bytes =
  ms.toByteArray();
 }
 finally {
