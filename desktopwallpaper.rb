@@ -1,3 +1,18 @@
+require 'tmpdir'
+
+# This Ruby script helps generate interesting variations on desktop
+# wallpapers based on existing image files.
+#
+# This script is released to the public domain; in case that is not possible, the
+# file is also licensed under Creative Commons Zero (CC0).
+
+# Suggestion for improving this file: Support the pattern format
+# from early versions of Microsoft Windows.  Namely it's an 8x8 monochrome
+# two-color tiling pattern represented as eight 8-bit bytes; the colors
+# that represent "black" and "white" could be set separately.
+
+################
+
 # Escapes a filename to appear in a command line argument
 # for Posix and Posix-like shells
 def ufq(f)
@@ -79,3 +94,136 @@ def magickgradientcmd(infile,rgb1=nil,rgb2=nil,wallpaper=false)
      " ; gsettings set org.gnome.desktop.background picture-uri #{ufq(fileuri)}"+
      " ; gsettings set org.gnome.desktop.background picture-options "+(wallpaper ? "wallpaper" : "stretched")
 end
+
+def torgb(x)
+ return (x[0]<<16)+(x[1]<<8)+x[2]
+end
+def adjustpixmap(fn,bases)
+ w=0;h=0;pixmap=nil
+ File.open(fn,"rb"){|f|
+ fr=f.read(3)
+ p fr
+ raise if fr!="P6\n"
+ s=f.gets()
+ p s
+ raise if s.length>20
+ raise if !s[/\A(\d+) (\d+)\n/]
+ w=$1.to_i
+ h=$2.to_i
+ raise if f.read(4)!="255\n"
+ pixmap=f.read().unpack("C*")
+ p pixmap.length
+ p w*h*3
+ i=0
+ for y in 0...h
+   for x in 0...w
+     pix=[pixmap[i],pixmap[i+1],pixmap[i+2]]
+     c=torgb(pix)
+     bc=bases[c]
+     raise pix.to_s if !bc
+     c2=bc[(x+y)%2]
+     pixmap[i]=(c2>>16)&0xff
+     pixmap[i+1]=(c2>>8)&0xff
+     pixmap[i+2]=(c2)&0xff
+     i+=3
+   end
+ end
+ }
+ File.open(fn,"wb"){|f|
+ f.write(sprintf("P6\n%d %d\n255\n",w,h))
+ f.write(pixmap.pack("C*"))
+ }
+end
+def tobases(basecolors)
+ bases={}
+ for b in basecolors
+  bases[b]=true
+ end
+ for i in 0...basecolors.length
+  for j in (i+1)...basecolors.length
+   bi=basecolors[i]
+   bj=basecolors[j]
+   b=[(bi[0]+bj[0])/2,(bi[1]+bj[1])/2,(bi[2]+bj[2])/2]
+   bases[b]=true
+  end
+ end
+ return bases
+end
+def tobases2(basecolors)
+ bases2={}
+ for b in basecolors
+  bases2[torgb(b)]=[torgb(b),torgb(b)]
+ end
+ for i in 0...basecolors.length
+  for j in (i+1)...basecolors.length
+   bi=basecolors[i]
+   bj=basecolors[j]
+   b=[(bi[0]+bj[0])/2,(bi[1]+bj[1])/2,(bi[2]+bj[2])/2]
+   bases2[torgb(b)]=[torgb(bi),torgb(bj)]
+  end
+ end
+ return bases2
+end
+def toseeds(bases)
+ return bases.keys.sort.map{|x| sprintf("#%02X%02X%02X",x[0],x[1],x[2]) }.join(";")
+end
+# Uses ImageMagick to dither the image in 'infile' to the colors in 'basecolors'
+# and output the resulting image to 'outfile'.
+def dithertobasecolors(infile,outfile,basecolors)
+ raise if !infile
+ raise if !outfile
+ raise if !basecolors || basecolors.length==0
+ bases=tobases(basecolors)
+ bases2=tobases2(basecolors)
+ Dir.mktmpdir {|tmpdir|
+ cmptmp=tmpdir+"/cmapdithertobasecolors.ppm"
+ cmpsmall=tmpdir+"/cmapsmalldithertobasecolors.ppm"
+ File.open(cmptmp,"wb"){|f|
+  f.write(sprintf("P6\n%d 1\n255\n",bases.keys.length))
+  for k in bases.keys.sort
+    f.write(k.pack("CCC"))
+  end
+ }
+ File.open(cmpsmall,"wb"){|f|
+  f.write(sprintf("P6\n%d 1\n255\n",basecolors.length))
+  for k in basecolors
+    f.write(k.pack("CCC"))
+  end
+ }
+ infile=ufq(infile)
+ outfile=ufq(outfile)
+ intermedfile=tmpdir+"/ccdithertobasecolors.ppm"
+ p "convert #{infile} -dither Riemersma -remap #{ufq(cmptmp)} #{ufq(intermedfile)}"
+ `convert #{infile} -dither Riemersma -remap #{ufq(cmptmp)} #{ufq(intermedfile)}`
+ # OR: `convert #{infile} -remap #{ufq(cmptmp)} #{ufq(intermedfile)}`
+ if false
+  adjustpixmap(intermedfile,bases2)
+  `convert #{ufq(intermedfile)} #{outfile}`
+ elsif true
+  `convert #{ufq(intermedfile)} -ordered-dither 4x4 -remap #{ufq(cmpsmall)} #{outfile}`
+ elsif true
+  `convert #{ufq(intermedfile)} -remap #{ufq(cmpsmall)} #{outfile}`
+ end
+ File.delete(cmptmp)
+ File.delete(cmpsmall)
+ File.delete(intermedfile)
+ }
+end
+basecolors=[
+[0,0,0],
+[127,127,127],
+[255,255,255],
+[191,191,191],
+[255,0,0],
+[127,0,0],
+[0,255,0],
+[0,127,0],
+[0,0,255],
+[0,0,127],
+[255,0,255],
+[127,0,127],
+[0,255,255],
+[0,127,127],
+[255,255,0],
+[127,127,0]
+]
