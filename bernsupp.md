@@ -313,9 +313,9 @@ To build an approximate Bernoulli factory with a polynomial:
 3. Then, with probability equal to&mdash;
 
     - the polynomial's Bernstein coefficient at position _j_ (which will be $f(j/n)$ in the case of the Bernstein polynomial $B_n(f)$), or
-    - the polynomial's scaled Bernstein coefficient at position _j_, divided by choose(_n_, _j_)
+    - the polynomial's scaled Bernstein coefficient at position _j_, divided by choose(_n_, _j_),
 
-    (0&le;_j_&le;_n_), return 1.  Otherwise, return 0.
+    return 1.  Otherwise, return 0. Here, 0&le;_j_&le;_n_.
 
     If the probability can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to exactly sample a probability equal to that irrational number.
 
