@@ -7,7 +7,8 @@ require 'tmpdir'
 # file is also licensed under Creative Commons Zero (CC0).
 
 # Suggestion for improving this file: Support the pattern format
-# from early versions of Microsoft Windows.  Namely it's an 8x8 monochrome
+# from early versions of Microsoft Windows (such as Windows 3.1).
+# Namely it's an 8x8 monochrome
 # two-color tiling pattern represented as eight 8-bit bytes; the colors
 # that represent "black" and "white" could be set separately.
 
@@ -305,3 +306,4 @@ basecolors=[
 [255,255,0],
 [127,127,0]
 ]
+relief("/home/peter/Documents/GAEU0uMWAAA9x_w.jpg","/tmp/c.png")

@@ -56,7 +56,6 @@
 <li><code><a href="#ToByteIfExact">ToByteIfExact()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
 <li><code><a href="#ToByteUnchecked">ToByteUnchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
 <li><code><a href="#ToCBORObject">ToCBORObject()</a></code> - Converts this object&#39;s value to a CBOR object.</li>
-<li><code><a href="#ToDecimal">ToDecimal()</a></code> - Converts this number&#39;s value to a CLR decimal.</li>
 <li><code><a href="#ToEDecimal">ToEDecimal()</a></code> - Converts this object to a decimal number.</li>
 <li><code><a href="#ToEFloat">ToEFloat()</a></code> - Converts this object to an arbitrary-precision binary floating point number.</li>
 <li><code><a href="#ToEInteger">ToEInteger()</a></code> - Converts this object to an arbitrary-precision integer.</li>
@@ -810,26 +809,6 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A CBOR object that stores this object&#39;s value.</p>
-
-<p><a id="ToDecimal"></a></p>
-
-<h3>ToDecimal</h3>
-
-<pre>public decimal ToDecimal();
-</pre>
-
-<p>Converts this number&#39;s value to a CLR decimal.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>This number&#39;s value, converted to a decimal as though by  <code>(decimal)this.ToEDecimal()</code> .</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.OverflowException:
-This value is infinity or not-a-number.</li>
-</ul>
 
 <p><a id="ToEDecimal"></a></p>
 
