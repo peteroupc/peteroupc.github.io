@@ -25,8 +25,6 @@
 <li><code><a href="#ParseJSONNumber_char_int_int_PeterO_Cbor_JSONOptions">ParseJSONNumber(char[], int, int, PeterO.Cbor.JSONOptions)</a></code> - Parses a number from a sequence of char s whose format follows the JSON specification (RFC 8259) and converts that number to a CBOR object.</li>
 <li><code><a href="#ParseJSONNumber_char_PeterO_Cbor_JSONOptions">ParseJSONNumber(char[], PeterO.Cbor.JSONOptions)</a></code> - Parses a number from a sequence of char s whose format follows the JSON specification (RFC 8259) and converts that number to a CBOR object.</li>
 <li><code><a href="#ParseJSONNumber_string">ParseJSONNumber(string)</a></code> - Parses a number whose format follows the JSON specification.</li>
-<li><code><a href="#ParseJSONNumber_string_bool_bool">ParseJSONNumber(string, bool, bool)</a></code> - <b>Deprecated:</b> Call the one-argument version of this method instead. If this method call used positiveOnly = true, check that the string does not begin with &#39;-&#39; before calling that version. If this method call used integersOnly = true, check that the string does not contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</li>
-<li><code><a href="#ParseJSONNumber_string_bool_bool_bool">ParseJSONNumber(string, bool, bool, bool)</a></code> - <b>Deprecated:</b> Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that sets preserveNegativeZero to the desired value, either true or false. If this method call used positiveOnly = true, check that the string does not begin with &#39;-&#39; before calling that version. If this method call used integersOnly = true, check that the string does not contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</li>
 <li><code><a href="#ParseJSONNumber_string_int_int">ParseJSONNumber(string, int, int)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259) from a portion of a text string, and converts that number to a CBOR object.</li>
 <li><code><a href="#ParseJSONNumber_string_int_int_PeterO_Cbor_JSONOptions">ParseJSONNumber(string, int, int, PeterO.Cbor.JSONOptions)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259) and converts that number to a CBOR object.</li>
 <li><code><a href="#ParseJSONNumber_string_PeterO_Cbor_JSONOptions">ParseJSONNumber(string, PeterO.Cbor.JSONOptions)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259) and converts that number to a CBOR object.</li>
@@ -40,7 +38,7 @@
     byte[] bytes);
 </pre>
 
-<p>Parses a number from a byte sequence whose format follows the JSON specification. The method uses a JSONOptions with all default properties except for a PreserveNegativeZero property of false.</p>
+<p>Parses a number from a byte sequence whose format follows the JSON specification. The method uses a JSONOptions with all default properties.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -50,7 +48,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the byte sequence is null or empty.</p>
+<p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the byte sequence is null or empty.</p>
 
 <p><a id="ParseJSONNumber_byte_int_int"></a></p>
 
@@ -171,7 +169,7 @@ Unsupported conversion kind.</p></li>
     char[] chars);
 </pre>
 
-<p>Parses a number from a sequence of  <code>char</code>  s whose format follows the JSON specification. The method uses a JSONOptions with all default properties except for a PreserveNegativeZero property of false.</p>
+<p>Parses a number from a sequence of  <code>char</code>  s whose format follows the JSON specification. The method uses a JSONOptions with all default properties.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -181,7 +179,7 @@ Unsupported conversion kind.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the sequence of  <code>char</code>  s is null or empty.</p>
+<p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the sequence of  <code>char</code>  s is null or empty.</p>
 
 <p><a id="ParseJSONNumber_char_int_int"></a></p>
 
@@ -302,70 +300,12 @@ Unsupported conversion kind.</p></li>
     string str);
 </pre>
 
-<p>Parses a number whose format follows the JSON specification. The method uses a JSONOptions with all default properties except for a PreserveNegativeZero property of false.</p>
+<p>Parses a number whose format follows the JSON specification. The method uses a JSONOptions with all default properties.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A text string to parse as a JSON number.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null or empty.</p>
-
-<p><a id="ParseJSONNumber_string_bool_bool"></a></p>
-
-<h3>ParseJSONNumber</h3>
-
-<pre>public static PeterO.Cbor.CBORObject ParseJSONNumber(
-    string str,
-    bool integersOnly,
-    bool positiveOnly);
-</pre>
-
-<p><b>Deprecated.</b> Call the one-argument version of this method instead. If this method call used positiveOnly = true, check that the string does not begin with &#39;-&#39; before calling that version. If this method call used integersOnly = true, check that the string does not contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</p>
-
-<p>Parses a number whose format follows the JSON specification (RFC 8259). The method uses a JSONOptions with all default properties except for a PreserveNegativeZero property of false.</p>
-
-<p>Roughly speaking, a valid JSON number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless there is only one digit and that digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent). A text string representing a valid JSON number is not allowed to contain white space characters, including spaces.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: A text string to parse as a JSON number.</p></li>
-<li><p><i>integersOnly</i>: If true, no decimal points or exponents are allowed in the string. The default is false.</p></li>
-<li><p><i>positiveOnly</i>: If true, only positive numbers are allowed (the leading minus is disallowed). The default is false.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null or empty.</p>
-
-<p><a id="ParseJSONNumber_string_bool_bool_bool"></a></p>
-
-<h3>ParseJSONNumber</h3>
-
-<pre>public static PeterO.Cbor.CBORObject ParseJSONNumber(
-    string str,
-    bool integersOnly,
-    bool positiveOnly,
-    bool preserveNegativeZero);
-</pre>
-
-<p><b>Deprecated.</b> Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that sets preserveNegativeZero to the desired value, either true or false. If this method call used positiveOnly = true, check that the string does not begin with &#39;-&#39; before calling that version. If this method call used integersOnly = true, check that the string does not contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</p>
-
-<p>Parses a number whose format follows the JSON specification (RFC 8259).</p>
-
-<p>Roughly speaking, a valid JSON number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless there is only one digit and that digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent). A text string representing a valid JSON number is not allowed to contain white space characters, including spaces.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: A text string to parse as a JSON number.</p></li>
-<li><p><i>integersOnly</i>: If true, no decimal points or exponents are allowed in the string. The default is false.</p></li>
-<li><p><i>positiveOnly</i>: If true, the leading minus is disallowed in the string. The default is false.</p></li>
-<li><p><i>preserveNegativeZero</i>: If true, returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Otherwise, returns negative zero in this case. The default is false.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
