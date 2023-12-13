@@ -102,6 +102,10 @@ Gets a CBOR object for the number zero.</p></li>
 <h2>Methods</h2>
 
 <ul>
+<li><p><code>CBORObject Abs()</code><br>
+Deprecated.
+Instead, convert this object to a number (with .getAsNumber()()),
+and use that number&#39;s.getAbs()() method.</p></li>
 <li><p><code>CBORObject Add(CBORObject obj)</code><br>
 Adds a new object to the end of this array.</p></li>
 <li><p><code>CBORObject Add(Object obj)</code><br>
@@ -111,12 +115,21 @@ array.</p></li>
 Object valueOb)</code><br>
 Adds a new key and its value to this CBOR map, or adds the value if the
 key doesn&#39;t exist.</p></li>
+<li><p><code>static CBORObject Addition(CBORObject first,
+CBORObject second)</code><br>
+Deprecated.
+Instead, convert both CBOR objects to numbers (with .AsNumber()), and
+use the first number&#39;s.Add() method.</p></li>
 <li><p><code>CBORObject ApplyJSONPatch(CBORObject patch)</code><br>
 Returns a copy of this object after applying the operations in a JSON
 patch, in the form of a CBOR object.</p></li>
 <li><p><code>boolean AsBoolean()</code><br>
 Returns false if this object is a CBOR false, null, or undefined value
 (whether or not the object has tags); otherwise, true.</p></li>
+<li><p><code>byte AsByte()</code><br>
+Deprecated.
+Instead, use.getToObject()&lt;byte&gt;() in .NET or
+.getToObject()(Byte.class) in Java.</p></li>
 <li><p><code>double AsDouble()</code><br>
 Converts this object to a 64-bit floating point number.</p></li>
 <li><p><code>long AsDoubleBits()</code><br>
@@ -125,14 +138,44 @@ CBOR object&#39;s type is FloatingPoint.</p></li>
 <li><p><code>double AsDoubleValue()</code><br>
 Converts this object to a 64-bit floating-point number if this CBOR object&#39;s
 type is FloatingPoint.</p></li>
+<li><p><code>com.upokecenter.numbers.EDecimal AsEDecimal()</code><br>
+Deprecated.
+Instead, use.getToObject()&lt;PeterO.Numbers.EDecimal&gt;()
+in .NET or
+.getToObject()(com.upokecenter.numbers.EDecimal.class)
+in Java.</p></li>
+<li><p><code>com.upokecenter.numbers.EFloat AsEFloat()</code><br>
+Deprecated.
+Instead, use.getToObject()&lt;PeterO.Numbers.EFloat&gt;() in.NET
+or  .getToObject()(com.upokecenter.numbers.EFloat.class)
+in Java.</p></li>
+<li><p><code>com.upokecenter.numbers.EInteger AsEInteger()</code><br>
+Deprecated.
+Instead, use.getToObject()&lt;PeterO.Numbers.EInteger&gt;()
+in .NET or
+.getToObject()(com.upokecenter.numbers.EInteger.class)
+in Java.</p></li>
 <li><p><code>com.upokecenter.numbers.EInteger AsEIntegerValue()</code><br>
 Converts this object to an arbitrary-precision integer if this CBOR object&#39;s
 type is Integer.</p></li>
+<li><p><code>com.upokecenter.numbers.ERational AsERational()</code><br>
+Deprecated.
+Instead, use.getToObject()&lt;PeterO.Numbers.ERational&gt;() in
+.NET or.getToObject()(com.upokecenter.numbers.ERational.class)
+in Java.</p></li>
+<li><p><code>short AsInt16()</code><br>
+Deprecated.
+Instead, use the following: (cbor.AsNumber().ToInt16Checked()),
+or .getToObject()&lt;short&gt;() in .NET.</p></li>
 <li><p><code>int AsInt32()</code><br>
 Converts this object to a 32-bit signed integer.</p></li>
 <li><p><code>int AsInt32Value()</code><br>
 Converts this object to a 32-bit signed integer if this CBOR object&#39;s
 type is Integer.</p></li>
+<li><p><code>long AsInt64()</code><br>
+Deprecated.
+Instead, use the following: (cbor.AsNumber().ToInt64Checked()), or
+.ToObject&lt;long&gt;() in.NET.</p></li>
 <li><p><code>long AsInt64Value()</code><br>
 Converts this object to a 64-bit signed integer if this CBOR object&#39;s
 type is Integer.</p></li>
@@ -151,6 +194,36 @@ or a default value if the operation fails.</p></li>
 <li><p><code>long CalcEncodedSize()</code><br>
 Calculates the number of bytes this CBOR object takes when serialized as a
 byte array using the EncodeToBytes() method.</p></li>
+<li><p><code>boolean CanFitInDouble()</code><br>
+Deprecated.
+Instead, use the following: (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().CanFitInDouble()).</p></li>
+<li><p><code>boolean CanFitInInt32()</code><br>
+Deprecated.
+Instead, use.CanValueFitInInt32(), if the application allows only CBOR
+integers, or (cbor.isNumber()
+&amp;&amp;cbor.AsNumber().CanFitInInt32()),   if the application
+allows any CBOR Object convertible to an integer.</p></li>
+<li><p><code>boolean CanFitInInt64()</code><br>
+Deprecated.
+Instead, use CanValueFitInInt64(), if the application allows only CBOR
+integers, or (cbor.isNumber()
+&amp;&amp;cbor.AsNumber().CanFitInInt64()),   if the application
+allows any CBOR Object convertible to an integer.</p></li>
+<li><p><code>boolean CanFitInSingle()</code><br>
+Deprecated.
+Instead, use the following: (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().CanFitInSingle()).</p></li>
+<li><p><code>boolean CanTruncatedIntFitInInt32()</code><br>
+Deprecated.
+Instead, use the following: (cbor.CanValueFitInInt32() if only
+integers of any tag are allowed, or (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().CanTruncatedIntFitInInt32()).</p></li>
+<li><p><code>boolean CanTruncatedIntFitInInt64()</code><br>
+Deprecated.
+Instead, use the following: (cbor.CanValueFitInInt64() if only
+integers of any tag are allowed, or (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().CanTruncatedIntFitInInt64()).</p></li>
 <li><p><code>boolean CanValueFitInInt32()</code><br>
 Returns whether this CBOR object stores an integer (CBORType.Integer) within
 the range of a 32-bit signed integer.</p></li>
@@ -207,6 +280,11 @@ Generates a sequence of CBOR objects from an array of CBOR-encoded bytes.</p></l
 <li><p><code>static CBORObject[] DecodeSequenceFromBytes(byte[] data,
 CBOREncodeOptions options)</code><br>
 Generates a sequence of CBOR objects from an array of CBOR-encoded bytes.</p></li>
+<li><p><code>static CBORObject Divide(CBORObject first,
+CBORObject second)</code><br>
+Deprecated.
+Instead, convert both CBOR objects to numbers (with .AsNumber()), and
+use the first number&#39;s.Divide() method.</p></li>
 <li><p><code>byte[] EncodeToBytes()</code><br>
 Writes the binary representation of this CBOR object and returns a byte
 array of that representation.</p></li>
@@ -263,6 +341,13 @@ int count,
 JSONOptions jsonoptions)</code><br>
 Generates a CBOR object from a text string in JavaScript object Notation
 (JSON) format, using the specified options to control the decoding process.</p></li>
+<li><p><code>static CBORObject FromJSONString(String str,
+CBOREncodeOptions options)</code><br>
+Deprecated.
+Instead, use.getFromJSONString()(str,
+new JSONOptions(\allowduplicatekeys = true))
+or .getFromJSONString()(str,   new
+JSONOptions(\allowduplicatekeys = false)), as appropriate.</p></li>
 <li><p><code>static CBORObject FromJSONString(String str,
 JSONOptions jsonoptions)</code><br>
 Generates a CBOR object from a text string in JavaScript object Notation
@@ -398,12 +483,40 @@ Inserts an object at the specified position in this CBOR array.</p></li>
 <li><p><code>final boolean isFalse()</code><br>
 Gets a value indicating whether this value is a CBOR false value, whether
 tagged or not.</p></li>
+<li><p><code>final boolean isFinite()</code><br>
+Deprecated.
+Instead, use the following: (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().IsFinite()).</p></li>
+<li><p><code>boolean IsInfinity()</code><br>
+Deprecated.
+Instead, use the following: (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().IsInfinity()).</p></li>
+<li><p><code>final boolean isIntegral()</code><br>
+Deprecated.
+Instead, use the following: (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().IsInteger()).</p></li>
+<li><p><code>boolean IsNaN()</code><br>
+Deprecated.
+Instead, use the following: (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().IsNaN()).</p></li>
+<li><p><code>final boolean isNegative()</code><br>
+Deprecated.
+Instead, use (cbor.IsNumber()
+&amp;&amp; cbor.AsNumber().IsNegative()).</p></li>
+<li><p><code>boolean IsNegativeInfinity()</code><br>
+Deprecated.
+Instead, use the following: (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().IsNegativeInfinity()).</p></li>
 <li><p><code>final boolean isNull()</code><br>
 Gets a value indicating whether this CBOR object is a CBOR null value,
 whether tagged or not.</p></li>
 <li><p><code>final boolean isNumber()</code><br>
 Gets a value indicating whether this CBOR object stores a number (including
 infinity or a not-a-number or NaN value).</p></li>
+<li><p><code>boolean IsPositiveInfinity()</code><br>
+Deprecated.
+Instead, use the following: (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().IsPositiveInfinity()).</p></li>
 <li><p><code>final boolean isTagged()</code><br>
 Gets a value indicating whether this data item has at least one tag.</p></li>
 <li><p><code>final boolean isTrue()</code><br>
@@ -412,6 +525,19 @@ tagged or not.</p></li>
 <li><p><code>final boolean isUndefined()</code><br>
 Gets a value indicating whether this value is a CBOR undefined value,
 whether tagged or not.</p></li>
+<li><p><code>final boolean isZero()</code><br>
+Deprecated.
+Instead, use the following: (cbor.isNumber()
+&amp;&amp; cbor.AsNumber().IsZero()).</p></li>
+<li><p><code>static CBORObject Multiply(CBORObject first,
+CBORObject second)</code><br>
+Deprecated.
+Instead, convert both CBOR objects to numbers (with .AsNumber()), and
+use the first number&#39;s.Multiply() method.</p></li>
+<li><p><code>CBORObject Negate()</code><br>
+Deprecated.
+Instead, convert this object to a number (with .AsNumber()), and
+use that number&#39;s.Negate() method.</p></li>
 <li><p><code>static CBORObject NewArray()</code><br>
 Creates a new empty CBOR array.</p></li>
 <li><p><code>static CBORObject NewMap()</code><br>
@@ -429,6 +555,14 @@ options to control the decoding process.</p></li>
 Generates a CBOR object from a data stream in JavaScript object Notation
 (JSON) format.</p></li>
 <li><p><code>static CBORObject ReadJSON(InputStream stream,
+CBOREncodeOptions options)</code><br>
+Deprecated.
+Instead, use.getReadJSON()(stream,
+new JSONOptions(\allowduplicatekeys = true))
+or .getReadJSON()(stream,
+new JSONOptions(\allowduplicatekeys = false)),
+as appropriate.</p></li>
+<li><p><code>static CBORObject ReadJSON(InputStream stream,
 JSONOptions jsonoptions)</code><br>
 Generates a CBOR object from a data stream in JavaScript object Notation
 (JSON) format, using the specified options to control the decoding process.</p></li>
@@ -444,6 +578,11 @@ Reads a sequence of objects in CBOR format from a data stream.</p></li>
 <li><p><code>static CBORObject[] ReadSequence(InputStream stream,
 CBOREncodeOptions options)</code><br>
 Reads a sequence of objects in CBOR format from a data stream.</p></li>
+<li><p><code>static CBORObject Remainder(CBORObject first,
+CBORObject second)</code><br>
+Deprecated.
+Instead, convert both CBOR objects to numbers (with .AsNumber()), and
+use the first number&#39;s.Remainder() method.</p></li>
 <li><p><code>boolean Remove(CBORObject obj)</code><br>
 If this object is an array, removes the first instance of the specified item
 from the array.</p></li>
@@ -467,9 +606,18 @@ Sets the value of a CBOR object in this map, using a string as the key.</p></li>
 Object valueOb)</code><br>
 Maps an object to a key in this CBOR map, or adds the value if the key
 doesn&#39;t exist.</p></li>
+<li><p><code>final int signum()</code><br>
+Deprecated.
+Instead, convert this object to a number with.AsNumber(),   and use the
+Sign property in.NET or the signum method in Java.</p></li>
 <li><p><code>final int size()</code><br>
 Gets the number of keys in this map, or the number of items in this array,
 or 0 if this item is neither an array nor a map.</p></li>
+<li><p><code>static CBORObject Subtract(CBORObject first,
+CBORObject second)</code><br>
+Deprecated.
+Instead, convert both CBOR objects to numbers (with .AsNumber()), and
+use the first number&#39;s.Subtract() method.</p></li>
 <li><p><code>byte[] ToJSONBytes()</code><br>
 Converts this object to a byte array in JavaScript object Notation (JSON)
 format.</p></li>
@@ -733,6 +881,36 @@ untagged.</li>
 false</code>.</li>
 </ul>
 
+<h3>isFinite</h3>
+
+<pre>@Deprecated public final boolean isFinite()
+</pre>
+
+<p>Gets a value indicating whether this CBOR object represents a finite number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this CBOR object represents a finite number;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>isIntegral</h3>
+
+<pre>@Deprecated public final boolean isIntegral()
+</pre>
+
+<p>Gets a value indicating whether this object represents an integer number,
+ that is, a number without a fractional part. Infinity and not-a-number are
+ not considered integers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object represents an integer number, that is, a
+number without a fractional part; otherwise, <code>false</code>.</li>
+</ul>
+
 <h3>isNull</h3>
 
 <pre>public final boolean isNull()
@@ -792,6 +970,20 @@ false</code>.</li>
 <code>false</code>.</li>
 </ul>
 
+<h3>isZero</h3>
+
+<pre>@Deprecated public final boolean isZero()
+</pre>
+
+<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value equals 0; otherwise, <code>
+false</code>.</li>
+</ul>
+
 <h3>getKeys</h3>
 
 <pre>public final Collection&lt;CBORObject&gt; getKeys()
@@ -804,15 +996,29 @@ false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A read-only collection of the keys of this CBOR object. To avoid
-potential problems, the calling code should not modify the CBOR map while
-iterating over the returned collection.</li>
+<li>A collection of the keys of this CBOR object. To avoid potential
+problems, the calling code should not modify the CBOR map or the returned
+collection while iterating over the returned collection.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
 <li><code>IllegalStateException</code> - This object is not a map.</li>
+</ul>
+
+<h3>isNegative</h3>
+
+<pre>@Deprecated public final boolean isNegative()
+</pre>
+
+<p>Gets a value indicating whether this object is a negative number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object is a negative number; otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>getMostOuterTag</h3>
@@ -828,6 +1034,27 @@ iterating over the returned collection.</li>
 <ul>
 <li>The outermost tag for this CBOR data item, or -1 if the item is
 untagged.</li>
+</ul>
+
+<h3>signum</h3>
+
+<pre>@Deprecated public final int signum()
+</pre>
+
+<p>Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero. Throws an
+ exception if this is a not-a-number value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object does not represent a number, or
+this object is a not-a-number (NaN) value.</li>
 </ul>
 
 <h3>getSimpleValue</h3>
@@ -917,9 +1144,9 @@ should not modify the CBOR map while iterating over the returned collection.</li
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A read-only collection of the values of this CBOR map or array. To
-avoid potential problems, the calling code should not modify the CBOR map or
-array while iterating over the returned collection.</li>
+<li>A collection of the values of this CBOR map or array. To avoid
+potential problems, the calling code should not modify the CBOR map or array
+or the returned collection while iterating over the returned collection.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1123,6 +1350,35 @@ if an item with the given key doesn&#39;t exist.</li>
 <ul>
 <li><p><code>NullPointerException</code> - The key is null.</p></li>
 <li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
+</ul>
+
+<h3>Addition</h3>
+
+<pre>@Deprecated public static CBORObject Addition(CBORObject first, CBORObject second)
+</pre>
+
+<p>Finds the sum of two CBOR numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - Either or both operands are not numbers (as
+opposed to Not-a-Number, NaN).</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</p></li>
 </ul>
 
 <h3>DecodeFromBytes</h3>
@@ -1382,6 +1638,25 @@ occurred.</p></li>
 * <code>NullPointerException</code> - The parameter <code>data</code> is null, or the
  parameter <code>options</code> is null.
 
+### Divide
+    @Deprecated public static CBORObject Divide(CBORObject first, CBORObject second)
+Divides a CBORObject object by the value of a CBORObject object.
+
+**Parameters:**
+
+* <code>first</code> - The parameter <code>first</code> is a CBOR object.
+
+* <code>second</code> - The parameter <code>second</code> is a CBOR object.
+
+**Returns:**
+
+* The quotient of the two objects.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
+
 ### FromJSONString
     public static CBORObject FromJSONString(String str, int offset, int count)
 <p>Generates a CBOR object from a text string in JavaScript object Notation
@@ -1489,6 +1764,43 @@ byte-order mark (U+FEFF).</li>
 
 <ul>
 <li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>CBORException</code> - The string is not in JSON format.</p></li>
+</ul>
+
+<h3>FromJSONString</h3>
+
+<pre>@Deprecated public static CBORObject FromJSONString(String str, CBOREncodeOptions options)
+</pre>
+
+<p>Generates a CBOR object from a text string in JavaScript object Notation
+ (JSON) format, using the specified options to control the decoding process.
+ </p> <p>Note that if a CBOR object is converted to JSON with <code>
+ ToJSONString</code>, then the JSON is converted back to CBOR with this method, the
+ new CBOR object will not necessarily be the same as the old CBOR object,
+ especially if the old CBOR object uses data types not supported in JSON,
+ such as integers in map keys.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string in JSON format. The entire string must contain a
+single JSON object and not multiple objects. The string may not begin with a
+byte-order mark (U+FEFF).</p></li>
+<li><p><code>options</code> - Specifies options to control the decoding process. This
+method uses only the AllowDuplicateKeys property of this object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object containing the JSON data decoded.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>options</code>
+is null.</p></li>
 <li><p><code>CBORException</code> - The string is not in JSON format.</p></li>
 </ul>
 
@@ -2437,12 +2749,11 @@ to a new array, or CBORObject.Null if the value is null.</li>
 <li><code>obj</code> - <p>The parameter <code>obj</code> is an arbitrary object, which can be
 null. </p><p><b>NOTE:</b> For security reasons, whenever possible, an
 application should not base this parameter on user input or other externally
-supplied data, and whenever possible, the application should limit this
-parameter&#39;s inputs to types specially handled by this method (such as <code>
-int</code> or <code>string</code>) and/or to plain-old-data types (POCO or POJO types)
-within the control of the application. If the plain-old-data type references
-other data types, those types should likewise meet either criterion
-above.</p>.</li>
+supplied data unless the application limits this parameter&#39;s inputs to types
+specially handled by this method (such as <code>int</code> or <code>string</code>)
+and/or to plain-old-data types (POCO or POJO types) within the control of
+the application. If the plain-old-data type references other data types,
+those types should likewise meet either criterion above.</p>.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2466,11 +2777,11 @@ CBORObject.Null if the object is null.</li>
 <li><p><code>obj</code> - <p>The parameter <code>obj</code> is an arbitrary object.
 </p><p><b>NOTE:</b> For security reasons, whenever possible, an application
 should not base this parameter on user input or other externally supplied
-data, and whenever possible, the application should limit this parameter&#39;s
-inputs to types specially handled by this method (such as <code>int</code> or
-<code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
-the control of the application. If the plain-old-data type references other
-data types, those types should likewise meet either criterion above.</p>.</p></li>
+data unless the application limits this parameter&#39;s inputs to types
+specially handled by this method (such as <code>int</code> or <code>string</code>)
+and/or to plain-old-data types (POCO or POJO types) within the control of
+the application. If the plain-old-data type references other data types,
+those types should likewise meet either criterion above.</p>.</p></li>
 <li><p><code>options</code> - An object containing options to control how certain objects
 are converted to CBOR objects.</p></li>
 </ul>
@@ -2502,11 +2813,11 @@ CBORObject.Null if the object is null.</li>
 <li><p><code>obj</code> - <p>The parameter <code>obj</code> is an arbitrary object.
 </p><p><b>NOTE:</b> For security reasons, whenever possible, an application
 should not base this parameter on user input or other externally supplied
-data, and whenever possible, the application should limit this parameter&#39;s
-inputs to types specially handled by this method (such as <code>int</code> or
-<code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
-the control of the application. If the plain-old-data type references other
-data types, those types should likewise meet either criterion above.</p>.</p></li>
+data unless the application limits this parameter&#39;s inputs to types
+specially handled by this method (such as <code>int</code> or <code>string</code>)
+and/or to plain-old-data types (POCO or POJO types) within the control of
+the application. If the plain-old-data type references other data types,
+those types should likewise meet either criterion above.</p>.</p></li>
 <li><p><code>mapper</code> - An object containing optional converters to convert objects of
 certain types to CBOR objects.</p></li>
 </ul>
@@ -2638,11 +2949,11 @@ CBORObject.Null if the object is null.</li>
 * <code>obj</code> - <p>An arbitrary object to convert to a CBOR object.
  </p><p><b>NOTE:</b> For security reasons, whenever possible, an application
  should not base this parameter on user input or other externally supplied
- data, and whenever possible, the application should limit this parameter's
- inputs to types specially handled by this method (such as <code>int</code> or
- <code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
- the control of the application. If the plain-old-data type references other
- data types, those types should likewise meet either criterion above.</p>.
+ data unless the application limits this parameter's inputs to types
+ specially handled by this method (such as <code>int</code> or <code>string</code>)
+ and/or to plain-old-data types (POCO or POJO types) within the control of
+ the application. If the plain-old-data type references other data types,
+ those types should likewise meet either criterion above.</p>.
 
 * <code>mapper</code> - An object containing optional converters to convert objects of
  certain types to CBOR objects. Can be null.
@@ -2706,12 +3017,12 @@ greater than 2^64-1.</p></li>
 <li><p><code>valueOb</code> - <p>The parameter <code>valueOb</code> is an arbitrary object,
 which can be null. </p><p><b>NOTE:</b> For security reasons, whenever
 possible, an application should not base this parameter on user input or
-other externally supplied data, and whenever possible, the application
-should limit this parameter&#39;s inputs to types specially handled by this
-method (such as <code>int</code> or <code>string</code>) and/or to plain-old-data
-types (POCO or POJO types) within the control of the application. If the
-plain-old-data type references other data types, those types should likewise
-meet either criterion above.</p>.</p></li>
+other externally supplied data unless the application limits this
+parameter&#39;s inputs to types specially handled by this method (such as <code>
+int</code> or <code>string</code>) and/or to plain-old-data types (POCO or POJO types)
+within the control of the application. If the plain-old-data type references
+other data types, those types should likewise meet either criterion
+above.</p>.</p></li>
 <li><p><code>bigintTag</code> - <p>Tag number. The tag number 55799 can be used to mark a
 &quot;self-described CBOR&quot; object. This document does not attempt to list all
 CBOR tags and their meanings. An up-to-date list can be found at the CBOR
@@ -2784,12 +3095,12 @@ outermost tag).</li>
 <li><p><code>valueObValue</code> - <p>The parameter <code>valueObValue</code> is an arbitrary
 object, which can be null. </p><p><b>NOTE:</b> For security reasons,
 whenever possible, an application should not base this parameter on user
-input or other externally supplied data, and whenever possible, the
-application should limit this parameter&#39;s inputs to types specially handled
-by this method (such as <code>int</code> or <code>string</code>) and/or to
-plain-old-data types (POCO or POJO types) within the control of the
-application. If the plain-old-data type references other data types, those
-types should likewise meet either criterion above.</p>.</p></li>
+input or other externally supplied data unless the application limits this
+parameter&#39;s inputs to types specially handled by this method (such as <code>
+int</code> or <code>string</code>) and/or to plain-old-data types (POCO or POJO types)
+within the control of the application. If the plain-old-data type references
+other data types, those types should likewise meet either criterion
+above.</p>.</p></li>
 <li><p><code>smallTag</code> - <p>A 32-bit integer that specifies a tag number. The tag
 number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This
 document does not attempt to list all CBOR tags and their meanings. An
@@ -2837,6 +3148,35 @@ integer.</li>
 <ul>
 <li><code>IllegalArgumentException</code> - The parameter <code>simpleValue</code> is less than 0,
 greater than 255, or from 24 through 31.</li>
+</ul>
+
+<h3>Multiply</h3>
+
+<pre>@Deprecated public static CBORObject Multiply(CBORObject first, CBORObject second)
+</pre>
+
+<p>Multiplies two CBOR numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The product of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - Either or both operands are not numbers (as
+opposed to Not-a-Number, NaN).</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</p></li>
 </ul>
 
 <h3>NewArray</h3>
@@ -3083,6 +3423,43 @@ CBORObject.Null</code>) in the given list.</li>
 <li><p><code>IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>CBORException</code> - The data stream is not empty and
 does not begin with a record separator byte (0x1e).</p></li>
+</ul>
+
+<h3>ReadJSON</h3>
+
+<pre>@Deprecated public static CBORObject ReadJSON(InputStream stream, CBOREncodeOptions options) throws IOException
+</pre>
+
+<p>Generates a CBOR object from a data stream in JavaScript object Notation
+ (JSON) format, using the specified options to control the decoding process.
+ The JSON stream may begin with a byte-order mark (U+FEFF). Since version
+ 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the
+ encoding is detected by assuming that the first character read must be a
+ byte-order mark or a nonzero basic character (U+0001 to U+007F). (In
+ previous versions, only UTF-8 was allowed.).</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>stream</code> - A readable data stream. The sequence of bytes read from the
+data stream must contain a single JSON object and not multiple objects.</p></li>
+<li><p><code>options</code> - Contains options to control the JSON decoding process. This
+method uses only the AllowDuplicateKeys property of this object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object containing the JSON data decoded.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>CBORException</code> - The data stream contains invalid
+encoding or is not in JSON format.</p></li>
 </ul>
 
 <h3>ReadJSONSequence</h3>
@@ -3349,6 +3726,63 @@ encoding or is not in JSON format.</p></li>
 <li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
 than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s length
 minus <code>offset</code> is less than <code>count</code>.</p></li>
+</ul>
+
+<h3>Remainder</h3>
+
+<pre>@Deprecated public static CBORObject Remainder(CBORObject first, CBORObject second)
+</pre>
+
+<p>Finds the remainder that results when a CBORObject object is divided by the
+ value of a CBOR object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The remainder of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
+</ul>
+
+<h3>Subtract</h3>
+
+<pre>@Deprecated public static CBORObject Subtract(CBORObject first, CBORObject second)
+</pre>
+
+<p>Finds the difference between two CBOR number objects.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The difference of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - Either or both operands are not numbers (as
+opposed to Not-a-Number, NaN).</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</p></li>
 </ul>
 
 <h3>Write</h3>
@@ -3709,11 +4143,11 @@ null.</p></li>
 * <code>objValue</code> - <p>The arbitrary object to be serialized. Can be null.
  </p><p><b>NOTE:</b> For security reasons, whenever possible, an application
  should not base this parameter on user input or other externally supplied
- data, and whenever possible, the application should limit this parameter's
- inputs to types specially handled by this method (such as <code>int</code> or
- <code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
- the control of the application. If the plain-old-data type references other
- data types, those types should likewise meet either criterion above.</p>.
+ data unless the application limits this parameter's inputs to types
+ specially handled by this method (such as <code>int</code> or <code>string</code>)
+ and/or to plain-old-data types (POCO or POJO types) within the control of
+ the application. If the plain-old-data type references other data types,
+ those types should likewise meet either criterion above.</p>.
 
 * <code>output</code> - A writable data stream.
 
@@ -3746,11 +4180,11 @@ null.</p></li>
 <li><p><code>obj</code> - <p>The parameter <code>obj</code> is an arbitrary object. Can be null.
 </p><p><b>NOTE:</b> For security reasons, whenever possible, an application
 should not base this parameter on user input or other externally supplied
-data, and whenever possible, the application should limit this parameter&#39;s
-inputs to types specially handled by this method (such as <code>int</code> or
-<code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
-the control of the application. If the plain-old-data type references other
-data types, those types should likewise meet either criterion above.</p>.</p></li>
+data unless the application limits this parameter&#39;s inputs to types
+specially handled by this method (such as <code>int</code> or <code>string</code>)
+and/or to plain-old-data types (POCO or POJO types) within the control of
+the application. If the plain-old-data type references other data types,
+those types should likewise meet either criterion above.</p>.</p></li>
 <li><p><code>outputStream</code> - A writable data stream.</p></li>
 </ul>
 
@@ -3759,6 +4193,27 @@ data types, those types should likewise meet either criterion above.</p>.</p></l
 <ul>
 <li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
 <li><p><code>IOException</code></p></li>
+</ul>
+
+<h3>Abs</h3>
+
+<pre>@Deprecated public CBORObject Abs()
+</pre>
+
+<p>Gets this object&#39;s absolute value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s absolute without its negative sign.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object does not represent a number (for
+this purpose, infinities and not-a-number or NaN values, but not
+CBORObject.Null, are considered numbers).</li>
 </ul>
 
 <h3>Add</h3>
@@ -3863,6 +4318,30 @@ to this CBOR array.</li>
 <li><p><code>IllegalArgumentException</code> - The type of <code>obj</code> is not supported.</p></li>
 </ul>
 
+<h3>AsEInteger</h3>
+
+<pre>@Deprecated public com.upokecenter.numbers.EInteger AsEInteger()
+</pre>
+
+<p>Converts this object to an arbitrary-precision integer. See the ToObject
+ overload taking a type for more information.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest arbitrary-precision integer to this object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalStateException</code> - This object does not represent a number (for
+the purposes of this method, infinity and not-a-number values, but not
+<code>CBORObject.Null</code>, are considered numbers).</p></li>
+<li><p><code>ArithmeticException</code> - This object&#39;s value is infinity or not-a-number
+(NaN).</p></li>
+</ul>
+
 <h3>AsBoolean</h3>
 
 <pre>public boolean AsBoolean()
@@ -3876,6 +4355,31 @@ to this CBOR array.</li>
 <ul>
 <li>False if this object is a CBOR false, null, or undefined value;
 otherwise, true.</li>
+</ul>
+
+<h3>AsByte</h3>
+
+<pre>@Deprecated public byte AsByte()
+</pre>
+
+<p>Converts this object to a byte (0 to 255). Floating point values are
+ converted to integers by discarding their fractional parts.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest byte-sized integer to this object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalStateException</code> - This object does not represent a number (for
+this purpose, infinities and not-a-number or NaN values, but not
+CBORObject.Null, are considered numbers).</p></li>
+<li><p><code>ArithmeticException</code> - This object&#39;s value exceeds the range of a byte
+(would be less than 0 or greater than 255 when converted to an integer by
+discarding its fractional part).</p></li>
 </ul>
 
 <h3>AsDouble</h3>
@@ -3899,6 +4403,96 @@ the range of a 64-bit floating point number.</li>
 <li><code>IllegalStateException</code> - This object does not represent a number (for
 this purpose, infinities and not-a-number or NaN values, but not
 CBORObject.Null, are considered numbers).</li>
+</ul>
+
+<h3>AsEDecimal</h3>
+
+<pre>@Deprecated public com.upokecenter.numbers.EDecimal AsEDecimal()
+</pre>
+
+<p>Converts this object to a decimal number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A decimal number for this object&#39;s value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object does not represent a number (for
+the purposes of this method, infinity and not-a-number values, but not
+<code>CBORObject.Null</code>, are considered numbers).</li>
+</ul>
+
+<h3>AsEFloat</h3>
+
+<pre>@Deprecated public com.upokecenter.numbers.EFloat AsEFloat()
+</pre>
+
+<p>Converts this object to an arbitrary-precision binary floating point number.
+ See the ToObject overload taking a type for more information.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary floating-point number for this
+object&#39;s value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object does not represent a number (for
+the purposes of this method, infinity and not-a-number values, but not
+<code>CBORObject.Null</code>, are considered numbers).</li>
+</ul>
+
+<h3>AsERational</h3>
+
+<pre>@Deprecated public com.upokecenter.numbers.ERational AsERational()
+</pre>
+
+<p>Converts this object to a rational number. See the ToObject overload taking
+ a type for more information.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A rational number for this object&#39;s value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object does not represent a number (for
+the purposes of this method, infinity and not-a-number values, but not
+<code>CBORObject.Null</code>, are considered numbers).</li>
+</ul>
+
+<h3>AsInt16</h3>
+
+<pre>@Deprecated public short AsInt16()
+</pre>
+
+<p>Converts this object to a 16-bit signed integer. Floating point values are
+ converted to integers by discarding their fractional parts.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest 16-bit signed integer to this object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalStateException</code> - This object does not represent a number (for
+this purpose, infinities and not-a-number or NaN values, but not
+CBORObject.Null, are considered numbers).</p></li>
+<li><p><code>ArithmeticException</code> - This object&#39;s value exceeds the range of a 16-bit
+signed integer.</p></li>
 </ul>
 
 <h3>AsInt32Value</h3>
@@ -4076,6 +4670,33 @@ CBORObject.Null, are considered numbers).</li>
 * <code>ArithmeticException</code> - This object's value exceeds the range of a 32-bit
  signed integer.
 
+### AsInt64
+    @Deprecated public long AsInt64()
+<p>Converts this object to a 64-bit signed integer. Non-integer numbers are
+ converted to integers by discarding their fractional parts. (NOTE: To
+ determine whether this method call can succeed, call
+ <b>AsNumber().getCanTruncatedIntFitInInt64()</b> before calling this method. See
+ the example.).</p><p>The following example code (originally written in C#
+ for the.NET Framework) shows a way to check whether a given CBOR object
+ stores a 64-bit signed integer before getting its value.</p> <pre>CBORObject
+ obj = CBORObject.FromInt64(99999); if (obj.isIntegral() &amp;&amp;
+ obj.AsNumber().CanFitInInt64()) { /* Not an Int64; handle the error */
+ System.out.println("Not a 64-bit integer."); } else {
+ System.out.println("The value is " + obj.AsInt64()); }</pre> .
+
+**Returns:**
+
+* The closest 64-bit signed integer to this object.
+
+**Throws:**
+
+* <code>IllegalStateException</code> - This object does not represent a number (for
+ this purpose, infinities and not-a-number or NaN values, but not
+ CBORObject.Null, are considered numbers).
+
+* <code>ArithmeticException</code> - This object's value exceeds the range of a 64-bit
+ signed integer.
+
 ### AsSingle
     public float AsSingle()
 Converts this object to a 32-bit floating point number.
@@ -4119,6 +4740,104 @@ the purposes of this method, infinity and not-a-number values, but not
 for null before conversion, use the following idiom (originally written in
 C# for the.NET version): <code>(cbor == null || cbor.isNull()) ? null :
 cbor.AsString()</code>.</li>
+</ul>
+
+<h3>CanFitInDouble</h3>
+
+<pre>@Deprecated public boolean CanFitInDouble()
+</pre>
+
+<p>Returns whether this object&#39;s value can be converted to a 64-bit floating
+ point number without its value being rounded to another numerical value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value can be converted to a 64-bit
+floating point number without its value being rounded to another numerical
+value, or if this is a not-a-number value, even if the value&#39;s diagnostic
+information can&#39;t fit in a 64-bit floating point number; otherwise, <code>
+false</code>.</li>
+</ul>
+
+<h3>CanFitInInt32</h3>
+
+<pre>@Deprecated public boolean CanFitInInt32()
+</pre>
+
+<p>Returns whether this object&#39;s numerical value is an integer, is -(2^31) or
+ greater, and is less than 2^31.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s numerical value is an integer, is
+-(2^31) or greater, and is less than 2^31; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>CanFitInInt64</h3>
+
+<pre>@Deprecated public boolean CanFitInInt64()
+</pre>
+
+<p>Returns whether this object&#39;s numerical value is an integer, is -(2^63) or
+ greater, and is less than 2^63.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s numerical value is an integer, is
+-(2^63) or greater, and is less than 2^63; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>CanFitInSingle</h3>
+
+<pre>@Deprecated public boolean CanFitInSingle()
+</pre>
+
+<p>Returns whether this object&#39;s value can be converted to a 32-bit floating
+ point number without its value being rounded to another numerical value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value can be converted to a 32-bit
+floating point number without its value being rounded to another numerical
+value, or if this is a not-a-number value, even if the value&#39;s diagnostic
+information can&#39; t fit in a 32-bit floating point number; otherwise, <code>
+false</code>.</li>
+</ul>
+
+<h3>CanTruncatedIntFitInInt32</h3>
+
+<pre>@Deprecated public boolean CanTruncatedIntFitInInt32()
+</pre>
+
+<p>Returns whether this object&#39;s value, converted to an integer by discarding
+ its fractional part, would be -(2^31) or greater, and less than 2^31.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value, converted to an integer by
+discarding its fractional part, would be -(2^31) or greater, and less than
+2^31; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>CanTruncatedIntFitInInt64</h3>
+
+<pre>@Deprecated public boolean CanTruncatedIntFitInInt64()
+</pre>
+
+<p>Returns whether this object&#39;s value, converted to an integer by discarding
+ its fractional part, would be -(2^63) or greater, and less than 2^63.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value, converted to an integer by
+discarding its fractional part, would be -(2^63) or greater, and less than
+2^63; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -4673,6 +5392,61 @@ Inserts an object at the specified position in this CBOR array.
 
 * <code>IllegalArgumentException</code> - The parameter <code>valueOb</code> has an unsupported
  type; or <code>index</code> is not a valid index into this array.
+
+### IsInfinity
+    @Deprecated public boolean IsInfinity()
+Gets a value indicating whether this CBOR object represents infinity.
+
+**Returns:**
+
+* <code>true</code> if this CBOR object represents infinity; otherwise,
+ <code>false</code>.
+
+### IsNaN
+    @Deprecated public boolean IsNaN()
+Gets a value indicating whether this CBOR object represents a not-a-number
+ value (as opposed to whether this object does not express a number).
+
+**Returns:**
+
+* <code>true</code> if this CBOR object represents a not-a-number value (as
+ opposed to whether this object does not represent a number as defined by the
+ IsNumber property or <code>isNumber()</code> method in Java); otherwise, <code>
+ false</code>.
+
+### IsNegativeInfinity
+    @Deprecated public boolean IsNegativeInfinity()
+Gets a value indicating whether this CBOR object represents negative
+ infinity.
+
+**Returns:**
+
+* <code>true</code> if this CBOR object represents negative infinity;
+ otherwise, <code>false</code>.
+
+### IsPositiveInfinity
+    @Deprecated public boolean IsPositiveInfinity()
+Gets a value indicating whether this CBOR object represents positive
+ infinity.
+
+**Returns:**
+
+* <code>true</code> if this CBOR object represents positive infinity;
+ otherwise, <code>false</code>.
+
+### Negate
+    @Deprecated public CBORObject Negate()
+Gets this object's value with the sign reversed.
+
+**Returns:**
+
+* The reversed-sign form of this number.
+
+**Throws:**
+
+* <code>IllegalStateException</code> - This object does not represent a number (for
+ this purpose, infinities and not-a-number or NaN values, but not
+ CBORObject.Null, are considered numbers).
 
 ### Clear
     public void Clear()

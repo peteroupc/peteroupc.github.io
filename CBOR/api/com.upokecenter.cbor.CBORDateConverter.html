@@ -217,6 +217,13 @@ For tags 0 and 1, this value is always 0.</li></ul>.</p></li>
 otherwise.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>year</code> or <code>
+lesserFields</code> is null, or contains fewer elements than required.</li>
+</ul>
+
 <h3>DateTimeFieldsToCBORObject</h3>
 
 <pre>public CBORObject DateTimeFieldsToCBORObject(int smallYear, int month, int day)
