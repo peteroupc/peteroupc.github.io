@@ -2,7 +2,7 @@
 
 To improve support for MIDI (Musical Instrument Digital Interface) music playback in open-source and other applications, I challenge the community to write the following items, all of which must be released to the public domain (Creative Commons Zero).
 
-- A cross-platform open-source library for _software_ synthesis of MIDI data stored in standard MIDI files (SMF, .mid), using instrument sound banks in SoundFont 2 (.sf2), downloadable sounds (.dls), and in OPL2, OPL3, and other FM synthesis sound banks, and possibly also in Timidity++ patch format (.cfg).  (Similar to _Fluidsynth_, but in the public domain.  In addition, the source code in the non-public-domain _libADLMIDI_, _libOPNMIDI_, and _OPL3BankEditor_ may be useful here.)
+- A cross-platform open-source library for _software_ synthesis of MIDI data stored in standard MIDI files (SMF, .mid), using instrument sound banks in SoundFont 2 (.sf2), downloadable sounds (.dls), and in OPL2, OPL3, and other FM synthesis sound banks, and possibly also in Timidity++/UltraSound patch format (.cfg, .pat).  (Similar to _Fluidsynth_, but in the public domain.  In addition, the source code in the non-public-domain _libADLMIDI_, _libOPNMIDI_, and _OPL3BankEditor_ may be useful here.)
     - The library should support popular loop-point conventions found in MIDI files.
     - The library should support seeking of MIDI files such that a pause and resume function can be offered by a media player.
 - An instrument sound bank for wavetable synthesis of all instruments and drum noises in the General MIDI specification.
