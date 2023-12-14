@@ -47,7 +47,6 @@ text to CBOR objects and back.</p>
 <ul>
 <li>CodePlex: <a href="https://peterocbor.codeplex.com/">https://peterocbor.codeplex.com/</a></li>
 <li>Code Project: <a href="http://www.codeproject.com/Tips/897294/Concise-Binary-Object-Representation-CBOR-in-Cshar">http://www.codeproject.com/Tips/897294/Concise-Binary-Object-Representation-CBOR-in-Cshar</a></li>
-<li>SourceForge: <a href="https://sourceforge.net/p/petero-cbor">https://sourceforge.net/p/petero-cbor</a></li>
 </ul>
 
 <h2>Examples</h2>
@@ -269,13 +268,11 @@ of a given class into CBOR objects.</p>
        cp2.Aa=&quot;AA&quot;;
        cp2.Bb=&quot;BB&quot;;
        cp2.Cc=&quot;CC&quot;;
-       var tm=new CBORTypeMapper().AddConverter(
-           typeof(CPOD3),
-           new CPOD3Converter());
-       // Serialize CBOR object
-       var cbor=CBORObject.FromObject(cp2,tm);
-       // Deserialize CBOR object
-       cp2=cbor.ToObject&lt;CPOD3&gt;();
+       var conv=new CPOD3Converter();
+       // Serialize CBOR object, passing the type mapper
+       var cbor=conv.ToCBORObject(cp2);
+       // Deserialize CBOR object, passing the type mapper
+       cp2=conv.FromCBORObject(cbor);
 </pre>
 
 <p>NOTE: All code samples in this section are released to the Public Domain,
@@ -307,7 +304,7 @@ for release notes.</p>
 <ul>
 <li>Tag 30: <a href="http://peteroupc.github.io/CBOR/rational.html">Rational numbers</a></li>
 <li>Tag 257: <a href="http://peteroupc.github.io/CBOR/binarymime.html">Binary MIME messages</a></li>
-<li>Tag 38: <a href="http://peteroupc.github.io/CBOR/langtags.html">Language-tagged strings</a></li>
+<li>Tag 38: <a href="http://peteroupc.github.io/CBOR/langtags.html">Language-tagged strings</a> (Expected to be superseded by an RFC; see the Internet Draft draft-ietf-core-problem-details).</li>
 <li>Tag 264 and 265: <a href="http://peteroupc.github.io/CBOR/bigfrac.html">Arbitrary-exponent numbers</a></li>
 </ul>
 
