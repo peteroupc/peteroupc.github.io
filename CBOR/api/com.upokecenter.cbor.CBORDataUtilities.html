@@ -59,19 +59,6 @@ object.</p></li>
 <li><p><code>static CBORObject ParseJSONNumber(String str)</code><br>
 Parses a number whose format follows the JSON specification.</p></li>
 <li><p><code>static CBORObject ParseJSONNumber(String str,
-boolean integersOnly,
-boolean positiveOnly)</code><br>
-Deprecated.
-Call the one-argument version of this method instead.</p></li>
-<li><p><code>static CBORObject ParseJSONNumber(String str,
-boolean integersOnly,
-boolean positiveOnly,
-boolean preserveNegativeZero)</code><br>
-Deprecated.
-Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that
-sets preserveNegativeZero to the desired value, either true or
-false.</p></li>
-<li><p><code>static CBORObject ParseJSONNumber(String str,
 int offset,
 int count)</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259)
@@ -97,84 +84,12 @@ and converts that number to a CBOR object.</p></li>
 </pre>
 
 <p>Parses a number whose format follows the JSON specification. The method uses
- a JSONOptions with all default properties except for a PreserveNegativeZero
- property of false.</p>
+ a JSONOptions with all default properties.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><code>str</code> - A text string to parse as a JSON number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR object that represents the parsed number. Returns positive
-zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or
-&quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null
-or empty.</li>
-</ul>
-
-<h3>ParseJSONNumber</h3>
-
-<pre>@Deprecated public static CBORObject ParseJSONNumber(String str, boolean integersOnly, boolean positiveOnly)
-</pre>
-
-<p>Parses a number whose format follows the JSON specification (RFC 8259).
- The method uses a JSONOptions with all default properties except for a
- PreserveNegativeZero property of false.</p> <p>Roughly speaking, a valid
- JSON number consists of an optional minus sign, one or more basic digits
- (starting with 1 to 9 unless there is only one digit and that digit is 0),
- an optional decimal point (".", full stop) with one or more basic digits,
- and an optional letter E or e with an optional plus or minus sign and one or
- more basic digits (the exponent). A text string representing a valid JSON
- number is not allowed to contain white space characters, including
- spaces.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>str</code> - A text string to parse as a JSON number.</p></li>
-<li><p><code>integersOnly</code> - If true, no decimal points or exponents are allowed in
-the string. The default is false.</p></li>
-<li><p><code>positiveOnly</code> - If true, only positive numbers are allowed (the leading
-minus is disallowed). The default is false.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR object that represents the parsed number. Returns positive
-zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or
-&quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null
-or empty.</li>
-</ul>
-
-<h3>ParseJSONNumber</h3>
-
-<pre>@Deprecated public static CBORObject ParseJSONNumber(String str, boolean integersOnly, boolean positiveOnly, boolean preserveNegativeZero)
-</pre>
-
-<p>Parses a number whose format follows the JSON specification (RFC
- 8259).</p> <p>Roughly speaking, a valid JSON number consists of an optional
- minus sign, one or more basic digits (starting with 1 to 9 unless there is
- only one digit and that digit is 0), an optional decimal point (".", full
- stop) with one or more basic digits, and an optional letter E or e with an
- optional plus or minus sign and one or more basic digits (the exponent). A
- text string representing a valid JSON number is not allowed to contain white
- space characters, including spaces.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>str</code> - A text string to parse as a JSON number.</p></li>
-<li><p><code>integersOnly</code> - If true, no decimal points or exponents are allowed in
-the string. The default is false.</p></li>
-<li><p><code>positiveOnly</code> - If true, the leading minus is disallowed in the string.
-The default is false.</p></li>
-<li><p><code>preserveNegativeZero</code> - If true, returns positive zero if the number is
-a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Otherwise,
-returns negative zero in this case. The default is false.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -422,8 +337,7 @@ minus <code>offset</code> is less than <code>count</code>.</p></li>
 </pre>
 
 <p>Parses a number from a byte sequence whose format follows the JSON
- specification. The method uses a JSONOptions with all default properties
- except for a PreserveNegativeZero property of false.</p>
+ specification. The method uses a JSONOptions with all default properties.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -434,10 +348,8 @@ minus <code>offset</code> is less than <code>count</code>.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBOR object that represents the parsed number. Returns positive
-zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or
-&quot;-0.0&quot;). Returns null if the parsing fails, including if the byte sequence
-is null or empty.</li>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the byte sequence is null or empty.</li>
 </ul>
 
 <h3>ParseJSONNumber</h3>
@@ -562,7 +474,7 @@ minus <code>offset</code> is less than <code>count</code>.</p></li>
 
 <p>Parses a number from a sequence of <code>char</code> s whose format follows the
  JSON specification. The method uses a JSONOptions with all default
- properties except for a PreserveNegativeZero property of false.</p>
+ properties.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -573,10 +485,8 @@ minus <code>offset</code> is less than <code>count</code>.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBOR object that represents the parsed number. Returns positive
-zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or
-&quot;-0.0&quot;). Returns null if the parsing fails, including if the sequence of
-<code>char</code> s is null or empty.</li>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the sequence of <code>char</code> s is null or empty.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
