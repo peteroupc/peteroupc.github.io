@@ -36,9 +36,6 @@ The default options for converting CBOR objects to JSON.</li>
 <ul>
 <li><p><code>final boolean getAllowDuplicateKeys()</code><br>
 Gets a value indicating whether to allow duplicate keys when reading JSON.</p></li>
-<li><p><code>final boolean getBase64Padding()</code><br>
-Deprecated.
-This property now has no effect.</p></li>
 <li><p><code>final boolean getKeepKeyOrder()</code><br>
 Gets a value indicating whether to preserve the order in which a map&#39;s keys
 appear when decoding JSON, by using maps created as though by
@@ -90,22 +87,6 @@ Gets the values of this options object&#39;s properties in text form.</p></li>
 <li>A text string containing the values of this options object&#39;s
 properties. The format of the string is the same as the one described in the
 string constructor for this class.</li>
-</ul>
-
-<h3>getBase64Padding</h3>
-
-<pre>@Deprecated public final boolean getBase64Padding()
-</pre>
-
-<p>Gets a value indicating whether the Base64Padding property is true. This
- property has no effect; in previous versions, this property meant that
- padding was written out when writing base64url or traditional base64 to
- JSON.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A value indicating whether the Base64Padding property is true.</li>
 </ul>
 
 <h3>getPreserveNegativeZero</h3>
