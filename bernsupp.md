@@ -200,7 +200,7 @@ Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can 
 >
 > **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is less than or equal to `High`(_&lambda;_) = _&lambda;_, and greater than or equal to `Low`(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = _&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: `fx=(1-exp(x))/(1-exp(1)); high=x; low=x**2; q=(low/high); r=(1-fx/high)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)`.
 
-**Other functions that equal 0 or 1 at the endpoint 0, 1, or both.** The table below accounts for these Bernoulli factory functions _f_(1):
+**Other functions that equal 0 or 1 at the endpoint 0, 1, or both.** The table below accounts for these Bernoulli factory functions:
 
 | If _f_(0) = | And _f_(1) = |      Method |
  --- | --- | --- |
@@ -353,7 +353,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 > **Note:** A function $f(\lambda)$ is:
 >
 > - _Analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $|\lambda-z|<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
-> - In the _Zygmund class_ if it is continuous and there is a constant $D>0$ with the following property: For each step size $\epsilon>0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two smaller classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
+> - In the _Zygmund class_ if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon>0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two "smaller" classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
 
 <a id=Notes></a>
 
@@ -467,9 +467,13 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 ### Examples of Well-Behaved Functions
 
-In the following examples, _f_(_&lambda;_) is a function defined on the closed unit interval.
+In the examples given in this section, _f_(_&lambda;_) is a function defined on the closed unit interval.
 
-**Concave and convex functions.**  The following table shows examples of functions that are convex, concave, or neither.  Also, review the [**definitions**](#Definitions).
+Generally, how well-behaved a function is depends on how many continuous derivatives it has, and whether those derivatives are Lipschitz continuous or Hölder continuous, among other things.  The following lists several classes of functions, from worst to best behaved and from "largest" to "smallest":
+
+Functions continuous except possibly at one point &rarr; Continuous functions &rarr; Hölder continuous functions &rarr; Lipschitz continuous functions &rarr; With continuous first derivative &rarr; With Hölder continuous first derivative &rarr;  With Lipschitz continuous first derivative &rarr; With continuous second derivative &rarr; With infinitely many derivatives &rarr; Analytic functions.
+
+**Concave and convex functions.**  The following table shows examples of functions that are convex, concave, or neither.  All these functions are continuous.  Also, review the [**definitions**](#Definitions).
 
 | Function _f_(_&lambda;_)| Convex or concave? | Notes |
  --- | --- | --- |
@@ -516,41 +520,6 @@ The following example, which uses the SymPy computer algebra library, plots $\ma
 | _&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise. | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1. |
 | exp(&minus;_&lambda;_). | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1.[^16] |
 | _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise. |_&alpha;_=1.<br>_L_=1.| Concave. Lipschitz continuous derivative with Lipschitz constant 2. |
-
-| Function _f_(_&lambda;_)\: | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_H_)\: | Notes |
- --- | --- | --- |
-|$\lambda^z\cdot t$. | _&alpha;_=_z_.<br>_H_=abs(_t_). | $0\lt z\le 1$, $t\ne 0$. |
-|$\lambda^z\cdot t$. | _&alpha;_=1 (Lipschitz continuous).<br>_H_=_z_\*abs(_t_). | $z\ge 1$, $t$ is a real number. |
-|$\lambda^{1/3}/4 + \lambda^{2/3}$/5. | _&alpha;_=1/3.<br>_H_=9/20. |  _&alpha;_ is the minimum of Hölder exponents, min(1/3, 2/3), and _H_ is the sum of Hölder constants, 1/4+1/5. |
-|$1/2-(1-2\lambda)^{z}/2$ if $\lambda<1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise. | _&alpha;_=_z_.<br>_H_=$2^z/2$. | $0\lt z\le 1$.  In this example, $f$ has a "vertical" slope at 1/2, unless _z_ is 1. |
-|$3/4-\sqrt{\lambda(1-\lambda)}$. | _&alpha;_=1/2.<br>_H_=1. | Has a "vertical" slope at 0 and 1. |
-| Continuous and **piecewise linear**. | _&alpha;_=1.<br>_H_ is the greatest absolute value of the slope among all pieces' slopes. | _f_(_&lambda;_) is _piecewise linear_ if it's made up of multiple linear functions defined on a finite number of "pieces", or non-empty subintervals, that together make up $f$'s domain (in this case, the closed unit interval). |
-| Piecewise linear; equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions. | _&alpha;_=1.<br>_H_ = 1.5. | _H_ = $\max(\text{abs}((3/4-0)/(2/3))$, $\text{abs}((1/4-3/4)/(1/3)))$.<br>Concave because the first piece's slope is greater than the second piece's. |
-| min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). | _&alpha;_=1.<br>_H_ = _mult_. | _mult_ &gt; 0, _&epsilon;_ &gt; 0.  Piecewise linear; equals 0 at 0, 1&minus;_&epsilon;_ at (1&minus;_&epsilon;_)/_mult_, and 1&minus;_&epsilon;_ at 1.<br>_H_=max(_mult_, 0).<br>Concave. |
-| 1/10 if _&lambda;_ is 0; &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise. | Not Hölder continuous. | Has a slope near 0 that's steeper than every "nth" root. |
-
-> **Note:** A Hölder continuous function with Hölder exponent _&alpha;_ and Hölder constant _H_ is also Hölder continuous with Hölder exponent _&beta;_ and Hölder constant bounded above by _H_, where 0 &lt; _&beta;_ &lt; _&alpha;_.
-
-**Finding parameters _&alpha;_ and _H_ for Hölder continuous functions.** If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (_&alpha;_) and Hölder constant (_H_) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.
-
-First, if $f$ has a continuous first derivative on its domain, then _&alpha;_ is 1 ($f$ is **Lipschitz continuous**) and _H_ is the maximum of the absolute value of that derivative.
-
-Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a "vertical slope" or the "steepest slope exhibited".  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$'s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant (_H_) equal to or greater than the maximum value of $g(\lambda)$ on its domain.
-
-The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: `lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c, 0), h.subs(c,1)), (lamda, 0, 1))`.
-
-**Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the table below, if $f$ has a continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _H_ is the maximum of the absolute value of that _second_ derivative.
-
-| Function $f(\lambda)$ | Derivative's Hölder exponent (_&alpha;_) and an upper bound of the derivative's Hölder constant (_H_): | Notes |
- ---- | ---- | ---- |
-| _&lambda;_<sup>1+_&beta;_</sup> | _&alpha;_=_&beta;_.<br>_H_ = 1+_&beta;_. | 0 &lt; _&beta;_ &le; 1. |
-|$3/4-\sqrt{\lambda(1-\lambda)}$. | Derivative is not Hölder continuous. | Derivative is not Hölder continuous because $f$ is not Lipschitz continuous. |
-| cosh(_&lambda;_) &minus; 3/4. | _&alpha;_=1 (derivative is Lipschitz continuous).<br>_H_ = cosh(1). | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
-| $\lambda\cdot\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_H_ = $z(2+z\lambda)/4$. | Continuous second derivative. _H_ is an upper bound of its absolute value. $z>0$. |
-| $\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_H_ = $(z^2)/4$. | Continuous second derivative; _H_ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z>0$. |
-| _&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise. | _&alpha;_=1.<br>_H_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1. |
-| exp(&minus;_&lambda;_). | _&alpha;_=1.<br>_H_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1.[^16] |
-| _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise. |_&alpha;_=1.<br>_H_=2.| Concave. Lipschitz continuous derivative with Lipschitz constant 2. |
 
 <a id=Results_Used_in_Approximate_Bernoulli_Factories></a>
 
@@ -1263,10 +1232,10 @@ add another state S&prime; (with a name that differs from all other states) and 
 
 Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)[^38], the machine now simulates the distribution's probability generating function.  Moreover, the function is in class **PDA** by Theorem 1.2 of Mossel and Peres (2005)[^34] because the machine is a full-domain pushdown automaton.  &#x25a1;
 
-Define a _stochastic context-free grammar_ as follows.  The grammar consists of a finite set of _nonterminals_ and a finite set of _letters_, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^39]):
+Define a _stochastic context-free grammar_ as follows.  The grammar consists of a finite set of _nonterminals_ and a finite set of _letters_, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky normal form (Etessami and Yannakakis 2009)[^39]):
 
 - _X_ &rarr; _a_ (rewrite _X_ to the letter _a_).
-- _X_ &rarr;<sub>_p_</sub> (_a_, _Y_) (with rational probability _p_, rewrite _X_ to the letter _a_ followed by the nonterminal _Y_).  For the same left-hand side, all the _p_ must sum to 1.
+- _X_ &rarr;<sub>_p_</sub> (_a_, _Y_) (with rational probability _p_, rewrite _X_ to the letter _a_ followed by the nonterminal _Y_).  For the same left-hand side, all the _p_ values must sum to 1.
 - _X_ &rarr; (_Y_, _Z_) (rewrite _X_ to the nonterminals _Y_ and _Z_ in that order).
 
 Instead of a letter (such as _a_), a rule can use _&epsilon;_ (the empty string). (The grammar is _context-free_ because the left-hand side has only a single nonterminal, so that no context from the word is needed to parse it.)

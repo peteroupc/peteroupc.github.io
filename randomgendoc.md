@@ -47,10 +47,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class BinaryExpansion(builtins.object)
      |  BinaryExpansion(arr, zerosAtEnd=False)
@@ -107,10 +107,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class BringmannLarsen(builtins.object)
      |  BringmannLarsen(weights)
@@ -137,10 +137,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class ConvexPolygonSampler(builtins.object)
      |  ConvexPolygonSampler(randgen, points)
@@ -167,10 +167,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class DensityInversionSampler(builtins.object)
      |  DensityInversionSampler(pdf, bl, br, ures=1e-08)
@@ -242,10 +242,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class DensityTiling(builtins.object)
      |  DensityTiling(pdf, bl, br, cycles=8)
@@ -313,10 +313,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class FastLoadedDiceRoller(builtins.object)
      |  FastLoadedDiceRoller(weights)
@@ -351,10 +351,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class OptimalSampler(builtins.object)
      |  OptimalSampler(m)
@@ -390,10 +390,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class PascalTriangle(builtins.object)
      |  Generates the rows of Pascal's triangle, or the
@@ -427,10 +427,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class PrefixDistributionSampler(builtins.object)
      |  PrefixDistributionSampler(pdf)
@@ -460,10 +460,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RandomGen(builtins.object)
      |  RandomGen(rng=None)
@@ -1294,10 +1294,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
@@ -1375,10 +1375,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class SortedAliasMethod(builtins.object)
      |  SortedAliasMethod(p)
@@ -1407,10 +1407,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class VoseAlias(builtins.object)
      |  VoseAlias(weights)
@@ -1435,10 +1435,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FUNCTIONS
     numericalTable(func, x, y, n=100)
@@ -1617,10 +1617,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
@@ -2014,10 +2014,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class DiceEnterprise(builtins.object)
      |  Implements the Dice Enterprise algorithm for
@@ -2117,10 +2117,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/bernoulli.py
@@ -2247,10 +2247,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
@@ -2360,10 +2360,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/moore.py
@@ -2437,10 +2437,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class FPInterval(builtins.object)
      |  FPInterval(n, d, prec)
@@ -2469,10 +2469,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class PhaseType(builtins.object)
      |  PhaseType(alpha, s)
@@ -2488,10 +2488,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class PiecewiseBernstein(builtins.object)
      |  Methods defined here:
@@ -2519,10 +2519,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RandPSRN(Real)
      |  RandPSRN(a)
@@ -2591,10 +2591,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RandUniform(Real)
      |  Method resolution order:
@@ -2661,10 +2661,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RandUniformIntFrac(Real)
      |  RandUniformIntFrac(i, f)
@@ -2733,10 +2733,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RandUniformNegIntFrac(Real)
      |  RandUniformNegIntFrac(i, f)
@@ -2805,10 +2805,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class Real(builtins.object)
      |  Methods defined here:
@@ -2864,10 +2864,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealAdd(Real)
      |  RealAdd(a, b)
@@ -2936,10 +2936,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealArcTan(Real)
      |  RealArcTan(a)
@@ -3008,10 +3008,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealArcTan2(Real)
      |  RealArcTan2(y, x)
@@ -3080,10 +3080,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealCos(Real)
      |  RealCos(a)
@@ -3152,10 +3152,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealDivide(Real)
      |  RealDivide(a, b)
@@ -3224,10 +3224,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealErf(Real)
      |  RealErf(a)
@@ -3296,10 +3296,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealExp(Real)
      |  RealExp(a)
@@ -3368,10 +3368,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealFraction(Real)
      |  RealFraction(a, b=None)
@@ -3444,10 +3444,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealLn(Real)
      |  RealLn(a)
@@ -3518,10 +3518,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealLogGammaInt(Real)
      |  RealLogGammaInt(a)
@@ -3590,10 +3590,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealMultiply(Real)
      |  RealMultiply(a, b)
@@ -3666,10 +3666,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealNegate(Real)
      |  RealNegate(a)
@@ -3738,10 +3738,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealPi(Real)
      |  RealPi(fraction=1, consistent=False)
@@ -3810,10 +3810,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealPow(Real)
      |  RealPow(a, b)
@@ -3882,10 +3882,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealSin(Real)
      |  RealSin(a)
@@ -3956,10 +3956,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealSqrt(Real)
      |  RealSqrt(a)
@@ -4028,10 +4028,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealSubtract(Real)
      |  RealSubtract(a, b)
@@ -4100,10 +4100,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class RealTan(Real)
      |  RealTan(a)
@@ -4172,10 +4172,10 @@ CLASSES
      |  Data descriptors inherited from Real:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class ShapeSampler(builtins.object)
      |  ShapeSampler(inshape, dx=1, dy=1)
@@ -4196,10 +4196,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
     class ShapeSampler2(builtins.object)
      |  ShapeSampler2(inshape, dx=1, dy=1)
@@ -4220,10 +4220,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
@@ -4243,10 +4243,10 @@ CLASSES
      |  Data descriptors defined here:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FUNCTIONS
     addto1(rg)

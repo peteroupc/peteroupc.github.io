@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/11/21"><meta name="citation_online_date" content="2023/11/21"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/12/29"><meta name="citation_online_date" content="2023/12/29"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -278,7 +278,7 @@
 <p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is less than or equal to <code>High</code>(<em>&lambda;</em>) = <em>&lambda;</em>, and greater than or equal to <code>Low</code>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following code in Python that uses the SymPy computer algebra library: <code>fx=(1-exp(x))/(1-exp(1)); high=x; low=x**2; q=(low/high); r=(1-fx/high)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
 </blockquote>
 
-<p><strong>Other functions that equal 0 or 1 at the endpoint 0, 1, or both.</strong> The table below accounts for these Bernoulli factory functions <em>f</em>(1):</p>
+<p><strong>Other functions that equal 0 or 1 at the endpoint 0, 1, or both.</strong> The table below accounts for these Bernoulli factory functions:</p>
 
 <table><thead>
 <tr>
@@ -525,7 +525,7 @@
 
 <ul>
 <li><em>Analytic</em> at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $|\lambda-z|&lt;r$, where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
-<li>In the <em>Zygmund class</em> if it is continuous and there is a constant $D&gt;0$ with the following property: For each step size $\epsilon&gt;0$, abs($g(x-h) + g(x+h) - 2g(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two smaller classes of Lipschitz continuous functions (see &quot;Definitions&quot;) and functions with a continuous derivative.</li>
+<li>In the <em>Zygmund class</em> if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon&gt;0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two &quot;smaller&quot; classes of Lipschitz continuous functions (see &quot;Definitions&quot;) and functions with a continuous derivative.</li>
 </ul>
 </blockquote>
 
@@ -641,9 +641,13 @@
 
 <h3>Examples of Well-Behaved Functions</h3>
 
-<p>In the following examples, <em>f</em>(<em>&lambda;</em>) is a function defined on the closed unit interval.</p>
+<p>In the examples given in this section, <em>f</em>(<em>&lambda;</em>) is a function defined on the closed unit interval.</p>
 
-<p><strong>Concave and convex functions.</strong>  The following table shows examples of functions that are convex, concave, or neither.  Also, review the <a href="#Definitions"><strong>definitions</strong></a>.</p>
+<p>Generally, how well-behaved a function is depends on how many continuous derivatives it has, and whether those derivatives are Lipschitz continuous or Hölder continuous, among other things.  The following lists several classes of functions, from worst to best behaved and from &quot;largest&quot; to &quot;smallest&quot;:</p>
+
+<p>Functions continuous except possibly at one point &rarr; Continuous functions &rarr; Hölder continuous functions &rarr; Lipschitz continuous functions &rarr; With continuous first derivative &rarr; With Hölder continuous first derivative &rarr;  With Lipschitz continuous first derivative &rarr; With continuous second derivative &rarr; With infinitely many derivatives &rarr; Analytic functions.</p>
+
+<p><strong>Concave and convex functions.</strong>  The following table shows examples of functions that are convex, concave, or neither.  All these functions are continuous.  Also, review the <a href="#Definitions"><strong>definitions</strong></a>.</p>
 
 <table><thead>
 <tr>
@@ -799,123 +803,6 @@
 <tr>
 <td><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1/2; (4*<em>&lambda;</em> &minus; 1)/(8*<em>&lambda;</em>) otherwise.</td>
 <td><em>&alpha;</em>=1.<br><em>L</em>=1.</td>
-<td>Concave. Lipschitz continuous derivative with Lipschitz constant 2.</td>
-</tr>
-</tbody></table>
-
-<table><thead>
-<tr>
-<th>Function <em>f</em>(<em>&lambda;</em>):</th>
-<th>Hölder exponent (<em>&alpha;</em>) and an upper bound of the Hölder constant (<em>H</em>):</th>
-<th>Notes</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>$\lambda^z\cdot t$.</td>
-<td><em>&alpha;</em>=<em>z</em>.<br><em>H</em>=abs(<em>t</em>).</td>
-<td>$0\lt z\le 1$, $t\ne 0$.</td>
-</tr>
-<tr>
-<td>$\lambda^z\cdot t$.</td>
-<td><em>&alpha;</em>=1 (Lipschitz continuous).<br><em>H</em>=<em>z</em>*abs(<em>t</em>).</td>
-<td>$z\ge 1$, $t$ is a real number.</td>
-</tr>
-<tr>
-<td>$\lambda^{1/3}/4 + \lambda^{2/3}$/5.</td>
-<td><em>&alpha;</em>=1/3.<br><em>H</em>=9/20.</td>
-<td><em>&alpha;</em> is the minimum of Hölder exponents, min(1/3, 2/3), and <em>H</em> is the sum of Hölder constants, 1/4+1/5.</td>
-</tr>
-<tr>
-<td>$1/2-(1-2\lambda)^{z}/2$ if $\lambda&lt;1/2$ and $1/2+(2\lambda-1)^{z}/2$ otherwise.</td>
-<td><em>&alpha;</em>=<em>z</em>.<br><em>H</em>=$2^z/2$.</td>
-<td>$0\lt z\le 1$.  In this example, $f$ has a &quot;vertical&quot; slope at 1/2, unless <em>z</em> is 1.</td>
-</tr>
-<tr>
-<td>$3/4-\sqrt{\lambda(1-\lambda)}$.</td>
-<td><em>&alpha;</em>=1/2.<br><em>H</em>=1.</td>
-<td>Has a &quot;vertical&quot; slope at 0 and 1.</td>
-</tr>
-<tr>
-<td>Continuous and <strong>piecewise linear</strong>.</td>
-<td><em>&alpha;</em>=1.<br><em>H</em> is the greatest absolute value of the slope among all pieces&#39; slopes.</td>
-<td><em>f</em>(<em>&lambda;</em>) is <em>piecewise linear</em> if it&#39;s made up of multiple linear functions defined on a finite number of &quot;pieces&quot;, or non-empty subintervals, that together make up $f$&#39;s domain (in this case, the closed unit interval).</td>
-</tr>
-<tr>
-<td>Piecewise linear; equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.</td>
-<td><em>&alpha;</em>=1.<br><em>H</em> = 1.5.</td>
-<td><em>H</em> = $\max(\text{abs}((3/4-0)/(2/3))$, $\text{abs}((1/4-3/4)/(1/3)))$.<br>Concave because the first piece&#39;s slope is greater than the second piece&#39;s.</td>
-</tr>
-<tr>
-<td>min(<em>&lambda;</em>*<em>mult</em>, 1&minus;<em>&epsilon;</em>).</td>
-<td><em>&alpha;</em>=1.<br><em>H</em> = <em>mult</em>.</td>
-<td><em>mult</em> &gt; 0, <em>&epsilon;</em> &gt; 0.  Piecewise linear; equals 0 at 0, 1&minus;<em>&epsilon;</em> at (1&minus;<em>&epsilon;</em>)/<em>mult</em>, and 1&minus;<em>&epsilon;</em> at 1.<br><em>H</em>=max(<em>mult</em>, 0).<br>Concave.</td>
-</tr>
-<tr>
-<td>1/10 if <em>&lambda;</em> is 0; &minus;1/(2*ln(<em>&lambda;</em>/2)) + 1/10 otherwise.</td>
-<td>Not Hölder continuous.</td>
-<td>Has a slope near 0 that&#39;s steeper than every &quot;nth&quot; root.</td>
-</tr>
-</tbody></table>
-
-<blockquote>
-<p><strong>Note:</strong> A Hölder continuous function with Hölder exponent <em>&alpha;</em> and Hölder constant <em>H</em> is also Hölder continuous with Hölder exponent <em>&beta;</em> and Hölder constant bounded above by <em>H</em>, where 0 &lt; <em>&beta;</em> &lt; <em>&alpha;</em>.</p>
-</blockquote>
-
-<p><strong>Finding parameters <em>&alpha;</em> and <em>H</em> for Hölder continuous functions.</strong> If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (<em>&alpha;</em>) and Hölder constant (<em>H</em>) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.</p>
-
-<p>First, if $f$ has a continuous first derivative on its domain, then <em>&alpha;</em> is 1 ($f$ is <strong>Lipschitz continuous</strong>) and <em>H</em> is the maximum of the absolute value of that derivative.</p>
-
-<p>Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a &quot;vertical slope&quot; or the &quot;steepest slope exhibited&quot;.  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$&#39;s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant (<em>H</em>) equal to or greater than the maximum value of $g(\lambda)$ on its domain.</p>
-
-<p>The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: <code>lamda,c=symbols(&#39;lamda c&#39;); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c, 0), h.subs(c,1)), (lamda, 0, 1))</code>.</p>
-
-<p><strong>Functions with a Hölder continuous or Lipschitz continuous derivative.</strong> The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function&#39;s derivative can be found using the <code>diff</code> method.) In the table below, if $f$ has a continuous <em>second</em> derivative on its domain, then <em>&alpha;</em> is 1 (the first derivative is Lipschitz continuous) and <em>H</em> is the maximum of the absolute value of that <em>second</em> derivative.</p>
-
-<table><thead>
-<tr>
-<th>Function $f(\lambda)$</th>
-<th>Derivative&#39;s Hölder exponent (<em>&alpha;</em>) and an upper bound of the derivative&#39;s Hölder constant (<em>H</em>):</th>
-<th>Notes</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>&lambda;</em><sup>1+<em>&beta;</em></sup></td>
-<td><em>&alpha;</em>=<em>&beta;</em>.<br><em>H</em> = 1+<em>&beta;</em>.</td>
-<td>0 &lt; <em>&beta;</em> &le; 1.</td>
-</tr>
-<tr>
-<td>$3/4-\sqrt{\lambda(1-\lambda)}$.</td>
-<td>Derivative is not Hölder continuous.</td>
-<td>Derivative is not Hölder continuous because $f$ is not Lipschitz continuous.</td>
-</tr>
-<tr>
-<td>cosh(<em>&lambda;</em>) &minus; 3/4.</td>
-<td><em>&alpha;</em>=1 (derivative is Lipschitz continuous).<br><em>H</em> = cosh(1).</td>
-<td>Continuous second derivative, namely cosh(<em>&lambda;</em>).  Convex. <code>cosh</code> is the hyperbolic cosine function.</td>
-</tr>
-<tr>
-<td>$\lambda\cdot\sin(z\lambda)/4+1/2$.</td>
-<td><em>&alpha;</em>=1.<br><em>H</em> = $z(2+z\lambda)/4$.</td>
-<td>Continuous second derivative. <em>H</em> is an upper bound of its absolute value. $z&gt;0$.</td>
-</tr>
-<tr>
-<td>$\sin(z\lambda)/4+1/2$.</td>
-<td><em>&alpha;</em>=1.<br><em>H</em> = $(z^2)/4$.</td>
-<td>Continuous second derivative; <em>H</em> is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z&gt;0$.</td>
-</tr>
-<tr>
-<td><em>&lambda;</em><sup>2</sup>/2 + 1/10 if <em>&lambda;</em> &le; 1/2; <em>&lambda;</em>/2 &minus; 1/40 otherwise.</td>
-<td><em>&alpha;</em>=1.<br><em>H</em> = 1.</td>
-<td>Lipschitz continuous derivative, with Lipschitz constant 1.</td>
-</tr>
-<tr>
-<td>exp(&minus;<em>&lambda;</em>).</td>
-<td><em>&alpha;</em>=1.<br><em>H</em> = 1.</td>
-<td>Lipschitz continuous derivative, with Lipschitz constant 1.[^16]</td>
-</tr>
-<tr>
-<td><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1/2; (4*<em>&lambda;</em> &minus; 1)/(8*<em>&lambda;</em>) otherwise.</td>
-<td><em>&alpha;</em>=1.<br><em>H</em>=2.</td>
 <td>Concave. Lipschitz continuous derivative with Lipschitz constant 2.</td>
 </tr>
 </tbody></table>
@@ -1854,11 +1741,11 @@ for i in range(20):
 
 <p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)[^38], the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of Mossel and Peres (2005)[^34] because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
-<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)[^39]):</p>
+<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky normal form (Etessami and Yannakakis 2009)[^39]):</p>
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> (rewrite <em>X</em> to the letter <em>a</em>).</li>
-<li><em>X</em> &rarr;<sub><em>p</em></sub> (<em>a</em>, <em>Y</em>) (with rational probability <em>p</em>, rewrite <em>X</em> to the letter <em>a</em> followed by the nonterminal <em>Y</em>).  For the same left-hand side, all the <em>p</em> must sum to 1.</li>
+<li><em>X</em> &rarr;<sub><em>p</em></sub> (<em>a</em>, <em>Y</em>) (with rational probability <em>p</em>, rewrite <em>X</em> to the letter <em>a</em> followed by the nonterminal <em>Y</em>).  For the same left-hand side, all the <em>p</em> values must sum to 1.</li>
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) (rewrite <em>X</em> to the nonterminals <em>Y</em> and <em>Z</em> in that order).</li>
 </ul>
 
