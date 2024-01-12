@@ -306,4 +306,34 @@ basecolors=[
 [255,255,0],
 [127,127,0]
 ]
-relief("/home/peter/Documents/GAEU0uMWAAA9x_w.jpg","/tmp/c.png")
+# Resembles the brushed steel-like background used in Apple
+# products from the mid-2000s.
+def steel(output,width=256, height=256,strength=1,vert=false)
+ raise if width<=0 or height<=0
+ raise if !output
+ raise if strength<=0 or strength>1
+ strength=(255*strength).to_i
+ raise if strength<=0
+ maxStrip=[width,52].min
+ noise=([256-strength]*(width*height)).map{|x| x+rand(strength) }
+ image=[0]*(width*3*height)
+ pos=0
+ for y in 0...height
+  currentRow=pos
+  yw=y*width
+  for x in 0...width
+   val=0
+   for k in 0...maxStrip
+    val+=noise[yw+(x>=k ? x-k : (width+x-k))]
+   end
+   val=(val/maxStrip).to_i
+   image[currentRow]=image[currentRow+1]=image[currentRow+2]=val
+   currentRow+=(vert ? 3*width : 3)
+  end
+  pos+=(vert ? 3 : width*3)
+ end
+ File.open(output,"wb"){|f|
+   f.write(sprintf("P6\n%d %d\n255\n",width,height))
+   f.write(image.pack("C*"))
+ }
+end

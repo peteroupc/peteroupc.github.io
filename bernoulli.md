@@ -270,7 +270,7 @@ $${n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambd
 
 where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _Bernstein coefficients_.
 
-But a polynomial admits a Bernoulli factory only if each of its Bernstein coefficients is 0 or greater and less than 1, and a function can be simulated with a fixed number of coin flips only if it's a polynomial of that kind (Goyal and Sigman 2012[^7]; Qian et al. 2011\)[^8]; see also Wästlund 1999, section 4[^9]).
+But a polynomial admits a Bernoulli factory only if it can be written to have Bernstein coefficients that are each 0 or greater and less than 1, and a function can be simulated with a fixed number of coin flips only if it's a polynomial of that kind (Goyal and Sigman 2012[^7]; Qian et al. 2011\)[^8]; see also Wästlund 1999, section 4[^9]).
 
 Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.
 
@@ -304,7 +304,7 @@ Because the Bernstein coefficients _a_\[_i_\] must be 0 or greater, but not grea
 >
 > **Examples:**
 >
-> 1. Take the following parabolic function discussed in Thomas and Blanchet (2012\)[^12]\: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where 0 &lt; _c_ &lt; 1.  This is a polynomial of degree 2 that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has _power coefficients_ (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. Rewriting the polynomial from power form to Bernstein form (such as via the matrix method by Ray and Nataraj (2012\)[^13]) leads to Bernstein coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus:
+> 1. Take the following function discussed in Thomas and Blanchet (2012\)[^12]\: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where 0 &lt; _c_ &lt; 1.  This is a quadratic function (a polynomial of degree 2) that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has _power coefficients_ (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. Rewriting the polynomial from power form to Bernstein form (such as via the matrix method by Ray and Nataraj (2012\)[^13]) leads to Bernstein coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus:
 >     - If 0 &lt; _c_ &le; 1/2, this function can be simulated as follows: "Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2\*_c_ and 0 otherwise.  Otherwise, return 0."
 >     - If 1/2 &lt; _c_ &lt; 1, the algorithm requires rewriting the polynomial to Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its Bernstein coefficients in the closed unit interval; the required degree approaches infinity as _c_ approaches 1.[^14]
 >

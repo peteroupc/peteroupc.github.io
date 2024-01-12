@@ -84,7 +84,7 @@ These randomized upper and lower bounds come from two sequences of polynomials a
     - the difference between the degree-(_n_&minus;1) upper polynomial and the degree-_n_ upper polynomial, and
     - the difference between the degree-_n_ lower polynomial and the degree-(_n_&minus;1) lower polynomial,
 
-    must have nonnegative Bernstein coefficients, once each of these differences is rewritten as a polynomial of degree exactly _n_.
+    must have nonnegative Bernstein coefficients, once each of these differences is rewritten as a polynomial of degree exactly _n_.  (For more on Bernstein coefficients and the Bernstein form of polynomials, see "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)" in the main article.)
 
 The consistency requirement ensures that the upper polynomials "decrease" and the lower polynomials "increase".  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not ensure the consistency requirement by itself.
 
