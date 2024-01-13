@@ -3,11 +3,11 @@
 These are suggestions to improve core and supplemental instructional materials, for all school subjects, used in U.S. schools from kindergarten to twelfth grade.
 
 1. Instructional materials should be open educational resources (OER), available under an open license, such as CC-BY-NC-SA (Creative Commons Attribution-NonCommercial) or a more permissive license.  For the instructional materials, there should be a GitHub or GitLab repository containing the source code of the materials.  This may make it easier for the general public to view, edit, give feedback on, and suggest changes to the instructional materials, for various reasons: to reduce cognitive load on students (without reducing rigor), to improve cultural responsiveness, to correct errors, to best take advantage of research on how people learn (such as retrieval practice and interleaving of topics), and for other reasons.
-2. Instructional materials should incorporating mindfulness in each lesson.  As one example, the following article suggests a "mindfulness minute" at the start of each class period:
+2. Instructional materials should consider incorporating mindfulness in each lesson.  As one example, the following article suggests a "mindfulness minute" at the start of each class period:
 
     - [**https://www.ascd.org/el/articles/whats-behind-the-rise-in-problem-behavior-it-could-be-cognitive**](https://www.ascd.org/el/articles/whats-behind-the-rise-in-problem-behavior-it-could-be-cognitive)
 
-3. Instructional materials should consider incorporating practices that encourage retention of information in memory.  An example is no-stakes retrieval practice (quizzing) at the end of every lesson, or the brain/book/buddy protocol popularized by Blake Harvard.  See, for example, the link above as well as:
+3. Instructional materials should incorporate practices that encourage retention of information in memory.  An example is no-stakes retrieval practice (quizzing) at the end of every lesson, or the brain/book/buddy protocol popularized by Blake Harvard.  See, for example, the link above as well as:
 
     - [**https://theeffortfuleducator.com/2019/03/13/brain-book-buddy-a-strategy-for-assessment/**](https://theeffortfuleducator.com/2019/03/13/brain-book-buddy-a-strategy-for-assessment/)
     - [**https://theeffortfuleducator.com/downloadables/**](https://theeffortfuleducator.com/downloadables/)
