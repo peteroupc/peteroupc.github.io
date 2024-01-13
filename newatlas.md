@@ -19,3 +19,9 @@ The maps should not be in Mercator projection, and the size of each page should 
 An atlas like this would be a handy reference for homes or classrooms.
 
 How many maps would be required to achieve this goal for the scale 1:4 million?  1:6 million?  1:8 million?  1:10 million?
+
+<a id=License></a>
+
+## License
+
+Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

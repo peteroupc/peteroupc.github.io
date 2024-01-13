@@ -19,6 +19,7 @@ This page lists certain open questions on probability.  Any answers to these que
     - [**Questions**](#Questions_3)
 - [**Questions on Estimation Algorithms**](#Questions_on_Estimation_Algorithms)
 - [**References**](#References)
+- [**License**](#License)
 
 <a id=Additional_Requests_and_Open_Questions></a>
 
@@ -279,3 +280,9 @@ Let $X$ be a random variable that does not take on a single value with probabili
 - Adamczewski, B., Cassaigne, J. And Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
 - Yao, Andrew C. "Context-free grammars and random number generation." In Combinatorial algorithms on words, pp. 357-361. Springer, Berlin, Heidelberg, 1985.
 - Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
+
+<a id=License></a>
+
+## License
+
+Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

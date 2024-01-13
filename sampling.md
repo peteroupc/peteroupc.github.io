@@ -139,3 +139,9 @@ For any case of the sampling problem, suppose the number of input values taken i
 [^20]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22, no. 4 (1995): 485-497.
 
 [^21]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
+
+<a id=License></a>
+
+## License
+
+Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
