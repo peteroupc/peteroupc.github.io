@@ -889,7 +889,7 @@ The following are ways to implement weighted choice without replacement, where e
 
 #### Unequal Probability Sampling
 
-For the methods given in the previous section, the weights have the property that higher-weighted items are chosen first, but each item's weight is not necessarily the chance that a given sample of `n` items will include that item (an _inclusion probability_).  The following method chooses a random sample of `n` indices from a list of items (whose weights are integers stored in a list called `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.   The chosen indices will not necessarily be in random order. The method implements the "[**splitting method**](https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf#page=68)" (Deville and Tillé 1998)[^45].
+For the methods given in the previous section, the weights have the property that higher-weighted items are more probably chosen first, but each item's weight is not necessarily the chance that a given sample of `n` items will include that item (an _inclusion probability_).  The following method chooses a random sample of `n` indices from a list of items (whose weights are integers stored in a list called `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.   The chosen indices will not necessarily be in random order. The method implements the "[**splitting method**](https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf#page=68)" (Deville and Tillé 1998)[^45].
 
 ```
 METHOD InclusionSelect(weights, n)

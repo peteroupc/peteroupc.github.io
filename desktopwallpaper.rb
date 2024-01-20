@@ -282,10 +282,14 @@ def dithertobasecolors(infile,outfile,basecolors)
  #`convert #{infile} -dither Riemersma -remap #{ufq(cmptmp)} #{ufq(intermedfile)}`
  # "-remap" appears to use Riemersma dither by default
  #`convert #{infile} -dither Floyd-Steinberg -remap #{ufq(cmptmp)} #{ufq(intermedfile)}`
- `convert #{ufq(infile)} -ordered-dither 8x8 -remap #{ufq(cmpsmall)} #{outfile}`
+ ditherkind="3x3" # "8x8"
+ `convert #{ufq(infile)} -ordered-dither #{ditherkind} -remap #{ufq(cmpsmall)} #{outfile}`
  File.delete(cmptmp)
  File.delete(cmpsmall)
- File.delete(intermedfile)
+ begin
+   File.delete(intermedfile)
+ rescue Errno::ENOENT
+ end
  }
 end
 basecolors=[
