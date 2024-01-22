@@ -70,9 +70,9 @@ end
 # in a GNOME or compatible desktop environment, to an image generated
 # by magickgradient.
 # Each of rgb1 and rgb2 can be nil, in which case its value
-# is determined automatically.
-def magickgradientcmd(infile,rgb1=nil,rgb2=nil,wallpaper=false)
-  outfile=Dir::home()+"/.cache/magickgradient001122.png"
+# is determined automatically.  outfile, the outputfile, can be nil.
+def magickgradientcmd(infile,outfile=nil,rgb1=nil,rgb2=nil,wallpaper=false)
+  outfile=Dir::home()+"/.cache/magickgradient001122.png" if !outfile
   fileuri="file://"+outfile
   if !rgb2
     rgb2=[255,255,255]
@@ -253,45 +253,21 @@ def solid(c,w,h,outfile)
  }
 end
 
-# Uses ImageMagick to dither the image in 'infile' to the colors in 'basecolors'
+# Returns an ImageMagick command to dither the image in 'infile' to the colors in 'basecolors'
 # and output the resulting image to 'outfile'.
-def dithertobasecolors(infile,outfile,basecolors)
+def dithertobasecolorscmd(infile,outfile,basecolors)
  raise if !infile
  raise if !outfile
  raise if !basecolors || basecolors.length==0
- bases=tobases(basecolors)
- bases2=tobases2(basecolors)
- Dir.mktmpdir {|tmpdir|
- cmptmp=tmpdir+"/cmapdithertobasecolors.ppm"
- cmpsmall=tmpdir+"/cmapsmalldithertobasecolors.ppm"
- File.open(cmptmp,"wb"){|f|
-  f.write(sprintf("P6\n%d 1\n255\n",bases.keys.length))
-  for k in bases.keys.sort
-    f.write(k.pack("CCC"))
-  end
- }
- File.open(cmpsmall,"wb"){|f|
-  f.write(sprintf("P6\n%d 1\n255\n",basecolors.length))
-  for k in basecolors
-    f.write(k.pack("CCC"))
-  end
- }
+ bases=basecolors.map{|k| sprintf("#%02X%02X%02X",k[0],k[1],k[2]) }
+ # ImageMagick command to generate the palette image
+ image="convert -size 1x1 "+(bases.map{|k| "xc:"+k}).join(" ")+" +append png:-"
  infile=ufq(infile)
  outfile=ufq(outfile)
- intermedfile=tmpdir+"/ccdithertobasecolors.ppm"
- #`convert #{infile} -dither Riemersma -remap #{ufq(cmptmp)} #{ufq(intermedfile)}`
- # "-remap" appears to use Riemersma dither by default
- #`convert #{infile} -dither Floyd-Steinberg -remap #{ufq(cmptmp)} #{ufq(intermedfile)}`
- ditherkind="3x3" # "8x8"
- `convert #{ufq(infile)} -ordered-dither #{ditherkind} -remap #{ufq(cmpsmall)} #{outfile}`
- File.delete(cmptmp)
- File.delete(cmpsmall)
- begin
-   File.delete(intermedfile)
- rescue Errno::ENOENT
- end
- }
+ ditherkind="8x8"
+ return "#{image} | convert #{ufq(infile)} -ordered-dither #{ditherkind} -remap png:- #{outfile}"
 end
+
 basecolors=[
 [0,0,0],
 [127,127,127],
