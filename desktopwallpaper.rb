@@ -11,6 +11,8 @@ require 'tmpdir'
 # Namely it's an 8x8 monochrome
 # two-color tiling pattern represented as eight 8-bit bytes; the colors
 # that represent "black" and "white" could be set separately.
+#
+# Also, support hue shifting.
 
 ################
 
@@ -34,27 +36,6 @@ def ufq(f)
   end
 end
 
-# Returns a string representing an ImageMagick command that
-# converts an input image file to grayscale, then translates the grayscale
-# palette to a gradient starting at rgb1 for black (e.g., [2,10,255] where each
-# component is from 0 through 255) and ending at rgb2 for white (same format).
-# The output image is intended to serve as a desktop background.
-#
-# The command has the following form:
-# convert \(INFILE -grayscale Rec709Luma\) \( -size 1x256 gradient:#RRGGBB-#RRGGBB \) -clut OUTFILE
-#
-# Example:
-# puts magickgradient([0,0,255],[255,255,255],
-#  "input.jpg","output.bmp")
-def magickgradient(rgb1,rgb2,infile,outfile)
-  r1=sprintf("#%02x%02x%02x",rgb1[0].to_i,rgb1[1].to_i,rgb1[2].to_i)
-  r2=sprintf("#%02x%02x%02x",rgb2[0].to_i,rgb2[1].to_i,rgb2[2].to_i)
-  infile=File.expand_path(infile)
-  outfile=File.expand_path(outfile)
-  return "convert \\( #{ufq(infile)} -grayscale Rec709Luma \\) \\( -size "+
-    "1x256 gradient:#{r1}-#{r2} \\) -clut #{ufq(outfile)}"
-end
-
 def parsecolor(prc)
     return nil if !prc
     if prc[ /\s*\'?\#([A-Fa-f0-9]{4})([A-Fa-f0-9]{4})([A-Fa-f0-9]{4})\'?\s*/ ]
@@ -66,30 +47,34 @@ def parsecolor(prc)
     return nil
 end
 
-# Returns a string representing commands that set the desktop background,
-# in a GNOME or compatible desktop environment, to an image generated
-# by magickgradient.
-# Each of rgb1 and rgb2 can be nil, in which case its value
-# is determined automatically.  outfile, the outputfile, can be nil.
-def magickgradientcmd(infile,outfile=nil,rgb1=nil,rgb2=nil,wallpaper=false)
-  outfile=Dir::home()+"/.cache/magickgradient001122.png" if !outfile
-  fileuri="file://"+outfile
-  if !rgb2
+def primarycolor()
     rgb2=[255,255,255]
     prc=`gsettings get org.cinnamon.desktop.background primary-color`
     prc=`gsettings get org.gnome.desktop.background primary-color` if prc.gsub(/\s+/)==""
     pc=parsecolor(prc)
     rgb2=pc if pc
-  end
-  if !rgb1
-    rgb1=[0,0,0]
+    return rgb2
+end
+
+def secondarycolor()
+    rgb2=[0,0,0]
     prc=`gsettings get org.cinnamon.desktop.background secondary-color`
     prc=`gsettings get org.gnome.desktop.background secondary-color` if prc.gsub(/\s+/)==""
     pc=parsecolor(prc)
-    rgb1=pc if pc
-  end
-  return magickgradient(rgb1,rgb2,infile,outfile)+
-     " ; gconftool-2 --set /desktop/gnome/background/picture_filename --type string #{ufq(outfile)}"+
+    rgb2=pc if pc
+    return rgb2
+end
+
+# Returns a string representing commands that set the desktop background,
+# in a GNOME or compatible desktop environment, to the image
+# with the filename specified in 'outfile'.
+# Each of rgb1 and rgb2 can be nil, in which case its value
+# is determined automatically.  outfile, the outputfile, can be nil.
+def wallpapercmd(outfilewallpaper=false)
+  outfile=Dir::home()+"/.cache/magickgradient001122.png" if !outfile
+  fileuri="file://"+outfile
+  return magickgradientdither(infile,outfile,rgb1,rgb2)+
+     "gconftool-2 --set /desktop/gnome/background/picture_filename --type string #{ufq(outfile)}"+
      " ; gsettings set org.cinnamon.desktop.background picture-uri #{ufq(fileuri)}"+
      " ; gsettings set org.cinnamon.desktop.background picture-options "+(wallpaper ? "wallpaper" : "stretched")+
      " ; gsettings set org.gnome.desktop.background picture-uri #{ufq(fileuri)}"+
@@ -138,12 +123,16 @@ end
 
 def reliefcore(infile,outfile,colors=nil,bas=true)
  if !colors
-  colors=[[128,128,128],[0,0,0],[255,255,255]]
+  colors=[[0,0,0],[255,255,255],[128,128,128],[192,192,192]]
+ end
+ raise if colors.length<3
+ if colors.length==3
+  colors=[colors[0],colors[1],colors[2],colors[3]]
  end
  w=0;h=0;pixmap=nil
  colorrelief=[]
  colorbytes=colors.map{|x|
-   raise if colors.length<3
+   raise if x.length<3
    next x[0,3].pack("C*")
  }
  File.open(infile,"rb"){|f|
@@ -181,9 +170,9 @@ def reliefcore(infile,outfile,colors=nil,bas=true)
      offset=bas ? 0 : 1
      down=colorrelief[[y+offset,h-1].min*w+[x-offset,0].max]
      if right==down
-       f.write(colorbytes[0])
+       f.write(colorbytes[2+right])
      else
-       f.write(colorbytes[1+right])
+       f.write(colorbytes[0+right])
      end
    end
  end
@@ -192,10 +181,14 @@ end
 
 # 'infile': input image file
 # 'outfile': output image file
-# 'colors': array of three colors; each color is a 3-item array
+# 'colors': array of four colors; each color is a 3-item array
 #   of the red, green, and blue components in that order.
-#   The three colors are background, shadow, and highlight color
-#   in that order.  Can be left out, then default colors are used.
+#   The four colors are shadow, highlight, dark background, and light background
+#   in that order. (The dark background is used for pixels that are black in both
+#   shifted versions of the relief; the light, for those that are white.)
+#   The fourth color can be left out, then the light background
+#   equals the dark background.  The 'colors' parameter itself
+#   can be left out, then default colors are used.
 # 'bas': true=bas relief, false=haut relief
 def relief(infile,outfile,colors=nil,bas=true)
  raise if !infile
@@ -253,19 +246,47 @@ def solid(c,w,h,outfile)
  }
 end
 
-# Returns an ImageMagick command to dither the image in 'infile' to the colors in 'basecolors'
-# and output the resulting image to 'outfile'.
-def dithertobasecolorscmd(infile,outfile,basecolors)
- raise if !infile
- raise if !outfile
- raise if !basecolors || basecolors.length==0
- bases=basecolors.map{|k| sprintf("#%02X%02X%02X",k[0],k[1],k[2]) }
- # ImageMagick command to generate the palette image
- image="convert -size 1x1 "+(bases.map{|k| "xc:"+k}).join(" ")+" +append png:-"
- infile=ufq(infile)
- outfile=ufq(outfile)
- ditherkind="8x8"
- return "#{image} | convert #{ufq(infile)} -ordered-dither #{ditherkind} -remap png:- #{outfile}"
+# Returns an ImageMagick command to generate a desktop background from an image, in three steps.
+# The input and output image file names are given in 'infile' and 'outfile', respectively.
+# 1. If rgb1 and rgb2 are not nil, converts the input image to grayscale, then translates the grayscale
+# palette to a gradient starting at rgb1 for black (e.g., [2,10,255] where each
+# component is from 0 through 255) and ending at rgb2 for white (same format).
+# The output image is the input for the next step.
+# 2. If hue is not 0, performs a hue shift, in degrees (-180 to 180), of the input image.
+# The output image is the input for the next step.
+# 3. If basecolors is not nil, performs a dithering operation on the input image; that is, it
+# reduces the number of colors of the image to those given in 'basecolors', which is a list
+# of colors (each color is a 3-item array of the red, green, and blue components in that order),
+# and scatters the remaining colors in the image so that they appear close to the original colors.
+# Raises an error if 'basecolors' has a length greater than 256.
+def magickgradientdither(infile,outfile,rgb1,rgb2,basecolors=nil,hue=0)
+  raise if !infile
+  raise if !outfile
+  raise if hue<-180 or hue>180
+  huemod=(hue+180)*100.0/180.0
+  hueshift=hue==0 ? "" : sprintf("-modulate 100,100,%.02f",huemod)
+  mgradient=nil
+  if rgb1 && rgb2
+    r1=sprintf("#%02x%02x%02x",rgb1[0].to_i,rgb1[1].to_i,rgb1[2].to_i)
+    r2=sprintf("#%02x%02x%02x",rgb2[0].to_i,rgb2[1].to_i,rgb2[2].to_i)
+    infile=ufq(File.expand_path(infile))
+    outfile=ufq(File.expand_path(outfile))
+    mgradient="\\( #{infile} -grayscale Rec709Luma \\) \\( -size "+
+      "1x256 gradient:#{r1}-#{r2} \\) -clut"
+  else
+    mgradient=infile
+  end
+  if basecolors && basecolors.length>0
+    raise if basecolors.length>256
+    bases=basecolors.map{|k| sprintf("#%02X%02X%02X",k[0],k[1],k[2]) }
+    # ImageMagick command to generate the palette image
+    image="convert -size 1x1 "+(bases.map{|k| "xc:"+k}).join(" ")+" +append png:-"
+    ditherkind="-ordered-dither 8x8" # for abstract or geometric images
+    ditherkind="-dither FloydSteinberg" # for photographic images
+    return "#{image} | convert #{mgradient} #{hueshift} #{ditherkind} -remap png:- #{outfile}"
+  else
+    return "convert #{mgradient} #{hueshift} #{outfile}"
+  end
 end
 
 basecolors=[
