@@ -11,8 +11,6 @@ require 'tmpdir'
 # Namely it's an 8x8 monochrome
 # two-color tiling pattern represented as eight 8-bit bytes; the colors
 # that represent "black" and "white" could be set separately.
-#
-# Also, support hue shifting.
 
 ################
 
@@ -70,11 +68,9 @@ end
 # with the filename specified in 'outfile'.
 # Each of rgb1 and rgb2 can be nil, in which case its value
 # is determined automatically.  outfile, the outputfile, can be nil.
-def wallpapercmd(outfilewallpaper=false)
-  outfile=Dir::home()+"/.cache/magickgradient001122.png" if !outfile
+def wallpapercmd(outfile,wallpaper=false)
   fileuri="file://"+outfile
-  return magickgradientdither(infile,outfile,rgb1,rgb2)+
-     "gconftool-2 --set /desktop/gnome/background/picture_filename --type string #{ufq(outfile)}"+
+  return "gconftool-2 --set /desktop/gnome/background/picture_filename --type string #{ufq(outfile)}"+
      " ; gsettings set org.cinnamon.desktop.background picture-uri #{ufq(fileuri)}"+
      " ; gsettings set org.cinnamon.desktop.background picture-options "+(wallpaper ? "wallpaper" : "stretched")+
      " ; gsettings set org.gnome.desktop.background picture-uri #{ufq(fileuri)}"+
@@ -196,7 +192,7 @@ def relief(infile,outfile,colors=nil,bas=true)
  raise if colors && colors.length<3
  Dir.mktmpdir{|t|
    tf=t+"/r.ppm"
-   `convert #{ufq(infile)} -depth 8 #{ufq(tf)}`
+   `convert #{ufq(infile)} -grayscale Rec709Luma -depth 8 #{ufq(tf)}`
    reliefcore(tf,tf,colors,bas)
    `convert #{ufq(tf)} #{ufq(outfile)}`
  }
@@ -266,11 +262,11 @@ def magickgradientdither(infile,outfile,rgb1,rgb2,basecolors=nil,hue=0)
   huemod=(hue+180)*100.0/180.0
   hueshift=hue==0 ? "" : sprintf("-modulate 100,100,%.02f",huemod)
   mgradient=nil
+  infile=ufq(File.expand_path(infile))
+  outfile=ufq(File.expand_path(outfile))
   if rgb1 && rgb2
     r1=sprintf("#%02x%02x%02x",rgb1[0].to_i,rgb1[1].to_i,rgb1[2].to_i)
     r2=sprintf("#%02x%02x%02x",rgb2[0].to_i,rgb2[1].to_i,rgb2[2].to_i)
-    infile=ufq(File.expand_path(infile))
-    outfile=ufq(File.expand_path(outfile))
     mgradient="\\( #{infile} -grayscale Rec709Luma \\) \\( -size "+
       "1x256 gradient:#{r1}-#{r2} \\) -clut"
   else
@@ -287,6 +283,27 @@ def magickgradientdither(infile,outfile,rgb1,rgb2,basecolors=nil,hue=0)
   else
     return "convert #{mgradient} #{hueshift} #{outfile}"
   end
+end
+
+# Returns an ImageMagick command to generate a tileable
+# desktop background from an image.
+# The input and output image file names are given in 'infile' and 'outfile', respectively.
+def tileable(infile,outfile)
+  infile=ufq(File.expand_path(infile))
+  outfile=ufq(File.expand_path(outfile))
+  return "convert #{infile} \\( +clone -flip \\) -append \\( +clone -flop \\) +append #{outfile}"
+end
+
+def websafecolors()
+ colors=[]
+ for r in 0..5
+   for g in 0..5
+     for b in 0..5
+       colors.push([r*51,g*51,b*51])
+     end
+   end
+ end
+ return colors
 end
 
 basecolors=[
