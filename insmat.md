@@ -2,7 +2,15 @@
 
 These are suggestions to improve core and supplemental instructional materials, for all school subjects, used in U.S. schools from kindergarten to twelfth grade.
 
-1. Instructional materials should be open educational resources (OER), available under an open license, such as CC-BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike) or a more permissive license.  For the instructional materials, there should be a GitHub or GitLab repository containing the source code of the materials.  This may make it easier for the general public to view, edit, give feedback on, and suggest changes to the instructional materials, for various reasons: to reduce cognitive load on students and teachers (without reducing rigor), to improve historical accuracy and cultural responsiveness, to correct errors, to best take advantage of research on how people learn (such as retrieval practice and interleaving of topics), to keep the materials up to date with scientific, technological, and historical scholarship, to reduce preparation time for teachers, and for other reasons.
+1. Instructional materials should be open educational resources (OER), available under an open license, such as CC-BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike) or a more permissive license.  For the instructional materials, there should be a GitHub or GitLab repository containing the source code of the materials.  This may make it easier for the general public to view, edit, give feedback on, and suggest changes to the instructional materials, for various reasons, including the following:
+
+    - To reduce cognitive load on students and teachers (without reducing rigor).
+    - To improve historical accuracy and cultural responsiveness.
+    - To correct errors.
+    - To best take advantage of research on how people learn (such as retrieval practice and interleaving of topics).
+    - To keep the materials up to date with scientific, technological, and historical scholarship.
+    - To reduce preparation time for teachers.
+
 2. Instructional materials should incorporate practices that encourage retention of information in memory.  An example is no-stakes retrieval practice (quizzing) at the end of every lesson, or the brain/book/buddy protocol popularized by Blake Harvard.  See, for example, the following:
 
     - [**https://www.ascd.org/el/articles/whats-behind-the-rise-in-problem-behavior-it-could-be-cognitive**](https://www.ascd.org/el/articles/whats-behind-the-rise-in-problem-behavior-it-could-be-cognitive)
