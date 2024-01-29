@@ -2,7 +2,7 @@
 
 These are suggestions to improve core and supplemental instructional materials, for all school subjects, used in U.S. schools from kindergarten to twelfth grade.
 
-1. Instructional materials should be open educational resources (OER), available under an open license, such as CC-BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike) or a more permissive license.  For the instructional materials, there should be a GitHub or GitLab repository containing the source code of the materials.  This may make it easier for the general public to view, edit, give feedback on, and suggest changes to the instructional materials, for various reasons, including the following:
+1. Instructional materials should be open educational resources (OER), available under an open license, such as CC-BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike) or a more permissive license.  For the instructional materials, there should be a GitHub or GitLab repository containing the source code of the materials.  This may make it easier for the general public to view, edit, give feedback on, and suggest changes to the instructional materials for various reasons, including the following:
 
     - To reduce cognitive load on students and teachers (without reducing rigor).
     - To improve historical accuracy and cultural responsiveness.
@@ -18,7 +18,7 @@ These are suggestions to improve core and supplemental instructional materials, 
     - [**https://theeffortfuleducator.com/downloadables/**](https://theeffortfuleducator.com/downloadables/)
     - [**https://achemicalorthodoxy.co.uk/2020/02/09/ratio/**](https://achemicalorthodoxy.co.uk/2020/02/09/ratio/)
 
-3. Instructional materials should adopt as many of [**Rosenshine's principles of instruction**](https://www.aft.org/sites/default/files/Rosenshine.pdf) as possible. Instructional materials should avoid "minimally guided instruction", such as discovery learning, because such instruction often goes against research on how people learn (e.g., cognitive load theory).  A paper by Rosenshine and colleagues called "Why Minimally Guided Instruction Does Not Work" gives details.
+3. Instructional materials should adopt as many of [**Rosenshine's principles of instruction**](https://www.aft.org/sites/default/files/Rosenshine.pdf) as possible. Instructional materials should avoid "minimally guided instruction", such as discovery learning, because such instruction often goes against research on how people learn (e.g., cognitive load theory).  A paper by Kirschner and colleagues called "[**Why Minimal Guidance During Instruction Does Not Work**](https://www.tandfonline.com/doi/abs/10.1207/s15326985ep4102_1)" (2006) gives details.
 4. In Literacy, instructional materials should be knowledge-based and follow the criteria given in the [**Knowledge Matters Campaign's review tool**](https://knowledgematterscampaign.org/review-tool/).  In other subjects, instructional materials should likewise be [**knowledge-rich**](https://teacherhead.com/2018/06/06/what-is-a-knowledge-rich-curriculum-principle-and-practice/).
 5. There is guidance for:
 
