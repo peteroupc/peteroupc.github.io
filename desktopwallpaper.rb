@@ -198,21 +198,6 @@ def relief(infile,outfile,colors=nil,bas=true)
  }
 end
 
-def tobases(basecolors)
- bases={}
- for b in basecolors
-  bases[b]=true
- end
- for i in 0...basecolors.length
-  for j in (i+1)...basecolors.length
-   bi=basecolors[i]
-   bj=basecolors[j]
-   b=[(bi[0]+bj[0])/2,(bi[1]+bj[1])/2,(bi[2]+bj[2])/2]
-   bases[b]=true
-  end
- end
- return bases
-end
 def tobases2(basecolors)
  bases2={}
  for b in basecolors
@@ -241,89 +226,6 @@ def solid(c,w,h,outfile)
   end
  }
 end
-
-# Returns an ImageMagick command to generate a desktop background from an image, in three steps.
-# The input and output image file names are given in 'infile' and 'outfile', respectively.
-# 1. If rgb1 and rgb2 are not nil, converts the input image to grayscale, then translates the grayscale
-# palette to a gradient starting at rgb1 for black (e.g., [2,10,255] where each
-# component is from 0 through 255) and ending at rgb2 for white (same format).
-# The output image is the input for the next step.
-# 2. If hue is not 0, performs a hue shift, in degrees (-180 to 180), of the input image.
-# The output image is the input for the next step.
-# 3. If basecolors is not nil, performs a dithering operation on the input image; that is, it
-# reduces the number of colors of the image to those given in 'basecolors', which is a list
-# of colors (each color is a 3-item array of the red, green, and blue components in that order),
-# and scatters the remaining colors in the image so that they appear close to the original colors.
-# Raises an error if 'basecolors' has a length greater than 256.
-def magickgradientdither(infile,outfile,rgb1,rgb2,basecolors=nil,hue=0)
-  raise if !infile
-  raise if !outfile
-  raise if hue<-180 or hue>180
-  huemod=(hue+180)*100.0/180.0
-  hueshift=hue==0 ? "" : sprintf("-modulate 100,100,%.02f",huemod)
-  mgradient=nil
-  infile=ufq(File.expand_path(infile))
-  outfile=ufq(File.expand_path(outfile))
-  if rgb1 && rgb2
-    r1=sprintf("#%02x%02x%02x",rgb1[0].to_i,rgb1[1].to_i,rgb1[2].to_i)
-    r2=sprintf("#%02x%02x%02x",rgb2[0].to_i,rgb2[1].to_i,rgb2[2].to_i)
-    mgradient="\\( #{infile} -grayscale Rec709Luma \\) \\( -size "+
-      "1x256 gradient:#{r1}-#{r2} \\) -clut"
-  else
-    mgradient=infile
-  end
-  if basecolors && basecolors.length>0
-    raise if basecolors.length>256
-    bases=basecolors.map{|k| sprintf("#%02X%02X%02X",k[0],k[1],k[2]) }
-    # ImageMagick command to generate the palette image
-    image="convert -size 1x1 "+(bases.map{|k| "xc:"+k}).join(" ")+" +append png:-"
-    ditherkind="-ordered-dither 8x8" # for abstract or geometric images
-    ditherkind="-dither FloydSteinberg" # for photographic images
-    return "#{image} | convert #{mgradient} #{hueshift} #{ditherkind} -remap png:- #{outfile}"
-  else
-    return "convert #{mgradient} #{hueshift} #{outfile}"
-  end
-end
-
-# Returns an ImageMagick command to generate a tileable
-# desktop background from an image.
-# The input and output image file names are given in 'infile' and 'outfile', respectively.
-def tileable(infile,outfile)
-  infile=ufq(File.expand_path(infile))
-  outfile=ufq(File.expand_path(outfile))
-  return "convert #{infile} \\( +clone -flip \\) -append \\( +clone -flop \\) +append #{outfile}"
-end
-
-def websafecolors()
- colors=[]
- for r in 0..5
-   for g in 0..5
-     for b in 0..5
-       colors.push([r*51,g*51,b*51])
-     end
-   end
- end
- return colors
-end
-
-basecolors=[
-[0,0,0],
-[127,127,127],
-[255,255,255],
-[191,191,191],
-[255,0,0],
-[127,0,0],
-[0,255,0],
-[0,127,0],
-[0,0,255],
-[0,0,127],
-[255,0,255],
-[127,0,127],
-[0,255,255],
-[0,127,127],
-[255,255,0],
-[127,127,0]
-]
 # Resembles the brushed steel-like background used in Apple
 # products from the mid-2000s.
 def steel(output,width=256, height=256,strength=1,vert=false)

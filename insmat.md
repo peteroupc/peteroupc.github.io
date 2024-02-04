@@ -11,7 +11,7 @@ These are suggestions to improve core and supplemental instructional materials, 
     - To keep the materials up to date with scientific, technological, and historical scholarship.
     - To reduce preparation time for teachers.
 
-2. Instructional materials should incorporate practices that encourage retention of information in memory.  An example is no-stakes retrieval practice (quizzing) at the end of every lesson, or the brain/book/buddy protocol popularized by Blake Harvard.  See, for example, the following:
+2. Instructional materials should incorporate practices that encourage retention of information in memory.  An example is low- or no-stakes retrieval practice (quizzing) at the end of every lesson, or the brain/book/buddy protocol popularized by Blake Harvard.  See, for example, the following:
 
     - [**https://www.ascd.org/el/articles/whats-behind-the-rise-in-problem-behavior-it-could-be-cognitive**](https://www.ascd.org/el/articles/whats-behind-the-rise-in-problem-behavior-it-could-be-cognitive)
     - [**https://theeffortfuleducator.com/2019/03/13/brain-book-buddy-a-strategy-for-assessment/**](https://theeffortfuleducator.com/2019/03/13/brain-book-buddy-a-strategy-for-assessment/)
