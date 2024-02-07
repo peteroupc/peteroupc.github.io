@@ -117,87 +117,6 @@ def adjustpixmap(fn,bases)
  }
 end
 
-def reliefcore(infile,outfile,colors=nil,bas=true)
- if !colors
-  colors=[[0,0,0],[255,255,255],[128,128,128],[192,192,192]]
- end
- raise if colors.length<3
- if colors.length==3
-  colors=[colors[0],colors[1],colors[2],colors[3]]
- end
- w=0;h=0;pixmap=nil
- colorrelief=[]
- colorbytes=colors.map{|x|
-   raise if x.length<3
-   next x[0,3].pack("C*")
- }
- File.open(infile,"rb"){|f|
- fr=f.read(3)
- #p fr
- raise if fr!="P6\n"
- s=f.gets()
- #p s
- raise if s.length>20
- raise if !s[/\A(\d+) (\d+)\n/]
- w=$1.to_i
- h=$2.to_i
- depth=f.read(4)
- raise if depth!="255\n"
- pixmap=f.read().unpack("C*")
- #p pixmap.length
- #p w*h*3
- i=0
- for y in 0...h
-   for x in 0...w
-     pix=[pixmap[i],pixmap[i+1],pixmap[i+2]]
-     c=torgb(pix)
-     white=((pix[0]+pix[1]+pix[2])/3>=128) ? 1 : 0
-     colorrelief.push(white)
-     i+=3
-   end
- end
- }
- File.open(outfile,"wb"){|f|
- f.write(sprintf("P6\n%d %d\n255\n",w,h))
- for y in 0...h
-   for x in 0...w
-     offset=1
-     right=colorrelief[[y-offset,0].max*w+[x+offset,w-1].min]
-     offset=bas ? 0 : 1
-     down=colorrelief[[y+offset,h-1].min*w+[x-offset,0].max]
-     if right==down
-       f.write(colorbytes[2+right])
-     else
-       f.write(colorbytes[0+right])
-     end
-   end
- end
- }
-end
-
-# 'infile': input image file
-# 'outfile': output image file
-# 'colors': array of four colors; each color is a 3-item array
-#   of the red, green, and blue components in that order.
-#   The four colors are shadow, highlight, dark background, and light background
-#   in that order. (The dark background is used for pixels that are black in both
-#   shifted versions of the relief; the light, for those that are white.)
-#   The fourth color can be left out, then the light background
-#   equals the dark background.  The 'colors' parameter itself
-#   can be left out, then default colors are used.
-# 'bas': true=bas relief, false=haut relief
-def relief(infile,outfile,colors=nil,bas=true)
- raise if !infile
- raise if !outfile
- raise if colors && colors.length<3
- Dir.mktmpdir{|t|
-   tf=t+"/r.ppm"
-   `convert #{ufq(infile)} -grayscale Rec709Luma -depth 8 #{ufq(tf)}`
-   reliefcore(tf,tf,colors,bas)
-   `convert #{ufq(tf)} #{ufq(outfile)}`
- }
-end
-
 def tobases2(basecolors)
  bases2={}
  for b in basecolors
@@ -216,16 +135,7 @@ end
 def toseeds(bases)
  return bases.keys.sort.map{|x| sprintf("#%02X%02X%02X",x[0],x[1],x[2]) }.join(";")
 end
-def solid(c,w,h,outfile)
- raise if w<=0 or h<=0 or w.to_i!=w or h.to_i!=h
- File.open(outfile,"wb"){|f|
-  f.write(sprintf("P6\n#{w} #{h}\n255\n",w,h))
-  kp=[c[0].to_i,c[1].to_i,c[2].to_i].pack("CCC")
-  for k in 0...(w*h)
-    f.write(kp)
-  end
- }
-end
+
 # Resembles the brushed steel-like background used in Apple
 # products from the mid-2000s.
 def steel(output,width=256, height=256,strength=1,vert=false)
