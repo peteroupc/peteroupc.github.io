@@ -1457,9 +1457,11 @@ class RandomGen:
             return [aliasinfo.next(self) for k in range(n)]
         ret = [0 for k in range(n)]
         rv = [
-            randgen.rndintexc(msum)
-            if not nonintweights
-            else randgen.rndrangemaxexc(0, msum)
+            (
+                randgen.rndintexc(msum)
+                if not nonintweights
+                else randgen.rndrangemaxexc(0, msum)
+            )
             for k in range(n)
         ]
         k = 0
@@ -5086,9 +5088,11 @@ if __name__ == "__main__":
         if mx == 0:
             return
         labels = [
-            ("%0.3f %d" % (ls[i], buckets[i]))
-            if int(buckets[i]) == buckets[i]
-            else ("%0.3f %f" % (ls[i], buckets[i]))
+            (
+                ("%0.3f %d" % (ls[i], buckets[i]))
+                if int(buckets[i]) == buckets[i]
+                else ("%0.3f %f" % (ls[i], buckets[i]))
+            )
             for i in range(len(buckets))
         ]
         maxlen = max([len(x) for x in labels])

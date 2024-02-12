@@ -25,8 +25,16 @@ These are suggestions to improve core and supplemental instructional materials, 
     - Increasing rigor and quality of [**Latino American content**](https://unidosus.org/publications/analyzing-inclusion-of-latino-contributions-in-us-history-curricula-for-high-school/) and [**black American content**](https://hub.jhu.edu/2021/02/10/black-history-curricula-lacking-rigor-and-quality/) in U.S. History instructional materials.
     - Improving [**cultural responsiveness**](https://steinhardt.nyu.edu/sites/default/files/2020-12/CRE%20Scorecard%20Revised%20Aug%202020.pdf) in Literacy instructional materials.
     - The length of daily Social Studies and Science instruction up to fifth grade: [**45 minutes**](https://ccsso.org/sites/default/files/2018-11/Elementary%20SS%20Brief%2045%20Minute%20Version_0.pdf) and [**60 minutes**](https://www.nsta.org/nstas-official-positions/elementary-school-science), respectively.
+6. Instructional materials in Literacy should include synonyms for new words to be learned and other words and phrases prone to overuse.  From sixth grade and up, they should include copious lessons on grammatical analysis, as well as concrete guidance to help students avoid the following in their writing:
+
+    - Overuse of certain words or phrases, both within and across writings ("said", "the company"; E. Bernal's "Good usage avoids abusage" also mentions "people", "members", "persons", "day", and "this is" and "I'm" in self-identifications).
+    - Imprecise word choices, especially choices of overused words.
+    - Redundancy that doesn't serve an expressive purpose.
+    - Ambiguous language.
 
 These suggestions concern only instructional materials, so policies such as those that [**restrict mobile phones in school**](https://www.educationnext.org/take-away-their-cellphones-rewire-schools-belonging-achievement/) or encourage the [**reduction of classroom decorations**](https://www.learningandthebrain.com/blog/getting-the-principles-just-right-classroom-decoration/), while they may be helpful because they can reduce students' cognitive load, are outside the scope, and encouraging students' mindfulness is likewise outside the scope even though it's likely [**no better than other social-emotional learning initiatives**](https://www.learningandthebrain.com/blog/does-mindfulness-help-a-blockbuster-new-study/).
+
+Suggestion number 6, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of vocabulary and linguistic variety (see, e.g., E. Bernal's "Good usage avoids abusage").
 
 <a id=License></a>
 

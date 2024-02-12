@@ -1919,9 +1919,11 @@ if __name__ == "__main__":
         if mx == 0:
             return
         labels = [
-            ("%0.3f %d" % (ls[i], buckets[i]))
-            if int(buckets[i]) == buckets[i]
-            else ("%0.3f %f" % (ls[i], buckets[i]))
+            (
+                ("%0.3f %d" % (ls[i], buckets[i]))
+                if int(buckets[i]) == buckets[i]
+                else ("%0.3f %f" % (ls[i], buckets[i]))
+            )
             for i in range(len(buckets))
         ]
         maxlen = max([len(x) for x in labels])

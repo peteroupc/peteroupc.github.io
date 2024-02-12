@@ -339,9 +339,11 @@ if __name__ == "__main__":
         if mx == 0:
             return
         labels = [
-            ("%0.3f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
-            if int(buckets[i]) == buckets[i]
-            else ("%0.3f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
+            (
+                ("%0.3f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
+                if int(buckets[i]) == buckets[i]
+                else ("%0.3f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
+            )
             for i in range(len(buckets))
         ]
         maxlen = max([len(x) for x in labels])

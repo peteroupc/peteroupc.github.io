@@ -249,9 +249,7 @@ def psrn_fill(rg, psrn, precision=53, digits=2):
         )
     else:
         return (
-            asign
-            * ((af // digits) + (aint * digits**precision))
-            / (digits**precision)
+            asign * ((af // digits) + (aint * digits**precision)) / (digits**precision)
         )
 
 def psrn_in_range(rg, bmin, bmax, digits=2):
@@ -4595,9 +4593,13 @@ if __name__ == "__main__":
         if mx == 0:
             return
         labels = [
-            ("%0.5f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
-            if int(buckets[i]) == buckets[i]
-            else ("%0.5f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+            (
+                ("%0.5f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+                if int(buckets[i]) == buckets[i]
+                else (
+                    "%0.5f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets)
+                )
+            )
             for i in range(len(buckets))
         ]
         maxlen = max([len(x) for x in labels])
