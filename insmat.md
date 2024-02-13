@@ -25,9 +25,9 @@ These are suggestions to improve core and supplemental instructional materials, 
     - Increasing rigor and quality of [**Latino American content**](https://unidosus.org/publications/analyzing-inclusion-of-latino-contributions-in-us-history-curricula-for-high-school/) and [**black American content**](https://hub.jhu.edu/2021/02/10/black-history-curricula-lacking-rigor-and-quality/) in U.S. History instructional materials.
     - Improving [**cultural responsiveness**](https://steinhardt.nyu.edu/sites/default/files/2020-12/CRE%20Scorecard%20Revised%20Aug%202020.pdf) in Literacy instructional materials.
     - The length of daily Social Studies and Science instruction up to fifth grade: [**45 minutes**](https://ccsso.org/sites/default/files/2018-11/Elementary%20SS%20Brief%2045%20Minute%20Version_0.pdf) and [**60 minutes**](https://www.nsta.org/nstas-official-positions/elementary-school-science), respectively.
-6. Instructional materials in Literacy should include synonyms for new words to be learned and other words and phrases prone to overuse.  From sixth grade and up, they should include copious lessons on grammatical analysis, as well as concrete guidance to help students avoid the following in their writing:
+6. Instructional materials in Literacy should include synonyms for new words to be learned and for other words and phrases prone to overuse.  In sixth grade and up, they should include copious lessons on grammatical analysis, as well as concrete guidance to help students avoid the following in their writing:
 
-    - Overuse of certain words or phrases, both within and across writings ("said", "the company"; E. Bernal's "Good usage avoids abusage" also mentions "people", "members", "persons", "day", and "this is" and "I'm" in self-identifications).
+    - Overuse of certain words or phrases, both within and across writings [^1].
     - Imprecise word choices, especially choices of overused words.
     - Redundancy that doesn't serve an expressive purpose.
     - Ambiguous language.
@@ -41,3 +41,7 @@ Suggestion number 6, in particular, is intended to address observations that our
 ## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
+
+----------------
+
+[^1]: E. Bernal’s “Good usage avoids abusage” mentions “people”, “members”, “persons”, “day”, and “this is” and “I’m” in self-identifications.  In addition, the wide and varied use of synonyms for "said" and "the company" in press articles in Spanish or French suggest that these two are overused in English.
