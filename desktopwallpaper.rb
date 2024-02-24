@@ -6,12 +6,6 @@ require 'tmpdir'
 # This script is released to the public domain; in case that is not possible, the
 # file is also licensed under Creative Commons Zero (CC0).
 
-# Suggestion for improving this file: Support the pattern format
-# from early versions of Microsoft Windows (such as Windows 3.1).
-# Namely it's an 8x8 monochrome
-# two-color tiling pattern represented as eight 8-bit bytes; the colors
-# that represent "black" and "white" could be set separately.
-
 ################
 
 # Escapes a filename to appear in a command line argument
@@ -131,9 +125,6 @@ def tobases2(basecolors)
   end
  end
  return bases2
-end
-def toseeds(bases)
- return bases.keys.sort.map{|x| sprintf("#%02X%02X%02X",x[0],x[1],x[2]) }.join(";")
 end
 
 # Resembles the brushed steel-like background used in Apple
