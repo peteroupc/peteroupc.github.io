@@ -29,12 +29,12 @@ These are suggestions to improve core and supplemental instructional materials, 
 
     - Overuse of certain words or phrases, both within and across writings [^1].
     - Imprecise word choices, especially choices of overused words.
-    - Redundancy that doesn't serve an expressive purpose.
-    - Ambiguous language and unnecessary words.
+    - Redundancy (including unnecessary words) not serving an expressive purpose.
+    - Ambiguous language.
 
 These suggestions concern only instructional materials, so policies such as those that [**restrict mobile phones in school**](https://www.educationnext.org/take-away-their-cellphones-rewire-schools-belonging-achievement/) or encourage the [**reduction of classroom decorations**](https://www.learningandthebrain.com/blog/getting-the-principles-just-right-classroom-decoration/), while they may be helpful because they can reduce students' cognitive load, are outside the scope, and encouraging students' mindfulness is likewise outside the scope even though it's likely [**no better than other social-emotional learning initiatives**](https://www.learningandthebrain.com/blog/does-mindfulness-help-a-blockbuster-new-study/).
 
-Suggestion number 6, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of vocabulary and linguistic variety (see, e.g., E. Bernal's "Good usage prevents abusage").
+Suggestion number 6, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of vocabulary and linguistic variety (see, e.g., Emilio Bernal's "Good usage prevents abusage").
 
 <a id=License></a>
 
@@ -44,4 +44,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 ----------------
 
-[^1]: E. Bernal’s “Good usage prevents abusage” mentions “people”, “members”, “persons”, “day”, and “this is” and “I’m” in self-identifications.  In addition, the rich and varied use of synonyms for "said" and "the company" in press articles in Spanish or French suggest that these two are overused in English.
+[^1]: Emilio Bernal’s “Good usage prevents abusage” mentions “people”, “members”, “persons”, “day”, and “this is” and “I’m” in self-identifications.  In addition, the rich and varied use of synonyms for "said" and "the company" in press articles in Spanish or French suggest that these two are overused in English.  The works of Theodore Bernstein, Mario Pei, Bill Bryson, and Richard Lederer, among others, also provide guidance on good English usage.
