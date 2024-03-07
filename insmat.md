@@ -34,7 +34,7 @@ These are suggestions to improve core and supplemental instructional materials, 
 
 These suggestions concern only instructional materials, so policies such as those that [**restrict mobile phones in school**](https://www.educationnext.org/take-away-their-cellphones-rewire-schools-belonging-achievement/) or encourage the [**reduction of classroom decorations**](https://www.learningandthebrain.com/blog/getting-the-principles-just-right-classroom-decoration/), while they may be helpful because they can reduce students' cognitive load, are outside the scope, and encouraging students' mindfulness is likewise outside the scope even though it's likely [**no better than other social-emotional learning initiatives**](https://www.learningandthebrain.com/blog/does-mindfulness-help-a-blockbuster-new-study/).
 
-Suggestion number 6, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of vocabulary and linguistic variety (see, e.g., Emilio Bernal's "Good usage prevents abusage").
+Suggestion number 6, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of everyday vocabulary and linguistic variety (see, e.g., Emilio Bernal's "Good usage prevents abusage").
 
 <a id=License></a>
 
