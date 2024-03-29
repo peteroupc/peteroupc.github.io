@@ -4,17 +4,19 @@ To improve English usage and enrich English vocabulary in writing and speech, I 
 
 | Instead of just saying... | Try saying... | Notes |
  --- | --- | -- |
-| Also, ... | in addition, furthermore, moreover, plus, to add to that, on top of that | |
+| Also, ... | in addition, furthermore, moreover, plus, to add to that, on top of that, what is more | |
 | another [number] | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
-| cause (verb) | lead to, provoke, engender, bring on, produce | |
+| cause (verb) | lead to, provoke, engender, beget, bring on, produce | |
 | check out | discover, uncover, learn more about, find out about, see for yourself | |
 | focus on | touch on, concentrate on, emphasize, put emphasis on, put the accent on, deal mostly with, prioritize | |
+| including [something] | [something] among them, among them [something], particularly [something], [something] included, especially [something], even [something]. | Inspired by E. Bernal. |
 | little house | housie, housette, houselet, minihouse | Diminutive. |
 | Note that... | Observe that..., It should be noted that..., It bears noting that..., It bears saying that..., It should be mentioned that..., Keep in mind that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe | |
 | (the) professors | professorship, professor corps, professor body, body of professors | |
 | say | declare, affirm, express, state, make it known, mention, comment.<br>Depending on context: opine, note, share, affirm, argue, contend, highlight, emphasize, add, explain, conclude, reply, respond, answer. | |
+| [someone] says that... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>[someone] [synonym for _says_] that... | |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
@@ -22,6 +24,7 @@ To improve English usage and enrich English vocabulary in writing and speech, I 
 | Don't say... | Say... |
  --- | --- |
 | alleged victim | likely victim |
+| all day today | all day [if _today_ is understood], from dawn to dusk (today), from sunrise to sunset (today) |
 | basically | [leave out] |
 | before now | ago |
 | dead people | the dead |
@@ -36,7 +39,7 @@ To improve English usage and enrich English vocabulary in writing and speech, I 
 | rain conditions | rain |
 | saved their lives | were saved, saved their life |
 | (their) lives, deaths, lifetimes, healths, sakes, identities, futures | their life, death, lifetime, health, sake, identity, future |
-| [verb] whether or not (e.g., know whether or not) | [verb] whether\*\* |
+| [verb] whether or not (e.g., _know whether or not_) | [verb] whether\*\* |
 
 \*\* Use "whether or not B" or "whether B or not" only to mean "both if B and if not".
 
