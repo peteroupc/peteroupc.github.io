@@ -2,12 +2,14 @@
 
 To improve English usage, reduce monotony, and enrich English vocabulary in writing and speech, I have compiled these two lists on what not to say and what to say better.  Many items in these tables were inspired by Emilio Bernal Labrada, "Good usage prevents abusage", 2018.
 
+This is an open-source document; see its [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/usage.md).  You can send comments on this document on the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
+
 | Instead of just saying... | Try saying... | Notes |
  --- | --- | -- |
 | Also, ... | in addition, furthermore, moreover, plus, to add to that, on top of that, what is more | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
 | another [number] | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
-| cause | lead to, provoke, engender, beget, bring on, bring about, bring forth, produce | Verb. |
+| cause | lead to, provoke, engender, beget, bring on, bring about, produce, result in | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself | |
 | focus on | touch on, concentrate on, emphasize, put/lay emphasis on, put/lay weight on, put/lay the accent on, deal mostly with, prioritize | |
 | focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving | |
@@ -45,7 +47,6 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | is something that is | is |Inspired by E. Bernal. |
 | it is midnight tonight | it is midnight |Inspired by E. Bernal. |
 | least favorite | least desired |Inspired by E. Bernal. |
-injuries |Inspired by E. Bernal. |
 | literally | absolutely, truly, totally; [leave out]\*\*\* | |
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
