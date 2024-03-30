@@ -2,6 +2,8 @@
 
 To improve English usage, reduce monotony, and enrich English vocabulary in writing and speech, I have compiled these two lists on what not to say and what to say better.  Many items in these tables were inspired by Emilio Bernal Labrada, "Good usage prevents abusage", 2018.
 
+This list could also be useful as a handout to Literacy students from ninth grade and up, or to suggest alternatives to overused and discouraged words for younger students.
+
 This is an open-source document; see its [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/usage.md).  You can send comments on this document on the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
 | Instead of just saying... | Try saying... | Notes |
@@ -24,7 +26,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | Note that... | Observe that..., It should be noted that..., It bears noting that..., It bears saying that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
 | (the) professors | professorship, professor corps, professor body, body of professors | |
-| say | declare, affirm, express, state, make it known, mention, comment.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, add, explain, conclude, reply, respond, answer, signal, indicate, point out. | Spanish and French press articles tend to vary this word. |
+| say | declare, affirm, express, state, make it known, mention, comment.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out. | Spanish and French press articles tend to vary this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, talk with, converse with, chat with | Suggested by E. Bernal. |
 | [someone] says that... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>[someone] [synonym for _says_] that... | |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
@@ -40,7 +42,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | basically | [leave out] | |
 | before [something] happened, ... | before [something] |Inspired by E. Bernal. |
 | [adjective] day today (e.g., _nice day today_) | [adjective] day [if _today_ is understood], it's [adjective] today |Inspired by E. Bernal. |
-| [adjective] night tonight (e.g., _nice night tonight_) | [adjective] night [if _today_ is understood], it's [adjective] tonight | Inspired by E. Bernal. |
+| [adjective] night tonight (e.g., _nice night tonight_) | [adjective] night [if _tonight_ is understood], it's [adjective] tonight | Inspired by E. Bernal. |
 | dead people | the dead |Inspired by E. Bernal. |
 | family members | relatives, kin |'Relatives' suggested by E. Bernal. |
 | injured people | the injured |Inspired by E. Bernal. |
