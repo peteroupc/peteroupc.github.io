@@ -70,6 +70,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote about his concerns about,
 | rain conditions | rain |Inspired by E. Bernal. |
 | saved their lives | were saved, saved their life |Inspired by E. Bernal. |
 | (their) lives, deaths, lifetimes, healths, sakes, identities, futures | their life, death, lifetime, health, sake, identity, future |Inspired by E. Bernal. |
+| This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We welcome you to [program]; Now begins [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
 | [time] before now | [time] ago |Inspired by E. Bernal. |
 | [verb] whether or not (e.g., _know whether or not_) | [verb] whether\*\* | Suggested by E. Bernal. |
 
