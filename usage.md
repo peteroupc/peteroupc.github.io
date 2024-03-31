@@ -2,7 +2,7 @@
 
 To improve English usage, reduce monotony, and enrich English vocabulary in writing and speech, I have compiled these two lists on what not to say and what to say better.  Many items in these tables were inspired by Emilio Bernal Labrada, "Good usage prevents abusage", 2018.
 
-This list could also be useful as a handout to Literacy students from ninth grade and up, or to suggest alternatives to overused and discouraged words for younger students.
+The lists could also be useful as a handout to Literacy students from ninth grade and up, or to suggest alternatives to overused and discouraged words for younger students.
 
 This is an open-source document; see its [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/usage.md).  You can send comments on this document on the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
@@ -11,6 +11,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | Also, ... | in addition, furthermore, moreover, plus, to add to that, on top of that, what is more | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
 | another [number] | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
+| bad actor | malicious actor, wrongdoer, malfeasant | |
 | cause | lead to, provoke, engender, beget, bring on, bring about, produce, result in | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself | |
 | focus on | touch on, concentrate on, emphasize, put/lay emphasis on, put/lay weight on, put/lay the accent on, deal mostly with, prioritize | |
@@ -23,16 +24,18 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) injured | _an event_ injures many; _an event_ [synonym for _causes_] many injuries|Inspired by E. Bernal. |
 little house | housie, housette, houselet, minihouse | Diminutive. |
-| Note that... | Observe that..., It should be noted that..., It bears noting that..., It bears saying that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
+| Note that... | Observe that..., Notably..., It should be noted that..., It bears noting that..., It bears mentioning that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
 | (the) professors | professorship, professor corps, professor body, body of professors | |
 | say | declare, affirm, express, state, make it known, mention, comment.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out. | Spanish and French press articles tend to vary this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, talk with, converse with, chat with | Suggested by E. Bernal. |
-| [someone] says that... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>[someone] [synonym for _says_] that... | |
+| [someone] says that... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>[someone] [synonym for _says_] that... | |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
 | use (verb) | employ, utilize, make use of | |
+
+Emilio Bernal, in "Good usage prevents abusage", wrote about his concerns about, among other things, the overuse of _people_, _persons_, _members_, _day_, and _happen_, as well as the unnecessary repetition of words (e.g., _He is someone who is reliable_).  His work formed the basis of many of the suggestions in the following table.
 
 | Don't say... | Say... | Notes |
  --- | --- | -- |
@@ -68,7 +71,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | saved their lives | were saved, saved their life |Inspired by E. Bernal. |
 | (their) lives, deaths, lifetimes, healths, sakes, identities, futures | their life, death, lifetime, health, sake, identity, future |Inspired by E. Bernal. |
 | [time] before now | [time] ago |Inspired by E. Bernal. |
-| [verb] whether or not (e.g., _know whether or not_) | [verb] whether\*\* |Inspired by E. Bernal. |
+| [verb] whether or not (e.g., _know whether or not_) | [verb] whether\*\* | Suggested by E. Bernal. |
 
 \*\* Use "whether or not B" or "whether B or not" only to mean "both if B and if not".
 
