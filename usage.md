@@ -18,7 +18,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
-| including [something] | [something] among them, among them [something], particularly [something], [something] included, especially [something], even [something]. | Inspired by E. Bernal. |
+| including [something] | [something] among them, among them [something], particularly [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] many deaths |Inspired by E. Bernal. |
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
@@ -27,9 +27,10 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | Note that... | Observe that..., Notably..., It should be noted that..., It bears noting that..., It bears mentioning that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
 | (the) professors | professorship, professor corps, professor body, body of professors | |
-| say | declare, affirm, express, state, make it known, mention, comment.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out. | Spanish and French press articles tend to vary this word. |
+| say | declare, affirm, express, state, make it known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out. | Spanish and French press articles tend to vary this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, talk with, converse with, chat with | Suggested by E. Bernal. |
-| [someone] says that... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>[someone] [synonym for _says_] that... | |
+| [someone] says that... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
+| [someone] says that... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>For [someone], ...<br>As [someone] believes, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that... | Expressing an opinion. |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
@@ -38,7 +39,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 Emilio Bernal, in "Good usage prevents abusage", wrote about his concerns about, among other things, the overuse of _people_, _persons_, _members_, _day_, and _happen_, as well as the unnecessary repetition of words (e.g., _He is someone who is reliable_).  His work formed the basis of many of the suggestions in the following table.
 
 | Don't say... | Say... | Notes |
- --- | --- | -- |
+ --- | ---- | -- |
 | after [something] happened, ... | after [something] |Inspired by E. Bernal. |
 | alleged victim | likely victim |Inspired by E. Bernal. |
 | all day today | all day [if _today_ is understood], from dawn to dusk (today), from sunrise to sunset (today) |Inspired by E. Bernal. |
@@ -53,7 +54,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote about his concerns about,
 | is something that is | is |Inspired by E. Bernal. |
 | it is midnight tonight | it is midnight |Inspired by E. Bernal. |
 | least favorite | least desired |Inspired by E. Bernal. |
-| literally | absolutely, truly, totally; [leave out]\*\*\* | |
+| literally | absolutely, totally; [leave out]\*\*\* | |
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
 | [number] people/persons | [number] | Leave out _people_ or _persons_ if understood. Inspired by E. Bernal. |
@@ -70,13 +71,13 @@ Emilio Bernal, in "Good usage prevents abusage", wrote about his concerns about,
 | rain conditions | rain |Inspired by E. Bernal. |
 | saved their lives | were saved, saved their life |Inspired by E. Bernal. |
 | (their) lives, deaths, lifetimes, healths, sakes, identities, futures | their life, death, lifetime, health, sake, identity, future |Inspired by E. Bernal. |
-| This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We welcome you to [program]; Now begins [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
+| This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We (now) welcome you to [program]; We (now) bring you [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]; It's time for [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
 | [time] before now | [time] ago |Inspired by E. Bernal. |
-| [verb] whether or not (e.g., _know whether or not_) | [verb] whether\*\* | Suggested by E. Bernal. |
+| [verb] whether or not (e.g., _know whether or not_, _determine whether or not_) | [verb] whether\*\* | Suggested by E. Bernal. |
 
-\*\* Use "whether or not B" or "whether B or not" only to mean "both if B and if not".
+\*\* Use "whether or not B" or "whether B or not" only to mean 'both if B and if not'.
 
-\*\*\* In formal writing, use _literally_ only to mean "in the exact sense; not figurative".
+\*\*\* In formal writing, use _literally_ only to mean 'in the exact sense; not figurative'.
 
 <a id=To_Improve_English_Usage_Through_Word_Processing_Apps></a>
 
