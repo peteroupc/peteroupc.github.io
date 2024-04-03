@@ -26,6 +26,7 @@ These are suggestions to improve core and supplemental instructional materials, 
     - Improving [**cultural responsiveness**](https://steinhardt.nyu.edu/sites/default/files/2020-12/CRE%20Scorecard%20Revised%20Aug%202020.pdf) in Literacy instructional materials.
     - The length of daily Social Studies and Science instruction up to fifth grade: [**45 minutes**](https://ccsso.org/sites/default/files/2018-11/Elementary%20SS%20Brief%2045%20Minute%20Version_0.pdf) and [**60 minutes**](https://www.nsta.org/nstas-official-positions/elementary-school-science), respectively.
     - Structuring lessons in History and other aspects of Social Studies using the [**Four-Question Method**](https://4qmteaching.net/).
+    - Structuring lessons in U.S. Civics using the questions in the civics portion of the naturalization test given by the U.S. government.
 
 6. Instructional materials in Literacy should teach synonyms for new words to be learned and for other words and phrases prone to overuse.  In sixth grade and up, they should include copious lessons on grammatical analysis and knowledge of English syntax, as well as concrete guidance to help students avoid the following in their writing:
 
