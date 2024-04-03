@@ -14,7 +14,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | bad actor | malicious actor, wrongdoer, malfeasant | |
 | cause | lead to, provoke, engender, beget, bring on, bring about, produce, result in | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself | |
-| focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, draw attention to | |
+| focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize | |
 | focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
