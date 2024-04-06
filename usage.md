@@ -8,7 +8,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 
 | Instead of just saying... | Try saying... | Notes |
  --- | --- | -- |
-| Also, ... | in addition, furthermore, moreover, plus, to add to that, on top of that, what is more | |
+| Also, ... | in addition, furthermore, moreover, further, plus, to add to that, on top of that, what is more | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
 | another [number] | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
 | bad actor | malicious actor, malevolent actor, wrongdoer, malfeasant | |
@@ -18,7 +18,8 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
-| including [something] | [something] among them, among them [something], particularly [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
+| happen | occur, manifest, show itself, produce itself, present itself, take place, unfold | Inspired by E. Bernal |
+| including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] many deaths |Inspired by E. Bernal. |
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
@@ -34,9 +35,9 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
-| use (verb) | employ, utilize, make use of | |
+| use | employ, utilize, make use of | Verb. |
 
-Emilio Bernal, in "Good usage prevents abusage", wrote about his concerns about, among other things, the overuse of _people_, _persons_, _members_, _day_, and _happen_, as well as the unnecessary repetition of words (e.g., _He is someone who is reliable_).  His work formed the basis of many of the suggestions in the following table.
+Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, among other things, the overuse of _people_, _persons_, _members_, _day_, and _happen_, as well as the unnecessary repetition of words (e.g., _He is someone who is reliable_; _She wants what she wants_; _It'll happen when it'll happen_).  His work formed the basis of many of the suggestions in the following table.
 
 | Don't say... | Say... | Notes |
  --- | ---- | -- |
@@ -51,6 +52,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote about his concerns about,
 | family members | relatives, kin |'Relatives' suggested by E. Bernal. |
 | injured people | the injured |Inspired by E. Bernal. |
 | is someone who is | is |Inspired by E. Bernal. |
+| is someone who is [adjective] (e.g., _is someone who is reliable_) | is [adjective]; is a(n) [adjective] one |Inspired by E. Bernal. |
 | is something that is | is |Inspired by E. Bernal. |
 | it is midnight tonight | it is midnight |Inspired by E. Bernal. |
 | least favorite | least desired |Inspired by E. Bernal. |
