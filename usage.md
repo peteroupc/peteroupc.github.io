@@ -64,7 +64,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | one way or the other | either way; [leave out] |Inspired by E. Bernal. |
 | people's identities | people's identity, every personal identity |Inspired by E. Bernal. |
 | people's lives | life |Inspired by E. Bernal. |
-| people/persons being held/jailed | (the) detainees, the jailed<br>_In criminal cases:_ (the) inmates, the prisoners [in criminal cases] |Inspired by E. Bernal. |
+| people/persons being held/jailed | (the) detainees, the jailed.<br>_In criminal cases:_ (the) inmates, the prisoners. |Inspired by E. Bernal. |
 | people/persons know | it is known, it is generally known, it is commonly known, we know |Inspired by E. Bernal. |
 | people/persons complaining | (the) complainants |Inspired by E. Bernal. |
 | people/persons present/attending | (the) attendees |Inspired by E. Bernal. |
