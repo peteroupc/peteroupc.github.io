@@ -12,7 +12,7 @@ An atlas of the world covering **all land masses in the scale 1:4,000,000**.  Th
 - Relief shading.
 - Natural features (e.g., plains, mountain ranges, islands) labeled.
 
-The maps should not be in Mercator projection, and the size of each page should be letter size or A4.  Essentially, the maps should feel similar to the classic _Quick Reference World Atlas_ that Rand McNally used to publish.
+The maps should not be in Mercator projection, and the size of each page should be letter size or A4.  Essentially, the maps should feel similar to the classic _Quick Reference World Atlas_ that Rand McNally Publishing used to publish.
 
 An atlas like this would be a handy reference for homes or classrooms.
 

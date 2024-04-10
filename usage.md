@@ -7,7 +7,7 @@ The lists could also be useful as a handout to Literacy students from ninth grad
 This is an open-source document; see its [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/usage.md).  You can send comments on this document on the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
 | Instead of just saying... | Try saying... | Notes |
- --- | --- | -- |
+ --- | ---- | -- |
 | Also, ... | in addition, furthermore, moreover, further, plus, to add to that, on top of that, what is more | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
 | another [number] | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
@@ -18,7 +18,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
-| happen | occur, manifest, show itself, produce itself, present itself, take place, unfold | Inspired by E. Bernal |
+| happen | occur, manifest, produce itself, present itself, take place, unfold, come to pass | Inspired by E. Bernal. |
 | including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] many deaths |Inspired by E. Bernal. |
@@ -64,10 +64,11 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | one way or the other | either way; [leave out] |Inspired by E. Bernal. |
 | people's identities | people's identity, every personal identity |Inspired by E. Bernal. |
 | people's lives | life |Inspired by E. Bernal. |
-| people/persons being held/jailed | (the) detainees, the jailed |Inspired by E. Bernal. |
+| people/persons being held/jailed | (the) detainees, the jailed<br>_In criminal cases:_ (the) inmates, the prisoners [in criminal cases] |Inspired by E. Bernal. |
 | people/persons know | it is known, it is generally known, it is commonly known, we know |Inspired by E. Bernal. |
+| people/persons complaining | (the) complainants |Inspired by E. Bernal. |
 | people/persons present/attending | (the) attendees |Inspired by E. Bernal. |
-| people/persons think | it is thought, it is commonly thought, it is believed, the general belief is, we think, they believe |Inspired by E. Bernal. |
+| people/persons think | it is thought, it is commonly thought, it is believed, the general belief is, we think, they believe, by popular belief |Inspired by E. Bernal. |
 | point in time | time, instant, moment |Inspired by E. Bernal. |
 | prevent [something] from happening | prevent [something] |Inspired by E. Bernal. |
 | rain conditions | rain |Inspired by E. Bernal. |
