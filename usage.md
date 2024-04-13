@@ -2,7 +2,7 @@
 
 To improve English usage, reduce monotony, and enrich English vocabulary in writing and speech, I have compiled these two lists on what not to say and what to say better.  Many items in these tables were inspired by Emilio Bernal Labrada, "Good usage prevents abusage", 2018.
 
-The lists could also be useful as a handout to Literacy students from ninth grade and up, or to suggest alternatives to overused and discouraged words for younger students.
+The lists could also be useful as a handout to Literacy students from ninth grade and up, or to suggest alternatives to overused and discouraged words for younger students.  For my other suggestions on Literacy instruction, see "[**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html)".
 
 This is an open-source document; see its [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/usage.md).  You can send comments on this document on the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
@@ -31,7 +31,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | say | declare, affirm, express, state, make it known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out. | Spanish and French press articles tend to employ numerous synonyms for this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, talk with, converse with, chat with | Suggested by E. Bernal. |
 | [someone] says that... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
-| [someone] says that... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>For [someone], ...<br>As [someone] believes, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that... | Expressing an opinion. |
+| [someone] says that... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that... | Expressing an opinion. |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
@@ -46,8 +46,8 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | all day today | all day [if _today_ is understood], from dawn to dusk (today), from sunrise to sunset (today) |Inspired by E. Bernal. |
 | basically | [leave out] | |
 | before [something] happened, ... | before [something] |Inspired by E. Bernal. |
+| blizzard conditions | blizzard |Inspired by E. Bernal. |
 | [adjective] day today (e.g., _nice day today_) | [adjective] day [if _today_ is understood], it's [adjective] today |Inspired by E. Bernal. |
-| [adjective] night tonight (e.g., _nice night tonight_) | [adjective] night [if _tonight_ is understood], it's [adjective] tonight | Inspired by E. Bernal. |
 | dead people | the dead |Inspired by E. Bernal. |
 | family members | relatives, kin |'Relatives' suggested by E. Bernal. |
 | injured people | the injured |Inspired by E. Bernal. |
@@ -59,6 +59,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | literally | absolutely, totally; [leave out]\*\*\* | |
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
+| [adjective] night tonight (e.g., _nice night tonight_) | [adjective] night [if _tonight_ is understood], it's [adjective] tonight | Inspired by E. Bernal. |
 | [number] people/persons | [number] | Leave out _people_ or _persons_ if understood. Inspired by E. Bernal. |
 | one way or another | either way; [leave out] |Inspired by E. Bernal. |
 | one way or the other | either way; [leave out] |Inspired by E. Bernal. |
@@ -71,7 +72,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | people/persons think | it is thought, it is commonly thought, it is believed, the general belief is, we think, they believe, by popular belief |Inspired by E. Bernal. |
 | point in time | time, instant, moment |Inspired by E. Bernal. |
 | prevent [something] from happening | prevent [something] |Inspired by E. Bernal. |
-| rain conditions | rain |Inspired by E. Bernal. |
+| rain conditions, rainy conditions | rain. _Or as appropriate_: drizzle, showers, squalls, light rain, heavy rain, downpours. |Inspired by E. Bernal. |
 | saved their lives | were saved, saved their life |Inspired by E. Bernal. |
 | (their) lives, deaths, lifetimes, healths, sakes, identities, futures | their life, death, lifetime, health, sake, identity, future |Inspired by E. Bernal. |
 | This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We (now) welcome you to [program]; We (now) bring you [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]; It's time for [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
