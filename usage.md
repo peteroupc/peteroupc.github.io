@@ -10,15 +10,15 @@ This is an open-source document; see its [**source code**](https://github.com/pe
  --- | ---- | -- |
 | Also, ... | in addition, furthermore, moreover, further, plus, to add to that, on top of that, what is more, apart from that | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
-| another [number] | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
-| bad actor | malicious actor, malevolent actor, wrongdoer, baddie, malfeasant | |
+| another [number] (e.g., _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
+| bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant | |
 | cause | lead to, produce, provoke, engender, beget, bring on, bring about, produce, result in | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself | |
 | focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize | |
 | focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
-| happen | occur, manifest, produce itself, present itself, take place, unfold, come to pass | Inspired by E. Bernal. |
+| happen | occur, manifest, produce itself, present itself, take place, unfold, come to pass. | Inspired by E. Bernal. |
 | including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] many deaths |Inspired by E. Bernal. |
@@ -36,6 +36,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
 | use | employ, utilize, make use of | Verb. |
+| what's happening | what's going on, what's occurring. | Inspired by E. Bernal. |
 
 Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, among other things, the overuse of _people_, _persons_, _members_, _day_, and _happen_, as well as the unnecessary repetition of words (e.g., _He is someone who is reliable_; _She wants what she wants_; _It'll happen when it'll happen_).  His work formed the basis of many of the suggestions in the following table.
 
@@ -59,10 +60,12 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | literally | absolutely, totally; [leave out]\*\*\* | |
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
+| myth (_when a story is not meant_) | falsehood, untruth | |
 | [adjective] night tonight (e.g., _nice night tonight_) | [adjective] night [if _tonight_ is understood], it's [adjective] tonight | Inspired by E. Bernal. |
 | [number] people/persons | [number] | Leave out _people_ or _persons_ if understood. Inspired by E. Bernal. |
 | one way or another | either way; [leave out] |Inspired by E. Bernal. |
 | one way or the other | either way; [leave out] |Inspired by E. Bernal. |
+| other people | others |Inspired by E. Bernal. |
 | people's identities | people's identity, every personal identity |Inspired by E. Bernal. |
 | people's lives | life |Inspired by E. Bernal. |
 | people/persons being held/jailed | (the) detainees, the jailed.<br>_In criminal cases:_ (the) inmates, the prisoners. |Inspired by E. Bernal. |
