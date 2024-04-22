@@ -6,6 +6,10 @@ The lists could also be useful as a handout to Literacy students from ninth grad
 
 This is an open-source document; see its [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/usage.md).  You can send comments on this document on the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
+<a id=Overused_Words></a>
+
+## Overused Words
+
 | Instead of just saying... | Try saying... | Notes |
  --- | ---- | -- |
 | Also, ... | in addition, furthermore, moreover, further, plus, to add to that, on top of that, what is more, apart from that | |
@@ -25,10 +29,12 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) injured | _an event_ injures many; _an event_ [synonym for _causes_] many injuries|Inspired by E. Bernal. |
 little house | housie, housette, houselet, minihouse | Diminutive. |
-| Note that... | Observe that..., Notably..., It should be noted that..., It bears noting that..., It bears mentioning that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
+| Note that... | Observe that..., Notably..., Notice that..., It should be noted that..., It bears noting that..., It bears mentioning that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
+| many people | many | Inspired by E. Bernal. |
+| people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider gentile nouns; e.g.: _people living in Italy_ &rarr; _Italians_. |
 | (the) professors | the faculty, professorship, professor corps, professor body, body of professors | |
-| say | declare, affirm, express, state, make it known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out. | Spanish and French press articles tend to employ numerous synonyms for this word. |
+| say | declare, affirm, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out. | Spanish and French press articles tend to employ numerous synonyms for this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, talk with, converse with, chat with | Suggested by E. Bernal. |
 | [someone] says that... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
 | [someone] says that... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that... | Expressing an opinion. |
@@ -37,6 +43,12 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
 | use | employ, utilize, make use of | Verb. |
 | what's happening | what's going on, what's occurring. | Inspired by E. Bernal. |
+
+Another technique to try is to rewrite a text to avoid overused words as much as possible.
+
+<a id=Discouraged_Words></a>
+
+## Discouraged Words
 
 Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, among other things, the overuse of _people_, _persons_, _members_, _day_, and _happen_, as well as the unnecessary repetition of words (e.g., _He is someone who is reliable_; _She wants what she wants_; _It'll happen when it'll happen_).  His work formed the basis of many of the suggestions in the following table.
 
@@ -50,7 +62,9 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | blizzard conditions | blizzard |Inspired by E. Bernal. |
 | [adjective] day today (e.g., _nice day today_) | [adjective] day [if _today_ is understood], it's [adjective] today |Inspired by E. Bernal. |
 | dead people | the dead |Inspired by E. Bernal. |
+| examples include but are not limited to | examples are | The word "examples" already conveys the idea that the list is not all-inclusive. |
 | family members | relatives, kin |'Relatives' suggested by E. Bernal. |
+| including but not limited to | including | |
 | injured people | the injured |Inspired by E. Bernal. |
 | is someone who is | is |Inspired by E. Bernal. |
 | is someone who is [adjective] (e.g., _is someone who is reliable_) | is [adjective]; is a(n) [adjective] one |Inspired by E. Bernal. |
@@ -81,6 +95,8 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We (now) welcome you to [program]; We (now) bring you [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]; It's time for [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
 | [time] before now | [time] ago |Inspired by E. Bernal. |
 | [verb] whether or not (e.g., _know whether or not_, _determine whether or not_) | [verb] whether\*\* | Suggested by E. Bernal. |
+
+Even here, it is worth trying to rewrite a text to avoid discouraged words to the greatest extent possible.
 
 \*\* Use "whether or not B" or "whether B or not" only to mean 'both if B and if not'.
 
