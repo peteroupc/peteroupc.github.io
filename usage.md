@@ -29,20 +29,21 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) injured | _an event_ injures many; _an event_ [synonym for _causes_] many injuries|Inspired by E. Bernal. |
 little house | housie, housette, houselet, minihouse | Diminutive. |
-| Note that... | Observe that..., Notably..., Notice that..., It should be noted that..., It bears noting that..., It bears mentioning that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
+| Note that... | Observe that..., Notably..., Notice that..., It should be noted that..., It bears noting that..., It is worth noting that, It bears mentioning that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
 | many people | many | Inspired by E. Bernal. |
 | people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider gentile nouns; e.g.: _people living in Italy_ &rarr; _Italians_. |
 | (the) professors | the faculty, professorship, professor corps, professor body, body of professors | |
-| say | declare, affirm, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out. | Spanish and French press articles tend to employ numerous synonyms for this word. |
+| say | declare, affirm, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out, maintain. | Spanish and French press articles tend to employ numerous synonyms for this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, talk with, converse with, chat with | Suggested by E. Bernal. |
-| [someone] says that... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
-| [someone] says that... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that... | Expressing an opinion. |
+| [someone] says (that)... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
+| [someone] says (that)... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that... | Expressing an opinion. |
+| [someone] says (that) [something] is... | [someone] considers [something] (as)...<br>[someone] labels [something] (as)...<br>[someone] finds [something]...<br>[someone] qualifies [something] as...<br>[something] is ... to [someone]. | |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
 | use | employ, utilize, make use of | Verb. |
-| what's happening | what's going on, what's occurring. | Inspired by E. Bernal. |
+| what's happening | what's going on, what's occurring, what's [synonym for _happening_]. | Inspired by E. Bernal. |
 
 Another technique to try is to rewrite a text to avoid overused words as much as possible.
 
