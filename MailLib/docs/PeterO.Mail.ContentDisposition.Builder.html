@@ -5,30 +5,27 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Mail.ContentDisposition.Builder</h1>
-
-<h2>PeterO.Mail.ContentDisposition.Builder</h2>
+<p>## PeterO.Mail.ContentDisposition.Builder</p>
 
 <pre>public sealed class Builder
 </pre>
 
 <p>A mutable data type that allows a content disposition to be built.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#DispositionType">DispositionType</a></code> - Gets or sets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
-<li><code><a href="#IsMultipart">IsMultipart</a></code> - <b>Deprecated:</b> Irrelevant for content dispositions; will be removed in the future.</li>
-<li><code><a href="#IsText">IsText</a></code> - <b>Deprecated:</b> Irrelevant for content dispositions; will be removed in the future.</li>
-<li><code><a href="#RemoveParameter_string">RemoveParameter(string)</a></code> - Removes a parameter from this content disposition.</li>
-<li><code><a href="#SetDispositionType_string">SetDispositionType(string)</a></code> - Sets the disposition type, such as &quot;inline&quot;.</li>
-<li><code><a href="#SetParameter_string_string">SetParameter(string, string)</a></code> - Sets a parameter of this content disposition.</li>
-<li><code><a href="#ToDisposition">ToDisposition()</a></code> - Converts this object to an immutable ContentDisposition object.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
+  <li><code>[DispositionType](#DispositionType)</code> - Gets or sets this value’s disposition type, such as “inline” or “attachment”.</li>
+  <li><code>[IsMultipart](#IsMultipart)</code> - <b>Deprecated:</b> Irrelevant for content dispositions; will be removed in the future.</li>
+  <li><code>[IsText](#IsText)</code> - <b>Deprecated:</b> Irrelevant for content dispositions; will be removed in the future.</li>
+  <li><code>[RemoveParameter(string)](#RemoveParameter_string)</code> - Removes a parameter from this content disposition.</li>
+  <li><code>[SetDispositionType(string)](#SetDispositionType_string)</code> - Sets the disposition type, such as “inline”.</li>
+  <li><code>[SetParameter(string, string)](#SetParameter_string_string)</code> - Sets a parameter of this content disposition.</li>
+  <li><code>[ToDisposition()](#ToDisposition)</code> - Converts this object to an immutable ContentDisposition object.</li>
+  <li><code>[ToString()](#ToString)</code> - Converts this object to a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_PeterO_Mail_ContentDisposition"></a></p>
-
-<h3>Builder Constructor</h3>
+<p><a id="Void_ctor_PeterO_Mail_ContentDisposition"></a>
+### Builder Constructor</p>
 
 <pre>public Builder(
     PeterO.Mail.ContentDisposition mt);
@@ -39,21 +36,20 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>mt</i>: The parameter  <i>mt</i>
-is a ContentDisposition object.</li>
+  <li><i>mt</i>: The parameter  <i>mt</i>
+ is a ContentDisposition object.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>mt</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>Builder Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### Builder Constructor</p>
 
 <pre>public Builder(
     string type);
@@ -64,54 +60,59 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>type</i>: The parameter  <i>type</i>
-is a text string.</li>
+  <li><i>type</i>: The parameter  <i>type</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>type</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-Type is empty.</p></li>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+Type is empty.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>Builder Constructor</h3>
+<p><a id="Void_ctor"></a>
+### Builder Constructor</p>
 
 <pre>public Builder();
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the disposition type &quot;attachment&quot; .</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the disposition type “attachment” .</p>
 
-<p><a id="DispositionType"></a></p>
-
-<h3>DispositionType</h3>
+<p><a id="DispositionType"></a>
+### DispositionType</p>
 
 <pre>public string DispositionType { get; set; }
 </pre>
 
-<p>Gets or sets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
+<p>Gets or sets this value’s disposition type, such as “inline” or “attachment”.</p>
 
 <p><b>Returns:</b></p>
 
-<p>This value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot; .</p>
+<p>This value’s disposition type, such as “inline” or “attachment” .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The property is being set and the value is null.</p></li>
-<li><p>System.ArgumentException:
-The property is being set and the value is an empty string.</p></li>
+  <li>
+    <p>System.ArgumentNullException:
+The property is being set and the value is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+The property is being set and the value is an empty string.</p>
+  </li>
 </ul>
 
-<p><a id="IsMultipart"></a></p>
-
-<h3>IsMultipart</h3>
+<p><a id="IsMultipart"></a>
+### IsMultipart</p>
 
 <pre>public bool IsMultipart { get; }
 </pre>
@@ -124,9 +125,8 @@ The property is being set and the value is an empty string.</p></li>
 
 <p><code>true</code>  If this is a multipart media type; otherwise,  <code>false</code> .</p>
 
-<p><a id="IsText"></a></p>
-
-<h3>IsText</h3>
+<p><a id="IsText"></a>
+### IsText</p>
 
 <pre>public bool IsText { get; }
 </pre>
@@ -139,20 +139,19 @@ The property is being set and the value is an empty string.</p></li>
 
 <p><code>true</code>  If this is a text media type; otherwise,  <code>false</code> .</p>
 
-<p><a id="RemoveParameter_string"></a></p>
-
-<h3>RemoveParameter</h3>
+<p><a id="RemoveParameter_string"></a>
+### RemoveParameter</p>
 
 <pre>public PeterO.Mail.ContentDisposition.Builder RemoveParameter(
     string name);
 </pre>
 
-<p>Removes a parameter from this content disposition. Does nothing if the parameter&#39;s name doesn&#39;t exist.</p>
+<p>Removes a parameter from this content disposition. Does nothing if the parameter’s name doesn’t exist.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The parameter to remove. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.).</li>
+  <li><i>name</i>: The parameter to remove. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -162,27 +161,26 @@ The property is being set and the value is an empty string.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>name</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="SetDispositionType_string"></a></p>
-
-<h3>SetDispositionType</h3>
+<p><a id="SetDispositionType_string"></a>
+### SetDispositionType</p>
 
 <pre>public PeterO.Mail.ContentDisposition.Builder SetDispositionType(
     string str);
 </pre>
 
-<p>Sets the disposition type, such as &quot;inline&quot;. This method enables the pattern of method chaining (e.g.,  <code>new
+<p>Sets the disposition type, such as “inline”. This method enables the pattern of method chaining (e.g.,  <code>new
             ...().Set...().Set...()</code>  ) unlike with the DispositionType property in .NET or the setDispositionType method (with small s) in Java.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: The parameter  <i>str</i>
-is a text string.</li>
+  <li><i>str</i>: The parameter  <i>str</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -192,16 +190,19 @@ is a text string.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-Str is empty.</p></li>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+Str is empty.</p>
+  </li>
 </ul>
 
-<p><a id="SetParameter_string_string"></a></p>
-
-<h3>SetParameter</h3>
+<p><a id="SetParameter_string_string"></a>
+### SetParameter</p>
 
 <pre>public PeterO.Mail.ContentDisposition.Builder SetParameter(
     string name,
@@ -213,8 +214,12 @@ Str is empty.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>: Name of the parameter to set. If this name already exists (compared using a basic case-insensitive comparison), it will be overwritten. (Two strings are equal in a basic case-insensitive comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.).</p></li>
-<li><p><i>value</i>: Value of the parameter to set.</p></li>
+  <li>
+    <p><i>name</i>: Name of the parameter to set. If this name already exists (compared using a basic case-insensitive comparison), it will be overwritten. (Two strings are equal in a basic case-insensitive comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.).</p>
+  </li>
+  <li>
+    <p><i>value</i>: Value of the parameter to set.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -224,18 +229,21 @@ Str is empty.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 Either  <i>value</i>
-or  <i>name</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ or  <i>name</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 The parameter  <i>name</i>
-is empty, or it isn&#39;t a well-formed parameter name.</p></li>
+ is empty, or it isn’t a well-formed parameter name.</p>
+  </li>
 </ul>
 
-<p><a id="ToDisposition"></a></p>
-
-<h3>ToDisposition</h3>
+<p><a id="ToDisposition"></a>
+### ToDisposition</p>
 
 <pre>public PeterO.Mail.ContentDisposition ToDisposition();
 </pre>
@@ -246,9 +254,8 @@ is empty, or it isn&#39;t a well-formed parameter name.</p></li>
 
 <p>A MediaType object.</p>
 
-<p><a id="ToString"></a></p>
-
-<h3>ToString</h3>
+<p><a id="ToString"></a>
+### ToString</p>
 
 <pre>public override string ToString();
 </pre>

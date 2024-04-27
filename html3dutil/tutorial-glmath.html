@@ -1,10 +1,10 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU&#39;s Math Functions</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>H3DU&#39;s Math Functions</h1>
+<h1 id="h3dus-math-functions">H3DU’s Math Functions</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
@@ -13,62 +13,60 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 
 <p>Here is an overview of these data types.</p>
 
-<p><a id=Contents></a></p>
-
-<h2>Contents</h2>
-
-<ul>
-<li><a href="#Contents"><strong>Contents</strong></a></li>
-<li><a href="#Vectors"><strong>Vectors</strong></a>
+<p><a id="Contents"></a>
+## Contents</p>
 
 <ul>
-<li><a href="#Unit_Vectors"><strong>Unit Vectors</strong></a></li>
-</ul></li>
-<li><a href="#Matrices"><strong>Matrices</strong></a>
-
-<ul>
-<li><a href="#Translation"><strong>Translation</strong></a></li>
-<li><a href="#Scaling"><strong>Scaling</strong></a></li>
-<li><a href="#Rotation"><strong>Rotation</strong></a></li>
-<li><a href="#Combining_Transforms"><strong>Combining Transforms</strong></a></li>
-</ul></li>
-<li><a href="#Describing_Rotations"><strong>Describing Rotations</strong></a>
-
-<ul>
-<li><a href="#Axis_of_Rotation"><strong>Axis of Rotation</strong></a></li>
-<li><a href="#Quaternions"><strong>Quaternions</strong></a>
-
-<ul>
-<li><a href="#Generating_Quaternions"><strong>Generating Quaternions</strong></a></li>
-<li><a href="#Using_Quaternions"><strong>Using Quaternions</strong></a></li>
-<li><a href="#Multiplying_Quaternions"><strong>Multiplying Quaternions</strong></a></li>
-</ul></li>
-<li><a href="#Tait_Bryan_angles"><strong>Tait-Bryan angles</strong></a></li>
-<li><a href="#4x4_Matrices"><strong>4x4 Matrices</strong></a></li>
-</ul></li>
-<li><a href="#Planes"><strong>Planes</strong></a></li>
-<li><a href="#Boxes"><strong>Boxes</strong></a></li>
-<li><a href="#Coordinate_Systems"><strong>Coordinate Systems</strong></a>
-
-<ul>
-<li><a href="#Differences_in_Behavior"><strong>Differences in Behavior</strong></a>
-
-<ul>
-<li><a href="#Projection_and_view_matrices"><strong>Projection and view matrices</strong></a></li>
-<li><a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate"><strong>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</strong></a></li>
-<li><a href="#Cross_product_vec3cross_and_normals"><strong>Cross product (<code>vec3cross</code>) and normals</strong></a></li>
-</ul></li>
-<li><a href="#Winding_and_face_classification"><strong>Winding and face classification</strong></a>
-
-<ul>
-<li><a href="#Finding_a_triangle_s_winding"><strong>Finding a triangle&#39;s winding</strong></a></li>
-</ul></li>
-</ul></li>
+  <li><a href="#Contents"><strong>Contents</strong></a></li>
+  <li><a href="#Vectors"><strong>Vectors</strong></a>
+    <ul>
+      <li><a href="#Unit_Vectors"><strong>Unit Vectors</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#Matrices"><strong>Matrices</strong></a>
+    <ul>
+      <li><a href="#Translation"><strong>Translation</strong></a></li>
+      <li><a href="#Scaling"><strong>Scaling</strong></a></li>
+      <li><a href="#Rotation"><strong>Rotation</strong></a></li>
+      <li><a href="#Combining_Transforms"><strong>Combining Transforms</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#Describing_Rotations"><strong>Describing Rotations</strong></a>
+    <ul>
+      <li><a href="#Axis_of_Rotation"><strong>Axis of Rotation</strong></a></li>
+      <li><a href="#Quaternions"><strong>Quaternions</strong></a>
+        <ul>
+          <li><a href="#Generating_Quaternions"><strong>Generating Quaternions</strong></a></li>
+          <li><a href="#Using_Quaternions"><strong>Using Quaternions</strong></a></li>
+          <li><a href="#Multiplying_Quaternions"><strong>Multiplying Quaternions</strong></a></li>
+        </ul>
+      </li>
+      <li><a href="#Tait_Bryan_angles"><strong>Tait-Bryan angles</strong></a></li>
+      <li><a href="#4x4_Matrices"><strong>4x4 Matrices</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#Planes"><strong>Planes</strong></a></li>
+  <li><a href="#Boxes"><strong>Boxes</strong></a></li>
+  <li><a href="#Coordinate_Systems"><strong>Coordinate Systems</strong></a>
+    <ul>
+      <li><a href="#Differences_in_Behavior"><strong>Differences in Behavior</strong></a>
+        <ul>
+          <li><a href="#Projection_and_view_matrices"><strong>Projection and view matrices</strong></a></li>
+          <li><a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate"><strong>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</strong></a></li>
+          <li><a href="#Cross_product_vec3cross_and_normals"><strong>Cross product (<code>vec3cross</code>) and normals</strong></a></li>
+        </ul>
+      </li>
+      <li><a href="#Winding_and_face_classification"><strong>Winding and face classification</strong></a>
+        <ul>
+          <li><a href="#Finding_a_triangle_s_winding"><strong>Finding a triangle’s winding</strong></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
 
-<p><a id=Vectors></a></p>
-
-<h2>Vectors</h2>
+<p><a id="Vectors"></a>
+## Vectors</p>
 
 <p>A vector is a line segment pointing in a certain <em>direction</em> in space and
 having a certain <em>length</em> and an unspecified starting point.
@@ -77,7 +75,7 @@ A particular vector can instead be treated as describing a position
 
 <p>In <code>MathUtil</code>, vectors are stored in arrays of numbers (usually
 three or four numbers), and functions dealing with vectors begin
-with &quot;vec&quot;.</p>
+with “vec”.</p>
 
 <p>If a 4-element vector describes a position or direction, the elements
 are given as X, Y, Z, and W, in that order.</p>
@@ -85,50 +83,47 @@ are given as X, Y, Z, and W, in that order.</p>
 <p>If a 4-element vector describes a color, the elements are given as red, green,
 blue, and alpha, in that order (where each element ranges from 0-1).</p>
 
-<p>If a 3D <em>direction</em> is used in a 4-element vector function (one beginning with &quot;vec4&quot;),
+<p>If a 3D <em>direction</em> is used in a 4-element vector function (one beginning with “vec4”),
 use 0 as the fourth element. If a 3D <em>position</em> (point) is used in a 4-element vector
 function, the fourth element is generally 1. (If the
 fourth element is anything other than 0, the vector is in <em>homogeneous
 coordinates</em>, where the 3D position equals the first three elements divided
 by the fourth.)</p>
 
-<p><a id=Unit_Vectors></a></p>
+<p><a id="Unit_Vectors"></a>
+### Unit Vectors</p>
 
-<h3>Unit Vectors</h3>
-
-<p>A <em>unit vector</em> is a vector with a length of 1. (A vector&#39;s <em>length</em>,  or <em>norm</em>, is the square root
-of the sum of the squares of its components.) A vector can be &quot;normalized&quot; to
-a unit vector by dividing each of its components by its length (doing so won&#39;t change
-the vector&#39;s direction).</p>
+<p>A <em>unit vector</em> is a vector with a length of 1. (A vector’s <em>length</em>,  or <em>norm</em>, is the square root
+of the sum of the squares of its components.) A vector can be “normalized” to
+a unit vector by dividing each of its components by its length (doing so won’t change
+the vector’s direction).</p>
 
 <p>The following functions normalize vectors and find their length.</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.vec3normalize">MathUtil.vec3normalize</a> - Converts a 3-element vector to a unit vector.</li>
-<li><a href="MathUtil.html#MathUtil.vec4normalize">MathUtil.vec4normalize</a> - Converts a 4-element vector to a unit vector.</li>
-<li><a href="MathUtil.html#MathUtil.vec3length">MathUtil.vec3length</a> - Finds a 3-element vector&#39;s length.</li>
-<li><a href="MathUtil.html#MathUtil.vec4length">MathUtil.vec4length</a> - Finds a 4-element vector&#39;s length.</li>
+  <li><a href="MathUtil.html#MathUtil.vec3normalize">MathUtil.vec3normalize</a> - Converts a 3-element vector to a unit vector.</li>
+  <li><a href="MathUtil.html#MathUtil.vec4normalize">MathUtil.vec4normalize</a> - Converts a 4-element vector to a unit vector.</li>
+  <li><a href="MathUtil.html#MathUtil.vec3length">MathUtil.vec3length</a> - Finds a 3-element vector’s length.</li>
+  <li><a href="MathUtil.html#MathUtil.vec4length">MathUtil.vec4length</a> - Finds a 4-element vector’s length.</li>
 </ul>
 
 <p>Note that due to rounding error, normalizing a vector with a <code>MathUtil</code> method
 might not necessarily result in a vector with a length of 1.</p>
 
-<p><a id=Matrices></a></p>
-
-<h2>Matrices</h2>
+<p><a id="Matrices"></a>
+## Matrices</p>
 
 <p>A matrix is a rectangular array that can describe a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
-Functions dealing with matrices begin with &quot;mat&quot;.
+Functions dealing with matrices begin with “mat”.
 A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.
 For more details, see the <a href="tutorial-matrixdetails.html">Matrix Details</a> tutorial.</p>
 
-<p><a id=Translation></a></p>
+<p><a id="Translation"></a>
+### Translation</p>
 
-<h3>Translation</h3>
-
-<p>A translation is a shifting of an object&#39;s position.</p>
+<p>A translation is a shifting of an object’s position.</p>
 
 <p>To create a translation matrix, use <a href="MathUtil.html#MathUtil.mat4translated">MathUtil.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset. For example, an X-offset of 1 moves
@@ -138,32 +133,30 @@ an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
 <a href="MathUtil.html#MathUtil.mat4translate">MathUtil.mat4translate()</a>. This will put the translation
 before the other transformations.</p>
 
-<p><a id=Scaling></a></p>
+<p><a id="Scaling"></a>
+### Scaling</p>
 
-<h3>Scaling</h3>
-
-<p>Scaling changes an object&#39;s size.</p>
+<p>Scaling changes an object’s size.</p>
 
 <p>To create a scaling matrix, use <a href="MathUtil.html#MathUtil.mat4scaled">MathUtil.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis. Each point is multiplied by the scaling
-factors to change the object&#39;s size. For example, a Y-factor of 2 doubles an object&#39;s height.</p>
+factors to change the object’s size. For example, a Y-factor of 2 doubles an object’s height.</p>
 
 <p>To multiply an existing matrix by a scaling, use
 <a href="MathUtil.html#MathUtil.mat4scale">MathUtil.mat4scale()</a>. This will put the scaling
 before the other transformations.</p>
 
-<p><a id=Rotation></a></p>
+<p><a id="Rotation"></a>
+### Rotation</p>
 
-<h3>Rotation</h3>
-
-<p>Rotation changes an object&#39;s orientation.</p>
+<p>Rotation changes an object’s orientation.</p>
 
 <p>To create a rotation matrix, use <a href="MathUtil.html#MathUtil.mat4rotated">MathUtil.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>. For example:</p>
 
 <ul>
-<li>Specifying <code>(45, [1, 0, 0])</code> means a 45-degree rotation of the point around the X axis.</li>
-<li>Specifying <code>(80, [0, 2, 3])</code> means a 45-degree rotation of the point around the axis that
+  <li>Specifying <code>(45, [1, 0, 0])</code> means a 45-degree rotation of the point around the X axis.</li>
+  <li>Specifying <code>(80, [0, 2, 3])</code> means a 45-degree rotation of the point around the axis that
 starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</li>
 </ul>
 
@@ -174,38 +167,35 @@ starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</li>
 <a href="MathUtil.html#MathUtil.mat4rotate">MathUtil.mat4rotate()</a>. This will put the rotation
 before the other transformations.</p>
 
-<p><a id=Combining_Transforms></a></p>
-
-<h3>Combining Transforms</h3>
+<p><a id="Combining_Transforms"></a>
+### Combining Transforms</p>
 
 <p>The order in which you do transforms is important. In general, scaling then translating is
 not the same as translating then scaling. Assuming your geometry is centered at the origin
 (0, 0, 0), you should create a transformation in this order:</p>
 
 <ul>
-<li>Call <a href="MathUtil.html#MathUtil.mat4identity"><code>MathUtil.mat4identity()</code></a>, creating a matrix without a transformation.</li>
-<li>Do your translations if needed, using <a href="MathUtil.html#MathUtil.mat4translate"><code>mat4translate()</code></a>.</li>
-<li>Do your rotations if needed, using <a href="MathUtil.html#MathUtil.mat4rotate"><code>mat4rotate()</code></a>.</li>
-<li>Do your scalings if needed, using <a href="MathUtil.html#MathUtil.mat4scale"><code>mat4scale()</code></a>.</li>
+  <li>Call <a href="MathUtil.html#MathUtil.mat4identity"><code>MathUtil.mat4identity()</code></a>, creating a matrix without a transformation.</li>
+  <li>Do your translations if needed, using <a href="MathUtil.html#MathUtil.mat4translate"><code>mat4translate()</code></a>.</li>
+  <li>Do your rotations if needed, using <a href="MathUtil.html#MathUtil.mat4rotate"><code>mat4rotate()</code></a>.</li>
+  <li>Do your scalings if needed, using <a href="MathUtil.html#MathUtil.mat4scale"><code>mat4scale()</code></a>.</li>
 </ul>
 
-<p>This way, the scalings and rotations will affect the object while it&#39;s still centered, and
+<p>This way, the scalings and rotations will affect the object while it’s still centered, and
 before the translations (shifts) take place.</p>
 
 <p>You can also multiply transforms using <a href="MathUtil.html#MathUtil.mat4multiply">MathUtil.mat4multiply()</a>.
 This takes two matrices and returns one combined matrix. The combined matrix will have the effect
-of doing the second matrix&#39;s transform, then the first matrix&#39;s transform.</p>
+of doing the second matrix’s transform, then the first matrix’s transform.</p>
 
-<p><a id=Describing_Rotations></a></p>
-
-<h2>Describing Rotations</h2>
+<p><a id="Describing_Rotations"></a>
+## Describing Rotations</p>
 
 <p>Rotations in 3D space can be described in many ways, including
 quaternions, Tait-Bryan angles, and an angle and axis.</p>
 
-<p><a id=Axis_of_Rotation></a></p>
-
-<h3>Axis of Rotation</h3>
+<p><a id="Axis_of_Rotation"></a>
+### Axis of Rotation</p>
 
 <p>A rotation of vectors or points can be described using an <em>angle</em>
 and an <em>axis of rotation</em>, for example, in the <a href="MathUtil.html#MathUtil.mat4rotate">MathUtil.mat4rotate</a> method.</p>
@@ -213,24 +203,24 @@ and an <em>axis of rotation</em>, for example, in the <a href="MathUtil.html#Mat
 <p>An axis of rotation is a vector pointing in a certain direction.  When a point (or vector)
 is rotated at any angle around this axis, the new point (or vector) will lie
 on the same plane as the previous point.  The axis of rotation describes
-a vector that is perpendicular to that plane&#39;s surface (the plane&#39;s <em>normal</em>).
+a vector that is perpendicular to that plane’s surface (the plane’s <em>normal</em>).
 Here are examples of an axis of rotation.</p>
 
 <ul>
-<li>The X axis of rotation (upward or downward turn) is (1, 0, 0).</li>
-<li>The Y axis of rotation (leftward or rightward turn) is (0, 1, 0).</li>
-<li>The Z axis of rotation (side-by-side sway) is (0, 0, 1).</li>
+  <li>The X axis of rotation (upward or downward turn) is (1, 0, 0).</li>
+  <li>The Y axis of rotation (leftward or rightward turn) is (0, 1, 0).</li>
+  <li>The Z axis of rotation (side-by-side sway) is (0, 0, 1).</li>
 </ul>
 
-<p>While the axis of rotation points backward from the &quot;eye&quot;, if the angle&#39;s value
-is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</strong></a> is...</p>
+<p>While the axis of rotation points backward from the “eye”, if the angle’s value
+is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</strong></a> is…</p>
 
 <ul>
-<li>...right handed, then the angle runs counterclockwise.</li>
-<li>...left handed, then the angle runs clockwise.</li>
+  <li>…right handed, then the angle runs counterclockwise.</li>
+  <li>…left handed, then the angle runs clockwise.</li>
 </ul>
 
-<p>While the axis of rotation points backward from the &quot;eye&quot;, if the angle&#39;s value
+<p>While the axis of rotation points backward from the “eye”, if the angle’s value
 is negative, then the angle runs in the opposite direction.</p>
 
 <p>Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2, 0, 0))
@@ -239,72 +229,67 @@ describe the same axis of rotation.</p>
 <p>Unless stated otherwise, an axis of rotation passed to a <code>MathUtil</code>
 method need not be a <a href="#Unit_Vectors"><strong>unit vector</strong></a>.</p>
 
-<p><a id=Quaternions></a></p>
-
-<h3>Quaternions</h3>
+<p><a id="Quaternions"></a>
+### Quaternions</p>
 
 <p>A quaternion is a 4-element vector that can describe a
-3D rotation. Functions dealing with quaternions begin with &quot;quat&quot;.</p>
+3D rotation. Functions dealing with quaternions begin with “quat”.</p>
 
-<p><a id=Generating_Quaternions></a></p>
-
-<h4>Generating Quaternions</h4>
+<p><a id="Generating_Quaternions"></a>
+#### Generating Quaternions</p>
 
 <p>Functions that generate quaternions include:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.quatIdentity">MathUtil.quatIdentity</a> - Generates a quaternion describing an
+  <li><a href="MathUtil.html#MathUtil.quatIdentity">MathUtil.quatIdentity</a> - Generates a quaternion describing an
 absence of rotations.</li>
-<li><a href="MathUtil.html#MathUtil.quatFromVectors">MathUtil.quatFromVectors</a> - Generates a quaternion describing
+  <li><a href="MathUtil.html#MathUtil.quatFromVectors">MathUtil.quatFromVectors</a> - Generates a quaternion describing
 a rotation from one vector to another.</li>
-<li><a href="MathUtil.html#MathUtil.quatFromMat4">MathUtil.quatFromMat4</a> - Generates a quaternion from a <a href="#Matrices"><strong>4x4 matrix</strong></a>.</li>
-<li><a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> - Generates a quaternion from an angle and <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>.</li>
-<li><a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a> - Generates a quaternion from Tait-Bryan angles.</li>
+  <li><a href="MathUtil.html#MathUtil.quatFromMat4">MathUtil.quatFromMat4</a> - Generates a quaternion from a <a href="#Matrices"><strong>4x4 matrix</strong></a>.</li>
+  <li><a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> - Generates a quaternion from an angle and <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>.</li>
+  <li><a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a> - Generates a quaternion from Tait-Bryan angles.</li>
 </ul>
 
-<p><a id=Using_Quaternions></a></p>
-
-<h4>Using Quaternions</h4>
+<p><a id="Using_Quaternions"></a>
+#### Using Quaternions</p>
 
 <p>For best results when using quaternions:</p>
 
 <ul>
-<li>Store the rotation of each object as a single quaternion.</li>
-<li>As rotations happen each frame, convert the rotation (which may be
+  <li>Store the rotation of each object as a single quaternion.</li>
+  <li>As rotations happen each frame, convert the rotation (which may be
 in pitch/yaw/roll or another form, depending on the input device) to a quaternion
-(see <a href="#Generating_Quaternions"><strong>&quot;Generating Quaternions&quot;</strong></a>
+(see <a href="#Generating_Quaternions"><strong>“Generating Quaternions”</strong></a>
 and <a href="MathUtil.html#MathUtil.quatMultiply">multiply</a> that quaternion by the current
-quaternion to get the object&#39;s new rotation.</li>
-<li>Normalize the rotation quaternion (using <a href="MathUtil.html#MathUtil.quatNormalize"><code>quatNormalize()</code></a>
-or <a href="MathUtil.html#MathUtil.quatNormalizeInPlace"><code>quatNormalizeInPlace()</code></a>)
+quaternion to get the object’s new rotation.</li>
+  <li>Normalize the rotation quaternion (using <a href="MathUtil.html#MathUtil.quatNormalize"><code>quatNormalize()</code></a>
+ or <a href="MathUtil.html#MathUtil.quatNormalizeInPlace"><code>quatNormalizeInPlace()</code></a>)
 every few frames. (Quaternions that describe a 3D rotation should be <a href="#Unit_Vectors"><strong>unit vectors</strong></a>.)</li>
 </ul>
 
-<p><a id=Multiplying_Quaternions></a></p>
-
-<h4>Multiplying Quaternions</h4>
+<p><a id="Multiplying_Quaternions"></a>
+#### Multiplying Quaternions</p>
 
 <p>When two quaternions are multiplied (for example, with {@MathUtil.quatMultiply}),
 the result is a combined rotation in which the second rotation happens
 before the first rotation (when applied in the global coordinate frame).
 Like matrix multiplication, the order in which you multiply quaternions is important.</p>
 
-<p><a id=Tait_Bryan_angles></a></p>
-
-<h3>Tait-Bryan angles</h3>
+<p><a id="Tait_Bryan_angles"></a>
+### Tait-Bryan angles</p>
 
 <p>Pitch-yaw-roll angles (also called Tait-Bryan angles) describe three different rotations
 of the same vector around three different axes, called the pitch, yaw, and roll axes
 (or the X, Y, Z axes, respectively), which occur one after the other.  However:</p>
 
 <ul>
-<li>There are multiple conventions for pitch-yaw-roll angles, including the order of
+  <li>There are multiple conventions for pitch-yaw-roll angles, including the order of
 rotations (for example: pitch-roll-yaw, roll-pitch-yaw), and whether the rotations occur
-around the object&#39;s original axes (&quot;extrinsic&quot;) or its new axes (&quot;intrinsic&quot;).</li>
-<li>Rotations are multiplied like in quaternions and matrices, so the order the rotations
+around the object’s original axes (“extrinsic”) or its new axes (“intrinsic”).</li>
+  <li>Rotations are multiplied like in quaternions and matrices, so the order the rotations
 occur is important.  For example, a 30-degree pitch followed by a 20-degree
 roll is not the same as a 20-degree pitch followed by a 30-degree roll.</li>
-<li>Pitch-yaw-roll angles can cause a problem called &quot;gimbal lock&quot;, in which a rotation along
+  <li>Pitch-yaw-roll angles can cause a problem called “gimbal lock”, in which a rotation along
 one axis (say, a pitch) can cause a vector to be parallel to another axis (say, the roll
 axis), so that a rotation along that axis will do nothing.</li>
 </ul>
@@ -312,56 +297,55 @@ axis), so that a rotation along that axis will do nothing.</li>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan()</a> -
+  <li><a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan()</a> -
 Converts from Tait-Bryan angles to a quaternion</li>
-<li><a href="MathUtil.html#MathUtil.quatToTaitBryan">MathUtil.quatToTaitBryan()</a> -
+  <li><a href="MathUtil.html#MathUtil.quatToTaitBryan">MathUtil.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
 
-<p><a id=4x4_Matrices></a></p>
+<p><a id="4x4_Matrices"></a>
+### 4x4 Matrices</p>
 
-<h3>4x4 Matrices</h3>
+<p>A 4x4 matrix can describe a 3D vector rotation; see <a href="#Rotation"><strong>“Rotation”, above</strong></a>.</p>
 
-<p>A 4x4 matrix can describe a 3D vector rotation; see <a href="#Rotation"><strong>&quot;Rotation&quot;, above</strong></a>.</p>
-
-<p><a id=Planes></a></p>
-
-<h2>Planes</h2>
+<p><a id="Planes"></a>
+## Planes</p>
 
 <p>A 4-element array can describe a plane in the following manner:</p>
 
 <ul>
-<li><p>The 4 elements, labeled A, B, C, and D in that order, describe a plane
-whose points satisfy the equation&mdash;</p>
+  <li>
+    <p>The 4 elements, labeled A, B, C, and D in that order, describe a plane
+ whose points satisfy the equation—</p>
 
-<pre>  Ax + By + Cz + D = 0
+    <pre>  Ax + By + Cz + D = 0
 </pre>
+  </li>
+</ul>
 
 <p>where x, y, and z are the
-coordinates of any point lying on the plane.</p></li>
-<li>A, B, and C are
-the X, Y, and Z components of the plane&#39;s normal vector.</li>
-<li>D is the signed distance from the plane to the origin (0,0,0).
-It&#39;s positive if the plane&#39;s normal points toward the origin, and
-negative if it points away from the origin.</li>
-<li>D is the negative dot product of the
-plane&#39;s normal and any point on the plane.</li>
-</ul>
+ coordinates of any point lying on the plane.
+* A, B, and C are
+ the X, Y, and Z components of the plane’s normal vector.
+* D is the signed distance from the plane to the origin (0,0,0).
+It’s positive if the plane’s normal points toward the origin, and
+negative if it points away from the origin.
+* D is the negative dot product of the
+ plane’s normal and any point on the plane.</p>
 
 <p>There is one method that deals with planes:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.planeNormalizeInPlace">MathUtil.planeNormalizeInPlace</a> - Converts the plane to a form in which
+  <li><a href="MathUtil.html#MathUtil.planeNormalizeInPlace">MathUtil.planeNormalizeInPlace</a> - Converts the plane to a form in which
 its normal has a length of 1.</li>
 </ul>
 
-<p><a id=Boxes></a></p>
-
-<h2>Boxes</h2>
+<p><a id="Boxes"></a>
+## Boxes</p>
 
 <p>An array of six numbers can describe an axis-aligned bounding box (AABB).
-If it does, the first three numbers are the box&#39;s minimum X, Y, and Z coordinates,
-and the last three numbers are the box&#39;s maximum X, Y, and Z coordinates.</p>
+If it does, the first three numbers are the box’s minimum X, Y, and Z coordinates,
+and the last three numbers are the box’s maximum X, Y, and Z coordinates.</p>
 
 <p>If a minimum coordinate is greater than a maximum coordinate, then the
 box is considered empty.</p>
@@ -369,28 +353,27 @@ box is considered empty.</p>
 <p>Methods that deal with boxes include:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.boxCenter">MathUtil.boxCenter</a> - Finds a box&#39;s center.</li>
-<li><a href="MathUtil.html#MathUtil.boxDimensions">MathUtil.boxDimensions</a> - Finds a box&#39;s dimensions.</li>
-<li><a href="MathUtil.html#MathUtil.boxIsEmpty">MathUtil.boxIsEmpty</a> - Determines whether a box is empty.</li>
+  <li><a href="MathUtil.html#MathUtil.boxCenter">MathUtil.boxCenter</a> - Finds a box’s center.</li>
+  <li><a href="MathUtil.html#MathUtil.boxDimensions">MathUtil.boxDimensions</a> - Finds a box’s dimensions.</li>
+  <li><a href="MathUtil.html#MathUtil.boxIsEmpty">MathUtil.boxIsEmpty</a> - Determines whether a box is empty.</li>
 </ul>
 
-<p><a id=Coordinate_Systems></a></p>
-
-<h2>Coordinate Systems</h2>
+<p><a id="Coordinate_Systems"></a>
+## Coordinate Systems</p>
 
 <p>There are two conventions of 3D coordinate systems, left-handed and
 right-handed:</p>
 
 <ul>
-<li>In a <em>left-handed</em> coordinate system, the positive Z axis points <em>forward from the &quot;eye&quot;</em> whenever the positive X axis points to the right and the positive Y axis points up.</li>
-<li>In a <em>right-handed</em> coordinate system, the positive Z axis points <em>backward from the &quot;eye&quot;</em> whenever the positive X axis points to the right and the positive Y axis points up.</li>
+  <li>In a <em>left-handed</em> coordinate system, the positive Z axis points <em>forward from the “eye”</em> whenever the positive X axis points to the right and the positive Y axis points up.</li>
+  <li>In a <em>right-handed</em> coordinate system, the positive Z axis points <em>backward from the “eye”</em> whenever the positive X axis points to the right and the positive Y axis points up.</li>
 </ul>
 
-<p>To show this more visually, point one hand&#39;s thumb to your right and
+<p>To show this more visually, point one hand’s thumb to your right and
 its index finger up, and bend the other three fingers halfway down.  In a
 coordinate system named after that hand (left-handed or
-right-handed), if the positive X axis points in the thumb&#39;s
-direction and the positive Y axis points in the index finger&#39;s direction, the Z axis will
+right-handed), if the positive X axis points in the thumb’s
+direction and the positive Y axis points in the index finger’s direction, the Z axis will
 point in the direction the other three fingers point.</p>
 
 <p>As used here, the Z axis is the <a href="MathUtil.html#MathUtil.vec3cross">cross product</a>
@@ -400,13 +383,11 @@ arbitrary; for example, some conventions may have the Z axis, rather than Y,
 be the up axis.  Therefore, these three axes are defined here to avoid
 confusion.</p>
 
-<p><a id=Differences_in_Behavior></a></p>
+<p><a id="Differences_in_Behavior"></a>
+### Differences in Behavior</p>
 
-<h3>Differences in Behavior</h3>
-
-<p><a id=Projection_and_view_matrices></a></p>
-
-<h4>Projection and view matrices</h4>
+<p><a id="Projection_and_view_matrices"></a>
+#### Projection and view matrices</p>
 
 <p>The difference between a left-handed and right-handed coordinate system
 affects how 3D points are transformed, mainly in the projection and view
@@ -414,64 +395,60 @@ matrices.  The projection and view matrices returned by Math
 matrix methods are designed for a right-handed coordinate system.  Their
 documentation describes how to adjust them for a left-handed coordinate system.</p>
 
-<p><a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a></p>
+<p><a id="Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate"></a>
+#### Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</p>
 
-<h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</h4>
-
-<p>While the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a> points backward from the &quot;eye&quot;, if the angle&#39;s value
-is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</strong></a> is...</p>
+<p>While the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a> points backward from the “eye”, if the angle’s value
+is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</strong></a> is…</p>
 
 <ul>
-<li>...right handed, then the angle runs counterclockwise.</li>
-<li>...left handed, then the angle runs clockwise.</li>
+  <li>…right handed, then the angle runs counterclockwise.</li>
+  <li>…left handed, then the angle runs clockwise.</li>
 </ul>
 
-<p>While the axis of rotation points backward from the &quot;eye&quot;, if the angle&#39;s value
+<p>While the axis of rotation points backward from the “eye”, if the angle’s value
 is negative, then the angle runs in the opposite direction.</p>
 
-<p><a id=Cross_product_vec3cross_and_normals></a></p>
+<p><a id="Cross_product_vec3cross_and_normals"></a>
+#### Cross product (<code>vec3cross</code>) and normals</p>
 
-<h4>Cross product (<code>vec3cross</code>) and normals</h4>
-
-<p>Given a triangle formed by...</p>
+<p>Given a triangle formed by…</p>
 
 <ul>
-<li>points (A minus C), (B minus C), and C, in that order, or</li>
-<li>points A, B, and (0, 0, 0), in that order,</li>
+  <li>points (A minus C), (B minus C), and C, in that order, or</li>
+  <li>points A, B, and (0, 0, 0), in that order,</li>
 </ul>
 
 <p>the <a href="MathUtil.html#MathUtil.vec3cross">cross product</a> of the first point with the second,
-in that order, is a <em>normal</em> of that triangle (a vector that&#39;s perpendicular to the triangle&#39;s surface).</p>
+in that order, is a <em>normal</em> of that triangle (a vector that’s perpendicular to the triangle’s surface).</p>
 
-<p>While this particular normal points backward from the &quot;eye&quot;, the triangle&#39;s vertices
+<p>While this particular normal points backward from the “eye”, the triangle’s vertices
 run in a counterclockwise path for right-handed coordinate systems, or a clockwise path
 for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)</p>
 
-<p><a id=Winding_and_face_classification></a></p>
+<p><a id="Winding_and_face_classification"></a>
+### Winding and face classification</p>
 
-<h3>Winding and face classification</h3>
-
-<p>A two-dimensional triangle has counterclockwise <em>winding</em> if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex. Otherwise, it has clockwise winding. If the triangle is in 3D space, it&#39;s first transformed into 2D <em>window coordinates</em> before its winding is found. (Window coordinates roughly correspond to screen pixels.)</p>
+<p>A two-dimensional triangle has counterclockwise <em>winding</em> if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex. Otherwise, it has clockwise winding. If the triangle is in 3D space, it’s first transformed into 2D <em>window coordinates</em> before its winding is found. (Window coordinates roughly correspond to screen pixels.)</p>
 
 <p>By default, in the GL pipeline, triangles with counterclockwise winding are <em>front faces</em>, and
 other triangles are <em>back faces</em>.</p>
 
-<p><a id=Finding_a_triangle_s_winding></a></p>
+<p><a id="Finding_a_triangle_s_winding"></a>
+#### Finding a triangle’s winding</p>
 
-<h4>Finding a triangle&#39;s winding</h4>
-
-<p>To find a triangle&#39;s winding, do the following calculation (X1, X2, X3 and Y1, Y2, Y3 are the window coordinates of its vertices). Note that half of the result will be the triangle&#39;s signed area.</p>
+<p>To find a triangle’s winding, do the following calculation (X1, X2, X3 and Y1, Y2, Y3 are the window coordinates of its vertices). Note that half of the result will be the triangle’s signed area.</p>
 
 <pre>(X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
 </pre>
 
-<p>If the result is positive, and the window space X axis points right and the positive Y axis points...</p>
+<p>If the result is positive, and the window space X axis points right and the positive Y axis points…</p>
 
 <ul>
-<li>...up (which is the case in WebGL), then the triangle
-has counterclockwise winding.</li>
-<li>...down, then the triangle has clockwise winding.</li>
+  <li>…up (which is the case in WebGL), then the triangle
+ has counterclockwise winding.</li>
+  <li>…down, then the triangle has clockwise winding.</li>
 </ul>
 
 <p>If the result is negative, then the triangle has the opposite winding.</p>
@@ -487,85 +464,85 @@ has counterclockwise winding.</li>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-<h3>Navigation</h3>
+<h3 id="navigation">Navigation</h3>
 
 <ul>
-<li><a href="BSplineCurve.html">BSplineCurve</a></li>
-<li><a href="BSplineSurface.html">BSplineSurface</a></li>
-<li><a href="BufferAccessor.html">BufferAccessor</a></li>
-<li><a href="Curve.html">Curve</a></li>
-<li><a href="CurveBuilder.html">CurveBuilder</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
-<li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="MathUtil.html">MathUtil</a></li>
-<li><a href="MeshBuffer.html">MeshBuffer</a></li>
-<li><a href="Meshes.html">Meshes</a></li>
-<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-<li><a href="Promise.html">Promise</a></li>
-<li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Shape.html">Shape</a></li>
-<li><a href="ShapeGroup.html">ShapeGroup</a></li>
-<li><a href="Surface.html">Surface</a></li>
-<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-<li><a href="Transform.html">Transform</a></li>
-<li><a href="extras_arrow.html">module:extras/arrow</a></li>
-<li><a href="extras_camera.html">module:extras/camera</a></li>
-<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
-<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
-<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
-<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
-<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
-<li><a href="extras_convex.html">module:extras/convex</a></li>
-<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
-<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
-<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
-<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
-<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
-<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
-<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
-<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
-<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
-<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
-<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
-<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
-<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
-<li><a href="extras_gradients.html">module:extras/gradients</a></li>
-<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
-<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
-<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
-<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
-<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
-<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
-<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
-<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
-<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
-<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
-<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
-<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
-<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
-<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
-<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
-<li><a href="extras_raypick.html">module:extras/raypick</a></li>
-<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
-<li><a href="extras_starfield.html">module:extras/starfield</a></li>
-<li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
-<li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
-<li><a href="extras_stl.html">module:extras/stl</a></li>
-<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
-<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
-<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
-<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
-<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
-<li><a href="extras_text.html">module:extras/text</a></li>
-<li><a href="extras_tga.html">module:extras/tga</a></li>
-<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
-<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
-<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
-<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
-<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
-<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
-<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Promise.html">Promise</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="Shape.html">Shape</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
+  <li><a href="extras_arrow.html">module:extras/arrow</a></li>
+  <li><a href="extras_camera.html">module:extras/camera</a></li>
+  <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+  <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+  <li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+  <li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+  <li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+  <li><a href="extras_convex.html">module:extras/convex</a></li>
+  <li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+  <li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+  <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+  <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+  <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+  <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+  <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+  <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+  <li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+  <li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+  <li><a href="extras_gradients.html">module:extras/gradients</a></li>
+  <li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+  <li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+  <li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+  <li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+  <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+  <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+  <li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+  <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+  <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+  <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+  <li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+  <li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+  <li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+  <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+  <li><a href="extras_raypick.html">module:extras/raypick</a></li>
+  <li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+  <li><a href="extras_starfield.html">module:extras/starfield</a></li>
+  <li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
+  <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
+  <li><a href="extras_stl.html">module:extras/stl</a></li>
+  <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+  <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+  <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+  <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+  <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+  <li><a href="extras_text.html">module:extras/text</a></li>
+  <li><a href="extras_tga.html">module:extras/tga</a></li>
+  <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+  <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+  <li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+  <li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+  <li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+  <li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+  <li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
 </ul>
 </nav></body></html>

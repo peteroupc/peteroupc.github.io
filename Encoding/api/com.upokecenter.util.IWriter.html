@@ -5,50 +5,56 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.util.IWriter</h1>
-
-<h1>com.upokecenter.util.IWriter</h1>
+<p># com.upokecenter.util.IWriter</p>
 
 <pre>public interface IWriter extends IByteWriter
 </pre>
 
 <p>A generic interface for writing bytes of data.</p>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><code>void write(byte[] bytes,
-int offset,
-int length)</code><br>
-Writes a portion of a byte array to the data source.</li>
+  <li><code>void write(byte[] bytes,
+ int offset,
+ int length)</code><br />
+ Writes a portion of a byte array to the data source.</li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>write</h3>
-
-<pre>void write(byte[] bytes, int offset, int length)
+<h3 id="write">write</h3>
+<pre>void write(byte[] bytes, int offset, int length) Writes a portion of a byte array to the data source.
 </pre>
-
-<p>Writes a portion of a byte array to the data source.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>bytes</code> - A byte array containing the data to write.</p></li>
-<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
-<code>bytes</code> begins.</p></li>
-<li><p><code>length</code> - The number of elements in the desired portion of <code>bytes</code>
-(but not more than <code>bytes</code> &#39;s length).</p></li>
+  <li>
+    <p><code>bytes</code> - A byte array containing the data to write.</p>
+  </li>
+  <li>
+    <p><code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>bytes</code> begins.</p>
+  </li>
+  <li>
+    <p><code>length</code> - The number of elements in the desired portion of <code>bytes</code>
+ (but not more than <code>bytes</code> ‘s length).</p>
+  </li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - Should be thrown if the parameter <code>
-bytes</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Should be thrown if either <code>offset</code> or
-<code>length</code> is less than 0 or greater than <code>bytes</code> &#39;s length, or
-<code>bytes</code> &#39;s length minus <code>offset</code> is less than <code>length</code>.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - Should be thrown if the parameter <code>
+ bytes</code> is null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - Should be thrown if either <code>offset</code> or
+ <code>length</code> is less than 0 or greater than <code>bytes</code> ‘s length, or
+ <code>bytes</code> ‘s length minus <code>offset</code> is less than <code>length</code>.</p>
+  </li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

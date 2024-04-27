@@ -5,32 +5,29 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Cbor.CBOREncodeOptions</h1>
-
-<h2>PeterO.Cbor.CBOREncodeOptions</h2>
+<p>## PeterO.Cbor.CBOREncodeOptions</p>
 
 <pre>public sealed class CBOREncodeOptions
 </pre>
 
 <p>Specifies options for encoding and decoding CBOR objects.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#AllowDuplicateKeys">AllowDuplicateKeys</a></code> - Gets a value indicating whether to allow duplicate keys when reading CBOR objects from a data stream.</li>
-<li><code><a href="#AllowEmpty">AllowEmpty</a></code> - Gets a value indicating whether decoding a CBOR object will return null instead of a CBOR object if the stream has no content or the end of the stream is reached before decoding begins.</li>
-<li><code><a href="#Ctap2Canonical">Ctap2Canonical</a></code> - Gets a value indicating whether CBOR objects: When encoding, are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication (WebAuthn).</li>
-<li><code><a href="#Default">public static readonly PeterO.Cbor.CBOREncodeOptions Default;</a></code> - Default options for CBOR objects.</li>
-<li><code><a href="#DefaultCtap2Canonical">public static readonly PeterO.Cbor.CBOREncodeOptions DefaultCtap2Canonical;</a></code> - Default options for CBOR objects serialized using the CTAP2 canonicalization (used in Web Authentication, among other specifications).</li>
-<li><code><a href="#Float64">Float64</a></code> - Gets a value indicating whether to encode floating-point numbers in a CBOR object in their 64-bit encoding form regardless of whether their value can be encoded without loss in a smaller form.</li>
-<li><code><a href="#KeepKeyOrder">KeepKeyOrder</a></code> - Gets a value indicating whether to preserve the order in which a CBOR map&#39;s keys appear when decoding a CBOR object, by using maps created as though by CBORObject.</li>
-<li><code><a href="#ResolveReferences">ResolveReferences</a></code> - Gets a value indicating whether to resolve references to sharable objects and sharable strings in the process of decoding a CBOR object.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Gets the values of this options object&#39;s properties in text form.</li>
-<li><code><a href="#UseIndefLengthStrings">UseIndefLengthStrings</a></code> - Gets a value indicating whether to encode strings with an indefinite-length encoding under certain circumstances.</li>
+  <li><code>[AllowDuplicateKeys](#AllowDuplicateKeys)</code> - Gets a value indicating whether to allow duplicate keys when reading CBOR objects from a data stream.</li>
+  <li><code>[AllowEmpty](#AllowEmpty)</code> - Gets a value indicating whether decoding a CBOR object will return null instead of a CBOR object if the stream has no content or the end of the stream is reached before decoding begins.</li>
+  <li><code>[Ctap2Canonical](#Ctap2Canonical)</code> - Gets a value indicating whether CBOR objects: When encoding, are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication (WebAuthn).</li>
+  <li><code>[public static readonly PeterO.Cbor.CBOREncodeOptions Default;](#Default)</code> - Default options for CBOR objects.</li>
+  <li><code>[public static readonly PeterO.Cbor.CBOREncodeOptions DefaultCtap2Canonical;](#DefaultCtap2Canonical)</code> - Default options for CBOR objects serialized using the CTAP2 canonicalization (used in Web Authentication, among other specifications).</li>
+  <li><code>[Float64](#Float64)</code> - Gets a value indicating whether to encode floating-point numbers in a CBOR object in their 64-bit encoding form regardless of whether their value can be encoded without loss in a smaller form.</li>
+  <li><code>[KeepKeyOrder](#KeepKeyOrder)</code> - Gets a value indicating whether to preserve the order in which a CBOR map’s keys appear when decoding a CBOR object, by using maps created as though by CBORObject.</li>
+  <li><code>[ResolveReferences](#ResolveReferences)</code> - Gets a value indicating whether to resolve references to sharable objects and sharable strings in the process of decoding a CBOR object.</li>
+  <li><code>[ToString()](#ToString)</code> - Gets the values of this options object’s properties in text form.</li>
+  <li><code>[UseIndefLengthStrings](#UseIndefLengthStrings)</code> - Gets a value indicating whether to encode strings with an indefinite-length encoding under certain circumstances.</li>
 </ul>
 
-<p><a id="Void_ctor_Boolean_Boolean"></a></p>
-
-<h3>CBOREncodeOptions Constructor</h3>
+<p><a id="Void_ctor_Boolean_Boolean"></a>
+### CBOREncodeOptions Constructor</p>
 
 <pre>public CBOREncodeOptions(
     bool useIndefLengthStrings,
@@ -44,13 +41,16 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>useIndefLengthStrings</i>: A value indicating whether to always encode strings with a definite-length encoding.</p></li>
-<li><p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p></li>
+  <li>
+    <p><i>useIndefLengthStrings</i>: A value indicating whether to always encode strings with a definite-length encoding.</p>
+  </li>
+  <li>
+    <p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_Boolean_Boolean_Boolean"></a></p>
-
-<h3>CBOREncodeOptions Constructor</h3>
+<p><a id="Void_ctor_Boolean_Boolean_Boolean"></a>
+### CBOREncodeOptions Constructor</p>
 
 <pre>public CBOREncodeOptions(
     bool useIndefLengthStrings,
@@ -65,14 +65,19 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>useIndefLengthStrings</i>: A value indicating whether to encode strings with a definite-length encoding in certain cases.</p></li>
-<li><p><i>allowDuplicateKeys</i>: A value indicating whether to allow duplicate keys when reading CBOR objects from a data stream.</p></li>
-<li><p><i>ctap2Canonical</i>: A value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication.</p></li>
+  <li>
+    <p><i>useIndefLengthStrings</i>: A value indicating whether to encode strings with a definite-length encoding in certain cases.</p>
+  </li>
+  <li>
+    <p><i>allowDuplicateKeys</i>: A value indicating whether to allow duplicate keys when reading CBOR objects from a data stream.</p>
+  </li>
+  <li>
+    <p><i>ctap2Canonical</i>: A value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>CBOREncodeOptions Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### CBOREncodeOptions Constructor</p>
 
 <pre>public CBOREncodeOptions(
     string paramString);
@@ -83,47 +88,43 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (&quot;=&quot;). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The string can be empty, but cannot be null. The following is an example of this parameter:  <code>allowduplicatekeys=true;ctap2Canonical=true</code> . The key can be any one of the following where the letters can be any combination of basic upper-case and/or basic lower-case letters:  <code>allowduplicatekeys</code> ,  <code>ctap2canonical</code> ,  <code>resolvereferences</code> ,  <code>useindeflengthstrings</code> ,  <code>allowempty</code> ,  <code>float64</code> ,  <code>keepkeyorder</code> . Keys other than these are ignored in this version of the CBOR library. The key  <code>float64</code>  was introduced in version 4.4 of this library. The key  <code>keepkeyorder</code>  was introduced in version 4.5 of this library.(Keys are compared using a basic case-insensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.) If two or more key/value pairs have equal keys (in a basic case-insensitive comparison), the value given for the last such key is used. The four keys just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code> , or  <code>on</code>  (where the letters can be any combination of basic upper-case and/or basic lower-case letters), which means true, and any other value meaning false. For example,  <code>allowduplicatekeys=Yes</code>  and  <code>allowduplicatekeys=1</code>  both set the  <code>AllowDuplicateKeys</code>  property to true. In the future, this class may allow other keys to store other kinds of values, not just true or false.</li>
+  <li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (“=”). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The string can be empty, but cannot be null. The following is an example of this parameter:  <code>allowduplicatekeys=true;ctap2Canonical=true</code> . The key can be any one of the following where the letters can be any combination of basic upper-case and/or basic lower-case letters:  <code>allowduplicatekeys</code> ,  <code>ctap2canonical</code> ,  <code>resolvereferences</code> ,  <code>useindeflengthstrings</code> ,  <code>allowempty</code> ,  <code>float64</code> ,  <code>keepkeyorder</code> . Keys other than these are ignored in this version of the CBOR library. The key  <code>float64</code>  was introduced in version 4.4 of this library. The key  <code>keepkeyorder</code>  was introduced in version 4.5 of this library.(Keys are compared using a basic case-insensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.) If two or more key/value pairs have equal keys (in a basic case-insensitive comparison), the value given for the last such key is used. The four keys just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code> , or  <code>on</code>  (where the letters can be any combination of basic upper-case and/or basic lower-case letters), which means true, and any other value meaning false. For example,  <code>allowduplicatekeys=Yes</code>  and  <code>allowduplicatekeys=1</code>  both set the  <code>AllowDuplicateKeys</code>  property to true. In the future, this class may allow other keys to store other kinds of values, not just true or false.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>paramString</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>CBOREncodeOptions Constructor</h3>
+<p><a id="Void_ctor"></a>
+### CBOREncodeOptions Constructor</p>
 
 <pre>public CBOREncodeOptions();
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> class with all the default options.</p>
 
-<p><a id="Default"></a></p>
-
-<h3>Default</h3>
+<p><a id="Default"></a>
+### Default</p>
 
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions Default;
 </pre>
 
 <p>Default options for CBOR objects. Disallow duplicate keys, and always encode strings using definite-length encoding.</p>
 
-<p><a id="DefaultCtap2Canonical"></a></p>
-
-<h3>DefaultCtap2Canonical</h3>
+<p><a id="DefaultCtap2Canonical"></a>
+### DefaultCtap2Canonical</p>
 
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions DefaultCtap2Canonical;
 </pre>
 
 <p>Default options for CBOR objects serialized using the CTAP2 canonicalization (used in Web Authentication, among other specifications). Disallow duplicate keys, and always encode strings using definite-length encoding.</p>
 
-<p><a id="AllowDuplicateKeys"></a></p>
-
-<h3>AllowDuplicateKeys</h3>
+<p><a id="AllowDuplicateKeys"></a>
+### AllowDuplicateKeys</p>
 
 <pre>public bool AllowDuplicateKeys { get; }
 </pre>
@@ -134,9 +135,8 @@ is null.</li>
 
 <p>A value indicating whether to allow duplicate keys when reading CBOR objects from a data stream. The default is false.</p>
 
-<p><a id="AllowEmpty"></a></p>
-
-<h3>AllowEmpty</h3>
+<p><a id="AllowEmpty"></a>
+### AllowEmpty</p>
 
 <pre>public bool AllowEmpty { get; }
 </pre>
@@ -147,9 +147,8 @@ is null.</li>
 
 <p>A value indicating whether decoding a CBOR object will return  <code>null</code>  instead of a CBOR object if the stream has no content or the end of the stream is reached before decoding begins. The default is false.</p>
 
-<p><a id="Ctap2Canonical"></a></p>
-
-<h3>Ctap2Canonical</h3>
+<p><a id="Ctap2Canonical"></a>
+### Ctap2Canonical</p>
 
 <pre>public bool Ctap2Canonical { get; }
 </pre>
@@ -157,19 +156,22 @@ is null.</li>
 <p>Gets a value indicating whether CBOR objects:</p>
 
 <ul>
-<li><p>When encoding, are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication (WebAuthn).</p></li>
-<li><p>When decoding, are checked for compliance with the CTAP2 canonical encoding form.</p>
-
-<p>In this form, CBOR tags are not used, map keys are written out in a canonical order, a maximum depth of four levels of arrays and/or maps is allowed, duplicate map keys are not allowed when decoding, and floating-point numbers are written out in their 64-bit encoding form regardless of whether their value can be encoded without loss in a smaller form. This implementation allows CBOR objects whose canonical form exceeds 1024 bytes, the default maximum size for CBOR objects in that form according to the FIDO Client-to-Authenticator Protocol 2 specification.</p></li>
+  <li>
+    <p>When encoding, are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication (WebAuthn).</p>
+  </li>
+  <li>
+    <p>When decoding, are checked for compliance with the CTAP2 canonical encoding form.</p>
+  </li>
 </ul>
+
+<p>In this form, CBOR tags are not used, map keys are written out in a canonical order, a maximum depth of four levels of arrays and/or maps is allowed, duplicate map keys are not allowed when decoding, and floating-point numbers are written out in their 64-bit encoding form regardless of whether their value can be encoded without loss in a smaller form. This implementation allows CBOR objects whose canonical form exceeds 1024 bytes, the default maximum size for CBOR objects in that form according to the FIDO Client-to-Authenticator Protocol 2 specification.</p>
 
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  if CBOR objects are written out using the CTAP2 canonical CBOR encoding form; otherwise,  <code>false</code> . The default is  <code>false</code> .</p>
 
-<p><a id="Float64"></a></p>
-
-<h3>Float64</h3>
+<p><a id="Float64"></a>
+### Float64</p>
 
 <pre>public bool Float64 { get; }
 </pre>
@@ -180,22 +182,20 @@ is null.</li>
 
 <p>Gets a value indicating whether to encode floating-point numbers in a CBOR object in their 64-bit encoding form regardless of whether their value can be encoded without loss in a smaller form. Used only when encoding CBOR objects. The default is false.</p>
 
-<p><a id="KeepKeyOrder"></a></p>
-
-<h3>KeepKeyOrder</h3>
+<p><a id="KeepKeyOrder"></a>
+### KeepKeyOrder</p>
 
 <pre>public bool KeepKeyOrder { get; }
 </pre>
 
-<p>Gets a value indicating whether to preserve the order in which a CBOR map&#39;s keys appear when decoding a CBOR object, by using maps created as though by CBORObject.NewOrderedMap. If false, key order is not guaranteed to be preserved when decoding CBOR.</p>
+<p>Gets a value indicating whether to preserve the order in which a CBOR map’s keys appear when decoding a CBOR object, by using maps created as though by CBORObject.NewOrderedMap. If false, key order is not guaranteed to be preserved when decoding CBOR.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A value indicating whether to preserve the order in which a CBOR map&#39;s keys appear when decoding a CBOR object. The default is false.</p>
+<p>A value indicating whether to preserve the order in which a CBOR map’s keys appear when decoding a CBOR object. The default is false.</p>
 
-<p><a id="ResolveReferences"></a></p>
-
-<h3>ResolveReferences</h3>
+<p><a id="ResolveReferences"></a>
+### ResolveReferences</p>
 
 <pre>public bool ResolveReferences { get; }
 </pre>
@@ -210,21 +210,20 @@ is null.</li>
 
 <p><b>Security Note</b></p>
 
-<p>When this property is enabled and a decoded CBOR object contains references to sharable CBOR objects within it, those references will be replaced with the sharable objects they refer to (but without making a copy of those objects). However, if shared references are deeply nested and used multiple times, these references can result in a CBOR object that is orders of magnitude bigger than if shared references weren&#39;t resolved, and this can cause a denial of service when the decoded CBOR object is then serialized (e.g., with  <code>EncodeToBytes()</code> ,  <code>ToString()</code> ,  <code>ToJSONString()</code> , or  <code>WriteTo</code>  ), because object references are expanded in the process.</p>
+<p>When this property is enabled and a decoded CBOR object contains references to sharable CBOR objects within it, those references will be replaced with the sharable objects they refer to (but without making a copy of those objects). However, if shared references are deeply nested and used multiple times, these references can result in a CBOR object that is orders of magnitude bigger than if shared references weren’t resolved, and this can cause a denial of service when the decoded CBOR object is then serialized (e.g., with  <code>EncodeToBytes()</code> ,  <code>ToString()</code> ,  <code>ToJSONString()</code> , or  <code>WriteTo</code>  ), because object references are expanded in the process.</p>
 
-<p>For example, the following object in CBOR diagnostic notation,  <code>[28([&quot;xxx&quot;, &quot;yyy&quot;]), 28([29(0), 29(0), 29(0)]),
+<p>For example, the following object in CBOR diagnostic notation,  <code>[28(["xxx", "yyy"]), 28([29(0), 29(0), 29(0)]),
             28([29(1), 29(1)]), 28([29(2), 29(2)]), 28([29(3), 29(3)]),
             28([29(4), 29(4)]), 28([29(5), 29(5)])]</code> , expands to a CBOR object with a serialized size of about 1831 bytes when this property is enabled, as opposed to about 69 bytes when this property is disabled.</p>
 
-<p>One way to mitigate security issues with this property is to limit the maximum supported size a CBORObject can have once serialized to CBOR or JSON. This can be done by passing a so-called &quot;limited memory stream&quot; to the  <code>WriteTo</code>  or  <code>WriteJSONTo</code>  methods when serializing the object to JSON or CBOR. A &quot;limited memory stream&quot; is a  <code>Stream</code>  (or  <code>OutputStream</code>  in Java) that throws an exception if it would write more bytes than a given maximum size or would seek past that size. (See the documentation for  <code>CBORObject.WriteTo</code>  or  <code>CBORObject.WriteJSONTo</code>  for example code.) Another mitigation is to check the CBOR object&#39;s type before serializing it, since only arrays and maps can have the security problem described here, or to check the maximum nesting depth of a CBOR array or map before serializing it.</p>
+<p>One way to mitigate security issues with this property is to limit the maximum supported size a CBORObject can have once serialized to CBOR or JSON. This can be done by passing a so-called “limited memory stream” to the  <code>WriteTo</code>  or  <code>WriteJSONTo</code>  methods when serializing the object to JSON or CBOR. A “limited memory stream” is a  <code>Stream</code>  (or  <code>OutputStream</code>  in Java) that throws an exception if it would write more bytes than a given maximum size or would seek past that size. (See the documentation for  <code>CBORObject.WriteTo</code>  or  <code>CBORObject.WriteJSONTo</code>  for example code.) Another mitigation is to check the CBOR object’s type before serializing it, since only arrays and maps can have the security problem described here, or to check the maximum nesting depth of a CBOR array or map before serializing it.</p>
 
 <p><b>Returns:</b></p>
 
 <p>A value indicating whether to resolve references to sharable objects and sharable strings. The default is false.</p>
 
-<p><a id="UseIndefLengthStrings"></a></p>
-
-<h3>UseIndefLengthStrings</h3>
+<p><a id="UseIndefLengthStrings"></a>
+### UseIndefLengthStrings</p>
 
 <pre>public bool UseIndefLengthStrings { get; }
 </pre>
@@ -235,18 +234,17 @@ is null.</li>
 
 <p>A value indicating whether to encode strings with an indefinite-length encoding under certain circumstances. The default is false.</p>
 
-<p><a id="ToString"></a></p>
-
-<h3>ToString</h3>
+<p><a id="ToString"></a>
+### ToString</p>
 
 <pre>public override string ToString();
 </pre>
 
-<p>Gets the values of this options object&#39;s properties in text form.</p>
+<p>Gets the values of this options object’s properties in text form.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A text string containing the values of this options object&#39;s properties. The format of the string is the same as the one described in the String constructor for this class.</p>
+<p>A text string containing the values of this options object’s properties. The format of the string is the same as the one described in the String constructor for this class.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

@@ -1,64 +1,61 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Strings</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>Color Strings</h1>
+<h1 id="color-strings">Color Strings</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p>This page describes common identifiers and names for colors, as used in the Geometry Utilities Library&#39;s <code>toGLColor</code> method.</p>
+<p>This page describes common identifiers and names for colors, as used in the Geometry Utilities Library’s <code>toGLColor</code> method.</p>
 
-<p><a id=Contents></a></p>
-
-<h2>Contents</h2>
-
-<ul>
-<li><a href="#Contents"><strong>Contents</strong></a></li>
-<li><a href="#What_Colors_Can_I_Use"><strong>What Colors Can I Use?</strong></a></li>
-<li><a href="#What_Do_Some_Colors_Look_Like"><strong>What Do Some Colors Look Like?</strong></a></li>
-<li><a href="#What_Is_the_Syntax_for_HTML_Colors"><strong>What Is the Syntax for HTML Colors?</strong></a>
+<p><a id="Contents"></a>
+## Contents</p>
 
 <ul>
-<li><a href="#Shortened_Notation"><strong>Shortened Notation</strong></a></li>
-</ul></li>
-<li><a href="#How_Do_I_Make_HTML_Colors"><strong>How Do I Make HTML Colors?</strong></a></li>
-<li><a href="#What_Are_Some_Common_HTML_Colors"><strong>What Are Some Common HTML Colors?</strong></a></li>
-<li><a href="#How_Do_I_Darken_an_HTML_Color"><strong>How Do I Darken an HTML Color?</strong></a></li>
-<li><a href="#How_Do_I_Lighten_a_HTML_Color"><strong>How Do I Lighten a HTML Color?</strong></a></li>
-<li><a href="#How_Do_I_Desaturate_an_HTML_Color"><strong>How Do I Desaturate an HTML Color?</strong></a></li>
-<li><a href="#What_Is_an_RGB_Color"><strong>What Is an RGB Color?</strong></a></li>
-<li><a href="#What_Is_an_HSL_Color"><strong>What Is an HSL Color?</strong></a>
-
-<ul>
-<li><a href="#HSL_Example"><strong>HSL Example</strong></a></li>
-</ul></li>
-<li><a href="#What_Is_an_Alpha_Component"><strong>What Is an Alpha Component?</strong></a></li>
+  <li><a href="#Contents"><strong>Contents</strong></a></li>
+  <li><a href="#What_Colors_Can_I_Use"><strong>What Colors Can I Use?</strong></a></li>
+  <li><a href="#What_Do_Some_Colors_Look_Like"><strong>What Do Some Colors Look Like?</strong></a></li>
+  <li><a href="#What_Is_the_Syntax_for_HTML_Colors"><strong>What Is the Syntax for HTML Colors?</strong></a>
+    <ul>
+      <li><a href="#Shortened_Notation"><strong>Shortened Notation</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#How_Do_I_Make_HTML_Colors"><strong>How Do I Make HTML Colors?</strong></a></li>
+  <li><a href="#What_Are_Some_Common_HTML_Colors"><strong>What Are Some Common HTML Colors?</strong></a></li>
+  <li><a href="#How_Do_I_Darken_an_HTML_Color"><strong>How Do I Darken an HTML Color?</strong></a></li>
+  <li><a href="#How_Do_I_Lighten_a_HTML_Color"><strong>How Do I Lighten a HTML Color?</strong></a></li>
+  <li><a href="#How_Do_I_Desaturate_an_HTML_Color"><strong>How Do I Desaturate an HTML Color?</strong></a></li>
+  <li><a href="#What_Is_an_RGB_Color"><strong>What Is an RGB Color?</strong></a></li>
+  <li><a href="#What_Is_an_HSL_Color"><strong>What Is an HSL Color?</strong></a>
+    <ul>
+      <li><a href="#HSL_Example"><strong>HSL Example</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#What_Is_an_Alpha_Component"><strong>What Is an Alpha Component?</strong></a></li>
 </ul>
 
-<p><a id=What_Colors_Can_I_Use></a></p>
-
-<h2>What Colors Can I Use?</h2>
+<p><a id="What_Colors_Can_I_Use"></a>
+## What Colors Can I Use?</p>
 
 <p>You can use values like the following.</p>
 
 <ul>
-<li>CSS color names: <code>red</code>, <code>blue</code>, <code>silver</code>, <code>fuchsia</code>, <code>darkslateblue</code>.</li>
-<li>HTML &#8220;hex colors&#8221;: <code>#223344</code>, <code>#234</code>, <code>#234F</code>, or <code>#223344FF</code>. (See &#8220;What Is the Syntax for HTML Colors?&#8221;)</li>
-<li>RGB colors: <code>rgb(20,30,40)</code> or <code>rgba(20,30,40,50%)</code>. (See &#8220;What Is an RGB Color?&#8221;, below.)</li>
-<li>HSL colors: <code>hsl(200,100%,50%)</code> or <code>hsla(200,100%,50%,80%</code>. (See &#8220;What Is an HSL Color?&#8221;, below.)</li>
-<li>The newly-added color name <code>rebeccapurple</code>.</li>
-<li>The word <code>transparent</code>, meaning a fully-transparent color.</li>
+  <li>CSS color names: <code>red</code>, <code>blue</code>, <code>silver</code>, <code>fuchsia</code>, <code>darkslateblue</code>.</li>
+  <li>HTML “hex colors”: <code>#223344</code>, <code>#234</code>, <code>#234F</code>, or <code>#223344FF</code>. (See “What Is the Syntax for HTML Colors?”)</li>
+  <li>RGB colors: <code>rgb(20,30,40)</code> or <code>rgba(20,30,40,50%)</code>. (See “What Is an RGB Color?”, below.)</li>
+  <li>HSL colors: <code>hsl(200,100%,50%)</code> or <code>hsla(200,100%,50%,80%</code>. (See “What Is an HSL Color?”, below.)</li>
+  <li>The newly-added color name <code>rebeccapurple</code>.</li>
+  <li>The word <code>transparent</code>, meaning a fully-transparent color.</li>
 </ul>
 
-<p><a id=What_Do_Some_Colors_Look_Like></a></p>
+<p><a id="What_Do_Some_Colors_Look_Like"></a>
+## What Do Some Colors Look Like?</p>
 
-<h2>What Do Some Colors Look Like?</h2>
+<p>Here is a list of useful colors sorted by hue or color tone.  This particular list was historically called the “Web safe” colors, which were chosen “specifically because they matched the palettes selected by various browser applications” for 256-color displays (according to <a href="http://en.wikipedia.org/wiki/Web_colors"><strong>Wikipedia</strong></a>), but this list is still useful because it’s short yet gives you a variety of appropriate colors for most purposes.</p>
 
-<p>Here is a list of useful colors sorted by hue or color tone.  This particular list was historically called the &quot;Web safe&quot; colors, which were chosen &quot;specifically because they matched the palettes selected by various browser applications&quot; for 256-color displays (according to <a href="http://en.wikipedia.org/wiki/Web_colors"><strong>Wikipedia</strong></a>), but this list is still useful because it&#39;s short yet gives you a variety of appropriate colors for most purposes.</p>
-
-<p><img src="websafe.svg" alt="**A list of the &quot;Web-safe colors&quot;. Each entry consists of a color swatch and the corresponding HTML name.**"></p>
+<p><img src="websafe.svg" alt="**A list of the &quot;Web-safe colors&quot;. Each entry consists of a color swatch and the corresponding HTML name.**" /></p>
 
 <p>The following list shows the colors defined in the <a href="http://www.w3.org/TR/css3-color/#colorunits"><strong>CSS3 Color Module section 4</strong></a>, as well as the newly-added name <code>rebeccapurple</code>. In addition, the names <code>darkgrey</code>,
 <code>darkslategrey</code>,
@@ -74,39 +71,36 @@
 <code>lightslategray</code>, and
 <code>slategray</code>.</p>
 
-<p><img src="colornames.svg" alt="**A list of named colors. Each entry consists of a color swatch and the corresponding name.**"></p>
+<p><img src="colornames.svg" alt="**A list of named colors. Each entry consists of a color swatch and the corresponding name.**" /></p>
 
-<p><a id=What_Is_the_Syntax_for_HTML_Colors></a></p>
+<p><a id="What_Is_the_Syntax_for_HTML_Colors"></a>
+## What Is the Syntax for HTML Colors?</p>
 
-<h2>What Is the Syntax for HTML Colors?</h2>
-
-<p>The notation used to name the colors in the preceding section is used in HTML to define colors. It&#8217;s also known as &#8220;hex colors&#8221;.</p>
+<p>The notation used to name the colors in the preceding section is used in HTML to define colors. It’s also known as “hex colors”.</p>
 
 <p>Take <code>#ff80cc</code> as an example. The color defined is a carnation pink. There are four parts to this example:</p>
 
 <ul>
-<li>The <code>#</code> identifies this word as a color.</li>
-<li>The <code>ff</code> is two letters and/or digits that show the red component of the color. This is a so-called hexadecimal number, or base-16 number. Each digit of this number can range from 0-9 and from A-F, with 0 being the lowest digit, and F being the highest digit. The highest two-digit value is 00, and the lowest two-digit value is FF (256). (The digits A-F may appear in upper or lower case.)</li>
-<li>The <code>80</code> is a base-16 number showing the color&#8217;s green component.</li>
-<li>The <code>cc</code> is a base-16 number showing the color&#8217;s blue component.</li>
+  <li>The <code>#</code> identifies this word as a color.</li>
+  <li>The <code>ff</code> is two letters and/or digits that show the red component of the color. This is a so-called hexadecimal number, or base-16 number. Each digit of this number can range from 0-9 and from A-F, with 0 being the lowest digit, and F being the highest digit. The highest two-digit value is 00, and the lowest two-digit value is FF (256). (The digits A-F may appear in upper or lower case.)</li>
+  <li>The <code>80</code> is a base-16 number showing the color’s green component.</li>
+  <li>The <code>cc</code> is a base-16 number showing the color’s blue component.</li>
 </ul>
 
-<p>The notation may also include an additional base-16 number, as in this example: <code>#ac80ccff</code>.  Here, the last <code>ff</code> shows the color&#39;s alpha component (see &quot;What Is an Alpha Component?&quot;, below).</p>
+<p>The notation may also include an additional base-16 number, as in this example: <code>#ac80ccff</code>.  Here, the last <code>ff</code> shows the color’s alpha component (see “What Is an Alpha Component?”, below).</p>
 
-<p>It looks complicated at first, but the section &quot;How Do I Make HTML Colors?&quot; will show a way to easily make your own colors in this notation.</p>
+<p>It looks complicated at first, but the section “How Do I Make HTML Colors?” will show a way to easily make your own colors in this notation.</p>
 
-<p><a id=Shortened_Notation></a></p>
-
-<h3>Shortened Notation</h3>
+<p><a id="Shortened_Notation"></a>
+### Shortened Notation</p>
 
 <ul>
-<li>Colors with only three base-16 digits are the same as their expanded six-digit form. For example, <code>#f8c</code> is the same as <code>#ff88cc</code>.</li>
-<li>Colors with only four base-16 digits are the same as their expanded eight-digit form. For example, <code>#f8ce</code> is the same as <code>#ff88ccee</code>.</li>
+  <li>Colors with only three base-16 digits are the same as their expanded six-digit form. For example, <code>#f8c</code> is the same as <code>#ff88cc</code>.</li>
+  <li>Colors with only four base-16 digits are the same as their expanded eight-digit form. For example, <code>#f8ce</code> is the same as <code>#ff88ccee</code>.</li>
 </ul>
 
-<p><a id=How_Do_I_Make_HTML_Colors></a></p>
-
-<h2>How Do I Make HTML Colors?</h2>
+<p><a id="How_Do_I_Make_HTML_Colors"></a>
+## How Do I Make HTML Colors?</p>
 
 <p>Look at the table below that shows some of the values possible for the red, green, and blue components of some colors.</p>
 
@@ -121,134 +115,132 @@ Blue 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
 
 <p>After you choose the three values, combine them by writing the <code>#</code>, then the red value, then the green value, then the blue value. For example, if you choose <code>FF</code> for red, <code>A0</code> for green, and <code>00</code> for blue, write the resulting color (orange) like this: <code>#FFA000</code>.</p>
 
-<p><a id=What_Are_Some_Common_HTML_Colors></a></p>
-
-<h2>What Are Some Common HTML Colors?</h2>
+<p><a id="What_Are_Some_Common_HTML_Colors"></a>
+## What Are Some Common HTML Colors?</p>
 
 <p>Now, what follows is a list of common colors that are possible by choosing a value in each row. See also the list of colors sorted by hue.</p>
 
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Red</th>
-<th>Green</th>
-<th>Blue</th>
-<th>Color</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Red</td>
-<td>FF</td>
-<td>00</td>
-<td>00</td>
-<td>#FF0000</td>
-</tr>
-<tr>
-<td>Orange</td>
-<td>FF</td>
-<td>A0</td>
-<td>00</td>
-<td>#FFA000</td>
-</tr>
-<tr>
-<td>Yellow</td>
-<td>FF</td>
-<td>80</td>
-<td>00</td>
-<td>#FF8000</td>
-</tr>
-<tr>
-<td>Bright Green</td>
-<td>00</td>
-<td>FF</td>
-<td>00</td>
-<td>#00FF00</td>
-</tr>
-<tr>
-<td>Dark Green</td>
-<td>00</td>
-<td>80</td>
-<td>00</td>
-<td>#008000</td>
-</tr>
-<tr>
-<td>Sky Blue</td>
-<td>00</td>
-<td>FF</td>
-<td>FF</td>
-<td>#00FFFF</td>
-</tr>
-<tr>
-<td>Blue</td>
-<td>00</td>
-<td>00</td>
-<td>FF</td>
-<td>#0000FF</td>
-</tr>
-<tr>
-<td>Purple</td>
-<td>C0</td>
-<td>00</td>
-<td>FF</td>
-<td>#CC00FF</td>
-</tr>
-<tr>
-<td>Hot Pink</td>
-<td>FF</td>
-<td>00</td>
-<td>FF</td>
-<td>#FF00FF</td>
-</tr>
-<tr>
-<td>Black</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>#000000</td>
-</tr>
-<tr>
-<td>White</td>
-<td>FF</td>
-<td>FF</td>
-<td>FF</td>
-<td>#FFFFFF</td>
-</tr>
-<tr>
-<td>Gray</td>
-<td>80</td>
-<td>80</td>
-<td>80</td>
-<td>#808080</td>
-</tr>
-</tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Red</th>
+      <th>Green</th>
+      <th>Blue</th>
+      <th>Color</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Red</td>
+      <td>FF</td>
+      <td>00</td>
+      <td>00</td>
+      <td>#FF0000</td>
+    </tr>
+    <tr>
+      <td>Orange</td>
+      <td>FF</td>
+      <td>A0</td>
+      <td>00</td>
+      <td>#FFA000</td>
+    </tr>
+    <tr>
+      <td>Yellow</td>
+      <td>FF</td>
+      <td>80</td>
+      <td>00</td>
+      <td>#FF8000</td>
+    </tr>
+    <tr>
+      <td>Bright Green</td>
+      <td>00</td>
+      <td>FF</td>
+      <td>00</td>
+      <td>#00FF00</td>
+    </tr>
+    <tr>
+      <td>Dark Green</td>
+      <td>00</td>
+      <td>80</td>
+      <td>00</td>
+      <td>#008000</td>
+    </tr>
+    <tr>
+      <td>Sky Blue</td>
+      <td>00</td>
+      <td>FF</td>
+      <td>FF</td>
+      <td>#00FFFF</td>
+    </tr>
+    <tr>
+      <td>Blue</td>
+      <td>00</td>
+      <td>00</td>
+      <td>FF</td>
+      <td>#0000FF</td>
+    </tr>
+    <tr>
+      <td>Purple</td>
+      <td>C0</td>
+      <td>00</td>
+      <td>FF</td>
+      <td>#CC00FF</td>
+    </tr>
+    <tr>
+      <td>Hot Pink</td>
+      <td>FF</td>
+      <td>00</td>
+      <td>FF</td>
+      <td>#FF00FF</td>
+    </tr>
+    <tr>
+      <td>Black</td>
+      <td>00</td>
+      <td>00</td>
+      <td>00</td>
+      <td>#000000</td>
+    </tr>
+    <tr>
+      <td>White</td>
+      <td>FF</td>
+      <td>FF</td>
+      <td>FF</td>
+      <td>#FFFFFF</td>
+    </tr>
+    <tr>
+      <td>Gray</td>
+      <td>80</td>
+      <td>80</td>
+      <td>80</td>
+      <td>#808080</td>
+    </tr>
+  </tbody>
+</table>
 
-<p><a id=How_Do_I_Darken_an_HTML_Color></a></p>
+<p><a id="How_Do_I_Darken_an_HTML_Color"></a>
+## How Do I Darken an HTML Color?</p>
 
-<h2>How Do I Darken an HTML Color?</h2>
-
-<p>To darken a color (make a <em>shade</em> of it), use the table shown in &#8220;How Do I Make HTML Colors?&#8221;, above, and move each component (red, green, and blue) the same number of steps to the left. If you can&#8217;t move a component that far to the left, that component becomes 00.</p>
+<p>To darken a color (make a <em>shade</em> of it), use the table shown in “How Do I Make HTML Colors?”, above, and move each component (red, green, and blue) the same number of steps to the left. If you can’t move a component that far to the left, that component becomes 00.</p>
 
 <p>For example, to make a darker sky blue, start with 00, FF, and FF for red, green, and blue. When we move these components ten steps to the left, we get 00, 60, and 60. The final color becomes #006060.</p>
 
-<p><a id=How_Do_I_Lighten_a_HTML_Color></a></p>
+<p><a id="How_Do_I_Lighten_a_HTML_Color"></a>
+## How Do I Lighten a HTML Color?</p>
 
-<h2>How Do I Lighten a HTML Color?</h2>
-
-<p>Lightening a color (making a <em>tint</em> of it) is almost the same as darkening a color, except we move the same number of steps to the right rather than the left. If you can&#8217;t move a component that far to the right, that component becomes FF.</p>
+<p>Lightening a color (making a <em>tint</em> of it) is almost the same as darkening a color, except we move the same number of steps to the right rather than the left. If you can’t move a component that far to the right, that component becomes FF.</p>
 
 <p>For example, to make a lighter red, start with FF, 00, and 00 for red, green, and blue. When we move these components ten steps to the right, we get FF, A0, and A0. The final color becomes #FFA0A0.</p>
 
-<p><a id=How_Do_I_Desaturate_an_HTML_Color></a></p>
+<p><a id="How_Do_I_Desaturate_an_HTML_Color"></a>
+## How Do I Desaturate an HTML Color?</p>
 
-<h2>How Do I Desaturate an HTML Color?</h2>
-
-<p>To make a desaturated (washed-out) version (or <em>tone</em>) of a color, move the color components closer to each other, in about the same proportion. (If they&#8217;re exactly the same, the result is a shade of gray.)</p>
+<p>To make a desaturated (washed-out) version (or <em>tone</em>) of a color, move the color components closer to each other, in about the same proportion. (If they’re exactly the same, the result is a shade of gray.)</p>
 
 <p>For example, to make a washed-out red, start with FF, 00, and 00 for red, green, and blue. When we move these components closer to each other, we get C0, 40, and 40. The final color becomes #C04040.</p>
 
-<p><a id=What_Is_an_RGB_Color></a></p>
-
-<h2>What Is an RGB Color?</h2>
+<p><a id="What_Is_an_RGB_Color"></a>
+## What Is an RGB Color?</p>
 
 <p>An RGB color contains the same information as an HTML color, except that each value is shown in the familiar base-10 format. For example, the value <code>rgb(192,64,0)</code> is the same as the HTML color value <code>#C04000</code>.</p>
 
@@ -256,42 +248,45 @@ Blue 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
 
 <p>The steps for darkening, lightening, and desaturating RGB colors are pretty much the same as with HTML colors.</p>
 
-<p>An alternate syntax for RGB colors supports the alpha component (see &quot;What Is an Alpha Component?&quot;, below): in the example <code>rgba(192,64,0,0.5)</code>, the <code>0.5</code> is the alpha component. This component can be used with either range for RGB colors, either 0-255 or percentages. (Note that the example starts with <code>rgba</code>, not just <code>rgb</code>.)</p>
+<p>An alternate syntax for RGB colors supports the alpha component (see “What Is an Alpha Component?”, below): in the example <code>rgba(192,64,0,0.5)</code>, the <code>0.5</code> is the alpha component. This component can be used with either range for RGB colors, either 0-255 or percentages. (Note that the example starts with <code>rgba</code>, not just <code>rgb</code>.)</p>
 
-<p><a id=What_Is_an_HSL_Color></a></p>
+<p><a id="What_Is_an_HSL_Color"></a>
+## What Is an HSL Color?</p>
 
-<h2>What Is an HSL Color?</h2>
-
-<p>An HSL color is a color represented in the Hue-Saturation-Lightness color space. Here&#8217;s what each component means in detail.</p>
-
-<ul>
-<li><p><strong>Hue</strong> ranges from 0 to 360 degrees. Each angle on the color wheel (which looks more like a hexagon than like a circle in HLS) stands for a different hue:</p>
+<p>An HSL color is a color represented in the Hue-Saturation-Lightness color space. Here’s what each component means in detail.</p>
 
 <ul>
-<li>Reds have hue 0 (say, 12 o&#8217;clock);</li>
-<li>Yellows have hue 60 (2 o&#8217;clock);</li>
-<li>Greens have hue 120 (4 o&#8217;clock);</li>
-<li>Cyans (Sky-blues) have hue 180 (6 o&#8217;clock);</li>
-<li>Blues have hue 240 (8 o&#8217;clock); and</li>
-<li>Magentas have hue 300 (10 o&#8217;clock).</li>
-</ul></li>
-<li><p><strong>Saturation</strong>, or vividness, ranges from 0% to 100%. 100% stands for the purest, most vivid color. The lower the number, the greater the amount of gray in the color. 0% means the color is totally gray. Therefore, <strong><em>to desaturate a color</em></strong>, simply lower the amount of saturation.</p></li>
-<li><p><strong>Lightness</strong> is also a value ranging from 0% to 100%. It expresses the amount of black or white in the color. 0% means fully black, 100% means fully white, and 50% means the color contains neither black nor white. <strong><em>To darken a color</em></strong>, lower the lightness, and <strong><em>to lighten a color</em></strong>, raise the lightness.</p></li>
+  <li>
+    <p><strong>Hue</strong> ranges from 0 to 360 degrees. Each angle on the color wheel (which looks more like a hexagon than like a circle in HLS) stands for a different hue:</p>
+
+    <ul>
+      <li>Reds have hue 0 (say, 12 o’clock);</li>
+      <li>Yellows have hue 60 (2 o’clock);</li>
+      <li>Greens have hue 120 (4 o’clock);</li>
+      <li>Cyans (Sky-blues) have hue 180 (6 o’clock);</li>
+      <li>Blues have hue 240 (8 o’clock); and</li>
+      <li>Magentas have hue 300 (10 o’clock).</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Saturation</strong>, or vividness, ranges from 0% to 100%. 100% stands for the purest, most vivid color. The lower the number, the greater the amount of gray in the color. 0% means the color is totally gray. Therefore, <strong><em>to desaturate a color</em></strong>, simply lower the amount of saturation.</p>
+  </li>
+  <li>
+    <p><strong>Lightness</strong> is also a value ranging from 0% to 100%. It expresses the amount of black or white in the color. 0% means fully black, 100% means fully white, and 50% means the color contains neither black nor white. <strong><em>To darken a color</em></strong>, lower the lightness, and <strong><em>to lighten a color</em></strong>, raise the lightness.</p>
+  </li>
 </ul>
 
-<p><a id=HSL_Example></a></p>
-
-<h3>HSL Example</h3>
+<p><a id="HSL_Example"></a>
+### HSL Example</p>
 
 <p>The value <code>hsl(240,100%,50%)</code> has a hue of 240 (blue), a saturation of 100% (fully saturated), and a lightness of 50% (neither black or white). It represents a vivid blue. If we lower lightness to 20%, we get a dark blue. If we also change the hue to 0, we get a dark red.</p>
 
-<p>An alternate syntax for HSL colors supports the alpha component (see &quot;What Is an Alpha Component?&quot;, below): in the example <code>hsla(240,100%,50%,80%)</code>, the <code>80%</code> is the alpha component.</p>
+<p>An alternate syntax for HSL colors supports the alpha component (see “What Is an Alpha Component?”, below): in the example <code>hsla(240,100%,50%,80%)</code>, the <code>80%</code> is the alpha component.</p>
 
-<p><a id=What_Is_an_Alpha_Component></a></p>
+<p><a id="What_Is_an_Alpha_Component"></a>
+## What Is an Alpha Component?</p>
 
-<h2>What Is an Alpha Component?</h2>
-
-<p>An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from <code>00</code>/<code>0.0</code>, or &quot;fully transparent&quot; (completely invisible), to <code>FF</code>/<code>1.0</code>, or &quot;fully opaque&quot; (letting nothing through it). If a color notation doesn&#39;t use an alpha component, the color is fully opaque.</p>
+<p>An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from <code>00</code>/<code>0.0</code>, or “fully transparent” (completely invisible), to <code>FF</code>/<code>1.0</code>, or “fully opaque” (letting nothing through it). If a color notation doesn’t use an alpha component, the color is fully opaque.</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
@@ -304,85 +299,85 @@ Blue 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-<h3>Navigation</h3>
+<h3 id="navigation">Navigation</h3>
 
 <ul>
-<li><a href="BSplineCurve.html">BSplineCurve</a></li>
-<li><a href="BSplineSurface.html">BSplineSurface</a></li>
-<li><a href="BufferAccessor.html">BufferAccessor</a></li>
-<li><a href="Curve.html">Curve</a></li>
-<li><a href="CurveBuilder.html">CurveBuilder</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
-<li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="MathUtil.html">MathUtil</a></li>
-<li><a href="MeshBuffer.html">MeshBuffer</a></li>
-<li><a href="Meshes.html">Meshes</a></li>
-<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-<li><a href="Promise.html">Promise</a></li>
-<li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Shape.html">Shape</a></li>
-<li><a href="ShapeGroup.html">ShapeGroup</a></li>
-<li><a href="Surface.html">Surface</a></li>
-<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-<li><a href="Transform.html">Transform</a></li>
-<li><a href="extras_arrow.html">module:extras/arrow</a></li>
-<li><a href="extras_camera.html">module:extras/camera</a></li>
-<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
-<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
-<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
-<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
-<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
-<li><a href="extras_convex.html">module:extras/convex</a></li>
-<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
-<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
-<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
-<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
-<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
-<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
-<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
-<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
-<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
-<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
-<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
-<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
-<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
-<li><a href="extras_gradients.html">module:extras/gradients</a></li>
-<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
-<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
-<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
-<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
-<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
-<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
-<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
-<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
-<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
-<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
-<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
-<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
-<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
-<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
-<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
-<li><a href="extras_raypick.html">module:extras/raypick</a></li>
-<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
-<li><a href="extras_starfield.html">module:extras/starfield</a></li>
-<li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
-<li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
-<li><a href="extras_stl.html">module:extras/stl</a></li>
-<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
-<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
-<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
-<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
-<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
-<li><a href="extras_text.html">module:extras/text</a></li>
-<li><a href="extras_tga.html">module:extras/tga</a></li>
-<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
-<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
-<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
-<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
-<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
-<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
-<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Promise.html">Promise</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="Shape.html">Shape</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
+  <li><a href="extras_arrow.html">module:extras/arrow</a></li>
+  <li><a href="extras_camera.html">module:extras/camera</a></li>
+  <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+  <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+  <li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+  <li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+  <li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+  <li><a href="extras_convex.html">module:extras/convex</a></li>
+  <li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+  <li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+  <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+  <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+  <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+  <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+  <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+  <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+  <li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+  <li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+  <li><a href="extras_gradients.html">module:extras/gradients</a></li>
+  <li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+  <li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+  <li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+  <li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+  <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+  <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+  <li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+  <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+  <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+  <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+  <li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+  <li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+  <li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+  <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+  <li><a href="extras_raypick.html">module:extras/raypick</a></li>
+  <li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+  <li><a href="extras_starfield.html">module:extras/starfield</a></li>
+  <li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
+  <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
+  <li><a href="extras_stl.html">module:extras/stl</a></li>
+  <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+  <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+  <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+  <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+  <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+  <li><a href="extras_text.html">module:extras/text</a></li>
+  <li><a href="extras_tga.html">module:extras/tga</a></li>
+  <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+  <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+  <li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+  <li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+  <li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+  <li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+  <li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
 </ul>
 </nav></body></html>

@@ -5,54 +5,58 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.cbor.CBORDateConverter.ConversionType</h1>
-
-<h1>com.upokecenter.cbor.CBORDateConverter.ConversionType</h1>
+<p># com.upokecenter.cbor.CBORDateConverter.ConversionType</p>
 
 <pre>public static enum CBORDateConverter.ConversionType extends Enum&lt;CBORDateConverter.ConversionType&gt;
 </pre>
 
 <p>Conversion type for date-time conversion.</p>
 
-<h2>Nested Classes</h2>
+<h2 id="nested-classes">Nested Classes</h2>
 
-<h2>Enum Constants</h2>
-
-<ul>
-<li><p><code>TaggedNumber</code><br>
-FromCBORObject accepts objects with tag 0 (date/time strings) and tag 1
-(number of seconds since the start of 1970), and ToCBORObject converts
-date/time objects to CBOR objects of tag 1.</p></li>
-<li><p><code>TaggedString</code><br>
-FromCBORObject accepts CBOR objects with tag 0 (date/time strings) and tag 1
-(number of seconds since the start of 1970), and ToCBORObject converts
-date/time objects to CBOR objects of tag 0.</p></li>
-<li><p><code>UntaggedNumber</code><br>
-FromCBORObject accepts untagged CBOR integer or CBOR floating-point objects
-that give the number of seconds since the start of 1970, and ToCBORObject
-converts date/time objects (java.util.Date in DotNet, and Date in Java) to such
-untagged CBOR objects.</p></li>
-</ul>
-
-<h2>Methods</h2>
+<h2 id="enum-constants">Enum Constants</h2>
 
 <ul>
-<li><p><code>static CBORDateConverter.ConversionType valueOf(String name)</code><br>
-Returns the enum constant of this class with the specified name.</p></li>
-<li><p><code>static CBORDateConverter.ConversionType[] values()</code><br>
-Returns an array containing the constants of this enum class, in
-the order they are declared.</p></li>
+  <li>
+    <p><code>TaggedNumber </code><br />
+ FromCBORObject accepts objects with tag 0 (date/time strings) and tag 1
+ (number of seconds since the start of 1970), and ToCBORObject converts
+ date/time objects to CBOR objects of tag 1.</p>
+  </li>
+  <li>
+    <p><code>TaggedString </code><br />
+ FromCBORObject accepts CBOR objects with tag 0 (date/time strings) and tag 1
+ (number of seconds since the start of 1970), and ToCBORObject converts
+ date/time objects to CBOR objects of tag 0.</p>
+  </li>
+  <li>
+    <p><code>UntaggedNumber </code><br />
+ FromCBORObject accepts untagged CBOR integer or CBOR floating-point objects
+ that give the number of seconds since the start of 1970, and ToCBORObject
+ converts date/time objects (java.util.Date in DotNet, and Date in Java) to such
+ untagged CBOR objects.</p>
+  </li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="methods">Methods</h2>
 
-<h3>values</h3>
+<ul>
+  <li>
+    <p><code>static CBORDateConverter.ConversionType valueOf(String name)</code><br />
+ Returns the enum constant of this class with the specified name.</p>
+  </li>
+  <li>
+    <p><code>static CBORDateConverter.ConversionType[] values()</code><br />
+ Returns an array containing the constants of this enum class, in
+the order they are declared.</p>
+  </li>
+</ul>
 
-<pre>public static CBORDateConverter.ConversionType[] values()
-</pre>
+<h2 id="method-details">Method Details</h2>
 
-<h3>valueOf</h3>
-
-<pre>public static CBORDateConverter.ConversionType valueOf(String name)
+<h3 id="values">values</h3>
+<pre>public static CBORDateConverter.ConversionType[] values() ### valueOf
+public static CBORDateConverter.ConversionType valueOf(String name)
 </pre>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

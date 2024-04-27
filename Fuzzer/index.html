@@ -1,18 +1,18 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>File Fuzzer</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>File Fuzzer</h1>
+<h1 id="file-fuzzer">File Fuzzer</h1>
 
-<p>By Peter O. -- Public Domain -- <a href="http://peteroupc.github.io/Fuzzer">http://peteroupc.github.io/Fuzzer</a></p>
+<p>By Peter O. – Public Domain – <a href="http://peteroupc.github.io/Fuzzer">http://peteroupc.github.io/Fuzzer</a></p>
 
-<hr>
+<hr />
 
 <p>This is a program that generates slightly altered versions
 of data files, for testing algorithms that parse file formats.
-It&#39;s a command line utility.</p>
+It’s a command line utility.</p>
 
 <p>Usage:
 Fuzzer.exe [fuzzer-xml]</p>
@@ -34,19 +34,19 @@ read the file fuzzer.xml. It has the following XML format:</p>
 </pre>
 
 <ul>
-<li>outputPath - Path of the directory to store the generated file.</li>
-<li>validFilesPath - Path of the directory containing files in a particular file
+  <li>outputPath - Path of the directory to store the generated file.</li>
+  <li>validFilesPath - Path of the directory containing files in a particular file
 format. The fuzzer will randomly manipulate these files to generate its
 test data.</li>
-<li>startBytes - A hexadecimal string specifying the bytes to write at the
+  <li>startBytes - A hexadecimal string specifying the bytes to write at the
 beginning of some of the generated files. Such files will contain random
 data following the header.</li>
-<li>fileExtension - File extension of the generated files.</li>
-<li>fuzzOffset - Byte offset of the point where the fuzzer will modify the
+  <li>fileExtension - File extension of the generated files.</li>
+  <li>fuzzOffset - Byte offset of the point where the fuzzer will modify the
 bytes of the files located in <em>validFilesPath</em>.</li>
-<li>frequencyMean - Mean of the frequency of changes, in bytes.</li>
-<li>frequencyStdDev - Standard deviation of the frequency of changes, in bytes.</li>
-<li>iterations - Number of files to generate. Each file will be named XXXXX.YYY
+  <li>frequencyMean - Mean of the frequency of changes, in bytes.</li>
+  <li>frequencyStdDev - Standard deviation of the frequency of changes, in bytes.</li>
+  <li>iterations - Number of files to generate. Each file will be named XXXXX.YYY
 where XXXXX is a sequence of five or more digits and YYY is the file
 extension given in <em>fileExtension</em>.</li>
 </ul>

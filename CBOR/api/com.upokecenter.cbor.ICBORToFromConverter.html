@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.cbor.ICBORToFromConverter</h1>
-
-<h1>com.upokecenter.cbor.ICBORToFromConverter</h1>
+<p># com.upokecenter.cbor.ICBORToFromConverter</p>
 
 <pre>public interface ICBORToFromConverter&lt;T&gt; extends ICBORConverter&lt;T&gt;
 </pre>
@@ -14,32 +13,29 @@
 <p>Classes that implement this interface can support conversions from CBOR
  objects to a custom type and back.</p>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><code>T FromCBORObject(CBORObject obj)</code><br>
-Converts a CBOR object to a custom type.</li>
+  <li><code>T FromCBORObject(CBORObject obj)</code><br />
+ Converts a CBOR object to a custom type.</li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>FromCBORObject</h3>
-
-<pre>T FromCBORObject(CBORObject obj)
+<h3 id="fromcborobject">FromCBORObject</h3>
+<pre>T FromCBORObject(CBORObject obj) Converts a CBOR object to a custom type.
 </pre>
-
-<p>Converts a CBOR object to a custom type.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - A CBOR object to convert to the custom type.</li>
+  <li><code>obj</code> - A CBOR object to convert to the custom type.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An object of the custom type after conversion.</li>
+  <li>An object of the custom type after conversion.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.cbor.JSONOptions.ConversionMode</h1>
-
-<h1>com.upokecenter.cbor.JSONOptions.ConversionMode</h1>
+<p># com.upokecenter.cbor.JSONOptions.ConversionMode</p>
 
 <pre>public static enum JSONOptions.ConversionMode extends Enum&lt;JSONOptions.ConversionMode&gt;
 </pre>
@@ -16,57 +15,66 @@
  conversion modes affects how CBOR objects are later encoded (such as via
  <code>EncodeToBytes</code>).</p>
 
-<h2>Nested Classes</h2>
+<h2 id="nested-classes">Nested Classes</h2>
 
-<h2>Enum Constants</h2>
-
-<ul>
-<li><p><code>Decimal128</code><br>
-JSON numbers are decoded to CBOR as their closest-rounded approximation to
-an IEEE 854 decimal128 value, using the round-to-nearest/ties-to-even
-rounding mode and the rules for the EDecimal form of that approximation as
-given in the CBORObject.FromObject(EDecimal) method.</p></li>
-<li><p><code>Double</code><br>
-JSON numbers are decoded to CBOR as their closest-rounded approximation
-as 64-bit binary floating-point numbers (using the
-round-to-nearest/ties-to-even rounding mode).</p></li>
-<li><p><code>Full</code><br>
-JSON numbers are decoded to CBOR using the full precision given in the JSON
-text.</p></li>
-<li><p><code>IntOrFloat</code><br>
-A JSON number is decoded to CBOR objects either as a CBOR integer (major
-type 0 or 1) if the JSON number represents an integer at least -(2^53)+1 and
-less than 2^53, or as their closest-rounded approximation as 64-bit binary
-floating-point numbers (using the round-to-nearest/ties-to-even rounding
-mode) otherwise.</p></li>
-<li><p><code>IntOrFloatFromDouble</code><br>
-A JSON number is decoded to CBOR objects either as a CBOR integer (major
-type 0 or 1) if the number&#39;s closest-rounded approximation as a 64-bit
-binary floating-point number (using the round-to-nearest/ties-to-even
-rounding mode) represents an integer at least -(2^53)+1 and less than 2^53,
-or as that approximation otherwise.</p></li>
-</ul>
-
-<h2>Methods</h2>
+<h2 id="enum-constants">Enum Constants</h2>
 
 <ul>
-<li><p><code>static JSONOptions.ConversionMode valueOf(String name)</code><br>
-Returns the enum constant of this class with the specified name.</p></li>
-<li><p><code>static JSONOptions.ConversionMode[] values()</code><br>
-Returns an array containing the constants of this enum class, in
-the order they are declared.</p></li>
+  <li>
+    <p><code>Decimal128 </code><br />
+ JSON numbers are decoded to CBOR as their closest-rounded approximation to
+ an IEEE 854 decimal128 value, using the round-to-nearest/ties-to-even
+ rounding mode and the rules for the EDecimal form of that approximation as
+ given in the CBORObject.FromObject(EDecimal) method.</p>
+  </li>
+  <li>
+    <p><code>Double </code><br />
+ JSON numbers are decoded to CBOR as their closest-rounded approximation
+ as 64-bit binary floating-point numbers (using the
+ round-to-nearest/ties-to-even rounding mode).</p>
+  </li>
+  <li>
+    <p><code>Full </code><br />
+ JSON numbers are decoded to CBOR using the full precision given in the JSON
+ text.</p>
+  </li>
+  <li>
+    <p><code>IntOrFloat </code><br />
+ A JSON number is decoded to CBOR objects either as a CBOR integer (major
+ type 0 or 1) if the JSON number represents an integer at least -(2^53)+1 and
+ less than 2^53, or as their closest-rounded approximation as 64-bit binary
+ floating-point numbers (using the round-to-nearest/ties-to-even rounding
+ mode) otherwise.</p>
+  </li>
+  <li>
+    <p><code>IntOrFloatFromDouble </code><br />
+ A JSON number is decoded to CBOR objects either as a CBOR integer (major
+ type 0 or 1) if the number’s closest-rounded approximation as a 64-bit
+ binary floating-point number (using the round-to-nearest/ties-to-even
+ rounding mode) represents an integer at least -(2^53)+1 and less than 2^53,
+ or as that approximation otherwise.</p>
+  </li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="methods">Methods</h2>
 
-<h3>values</h3>
+<ul>
+  <li>
+    <p><code>static JSONOptions.ConversionMode valueOf(String name)</code><br />
+ Returns the enum constant of this class with the specified name.</p>
+  </li>
+  <li>
+    <p><code>static JSONOptions.ConversionMode[] values()</code><br />
+ Returns an array containing the constants of this enum class, in
+the order they are declared.</p>
+  </li>
+</ul>
 
-<pre>public static JSONOptions.ConversionMode[] values()
-</pre>
+<h2 id="method-details">Method Details</h2>
 
-<h3>valueOf</h3>
-
-<pre>public static JSONOptions.ConversionMode valueOf(String name)
+<h3 id="values">values</h3>
+<pre>public static JSONOptions.ConversionMode[] values() ### valueOf
+public static JSONOptions.ConversionMode valueOf(String name)
 </pre>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

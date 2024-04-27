@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.cbor.CBORTypeMapper</h1>
-
-<h1>com.upokecenter.cbor.CBORTypeMapper</h1>
+<p># com.upokecenter.cbor.CBORTypeMapper</p>
 
 <pre>public final class CBORTypeMapper extends Object
 </pre>
@@ -15,146 +14,149 @@
  of <code>CBORObject.FromObject</code> and <code>CBORObject#ToObject</code>, as well as
  type filters for <code>ToObject</code>.</p>
 
-<h2>Constructors</h2>
+<h2 id="constructors">Constructors</h2>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><p><code>&lt;T&gt; CBORTypeMapper AddConverter(Type type,
-ICBORConverter&lt;T&gt; converter)</code><br>
-Registers an object that converts objects of a given type to CBOR objects
-(called a CBOR converter).</p></li>
-<li><p><code>CBORTypeMapper AddTypeName(String name)</code><br>
-Adds the fully qualified name of a Java or.NET type for use in type
-matching.</p></li>
-<li><p><code>CBORTypeMapper AddTypePrefix(String prefix)</code><br>
-Adds a prefix of a Java or.NET type for use in type matching.</p></li>
-<li><p><code>boolean FilterTypeName(String typeName)</code><br>
-Returns whether the given Java or.NET type name fits the filters given in
-this mapper.</p></li>
+  <li>
+    <p><code>&lt;T&gt; CBORTypeMapper AddConverter(Type type,
+ ICBORConverter&lt;T&gt; converter)</code><br />
+ Registers an object that converts objects of a given type to CBOR objects
+ (called a CBOR converter).</p>
+  </li>
+  <li>
+    <p><code>CBORTypeMapper AddTypeName(String name)</code><br />
+ Adds the fully qualified name of a Java or.NET type for use in type
+ matching.</p>
+  </li>
+  <li>
+    <p><code>CBORTypeMapper AddTypePrefix(String prefix)</code><br />
+ Adds a prefix of a Java or.NET type for use in type matching.</p>
+  </li>
+  <li>
+    <p><code>boolean FilterTypeName(String typeName)</code><br />
+ Returns whether the given Java or.NET type name fits the filters given in
+ this mapper.</p>
+  </li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>AddConverter</h3>
-
-<pre>public &lt;T&gt; CBORTypeMapper AddConverter(Type type, ICBORConverter&lt;T&gt; converter)
+<h3 id="addconverter">AddConverter</h3>
+<pre>public &lt;T&gt; CBORTypeMapper AddConverter(Type type, ICBORConverter&lt;T&gt; converter) Registers an object that converts objects of a given type to CBOR objects  (called a CBOR converter). If the CBOR converter converts to and from CBOR  objects, it should implement the ICBORToFromConverter interface and provide  ToCBORObject and FromCBORObject methods. If the CBOR converter only supports  converting to (not from) CBOR objects, it should implement the  ICBORConverter interface and provide a ToCBORObject method.
 </pre>
-
-<p>Registers an object that converts objects of a given type to CBOR objects
- (called a CBOR converter). If the CBOR converter converts to and from CBOR
- objects, it should implement the ICBORToFromConverter interface and provide
- ToCBORObject and FromCBORObject methods. If the CBOR converter only supports
- converting to (not from) CBOR objects, it should implement the
- ICBORConverter interface and provide a ToCBORObject method.</p>
 
 <p><strong>Type Parameters:</strong></p>
 
 <ul>
-<li><code>T</code> - Must be the same as the &quot;type&quot; parameter.</li>
+  <li><code>T</code> - Must be the same as the “type” parameter.</li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>type</code> - A Type object specifying the type that the converter converts to
-CBOR objects.</p></li>
-<li><p><code>converter</code> - The parameter <code>converter</code> is an ICBORConverter
-object.</p></li>
+  <li>
+    <p><code>type</code> - A Type object specifying the type that the converter converts to
+ CBOR objects.</p>
+  </li>
+  <li>
+    <p><code>converter</code> - The parameter <code>converter</code> is an ICBORConverter
+ object.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+  <li>This object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>type</code> or <code>
-converter</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Converter doesn&#39;t contain a proper ToCBORObject
-method&quot;.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>type</code> or <code>
+ converter</code> is null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - Converter doesn’t contain a proper ToCBORObject
+ method”.</p>
+  </li>
 </ul>
 
-<h3>FilterTypeName</h3>
-
-<pre>public boolean FilterTypeName(String typeName)
+<h3 id="filtertypename">FilterTypeName</h3>
+<pre>public boolean FilterTypeName(String typeName) Returns whether the given Java or.NET type name fits the filters given in  this mapper.
 </pre>
-
-<p>Returns whether the given Java or.NET type name fits the filters given in
- this mapper.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>typeName</code> - The fully qualified name of a Java or.NET class (e.g.,
-<code>java.math.BigInteger</code> or <code>System.Globalization.CultureInfo</code>).</li>
+  <li><code>typeName</code> - The fully qualified name of a Java or.NET class (e.g.,
+ <code>java.math.BigInteger</code> or <code>System.Globalization.CultureInfo</code>).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> if the given Java or.NET type name fits the
-filters given in this mapper, or <code>false</code> otherwise.</li>
+  <li>Either <code>true</code> if the given Java or.NET type name fits the
+ filters given in this mapper, or <code>false</code> otherwise.</li>
 </ul>
 
-<h3>AddTypePrefix</h3>
-
-<pre>public CBORTypeMapper AddTypePrefix(String prefix)
+<h3 id="addtypeprefix">AddTypePrefix</h3>
+<pre>public CBORTypeMapper AddTypePrefix(String prefix) Adds a prefix of a Java or.NET type for use in type matching. A type matches  a prefix if its fully qualified name is or begins with that prefix, using  codepoint-by-codepoint (case-sensitive) matching.
 </pre>
-
-<p>Adds a prefix of a Java or.NET type for use in type matching. A type matches
- a prefix if its fully qualified name is or begins with that prefix, using
- codepoint-by-codepoint (case-sensitive) matching.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>prefix</code> - The prefix of a Java or.NET type (e.g., <code>java.math.</code> or
-<code>System.Globalization</code>).</li>
+  <li><code>prefix</code> - The prefix of a Java or.NET type (e.g., <code>java.math.</code> or
+ <code>System.Globalization</code>).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+  <li>This object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>prefix</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>prefix</code> is empty.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>prefix</code> is null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - The parameter <code>prefix</code> is empty.</p>
+  </li>
 </ul>
 
-<h3>AddTypeName</h3>
-
-<pre>public CBORTypeMapper AddTypeName(String name)
+<h3 id="addtypename">AddTypeName</h3>
+<pre>public CBORTypeMapper AddTypeName(String name) Adds the fully qualified name of a Java or.NET type for use in type  matching.
 </pre>
-
-<p>Adds the fully qualified name of a Java or.NET type for use in type
- matching.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>name</code> - The fully qualified name of a Java or.NET class (e.g., <code>
-java.math.BigInteger</code> or <code>System.Globalization.CultureInfo</code>).</li>
+  <li><code>name</code> - The fully qualified name of a Java or.NET class (e.g., <code>
+ java.math.BigInteger</code> or <code>System.Globalization.CultureInfo</code>).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+  <li>This object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty.</p>
+  </li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

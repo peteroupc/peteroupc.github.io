@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Numbers.ETrapException</h1>
-
-<h2>PeterO.Numbers.ETrapException</h2>
+<p>## PeterO.Numbers.ETrapException</p>
 
 <pre>public sealed class ETrapException :
     System.ArithmeticException,
@@ -14,21 +13,19 @@
     System.Runtime.Serialization.ISerializable
 </pre>
 
-<p>Exception thrown for arithmetic trap errors. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.). This library may throw exceptions of this type in certain cases, notably when errors occur, and may supply messages to those exceptions (the message can be accessed through the  <code>Message</code>  property in.NET or the  <code>getMessage()</code>  method in Java). These messages are intended to be read by humans to help diagnose the error (or other cause of the exception); they are not intended to be parsed by computer programs, and the exact text of the messages may change at any time between versions of this library.</p>
+<p>Exception thrown for arithmetic trap errors. (The “E” stands for “extended”, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.). This library may throw exceptions of this type in certain cases, notably when errors occur, and may supply messages to those exceptions (the message can be accessed through the  <code>Message</code>  property in.NET or the  <code>getMessage()</code>  method in Java). These messages are intended to be read by humans to help diagnose the error (or other cause of the exception); they are not intended to be parsed by computer programs, and the exact text of the messages may change at any time between versions of this library.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Context">Context</a></code> - Gets the arithmetic context used during the operation that triggered the trap.</li>
-<li><code><a href="#Error">Error</a></code> - Gets the flag that specifies the primary kind of error in one or more operations (EContext.</li>
-<li><code><a href="#Errors">Errors</a></code> - Gets the flags that were signaled as the result of one or more operations.</li>
-<li><code><a href="#HasError_int">HasError(int)</a></code> - Returns whether this trap exception specifies all the flags given.</li>
-<li><code><a href="#Result">Result</a></code> - Gets the defined result of the operation that caused the trap.</li>
+  <li><code>[Context](#Context)</code> - Gets the arithmetic context used during the operation that triggered the trap.</li>
+  <li><code>[Error](#Error)</code> - Gets the flag that specifies the primary kind of error in one or more operations (EContext.</li>
+  <li><code>[Errors](#Errors)</code> - Gets the flags that were signaled as the result of one or more operations.</li>
+  <li><code>[HasError(int)](#HasError_int)</code> - Returns whether this trap exception specifies all the flags given.</li>
+  <li><code>[Result](#Result)</code> - Gets the defined result of the operation that caused the trap.</li>
 </ul>
 
-<p><a id="Void_ctor_Int32_PeterO_Numbers_EContext_System_Object"></a></p>
-
-<h3>ETrapException Constructor</h3>
+<p><a id="Void_ctor_Int32_PeterO_Numbers_EContext_System_Object"></a>
+### ETrapException Constructor</p>
 
 <pre>public ETrapException(
     int flag,
@@ -41,14 +38,19 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>flag</i>: The flag that specifies the kind of error from one or more operations (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p></li>
-<li><p><i>ctx</i>: The arithmetic context used during the operation that triggered the trap. Can be null.</p></li>
-<li><p><i>result</i>: The defined result of the operation that caused the trap.</p></li>
+  <li>
+    <p><i>flag</i>: The flag that specifies the kind of error from one or more operations (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p>
+  </li>
+  <li>
+    <p><i>ctx</i>: The arithmetic context used during the operation that triggered the trap. Can be null.</p>
+  </li>
+  <li>
+    <p><i>result</i>: The defined result of the operation that caused the trap.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_Int32_Int32_PeterO_Numbers_EContext_System_Object"></a></p>
-
-<h3>ETrapException Constructor</h3>
+<p><a id="Void_ctor_Int32_Int32_PeterO_Numbers_EContext_System_Object"></a>
+### ETrapException Constructor</p>
 
 <pre>public ETrapException(
     int flags,
@@ -62,24 +64,31 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>flags</i>: Specifies the flags that were signaled as the result of one or more operations. This includes the flag specified in the &quot;flag&quot; parameter, but can include other flags. For instance, if &quot;flag&quot; is  <code>EContext.FlagInexact</code> , this parameter might be  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</p></li>
-<li><p><i>flag</i>: Specifies the flag that specifies the primary kind of error from one or more operations (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p></li>
-<li><p><i>ctx</i>: The arithmetic context used during the operation that triggered the trap. Can be null.</p></li>
-<li><p><i>result</i>: The defined result of the operation that caused the trap.</p></li>
+  <li>
+    <p><i>flags</i>: Specifies the flags that were signaled as the result of one or more operations. This includes the flag specified in the “flag” parameter, but can include other flags. For instance, if “flag” is  <code>EContext.FlagInexact</code> , this parameter might be  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</p>
+  </li>
+  <li>
+    <p><i>flag</i>: Specifies the flag that specifies the primary kind of error from one or more operations (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p>
+  </li>
+  <li>
+    <p><i>ctx</i>: The arithmetic context used during the operation that triggered the trap. Can be null.</p>
+  </li>
+  <li>
+    <p><i>result</i>: The defined result of the operation that caused the trap.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
+  <li>System.ArgumentException:
 The parameter  <i>flags</i>
-doesn&#39;t include all the flags in the  <i>flag</i>
-parameter.</li>
+ doesn’t include all the flags in the  <i>flag</i>
+ parameter.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>ETrapException Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### ETrapException Constructor</p>
 
 <pre>public ETrapException(
     string message);
@@ -90,13 +99,12 @@ parameter.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>message</i>: The parameter  <i>message</i>
-is a text string.</li>
+  <li><i>message</i>: The parameter  <i>message</i>
+ is a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_Exception"></a></p>
-
-<h3>ETrapException Constructor</h3>
+<p><a id="Void_ctor_System_String_System_Exception"></a>
+### ETrapException Constructor</p>
 
 <pre>public ETrapException(
     string message,
@@ -108,24 +116,26 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>message</i>: The parameter  <i>message</i>
-is a text string.</p></li>
-<li><p><i>innerException</i>: The parameter  <i>innerException</i>
-is an Exception object.</p></li>
+  <li>
+    <p><i>message</i>: The parameter  <i>message</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>innerException</i>: The parameter  <i>innerException</i>
+ is an Exception object.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>ETrapException Constructor</h3>
+<p><a id="Void_ctor"></a>
+### ETrapException Constructor</p>
 
 <pre>public ETrapException();
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Numbers.ETrapException.html">PeterO.Numbers.ETrapException</a> class.</p>
 
-<p><a id="Context"></a></p>
-
-<h3>Context</h3>
+<p><a id="Context"></a>
+### Context</p>
 
 <pre>public PeterO.Numbers.EContext Context { get; }
 </pre>
@@ -136,9 +146,8 @@ is an Exception object.</p></li>
 
 <p>The arithmetic context used during the operation that triggered the trap. May be null.</p>
 
-<p><a id="Error"></a></p>
-
-<h3>Error</h3>
+<p><a id="Error"></a>
+### Error</p>
 
 <pre>public int Error { get; }
 </pre>
@@ -149,22 +158,20 @@ is an Exception object.</p></li>
 
 <p>The flag that specifies the primary kind of error in one or more operations.</p>
 
-<p><a id="Errors"></a></p>
-
-<h3>Errors</h3>
+<p><a id="Errors"></a>
+### Errors</p>
 
 <pre>public int Errors { get; }
 </pre>
 
-<p>Gets the flags that were signaled as the result of one or more operations. This includes the flag specified in the &quot;flag&quot; parameter, but can include other flags. For instance, if &quot;flag&quot; is  <code>EContext.FlagInexact</code> , this parameter might be  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</p>
+<p>Gets the flags that were signaled as the result of one or more operations. This includes the flag specified in the “flag” parameter, but can include other flags. For instance, if “flag” is  <code>EContext.FlagInexact</code> , this parameter might be  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</p>
 
 <p><b>Returns:</b></p>
 
 <p>The flags that specify the errors in one or more operations.</p>
 
-<p><a id="Result"></a></p>
-
-<h3>Result</h3>
+<p><a id="Result"></a>
+### Result</p>
 
 <pre>public object Result { get; }
 </pre>
@@ -175,9 +182,8 @@ is an Exception object.</p></li>
 
 <p>The defined result of the operation that caused the trap.</p>
 
-<p><a id="HasError_int"></a></p>
-
-<h3>HasError</h3>
+<p><a id="HasError_int"></a>
+### HasError</p>
 
 <pre>public bool HasError(
     int flag);
@@ -188,7 +194,7 @@ is an Exception object.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>flag</i>: A combination of one or more flags, such as  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</li>
+  <li><i>flag</i>: A combination of one or more flags, such as  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</li>
 </ul>
 
 <p><b>Return Value:</b></p>

@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.PartialStream</h1>
-
-<h2>PeterO.PartialStream</h2>
+<p>## PeterO.PartialStream</p>
 
 <pre>public sealed class PartialStream :
     System.IO.Stream,
@@ -16,24 +15,22 @@
 
 <p>Represents a portion of another data stream. For this to work, the underlying stream must be seekable and have a known length.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#CanRead">CanRead</a></code> - Gets a value indicating whether the underlying stream supports reading.</li>
-<li><code><a href="#CanSeek">CanSeek</a></code> - Gets a value indicating whether the underlying stream supports seeking.</li>
-<li><code><a href="#CanWrite">CanWrite</a></code> - Gets a value indicating whether the underlying stream supports writing.</li>
-<li><code><a href="#Flush">Flush()</a></code> - Not documented yet.</li>
-<li><code><a href="#Length">Length</a></code> - Gets the partial stream&#39;s length in bytes.</li>
-<li><code><a href="#Position">Position</a></code> - Gets the partial stream&#39;s current byte position.</li>
-<li><code><a href="#Read_byte_int_int">Read(byte[], int, int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Seek_long_System_IO_SeekOrigin">Seek(long, System.IO.SeekOrigin)</a></code> - Not documented yet.</li>
-<li><code><a href="#SetLength_long">SetLength(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#Write_byte_int_int">Write(byte[], int, int)</a></code> - Not documented yet.</li>
+  <li><code>[CanRead](#CanRead)</code> - Gets a value indicating whether the underlying stream supports reading.</li>
+  <li><code>[CanSeek](#CanSeek)</code> - Gets a value indicating whether the underlying stream supports seeking.</li>
+  <li><code>[CanWrite](#CanWrite)</code> - Gets a value indicating whether the underlying stream supports writing.</li>
+  <li><code>[Flush()](#Flush)</code> - Not documented yet.</li>
+  <li><code>[Length](#Length)</code> - Gets the partial stream’s length in bytes.</li>
+  <li><code>[Position](#Position)</code> - Gets the partial stream’s current byte position.</li>
+  <li><code>[Read(byte[], int, int)](#Read_byte_int_int)</code> - Not documented yet.</li>
+  <li><code>[Seek(long, System.IO.SeekOrigin)](#Seek_long_System_IO_SeekOrigin)</code> - Not documented yet.</li>
+  <li><code>[SetLength(long)](#SetLength_long)</code> - Not documented yet.</li>
+  <li><code>[Write(byte[], int, int)](#Write_byte_int_int)</code> - Not documented yet.</li>
 </ul>
 
-<p><a id="Void_ctor_System_IO_Stream_Int64_Int64"></a></p>
-
-<h3>PartialStream Constructor</h3>
+<p><a id="Void_ctor_System_IO_Stream_Int64_Int64"></a>
+### PartialStream Constructor</p>
 
 <pre>public PartialStream(
     System.IO.Stream stream,
@@ -46,17 +43,22 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: The parameter  <i>stream</i>
-is a Stream object.</p></li>
-<li><p><i>start</i>: The parameter  <i>start</i>
-is a 64-bit signed integer.</p></li>
-<li><p><i>length</i>: The parameter  <i>length</i>
-is a 64-bit signed integer.</p></li>
+  <li>
+    <p><i>stream</i>: The parameter  <i>stream</i>
+ is a Stream object.</p>
+  </li>
+  <li>
+    <p><i>start</i>: The parameter  <i>start</i>
+ is a 64-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The parameter  <i>length</i>
+ is a 64-bit signed integer.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_System_IO_Stream_Int64_Int64_Boolean"></a></p>
-
-<h3>PartialStream Constructor</h3>
+<p><a id="Void_ctor_System_IO_Stream_Int64_Int64_Boolean"></a>
+### PartialStream Constructor</p>
 
 <pre>public PartialStream(
     System.IO.Stream stream,
@@ -70,28 +72,39 @@ is a 64-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: The parameter  <i>stream</i>
-is a Stream object.</p></li>
-<li><p><i>start</i>: The start of the partial stream from the underlying stream.</p></li>
-<li><p><i>length</i>: The length of the partial stream in bytes.</p></li>
-<li><p><i>closeOnDispose</i>: If true, closes the underlying stream when disposing the partial stream.</p></li>
+  <li>
+    <p><i>stream</i>: The parameter  <i>stream</i>
+ is a Stream object.</p>
+  </li>
+  <li>
+    <p><i>start</i>: The start of the partial stream from the underlying stream.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The length of the partial stream in bytes.</p>
+  </li>
+  <li>
+    <p><i>closeOnDispose</i>: If true, closes the underlying stream when disposing the partial stream.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
+  <li>
+    <p>System.ArgumentException:
 The parameter  <i>stream</i>
-doesn&#39;t support seeking, the length or start is less than 0 or greater than the underlying stream&#39;s length, or the partial stream would go beyond the underlying stream.</p></li>
-<li><p>System.ArgumentNullException:
+ doesn’t support seeking, the length or start is less than 0 or greater than the underlying stream’s length, or the partial stream would go beyond the underlying stream.</p>
+  </li>
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>stream</i>
-or  <i>stream</i>
-is null.</p></li>
+ or  <i>stream</i>
+ is null.</p>
+  </li>
 </ul>
 
-<p><a id="CanRead"></a></p>
-
-<h3>CanRead</h3>
+<p><a id="CanRead"></a>
+### CanRead</p>
 
 <pre>public override bool CanRead { get; }
 </pre>
@@ -102,9 +115,8 @@ is null.</p></li>
 
 <p><code>true</code>  If the underlying stream supports reading; otherwise,  <code>false</code> .</p>
 
-<p><a id="CanSeek"></a></p>
-
-<h3>CanSeek</h3>
+<p><a id="CanSeek"></a>
+### CanSeek</p>
 
 <pre>public override bool CanSeek { get; }
 </pre>
@@ -115,9 +127,8 @@ is null.</p></li>
 
 <p><code>true</code>  If the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
 
-<p><a id="CanWrite"></a></p>
-
-<h3>CanWrite</h3>
+<p><a id="CanWrite"></a>
+### CanWrite</p>
 
 <pre>public override bool CanWrite { get; }
 </pre>
@@ -128,44 +139,40 @@ is null.</p></li>
 
 <p><code>true</code>  If the underlying stream supports writing; otherwise,  <code>false</code> .</p>
 
-<p><a id="Length"></a></p>
-
-<h3>Length</h3>
+<p><a id="Length"></a>
+### Length</p>
 
 <pre>public override long Length { get; }
 </pre>
 
-<p>Gets the partial stream&#39;s length in bytes.</p>
+<p>Gets the partial stream’s length in bytes.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The partial stream&#39;s length in bytes.</p>
+<p>The partial stream’s length in bytes.</p>
 
-<p><a id="Position"></a></p>
-
-<h3>Position</h3>
+<p><a id="Position"></a>
+### Position</p>
 
 <pre>public override long Position { get; set; }
 </pre>
 
-<p>Gets the partial stream&#39;s current byte position.</p>
+<p>Gets the partial stream’s current byte position.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The partial stream&#39;s current byte position.</p>
+<p>The partial stream’s current byte position.</p>
 
-<p><a id="Flush"></a></p>
-
-<h3>Flush</h3>
+<p><a id="Flush"></a>
+### Flush</p>
 
 <pre>public override void Flush();
 </pre>
 
 <p>Not documented yet.</p>
 
-<p><a id="Read_byte_int_int"></a></p>
-
-<h3>Read</h3>
+<p><a id="Read_byte_int_int"></a>
+### Read</p>
 
 <pre>public override int Read(
     byte[] buffer,
@@ -178,13 +185,19 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>buffer</i>: The parameter  <i>buffer</i>
-is a.Byte[] object.</p></li>
-<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>buffer</i>
-begins.</p></li>
-<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
-(but not more than  <i>buffer</i>
-&#39;s length).</p></li>
+  <li>
+    <p><i>buffer</i>: The parameter  <i>buffer</i>
+ is a.Byte[] object.</p>
+  </li>
+  <li>
+    <p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>buffer</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
+ (but not more than  <i>buffer</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -194,30 +207,35 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>T:System.ArgumentException:
+  <li>
+    <p>T:System.ArgumentException:
 Either  <i> offset</i>
-or  <i> count</i>
-is less than 0 or greater than  <i>buffer</i>
-&#39;s length, or  <i> buffer</i>
-&#39;s length minus  <i>offset</i>
-is less than  <i>count</i>
-.</p></li>
-<li><p>System.ArgumentNullException:
+ or  <i> count</i>
+ is less than 0 or greater than  <i>buffer</i>
+ ‘s length, or  <i> buffer</i>
+ ‘s length minus  <i>offset</i>
+ is less than  <i>count</i>
+.</p>
+  </li>
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>buffer</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 Either  <i>offset</i>
-or  <i>count</i>
-is less than 0 or greater than  <i>buffer</i>
-&#39;s length, or  <i>buffer</i>
-&#39;s length minus  <i>offset</i>
-is less than  <i>count</i>
-.</p></li>
+ or  <i>count</i>
+ is less than 0 or greater than  <i>buffer</i>
+ ‘s length, or  <i>buffer</i>
+ ‘s length minus  <i>offset</i>
+ is less than  <i>count</i>
+.</p>
+  </li>
 </ul>
 
-<p><a id="Seek_long_System_IO_SeekOrigin"></a></p>
-
-<h3>Seek</h3>
+<p><a id="Seek_long_System_IO_SeekOrigin"></a>
+### Seek</p>
 
 <pre>public override long Seek(
     long offset,
@@ -229,19 +247,22 @@ is less than  <i>count</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>offset</i>: The parameter  <i>offset</i>
-is a 64-bit signed integer.</p></li>
-<li><p><i>origin</i>: The parameter  <i>origin</i>
-is a.IO.SeekOrigin object.</p></li>
+  <li>
+    <p><i>offset</i>: The parameter  <i>offset</i>
+ is a 64-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>origin</i>: The parameter  <i>origin</i>
+ is a.IO.SeekOrigin object.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit signed integer.</p>
 
-<p><a id="SetLength_long"></a></p>
-
-<h3>SetLength</h3>
+<p><a id="SetLength_long"></a>
+### SetLength</p>
 
 <pre>public override void SetLength(
     long value);
@@ -252,13 +273,12 @@ is a.IO.SeekOrigin object.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is a 64-bit signed integer.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is a 64-bit signed integer.</li>
 </ul>
 
-<p><a id="Write_byte_int_int"></a></p>
-
-<h3>Write</h3>
+<p><a id="Write_byte_int_int"></a>
+### Write</p>
 
 <pre>public override void Write(
     byte[] buffer,
@@ -271,29 +291,39 @@ is a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>buffer</i>: The parameter  <i>buffer</i>
-is a.Byte[] object.</p></li>
-<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>buffer</i>
-begins.</p></li>
-<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
-(but not more than  <i>buffer</i>
-&#39;s length).</p></li>
+  <li>
+    <p><i>buffer</i>: The parameter  <i>buffer</i>
+ is a.Byte[] object.</p>
+  </li>
+  <li>
+    <p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>buffer</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
+ (but not more than  <i>buffer</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
+  <li>
+    <p>System.ArgumentException:
 Either  <i>offset</i>
-or  <i>count</i>
-is less than 0 or greater than  <i>buffer</i>
-&#39;s length, or  <i> buffer</i>
-&#39;s length minus  <i>offset</i>
-is less than  <i>count</i>
-.</p></li>
-<li><p>System.ArgumentNullException:
+ or  <i>count</i>
+ is less than 0 or greater than  <i>buffer</i>
+ ‘s length, or  <i> buffer</i>
+ ‘s length minus  <i>offset</i>
+ is less than  <i>count</i>
+.</p>
+  </li>
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>buffer</i>
-is null.</p></li>
+ is null.</p>
+  </li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

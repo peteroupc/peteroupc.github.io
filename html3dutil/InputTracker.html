@@ -1,16 +1,15 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>InputTracker</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>InputTracker</h1>
+<h1 id="inputtracker">InputTracker</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a name='InputTracker'></a></p>
-
-<h3>InputTracker(element)</h3>
+<p><a name="InputTracker"></a>
+### InputTracker(element)</p>
 
 <p>A class for tracking key press, mouse, touch, and mouse wheel
 events.</p>
@@ -19,269 +18,253 @@ events.</p>
 Public Domain HTML 3D Library and is not considered part of that
 library.</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters">Parameters</h4>
 
 <ul>
-<li><code>element</code> (Type: HTMLElement | HTMLDocument)<br>The HTML document or element to track keyboard and mouse events for. If null, undefined, or omitted, uses the calling application&#39;s HTML document.</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><code>element</code> (Type: HTMLElement</td>
+          <td>HTMLDocument)<br />The HTML document or element to track keyboard and mouse events for. If null, undefined, or omitted, uses the calling application’s HTML document.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
 </ul>
 
-<h3>Members</h3>
+<h3 id="members">Members</h3>
 
 <ul>
-<li><a href="#InputTracker.A">A</a><br>Key code for the A key.</li>
-<li><a href="#InputTracker.ADD">ADD</a><br>Key code for the plus key.</li>
-<li><a href="#InputTracker.ALT">ALT</a><br>Key code for the return key.</li>
-<li><a href="#InputTracker.CTRL">CTRL</a><br>Key code for the return key.</li>
-<li><a href="#InputTracker.DELETE">DELETE</a><br>Key code for the delete key.</li>
-<li><a href="#InputTracker.DOWN">DOWN</a><br>Key code for the down arrow key.</li>
-<li><a href="#InputTracker.END">END</a><br>Key code for the end key.</li>
-<li><a href="#InputTracker.ENTER">ENTER</a><br>Key code for the enter key.</li>
-<li><a href="#InputTracker.ESC">ESC</a><br>Key code for the return key.</li>
-<li><a href="#InputTracker.HOME">HOME</a><br>Key code for the home key.</li>
-<li><a href="#InputTracker.LEFT">LEFT</a><br>Key code for the left arrow key.</li>
-<li><a href="#InputTracker.PAGEDOWN">PAGEDOWN</a><br>Key code for the page down key.</li>
-<li><a href="#InputTracker.PAGEUP">PAGEUP</a><br>Key code for the page up key.</li>
-<li><a href="#InputTracker.RETURN">RETURN</a><br>Key code for the return key.</li>
-<li><a href="#InputTracker.RIGHT">RIGHT</a><br>Key code for the right arrow key.</li>
-<li><a href="#InputTracker.SHIFT">SHIFT</a><br>Key code for the shift key.</li>
-<li><a href="#InputTracker.SPACE">SPACE</a><br>Key code for the space bar.</li>
-<li><a href="#InputTracker.SUBTRACT">SUBTRACT</a><br>Key code for the minus key.</li>
-<li><a href="#InputTracker.TAB">TAB</a><br>Key code for the tab key.</li>
-<li><a href="#InputTracker.UP">UP</a><br>Key code for the up arrow key.</li>
-<li><a href="#InputTracker.ZERO">ZERO</a><br>Key code for the 0 key.</li>
-<li><a href="#InputTracker_deltaXY">deltaXY</a><br><strong>Deprecated: Yes</strong></li>
+  <li><a href="#InputTracker.A">A</a><br />Key code for the A key.</li>
+  <li><a href="#InputTracker.ADD">ADD</a><br />Key code for the plus key.</li>
+  <li><a href="#InputTracker.ALT">ALT</a><br />Key code for the return key.</li>
+  <li><a href="#InputTracker.CTRL">CTRL</a><br />Key code for the return key.</li>
+  <li><a href="#InputTracker.DELETE">DELETE</a><br />Key code for the delete key.</li>
+  <li><a href="#InputTracker.DOWN">DOWN</a><br />Key code for the down arrow key.</li>
+  <li><a href="#InputTracker.END">END</a><br />Key code for the end key.</li>
+  <li><a href="#InputTracker.ENTER">ENTER</a><br />Key code for the enter key.</li>
+  <li><a href="#InputTracker.ESC">ESC</a><br />Key code for the return key.</li>
+  <li><a href="#InputTracker.HOME">HOME</a><br />Key code for the home key.</li>
+  <li><a href="#InputTracker.LEFT">LEFT</a><br />Key code for the left arrow key.</li>
+  <li><a href="#InputTracker.PAGEDOWN">PAGEDOWN</a><br />Key code for the page down key.</li>
+  <li><a href="#InputTracker.PAGEUP">PAGEUP</a><br />Key code for the page up key.</li>
+  <li><a href="#InputTracker.RETURN">RETURN</a><br />Key code for the return key.</li>
+  <li><a href="#InputTracker.RIGHT">RIGHT</a><br />Key code for the right arrow key.</li>
+  <li><a href="#InputTracker.SHIFT">SHIFT</a><br />Key code for the shift key.</li>
+  <li><a href="#InputTracker.SPACE">SPACE</a><br />Key code for the space bar.</li>
+  <li><a href="#InputTracker.SUBTRACT">SUBTRACT</a><br />Key code for the minus key.</li>
+  <li><a href="#InputTracker.TAB">TAB</a><br />Key code for the tab key.</li>
+  <li><a href="#InputTracker.UP">UP</a><br />Key code for the up arrow key.</li>
+  <li><a href="#InputTracker.ZERO">ZERO</a><br />Key code for the 0 key.</li>
+  <li><a href="#InputTracker_deltaXY">deltaXY</a><br /><strong>Deprecated: Yes</strong></li>
 </ul>
 
-<h3>Methods</h3>
+<h3 id="methods">Methods</h3>
 
 <ul>
-<li><a href="#InputTracker_dispose">dispose</a><br>Disposes all resources used by this input tracker.</li>
-<li><a href="#InputTracker_getKey">getKey</a><br>Gets whether a key is pressed, as detected by this
+  <li><a href="#InputTracker_dispose">dispose</a><br />Disposes all resources used by this input tracker.</li>
+  <li><a href="#InputTracker_getKey">getKey</a><br />Gets whether a key is pressed, as detected by this
 input tracker.</li>
-<li><a href="#InputTracker_mousePos">mousePos</a><br>Returns the current mouse position, delta
+  <li><a href="#InputTracker_mousePos">mousePos</a><br />Returns the current mouse position, delta
 mouse position, and delta mouse wheel
-position (see the &quot;update&quot; method).</li>
-<li><a href="#InputTracker_mousewheel">mousewheel</a><br><strong>Deprecated: Will be removed in the future. Use the
+position (see the “update” method).</li>
+  <li><a href="#InputTracker_mousewheel">mousewheel</a><br /><strong>Deprecated: Will be removed in the future. Use the
 mousePos method to find out whether the user
 has rotated the mouse wheel.</strong></li>
-<li><a href="#InputTracker_update">update</a><br>Retrieves the current position of the mouse within
-the page&#39;s client area, as detected by the input
-tracker and calculates the &quot;delta mouse position&quot;,
+  <li><a href="#InputTracker_update">update</a><br />Retrieves the current position of the mouse within
+the page’s client area, as detected by the input
+tracker and calculates the “delta mouse position”,
 or the difference between
 those values and the values they had the last
 time this method was called.</li>
 </ul>
 
-<p><a name='InputTracker.A'></a></p>
-
-<h3>InputTracker.A (constant)</h3>
+<p><a name="InputTracker.A"></a>
+### InputTracker.A (constant)</p>
 
 <p>Key code for the A key. Add 1 through 25 to get
 the keys for the other letters of the English alphabet.</p>
 
 <p>Default Value: <code>65</code></p>
 
-<p><a name='InputTracker.ADD'></a></p>
-
-<h3>InputTracker.ADD (constant)</h3>
+<p><a name="InputTracker.ADD"></a>
+### InputTracker.ADD (constant)</p>
 
 <p>Key code for the plus key.</p>
 
 <p>Default Value: <code>107</code></p>
 
-<p><a name='InputTracker.ALT'></a></p>
-
-<h3>InputTracker.ALT (constant)</h3>
+<p><a name="InputTracker.ALT"></a>
+### InputTracker.ALT (constant)</p>
 
 <p>Key code for the return key.</p>
 
 <p>Default Value: <code>18</code></p>
 
-<p><a name='InputTracker.CTRL'></a></p>
-
-<h3>InputTracker.CTRL (constant)</h3>
+<p><a name="InputTracker.CTRL"></a>
+### InputTracker.CTRL (constant)</p>
 
 <p>Key code for the return key.</p>
 
 <p>Default Value: <code>17</code></p>
 
-<p><a name='InputTracker.DELETE'></a></p>
-
-<h3>InputTracker.DELETE (constant)</h3>
+<p><a name="InputTracker.DELETE"></a>
+### InputTracker.DELETE (constant)</p>
 
 <p>Key code for the delete key.</p>
 
 <p>Default Value: <code>46</code></p>
 
-<p><a name='InputTracker.DOWN'></a></p>
-
-<h3>InputTracker.DOWN (constant)</h3>
+<p><a name="InputTracker.DOWN"></a>
+### InputTracker.DOWN (constant)</p>
 
 <p>Key code for the down arrow key.</p>
 
 <p>Default Value: <code>40</code></p>
 
-<p><a name='InputTracker.END'></a></p>
-
-<h3>InputTracker.END (constant)</h3>
+<p><a name="InputTracker.END"></a>
+### InputTracker.END (constant)</p>
 
 <p>Key code for the end key.</p>
 
 <p>Default Value: <code>35</code></p>
 
-<p><a name='InputTracker.ENTER'></a></p>
-
-<h3>InputTracker.ENTER (constant)</h3>
+<p><a name="InputTracker.ENTER"></a>
+### InputTracker.ENTER (constant)</p>
 
 <p>Key code for the enter key.</p>
 
 <p>Default Value: <code>13</code></p>
 
-<p><a name='InputTracker.ESC'></a></p>
-
-<h3>InputTracker.ESC (constant)</h3>
+<p><a name="InputTracker.ESC"></a>
+### InputTracker.ESC (constant)</p>
 
 <p>Key code for the return key.</p>
 
 <p>Default Value: <code>27</code></p>
 
-<p><a name='InputTracker.HOME'></a></p>
-
-<h3>InputTracker.HOME (constant)</h3>
+<p><a name="InputTracker.HOME"></a>
+### InputTracker.HOME (constant)</p>
 
 <p>Key code for the home key.</p>
 
 <p>Default Value: <code>36</code></p>
 
-<p><a name='InputTracker.LEFT'></a></p>
-
-<h3>InputTracker.LEFT (constant)</h3>
+<p><a name="InputTracker.LEFT"></a>
+### InputTracker.LEFT (constant)</p>
 
 <p>Key code for the left arrow key.</p>
 
 <p>Default Value: <code>37</code></p>
 
-<p><a name='InputTracker.PAGEDOWN'></a></p>
-
-<h3>InputTracker.PAGEDOWN (constant)</h3>
+<p><a name="InputTracker.PAGEDOWN"></a>
+### InputTracker.PAGEDOWN (constant)</p>
 
 <p>Key code for the page down key.</p>
 
 <p>Default Value: <code>34</code></p>
 
-<p><a name='InputTracker.PAGEUP'></a></p>
-
-<h3>InputTracker.PAGEUP (constant)</h3>
+<p><a name="InputTracker.PAGEUP"></a>
+### InputTracker.PAGEUP (constant)</p>
 
 <p>Key code for the page up key.</p>
 
 <p>Default Value: <code>33</code></p>
 
-<p><a name='InputTracker.RETURN'></a></p>
-
-<h3>InputTracker.RETURN (constant)</h3>
+<p><a name="InputTracker.RETURN"></a>
+### InputTracker.RETURN (constant)</p>
 
 <p>Key code for the return key.</p>
 
 <p>Default Value: <code>10</code></p>
 
-<p><a name='InputTracker.RIGHT'></a></p>
-
-<h3>InputTracker.RIGHT (constant)</h3>
+<p><a name="InputTracker.RIGHT"></a>
+### InputTracker.RIGHT (constant)</p>
 
 <p>Key code for the right arrow key.</p>
 
 <p>Default Value: <code>39</code></p>
 
-<p><a name='InputTracker.SHIFT'></a></p>
-
-<h3>InputTracker.SHIFT (constant)</h3>
+<p><a name="InputTracker.SHIFT"></a>
+### InputTracker.SHIFT (constant)</p>
 
 <p>Key code for the shift key.</p>
 
 <p>Default Value: <code>16</code></p>
 
-<p><a name='InputTracker.SPACE'></a></p>
-
-<h3>InputTracker.SPACE (constant)</h3>
+<p><a name="InputTracker.SPACE"></a>
+### InputTracker.SPACE (constant)</p>
 
 <p>Key code for the space bar.</p>
 
 <p>Default Value: <code>32</code></p>
 
-<p><a name='InputTracker.SUBTRACT'></a></p>
-
-<h3>InputTracker.SUBTRACT (constant)</h3>
+<p><a name="InputTracker.SUBTRACT"></a>
+### InputTracker.SUBTRACT (constant)</p>
 
 <p>Key code for the minus key.</p>
 
 <p>Default Value: <code>109</code></p>
 
-<p><a name='InputTracker.TAB'></a></p>
-
-<h3>InputTracker.TAB (constant)</h3>
+<p><a name="InputTracker.TAB"></a>
+### InputTracker.TAB (constant)</p>
 
 <p>Key code for the tab key.</p>
 
 <p>Default Value: <code>9</code></p>
 
-<p><a name='InputTracker.UP'></a></p>
-
-<h3>InputTracker.UP (constant)</h3>
+<p><a name="InputTracker.UP"></a>
+### InputTracker.UP (constant)</p>
 
 <p>Key code for the up arrow key.</p>
 
 <p>Default Value: <code>38</code></p>
 
-<p><a name='InputTracker.ZERO'></a></p>
-
-<h3>InputTracker.ZERO (constant)</h3>
+<p><a name="InputTracker.ZERO"></a>
+### InputTracker.ZERO (constant)</p>
 
 <p>Key code for the 0 key. Add 1 through 9 to get
 the keys for the other basic digits 1 through 9.</p>
 
 <p>Default Value: <code>48</code></p>
 
-<p><a name='InputTracker_deltaXY'></a></p>
-
-<h3>InputTracker#deltaXY</h3>
+<p><a name="InputTracker_deltaXY"></a>
+### InputTracker#deltaXY</p>
 
 <p><strong>Deprecated: Yes</strong></p>
 
 <p>An alias for <a href="InputTracker.html#InputTracker_mousePos">InputTracker#mousePos</a>.</p>
 
-<p><a name='InputTracker_dispose'></a></p>
-
-<h3>InputTracker#dispose()</h3>
+<p><a name="InputTracker_dispose"></a>
+### InputTracker#dispose()</p>
 
 <p>Disposes all resources used by this input tracker.</p>
 
-<h4>Return Value</h4>
+<h4 id="return-value">Return Value</h4>
 
 <p>Return value. (Type: Object)</p>
 
-<p><a name='InputTracker_getKey'></a></p>
-
-<h3>InputTracker#getKey()</h3>
+<p><a name="InputTracker_getKey"></a>
+### InputTracker#getKey()</p>
 
 <p>Gets whether a key is pressed, as detected by this
 input tracker.</p>
 
-<h4>Return Value</h4>
+<h4 id="return-value-1">Return Value</h4>
 
 <p>key Key code of the key to check. (Type: number)</p>
 
-<p><a name='InputTracker_mousePos'></a></p>
-
-<h3>InputTracker#mousePos()</h3>
+<p><a name="InputTracker_mousePos"></a>
+### InputTracker#mousePos()</p>
 
 <p>Returns the current mouse position, delta
 mouse position, and delta mouse wheel
-position (see the &quot;update&quot; method).</p>
+position (see the “update” method).</p>
 
-<h4>Return Value</h4>
+<h4 id="return-value-2">Return Value</h4>
 
-<p>An object containing the following keys:<ul>
+<p>An object containing the following keys:&lt;ul&gt;</p>
 <li><code>cx</code> - X coordinate of the current mouse
 position.
 <li><code>cx</code> - Y coordinate of the current mouse
@@ -289,54 +272,51 @@ position.
 <li><code>x</code> - X component of the delta mouse position.
 <li><code>y</code> - Y component of the delta mouse position.
 <li><code>ticks</code> - The delta mouse wheel position.
-</ul>
-If this object&#39;s update method wasn&#39;t called, all these values
-will be 0. (Type: Object)</p>
+&lt;/ul&gt;
+If this object's update method wasn't called, all these values
+will be 0. (Type: Object)
 
-<p><a name='InputTracker_mousewheel'></a></p>
+<a name="InputTracker_mousewheel"></a>
+### InputTracker#mousewheel(func)
 
-<h3>InputTracker#mousewheel(func)</h3>
-
-<p><strong>Deprecated: Will be removed in the future. Use the
+**Deprecated: Will be removed in the future. Use the
 mousePos method to find out whether the user
-has rotated the mouse wheel.</strong></p>
+has rotated the mouse wheel.**
 
-<p>Sets a function to handle mouse wheel events.</p>
+Sets a function to handle mouse wheel events.
 
-<h4>Parameters</h4>
+#### Parameters
 
-<ul>
-<li><code>func</code> (Type: function)<br>A function.</li>
-</ul>
+* `func` (Type: function)<br />A function.
 
-<h4>Return Value</h4>
+#### Return Value
 
-<p>Return value. (Type: Object)</p>
+Return value. (Type: Object)
 
-<p><a name='InputTracker_update'></a></p>
+<a name="InputTracker_update"></a>
+### InputTracker#update()
 
-<h3>InputTracker#update()</h3>
-
-<p>Retrieves the current position of the mouse within
-the page&#39;s client area, as detected by the input
-tracker and calculates the &quot;delta mouse position&quot;,
+Retrieves the current position of the mouse within
+the page's client area, as detected by the input
+tracker and calculates the "delta mouse position",
 or the difference between
 those values and the values they had the last
-time this method was called. If this method wasn&#39;t
+time this method was called. If this method wasn't
 called before for this tracker, the delta mouse position is
 (0, 0). If the current position of the mouse is unknown,
-it&#39;s (0, 0) instead.</p>
+it's (0, 0) instead.
 
-<p>Also retrieves the &quot;delta mouse wheel position&quot;, or the
-offset, in &quot;ticks&quot;, from the mouse wheel position at the
+Also retrieves the "delta mouse wheel position", or the
+offset, in "ticks", from the mouse wheel position at the
 last time this method was called (or the time this tracker
-was created if it wasn&#39;t) to the current mouse wheel position.</p>
+was created if it wasn't) to the current mouse wheel position.
 
-<h4>Return Value</h4>
+#### Return Value
 
-<p>This object. (Type: <a href="InputTracker.html">InputTracker</a>)</p>
+This object. (Type: <a href="InputTracker.html">InputTracker</a>)
 
-<p><a href="index.html">Back to documentation index.</a></p>
+[Back to documentation index.](index.html)
+</li></li></li></li></li>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
@@ -347,85 +327,85 @@ was created if it wasn&#39;t) to the current mouse wheel position.</p>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-<h3>Navigation</h3>
+<h3 id="navigation">Navigation</h3>
 
 <ul>
-<li><a href="BSplineCurve.html">BSplineCurve</a></li>
-<li><a href="BSplineSurface.html">BSplineSurface</a></li>
-<li><a href="BufferAccessor.html">BufferAccessor</a></li>
-<li><a href="Curve.html">Curve</a></li>
-<li><a href="CurveBuilder.html">CurveBuilder</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
-<li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="MathUtil.html">MathUtil</a></li>
-<li><a href="MeshBuffer.html">MeshBuffer</a></li>
-<li><a href="Meshes.html">Meshes</a></li>
-<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-<li><a href="Promise.html">Promise</a></li>
-<li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Shape.html">Shape</a></li>
-<li><a href="ShapeGroup.html">ShapeGroup</a></li>
-<li><a href="Surface.html">Surface</a></li>
-<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-<li><a href="Transform.html">Transform</a></li>
-<li><a href="extras_arrow.html">module:extras/arrow</a></li>
-<li><a href="extras_camera.html">module:extras/camera</a></li>
-<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
-<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
-<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
-<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
-<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
-<li><a href="extras_convex.html">module:extras/convex</a></li>
-<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
-<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
-<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
-<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
-<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
-<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
-<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
-<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
-<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
-<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
-<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
-<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
-<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
-<li><a href="extras_gradients.html">module:extras/gradients</a></li>
-<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
-<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
-<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
-<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
-<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
-<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
-<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
-<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
-<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
-<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
-<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
-<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
-<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
-<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
-<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
-<li><a href="extras_raypick.html">module:extras/raypick</a></li>
-<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
-<li><a href="extras_starfield.html">module:extras/starfield</a></li>
-<li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
-<li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
-<li><a href="extras_stl.html">module:extras/stl</a></li>
-<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
-<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
-<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
-<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
-<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
-<li><a href="extras_text.html">module:extras/text</a></li>
-<li><a href="extras_tga.html">module:extras/tga</a></li>
-<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
-<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
-<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
-<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
-<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
-<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
-<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Promise.html">Promise</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="Shape.html">Shape</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
+  <li><a href="extras_arrow.html">module:extras/arrow</a></li>
+  <li><a href="extras_camera.html">module:extras/camera</a></li>
+  <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+  <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+  <li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+  <li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+  <li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+  <li><a href="extras_convex.html">module:extras/convex</a></li>
+  <li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+  <li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+  <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+  <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+  <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+  <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+  <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+  <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+  <li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+  <li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+  <li><a href="extras_gradients.html">module:extras/gradients</a></li>
+  <li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+  <li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+  <li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+  <li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+  <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+  <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+  <li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+  <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+  <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+  <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+  <li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+  <li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+  <li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+  <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+  <li><a href="extras_raypick.html">module:extras/raypick</a></li>
+  <li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+  <li><a href="extras_starfield.html">module:extras/starfield</a></li>
+  <li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
+  <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
+  <li><a href="extras_stl.html">module:extras/stl</a></li>
+  <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+  <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+  <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+  <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+  <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+  <li><a href="extras_text.html">module:extras/text</a></li>
+  <li><a href="extras_tga.html">module:extras/tga</a></li>
+  <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+  <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+  <li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+  <li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+  <li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+  <li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+  <li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
 </ul>
 </nav></body></html>

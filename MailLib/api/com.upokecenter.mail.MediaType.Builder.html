@@ -5,255 +5,252 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.mail.MediaType.Builder</h1>
-
-<h1>com.upokecenter.mail.MediaType.Builder</h1>
+<p># com.upokecenter.mail.MediaType.Builder</p>
 
 <pre>public static final class MediaType.Builder extends Object
 </pre>
 
 <p>A mutable data type that allows a media type object to be built.</p>
 
-<h2>Constructors</h2>
+<h2 id="constructors">Constructors</h2>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><p><code>final String getSubType()</code><br>
-Gets this value&#39;s subtype.</p></li>
-<li><p><code>final String getTopLevelType()</code><br>
-Gets this value&#39;s top-level type.</p></li>
-<li><p><code>MediaType.Builder RemoveParameter(String name)</code><br>
-Removes a parameter from this builder object.</p></li>
-<li><p><code>MediaType.Builder SetParameter(String name,
-String value)</code><br>
-Sets a parameter&#39;s name and value for this media type.</p></li>
-<li><p><code>final void setSubType(String value)</code><br>
- </p></li>
-<li><p><code>MediaType.Builder SetSubType(String str)</code><br>
-Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p></li>
-<li><p><code>final void setTopLevelType(String value)</code><br>
- </p></li>
-<li><p><code>MediaType.Builder SetTopLevelType(String str)</code><br>
-Sets this media type&#39;s top-level type.</p></li>
-<li><p><code>MediaType ToMediaType()</code><br>
-Converts this builder to an immutable media type object.</p></li>
-<li><p><code>String toString()</code><br>
-Converts this object to a text string of the media type it represents, in
-the same form as MediaType.toString.</p></li>
+  <li>
+    <p><code>final String getSubType()</code><br />
+ Gets this value’s subtype.</p>
+  </li>
+  <li>
+    <p><code>final String getTopLevelType()</code><br />
+ Gets this value’s top-level type.</p>
+  </li>
+  <li>
+    <p><code>MediaType.Builder RemoveParameter(String name)</code><br />
+ Removes a parameter from this builder object.</p>
+  </li>
+  <li>
+    <p><code>MediaType.Builder SetParameter(String name,
+ String value)</code><br />
+ Sets a parameter’s name and value for this media type.</p>
+  </li>
+  <li><code>final void setSubType(String value)</code><br />
+  </li>
+  <li>
+    <p><code>MediaType.Builder SetSubType(String str)</code><br />
+ Sets this media type’s subtype, such as “plain” or “xml” .</p>
+  </li>
+  <li><code>final void setTopLevelType(String value)</code><br />
+  </li>
+  <li>
+    <p><code>MediaType.Builder SetTopLevelType(String str)</code><br />
+ Sets this media type’s top-level type.</p>
+  </li>
+  <li>
+    <p><code>MediaType ToMediaType()</code><br />
+ Converts this builder to an immutable media type object.</p>
+  </li>
+  <li><code>String toString()</code><br />
+ Converts this object to a text string of the media type it represents, in
+ the same form as MediaType.toString.</li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>getTopLevelType</h3>
-
-<pre>public final String getTopLevelType()
+<h3 id="gettopleveltype">getTopLevelType</h3>
+<pre>public final String getTopLevelType() Gets this value's top-level type.
 </pre>
-
-<p>Gets this value&#39;s top-level type.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string naming this object&#39;s top-level type, such as &quot;text&quot; or
-&quot;audio&quot; .</li>
+  <li>A text string naming this object’s top-level type, such as “text” or
+ “audio” .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The property is being set and the value is
-null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The property is being set and the value is
-syntactically invalid for a top-level type.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The property is being set and the value is
+ null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - The property is being set and the value is
+ syntactically invalid for a top-level type.</p>
+  </li>
 </ul>
 
-<h3>setTopLevelType</h3>
-
-<pre>public final void setTopLevelType(String value)
+<h3 id="settopleveltype">setTopLevelType</h3>
+<pre>public final void setTopLevelType(String value) ### getSubType
+public final String getSubType() Gets this value's subtype.
 </pre>
-
-<h3>getSubType</h3>
-
-<pre>public final String getSubType()
-</pre>
-
-<p>Gets this value&#39;s subtype.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string naming this object&#39;s subtype, such as &quot;plain&quot; or
-&quot;xml&quot;.</li>
+  <li>A text string naming this object’s subtype, such as “plain” or
+ “xml”.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The property is being set and the value is
-null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The property is being set and the value is
-syntactically invalid for a subtype.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The property is being set and the value is
+ null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - The property is being set and the value is
+ syntactically invalid for a subtype.</p>
+  </li>
 </ul>
 
-<h3>setSubType</h3>
-
-<pre>public final void setSubType(String value)
+<h3 id="setsubtype">setSubType</h3>
+<pre>public final void setSubType(String value) ### ToMediaType
+public MediaType ToMediaType() Converts this builder to an immutable media type object.
 </pre>
-
-<h3>ToMediaType</h3>
-
-<pre>public MediaType ToMediaType()
-</pre>
-
-<p>Converts this builder to an immutable media type object.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A MediaType object.</li>
+  <li>A MediaType object.</li>
 </ul>
 
-<h3>SetTopLevelType</h3>
-
-<pre>public MediaType.Builder SetTopLevelType(String str)
+<h3 id="settopleveltype-1">SetTopLevelType</h3>
+<pre>public MediaType.Builder SetTopLevelType(String str) Sets this media type's top-level type. This method enables the pattern of  method chaining (e.g., &lt;code&gt;new...().getSet()...().getSet()...()&lt;/code&gt;) unlike with the  TopLevelType property in.NET or the setTopLevelType method (with small s) in  Java.
 </pre>
-
-<p>Sets this media type&#39;s top-level type. This method enables the pattern of
- method chaining (e.g., <code>new...().getSet()...().getSet()...()</code>) unlike with the
- TopLevelType property in.NET or the setTopLevelType method (with small s) in
- Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A text string naming a top-level type, such as &quot;text&quot; or &quot;audio&quot;
-.</li>
+  <li><code>str</code> - A text string naming a top-level type, such as “text” or “audio”
+ .</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This instance.</li>
+  <li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> is syntactically invalid
-for a top-level type.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - The parameter <code>str</code> is syntactically invalid
+ for a top-level type.</p>
+  </li>
 </ul>
 
-<h3>RemoveParameter</h3>
-
-<pre>public MediaType.Builder RemoveParameter(String name)
+<h3 id="removeparameter">RemoveParameter</h3>
+<pre>public MediaType.Builder RemoveParameter(String name) Removes a parameter from this builder object. Does nothing if the  parameter's name doesn't exist.
 </pre>
-
-<p>Removes a parameter from this builder object. Does nothing if the
- parameter&#39;s name doesn&#39;t exist.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>name</code> - Name of the parameter to remove. The name is compared using a
-basic case-insensitive comparison. (Two strings are equal in such a
-comparison, if they match after converting the basic upper-case letters A to
-Z (U+0041 to U+005A) in both strings to basic lower-case letters.).</li>
+  <li><code>name</code> - Name of the parameter to remove. The name is compared using a
+ basic case-insensitive comparison. (Two strings are equal in such a
+ comparison, if they match after converting the basic upper-case letters A to
+ Z (U+0041 to U+005A) in both strings to basic lower-case letters.).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This instance.</li>
+  <li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
+  <li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
 </ul>
 
-<h3>SetParameter</h3>
-
-<pre>public MediaType.Builder SetParameter(String name, String value)
+<h3 id="setparameter">SetParameter</h3>
+<pre>public MediaType.Builder SetParameter(String name, String value) Sets a parameter's name and value for this media type.
 </pre>
-
-<p>Sets a parameter&#39;s name and value for this media type.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>name</code> - Name of the parameter to set, such as &quot;charset&quot; . The name is
-compared using a basic case-insensitive comparison. (Two strings are equal
-in such a comparison, if they match after converting the basic upper-case
-letters A to Z (U+0041 to U+005A) in both strings to basic lower-case
-letters.).</p></li>
-<li><p><code>value</code> - A text string giving the parameter&#39;s value.</p></li>
+  <li>
+    <p><code>name</code> - Name of the parameter to set, such as “charset” . The name is
+ compared using a basic case-insensitive comparison. (Two strings are equal
+ in such a comparison, if they match after converting the basic upper-case
+ letters A to Z (U+0041 to U+005A) in both strings to basic lower-case
+ letters.).</p>
+  </li>
+  <li>
+    <p><code>value</code> - A text string giving the parameter’s value.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This instance.</li>
+  <li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>value</code> or <code>name</code> is
-null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty or
-syntactically invalid.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>value</code> or <code>name</code> is
+ null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty or
+ syntactically invalid.</p>
+  </li>
 </ul>
 
-<h3>SetSubType</h3>
-
-<pre>public MediaType.Builder SetSubType(String str)
+<h3 id="setsubtype-1">SetSubType</h3>
+<pre>public MediaType.Builder SetSubType(String str) Sets this media type's subtype, such as "plain" or "xml" . This method  enables the pattern of method chaining (e.g., &lt;code&gt;  new...().getSet()...().getSet()...()&lt;/code&gt;) unlike with the SubType property in.NET or the  setSubType method (with small s) in Java.
 </pre>
-
-<p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; . This method
- enables the pattern of method chaining (e.g., <code>
- new...().getSet()...().getSet()...()</code>) unlike with the SubType property in.NET or the
- setSubType method (with small s) in Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A text string naming a media subtype.</li>
+  <li><code>str</code> - A text string naming a media subtype.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This instance.</li>
+  <li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> is empty or
-syntactically invalid.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - The parameter <code>str</code> is empty or
+ syntactically invalid.</p>
+  </li>
 </ul>
 
-<h3>toString</h3>
-
-<pre>public String toString()
+<h3 id="tostring">toString</h3>
+<pre>public String toString() Converts this object to a text string of the media type it represents, in  the same form as &lt;code&gt;MediaType.toString&lt;/code&gt;.
 </pre>
-
-<p>Converts this object to a text string of the media type it represents, in
- the same form as <code>MediaType.toString</code>.</p>
 
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+  <li><code>toString</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A string representation of this object.</li>
+  <li>A string representation of this object.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

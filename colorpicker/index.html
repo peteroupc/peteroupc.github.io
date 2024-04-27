@@ -1,77 +1,79 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Picker</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>Color Picker</h1>
+<h1 id="color-picker">Color Picker</h1>
 
-<p><img src="cpicker.png" alt="Image of color picker"></p>
+<p><img src="cpicker.png" alt="Image of color picker" /></p>
 
 <p><strong>Download source code: <a href="https://github.com/peteroupc/colorpicker/archive/master.zip">ZIP file</a></strong></p>
 
-<hr>
+<hr />
 
 <p>A color picker in JavaScript. Supports adapters for integrating other popular color pickers, and can use native color selection controls. In the public domain under CC0.</p>
 
-<h2>Demo</h2>
+<h2 id="demo">Demo</h2>
 
 <p>See: <a href="http://peteroupc.github.io/colorpicker/demo.html">http://peteroupc.github.io/colorpicker/demo.html</a></p>
 
 <p>The homepage is: <a href="http://peteroupc.github.io/colorpicker">http://peteroupc.github.io/colorpicker</a></p>
 
-<h2>How to use:</h2>
+<h2 id="how-to-use">How to use:</h2>
 
-<p>In general, include the scripts &quot;cbox.js&quot; to your HTML:</p>
+<p>In general, include the scripts “cbox.js” to your HTML:</p>
 
-<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;cbox.js&quot;&gt;&lt;/script&gt;
+<pre>&lt;script type="text/javascript" src="cbox.js"&gt;&lt;/script&gt;
 </pre>
 
 <p>When the page is ready, it will convert certain textboxes into color pickers:</p>
 
 <ul>
-<li>Textboxes with IDs or class names starting with &quot;color_&quot;. and input elements with type &quot;color&quot;, will be converted into normal color pickers.</li>
-<li>Textboxes with IDs or class names starting with &quot;rgbahex_&quot; will be converted into alpha color pickers that use the color format RRGGBBAA, with no &quot;#&quot; character, and with hexadecimal components.</li>
-<li>Textboxes with IDs or class names starting with &quot;argbhex_&quot; will be converted into alpha color pickers that use the color format AARRGGBB, with no &quot;#&quot; character, and with hexadecimal components.</li>
-<li>Textboxes with IDs or class names starting with &quot;acolor_&quot; will be converted into alpha color pickers.</li>
+  <li>Textboxes with IDs or class names starting with “color_”. and input elements with type “color”, will be converted into normal color pickers.</li>
+  <li>Textboxes with IDs or class names starting with “rgbahex_” will be converted into alpha color pickers that use the color format RRGGBBAA, with no “#” character, and with hexadecimal components.</li>
+  <li>Textboxes with IDs or class names starting with “argbhex_” will be converted into alpha color pickers that use the color format AARRGGBB, with no “#” character, and with hexadecimal components.</li>
+  <li>Textboxes with IDs or class names starting with “acolor_” will be converted into alpha color pickers.</li>
 </ul>
 
 <p>For more advanced features, use the following functions.</p>
 
-<h2>Available Functions</h2>
+<h2 id="available-functions">Available Functions</h2>
 
 <p>PDColorPicker.setColorPicker( <em>input</em>, <em>extra</em>) - sets up a color picker for the given textbox. The
 <em>input</em> parameter is the HTML element for the input text box. The <em>extra</em> parameter takes the following keys:</p>
 
 <ol>
-<li>usealpha - whether this color picker should use the alpha channel or not.</li>
-<li>info - the color model used. If null, the default color model is used, which is initially <code>PDColorPicker.HueSatVal</code>.</li>
-<li><p>flat - if true, shows the color selection control in-line rather than in the form of a text box and button. Default is false.</p></li>
-<li><p>rgbahex - if true, the color format used is RRGGBBAA, with hexadecimal components.</p></li>
-<li><p>argbhex - if true, the color format used is AARRGGBB, with hexadecimal components.
+  <li>usealpha - whether this color picker should use the alpha channel or not.</li>
+  <li>info - the color model used. If null, the default color model is used, which is initially <code>PDColorPicker.HueSatVal</code>.</li>
+  <li>
+    <p>flat - if true, shows the color selection control in-line rather than in the form of a text box and button. Default is false.</p>
+  </li>
+  <li>rgbahex - if true, the color format used is RRGGBBAA, with hexadecimal components.</li>
+  <li>argbhex - if true, the color format used is AARRGGBB, with hexadecimal components.
 PDColorPicker.getDefaultColorModel() - gets the default color model used by the color picker.
-The model is a JavaScript object with the following keys:</p></li>
+The model is a JavaScript object with the following keys:</li>
 </ol>
 
 <ul>
-<li>fromrgbcolor - a function that takes an RGB color as an input and returns a converted form
+  <li>fromrgbcolor - a function that takes an RGB color as an input and returns a converted form
 of the color as output. The RGB color is a three-element array consisting of the red (0-255), green (0-255), and blue (0-255) components.</li>
-<li>torgbcolor - a function that takes a converted form of the color and returns an RGB color.</li>
-<li>maxes - an array containing maximum values for each component of the converted color.</li>
-<li>reversed - an array containing boolean values for each component of the converted color. Each value indicates whether the value goes down to up in the display rather than up to down.</li>
-<li>indexes - an array that determines which axes of the display correspond to which color component. 0 refers to the X-axis, 1 to the Y-axis, and 2 to the sidebar.</li>
+  <li>torgbcolor - a function that takes a converted form of the color and returns an RGB color.</li>
+  <li>maxes - an array containing maximum values for each component of the converted color.</li>
+  <li>reversed - an array containing boolean values for each component of the converted color. Each value indicates whether the value goes down to up in the display rather than up to down.</li>
+  <li>indexes - an array that determines which axes of the display correspond to which color component. 0 refers to the X-axis, 1 to the Y-axis, and 2 to the sidebar.</li>
 </ul>
 
 <p>Two color models are included: <code>PDColorPicker.HueLumSat</code> and <code>PDColorPicker.HueSatVal</code>.</p>
 
 <p>PDColorPicker.setDefaultColorModel() - sets the default color model used by the color picker.</p>
 
-<p>PDColorPicker.getColorChangeEvent().add( <em>handler</em> ) - adds a function to call when a color picker&#39;s color changes. The function takes two parameters: a four-element array representing the color
+<p>PDColorPicker.getColorChangeEvent().add( <em>handler</em> ) - adds a function to call when a color picker’s color changes. The function takes two parameters: a four-element array representing the color
 (red/green/blue/alpha, each 0-255) and the HTML element (the text box) whose value changed.</p>
 
 <p>PDColorPicker.getColorChangeEvent().remove( <em>handler</em> ) - removes an event handler for a color change event.</p>
 
-<p>PDColorPicker.getColorPreviewEvent().add( <em>handler</em> ) - adds a function to call when a color picker&#39;s color is being previewed. The function takes the same parameters as for color change events.</p>
+<p>PDColorPicker.getColorPreviewEvent().add( <em>handler</em> ) - adds a function to call when a color picker’s color is being previewed. The function takes the same parameters as for color change events.</p>
 
 <p>PDColorPicker.getColorPreviewEvent().remove( <em>handler</em> ) - removes an event handler for a color preview event.</p>
 
@@ -80,33 +82,33 @@ function should include code that links the text box with the third-party color 
 successfully. The <em>input</em> parameter is the HTML element for the input text box. The <em>extra</em> parameter takes the following keys:</p>
 
 <ol>
-<li>usealpha - whether this color picker should use the alpha channel or not.</li>
-<li>info - the color model used.</li>
-<li>flat - if true, shows the color selection control in-line rather than in the form of a text box and button.</li>
-<li>rgbahex - if true, the color format used is RRGGBBAA, with hexadecimal components.</li>
-<li>argbhex - if true, the color format used is AARRGGBB, with hexadecimal components.</li>
+  <li>usealpha - whether this color picker should use the alpha channel or not.</li>
+  <li>info - the color model used.</li>
+  <li>flat - if true, shows the color selection control in-line rather than in the form of a text box and button.</li>
+  <li>rgbahex - if true, the color format used is RRGGBBAA, with hexadecimal components.</li>
+  <li>argbhex - if true, the color format used is AARRGGBB, with hexadecimal components.</li>
 </ol>
 
 <p><strong>The following methods are generally only useful when making color picker adapters:</strong></p>
 
 <p>PDColorPicker.createColorPickerButton( <em>input</em>, <em>extra</em> ) - adds a color picker button next to the color text box. This is a helper function used within functions called via <code>addColorPickerHandler()</code>.
-<em>input</em> and <em>extra</em> have the same meaning as in <code>addColorPickerAdapter()</code>. Returns the HTML element for the button just added.</p>
+<em>input</em> and <em>extra</em> have the same meaning as in ` addColorPickerAdapter()`. Returns the HTML element for the button just added.</p>
 
 <p>PDColorPicker.doColorChange( <em>input</em>, <em>extra</em>, <em>button</em>) - triggers the color change event, using the current value of the color text box.
-<em>input</em> and <em>extra</em> have the same meaning as in <code>addColorPickerAdapter()</code>. <code>button</code> should be the button returned from <code>createColorPickerButton</code>.</p>
+<em>input</em> and <em>extra</em> have the same meaning as in ` addColorPickerAdapter()<code>. </code>button<code> should be the button returned from </code>createColorPickerButton`.</p>
 
 <p>PDColorPicker.doColorPreview( <em>input</em>, <em>extra</em>, <em>button</em> ) - triggers the color preview event, using the current value of the color text box.
-<em>input</em> and <em>extra</em> have the same meaning as in <code>addColorPickerAdapter()</code>. <code>button</code> should be the button returned from <code>createColorPickerButton</code>.</p>
+<em>input</em> and <em>extra</em> have the same meaning as in ` addColorPickerAdapter()<code>. </code>button<code> should be the button returned from </code>createColorPickerButton`.</p>
 
-<h2>History</h2>
+<h2 id="history">History</h2>
 
 <p>Version 1.0</p>
 
 <ul>
-<li>First CodeProject release</li>
+  <li>First CodeProject release</li>
 </ul>
 
-<h2>Server-Side Processing</h2>
+<h2 id="server-side-processing">Server-Side Processing</h2>
 
 <p>Every form sent to the server should be validated on the server side. The color boxes accept a wide variety of values for
 colors, which need to be validated and converted to a common format. Use the server-side scripts in another of my projects:</p>
@@ -116,7 +118,7 @@ colors, which need to be validated and converted to a common format. Use the ser
 <p>That project contains scripts for five popular server-side languages: PHP, Python, Ruby, C#, and Java. These scripts are
 also released to the Public Domain.</p>
 
-<h2>About</h2>
+<h2 id="about">About</h2>
 
 <p>Written in 2012-2016 by Peter O.</p>
 

@@ -5,63 +5,79 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.cbor.CBORType</h1>
-
-<h1>com.upokecenter.cbor.CBORType</h1>
+<p># com.upokecenter.cbor.CBORType</p>
 
 <pre>public enum CBORType extends Enum&lt;CBORType&gt;
 </pre>
 
 <p>Represents a type that a CBOR object can have.</p>
 
-<h2>Nested Classes</h2>
+<h2 id="nested-classes">Nested Classes</h2>
 
-<h2>Enum Constants</h2>
+<h2 id="enum-constants">Enum Constants</h2>
 
 <ul>
-<li><p><code>Array</code><br>
-An array of CBOR objects.</p></li>
-<li><p><code>Boolean</code><br>
-The simple values true and false.</p></li>
-<li><p><code>ByteString</code><br>
-An array of bytes.</p></li>
-<li><p><code>FloatingPoint</code><br>
-A 16-, 32-, or 64-bit binary floating-point number.</p></li>
-<li><p><code>Integer</code><br>
-An integer in the interval [-(2^64), 2^64 - 1], or an integer of major type
-0 and 1.</p></li>
-<li><p><code>Map</code><br>
-A map of CBOR objects.</p></li>
-<li><p><code>Number</code><br>
-Deprecated.
+  <li>
+    <p><code>Array </code><br />
+ An array of CBOR objects.</p>
+  </li>
+  <li>
+    <p><code>Boolean </code><br />
+ The simple values true and false.</p>
+  </li>
+  <li>
+    <p><code>ByteString </code><br />
+ An array of bytes.</p>
+  </li>
+  <li>
+    <p><code>FloatingPoint </code><br />
+ A 16-, 32-, or 64-bit binary floating-point number.</p>
+  </li>
+  <li>
+    <p><code>Integer </code><br />
+ An integer in the interval [-(2^64), 2^64 - 1], or an integer of major type
+ 0 and 1.</p>
+  </li>
+  <li>
+    <p><code>Map </code><br />
+ A map of CBOR objects.</p>
+  </li>
+  <li>
+    <p><code>Number </code><br />
+ Deprecated.
 Since version 4.0, CBORObject.Type no longer returns this value for any
-CBOR Object - this is a breaking change from earlier
-versions.</p></li>
-<li><p><code>SimpleValue</code><br>
-A &quot;simple value&quot; other than floating point values, true, and false.</p></li>
-<li><p><code>TextString</code><br>
-A text string.</p></li>
+ CBOR Object - this is a breaking change from earlier
+ versions.</p>
+  </li>
+  <li>
+    <p><code>SimpleValue </code><br />
+ A “simple value” other than floating point values, true, and false.</p>
+  </li>
+  <li>
+    <p><code>TextString </code><br />
+ A text string.</p>
+  </li>
 </ul>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><p><code>static CBORType valueOf(String name)</code><br>
-Returns the enum constant of this class with the specified name.</p></li>
-<li><p><code>static CBORType[] values()</code><br>
-Returns an array containing the constants of this enum class, in
-the order they are declared.</p></li>
+  <li>
+    <p><code>static CBORType valueOf(String name)</code><br />
+ Returns the enum constant of this class with the specified name.</p>
+  </li>
+  <li>
+    <p><code>static CBORType[] values()</code><br />
+ Returns an array containing the constants of this enum class, in
+the order they are declared.</p>
+  </li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>values</h3>
-
-<pre>public static CBORType[] values()
-</pre>
-
-<h3>valueOf</h3>
-
-<pre>public static CBORType valueOf(String name)
+<h3 id="values">values</h3>
+<pre>public static CBORType[] values() ### valueOf
+public static CBORType valueOf(String name)
 </pre>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

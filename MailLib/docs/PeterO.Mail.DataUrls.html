@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Mail.DataUrls</h1>
-
-<h2>PeterO.Mail.DataUrls</h2>
+<p>## PeterO.Mail.DataUrls</p>
 
 <pre>public static class DataUrls
 </pre>
@@ -24,18 +23,16 @@ data:application/octet-stream;base64, AAAAAA==
 
 <p>.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#DataUrlBytes_string">DataUrlBytes(string)</a></code> - <b>Deprecated:</b> Renamed to DataUriBytes.</li>
-<li><code><a href="#DataUrlMediaType_string">DataUrlMediaType(string)</a></code> - <b>Deprecated:</b> Renamed to DataUriMediaType.</li>
-<li><code><a href="#MakeDataUrl_byte_PeterO_Mail_MediaType">MakeDataUrl(byte[], PeterO.Mail.MediaType)</a></code> - <b>Deprecated:</b> Renamed to MakeDataUri.</li>
-<li><code><a href="#MakeDataUrl_string">MakeDataUrl(string)</a></code> - <b>Deprecated:</b> Renamed to MakeDataUri.</li>
+  <li><code>[DataUrlBytes(string)](#DataUrlBytes_string)</code> - <b>Deprecated:</b> Renamed to DataUriBytes.</li>
+  <li><code>[DataUrlMediaType(string)](#DataUrlMediaType_string)</code> - <b>Deprecated:</b> Renamed to DataUriMediaType.</li>
+  <li><code>[MakeDataUrl(byte[], PeterO.Mail.MediaType)](#MakeDataUrl_byte_PeterO_Mail_MediaType)</code> - <b>Deprecated:</b> Renamed to MakeDataUri.</li>
+  <li><code>[MakeDataUrl(string)](#MakeDataUrl_string)</code> - <b>Deprecated:</b> Renamed to MakeDataUri.</li>
 </ul>
 
-<p><a id="DataUrlBytes_string"></a></p>
-
-<h3>DataUrlBytes</h3>
+<p><a id="DataUrlBytes_string"></a>
+### DataUrlBytes</p>
 
 <pre>public static byte[] DataUrlBytes(
     string url);
@@ -48,7 +45,7 @@ data:application/octet-stream;base64, AAAAAA==
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>url</i>: A data URI.</li>
+  <li><i>url</i>: A data URI.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -56,9 +53,8 @@ data:application/octet-stream;base64, AAAAAA==
 <p>The data as a byte array. Returns null if  <i>url</i>
  is null, is syntactically invalid, or is not a data URI.</p>
 
-<p><a id="DataUrlMediaType_string"></a></p>
-
-<h3>DataUrlMediaType</h3>
+<p><a id="DataUrlMediaType_string"></a>
+### DataUrlMediaType</p>
 
 <pre>public static PeterO.Mail.MediaType DataUrlMediaType(
     string url);
@@ -71,7 +67,7 @@ data:application/octet-stream;base64, AAAAAA==
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>url</i>: A data URI.</li>
+  <li><i>url</i>: A data URI.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -79,9 +75,8 @@ data:application/octet-stream;base64, AAAAAA==
 <p>The media type. Returns null if  <i>url</i>
  is null, is syntactically invalid, or is not a Data URI.</p>
 
-<p><a id="MakeDataUrl_byte_PeterO_Mail_MediaType"></a></p>
-
-<h3>MakeDataUrl</h3>
+<p><a id="MakeDataUrl_byte_PeterO_Mail_MediaType"></a>
+### MakeDataUrl</p>
 
 <pre>public static string MakeDataUrl(
     byte[] bytes,
@@ -95,8 +90,12 @@ data:application/octet-stream;base64, AAAAAA==
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array containing the data to encode in a Data URI.</p></li>
-<li><p><i>mediaType</i>: A media type to assign to the data.</p></li>
+  <li>
+    <p><i>bytes</i>: A byte array containing the data to encode in a Data URI.</p>
+  </li>
+  <li>
+    <p><i>mediaType</i>: A media type to assign to the data.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -106,15 +105,14 @@ data:application/octet-stream;base64, AAAAAA==
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>bytes</i>
-or  <i>mediaType</i>
-is null.</li>
+ or  <i>mediaType</i>
+ is null.</li>
 </ul>
 
-<p><a id="MakeDataUrl_string"></a></p>
-
-<h3>MakeDataUrl</h3>
+<p><a id="MakeDataUrl_string"></a>
+### MakeDataUrl</p>
 
 <pre>public static string MakeDataUrl(
     string textString);
@@ -127,7 +125,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>textString</i>: A text string to encode as a data URI.</li>
+  <li><i>textString</i>: A text string to encode as a data URI.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -137,9 +135,9 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>textString</i>
-is null.</li>
+ is null.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

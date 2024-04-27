@@ -1,84 +1,84 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Color Topics for Programmers</title><meta name="citation_title" content="Supplemental Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/suppcolor.pdf"><meta name="citation_url" content="https://peteroupc.github.io/suppcolor.html"><meta name="citation_date" content="2023/06/13"><meta name="citation_online_date" content="2023/06/13"><meta name="og:title" content="Supplemental Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/suppcolor.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/suppcolor.pdf"><meta name="citation_url" content="https://peteroupc.github.io/suppcolor.html"><meta name="citation_date" content="2023/06/13"><meta name="citation_online_date" content="2023/06/13"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/suppcolor.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>Supplemental Color Topics for Programmers</h1>
+<h1 id="supplemental-color-topics-for-programmers">Supplemental Color Topics for Programmers</h1>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p><a id=Introduction></a></p>
+<p><a id="Introduction"></a></p>
 
-<h2>Introduction</h2>
+<h2 id="introduction">Introduction</h2>
 
 <p>This document presents supplemental topics about color.  They add to my article on <a href="https://peteroupc.github.io/colorgen.html"><strong>color topics for programmers</strong></a>.</p>
 
-<p><a id=Contents></a></p>
+<p><a id="Contents"></a></p>
 
-<h2>Contents</h2>
-
-<ul>
-<li><a href="#Introduction"><strong>Introduction</strong></a></li>
-<li><a href="#Contents"><strong>Contents</strong></a></li>
-<li><a href="#Notation_and_Definitions"><strong>Notation and Definitions</strong></a></li>
-<li><a href="#Kinds_of_Color_Spaces"><strong>Kinds of Color Spaces</strong></a></li>
-<li><a href="#Primary_Colors"><strong>&quot;Primary Colors&quot;</strong></a></li>
-<li><a href="#Calculating_the_Mean_Hue_Angle"><strong>Calculating the Mean Hue Angle</strong></a></li>
-<li><a href="#Additional_Text_based_RGB_colors"><strong>Additional Text-based RGB colors</strong></a></li>
-<li><a href="#Additional_Color_Models"><strong>Additional Color Models</strong></a>
+<h2 id="contents">Contents</h2>
 
 <ul>
-<li><a href="#HSI"><strong>HSI</strong></a></li>
-<li><a href="#Hunter_L_a_b"><strong>Hunter L,a,b</strong></a></li>
-</ul></li>
-<li><a href="#Additional_Color_Formulas"><strong>Additional Color Formulas</strong></a></li>
-<li><a href="#Terminal_Graphics"><strong>Terminal Graphics</strong></a></li>
-<li><a href="#Color_Measurement_Devices"><strong>Color Measurement Devices</strong></a></li>
-<li><a href="#Irrelevant_Topics"><strong>Irrelevant Topics</strong></a></li>
-<li><a href="#License"><strong>License</strong></a></li>
+  <li><a href="#Introduction"><strong>Introduction</strong></a></li>
+  <li><a href="#Contents"><strong>Contents</strong></a></li>
+  <li><a href="#Notation_and_Definitions"><strong>Notation and Definitions</strong></a></li>
+  <li><a href="#Kinds_of_Color_Spaces"><strong>Kinds of Color Spaces</strong></a></li>
+  <li><a href="#Primary_Colors"><strong>“Primary Colors”</strong></a></li>
+  <li><a href="#Calculating_the_Mean_Hue_Angle"><strong>Calculating the Mean Hue Angle</strong></a></li>
+  <li><a href="#Additional_Text_based_RGB_colors"><strong>Additional Text-based RGB colors</strong></a></li>
+  <li><a href="#Additional_Color_Models"><strong>Additional Color Models</strong></a>
+    <ul>
+      <li><a href="#HSI"><strong>HSI</strong></a></li>
+      <li><a href="#Hunter_L_a_b"><strong>Hunter L,a,b</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#Additional_Color_Formulas"><strong>Additional Color Formulas</strong></a></li>
+  <li><a href="#Terminal_Graphics"><strong>Terminal Graphics</strong></a></li>
+  <li><a href="#Color_Measurement_Devices"><strong>Color Measurement Devices</strong></a></li>
+  <li><a href="#Irrelevant_Topics"><strong>Irrelevant Topics</strong></a></li>
+  <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
-<p><a id=Notation_and_Definitions></a></p>
+<p><a id="Notation_and_Definitions"></a></p>
 
-<h2>Notation and Definitions</h2>
+<h2 id="notation-and-definitions">Notation and Definitions</h2>
 
 <ul>
-<li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
-<li><strong>CIE.</strong> French initials for the International Commission on Illumination.</li>
-<li><strong>RGB.</strong> Red&ndash;green&ndash;blue.</li>
+  <li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
+  <li><strong>CIE.</strong> French initials for the International Commission on Illumination.</li>
+  <li><strong>RGB.</strong> Red–green–blue.</li>
 </ul>
 
-<p><a id=Kinds_of_Color_Spaces></a></p>
+<p><a id="Kinds_of_Color_Spaces"></a></p>
 
-<h2>Kinds of Color Spaces</h2>
+<h2 id="kinds-of-color-spaces">Kinds of Color Spaces</h2>
 
 <p><em>Color spaces</em> are designed to organize colors.  They can be categorized as any of the following:</p>
 
 <ul>
-<li><strong>Light-mixture</strong> color spaces are based on mixtures of colored light sources (such as RGB, red&ndash;green&ndash;blue).  (The term &quot;additive mixture&quot; is better used to mean <a href="http://eilv.cie.co.at/term/24"><strong><em>additive mixture of color stimuli</em></strong></a>, rather than light mixture.)</li>
-<li><strong>Colorant-mixture</strong> color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan&ndash;magenta&ndash;yellow&ndash;black). (&quot;Subtractive mixture&quot; is an inferior term.)</li>
-<li><strong>Hue-based</strong> color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE <em>L*C*h</em>.</li>
-<li><strong>Light/dark</strong> color spaces have three dimensions, one of which is a light/dark dimension.  Examples include HSL, CIE <em>L*C*h</em>, CIE XYZ, and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Of these color spaces:</li>
-<li><strong>Opponent</strong> color spaces are light/dark color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.</li>
-<li>It&#39;s discouraged to speak of <strong>&quot;device-dependent&quot;</strong> and <strong>&quot;device-independent&quot;</strong> color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered &quot;device independent&quot;, some RGB color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (<em>colorimetric color spaces</em>).</li>
+  <li><strong>Light-mixture</strong> color spaces are based on mixtures of colored light sources (such as RGB, red–green–blue).  (The term “additive mixture” is better used to mean <a href="http://eilv.cie.co.at/term/24"><strong><em>additive mixture of color stimuli</em></strong></a>, rather than light mixture.)</li>
+  <li><strong>Colorant-mixture</strong> color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan–magenta–yellow–black). (“Subtractive mixture” is an inferior term.)</li>
+  <li><strong>Hue-based</strong> color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE <em>L*C*h</em>.</li>
+  <li><strong>Light/dark</strong> color spaces have three dimensions, one of which is a light/dark dimension.  Examples include HSL, CIE <em>L*C*h</em>, CIE XYZ, and Y′C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Of these color spaces:</li>
+  <li><strong>Opponent</strong> color spaces are light/dark color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.</li>
+  <li>It’s discouraged to speak of <strong>“device-dependent”</strong> and <strong>“device-independent”</strong> color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered “device independent”, some RGB color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (<em>colorimetric color spaces</em>).</li>
 </ul>
 
-<p><a id=Primary_Colors></a></p>
+<p><a id="Primary_Colors"></a></p>
 
-<h2>&quot;Primary Colors&quot;</h2>
+<h2 id="primary-colors">“Primary Colors”</h2>
 
-<p>In general, so-called &quot;primary colors&quot; are not relevant to programming except in the context of light-mixture, colorant-mixture, or opponent color spaces.</p>
+<p>In general, so-called “primary colors” are not relevant to programming except in the context of light-mixture, colorant-mixture, or opponent color spaces.</p>
 
-<p>For light-mixture and colorant-mixture color spaces, the colors of the light sources or colorants those spaces are based on can be called &quot;primary colors&quot;.</p>
+<p>For light-mixture and colorant-mixture color spaces, the colors of the light sources or colorants those spaces are based on can be called “primary colors”.</p>
 
-<p>For opponent color spaces, the four so-called <em>unique hues</em> red, green, blue, and yellow, and maybe white and black, can be called &quot;primary colors&quot;; such &quot;primary colors&quot;, however, generally serve as axes only.</p>
+<p>For opponent color spaces, the four so-called <em>unique hues</em> red, green, blue, and yellow, and maybe white and black, can be called “primary colors”; such “primary colors”, however, generally serve as axes only.</p>
 
-<p>&quot;Primary colors&quot; can be, and often are, imaginary.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 RGB color space</strong></a>, and certain other RGB color spaces, include imaginary points for one or more &quot;primary colors&quot; in exchange for covering a range of colors not normally possible otherwise.</p>
+<p>“Primary colors” can be, and often are, imaginary.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 RGB color space</strong></a>, and certain other RGB color spaces, include imaginary points for one or more “primary colors” in exchange for covering a range of colors not normally possible otherwise.</p>
 
-<p><a id=Calculating_the_Mean_Hue_Angle></a></p>
+<p><a id="Calculating_the_Mean_Hue_Angle"></a></p>
 
-<h2>Calculating the Mean Hue Angle</h2>
+<h2 id="calculating-the-mean-hue-angle">Calculating the Mean Hue Angle</h2>
 
 <p>The <code>MeanAngle</code> method, as given in the pseudocode below, finds the average of one or more angles expressed in radians (which is important when averaging colors in hue-based color models such as HSL, HSV, and CIE <em>L*C*h</em>, which contain hue components that are angles).</p>
 
@@ -98,33 +98,33 @@
 END
 </pre>
 
-<p><a id=Additional_Text_based_RGB_colors></a></p>
+<p><a id="Additional_Text_based_RGB_colors"></a></p>
 
-<h2>Additional Text-based RGB colors</h2>
+<h2 id="additional-text-based-rgb-colors">Additional Text-based RGB colors</h2>
 
 <p>The following color formats express <a href="https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats"><strong>8-bpc <em>encoded RGB</em> colors</strong></a> as text strings:</p>
 
 <ul>
-<li><strong>Delphi</strong> format: Consists of &quot;$00&quot; followed by six base-16 (hexadecimal) digits, two each for the blue, green, and red components, in that order.</li>
-<li><strong>Visual Basic</strong> format: Consists of &quot;&amp;H&quot; followed by six base-16 digits, two each for the blue, green, and red components, in that order.</li>
-<li><strong>C++</strong> format: Consists of &quot;0x00&quot; followed by six base-16 digits, two each for the three RGB components.  If the format expresses a Windows <code>COLORREF</code> color, the three components are blue, green, and red, in that order.</li>
-<li><strong>PowerBuilder</strong> format: Consists of the integer form of the 8-bpc format color, packed red/green/blue, in that order from lowest to highest bits.</li>
+  <li><strong>Delphi</strong> format: Consists of “$00” followed by six base-16 (hexadecimal) digits, two each for the blue, green, and red components, in that order.</li>
+  <li><strong>Visual Basic</strong> format: Consists of “&amp;H” followed by six base-16 digits, two each for the blue, green, and red components, in that order.</li>
+  <li><strong>C++</strong> format: Consists of “0x00” followed by six base-16 digits, two each for the three RGB components.  If the format expresses a Windows <code>COLORREF</code> color, the three components are blue, green, and red, in that order.</li>
+  <li><strong>PowerBuilder</strong> format: Consists of the integer form of the 8-bpc format color, packed red/green/blue, in that order from lowest to highest bits.</li>
 </ul>
 
-<p><a id=Additional_Color_Models></a></p>
+<p><a id="Additional_Color_Models"></a></p>
 
-<h2>Additional Color Models</h2>
+<h2 id="additional-color-models">Additional Color Models</h2>
 
-<p><a id=HSI></a></p>
+<p><a id="HSI"></a></p>
 
-<h3>HSI</h3>
+<h3 id="hsi">HSI</h3>
 
 <p>A color following the HSI color model consists of three components, in the following order:</p>
 
 <ul>
-<li><em>Hue</em> has the same general meaning as HSV hue, but is calculated differently.</li>
-<li>A component called &quot;saturation&quot; is 0 or greater and 1 or less.</li>
-<li>A component called &quot;intensity&quot;, the average of the red, green, and blue components, is 0 or greater and 1 or less.</li>
+  <li><em>Hue</em> has the same general meaning as HSV hue, but is calculated differently.</li>
+  <li>A component called “saturation” is 0 or greater and 1 or less.</li>
+  <li>A component called “intensity”, the average of the red, green, and blue components, is 0 or greater and 1 or less.</li>
 </ul>
 
 <p>The conversions given below are independent of RGB color space, but should be done using <a href="https://peteroupc.github.io/colorgen.html#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a>.</p>
@@ -156,9 +156,9 @@ METHOD HsiToRgb(hsi)
 END METHOD
 </pre>
 
-<p><a id=Hunter_L_a_b></a></p>
+<p><a id="Hunter_L_a_b"></a></p>
 
-<h3>Hunter L,a,b</h3>
+<h3 id="hunter-lab">Hunter L,a,b</h3>
 
 <p>The conversion between XYZ and Hunter L,a,b colors is as given below.</p>
 
@@ -187,13 +187,13 @@ END METHOD
 <code>LchToLab</code> methods from the <a href="colorgen.html#CIELAB"><strong>discussion on CIELAB colors</strong></a> work with
 Hunter L, a, b colors analogously to CIELAB colors.</p>
 
-<p>The difference in lightness, <em>a</em>, <em>b</em>, or chroma (<em>&Delta;L</em>, <em>&Delta;a</em>, <em>&Delta;b</em>, or <em>&Delta;C</em>, respectively), between two Hunter L, a, b colors is simply the difference between the corresponding value of the second Hunter L, a, b color and that of the first.</p>
+<p>The difference in lightness, <em>a</em>, <em>b</em>, or chroma (<em>ΔL</em>, <em>Δa</em>, <em>Δb</em>, or <em>ΔC</em>, respectively), between two Hunter L, a, b colors is simply the difference between the corresponding value of the second Hunter L, a, b color and that of the first.</p>
 
-<p><a id=Additional_Color_Formulas></a></p>
+<p><a id="Additional_Color_Formulas"></a></p>
 
-<h2>Additional Color Formulas</h2>
+<h2 id="additional-color-formulas">Additional Color Formulas</h2>
 
-<p><strong>CIE94.</strong> The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or <em>&Delta;E*</em><sub>94</sub>, between two <a href="https://peteroupc.github.io/colorgen.html#CIELAB"><strong>CIELAB</strong></a> colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, <code>TEXTILES</code> is <code>true</code> for a color difference suitable for textile applications, and <code>false</code> otherwise.</p>
+<p><strong>CIE94.</strong> The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or <em>ΔE*</em><sub>94</sub>, between two <a href="https://peteroupc.github.io/colorgen.html#CIELAB"><strong>CIELAB</strong></a> colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, <code>TEXTILES</code> is <code>true</code> for a color difference suitable for textile applications, and <code>false</code> otherwise.</p>
 
 <pre>METHOD COLORDIFF(lab1, lab2)
     c1=LabToChroma(lab1)
@@ -217,75 +217,68 @@ Hunter L, a, b colors analogously to CIELAB colors.</p>
 END METHOD
 </pre>
 
-<p><a id=Terminal_Graphics></a></p>
+<p><a id="Terminal_Graphics"></a></p>
 
-<h2>Terminal Graphics</h2>
+<h2 id="terminal-graphics">Terminal Graphics</h2>
 
-<p>Some command-line terminals (or terminal emulators) support coloring the background or foreground of text.  In such programs that support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code"><strong>&quot;ANSI&quot; (American National Standards Institute) color codes</strong></a> (generally in the category &quot;select graphic rendition&quot;, or SGR), the sequence U+001B (escape character) followed by &quot;&#x5b;&quot; followed by a semicolon-separated sequence of numbers (given below) followed by &quot;m&quot; is a graphic control sequence (see also Ecma-048, sec. 8.3.117):</p>
-
-<ul>
-<li>&quot;0&quot;: Reset the foreground and background color and other graphic properties to default.  (The graphic control sequence U+001B followed by &quot;&#x5b;m&quot; has the same effect.)</li>
-<li>&quot;1&quot;: Set the following text in bold.</li>
-<li>&quot;2&quot;: Use a slightly dimmer foreground color than usual.</li>
-<li>&quot;3&quot;: Set the following text in italics.</li>
-<li>&quot;4&quot;: Underline the following text.</li>
-<li>&quot;7&quot;: Reverse the meaning of &quot;foreground&quot; and &quot;background&quot; in the following text.</li>
-<li>&quot;8&quot;: Hide text while still taking up space.</li>
-<li>&quot;21&quot;, &quot;22&quot;, &quot;23&quot;, &quot;24&quot;, &quot;27&quot;, &quot;28&quot;: Turns off the feature mentioned earlier in &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;7&quot;, or &quot;8&quot;, respectively.</li>
-<li>&quot;3&quot; followed by one of the <em>color numbers</em> below: Dimmer version of foreground color.</li>
-<li>&quot;4&quot; followed by color number: Dimmer version of background color.</li>
-<li>&quot;9&quot; followed by color number: Brighter version of foreground color.</li>
-<li>&quot;10&quot; followed by color number: Brighter version of background color.</li>
-</ul>
-
-<p>The <em>color number</em> is one of the following: &quot;0&quot; (black), &quot;1&quot; (red), &quot;2&quot; (green), &quot;3&quot; (yellow), &quot;4&quot; (blue), &quot;5&quot; (magenta), &quot;6&quot; (cyan), or &quot;7&quot; (white).  Note that not all terminals or terminal emulators support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.</p>
-
-<p><a id=Color_Measurement_Devices></a></p>
-
-<h2>Color Measurement Devices</h2>
-
-<p>Measuring color is not like pointing and shooting with a camera, and it&#39;s not like measuring height or weight.  In general, special devices or technologies are needed to measure color.</p>
-
-<p>There are two general kinds of color measurement devices: <em>colorimeters</em> and <em>spectrophotometers</em>.  In general:</p>
+<p>Some command-line terminals (or terminal emulators) support coloring the background or foreground of text.  In such programs that support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code"><strong>“ANSI” (American National Standards Institute) color codes</strong></a> (generally in the category “select graphic rendition”, or SGR), the sequence U+001B (escape character) followed by “[” followed by a semicolon-separated sequence of numbers (given below) followed by “m” is a graphic control sequence (see also Ecma-048, sec. 8.3.117):</p>
 
 <ul>
-<li>A <em>colorimeter</em> detects light passing through a small number of special filters, and converts the light detected this way to numbers.  These numbers are usually three <em>tristimulus values</em> that identify a particular color.</li>
-<li>A <em>spectrophotometer</em> breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a <a href="https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions"><strong><em>spectral curve</em></strong></a>.</li>
+  <li>“0”: Reset the foreground and background color and other graphic properties to default.  (The graphic control sequence U+001B followed by “[m” has the same effect.)</li>
+  <li>“1”: Set the following text in bold.</li>
+  <li>“2”: Use a slightly dimmer foreground color than usual.</li>
+  <li>“3”: Set the following text in italics.</li>
+  <li>“4”: Underline the following text.</li>
+  <li>“7”: Reverse the meaning of “foreground” and “background” in the following text.</li>
+  <li>“8”: Hide text while still taking up space.</li>
+  <li>“21”, “22”, “23”, “24”, “27”, “28”: Turns off the feature mentioned earlier in “1”, “2”, “3”, “4”, “7”, or “8”, respectively.</li>
+  <li>“3” followed by one of the <em>color numbers</em> below: Dimmer version of foreground color.</li>
+  <li>“4” followed by color number: Dimmer version of background color.</li>
+  <li>“9” followed by color number: Brighter version of foreground color.</li>
+  <li>“10” followed by color number: Brighter version of background color.</li>
 </ul>
 
-<p>Color measurements of the same sample can vary depending on many things, including&mdash;</p>
+<p>The <em>color number</em> is one of the following: “0” (black), “1” (red), “2” (green), “3” (yellow), “4” (blue), “5” (magenta), “6” (cyan), or “7” (white).  Note that not all terminals or terminal emulators support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.</p>
 
-<ul>
-<li>how the sample is prepared,</li>
-<li>how the sample is presented to the measurement device,</li>
-<li>for opaque samples, whether that device includes gloss in the measurement (as in &quot;sphere&quot; or &quot;diffuse/8&deg;&quot; devices) or excludes it (as in &quot;45/0&quot; or &quot;0/45&quot; devices),</li>
-<li>for non-opaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),</li>
-<li>how the measurement device illuminates the sample and filters the light in the device&#39;s path (especially if it&#39;s a colorimeter or the sample is fluorescent),</li>
-<li>the measurement device&#39;s aperture (sample view area),</li>
-<li>ambient temperature and relative humidity, and</li>
-<li>for spectrophotometers, the wavelength range, resolution, and bandwidth of measurement.</li>
-</ul>
+<p><a id="Color_Measurement_Devices"></a></p>
+
+<h2 id="color-measurement-devices">Color Measurement Devices</h2>
+
+<p>Measuring color is not like pointing and shooting with a camera, and it’s not like measuring height or weight.  In general, special devices or technologies are needed to measure color.</p>
+
+<p>There are two general kinds of color measurement devices: <em>colorimeters</em> and <em>spectrophotometers</em>.  In general:
+- A <em>colorimeter</em> detects light passing through a small number of special filters, and converts the light detected this way to numbers.  These numbers are usually three <em>tristimulus values</em> that identify a particular color.
+- A <em>spectrophotometer</em> breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a <a href="https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions"><strong><em>spectral curve</em></strong></a>.</p>
+
+<p>Color measurements of the same sample can vary depending on many things, including—
+- how the sample is prepared,
+- how the sample is presented to the measurement device,
+- for opaque samples, whether that device includes gloss in the measurement (as in “sphere” or “diffuse/8°” devices) or excludes it (as in “45/0” or “0/45” devices),
+- for non-opaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),
+- how the measurement device illuminates the sample and filters the light in the device’s path (especially if it’s a colorimeter or the sample is fluorescent),
+- the measurement device’s aperture (sample view area),
+- ambient temperature and relative humidity, and
+- for spectrophotometers, the wavelength range, resolution, and bandwidth of measurement.</p>
 
 <p>Several <a href="https://www.hunterlab.com/application-notes.html"><strong>application notes</strong></a> by HunterLab (AN 1018, AN 1031, AN 1033) provide more detailed information.  Color measurements should also be reproducible, but how to ensure this is outside the scope of this section.</p>
 
 <p>At the time of this writing, most color measurement devices are still expensive and mostly for professional use.  However, <a href="https://www.coltechcon.com/publication/overview-low-cost-color-capture-devices/"><strong>several colorimeters</strong></a> are available in the consumer market, as is a limited selection of spectrophotometers.  G. W. Gill describes a <a href="http://www.argyllcms.com/doc/instruments.html"><strong>selection</strong></a> of color measurement devices.</p>
 
-<p><a id=Irrelevant_Topics></a></p>
+<p><a id="Irrelevant_Topics"></a></p>
 
-<h2>Irrelevant Topics</h2>
+<h2 id="irrelevant-topics">Irrelevant Topics</h2>
 
 <p>The following topics on color are rarely relevant to programmers:</p>
 
 <ul>
-<li>The psychology, symbolism, or &quot;meaning&quot; of colors, since they vary from culture to culture and can change over time, even within the same culture.</li>
-<li>Language differences in color lexicons, for the same reason.</li>
-<li>&quot;Color forecasting&quot;, or predicting which colors will be in high demand, especially in the fashion and design realms.</li>
+  <li>The psychology, symbolism, or “meaning” of colors, since they vary from culture to culture and can change over time, even within the same culture.</li>
+  <li>Language differences in color lexicons, for the same reason.</li>
+  <li>“Color forecasting”, or predicting which colors will be in high demand, especially in the fashion and design realms.</li>
 </ul>
 
-<p><a id=License></a></p>
+<p><a id="License"></a></p>
 
-<h2>License</h2>
-
+<h2 id="license">License</h2>
 <p>This page is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

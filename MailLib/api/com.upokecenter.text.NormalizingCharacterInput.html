@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.text.NormalizingCharacterInput</h1>
-
-<h1>com.upokecenter.text.NormalizingCharacterInput</h1>
+<p># com.upokecenter.text.NormalizingCharacterInput</p>
 
 <pre>@Deprecated public final class NormalizingCharacterInput extends Object implements com.upokecenter.text.ICharacterInput
 </pre>
@@ -14,7 +13,8 @@
 <p>A character input class that implements the Unicode normalization
  algorithm and contains methods and functionality to test and convert text
  strings for normalization. This is similar to the deprecated Normalizer
- class, except it implements the ICharacterInput interface.</p> <ul>
+ class, except it implements the ICharacterInput interface.</p>
+<ul>
  <li><b>NFD</b> (Normalization Form D) decomposes combined forms to their
  constituent characters (E plus acute, for example), then reorders combining
  marks to a standardized order. This is called canonical
@@ -24,19 +24,25 @@
  forms, <b>NFKC</b> and <b>NFKD</b>, are similar to NFC and NFD, except they
  also "decompose" certain characters, such as ligatures, font or positional
  variants, and subscripts, whose visual distinction can matter in some
- contexts. This is called compatibility decomposition.</li></ul> <p>For more
+ contexts. This is called compatibility decomposition.</li></ul>
+<p>For more
  information, see Standard Annex 15 at <code>
- http://www.unicode.org/reports/tr15/</code>.</p> <p><b>Thread safety:</b> This
+ http://www.unicode.org/reports/tr15/</code>.</p>
+<p><b>Thread safety:</b> This
  class is mutable; its properties can be changed. None of its instance
  methods are designed to be thread safe. Therefore, access to objects from
  this class must be synchronized if multiple threads can access them at the
- same time.</p> <p>NOTICE: While this class's source code is in the public
+ same time.</p>
+<p>NOTICE: While this class's source code is in the public
  domain, the class uses an class, called NormalizationData, that
  includes data derived from the Unicode Character Database. In case doing so
  is required, the permission notice for the Unicode Character Database is
- given here:</p> <p>COPYRIGHT AND PERMISSION NOTICE.</p> <p>Copyright (c)
+ given here:</p>
+<p>COPYRIGHT AND PERMISSION NOTICE.</p>
+<p>Copyright (c)
  1991-2014 Unicode, Inc. All rights reserved. Distributed under the Terms of
- Use in http://www.unicode.org/copyright.html.</p> <p>Permission is hereby
+ Use in http://www.unicode.org/copyright.html.</p>
+<p>Permission is hereby
  granted, free of charge, to any person obtaining a copy of the Unicode data
  files and any associated documentation (the "Data Files") or Unicode
  software and any associated documentation (the "Software") to deal in the
@@ -48,7 +54,8 @@
  this copyright and permission notice appear in associated documentation, and
  (c) there is clear notice in each modified Data File or in the Software as
  well as in the documentation associated with the Data File(s) or Software
- that the data or software has been modified.</p> <p>THE DATA FILES AND
+ that the data or software has been modified.</p>
+<p>THE DATA FILES AND
  SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS.
@@ -57,314 +64,345 @@
  ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
  IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
  OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA FILES OR
- SOFTWARE.</p> <p>Except as contained in this notice, the name of a copyright
+ SOFTWARE.</p>
+<p>Except as contained in this notice, the name of a copyright
  holder shall not be used in advertising or otherwise to promote the sale,
  use or other dealings in these Data Files or Software without prior written
  authorization of the copyright holder.</p>
 
-<h2>Constructors</h2>
+<h2 id="constructors">Constructors</h2>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><p><code>static List&lt;Integer&gt; GetChars(com.upokecenter.text.ICharacterInput chars,
-Normalization form)</code><br>
-Deprecated.
+  <li>
+    <p><code>static List&lt;Integer&gt; GetChars(com.upokecenter.text.ICharacterInput chars,
+ Normalization form)</code><br />
+ Deprecated.
 Instead of this method, create a NormalizerInput on the input and call
-ReadChar to get the normalized String&#39;s code points.</p></li>
-<li><p><code>static List&lt;Integer&gt; GetChars(String str,
-Normalization form)</code><br>
-Deprecated.
+ ReadChar to get the normalized String’s code points.</p>
+  </li>
+  <li>
+    <p><code>static List&lt;Integer&gt; GetChars(String str,
+ Normalization form)</code><br />
+ Deprecated.
 Instead of this method, create a NormalizerInput on the String and call
-ReadChar to get the normalized String&#39;s code points.</p></li>
-<li><p><code>static boolean IsNormalized(int[] charArray,
-Normalization form)</code><br>
-Deprecated.
+ ReadChar to get the normalized String’s code points.</p>
+  </li>
+  <li>
+    <p><code>static boolean IsNormalized(int[] charArray,
+ Normalization form)</code><br />
+ Deprecated.
 Either convert the array to a String or wrap it in an ICharacterInput and
-call the corresponding overload instead.</p></li>
-<li><p><code>static boolean IsNormalized(com.upokecenter.text.ICharacterInput chars,
-Normalization form)</code><br>
-Deprecated.
-Determines whether the text provided by a character input is normalized.</p></li>
-<li><p><code>static boolean IsNormalized(String str,
-Normalization form)</code><br>
-Deprecated.
+ call the corresponding overload instead.</p>
+  </li>
+  <li>
+    <p><code>static boolean IsNormalized(com.upokecenter.text.ICharacterInput chars,
+ Normalization form)</code><br />
+ Deprecated.
+Determines whether the text provided by a character input is normalized.</p>
+  </li>
+  <li>
+    <p><code>static boolean IsNormalized(String str,
+ Normalization form)</code><br />
+ Deprecated.
 Determines whether the given string is in the given Unicode normalization
-form.</p></li>
-<li><p><code>static boolean IsNormalized(List&lt;Integer&gt; charList,
-Normalization form)</code><br>
-Deprecated.
-Either convert the list to a String or wrap it in an ICharacterInput and
-call the corresponding overload instead.</p></li>
-<li><p><code>static String Normalize(String str,
-Normalization form)</code><br>
-Deprecated.
-Converts a string to the given Unicode normalization form.</p></li>
-<li><p><code>int Read(int[] chars,
-int index,
-int length)</code><br>
-Deprecated.
-Reads a sequence of Unicode code points from a data source.</p></li>
-<li><p><code>int ReadChar()</code><br>
-Deprecated.
-Reads a Unicode character from a data source.</p></li>
-</ul>
-
-<h2>Method Details</h2>
-
-<h3>IsNormalized</h3>
-
-<pre>public static boolean IsNormalized(com.upokecenter.text.ICharacterInput chars, Normalization form)
-</pre>
-
-<p>Determines whether the text provided by a character input is normalized.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>chars</code> - A object that implements a streamable character input.</p></li>
-<li><p><code>form</code> - Specifies the normalization form to check.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if the text is normalized; otherwise, <code>false</code>.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>chars</code> is null.</li>
-</ul>
-
-<h3>Normalize</h3>
-
-<pre>public static String Normalize(String str, Normalization form)
-</pre>
-
-<p>Converts a string to the given Unicode normalization form.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>str</code> - An arbitrary string.</p></li>
-<li><p><code>form</code> - The Unicode normalization form to convert to.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The parameter <code>str</code> converted to the given normalization form.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> contains an unpaired
-surrogate code point.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-</ul>
-
-<h3>IsNormalized</h3>
-
-<pre>public static boolean IsNormalized(String str, Normalization form)
-</pre>
-
-<p>Determines whether the given string is in the given Unicode normalization
  form.</p>
+  </li>
+  <li>
+    <p><code>static boolean IsNormalized(List&lt;Integer&gt; charList,
+ Normalization form)</code><br />
+ Deprecated.
+Either convert the list to a String or wrap it in an ICharacterInput and
+ call the corresponding overload instead.</p>
+  </li>
+  <li>
+    <p><code>static String Normalize(String str,
+ Normalization form)</code><br />
+ Deprecated.
+Converts a string to the given Unicode normalization form.</p>
+  </li>
+  <li>
+    <p><code>int Read(int[] chars,
+ int index,
+ int length)</code><br />
+ Deprecated.
+Reads a sequence of Unicode code points from a data source.</p>
+  </li>
+  <li>
+    <p><code>int ReadChar()</code><br />
+ Deprecated.
+Reads a Unicode character from a data source.</p>
+  </li>
+</ul>
+
+<h2 id="method-details">Method Details</h2>
+
+<h3 id="isnormalized">IsNormalized</h3>
+<pre>public static boolean IsNormalized(com.upokecenter.text.ICharacterInput chars, Normalization form) Determines whether the text provided by a character input is normalized.
+</pre>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - An arbitrary string.</p></li>
-<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
-text.</p></li>
+  <li>
+    <p><code>chars</code> - A object that implements a streamable character input.</p>
+  </li>
+  <li>
+    <p><code>form</code> - Specifies the normalization form to check.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the given string is in the given Unicode
-normalization form; otherwise, <code>false</code>. Returns <code>false</code> if the
-string contains an unpaired surrogate code point.</li>
+  <li><code>true</code> if the text is normalized; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+  <li><code>NullPointerException</code> - The parameter <code>chars</code> is null.</li>
 </ul>
 
-<h3>GetChars</h3>
-
-<pre>@Deprecated public static List&lt;Integer&gt; GetChars(String str, Normalization form)
+<h3 id="normalize">Normalize</h3>
+<pre>public static String Normalize(String str, Normalization form) Converts a string to the given Unicode normalization form.
 </pre>
-
-<p>Gets a list of normalized code points after reading from a string.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
-text.</p></li>
+  <li>
+    <p><code>str</code> - An arbitrary string.</p>
+  </li>
+  <li>
+    <p><code>form</code> - The Unicode normalization form to convert to.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A list of the normalized Unicode characters.</li>
+  <li>The parameter <code>str</code> converted to the given normalization form.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+  <li>
+    <p><code>IllegalArgumentException</code> - The parameter <code>str</code> contains an unpaired
+ surrogate code point.</p>
+  </li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p>
+  </li>
 </ul>
 
-<h3>GetChars</h3>
-
-<pre>@Deprecated public static List&lt;Integer&gt; GetChars(com.upokecenter.text.ICharacterInput chars, Normalization form)
+<h3 id="isnormalized-1">IsNormalized</h3>
+<pre>public static boolean IsNormalized(String str, Normalization form) Determines whether the given string is in the given Unicode normalization  form.
 </pre>
-
-<p>Gets a list of normalized code points after reading from a character stream.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>chars</code> - An object that implements a stream of Unicode characters.</p></li>
-<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
-text.</p></li>
+  <li>
+    <p><code>str</code> - An arbitrary string.</p>
+  </li>
+  <li>
+    <p><code>form</code> - Specifies the normalization form to use when normalizing the
+ text.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A list of the normalized Unicode characters.</li>
+  <li><code>true</code> if the given string is in the given Unicode
+ normalization form; otherwise, <code>false</code>. Returns <code>false</code> if the
+ string contains an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>chars</code> is null.</li>
+  <li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
-<h3>IsNormalized</h3>
-
-<pre>@Deprecated public static boolean IsNormalized(int[] charArray, Normalization form)
+<h3 id="getchars">GetChars</h3>
+<pre>@Deprecated public static List&lt;Integer&gt; GetChars(String str, Normalization form) Gets a list of normalized code points after reading from a string.
 </pre>
-
-<p>Determines whether the given array of characters is in the given Unicode
- normalization form.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>charArray</code> - An array of Unicode code points.</p></li>
-<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
-text.</p></li>
+  <li>
+    <p><code>str</code> - The parameter <code>str</code> is a text string.</p>
+  </li>
+  <li>
+    <p><code>form</code> - Specifies the normalization form to use when normalizing the
+ text.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the given list of characters is in the given Unicode
-normalization form; otherwise, <code>false</code>.</li>
+  <li>A list of the normalized Unicode characters.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;charList&quot; is null.</li>
+  <li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
-<h3>IsNormalized</h3>
-
-<pre>@Deprecated public static boolean IsNormalized(List&lt;Integer&gt; charList, Normalization form)
+<h3 id="getchars-1">GetChars</h3>
+<pre>@Deprecated public static List&lt;Integer&gt; GetChars(com.upokecenter.text.ICharacterInput chars, Normalization form) Gets a list of normalized code points after reading from a character stream.
 </pre>
-
-<p>Determines whether the given list of characters is in the given Unicode
- normalization form.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>charList</code> - A list of Unicode code points.</p></li>
-<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
-text.</p></li>
+  <li>
+    <p><code>chars</code> - An object that implements a stream of Unicode characters.</p>
+  </li>
+  <li>
+    <p><code>form</code> - Specifies the normalization form to use when normalizing the
+ text.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the given list of characters is in the given Unicode
-normalization form; otherwise, <code>false</code>.</li>
+  <li>A list of the normalized Unicode characters.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>charList</code> is null.</li>
+  <li><code>NullPointerException</code> - The parameter <code>chars</code> is null.</li>
 </ul>
 
-<h3>ReadChar</h3>
-
-<pre>public int ReadChar()
+<h3 id="isnormalized-2">IsNormalized</h3>
+<pre>@Deprecated public static boolean IsNormalized(int[] charArray, Normalization form) Determines whether the given array of characters is in the given Unicode  normalization form.
 </pre>
 
-<p>Reads a Unicode character from a data source.</p>
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li>
+    <p><code>charArray</code> - An array of Unicode code points.</p>
+  </li>
+  <li>
+    <p><code>form</code> - Specifies the normalization form to use when normalizing the
+ text.</p>
+  </li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li><code>true</code> if the given list of characters is in the given Unicode
+ normalization form; otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+  <li><code>NullPointerException</code> - The parameter “charList” is null.</li>
+</ul>
+
+<h3 id="isnormalized-3">IsNormalized</h3>
+<pre>@Deprecated public static boolean IsNormalized(List&lt;Integer&gt; charList, Normalization form) Determines whether the given list of characters is in the given Unicode  normalization form.
+</pre>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li>
+    <p><code>charList</code> - A list of Unicode code points.</p>
+  </li>
+  <li>
+    <p><code>form</code> - Specifies the normalization form to use when normalizing the
+ text.</p>
+  </li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li><code>true</code> if the given list of characters is in the given Unicode
+ normalization form; otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+  <li><code>NullPointerException</code> - The parameter <code>charList</code> is null.</li>
+</ul>
+
+<h3 id="readchar">ReadChar</h3>
+<pre>public int ReadChar() Reads a Unicode character from a data source.
+</pre>
 
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>ReadChar</code> in interface <code>com.upokecenter.text.ICharacterInput</code></li>
+  <li><code>ReadChar</code> in interface <code>com.upokecenter.text.ICharacterInput</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
-0x10ffff), or the value -1 indicating the end of the source.</li>
+  <li>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
+ 0x10ffff), or the value -1 indicating the end of the source.</li>
 </ul>
 
-<h3>Read</h3>
-
-<pre>public int Read(int[] chars, int index, int length)
+<h3 id="read">Read</h3>
+<pre>public int Read(int[] chars, int index, int length) Reads a sequence of Unicode code points from a data source.
 </pre>
-
-<p>Reads a sequence of Unicode code points from a data source.</p>
 
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>Read</code> in interface <code>com.upokecenter.text.ICharacterInput</code></li>
+  <li><code>Read</code> in interface <code>com.upokecenter.text.ICharacterInput</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>chars</code> - Output buffer.</p></li>
-<li><p><code>index</code> - An index starting at 0 showing where the desired portion of
-<code>chars</code> begins.</p></li>
-<li><p><code>length</code> - The number of elements in the desired portion of <code>chars</code>
-(but not more than <code>chars</code> &#39;s length).</p></li>
+  <li>
+    <p><code>chars</code> - Output buffer.</p>
+  </li>
+  <li>
+    <p><code>index</code> - An index starting at 0 showing where the desired portion of
+ <code>chars</code> begins.</p>
+  </li>
+  <li>
+    <p><code>length</code> - The number of elements in the desired portion of <code>chars</code>
+ (but not more than <code>chars</code> ‘s length).</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The number of Unicode code points read, or 0 if the end of the
-source is reached.</li>
+  <li>The number of Unicode code points read, or 0 if the end of the
+ source is reached.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
-than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s length
-minus <code>index</code> is less than <code>length</code>.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
+ than 0 or greater than <code>chars</code> ‘s length, or <code>chars</code> ‘s length
+ minus <code>index</code> is less than <code>length</code>.</p>
+  </li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

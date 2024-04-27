@@ -5,24 +5,21 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Text.ICharacterInput</h1>
-
-<h2>PeterO.Text.ICharacterInput</h2>
+<p>## PeterO.Text.ICharacterInput</p>
 
 <pre>public interface ICharacterInput
 </pre>
 
 <p>An interface for reading Unicode code points from a data source.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Read_int_int_int">Read(int[], int, int)</a></code> - Reads a sequence of Unicode code points from a data source.</li>
-<li><code><a href="#ReadChar">ReadChar()</a></code> - Reads a Unicode code point from a data source.</li>
+  <li><code>[Read(int[], int, int)](#Read_int_int_int)</code> - Reads a sequence of Unicode code points from a data source.</li>
+  <li><code>[ReadChar()](#ReadChar)</code> - Reads a Unicode code point from a data source.</li>
 </ul>
 
-<p><a id="Read_int_int_int"></a></p>
-
-<h3>Read</h3>
+<p><a id="Read_int_int_int"></a>
+### Read</p>
 
 <pre>int Read(
     int[] chars,
@@ -35,12 +32,18 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>chars</i>: Output buffer.</p></li>
-<li><p><i>index</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
-begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
-(but not more than  <i>chars</i>
-&#39;s length).</p></li>
+  <li>
+    <p><i>chars</i>: Output buffer.</p>
+  </li>
+  <li>
+    <p><i>index</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
+ (but not more than  <i>chars</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -50,16 +53,19 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 Should be thrown if  <i>chars</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-Either &quot;index&quot; or &quot;length&quot; is less than 0 or greater than &quot;chars&quot;&#39;s length, or &quot;chars&quot;&#39;s length minus &quot;index&quot; is less than &quot;length&quot;.</p></li>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+Either “index” or “length” is less than 0 or greater than “chars”’s length, or “chars”’s length minus “index” is less than “length”.</p>
+  </li>
 </ul>
 
-<p><a id="ReadChar"></a></p>
-
-<h3>ReadChar</h3>
+<p><a id="ReadChar"></a>
+### ReadChar</p>
 
 <pre>int ReadChar();
 </pre>

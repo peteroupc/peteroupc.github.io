@@ -5,27 +5,24 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Mail.Address</h1>
-
-<h2>PeterO.Mail.Address</h2>
+<p>## PeterO.Mail.Address</p>
 
 <pre>public class Address
 </pre>
 
 <p>Represents an email address.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Domain">Domain</a></code> - Gets the domain of this email address (the part after the &quot;@&quot; sign).</li>
-<li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal.</li>
-<li><code><a href="#GetHashCode">GetHashCode()</a></code> - Returns a hash code for this address object.</li>
-<li><code><a href="#LocalPart">LocalPart</a></code> - Gets the local part of this email address (the part before the &quot;@&quot; sign).</li>
-<li><code><a href="#ToString">ToString()</a></code> - Converts this address object to a text string.</li>
+  <li><code>[Domain](#Domain)</code> - Gets the domain of this email address (the part after the “@” sign).</li>
+  <li><code>[Equals(object)](#Equals_object)</code> - Determines whether this object and another object are equal.</li>
+  <li><code>[GetHashCode()](#GetHashCode)</code> - Returns a hash code for this address object.</li>
+  <li><code>[LocalPart](#LocalPart)</code> - Gets the local part of this email address (the part before the “@” sign).</li>
+  <li><code>[ToString()](#ToString)</code> - Converts this address object to a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>Address Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### Address Constructor</p>
 
 <pre>public Address(
     string addressValue);
@@ -36,48 +33,49 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addressValue</i>: An email address. This parameter must contain an at-sign, and may not contain extraneous whitespace, and comments enclosed in parentheses are also not allowed.</li>
+  <li><i>addressValue</i>: An email address. This parameter must contain an at-sign, and may not contain extraneous whitespace, and comments enclosed in parentheses are also not allowed.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>addressValue</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-AddressValue is empty.; Address doesn&#39;t contain a &#39;@&#39;sign; Invalid local part; Expected &#39;@&#39;sign after local part; Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+AddressValue is empty.; Address doesn’t contain a ‘@’sign; Invalid local part; Expected ‘@’sign after local part; Expected domain after ‘@’; Invalid domain; Address too long.</p>
+  </li>
 </ul>
 
-<p><a id="Domain"></a></p>
-
-<h3>Domain</h3>
+<p><a id="Domain"></a>
+### Domain</p>
 
 <pre>public string Domain { get; }
 </pre>
 
-<p>Gets the domain of this email address (the part after the &quot;@&quot; sign).</p>
+<p>Gets the domain of this email address (the part after the “@” sign).</p>
 
 <p><b>Returns:</b></p>
 
-<p>The domain of this email address (the part after the &quot;@&quot; sign).</p>
+<p>The domain of this email address (the part after the “@” sign).</p>
 
-<p><a id="LocalPart"></a></p>
-
-<h3>LocalPart</h3>
+<p><a id="LocalPart"></a>
+### LocalPart</p>
 
 <pre>public string LocalPart { get; }
 </pre>
 
-<p>Gets the local part of this email address (the part before the &quot;@&quot; sign).</p>
+<p>Gets the local part of this email address (the part before the “@” sign).</p>
 
 <p><b>Returns:</b></p>
 
-<p>The local part of this email address (the part before the &quot;@&quot; sign).</p>
+<p>The local part of this email address (the part before the “@” sign).</p>
 
-<p><a id="Equals_object"></a></p>
-
-<h3>Equals</h3>
+<p><a id="Equals_object"></a>
+### Equals</p>
 
 <pre>public override bool Equals(
     object obj);
@@ -88,17 +86,16 @@ AddressValue is empty.; Address doesn&#39;t contain a &#39;@&#39;sign; Invalid l
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
-is an arbitrary object.</li>
+  <li><i>obj</i>: The parameter  <i>obj</i>
+ is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
-<p><a id="GetHashCode"></a></p>
-
-<h3>GetHashCode</h3>
+<p><a id="GetHashCode"></a>
+### GetHashCode</p>
 
 <pre>public override int GetHashCode();
 </pre>
@@ -109,9 +106,8 @@ is an arbitrary object.</li>
 
 <p>A hash code for this instance.</p>
 
-<p><a id="ToString"></a></p>
-
-<h3>ToString</h3>
+<p><a id="ToString"></a>
+### ToString</p>
 
 <pre>public override string ToString();
 </pre>

@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.DisposableList-T</h1>
-
-<h2>PeterO.DisposableList<T></h2>
+<p>## PeterO.DisposableList<T></T></p>
 
 <pre>public sealed class DisposableList&lt;T&gt; :
     System.Collections.Generic.ICollection&lt;T&gt;,
@@ -19,42 +18,39 @@
 
 <p>Holds a list of disposable objects, which can all be disposed at once when this object is disposed.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Add_T">Add(T)</a></code> - Not documented yet.</li>
-<li><code><a href="#Clear">Clear()</a></code> - Not documented yet.</li>
-<li><code><a href="#Contains_T">Contains(T)</a></code> - Not documented yet.</li>
-<li><code><a href="#CopyTo_PeterO_T_int">CopyTo(PeterO.T&lt;&gt;[], int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Count">Count</a></code> - Gets a value not documented yet.</li>
-<li><code><a href="#Dispose">Dispose()</a></code> - Not documented yet.</li>
-<li><code><a href="#GetEnumerator">GetEnumerator()</a></code> - Not documented yet.</li>
-<li><code><a href="#IndexOf_T">IndexOf(T)</a></code> - Not documented yet.</li>
-<li><code><a href="#Insert_int_T">Insert(int, T)</a></code> - Not documented yet.</li>
-<li><code><a href="#IsReadOnly">IsReadOnly</a></code> - Gets a value indicating whether this list is read only.</li>
-<li><code><a href="#Remove_T">Remove(T)</a></code> - Not documented yet.</li>
-<li><code><a href="#RemoveAt_int">RemoveAt(int)</a></code> - Removes an item at a given index from the list.</li>
-<li><code><a href="#this_int">this[int]</a></code> - Not documented yet.</li>
+  <li><code>[Add(T)](#Add_T)</code> - Not documented yet.</li>
+  <li><code>[Clear()](#Clear)</code> - Not documented yet.</li>
+  <li><code>[Contains(T)](#Contains_T)</code> - Not documented yet.</li>
+  <li><code>[CopyTo(PeterO.T&lt;&gt;[], int)](#CopyTo_PeterO_T_int)</code> - Not documented yet.</li>
+  <li><code>[Count](#Count)</code> - Gets a value not documented yet.</li>
+  <li><code>[Dispose()](#Dispose)</code> - Not documented yet.</li>
+  <li><code>[GetEnumerator()](#GetEnumerator)</code> - Not documented yet.</li>
+  <li><code>[IndexOf(T)](#IndexOf_T)</code> - Not documented yet.</li>
+  <li><code>[Insert(int, T)](#Insert_int_T)</code> - Not documented yet.</li>
+  <li><code>[IsReadOnly](#IsReadOnly)</code> - Gets a value indicating whether this list is read only.</li>
+  <li><code>[Remove(T)](#Remove_T)</code> - Not documented yet.</li>
+  <li><code>[RemoveAt(int)](#RemoveAt_int)</code> - Removes an item at a given index from the list.</li>
+  <li><code>[this[int]](#this_int)</code> - Not documented yet.</li>
 </ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li>&lt;T&gt;: Any object type that implements IDisposable.</li>
+  <li>&lt;T&gt;: Any object type that implements IDisposable.</li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>DisposableList Constructor</h3>
+<p><a id="Void_ctor"></a>
+### DisposableList Constructor</p>
 
 <pre>public DisposableList();
 </pre>
 
 <p>Initializes a new instance of the  class.</p>
 
-<p><a id="Count"></a></p>
-
-<h3>Count</h3>
+<p><a id="Count"></a>
+### Count</p>
 
 <pre>public sealed int Count { get; }
 </pre>
@@ -65,9 +61,8 @@
 
 <p>A value not documented yet.</p>
 
-<p><a id="IsReadOnly"></a></p>
-
-<h3>IsReadOnly</h3>
+<p><a id="IsReadOnly"></a>
+### IsReadOnly</p>
 
 <pre>public sealed bool IsReadOnly { get; }
 </pre>
@@ -78,9 +73,8 @@
 
 <p><code>true</code>  if this list is read only; otherwise,  <code>false</code> .</p>
 
-<p><a id="this_int"></a></p>
-
-<h3>Item</h3>
+<p><a id="this_int"></a>
+### Item</p>
 
 <pre>public sealed T this[int item] { get; set; }
 </pre>
@@ -90,17 +84,16 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter  <i>item</i>
-is a 32-bit signed integer.</li>
+  <li><i>item</i>: The parameter  <i>item</i>
+ is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A T object.</p>
 
-<p><a id="Add_T"></a></p>
-
-<h3>Add</h3>
+<p><a id="Add_T"></a>
+### Add</p>
 
 <pre>public sealed void Add(
     T item);
@@ -111,22 +104,20 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter  <i>item</i>
-is a `0 object.</li>
+  <li><i>item</i>: The parameter  <i>item</i>
+ is a `0 object.</li>
 </ul>
 
-<p><a id="Clear"></a></p>
-
-<h3>Clear</h3>
+<p><a id="Clear"></a>
+### Clear</p>
 
 <pre>public sealed void Clear();
 </pre>
 
 <p>Not documented yet.</p>
 
-<p><a id="Contains_T"></a></p>
-
-<h3>Contains</h3>
+<p><a id="Contains_T"></a>
+### Contains</p>
 
 <pre>public sealed bool Contains(
     T item);
@@ -137,17 +128,16 @@ is a `0 object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter  <i>item</i>
-is a `0 object.</li>
+  <li><i>item</i>: The parameter  <i>item</i>
+ is a `0 object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>Either  <code>true</code>  or  <code>false</code> .</p>
 
-<p><a id="CopyTo_PeterO_T_int"></a></p>
-
-<h3>CopyTo</h3>
+<p><a id="CopyTo_PeterO_T_int"></a>
+### CopyTo</p>
 
 <pre>public sealed void CopyTo(
     PeterO.T&lt;&gt;[] array,
@@ -159,24 +149,26 @@ is a `0 object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>array</i>: The parameter  <i>array</i>
-is a `0[] object.</p></li>
-<li><p><i>arrayIndex</i>: The parameter  <i>arrayIndex</i>
-is a 32-bit signed integer.</p></li>
+  <li>
+    <p><i>array</i>: The parameter  <i>array</i>
+ is a `0[] object.</p>
+  </li>
+  <li>
+    <p><i>arrayIndex</i>: The parameter  <i>arrayIndex</i>
+ is a 32-bit signed integer.</p>
+  </li>
 </ul>
 
-<p><a id="Dispose"></a></p>
-
-<h3>Dispose</h3>
+<p><a id="Dispose"></a>
+### Dispose</p>
 
 <pre>public sealed void Dispose();
 </pre>
 
 <p>Not documented yet.</p>
 
-<p><a id="GetEnumerator"></a></p>
-
-<h3>GetEnumerator</h3>
+<p><a id="GetEnumerator"></a>
+### GetEnumerator</p>
 
 <pre>public sealed System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator();
 </pre>
@@ -187,9 +179,8 @@ is a 32-bit signed integer.</p></li>
 
 <p>An IEnumerator(T) object.</p>
 
-<p><a id="IndexOf_T"></a></p>
-
-<h3>IndexOf</h3>
+<p><a id="IndexOf_T"></a>
+### IndexOf</p>
 
 <pre>public sealed int IndexOf(
     T item);
@@ -200,17 +191,16 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter  <i>item</i>
-is a `0 object.</li>
+  <li><i>item</i>: The parameter  <i>item</i>
+ is a `0 object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Insert_int_T"></a></p>
-
-<h3>Insert</h3>
+<p><a id="Insert_int_T"></a>
+### Insert</p>
 
 <pre>public sealed void Insert(
     int index,
@@ -222,15 +212,18 @@ is a `0 object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>: The parameter  <i>index</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>item</i>: The parameter  <i>item</i>
-is a `0 object.</p></li>
+  <li>
+    <p><i>index</i>: The parameter  <i>index</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>item</i>: The parameter  <i>item</i>
+ is a `0 object.</p>
+  </li>
 </ul>
 
-<p><a id="Remove_T"></a></p>
-
-<h3>Remove</h3>
+<p><a id="Remove_T"></a>
+### Remove</p>
 
 <pre>public sealed bool Remove(
     T item);
@@ -241,17 +234,16 @@ is a `0 object.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter  <i>item</i>
-is a `0 object.</li>
+  <li><i>item</i>: The parameter  <i>item</i>
+ is a `0 object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>Either  <code>true</code>  or  <code>false</code> .</p>
 
-<p><a id="RemoveAt_int"></a></p>
-
-<h3>RemoveAt</h3>
+<p><a id="RemoveAt_int"></a>
+### RemoveAt</p>
 
 <pre>public sealed void RemoveAt(
     int index);
@@ -262,7 +254,7 @@ is a `0 object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: Zero-based index into the list.</li>
+  <li><i>index</i>: Zero-based index into the list.</li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

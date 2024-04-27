@@ -1,88 +1,84 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics Filters</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>Graphics Filters</h1>
+<h1 id="graphics-filters">Graphics Filters</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a id=Introduction></a></p>
-
-<h2>Introduction</h2>
+<p><a id="Introduction"></a>
+## Introduction</p>
 
 <p>This page describes what graphics filters are and how they work in my
 public domain <a href="http://peteroupc.github.io/html3dutil"><strong>HTML 3D Library</strong></a>.
 It also describes several examples of graphics filters.</p>
 
-<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases"><strong>HTML 3D Library&#39;s Releases page</strong></a>.</strong></p>
+<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">**HTML 3D Library’s Releases page**</a>.</strong></p>
 
-<p><a id=Contents></a></p>
-
-<h2>Contents</h2>
-
-<ul>
-<li><a href="#Introduction"><strong>Introduction</strong></a></li>
-<li><a href="#Contents"><strong>Contents</strong></a></li>
-<li><a href="#Graphics_Filters"><strong>Graphics Filters</strong></a></li>
-<li><a href="#Writing_Graphics_Filters"><strong>Writing Graphics Filters</strong></a></li>
-<li><a href="#Using_Graphics_Filters"><strong>Using Graphics Filters</strong></a></li>
-<li><a href="#Sample_Code"><strong>Sample Code</strong></a>
+<p><a id="Contents"></a>
+## Contents</p>
 
 <ul>
-<li><a href="#Mirror_Filter"><strong>Mirror Filter</strong></a></li>
-<li><a href="#Pixelate_Filter"><strong>Pixelate Filter</strong></a></li>
-<li><a href="#Wave_Filter"><strong>Wave Filter</strong></a></li>
-<li><a href="#Waterpaint_Filter"><strong>Waterpaint Filter</strong></a></li>
-</ul></li>
-<li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
+  <li><a href="#Introduction"><strong>Introduction</strong></a></li>
+  <li><a href="#Contents"><strong>Contents</strong></a></li>
+  <li><a href="#Graphics_Filters"><strong>Graphics Filters</strong></a></li>
+  <li><a href="#Writing_Graphics_Filters"><strong>Writing Graphics Filters</strong></a></li>
+  <li><a href="#Using_Graphics_Filters"><strong>Using Graphics Filters</strong></a></li>
+  <li><a href="#Sample_Code"><strong>Sample Code</strong></a>
+    <ul>
+      <li><a href="#Mirror_Filter"><strong>Mirror Filter</strong></a></li>
+      <li><a href="#Pixelate_Filter"><strong>Pixelate Filter</strong></a></li>
+      <li><a href="#Wave_Filter"><strong>Wave Filter</strong></a></li>
+      <li><a href="#Waterpaint_Filter"><strong>Waterpaint Filter</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
 </ul>
 
-<p><a id=Graphics_Filters></a></p>
-
-<h2>Graphics Filters</h2>
+<p><a id="Graphics_Filters"></a>
+## Graphics Filters</p>
 
 <p>In the HTML 3D Library, graphics filters are functions used to modify the appearance
 of the screen after each frame. They are implemented in a language called GLSL, or GL
-Shading Language.  GLSL programs are called &quot;shaders&quot;, and they are compiled into code that runs on a GPU, or graphics processing unit.</p>
+Shading Language.  GLSL programs are called “shaders”, and they are compiled into code that runs on a GPU, or graphics processing unit.</p>
 
-<p>Graphics filters are considered &quot;fragment shaders&quot;, or shaders that process one pixel at a time. GPUs
+<p>Graphics filters are considered “fragment shaders”, or shaders that process one pixel at a time. GPUs
 can render graphics very fast with such shaders because one fragment shader can process multiple pixels in parallel, without
 affecting the other pixels, and GPUs are often much better designed for parallel processing than CPUs.</p>
 
 <p>For graphics filters to work, the 3D scene must be rendered to an off-screen buffer called
 a <em>frame buffer</em>. The frame buffer acts like a texture which will be rendered back to
-the screen with the help of the graphics filter&#39;s shader program.</p>
+the screen with the help of the graphics filter’s shader program.</p>
 
-<p><a id=Writing_Graphics_Filters></a></p>
-
-<h2>Writing Graphics Filters</h2>
+<p><a id="Writing_Graphics_Filters"></a>
+## Writing Graphics Filters</p>
 
 <p>In the HTML 3D Library, use the <code>makeEffect</code> method of the <code>H3DU.ShaderInfo</code> class to create
 graphics filters:</p>
 
 <ul>
-<li>The <code>H3DU.ShaderInfo</code> class holds data on shader programs. Each shader program consists
+  <li>The <code>H3DU.ShaderInfo</code> class holds data on shader programs. Each shader program consists
 of a <em>vertex shader</em> and a <em>fragment shader</em>. Fragment shaders process pixels. (Vertex shaders, which process vertices of triangles, lines, and points, are not discussed on this page.)</li>
-<li>The <code>makeEffect</code> method generates the source code for a shader program, using the graphics
-filter as part of the program&#39;s fragment shader. Since shader programs must also have a vertex shader, the method also adds a basic vertex shader for the graphics filter.</li>
+  <li>The <code>makeEffect</code> method generates the source code for a shader program, using the graphics
+filter as part of the program’s fragment shader. Since shader programs must also have a vertex shader, the method also adds a basic vertex shader for the graphics filter.</li>
 </ul>
 
 <p>The following is an example of a graphics filter.</p>
 
 <pre>return H3DU.ShaderInfo.makeEffect([
-&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 // Read the current color from the sampler texture
-&quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
+" vec4 color=texture2D(sampler,uvCoord);",
 // Convert the color to a shade of gray. It gets
-// the current color&#39;s red, green, and blue components,
+// the current color's red, green, and blue components,
 // adds them, and divides by 3. Thus, the gray color
 // will be an average of the red/green/blue components.
-&quot; float gray=(color.r+color.g+color.b)/3.0;&quot;,
-// Return the gray color (using the color&#39;s original alpha)
-&quot; return vec4(gray,gray,gray,color.a);&quot;,
-&quot;}&quot;].join(&quot;\n&quot;));
+" float gray=(color.r+color.g+color.b)/3.0;",
+// Return the gray color (using the color's original alpha)
+" return vec4(gray,gray,gray,color.a);",
+"}"].join("\n"));
 </pre>
 
 <p>Each graphics filter must have a GLSL function called <code>textureEffect()</code>, like in the example above.</p>
@@ -90,28 +86,27 @@ filter as part of the program&#39;s fragment shader. Since shader programs must 
 <p>The <code>textureEffect</code> function takes these parameters:</p>
 
 <ul>
-<li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame. To read from the texture, use the <code>texture2D</code> function, as shown in the example above.</li>
-<li><code>vec2 uvCoord</code>: Texture coordinates of the current pixel.  <code>uvCoord.x</code> ranges from 0 on the left side to 1 on the right side.  <code>uvCoord.y</code> ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the bottom-left corner, not the top left, that is, textures are &quot;bottom up&quot;,
-not &quot;top down&quot;).</li>
-<li><code>vec2 textureSize</code>: Size of the screenshot, pointed to by <code>sampler</code>, in pixels. <code>textureSize.x</code> is the
+  <li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame. To read from the texture, use the <code>texture2D</code> function, as shown in the example above.</li>
+  <li><code>vec2 uvCoord</code>: Texture coordinates of the current pixel.  <code>uvCoord.x</code> ranges from 0 on the left side to 1 on the right side.  <code>uvCoord.y</code> ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the bottom-left corner, not the top left, that is, textures are “bottom up”,
+not “top down”).</li>
+  <li><code>vec2 textureSize</code>: Size of the screenshot, pointed to by <code>sampler</code>, in pixels. <code>textureSize.x</code> is the
 width, and <code>textureSize.y</code> is the height.</li>
 </ul>
 
-<p>The <code>textureEffect</code> function returns a <code>vec4</code> (4-element vector) giving the color that the current pixel should be. The example above reads the current pixel&#39;s color, turns it to a shade of gray, and returns a new color with that shade of gray. Thus, the filter will convert the screen to grayscale tones.</p>
+<p>The <code>textureEffect</code> function returns a <code>vec4</code> (4-element vector) giving the color that the current pixel should be. The example above reads the current pixel’s color, turns it to a shade of gray, and returns a new color with that shade of gray. Thus, the filter will convert the screen to grayscale tones.</p>
 
-<p>The shader can also define custom parameters called &quot;uniforms&quot;, so called because their values are uniform for every run of the shader within a given draw call. Uniforms are declared by using a line like <code>uniform [type] [name];</code> at the top of the shader. Example: <code>uniform float time;</code> Uniforms, once declared, can be used in the <code>textureEffect</code> function.</p>
+<p>The shader can also define custom parameters called “uniforms”, so called because their values are uniform for every run of the shader within a given draw call. Uniforms are declared by using a line like <code>uniform [type] [name];</code> at the top of the shader. Example: <code>uniform float time;</code> Uniforms, once declared, can be used in the <code>textureEffect</code> function.</p>
 
 <p>A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
 be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.</p>
 
-<p><a id=Using_Graphics_Filters></a></p>
-
-<h2>Using Graphics Filters</h2>
+<p><a id="Using_Graphics_Filters"></a>
+## Using Graphics Filters</p>
 
 <p>To use a graphics filter, the application needs to prepare for its use by following these steps.</p>
 
 <p>First, create an object to hold information about a <em>frame buffer</em>. A frame buffer is an array of
-pixels designed to be drawn off the screen. This means that the scene&#39;s geometry is drawn
+pixels designed to be drawn off the screen. This means that the scene’s geometry is drawn
 not to the screen (or to the buffer the screen uses), but to a separate buffer, to be manipulated
 later by the application or re-drawn to the screen (or the screen buffer). In the HTML 3D Library,
 each frame buffer consists of a texture of a given size and a <em>renderbuffer</em> of the same
@@ -120,17 +115,17 @@ size to use as the depth buffer.</p>
 <pre>var fbo=new H3DU.FrameBufferInfo(scene.getWidth(),scene.getHeight());
 </pre>
 
-<p>Note that we set the frame buffer&#39;s size to the current width and height of the scene.</p>
+<p>Note that we set the frame buffer’s size to the current width and height of the scene.</p>
 
 <p>Then create an array of <em>rendering passes</em>. The sample code below creates two
-passes: the first renders to a frame buffer, and the second renders the frame buffer&#39;s contents
+passes: the first renders to a frame buffer, and the second renders the frame buffer’s contents
 back to the screen.</p>
 
 <pre>var renders = [
-  // The first batch renders the main batch&#39;s geometry to
+  // The first batch renders the main batch's geometry to
   // the frame buffer info we just created.
-  new H3DU.RenderPass(batch,{&quot;frameBuffer&quot;:fbo}),
-  // The next batch renders the frame buffer&#39;s contents
+  new H3DU.RenderPass(batch,{"frameBuffer":fbo}),
+  // The next batch renders the frame buffer's contents
   // back to the screen.
   new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene,fbo))
 ];
@@ -148,29 +143,28 @@ scene.render(renders);
 passes mentioned above, the following happens.</p>
 
 <ul>
-<li>The 3D library renders the first pass.
-
-<ul>
-<li>The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then uses the usual shaders for drawing the 3D scene.</li>
-<li>The current frame is rendered onto the frame buffer. The frame buffer&#39;s texture will now contain a
-  &quot;snapshot&quot; of the frame that can now be modified by graphics filters.</li>
-</ul></li>
-<li>Then, the library renders the second pass.
-
-<ul>
-<li>The 3D library switches drawing back to the GL Canvas, then switches the shader
-   to the graphics filter&#39;s shaders.</li>
-<li>A rectangle taking up the entire GL Canvas is drawn. This is to allow each pixel of the texture to
-   be passed to the graphics filter, and the filter&#39;s <code>textureEffect</code> method to be called for each pixel.
-  Any custom parameters, or &quot;uniforms&quot;, given to the graphics filter will be set before drawing.
-  The graphics filter can either use the current pixel&#39;s color or change it for each pixel.
-  As a result, a &quot;filtered&quot; version of the current frame will be drawn.</li>
-</ul></li>
+  <li>The 3D library renders the first pass.
+    <ul>
+      <li>The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then uses the usual shaders for drawing the 3D scene.</li>
+      <li>The current frame is rendered onto the frame buffer. The frame buffer’s texture will now contain a
+    “snapshot” of the frame that can now be modified by graphics filters.</li>
+    </ul>
+  </li>
+  <li>Then, the library renders the second pass.
+    <ul>
+      <li>The 3D library switches drawing back to the GL Canvas, then switches the shader
+     to the graphics filter’s shaders.</li>
+      <li>A rectangle taking up the entire GL Canvas is drawn. This is to allow each pixel of the texture to
+     be passed to the graphics filter, and the filter’s <code>textureEffect</code> method to be called for each pixel.
+    Any custom parameters, or “uniforms”, given to the graphics filter will be set before drawing.
+    The graphics filter can either use the current pixel’s color or change it for each pixel.
+    As a result, a “filtered” version of the current frame will be drawn.</li>
+    </ul>
+  </li>
 </ul>
 
-<p><a id=Sample_Code></a></p>
-
-<h2>Sample Code</h2>
+<p><a id="Sample_Code"></a>
+## Sample Code</p>
 
 <p>Here is sample code for using a graphics filter.</p>
 
@@ -182,7 +176,7 @@ var subScene=new H3DU.Batch3D()
 // create an array of render passes
 var renders=[
   // The first pass renders to a frame buffer
-  new H3DU.RenderPass(subScene,{&quot;frameBuffer&quot;:fbo}),
+  new H3DU.RenderPass(subScene,{"frameBuffer":fbo}),
   // The second pass renders the frame buffer to the main canvas,
   // using the given graphics filter
   new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene,fbo,currentFilter))
@@ -192,11 +186,10 @@ var renders=[
 scene.render(renders);
 </pre>
 
-<p><a id=Mirror_Filter></a></p>
+<p><a id="Mirror_Filter"></a>
+### Mirror Filter</p>
 
-<h3>Mirror Filter</h3>
-
-<p><img src="filters7.png" alt="**Mirror filtered image**"></p>
+<p><img src="filters7.png" alt="**Mirror filtered image**" /></p>
 
 <p>This filter does a horizontal flip of its pixels. Note that the filter, given below, reads not from
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
@@ -204,48 +197,44 @@ the current X coordinate).</p>
 
 <pre>function makeMirror(){
 return H3DU.ShaderInfo.makeEffect(context,[
-&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
-&quot; vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));&quot;,
-&quot; return color;&quot;,
-&quot;}&quot;].join(&quot;\n&quot;));
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));",
+" return color;",
+"}"].join("\n"));
 }
 </pre>
 
 <p>With a simple change, this filter can be modified to do a vertical flip (<code>1.0-uvCoord.y</code>) or even both flips.</p>
 
-<p><a id=Pixelate_Filter></a></p>
+<p><a id="Pixelate_Filter"></a>
+### Pixelate Filter</p>
 
-<h3>Pixelate Filter</h3>
-
-<p><img src="filters5.png" alt="**Pixelate filtered image**"></p>
+<p><img src="filters5.png" alt="**Pixelate filtered image**" /></p>
 
 <p>This filter pixelates the screen, in effect, by scaling it down and then scaling it up.
 This filter takes a uniform variable named <code>coarseness</code>, which indicates how many normal pixels
-each &quot;pixelated&quot; pixel takes up.</p>
+each “pixelated” pixel takes up.</p>
 
 <pre>function makePixelate(){
 return H3DU.ShaderInfo.makeEffect([
-&quot;uniform float coarseness;&quot;, // coarseness in pixels; 1 means normal
-&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
-&quot; float g=max(coarseness,1.0);&quot;,
-&quot; float gridSizeX=textureSize.x/g;&quot;,
-&quot; float gridSizeY=textureSize.y/g;&quot;,
-&quot; float uv0=floor(uvCoord.x*gridSizeX)/gridSizeX;&quot;,
-&quot; float uv1=floor(uvCoord.y*gridSizeY)/gridSizeY;&quot;,
-&quot; vec4 c=texture2D(sampler,vec2(uv0,uv1));&quot;,
-&quot; return c;&quot;,
-&quot;}&quot;].join(&quot;\n&quot;));
+"uniform float coarseness;", // coarseness in pixels; 1 means normal
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" float g=max(coarseness,1.0);",
+" float gridSizeX=textureSize.x/g;",
+" float gridSizeY=textureSize.y/g;",
+" float uv0=floor(uvCoord.x*gridSizeX)/gridSizeX;",
+" float uv1=floor(uvCoord.y*gridSizeY)/gridSizeY;",
+" vec4 c=texture2D(sampler,vec2(uv0,uv1));",
+" return c;",
+"}"].join("\n")); }
 </pre>
 
-<p>}</p>
+<p>The demo changes the “coarseness” parameter with time to animate the pixelation effect.</p>
 
-<p>The demo changes the &quot;coarseness&quot; parameter with time to animate the pixelation effect.</p>
+<p><a id="Wave_Filter"></a>
+### Wave Filter</p>
 
-<p><a id=Wave_Filter></a></p>
-
-<h3>Wave Filter</h3>
-
-<p><img src="filters3.png" alt="**Wave filtered image**"></p>
+<p><img src="filters3.png" alt="**Wave filtered image**" /></p>
 
 <p>This filter shifts the pixels in each row horizontally to cause the screen to undulate
 vertically. This filter takes a uniform variable named <code>time</code>, which indicates the animation
@@ -253,28 +242,26 @@ frame for the undulation effect.</p>
 
 <p>This filter is implemented in the function <code>makeWave</code> in the demo.</p>
 
-<p><a id=Waterpaint_Filter></a></p>
+<p><a id="Waterpaint_Filter"></a>
+### Waterpaint Filter</p>
 
-<h3>Waterpaint Filter</h3>
-
-<p><img src="filters6.png" alt="**Waterpaint filtered image**"></p>
+<p><img src="filters6.png" alt="**Waterpaint filtered image**" /></p>
 
 <p>This is a watercoloring effect based on a public domain shader by someone
-named &quot;Themaister&quot;.</p>
+named “Themaister”.</p>
 
 <p>This filter is implemented in the function <code>makeWaterpaint</code> in the demo.</p>
 
-<p><a id=Other_Pages></a></p>
-
-<h2>Other Pages</h2>
+<p><a id="Other_Pages"></a>
+## Other Pages</p>
 
 <p>The following pages of mine on CodeProject also discuss this library:</p>
 
 <ul>
-<li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><strong><em>Public-Domain HTML 3D Library</em></strong></a></li>
-<li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><strong><em>Creating shapes using the Public Domain HTML 3D Library</em></strong></a></li>
-<li><a href="http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai"><strong><em>Drawing parametric surfaces using the Public Domain HTML 3D Library</em></strong></a></li>
-<li><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><strong><em>The &quot;Camera&quot; and the Projection and View Transforms</em></strong></a></li>
+  <li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><strong><em>Public-Domain HTML 3D Library</em></strong></a></li>
+  <li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><strong><em>Creating shapes using the Public Domain HTML 3D Library</em></strong></a></li>
+  <li><a href="http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai"><strong><em>Drawing parametric surfaces using the Public Domain HTML 3D Library</em></strong></a></li>
+  <li><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><strong><em>The “Camera” and the Projection and View Transforms</em></strong></a></li>
 </ul>
 
 <p><a href="index.html">Back to documentation index.</a></p>
@@ -288,85 +275,85 @@ named &quot;Themaister&quot;.</p>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-<h3>Navigation</h3>
+<h3 id="navigation">Navigation</h3>
 
 <ul>
-<li><a href="BSplineCurve.html">BSplineCurve</a></li>
-<li><a href="BSplineSurface.html">BSplineSurface</a></li>
-<li><a href="BufferAccessor.html">BufferAccessor</a></li>
-<li><a href="Curve.html">Curve</a></li>
-<li><a href="CurveBuilder.html">CurveBuilder</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
-<li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="MathUtil.html">MathUtil</a></li>
-<li><a href="MeshBuffer.html">MeshBuffer</a></li>
-<li><a href="Meshes.html">Meshes</a></li>
-<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-<li><a href="Promise.html">Promise</a></li>
-<li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Shape.html">Shape</a></li>
-<li><a href="ShapeGroup.html">ShapeGroup</a></li>
-<li><a href="Surface.html">Surface</a></li>
-<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-<li><a href="Transform.html">Transform</a></li>
-<li><a href="extras_arrow.html">module:extras/arrow</a></li>
-<li><a href="extras_camera.html">module:extras/camera</a></li>
-<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
-<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
-<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
-<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
-<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
-<li><a href="extras_convex.html">module:extras/convex</a></li>
-<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
-<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
-<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
-<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
-<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
-<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
-<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
-<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
-<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
-<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
-<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
-<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
-<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
-<li><a href="extras_gradients.html">module:extras/gradients</a></li>
-<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
-<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
-<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
-<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
-<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
-<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
-<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
-<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
-<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
-<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
-<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
-<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
-<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
-<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
-<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
-<li><a href="extras_raypick.html">module:extras/raypick</a></li>
-<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
-<li><a href="extras_starfield.html">module:extras/starfield</a></li>
-<li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
-<li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
-<li><a href="extras_stl.html">module:extras/stl</a></li>
-<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
-<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
-<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
-<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
-<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
-<li><a href="extras_text.html">module:extras/text</a></li>
-<li><a href="extras_tga.html">module:extras/tga</a></li>
-<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
-<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
-<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
-<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
-<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
-<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
-<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Promise.html">Promise</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="Shape.html">Shape</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
+  <li><a href="extras_arrow.html">module:extras/arrow</a></li>
+  <li><a href="extras_camera.html">module:extras/camera</a></li>
+  <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+  <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+  <li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+  <li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+  <li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+  <li><a href="extras_convex.html">module:extras/convex</a></li>
+  <li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+  <li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+  <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+  <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+  <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+  <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+  <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+  <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+  <li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+  <li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+  <li><a href="extras_gradients.html">module:extras/gradients</a></li>
+  <li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+  <li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+  <li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+  <li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+  <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+  <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+  <li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+  <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+  <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+  <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+  <li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+  <li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+  <li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+  <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+  <li><a href="extras_raypick.html">module:extras/raypick</a></li>
+  <li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+  <li><a href="extras_starfield.html">module:extras/starfield</a></li>
+  <li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
+  <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
+  <li><a href="extras_stl.html">module:extras/stl</a></li>
+  <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+  <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+  <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+  <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+  <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+  <li><a href="extras_text.html">module:extras/text</a></li>
+  <li><a href="extras_tga.html">module:extras/tga</a></li>
+  <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+  <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+  <li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+  <li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+  <li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+  <li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+  <li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
 </ul>
 </nav></body></html>

@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.IniSection</h1>
-
-<h2>PeterO.IniSection</h2>
+<p>## PeterO.IniSection</p>
 
 <pre>public sealed class IniSection :
     System.Collections.Generic.IEnumerable,
@@ -15,27 +14,25 @@
 
 <p>Not documented yet.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Add_PeterO_IniEntry">Add(PeterO.IniEntry)</a></code> - Not documented yet.</li>
-<li><code><a href="#Add_PeterO_IniEntry_PeterO_IniMergeBehavior">Add(PeterO.IniEntry, PeterO.IniMergeBehavior)</a></code> - Adds two IniEntry objects.</li>
-<li><code><a href="#AddComment_string">AddComment(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#AddEntry_string_string">AddEntry(string, string)</a></code> - Not documented yet.</li>
-<li><code><a href="#AddEntry_string_string_PeterO_IniMergeBehavior">AddEntry(string, string, PeterO.IniMergeBehavior)</a></code> - Not documented yet.</li>
-<li><code><a href="#Clear">Clear()</a></code> - Not documented yet.</li>
-<li><code><a href="#Count">Count</a></code> - Gets a value not documented yet.</li>
-<li><code><a href="#GetValue_string">GetValue(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#Name">Name</a></code> - Gets a value not documented yet.</li>
-<li><code><a href="#RemoveEntry_string">RemoveEntry(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#SetValue_string_string">SetValue(string, string)</a></code> - Not documented yet.</li>
-<li><code><a href="#this_int">this[int]</a></code> - Not documented yet.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
+  <li><code>[Add(PeterO.IniEntry)](#Add_PeterO_IniEntry)</code> - Not documented yet.</li>
+  <li><code>[Add(PeterO.IniEntry, PeterO.IniMergeBehavior)](#Add_PeterO_IniEntry_PeterO_IniMergeBehavior)</code> - Adds two IniEntry objects.</li>
+  <li><code>[AddComment(string)](#AddComment_string)</code> - Not documented yet.</li>
+  <li><code>[AddEntry(string, string)](#AddEntry_string_string)</code> - Not documented yet.</li>
+  <li><code>[AddEntry(string, string, PeterO.IniMergeBehavior)](#AddEntry_string_string_PeterO_IniMergeBehavior)</code> - Not documented yet.</li>
+  <li><code>[Clear()](#Clear)</code> - Not documented yet.</li>
+  <li><code>[Count](#Count)</code> - Gets a value not documented yet.</li>
+  <li><code>[GetValue(string)](#GetValue_string)</code> - Not documented yet.</li>
+  <li><code>[Name](#Name)</code> - Gets a value not documented yet.</li>
+  <li><code>[RemoveEntry(string)](#RemoveEntry_string)</code> - Not documented yet.</li>
+  <li><code>[SetValue(string, string)](#SetValue_string_string)</code> - Not documented yet.</li>
+  <li><code>[this[int]](#this_int)</code> - Not documented yet.</li>
+  <li><code>[ToString()](#ToString)</code> - Converts this object to a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_PeterO_IniSection"></a></p>
-
-<h3>IniSection Constructor</h3>
+<p><a id="Void_ctor_PeterO_IniSection"></a>
+### IniSection Constructor</p>
 
 <pre>public IniSection(
     PeterO.IniSection other);
@@ -46,21 +43,20 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: The parameter  <i>other</i>
-is an IniSection object.</li>
+  <li><i>other</i>: The parameter  <i>other</i>
+ is an IniSection object.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>other</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>IniSection Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### IniSection Constructor</p>
 
 <pre>public IniSection(
     string name);
@@ -71,13 +67,12 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The parameter  <i>name</i>
-is a text string.</li>
+  <li><i>name</i>: The parameter  <i>name</i>
+ is a text string.</li>
 </ul>
 
-<p><a id="Count"></a></p>
-
-<h3>Count</h3>
+<p><a id="Count"></a>
+### Count</p>
 
 <pre>public int Count { get; }
 </pre>
@@ -88,9 +83,8 @@ is a text string.</li>
 
 <p>A value not documented yet.</p>
 
-<p><a id="this_int"></a></p>
-
-<h3>Item</h3>
+<p><a id="this_int"></a>
+### Item</p>
 
 <pre>public PeterO.IniEntry this[int index] { get; set; }
 </pre>
@@ -100,17 +94,16 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: The parameter  <i>index</i>
-is a 32-bit signed integer.</li>
+  <li><i>index</i>: The parameter  <i>index</i>
+ is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An IniEntry object.</p>
 
-<p><a id="Name"></a></p>
-
-<h3>Name</h3>
+<p><a id="Name"></a>
+### Name</p>
 
 <pre>public string Name { get; }
 </pre>
@@ -121,9 +114,8 @@ is a 32-bit signed integer.</li>
 
 <p>A value not documented yet.</p>
 
-<p><a id="Add_PeterO_IniEntry"></a></p>
-
-<h3>Add</h3>
+<p><a id="Add_PeterO_IniEntry"></a>
+### Add</p>
 
 <pre>public void Add(
     PeterO.IniEntry entry);
@@ -134,13 +126,12 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>entry</i>: The parameter  <i>entry</i>
-is a IniEntry object.</li>
+  <li><i>entry</i>: The parameter  <i>entry</i>
+ is a IniEntry object.</li>
 </ul>
 
-<p><a id="Add_PeterO_IniEntry_PeterO_IniMergeBehavior"></a></p>
-
-<h3>Add</h3>
+<p><a id="Add_PeterO_IniEntry_PeterO_IniMergeBehavior"></a>
+### Add</p>
 
 <pre>public void Add(
     PeterO.IniEntry entry,
@@ -152,23 +143,26 @@ is a IniEntry object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>entry</i>: The parameter  <i>entry</i>
-is an IniEntry object.</p></li>
-<li><p><i>behavior</i>: The parameter  <i>behavior</i>
-is an IniMergeBehavior object.</p></li>
+  <li>
+    <p><i>entry</i>: The parameter  <i>entry</i>
+ is an IniEntry object.</p>
+  </li>
+  <li>
+    <p><i>behavior</i>: The parameter  <i>behavior</i>
+ is an IniMergeBehavior object.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>entry</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="AddComment_string"></a></p>
-
-<h3>AddComment</h3>
+<p><a id="AddComment_string"></a>
+### AddComment</p>
 
 <pre>public void AddComment(
     string comment);
@@ -179,13 +173,12 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>comment</i>: The parameter  <i>comment</i>
-is a text string.</li>
+  <li><i>comment</i>: The parameter  <i>comment</i>
+ is a text string.</li>
 </ul>
 
-<p><a id="AddEntry_string_string"></a></p>
-
-<h3>AddEntry</h3>
+<p><a id="AddEntry_string_string"></a>
+### AddEntry</p>
 
 <pre>public void AddEntry(
     string key,
@@ -197,15 +190,18 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>key</i>: The parameter  <i>key</i>
-is a text string.</p></li>
-<li><p><i>value</i>: The parameter  <i>value</i>
-is a text string.</p></li>
+  <li>
+    <p><i>key</i>: The parameter  <i>key</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>value</i>: The parameter  <i>value</i>
+ is a text string.</p>
+  </li>
 </ul>
 
-<p><a id="AddEntry_string_string_PeterO_IniMergeBehavior"></a></p>
-
-<h3>AddEntry</h3>
+<p><a id="AddEntry_string_string_PeterO_IniMergeBehavior"></a>
+### AddEntry</p>
 
 <pre>public void AddEntry(
     string key,
@@ -218,33 +214,37 @@ is a text string.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>key</i>: The parameter  <i>key</i>
-is a text string.</p></li>
-<li><p><i>value</i>: The parameter  <i>value</i>
-is a text string.</p></li>
-<li><p><i>behavior</i>: The parameter  <i>behavior</i>
-is a IniMergeBehavior object.</p></li>
+  <li>
+    <p><i>key</i>: The parameter  <i>key</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>value</i>: The parameter  <i>value</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>behavior</i>: The parameter  <i>behavior</i>
+ is a IniMergeBehavior object.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
-The parameter &quot;keyName&quot; is null.</li>
+  <li>System.ArgumentNullException:
+The parameter “keyName” is null.</li>
 </ul>
 
-<p><a id="Clear"></a></p>
-
-<h3>Clear</h3>
+<p><a id="Clear"></a>
+### Clear</p>
 
 <pre>public void Clear();
 </pre>
 
 <p>Not documented yet.</p>
 
-<p><a id="GetValue_string"></a></p>
-
-<h3>GetValue</h3>
+<p><a id="GetValue_string"></a>
+### GetValue</p>
 
 <pre>public string GetValue(
     string keyName);
@@ -255,8 +255,8 @@ The parameter &quot;keyName&quot; is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>keyName</i>: The parameter  <i>keyName</i>
-is a text string.</li>
+  <li><i>keyName</i>: The parameter  <i>keyName</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -266,14 +266,13 @@ is a text string.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>keyName</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="RemoveEntry_string"></a></p>
-
-<h3>RemoveEntry</h3>
+<p><a id="RemoveEntry_string"></a>
+### RemoveEntry</p>
 
 <pre>public void RemoveEntry(
     string key);
@@ -284,21 +283,20 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>key</i>: The parameter  <i>key</i>
-is a text string.</li>
+  <li><i>key</i>: The parameter  <i>key</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>key</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="SetValue_string_string"></a></p>
-
-<h3>SetValue</h3>
+<p><a id="SetValue_string_string"></a>
+### SetValue</p>
 
 <pre>public void SetValue(
     string keyName,
@@ -310,23 +308,26 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>keyName</i>: The parameter  <i>keyName</i>
-is a text string.</p></li>
-<li><p><i>value</i>: The parameter  <i>value</i>
-is a text string.</p></li>
+  <li>
+    <p><i>keyName</i>: The parameter  <i>keyName</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>value</i>: The parameter  <i>value</i>
+ is a text string.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>keyName</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="ToString"></a></p>
-
-<h3>ToString</h3>
+<p><a id="ToString"></a>
+### ToString</p>
 
 <pre>public override string ToString();
 </pre>

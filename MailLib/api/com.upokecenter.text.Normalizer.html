@@ -5,136 +5,150 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.text.Normalizer</h1>
-
-<h1>com.upokecenter.text.Normalizer</h1>
+<p># com.upokecenter.text.Normalizer</p>
 
 <pre>@Deprecated public final class Normalizer extends Object
 </pre>
 
 <p>Implements the Unicode normalization algorithm and contains methods and
  functionality to test and convert Unicode strings for Unicode
- normalization.</p> <p>NOTICE: While this class's source code is in the
+ normalization.</p>
+<p>NOTICE: While this class's source code is in the
  public domain, the class uses an class, called NormalizationData,
  that includes data derived from the Unicode Character Database. See the
  documentation for the NormalizerInput class for the permission notice for
  the Unicode Character Database.</p>
 
-<h2>Constructors</h2>
+<h2 id="constructors">Constructors</h2>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><p><code>static boolean IsNormalized(String str,
-Normalization form)</code><br>
-Deprecated.
-Returns whether this string is normalized.</p></li>
-<li><p><code>static String Normalize(String str,
-Normalization form)</code><br>
-Deprecated.
-Converts a string to the given Unicode normalization form.</p></li>
-<li><p><code>int Read(int[] chars,
-int index,
-int length)</code><br>
-Deprecated.
-Reads a sequence of Unicode code points from a data source.</p></li>
-<li><p><code>int ReadChar()</code><br>
-Deprecated.
-Reads a Unicode character from a data source.</p></li>
+  <li>
+    <p><code>static boolean IsNormalized(String str,
+ Normalization form)</code><br />
+ Deprecated.
+Returns whether this string is normalized.</p>
+  </li>
+  <li>
+    <p><code>static String Normalize(String str,
+ Normalization form)</code><br />
+ Deprecated.
+Converts a string to the given Unicode normalization form.</p>
+  </li>
+  <li>
+    <p><code>int Read(int[] chars,
+ int index,
+ int length)</code><br />
+ Deprecated.
+Reads a sequence of Unicode code points from a data source.</p>
+  </li>
+  <li>
+    <p><code>int ReadChar()</code><br />
+ Deprecated.
+Reads a Unicode character from a data source.</p>
+  </li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>Normalize</h3>
-
-<pre>public static String Normalize(String str, Normalization form)
+<h3 id="normalize">Normalize</h3>
+<pre>public static String Normalize(String str, Normalization form) Converts a string to the given Unicode normalization form.
 </pre>
-
-<p>Converts a string to the given Unicode normalization form.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - An arbitrary string.</p></li>
-<li><p><code>form</code> - The Unicode normalization form to convert to.</p></li>
+  <li>
+    <p><code>str</code> - An arbitrary string.</p>
+  </li>
+  <li>
+    <p><code>form</code> - The Unicode normalization form to convert to.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The parameter <code>str</code> converted to the given normalization form.</li>
+  <li>The parameter <code>str</code> converted to the given normalization form.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+  <li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
-<h3>IsNormalized</h3>
-
-<pre>public static boolean IsNormalized(String str, Normalization form)
+<h3 id="isnormalized">IsNormalized</h3>
+<pre>public static boolean IsNormalized(String str, Normalization form) Returns whether this string is normalized.
 </pre>
-
-<p>Returns whether this string is normalized.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The string to check.</p></li>
-<li><p><code>form</code> - The parameter <code>form</code> is a Normalization object.</p></li>
+  <li>
+    <p><code>str</code> - The string to check.</p>
+  </li>
+  <li>
+    <p><code>form</code> - The parameter <code>form</code> is a Normalization object.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this string is normalized; otherwise, <code>false</code>.
-Returns <code>false</code> if the string contains an unpaired surrogate code
-point.</li>
+  <li><code>true</code> if this string is normalized; otherwise, <code>false</code>.
+ Returns <code>false</code> if the string contains an unpaired surrogate code
+ point.</li>
 </ul>
 
-<h3>ReadChar</h3>
-
-<pre>public int ReadChar()
+<h3 id="readchar">ReadChar</h3>
+<pre>public int ReadChar() Reads a Unicode character from a data source.
 </pre>
-
-<p>Reads a Unicode character from a data source.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
-0x10ffff), or the value -1 indicating the end of the source.</li>
+  <li>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
+ 0x10ffff), or the value -1 indicating the end of the source.</li>
 </ul>
 
-<h3>Read</h3>
-
-<pre>public int Read(int[] chars, int index, int length)
+<h3 id="read">Read</h3>
+<pre>public int Read(int[] chars, int index, int length) Reads a sequence of Unicode code points from a data source.
 </pre>
-
-<p>Reads a sequence of Unicode code points from a data source.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>chars</code> - Output buffer.</p></li>
-<li><p><code>index</code> - Index in the output buffer to start writing to.</p></li>
-<li><p><code>length</code> - Maximum number of code points to write.</p></li>
+  <li>
+    <p><code>chars</code> - Output buffer.</p>
+  </li>
+  <li>
+    <p><code>index</code> - Index in the output buffer to start writing to.</p>
+  </li>
+  <li>
+    <p><code>length</code> - Maximum number of code points to write.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The number of Unicode code points read, or 0 if the end of the
-source is reached.</li>
+  <li>The number of Unicode code points read, or 0 if the end of the
+ source is reached.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
-than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s length
-minus <code>index</code> is less than <code>length</code>.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+  <li>
+    <p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
+ than 0 or greater than <code>chars</code> ‘s length, or <code>chars</code> ‘s length
+ minus <code>index</code> is less than <code>length</code>.</p>
+  </li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p>
+  </li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

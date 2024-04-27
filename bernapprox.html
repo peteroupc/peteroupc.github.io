@@ -1,888 +1,1276 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/09/02"><meta name="citation_online_date" content="2023/09/02"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2023/09/02"><meta name="citation_online_date" content="2023/09/02"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>Approximations in Bernstein Form</h1>
+<h1 id="approximations-in-bernstein-form">Approximations in Bernstein Form</h1>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>This page describes how to compute a polynomial in Bernstein form that comes close to a known function $f(\lambda)$ with a user-defined error tolerance, so that the polynomial&#39;s Bernstein coefficients will lie in the closed unit interval if $f$&#39;s values lie in that interval.  The polynomial is often simpler to calculate than the original function $f$ and can often be accurate enough for an application&#39;s purposes.</p>
+<p>This page describes how to compute a polynomial in Bernstein form that comes close to a known function $f(\lambda)$ with a user-defined error tolerance, so that the polynomial’s Bernstein coefficients will lie in the closed unit interval if $f$’s values lie in that interval.  The polynomial is often simpler to calculate than the original function $f$ and can often be accurate enough for an application’s purposes.</p>
 
 <p>The goal of these approximations is to avoid introducing transcendental and trigonometric functions to the approximation method. (For this reason, although this page also discusses approximation by so-called <em>Chebyshev interpolants</em>, that method is relegated to the appendix.)</p>
 
 <blockquote>
-<p><strong>Notes:</strong></p>
+  <p><strong>Notes:</strong></p>
 
-<ol>
-<li>This page was originally developed as part of a section on <em>approximate Bernoulli factories</em>, or algorithms that toss heads with probability equal to a polynomial that comes close to a continuous function.  However, the information in this page is of much broader interest than the approximate Bernoulli factory problem.</li>
-<li><p>In practice, the level at which the function $f(\lambda)$ is known may vary:</p>
+  <ol>
+    <li>This page was originally developed as part of a section on <em>approximate Bernoulli factories</em>, or algorithms that toss heads with probability equal to a polynomial that comes close to a continuous function.  However, the information in this page is of much broader interest than the approximate Bernoulli factory problem.</li>
+    <li>
+      <p>In practice, the level at which the function $f(\lambda)$ is known may vary:</p>
 
-<ol>
-<li>$f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$).  Or...</li>
-<li>$f$ may be given as a &quot;black box&quot;, but it&#39;s possible to find the exact value of $f(\lambda)$ for any $\lambda$ (or at least any rational $\lambda$) in $f$&#39;s domain.  Or...</li>
-<li>Only the values of $f$ at equally spaced points may be known.</li>
-</ol>
+      <ol>
+        <li>$f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$).  Or…</li>
+        <li>$f$ may be given as a “black box”, but it’s possible to find the exact value of $f(\lambda)$ for any $\lambda$ (or at least any rational $\lambda$) in $f$’s domain.  Or…</li>
+        <li>Only the values of $f$ at equally spaced points may be known.</li>
+      </ol>
 
-<p>In the last two cases, additional assumptions on $f$ may have to be made in practice, such as upper bounds on $f$&#39;s first or second derivative, or whether $f$ has a continuous $r$-th derivative for every $r$ (see &quot;Definitions&quot;).  If $f$ does not meet those assumptions, the polynomial that approximates $f$ will not necessarily achieve the desired accuracy.</p></li>
-</ol>
+      <p>In the last two cases, additional assumptions on $f$ may have to be made in practice, such as upper bounds on $f$’s first or second derivative, or whether $f$ has a continuous $r$-th derivative for every $r$ (see “Definitions”).  If $f$ does not meet those assumptions, the polynomial that approximates $f$ will not necessarily achieve the desired accuracy.</p>
+    </li>
+  </ol>
 </blockquote>
 
-<p><a id=Contents></a></p>
+<p><a id="Contents"></a></p>
 
-<h2>Contents</h2>
-
-<ul>
-<li><a href="#Contents"><strong>Contents</strong></a></li>
-<li><a href="#About_This_Document"><strong>About This Document</strong></a></li>
-<li><a href="#Definitions"><strong>Definitions</strong></a></li>
-<li><a href="#Approximations_by_Polynomials"><strong>Approximations by Polynomials</strong></a>
+<h2 id="contents">Contents</h2>
 
 <ul>
-<li><a href="#Approximations_on_the_Closed_Unit_Interval"><strong>Approximations on the Closed Unit Interval</strong></a></li>
-<li><a href="#Taylor_Polynomials_for_Smooth_Functions"><strong>Taylor Polynomials for &quot;Smooth&quot; Functions</strong></a></li>
-<li><a href="#Approximations_on_Any_Closed_Interval"><strong>Approximations on Any Closed Interval</strong></a></li>
-<li><a href="#Approximating_an_Integral"><strong>Approximating an Integral</strong></a></li>
-<li><a href="#Approximating_a_Derivative"><strong>Approximating a Derivative</strong></a></li>
-<li><a href="#Computational_Issues"><strong>Computational Issues</strong></a></li>
-</ul></li>
-<li><a href="#Approximations_by_Rational_Functions"><strong>Approximations by Rational Functions</strong></a></li>
-<li><a href="#Request_for_Additional_Methods"><strong>Request for Additional Methods</strong></a></li>
-<li><a href="#Notes"><strong>Notes</strong></a></li>
-<li><a href="#Appendix"><strong>Appendix</strong></a>
-
-<ul>
-<li><a href="#Results_Used_in_Approximations_by_Polynomials"><strong>Results Used in Approximations by Polynomials</strong></a></li>
-<li><a href="#Chebyshev_Interpolants"><strong>Chebyshev Interpolants</strong></a></li>
-</ul></li>
-<li><a href="#License"><strong>License</strong></a></li>
+  <li><a href="#Contents"><strong>Contents</strong></a></li>
+  <li><a href="#About_This_Document"><strong>About This Document</strong></a></li>
+  <li><a href="#Definitions"><strong>Definitions</strong></a></li>
+  <li><a href="#Approximations_by_Polynomials"><strong>Approximations by Polynomials</strong></a>
+    <ul>
+      <li><a href="#Approximations_on_the_Closed_Unit_Interval"><strong>Approximations on the Closed Unit Interval</strong></a></li>
+      <li><a href="#Taylor_Polynomials_for_Smooth_Functions"><strong>Taylor Polynomials for “Smooth” Functions</strong></a></li>
+      <li><a href="#Approximations_on_Any_Closed_Interval"><strong>Approximations on Any Closed Interval</strong></a></li>
+      <li><a href="#Approximating_an_Integral"><strong>Approximating an Integral</strong></a></li>
+      <li><a href="#Approximating_a_Derivative"><strong>Approximating a Derivative</strong></a></li>
+      <li><a href="#Computational_Issues"><strong>Computational Issues</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#Approximations_by_Rational_Functions"><strong>Approximations by Rational Functions</strong></a></li>
+  <li><a href="#Request_for_Additional_Methods"><strong>Request for Additional Methods</strong></a></li>
+  <li><a href="#Notes"><strong>Notes</strong></a></li>
+  <li><a href="#Appendix"><strong>Appendix</strong></a>
+    <ul>
+      <li><a href="#Results_Used_in_Approximations_by_Polynomials"><strong>Results Used in Approximations by Polynomials</strong></a></li>
+      <li><a href="#Chebyshev_Interpolants"><strong>Chebyshev Interpolants</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
-<p><a id=About_This_Document></a></p>
+<p><a id="About_This_Document"></a></p>
 
-<h2>About This Document</h2>
+<h2 id="about-this-document">About This Document</h2>
 
 <p><strong>This is an open-source document; for an updated version, see the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/raw/master/bernapprox.md"><strong>source code</strong></a> <strong>or its</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernapprox.md"><strong>rendering on GitHub</strong></a><strong>.  You can send comments on this document on the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a>, especially if you find any errors on this page.</p>
 
 <p>My audience for this article is <strong>computer programmers with mathematics knowledge, but little or no familiarity with calculus</strong>.</p>
 
-<p><a id=Definitions></a></p>
+<p><a id="Definitions"></a></p>
 
-<h2>Definitions</h2>
+<h2 id="definitions">Definitions</h2>
 
 <p>This section describes certain math terms used on this page for programmers to understand.</p>
 
 <p>The <em>closed unit interval</em> (written as [0, 1]) means the set consisting of 0, 1, and every real number in between.</p>
 
-<p>For definitions of <em>continuous</em>, <em>derivative</em>, <em>convex</em>, <em>concave</em>, <em>Hölder continuous</em>, and <em>Lipschitz continuous</em>, see the definitions section in &quot;<a href="https://peteroupc.github.io/bernsupp.html#Definitions"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a>&quot;.</p>
+<p>For definitions of <em>continuous</em>, <em>derivative</em>, <em>convex</em>, <em>concave</em>, <em>Hölder continuous</em>, and <em>Lipschitz continuous</em>, see the definitions section in “<a href="https://peteroupc.github.io/bernsupp.html#Definitions"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a>”.</p>
 
-<p>Any polynomial $p(\lambda)$ can be written in <em>Bernstein form</em> as&mdash;</p>
+<p>Any polynomial $p(\lambda)$ can be written in <em>Bernstein form</em> as—</p>
 
-<p>$$p(\lambda) = {n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$</p>
+\[p(\lambda) = {n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],\]
 
-<p>where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], ..., <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>Bernstein coefficients</em> (which this document may simply call <em>coefficients</em> if the meaning is obvious from the context).[^1]</p>
+<p>where <em>n</em> is the polynomial’s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], …, <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>Bernstein coefficients</em> (which this document may simply call <em>coefficients</em> if the meaning is obvious from the context).<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
 
-<p>A function $f(\lambda)$ is <em>piecewise continuous</em> if it&#39;s made up of multiple continuous functions defined on a finite number of &quot;pieces&quot;, or non-empty subintervals, that together make up $f$&#39;s domain.</p>
+<p>A function $f(\lambda)$ is <em>piecewise continuous</em> if it’s made up of multiple continuous functions defined on a finite number of “pieces”, or non-empty subintervals, that together make up $f$’s domain.</p>
 
-<p><a id=Approximations_by_Polynomials></a></p>
+<p><a id="Approximations_by_Polynomials"></a></p>
 
-<h2>Approximations by Polynomials</h2>
+<h2 id="approximations-by-polynomials">Approximations by Polynomials</h2>
 
 <p>This section first shows how to approximate a function on the closed unit interval, then shows how to approximate a function on <em>any</em> closed interval.</p>
 
-<p><a id=Approximations_on_the_Closed_Unit_Interval></a></p>
+<p><a id="Approximations_on_the_Closed_Unit_Interval"></a></p>
 
-<h3>Approximations on the Closed Unit Interval</h3>
+<h3 id="approximations-on-the-closed-unit-interval">Approximations on the Closed Unit Interval</h3>
 
 <p>Suppose $f(\lambda)$ is continuous and maps the closed unit interval to the closed unit interval.</p>
 
-<p>Then, a polynomial of a high enough degree (called $n$) can be used to approximate $f(\lambda)$ with an error no more than $\epsilon$, as long as the polynomial&#39;s Bernstein coefficients can be calculated and an explicit upper bound on the approximation error is available. See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>.  Examples of these polynomials (all of degree $n$) are given in the following table.</p>
+<p>Then, a polynomial of a high enough degree (called $n$) can be used to approximate $f(\lambda)$ with an error no more than $\epsilon$, as long as the polynomial’s Bernstein coefficients can be calculated and an explicit upper bound on the approximation error is available. See my <a href="https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions"><strong>question on MathOverflow</strong></a>.  Examples of these polynomials (all of degree $n$) are given in the following table.</p>
 
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Polynomial</th>
-<th>Its Bernstein coefficients are found as follows:</th>
-<th>Notes</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Bernstein polynomial.</td>
-<td>$B_n(f)$.</td>
-<td>$f(j/n)$, where $0\le j\le n$.</td>
-<td>Originated with S.N. Bernstein (1912).  Evaluates $f$ at $n+1$ evenly-spaced points.</td>
-</tr>
-<tr>
-<td>Order-2 iterated Boolean sum.</td>
-<td>$U_{n,2} = B_n(W_{n,2})$.</td>
-<td>$W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f)(\lambda)$.</td>
-<td>Micchelli (1973)[^2], Guan (2009)[^3], Güntürk and Li (2021, sec. 3.3)[^4].  Evaluates $f$ at $n+1$ evenly-spaced points.</td>
-</tr>
-<tr>
-<td>Order-3 iterated Boolean sum.</td>
-<td>$U_{n,3} = B_n(W_{n,3})$.</td>
-<td>$W_{n,3}(j/n)$, where $0\le j\le n$ and $W_{n,3}(\lambda) = B_n(B_n(f)(\lambda))$ + $3 (f(\lambda)$ &minus; $B_n(f)(\lambda))$.</td>
-<td>Same.</td>
-</tr>
-<tr>
-<td>Butzer&#39;s linear combination (order 2).</td>
-<td>$L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$.</td>
-<td>(First, define the following operation: <strong>Get coefficients for $n$ given $m$</strong>: Treat the coefficients [$f(0/m)$, $f(1/m)$, ..., $f(m/m)$] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients (see &quot;<a href="#Computational_Issues"><strong>Computational Issues</strong></a>&quot;), then return those coefficients.)<br><strong>Get coefficients for $n$ given $n/2$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$.</td>
-<td>Tachev (2022)[^5], Butzer (1955)[^6].  $n\ge 6$ must be even.  Evaluates $f$ at $n/2+1$ evenly-spaced points.</td>
-</tr>
-<tr>
-<td>Butzer&#39;s linear combination (order 3).</td>
-<td>$L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$</td>
-<td><strong>Get coefficients for $n$ given $n/4$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>], then <strong>get coefficients for $n$ given $n/2$</strong>, call them <em>b</em>[0], ..., <em>b</em>[<em>n</em>], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$.</td>
-<td>Butzer (1955)[^6]. $n\ge 4$ must be divisible by 4. Evaluates $f$ at $n/2+1$ evenly-spaced points.</td>
-</tr>
-<tr>
-<td>Lorentz operator (order 2).</td>
-<td>$Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f&#39;&#39;)/(2(n-2))$.</td>
-<td><strong>Get coefficients for $n$ given $n-2$</strong>, call them <em>a</em>[0], ..., <em>a</em>[<em>n</em>].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from <em>a</em>[<em>j</em>], where $z=(((f&#39;&#39;((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now <em>a</em>[0], ..., <em>a</em>[<em>n</em>].</td>
-<td>Holtz et al. (2011)[^7]; Bernstein (1932)[^8]; Lorentz (1966)[^9]. $n\ge 4$; $f&#39;&#39;$ is the second derivative of $f$. Evaluates $f$ and $f&#39;&#39;$ at $n-1$ evenly-spaced points.</td>
-</tr>
-</tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Polynomial</th>
+      <th>Its Bernstein coefficients are found as follows:</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bernstein polynomial.</td>
+      <td>$B_n(f)$.</td>
+      <td>$f(j/n)$, where $0\le j\le n$.</td>
+      <td>Originated with S.N. Bernstein (1912).  Evaluates $f$ at $n+1$ evenly-spaced points.</td>
+    </tr>
+    <tr>
+      <td>Order-2 iterated Boolean sum.</td>
+      <td>$U_{n,2} = B_n(W_{n,2})$.</td>
+      <td>$W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f)(\lambda)$.</td>
+      <td>Micchelli (1973)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, Guan (2009)<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>, Güntürk and Li (2021, sec. 3.3)<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>.  Evaluates $f$ at $n+1$ evenly-spaced points.</td>
+    </tr>
+    <tr>
+      <td>Order-3 iterated Boolean sum.</td>
+      <td>$U_{n,3} = B_n(W_{n,3})$.</td>
+      <td>$W_{n,3}(j/n)$, where $0\le j\le n$ and $W_{n,3}(\lambda) = B_n(B_n(f)(\lambda))$ + $3 (f(\lambda)$ − $B_n(f)(\lambda))$.</td>
+      <td>Same.</td>
+    </tr>
+    <tr>
+      <td>Butzer’s linear combination (order 2).</td>
+      <td>$L_{2,n/2} = 2 B_{n}(f(\lambda))$ − $B_{n/2}(f(\lambda))$.</td>
+      <td>(First, define the following operation: <strong>Get coefficients for $n$ given $m$</strong>: Treat the coefficients [$f(0/m)$, $f(1/m)$, …, $f(m/m)$] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients (see “<a href="#Computational_Issues"><strong>Computational Issues</strong></a>”), then return those coefficients.)<br /><strong>Get coefficients for $n$ given $n/2$</strong>, call them <em>a</em>[0], …, <em>a</em>[<em>n</em>], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$.</td>
+      <td>Tachev (2022)<sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>, Butzer (1955)<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>.  $n\ge 6$ must be even.  Evaluates $f$ at $n/2+1$ evenly-spaced points.</td>
+    </tr>
+    <tr>
+      <td>Butzer’s linear combination (order 3).</td>
+      <td>$L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ − $2 B_{n/2}(f)$</td>
+      <td><strong>Get coefficients for $n$ given $n/4$</strong>, call them <em>a</em>[0], …, <em>a</em>[<em>n</em>], then <strong>get coefficients for $n$ given $n/2$</strong>, call them <em>b</em>[0], …, <em>b</em>[<em>n</em>], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$.</td>
+      <td>Butzer (1955)<sup id="fnref:6:1" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>. $n\ge 4$ must be divisible by 4. Evaluates $f$ at $n/2+1$ evenly-spaced points.</td>
+    </tr>
+    <tr>
+      <td>Lorentz operator (order 2).</td>
+      <td>$Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f’’)/(2(n-2))$.</td>
+      <td><strong>Get coefficients for $n$ given $n-2$</strong>, call them <em>a</em>[0], …, <em>a</em>[<em>n</em>].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from <em>a</em>[<em>j</em>], where $z=(((f’’((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now <em>a</em>[0], …, <em>a</em>[<em>n</em>].</td>
+      <td>Holtz et al. (2011)<sup id="fnref:7" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>; Bernstein (1932)<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>; Lorentz (1966)<sup id="fnref:9" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>. $n\ge 4$; $f’’$ is the second derivative of $f$. Evaluates $f$ and $f’’$ at $n-1$ evenly-spaced points.</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>The goal is now to find a polynomial of degree $n$, written in Bernstein form, such that&mdash;</p>
+<p>The goal is now to find a polynomial of degree $n$, written in Bernstein form, such that—</p>
 
 <ol>
-<li>the polynomial is within $\epsilon$ of $f(\lambda)$, and</li>
-<li>each of the polynomial&#39;s Bernstein coefficients is not less than 0 or greater than 1 (assuming none of $f$&#39;s values is less than 0 or greater than 1).</li>
+  <li>the polynomial is within $\epsilon$ of $f(\lambda)$, and</li>
+  <li>each of the polynomial’s Bernstein coefficients is not less than 0 or greater than 1 (assuming none of $f$’s values is less than 0 or greater than 1).</li>
 </ol>
 
-<p>For some of the polynomials given above, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound&#39;s equation for $n$ and round the solution up to the nearest integer.  See the table below, where:</p>
+<p>For some of the polynomials given above, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound’s equation for $n$ and round the solution up to the nearest integer.  See the table below, where:</p>
 
 <ul>
-<li>$M_r$ is not less than the maximum of the absolute value of $f$&#39;s $r$-th derivative.</li>
-<li>$H_r$ is not less than $f$&#39;s $r$-th derivative&#39;s Hölder constant (for the given Hölder exponent <em>&alpha;</em>).</li>
-<li>$L_r$ is not less than $f$&#39;s $r$-th derivative&#39;s Lipschitz constant.</li>
+  <li>$M_r$ is not less than the maximum of the absolute value of $f$’s $r$-th derivative.</li>
+  <li>$H_r$ is not less than $f$’s $r$-th derivative’s Hölder constant (for the given Hölder exponent <em>α</em>).</li>
+  <li>$L_r$ is not less than $f$’s $r$-th derivative’s Lipschitz constant.</li>
 </ul>
 
-<table><thead>
-<tr>
-<th>If <em>f</em>(<em>&lambda;</em>):</th>
-<th>Then the following polynomial:</th>
-<th>Is close to <em>f</em> with the following error bound:</th>
-<th>And a value of <em>n</em> that achieves the bound is:</th>
-<th>Notes</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Has Hölder continuous second derivative (see &quot;Definitions&quot;).</td>
-<td>$U_{n, 2}(f)$.</td>
-<td><em>&epsilon;</em> = $(5H_2+4M_2)$ / $(32 n^{1+\alpha/2})$.</td>
-<td><em>n</em>=max(3, ceil($((5H_2+4M_2)$ / $(32\epsilon))^{2/(2+\alpha)}$)).</td>
-<td>$n\ge 3$.  0 &lt; <em>&alpha;</em> &le; 1 is second derivative&#39;s Hölder exponent.  See Proposition B10C in appendix.</td>
-</tr>
-<tr>
-<td>Has Lipschitz continuous second derivative.</td>
-<td>$U_{n, 2}(f)$.</td>
-<td><em>&epsilon;</em> = $(5L_2+4M_2)$ / $(32 n^{3/2})$.</td>
-<td><em>n</em>=max(3, ceil($((5L_2+4M_2)$ / $(32\epsilon))^{2/3}$)).</td>
-<td>$n\ge 3$.  Special case of previous entry.</td>
-</tr>
-<tr>
-<td>Has Lipschitz continuous second derivative.</td>
-<td>$Q_{n-2,2}(f)$.</td>
-<td><em>&epsilon;</em> = 0.098585 <em>L</em><sub>2</sub>/((<em>n</em>&minus;2)<sup>3/2</sup>).</td>
-<td><em>n</em>=max(4, ceil($((0.098585 L_2)$ / $(\epsilon))^{2/3}+2$)).</td>
-<td>$n\ge 4$. See Proposition B10A in appendix.</td>
-</tr>
-<tr>
-<td>Has continuous third derivative.</td>
-<td>$L_{2, n/2}(f)$.</td>
-<td><em>&epsilon;</em> = (3*sqrt(3&minus;4/<em>n</em>)/4)*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &lt; (3*sqrt(3)/4)*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &lt; 1.29904*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &le; 1.29904*<em>M</em><sub>3</sub>/<em>n</em><sup>3/2</sup>.</td>
-<td><em>n</em>=max(6,ceil($\frac{3^{3/4} \sqrt{M_3/\epsilon}}{2}$)) &le; max(6,ceil((113976/100000) * sqrt(<em>M</em><sub>3</sub>/<em>&epsilon;</em>))) &le; max(6, ceil($((1.29904 M_3)$ / $\epsilon)^{2/3}$)). (If <em>n</em> is now odd, add 1.)</td>
-<td>Tachev (2022)[^5]. $n\ge 6$ must be even.</td>
-</tr>
-<tr>
-<td>Has Hölder continuous third derivative.</td>
-<td>$U_{n, 2}(f)$.</td>
-<td><em>&epsilon;</em> = $(9H_3+8M_2+8M_3)$ / $(64 n^{(3+\alpha)/2})$.</td>
-<td><em>n</em>=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{2/(3+\alpha)}$)).</td>
-<td>$n\ge 6$.  0 &lt; <em>&alpha;</em> &le; 1 is third derivative&#39;s Hölder exponent.  See Proposition B10D in appendix.</td>
-</tr>
-<tr>
-<td>Has Lipschitz continuous third derivative.</td>
-<td>$U_{n, 2}(f)$.</td>
-<td><em>&epsilon;</em> = $(9H_3+8M_2+8M_3)$ / $(64 n^2)$.</td>
-<td><em>n</em>=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{1/2}$)).</td>
-<td>$n\ge 6$.  Special case of previous entry.</td>
-</tr>
-<tr>
-<td>Has Lipschitz continuous third derivative.</td>
-<td>$L_{3, n/4}(f)$.</td>
-<td><em>&epsilon;</em> = <em>L</em><sub>3</sub>/(8*<em>n</em><sup>2</sup>).</td>
-<td><em>n</em>=max(4,ceil((sqrt(2)/4) * sqrt(<em>L</em><sub>3</sub>/<em>&epsilon;</em>))) &le; max(4,ceil((35356/100000) * sqrt(<em>L</em><sub>3</sub>/<em>&epsilon;</em>))). (Round <em>n</em> up to nearest multiple of 4.)</td>
-<td>$n\ge 4$ must be divisible by 4. See Proposition B10 in appendix.</td>
-</tr>
-<tr>
-<td>Has Lipschitz continuous derivative.</td>
-<td>$B_n(f)$.</td>
-<td><em>&epsilon;</em> = <em>L</em><sub>1</sub>/(8*<em>n</em>).</td>
-<td><em>n</em> = ceil(<em>L</em><sub>1</sub>/(8*<em>&epsilon;</em>)).</td>
-<td>Lorentz (1963)[^10].[^11]</td>
-</tr>
-<tr>
-<td>Has Hölder continuous derivative.</td>
-<td>$B_n(f)$.</td>
-<td><em>&epsilon;</em> = <em>H</em><sub>1</sub>/(4*<em>n</em><sup>(1+<em>&alpha;</em>)/2</sup>).</td>
-<td><em>n</em> = ceil((<em>H</em><sub>1</sub>/(4*<em>&epsilon;</em>))<sup>2/(1+<em>&alpha;</em>)</sup>).</td>
-<td>Schurer and Steutel (1975)[^12]. 0 &lt; <em>&alpha;</em> &le; 1 is derivative&#39;s Hölder exponent.</td>
-</tr>
-<tr>
-<td>Is Hölder continuous.</td>
-<td>$B_n(f)$.</td>
-<td><em>&epsilon;</em> = <em>H</em><sub>0</sub>*(1/(4*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.</td>
-<td><em>n</em> = ceil((<em>H</em><sub>0</sub>/<em>&epsilon;</em>))<sup>2/<em>&alpha;</em></sup>/4).</td>
-<td>Kac (1938)[^13]. 0 &lt; <em>&alpha;</em> &le; 1 is <em>f</em>&#39;s Hölder exponent.</td>
-</tr>
-<tr>
-<td>Is Lipschitz continuous.</td>
-<td>$B_n(f)$.</td>
-<td><em>&epsilon;</em> = <em>L</em><sub>0</sub>*sqrt(1/(4*<em>n</em>)).</td>
-<td><em>n</em> = ceil((<em>L</em><sub>0</sub>)<sup>2</sup>/(4*<em>&epsilon;</em><sup>2</sup>)).</td>
-<td>Special case of previous entry.</td>
-</tr>
-<tr>
-<td>Is Lipschitz continuous.</td>
-<td>$B_n(f)$.</td>
-<td><em>&epsilon;</em> = $\frac{4306+837\sqrt{6}}{5832} L_0/n^{1/2}$ &lt; $1.08989 L_0/n^{1/2}$.</td>
-<td><em>n</em>=ceil((<em>L</em><sub>0</sub>*1.08989/<em>&epsilon;</em>)<sup>2</sup>).</td>
-<td>Sikkema (1961)[^14].</td>
-</tr>
-</tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th>If <em>f</em>(<em>λ</em>):</th>
+      <th>Then the following polynomial:</th>
+      <th>Is close to <em>f</em> with the following error bound:</th>
+      <th>And a value of <em>n</em> that achieves the bound is:</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Has Hölder continuous second derivative (see “Definitions”).</td>
+      <td>$U_{n, 2}(f)$.</td>
+      <td><em>ε</em> = $(5H_2+4M_2)$ / $(32 n^{1+\alpha/2})$.</td>
+      <td><em>n</em>=max(3, ceil($((5H_2+4M_2)$ / $(32\epsilon))^{2/(2+\alpha)}$)).</td>
+      <td>$n\ge 3$.  0 &lt; <em>α</em> ≤ 1 is second derivative’s Hölder exponent.  See Proposition B10C in appendix.</td>
+    </tr>
+    <tr>
+      <td>Has Lipschitz continuous second derivative.</td>
+      <td>$U_{n, 2}(f)$.</td>
+      <td><em>ε</em> = $(5L_2+4M_2)$ / $(32 n^{3/2})$.</td>
+      <td><em>n</em>=max(3, ceil($((5L_2+4M_2)$ / $(32\epsilon))^{2/3}$)).</td>
+      <td>$n\ge 3$.  Special case of previous entry.</td>
+    </tr>
+    <tr>
+      <td>Has Lipschitz continuous second derivative.</td>
+      <td>$Q_{n-2,2}(f)$.</td>
+      <td><em>ε</em> = 0.098585 <em>L</em><sub>2</sub>/((<em>n</em>−2)<sup>3/2</sup>).</td>
+      <td><em>n</em>=max(4, ceil($((0.098585 L_2)$ / $(\epsilon))^{2/3}+2$)).</td>
+      <td>$n\ge 4$. See Proposition B10A in appendix.</td>
+    </tr>
+    <tr>
+      <td>Has continuous third derivative.</td>
+      <td>$L_{2, n/2}(f)$.</td>
+      <td><em>ε</em> = (3*sqrt(3−4/<em>n</em>)/4)*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &lt; (3*sqrt(3)/4)*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &lt; 1.29904*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> ≤ 1.29904*<em>M</em><sub>3</sub>/<em>n</em><sup>3/2</sup>.</td>
+      <td><em>n</em>=max(6,ceil($\frac{3^{3/4} \sqrt{M_3/\epsilon}}{2}$)) ≤ max(6,ceil((113976/100000) * sqrt(<em>M</em><sub>3</sub>/<em>ε</em>))) ≤ max(6, ceil($((1.29904 M_3)$ / $\epsilon)^{2/3}$)). (If <em>n</em> is now odd, add 1.)</td>
+      <td>Tachev (2022)<sup id="fnref:5:1" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>. $n\ge 6$ must be even.</td>
+    </tr>
+    <tr>
+      <td>Has Hölder continuous third derivative.</td>
+      <td>$U_{n, 2}(f)$.</td>
+      <td><em>ε</em> = $(9H_3+8M_2+8M_3)$ / $(64 n^{(3+\alpha)/2})$.</td>
+      <td><em>n</em>=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{2/(3+\alpha)}$)).</td>
+      <td>$n\ge 6$.  0 &lt; <em>α</em> ≤ 1 is third derivative’s Hölder exponent.  See Proposition B10D in appendix.</td>
+    </tr>
+    <tr>
+      <td>Has Lipschitz continuous third derivative.</td>
+      <td>$U_{n, 2}(f)$.</td>
+      <td><em>ε</em> = $(9H_3+8M_2+8M_3)$ / $(64 n^2)$.</td>
+      <td><em>n</em>=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{1/2}$)).</td>
+      <td>$n\ge 6$.  Special case of previous entry.</td>
+    </tr>
+    <tr>
+      <td>Has Lipschitz continuous third derivative.</td>
+      <td>$L_{3, n/4}(f)$.</td>
+      <td><em>ε</em> = <em>L</em><sub>3</sub>/(8*<em>n</em><sup>2</sup>).</td>
+      <td><em>n</em>=max(4,ceil((sqrt(2)/4) * sqrt(<em>L</em><sub>3</sub>/<em>ε</em>))) ≤ max(4,ceil((35356/100000) * sqrt(<em>L</em><sub>3</sub>/<em>ε</em>))). (Round <em>n</em> up to nearest multiple of 4.)</td>
+      <td>$n\ge 4$ must be divisible by 4. See Proposition B10 in appendix.</td>
+    </tr>
+    <tr>
+      <td>Has Lipschitz continuous derivative.</td>
+      <td>$B_n(f)$.</td>
+      <td><em>ε</em> = <em>L</em><sub>1</sub>/(8*<em>n</em>).</td>
+      <td><em>n</em> = ceil(<em>L</em><sub>1</sub>/(8*<em>ε</em>)).</td>
+      <td>Lorentz (1963)<sup id="fnref:10" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup>.<sup id="fnref:11" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup></td>
+    </tr>
+    <tr>
+      <td>Has Hölder continuous derivative.</td>
+      <td>$B_n(f)$.</td>
+      <td><em>ε</em> = <em>H</em><sub>1</sub>/(4*<em>n</em><sup>(1+<em>α</em>)/2</sup>).</td>
+      <td><em>n</em> = ceil((<em>H</em><sub>1</sub>/(4*<em>ε</em>))<sup>2/(1+<em>α</em>)</sup>).</td>
+      <td>Schurer and Steutel (1975)<sup id="fnref:12" role="doc-noteref"><a href="#fn:12" class="footnote" rel="footnote">12</a></sup>. 0 &lt; <em>α</em> ≤ 1 is derivative’s Hölder exponent.</td>
+    </tr>
+    <tr>
+      <td>Is Hölder continuous.</td>
+      <td>$B_n(f)$.</td>
+      <td><em>ε</em> = <em>H</em><sub>0</sub>*(1/(4*<em>n</em>))<sup><em>α</em>/2</sup>.</td>
+      <td><em>n</em> = ceil((<em>H</em><sub>0</sub>/<em>ε</em>))<sup>2/<em>α</em></sup>/4).</td>
+      <td>Kac (1938)<sup id="fnref:13" role="doc-noteref"><a href="#fn:13" class="footnote" rel="footnote">13</a></sup>. 0 &lt; <em>α</em> ≤ 1 is <em>f</em>’s Hölder exponent.</td>
+    </tr>
+    <tr>
+      <td>Is Lipschitz continuous.</td>
+      <td>$B_n(f)$.</td>
+      <td><em>ε</em> = <em>L</em><sub>0</sub>*sqrt(1/(4*<em>n</em>)).</td>
+      <td><em>n</em> = ceil((<em>L</em><sub>0</sub>)<sup>2</sup>/(4*<em>ε</em><sup>2</sup>)).</td>
+      <td>Special case of previous entry.</td>
+    </tr>
+    <tr>
+      <td>Is Lipschitz continuous.</td>
+      <td>$B_n(f)$.</td>
+      <td><em>ε</em> = $\frac{4306+837\sqrt{6}}{5832} L_0/n^{1/2}$ &lt; $1.08989 L_0/n^{1/2}$.</td>
+      <td><em>n</em>=ceil((<em>L</em><sub>0</sub>*1.08989/<em>ε</em>)<sup>2</sup>).</td>
+      <td>Sikkema (1961)<sup id="fnref:14" role="doc-noteref"><a href="#fn:14" class="footnote" rel="footnote">14</a></sup>.</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
-<p><strong>Note:</strong> In addition, by analyzing the proof of Theorem 2.4 of Güntürk and Li (2021, sec. 3.3)[^4], the following error bounds for $U_{n, 3}$ <em>appear</em> to be true:</p>
+  <p><strong>Note:</strong> In addition, by analyzing the proof of Theorem 2.4 of Güntürk and Li (2021, sec. 3.3)<sup id="fnref:4:1" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>, the following error bounds for $U_{n, 3}$ <em>appear</em> to be true:</p>
 
-<ul>
-<li>If $f(\lambda)$ has continuous fifth derivative: <em>&epsilon;</em> = 4.0421*max(<em>M</em><sub>0</sub>,...,<em>M</em><sub>5</sub>)/<em>n</em><sup>5/2</sup>.</li>
-<li>If $f(\lambda)$ has continuous sixth derivative: <em>&epsilon;</em> = 4.8457*max(<em>M</em><sub>0</sub>,...,<em>M</em><sub>6</sub>)/<em>n</em><sup>3</sup>.</li>
-</ul>
+  <ul>
+    <li>If $f(\lambda)$ has continuous fifth derivative: <em>ε</em> = 4.0421*max(<em>M</em><sub>0</sub>,…,<em>M</em><sub>5</sub>)/<em>n</em><sup>5/2</sup>.</li>
+    <li>If $f(\lambda)$ has continuous sixth derivative: <em>ε</em> = 4.8457*max(<em>M</em><sub>0</sub>,…,<em>M</em><sub>6</sub>)/<em>n</em><sup>3</sup>.</li>
+  </ul>
 </blockquote>
 
-<p>Bernstein polynomials ($B_n(f)$) have the advantages that only one Bernstein coefficient has to be found per run and that the coefficient will be bounded by 0 and 1 if $f(\lambda)$ is.  But their disadvantage is that they approach $f$ slowly in general, at a rate no faster than a rate proportional to $1/n$ (Voronovskaya 1932)[^15].</p>
+<p>Bernstein polynomials ($B_n(f)$) have the advantages that only one Bernstein coefficient has to be found per run and that the coefficient will be bounded by 0 and 1 if $f(\lambda)$ is.  But their disadvantage is that they approach $f$ slowly in general, at a rate no faster than a rate proportional to $1/n$ (Voronovskaya 1932)<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>.</p>
 
-<p>On the other hand, polynomials other than Bernstein polynomials can approach $f$ faster in many cases than Bernstein polynomials, but are not necessarily bounded by 0 and 1.  For these polynomials, the following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$, assuming none of $f$&#39;s values is less than 0 or greater than 1.</p>
+<p>On the other hand, polynomials other than Bernstein polynomials can approach $f$ faster in many cases than Bernstein polynomials, but are not necessarily bounded by 0 and 1.  For these polynomials, the following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$, assuming none of $f$’s values is less than 0 or greater than 1.</p>
 
 <ol>
-<li>Determine whether $f$ is described in the table above.  Let <em>A</em> be the minimum of $f$ on the closed unit interval and let <em>B</em> be the maximum of $f$ there.</li>
-<li>If 0 &lt; <em>A</em> &le; <em>B</em> &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.</li>
-<li>Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If <em>B</em> is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W_{n,2}$ or $W_{n,3}$ will now be bounded by 0 and 1.</li>
-<li>Calculate $n$ as given in the table above.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.</li>
+  <li>Determine whether $f$ is described in the table above.  Let <em>A</em> be the minimum of $f$ on the closed unit interval and let <em>B</em> be the maximum of $f$ there.</li>
+  <li>If 0 &lt; <em>A</em> ≤ <em>B</em> &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.</li>
+  <li>Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If <em>B</em> is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W_{n,2}$ or $W_{n,3}$ will now be bounded by 0 and 1.</li>
+  <li>Calculate $n$ as given in the table above.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.</li>
 </ol>
 
 <p>The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$.</p>
 
 <blockquote>
-<p><strong>Notes:</strong></p>
+  <p><strong>Notes:</strong></p>
 
-<ol>
-<li><p>A polynomial&#39;s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting either&mdash;</p>
+  <ol>
+    <li>
+      <p>A polynomial’s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting either—</p>
 
-<ul>
-<li>$c$=floor($c/\delta$) * $\delta$ (rounding down), or</li>
-<li>$c$=floor($c/\delta + 1/2$) * $\delta$ (rounding to the nearest multiple),</li>
-</ul>
+      <ul>
+        <li>$c$=floor($c/\delta$) * $\delta$ (rounding down), or</li>
+        <li>$c$=floor($c/\delta + 1/2$) * $\delta$ (rounding to the nearest multiple),</li>
+      </ul>
 
-<p>for each Bernstein coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ Bernstein coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial&#39;s Bernstein coefficients as given here.)</p></li>
-<li><p><em>Gevrey&#39;s hierarchy</em> is a class of &quot;smooth&quot; functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in <em>Gevrey&#39;s hierarchy</em> if there are values $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$&#39;s $n$-th derivative&#39;s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n\ge 1$ (Kawamura et al. 2015)[^16]; see also (Gevrey 1918)[^17]). In this case, for each $n\ge 1$&mdash;</p>
+      <p>for each Bernstein coefficient $c$.  The new polynomial will differ from the old one by at most $\delta$.  (Thus, to find a polynomial with multiple-of-$\delta$ Bernstein coefficients that approximates $f$ with error $\epsilon$ [which must be greater than $\delta$], first find a polynomial with error $\epsilon - \delta$, then round that polynomial’s Bernstein coefficients as given here.)</p>
+    </li>
+    <li>
+      <p><em>Gevrey’s hierarchy</em> is a class of “smooth” functions with known bounds on their derivatives. A function $f(\lambda)$ belongs in <em>Gevrey’s hierarchy</em> if there are values $B\ge 1$, $l\ge 1$, $\gamma\ge 1$ such that $f$’s $n$-th derivative’s absolute value is not greater than $Bl^n n^{\gamma n}$ for every $n\ge 1$ (Kawamura et al. 2015)<sup id="fnref:16" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>; see also (Gevrey 1918)<sup id="fnref:17" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>). In this case, for each $n\ge 1$—</p>
+      <ul>
+        <li>the $n$-th derivative of $f$ is continuous and has a maximum absolute value of at most $Bl^n n^{\gamma n}$, and</li>
+        <li>the $(n-1)$-th derivative of $f$ is Lipschitz continuous with Lipschitz constant at most $Bl^n n^{\gamma n}$.</li>
+      </ul>
 
-<ul>
-<li>the $n$-th derivative of $f$ is continuous and has a maximum absolute value of at most $Bl^n n^{\gamma n}$, and</li>
-<li>the $(n-1)$-th derivative of $f$ is Lipschitz continuous with Lipschitz constant at most $Bl^n n^{\gamma n}$.</li>
-</ul>
-
-<p><em>Gevrey&#39;s hierarchy</em> with $\gamma=1$ is the class of functions equaling power series (see note in next section).</p></li>
-</ol>
+      <p><em>Gevrey’s hierarchy</em> with $\gamma=1$ is the class of functions equaling power series (see note in next section).</p>
+    </li>
+  </ol>
 </blockquote>
 
-<p><a id=Taylor_Polynomials_for_Smooth_Functions></a></p>
+<p><a id="Taylor_Polynomials_for_Smooth_Functions"></a></p>
 
-<h3>Taylor Polynomials for &quot;Smooth&quot; Functions</h3>
+<h3 id="taylor-polynomials-for-smooth-functions">Taylor Polynomials for “Smooth” Functions</h3>
 
-<p>If $f(\lambda)$ is &quot;smooth&quot; enough on the closed unit interval and if $\epsilon$ is big enough, then Taylor&#39;s theorem shows how to build a polynomial that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series (see note).</p>
+<p>If $f(\lambda)$ is “smooth” enough on the closed unit interval and if $\epsilon$ is big enough, then Taylor’s theorem shows how to build a polynomial that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series (see note).</p>
 
-<p>In this section, $M_r$ is not less than the maximum of the absolute value of $f$&#39;s $r$-th derivative.</p>
+<p>In this section, $M_r$ is not less than the maximum of the absolute value of $f$’s $r$-th derivative.</p>
 
-<p>Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that&mdash;</p>
+<p>Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that—</p>
 
 <ol>
-<li>$f$ is continuous on the closed unit interval, and</li>
-<li>$f$ satisfies $\epsilon\le f(0)\le 1-\epsilon$ and $\epsilon\le f(1)\le 1-\epsilon$, and</li>
-<li>$f$ satisfies $\epsilon\lt f(\lambda)\lt 1-\epsilon$ whenever $0\lt\lambda\lt 1$, and</li>
-<li>$f$&#39;s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M_{n+1}/((n+1)!)$, and</li>
-<li>$f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.</li>
+  <li>$f$ is continuous on the closed unit interval, and</li>
+  <li>$f$ satisfies $\epsilon\le f(0)\le 1-\epsilon$ and $\epsilon\le f(1)\le 1-\epsilon$, and</li>
+  <li>$f$ satisfies $\epsilon\lt f(\lambda)\lt 1-\epsilon$ whenever $0\lt\lambda\lt 1$, and</li>
+  <li>$f$’s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M_{n+1}/((n+1)!)$, and</li>
+  <li>$f(0)$ is known as well as $f^{(1)}(0), …, f^{(n)}(0)$.</li>
 </ol>
 
-<p>Then the $n$-th <em>Taylor polynomial</em> centered at 0, given below, is within $\epsilon$ of $f$: $$P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,$$</p>
+<p>Then the $n$-th <em>Taylor polynomial</em> centered at 0, given below, is within $\epsilon$ of $f$: \(P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,\)</p>
 
 <p>where $a_0 = f(0)$ and $a_i = f^{(i)}(0)/(i!)$ for $i\ge 1$.</p>
 
-<p>Items 2 and 3 above are not needed to find a polynomial within $\epsilon$ of $f$, but they <em>are</em> needed to ensure the Taylor polynomial&#39;s Bernstein coefficients will lie in the closed unit interval, as described after the note.</p>
+<p>Items 2 and 3 above are not needed to find a polynomial within $\epsilon$ of $f$, but they <em>are</em> needed to ensure the Taylor polynomial’s Bernstein coefficients will lie in the closed unit interval, as described after the note.</p>
 
 <blockquote>
-<p><strong>Note:</strong> If $f(\lambda)$ can be rewritten as a <em>power series</em>, namely $f(\lambda) = c_0 \lambda^0 + c_1 \lambda^1 + ... + c_i \lambda^i + ...$ whenever $0\le\lambda\le 1$ (so that $f$ has a continuous $k$-th derivative for every $k$), and if the power series coefficients $c_i$&mdash;</p>
+  <p><strong>Note:</strong> If $f(\lambda)$ can be rewritten as a <em>power series</em>, namely $f(\lambda) = c_0 \lambda^0 + c_1 \lambda^1 + … + c_i \lambda^i + …$ whenever $0\le\lambda\le 1$ (so that $f$ has a continuous $k$-th derivative for every $k$), and if the power series coefficients $c_i$—</p>
 
-<ul>
-<li>are each greater than 0,</li>
-<li>form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, ...)), and</li>
-<li>meet the so-called &quot;ratio test&quot;,</li>
-</ul>
+  <ul>
+    <li>are each greater than 0,</li>
+    <li>form a nowhere increasing sequence (example: (1/4, 1/8, 1/8, 1/16, …)), and</li>
+    <li>meet the so-called “ratio test”,</li>
+  </ul>
 
-<p>then the algorithms in Carvalho and Moreira (2022)[^18] can be used to find the first $n$+1 power series coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also the appendix).</p>
+  <p>then the algorithms in Carvalho and Moreira (2022)<sup id="fnref:18" role="doc-noteref"><a href="#fn:18" class="footnote" rel="footnote">18</a></sup> can be used to find the first $n$+1 power series coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also the appendix).</p>
 </blockquote>
 
-<p>Now, the Taylor polynomial $P$, when written in its &quot;power&quot; form or &quot;monomial&quot; form, has &quot;power&quot; coefficients $a_0, ..., a_n$.</p>
+<p>Now, the Taylor polynomial $P$, when written in its “power” form or “monomial” form, has “power” coefficients $a_0, …, a_n$.</p>
 
-<p>Now, rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (See &quot;<a href="#Computational_Issues"><strong>Computational Issues</strong></a>&quot; for details.)  Let $b_0, ..., b_n$ be the resulting Bernstein coefficients.  If any of those Bernstein coefficients is less than 0 or greater than 1, then&mdash;</p>
+<p>Now, rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (See “<a href="#Computational_Issues"><strong>Computational Issues</strong></a>” for details.)  Let $b_0, …, b_n$ be the resulting Bernstein coefficients.  If any of those Bernstein coefficients is less than 0 or greater than 1, then—</p>
 
 <ul>
-<li>double the value of $n$, then</li>
-<li>rewrite the Bernstein coefficients of degree $n/2$ to the corresponding Bernstein coefficients of degree $n$,</li>
+  <li>double the value of $n$, then</li>
+  <li>rewrite the Bernstein coefficients of degree $n/2$ to the corresponding Bernstein coefficients of degree $n$,</li>
 </ul>
 
 <p>until none of the Bernstein coefficients is less than 0 or greater than 1.</p>
 
 <p>The result will be a polynomial of degree $n$ with $(n+1)$ Bernstein coefficients.</p>
 
-<p><a id=Approximations_on_Any_Closed_Interval></a></p>
+<p><a id="Approximations_on_Any_Closed_Interval"></a></p>
 
-<h3>Approximations on Any Closed Interval</h3>
+<h3 id="approximations-on-any-closed-interval">Approximations on Any Closed Interval</h3>
 
 <p>Now, let $g(\lambda)$ be continuous on the closed interval $[a, b]$.  This section shows how to adapt the previous two sections to approximate $g$ on the interval, to the user-defined error tolerance $\epsilon$, by a polynomial in Bernstein form on the interval $[a, b]$.</p>
 
-<p>Any polynomial $p(\lambda)$ can be written in <em>Bernstein form on the interval $[a,b]$</em> as&mdash;</p>
+<p>Any polynomial $p(\lambda)$ can be written in <em>Bernstein form on the interval $[a,b]$</em> as—</p>
 
-<p>$$p(\lambda) = \frac{1}{(b-a)^n}\left({n\choose 0}(\lambda-a)^0 (b-\lambda)^{n-0} a[0] + {n\choose 1}(\lambda-a)^1 (b-\lambda)^{n-1} a[1] + ... + {n\choose n}(\lambda-a)^n (b-\lambda)^{n-n} a[n]\right),$$</p>
+\[p(\lambda) = \frac{1}{(b-a)^n}\left({n\choose 0}(\lambda-a)^0 (b-\lambda)^{n-0} a[0] + {n\choose 1}(\lambda-a)^1 (b-\lambda)^{n-1} a[1] + ... + {n\choose n}(\lambda-a)^n (b-\lambda)^{n-n} a[n]\right),\]
 
-<p>where <em>n</em> is the polynomial&#39;s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], ..., <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>Bernstein coefficients for the interval $[a,b]$</em> (Bărbosu 2020)[^19].</p>
+<p>where <em>n</em> is the polynomial’s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], …, <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>Bernstein coefficients for the interval $[a,b]$</em> (Bărbosu 2020)<sup id="fnref:19" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup>.</p>
 
 <p>The necessary changes are as follows:</p>
 
 <ul>
-<li>In the previous two sections, define $f$, $M_r$, $a_i$, and $L_r$ as follows:
-
-<ul>
-<li>$f(\lambda) = g(a+(b-a)\lambda)$.  This will make $f$ continuous on the closed unit interval.</li>
-<li>$M_r$ is not less than $(b-a)^r$ times the maximum of the absolute value of $g$&#39;s $r$-th derivative on $[a,b]$.</li>
-<li>$L_r$ is not less than $(b-a)^{r+1}$ times the Lipschitz constant of $g$&#39;s $r$-th derivative on $[a,b]$.</li>
-<li>$a_i = (b-a)^i f^{(i)}(0)/(i!)$.</li>
-</ul></li>
+  <li>In the previous two sections, define $f$, $M_r$, $a_i$, and $L_r$ as follows:
+    <ul>
+      <li>$f(\lambda) = g(a+(b-a)\lambda)$.  This will make $f$ continuous on the closed unit interval.</li>
+      <li>$M_r$ is not less than $(b-a)^r$ times the maximum of the absolute value of $g$’s $r$-th derivative on $[a,b]$.</li>
+      <li>$L_r$ is not less than $(b-a)^{r+1}$ times the Lipschitz constant of $g$’s $r$-th derivative on $[a,b]$.</li>
+      <li>$a_i = (b-a)^i f^{(i)}(0)/(i!)$.</li>
+    </ul>
+  </li>
 </ul>
 
-<p>(The error bounds that rely on $H_r$ won&#39;t work for the time being unless $[a, b]$ is the closed unit interval.)</p>
+<p>(The error bounds that rely on $H_r$ won’t work for the time being unless $[a, b]$ is the closed unit interval.)</p>
 
 <p>The result will be in the form of Bernstein coefficients for the interval $[a, b]$ rather than the interval $[0, 1]$.</p>
 
 <blockquote>
-<p><strong>Note:</strong> The following statements can be shown.  Let $g(x)$ be continuous on the interval $[a, b]$, and let $f(x) = g(a+(b-a) x)$.</p>
+  <p><strong>Note:</strong> The following statements can be shown.  Let $g(x)$ be continuous on the interval $[a, b]$, and let $f(x) = g(a+(b-a) x)$.</p>
 
-<ul>
-<li>If the $r$-th derivative of $g$ is continuous and has a maximum absolute value of $M$ on the interval, where $r\ge 1$, then the $r$-th derivative of $f(x)$ has a maximum absolute value of $M(b-a)^r$ on the interval $[0, 1]$.</li>
-<li>If the $r$-th derivative of $g$ is Lipschitz continuous with Lipschitz constant $L$ on the interval, where $r\ge 0$, then the $r$-th derivative of $f(x)$ is Lipschitz continuous with Lipschitz constant $L(b-a)^{r+1}$ on the interval $[0, 1]$.</li>
-</ul>
+  <ul>
+    <li>If the $r$-th derivative of $g$ is continuous and has a maximum absolute value of $M$ on the interval, where $r\ge 1$, then the $r$-th derivative of $f(x)$ has a maximum absolute value of $M(b-a)^r$ on the interval $[0, 1]$.</li>
+    <li>If the $r$-th derivative of $g$ is Lipschitz continuous with Lipschitz constant $L$ on the interval, where $r\ge 0$, then the $r$-th derivative of $f(x)$ is Lipschitz continuous with Lipschitz constant $L(b-a)^{r+1}$ on the interval $[0, 1]$.</li>
+  </ul>
 
-<p><strong>Example:</strong> Suppose $g(x)$ is defined on the interval $[1,3]$ and has a Lipschitz continuous derivative with Lipschitz constant $L$.  Let $f(x)=g(1+(3-1) x)$.  Then $f(x)$ has a Lipschitz continuous derivative with Lipschitz constant $L(3-1)^{r+1} = L(3-1)^2 = 4L$ (where $r$ is 1 in this case).  Further, the Bernstein polynomial $B_n(f)$ admits the following error bound $\epsilon$ and a degree $n$ that achieves the error tolerance $\epsilon$: $\epsilon=(4L)\cdot 1/(8n)$ and $n=\text{ceil}((4L)\cdot 1/(8\epsilon))$.  (Compare with the row starting with &quot;Has Lipschitz continuous derivative&quot; in the previous section.)  The error bound carries over to $g(x)$ on the interval $[1, 3]$.</p>
+  <p><strong>Example:</strong> Suppose $g(x)$ is defined on the interval $[1,3]$ and has a Lipschitz continuous derivative with Lipschitz constant $L$.  Let $f(x)=g(1+(3-1) x)$.  Then $f(x)$ has a Lipschitz continuous derivative with Lipschitz constant $L(3-1)^{r+1} = L(3-1)^2 = 4L$ (where $r$ is 1 in this case).  Further, the Bernstein polynomial $B_n(f)$ admits the following error bound $\epsilon$ and a degree $n$ that achieves the error tolerance $\epsilon$: $\epsilon=(4L)\cdot 1/(8n)$ and $n=\text{ceil}((4L)\cdot 1/(8\epsilon))$.  (Compare with the row starting with “Has Lipschitz continuous derivative” in the previous section.)  The error bound carries over to $g(x)$ on the interval $[1, 3]$.</p>
 </blockquote>
 
-<p><a id=Approximating_an_Integral></a></p>
+<p><a id="Approximating_an_Integral"></a></p>
 
-<h3>Approximating an Integral</h3>
+<h3 id="approximating-an-integral">Approximating an Integral</h3>
 
-<p>Roughly speaking, the <em>integral</em> of <em>f</em>(<em>x</em>) on an interval [<em>a</em>, <em>b</em>] is the &quot;area under the graph&quot; of that function when the function is restricted to that interval.  If <em>f</em> is continuous there, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+...+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.</p>
+<p>Roughly speaking, the <em>integral</em> of <em>f</em>(<em>x</em>) on an interval [<em>a</em>, <em>b</em>] is the “area under the graph” of that function when the function is restricted to that interval.  If <em>f</em> is continuous there, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+…+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.</p>
 
 <p>If a polynomial is in Bernstein form of degree $n$, and is defined on the closed unit interval:</p>
 
 <ul>
-<li>The polynomial&#39;s integral on the closed unit interval is equal to the average of its $(n+1)$ Bernstein coefficients; that is, the integral is found by adding those coefficients together, then dividing by $(n+1)$ (Tsai and Farouki 2001, section 3.4)[^20].[^21]</li>
+  <li>The polynomial’s integral on the closed unit interval is equal to the average of its $(n+1)$ Bernstein coefficients; that is, the integral is found by adding those coefficients together, then dividing by $(n+1)$ (Tsai and Farouki 2001, section 3.4)<sup id="fnref:20" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.<sup id="fnref:21" role="doc-noteref"><a href="#fn:21" class="footnote" rel="footnote">21</a></sup></li>
 </ul>
 
 <p>If a polynomial is in Bernstein form on the interval $[a, b]$, of degree $n$:</p>
 
 <ul>
-<li>The polynomial&#39;s integral on $[a, b]$ is found by adding the polynomial&#39;s Bernstein coefficients for $[a, b]$ together, then multiplying by $(b-a)/(n+1)$.</li>
+  <li>The polynomial’s integral on $[a, b]$ is found by adding the polynomial’s Bernstein coefficients for $[a, b]$ together, then multiplying by $(b-a)/(n+1)$.</li>
 </ul>
 
 <p>Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval [<em>a</em>, <em>b</em>], and let $f(\lambda)$ be a piecewise continuous function on that interval.</p>
 
 <ul>
-<li>If $P$ is within $\epsilon$ of $f$ at every point on the interval, then its integral is within $\epsilon\times(b-a)$ of $f$&#39;s integral on that interval.</li>
-<li>If $P$ is within $\epsilon/(b-a)$ of $f$ at every point on the interval, then its integral is within $\epsilon$ of $f$&#39;s integral on that interval.</li>
+  <li>If $P$ is within $\epsilon$ of $f$ at every point on the interval, then its integral is within $\epsilon\times(b-a)$ of $f$’s integral on that interval.</li>
+  <li>If $P$ is within $\epsilon/(b-a)$ of $f$ at every point on the interval, then its integral is within $\epsilon$ of $f$’s integral on that interval.</li>
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> A pair of articles by Konečný and Neumann discuss approximating the integral (and maximum) of a class of functions efficiently using polynomials or piecewise functions with polynomials as the pieces: Konečný and Neumann (2021)[^22]; Konečný and Neumann (2019)[^23].</p>
+  <p><strong>Note:</strong> A pair of articles by Konečný and Neumann discuss approximating the integral (and maximum) of a class of functions efficiently using polynomials or piecewise functions with polynomials as the pieces: Konečný and Neumann (2021)<sup id="fnref:22" role="doc-noteref"><a href="#fn:22" class="footnote" rel="footnote">22</a></sup>; Konečný and Neumann (2019)<sup id="fnref:23" role="doc-noteref"><a href="#fn:23" class="footnote" rel="footnote">23</a></sup>.</p>
 
-<p>Muñoz and Narkawicz (2013)[^24] also discuss finding the minimum and maximum of a polynomial in Bernstein form &mdash; indeed, a polynomial is bounded above by its highest Bernstein coefficient and below by its lowest.</p>
+  <p>Muñoz and Narkawicz (2013)<sup id="fnref:24" role="doc-noteref"><a href="#fn:24" class="footnote" rel="footnote">24</a></sup> also discuss finding the minimum and maximum of a polynomial in Bernstein form — indeed, a polynomial is bounded above by its highest Bernstein coefficient and below by its lowest.</p>
 </blockquote>
 
-<p><a id=Approximating_a_Derivative></a></p>
+<p><a id="Approximating_a_Derivative"></a></p>
 
-<h3>Approximating a Derivative</h3>
+<h3 id="approximating-a-derivative">Approximating a Derivative</h3>
 
 <p>For the time being, this section works only if $f(\lambda)$ is defined on the closed unit interval, rather than an arbitrary closed interval.</p>
 
-<p>If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it&#39;s possible to approximate $f$&#39;s $r$-th derivative as follows:</p>
+<p>If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it’s possible to approximate $f$’s $r$-th derivative as follows:</p>
 
 <ol>
-<li>Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user-defined error tolerance.  See the table below.</li>
-<li><p>Let $a[0], ..., a[n]$ be the polynomial&#39;s Bernstein coefficients. Now, to compute the polynomial&#39;s $r$-th derivative, do the following $r$ times or until the process stops, whichever happens first (Tsai and Farouki 2001, section 3.4)[^20].</p>
+  <li>Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user-defined error tolerance.  See the table below.</li>
+  <li>
+    <p>Let $a[0], …, a[n]$ be the polynomial’s Bernstein coefficients. Now, to compute the polynomial’s $r$-th derivative, do the following $r$ times or until the process stops, whichever happens first (Tsai and Farouki 2001, section 3.4)<sup id="fnref:20:1" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.</p>
 
-<ul>
-<li>If $n$ is 0, set $a[0]=0$ and stop.</li>
-<li>For each integer $k$ with $0\le k\le n-1$, set $a[k] = n\cdot(a[k+1]-a[k])$.</li>
-<li>Set $n$ to $n-1$.</li>
-</ul></li>
-<li><p>The result is a degree-$n$ polynomial, with Bernstein coefficients $a[0], ..., a[n]$, that approximates the $r$-th derivative of $f(\lambda)$.</p></li>
+    <ul>
+      <li>If $n$ is 0, set $a[0]=0$ and stop.</li>
+      <li>For each integer $k$ with $0\le k\le n-1$, set $a[k] = n\cdot(a[k+1]-a[k])$.</li>
+      <li>Set $n$ to $n-1$.</li>
+    </ul>
+  </li>
+  <li>The result is a degree-$n$ polynomial, with Bernstein coefficients $a[0], …, a[n]$, that approximates the $r$-th derivative of $f(\lambda)$.</li>
 </ol>
 
 <p>In the table below:</p>
 
 <ul>
-<li>$M_r$ is not less than the maximum of the absolute value of $f$&#39;s $r$-th derivative.</li>
-<li>$H_r$ is not less than $f$&#39;s $r$-th derivative&#39;s Hölder constant (for the given Hölder exponent <em>&alpha;</em>).</li>
-<li>$L_r$ is not less than $f$&#39;s $r$-th derivative&#39;s Lipschitz constant.</li>
+  <li>$M_r$ is not less than the maximum of the absolute value of $f$’s $r$-th derivative.</li>
+  <li>$H_r$ is not less than $f$’s $r$-th derivative’s Hölder constant (for the given Hölder exponent <em>α</em>).</li>
+  <li>$L_r$ is not less than $f$’s $r$-th derivative’s Lipschitz constant.</li>
 </ul>
 
-<table><thead>
-<tr>
-<th>If <em>f</em>(<em>&lambda;</em>):</th>
-<th>Then the following polynomial:</th>
-<th>Is close to <em>f</em> with the following error bound:</th>
-<th>And a value of <em>n</em> that achieves the bound is:</th>
-<th>Notes</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Has Hölder continuous $r$-th derivative.</td>
-<td>$B_n(f)$.</td>
-<td>$\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$.</td>
-<td>$n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$.</td>
-<td>Knoop and Pottinger (1976)[^25]. $0\lt\alpha\le 1$ is $r$-th derivative&#39;s Hölder exponent.</td>
-</tr>
-</tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th>If <em>f</em>(<em>λ</em>):</th>
+      <th>Then the following polynomial:</th>
+      <th>Is close to <em>f</em> with the following error bound:</th>
+      <th>And a value of <em>n</em> that achieves the bound is:</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Has Hölder continuous $r$-th derivative.</td>
+      <td>$B_n(f)$.</td>
+      <td>$\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ ≤ $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$.</td>
+      <td>$n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$.</td>
+      <td>Knoop and Pottinger (1976)<sup id="fnref:25" role="doc-noteref"><a href="#fn:25" class="footnote" rel="footnote">25</a></sup>. $0\lt\alpha\le 1$ is $r$-th derivative’s Hölder exponent.</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
-<p><strong>Note:</strong> In general, it is not possible to approximate a continuous function&#39;s derivative unless upper and lower bounds on the derivative are known (Konečný and Neumann (2019)[^23]).</p>
+  <p><strong>Note:</strong> In general, it is not possible to approximate a continuous function’s derivative unless upper and lower bounds on the derivative are known (Konečný and Neumann (2019)<sup id="fnref:23:1" role="doc-noteref"><a href="#fn:23" class="footnote" rel="footnote">23</a></sup>).</p>
 </blockquote>
 
-<p><a id=Computational_Issues></a></p>
+<p><a id="Computational_Issues"></a></p>
 
-<h3>Computational Issues</h3>
+<h3 id="computational-issues">Computational Issues</h3>
 
 <p>Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as <em>degree elevation</em>.  This rewriting works for polynomials in Bernstein form on any closed interval.</p>
 
 <ul>
-<li>This rewriting can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)[^20].</li>
-<li>This rewriting can also be done through an intermediate form called the <em>scaled Bernstein form</em> (Farouki and Rajan 1988)[^26], as described in Sánchez-Reyes (2003)[^27].  (A polynomial in scaled Bernstein form is also known as a <em>homogeneous polynomial</em>.)
-
-<ul>
-<li>The <em>i</em>-th Bernstein coefficient of degree <em>m</em> is turned to a scaled Bernstein coefficient by multiplying it by choose(<em>m</em>,<em>i</em>).</li>
-<li>The <em>i</em>-th scaled Bernstein coefficient of degree <em>m</em> is turned to a Bernstein coefficient by dividing it by choose(<em>m</em>,<em>i</em>).</li>
-</ul></li>
+  <li>This rewriting can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)<sup id="fnref:20:2" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.</li>
+  <li>This rewriting can also be done through an intermediate form called the <em>scaled Bernstein form</em> (Farouki and Rajan 1988)<sup id="fnref:26" role="doc-noteref"><a href="#fn:26" class="footnote" rel="footnote">26</a></sup>, as described in Sánchez-Reyes (2003)<sup id="fnref:27" role="doc-noteref"><a href="#fn:27" class="footnote" rel="footnote">27</a></sup>.  (A polynomial in scaled Bernstein form is also known as a <em>homogeneous polynomial</em>.)
+    <ul>
+      <li>The <em>i</em>-th Bernstein coefficient of degree <em>m</em> is turned to a scaled Bernstein coefficient by multiplying it by choose(<em>m</em>,<em>i</em>).</li>
+      <li>The <em>i</em>-th scaled Bernstein coefficient of degree <em>m</em> is turned to a Bernstein coefficient by dividing it by choose(<em>m</em>,<em>i</em>).</li>
+    </ul>
+  </li>
 </ul>
 
-<p>Some methods in this document require rewriting a polynomial in &quot;power&quot; form of degree $m$ (also known as &quot;monomial&quot; form) to Bernstein form of degree $m$.  This rewriting works only for polynomials in Bernstein form on the closed unit interval.</p>
+<p>Some methods in this document require rewriting a polynomial in “power” form of degree $m$ (also known as “monomial” form) to Bernstein form of degree $m$.  This rewriting works only for polynomials in Bernstein form on the closed unit interval.</p>
 
 <ul>
-<li>This rewriting can be done directly using the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^28].</li>
-<li>This rewriting can also be done by rewriting the polynomial from &quot;power&quot; form to scaled Bernstein form (see Sánchez-Reyes (2003, section 2.6)[^27]), then converting the scaled Bernstein form to Bernstein form.</li>
+  <li>This rewriting can be done directly using the so-called “matrix method” from Ray and Nataraj (2012)<sup id="fnref:28" role="doc-noteref"><a href="#fn:28" class="footnote" rel="footnote">28</a></sup>.</li>
+  <li>This rewriting can also be done by rewriting the polynomial from “power” form to scaled Bernstein form (see Sánchez-Reyes (2003, section 2.6)<sup id="fnref:27:1" role="doc-noteref"><a href="#fn:27" class="footnote" rel="footnote">27</a></sup>), then converting the scaled Bernstein form to Bernstein form.</li>
 </ul>
 
-<p><a id=Approximations_by_Rational_Functions></a></p>
+<p><a id="Approximations_by_Rational_Functions"></a></p>
 
-<h2>Approximations by Rational Functions</h2>
+<h2 id="approximations-by-rational-functions">Approximations by Rational Functions</h2>
 
-<p>Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the closed unit interval to itself, where $q(\lambda)$ is in Bernstein form with non-negative coefficients.  Then rational functions of this kind are not much better than polynomials in approximating $f(\lambda)$ when&mdash;</p>
+<p>Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the closed unit interval to itself, where $q(\lambda)$ is in Bernstein form with non-negative coefficients.  Then rational functions of this kind are not much better than polynomials in approximating $f(\lambda)$ when—</p>
 
 <ul>
-<li>$f$ has only a finite number of continuous derivatives on the open interval (0, 1) (Borwein 1979, section 3)[^29], <em>or</em></li>
-<li>$f(\lambda)$ is writable as $a_0 \lambda^0 + a_1 \lambda^1 + ...$, where $a_k\ge(k+1) a_{k+1}\ge 0$ whenever $k\ge 0$ (Borwein 1980)[^30].</li>
+  <li>$f$ has only a finite number of continuous derivatives on the open interval (0, 1) (Borwein 1979, section 3)<sup id="fnref:29" role="doc-noteref"><a href="#fn:29" class="footnote" rel="footnote">29</a></sup>, <em>or</em></li>
+  <li>$f(\lambda)$ is writable as $a_0 \lambda^0 + a_1 \lambda^1 + …$, where $a_k\ge(k+1) a_{k+1}\ge 0$ whenever $k\ge 0$ (Borwein 1980)<sup id="fnref:30" role="doc-noteref"><a href="#fn:30" class="footnote" rel="footnote">30</a></sup>.</li>
 </ul>
 
-<p>In addition, rational functions are not much better than polynomials in approximating $f(\lambda)$ when&mdash;</p>
+<p>In addition, rational functions are not much better than polynomials in approximating $f(\lambda)$ when—</p>
 
 <ul>
-<li>$f$ has only a finite number of continuous derivatives on the half-open interval (0, 1], <em>and</em></li>
-<li>the rational function has no root that is a complex number whose real part is between 0 and 1 (Borwein 1979, theorem 29)[^29].</li>
+  <li>$f$ has only a finite number of continuous derivatives on the half-open interval (0, 1], <em>and</em></li>
+  <li>the rational function has no root that is a complex number whose real part is between 0 and 1 (Borwein 1979, theorem 29)<sup id="fnref:29:1" role="doc-noteref"><a href="#fn:29" class="footnote" rel="footnote">29</a></sup>.</li>
 </ul>
 
-<p><a id=Request_for_Additional_Methods></a></p>
+<p><a id="Request_for_Additional_Methods"></a></p>
 
-<h2>Request for Additional Methods</h2>
+<h2 id="request-for-additional-methods">Request for Additional Methods</h2>
 
 <p>Readers are requested to let me know of additional solutions to the following problems:</p>
 
 <ol>
-<li><p>Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.</p>
+  <li>
+    <p>Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.</p>
 
-<p>The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative.</p>
+    <p>The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative.</p>
 
-<p>Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev interpolants and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).</p></li>
-<li><p>Find a polynomial $P$ in Bernstein form that approximates a strictly increasing polynomial $Q$ on the closed unit interval such that the <em>inverse</em> of $P$ is within $\epsilon$ of the inverse of $Q$.</p></li>
-<li><p>Find a polynomial $P$ in Bernstein form that approximates a strictly increasing real analytic function $f$ on the closed unit interval such that the <em>inverse</em> of $P$ is within $\epsilon$ of the inverse of $f$.</p>
+    <p>Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev interpolants and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).</p>
+  </li>
+  <li>
+    <p>Find a polynomial $P$ in Bernstein form that approximates a strictly increasing polynomial $Q$ on the closed unit interval such that the <em>inverse</em> of $P$ is within $\epsilon$ of the inverse of $Q$.</p>
+  </li>
+  <li>
+    <p>Find a polynomial $P$ in Bernstein form that approximates a strictly increasing real analytic function $f$ on the closed unit interval such that the <em>inverse</em> of $P$ is within $\epsilon$ of the inverse of $f$.</p>
 
-<p>(Note: There is no bounded convergence rate for $P$ if $f$ is assumed only to have a continuous $k$-th derivative for every $k$; a counterexample is $h(x)=\exp(-1/x)$ ($h(0)=0$), $h(h(x))$, $h(h(h(x)))$, and so on.)</p></li>
+    <p>(Note: There is no bounded convergence rate for $P$ if $f$ is assumed only to have a continuous $k$-th derivative for every $k$; a counterexample is $h(x)=\exp(-1/x)$ ($h(0)=0$), $h(h(x))$, $h(h(h(x)))$, and so on.)</p>
+  </li>
 </ol>
 
 <p>See also the <a href="https://peteroupc.github.io/bernreq.html#Polynomials_that_approach_a_factory_function_fast"><strong>open questions</strong></a>.</p>
 
-<p><a id=Notes></a></p>
+<p><a id="Notes"></a></p>
 
-<h2>Notes</h2>
+<h2 id="notes">Notes</h2>
 
-<p>[^1]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> satisfying <em>n</em>&minus;<em>k</em>+1 &le; <em>i</em> &le; <em>n</em>, then multiplying the results (Yannis Manolopoulos. 2002. &quot;Binomial coefficient computation: recursion or iteration?&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: <a href="https://doi.org/10.1145/820127.820168"><strong>https://doi.org/10.1145/820127.820168</strong></a>).  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.<br><em>n</em>! = 1*2*3*...*<em>n</em> is also known as $n$ factorial; in this document, (0!) = 1.</p>
+<p><a id="Appendix"></a></p>
 
-<p>[^2]: Micchelli, Charles. &quot;<a href="https://www.sciencedirect.com/science/article/pii/0021904573900282"><strong>The saturation class and iterates of the Bernstein polynomials</strong></a>&quot;, Journal of Approximation Theory 8, no. 1 (1973): 1-18.</p>
+<h2 id="appendix">Appendix</h2>
 
-<p>[^3]: Guan, Zhong. &quot;<a href="https://arxiv.org/abs/0909.0684"><strong>Iterated Bernstein polynomial approximations</strong></a>&quot;, arXiv:0909.0684 (2009).</p>
+<p><a id="Results_Used_in_Approximations_by_Polynomials"></a></p>
 
-<p>[^4]: Güntürk, C.S., Li, W., &quot;<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>&quot;, arXiv:2112.09181 [cs.LG], 2021.</p>
+<h3 id="results-used-in-approximations-by-polynomials">Results Used in Approximations by Polynomials</h3>
 
-<p>[^5]: Tachev, Gancho. &quot;<a href="https://doi.org/10.3934/mfc.2022061"><strong>Linear combinations of two Bernstein polynomials</strong></a>&quot;, <em>Mathematical Foundations of Computing</em>, 2022.</p>
+<p><strong>Lemma A1:</strong> Let— \(f(x)=a_0 x^0 + a_1 x^1 + ...,\) where the $a_i$ are constants each 0 or greater and sum to a finite value and where $0\le x\le 1$ (the domain is the closed unit interval). Then $f$ is convex and has a maximum at 1.</p>
 
-<p>[^6]: Butzer, P.L., &quot;Linear combinations of Bernstein polynomials&quot;, Canadian Journal of Mathematics 15 (1953).</p>
-
-<p>[^7]: Holtz, O., Nazarov, F., Peres, Y., &quot;<a href="https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf"><strong>New Coins from Old, Smoothly</strong></a>&quot;, <em>Constructive Approximation</em> 33 (2011).</p>
-
-<p>[^8]: Bernstein, S. N. (1932). &quot;Complément a l’article de E. Voronovskaya.&quot; CR Acad. URSS, 86-92.</p>
-
-<p>[^9]: G.G. Lorentz, &quot;The degree of approximation by polynomials with positive coefficients&quot;, 1966.</p>
-
-<p>[^10]: G.G. Lorentz, &quot;Inequalities and saturation classes for Bernstein polynomials&quot;, 1963.</p>
-
-<p>[^11]: Qian et al. suggested an <em>n</em> which has the upper bound <em>n</em>=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial (Qian, W., Riedel, M. D., &amp; Rosenberg, I. (2011). Uniform approximation and Bernstein polynomials with coefficients in the unit interval. European Journal of Combinatorics, 32(3), 448-463).</p>
-
-<p>[^12]: Schurer and Steutel, &quot;On an inequality of Lorentz in the theory of Bernstein polynomials&quot;, 1975.</p>
-
-<p>[^13]: Kac, M., &quot;Une remarque sur les polynômes de M. S. Bernstein&quot;, Studia Math. 7, 1938.</p>
-
-<p>[^14]: Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, 1961.</p>
-
-<p>[^15]: E. Voronovskaya, &quot;Détermination de la forme asymptotique d&#39;approximation des fonctions par les polynômes de M. Bernstein&quot;, 1932.</p>
-
-<p>[^16]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. &quot;<a href="https://doi.org/10.1016/j.jco.2015.05.001"><strong>Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy</strong></a>.&quot; Journal of Complexity 31, no. 5 (2015): 689-714.</p>
-
-<p>[^17]: M. Gevrey, &quot;Sur la nature analytique des solutions des équations aux dérivées partielles&quot;, 1918.</p>
-
-<p>[^18]: Carvalho, Luiz Max, and Guido A. Moreira. &quot;<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>&quot;, arXiv:2202.06121 (2022).</p>
-
-<p>[^19]: Bărbosu, D., &quot;The Bernstein operators on any finite interval revisited&quot;, Creat. Math. Inform. 20 (2020).</p>
-
-<p>[^20]: Tsai, Y., Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object- Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, ACM Transactions on Mathematical Software, June 2001.</p>
-
-<p>[^21]: As an example, Mastroianni and Occorsio (1977) approximate an integral this way using iterated Boolean sums of Bernstein polynomials (which include $U_{n,2}$). G. Mastroianni, M.R. Occorsio, &quot;Una generalizzazione dell&#39;operatore di Bernstein&quot;, 1977.</p>
-
-<p>[^22]: Konečný, Michal, and Eike Neumann. &quot;Representations and evaluation strategies for feasibly approximable functions.&quot; Computability 10, no. 1 (2021): 63-89. Also in arXiv: <a href="https://arxiv.org/abs/1710.03702"><strong>1710.03702</strong></a>.</p>
-
-<p>[^23]: Konečný, Michal, and Eike Neumann. &quot;<a href="https://arxiv.org/abs/1910.04891"><strong>Implementing evaluation strategies for continuous real functions</strong></a>&quot;, arXiv:1910.04891 (2019).</p>
-
-<p>[^24]: Muñoz, César, and Anthony Narkawicz. &quot;Formalization of Bernstein polynomials and applications to global optimization.&quot; Journal of Automated Reasoning 51, no. 2 (2013): 151-196.</p>
-
-<p>[^25]: Knoop, H-B., Pottinger, P., &quot;Ein Satz vom Korovkin-Typ für $C^k$-Räume&quot;, Math. Zeitschrift 148 (1976).</p>
-
-<p>[^26]: Farouki, Rida T., and V. T. Rajan. &quot;<a href="https://www.sciencedirect.com/science/article/pii/0167839688900167"><strong>Algorithms for polynomials in Bernstein form</strong></a>&quot;. Computer Aided Geometric Design 5, no. 1 (1988): 1-26.</p>
-
-<p>[^27]: Sánchez-Reyes, J. (2003). <a href="https://www.sciencedirect.com/science/article/pii/S0010448503000216"><strong>Algebraic manipulation in the Bernstein form made simple via convolutions</strong></a>. Computer-Aided Design, 35(10), 959-967.</p>
-
-<p>[^28]: S. Ray, P.S.V. Nataraj, &quot;<a href="https://interval.louisiana.edu/reliable-computing-journal/volume-17/reliable-computing-17-pp-40-71.pdf"><strong>A Matrix Method for Efficient Computation of Bernstein Coefficients</strong></a>&quot;, Reliable Computing 17(1), 2012.</p>
-
-<p>[^29]: Borwein, P. B. (1979). Restricted uniform rational approximations (Doctoral dissertation, University of British Columbia).</p>
-
-<p>[^30]: Borwein, Peter B. &quot;Approximations by rational functions with positive coefficients.&quot; Journal of Mathematical Analysis and Applications 74, no. 1 (1980): 144-151.</p>
-
-<p>[^31]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. &quot;Uniform approximation and Bernstein polynomials with coefficients in the unit interval.&quot; European Journal of Combinatorics 32, no. 3 (2011): 448-463.</p>
-
-<p>[^32]: Li, Zhongkai. &quot;Bernstein polynomials and modulus of continuity.&quot; Journal of Approximation Theory 102, no. 1 (2000): 171-174.</p>
-
-<p>[^33]: <em>Summation notation</em>, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.</p>
-
-<p>[^34]: Molteni, Giuseppe. &quot;Explicit bounds for even moments of Bernstein’s polynomials.&quot; Journal of Approximation Theory 273 (2022): 105658.</p>
-
-<p>[^35]: Adell, J. A., Bustamante, J., &amp; Quesada, J. M. (2015). Estimates for the moments of Bernstein polynomials. Journal of Mathematical Analysis and Applications, 432(1), 114-128.</p>
-
-<p>[^36]: Adell, J.A., Cárdenas-Morales, D., &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0021904518300376"><strong>Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials</strong></a>&quot;, Journal of Approximation Theory 231, July 2018.</p>
-
-<p>[^37]: Gonska, H.H., Piţul, P., Raşa, I., &quot;On Peano&#39;s form of the Taylor remainder, Voronovskaja&#39;s theorem and the commutator of positive linear operators&quot;, In Numerical Analysis and Approximation Theory, 2006.</p>
-
-<p>[^38]: The result from Gonska et al. actually applies if the $r$-th derivative belongs to a broader class of continuous functions than Lipschitz continuous functions, but this feature is not used in this proof.</p>
-
-<p>[^39]: Cheng, F., &quot;On the rate of convergence of Bernstein polynomials of functions of bounded variation&quot;, Journal of Approximation Theory 39 (1983).</p>
-
-<p>[^40]: G.G. Lorentz, <em>Bernstein polynomials</em>, 1953.</p>
-
-<p>[^41]: <em>NIST Digital Library of Mathematical Functions</em>, <a href="https://dlmf.nist.gov/"><strong>https://dlmf.nist.gov/</strong></a> , Release 1.1.9 of 2023-03-15.</p>
-
-<p>[^42]: Ditzian, Z., Totik, V., <em>Moduli of Smoothness</em>, 1987.</p>
-
-<p>[^43]: May, C.P., &quot;Saturation and inverse theorems for a class of exponential-type operators&quot;, Canadian Journal of Mathematics 28 (1976).</p>
-
-<p>[^44]: Costabile, F., Gualtieri, M.I., Serra, S., &quot;Asymptotic expansion and extrapolation for Bernstein polynomials with applications&quot;, <em>BIT</em> 36 (1996).</p>
-
-<p>[^45]: Draganov, Borislav R. &quot;On simultaneous approximation by iterated Boolean sums of Bernstein operators.&quot; Results in Mathematics 66, no. 1 (2014): 21-41.</p>
-
-<p>[^46]: Kacsó, D.P., &quot;Simultaneous approximation by almost convex operators&quot;, 2002.</p>
-
-<p>[^47]: Stancu, D.D., Agratini, O., et al. <em>Analiză Numerică şi Teoria Aproximării</em>, 2001.</p>
-
-<p>[^48]: H. Wang, &quot;<a href="https://arxiv.org/abs/2106.03456v3"><strong>Analysis of error localization of Chebyshev spectral approximations</strong></a>&quot;, arXiv:2106.03456v3 [math.NA], 2023.</p>
-
-<p>[^49]: Trefethen, L.N., <a href="https://www.chebfun.org/ATAP/"><strong><em>Approximation Theory and Approximation Practice</em></strong></a>, 2013.</p>
-
-<p>[^50]: R. Kannan and C.K. Kreuger, <em>Advanced Analysis on the Real Line</em>, 1996.</p>
-
-<p>[^51]: Rababah, Abedallah. &quot;<a href="https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html"><strong>Transformation of Chebyshev–Bernstein polynomial basis</strong></a>.&quot; Computational Methods in Applied Mathematics 3.4 (2003): 608-622.</p>
-
-<p><a id=Appendix></a></p>
-
-<h2>Appendix</h2>
-
-<p><a id=Results_Used_in_Approximations_by_Polynomials></a></p>
-
-<h3>Results Used in Approximations by Polynomials</h3>
-
-<p><strong>Lemma A1:</strong> Let&mdash; $$f(x)=a_0 x^0 + a_1 x^1 + ...,$$ where the $a_i$ are constants each 0 or greater and sum to a finite value and where $0\le x\le 1$ (the domain is the closed unit interval). Then $f$ is convex and has a maximum at 1.</p>
-
-<p><em>Proof:</em> By inspection, $f(x)$ is a power series and is nonnegative wherever $x\ge 0$ (and thus wherever $0\le x\le 1$).  Each of its terms has a maximum at 1 since&mdash;</p>
+<p><em>Proof:</em> By inspection, $f(x)$ is a power series and is nonnegative wherever $x\ge 0$ (and thus wherever $0\le x\le 1$).  Each of its terms has a maximum at 1 since—</p>
 
 <ul>
-<li>for $n=0$, $a_0 x^0=a_0$ is a non-negative constant (which trivially reaches its maximum at 1), and</li>
-<li>for each $n$ where $a_0 = 0$, $a_0 x^n$ is the constant 0 (which trivially reaches its maximum at 1), and</li>
-<li>for each other $n$, $x^n$ is a strictly increasing function and multiplying that by $a_n$ (a positive constant) doesn&#39;t change whether it&#39;s strictly increasing.</li>
+  <li>for $n=0$, $a_0 x^0=a_0$ is a non-negative constant (which trivially reaches its maximum at 1), and</li>
+  <li>for each $n$ where $a_0 = 0$, $a_0 x^n$ is the constant 0 (which trivially reaches its maximum at 1), and</li>
+  <li>for each other $n$, $x^n$ is a strictly increasing function and multiplying that by $a_n$ (a positive constant) doesn’t change whether it’s strictly increasing.</li>
 </ul>
 
 <p>Since all of these terms have a maximum at 1 on the domain, so does their sum.</p>
 
-<p>The derivative of $f$ is&mdash; $$f&#39;(x) = 1\cdot a_1 x^0 + ... + i\cdot a_i x^{i-1} + ...,$$ which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f&#39;$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.</p>
+<p>The derivative of $f$ is— \(f'(x) = 1\cdot a_1 x^0 + ... + i\cdot a_i x^{i-1} + ...,\) which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f’$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.</p>
 
-<p>Now, since the second derivative is nonnegative wherever $x\ge 0$, and thus on its domain, $f$ is convex, which completes the proof. &#x25a1;</p>
+<p>Now, since the second derivative is nonnegative wherever $x\ge 0$, and thus on its domain, $f$ is convex, which completes the proof. □</p>
 
-<p><strong>Proposition A2:</strong> For a function $f(x)$ as in Lemma A1, let&mdash; $$g_n(x)=a_0 x^0 + ... + a_n x^n,$$ and have the same domain as $f$.  Then for every $n\ge 1$, $g_n(x)$ is within $\epsilon$ of $f(x)$, where $\epsilon = f(1) - g_n(1)$.</p>
+<p><strong>Proposition A2:</strong> For a function $f(x)$ as in Lemma A1, let— \(g_n(x)=a_0 x^0 + ... + a_n x^n,\) and have the same domain as $f$.  Then for every $n\ge 1$, $g_n(x)$ is within $\epsilon$ of $f(x)$, where $\epsilon = f(1) - g_n(1)$.</p>
 
-<p><em>Proof:</em> $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative values for $a_0, ..., a_n$, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;</p>
+<p><em>Proof:</em> $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative values for $a_0, …, a_n$, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. □</p>
 
-<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$&#39;s error behavior is described at the point 1, so the algorithms given in Carvalho and Moreira (2022)[^18] &mdash; which apply to infinite sums &mdash; can be used to &quot;cut off&quot; $f$ at a certain number of terms and do so with a controlled error.</p>
+<p>For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + … = a_0 + a_1+…$, and $f$’s error behavior is described at the point 1, so the algorithms given in Carvalho and Moreira (2022)<sup id="fnref:18:1" role="doc-noteref"><a href="#fn:18" class="footnote" rel="footnote">18</a></sup> — which apply to infinite sums — can be used to “cut off” $f$ at a certain number of terms and do so with a controlled error.</p>
 
-<p><strong>Proposition B1</strong>: Let $f(\lambda)$ map the closed unit interval to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in &quot;For Certain Functions&quot;) are nonnegative on the closed unit interval.</p>
+<p><strong>Proposition B1</strong>: Let $f(\lambda)$ map the closed unit interval to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in “For Certain Functions”) are nonnegative on the closed unit interval.</p>
 
-<p><em>Proof:</em> For $W_{n,2}$ it&#39;s enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen&#39;s inequality and because $f$ is concave.</p>
+<p><em>Proof:</em> For $W_{n,2}$ it’s enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen’s inequality and because $f$ is concave.</p>
 
-<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f)(\lambda))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each of those coefficients is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)[^31].  Thus, by induction, $B_n(B_n(f)(\lambda))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. &#x25a1;</p>
+<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f)(\lambda))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each of those coefficients is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)<sup id="fnref:31" role="doc-noteref"><a href="#fn:31" class="footnote" rel="footnote">31</a></sup>.  Thus, by induction, $B_n(B_n(f)(\lambda))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. □</p>
 
 <p><strong>Proposition B2</strong>: Let $f(\lambda)$ map the closed unit interval to itself, be continuous, nowhere decreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is nonnegative on the closed unit interval.</p>
 
-<p><em>Proof:</em> The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^32], showing that $W_{n,2}$ is nonnegative on the closed unit interval.  &#x25a1;</p>
+<p><em>Proof:</em> The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)<sup id="fnref:32" role="doc-noteref"><a href="#fn:32" class="footnote" rel="footnote">32</a></sup>, showing that $W_{n,2}$ is nonnegative on the closed unit interval.  □</p>
 
 <blockquote>
-<p><strong>Note:</strong> A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$&#39;s domain.</p>
+  <p><strong>Note:</strong> A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$’s domain.</p>
 </blockquote>
 
-<p><strong>Proposition B3</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$&#39;s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.</p>
+<p><strong>Proposition B3</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$’s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.</p>
 
-<p><em>Proof</em>: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^10] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;</p>
+<p><em>Proof</em>: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)<sup id="fnref:10:1" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup> showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. □</p>
 
-<p>The following results deal with useful quantities when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$ where $\mathbb{E}[.]$ is the expected value (&quot;long-run average&quot;).</p>
+<p>The following results deal with useful quantities when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows: \(T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},\) where $\mathbb{E}[.]$ is the expected value (“long-run average”).</p>
 
 <ul>
-<li>Traditionally, the central moment of $X/n$ or the ratio of heads to tosses is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  ($T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.)</li>
-<li>The $r$-th <em>absolute moment</em> of $X/n$ or the ratio of heads to tosses is denoted $M_{n,r}(p) = \mathbb{E}[|X/n-\mathbb{E}[X/n]|^r] = B_n(|\lambda-x|^r)(p)$.</li>
+  <li>Traditionally, the central moment of $X/n$ or the ratio of heads to tosses is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  ($T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.)</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>The $r$-th <em>absolute moment</em> of $X/n$ or the ratio of heads to tosses is denoted $M_{n,r}(p) = \mathbb{E}[</td>
+          <td>X/n-\mathbb{E}[X/n]</td>
+          <td>^r] = B_n(</td>
+          <td>\lambda-x</td>
+          <td>^r)(p)$.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
 </ul>
 
-<p>The following results bound the absolute value of $T_{n,r}$, $S_{n,r}$, and $M_{n,r}$.[^33]</p>
+<p>The following results bound the absolute value of $T_{n,r}$, $S_{n,r}$, and $M_{n,r}$.<sup id="fnref:33" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup></p>
 
-<p><strong>Result B4</strong> (Molteni (2022)[^34]): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $|T_{n,r}(p)|\le (r!)/(((r/2)!)8^{r/2}) n^{r/2}$ and $|S_{n,r}(p)| \le (r!)/(((r/2)!)8^{r/2})\cdot(1/n^{r/2})$.</p>
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Result B4</strong> (Molteni (2022)<sup id="fnref:34" role="doc-noteref"><a href="#fn:34" class="footnote" rel="footnote">34</a></sup>): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $</td>
+      <td>T_{n,r}(p)</td>
+      <td>\le (r!)/(((r/2)!)8^{r/2}) n^{r/2}$ and $</td>
+      <td>S_{n,r}(p)</td>
+      <td>\le (r!)/(((r/2)!)8^{r/2})\cdot(1/n^{r/2})$.</td>
+    </tr>
+  </tbody>
+</table>
 
-<p><strong>Result B4A</strong> (Adell et al. (2015)[^35]):  For every odd integer $r\ge 1$, $T_{n,r}(p)$ is positive whenever $0\le p\lt 1/2$, and negative whenever $1/2\lt p\le 1$.</p>
+<p><strong>Result B4A</strong> (Adell et al. (2015)<sup id="fnref:35" role="doc-noteref"><a href="#fn:35" class="footnote" rel="footnote">35</a></sup>):  For every odd integer $r\ge 1$, $T_{n,r}(p)$ is positive whenever $0\le p\lt 1/2$, and negative whenever $1/2\lt p\le 1$.</p>
 
 <p><strong>Lemma B5</strong>: For every integer $n\ge 1$:</p>
 
 <ul>
-<li>$|S_{n,0}(p)|=1=1\cdot(p(1-p)/n)^{0/2}$.</li>
-<li>$|S_{n,1}(p)|=0=0\cdot(p(1-p)/n)^{1/2}$.</li>
-<li>$|S_{n,2}(p)|=p(1-p)/n=1\cdot(p(1-p)/n)^{2/2}$.</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>$</td>
+          <td>S_{n,0}(p)</td>
+          <td>=1=1\cdot(p(1-p)/n)^{0/2}$.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>$</td>
+          <td>S_{n,1}(p)</td>
+          <td>=0=0\cdot(p(1-p)/n)^{1/2}$.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>$</td>
+          <td>S_{n,2}(p)</td>
+          <td>=p(1-p)/n=1\cdot(p(1-p)/n)^{2/2}$.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
 </ul>
 
 <p>The proof is straightforward.</p>
 
 <p><strong>Result B5A</strong>:  Let $\Delta_n(x)=\max(1/n,(x(1-x)/n)^{1/2})$.  For every real number $r\gt 0$, $M_{n,r}(p)\le (c+d)(\Delta_n(x))^r$, where $c=2\cdot 4^{r/2}\Gamma(r/2+1)$, $d=2\cdot 8^r\Gamma(r+1)$, and $\Gamma(x)$ is the gamma function.</p>
 
-<p><em>Proof</em>: By Theorem 1 of Adell et al. (2015)[^35] with $\delta=1/2$, $M_{n,r}(p)\le c(p(1-p)/n)^{r/2}+d/n^r$, and in turn, $c(p(1-p)/n)^{r/2}+d/n^r\le c(\Delta_n(p))^r+d(\Delta_n(p))^r$ = $(c+d)(\Delta_n(p))^r$.  &#x25a1;</p>
+<p><em>Proof</em>: By Theorem 1 of Adell et al. (2015)<sup id="fnref:35:1" role="doc-noteref"><a href="#fn:35" class="footnote" rel="footnote">35</a></sup> with $\delta=1/2$, $M_{n,r}(p)\le c(p(1-p)/n)^{r/2}+d/n^r$, and in turn, $c(p(1-p)/n)^{r/2}+d/n^r\le c(\Delta_n(p))^r+d(\Delta_n(p))^r$ = $(c+d)(\Delta_n(p))^r$.  □</p>
 
 <p>By Result B5A, $c+d=264$ when $r=2$, $c+d\lt 6165.27$ when $r=3$, and $c+d=196672$ when $r=4$.</p>
 
-<p><strong>Result B6</strong> (Adell and Cárdenas-Morales (2018)[^36]): Let $\sigma(r,t) = (r!)/(((r/2)!)t^{r/2})$.  If $r\ge 0$ is an even integer, then&mdash;</p>
+<p><strong>Result B6</strong> (Adell and Cárdenas-Morales (2018)<sup id="fnref:36" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup>): Let $\sigma(r,t) = (r!)/(((r/2)!)t^{r/2})$.  If $r\ge 0$ is an even integer, then—</p>
 
 <ul>
-<li>for every integer $n\ge 1$, $|T_{n,r}(p)|\le \sigma(r,6)n^{r/2}$ and $|S_{n,r}(p)| \le \sigma(r,6)/n^{r/2}$, and</li>
-<li>for every integer $n\ge 1$, $|T_{n,r}(1/2)|\le \sigma(r,8)n^{r/2}$ and $|S_{n,r}(1/2)| \le \sigma(r,8)/n^{r/2}$.</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>for every integer $n\ge 1$, $</td>
+          <td>T_{n,r}(p)</td>
+          <td>\le \sigma(r,6)n^{r/2}$ and $</td>
+          <td>S_{n,r}(p)</td>
+          <td>\le \sigma(r,6)/n^{r/2}$, and</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>for every integer $n\ge 1$, $</td>
+          <td>T_{n,r}(1/2)</td>
+          <td>\le \sigma(r,8)n^{r/2}$ and $</td>
+          <td>S_{n,r}(1/2)</td>
+          <td>\le \sigma(r,8)/n^{r/2}$.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
 </ul>
 
-<p><strong>Lemma B9</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval (see &quot;<a href="#Definitions"><strong>Definitions</strong></a>&quot;), where $r\ge 0$ is an integer, and let $M$ be equal to or greater than the $r$-th derivative&#39;s Lipschitz constant.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then, for every $0\le x_0 \le 1$:</p>
+<p><strong>Lemma B9</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval (see “<a href="#Definitions"><strong>Definitions</strong></a>”), where $r\ge 0$ is an integer, and let $M$ be equal to or greater than the $r$-th derivative’s Lipschitz constant.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then, for every $0\le x_0 \le 1$:</p>
 
 <ol>
-<li>$f$ can be written as $f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
-<li>If $r$ is odd, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le M/((((r+1)/2)!)(\beta n)^{(r+1)/2})$ for every integer $n\ge 1$, where $\beta$ is 8 if $r\le 43$ and 6 otherwise.</li>
-<li>If $r=0$, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le M/(2n^{1/2})$ for every integer $n\ge 1$.</li>
-<li>If $r$ is even and greater than 0, $|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}$ for every integer $n\ge 2$, where $\gamma$ is 8 if $r\le 42$ and 6 otherwise.</li>
+  <li>$f$ can be written as $f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>If $r$ is odd, $</td>
+          <td>B_n(R_{f,r}(\lambda, x_0))(x_0)</td>
+          <td>\le M/((((r+1)/2)!)(\beta n)^{(r+1)/2})$ for every integer $n\ge 1$, where $\beta$ is 8 if $r\le 43$ and 6 otherwise.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>If $r=0$, $</td>
+          <td>B_n(R_{f,r}(\lambda, x_0))(x_0)</td>
+          <td>\le M/(2n^{1/2})$ for every integer $n\ge 1$.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>If $r$ is even and greater than 0, $</td>
+          <td>B_n(R_{f,r}(\lambda, x_0))(x_0)</td>
+          <td>\le \frac{M}{(r+1)!n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}$ for every integer $n\ge 2$, where $\gamma$ is 8 if $r\le 42$ and 6 otherwise.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
 </ol>
 
-<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^37], which applies for any integer $r\ge 0$, bounds that Lagrange remainder [^38].  By that result, because $f$&#39;s $r$-th derivative is Lipschitz continuous&mdash; $$|R_{f,r}(\lambda, x_0)|\le \frac{|\lambda-x_0|^r}{r!} M \frac{|\lambda-x_0|}{r+1}=M\frac{|\lambda-x_0|^{r+1}}{(r+1)!}.$$</p>
+<table>
+  <tbody>
+    <tr>
+      <td><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)<sup id="fnref:37" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup>, which applies for any integer $r\ge 0$, bounds that Lagrange remainder <sup id="fnref:38" role="doc-noteref"><a href="#fn:38" class="footnote" rel="footnote">38</a></sup>.  By that result, because $f$’s $r$-th derivative is Lipschitz continuous— $$</td>
+      <td>R_{f,r}(\lambda, x_0)</td>
+      <td>\le \frac{</td>
+      <td>\lambda-x_0</td>
+      <td>^r}{r!} M \frac{</td>
+      <td>\lambda-x_0</td>
+      <td>}{r+1}=M\frac{</td>
+      <td>\lambda-x_0</td>
+      <td>^{r+1}}{(r+1)!}.$$</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>The goal is now to bound the Bernstein polynomial of $|\lambda-x_0|^{r+1}$.  This is easiest to do if $r$ is odd.</p>
+<table>
+  <tbody>
+    <tr>
+      <td>The goal is now to bound the Bernstein polynomial of $</td>
+      <td>\lambda-x_0</td>
+      <td>^{r+1}$.  This is easiest to do if $r$ is odd.</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>If $r$ is odd, then $(\lambda-x_0)^{r+1} = |\lambda-x_0|^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded as follows: $$|B_n((\lambda-x_0)^{r+1})(x_0)| \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),$$ where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!} |B_n((\lambda-x_0)^{r+1})(x_0)|$$ $$\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.$$</p>
+<table>
+  <tbody>
+    <tr>
+      <td>If $r$ is odd, then $(\lambda-x_0)^{r+1} =</td>
+      <td>\lambda-x_0</td>
+      <td>^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $</td>
+      <td>\lambda-x_0</td>
+      <td>^{r+1}$ can be bounded as follows: $$</td>
+      <td>B_n((\lambda-x_0)^{r+1})(x_0)</td>
+      <td>\le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),\(where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore&amp;mdash;\)</td>
+      <td>B_n(R_{f,r}(\lambda, x_0))(x_0)</td>
+      <td>\le \frac{M}{(r+1)!}</td>
+      <td>B_n((\lambda-x_0)^{r+1})(x_0)</td>
+      <td>\(\)\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.$$</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>If $r$ is 0, then the Bernstein polynomial of $|\lambda-x_0|^{1}$ is bounded by $\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$ (Cheng 1983)[^39], so&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$</p>
+<table>
+  <tbody>
+    <tr>
+      <td>If $r$ is 0, then the Bernstein polynomial of $</td>
+      <td>\lambda-x_0</td>
+      <td>^{1}$ is bounded by $\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$ (Cheng 1983)<sup id="fnref:39" role="doc-noteref"><a href="#fn:39" class="footnote" rel="footnote">39</a></sup>, so— $$</td>
+      <td>B_n(R_{f,r}(\lambda, x_0))(x_0)</td>
+      <td>\le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>If $r$ is even and greater than 0, the Bernstein polynomial for $|\lambda-x_0|^{r+1}$ can be bounded as follows for every $n\ge 2$, using <a href="https://mathworld.wolfram.com/SchwarzsInequality.html"><strong>Schwarz&#39;s inequality</strong></a> (see also Bojanic and Shisha [1975][^40] for the case $r=4$): $$B_n(|\lambda-x_0|^{r+1})(x_0)=B_n((|\lambda-x_0|^{r/2}|\lambda-x_0|^{(r+2)/2})^2)(x_0)$$ $$\le\sqrt{|S_{n,r}(x_0)|}\sqrt{|S_{n,r+2}(x_0)|}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$ $$\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},$$where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore&mdash; $$|B_n(R_{f,r}(\lambda, x_0))(x_0)| \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$&#x25a1;</p>
+<table>
+  <tbody>
+    <tr>
+      <td>If $r$ is even and greater than 0, the Bernstein polynomial for $</td>
+      <td>\lambda-x_0</td>
+      <td>^{r+1}$ can be bounded as follows for every $n\ge 2$, using <a href="https://mathworld.wolfram.com/SchwarzsInequality.html"><strong>Schwarz’s inequality</strong></a> (see also Bojanic and Shisha [1975]<sup id="fnref:40" role="doc-noteref"><a href="#fn:40" class="footnote" rel="footnote">40</a></sup> for the case $r=4$): $$B_n(</td>
+      <td>\lambda-x_0</td>
+      <td>^{r+1})(x_0)=B_n((</td>
+      <td>\lambda-x_0</td>
+      <td>^{r/2}</td>
+      <td>\lambda-x_0</td>
+      <td>^{(r+2)/2})^2)(x_0)\(\)\le\sqrt{</td>
+      <td>S_{n,r}(x_0)</td>
+      <td>}\sqrt{</td>
+      <td>S_{n,r+2}(x_0)</td>
+      <td>}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}\(\)\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},\(where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore&amp;mdash;\)</td>
+      <td>B_n(R_{f,r}(\lambda, x_0))(x_0)</td>
+      <td>\le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$□</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
-<p><strong>Notes:</strong></p>
+  <p><strong>Notes:</strong></p>
 
-<ol>
-<li>If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor&#39;s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$&#39;s domain) (DLMF [^41] <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $|R_{f,r}(\lambda, x_0)| \le \frac{M}{r!} (\lambda-x_0)^r.$</li>
-<li>It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $|\lambda-x_0|^{r+1}$ can be bounded in this way (Lorentz 1966)[^9].</li>
-</ol>
+  <ol>
+    <li>
+      <table>
+        <tbody>
+          <tr>
+            <td>If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor’s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$’s domain) (DLMF <sup id="fnref:41" role="doc-noteref"><a href="#fn:41" class="footnote" rel="footnote">41</a></sup> <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $</td>
+            <td>R_{f,r}(\lambda, x_0)</td>
+            <td>\le \frac{M}{r!} (\lambda-x_0)^r.$</td>
+          </tr>
+        </tbody>
+      </table>
+    </li>
+    <li>
+      <table>
+        <tbody>
+          <tr>
+            <td>It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $</td>
+            <td>\lambda-x_0</td>
+            <td>^{r+1}$ can be bounded in this way (Lorentz 1966)<sup id="fnref:9:1" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </li>
+  </ol>
 </blockquote>
 
-<p><strong>Corollary B9A</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative&#39;s Lipschitz constant or greater.  Then, for every $0\le x_0 \le 1$:</p>
+<p><strong>Corollary B9A</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative’s Lipschitz constant or greater.  Then, for every $0\le x_0 \le 1$:</p>
 
-<table><thead>
-<tr>
-<th>If $r$ is:</th>
-<th>Then $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le$ ...</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>0.</td>
-<td>$M/(2 n^{1/2})$ for every integer $n\ge 1$.</td>
-</tr>
-<tr>
-<td>0.</td>
-<td>$M\cdot\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$.</td>
-</tr>
-<tr>
-<td>1.</td>
-<td>$M/(8 n)$ for every integer $n\ge 1$.</td>
-</tr>
-<tr>
-<td>2.</td>
-<td>$\sqrt{3}M/(48 n^{3/2}) &lt; 0.03609 M/n^{3/2}$ for every integer $n\ge 2$.</td>
-</tr>
-<tr>
-<td>3.</td>
-<td>$M/(128 n^2)$ for every integer $n\ge 1$.</td>
-</tr>
-<tr>
-<td>4.</td>
-<td>$\sqrt{5}M/(1280 n^{5/2}) &lt; 0.001747 M/n^{5/2}$ for every integer $n\ge 2$.</td>
-</tr>
-<tr>
-<td>5.</td>
-<td>$M/(3072 n^3)$ for every integer $n\ge 1$.</td>
-</tr>
-</tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th>If $r$ is:</th>
+      <th>Then $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le$ …</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.</td>
+      <td>$M/(2 n^{1/2})$ for every integer $n\ge 1$.</td>
+    </tr>
+    <tr>
+      <td>0.</td>
+      <td>$M\cdot\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$.</td>
+    </tr>
+    <tr>
+      <td>1.</td>
+      <td>$M/(8 n)$ for every integer $n\ge 1$.</td>
+    </tr>
+    <tr>
+      <td>2.</td>
+      <td>$\sqrt{3}M/(48 n^{3/2}) &lt; 0.03609 M/n^{3/2}$ for every integer $n\ge 2$.</td>
+    </tr>
+    <tr>
+      <td>3.</td>
+      <td>$M/(128 n^2)$ for every integer $n\ge 1$.</td>
+    </tr>
+    <tr>
+      <td>4.</td>
+      <td>$\sqrt{5}M/(1280 n^{5/2}) &lt; 0.001747 M/n^{5/2}$ for every integer $n\ge 2$.</td>
+    </tr>
+    <tr>
+      <td>5.</td>
+      <td>$M/(3072 n^3)$ for every integer $n\ge 1$.</td>
+    </tr>
+  </tbody>
+</table>
 
 <p><strong>Proposition B10</strong>: Let $f(\lambda)$ have a Lipschitz continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M_4/(8 n^2)$ of $f$, where $M_4$ is the maximum of the absolute value of that fourth derivative.</p>
 
-<p><em>Proof</em>: This proof is inspired by the proof technique in Tachev (2022)[^5].</p>
+<p><em>Proof</em>: This proof is inspired by the proof technique in Tachev (2022)<sup id="fnref:5:2" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>.</p>
 
 <p>Because $f$ has a Lipschitz continuous third derivative, $f$ has the Lagrange remainder $R_{f,3}(\lambda, x_0)$ given in Lemma B9 and Corollary B9A.</p>
 
-<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^42], Butzer (1955)[^6], May (1976)[^43].  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.</p>
+<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)<sup id="fnref:42" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup>, Butzer (1955)<sup id="fnref:6:2" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>, May (1976)<sup id="fnref:43" role="doc-noteref"><a href="#fn:43" class="footnote" rel="footnote">43</a></sup>.  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.</p>
 
-<p>Therefore&mdash;$$|L_{3,n/4}(f(\lambda))(x_0) - f(x_0)| = |L_{3,n/4}(R_{f,3}(\lambda, x_0))|.$$ Now denote $\sigma_n$ as the maximum of $|B_n(R_{f,3}(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash; $$|L_{3,n/4}(R_{f,3}(\lambda, x_0))| \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M_4}{128 (n/4)^2} + 2\frac{M_4}{128 (n/2)^2} + (8/3)\frac{M_4}{128 n^2} =M_4/(8 n^2).$$ &#x25a1;</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Therefore—$$</td>
+      <td>L_{3,n/4}(f(\lambda))(x_0) - f(x_0)</td>
+      <td>=</td>
+      <td>L_{3,n/4}(R_{f,3}(\lambda, x_0))</td>
+      <td>.$$ Now denote $\sigma_n$ as the maximum of $</td>
+      <td>B_n(R_{f,3}(\lambda, x_0))(x_0)</td>
+      <td>$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)— $$</td>
+      <td>L_{3,n/4}(R_{f,3}(\lambda, x_0))</td>
+      <td>\le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n\(\)\le (1/3)\frac{M_4}{128 (n/4)^2} + 2\frac{M_4}{128 (n/2)^2} + (8/3)\frac{M_4}{128 n^2} =M_4/(8 n^2).$$ □</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>The proof of Proposition B10 shows how to prove an upper bound on the approximation error for polynomials written as&mdash; $$P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B_{n(k)}(f)(x)$$ (where $\alpha_i$ are real numbers and $n(i)\ge 1$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^44].</p>
+<p>The proof of Proposition B10 shows how to prove an upper bound on the approximation error for polynomials written as— \(P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B_{n(k)}(f)(x)\) (where $\alpha_i$ are real numbers and $n(i)\ge 1$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup>.</p>
 
-<p><strong>Proposition B10A:</strong> Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f&#39;&#39;)(x)$ be the <em>Lorentz operator</em> of order 2 (Holtz et al. 2011)[^7], (Lorentz 1966)[^9], which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative&#39;s Lipschitz constant or greater.</p>
+<p><strong>Proposition B10A:</strong> Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f’’)(x)$ be the <em>Lorentz operator</em> of order 2 (Holtz et al. 2011)<sup id="fnref:7:1" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, (Lorentz 1966)<sup id="fnref:9:2" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>, which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative’s Lipschitz constant or greater.</p>
 
-<p><em>Proof</em>: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14)[^7] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f&#39;&#39;$, the second derivative of $f$, has the Lagrange remainder $R_{f&#39;&#39;,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash; $$|Q_{n,2}(f(\lambda))(x_0) - f(x_0)|\le|B_n(R_{f,2}(\lambda, x_0))| + \frac{x_0(1-x_0)}{2n} |B_n(R_{f&#39;&#39;,0}(\lambda,x_0))|$$ $$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2}).$$ &#x25a1;</p>
+<table>
+  <tbody>
+    <tr>
+      <td><em>Proof</em>: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup> and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f’’$, the second derivative of $f$, has the Lagrange remainder $R_{f’‘,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as— $$</td>
+      <td>Q_{n,2}(f(\lambda))(x_0) - f(x_0)</td>
+      <td>\le</td>
+      <td>B_n(R_{f,2}(\lambda, x_0))</td>
+      <td>+ \frac{x_0(1-x_0)}{2n}</td>
+      <td>B_n(R_{f’‘,0}(\lambda,x_0))</td>
+      <td>\(\)\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2}).$$ □</td>
+    </tr>
+  </tbody>
+</table>
 
-<p><strong>Corollary B10B:</strong> Let $f(\lambda)$ have a continuous second derivative on the closed unit interval.  Then $B_n(f)$ is within $\frac{M_2}{8n}$ of $f$, where $M_2$ is the maximum of that second derivative&#39;s absolute value or greater.</p>
+<p><strong>Corollary B10B:</strong> Let $f(\lambda)$ have a continuous second derivative on the closed unit interval.  Then $B_n(f)$ is within $\frac{M_2}{8n}$ of $f$, where $M_2$ is the maximum of that second derivative’s absolute value or greater.</p>
 
-<p><em>Proof</em>: Follows from Lorentz (1963)[^10] and the well-known fact that $M_2$ is an upper bound of $f$&#39;s first derivative&#39;s (minimal) Lipschitz constant. &#x25a1;</p>
+<p><em>Proof</em>: Follows from Lorentz (1963)<sup id="fnref:10:2" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup> and the well-known fact that $M_2$ is an upper bound of $f$’s first derivative’s (minimal) Lipschitz constant. □</p>
 
-<p>In the following propositions, $f^{(r)}$ means the $r$-th derivative of the function $f$ and $\max(|f|)$ means the maximum of the absolute value of the function $f$.</p>
+<table>
+  <tbody>
+    <tr>
+      <td>In the following propositions, $f^{(r)}$ means the $r$-th derivative of the function $f$ and $\max(</td>
+      <td>f</td>
+      <td>)$ means the maximum of the absolute value of the function $f$.</td>
+    </tr>
+  </tbody>
+</table>
 
-<p><strong>Proposition B10C:</strong> Let $f(\lambda)$ have a Hölder continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_2$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$&#39;s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$|f-U_{n,2}(f)|\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2},$$ where $M_2$ is the maximum of that second derivative&#39;s absolute value or greater.</p>
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Proposition B10C:</strong> Let $f(\lambda)$ have a Hölder continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_2$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$’s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$</td>
+      <td>f-U_{n,2}(f)</td>
+      <td>\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2},$$ where $M_2$ is the maximum of that second derivative’s absolute value or greater.</td>
+    </tr>
+  </tbody>
+</table>
 
-<p><em>Proof</em>: This proof is inspired by a result in Draganov (2004, Theorem 4.1)[^45].</p>
+<p><em>Proof</em>: This proof is inspired by a result in Draganov (2004, Theorem 4.1)<sup id="fnref:45" role="doc-noteref"><a href="#fn:45" class="footnote" rel="footnote">45</a></sup>.</p>
 
-<p>The error to be bounded can be expressed as $|(B_n(f)-f)( B_n(f)-f )|$.  Following Corollary B10B: $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \max(|(B_n(f))^{(2)}-f^{(2)}|).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  A result by Knoop and Pottinger (1976)[^25], which works for every $n\ge 3$, is what is known as a <em>simultaneous approximation</em> error bound, showing that the second derivative of the Bernstein polynomial approaches that of $f$ as $n$ increases.  Using this result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2},$$ so&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;</p>
+<table>
+  <tbody>
+    <tr>
+      <td>The error to be bounded can be expressed as $</td>
+      <td>(B_n(f)-f)( B_n(f)-f )</td>
+      <td>$.  Following Corollary B10B: $$</td>
+      <td>(B_n(f)-f)( B_n(f)-f )</td>
+      <td>\le \frac{1}{8n} \max(</td>
+      <td>(B_n(f))^{(2)}-f^{(2)}</td>
+      <td>).\tag{B10C-1}\(It thus remains to estimate the right-hand side of the bound.  A result by Knoop and Pottinger (1976)[^25], which works for every $n\ge 3$, is what is known as a _simultaneous approximation_ error bound, showing that the second derivative of the Bernstein polynomial approaches that of $f$ as $n$ increases.  Using this result:\)</td>
+      <td>(B_n(f))^{(2)}-f^{(2)}</td>
+      <td>\le \frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2},\(so&amp;mdash;\)</td>
+      <td>(B_n(f)-f)( B_n(f)-f )</td>
+      <td>\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2}\right)\(\)\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ □</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
-<p><strong>Note</strong>: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be non-negative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda &lt;1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.</p>
+  <p><strong>Note</strong>: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be non-negative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda &lt;1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.</p>
 </blockquote>
 
-<p><strong>Proposition B10D:</strong> Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$|f-U_{n,2}(f)|\le \frac{\max(|f^{(2)}|)+\max(|f^{(3)}|)}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$ $$\le \frac{9H_3+8\max(|f^{(2)}|)+8\max(|f^{(3)}|)}{64n^{(3+\alpha)/2}}.$$</p>
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Proposition B10D:</strong> Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$</td>
+      <td>f-U_{n,2}(f)</td>
+      <td>\le \frac{\max(</td>
+      <td>f^{(2)}</td>
+      <td>)+\max(</td>
+      <td>f^{(3)}</td>
+      <td>)}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})\(\)\le \frac{9H_3+8\max(</td>
+      <td>f^{(2)}</td>
+      <td>)+8\max(</td>
+      <td>f^{(3)}</td>
+      <td>)}{64n^{(3+\alpha)/2}}.$$</td>
+    </tr>
+  </tbody>
+</table>
 
-<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^46], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result: $$|(B_n(f))^{(2)}-f^{(2)}| \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$ where $r=2$, $M_2 = \max(|f^{(2)}|)$, and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^47].  Therefore&mdash; $$|(B_n(f)-f)( B_n(f)-f )|\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9H_3}{64 n^{(3+\alpha)/2}}\le \frac{9H_3+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$ &#x25a1;</p>
+<table>
+  <tbody>
+    <tr>
+      <td><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)<sup id="fnref:46" role="doc-noteref"><a href="#fn:46" class="footnote" rel="footnote">46</a></sup>, which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result: $$</td>
+      <td>(B_n(f))^{(2)}-f^{(2)}</td>
+      <td>\le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})\(\)\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$ where $r=2$, $M_2 = \max(</td>
+      <td>f^{(2)}</td>
+      <td>)$, and $M_3=\max(</td>
+      <td>f^{(3)}</td>
+      <td>)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)<sup id="fnref:47" role="doc-noteref"><a href="#fn:47" class="footnote" rel="footnote">47</a></sup>.  Therefore— $$</td>
+      <td>(B_n(f)-f)( B_n(f)-f )</td>
+      <td>\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right)\(\)\le \frac{M_2+M_3}{8n^2} + \frac{9H_3}{64 n^{(3+\alpha)/2}}\le \frac{9H_3+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$ □</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>In a similar way, it&#39;s possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder continuous fourth or fifth derivative, by expressing the error bound as $|(B_n(f)-f)((B_n(f)-f)(B_n(f)-f))|$ and replacing the values for $M_2$, $M_3$, and $H_3$ in the bound proved at the end of Proposition B10D with upper bounds for $|(B_n(f))^{(2)}-f^{(2)}|$, $|(B_n(f))^{(3)}-f^{(3)}|$, and $|(B_n(f))^{(4)}-f^{(4)}|$, respectively.</p>
+<table>
+  <tbody>
+    <tr>
+      <td>In a similar way, it’s possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder continuous fourth or fifth derivative, by expressing the error bound as $</td>
+      <td>(B_n(f)-f)((B_n(f)-f)(B_n(f)-f))</td>
+      <td>$ and replacing the values for $M_2$, $M_3$, and $H_3$ in the bound proved at the end of Proposition B10D with upper bounds for $</td>
+      <td>(B_n(f))^{(2)}-f^{(2)}</td>
+      <td>$, $</td>
+      <td>(B_n(f))^{(3)}-f^{(3)}</td>
+      <td>$, and $</td>
+      <td>(B_n(f))^{(4)}-f^{(4)}</td>
+      <td>$, respectively.</td>
+    </tr>
+  </tbody>
+</table>
 
-<p><a id=Chebyshev_Interpolants></a></p>
+<p><a id="Chebyshev_Interpolants"></a></p>
 
-<h3>Chebyshev Interpolants</h3>
+<h3 id="chebyshev-interpolants">Chebyshev Interpolants</h3>
 
-<p>The following is a method that employs <em>Chebyshev interpolants</em> to compute the Bernstein coefficients of a polynomial that comes within $\epsilon$ of $f(\lambda)$, as long as $f$ meets certain conditions.  Because the method introduces a trigonometric function (the cosine function), it appears here in the appendix and it runs too slowly for real-time or &quot;online&quot; use; rather, this method is more suitable for pregenerating (&quot;offline&quot;) the approximate version of a function known in advance.</p>
+<p>The following is a method that employs <em>Chebyshev interpolants</em> to compute the Bernstein coefficients of a polynomial that comes within $\epsilon$ of $f(\lambda)$, as long as $f$ meets certain conditions.  Because the method introduces a trigonometric function (the cosine function), it appears here in the appendix and it runs too slowly for real-time or “online” use; rather, this method is more suitable for pregenerating (“offline”) the approximate version of a function known in advance.</p>
 
 <ul>
-<li>$f$ must be continuous on the interval $[a, b]$ and must have an $r$-th derivative of <em>bounded variation</em>, as described later.</li>
-<li><p>Suppose $f$&#39;s domain is the interval $[a, b]$.  Then the <em>Chebyshev interpolant</em> of degree $n$ of $f$ (Wang 2023)[^48], (Trefethen 2013)[^49] is&mdash; $$p(\lambda)=\sum_{k=0}^n c_k T_k(2\frac{\lambda-a}{b-a}-1),$$ where&mdash;</p>
+  <li>$f$ must be continuous on the interval $[a, b]$ and must have an $r$-th derivative of <em>bounded variation</em>, as described later.</li>
+  <li>
+    <p>Suppose $f$’s domain is the interval $[a, b]$.  Then the <em>Chebyshev interpolant</em> of degree $n$ of $f$ (Wang 2023)<sup id="fnref:48" role="doc-noteref"><a href="#fn:48" class="footnote" rel="footnote">48</a></sup>, (Trefethen 2013)<sup id="fnref:49" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">49</a></sup> is— \(p(\lambda)=\sum_{k=0}^n c_k T_k(2\frac{\lambda-a}{b-a}-1),\) where—</p>
 
-<ul>
-<li>$c_k=\sigma(k,n)\frac{2}{n}\sum_{j=0}^n \sigma(j,n) f(\gamma(j,n))T_k(\cos(j\pi/n))$,</li>
-<li>$\gamma(j,n) = a+(b-a)(\cos(j\pi/n)+1)/2$,</li>
-<li>$\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and</li>
-<li>$T_k(x)$ is the $k$-th <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> (<code>chebyshevt(k,x)</code> in the SymPy computer algebra library).</li>
-</ul></li>
-<li>Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz continuous $(r-1)$-th derivative, and has an $r$-th derivative of <em>bounded variation</em>, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative&#39;s <em>total variation</em> or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^49] as well as a statement in note 1 at the end of this section.
-
-<ul>
-<li>If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).</li>
-<li>If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^50].</li>
-<li>The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon&gt;0$ is the desired error tolerance.</li>
-</ul></li>
-<li>If $f$ is so &quot;smooth&quot; to be <em>analytic</em> (see note 4 below) at every point in the interval $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^49].</li>
+    <ul>
+      <li>$c_k=\sigma(k,n)\frac{2}{n}\sum_{j=0}^n \sigma(j,n) f(\gamma(j,n))T_k(\cos(j\pi/n))$,</li>
+      <li>$\gamma(j,n) = a+(b-a)(\cos(j\pi/n)+1)/2$,</li>
+      <li>$\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and</li>
+      <li>$T_k(x)$ is the $k$-th <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> (<code>chebyshevt(k,x)</code> in the SymPy computer algebra library).</li>
+    </ul>
+  </li>
+  <li>Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz continuous $(r-1)$-th derivative, and has an $r$-th derivative of <em>bounded variation</em>, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative’s <em>total variation</em> or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)<sup id="fnref:49:1" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">49</a></sup> as well as a statement in note 1 at the end of this section.
+    <ul>
+      <li>If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).</li>
+      <li>If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)<sup id="fnref:50" role="doc-noteref"><a href="#fn:50" class="footnote" rel="footnote">50</a></sup>.</li>
+      <li>The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ ≤ $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon&gt;0$ is the desired error tolerance.</li>
+    </ul>
+  </li>
+  <li>If $f$ is so “smooth” to be <em>analytic</em> (see note 4 below) at every point in the interval $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)<sup id="fnref:49:2" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">49</a></sup>.</li>
 </ul>
 
-<hr>
+<hr />
 
 <ol>
-<li>Compute the required degree $n$ as given above, with error tolerance $\epsilon/2$.</li>
-<li>Compute the values $c_k$ as given above, which relate to $f$&#39;s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, ..., c_n$.</li>
-<li>Compute the (<em>n</em>+1)&times;(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^51].</li>
-<li>Multiply the matrix by the transposed vector of values $(c_0, ..., c_n)$ to get the polynomial&#39;s Bernstein coefficients $b_0, ..., b_n$.  (Transposing means turning columns to rows and vice versa.)</li>
-<li>(Rounding.) For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.</li>
-<li>Return the Bernstein coefficients $b_0, ..., b_n$.</li>
+  <li>Compute the required degree $n$ as given above, with error tolerance $\epsilon/2$.</li>
+  <li>Compute the values $c_k$ as given above, which relate to $f$’s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, …, c_n$.</li>
+  <li>Compute the (<em>n</em>+1)×(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)<sup id="fnref:51" role="doc-noteref"><a href="#fn:51" class="footnote" rel="footnote">51</a></sup>.</li>
+  <li>Multiply the matrix by the transposed vector of values $(c_0, …, c_n)$ to get the polynomial’s Bernstein coefficients $b_0, …, b_n$.  (Transposing means turning columns to rows and vice versa.)</li>
+  <li>(Rounding.) For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.</li>
+  <li>Return the Bernstein coefficients $b_0, …, b_n$.</li>
 </ol>
 
 <blockquote>
-<p><strong>Notes:</strong></p>
+  <p><strong>Notes:</strong></p>
 
-<ol>
-<li>The following statement can be shown.  Let $f(x)$ have a Lipschitz continuous $(r-1)$-th derivative on the interval $[a, b]$, where $r\ge 1$.  If the $r$-th derivative of $f$ has total variation $V$, then the $r$-th derivative of $g(x)$, where $g(x) = f(a+(b-a) (x+1)/2)$, has total variation $V\left(\frac{b-a}{2}\right)^r$ on the interval $[-1, 1]$.</li>
-<li>The method in this section doesn&#39;t require $f(\lambda)$ to have a particular minimum or maximum.  If $f$ must map the closed unit interval to itself and the Bernstein coefficients must lie on that interval, the following changes to the method are needed:
-
-<ul>
-<li>$f(\lambda)$ must be continuous on the closed unit interval ($a=0$, $b=1$) and take on only values in that interval.</li>
-<li>If any Bernstein coefficient returned by the method is less than 0 or greater than 1, double the value of $n$ and repeat the method starting at step 2 until that condition is no longer true.</li>
-</ul></li>
-<li>It would be of interest to build Chebyshev-like interpolants that sample $f(\lambda)$ at <em>rational</em> values of $\lambda$ that get closer to the Chebyshev points (e.g., $\cos(j\pi/n)$) with increasing $n$, and to find results that provide explicit bounds (with no hidden constants) on the approximation error that are close to those for Chebyshev interpolants.</li>
-<li>A function $f(x)$ is <em>analytic</em> at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $|\lambda-z|&lt;r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the <em>radius of convergence</em> of $f$ at $z$.</li>
-</ol>
+  <ol>
+    <li>The following statement can be shown.  Let $f(x)$ have a Lipschitz continuous $(r-1)$-th derivative on the interval $[a, b]$, where $r\ge 1$.  If the $r$-th derivative of $f$ has total variation $V$, then the $r$-th derivative of $g(x)$, where $g(x) = f(a+(b-a) (x+1)/2)$, has total variation $V\left(\frac{b-a}{2}\right)^r$ on the interval $[-1, 1]$.</li>
+    <li>The method in this section doesn’t require $f(\lambda)$ to have a particular minimum or maximum.  If $f$ must map the closed unit interval to itself and the Bernstein coefficients must lie on that interval, the following changes to the method are needed:
+      <ul>
+        <li>$f(\lambda)$ must be continuous on the closed unit interval ($a=0$, $b=1$) and take on only values in that interval.</li>
+        <li>If any Bernstein coefficient returned by the method is less than 0 or greater than 1, double the value of $n$ and repeat the method starting at step 2 until that condition is no longer true.</li>
+      </ul>
+    </li>
+    <li>It would be of interest to build Chebyshev-like interpolants that sample $f(\lambda)$ at <em>rational</em> values of $\lambda$ that get closer to the Chebyshev points (e.g., $\cos(j\pi/n)$) with increasing $n$, and to find results that provide explicit bounds (with no hidden constants) on the approximation error that are close to those for Chebyshev interpolants.</li>
+    <li>
+      <table>
+        <tbody>
+          <tr>
+            <td>A function $f(x)$ is <em>analytic</em> at a point $z$ if there is a positive number $r$ such that $f$ is writable as— \(f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,\) whenever $</td>
+            <td>\lambda-z</td>
+            <td>&lt;r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the <em>radius of convergence</em> of $f$ at $z$.</td>
+          </tr>
+        </tbody>
+      </table>
+    </li>
+  </ol>
 </blockquote>
 
-<p><a id=License></a></p>
+<p><a id="License"></a></p>
 
-<h2>License</h2>
+<h2 id="license">License</h2>
 
 <p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>choose(<em>n</em>, <em>k</em>) = (1*2*3*…*<em>n</em>)/((1*…*<em>k</em>)*(1*…*(<em>n</em>−<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> − <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>−<em>i</em>+1) for each integer <em>i</em> satisfying <em>n</em>−<em>k</em>+1 ≤ <em>i</em> ≤ <em>n</em>, then multiplying the results (Yannis Manolopoulos. 2002. “Binomial coefficient computation: recursion or iteration?”, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: <a href="https://doi.org/10.1145/820127.820168"><strong>https://doi.org/10.1145/820127.820168</strong></a>).  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>−1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.<br /><em>n</em>! = 1*2*3*…*<em>n</em> is also known as $n$ factorial; in this document, (0!) = 1. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Micchelli, Charles. “<a href="https://www.sciencedirect.com/science/article/pii/0021904573900282"><strong>The saturation class and iterates of the Bernstein polynomials</strong></a>”, Journal of Approximation Theory 8, no. 1 (1973): 1-18. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>Guan, Zhong. “<a href="https://arxiv.org/abs/0909.0684"><strong>Iterated Bernstein polynomial approximations</strong></a>”, arXiv:0909.0684 (2009). <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>Güntürk, C.S., Li, W., “<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>”, arXiv:2112.09181 [cs.LG], 2021. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:4:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:5" role="doc-endnote">
+      <p>Tachev, Gancho. “<a href="https://doi.org/10.3934/mfc.2022061"><strong>Linear combinations of two Bernstein polynomials</strong></a>”, <em>Mathematical Foundations of Computing</em>, 2022. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:5:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:5:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:6" role="doc-endnote">
+      <p>Butzer, P.L., “Linear combinations of Bernstein polynomials”, Canadian Journal of Mathematics 15 (1953). <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:6:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:6:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:7" role="doc-endnote">
+      <p>Holtz, O., Nazarov, F., Peres, Y., “<a href="https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf"><strong>New Coins from Old, Smoothly</strong></a>”, <em>Constructive Approximation</em> 33 (2011). <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:7:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:7:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:8" role="doc-endnote">
+      <p>Bernstein, S. N. (1932). “Complément a l’article de E. Voronovskaya.” CR Acad. URSS, 86-92. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:9" role="doc-endnote">
+      <p>G.G. Lorentz, “The degree of approximation by polynomials with positive coefficients”, 1966. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:9:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:9:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:10" role="doc-endnote">
+      <p>G.G. Lorentz, “Inequalities and saturation classes for Bernstein polynomials”, 1963. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:10:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:10:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:11" role="doc-endnote">
+      <p>Qian et al. suggested an <em>n</em> which has the upper bound <em>n</em>=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial (Qian, W., Riedel, M. D., &amp; Rosenberg, I. (2011). Uniform approximation and Bernstein polynomials with coefficients in the unit interval. European Journal of Combinatorics, 32(3), 448-463). <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:12" role="doc-endnote">
+      <p>Schurer and Steutel, “On an inequality of Lorentz in the theory of Bernstein polynomials”, 1975. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:13" role="doc-endnote">
+      <p>Kac, M., “Une remarque sur les polynômes de M. S. Bernstein”, Studia Math. 7, 1938. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:14" role="doc-endnote">
+      <p>Sikkema, P.C., “Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen”, 1961. <a href="#fnref:14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:15" role="doc-endnote">
+      <p>E. Voronovskaya, “Détermination de la forme asymptotique d’approximation des fonctions par les polynômes de M. Bernstein”, 1932. <a href="#fnref:15" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:16" role="doc-endnote">
+      <p>Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. “<a href="https://doi.org/10.1016/j.jco.2015.05.001"><strong>Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy</strong></a>.” Journal of Complexity 31, no. 5 (2015): 689-714. <a href="#fnref:16" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:17" role="doc-endnote">
+      <p>M. Gevrey, “Sur la nature analytique des solutions des équations aux dérivées partielles”, 1918. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:18" role="doc-endnote">
+      <p>Carvalho, Luiz Max, and Guido A. Moreira. “<a href="https://arxiv.org/abs/2202.06121"><strong>Adaptive truncation of infinite sums: applications to Statistics</strong></a>”, arXiv:2202.06121 (2022). <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:18:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:19" role="doc-endnote">
+      <p>Bărbosu, D., “The Bernstein operators on any finite interval revisited”, Creat. Math. Inform. 20 (2020). <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:20" role="doc-endnote">
+      <p>Tsai, Y., Farouki, R.T., “Algorithm 812: BPOLY: An Object- Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form”, ACM Transactions on Mathematical Software, June 2001. <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:20:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:20:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:21" role="doc-endnote">
+      <p>As an example, Mastroianni and Occorsio (1977) approximate an integral this way using iterated Boolean sums of Bernstein polynomials (which include $U_{n,2}$). G. Mastroianni, M.R. Occorsio, “Una generalizzazione dell’operatore di Bernstein”, 1977. <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:22" role="doc-endnote">
+      <p>Konečný, Michal, and Eike Neumann. “Representations and evaluation strategies for feasibly approximable functions.” Computability 10, no. 1 (2021): 63-89. Also in arXiv: <a href="https://arxiv.org/abs/1710.03702"><strong>1710.03702</strong></a>. <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:23" role="doc-endnote">
+      <p>Konečný, Michal, and Eike Neumann. “<a href="https://arxiv.org/abs/1910.04891"><strong>Implementing evaluation strategies for continuous real functions</strong></a>”, arXiv:1910.04891 (2019). <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:23:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:24" role="doc-endnote">
+      <p>Muñoz, César, and Anthony Narkawicz. “Formalization of Bernstein polynomials and applications to global optimization.” Journal of Automated Reasoning 51, no. 2 (2013): 151-196. <a href="#fnref:24" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:25" role="doc-endnote">
+      <p>Knoop, H-B., Pottinger, P., “Ein Satz vom Korovkin-Typ für $C^k$-Räume”, Math. Zeitschrift 148 (1976). <a href="#fnref:25" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:26" role="doc-endnote">
+      <p>Farouki, Rida T., and V. T. Rajan. “<a href="https://www.sciencedirect.com/science/article/pii/0167839688900167"><strong>Algorithms for polynomials in Bernstein form</strong></a>”. Computer Aided Geometric Design 5, no. 1 (1988): 1-26. <a href="#fnref:26" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:27" role="doc-endnote">
+      <p>Sánchez-Reyes, J. (2003). <a href="https://www.sciencedirect.com/science/article/pii/S0010448503000216"><strong>Algebraic manipulation in the Bernstein form made simple via convolutions</strong></a>. Computer-Aided Design, 35(10), 959-967. <a href="#fnref:27" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:27:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:28" role="doc-endnote">
+      <p>S. Ray, P.S.V. Nataraj, “<a href="https://interval.louisiana.edu/reliable-computing-journal/volume-17/reliable-computing-17-pp-40-71.pdf"><strong>A Matrix Method for Efficient Computation of Bernstein Coefficients</strong></a>”, Reliable Computing 17(1), 2012. <a href="#fnref:28" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:29" role="doc-endnote">
+      <p>Borwein, P. B. (1979). Restricted uniform rational approximations (Doctoral dissertation, University of British Columbia). <a href="#fnref:29" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:29:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:30" role="doc-endnote">
+      <p>Borwein, Peter B. “Approximations by rational functions with positive coefficients.” Journal of Mathematical Analysis and Applications 74, no. 1 (1980): 144-151. <a href="#fnref:30" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:31" role="doc-endnote">
+      <p>Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. “Uniform approximation and Bernstein polynomials with coefficients in the unit interval.” European Journal of Combinatorics 32, no. 3 (2011): 448-463. <a href="#fnref:31" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:32" role="doc-endnote">
+      <p>Li, Zhongkai. “Bernstein polynomials and modulus of continuity.” Journal of Approximation Theory 102, no. 1 (2000): 171-174. <a href="#fnref:32" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:33" role="doc-endnote">
+      <p><em>Summation notation</em>, involving the Greek capital sigma (Σ), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+…+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+…$. <a href="#fnref:33" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:34" role="doc-endnote">
+      <p>Molteni, Giuseppe. “Explicit bounds for even moments of Bernstein’s polynomials.” Journal of Approximation Theory 273 (2022): 105658. <a href="#fnref:34" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:35" role="doc-endnote">
+      <p>Adell, J. A., Bustamante, J., &amp; Quesada, J. M. (2015). Estimates for the moments of Bernstein polynomials. Journal of Mathematical Analysis and Applications, 432(1), 114-128. <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:35:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:36" role="doc-endnote">
+      <p>Adell, J.A., Cárdenas-Morales, D., “<a href="https://www.sciencedirect.com/science/article/pii/S0021904518300376"><strong>Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials</strong></a>”, Journal of Approximation Theory 231, July 2018. <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:37" role="doc-endnote">
+      <p>Gonska, H.H., Piţul, P., Raşa, I., “On Peano’s form of the Taylor remainder, Voronovskaja’s theorem and the commutator of positive linear operators”, In Numerical Analysis and Approximation Theory, 2006. <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:38" role="doc-endnote">
+      <p>The result from Gonska et al. actually applies if the $r$-th derivative belongs to a broader class of continuous functions than Lipschitz continuous functions, but this feature is not used in this proof. <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:39" role="doc-endnote">
+      <p>Cheng, F., “On the rate of convergence of Bernstein polynomials of functions of bounded variation”, Journal of Approximation Theory 39 (1983). <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:40" role="doc-endnote">
+      <p>G.G. Lorentz, <em>Bernstein polynomials</em>, 1953. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:41" role="doc-endnote">
+      <p><em>NIST Digital Library of Mathematical Functions</em>, <a href="https://dlmf.nist.gov/"><strong>https://dlmf.nist.gov/</strong></a> , Release 1.1.9 of 2023-03-15. <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:42" role="doc-endnote">
+      <p>Ditzian, Z., Totik, V., <em>Moduli of Smoothness</em>, 1987. <a href="#fnref:42" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:43" role="doc-endnote">
+      <p>May, C.P., “Saturation and inverse theorems for a class of exponential-type operators”, Canadian Journal of Mathematics 28 (1976). <a href="#fnref:43" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:44" role="doc-endnote">
+      <p>Costabile, F., Gualtieri, M.I., Serra, S., “Asymptotic expansion and extrapolation for Bernstein polynomials with applications”, <em>BIT</em> 36 (1996). <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:45" role="doc-endnote">
+      <p>Draganov, Borislav R. “On simultaneous approximation by iterated Boolean sums of Bernstein operators.” Results in Mathematics 66, no. 1 (2014): 21-41. <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:46" role="doc-endnote">
+      <p>Kacsó, D.P., “Simultaneous approximation by almost convex operators”, 2002. <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:47" role="doc-endnote">
+      <p>Stancu, D.D., Agratini, O., et al. <em>Analiză Numerică şi Teoria Aproximării</em>, 2001. <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:48" role="doc-endnote">
+      <p>H. Wang, “<a href="https://arxiv.org/abs/2106.03456v3"><strong>Analysis of error localization of Chebyshev spectral approximations</strong></a>”, arXiv:2106.03456v3 [math.NA], 2023. <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:49" role="doc-endnote">
+      <p>Trefethen, L.N., <a href="https://www.chebfun.org/ATAP/"><strong><em>Approximation Theory and Approximation Practice</em></strong></a>, 2013. <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:49:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:49:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:50" role="doc-endnote">
+      <p>R. Kannan and C.K. Kreuger, <em>Advanced Analysis on the Real Line</em>, 1996. <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:51" role="doc-endnote">
+      <p>Rababah, Abedallah. “<a href="https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html"><strong>Transformation of Chebyshev–Bernstein polynomial basis</strong></a>.” Computational Methods in Applied Mathematics 3.4 (2003): 608-622. <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>

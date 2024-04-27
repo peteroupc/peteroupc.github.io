@@ -5,30 +5,27 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Png4BitIndexed</h1>
-
-<h2>PeterO.Png4BitIndexed</h2>
+<p>## PeterO.Png4BitIndexed</p>
 
 <pre>public sealed class Png4BitIndexed
 </pre>
 
 <p>A simple class for encoding PNG image files.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#GetColor_int">GetColor(int)</a></code> - Not documented yet.</li>
-<li><code><a href="#GetPixel_int_int">GetPixel(int, int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Height">Height</a></code> - Gets the height of the image.</li>
-<li><code><a href="#Save_string">Save(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#SetColor_int_byte">SetColor(int, byte[])</a></code> - Not documented yet.</li>
-<li><code><a href="#SetPixel_int_int_int">SetPixel(int, int, int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Transparent">Transparent</a></code> - Gets or sets the index of the transparent color.</li>
-<li><code><a href="#Width">Width</a></code> - Gets the width of the image.</li>
+  <li><code>[GetColor(int)](#GetColor_int)</code> - Not documented yet.</li>
+  <li><code>[GetPixel(int, int)](#GetPixel_int_int)</code> - Not documented yet.</li>
+  <li><code>[Height](#Height)</code> - Gets the height of the image.</li>
+  <li><code>[Save(string)](#Save_string)</code> - Not documented yet.</li>
+  <li><code>[SetColor(int, byte[])](#SetColor_int_byte)</code> - Not documented yet.</li>
+  <li><code>[SetPixel(int, int, int)](#SetPixel_int_int_int)</code> - Not documented yet.</li>
+  <li><code>[Transparent](#Transparent)</code> - Gets or sets the index of the transparent color.</li>
+  <li><code>[Width](#Width)</code> - Gets the width of the image.</li>
 </ul>
 
-<p><a id="Void_ctor_Int32_Int32"></a></p>
-
-<h3>Png4BitIndexed Constructor</h3>
+<p><a id="Void_ctor_Int32_Int32"></a>
+### Png4BitIndexed Constructor</p>
 
 <pre>public Png4BitIndexed(
     int width,
@@ -40,15 +37,18 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>width</i>: The parameter  <i>width</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>height</i>: The parameter  <i>height</i>
-is a 32-bit signed integer.</p></li>
+  <li>
+    <p><i>width</i>: The parameter  <i>width</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>height</i>: The parameter  <i>height</i>
+ is a 32-bit signed integer.</p>
+  </li>
 </ul>
 
-<p><a id="Height"></a></p>
-
-<h3>Height</h3>
+<p><a id="Height"></a>
+### Height</p>
 
 <pre>public int Height { get; }
 </pre>
@@ -59,9 +59,8 @@ is a 32-bit signed integer.</p></li>
 
 <p>The height of the image.</p>
 
-<p><a id="Transparent"></a></p>
-
-<h3>Transparent</h3>
+<p><a id="Transparent"></a>
+### Transparent</p>
 
 <pre>public int Transparent { get; set; }
 </pre>
@@ -72,9 +71,8 @@ is a 32-bit signed integer.</p></li>
 
 <p>The index of the transparent color.</p>
 
-<p><a id="Width"></a></p>
-
-<h3>Width</h3>
+<p><a id="Width"></a>
+### Width</p>
 
 <pre>public int Width { get; }
 </pre>
@@ -85,9 +83,8 @@ is a 32-bit signed integer.</p></li>
 
 <p>The width of the image.</p>
 
-<p><a id="GetColor_int"></a></p>
-
-<h3>GetColor</h3>
+<p><a id="GetColor_int"></a>
+### GetColor</p>
 
 <pre>public byte[] GetColor(
     int index);
@@ -98,17 +95,16 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: The parameter  <i>index</i>
-is a 32-bit signed integer.</li>
+  <li><i>index</i>: The parameter  <i>index</i>
+ is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A byte array.</p>
 
-<p><a id="GetPixel_int_int"></a></p>
-
-<h3>GetPixel</h3>
+<p><a id="GetPixel_int_int"></a>
+### GetPixel</p>
 
 <pre>public int GetPixel(
     int x,
@@ -120,19 +116,22 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>x</i>: The parameter  <i>x</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>y</i>: The parameter  <i>y</i>
-is a 32-bit signed integer.</p></li>
+  <li>
+    <p><i>x</i>: The parameter  <i>x</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>y</i>: The parameter  <i>y</i>
+ is a 32-bit signed integer.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Save_string"></a></p>
-
-<h3>Save</h3>
+<p><a id="Save_string"></a>
+### Save</p>
 
 <pre>public void Save(
     string filename);
@@ -143,21 +142,20 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>filename</i>: The parameter  <i>filename</i>
-is a text string.</li>
+  <li><i>filename</i>: The parameter  <i>filename</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>filename</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="SetColor_int_byte"></a></p>
-
-<h3>SetColor</h3>
+<p><a id="SetColor_int_byte"></a>
+### SetColor</p>
 
 <pre>public void SetColor(
     int index,
@@ -169,26 +167,33 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>: The parameter  <i>index</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>color</i>: The parameter  <i>color</i>
-is a.Byte[] object.</p></li>
+  <li>
+    <p><i>index</i>: The parameter  <i>index</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>color</i>: The parameter  <i>color</i>
+ is a.Byte[] object.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>color</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 The parameter  <i>color</i>
-must have length 3 or more.</p></li>
+ must have length 3 or more.</p>
+  </li>
 </ul>
 
-<p><a id="SetPixel_int_int_int"></a></p>
-
-<h3>SetPixel</h3>
+<p><a id="SetPixel_int_int_int"></a>
+### SetPixel</p>
 
 <pre>public void SetPixel(
     int x,
@@ -201,12 +206,18 @@ must have length 3 or more.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>x</i>: The parameter  <i>x</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>y</i>: The parameter  <i>y</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>pixel</i>: The parameter  <i>pixel</i>
-is a 32-bit signed integer.</p></li>
+  <li>
+    <p><i>x</i>: The parameter  <i>x</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>y</i>: The parameter  <i>y</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>pixel</i>: The parameter  <i>pixel</i>
+ is a 32-bit signed integer.</p>
+  </li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Cbor.CBORException</h1>
-
-<h2>PeterO.Cbor.CBORException</h2>
+<p>## PeterO.Cbor.CBORException</p>
 
 <pre>public sealed class CBORException :
     System.Exception,
@@ -16,11 +15,10 @@
 
 <p>Exception thrown for errors involving CBOR data. This library may throw exceptions of this type in certain cases, notably when errors occur, and may supply messages to those exceptions (the message can be accessed through the  <code>Message</code>  property in.NET or the  <code>getMessage()</code>  method in Java). These messages are intended to be read by humans to help diagnose the error (or other cause of the exception); they are not intended to be parsed by computer programs, and the exact text of the messages may change at any time between versions of this library.</p>
 
-<h3>Member Summary</h3>
+<h3 id="member-summary">Member Summary</h3>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>CBORException Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### CBORException Constructor</p>
 
 <pre>public CBORException(
     string message);
@@ -31,13 +29,12 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>message</i>: The parameter  <i>message</i>
-is a text string.</li>
+  <li><i>message</i>: The parameter  <i>message</i>
+ is a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_Exception"></a></p>
-
-<h3>CBORException Constructor</h3>
+<p><a id="Void_ctor_System_String_System_Exception"></a>
+### CBORException Constructor</p>
 
 <pre>public CBORException(
     string message,
@@ -49,15 +46,18 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>message</i>: The parameter  <i>message</i>
-is a text string.</p></li>
-<li><p><i>innerException</i>: The parameter  <i>innerException</i>
-is an Exception object.</p></li>
+  <li>
+    <p><i>message</i>: The parameter  <i>message</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>innerException</i>: The parameter  <i>innerException</i>
+ is an Exception object.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>CBORException Constructor</h3>
+<p><a id="Void_ctor"></a>
+### CBORException Constructor</p>
 
 <pre>public CBORException();
 </pre>

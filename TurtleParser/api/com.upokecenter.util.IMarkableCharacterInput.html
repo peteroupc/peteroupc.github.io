@@ -5,98 +5,90 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.util.IMarkableCharacterInput</h1>
-
-<h1>com.upokecenter.util.IMarkableCharacterInput</h1>
+<p># com.upokecenter.util.IMarkableCharacterInput</p>
 
 <pre>public interface IMarkableCharacterInput extends com.upokecenter.text.ICharacterInput
 </pre>
 
 <p>Not documented yet.</p>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><p><code>int GetMarkPosition()</code><br>
-Gets the zero-based character position in the stream from the last-set mark.</p></li>
-<li><p><code>void MoveBack(int count)</code><br>
-Moves the stream position back the given number of characters.</p></li>
-<li><p><code>int SetHardMark()</code><br>
-Sets a mark on the stream&#39;s current position.</p></li>
-<li><p><code>void SetMarkPosition(int pos)</code><br>
-Sets the stream&#39;s position from the last set mark.</p></li>
-<li><p><code>int SetSoftMark()</code><br>
-If no mark is set, sets a mark on the stream, and characters read before the
-currently set mark are no longer available, while characters read after will
-be available if MoveBack is called.</p></li>
-</ul>
-
-<h2>Method Details</h2>
-
-<h3>GetMarkPosition</h3>
-
-<pre>int GetMarkPosition()
-</pre>
-
-<p>Gets the zero-based character position in the stream from the last-set mark.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The return value is not documented yet.</li>
-</ul>
-
-<h3>MoveBack</h3>
-
-<pre>void MoveBack(int count)
-</pre>
-
-<p>Moves the stream position back the given number of characters.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>count</code> - The parameter <code>count</code> is a 32-bit signed integer.</li>
-</ul>
-
-<h3>SetHardMark</h3>
-
-<pre>int SetHardMark()
-</pre>
-
-<p>Sets a mark on the stream&#39;s current position.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The return value is not documented yet.</li>
-</ul>
-
-<h3>SetMarkPosition</h3>
-
-<pre>void SetMarkPosition(int pos)
-</pre>
-
-<p>Sets the stream&#39;s position from the last set mark.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>pos</code> - Zero-based character offset from the last set mark.</li>
-</ul>
-
-<h3>SetSoftMark</h3>
-
-<pre>int SetSoftMark()
-</pre>
-
-<p>If no mark is set, sets a mark on the stream, and characters read before the
+  <li>
+    <p><code>int GetMarkPosition()</code><br />
+ Gets the zero-based character position in the stream from the last-set mark.</p>
+  </li>
+  <li>
+    <p><code>void MoveBack(int count)</code><br />
+ Moves the stream position back the given number of characters.</p>
+  </li>
+  <li>
+    <p><code>int SetHardMark()</code><br />
+ Sets a mark on the stream’s current position.</p>
+  </li>
+  <li>
+    <p><code>void SetMarkPosition(int pos)</code><br />
+ Sets the stream’s position from the last set mark.</p>
+  </li>
+  <li>
+    <p><code>int SetSoftMark()</code><br />
+ If no mark is set, sets a mark on the stream, and characters read before the
  currently set mark are no longer available, while characters read after will
- be available if MoveBack is called. Otherwise, behaves like GetMarkPosition.</p>
+ be available if MoveBack is called.</p>
+  </li>
+</ul>
+
+<h2 id="method-details">Method Details</h2>
+
+<h3 id="getmarkposition">GetMarkPosition</h3>
+<pre>int GetMarkPosition() Gets the zero-based character position in the stream from the last-set mark.
+</pre>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+  <li>The return value is not documented yet.</li>
+</ul>
+
+<h3 id="moveback">MoveBack</h3>
+<pre>void MoveBack(int count) Moves the stream position back the given number of characters.
+</pre>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li><code>count</code> - The parameter <code>count</code> is a 32-bit signed integer.</li>
+</ul>
+
+<h3 id="sethardmark">SetHardMark</h3>
+<pre>int SetHardMark() Sets a mark on the stream's current position.
+</pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>The return value is not documented yet.</li>
+</ul>
+
+<h3 id="setmarkposition">SetMarkPosition</h3>
+<pre>void SetMarkPosition(int pos) Sets the stream's position from the last set mark.
+</pre>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li><code>pos</code> - Zero-based character offset from the last set mark.</li>
+</ul>
+
+<h3 id="setsoftmark">SetSoftMark</h3>
+<pre>int SetSoftMark() If no mark is set, sets a mark on the stream, and characters read before the  currently set mark are no longer available, while characters read after will  be available if MoveBack is called. Otherwise, behaves like GetMarkPosition.
+</pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>The return value is not documented yet.</li>
 </ul>
 
 <p><a href="/TurtleParser/">Back to TurtleParser start page.</a></p>

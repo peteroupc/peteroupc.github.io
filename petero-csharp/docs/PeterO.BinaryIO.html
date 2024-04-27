@@ -5,66 +5,63 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.BinaryIO</h1>
-
-<h2>PeterO.BinaryIO</h2>
+<p>## PeterO.BinaryIO</p>
 
 <pre>public sealed class BinaryIO
 </pre>
 
 <p>Reads and writes data types in little endian or big endian.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#CanRead">CanRead</a></code> - Gets a value indicating whether the underlying stream can be read.</li>
-<li><code><a href="#CanSeek">CanSeek</a></code> - Gets a value indicating whether the underlying stream supports seeking.</li>
-<li><code><a href="#CanWrite">CanWrite</a></code> - Gets a value indicating whether the underlying stream supports writing.</li>
-<li><code><a href="#Length">Length</a></code> - Gets the length of the underlying stream.</li>
-<li><code><a href="#Position">Position</a></code> - Gets or sets the position of the underlying stream.</li>
-<li><code><a href="#Read_byte_int_int">Read(byte[], int, int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Read7BitEncodedInt32BE">Read7BitEncodedInt32BE()</a></code> - Not documented yet.</li>
-<li><code><a href="#Read7BitEncodedInt32LE">Read7BitEncodedInt32LE()</a></code> - Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</li>
-<li><code><a href="#Read7BitEncodedInt64BE">Read7BitEncodedInt64BE()</a></code> - Not documented yet.</li>
-<li><code><a href="#Read7BitEncodedInt64LE">Read7BitEncodedInt64LE()</a></code> - Not documented yet.</li>
-<li><code><a href="#Read7BitEncodedUInt32BE">Read7BitEncodedUInt32BE()</a></code> - Not documented yet.</li>
-<li><code><a href="#Read7BitEncodedUInt32LE">Read7BitEncodedUInt32LE()</a></code> - Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</li>
-<li><code><a href="#ReadByte">ReadByte()</a></code> - Not documented yet.</li>
-<li><code><a href="#ReadBytes_int">ReadBytes(int)</a></code> - Reads data from a stream into a byte array.</li>
-<li><code><a href="#ReadDoubleBE">ReadDoubleBE()</a></code> - Reads a 64-bit floating-point number in big-endian byte order.</li>
-<li><code><a href="#ReadDoubleLE">ReadDoubleLE()</a></code> - Not documented yet.</li>
-<li><code><a href="#ReadInt16BE">ReadInt16BE()</a></code> - Reads a 16-bit signed integer in big-endian byte order (2 bytes).</li>
-<li><code><a href="#ReadInt16LE">ReadInt16LE()</a></code> - Not documented yet.</li>
-<li><code><a href="#ReadInt32BE">ReadInt32BE()</a></code> - Reads a 32-bit signed integer in big-endian byte order (4 bytes).</li>
-<li><code><a href="#ReadInt32LE">ReadInt32LE()</a></code> - Not documented yet.</li>
-<li><code><a href="#ReadInt64BE">ReadInt64BE()</a></code> - Reads a 64-bit signed integer in big-endian byte order (8 bytes).</li>
-<li><code><a href="#ReadInt64LE">ReadInt64LE()</a></code> - Not documented yet.</li>
-<li><code><a href="#ReadSingleBE">ReadSingleBE()</a></code> - Not documented yet.</li>
-<li><code><a href="#ReadSingleLE">ReadSingleLE()</a></code> - Not documented yet.</li>
-<li><code><a href="#Write_byte">Write(byte[])</a></code> - Not documented yet.</li>
-<li><code><a href="#Write_byte_int_int">Write(byte[], int, int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Write7BitEncodedInt32BE_int">Write7BitEncodedInt32BE(int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Write7BitEncodedInt32LE_int">Write7BitEncodedInt32LE(int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Write7BitEncodedInt64BE_long">Write7BitEncodedInt64BE(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#Write7BitEncodedInt64LE_long">Write7BitEncodedInt64LE(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#Write7BitEncodedUInt32BE_int">Write7BitEncodedUInt32BE(int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Write7BitEncodedUInt32LE_int">Write7BitEncodedUInt32LE(int)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteBE_byte">WriteBE(byte)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteBE_double">WriteBE(double)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteBE_float">WriteBE(float)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteBE_int">WriteBE(int)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteBE_long">WriteBE(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteBE_short">WriteBE(short)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteLE_byte">WriteLE(byte)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteLE_double">WriteLE(double)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteLE_float">WriteLE(float)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteLE_int">WriteLE(int)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteLE_long">WriteLE(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#WriteLE_short">WriteLE(short)</a></code> - Not documented yet.</li>
+  <li><code>[CanRead](#CanRead)</code> - Gets a value indicating whether the underlying stream can be read.</li>
+  <li><code>[CanSeek](#CanSeek)</code> - Gets a value indicating whether the underlying stream supports seeking.</li>
+  <li><code>[CanWrite](#CanWrite)</code> - Gets a value indicating whether the underlying stream supports writing.</li>
+  <li><code>[Length](#Length)</code> - Gets the length of the underlying stream.</li>
+  <li><code>[Position](#Position)</code> - Gets or sets the position of the underlying stream.</li>
+  <li><code>[Read(byte[], int, int)](#Read_byte_int_int)</code> - Not documented yet.</li>
+  <li><code>[Read7BitEncodedInt32BE()](#Read7BitEncodedInt32BE)</code> - Not documented yet.</li>
+  <li><code>[Read7BitEncodedInt32LE()](#Read7BitEncodedInt32LE)</code> - Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</li>
+  <li><code>[Read7BitEncodedInt64BE()](#Read7BitEncodedInt64BE)</code> - Not documented yet.</li>
+  <li><code>[Read7BitEncodedInt64LE()](#Read7BitEncodedInt64LE)</code> - Not documented yet.</li>
+  <li><code>[Read7BitEncodedUInt32BE()](#Read7BitEncodedUInt32BE)</code> - Not documented yet.</li>
+  <li><code>[Read7BitEncodedUInt32LE()](#Read7BitEncodedUInt32LE)</code> - Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</li>
+  <li><code>[ReadByte()](#ReadByte)</code> - Not documented yet.</li>
+  <li><code>[ReadBytes(int)](#ReadBytes_int)</code> - Reads data from a stream into a byte array.</li>
+  <li><code>[ReadDoubleBE()](#ReadDoubleBE)</code> - Reads a 64-bit floating-point number in big-endian byte order.</li>
+  <li><code>[ReadDoubleLE()](#ReadDoubleLE)</code> - Not documented yet.</li>
+  <li><code>[ReadInt16BE()](#ReadInt16BE)</code> - Reads a 16-bit signed integer in big-endian byte order (2 bytes).</li>
+  <li><code>[ReadInt16LE()](#ReadInt16LE)</code> - Not documented yet.</li>
+  <li><code>[ReadInt32BE()](#ReadInt32BE)</code> - Reads a 32-bit signed integer in big-endian byte order (4 bytes).</li>
+  <li><code>[ReadInt32LE()](#ReadInt32LE)</code> - Not documented yet.</li>
+  <li><code>[ReadInt64BE()](#ReadInt64BE)</code> - Reads a 64-bit signed integer in big-endian byte order (8 bytes).</li>
+  <li><code>[ReadInt64LE()](#ReadInt64LE)</code> - Not documented yet.</li>
+  <li><code>[ReadSingleBE()](#ReadSingleBE)</code> - Not documented yet.</li>
+  <li><code>[ReadSingleLE()](#ReadSingleLE)</code> - Not documented yet.</li>
+  <li><code>[Write(byte[])](#Write_byte)</code> - Not documented yet.</li>
+  <li><code>[Write(byte[], int, int)](#Write_byte_int_int)</code> - Not documented yet.</li>
+  <li><code>[Write7BitEncodedInt32BE(int)](#Write7BitEncodedInt32BE_int)</code> - Not documented yet.</li>
+  <li><code>[Write7BitEncodedInt32LE(int)](#Write7BitEncodedInt32LE_int)</code> - Not documented yet.</li>
+  <li><code>[Write7BitEncodedInt64BE(long)](#Write7BitEncodedInt64BE_long)</code> - Not documented yet.</li>
+  <li><code>[Write7BitEncodedInt64LE(long)](#Write7BitEncodedInt64LE_long)</code> - Not documented yet.</li>
+  <li><code>[Write7BitEncodedUInt32BE(int)](#Write7BitEncodedUInt32BE_int)</code> - Not documented yet.</li>
+  <li><code>[Write7BitEncodedUInt32LE(int)](#Write7BitEncodedUInt32LE_int)</code> - Not documented yet.</li>
+  <li><code>[WriteBE(byte)](#WriteBE_byte)</code> - Not documented yet.</li>
+  <li><code>[WriteBE(double)](#WriteBE_double)</code> - Not documented yet.</li>
+  <li><code>[WriteBE(float)](#WriteBE_float)</code> - Not documented yet.</li>
+  <li><code>[WriteBE(int)](#WriteBE_int)</code> - Not documented yet.</li>
+  <li><code>[WriteBE(long)](#WriteBE_long)</code> - Not documented yet.</li>
+  <li><code>[WriteBE(short)](#WriteBE_short)</code> - Not documented yet.</li>
+  <li><code>[WriteLE(byte)](#WriteLE_byte)</code> - Not documented yet.</li>
+  <li><code>[WriteLE(double)](#WriteLE_double)</code> - Not documented yet.</li>
+  <li><code>[WriteLE(float)](#WriteLE_float)</code> - Not documented yet.</li>
+  <li><code>[WriteLE(int)](#WriteLE_int)</code> - Not documented yet.</li>
+  <li><code>[WriteLE(long)](#WriteLE_long)</code> - Not documented yet.</li>
+  <li><code>[WriteLE(short)](#WriteLE_short)</code> - Not documented yet.</li>
 </ul>
 
-<p><a id="Void_ctor_Stream"></a></p>
-
-<h3>BinaryIO Constructor</h3>
+<p><a id="Void_ctor_Stream"></a>
+### BinaryIO Constructor</p>
 
 <pre>public BinaryIO(
     System.IO.Stream stream);
@@ -75,21 +72,20 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>stream</i>: The parameter  <i>stream</i>
-is a Stream object.</li>
+  <li><i>stream</i>: The parameter  <i>stream</i>
+ is a Stream object.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>stream</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="CanRead"></a></p>
-
-<h3>CanRead</h3>
+<p><a id="CanRead"></a>
+### CanRead</p>
 
 <pre>public bool CanRead { get; }
 </pre>
@@ -98,9 +94,8 @@ is null.</li>
 
 <p><code>true</code>  if the underlying stream can be read; otherwise,  <code>false</code>  .</p>
 
-<p><a id="CanSeek"></a></p>
-
-<h3>CanSeek</h3>
+<p><a id="CanSeek"></a>
+### CanSeek</p>
 
 <pre>public bool CanSeek { get; }
 </pre>
@@ -109,9 +104,8 @@ is null.</li>
 
 <p><code>true</code>  if the underlying stream supports seeking; otherwise,  <code>false</code>  .</p>
 
-<p><a id="CanWrite"></a></p>
-
-<h3>CanWrite</h3>
+<p><a id="CanWrite"></a>
+### CanWrite</p>
 
 <pre>public bool CanWrite { get; }
 </pre>
@@ -120,9 +114,8 @@ is null.</li>
 
 <p><code>true</code>  if the underlying stream supports writing; otherwise,  <code>false</code>  .</p>
 
-<p><a id="Length"></a></p>
-
-<h3>Length</h3>
+<p><a id="Length"></a>
+### Length</p>
 
 <pre>public long Length { get; }
 </pre>
@@ -131,9 +124,8 @@ is null.</li>
 
 <p>The length of the underlying stream.</p>
 
-<p><a id="Position"></a></p>
-
-<h3>Position</h3>
+<p><a id="Position"></a>
+### Position</p>
 
 <pre>public long Position { get; set; }
 </pre>
@@ -142,9 +134,8 @@ is null.</li>
 
 <p>The position of the underlying stream.</p>
 
-<p><a id="Read_byte_int_int"></a></p>
-
-<h3>Read</h3>
+<p><a id="Read_byte_int_int"></a>
+### Read</p>
 
 <pre>public int Read(
     byte[] data,
@@ -157,13 +148,19 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>data</i>: The parameter  <i>data</i>
-is not documented yet.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>data</i>
-begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of  <i>data</i>
-(but not more than  <i>data</i>
-&#39;s length).</p></li>
+  <li>
+    <p><i>data</i>: The parameter  <i>data</i>
+ is not documented yet.</p>
+  </li>
+  <li>
+    <p><i>offset</i>: A zero-based index showing where the desired portion of  <i>data</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The number of elements in the desired portion of  <i>data</i>
+ (but not more than  <i>data</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -173,24 +170,29 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>T:System.ArgumentException:
+  <li>
+    <p>T:System.ArgumentException:
 Either  <i> offset</i>
-or  <i> length</i>
-is less than 0 or greater than  <i>data</i>
-&#39;s length, or  <i>             data</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>length</i>
-.</p></li>
-<li><p>System.ArgumentNullException:
+ or  <i> length</i>
+ is less than 0 or greater than  <i>data</i>
+ ‘s length, or  <i>             data</i>
+ ‘ s length minus  <i>offset</i>
+ is less than  <i>length</i>
+ .</p>
+  </li>
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>data</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;data&quot;&#39;s length, or &quot;data&quot;&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+Either “offset” or “length” is less than 0 or greater than “data”’s length, or “data”’s length minus “offset” is less than “length”.</p>
+  </li>
 </ul>
 
-<p><a id="Read7BitEncodedInt32BE"></a></p>
-
-<h3>Read7BitEncodedInt32BE</h3>
+<p><a id="Read7BitEncodedInt32BE"></a>
+### Read7BitEncodedInt32BE</p>
 
 <pre>public int Read7BitEncodedInt32BE();
 </pre>
@@ -201,9 +203,8 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Read7BitEncodedInt32LE"></a></p>
-
-<h3>Read7BitEncodedInt32LE</h3>
+<p><a id="Read7BitEncodedInt32LE"></a>
+### Read7BitEncodedInt32LE</p>
 
 <pre>public int Read7BitEncodedInt32LE();
 </pre>
@@ -214,9 +215,8 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Read7BitEncodedInt64BE"></a></p>
-
-<h3>Read7BitEncodedInt64BE</h3>
+<p><a id="Read7BitEncodedInt64BE"></a>
+### Read7BitEncodedInt64BE</p>
 
 <pre>public long Read7BitEncodedInt64BE();
 </pre>
@@ -227,9 +227,8 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <p>A 64-bit signed integer.</p>
 
-<p><a id="Read7BitEncodedInt64LE"></a></p>
-
-<h3>Read7BitEncodedInt64LE</h3>
+<p><a id="Read7BitEncodedInt64LE"></a>
+### Read7BitEncodedInt64LE</p>
 
 <pre>public long Read7BitEncodedInt64LE();
 </pre>
@@ -240,9 +239,8 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <p>A 64-bit signed integer.</p>
 
-<p><a id="Read7BitEncodedUInt32BE"></a></p>
-
-<h3>Read7BitEncodedUInt32BE</h3>
+<p><a id="Read7BitEncodedUInt32BE"></a>
+### Read7BitEncodedUInt32BE</p>
 
 <pre>public int Read7BitEncodedUInt32BE();
 </pre>
@@ -253,9 +251,8 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Read7BitEncodedUInt32LE"></a></p>
-
-<h3>Read7BitEncodedUInt32LE</h3>
+<p><a id="Read7BitEncodedUInt32LE"></a>
+### Read7BitEncodedUInt32LE</p>
 
 <pre>public int Read7BitEncodedUInt32LE();
 </pre>
@@ -266,9 +263,8 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="ReadByte"></a></p>
-
-<h3>ReadByte</h3>
+<p><a id="ReadByte"></a>
+### ReadByte</p>
 
 <pre>public byte ReadByte();
 </pre>
@@ -279,9 +275,8 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <p>A byte (from 0 to 255).</p>
 
-<p><a id="ReadBytes_int"></a></p>
-
-<h3>ReadBytes</h3>
+<p><a id="ReadBytes_int"></a>
+### ReadBytes</p>
 
 <pre>public byte[] ReadBytes(
     int size);
@@ -292,17 +287,16 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>size</i>: The parameter  <i>size</i>
-is not documented yet.</li>
+  <li><i>size</i>: The parameter  <i>size</i>
+ is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A byte array containing the data read.</p>
 
-<p><a id="ReadDoubleBE"></a></p>
-
-<h3>ReadDoubleBE</h3>
+<p><a id="ReadDoubleBE"></a>
+### ReadDoubleBE</p>
 
 <pre>public double ReadDoubleBE();
 </pre>
@@ -313,9 +307,8 @@ is not documented yet.</li>
 
 <p>A 64-bit floating-point number.</p>
 
-<p><a id="ReadDoubleLE"></a></p>
-
-<h3>ReadDoubleLE</h3>
+<p><a id="ReadDoubleLE"></a>
+### ReadDoubleLE</p>
 
 <pre>public double ReadDoubleLE();
 </pre>
@@ -326,9 +319,8 @@ is not documented yet.</li>
 
 <p>A 64-bit floating-point number.</p>
 
-<p><a id="ReadInt16BE"></a></p>
-
-<h3>ReadInt16BE</h3>
+<p><a id="ReadInt16BE"></a>
+### ReadInt16BE</p>
 
 <pre>public short ReadInt16BE();
 </pre>
@@ -339,9 +331,8 @@ is not documented yet.</li>
 
 <p>A 16-bit signed integer.</p>
 
-<p><a id="ReadInt16LE"></a></p>
-
-<h3>ReadInt16LE</h3>
+<p><a id="ReadInt16LE"></a>
+### ReadInt16LE</p>
 
 <pre>public short ReadInt16LE();
 </pre>
@@ -352,9 +343,8 @@ is not documented yet.</li>
 
 <p>A 16-bit signed integer.</p>
 
-<p><a id="ReadInt32BE"></a></p>
-
-<h3>ReadInt32BE</h3>
+<p><a id="ReadInt32BE"></a>
+### ReadInt32BE</p>
 
 <pre>public int ReadInt32BE();
 </pre>
@@ -365,9 +355,8 @@ is not documented yet.</li>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="ReadInt32LE"></a></p>
-
-<h3>ReadInt32LE</h3>
+<p><a id="ReadInt32LE"></a>
+### ReadInt32LE</p>
 
 <pre>public int ReadInt32LE();
 </pre>
@@ -378,9 +367,8 @@ is not documented yet.</li>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="ReadInt64BE"></a></p>
-
-<h3>ReadInt64BE</h3>
+<p><a id="ReadInt64BE"></a>
+### ReadInt64BE</p>
 
 <pre>public long ReadInt64BE();
 </pre>
@@ -391,9 +379,8 @@ is not documented yet.</li>
 
 <p>A 64-bit signed integer.</p>
 
-<p><a id="ReadInt64LE"></a></p>
-
-<h3>ReadInt64LE</h3>
+<p><a id="ReadInt64LE"></a>
+### ReadInt64LE</p>
 
 <pre>public long ReadInt64LE();
 </pre>
@@ -404,9 +391,8 @@ is not documented yet.</li>
 
 <p>A 64-bit signed integer.</p>
 
-<p><a id="ReadSingleBE"></a></p>
-
-<h3>ReadSingleBE</h3>
+<p><a id="ReadSingleBE"></a>
+### ReadSingleBE</p>
 
 <pre>public float ReadSingleBE();
 </pre>
@@ -417,9 +403,8 @@ is not documented yet.</li>
 
 <p>A 32-bit floating-point number.</p>
 
-<p><a id="ReadSingleLE"></a></p>
-
-<h3>ReadSingleLE</h3>
+<p><a id="ReadSingleLE"></a>
+### ReadSingleLE</p>
 
 <pre>public float ReadSingleLE();
 </pre>
@@ -430,9 +415,8 @@ is not documented yet.</li>
 
 <p>A 32-bit floating-point number.</p>
 
-<p><a id="Write_byte"></a></p>
-
-<h3>Write</h3>
+<p><a id="Write_byte"></a>
+### Write</p>
 
 <pre>public void Write(
     byte value);
@@ -443,13 +427,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="Write_byte"></a></p>
-
-<h3>Write</h3>
+<p><a id="Write_byte"></a>
+### Write</p>
 
 <pre>public void Write(
     byte[] data);
@@ -460,21 +443,20 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>data</i>: The parameter  <i>data</i>
-is not documented yet.</li>
+  <li><i>data</i>: The parameter  <i>data</i>
+ is not documented yet.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>data</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Write_byte_int_int"></a></p>
-
-<h3>Write</h3>
+<p><a id="Write_byte_int_int"></a>
+### Write</p>
 
 <pre>public void Write(
     byte[] data,
@@ -487,34 +469,43 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>data</i>: The parameter  <i>data</i>
-is not documented yet.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>data</i>
-begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of  <i>data</i>
-(but not more than  <i>data</i>
-&#39;s length).</p></li>
+  <li>
+    <p><i>data</i>: The parameter  <i>data</i>
+ is not documented yet.</p>
+  </li>
+  <li>
+    <p><i>offset</i>: A zero-based index showing where the desired portion of  <i>data</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The number of elements in the desired portion of  <i>data</i>
+ (but not more than  <i>data</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
+  <li>
+    <p>System.ArgumentException:
 Either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>data</i>
-&#39;s length, or  <i>             data</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>length</i>
-.</p></li>
-<li><p>System.ArgumentNullException:
+ or  <i>length</i>
+ is less than 0 or greater than  <i>data</i>
+ ‘s length, or  <i>             data</i>
+ ‘ s length minus  <i>offset</i>
+ is less than  <i>length</i>
+ .</p>
+  </li>
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>data</i>
-is null.</p></li>
+ is null.</p>
+  </li>
 </ul>
 
-<p><a id="Write7BitEncodedInt32BE_int"></a></p>
-
-<h3>Write7BitEncodedInt32BE</h3>
+<p><a id="Write7BitEncodedInt32BE_int"></a>
+### Write7BitEncodedInt32BE</p>
 
 <pre>public int Write7BitEncodedInt32BE(
     int value);
@@ -525,17 +516,16 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Write7BitEncodedInt32LE_int"></a></p>
-
-<h3>Write7BitEncodedInt32LE</h3>
+<p><a id="Write7BitEncodedInt32LE_int"></a>
+### Write7BitEncodedInt32LE</p>
 
 <pre>public int Write7BitEncodedInt32LE(
     int value);
@@ -546,17 +536,16 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Write7BitEncodedInt64BE_long"></a></p>
-
-<h3>Write7BitEncodedInt64BE</h3>
+<p><a id="Write7BitEncodedInt64BE_long"></a>
+### Write7BitEncodedInt64BE</p>
 
 <pre>public int Write7BitEncodedInt64BE(
     long value);
@@ -567,17 +556,16 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Write7BitEncodedInt64LE_long"></a></p>
-
-<h3>Write7BitEncodedInt64LE</h3>
+<p><a id="Write7BitEncodedInt64LE_long"></a>
+### Write7BitEncodedInt64LE</p>
 
 <pre>public int Write7BitEncodedInt64LE(
     long value);
@@ -588,17 +576,16 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Write7BitEncodedUInt32BE_int"></a></p>
-
-<h3>Write7BitEncodedUInt32BE</h3>
+<p><a id="Write7BitEncodedUInt32BE_int"></a>
+### Write7BitEncodedUInt32BE</p>
 
 <pre>public int Write7BitEncodedUInt32BE(
     int value);
@@ -609,17 +596,16 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="Write7BitEncodedUInt32LE_int"></a></p>
-
-<h3>Write7BitEncodedUInt32LE</h3>
+<p><a id="Write7BitEncodedUInt32LE_int"></a>
+### Write7BitEncodedUInt32LE</p>
 
 <pre>public int Write7BitEncodedUInt32LE(
     int value);
@@ -630,17 +616,16 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<p><a id="WriteBE_byte"></a></p>
-
-<h3>WriteBE</h3>
+<p><a id="WriteBE_byte"></a>
+### WriteBE</p>
 
 <pre>public void WriteBE(
     byte value);
@@ -651,13 +636,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteBE_double"></a></p>
-
-<h3>WriteBE</h3>
+<p><a id="WriteBE_double"></a>
+### WriteBE</p>
 
 <pre>public void WriteBE(
     double value);
@@ -668,13 +652,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteBE_float"></a></p>
-
-<h3>WriteBE</h3>
+<p><a id="WriteBE_float"></a>
+### WriteBE</p>
 
 <pre>public void WriteBE(
     float value);
@@ -685,13 +668,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteBE_int"></a></p>
-
-<h3>WriteBE</h3>
+<p><a id="WriteBE_int"></a>
+### WriteBE</p>
 
 <pre>public void WriteBE(
     int value);
@@ -702,13 +684,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteBE_long"></a></p>
-
-<h3>WriteBE</h3>
+<p><a id="WriteBE_long"></a>
+### WriteBE</p>
 
 <pre>public void WriteBE(
     long value);
@@ -719,13 +700,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteBE_short"></a></p>
-
-<h3>WriteBE</h3>
+<p><a id="WriteBE_short"></a>
+### WriteBE</p>
 
 <pre>public void WriteBE(
     short value);
@@ -736,13 +716,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteLE_byte"></a></p>
-
-<h3>WriteLE</h3>
+<p><a id="WriteLE_byte"></a>
+### WriteLE</p>
 
 <pre>public void WriteLE(
     byte value);
@@ -753,13 +732,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteLE_double"></a></p>
-
-<h3>WriteLE</h3>
+<p><a id="WriteLE_double"></a>
+### WriteLE</p>
 
 <pre>public void WriteLE(
     double value);
@@ -770,13 +748,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteLE_float"></a></p>
-
-<h3>WriteLE</h3>
+<p><a id="WriteLE_float"></a>
+### WriteLE</p>
 
 <pre>public void WriteLE(
     float value);
@@ -787,13 +764,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteLE_int"></a></p>
-
-<h3>WriteLE</h3>
+<p><a id="WriteLE_int"></a>
+### WriteLE</p>
 
 <pre>public void WriteLE(
     int value);
@@ -804,13 +780,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteLE_long"></a></p>
-
-<h3>WriteLE</h3>
+<p><a id="WriteLE_long"></a>
+### WriteLE</p>
 
 <pre>public void WriteLE(
     long value);
@@ -821,13 +796,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
-<p><a id="WriteLE_short"></a></p>
-
-<h3>WriteLE</h3>
+<p><a id="WriteLE_short"></a>
+### WriteLE</p>
 
 <pre>public void WriteLE(
     short value);
@@ -838,8 +812,8 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is not documented yet.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is not documented yet.</li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

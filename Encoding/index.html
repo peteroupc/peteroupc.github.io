@@ -1,24 +1,23 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Encoding</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>Encoding</h1>
+<h1 id="encoding">Encoding</h1>
 
-<p><a href="https://www.nuget.org/packages/PeterO.Encoding"><img src="http://img.shields.io/nuget/v/PeterO.Encoding.svg?style=flat" alt="NuGet Status"></a>
-<a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.peteroupc%22%20AND%20a%3A%22encoding%22"><img src="https://img.shields.io/maven-central/v/com.github.peteroupc/encoding.svg?style=plastic" alt="Maven Central"></a></p>
+<p><a href="https://www.nuget.org/packages/PeterO.Encoding"><img src="http://img.shields.io/nuget/v/PeterO.Encoding.svg?style=flat" alt="NuGet Status" /></a>
+<a href="https://search.maven.org/#search|ga|1|g%3A%22com.github.peteroupc%22%20AND%20a%3A%22encoding%22"><img src="https://img.shields.io/maven-central/v/com.github.peteroupc/encoding.svg?style=plastic" alt="Maven Central" /></a></p>
 
 <p><strong>Download source code: <a href="https://github.com/peteroupc/MailLib/archive/master.zip">ZIP file</a></strong></p>
 
-<hr>
+<hr />
 
 <p>A portable library in C# and Java that implements character encodings used in Web pages and email.</p>
 
 <p>It implements the Encoding Standard, which is currently a candidate recommendation at the time of this writing.</p>
 
-<h2>How to Install</h2>
-
+<h2 id="how-to-install">How to Install</h2>
 <p>The C# implementation is available in the
 NuGet Package Gallery under the name
 <a href="https://www.nuget.org/packages/PeterO.Encoding">PeterO.Encoding</a>. To install
@@ -26,7 +25,7 @@ this library as a NuGet package, enter <code>Install-Package PeterO.Encoding</co
 NuGet Package Manager Console.</p>
 
 <p>The Java implementation is available
-as an <a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.peteroupc%22%20AND%20a%3A%22encoding%22">artifact</a> in the Central Repository. To add this library to a Maven
+as an <a href="https://search.maven.org/#search|ga|1|g%3A%22com.github.peteroupc%22%20AND%20a%3A%22encoding%22">artifact</a> in the Central Repository. To add this library to a Maven
 project, add the following to the <code>dependencies</code> section in your <code>pom.xml</code> file:</p>
 
 <pre>&lt;dependency&gt;
@@ -39,113 +38,116 @@ project, add the following to the <code>dependencies</code> section in your <cod
 <p>In other Java-based environments, the library can be referred to by its
 group ID (<code>com.github.peteroupc</code>), artifact ID (<code>encoding</code>), and version, as given above.</p>
 
-<h2>Documentation</h2>
+<h2 id="documentation">Documentation</h2>
 
 <p><strong>See the <a href="https://peteroupc.github.io/Encoding/api/">Java API documentation</a>.</strong></p>
 
 <p><strong>See the <a href="https://peteroupc.github.io/Encoding/docs/">C# (.NET) API documentation</a>.</strong></p>
 
-<h2>Examples</h2>
+<h2 id="examples">Examples</h2>
 
 <p>In C#.</p>
 
-<pre>    // Reads text from a UTF-8/UTF-16/UTF-32 file
+<p><code>
+    // Reads text from a UTF-8/UTF-16/UTF-32 file
     public static string ReadTextFromFile(string filename) {
       using (var stream = new FileStream(filename, FileMode.Open)) {
         return new CharacterReader(stream, 2).InputToString();
       }
     }
-</pre>
+</code></p>
 
-<pre>    // Reads text from a SHIFT-JIS stream, but uses UTF-8/UTF-16
+<p><code>
+    // Reads text from a SHIFT-JIS stream, but uses UTF-8/UTF-16
     // instead if it detects byte order marks
       using (var stream = new FileStream(filename, FileMode.Open)) {
-        return Encodings.GetEncoding(&quot;shift_jis&quot;)
+        return Encodings.GetEncoding("shift_jis")
            .GetDecoderInputSkipBom(stream).InputToString();
       }
-</pre>
+</code></p>
 
-<pre>    // Writes text in UTF-8 to a file
+<p><code>
+    // Writes text in UTF-8 to a file
       using (var stream = new FileStream(filename, FileMode.Create)) {
-        var str=&quot;Hello world!&quot;
+        var str="Hello world!"
         str.EncodeToWriter(Encodings.UTF8,stream);
       }
-</pre>
+</code></p>
 
-<h2>History</h2>
+<h2 id="history">History</h2>
 
 <p>Version 0.6.0:</p>
 
 <ul>
-<li>Bug fixes</li>
+  <li>Bug fixes</li>
 </ul>
 
 <p>Version 0.5.1:</p>
 
 <ul>
-<li>Fixed issue in .NET 2.0 and 4.0 assemblies where resources were inadvertently left out of build.</li>
+  <li>Fixed issue in .NET 2.0 and 4.0 assemblies where resources were inadvertently left out of build.</li>
 </ul>
 
 <p>Version 0.5.0:</p>
 
 <ul>
-<li>Separate aliases and encodings for email are used, for better conformance to MIME.</li>
-<li>New methods added to Encodings class.</li>
-<li>Endian-independent UTF-16 encoding added for email.</li>
-<li>ISO-2022-JP-2 and ISO-2022-KR encodings added for email.</li>
-<li>.NET 2 and .NET 4 assemblies added to NuGet package.</li>
+  <li>Separate aliases and encodings for email are used, for better conformance to MIME.</li>
+  <li>New methods added to Encodings class.</li>
+  <li>Endian-independent UTF-16 encoding added for email.</li>
+  <li>ISO-2022-JP-2 and ISO-2022-KR encodings added for email.</li>
+  <li>.NET 2 and .NET 4 assemblies added to NuGet package.</li>
 </ul>
 
 <p>Version 0.4.0:</p>
 
 <ul>
-<li>Updated to latest Encoding Standard draft as of Jun. 28, 2018, except for a bug fix in one encoding.</li>
+  <li>Updated to latest Encoding Standard draft as of Jun. 28, 2018, except for a bug fix in one encoding.</li>
 </ul>
 
 <p>Version 0.3.2:</p>
 
 <ul>
-<li>Version change needed to properly refer to version.</li>
+  <li>Version change needed to properly refer to version.</li>
 </ul>
 
 <p>Version 0.3.1:</p>
 
 <ul>
-<li>Marked assembly as CLS-compliant.</li>
+  <li>Marked assembly as CLS-compliant.</li>
 </ul>
 
 <p>Version 0.3:</p>
 
 <ul>
-<li>Converted project to .NET Standard</li>
+  <li>Converted project to .NET Standard</li>
 </ul>
 
 <p>Version 0.2.1:</p>
 
 <ul>
-<li>Fix ResolveAliasForEmail method to conform to new behavior
+  <li>Fix ResolveAliasForEmail method to conform to new behavior
 in version 0.2.0</li>
 </ul>
 
 <p>Version 0.2.0:</p>
 
 <ul>
-<li>Update implementation to latest candidate recommendation of Encoding Standard</li>
-<li>ResolveAlias may return a mixed-case encoding name (as opposed to a lower-case one).</li>
-<li>Add overloads to CharacterReader constructor</li>
-<li>Add IReader interface</li>
-<li>Deprecated some methods of DataIO</li>
-<li>Add a few overloads in Encodings class, especially EncodeToWriter</li>
-<li>Bug fixes</li>
+  <li>Update implementation to latest candidate recommendation of Encoding Standard</li>
+  <li>ResolveAlias may return a mixed-case encoding name (as opposed to a lower-case one).</li>
+  <li>Add overloads to CharacterReader constructor</li>
+  <li>Add IReader interface</li>
+  <li>Deprecated some methods of DataIO</li>
+  <li>Add a few overloads in Encodings class, especially EncodeToWriter</li>
+  <li>Bug fixes</li>
 </ul>
 
 <p>Version 0.1.0:</p>
 
 <ul>
-<li>First release</li>
+  <li>First release</li>
 </ul>
 
-<h2>About</h2>
+<h2 id="about">About</h2>
 
 <p>Written by Peter O.</p>
 

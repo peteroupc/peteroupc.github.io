@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.text.ICharacterEncoder</h1>
-
-<h1>com.upokecenter.text.ICharacterEncoder</h1>
+<p># com.upokecenter.text.ICharacterEncoder</p>
 
 <pre>public interface ICharacterEncoder
 </pre>
@@ -14,24 +13,23 @@
 <p>Defines a method that can be implemented by classes that convert Unicode
  code points to bytes.</p>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><code>int Encode(int c,
-IWriter output)</code><br>
-Converts a Unicode code point to bytes and writes the bytes to an output
-stream.</li>
+  <li><code>int Encode(int c,
+ IWriter output)</code><br />
+ Converts a Unicode code point to bytes and writes the bytes to an output
+ stream.</li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>Encode</h3>
-
+<h3 id="encode">Encode</h3>
 <pre>int Encode(int c, IWriter output)
 </pre>
-
 <p>Converts a Unicode code point to bytes and writes the bytes to an output
- stream. </p> <p>If this method returns -2, indicating an error, the caller
+ stream. </p>
+<p>If this method returns -2, indicating an error, the caller
  of this method can take one of a variety of actions to handle the error. For
  example, it can write an escape sequence using the code point (such as the
  HTML error mode in the Encoding Standard), it can replace the code point
@@ -44,23 +42,27 @@ stream.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>c</code> - Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
-0x10ffff), or the value -1 indicating the end of the stream.</p></li>
-<li><p><code>output</code> - Output stream where the converted bytes will be written. The
-decoder can maintain internal state, including data on code points already
-passed as input, so this parameter should not change when using the same
-character encoder object.</p></li>
+  <li>
+    <p><code>c</code> - Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
+ 0x10ffff), or the value -1 indicating the end of the stream.</p>
+  </li>
+  <li>
+    <p><code>output</code> - Output stream where the converted bytes will be written. The
+ decoder can maintain internal state, including data on code points already
+ passed as input, so this parameter should not change when using the same
+ character encoder object.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The number of bytes written to the stream; -1 if no further code
-points remain (for example, if <em>c</em> is -1 indicating the end of the stream),
-or -2 if an encoding error occurs. (Note that it&#39;s possible for this method
-to return 0 if, for example, it can&#39;t generate new bytes yet based on the
-current input.). If this method returns -2, it should not write any bytes to
-the output stream.</li>
+  <li>The number of bytes written to the stream; -1 if no further code
+ points remain (for example, if <em>c</em> is -1 indicating the end of the stream),
+ or -2 if an encoding error occurs. (Note that it’s possible for this method
+ to return 0 if, for example, it can’t generate new bytes yet based on the
+ current input.). If this method returns -2, it should not write any bytes to
+ the output stream.</li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

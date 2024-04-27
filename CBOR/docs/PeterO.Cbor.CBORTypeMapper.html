@@ -5,35 +5,31 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Cbor.CBORTypeMapper</h1>
-
-<h2>PeterO.Cbor.CBORTypeMapper</h2>
+<p>## PeterO.Cbor.CBORTypeMapper</p>
 
 <pre>public sealed class CBORTypeMapper
 </pre>
 
 <p>Holds converters to customize the serialization and deserialization behavior of  <code>CBORObject.FromObject</code>  and  <code>CBORObject#ToObject</code> , as well as type filters for  <code>ToObject</code> .</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T">AddConverter&lt;T&gt;(System.Type, PeterO.Cbor.ICBORConverter&lt;T&gt;)</a></code> - Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).</li>
-<li><code><a href="#AddTypeName_string">AddTypeName(string)</a></code> - Adds the fully qualified name of a Java or.</li>
-<li><code><a href="#AddTypePrefix_string">AddTypePrefix(string)</a></code> - Adds a prefix of a Java or.</li>
-<li><code><a href="#FilterTypeName_string">FilterTypeName(string)</a></code> - Returns whether the given Java or.</li>
+  <li><code>[AddConverter&lt;T&gt;(System.Type, PeterO.Cbor.ICBORConverter&lt;T&gt;)](#AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T)</code> - Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).</li>
+  <li><code>[AddTypeName(string)](#AddTypeName_string)</code> - Adds the fully qualified name of a Java or.</li>
+  <li><code>[AddTypePrefix(string)](#AddTypePrefix_string)</code> - Adds a prefix of a Java or.</li>
+  <li><code>[FilterTypeName(string)](#FilterTypeName_string)</code> - Returns whether the given Java or.</li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>CBORTypeMapper Constructor</h3>
+<p><a id="Void_ctor"></a>
+### CBORTypeMapper Constructor</p>
 
 <pre>public CBORTypeMapper();
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.CBORTypeMapper.html">PeterO.Cbor.CBORTypeMapper</a> class.</p>
 
-<p><a id="AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T"></a></p>
-
-<h3>AddConverter</h3>
+<p><a id="AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T"></a>
+### AddConverter</p>
 
 <pre>public PeterO.Cbor.CBORTypeMapper AddConverter&lt;T&gt;(
     System.Type type,
@@ -45,10 +41,16 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>type</i>: A Type object specifying the type that the converter converts to CBOR objects.</p></li>
-<li><p><i>converter</i>: The parameter  <i>converter</i>
-is an ICBORConverter object.</p></li>
-<li><p>&lt;T&gt;: Must be the same as the &quot;type&quot; parameter.</p></li>
+  <li>
+    <p><i>type</i>: A Type object specifying the type that the converter converts to CBOR objects.</p>
+  </li>
+  <li>
+    <p><i>converter</i>: The parameter  <i>converter</i>
+ is an ICBORConverter object.</p>
+  </li>
+  <li>
+    <p>&lt;T&gt;: Must be the same as the “type” parameter.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -58,17 +60,20 @@ is an ICBORConverter object.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>type</i>
-or  <i>converter</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-Converter doesn&#39;t contain a proper ToCBORObject method&quot;.</p></li>
+ or  <i>converter</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+Converter doesn’t contain a proper ToCBORObject method”.</p>
+  </li>
 </ul>
 
-<p><a id="AddTypeName_string"></a></p>
-
-<h3>AddTypeName</h3>
+<p><a id="AddTypeName_string"></a>
+### AddTypeName</p>
 
 <pre>public PeterO.Cbor.CBORTypeMapper AddTypeName(
     string name);
@@ -79,7 +84,7 @@ Converter doesn&#39;t contain a proper ToCBORObject method&quot;.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The fully qualified name of a Java or.NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>
+  <li><i>name</i>: The fully qualified name of a Java or.NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -89,17 +94,20 @@ Converter doesn&#39;t contain a proper ToCBORObject method&quot;.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>name</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 The parameter  <i>name</i>
-is empty.</p></li>
+ is empty.</p>
+  </li>
 </ul>
 
-<p><a id="AddTypePrefix_string"></a></p>
-
-<h3>AddTypePrefix</h3>
+<p><a id="AddTypePrefix_string"></a>
+### AddTypePrefix</p>
 
 <pre>public PeterO.Cbor.CBORTypeMapper AddTypePrefix(
     string prefix);
@@ -110,7 +118,7 @@ is empty.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>prefix</i>: The prefix of a Java or.NET type (e.g., <code>java.math.</code> or <code>System.Globalization</code>).</li>
+  <li><i>prefix</i>: The prefix of a Java or.NET type (e.g., <code>java.math.</code> or <code>System.Globalization</code>).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -120,17 +128,20 @@ is empty.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>prefix</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 The parameter  <i>prefix</i>
-is empty.</p></li>
+ is empty.</p>
+  </li>
 </ul>
 
-<p><a id="FilterTypeName_string"></a></p>
-
-<h3>FilterTypeName</h3>
+<p><a id="FilterTypeName_string"></a>
+### FilterTypeName</p>
 
 <pre>public bool FilterTypeName(
     string typeName);
@@ -141,7 +152,7 @@ is empty.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>typeName</i>: The fully qualified name of a Java or.NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>
+  <li><i>typeName</i>: The fully qualified name of a Java or.NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>
 </ul>
 
 <p><b>Return Value:</b></p>

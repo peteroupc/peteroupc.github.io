@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.IReader</h1>
-
-<h2>PeterO.IReader</h2>
+<p>## PeterO.IReader</p>
 
 <pre>public interface IReader :
     PeterO.IByteReader
@@ -14,15 +13,13 @@
 
 <p>A generic interface for reading bytes of data from a data source.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Read_byte_int_int">Read(byte[], int, int)</a></code> - Reads a portion of a byte array from the data source.</li>
+  <li><code>[Read(byte[], int, int)](#Read_byte_int_int)</code> - Reads a portion of a byte array from the data source.</li>
 </ul>
 
-<p><a id="Read_byte_int_int"></a></p>
-
-<h3>Read</h3>
+<p><a id="Read_byte_int_int"></a>
+### Read</p>
 
 <pre>int Read(
     byte[] bytes,
@@ -35,12 +32,18 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array which will contain the data that was read from the data source.</p></li>
-<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>bytes</i>
-begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of  <i>bytes</i>
-(but not more than  <i>bytes</i>
-&#39;s length).</p></li>
+  <li>
+    <p><i>bytes</i>: A byte array which will contain the data that was read from the data source.</p>
+  </li>
+  <li>
+    <p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>bytes</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The number of elements in the desired portion of  <i>bytes</i>
+ (but not more than  <i>bytes</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -51,17 +54,21 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 Should be thrown if the parameter  <i>bytes</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 Should be thrown if either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>bytes</i>
-&#39;s length, or  <i>bytes</i>
-&#39;s length minus  <i>offset</i>
-is less than  <i>length</i>
-.</p></li>
+ or  <i>length</i>
+ is less than 0 or greater than  <i>bytes</i>
+ ‘s length, or  <i>bytes</i>
+ ‘s length minus  <i>offset</i>
+ is less than  <i>length</i>
+.</p>
+  </li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

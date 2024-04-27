@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Mail.MessageDataException</h1>
-
-<h2>PeterO.Mail.MessageDataException</h2>
+<p>## PeterO.Mail.MessageDataException</p>
 
 <pre>public sealed class MessageDataException :
     System.Exception,
@@ -16,11 +15,10 @@
 
 <p>Exception thrown when a message has invalid syntax. This library may throw exceptions of this type in certain cases, notably when errors occur, and may supply messages to those exceptions (the message can be accessed through the  <code>Message</code>  property in.NET or the  <code>getMessage()</code>  method in Java). These messages are intended to be read by humans to help diagnose the error (or other cause of the exception); they are not intended to be parsed by computer programs, and the exact text of the messages may change at any time between versions of this library.</p>
 
-<h3>Member Summary</h3>
+<h3 id="member-summary">Member Summary</h3>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>MessageDataException Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### MessageDataException Constructor</p>
 
 <pre>public MessageDataException(
     string message);
@@ -31,12 +29,11 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>message</i>: A string to use as the exception message.</li>
+  <li><i>message</i>: A string to use as the exception message.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_Exception"></a></p>
-
-<h3>MessageDataException Constructor</h3>
+<p><a id="Void_ctor_System_String_System_Exception"></a>
+### MessageDataException Constructor</p>
 
 <pre>public MessageDataException(
     string message,
@@ -48,14 +45,17 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>message</i>: A string to use as the exception message.</p></li>
-<li><p><i>innerException</i>: The parameter  <i>innerException</i>
-is an Exception object.</p></li>
+  <li>
+    <p><i>message</i>: A string to use as the exception message.</p>
+  </li>
+  <li>
+    <p><i>innerException</i>: The parameter  <i>innerException</i>
+ is an Exception object.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>MessageDataException Constructor</h3>
+<p><a id="Void_ctor"></a>
+### MessageDataException Constructor</p>
 
 <pre>public MessageDataException();
 </pre>

@@ -5,25 +5,22 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Cbor.PODOptions</h1>
-
-<h2>PeterO.Cbor.PODOptions</h2>
+<p>## PeterO.Cbor.PODOptions</p>
 
 <pre>public class PODOptions
 </pre>
 
-<p>Options for controlling how certain DotNET or Java objects, such as so-called &quot;plain old data&quot; objects (better known as POCOs in DotNET or POJOs in Java), are converted to CBOR objects.</p>
+<p>Options for controlling how certain DotNET or Java objects, such as so-called “plain old data” objects (better known as POCOs in DotNET or POJOs in Java), are converted to CBOR objects.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Default">public static readonly PeterO.Cbor.PODOptions Default;</a></code> - The default settings for &quot;plain old data&quot; options.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Gets the values of this options object&#39;s properties in text form.</li>
-<li><code><a href="#UseCamelCase">UseCamelCase</a></code> - Gets a value indicating whether property, field, and method names are converted to camel case before they are used as keys.</li>
+  <li><code>[public static readonly PeterO.Cbor.PODOptions Default;](#Default)</code> - The default settings for “plain old data” options.</li>
+  <li><code>[ToString()](#ToString)</code> - Gets the values of this options object’s properties in text form.</li>
+  <li><code>[UseCamelCase](#UseCamelCase)</code> - Gets a value indicating whether property, field, and method names are converted to camel case before they are used as keys.</li>
 </ul>
 
-<p><a id="Void_ctor_Boolean_Boolean"></a></p>
-
-<h3>PODOptions Constructor</h3>
+<p><a id="Void_ctor_Boolean_Boolean"></a>
+### PODOptions Constructor</p>
 
 <pre>public PODOptions(
     bool removeIsPrefix,
@@ -37,13 +34,16 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>removeIsPrefix</i>: The parameter is not used.</p></li>
-<li><p><i>useCamelCase</i>: The value of the &quot;UseCamelCase&quot; property.</p></li>
+  <li>
+    <p><i>removeIsPrefix</i>: The parameter is not used.</p>
+  </li>
+  <li>
+    <p><i>useCamelCase</i>: The value of the “UseCamelCase” property.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>PODOptions Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### PODOptions Constructor</p>
 
 <pre>public PODOptions(
     string paramString);
@@ -54,74 +54,78 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (&quot;=&quot;). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The string can be empty, but cannot be null. The following is an example of this parameter:  <code>usecamelcase=true</code> . The key can be any one of the following where the letters can be any combination of basic upper-case and/or basic lower-case letters:  <code>usecamelcase</code> . Other keys are ignored in this version of the CBOR library. (Keys are compared using a basic case-insensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.) If two or more key/value pairs have equal keys (in a basic case-insensitive comparison), the value given for the last such key is used. The key just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code> , or  <code>on</code>  (where the letters can be any combination of basic upper-case and/or basic lower-case letters), which means true, and any other value meaning false. For example,  <code>usecamelcase=Yes</code>  and  <code>usecamelcase=1</code>  both set the  <code>UseCamelCase</code>  property to true. In the future, this class may allow other keys to store other kinds of values, not just true or false.</li>
+  <li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (“=”). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The string can be empty, but cannot be null. The following is an example of this parameter:  <code>usecamelcase=true</code> . The key can be any one of the following where the letters can be any combination of basic upper-case and/or basic lower-case letters:  <code>usecamelcase</code> . Other keys are ignored in this version of the CBOR library. (Keys are compared using a basic case-insensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.) If two or more key/value pairs have equal keys (in a basic case-insensitive comparison), the value given for the last such key is used. The key just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code> , or  <code>on</code>  (where the letters can be any combination of basic upper-case and/or basic lower-case letters), which means true, and any other value meaning false. For example,  <code>usecamelcase=Yes</code>  and  <code>usecamelcase=1</code>  both set the  <code>UseCamelCase</code>  property to true. In the future, this class may allow other keys to store other kinds of values, not just true or false.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>paramString</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>PODOptions Constructor</h3>
+<p><a id="Void_ctor"></a>
+### PODOptions Constructor</p>
 
 <pre>public PODOptions();
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> class with all the default options.</p>
 
-<p><a id="Default"></a></p>
-
-<h3>Default</h3>
+<p><a id="Default"></a>
+### Default</p>
 
 <pre>public static readonly PeterO.Cbor.PODOptions Default;
 </pre>
 
-<p>The default settings for &quot;plain old data&quot; options.</p>
+<p>The default settings for “plain old data” options.</p>
 
-<p><a id="UseCamelCase"></a></p>
-
-<h3>UseCamelCase</h3>
+<p><a id="UseCamelCase"></a>
+### UseCamelCase</p>
 
 <pre>public bool UseCamelCase { get; }
 </pre>
 
-<p>Gets a value indicating whether property, field, and method names are converted to camel case before they are used as keys. This option changes the behavior of key name serialization as follows. If &quot;useCamelCase&quot; is  <code>false</code>  :</p>
+<p>Gets a value indicating whether property, field, and method names are converted to camel case before they are used as keys. This option changes the behavior of key name serialization as follows. If “useCamelCase” is  <code>false</code>  :</p>
 
 <ul>
-<li><p>In the .NET version, all key names are capitalized, meaning the first letter in the name is converted to a basic upper-case letter if it&#39;s a basic lower-case letter (&quot;a&quot; to &quot;z&quot;). (For example, &quot;Name&quot; and &quot;IsName&quot; both remain unchanged.)</p></li>
-<li><p>In the Java version, all field names are capitalized, and for each eligible method name, the word &quot;get&quot; or &quot;set&quot; is removed from the name if the name starts with that word, then the name is capitalized. (For example, &quot;getName&quot; and &quot;setName&quot; both become &quot;Name&quot;, and &quot;isName&quot; becomes &quot;IsName&quot;.)</p></li>
+  <li>
+    <p>In the .NET version, all key names are capitalized, meaning the first letter in the name is converted to a basic upper-case letter if it’s a basic lower-case letter (“a” to “z”). (For example, “Name” and “IsName” both remain unchanged.)</p>
+  </li>
+  <li>
+    <p>In the Java version, all field names are capitalized, and for each eligible method name, the word “get” or “set” is removed from the name if the name starts with that word, then the name is capitalized. (For example, “getName” and “setName” both become “Name”, and “isName” becomes “IsName”.)</p>
+  </li>
 </ul>
 
-<p>If &quot;useCamelCase&quot; is  <code>true</code>  :</p>
+<p>If “useCamelCase” is  <code>true</code>  :</p>
 
 <ul>
-<li><p>In the .NET version, for each eligible property or field name, the word &quot;Is&quot; is removed from the name if the name starts with that word, then the name is converted to camel case, meaning the first letter in the name is converted to a basic lower-case letter if it&#39;s a basic upper-case letter (&quot;A&quot; to &quot;Z&quot;). (For example, &quot;Name&quot; and &quot;IsName&quot; both become &quot;name&quot;, and &quot;IsIsName&quot; becomes &quot;isName&quot;.)</p></li>
-<li><p>In the Java version: For each eligible method name, the word &quot;get&quot;, &quot;set&quot;, or &quot;is&quot; is removed from the name if the name starts with that word, then the name is converted to camel case. (For example, &quot;getName&quot;, &quot;setName&quot;, and &quot;isName&quot; all become &quot;name&quot;.) For each eligible field name, the word &quot;is&quot; is removed from the name if the name starts with that word, then the name is converted to camel case. (For example, &quot;name&quot; and &quot;isName&quot; both become &quot;name&quot;.)</p></li>
+  <li>
+    <p>In the .NET version, for each eligible property or field name, the word “Is” is removed from the name if the name starts with that word, then the name is converted to camel case, meaning the first letter in the name is converted to a basic lower-case letter if it’s a basic upper-case letter (“A” to “Z”). (For example, “Name” and “IsName” both become “name”, and “IsIsName” becomes “isName”.)</p>
+  </li>
+  <li>
+    <p>In the Java version: For each eligible method name, the word “get”, “set”, or “is” is removed from the name if the name starts with that word, then the name is converted to camel case. (For example, “getName”, “setName”, and “isName” all become “name”.) For each eligible field name, the word “is” is removed from the name if the name starts with that word, then the name is converted to camel case. (For example, “name” and “isName” both become “name”.)</p>
+  </li>
 </ul>
 
-<p>In the description above, a name &quot;starts with&quot; a word if that word begins the name and is followed by a character other than a basic digit or basic lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;.</p>
+<p>In the description above, a name “starts with” a word if that word begins the name and is followed by a character other than a basic digit or basic lower-case letter, that is, other than “a” to “z” or “0” to “9”.</p>
 
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  If the names are converted to camel case; otherwise,  <code>false</code> . This property is  <code>true</code>  by default.</p>
 
-<p><a id="ToString"></a></p>
-
-<h3>ToString</h3>
+<p><a id="ToString"></a>
+### ToString</p>
 
 <pre>public override string ToString();
 </pre>
 
-<p>Gets the values of this options object&#39;s properties in text form.</p>
+<p>Gets the values of this options object’s properties in text form.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A text string containing the values of this options object&#39;s properties. The format of the string is the same as the one described in the String constructor for this class.</p>
+<p>A text string containing the values of this options object’s properties. The format of the string is the same as the one described in the String constructor for this class.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

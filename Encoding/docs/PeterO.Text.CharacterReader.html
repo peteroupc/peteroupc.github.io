@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Text.CharacterReader</h1>
-
-<h2>PeterO.Text.CharacterReader</h2>
+<p>## PeterO.Text.CharacterReader</p>
 
 <pre>public sealed class CharacterReader :
     PeterO.Text.ICharacterInput
@@ -14,16 +13,14 @@
 
 <p>A general-purpose character input for reading text from byte streams and text strings. When reading byte streams, this class supports the UTF-8 character encoding by default, but can be configured to support UTF-16 and UTF-32 as well.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Read_int_int_int">Read(int[], int, int)</a></code> - Reads a series of code points from a Unicode stream or a string.</li>
-<li><code><a href="#ReadChar">ReadChar()</a></code> - Reads the next character from a Unicode stream or a string.</li>
+  <li><code>[Read(int[], int, int)](#Read_int_int_int)</code> - Reads a series of code points from a Unicode stream or a string.</li>
+  <li><code>[ReadChar()](#ReadChar)</code> - Reads the next character from a Unicode stream or a string.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>CharacterReader Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     string str);
@@ -34,13 +31,12 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: The parameter  <i>str</i>
-is a text string.</li>
+  <li><i>str</i>: The parameter  <i>str</i>
+ is a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
+<p><a id="Void_ctor_System_String_Boolean"></a>
+### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     string str,
@@ -52,22 +48,25 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
-is a text string.</p></li>
-<li><p><i>skipByteOrderMark</i>: If true and the first character in the string is U+FEFF, skip that character.</p></li>
+  <li>
+    <p><i>str</i>: The parameter  <i>str</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>skipByteOrderMark</i>: If true and the first character in the string is U+FEFF, skip that character.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_Boolean_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
+<p><a id="Void_ctor_System_String_Boolean_Boolean"></a>
+### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     string str,
@@ -80,23 +79,28 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
-is a text string.</p></li>
-<li><p><i>skipByteOrderMark</i>: If true and the first character in the string is U+FEFF, skip that character.</p></li>
-<li><p><i>errorThrow</i>: When encountering invalid encoding, throw an exception if this parameter is true, or replace it with U+FFFD (replacement character) if this parameter is false.</p></li>
+  <li>
+    <p><i>str</i>: The parameter  <i>str</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>skipByteOrderMark</i>: If true and the first character in the string is U+FEFF, skip that character.</p>
+  </li>
+  <li>
+    <p><i>errorThrow</i>: When encountering invalid encoding, throw an exception if this parameter is true, or replace it with U+FFFD (replacement character) if this parameter is false.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_Int32_Int32"></a></p>
-
-<h3>CharacterReader Constructor</h3>
+<p><a id="Void_ctor_System_String_Int32_Int32"></a>
+### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     string str,
@@ -109,28 +113,37 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
-is a text string.</p></li>
-<li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
-begins.</p></li>
-<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
-(but not more than  <i>str</i>
-&#39;s length).</p></li>
+  <li>
+    <p><i>str</i>: The parameter  <i>str</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
+ (but not more than  <i>str</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
-Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentException:
+Either “offset” or “length” is less than 0 or greater than “str”’s length, or “str”’s length minus “offset” is less than “length”.</p>
+  </li>
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</p></li>
+ is null.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_System_String_Int32_Int32_Boolean_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
+<p><a id="Void_ctor_System_String_Int32_Int32_Boolean_Boolean"></a>
+### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     string str,
@@ -145,36 +158,49 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
-is a text string.</p></li>
-<li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
-begins.</p></li>
-<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
-(but not more than  <i>str</i>
-&#39;s length).</p></li>
-<li><p><i>skipByteOrderMark</i>: If true and the first character in the string portion is U+FEFF, skip that character.</p></li>
-<li><p><i>errorThrow</i>: When encountering invalid encoding, throw an exception if this parameter is true, or replace it with U+FFFD (replacement character) if this parameter is false.</p></li>
+  <li>
+    <p><i>str</i>: The parameter  <i>str</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
+ (but not more than  <i>str</i>
+ ‘s length).</p>
+  </li>
+  <li>
+    <p><i>skipByteOrderMark</i>: If true and the first character in the string portion is U+FEFF, skip that character.</p>
+  </li>
+  <li>
+    <p><i>errorThrow</i>: When encountering invalid encoding, throw an exception if this parameter is true, or replace it with U+FFFD (replacement character) if this parameter is false.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 Either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>str</i>
-&#39;s length, or  <i>str</i>
-&#39;s length minus  <i>offset</i>
-is less than  <i>length</i>
-.</p></li>
+ or  <i>length</i>
+ is less than 0 or greater than  <i>str</i>
+ ‘s length, or  <i>str</i>
+ ‘s length minus  <i>offset</i>
+ is less than  <i>length</i>
+.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_System_IO_Stream"></a></p>
-
-<h3>CharacterReader Constructor</h3>
+<p><a id="Void_ctor_System_IO_Stream"></a>
+### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     System.IO.Stream stream);
@@ -185,20 +211,19 @@ is less than  <i>length</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>stream</i>: A readable data stream.</li>
+  <li><i>stream</i>: A readable data stream.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>stream</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_IO_Stream_Int32"></a></p>
-
-<h3>CharacterReader Constructor</h3>
+<p><a id="Void_ctor_System_IO_Stream_Int32"></a>
+### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     System.IO.Stream stream,
@@ -210,13 +235,27 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
-<li><p>0: UTF-8 only.</p></li>
-<li><p>1: Detect UTF-16 using BOM or non-zero basic code point, otherwise UTF-8.</p></li>
-<li><p>2: Detect UTF-16/UTF-32 using BOM or non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
-<li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
-<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
+  <li>
+    <p><i>stream</i>: A readable byte stream.</p>
+  </li>
+  <li>
+    <p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p>
+  </li>
+  <li>
+    <p>0: UTF-8 only.</p>
+  </li>
+  <li>
+    <p>1: Detect UTF-16 using BOM or non-zero basic code point, otherwise UTF-8.</p>
+  </li>
+  <li>
+    <p>2: Detect UTF-16/UTF-32 using BOM or non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32 first.)</p>
+  </li>
+  <li>
+    <p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p>
+  </li>
+  <li>
+    <p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p>
+  </li>
 </ul>
 
 <p>.</p>
@@ -224,14 +263,13 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>stream</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_IO_Stream_Int32_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
+<p><a id="Void_ctor_System_IO_Stream_Int32_Boolean"></a>
+### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     System.IO.Stream stream,
@@ -244,24 +282,37 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: A readable data stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
-<li><p>0: UTF-8 only.</p></li>
-<li><p>1: Detect UTF-16 using BOM or non-zero basic code point, otherwise UTF-8.</p></li>
-<li><p>2: Detect UTF-16/UTF-32 using BOM or non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
-<li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
-<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
+  <li>
+    <p><i>stream</i>: A readable data stream.</p>
+  </li>
+  <li>
+    <p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p>
+  </li>
+  <li>
+    <p>0: UTF-8 only.</p>
+  </li>
+  <li>
+    <p>1: Detect UTF-16 using BOM or non-zero basic code point, otherwise UTF-8.</p>
+  </li>
+  <li>
+    <p>2: Detect UTF-16/UTF-32 using BOM or non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32 first.)</p>
+  </li>
+  <li>
+    <p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p>
+  </li>
+  <li>
+    <p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p>
+  </li>
 </ul>
 
 <p>.</p>
 
 <ul>
-<li><i>errorThrow</i>: When encountering invalid encoding, throw an exception if this parameter is true, or replace it with U+FFFD (replacement character) if this parameter is false.</li>
+  <li><i>errorThrow</i>: When encountering invalid encoding, throw an exception if this parameter is true, or replace it with U+FFFD (replacement character) if this parameter is false.</li>
 </ul>
 
-<p><a id="Void_ctor_System_IO_Stream_Int32_Boolean_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
+<p><a id="Void_ctor_System_IO_Stream_Int32_Boolean_Boolean"></a>
+### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     System.IO.Stream stream,
@@ -275,33 +326,50 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
-<li><p>0: UTF-8 only.</p></li>
-<li><p>1: Detect UTF-16 using BOM or non-zero basic code point, otherwise UTF-8.</p></li>
-<li><p>2: Detect UTF-16/UTF-32 using BOM or non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
-<li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
-<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
+  <li>
+    <p><i>stream</i>: A readable byte stream.</p>
+  </li>
+  <li>
+    <p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p>
+  </li>
+  <li>
+    <p>0: UTF-8 only.</p>
+  </li>
+  <li>
+    <p>1: Detect UTF-16 using BOM or non-zero basic code point, otherwise UTF-8.</p>
+  </li>
+  <li>
+    <p>2: Detect UTF-16/UTF-32 using BOM or non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32 first.)</p>
+  </li>
+  <li>
+    <p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p>
+  </li>
+  <li>
+    <p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p>
+  </li>
 </ul>
 
 <p>.</p>
 
 <ul>
-<li><p><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the detected encoding) are found in the byte stream. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p></li>
-<li><p><i>dontSkipUtf8Bom</i>: If the stream is detected as UTF-8 (including when &quot;mode&quot; is 0) and this parameter is  <code>true</code> , won&#39;t skip the BOM character if it occurs at the start of the stream.</p></li>
+  <li>
+    <p><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the detected encoding) are found in the byte stream. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p>
+  </li>
+  <li>
+    <p><i>dontSkipUtf8Bom</i>: If the stream is detected as UTF-8 (including when “mode” is 0) and this parameter is  <code>true</code> , won’t skip the BOM character if it occurs at the start of the stream.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>stream</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Read_int_int_int"></a></p>
-
-<h3>Read</h3>
+<p><a id="Read_int_int_int"></a>
+### Read</p>
 
 <pre>public sealed int Read(
     int[] chars,
@@ -314,12 +382,18 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>chars</i>: An array where the code points that were read will be stored.</p></li>
-<li><p><i>index</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
-begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
-(but not more than  <i>chars</i>
-&#39;s length).</p></li>
+  <li>
+    <p><i>chars</i>: An array where the code points that were read will be stored.</p>
+  </li>
+  <li>
+    <p><i>index</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
+ (but not more than  <i>chars</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -330,22 +404,25 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>chars</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 Either  <i>index</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>chars</i>
-&#39;s length, or  <i>chars</i>
-&#39;s length minus  <i>index</i>
-is less than  <i>length</i>
-.</p></li>
+ or  <i>length</i>
+ is less than 0 or greater than  <i>chars</i>
+ ‘s length, or  <i>chars</i>
+ ‘s length minus  <i>index</i>
+ is less than  <i>length</i>
+.</p>
+  </li>
 </ul>
 
-<p><a id="ReadChar"></a></p>
-
-<h3>ReadChar</h3>
+<p><a id="ReadChar"></a>
+### ReadChar</p>
 
 <pre>public sealed int ReadChar();
 </pre>

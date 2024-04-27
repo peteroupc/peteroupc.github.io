@@ -5,24 +5,21 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Mail.StringAndQuality</h1>
-
-<h2>PeterO.Mail.StringAndQuality</h2>
+<p>## PeterO.Mail.StringAndQuality</p>
 
 <pre>public sealed class StringAndQuality
 </pre>
 
-<p>Stores an arbitrary string and a &quot;quality value&quot; for that string. For instance, the string can be a language tag, and the &quot;quality value&quot; can be the degree of preference for that language.</p>
+<p>Stores an arbitrary string and a “quality value” for that string. For instance, the string can be a language tag, and the “quality value” can be the degree of preference for that language.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Quality">Quality</a></code> - Gets the quality value stored by this object.</li>
-<li><code><a href="#Value">Value</a></code> - Gets the arbitrary string stored by this object.</li>
+  <li><code>[Quality](#Quality)</code> - Gets the quality value stored by this object.</li>
+  <li><code>[Value](#Value)</code> - Gets the arbitrary string stored by this object.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_Int32"></a></p>
-
-<h3>StringAndQuality Constructor</h3>
+<p><a id="Void_ctor_System_String_Int32"></a>
+### StringAndQuality Constructor</p>
 
 <pre>public StringAndQuality(
     string value,
@@ -34,13 +31,16 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>value</i>: An arbitrary text string.</p></li>
-<li><p><i>quality</i>: A 32-bit signed integer serving as the &quot;quality&quot; value.</p></li>
+  <li>
+    <p><i>value</i>: An arbitrary text string.</p>
+  </li>
+  <li>
+    <p><i>quality</i>: A 32-bit signed integer serving as the “quality” value.</p>
+  </li>
 </ul>
 
-<p><a id="Quality"></a></p>
-
-<h3>Quality</h3>
+<p><a id="Quality"></a>
+### Quality</p>
 
 <pre>public int Quality { get; }
 </pre>
@@ -51,9 +51,8 @@
 
 <p>The quality value stored by this object.</p>
 
-<p><a id="Value"></a></p>
-
-<h3>Value</h3>
+<p><a id="Value"></a>
+### Value</p>
 
 <pre>public string Value { get; }
 </pre>

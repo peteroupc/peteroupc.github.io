@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.text.ICharacterDecoder</h1>
-
-<h1>com.upokecenter.text.ICharacterDecoder</h1>
+<p># com.upokecenter.text.ICharacterDecoder</p>
 
 <pre>public interface ICharacterDecoder
 </pre>
@@ -14,23 +13,22 @@
 <p>Defines a method that can be implemented by classes that convert a stream of
  bytes to Unicode code points.</p>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><code>int ReadChar(IByteReader input)</code><br>
-Reads bytes from an input transform until a Unicode code point is decoded
-or until the end of the stream is reached.</li>
+  <li><code>int ReadChar(IByteReader input)</code><br />
+ Reads bytes from an input transform until a Unicode code point is decoded
+ or until the end of the stream is reached.</li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>ReadChar</h3>
-
+<h3 id="readchar">ReadChar</h3>
 <pre>int ReadChar(IByteReader input)
 </pre>
-
 <p>Reads bytes from an input transform until a Unicode code point is decoded
- or until the end of the stream is reached. </p> <p>If this method returns
+ or until the end of the stream is reached. </p>
+<p>If this method returns
  -2, indicating an error, the caller of this method can take one of a variety
  of actions to handle the error. For example, it can output one or more
  replacement code points instead (such as the Replacement Character 0xfffd),
@@ -41,19 +39,19 @@ or until the end of the stream is reached.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>input</code> - Source of bytes to decode into code points. The decoder can
-maintain internal state, including data on bytes already read, so this
-parameter should not change when using the same character decoder object.
-It&#39;s also possible for the decoder to read no bytes but still return a code
-point, depending on the encoding it supports and its internal state.</li>
+  <li><code>input</code> - Source of bytes to decode into code points. The decoder can
+ maintain internal state, including data on bytes already read, so this
+ parameter should not change when using the same character decoder object.
+ It’s also possible for the decoder to read no bytes but still return a code
+ point, depending on the encoding it supports and its internal state.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The Unicode code point decoded, from 0-0xd7ff or from 0xe000 to
-0x10ffff. Returns -1 if the end of the source is reached or -2 if a decoder
-error occurs.</li>
+  <li>The Unicode code point decoded, from 0-0xd7ff or from 0xe000 to
+ 0x10ffff. Returns -1 if the end of the source is reached or -2 if a decoder
+ error occurs.</li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

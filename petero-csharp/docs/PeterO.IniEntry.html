@@ -5,26 +5,23 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.IniEntry</h1>
-
-<h2>PeterO.IniEntry</h2>
+<p>## PeterO.IniEntry</p>
 
 <pre>public sealed class IniEntry
 </pre>
 
 <p>Not documented yet.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#IsComment">IsComment</a></code> - Gets a value indicating whether this entry is a comment line.</li>
-<li><code><a href="#Key">Key</a></code> - Gets a value not documented yet.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
-<li><code><a href="#Value">Value</a></code> - Gets a value not documented yet.</li>
+  <li><code>[IsComment](#IsComment)</code> - Gets a value indicating whether this entry is a comment line.</li>
+  <li><code>[Key](#Key)</code> - Gets a value not documented yet.</li>
+  <li><code>[ToString()](#ToString)</code> - Converts this object to a text string.</li>
+  <li><code>[Value](#Value)</code> - Gets a value not documented yet.</li>
 </ul>
 
-<p><a id="Void_ctor_PeterO_IniEntry"></a></p>
-
-<h3>IniEntry Constructor</h3>
+<p><a id="Void_ctor_PeterO_IniEntry"></a>
+### IniEntry Constructor</p>
 
 <pre>public IniEntry(
     PeterO.IniEntry entry);
@@ -35,21 +32,20 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>entry</i>: The parameter  <i>entry</i>
-is an IniEntry object.</li>
+  <li><i>entry</i>: The parameter  <i>entry</i>
+ is an IniEntry object.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>entry</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>IniEntry Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### IniEntry Constructor</p>
 
 <pre>public IniEntry(
     string comment);
@@ -60,23 +56,26 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>comment</i>: The parameter  <i>comment</i>
-is a text string.</li>
+  <li><i>comment</i>: The parameter  <i>comment</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>comment</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-Value is not a comment.; Characters in comment are not valid.</p></li>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+Value is not a comment.; Characters in comment are not valid.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_String"></a></p>
-
-<h3>IniEntry Constructor</h3>
+<p><a id="Void_ctor_System_String_System_String"></a>
+### IniEntry Constructor</p>
 
 <pre>public IniEntry(
     string key,
@@ -88,26 +87,33 @@ Value is not a comment.; Characters in comment are not valid.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>key</i>: The parameter  <i>key</i>
-is a text string.</p></li>
-<li><p><i>value</i>: The parameter  <i>value</i>
-is a text string.</p></li>
+  <li>
+    <p><i>key</i>: The parameter  <i>key</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>value</i>: The parameter  <i>value</i>
+ is a text string.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>key</i>
-or  <i>value</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-Characters in key are not valid.; Characters in value are not valid.</p></li>
+ or  <i>value</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+Characters in key are not valid.; Characters in value are not valid.</p>
+  </li>
 </ul>
 
-<p><a id="IsComment"></a></p>
-
-<h3>IsComment</h3>
+<p><a id="IsComment"></a>
+### IsComment</p>
 
 <pre>public bool IsComment { get; }
 </pre>
@@ -118,9 +124,8 @@ Characters in key are not valid.; Characters in value are not valid.</p></li>
 
 <p><code>true</code>  if this entry is a comment line; otherwise,  <code>false</code> .</p>
 
-<p><a id="Key"></a></p>
-
-<h3>Key</h3>
+<p><a id="Key"></a>
+### Key</p>
 
 <pre>public string Key { get; }
 </pre>
@@ -131,9 +136,8 @@ Characters in key are not valid.; Characters in value are not valid.</p></li>
 
 <p>A value not documented yet.</p>
 
-<p><a id="Value"></a></p>
-
-<h3>Value</h3>
+<p><a id="Value"></a>
+### Value</p>
 
 <pre>public string Value { get; }
 </pre>
@@ -144,9 +148,8 @@ Characters in key are not valid.; Characters in value are not valid.</p></li>
 
 <p>A value not documented yet.</p>
 
-<p><a id="ToString"></a></p>
-
-<h3>ToString</h3>
+<p><a id="ToString"></a>
+### ToString</p>
 
 <pre>public override string ToString();
 </pre>

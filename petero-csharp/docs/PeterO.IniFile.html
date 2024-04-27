@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.IniFile</h1>
-
-<h2>PeterO.IniFile</h2>
+<p>## PeterO.IniFile</p>
 
 <pre>public sealed class IniFile :
     System.Collections.Generic.IEnumerable,
@@ -15,24 +14,22 @@
 
 <p>Not documented yet.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#AddSection_string">AddSection(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#AddSection_string_PeterO_IniMergeBehavior">AddSection(string, PeterO.IniMergeBehavior)</a></code> - Not documented yet.</li>
-<li><code><a href="#Count">Count</a></code> - Gets a value not documented yet.</li>
-<li><code><a href="#GetSection_string">GetSection(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#GetValue_string_string">GetValue(string, string)</a></code> - Not documented yet.</li>
-<li><code><a href="#RemoveSection_string">RemoveSection(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#Save_string">Save(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#SetValue_string_string_string">SetValue(string, string, string)</a></code> - Not documented yet.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
-<li><code><a href="#WriteToStream_System_IO_StreamWriter">WriteToStream(System.IO.StreamWriter)</a></code> - Not documented yet.</li>
+  <li><code>[AddSection(string)](#AddSection_string)</code> - Not documented yet.</li>
+  <li><code>[AddSection(string, PeterO.IniMergeBehavior)](#AddSection_string_PeterO_IniMergeBehavior)</code> - Not documented yet.</li>
+  <li><code>[Count](#Count)</code> - Gets a value not documented yet.</li>
+  <li><code>[GetSection(string)](#GetSection_string)</code> - Not documented yet.</li>
+  <li><code>[GetValue(string, string)](#GetValue_string_string)</code> - Not documented yet.</li>
+  <li><code>[RemoveSection(string)](#RemoveSection_string)</code> - Not documented yet.</li>
+  <li><code>[Save(string)](#Save_string)</code> - Not documented yet.</li>
+  <li><code>[SetValue(string, string, string)](#SetValue_string_string_string)</code> - Not documented yet.</li>
+  <li><code>[ToString()](#ToString)</code> - Converts this object to a text string.</li>
+  <li><code>[WriteToStream(System.IO.StreamWriter)](#WriteToStream_System_IO_StreamWriter)</code> - Not documented yet.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>IniFile Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### IniFile Constructor</p>
 
 <pre>public IniFile(
     string path);
@@ -43,13 +40,12 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>path</i>: The parameter  <i>path</i>
-is a text string.</li>
+  <li><i>path</i>: The parameter  <i>path</i>
+ is a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_PeterO_IniMergeBehavior"></a></p>
-
-<h3>IniFile Constructor</h3>
+<p><a id="Void_ctor_System_String_PeterO_IniMergeBehavior"></a>
+### IniFile Constructor</p>
 
 <pre>public IniFile(
     string path,
@@ -61,32 +57,34 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>path</i>: The parameter  <i>path</i>
-is a text string.</p></li>
-<li><p><i>behavior</i>: The parameter  <i>behavior</i>
-is an IniMergeBehavior object.</p></li>
+  <li>
+    <p><i>path</i>: The parameter  <i>path</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>behavior</i>: The parameter  <i>behavior</i>
+ is an IniMergeBehavior object.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>path</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>IniFile Constructor</h3>
+<p><a id="Void_ctor"></a>
+### IniFile Constructor</p>
 
 <pre>public IniFile();
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.IniFile.html">PeterO.IniFile</a> class.</p>
 
-<p><a id="Count"></a></p>
-
-<h3>Count</h3>
+<p><a id="Count"></a>
+### Count</p>
 
 <pre>public int Count { get; }
 </pre>
@@ -97,9 +95,8 @@ is null.</li>
 
 <p>A value not documented yet.</p>
 
-<p><a id="AddSection_string"></a></p>
-
-<h3>AddSection</h3>
+<p><a id="AddSection_string"></a>
+### AddSection</p>
 
 <pre>public PeterO.IniSection AddSection(
     string sectionName);
@@ -110,17 +107,16 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>sectionName</i>: The parameter  <i>sectionName</i>
-is a text string.</li>
+  <li><i>sectionName</i>: The parameter  <i>sectionName</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An IniSection object.</p>
 
-<p><a id="AddSection_string_PeterO_IniMergeBehavior"></a></p>
-
-<h3>AddSection</h3>
+<p><a id="AddSection_string_PeterO_IniMergeBehavior"></a>
+### AddSection</p>
 
 <pre>public PeterO.IniSection AddSection(
     string sectionName,
@@ -132,19 +128,22 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>sectionName</i>: The parameter  <i>sectionName</i>
-is a text string.</p></li>
-<li><p><i>behavior</i>: The parameter  <i>behavior</i>
-is an IniMergeBehavior object.</p></li>
+  <li>
+    <p><i>sectionName</i>: The parameter  <i>sectionName</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>behavior</i>: The parameter  <i>behavior</i>
+ is an IniMergeBehavior object.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An IniSection object.</p>
 
-<p><a id="GetSection_string"></a></p>
-
-<h3>GetSection</h3>
+<p><a id="GetSection_string"></a>
+### GetSection</p>
 
 <pre>public PeterO.IniSection GetSection(
     string sectionName);
@@ -155,17 +154,16 @@ is an IniMergeBehavior object.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>sectionName</i>: The parameter  <i>sectionName</i>
-is a text string.</li>
+  <li><i>sectionName</i>: The parameter  <i>sectionName</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An IniSection object.</p>
 
-<p><a id="GetValue_string_string"></a></p>
-
-<h3>GetValue</h3>
+<p><a id="GetValue_string_string"></a>
+### GetValue</p>
 
 <pre>public string GetValue(
     string sectionName,
@@ -177,10 +175,14 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>sectionName</i>: The parameter  <i>sectionName</i>
-is a text string.</p></li>
-<li><p><i>keyName</i>: The parameter  <i>keyName</i>
-is a text string.</p></li>
+  <li>
+    <p><i>sectionName</i>: The parameter  <i>sectionName</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>keyName</i>: The parameter  <i>keyName</i>
+ is a text string.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -190,14 +192,13 @@ is a text string.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>keyName</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="RemoveSection_string"></a></p>
-
-<h3>RemoveSection</h3>
+<p><a id="RemoveSection_string"></a>
+### RemoveSection</p>
 
 <pre>public void RemoveSection(
     string sectionName);
@@ -208,13 +209,12 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>sectionName</i>: The parameter  <i>sectionName</i>
-is a text string.</li>
+  <li><i>sectionName</i>: The parameter  <i>sectionName</i>
+ is a text string.</li>
 </ul>
 
-<p><a id="Save_string"></a></p>
-
-<h3>Save</h3>
+<p><a id="Save_string"></a>
+### Save</p>
 
 <pre>public void Save(
     string path);
@@ -225,21 +225,20 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>path</i>: The parameter  <i>path</i>
-is a text string.</li>
+  <li><i>path</i>: The parameter  <i>path</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>path</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="SetValue_string_string_string"></a></p>
-
-<h3>SetValue</h3>
+<p><a id="SetValue_string_string_string"></a>
+### SetValue</p>
 
 <pre>public void SetValue(
     string sectionName,
@@ -252,26 +251,31 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>sectionName</i>: The parameter  <i>sectionName</i>
-is a text string.</p></li>
-<li><p><i>keyName</i>: The parameter  <i>keyName</i>
-is a text string.</p></li>
-<li><p><i>value</i>: The parameter  <i>value</i>
-is a text string.</p></li>
+  <li>
+    <p><i>sectionName</i>: The parameter  <i>sectionName</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>keyName</i>: The parameter  <i>keyName</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>value</i>: The parameter  <i>value</i>
+ is a text string.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>keyName</i>
-or  <i>value</i>
-is null.</li>
+ or  <i>value</i>
+ is null.</li>
 </ul>
 
-<p><a id="ToString"></a></p>
-
-<h3>ToString</h3>
+<p><a id="ToString"></a>
+### ToString</p>
 
 <pre>public override string ToString();
 </pre>
@@ -282,9 +286,8 @@ is null.</li>
 
 <p>A text string.</p>
 
-<p><a id="WriteToStream_System_IO_StreamWriter"></a></p>
-
-<h3>WriteToStream</h3>
+<p><a id="WriteToStream_System_IO_StreamWriter"></a>
+### WriteToStream</p>
 
 <pre>public void WriteToStream(
     System.IO.StreamWriter writer);
@@ -295,16 +298,16 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>writer</i>: The parameter  <i>writer</i>
-is a StreamWriter object.</li>
+  <li><i>writer</i>: The parameter  <i>writer</i>
+ is a StreamWriter object.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>writer</i>
-is null.</li>
+ is null.</li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

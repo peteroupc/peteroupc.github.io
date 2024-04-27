@@ -1,147 +1,134 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Methods</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h3>Methods</h3>
+<h3 id="methods">Methods</h3>
 
 <ul>
-<li><a href="#getPromiseResults">getPromiseResults</a><br>Utility function that returns a promise that
+  <li><a href="#getPromiseResults">getPromiseResults</a><br />Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.</li>
-<li><a href="#getPromiseResultsAll">getPromiseResultsAll</a><br>Utility function that returns a promise that
+  <li><a href="#getPromiseResultsAll">getPromiseResultsAll</a><br />Utility function that returns a promise that
 resolves or is rejected after the given list of promises finishes
 its work.</li>
-<li><a href="#getTimePosition">getTimePosition</a><br>Gets the position of a time value within an interval.</li>
-<li><a href="#newFrames">newFrames</a><br>Returns the number of frame-length intervals that occurred since
-the last known time, where a frame&#39;s length is 1/60 of a second.</li>
-<li><a href="#toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</li>
+  <li><a href="#getTimePosition">getTimePosition</a><br />Gets the position of a time value within an interval.</li>
+  <li><a href="#newFrames">newFrames</a><br />Returns the number of frame-length intervals that occurred since
+the last known time, where a frame’s length is 1/60 of a second.</li>
+  <li><a href="#toGLColor">toGLColor</a><br />Creates a 4-element array representing a color.</li>
 </ul>
 
-<p><a name='getPromiseResults'></a></p>
-
-<h3>getPromiseResults(promises, [progressResolve], [progressReject])</h3>
+<p><a name="getPromiseResults"></a>
+### getPromiseResults(promises, [progressResolve], [progressReject])</p>
 
 <p>Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters">Parameters</h4>
 
 <ul>
-<li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br>an array containing promise objects</li>
-<li><code>progressResolve</code> (Type: function) (optional)<br>A function called as each individual promise is resolved.</li>
-<li><code>progressReject</code> (Type: function) (optional)<br>A function called as each individual promise is rejected.</li>
+  <li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br />an array containing promise objects</li>
+  <li><code>progressResolve</code> (Type: function) (optional)<br />A function called as each individual promise is resolved.</li>
+  <li><code>progressReject</code> (Type: function) (optional)<br />A function called as each individual promise is rejected.</li>
 </ul>
 
-<h4>Return Value</h4>
+<h4 id="return-value">Return Value</h4>
 
 <p>A promise that is never rejected and resolves when
 all of the promises are each resolved or rejected. The result
 of the promise will be an object with
-three keys:<ul>
- <li>&quot;successes&quot; - contains a list of results from the
+three keys:&lt;ul&gt;</p>
+<li>"successes" - contains a list of results from the
 promises that succeeded, in the order in which those promises were listed.
- <li>&quot;failures&quot; - contains a list of results from the
+ <li>"failures" - contains a list of results from the
 promises that failed, in the order in which those promises were listed.
- <li>&quot;results&quot; - contains a list of boolean values for each
+ <li>"results" - contains a list of boolean values for each
 promise, in the order in which the promises were listed.
-True means success, and false means failure.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
+True means success, and false means failure.&lt;/ul&gt; (Type: <a href="Promise.html">Promise</a>)
 
-<p><a name='getPromiseResultsAll'></a></p>
+<a name="getPromiseResultsAll"></a>
+### getPromiseResultsAll(promises, [progressResolve], [progressReject])
 
-<h3>getPromiseResultsAll(promises, [progressResolve], [progressReject])</h3>
-
-<p>Utility function that returns a promise that
+Utility function that returns a promise that
 resolves or is rejected after the given list of promises finishes
-its work.</p>
+its work.
 
-<h4>Parameters</h4>
+#### Parameters
 
-<ul>
-<li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br>an array containing promise objects</li>
-<li><code>progressResolve</code> (Type: function) (optional)<br>a function called as each individual promise is resolved; optional</li>
-<li><code>progressReject</code> (Type: function) (optional)<br>a function called as each individual promise is rejected; optional</li>
-</ul>
+* `promises` (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br />an array containing promise objects
+* `progressResolve` (Type: function) (optional)<br />a function called as each individual promise is resolved; optional
+* `progressReject` (Type: function) (optional)<br />a function called as each individual promise is rejected; optional
 
-<h4>Return Value</h4>
+#### Return Value
 
-<p>A promise that is resolved when
+A promise that is resolved when
 all of the promises are each resolved; the result will
 be an array of results from those promises,
 in the order in which those promises were listed.
 Will be rejected if any of the promises is rejected; the result
-will be an object as specified in <a href="getPromiseResults.html">getPromiseResults</a>.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
+will be an object as specified in <a href="getPromiseResults.html">getPromiseResults</a>.&lt;/ul&gt; (Type: <a href="Promise.html">Promise</a>)
 
-<p><a name='getTimePosition'></a></p>
+<a name="getTimePosition"></a>
+### getTimePosition(timer, timeInMs, intervalInMs)
 
-<h3>getTimePosition(timer, timeInMs, intervalInMs)</h3>
-
-<p>Gets the position of a time value within an interval.
+Gets the position of a time value within an interval.
 This is useful for doing animation cycles lasting a certain number
 of seconds, such as rotating a shape in a 5-second cycle.
-This method may be called any number of times each frame.</p>
+This method may be called any number of times each frame.
 
-<h4>Parameters</h4>
+#### Parameters
 
-<ul>
-<li><code>timer</code> (Type: Object)<br>An object that will hold two properties:<ul> <li>&quot;time&quot; - initial time value, in milliseconds. <li>&quot;lastTime&quot; - last known time value, in milliseconds. Will be set to the value given in &quot;timeInMs&quot; before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.</li>
-<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.</li>
-<li><code>intervalInMs</code> (Type: number)<br>The length of the interval (animation cycle), in milliseconds.</li>
-</ul>
+* `timer` (Type: Object)<br />An object that will hold two properties:<ul> <li>"time" - initial time value, in milliseconds. <li>"lastTime" - last known time value, in milliseconds. Will be set to the value given in "timeInMs" before returning. &lt;/ul&gt; The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.
+* `timeInMs` (Type: number)<br />A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.
+* `intervalInMs` (Type: number)<br />The length of the interval (animation cycle), in milliseconds.
 
-<h4>Return Value</h4>
+#### Return Value
 
-<p>A value in the range [0, 1), where closer
-to 0 means &quot;timeInMs&quot; lies
+A value in the range [0, 1), where closer
+to 0 means "timeInMs" lies
 closer to the start, and closer to 1 means closer
-to the end of the interval. If an initial time wasn&#39;t set, returns 0. (Type: number)</p>
+to the end of the interval. If an initial time wasn't set, returns 0. (Type: number)
 
-<h4>Examples</h4>
+#### Examples
 
-<p>The following code sets an angle of
+The following code sets an angle of
 rotation, in degrees, such that an object rotated with the
 angle does a 360-degree turn in 5 seconds (5000 milliseconds).
 The variable <code>time</code> is assumed to be a time
 value in milliseconds, such as the parameter of a
-<code>requestAnimationFrame()</code> callback method.</p>
+<code>requestAnimationFrame()</code> callback method.
 
-<pre>var angle = 360 * getTimePosition(timer, time, 5000);
-</pre>
+    var angle = 360 * getTimePosition(timer, time, 5000);
 
-<p><a name='newFrames'></a></p>
+<a name="newFrames"></a>
+### newFrames(timer, timeInMs)
 
-<h3>newFrames(timer, timeInMs)</h3>
+Returns the number of frame-length intervals that occurred since
+the last known time, where a frame's length is 1/60 of a second.
+This method should be called only once each frame.
 
-<p>Returns the number of frame-length intervals that occurred since
-the last known time, where a frame&#39;s length is 1/60 of a second.
-This method should be called only once each frame.</p>
+#### Parameters
 
-<h4>Parameters</h4>
+* `timer` (Type: Object)<br />An object described in <a href="getTimePosition.html">getTimePosition</a>.
+* `timeInMs` (Type: number)<br />A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. &lt;/code&gt;.
 
-<ul>
-<li><code>timer</code> (Type: Object)<br>An object described in <a href="getTimePosition.html">getTimePosition</a>.</li>
-<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</li>
-</ul>
+#### Return Value
 
-<h4>Return Value</h4>
-
-<p>The number of frame-length intervals relative to
-the last known time held in the parameter &quot;timer&quot;.
+The number of frame-length intervals relative to
+the last known time held in the parameter "timer".
 The number can include fractional frames. If an
-initial time or last known time wasn&#39;t set, returns 0. (Type: number)</p>
+initial time or last known time wasn't set, returns 0. (Type: number)
 
-<p><a name='toGLColor'></a></p>
+<a name="toGLColor"></a>
+### toGLColor(r, [g], [b], [a])
 
-<h3>toGLColor(r, [g], [b], [a])</h3>
-
-<p>Creates a 4-element array representing a color. Each element
+Creates a 4-element array representing a color. Each element
 can range from 0 to 1 and specifies the red, green, blue or alpha
 component, respectively.
 This method also converts HTML and CSS colors to 4-element RGB
-colors. The following lists the kinds of colors accepted:</p>
-
+colors. The following lists the kinds of colors accepted:
 <ul>
 <li>HTML colors with the syntax <code>#RRGGBB</code> or <code>#RRGGBBAA</code>, where
 RR is the hexadecimal form of the red component (00-FF), GG
@@ -172,27 +159,25 @@ Examples: <code>rgb(255,0,0)</code>,
 <code>white</code>, <code>lemonchiffon</code>, <code>chocolate</code>,
 and so on, including the newly added <code>rebeccapurple</code>.
 <li>The value <code>transparent</code>, meaning transparent black.
-</ul>
+&lt;/ul&gt;
+For more information, see the "<a href="tutorial-colors.html">Color Strings</a>" tutorial.
 
-<p>For more information, see the &quot;<a href="tutorial-colors.html">Color Strings</a>&quot; tutorial.</p>
+#### Parameters
 
-<h4>Parameters</h4>
+* `r` (Type: Array.&lt;number&gt; | number | string)<br />One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.
+* `g` (Type: number) (optional)<br />Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
+* `b` (Type: number) (optional)<br />Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
+* `a` (Type: number) (optional)<br />Alpha color component (0-1). If the "r" parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.
 
-<ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.</li>
-<li><code>g</code> (Type: number) (optional)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number) (optional)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.</li>
-</ul>
+#### Return Value
 
-<h4>Return Value</h4>
-
-<p>The color as a 4-element array; if the color is
+The color as a 4-element array; if the color is
 invalid, returns [0,0,0,0], or transparent black. Numbers less
 than 0 are clamped to 0, and numbers greater than 1 are
-clamped to 1. (Type: Array.&lt;number&gt;)</p>
+clamped to 1. (Type: Array.&lt;number&gt;)
 
-<p><a href="index.html">Back to documentation index.</a></p>
+[Back to documentation index.](index.html)
+</li></li></li></li></li></li></ul></li></li></ul></li></li></li>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
@@ -203,85 +188,85 @@ clamped to 1. (Type: Array.&lt;number&gt;)</p>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-<h3>Navigation</h3>
+<h3 id="navigation">Navigation</h3>
 
 <ul>
-<li><a href="BSplineCurve.html">BSplineCurve</a></li>
-<li><a href="BSplineSurface.html">BSplineSurface</a></li>
-<li><a href="BufferAccessor.html">BufferAccessor</a></li>
-<li><a href="Curve.html">Curve</a></li>
-<li><a href="CurveBuilder.html">CurveBuilder</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
-<li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="MathUtil.html">MathUtil</a></li>
-<li><a href="MeshBuffer.html">MeshBuffer</a></li>
-<li><a href="Meshes.html">Meshes</a></li>
-<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-<li><a href="Promise.html">Promise</a></li>
-<li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Shape.html">Shape</a></li>
-<li><a href="ShapeGroup.html">ShapeGroup</a></li>
-<li><a href="Surface.html">Surface</a></li>
-<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-<li><a href="Transform.html">Transform</a></li>
-<li><a href="extras_arrow.html">module:extras/arrow</a></li>
-<li><a href="extras_camera.html">module:extras/camera</a></li>
-<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
-<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
-<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
-<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
-<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
-<li><a href="extras_convex.html">module:extras/convex</a></li>
-<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
-<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
-<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
-<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
-<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
-<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
-<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
-<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
-<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
-<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
-<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
-<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
-<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
-<li><a href="extras_gradients.html">module:extras/gradients</a></li>
-<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
-<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
-<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
-<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
-<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
-<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
-<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
-<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
-<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
-<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
-<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
-<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
-<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
-<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
-<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
-<li><a href="extras_raypick.html">module:extras/raypick</a></li>
-<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
-<li><a href="extras_starfield.html">module:extras/starfield</a></li>
-<li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
-<li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
-<li><a href="extras_stl.html">module:extras/stl</a></li>
-<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
-<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
-<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
-<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
-<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
-<li><a href="extras_text.html">module:extras/text</a></li>
-<li><a href="extras_tga.html">module:extras/tga</a></li>
-<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
-<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
-<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
-<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
-<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
-<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
-<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Promise.html">Promise</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="Shape.html">Shape</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
+  <li><a href="extras_arrow.html">module:extras/arrow</a></li>
+  <li><a href="extras_camera.html">module:extras/camera</a></li>
+  <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+  <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+  <li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+  <li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+  <li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+  <li><a href="extras_convex.html">module:extras/convex</a></li>
+  <li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+  <li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+  <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+  <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+  <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+  <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+  <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+  <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+  <li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+  <li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+  <li><a href="extras_gradients.html">module:extras/gradients</a></li>
+  <li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+  <li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+  <li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+  <li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+  <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+  <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+  <li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+  <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+  <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+  <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+  <li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+  <li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+  <li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+  <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+  <li><a href="extras_raypick.html">module:extras/raypick</a></li>
+  <li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+  <li><a href="extras_starfield.html">module:extras/starfield</a></li>
+  <li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
+  <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
+  <li><a href="extras_stl.html">module:extras/stl</a></li>
+  <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+  <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+  <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+  <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+  <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+  <li><a href="extras_text.html">module:extras/text</a></li>
+  <li><a href="extras_tga.html">module:extras/tga</a></li>
+  <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+  <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+  <li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+  <li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+  <li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+  <li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+  <li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
 </ul>
 </nav></body></html>

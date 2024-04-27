@@ -1,18 +1,18 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>CBOR</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>CBOR</h1>
+<h1 id="cbor">CBOR</h1>
 
-<p><a href="https://www.nuget.org/packages/PeterO.Cbor"><img src="http://img.shields.io/nuget/v/PeterO.Cbor.svg?style=flat" alt="NuGet Status"></a></p>
+<p><a href="https://www.nuget.org/packages/PeterO.Cbor"><img src="http://img.shields.io/nuget/v/PeterO.Cbor.svg?style=flat" alt="NuGet Status" /></a></p>
 
 <p><strong>Download source code: <a href="https://github.com/peteroupc/CBOR/archive/master.zip">ZIP file</a></strong></p>
 
-<hr>
+<hr />
 
-<p>A C# implementation of Concise Binary Object Representation, a general-purpose binary data format defined in RFC 8949. According to that RFC, CBOR&#39;s data model &quot;is an extended version of the JSON data model&quot;, supporting many more types of data than JSON. &quot;CBOR was inspired by MessagePack&quot;, but &quot;is not intended as a version of or replacement for MessagePack.&quot;</p>
+<p>A C# implementation of Concise Binary Object Representation, a general-purpose binary data format defined in RFC 8949. According to that RFC, CBOR’s data model “is an extended version of the JSON data model”, supporting many more types of data than JSON. “CBOR was inspired by MessagePack”, but “is not intended as a version of or replacement for MessagePack.”</p>
 
 <p>This implementation was written by Peter O. and is released to the Public Domain under the <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Declaration</a>.</p>
 
@@ -22,17 +22,16 @@
 
 <p>Source code is available in the <a href="https://github.com/peteroupc/CBOR">project page</a>.</p>
 
-<p>Note that after version 4.5x, the CBOR library&#39;s repository will stop including special projects for .NET 2.0 and .NET 4.0, leaving the .NET-Standard project for building the library.</p>
+<p>Note that after version 4.5x, the CBOR library’s repository will stop including special projects for .NET 2.0 and .NET 4.0, leaving the .NET-Standard project for building the library.</p>
 
-<h2>How to Install</h2>
-
+<h2 id="how-to-install">How to Install</h2>
 <p>Starting with version 0.21.0, the C# implementation is available in the
 NuGet Package Gallery under the name
 <a href="https://www.nuget.org/packages/PeterO.Cbor">PeterO.Cbor</a>. To install
 this library as a NuGet package, enter <code>Install-Package PeterO.Cbor</code> in the
 NuGet Package Manager Console.</p>
 
-<h2>Documentation</h2>
+<h2 id="documentation">Documentation</h2>
 
 <p>This library defines one class, called CBORObject, that allows you to read and
 write CBOR objects to and from data streams and byte arrays, and to convert JSON
@@ -42,71 +41,75 @@ text to CBOR objects and back.</p>
 
 <p>The C# implementation is designed as a Portable Class Library.</p>
 
-<h2>Other Sites</h2>
+<h2 id="other-sites">Other Sites</h2>
 
 <ul>
-<li>CodePlex: <a href="https://peterocbor.codeplex.com/">https://peterocbor.codeplex.com/</a></li>
-<li>Code Project: <a href="http://www.codeproject.com/Tips/897294/Concise-Binary-Object-Representation-CBOR-in-Cshar">http://www.codeproject.com/Tips/897294/Concise-Binary-Object-Representation-CBOR-in-Cshar</a></li>
+  <li>CodePlex: <a href="https://peterocbor.codeplex.com/">https://peterocbor.codeplex.com/</a></li>
+  <li>Code Project: <a href="http://www.codeproject.com/Tips/897294/Concise-Binary-Object-Representation-CBOR-in-Cshar">http://www.codeproject.com/Tips/897294/Concise-Binary-Object-Representation-CBOR-in-Cshar</a></li>
 </ul>
 
-<h2>Examples</h2>
+<h2 id="examples">Examples</h2>
 
 <p>The following shows certain use examples of this library.  Additional examples can be found in the <a href="https://peteroupc.github.io/CBOR/docs/">API documentation</a>.</p>
 
 <p>Creating a map and converting that map to CBOR bytes
 and a JSON string:</p>
 
-<pre lang="c#"><code>// The following creates a CBOR map and adds
+<p><code>c#
+// The following creates a CBOR map and adds
 // several kinds of objects to it
 var cbor = CBORObject.NewMap()
-   .Add(&quot;item&quot;, &quot;any string&quot;)
-   .Add(&quot;number&quot;, 42)
-   .Add(&quot;map&quot;, CBORObject.NewMap().Add(&quot;number&quot;, 42))
-   .Add(&quot;array&quot;, CBORObject.NewArray().Add(999f).Add(&quot;xyz&quot;))
-   .Add(&quot;bytes&quot;, new byte[] { 0, 1, 2 });
+   .Add("item", "any string")
+   .Add("number", 42)
+   .Add("map", CBORObject.NewMap().Add("number", 42))
+   .Add("array", CBORObject.NewArray().Add(999f).Add("xyz"))
+   .Add("bytes", new byte[] { 0, 1, 2 });
 // The following converts the map to CBOR
 byte[] bytes = cbor.EncodeToBytes();
 // The following converts the map to JSON
 string json = cbor.ToJSONString();
 Console.WriteLine(json);
-</pre>
+</code></p>
 
 <p>Creating a map and converting that map to canonical CBOR
 bytes (for WebAuthn and other purposes) and a .NET
 dictionary:</p>
 
-<pre lang="c#"><code>// The following creates a CBOR map and adds
+<p><code>c#
+// The following creates a CBOR map and adds
 // several kinds of objects to it
 var cbor = CBORObject.NewMap()
-   .Add(&quot;item&quot;, &quot;any string&quot;)
-   .Add(&quot;foo&quot;, &quot;another string&quot;)
-   .Add(&quot;quux&quot;, &quot;a third string&quot;);
+   .Add("item", "any string")
+   .Add("foo", "another string")
+   .Add("quux", "a third string");
 // The following converts the map to canonical CBOR
 byte[] bytes = cbor.EncodeToBytes(CBOREncodeOptions.DefaultCtap2Canonical);
 // The following converts the map to a dictionary
 var dict = cbor.ToObject&lt;IDictionary&lt;string,string&gt;&gt;();
 Console.WriteLine(dict.Count);
-</pre>
+</code></p>
 
 <p>Reading data from a file (C#).  Note that all the examples for
 reading and writing to files assume that the platform supports
-file I/O; the portable class library doesn&#39;t make that assumption.</p>
+file I/O; the portable class library doesn’t make that assumption.</p>
 
-<pre lang="c#"><code> // Read all the bytes from a file and decode the CBOR object
+<p><code>c#
+ // Read all the bytes from a file and decode the CBOR object
  // from it.  However, there are two disadvantages to this approach:
  // 1.  The byte array might be very huge, so a lot of memory to store
  // the array may be needed.
  // 2.  The decoding will succeed only if the entire array,
  // not just the start of the array, consists of a CBOR object.
  var cbor = CBORObject.DecodeFromBytes(
-    File.ReadAllBytes(&quot;object.cbor&quot;), CBOREncodeOptions.Default);
-</pre>
+    File.ReadAllBytes("object.cbor"), CBOREncodeOptions.Default);
+</code></p>
 
 <p>Another example of reading data from a file:</p>
 
-<pre lang="c#"><code> // C#
+<p><code>c#
+ // C#
  // Open the file stream
- using (var stream = new FileStream(&quot;object.cbor&quot;, FileMode.Open)) {
+ using (var stream = new FileStream("object.cbor", FileMode.Open)) {
     // Read the CBOR object from the stream
     var cbor = CBORObject.Read(stream);
     // At this point, the object is read, but the file stream might
@@ -115,101 +118,107 @@ file I/O; the portable class library doesn&#39;t make that assumption.</p>
     // rest of the file.  The following is an example of checking for the
     // end of the stream.
     if (stream.Position != stream.Length) {
-      // The end of the stream wasn&#39;t reached yet.
+      // The end of the stream wasn't reached yet.
     } else {
       // The end of the stream was reached.
     }
  }
-</pre>
+</code></p>
 
 <p>If a byte array contains multiple CBOR objects, the byte array should
 be wrapped in a MemoryStream and the stream used to read the objects,
 as DecodeFromBytes assumes the array contains only one CBOR object.
 Here is an example.</p>
 
-<pre lang="c#"><code> // C#
+<p><code>c#
+ // C#
  // Create a memory stream with a view of the byte array
  using (var stream = new MemoryStream(byteArray)) {
     // Read the CBOR object from the stream
     var cbor = CBORObject.Read(stream);
     // The rest of the example follows the one given above.
  }
-</pre>
+</code></p>
 
 <p>Writing CBOR data to a file (C#):</p>
 
-<pre lang="c#"><code>// This example assumes that the variable &quot;cbor&quot; refers
+<p><code>c#
+// This example assumes that the variable "cbor" refers
 // to a CBORObject object.
-using (var stream = new FileStream(&quot;object.cbor&quot;, FileMode.Create)) {
+using (var stream = new FileStream("object.cbor", FileMode.Create)) {
    cbor.WriteTo(stream);
 }
-</pre>
+</code></p>
 
 <p>Writing multiple objects to a file, including arbitrary objects (the resulting
 file is also called a <em>CBOR sequence</em>):</p>
 
-<pre lang="c#"><code>// C#
+<p><code>c#
+// C#
 // This example writes a sequence of objects in CBOR
 // format to the same file.
-using (var stream = new FileStream(&quot;object.cborseq&quot;, FileMode.Create)) {
+using (var stream = new FileStream("object.cborseq", FileMode.Create)) {
    CBORObject.Write(true, stream);
    CBORObject.Write(422.5, stream);
-   CBORObject.Write(&quot;some string&quot;, stream);
+   CBORObject.Write("some string", stream);
    CBORObject.Write(CBORObject.Undefined, stream);
    CBORObject.NewArray().Add(42).WriteTo(stream);
 }
-</pre>
+</code></p>
 
 <p>Reading JSON from a file:</p>
 
-<pre lang="c#"><code> // Open the file stream
- using (var stream = new FileStream(&quot;object.json&quot;, FileMode.Open)) {
+<p><code>c#
+ // Open the file stream
+ using (var stream = new FileStream("object.json", FileMode.Open)) {
     // Read the JSON object from the stream
     // as a CBOR object
     var cbor = CBORObject.ReadJSON(stream);
  }
-</pre>
+</code></p>
 
 <p>Writing a CBOR object as JSON:</p>
 
-<pre lang="c#"><code>// This example assumes that the variable &quot;cbor&quot; refers
+<p>```c#
+// This example assumes that the variable “cbor” refers
 // to a CBORObject object.
 // NOTE: Specifying Encoding.UTF8 as the third parameter
 // would add a byte order mark to the beginning of the text,
 // but conforming JSON implementations are forbidden from
 // adding it this way in JSON texts they generate.
 File.WriteAllText(
-  &quot;object.json&quot;,
+  “object.json”,
   cbor.ToJSONString(),
-  new System.Text.Encoding.UTF8Encoding(false));
+  new System.Text.Encoding.UTF8Encoding(false));</p>
 
-// This is an alternative way to write the CBOR object
+<p>// This is an alternative way to write the CBOR object
 // and is supported since version 1.2.
-using (var stream = new FileStream(&quot;object2.json&quot;, FileMode.Create)) {
+using (var stream = new FileStream(“object2.json”, FileMode.Create)) {
     // Write the CBOR object as JSON; here, a byte order
-    // mark won&#39;t be added
+    // mark won’t be added
     cbor.WriteJSONTo(stream);
 }
 // Version 1.2 and later support a third way to write
 // objects to JSON: the CBORObject.WriteJSON method
-using (var stream = new FileStream(&quot;object3.json&quot;, FileMode.Create)) {
-   CBORObject.WriteJSON(&quot;some string&quot;, stream);
+using (var stream = new FileStream(“object3.json”, FileMode.Create)) {
+   CBORObject.WriteJSON(“some string”, stream);
 }
-using (var stream = new FileStream(&quot;object4.json&quot;, FileMode.Create)) {
+using (var stream = new FileStream(“object4.json”, FileMode.Create)) {
    CBORObject.WriteJSON(cbor, stream);
 }
-using (var stream = new FileStream(&quot;object5.json&quot;, FileMode.Create)) {
+using (var stream = new FileStream(“object5.json”, FileMode.Create)) {
    CBORObject.WriteJSON(true, stream);
 }
-using (var stream = new FileStream(&quot;object6.json&quot;, FileMode.Create)) {
+using (var stream = new FileStream(“object6.json”, FileMode.Create)) {
    CBORObject.WriteJSON(42, stream);
 }
-</pre>
+```</p>
 
 <p>There are several ways to check whether a CBOR object is a 32-bit integer.  Which
-one to use depends on the application&#39;s needs.  Some of them follow (written in C#).</p>
+one to use depends on the application’s needs.  Some of them follow (written in C#).</p>
 
-<pre lang="c#"><code>/* Accept any untagged CBOR integer
+<p><code>c#
+/* Accept any untagged CBOR integer
   that can fit the Int32 range */
 if(!cbor.IsTagged &amp;&amp; cbor.Type==CBORType.Integer &amp;&amp;
    cbor.CanValueFitInInt32()) {
@@ -231,59 +240,59 @@ if((cbor.Type==CBORType.Integer || cborType==CBORType.FloatingPoint) ||
 if(cbor.IsNumber &amp;&amp; cbor.AsNumber().CanValueFitInInt32()) {
   return cbor.AsInt32();
 }
-</pre>
+</code></p>
 
 <p>The following example illustrates a custom strategy for converting objects
-of a given class into CBOR objects.</p>
-
-<pre>    public class CPOD3 {
+of a given class into CBOR objects.
+```
+    public class CPOD3 {
        public string Aa { get; set; }
        public string Bb { get; set; }
        public string Cc { get; set; }
-    }
+    }</p>
 
-    private class CPOD3Converter : ICBORToFromConverter&lt;CPOD3&gt; {
-       public CBORObject ToCBORObject(CPOD3 cpod) {
-          return CBORObject.NewMap()
-             .Add(0,cpod.Aa)
-             .Add(1,cpod.Bb)
-             .Add(2,cpod.Cc);
-       }
-       public CPOD3 FromCBORObject(CBORObject obj) {
-          if (obj.Type!=CBORType.Map) {
-             throw new CBORException();
-          }
-          var ret=new CPOD3();
-          ret.Aa=obj[0].AsString();
-          ret.Bb=obj[1].AsString();
-          ret.Cc=obj[2].AsString();
-          return ret;
-       }
-    }
+<pre>private class CPOD3Converter : ICBORToFromConverter&lt;CPOD3&gt; {
+   public CBORObject ToCBORObject(CPOD3 cpod) {
+      return CBORObject.NewMap()
+         .Add(0,cpod.Aa)
+         .Add(1,cpod.Bb)
+         .Add(2,cpod.Cc);
+   }
+   public CPOD3 FromCBORObject(CBORObject obj) {
+      if (obj.Type!=CBORType.Map) {
+         throw new CBORException();
+      }
+      var ret=new CPOD3();
+      ret.Aa=obj[0].AsString();
+      ret.Bb=obj[1].AsString();
+      ret.Cc=obj[2].AsString();
+      return ret;
+   }
+}
 
-    //////////
-    //  And in the code...
+//////////
+//  And in the code...
 
-       var cp2=new CPOD3();
-       cp2.Aa=&quot;AA&quot;;
-       cp2.Bb=&quot;BB&quot;;
-       cp2.Cc=&quot;CC&quot;;
-       var conv=new CPOD3Converter();
-       // Serialize CBOR object, passing the type mapper
-       var cbor=conv.ToCBORObject(cp2);
-       // Deserialize CBOR object, passing the type mapper
-       cp2=conv.FromCBORObject(cbor);
+   var cp2=new CPOD3();
+   cp2.Aa="AA";
+   cp2.Bb="BB";
+   cp2.Cc="CC";
+   var conv=new CPOD3Converter();
+   // Serialize CBOR object, passing the type mapper
+   var cbor=conv.ToCBORObject(cp2);
+   // Deserialize CBOR object, passing the type mapper
+   cp2=conv.FromCBORObject(cbor); ```
 </pre>
 
 <p>NOTE: All code samples in this section are released to the Public Domain,
 as explained in <a href="https://creativecommons.org/publicdomain/zero/1.0/">https://creativecommons.org/publicdomain/zero/1.0/</a>.</p>
 
-<h2>Demo</h2>
+<h2 id="demo">Demo</h2>
 
 <p>Go to <a href="https://github.com/peteroupc/Calculator">https://github.com/peteroupc/Calculator</a> for source code to a demo of the
 CBOR library in the form of a calculator.</p>
 
-<h2>About</h2>
+<h2 id="about">About</h2>
 
 <p>Written in 2013-2019 by Peter O.</p>
 
@@ -292,27 +301,26 @@ In case this is not possible, this work is also
 licensed under Creative Commons Zero (CC0):
 <a href="https://creativecommons.org/publicdomain/zero/1.0/">https://creativecommons.org/publicdomain/zero/1.0/</a></p>
 
-<h2>Release Notes</h2>
+<h2 id="release-notes">Release Notes</h2>
 
 <p>See <a href="https://github.com/peteroupc/CBOR/tree/master/History.md">History.md</a>
 for release notes.</p>
 
-<h2>Specifications</h2>
-
-<p>Here are specifications by this implementation&#39;s author on certain CBOR tags:</p>
+<h2 id="specifications">Specifications</h2>
+<p>Here are specifications by this implementation’s author on certain CBOR tags:</p>
 
 <ul>
-<li>Tag 30: <a href="http://peteroupc.github.io/CBOR/rational.html">Rational numbers</a></li>
-<li>Tag 257: <a href="http://peteroupc.github.io/CBOR/binarymime.html">Binary MIME messages</a></li>
-<li>Tag 38: <a href="http://peteroupc.github.io/CBOR/langtags.html">Language-tagged strings</a> (Expected to be superseded by an RFC; see the Internet Draft draft-ietf-core-problem-details).</li>
-<li>Tag 264 and 265: <a href="http://peteroupc.github.io/CBOR/bigfrac.html">Arbitrary-exponent numbers</a></li>
+  <li>Tag 30: <a href="http://peteroupc.github.io/CBOR/rational.html">Rational numbers</a></li>
+  <li>Tag 257: <a href="http://peteroupc.github.io/CBOR/binarymime.html">Binary MIME messages</a></li>
+  <li>Tag 38: <a href="http://peteroupc.github.io/CBOR/langtags.html">Language-tagged strings</a> (Expected to be superseded by an RFC; see the Internet Draft draft-ietf-core-problem-details).</li>
+  <li>Tag 264 and 265: <a href="http://peteroupc.github.io/CBOR/bigfrac.html">Arbitrary-exponent numbers</a></li>
 </ul>
 
-<h2>Acknowledgments</h2>
+<h2 id="acknowledgments">Acknowledgments</h2>
 
 <ul>
-<li>Carsten Bormann reviewed this library and gave helpful suggestions.</li>
-<li>Anders Gustafsson converted this library to a Portable Class Library.</li>
+  <li>Carsten Bormann reviewed this library and gave helpful suggestions.</li>
+  <li>Anders Gustafsson converted this library to a Portable Class Library.</li>
 </ul>
 
 <p>I thank all users who sent issues to this repository.</p>

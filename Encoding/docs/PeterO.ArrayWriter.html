@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.ArrayWriter</h1>
-
-<h2>PeterO.ArrayWriter</h2>
+<p>## PeterO.ArrayWriter</p>
 
 <pre>public sealed class ArrayWriter :
     PeterO.IByteWriter,
@@ -15,18 +14,16 @@
 
 <p>An array of bytes that grows as needed.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Clear">Clear()</a></code> - Offers a fast way to reset the length of the array writer&#39;s data to 0.</li>
-<li><code><a href="#ToArray">ToArray()</a></code> - Generates an array of all bytes written so far to it.</li>
-<li><code><a href="#Write_byte_int_int">Write(byte[], int, int)</a></code> - Writes a series of bytes to the array.</li>
-<li><code><a href="#WriteByte_int">WriteByte(int)</a></code> - Writes an 8-bit byte to the array.</li>
+  <li><code>[Clear()](#Clear)</code> - Offers a fast way to reset the length of the array writer’s data to 0.</li>
+  <li><code>[ToArray()](#ToArray)</code> - Generates an array of all bytes written so far to it.</li>
+  <li><code>[Write(byte[], int, int)](#Write_byte_int_int)</code> - Writes a series of bytes to the array.</li>
+  <li><code>[WriteByte(int)](#WriteByte_int)</code> - Writes an 8-bit byte to the array.</li>
 </ul>
 
-<p><a id="Void_ctor_Int32"></a></p>
-
-<h3>ArrayWriter Constructor</h3>
+<p><a id="Void_ctor_Int32"></a>
+### ArrayWriter Constructor</p>
 
 <pre>public ArrayWriter(
     int initialSize);
@@ -37,30 +34,27 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>initialSize</i>: The initial size of the array writer&#39;s backing store.</li>
+  <li><i>initialSize</i>: The initial size of the array writer’s backing store.</li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>ArrayWriter Constructor</h3>
+<p><a id="Void_ctor"></a>
+### ArrayWriter Constructor</p>
 
 <pre>public ArrayWriter();
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.ArrayWriter.html">PeterO.ArrayWriter</a> class with a default backing store size of 16.</p>
 
-<p><a id="Clear"></a></p>
-
-<h3>Clear</h3>
+<p><a id="Clear"></a>
+### Clear</p>
 
 <pre>public void Clear();
 </pre>
 
-<p>Offers a fast way to reset the length of the array writer&#39;s data to 0.</p>
+<p>Offers a fast way to reset the length of the array writer’s data to 0.</p>
 
-<p><a id="ToArray"></a></p>
-
-<h3>ToArray</h3>
+<p><a id="ToArray"></a>
+### ToArray</p>
 
 <pre>public byte[] ToArray();
 </pre>
@@ -71,9 +65,8 @@
 
 <p>A byte array.</p>
 
-<p><a id="Write_byte_int_int"></a></p>
-
-<h3>Write</h3>
+<p><a id="Write_byte_int_int"></a>
+### Write</p>
 
 <pre>public sealed void Write(
     byte[] src,
@@ -86,33 +79,42 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>src</i>: Byte array containing the data to write.</p></li>
-<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>src</i>
-begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of  <i>src</i>
-(but not more than  <i>src</i>
-&#39;s length).</p></li>
+  <li>
+    <p><i>src</i>: Byte array containing the data to write.</p>
+  </li>
+  <li>
+    <p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>src</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The number of elements in the desired portion of  <i>src</i>
+ (but not more than  <i>src</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>src</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 Either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>src</i>
-&#39;s length, or  <i>src</i>
-&#39;s length minus  <i>offset</i>
-is less than  <i>length</i>
-.</p></li>
+ or  <i>length</i>
+ is less than 0 or greater than  <i>src</i>
+ ‘s length, or  <i>src</i>
+ ‘s length minus  <i>offset</i>
+ is less than  <i>length</i>
+.</p>
+  </li>
 </ul>
 
-<p><a id="WriteByte_int"></a></p>
-
-<h3>WriteByte</h3>
+<p><a id="WriteByte_int"></a>
+### WriteByte</p>
 
 <pre>public sealed void WriteByte(
     int byteValue);
@@ -123,7 +125,7 @@ is less than  <i>length</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>byteValue</i>: An integer containing the byte to write. Only the lower 8 bits of this value will be used.</li>
+  <li><i>byteValue</i>: An integer containing the byte to write. Only the lower 8 bits of this value will be used.</li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

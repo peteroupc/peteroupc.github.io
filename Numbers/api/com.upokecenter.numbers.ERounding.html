@@ -5,75 +5,95 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.numbers.ERounding</h1>
-
-<h1>com.upokecenter.numbers.ERounding</h1>
+<p># com.upokecenter.numbers.ERounding</p>
 
 <pre>public enum ERounding extends Enum&lt;ERounding&gt;
 </pre>
 
-<p>Specifies the mode to use when &quot;shortening&quot; numbers that otherwise can&#39;t fit
+<p>Specifies the mode to use when “shortening” numbers that otherwise can’t fit
  a given number of digits, so that the shortened number has about the same
- value. This &quot;shortening&quot; is known as rounding. (The &quot;E&quot; stands for
- &quot;extended&quot;, and has this prefix to group it with the other classes common to
+ value. This “shortening” is known as rounding. (The “E” stands for
+ “extended”, and has this prefix to group it with the other classes common to
  this library, particularly EDecimal, EFloat, and ERational.).</p>
 
-<h2>Nested Classes</h2>
+<h2 id="nested-classes">Nested Classes</h2>
 
-<h2>Enum Constants</h2>
-
-<ul>
-<li><p><code>Ceiling</code><br>
-If there is a fractional part, the number is rounded to the highest
-representable number that&#39;s closest to it.</p></li>
-<li><p><code>Down</code><br>
-The fractional part is discarded (the number is truncated).</p></li>
-<li><p><code>Floor</code><br>
-If there is a fractional part, the number is rounded to the lowest
-representable number that&#39;s closest to it.</p></li>
-<li><p><code>HalfDown</code><br>
-Rounded to the nearest number; if the fractional part is exactly half, it is
-discarded.</p></li>
-<li><p><code>HalfEven</code><br>
-Rounded to the nearest number; if the fractional part is exactly half, the
-number is rounded to the closest representable number that is even.</p></li>
-<li><p><code>HalfUp</code><br>
-Rounded to the nearest number; if the fractional part is exactly half, the
-number is rounded to the closest representable number away from zero.</p></li>
-<li><p><code>None</code><br>
-Indicates that rounding will not be used.</p></li>
-<li><p><code>Odd</code><br>
-Deprecated.
-Consider using ERounding.OddOrZeroFiveUp instead.</p></li>
-<li><p><code>OddOrZeroFiveUp</code><br>
-For binary floating point numbers, this is the same as Odd.</p></li>
-<li><p><code>Up</code><br>
-If there is a fractional part, the number is rounded to the closest
-representable number away from zero.</p></li>
-<li><p><code>ZeroFiveUp</code><br>
-Deprecated.
-Use ERounding.OddOrZeroFiveUp instead.</p></li>
-</ul>
-
-<h2>Methods</h2>
+<h2 id="enum-constants">Enum Constants</h2>
 
 <ul>
-<li><p><code>static ERounding valueOf(String name)</code><br>
-Returns the enum constant of this class with the specified name.</p></li>
-<li><p><code>static ERounding[] values()</code><br>
-Returns an array containing the constants of this enum class, in
-the order they are declared.</p></li>
+  <li>
+    <p><code>Ceiling </code><br />
+ If there is a fractional part, the number is rounded to the highest
+ representable number that’s closest to it.</p>
+  </li>
+  <li>
+    <p><code>Down </code><br />
+ The fractional part is discarded (the number is truncated).</p>
+  </li>
+  <li>
+    <p><code>Floor </code><br />
+ If there is a fractional part, the number is rounded to the lowest
+ representable number that’s closest to it.</p>
+  </li>
+  <li>
+    <p><code>HalfDown </code><br />
+ Rounded to the nearest number; if the fractional part is exactly half, it is
+ discarded.</p>
+  </li>
+  <li>
+    <p><code>HalfEven </code><br />
+ Rounded to the nearest number; if the fractional part is exactly half, the
+ number is rounded to the closest representable number that is even.</p>
+  </li>
+  <li>
+    <p><code>HalfUp </code><br />
+ Rounded to the nearest number; if the fractional part is exactly half, the
+ number is rounded to the closest representable number away from zero.</p>
+  </li>
+  <li>
+    <p><code>None </code><br />
+ Indicates that rounding will not be used.</p>
+  </li>
+  <li>
+    <p><code>Odd </code><br />
+ Deprecated.
+Consider using ERounding.OddOrZeroFiveUp instead.</p>
+  </li>
+  <li>
+    <p><code>OddOrZeroFiveUp </code><br />
+ For binary floating point numbers, this is the same as Odd.</p>
+  </li>
+  <li>
+    <p><code>Up </code><br />
+ If there is a fractional part, the number is rounded to the closest
+ representable number away from zero.</p>
+  </li>
+  <li>
+    <p><code>ZeroFiveUp </code><br />
+ Deprecated.
+Use ERounding.OddOrZeroFiveUp instead.</p>
+  </li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="methods">Methods</h2>
 
-<h3>values</h3>
+<ul>
+  <li>
+    <p><code>static ERounding valueOf(String name)</code><br />
+ Returns the enum constant of this class with the specified name.</p>
+  </li>
+  <li>
+    <p><code>static ERounding[] values()</code><br />
+ Returns an array containing the constants of this enum class, in
+the order they are declared.</p>
+  </li>
+</ul>
 
-<pre>public static ERounding[] values()
-</pre>
+<h2 id="method-details">Method Details</h2>
 
-<h3>valueOf</h3>
-
-<pre>public static ERounding valueOf(String name)
+<h3 id="values">values</h3>
+<pre>public static ERounding[] values() ### valueOf
+public static ERounding valueOf(String name)
 </pre>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>

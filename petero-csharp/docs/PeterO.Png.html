@@ -5,31 +5,28 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Png</h1>
-
-<h2>PeterO.Png</h2>
+<p>## PeterO.Png</p>
 
 <pre>public sealed class Png
 </pre>
 
 <p>A simple class for encoding PNG image files.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#GetFilter_int">GetFilter(int)</a></code> - Not documented yet.</li>
-<li><code><a href="#GetPixel_int_int">GetPixel(int, int)</a></code> - Not documented yet.</li>
-<li><code><a href="#Height">Height</a></code> - Gets a value not documented yet.</li>
-<li><code><a href="#Save_string">Save(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#SetFilter_int_byte">SetFilter(int, byte)</a></code> - Not documented yet.</li>
-<li><code><a href="#SetPixel_int_int_byte">SetPixel(int, int, byte[])</a></code> - Sets the pixel.</li>
-<li><code><a href="#SetPixel_int_int_byte_byte_byte">SetPixel(int, int, byte, byte, byte)</a></code> - Not documented yet.</li>
-<li><code><a href="#SetPixel_int_int_byte_byte_byte_byte">SetPixel(int, int, byte, byte, byte, byte)</a></code> - Not documented yet.</li>
-<li><code><a href="#Width">Width</a></code> - Gets a value not documented yet.</li>
+  <li><code>[GetFilter(int)](#GetFilter_int)</code> - Not documented yet.</li>
+  <li><code>[GetPixel(int, int)](#GetPixel_int_int)</code> - Not documented yet.</li>
+  <li><code>[Height](#Height)</code> - Gets a value not documented yet.</li>
+  <li><code>[Save(string)](#Save_string)</code> - Not documented yet.</li>
+  <li><code>[SetFilter(int, byte)](#SetFilter_int_byte)</code> - Not documented yet.</li>
+  <li><code>[SetPixel(int, int, byte[])](#SetPixel_int_int_byte)</code> - Sets the pixel.</li>
+  <li><code>[SetPixel(int, int, byte, byte, byte)](#SetPixel_int_int_byte_byte_byte)</code> - Not documented yet.</li>
+  <li><code>[SetPixel(int, int, byte, byte, byte, byte)](#SetPixel_int_int_byte_byte_byte_byte)</code> - Not documented yet.</li>
+  <li><code>[Width](#Width)</code> - Gets a value not documented yet.</li>
 </ul>
 
-<p><a id="Void_ctor_Int32_Int32"></a></p>
-
-<h3>Png Constructor</h3>
+<p><a id="Void_ctor_Int32_Int32"></a>
+### Png Constructor</p>
 
 <pre>public Png(
     int width,
@@ -39,15 +36,18 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>width</i>: The parameter  <i>width</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>height</i>: The parameter  <i>height</i>
-is a 32-bit signed integer.</p></li>
+  <li>
+    <p><i>width</i>: The parameter  <i>width</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>height</i>: The parameter  <i>height</i>
+ is a 32-bit signed integer.</p>
+  </li>
 </ul>
 
-<p><a id="Height"></a></p>
-
-<h3>Height</h3>
+<p><a id="Height"></a>
+### Height</p>
 
 <pre>public int Height { get; }
 </pre>
@@ -58,9 +58,8 @@ is a 32-bit signed integer.</p></li>
 
 <p>A value not documented yet.</p>
 
-<p><a id="Width"></a></p>
-
-<h3>Width</h3>
+<p><a id="Width"></a>
+### Width</p>
 
 <pre>public int Width { get; }
 </pre>
@@ -71,9 +70,8 @@ is a 32-bit signed integer.</p></li>
 
 <p>A value not documented yet.</p>
 
-<p><a id="GetFilter_int"></a></p>
-
-<h3>GetFilter</h3>
+<p><a id="GetFilter_int"></a>
+### GetFilter</p>
 
 <pre>public byte GetFilter(
     int y);
@@ -84,17 +82,16 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>y</i>: The parameter  <i>y</i>
-is a 32-bit signed integer.</li>
+  <li><i>y</i>: The parameter  <i>y</i>
+ is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A byte (from 0 to 255).</p>
 
-<p><a id="GetPixel_int_int"></a></p>
-
-<h3>GetPixel</h3>
+<p><a id="GetPixel_int_int"></a>
+### GetPixel</p>
 
 <pre>public byte[] GetPixel(
     int x,
@@ -106,19 +103,22 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>x</i>: The parameter  <i>x</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>y</i>: The parameter  <i>y</i>
-is a 32-bit signed integer.</p></li>
+  <li>
+    <p><i>x</i>: The parameter  <i>x</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>y</i>: The parameter  <i>y</i>
+ is a 32-bit signed integer.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A byte array.</p>
 
-<p><a id="Save_string"></a></p>
-
-<h3>Save</h3>
+<p><a id="Save_string"></a>
+### Save</p>
 
 <pre>public void Save(
     string filename);
@@ -129,21 +129,20 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>filename</i>: The parameter  <i>filename</i>
-is a text string.</li>
+  <li><i>filename</i>: The parameter  <i>filename</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>filename</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="SetFilter_int_byte"></a></p>
-
-<h3>SetFilter</h3>
+<p><a id="SetFilter_int_byte"></a>
+### SetFilter</p>
 
 <pre>public void SetFilter(
     int y,
@@ -155,15 +154,18 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>y</i>: The parameter  <i>y</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>filter</i>: The parameter  <i>filter</i>
-is a byte (from 0 to 255).</p></li>
+  <li>
+    <p><i>y</i>: The parameter  <i>y</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>filter</i>: The parameter  <i>filter</i>
+ is a byte (from 0 to 255).</p>
+  </li>
 </ul>
 
-<p><a id="SetPixel_int_int_byte_byte_byte"></a></p>
-
-<h3>SetPixel</h3>
+<p><a id="SetPixel_int_int_byte_byte_byte"></a>
+### SetPixel</p>
 
 <pre>public void SetPixel(
     int x,
@@ -178,21 +180,30 @@ is a byte (from 0 to 255).</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>x</i>: The parameter  <i>x</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>y</i>: The parameter  <i>y</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>r</i>: The parameter  <i>r</i>
-is a byte (from 0 to 255).</p></li>
-<li><p><i>g</i>: The parameter  <i>g</i>
-is a byte (from 0 to 255).</p></li>
-<li><p><i>b</i>: The parameter  <i>b</i>
-is a byte (from 0 to 255).</p></li>
+  <li>
+    <p><i>x</i>: The parameter  <i>x</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>y</i>: The parameter  <i>y</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>r</i>: The parameter  <i>r</i>
+ is a byte (from 0 to 255).</p>
+  </li>
+  <li>
+    <p><i>g</i>: The parameter  <i>g</i>
+ is a byte (from 0 to 255).</p>
+  </li>
+  <li>
+    <p><i>b</i>: The parameter  <i>b</i>
+ is a byte (from 0 to 255).</p>
+  </li>
 </ul>
 
-<p><a id="SetPixel_int_int_byte_byte_byte_byte"></a></p>
-
-<h3>SetPixel</h3>
+<p><a id="SetPixel_int_int_byte_byte_byte_byte"></a>
+### SetPixel</p>
 
 <pre>public void SetPixel(
     int x,
@@ -208,23 +219,34 @@ is a byte (from 0 to 255).</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>x</i>: The parameter  <i>x</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>y</i>: The parameter  <i>y</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>r</i>: The parameter  <i>r</i>
-is a byte (from 0 to 255).</p></li>
-<li><p><i>g</i>: The parameter  <i>g</i>
-is a byte (from 0 to 255).</p></li>
-<li><p><i>b</i>: The parameter  <i>b</i>
-is a byte (from 0 to 255).</p></li>
-<li><p><i>a</i>: The parameter  <i>a</i>
-is a byte (from 0 to 255).</p></li>
+  <li>
+    <p><i>x</i>: The parameter  <i>x</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>y</i>: The parameter  <i>y</i>
+ is a 32-bit signed integer.</p>
+  </li>
+  <li>
+    <p><i>r</i>: The parameter  <i>r</i>
+ is a byte (from 0 to 255).</p>
+  </li>
+  <li>
+    <p><i>g</i>: The parameter  <i>g</i>
+ is a byte (from 0 to 255).</p>
+  </li>
+  <li>
+    <p><i>b</i>: The parameter  <i>b</i>
+ is a byte (from 0 to 255).</p>
+  </li>
+  <li>
+    <p><i>a</i>: The parameter  <i>a</i>
+ is a byte (from 0 to 255).</p>
+  </li>
 </ul>
 
-<p><a id="SetPixel_int_int_byte"></a></p>
-
-<h3>SetPixel</h3>
+<p><a id="SetPixel_int_int_byte"></a>
+### SetPixel</p>
 
 <pre>public void SetPixel(
     int x,
@@ -237,21 +259,31 @@ is a byte (from 0 to 255).</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>x</i>: The x coordinate.</p></li>
-<li><p><i>y</i>: The y coordinate.</p></li>
-<li><p><i>pixel</i>: The parameter  <i>pixel</i>
-is a.Byte[] object.</p></li>
+  <li>
+    <p><i>x</i>: The x coordinate.</p>
+  </li>
+  <li>
+    <p><i>y</i>: The y coordinate.</p>
+  </li>
+  <li>
+    <p><i>pixel</i>: The parameter  <i>pixel</i>
+ is a.Byte[] object.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>pixel</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
 The parameter  <i>pixel</i>
-has an improper length.</p></li>
+ has an improper length.</p>
+  </li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

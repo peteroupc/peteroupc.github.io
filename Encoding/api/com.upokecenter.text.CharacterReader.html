@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.text.CharacterReader</h1>
-
-<h1>com.upokecenter.text.CharacterReader</h1>
+<p># com.upokecenter.text.CharacterReader</p>
 
 <pre>public final class CharacterReader extends Object implements ICharacterInput
 </pre>
@@ -16,78 +15,86 @@
  character encoding by default, but can be configured to support UTF-16 and
  UTF-32 as well.</p>
 
-<h2>Constructors</h2>
+<h2 id="constructors">Constructors</h2>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><p><code>int Read(int[] chars,
-int index,
-int length)</code><br>
-Reads a series of code points from a Unicode stream or a string.</p></li>
-<li><p><code>int ReadChar()</code><br>
-Reads the next character from a Unicode stream or a string.</p></li>
+  <li>
+    <p><code>int Read(int[] chars,
+ int index,
+ int length)</code><br />
+ Reads a series of code points from a Unicode stream or a string.</p>
+  </li>
+  <li>
+    <p><code>int ReadChar()</code><br />
+ Reads the next character from a Unicode stream or a string.</p>
+  </li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>Read</h3>
-
-<pre>public int Read(int[] chars, int index, int length)
+<h3 id="read">Read</h3>
+<pre>public int Read(int[] chars, int index, int length) Reads a series of code points from a Unicode stream or a string.
 </pre>
-
-<p>Reads a series of code points from a Unicode stream or a string.</p>
 
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>Read</code> in interface <code>ICharacterInput</code></li>
+  <li><code>Read</code> in interface <code>ICharacterInput</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>chars</code> - An array where the code points that were read will be stored.</p></li>
-<li><p><code>index</code> - An index starting at 0 showing where the desired portion of
-<code>chars</code> begins.</p></li>
-<li><p><code>length</code> - The number of elements in the desired portion of <code>chars</code>
-(but not more than <code>chars</code> &#39;s length).</p></li>
+  <li>
+    <p><code>chars</code> - An array where the code points that were read will be stored.</p>
+  </li>
+  <li>
+    <p><code>index</code> - An index starting at 0 showing where the desired portion of
+ <code>chars</code> begins.</p>
+  </li>
+  <li>
+    <p><code>length</code> - The number of elements in the desired portion of <code>chars</code>
+ (but not more than <code>chars</code> ‘s length).</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The number of code points read from the stream. This can be less
-than the <code>length</code> parameter if the end of the stream is reached.</li>
+  <li>The number of code points read from the stream. This can be less
+ than the <code>length</code> parameter if the end of the stream is reached.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
-than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s length
-minus <code>index</code> is less than <code>length</code>.</p></li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p>
+  </li>
+  <li>
+    <p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
+ than 0 or greater than <code>chars</code> ‘s length, or <code>chars</code> ‘s length
+ minus <code>index</code> is less than <code>length</code>.</p>
+  </li>
 </ul>
 
-<h3>ReadChar</h3>
-
-<pre>public int ReadChar()
+<h3 id="readchar">ReadChar</h3>
+<pre>public int ReadChar() Reads the next character from a Unicode stream or a string.
 </pre>
-
-<p>Reads the next character from a Unicode stream or a string.</p>
 
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>ReadChar</code> in interface <code>ICharacterInput</code></li>
+  <li><code>ReadChar</code> in interface <code>ICharacterInput</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The next character, or -1 if the end of the string or stream was
-reached.</li>
+  <li>The next character, or -1 if the end of the string or stream was
+ reached.</li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

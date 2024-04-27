@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.mail.MailDateTime</h1>
-
-<h1>com.upokecenter.mail.MailDateTime</h1>
+<p># com.upokecenter.mail.MailDateTime</p>
 
 <pre>public final class MailDateTime extends Object
 </pre>
@@ -14,100 +13,109 @@
 <p>Contains methods for parsing and generating date-time strings following the
  Internet Message Format (RFC 5322).</p>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><p><code>static String GenerateDateString(int[] dateTime)</code><br>
-Generates a date-time string following the Internet Message Format (RFC
-5322) from an 8-element array.</p></li>
-<li><p><code>static String GenerateDateString(int[] dateTime,
-boolean gmt)</code><br>
-Generates a date-time string following the Internet Message Format (RFC
-5322) from an 8-element array.</p></li>
-<li><p><code>static int[] ParseDateString(String str)</code><br>
-Gets the date and time extracted from a date-time string following the
-Internet Message Format (RFC 5322).</p></li>
-<li><p><code>static int[] ParseDateString(String str,
-boolean parseObsoleteZones)</code><br>
-Gets the date and time extracted from a date-time string following the
-Internet Message Format (RFC 5322), with an option to allow obsolete time
-zone strings to appear in the date-time string.</p></li>
-<li><p><code>static int[] ParseDateStringHttp(String v)</code><br>
-Parses a date string in one of the three formats allowed by HTTP/1.1 (RFC
-7231).</p></li>
+  <li>
+    <p><code>static String GenerateDateString(int[] dateTime)</code><br />
+ Generates a date-time string following the Internet Message Format (RFC
+ 5322) from an 8-element array.</p>
+  </li>
+  <li>
+    <p><code>static String GenerateDateString(int[] dateTime,
+ boolean gmt)</code><br />
+ Generates a date-time string following the Internet Message Format (RFC
+ 5322) from an 8-element array.</p>
+  </li>
+  <li>
+    <p><code>static int[] ParseDateString(String str)</code><br />
+ Gets the date and time extracted from a date-time string following the
+ Internet Message Format (RFC 5322).</p>
+  </li>
+  <li>
+    <p><code>static int[] ParseDateString(String str,
+ boolean parseObsoleteZones)</code><br />
+ Gets the date and time extracted from a date-time string following the
+ Internet Message Format (RFC 5322), with an option to allow obsolete time
+ zone strings to appear in the date-time string.</p>
+  </li>
+  <li>
+    <p><code>static int[] ParseDateStringHttp(String v)</code><br />
+ Parses a date string in one of the three formats allowed by HTTP/1.1 (RFC
+ 7231).</p>
+  </li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>GenerateDateString</h3>
-
-<pre>public static String GenerateDateString(int[] dateTime)
+<h3 id="generatedatestring">GenerateDateString</h3>
+<pre>public static String GenerateDateString(int[] dateTime) Generates a date-time string following the Internet Message Format (RFC  5322) from an 8-element array.
 </pre>
-
-<p>Generates a date-time string following the Internet Message Format (RFC
- 5322) from an 8-element array.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>dateTime</code> - The date and time in the form of an 8-element array. See
-<code>ParseDateString(string, boolean)</code> for information on the format of
-this parameter.</li>
+  <li><code>dateTime</code> - The date and time in the form of an 8-element array. See
+ <code>ParseDateString(string, boolean)</code> for information on the format of
+ this parameter.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A date-time string.</li>
+  <li>A date-time string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
-(see <code>ParseDateString(string, boolean)</code>).</li>
+  <li><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
+ (see <code>ParseDateString(string, boolean)</code>).</li>
 </ul>
 
-<h3>GenerateDateString</h3>
-
-<pre>public static String GenerateDateString(int[] dateTime, boolean gmt)
+<h3 id="generatedatestring-1">GenerateDateString</h3>
+<pre>public static String GenerateDateString(int[] dateTime, boolean gmt) Generates a date-time string following the Internet Message Format (RFC  5322) from an 8-element array.
 </pre>
-
-<p>Generates a date-time string following the Internet Message Format (RFC
- 5322) from an 8-element array.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>dateTime</code> - The date and time in the form of an 8-element array. See
-<code>ParseDateString(string, boolean)</code> for information on the format of
-this parameter.</p></li>
-<li><p><code>gmt</code> - If true, uses the string &quot;GMT&quot; as the time zone offset.</p></li>
+  <li>
+    <p><code>dateTime</code> - The date and time in the form of an 8-element array. See
+ <code>ParseDateString(string, boolean)</code> for information on the format of
+ this parameter.</p>
+  </li>
+  <li>
+    <p><code>gmt</code> - If true, uses the string “GMT” as the time zone offset.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A date-time string.</li>
+  <li>A date-time string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
-(see <code>ParseDateString(string, boolean)</code>).</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>dateTime</code> is null.</p></li>
+  <li>
+    <p><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
+ (see <code>ParseDateString(string, boolean)</code>).</p>
+  </li>
+  <li>
+    <p><code>NullPointerException</code> - The parameter <code>dateTime</code> is null.</p>
+  </li>
 </ul>
 
-<h3>ParseDateString</h3>
-
+<h3 id="parsedatestring">ParseDateString</h3>
 <pre>public static int[] ParseDateString(String str, boolean parseObsoleteZones)
 </pre>
-
 <p>Gets the date and time extracted from a date-time string following the
  Internet Message Format (RFC 5322), with an option to allow obsolete time
  zone strings to appear in the date-time string. If an array is returned, the
- elements of that array (starting from 0) are as follows: </p><ul> <li>0 -
+ elements of that array (starting from 0) are as follows: </p>
+<ul> <li>0 -
  The year. For example, the value 2000 means 2000 C.E. This value cannot be
  less than 1900 (a restriction specified by RFC 5322).</li><li>1 - Month of
  the year, from 1 (January) through 12 (December).</li><li>2 - Day of the
@@ -122,71 +130,65 @@ this parameter.</p></li>
  expressed in the date-time format specified by RFC 5322. This value cannot
  be less than 0.</li><li>7 - Number of minutes to subtract from this date and
  time to get global time. This number can be positive or negative, but cannot
- be less than -1439 or greater than 1439.</li></ul> <p>If a method or
+ be less than -1439 or greater than 1439.</li></ul>
+<p>If a method or
  property uses an array of this format and refers to this method's
  documentation, that array may have any number of elements 8 or greater.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A date-time string.</p></li>
-<li><p><code>parseObsoleteZones</code> - If set to <code>true</code>, this method allows
-obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain
-three-letter combinations) to appear in the date-time string.</p></li>
+  <li>
+    <p><code>str</code> - A date-time string.</p>
+  </li>
+  <li>
+    <p><code>parseObsoleteZones</code> - If set to <code>true</code>, this method allows
+ obsolete time zones (single-letter time zones, “GMT”, “UT”, and certain
+ three-letter combinations) to appear in the date-time string.</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An 8-element array containing the date and time, or <code>null</code> if
-<code>str</code> is null, empty, or syntactically invalid, or if the string&#39;s
-year would overflow the range of a 32-bit signed integer.</li>
+  <li>An 8-element array containing the date and time, or <code>null</code> if
+ <code>str</code> is null, empty, or syntactically invalid, or if the string’s
+ year would overflow the range of a 32-bit signed integer.</li>
 </ul>
 
-<h3>ParseDateString</h3>
-
-<pre>public static int[] ParseDateString(String str)
+<h3 id="parsedatestring-1">ParseDateString</h3>
+<pre>public static int[] ParseDateString(String str) Gets the date and time extracted from a date-time string following the  Internet Message Format (RFC 5322). Obsolete time zone strings are not  allowed to appear in the date-time string. See &lt;code&gt;  ParseDateString(string, boolean)&lt;/code&gt; for information on this method's return  value.
 </pre>
-
-<p>Gets the date and time extracted from a date-time string following the
- Internet Message Format (RFC 5322). Obsolete time zone strings are not
- allowed to appear in the date-time string. See <code>
- ParseDateString(string, boolean)</code> for information on this method&#39;s return
- value.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A date-time string.</li>
+  <li><code>str</code> - A date-time string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An 8-element array containing the date and time, or <code>null</code> if
-<code>str</code> is null, empty, or syntactically invalid, or if the string&#39;s
-year would overflow the range of a 32-bit signed integer.</li>
+  <li>An 8-element array containing the date and time, or <code>null</code> if
+ <code>str</code> is null, empty, or syntactically invalid, or if the string’s
+ year would overflow the range of a 32-bit signed integer.</li>
 </ul>
 
-<h3>ParseDateStringHttp</h3>
-
-<pre>public static int[] ParseDateStringHttp(String v)
+<h3 id="parsedatestringhttp">ParseDateStringHttp</h3>
+<pre>public static int[] ParseDateStringHttp(String v) Parses a date string in one of the three formats allowed by HTTP/1.1 (RFC  7231).
 </pre>
-
-<p>Parses a date string in one of the three formats allowed by HTTP/1.1 (RFC
- 7231).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>v</code> - A date-time string.</li>
+  <li><code>v</code> - A date-time string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An array of 8 elements as specified in the <code>
-ParseDateString(string, boolean)</code> method.</li>
+  <li>An array of 8 elements as specified in the <code>
+ ParseDateString(string, boolean)</code> method.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

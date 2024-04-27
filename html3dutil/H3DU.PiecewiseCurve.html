@@ -1,23 +1,22 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.PiecewiseCurve</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>H3DU.PiecewiseCurve</h1>
+<h1 id="h3dupiecewisecurve">H3DU.PiecewiseCurve</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a name='H3DU.PiecewiseCurve'></a></p>
-
-<h3>new H3DU.PiecewiseCurve(curves)</h3>
+<p><a name="H3DU.PiecewiseCurve"></a>
+### new H3DU.PiecewiseCurve(curves)</p>
 
 <p><strong>Augments:</strong> Curve</p>
 
 <p>A curve evaluator object for a curve
 made up of one or more individual curves.</p>
 
-<p>The combined curve&#39;s U coordinates range from 0 to N,
+<p>The combined curve’s U coordinates range from 0 to N,
 where N is the number of curves. In this way, the integer
 part of a U coordinate indicates the curve the coordinate
 refers to. For example, if there are four curves, coordinates
@@ -26,13 +25,13 @@ from 1, but less than 2, belong to the second curve. The U
 coordinate equal to N refers to the end of the last curve in
 the piecewise curve.</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters">Parameters</h4>
 
 <ul>
-<li><code>curves</code> (Type: Array.&lt;Object&gt;)<br>An array of curve evaluator objects, such as an instance of Curve or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).</li>
+  <li><code>curves</code> (Type: Array.&lt;Object&gt;)<br />An array of curve evaluator objects, such as an instance of Curve or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).</li>
 </ul>
 
-<h4>Examples</h4>
+<h4 id="examples">Examples</h4>
 
 <pre>// Generates a piecewise polygon curve from an array of
 // vectors (arrays with the same number of elements) that
@@ -48,117 +47,111 @@ return new PiecewiseCurve(curves)
 }
 </pre>
 
-<h3>Methods</h3>
+<h3 id="methods">Methods</h3>
 
 <ul>
-<li><a href="#H3DU.PiecewiseCurve_arcLength">arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+  <li><a href="#H3DU.PiecewiseCurve_arcLength">arcLength</a><br />Finds an approximate arc length (distance) between the start of this
 curve and the point at the given U coordinate of this curve.</li>
-<li><a href="#H3DU.PiecewiseCurve_endPoints">endPoints</a><br>Returns the starting and ending U coordinates of this curve.</li>
-<li><a href="#H3DU.PiecewiseCurve_evaluate">evaluate</a><br>Finds the position of this curve at the given U coordinate.</li>
-<li><a href="#H3DU.PiecewiseCurve.fromCatmullRomSpline">fromCatmullRomSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
-cubic Catmull&ndash;Rom spline.</li>
-<li><a href="#H3DU.PiecewiseCurve.fromEllipseArc">fromEllipseArc</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.PiecewiseCurve.fromHermiteSpline">fromHermiteSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
+  <li><a href="#H3DU.PiecewiseCurve_endPoints">endPoints</a><br />Returns the starting and ending U coordinates of this curve.</li>
+  <li><a href="#H3DU.PiecewiseCurve_evaluate">evaluate</a><br />Finds the position of this curve at the given U coordinate.</li>
+  <li><a href="#H3DU.PiecewiseCurve.fromCatmullRomSpline">fromCatmullRomSpline</a><br />Creates a piecewise curve made up of B-spline curves from the control points of a
+cubic Catmull–Rom spline.</li>
+  <li><a href="#H3DU.PiecewiseCurve.fromEllipseArc">fromEllipseArc</a><br />TODO: Not documented yet.</li>
+  <li><a href="#H3DU.PiecewiseCurve.fromHermiteSpline">fromHermiteSpline</a><br />Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline.</li>
-<li><a href="#H3DU.PiecewiseCurve.fromTCBSpline">fromTCBSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
-cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).</li>
-<li><a href="#H3DU.PiecewiseCurve_getCurves">getCurves</a><br>Gets a reference to the curves that make up this piecewise curve.</li>
-<li><a href="#H3DU.PiecewiseCurve_velocity">velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</li>
+  <li><a href="#H3DU.PiecewiseCurve.fromTCBSpline">fromTCBSpline</a><br />Creates a piecewise curve made up of B-spline curves from the control points of a
+cubic TCB spline (tension/continuity/bias spline, also known as Kochanek–Bartels spline).</li>
+  <li><a href="#H3DU.PiecewiseCurve_getCurves">getCurves</a><br />Gets a reference to the curves that make up this piecewise curve.</li>
+  <li><a href="#H3DU.PiecewiseCurve_velocity">velocity</a><br />Finds an approximate velocity vector at the given U coordinate of this curve.</li>
 </ul>
 
-<p><a name='H3DU.PiecewiseCurve_arcLength'></a></p>
-
-<h3>H3DU.PiecewiseCurve#arcLength(u)</h3>
+<p><a name="H3DU.PiecewiseCurve_arcLength"></a>
+### H3DU.PiecewiseCurve#arcLength(u)</p>
 
 <p>Finds an approximate arc length (distance) between the start of this
 curve and the point at the given U coordinate of this curve.</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters-1">Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+  <li><code>u</code> (Type: number)<br />U coordinate of a point on the curve.</li>
 </ul>
 
-<h4>Return Value</h4>
+<h4 id="return-value">Return Value</h4>
 
 <p>The approximate arc length of this curve at the given U coordinate. (Type: number)</p>
 
-<p><a name='H3DU.PiecewiseCurve_endPoints'></a></p>
-
-<h3>H3DU.PiecewiseCurve#endPoints()</h3>
+<p><a name="H3DU.PiecewiseCurve_endPoints"></a>
+### H3DU.PiecewiseCurve#endPoints()</p>
 
 <p>Returns the starting and ending U coordinates of this curve.</p>
 
-<h4>Return Value</h4>
+<h4 id="return-value-1">Return Value</h4>
 
 <p>A two-element array. The first element is the starting coordinate of
 the curve, and the second is its ending coordinate.
 Returns <code>[0, n]</code>, where <code>n</code> is the number
 of curves that make up this piecewise curve.</p>
 
-<p><a name='H3DU.PiecewiseCurve_evaluate'></a></p>
-
-<h3>H3DU.PiecewiseCurve#evaluate(u)</h3>
+<p><a name="H3DU.PiecewiseCurve_evaluate"></a>
+### H3DU.PiecewiseCurve#evaluate(u)</p>
 
 <p>Finds the position of this curve at the given U coordinate.</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters-2">Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+  <li><code>u</code> (Type: number)<br />U coordinate of a point on the curve.</li>
 </ul>
 
-<h4>Return Value</h4>
+<h4 id="return-value-2">Return Value</h4>
 
 <p>An array describing a position. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name='H3DU.PiecewiseCurve.fromCatmullRomSpline'></a></p>
-
-<h3>(static) H3DU.PiecewiseCurve.fromCatmullRomSpline(spline, [param], [closed])</h3>
+<p><a name="H3DU.PiecewiseCurve.fromCatmullRomSpline"></a>
+### (static) H3DU.PiecewiseCurve.fromCatmullRomSpline(spline, [param], [closed])</p>
 
 <p>Creates a piecewise curve made up of B-spline curves from the control points of a
-cubic Catmull&ndash;Rom spline. A Catmull&ndash;Rom spline is defined by
+cubic Catmull–Rom spline. A Catmull–Rom spline is defined by
 a collection of control points that the spline
 will go through, and the shape of each curve segment is also determined by the positions
 of neighboring points on the spline.</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters-3">Parameters</h4>
 
 <ul>
-<li><code>spline</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.</li>
-<li><code>param</code> (Type: number) (optional)<br>A value that describes the curve&#39;s parameterization. Ranges from 0 to 1. A value of 0 indicates a uniform parameterization, 0.5 indicates a centripetal parameterization, and 1 indicates a chordal parameterization. Default is 0.5.</li>
-<li><code>closed</code> (Type: number) (optional)<br>If true, connects the last control point of the curve with the first. Default is false.</li>
+  <li><code>spline</code> (Type: Array.&lt;Array.&lt;number»)<br />An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.</li>
+  <li><code>param</code> (Type: number) (optional)<br />A value that describes the curve’s parameterization. Ranges from 0 to 1. A value of 0 indicates a uniform parameterization, 0.5 indicates a centripetal parameterization, and 1 indicates a chordal parameterization. Default is 0.5.</li>
+  <li><code>closed</code> (Type: number) (optional)<br />If true, connects the last control point of the curve with the first. Default is false.</li>
 </ul>
 
-<h4>Return Value</h4>
+<h4 id="return-value-3">Return Value</h4>
 
-<p>A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline. (Type: PiecewiseCurve)</p>
+<p>A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull–Rom spline. (Type: PiecewiseCurve)</p>
 
-<p><a name='H3DU.PiecewiseCurve.fromEllipseArc'></a></p>
-
-<h3>(static) H3DU.PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)</h3>
+<p><a name="H3DU.PiecewiseCurve.fromEllipseArc"></a>
+### (static) H3DU.PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)</p>
 
 <p>TODO: Not documented yet.</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters-4">Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number)</li>
-<li><code>y</code> (Type: number)</li>
-<li><code>radiusX</code> (Type: number)</li>
-<li><code>radiusY</code> (Type: number)</li>
-<li><code>start</code> (Type: number)</li>
-<li><code>sweep</code> (Type: number)</li>
+  <li><code>x</code> (Type: number)</li>
+  <li><code>y</code> (Type: number)</li>
+  <li><code>radiusX</code> (Type: number)</li>
+  <li><code>radiusY</code> (Type: number)</li>
+  <li><code>start</code> (Type: number)</li>
+  <li><code>sweep</code> (Type: number)</li>
 </ul>
 
-<h4>Return Value</h4>
+<h4 id="return-value-4">Return Value</h4>
 
 <p>Return value. (Type: PiecewiseCurve)</p>
 
-<p><a name='H3DU.PiecewiseCurve.fromHermiteSpline'></a></p>
-
-<h3>(static) H3DU.PiecewiseCurve.fromHermiteSpline(spline)</h3>
+<p><a name="H3DU.PiecewiseCurve.fromHermiteSpline"></a>
+### (static) H3DU.PiecewiseCurve.fromHermiteSpline(spline)</p>
 
 <p>Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline. A Hermite spline is a collection of points that the curve will go through,
@@ -169,65 +162,62 @@ those points.</p>
 of a function or curve whose derivative is known; however, Hermite splines are not
 guaranteed to preserve the increasing or decreasing nature of the function or curve.</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters-5">Parameters</h4>
 
 <ul>
-<li><code>spline</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the velocity vector (derivative) at that point. The array must have an even number of control points and at least four control points.</li>
+  <li><code>spline</code> (Type: Array.&lt;Array.&lt;number»)<br />An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the velocity vector (derivative) at that point. The array must have an even number of control points and at least four control points.</li>
 </ul>
 
-<h4>Return Value</h4>
+<h4 id="return-value-5">Return Value</h4>
 
 <p>A piecewise curve made up of cubic B-spline curves describing the
 same path as the Hermite spline. (Type: PiecewiseCurve)</p>
 
-<p><a name='H3DU.PiecewiseCurve.fromTCBSpline'></a></p>
-
-<h3>(static) H3DU.PiecewiseCurve.fromTCBSpline(spline, [tension], [continuity], [bias], [closed], [rigidEnds])</h3>
+<p><a name="H3DU.PiecewiseCurve.fromTCBSpline"></a>
+### (static) H3DU.PiecewiseCurve.fromTCBSpline(spline, [tension], [continuity], [bias], [closed], [rigidEnds])</p>
 
 <p>Creates a piecewise curve made up of B-spline curves from the control points of a
-cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).
-(If tension, continuity, and bias are all 0, the result is a cubic Catmull&ndash;Rom spline
+cubic TCB spline (tension/continuity/bias spline, also known as Kochanek–Bartels spline).
+(If tension, continuity, and bias are all 0, the result is a cubic Catmull–Rom spline
 in uniform parameterization.)</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters-6">Parameters</h4>
 
 <ul>
-<li><code>spline</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.</li>
-<li><code>tension</code> (Type: number) (optional)<br>A parameter that adjusts the length of the starting and ending tangents of each curve segment. Ranges from -1 for double-length tangents to 1 for zero-length tangents. A value of 1 results in straight line segments. Default is 0.</li>
-<li><code>continuity</code> (Type: number) (optional)<br>A parameter that adjusts the direction of the starting and ending tangents of each curve segment. Ranges from -1 to 1, where values closer to -1 or closer to 1 result in tangents that are closer to perpendicular. A value of -1 results in straight line segments. Default is 0.</li>
-<li><code>bias</code> (Type: number) (optional)<br>A parameter that adjusts the influence of the starting and ending tangents of each curve segment. The greater this number, the greater the ending tangents influence the direction of the next curve segment in comparison to the starting tangents. Ranges from -1 to 1. Default is 0.</li>
-<li><code>closed</code> (Type: number) (optional)<br>If true, connects the last control point of the curve with the first. Default is false.</li>
-<li><code>rigidEnds</code> (Type: number) (optional)<br>If true, the start and end of the piecewise curve will, by default, more rigidly follow the direction to the next or previous control point, respectively. This makes the curve compatible with GDI+ cardinal splines with 0 continuity, 0 bias, and tension equal to <code>-((T*2)-1)</code>, where T is the GDI+ cardinal spline tension parameter. Default is false.</li>
+  <li><code>spline</code> (Type: Array.&lt;Array.&lt;number»)<br />An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.</li>
+  <li><code>tension</code> (Type: number) (optional)<br />A parameter that adjusts the length of the starting and ending tangents of each curve segment. Ranges from -1 for double-length tangents to 1 for zero-length tangents. A value of 1 results in straight line segments. Default is 0.</li>
+  <li><code>continuity</code> (Type: number) (optional)<br />A parameter that adjusts the direction of the starting and ending tangents of each curve segment. Ranges from -1 to 1, where values closer to -1 or closer to 1 result in tangents that are closer to perpendicular. A value of -1 results in straight line segments. Default is 0.</li>
+  <li><code>bias</code> (Type: number) (optional)<br />A parameter that adjusts the influence of the starting and ending tangents of each curve segment. The greater this number, the greater the ending tangents influence the direction of the next curve segment in comparison to the starting tangents. Ranges from -1 to 1. Default is 0.</li>
+  <li><code>closed</code> (Type: number) (optional)<br />If true, connects the last control point of the curve with the first. Default is false.</li>
+  <li><code>rigidEnds</code> (Type: number) (optional)<br />If true, the start and end of the piecewise curve will, by default, more rigidly follow the direction to the next or previous control point, respectively. This makes the curve compatible with GDI+ cardinal splines with 0 continuity, 0 bias, and tension equal to <code>-((T\*2)-1)</code>, where T is the GDI+ cardinal spline tension parameter. Default is false.</li>
 </ul>
 
-<h4>Return Value</h4>
+<h4 id="return-value-6">Return Value</h4>
 
 <p>A piecewise curve made up of cubic B-spline curves describing the
 same path as the TCB spline. (Type: PiecewiseCurve)</p>
 
-<p><a name='H3DU.PiecewiseCurve_getCurves'></a></p>
-
-<h3>H3DU.PiecewiseCurve#getCurves()</h3>
+<p><a name="H3DU.PiecewiseCurve_getCurves"></a>
+### H3DU.PiecewiseCurve#getCurves()</p>
 
 <p>Gets a reference to the curves that make up this piecewise curve.</p>
 
-<h4>Return Value</h4>
+<h4 id="return-value-7">Return Value</h4>
 
 <p>The curves that make up this piecewise curve. (Type: Array.&lt;Curve&gt;)</p>
 
-<p><a name='H3DU.PiecewiseCurve_velocity'></a></p>
-
-<h3>H3DU.PiecewiseCurve#velocity(u)</h3>
+<p><a name="H3DU.PiecewiseCurve_velocity"></a>
+### H3DU.PiecewiseCurve#velocity(u)</p>
 
 <p>Finds an approximate velocity vector at the given U coordinate of this curve.</p>
 
-<h4>Parameters</h4>
+<h4 id="parameters-7">Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+  <li><code>u</code> (Type: number)<br />U coordinate of a point on the curve.</li>
 </ul>
 
-<h4>Return Value</h4>
+<h4 id="return-value-8">Return Value</h4>
 
 <p>An array describing a velocity vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
@@ -243,85 +233,85 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-<h3>Navigation</h3>
+<h3 id="navigation">Navigation</h3>
 
 <ul>
-<li><a href="BSplineCurve.html">BSplineCurve</a></li>
-<li><a href="BSplineSurface.html">BSplineSurface</a></li>
-<li><a href="BufferAccessor.html">BufferAccessor</a></li>
-<li><a href="Curve.html">Curve</a></li>
-<li><a href="CurveBuilder.html">CurveBuilder</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
-<li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="MathUtil.html">MathUtil</a></li>
-<li><a href="MeshBuffer.html">MeshBuffer</a></li>
-<li><a href="Meshes.html">Meshes</a></li>
-<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-<li><a href="Promise.html">Promise</a></li>
-<li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Shape.html">Shape</a></li>
-<li><a href="ShapeGroup.html">ShapeGroup</a></li>
-<li><a href="Surface.html">Surface</a></li>
-<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-<li><a href="Transform.html">Transform</a></li>
-<li><a href="extras_arrow.html">module:extras/arrow</a></li>
-<li><a href="extras_camera.html">module:extras/camera</a></li>
-<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
-<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
-<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
-<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
-<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
-<li><a href="extras_convex.html">module:extras/convex</a></li>
-<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
-<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
-<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
-<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
-<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
-<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
-<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
-<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
-<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
-<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
-<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
-<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
-<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
-<li><a href="extras_gradients.html">module:extras/gradients</a></li>
-<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
-<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
-<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
-<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
-<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
-<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
-<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
-<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
-<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
-<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
-<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
-<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
-<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
-<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
-<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
-<li><a href="extras_raypick.html">module:extras/raypick</a></li>
-<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
-<li><a href="extras_starfield.html">module:extras/starfield</a></li>
-<li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
-<li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
-<li><a href="extras_stl.html">module:extras/stl</a></li>
-<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
-<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
-<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
-<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
-<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
-<li><a href="extras_text.html">module:extras/text</a></li>
-<li><a href="extras_tga.html">module:extras/tga</a></li>
-<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
-<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
-<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
-<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
-<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
-<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
-<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Promise.html">Promise</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="Shape.html">Shape</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
+  <li><a href="extras_arrow.html">module:extras/arrow</a></li>
+  <li><a href="extras_camera.html">module:extras/camera</a></li>
+  <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+  <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+  <li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+  <li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+  <li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+  <li><a href="extras_convex.html">module:extras/convex</a></li>
+  <li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+  <li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+  <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+  <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+  <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+  <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+  <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+  <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+  <li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+  <li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+  <li><a href="extras_gradients.html">module:extras/gradients</a></li>
+  <li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+  <li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+  <li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+  <li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+  <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+  <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+  <li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+  <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+  <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+  <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+  <li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+  <li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+  <li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+  <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+  <li><a href="extras_raypick.html">module:extras/raypick</a></li>
+  <li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+  <li><a href="extras_starfield.html">module:extras/starfield</a></li>
+  <li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
+  <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
+  <li><a href="extras_stl.html">module:extras/stl</a></li>
+  <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+  <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+  <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+  <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+  <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+  <li><a href="extras_text.html">module:extras/text</a></li>
+  <li><a href="extras_tga.html">module:extras/tga</a></li>
+  <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+  <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+  <li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+  <li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+  <li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+  <li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+  <li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
 </ul>
 </nav></body></html>

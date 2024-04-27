@@ -5,8 +5,7 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.mail.NamedAddress</h1>
-
-<h1>com.upokecenter.mail.NamedAddress</h1>
+<p># com.upokecenter.mail.NamedAddress</p>
 
 <pre>public class NamedAddress extends Object
 </pre>
@@ -14,316 +13,280 @@
 <p>Represents an email address and a name for that address. Can represent a
  group of email addresses instead.</p>
 
-<h2>Constructors</h2>
+<h2 id="constructors">Constructors</h2>
 
-<h2>Methods</h2>
-
-<ul>
-<li><p><code>boolean AddressesEqual(NamedAddress na)</code><br>
-Determines whether the email addresses stored this object are the same
-between this object and the given object, regardless of the display names
-they store.</p></li>
-<li><p><code>boolean equals(Object obj)</code><br>
-Determines whether this object and another object are equal.</p></li>
-<li><p><code>final Address getAddress()</code><br>
-Gets the email address associated with this object.</p></li>
-<li><p><code>final String getDisplayName()</code><br>
-Gets the display name for this email address.</p></li>
-<li><p><code>final List&lt;NamedAddress&gt; getGroupAddresses()</code><br>
-Gets a read-only list of addresses that make up the group, if this object
-represents a group, or an empty list otherwise.</p></li>
-<li><p><code>final String getName()</code><br>
-Gets the display name for this email address, or the email address&#39;s value
-if the display name is null.</p></li>
-<li><p><code>int hashCode()</code><br>
-Calculates the hash code of this object.</p></li>
-<li><p><code>final boolean isGroup()</code><br>
-Gets a value indicating whether this represents a group of addresses rather
-than a single address.</p></li>
-<li><p><code>static List&lt;NamedAddress&gt; ParseAddresses(String addressValue)</code><br>
-Generates a list of NamedAddress objects from a comma-separated list of
-addresses.</p></li>
-<li><p><code>String ToDisplayString()</code><br>
-Converts this named-address object to a text string intended for display to
-end users.</p></li>
-<li><p><code>static String ToDisplayString(List&lt;NamedAddress&gt; addresses)</code><br>
-Generates a string containing the display names and email addresses of the
-given named-address objects, separated by commas.</p></li>
-<li><p><code>static String ToDisplayStringShort(List&lt;NamedAddress&gt; addresses)</code><br>
-Generates a string containing the display names of the given named-address
-objects, separated by commas.</p></li>
-<li><p><code>String toString()</code><br>
-Converts this object to a text string.</p></li>
-</ul>
-
-<h2>Method Details</h2>
-
-<h3>ToDisplayStringShort</h3>
-
-<pre>public static String ToDisplayStringShort(List&lt;NamedAddress&gt; addresses)
-</pre>
-
-<p>Generates a string containing the display names of the given named-address
- objects, separated by commas. The generated string is intended to be
- displayed to end users, and is not intended to be parsed by computer
- programs. If a named address has no display name, its email address is used
- as the display name.</p>
-
-<p><strong>Parameters:</strong></p>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><code>addresses</code> - A list of named address objects.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string containing the display names of the given named-address
-objects, separated by commas.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>addresses</code> is null.</li>
-</ul>
-
-<h3>ToDisplayString</h3>
-
-<pre>public static String ToDisplayString(List&lt;NamedAddress&gt; addresses)
-</pre>
-
-<p>Generates a string containing the display names and email addresses of the
- given named-address objects, separated by commas. The generated string is
- intended to be displayed to end users, and is not intended to be parsed by
- computer programs.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>addresses</code> - A list of named address objects.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string containing the display names and email addresses of the
-given named-address objects, separated by commas.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>addresses</code> is null.</li>
-</ul>
-
-<h3>ParseAddresses</h3>
-
-<pre>public static List&lt;NamedAddress&gt; ParseAddresses(String addressValue)
-</pre>
-
-<p>Generates a list of NamedAddress objects from a comma-separated list of
- addresses. Each address must follow the syntax accepted by the one-argument
- constructor of NamedAddress.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>addressValue</code> - A comma-separated list of addresses in the form of a
-text string.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A list of addresses generated from the <code>addressValue</code>
-parameter.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>addressValue</code> is null.</li>
-</ul>
-
-<h3>hashCode</h3>
-
-<pre>public int hashCode()
-</pre>
-
-<p>Calculates the hash code of this object. The exact algorithm used by this
- method is not guaranteed to be the same between versions of this library,
- and no application or process IDs are used in the hash code calculation.</p>
-
-<p><strong>Overrides:</strong></p>
-
-<ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A 32-bit hash code.</li>
-</ul>
-
-<h3>equals</h3>
-
-<pre>public boolean equals(Object obj)
-</pre>
-
-<p>Determines whether this object and another object are equal. For groups, the
- named addresses (display name/email address pairs) must be equal and in the
- same order in both objects.</p>
-
-<p><strong>Overrides:</strong></p>
-
-<ul>
-<li><code>equals</code> in class <code>Object</code></li>
-</ul>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>obj</code> - An arbitrary object to compare with this one.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object and another object are equal and have
-the same type; otherwise, <code>false</code>.</li>
-</ul>
-
-<h3>AddressesEqual</h3>
-
-<pre>public boolean AddressesEqual(NamedAddress na)
-</pre>
-
-<p>Determines whether the email addresses stored this object are the same
+  <li>
+    <p><code>boolean AddressesEqual(NamedAddress na)</code><br />
+ Determines whether the email addresses stored this object are the same
  between this object and the given object, regardless of the display names
- they store. For groups, the email addresses must be equal and in the same
- order in both objects.</p>
+ they store.</p>
+  </li>
+  <li>
+    <p><code>boolean equals(Object obj)</code><br />
+ Determines whether this object and another object are equal.</p>
+  </li>
+  <li>
+    <p><code>final Address getAddress()</code><br />
+ Gets the email address associated with this object.</p>
+  </li>
+  <li>
+    <p><code>final String getDisplayName()</code><br />
+ Gets the display name for this email address.</p>
+  </li>
+  <li>
+    <p><code>final List&lt;NamedAddress&gt; getGroupAddresses()</code><br />
+ Gets a read-only list of addresses that make up the group, if this object
+ represents a group, or an empty list otherwise.</p>
+  </li>
+  <li>
+    <p><code>final String getName()</code><br />
+ Gets the display name for this email address, or the email address’s value
+ if the display name is null.</p>
+  </li>
+  <li>
+    <p><code>int hashCode()</code><br />
+ Calculates the hash code of this object.</p>
+  </li>
+  <li>
+    <p><code>final boolean isGroup()</code><br />
+ Gets a value indicating whether this represents a group of addresses rather
+ than a single address.</p>
+  </li>
+  <li>
+    <p><code>static List&lt;NamedAddress&gt; ParseAddresses(String addressValue)</code><br />
+ Generates a list of NamedAddress objects from a comma-separated list of
+ addresses.</p>
+  </li>
+  <li>
+    <p><code>String ToDisplayString()</code><br />
+ Converts this named-address object to a text string intended for display to
+ end users.</p>
+  </li>
+  <li>
+    <p><code>static String ToDisplayString(List&lt;NamedAddress&gt; addresses)</code><br />
+ Generates a string containing the display names and email addresses of the
+ given named-address objects, separated by commas.</p>
+  </li>
+  <li>
+    <p><code>static String ToDisplayStringShort(List&lt;NamedAddress&gt; addresses)</code><br />
+ Generates a string containing the display names of the given named-address
+ objects, separated by commas.</p>
+  </li>
+  <li>
+    <p><code>String toString()</code><br />
+ Converts this object to a text string.</p>
+  </li>
+</ul>
+
+<h2 id="method-details">Method Details</h2>
+
+<h3 id="todisplaystringshort">ToDisplayStringShort</h3>
+<pre>public static String ToDisplayStringShort(List&lt;NamedAddress&gt; addresses) Generates a string containing the display names of the given named-address  objects, separated by commas. The generated string is intended to be  displayed to end users, and is not intended to be parsed by computer  programs. If a named address has no display name, its email address is used  as the display name.
+</pre>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>na</code> - A named address object to compare with this one. Can be null.</li>
+  <li><code>addresses</code> - A list of named address objects.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+  <li>A string containing the display names of the given named-address
+ objects, separated by commas.</li>
 </ul>
 
-<h3>getName</h3>
+<p><strong>Throws:</strong></p>
 
-<pre>public final String getName()
+<ul>
+  <li><code>NullPointerException</code> - The parameter <code>addresses</code> is null.</li>
+</ul>
+
+<h3 id="todisplaystring">ToDisplayString</h3>
+<pre>public static String ToDisplayString(List&lt;NamedAddress&gt; addresses) Generates a string containing the display names and email addresses of the  given named-address objects, separated by commas. The generated string is  intended to be displayed to end users, and is not intended to be parsed by  computer programs.
 </pre>
 
-<p>Gets the display name for this email address, or the email address&#39;s value
- if the display name is null. Returns an empty string if the address and
- display name are null.</p>
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li><code>addresses</code> - A list of named address objects.</li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The name for this email address.</li>
+  <li>A string containing the display names and email addresses of the
+ given named-address objects, separated by commas.</li>
 </ul>
 
-<h3>getDisplayName</h3>
+<p><strong>Throws:</strong></p>
 
-<pre>public final String getDisplayName()
+<ul>
+  <li><code>NullPointerException</code> - The parameter <code>addresses</code> is null.</li>
+</ul>
+
+<h3 id="parseaddresses">ParseAddresses</h3>
+<pre>public static List&lt;NamedAddress&gt; ParseAddresses(String addressValue) Generates a list of NamedAddress objects from a comma-separated list of  addresses. Each address must follow the syntax accepted by the one-argument  constructor of NamedAddress.
 </pre>
 
-<p>Gets the display name for this email address.</p>
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li><code>addressValue</code> - A comma-separated list of addresses in the form of a
+ text string.</li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The display name for this email address. Returns null if the display
-name is absent.</li>
+  <li>A list of addresses generated from the <code>addressValue</code>
+ parameter.</li>
 </ul>
 
-<h3>getAddress</h3>
-
-<pre>public final Address getAddress()
-</pre>
-
-<p>Gets the email address associated with this object.</p>
-
-<p><strong>Returns:</strong></p>
+<p><strong>Throws:</strong></p>
 
 <ul>
-<li>The email address associated with this object. This value is null if
-this object represents a group of addresses instead.</li>
+  <li><code>NullPointerException</code> - The parameter <code>addressValue</code> is null.</li>
 </ul>
 
-<h3>isGroup</h3>
-
-<pre>public final boolean isGroup()
+<h3 id="hashcode">hashCode</h3>
+<pre>public int hashCode() Calculates the hash code of this object. The exact algorithm used by this  method is not guaranteed to be the same between versions of this library,  and no application or process IDs are used in the hash code calculation.
 </pre>
-
-<p>Gets a value indicating whether this represents a group of addresses rather
- than a single address.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> If this represents a group of addresses; otherwise,
-<code>false</code>.</li>
-</ul>
-
-<h3>toString</h3>
-
-<pre>public String toString()
-</pre>
-
-<p>Converts this object to a text string. This will generally be the form of
- this NamedAddress object as it could appear in a &quot;To&quot; header field.</p>
 
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+  <li><code>hashCode</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A string representation of this object.</li>
+  <li>A 32-bit hash code.</li>
 </ul>
 
-<h3>ToDisplayString</h3>
-
-<pre>public String ToDisplayString()
+<h3 id="equals">equals</h3>
+<pre>public boolean equals(Object obj) Determines whether this object and another object are equal. For groups, the  named addresses (display name/email address pairs) must be equal and in the  same order in both objects.
 </pre>
 
-<p>Converts this named-address object to a text string intended for display to
- end users. The returned string is not intended to be parsed by computer
- programs.</p>
-
-<p><strong>Returns:</strong></p>
+<p><strong>Overrides:</strong></p>
 
 <ul>
-<li>A text string of this named-address object, intended for display to
-end-users.</li>
+  <li><code>equals</code> in class <code>Object</code></li>
 </ul>
 
-<h3>getGroupAddresses</h3>
+<p><strong>Parameters:</strong></p>
 
-<pre>public final List&lt;NamedAddress&gt; getGroupAddresses()
-</pre>
-
-<p>Gets a read-only list of addresses that make up the group, if this object
- represents a group, or an empty list otherwise.</p>
+<ul>
+  <li><code>obj</code> - An arbitrary object to compare with this one.</li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A list of addresses that make up the group, if this object
-represents a group, or an empty list otherwise.</li>
+  <li><code>true</code> if this object and another object are equal and have
+ the same type; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3 id="addressesequal">AddressesEqual</h3>
+<pre>public boolean AddressesEqual(NamedAddress na) Determines whether the email addresses stored this object are the same  between this object and the given object, regardless of the display names  they store. For groups, the email addresses must be equal and in the same  order in both objects.
+</pre>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li><code>na</code> - A named address object to compare with this one. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>Either <code>true</code> or <code>false</code>.</li>
+</ul>
+
+<h3 id="getname">getName</h3>
+<pre>public final String getName() Gets the display name for this email address, or the email address's value  if the display name is null. Returns an empty string if the address and  display name are null.
+</pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>The name for this email address.</li>
+</ul>
+
+<h3 id="getdisplayname">getDisplayName</h3>
+<pre>public final String getDisplayName() Gets the display name for this email address.
+</pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>The display name for this email address. Returns null if the display
+ name is absent.</li>
+</ul>
+
+<h3 id="getaddress">getAddress</h3>
+<pre>public final Address getAddress() Gets the email address associated with this object.
+</pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>The email address associated with this object. This value is null if
+ this object represents a group of addresses instead.</li>
+</ul>
+
+<h3 id="isgroup">isGroup</h3>
+<pre>public final boolean isGroup() Gets a value indicating whether this represents a group of addresses rather  than a single address.
+</pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li><code>true</code> If this represents a group of addresses; otherwise,
+ <code>false</code>.</li>
+</ul>
+
+<h3 id="tostring">toString</h3>
+<pre>public String toString() Converts this object to a text string. This will generally be the form of  this NamedAddress object as it could appear in a "To" header field.
+</pre>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+  <li><code>toString</code> in class <code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>A string representation of this object.</li>
+</ul>
+
+<h3 id="todisplaystring-1">ToDisplayString</h3>
+<pre>public String ToDisplayString() Converts this named-address object to a text string intended for display to  end users. The returned string is not intended to be parsed by computer  programs.
+</pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>A text string of this named-address object, intended for display to
+ end-users.</li>
+</ul>
+
+<h3 id="getgroupaddresses">getGroupAddresses</h3>
+<pre>public final List&lt;NamedAddress&gt; getGroupAddresses() Gets a read-only list of addresses that make up the group, if this object  represents a group, or an empty list otherwise.
+</pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>A list of addresses that make up the group, if this object
+ represents a group, or an empty list otherwise.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

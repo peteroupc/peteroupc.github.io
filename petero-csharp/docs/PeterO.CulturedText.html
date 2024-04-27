@@ -5,17 +5,16 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.CulturedText</h1>
-
-<h2>PeterO.CulturedText</h2>
+<p>## PeterO.CulturedText</p>
 
 <pre>public static class CulturedText
 </pre>
 
-<p>Contains string processing operations that should be formatted according to the current locale&#39;s formatting rules.</p>
+<p>Contains string processing operations that should be formatted according to the current locale’s formatting rules.</p>
 
 <p>This class, along with the InvariantText class, supports the correct use f string functions in the framework. InvariantText is intended for use in ocale-independent string processing, such as data and file system rocessing, while CulturedText is intended for text display. Use ulturedText for formatting the messages of exceptions and within the onsole.Write method.</p>
 
-<h3>Compare</h3>
+<h3 id="compare">Compare</h3>
 
 <pre>public static int Compare(
     string value1,
@@ -27,17 +26,21 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>value1</i>: The parameter  <i>value1</i>
-is a text string.</p></li>
-<li><p><i>value2</i>: The parameter  <i>value2</i>
-is a text string.</p></li>
+  <li>
+    <p><i>value1</i>: The parameter  <i>value1</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>value2</i>: The parameter  <i>value2</i>
+ is a text string.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<h3>CompareIgnoreCase</h3>
+<h3 id="compareignorecase">CompareIgnoreCase</h3>
 
 <pre>public static int CompareIgnoreCase(
     string value1,
@@ -49,17 +52,21 @@ is a text string.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>value1</i>: The parameter  <i>value1</i>
-is a text string.</p></li>
-<li><p><i>value2</i>: The parameter  <i>value2</i>
-is a text string.</p></li>
+  <li>
+    <p><i>value1</i>: The parameter  <i>value1</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>value2</i>: The parameter  <i>value2</i>
+ is a text string.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<h3>EndsWith</h3>
+<h3 id="endswith">EndsWith</h3>
 
 <pre>public static bool EndsWith(
     string value1,
@@ -71,10 +78,14 @@ is a text string.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>value1</i>: The parameter  <i>value1</i>
-is a text string.</p></li>
-<li><p><i>value2</i>: The parameter  <i>value2</i>
-is a text string.</p></li>
+  <li>
+    <p><i>value1</i>: The parameter  <i>value1</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>value2</i>: The parameter  <i>value2</i>
+ is a text string.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -84,12 +95,12 @@ is a text string.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter <i>value1</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<h3>Format</h3>
+<h3 id="format">Format</h3>
 
 <pre>public static string Format(
     string formattedText,
@@ -101,17 +112,21 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>formattedText</i>: The parameter  <i>formattedText</i>
-is a text string.</p></li>
-<li><p><i>options</i>: The parameter  <i>options</i>
-is a params object.</p></li>
+  <li>
+    <p><i>formattedText</i>: The parameter  <i>formattedText</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>options</i>: The parameter  <i>options</i>
+ is a params object.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
 
-<h3>ParseInt32</h3>
+<h3 id="parseint32">ParseInt32</h3>
 
 <pre>public static int ParseInt32(
     string value);
@@ -122,15 +137,15 @@ is a params object.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is a text string.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<h3>ParseInt32Hex</h3>
+<h3 id="parseint32hex">ParseInt32Hex</h3>
 
 <pre>public static int ParseInt32Hex(
     string value);
@@ -141,15 +156,15 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is a text string.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<h3>StartsWith</h3>
+<h3 id="startswith">StartsWith</h3>
 
 <pre>public static bool StartsWith(
     string value1,
@@ -161,10 +176,14 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>value1</i>: The parameter  <i>value1</i>
-is a text string.</p></li>
-<li><p><i>value2</i>: The parameter  <i>value2</i>
-is a text string.</p></li>
+  <li>
+    <p><i>value1</i>: The parameter  <i>value1</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>value2</i>: The parameter  <i>value2</i>
+ is a text string.</p>
+  </li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -174,12 +193,12 @@ is a text string.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter <i>value1</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<h3>ToString</h3>
+<h3 id="tostring">ToString</h3>
 
 <pre>public static string ToString(
     byte value);
@@ -190,15 +209,15 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is a byte (from 0 to 255).</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is a byte (from 0 to 255).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
 
-<h3>ToString</h3>
+<h3 id="tostring-1">ToString</h3>
 
 <pre>public static string ToString(
     double value);
@@ -209,15 +228,15 @@ is a byte (from 0 to 255).</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is a 64-bit floating-point number.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is a 64-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
 
-<h3>ToString</h3>
+<h3 id="tostring-2">ToString</h3>
 
 <pre>public static string ToString(
     float value);
@@ -228,15 +247,15 @@ is a 64-bit floating-point number.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is a 32-bit floating-point number.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is a 32-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
 
-<h3>ToString</h3>
+<h3 id="tostring-3">ToString</h3>
 
 <pre>public static string ToString(
     int value);
@@ -247,15 +266,15 @@ is a 32-bit floating-point number.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is a 32-bit signed integer.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
 
-<h3>ToString</h3>
+<h3 id="tostring-4">ToString</h3>
 
 <pre>public static string ToString(
     long value);
@@ -266,15 +285,15 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is a 64-bit signed integer.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is a 64-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
 
-<h3>ToString</h3>
+<h3 id="tostring-5">ToString</h3>
 
 <pre>public static string ToString(
     object value);
@@ -285,15 +304,15 @@ is a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is an arbitrary object.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
 
-<h3>ToString</h3>
+<h3 id="tostring-6">ToString</h3>
 
 <pre>public static string ToString(
     short value);
@@ -304,8 +323,8 @@ is an arbitrary object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
-is a 16-bit signed integer.</li>
+  <li><i>value</i>: The parameter  <i>value</i>
+ is a 16-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>

@@ -5,15 +5,15 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>com.upokecenter.numbers.ETrapException</h1>
-
-<h1>com.upokecenter.numbers.ETrapException</h1>
+<p># com.upokecenter.numbers.ETrapException</p>
 
 <pre>public final class ETrapException extends ArithmeticException
 </pre>
 
 <p>Exception thrown for arithmetic trap errors. (The "E" stands for
  "extended", and has this prefix to group it with the other classes common to
- this library, particularly EDecimal, EFloat, and ERational.). </p> <p>This
+ this library, particularly EDecimal, EFloat, and ERational.). </p>
+<p>This
  library may throw exceptions of this type in certain cases, notably when
  errors occur, and may supply messages to those exceptions (the message can
  be accessed through the <code>Message</code> property in.NET or the <code>
@@ -22,109 +22,95 @@
  are not intended to be parsed by computer programs, and the exact text of
  the messages may change at any time between versions of this library.</p>
 
-<h2>Constructors</h2>
+<h2 id="constructors">Constructors</h2>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods</h2>
 
 <ul>
-<li><p><code>final EContext getContext()</code><br>
-Gets the arithmetic context used during the operation that triggered the
-trap.</p></li>
-<li><p><code>final int getError()</code><br>
-Gets the flag that specifies the primary kind of error in one or more
-operations (EContext.FlagXXX).</p></li>
-<li><p><code>final int getErrors()</code><br>
-Gets the flags that were signaled as the result of one or more operations.</p></li>
-<li><p><code>final Object getResult()</code><br>
-Gets the defined result of the operation that caused the trap.</p></li>
-<li><p><code>boolean HasError(int flag)</code><br>
-Returns whether this trap exception specifies all the flags given.</p></li>
+  <li>
+    <p><code>final EContext getContext()</code><br />
+ Gets the arithmetic context used during the operation that triggered the
+ trap.</p>
+  </li>
+  <li>
+    <p><code>final int getError()</code><br />
+ Gets the flag that specifies the primary kind of error in one or more
+ operations (EContext.FlagXXX).</p>
+  </li>
+  <li>
+    <p><code>final int getErrors()</code><br />
+ Gets the flags that were signaled as the result of one or more operations.</p>
+  </li>
+  <li>
+    <p><code>final Object getResult()</code><br />
+ Gets the defined result of the operation that caused the trap.</p>
+  </li>
+  <li>
+    <p><code>boolean HasError(int flag)</code><br />
+ Returns whether this trap exception specifies all the flags given.</p>
+  </li>
 </ul>
 
-<h2>Method Details</h2>
+<h2 id="method-details">Method Details</h2>
 
-<h3>getContext</h3>
-
-<pre>public final EContext getContext()
+<h3 id="getcontext">getContext</h3>
+<pre>public final EContext getContext() Gets the arithmetic context used during the operation that triggered the  trap. May be null.
 </pre>
-
-<p>Gets the arithmetic context used during the operation that triggered the
- trap. May be null.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The arithmetic context used during the operation that triggered the
-trap. May be null.</li>
+  <li>The arithmetic context used during the operation that triggered the
+ trap. May be null.</li>
 </ul>
 
-<h3>getResult</h3>
-
-<pre>public final Object getResult()
+<h3 id="getresult">getResult</h3>
+<pre>public final Object getResult() Gets the defined result of the operation that caused the trap.
 </pre>
-
-<p>Gets the defined result of the operation that caused the trap.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The defined result of the operation that caused the trap.</li>
+  <li>The defined result of the operation that caused the trap.</li>
 </ul>
 
-<h3>getError</h3>
-
-<pre>public final int getError()
+<h3 id="geterror">getError</h3>
+<pre>public final int getError() Gets the flag that specifies the primary kind of error in one or more  operations (EContext.FlagXXX). This will only be one flag, such as &lt;code&gt;  FlagInexact&lt;/code&gt; or FlagSubnormal.
 </pre>
-
-<p>Gets the flag that specifies the primary kind of error in one or more
- operations (EContext.FlagXXX). This will only be one flag, such as <code>
- FlagInexact</code> or FlagSubnormal.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The flag that specifies the primary kind of error in one or more
-operations.</li>
+  <li>The flag that specifies the primary kind of error in one or more
+ operations.</li>
 </ul>
 
-<h3>getErrors</h3>
-
-<pre>public final int getErrors()
+<h3 id="geterrors">getErrors</h3>
+<pre>public final int getErrors() Gets the flags that were signaled as the result of one or more operations.  This includes the flag specified in the "flag" parameter, but can include  other flags. For instance, if "flag" is &lt;code&gt;EContext.FlagInexact&lt;/code&gt;, this  parameter might be &lt;code&gt;EContext.FlagInexact | EContext.FlagRounded&lt;/code&gt;.
 </pre>
-
-<p>Gets the flags that were signaled as the result of one or more operations.
- This includes the flag specified in the &quot;flag&quot; parameter, but can include
- other flags. For instance, if &quot;flag&quot; is <code>EContext.FlagInexact</code>, this
- parameter might be <code>EContext.FlagInexact | EContext.FlagRounded</code>.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The flags that specify the errors in one or more operations.</li>
+  <li>The flags that specify the errors in one or more operations.</li>
 </ul>
 
-<h3>HasError</h3>
-
-<pre>public boolean HasError(int flag)
+<h3 id="haserror">HasError</h3>
+<pre>public boolean HasError(int flag) Returns whether this trap exception specifies all the flags given. (Flags  are signaled in a trap exception as the result of one or more operations  involving arbitrary-precision numbers, such as multiplication of two  EDecimals.).
 </pre>
-
-<p>Returns whether this trap exception specifies all the flags given. (Flags
- are signaled in a trap exception as the result of one or more operations
- involving arbitrary-precision numbers, such as multiplication of two
- EDecimals.).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>flag</code> - A combination of one or more flags, such as <code>
-EContext.FlagInexact | EContext.FlagRounded</code>.</li>
+  <li><code>flag</code> - A combination of one or more flags, such as <code>
+ EContext.FlagInexact | EContext.FlagRounded</code>.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this exception pertains to all of the flags given in <code>
-flag</code> ; otherwise, false.</li>
+  <li>True if this exception pertains to all of the flags given in <code>
+ flag</code> ; otherwise, false.</li>
 </ul>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>

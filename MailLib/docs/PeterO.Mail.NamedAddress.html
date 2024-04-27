@@ -5,35 +5,32 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Mail.NamedAddress</h1>
-
-<h2>PeterO.Mail.NamedAddress</h2>
+<p>## PeterO.Mail.NamedAddress</p>
 
 <pre>public class NamedAddress
 </pre>
 
 <p>Represents an email address and a name for that address. Can represent a group of email addresses instead.</p>
 
-<h3>Member Summary</h3>
-
+<h3 id="member-summary">Member Summary</h3>
 <ul>
-<li><code><a href="#Address">Address</a></code> - Gets the email address associated with this object.</li>
-<li><code><a href="#AddressesEqual_PeterO_Mail_NamedAddress">AddressesEqual(PeterO.Mail.NamedAddress)</a></code> - Determines whether the email addresses stored this object are the same between this object and the given object, regardless of the display names they store.</li>
-<li><code><a href="#DisplayName">DisplayName</a></code> - Gets the display name for this email address.</li>
-<li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal.</li>
-<li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates the hash code of this object.</li>
-<li><code><a href="#GroupAddresses">GroupAddresses</a></code> - Gets a read-only list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</li>
-<li><code><a href="#IsGroup">IsGroup</a></code> - Gets a value indicating whether this represents a group of addresses rather than a single address.</li>
-<li><code><a href="#Name">Name</a></code> - Gets the display name for this email address, or the email address&#39;s value if the display name is null.</li>
-<li><code><a href="#ParseAddresses_string">ParseAddresses(string)</a></code> - Generates a list of NamedAddress objects from a comma-separated list of addresses.</li>
-<li><code><a href="#ToDisplayString">ToDisplayString()</a></code> - Converts this named-address object to a text string intended for display to end users.</li>
-<li><code><a href="#ToDisplayString_System_Collections_Generic_IList">ToDisplayString(System.Collections.Generic.IList)</a></code> - Generates a string containing the display names and email addresses of the given named-address objects, separated by commas.</li>
-<li><code><a href="#ToDisplayStringShort_System_Collections_Generic_IList">ToDisplayStringShort(System.Collections.Generic.IList)</a></code> - Generates a string containing the display names of the given named-address objects, separated by commas.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
+  <li><code>[Address](#Address)</code> - Gets the email address associated with this object.</li>
+  <li><code>[AddressesEqual(PeterO.Mail.NamedAddress)](#AddressesEqual_PeterO_Mail_NamedAddress)</code> - Determines whether the email addresses stored this object are the same between this object and the given object, regardless of the display names they store.</li>
+  <li><code>[DisplayName](#DisplayName)</code> - Gets the display name for this email address.</li>
+  <li><code>[Equals(object)](#Equals_object)</code> - Determines whether this object and another object are equal.</li>
+  <li><code>[GetHashCode()](#GetHashCode)</code> - Calculates the hash code of this object.</li>
+  <li><code>[GroupAddresses](#GroupAddresses)</code> - Gets a read-only list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</li>
+  <li><code>[IsGroup](#IsGroup)</code> - Gets a value indicating whether this represents a group of addresses rather than a single address.</li>
+  <li><code>[Name](#Name)</code> - Gets the display name for this email address, or the email address’s value if the display name is null.</li>
+  <li><code>[ParseAddresses(string)](#ParseAddresses_string)</code> - Generates a list of NamedAddress objects from a comma-separated list of addresses.</li>
+  <li><code>[ToDisplayString()](#ToDisplayString)</code> - Converts this named-address object to a text string intended for display to end users.</li>
+  <li><code>[ToDisplayString(System.Collections.Generic.IList)](#ToDisplayString_System_Collections_Generic_IList)</code> - Generates a string containing the display names and email addresses of the given named-address objects, separated by commas.</li>
+  <li><code>[ToDisplayStringShort(System.Collections.Generic.IList)](#ToDisplayStringShort_System_Collections_Generic_IList)</code> - Generates a string containing the display names of the given named-address objects, separated by commas.</li>
+  <li><code>[ToString()](#ToString)</code> - Converts this object to a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
-
-<h3>NamedAddress Constructor</h3>
+<p><a id="Void_ctor_System_String"></a>
+### NamedAddress Constructor</p>
 
 <pre>public NamedAddress(
     string address);
@@ -42,18 +39,28 @@
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class. Examples:</p>
 
 <ul>
-<li><p><code>john@example.com</code></p></li>
-<li><p><code>&quot;John Doe&quot; &lt;john@example.com&gt;</code></p></li>
-<li><p><code>=?utf-8?q?John</code>  <code>=</code>  <code>27s_Office?=&lt;john@example.com&gt;</code></p></li>
-<li><p><code>John &lt;john@example.com&gt;</code></p></li>
-<li><p><code>&quot;Group&quot; : Tom &lt;tom@example.com&gt;, Jane
-         &lt;jane@example.com&gt;;</code></p></li>
+  <li>
+    <p><code>john@example.com</code></p>
+  </li>
+  <li>
+    <p><code>"John Doe" &lt;john@example.com&gt;</code></p>
+  </li>
+  <li>
+    <p><code>=?utf-8?q?John</code>  <code>=</code>  <code>27s_Office?=&lt;john@example.com&gt;</code></p>
+  </li>
+  <li>
+    <p><code>John &lt;john@example.com&gt;</code></p>
+  </li>
+  <li>
+    <p><code>"Group" : Tom &lt;tom@example.com&gt;, Jane
+         &lt;jane@example.com&gt;;</code></p>
+  </li>
 </ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>address</i>: A text string identifying a single email address or a group of email addresses. Comments, or text within parentheses, can appear. Multiple email addresses are not allowed unless they appear in the group syntax given above. Encoded words under RFC 2047 that appear within comments or display names will be decoded. An RFC 2047 encoded word consists of &quot;=?&quot;, a character encoding name, such as  <code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a series of bytes in the character encoding, further encoded using B or Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;, and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed to &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s maximum length is 75 characters. See the third example.</li>
+  <li><i>address</i>: A text string identifying a single email address or a group of email addresses. Comments, or text within parentheses, can appear. Multiple email addresses are not allowed unless they appear in the group syntax given above. Encoded words under RFC 2047 that appear within comments or display names will be decoded. An RFC 2047 encoded word consists of “=?”, a character encoding name, such as  <code>utf-8</code> , either “?B?” or “?Q?” (in upper or lower case), a series of bytes in the character encoding, further encoded using B or Q encoding, and finally “?=”. B encoding uses Base64, while in Q encoding, spaces are changed to “_”, equals are changed to “=3D”, and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed to “=” followed by their 2-digit hexadecimal form. An encoded word’s maximum length is 75 characters. See the third example.</li>
 </ul>
 
 <p>.</p>
@@ -61,16 +68,19 @@
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>address</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-Address has an invalid syntax.; Address has an invalid syntax.</p></li>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+Address has an invalid syntax.; Address has an invalid syntax.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_System_String_PeterO_Mail_Address"></a></p>
-
-<h3>NamedAddress Constructor</h3>
+<p><a id="Void_ctor_System_String_PeterO_Mail_Address"></a>
+### NamedAddress Constructor</p>
 
 <pre>public NamedAddress(
     string displayName,
@@ -82,21 +92,24 @@ Address has an invalid syntax.; Address has an invalid syntax.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded words under RFC 2047 will not be decoded.</p></li>
-<li><p><i>address</i>: An email address.</p></li>
+  <li>
+    <p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded words under RFC 2047 will not be decoded.</p>
+  </li>
+  <li>
+    <p><i>address</i>: An email address.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>address</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_String"></a></p>
-
-<h3>NamedAddress Constructor</h3>
+<p><a id="Void_ctor_System_String_System_String"></a>
+### NamedAddress Constructor</p>
 
 <pre>public NamedAddress(
     string displayName,
@@ -108,21 +121,24 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded words under RFC 2047 will not be decoded.</p></li>
-<li><p><i>address</i>: An email address.</p></li>
+  <li>
+    <p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded words under RFC 2047 will not be decoded.</p>
+  </li>
+  <li>
+    <p><i>address</i>: An email address.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>address</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_String_System_String"></a></p>
-
-<h3>NamedAddress Constructor</h3>
+<p><a id="Void_ctor_System_String_System_String_System_String"></a>
+### NamedAddress Constructor</p>
 
 <pre>public NamedAddress(
     string displayName,
@@ -135,23 +151,28 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: The display name of the email address. Can be null or empty.</p></li>
-<li><p><i>localPart</i>: The local part of the email address (before the &quot;@&quot;).</p></li>
-<li><p><i>domain</i>: The domain of the email address (before the &quot;@&quot;).</p></li>
+  <li>
+    <p><i>displayName</i>: The display name of the email address. Can be null or empty.</p>
+  </li>
+  <li>
+    <p><i>localPart</i>: The local part of the email address (before the “@”).</p>
+  </li>
+  <li>
+    <p><i>domain</i>: The domain of the email address (before the “@”).</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>localPart</i>
-or  <i>domain</i>
-is null.</li>
+ or  <i>domain</i>
+ is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_Collections_Generic_IList_1_PeterO_Mail_NamedAddress"></a></p>
-
-<h3>NamedAddress Constructor</h3>
+<p><a id="Void_ctor_System_String_System_Collections_Generic_IList_1_PeterO_Mail_NamedAddress"></a>
+### NamedAddress Constructor</p>
 
 <pre>public NamedAddress(
     string groupName,
@@ -163,24 +184,31 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>groupName</i>: The group&#39;s name.</p></li>
-<li><p><i>mailboxes</i>: A list of named addresses that make up the group.</p></li>
+  <li>
+    <p><i>groupName</i>: The group’s name.</p>
+  </li>
+  <li>
+    <p><i>mailboxes</i>: A list of named addresses that make up the group.</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+  <li>
+    <p>System.ArgumentNullException:
 The parameter  <i>groupName</i>
-or  <i>mailboxes</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-GroupName is empty.; A mailbox in the list is a group.</p></li>
+ or  <i>mailboxes</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+GroupName is empty.; A mailbox in the list is a group.</p>
+  </li>
 </ul>
 
-<p><a id="Address"></a></p>
-
-<h3>Address</h3>
+<p><a id="Address"></a>
+### Address</p>
 
 <pre>public PeterO.Mail.Address Address { get; }
 </pre>
@@ -191,9 +219,8 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 
 <p>The email address associated with this object. This value is null if this object represents a group of addresses instead.</p>
 
-<p><a id="DisplayName"></a></p>
-
-<h3>DisplayName</h3>
+<p><a id="DisplayName"></a>
+### DisplayName</p>
 
 <pre>public string DisplayName { get; }
 </pre>
@@ -204,9 +231,8 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 
 <p>The display name for this email address. Returns null if the display name is absent.</p>
 
-<p><a id="GroupAddresses"></a></p>
-
-<h3>GroupAddresses</h3>
+<p><a id="GroupAddresses"></a>
+### GroupAddresses</p>
 
 <pre>public System.Collections.Generic.IList GroupAddresses { get; }
 </pre>
@@ -217,9 +243,8 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 
 <p>A list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</p>
 
-<p><a id="IsGroup"></a></p>
-
-<h3>IsGroup</h3>
+<p><a id="IsGroup"></a>
+### IsGroup</p>
 
 <pre>public bool IsGroup { get; }
 </pre>
@@ -230,22 +255,20 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 
 <p><code>true</code>  If this represents a group of addresses; otherwise,  <code>false</code> .</p>
 
-<p><a id="Name"></a></p>
-
-<h3>Name</h3>
+<p><a id="Name"></a>
+### Name</p>
 
 <pre>public string Name { get; }
 </pre>
 
-<p>Gets the display name for this email address, or the email address&#39;s value if the display name is null. Returns an empty string if the address and display name are null.</p>
+<p>Gets the display name for this email address, or the email address’s value if the display name is null. Returns an empty string if the address and display name are null.</p>
 
 <p><b>Returns:</b></p>
 
 <p>The name for this email address.</p>
 
-<p><a id="AddressesEqual_PeterO_Mail_NamedAddress"></a></p>
-
-<h3>AddressesEqual</h3>
+<p><a id="AddressesEqual_PeterO_Mail_NamedAddress"></a>
+### AddressesEqual</p>
 
 <pre>public bool AddressesEqual(
     PeterO.Mail.NamedAddress na);
@@ -256,16 +279,15 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>na</i>: A named address object to compare with this one. Can be null.</li>
+  <li><i>na</i>: A named address object to compare with this one. Can be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>Either  <code>true</code>  or  <code>false</code> .</p>
 
-<p><a id="Equals_object"></a></p>
-
-<h3>Equals</h3>
+<p><a id="Equals_object"></a>
+### Equals</p>
 
 <pre>public override bool Equals(
     object obj);
@@ -276,16 +298,15 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: An arbitrary object to compare with this one.</li>
+  <li><i>obj</i>: An arbitrary object to compare with this one.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object and another object are equal and have the same type; otherwise,  <code>false</code> .</p>
 
-<p><a id="GetHashCode"></a></p>
-
-<h3>GetHashCode</h3>
+<p><a id="GetHashCode"></a>
+### GetHashCode</p>
 
 <pre>public override int GetHashCode();
 </pre>
@@ -296,9 +317,8 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 
 <p>A 32-bit hash code.</p>
 
-<p><a id="ParseAddresses_string"></a></p>
-
-<h3>ParseAddresses</h3>
+<p><a id="ParseAddresses_string"></a>
+### ParseAddresses</p>
 
 <pre>public static System.Collections.Generic.IList ParseAddresses(
     string addressValue);
@@ -309,7 +329,7 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addressValue</i>: A comma-separated list of addresses in the form of a text string.</li>
+  <li><i>addressValue</i>: A comma-separated list of addresses in the form of a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -320,14 +340,13 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>addressValue</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="ToDisplayString_System_Collections_Generic_IList"></a></p>
-
-<h3>ToDisplayString</h3>
+<p><a id="ToDisplayString_System_Collections_Generic_IList"></a>
+### ToDisplayString</p>
 
 <pre>public static string ToDisplayString(
     System.Collections.Generic.IList addresses);
@@ -338,7 +357,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addresses</i>: A list of named address objects.</li>
+  <li><i>addresses</i>: A list of named address objects.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -348,14 +367,13 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>addresses</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="ToDisplayString"></a></p>
-
-<h3>ToDisplayString</h3>
+<p><a id="ToDisplayString"></a>
+### ToDisplayString</p>
 
 <pre>public string ToDisplayString();
 </pre>
@@ -366,9 +384,8 @@ is null.</li>
 
 <p>A text string of this named-address object, intended for display to end-users.</p>
 
-<p><a id="ToDisplayStringShort_System_Collections_Generic_IList"></a></p>
-
-<h3>ToDisplayStringShort</h3>
+<p><a id="ToDisplayStringShort_System_Collections_Generic_IList"></a>
+### ToDisplayStringShort</p>
 
 <pre>public static string ToDisplayStringShort(
     System.Collections.Generic.IList addresses);
@@ -379,7 +396,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addresses</i>: A list of named address objects.</li>
+  <li><i>addresses</i>: A list of named address objects.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -389,19 +406,18 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>addresses</i>
-is null.</li>
+ is null.</li>
 </ul>
 
-<p><a id="ToString"></a></p>
-
-<h3>ToString</h3>
+<p><a id="ToString"></a>
+### ToString</p>
 
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this object to a text string. This will generally be the form of this NamedAddress object as it could appear in a &quot;To&quot; header field.</p>
+<p>Converts this object to a text string. This will generally be the form of this NamedAddress object as it could appear in a “To” header field.</p>
 
 <p><b>Return Value:</b></p>
 
