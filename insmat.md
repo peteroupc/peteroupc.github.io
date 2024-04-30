@@ -2,7 +2,7 @@
 
 These are suggestions to improve core and supplemental instructional materials, for all school subjects, used in U.S. schools from kindergarten to twelfth grade.
 
-1. Instructional materials should be open educational resources (OER), available under an open license, such as CC-BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike) or a more permissive license.  For the instructional materials, there should be a GitHub or GitLab repository containing the source code of the materials.  This may make it easier for the general public to view, edit, give feedback on, and suggest changes to the instructional materials for various reasons, including the following:
+1. Instructional materials should be open educational resources (OER), available to anyone under an open license, such as CC-BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike) or a more permissive license.  For the instructional materials, there should be a GitHub or GitLab repository containing the source code of the materials.  This may make it easier for the general public to view, edit, give feedback on, and suggest changes to the instructional materials for various reasons, including the following:
 
     - To reduce cognitive load on students and teachers (without reducing rigor).
     - To improve historical accuracy and cultural responsiveness.
@@ -31,7 +31,7 @@ These are suggestions to improve core and supplemental instructional materials, 
     - Redundancy (which includes unnecessary words) not serving an expressive purpose.
     - Ambiguous language.
 
-These suggestions concern only instructional materials, so policies such as those that [**restrict mobile phones in school**](https://www.educationnext.org/take-away-their-cellphones-rewire-schools-belonging-achievement/) or encourage the [**reduction of classroom decorations**](https://www.learningandthebrain.com/blog/getting-the-principles-just-right-classroom-decoration/), while they may be helpful because they can reduce students' cognitive load, are outside the scope. [^3]
+These suggestions concern only instructional materials, so policies such as those that [**restrict mobile phones in school**](https://www.educationnext.org/take-away-their-cellphones-rewire-schools-belonging-achievement/) or encourage the [**reduction of classroom decorations**](https://www.learningandthebrain.com/blog/getting-the-principles-just-right-classroom-decoration/), while they may help reduce students' cognitive load, are outside the scope. [^3]
 
 Suggestion number 5, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of everyday vocabulary and linguistic variety (see, e.g., Emilio Bernal's "Good usage prevents abusage"). [^2]
 

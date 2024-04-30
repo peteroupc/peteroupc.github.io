@@ -29,7 +29,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) injured | _an event_ injures many; _an event_ [synonym for _causes_] many injuries|Inspired by E. Bernal. |
 little house | housie, housette, houselet, minihouse | Diminutive. |
-| Note that... | Observe that..., Notably..., Notice that..., It should be noted that..., It bears noting that..., It is worth noting that, It bears mentioning that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
+| Note that... | Observe that..., Notably..., Notice that..., Take note that..., It should be noted that..., It bears noting that..., It is worth noting that, It bears mentioning that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
 | many people | many | Inspired by E. Bernal. |
 | people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider gentile nouns; e.g.: _people living in Italy_ &rarr; _Italians_. |
