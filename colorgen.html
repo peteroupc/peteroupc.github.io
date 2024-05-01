@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2023/06/19"><meta name="citation_online_date" content="2023/06/19"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/05/01"><meta name="citation_online_date" content="2024/05/01"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1403,13 +1403,13 @@ END METHOD
   <li>An RGB color—
     <ul>
       <li>is white, black, or a shade of gray (<strong><em>achromatic</em></strong>) if it has equal red, green, and blue components, and</li>
-      <li>is a <a href="http://en.wikipedia.org/wiki/Web_colors"><strong>“Web safe” color</strong></a> if its red, green, and blue components are each a multiple of 0.2.</li>
+      <li>is a <a href="http://en.wikipedia.org/wiki/Web_colors"><strong>“Web safe” color</strong></a> if its red, green, and blue components are each a multiple of 0.2.<sup id="fnref:46" role="doc-noteref"><a href="#fn:46" class="footnote" rel="footnote">32</a></sup></li>
     </ul>
 
     <p>An <a href="#Notation_and_Definitions"><strong><em>image color list</em></strong></a> is achromatic or “Web safe” if all its colors are achromatic or “Web safe”, respectively.</p>
   </li>
   <li>Background removal algorithms, including <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>, can replace “background” pixels of a raster image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel’s color to determine whether that pixel is a “background” pixel (for example, by checking whether the <a href="#Color_Difference"><strong>color difference</strong></a> between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.</li>
-  <li>An application can <strong>apply a function</strong> to each component of an RGB or other multicomponent color, including a power function (of the form <em>base</em><sup><em>exponent</em></sup>), an inversion (an example is <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code> for RGB colors in 0-1 format<sup id="fnref:31" role="doc-noteref"><a href="#fn:31" class="footnote" rel="footnote">32</a></sup>), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.</li>
+  <li>An application can <strong>apply a function</strong> to each component of an RGB or other multicomponent color, including a power function (of the form <em>base</em><sup><em>exponent</em></sup>), an inversion (an example is <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code> for RGB colors in 0-1 format<sup id="fnref:31" role="doc-noteref"><a href="#fn:31" class="footnote" rel="footnote">33</a></sup>), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.</li>
   <li>An application can <strong>swap</strong> the values of any two components of an RGB or other multicomponent color to form new colors.  The following example swaps the blue and red channels of an RGB color: <code>[color[2], color[1], color[0]]</code>.</li>
   <li>Raster image processing techniques that process each pixel depending on neighboring pixels or the image context are largely out of scope of this document.  These include pixel neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation beyond individual pixels (including some clustering and background removal algorithms).</li>
 </ol>
@@ -1443,7 +1443,7 @@ END METHOD
   </ul>
 </blockquote>
 
-<p><strong>Riemersma’s method.</strong> (Riemersma)<sup id="fnref:33" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup> suggests an algorithm for color difference, to be applied to <strong>encoded RGB colors</strong>.</p>
+<p><strong>Riemersma’s method.</strong> (Riemersma)<sup id="fnref:33" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">34</a></sup> suggests an algorithm for color difference, to be applied to <strong>encoded RGB colors</strong>.</p>
 
 <p><strong>CMC.</strong> The following pseudocode implements the Color Measuring Committee color difference formula published in 1984, used above all in the textile industry. Note that in this formula, the order of the two <a href="#CIELAB"><strong>CIELAB</strong></a> colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(<code>LPARAM</code>:<code>CPARAM</code>) where—</p>
 
@@ -1532,7 +1532,7 @@ END METHOD
 </pre>
 
 <blockquote>
-  <p><strong>Note:</strong> An improvement to CIEDE2000 (Huang et al. 2015)<sup id="fnref:34" role="doc-noteref"><a href="#fn:34" class="footnote" rel="footnote">34</a></sup>, recently recommended in CIE 230:2019 for small color differences, is not yet in common use.</p>
+  <p><strong>Note:</strong> An improvement to CIEDE2000 (Huang et al. 2015)<sup id="fnref:34" role="doc-noteref"><a href="#fn:34" class="footnote" rel="footnote">35</a></sup>, recently recommended in CIE 230:2019 for small color differences, is not yet in common use.</p>
 </blockquote>
 
 <p><strong>Commercial factors.</strong> A <em>commercial factor</em> (<code>cf</code>) is an additional parameter to CMC and other color difference formulas.  The <code>COLORDIFF</code> result is divided by <code>cf</code> (which is usually 1) to get the final color difference.</p>
@@ -1614,13 +1614,13 @@ END METHOD
     <li><strong>Color reduction</strong>: Reducing the number of colors in an image usually involves finding that image’s dominant colors and either—
       <ul>
         <li>applying a “nearest neighbor” approach (replacing that image’s colors with their <a href="#Nearest_Colors"><strong>nearest dominant colors</strong></a>), or</li>
-        <li>applying a <a href="https://en.wikipedia.org/wiki/Dither"><strong>“dithering”</strong></a> technique (especially to reduce undesirable color “banding” in certain cases), which is outside the scope of this document, however.<sup id="fnref:35" role="doc-noteref"><a href="#fn:35" class="footnote" rel="footnote">35</a></sup></li>
+        <li>applying a <a href="https://en.wikipedia.org/wiki/Dither"><strong>“dithering”</strong></a> technique (especially to reduce undesirable color “banding” in certain cases), which is outside the scope of this document, however.<sup id="fnref:35" role="doc-noteref"><a href="#fn:35" class="footnote" rel="footnote">36</a></sup></li>
       </ul>
     </li>
-    <li><strong>Unique colors</strong>: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup id="fnref:36" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup></li>
+    <li><strong>Unique colors</strong>: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup id="fnref:36" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">37</a></sup></li>
     <li><strong>Disqualifying dominant colors</strong>:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image’s edges, can ignore certain kinds of colors (for example, gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the dominant color list.</li>
     <li>Averaging the colors of an image, component-by-component, can lead to a meaningless result, especially if there is a wide color variety represented in the image (see <code>stackoverflow.com/questions/43111029</code>).</li>
-    <li><strong>Extracting a scene’s “true colors”</strong>: For applications where matching colors from the real world is important, colors need to be measured using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a>, or be calculated from <a href="http://eilv.cie.co.at/term/567"><strong><em>scene-referred</em> image data</strong></a>.<sup id="fnref:37" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup> PNG and many other image formats store image data commonly interpreted as <a href="#sRGB"><strong>sRGB</strong></a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><strong><em>output-referred</em></strong></a> color space, not a scene-referred one (it’s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br />Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image’s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
+    <li><strong>Extracting a scene’s “true colors”</strong>: For applications where matching colors from the real world is important, colors need to be measured using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a>, or be calculated from <a href="http://eilv.cie.co.at/term/567"><strong><em>scene-referred</em> image data</strong></a>.<sup id="fnref:37" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">38</a></sup> PNG and many other image formats store image data commonly interpreted as <a href="#sRGB"><strong>sRGB</strong></a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><strong><em>output-referred</em></strong></a> color space, not a scene-referred one (it’s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br />Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image’s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
   </ol>
 </blockquote>
 
@@ -1647,22 +1647,22 @@ END METHOD
 </ul>
 
 <blockquote>
-  <p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being “print friendly”<sup id="fnref:38" role="doc-noteref"><a href="#fn:38" class="footnote" rel="footnote">38</a></sup>, “<a href="#Defective_and_Animal_Color_Vision"><strong>color blind friendly</strong></a>”, or both suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
+  <p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being “print friendly”<sup id="fnref:38" role="doc-noteref"><a href="#fn:38" class="footnote" rel="footnote">39</a></sup>, “<a href="#Defective_and_Animal_Color_Vision"><strong>color blind friendly</strong></a>”, or both suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
 </blockquote>
 
 <p><a id="Color_Collections"></a></p>
 
 <h3 id="color-collections">Color Collections</h3>
 
-<p>If each color in a color map has a name, number, or code associated with it, the color map is also called a <em>color collection</em>.  Examples of names are “red”, “vivid green”, “orange”, “lemonchiffon”, and “5RP 5/6”<sup id="fnref:39" role="doc-noteref"><a href="#fn:39" class="footnote" rel="footnote">39</a></sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like"><strong>colors tutorial for the HTML 3D Library</strong></a>.</p>
+<p>If each color in a color map has a name, number, or code associated with it, the color map is also called a <em>color collection</em>.  Examples of names are “red”, “vivid green”, “orange”, “lemonchiffon”, and “5RP 5/6”<sup id="fnref:39" role="doc-noteref"><a href="#fn:39" class="footnote" rel="footnote">40</a></sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like"><strong>colors tutorial for the HTML 3D Library</strong></a>.</p>
 
 <p>Converting a color (such as an RGB color) to a color name can be done by—
-- retrieving the name keyed to that color in a hash table (or returning an error if that color doesn’t exist in the hash table)<sup id="fnref:36:1" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup>, or
+- retrieving the name keyed to that color in a hash table (or returning an error if that color doesn’t exist in the hash table)<sup id="fnref:36:1" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">37</a></sup>, or
 - finding the <a href="#Nearest_Colors"><strong>nearest color</strong></a> to that color among the named colors, and returning the name of the color found this way.</p>
 
-<p>Converting a color name to a color can be done by retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup id="fnref:36:2" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup></p>
+<p>Converting a color name to a color can be done by retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup id="fnref:36:2" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">37</a></sup></p>
 
-<p>If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a <em>color dictionary</em> (Venn et al.)<sup id="fnref:40" role="doc-noteref"><a href="#fn:40" class="footnote" rel="footnote">40</a></sup>.</p>
+<p>If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a <em>color dictionary</em> (Venn et al.)<sup id="fnref:40" role="doc-noteref"><a href="#fn:40" class="footnote" rel="footnote">41</a></sup>.</p>
 
 <blockquote>
   <p><strong>Notes:</strong></p>
@@ -1680,14 +1680,14 @@ END METHOD
 <p>Color maps can list colors used to identify different items. Because of this use, many applications need to use colors that are easily distinguishable by humans.  In this respect—</p>
 
 <ul>
-  <li>K. Kelly (1965) proposed a list of “twenty two colors of maximum contrast”<sup id="fnref:41" role="doc-noteref"><a href="#fn:41" class="footnote" rel="footnote">41</a></sup>, the first nine of which
+  <li>K. Kelly (1965) proposed a list of “twenty two colors of maximum contrast”<sup id="fnref:41" role="doc-noteref"><a href="#fn:41" class="footnote" rel="footnote">42</a></sup>, the first nine of which
 were intended for readers with normal and <a href="#Defective_and_Animal_Color_Vision"><strong>defective</strong></a> color vision, and</li>
   <li>B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.</li>
 </ul>
 
 <p>In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly’s list) should use other visual means in addition to color (or rather than color) to help users identify them, such as numbered labels, text labels, different shapes, different shading, different dash patterns, or a combination of these. (Note that under the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/"><strong>Web Content Accessibility Guidelines 2.0</strong></a> level A, color may not be <a href="http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color"><strong>“the only visual means of conveying information”</strong></a>.)</p>
 
-<p>In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest <a href="#Color_Differences"><strong>color difference</strong></a> [<code>COLORDIFF</code>] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular <em>color gamut</em>. Here, the color difference method should be <em>ΔE*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup id="fnref:42" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup>.)</p>
+<p>In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest <a href="#Color_Differences"><strong>color difference</strong></a> [<code>COLORDIFF</code>] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular <em>color gamut</em>. Here, the color difference method should be <em>ΔE*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup id="fnref:42" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">43</a></sup>.)</p>
 
 <p><a id="Linear_Gradients"></a></p>
 
@@ -1908,7 +1908,7 @@ END METHOD
 
 <p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  As a blackbody’s temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.</p>
 
-<p>The <code>Planckian</code> method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>BlackbodySPD</code> method below uses that method (where <code>TEMP</code> is the desired color temperature).<sup id="fnref:43" role="doc-noteref"><a href="#fn:43" class="footnote" rel="footnote">43</a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
+<p>The <code>Planckian</code> method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>BlackbodySPD</code> method below uses that method (where <code>TEMP</code> is the desired color temperature).<sup id="fnref:43" role="doc-noteref"><a href="#fn:43" class="footnote" rel="footnote">44</a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
 
 <pre>METHOD Planckian(wl, temp)
     num = pow(wl, -5)
@@ -1953,9 +1953,9 @@ END METHOD
 
 <ul>
   <li>As <a href="http://www.scottburns.us/subtractive-color-mixture/"><strong>S. A. Burns indicates</strong></a>, two or more <a href="#Spectral_Color_Functions"><strong><em>reflectance curves</em></strong></a>, each representing a <strong>pigment or colorant</strong>, can be mixed by calculating their <em>weighted geometric mean</em>, which
-takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup></li>
+takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">45</a></sup></li>
   <li>As <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile"><strong>B. MacEvoy indicates</strong></a>, two or more spectral curves for <strong>transmissive materials</strong> can be mixed simply by multiplying them; the result is a new spectral curve for the mixed material.</li>
-  <li>An alternative method of color formulation, based on the <strong>Kubelka–Munk theory</strong>, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance factors in the Kubelka–Munk theory.  The Python sample code implements the Kubelka–Munk equations.  One way to predict a color formula using this theory is described by E. Walowit in 1985<sup id="fnref:45" role="doc-noteref"><a href="#fn:45" class="footnote" rel="footnote">45</a></sup>.  ISO 18314-2 is also a relevant document.</li>
+  <li>An alternative method of color formulation, based on the <strong>Kubelka–Munk theory</strong>, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance factors in the Kubelka–Munk theory.  The Python sample code implements the Kubelka–Munk equations.  One way to predict a color formula using this theory is described by E. Walowit in 1985<sup id="fnref:45" role="doc-noteref"><a href="#fn:45" class="footnote" rel="footnote">46</a></sup>.  ISO 18314-2 is also a relevant document.</li>
 </ul>
 
 <p>For convenience, the <code>WGM</code> method below computes the weighted geometric mean of one or more numbers, where—</p>
@@ -2122,6 +2122,9 @@ END METHOD
     </li>
     <li id="fn:32" role="doc-endnote">
       <p>The “E” here stands for the German word <em>Empfindung</em>. <a href="#fnref:32" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:32:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:46" role="doc-endnote">
+      <p>The definition of “Web safe” colors, though not the name, dates as early as 1994, when Microsoft’s WinG API provided a <em>halftone palette</em> to “allo[w] applications to simulate true 24-bit color on 8-bit devices” (<em>WinG Programmer’s Reference</em>, 1994).  WinG was an early attempt by Microsoft to bring high-performance graphics operations to the Windows platform and was superseded by DirectX. <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:31" role="doc-endnote">
       <p>This is often called the “CMY” (“cyan–magenta–yellow”) version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also “<a href="#CMYK_and_Other_Ink_Mixture_Color_Models"><strong>CMYK and Other Ink-Mixture Color Models</strong></a>”).  If such an operation is used, the conversions between “CMY” and RGB are exactly the same. <a href="#fnref:31" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

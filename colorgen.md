@@ -1231,7 +1231,7 @@ The following approaches can generate a saturated or desaturated version of a co
 
 1. An RGB color&mdash;
     - is white, black, or a shade of gray (**_achromatic_**) if it has equal red, green, and blue components, and
-    - is a [**"Web safe" color**](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.
+    - is a [**"Web safe" color**](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.[^46]
 
     An [**_image color list_**](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
 
@@ -1840,6 +1840,8 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 [^44]: As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [for example, the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
 
 [^45]: Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.
+
+[^46]: The definition of "Web safe" colors, though not the name, dates as early as 1994, when Microsoft's WinG API provided a _halftone palette_ to "allo[w] applications to simulate true 24-bit color on 8-bit devices" (_WinG Programmer's Reference_, 1994).  WinG was an early attempt by Microsoft to bring high-performance graphics operations to the Windows platform and was superseded by DirectX.
 
 <a id=License></a>
 
