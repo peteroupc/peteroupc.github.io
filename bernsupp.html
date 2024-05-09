@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2023/12/30"><meta name="citation_online_date" content="2023/12/30"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/05/07"><meta name="citation_online_date" content="2024/05/07"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -78,7 +78,7 @@
 <p>The following terms can describe a function $f(x)$, specifically how “well-behaved” $f$ is.</p>
 
 <ul>
-  <li>A <em>continuous</em> function $f$ has the property that there is a function $h(x, \epsilon)$ (where $x$ is in $f$’s domain and $\epsilon&gt;0$), such that $f(x)$ and $f(y)$ are no more than $\epsilon$ apart whenever $x$ and $y$ are in $f$’s domain and no more than $h(x, \epsilon)$ apart.<br />Roughly speaking, for each $x$ in $f$’s domain, $f(x)$ and $f(y)$ are “close” if $x$ and $y$ are “close” and belong in the domain.</li>
+  <li>A <em>continuous</em> function $f$ has the property that there is a function $h(x, \epsilon)$ (where $x$ is in $f$’s domain and $\epsilon&gt;0$), such that $f(x)$ and $f(y)$ are less than $\epsilon$ apart whenever $x$ and $y$ are in $f$’s domain and less than $h(x, \epsilon)$ apart.<br />Roughly speaking, for each $x$ in $f$’s domain, $f(x)$ and $f(y)$ are “close” if $x$ and $y$ are “close” and belong in the domain.</li>
   <li>If $f$ is continuous, its <em>derivative</em> is, roughly speaking, its “slope” function or “velocity” function or “instantaneous-rate-of-change” function.  The derivative (or <em>first derivative</em>) is denoted $f’$ or $f^{(1)}$.  The <em>second derivative</em> (“slope-of-slope”) of $f$, denoted $f’’$ or $f^{(2)}$, is the derivative of $f’$; the <em>third derivative</em>, denoted $f^{(3)}$, is the derivative of $f’’$; and so on.  The <em>0-th derivative</em> of a function $f$ is $f$ itself and denoted $f^{(0)}$.</li>
   <li>A <a href="https://en.wikipedia.org/wiki/Hölder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>α</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>δ</em><sup><em>α</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function’s domain and no more than <em>δ</em> apart.<br />Here, <em>α</em> satisfies 0 &lt; <em>α</em> ≤ 1.<br />Roughly speaking, the function’s “steepness” is no greater than that of <em>M</em>*<em>x</em><sup><em>α</em></sup>.</li>
   <li>A <em>Lipschitz continuous</em> function with constant <em>L</em> (the <em>Lipschitz constant</em>) is Hölder continuous with Hölder exponent 1 and Hölder constant <em>L</em>.<br />Roughly speaking, the function’s “steepness” is no greater than that of <em>L</em>*<em>x</em>.<br />If the function has a derivative on its domain, <em>L</em> can be the maximum of the absolute value of that derivative.</li>
@@ -328,7 +328,7 @@
 
 <p>For examples of suitable polynomials, see <a href="https://peteroupc.github.io/bernapprox.html"><strong>“Approximations in Bernstein Form”</strong></a>.</p>
 
-<p>In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called <em>T</em> in the algorithm below), then simulates an appropriate <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a> of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup> To simulate $f$, the algorithm—</p>
+<p>In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called <em>T</em> in the algorithm below), then simulates an appropriate <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a> (weighted sum) of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup> To simulate $f$, the algorithm—</p>
 
 <ul>
   <li>selects a polynomial in the convex combination with probability proportional to its upper bound, or a “leftover” zero polynomial with probability <em>T</em>, then</li>
@@ -538,17 +538,7 @@
   <p><strong>Note:</strong> A function $f(\lambda)$ is:</p>
 
   <ul>
-    <li>
-      <table>
-        <tbody>
-          <tr>
-            <td><em>Analytic</em> at a point $z$ if there is a positive number $r$ such that $f$ is writable as— \(f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,\) whenever $</td>
-            <td>\lambda-z</td>
-            <td>&lt;r$, where $f^{(i)}$ is the $i$-th derivative of $f$.</td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
+    <li><em>Analytic</em> at a point $z$ if there is a positive number $r$ such that $f$ is writable as— \(f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,\) whenever $\abs(\lambda-z)&lt;r$, where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
     <li>In the <em>Zygmund class</em> if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon&gt;0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two “smaller” classes of Lipschitz continuous functions (see “Definitions”) and functions with a continuous derivative.</li>
   </ul>
 </blockquote>

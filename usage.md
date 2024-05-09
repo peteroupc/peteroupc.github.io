@@ -18,8 +18,8 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant | |
 | cause | lead to, produce, provoke, engender, beget, bring on, bring about, produce, result in | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself | |
-| focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, concern | |
-| focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning | |
+| focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, concern, be anchored on, be devoted to | |
+| focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
 | happen | occur, manifest, produce itself, present itself, take place, unfold, come to pass. | Inspired by E. Bernal. |
@@ -31,6 +31,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 little house | housie, housette, houselet, minihouse | Diminutive. |
 | Note that... | Observe that..., Notably..., Notice that..., Take note that..., It should be noted that..., It bears noting that..., It is worth noting that, It bears mentioning that..., It should be mentioned that..., Keep in mind that..., We point out that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
+| jury member | juror |Suggested by E. Bernal. |
 | many people | many | Inspired by E. Bernal. |
 | people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider gentile nouns; e.g.: _people living in Italy_ &rarr; _Italians_. |
 | (the) professors | the faculty, professorship, professor corps, professor body, body of professors | |

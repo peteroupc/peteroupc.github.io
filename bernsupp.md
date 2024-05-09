@@ -55,7 +55,7 @@ The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 
 
 The following terms can describe a function $f(x)$, specifically how "well-behaved" $f$ is.
 
-- A _continuous_ function $f$ has the property that there is a function $h(x, \epsilon)$ (where $x$ is in $f$'s domain and $\epsilon>0$), such that $f(x)$ and $f(y)$ are no more than $\epsilon$ apart whenever $x$ and $y$ are in $f$'s domain and no more than $h(x, \epsilon)$ apart.<br>Roughly speaking, for each $x$ in $f$'s domain, $f(x)$ and $f(y)$ are "close" if $x$ and $y$ are "close" and belong in the domain.
+- A _continuous_ function $f$ has the property that there is a function $h(x, \epsilon)$ (where $x$ is in $f$'s domain and $\epsilon>0$), such that $f(x)$ and $f(y)$ are less than $\epsilon$ apart whenever $x$ and $y$ are in $f$'s domain and less than $h(x, \epsilon)$ apart.<br>Roughly speaking, for each $x$ in $f$'s domain, $f(x)$ and $f(y)$ are "close" if $x$ and $y$ are "close" and belong in the domain.
 - If $f$ is continuous, its _derivative_ is, roughly speaking, its "slope" function or "velocity" function or "instantaneous-rate-of-change" function.  The derivative (or _first derivative_) is denoted $f'$ or $f^{(1)}$.  The _second derivative_ ("slope-of-slope") of $f$, denoted $f''$ or $f^{(2)}$, is the derivative of $f'$; the _third derivative_, denoted $f^{(3)}$, is the derivative of $f''$; and so on.  The _0-th derivative_ of a function $f$ is $f$ itself and denoted $f^{(0)}$.
 - A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 - A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the function's "steepness" is no greater than that of _L_\*_x_.<br>If the function has a derivative on its domain, _L_ can be the maximum of the absolute value of that derivative.
@@ -221,7 +221,7 @@ The algorithm I've developed in this section simulates $f(\lambda)$ when $f$ bel
 
 For examples of suitable polynomials, see [**"Approximations in Bernstein Form"**](https://peteroupc.github.io/bernapprox.html).
 
-In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called _T_ in the algorithm below), then simulates an appropriate [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations) of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).[^6] To simulate $f$, the algorithm&mdash;
+In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose maximums must sum to 1 or less (called _T_ in the algorithm below), then simulates an appropriate [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations) (weighted sum) of these polynomials.  To build the convex combination, each polynomial in the infinite sum is divided by an upper bound on its maximum (which is why error bounds on $L_{n}(f)$ are crucial here).[^6] To simulate $f$, the algorithm&mdash;
 
 - selects a polynomial in the convex combination with probability proportional to its upper bound, or a "leftover" zero polynomial with probability _T_, then
 - simulates the chosen polynomial (which is easy to do; see Goyal and Sigman (2012)[^7]).
@@ -352,7 +352,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 > **Note:** A function $f(\lambda)$ is:
 >
-> - _Analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $|\lambda-z|<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
+> - _Analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $\abs(\lambda-z)<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
 > - In the _Zygmund class_ if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon>0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two "smaller" classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
 
 <a id=Notes></a>
