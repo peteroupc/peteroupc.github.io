@@ -1,0 +1,679 @@
+# This Python script helps generate interesting variations on desktop
+# wallpapers based on existing image files.
+#
+# This script is released to the public domain; in case that is not possible, the
+# file is also licensed under Creative Commons Zero (CC0).
+
+# Suggestion for improving this file: Support the pattern format
+# from early versions of Microsoft Windows (such as Windows 3.1).
+# Namely it's an 8x8 monochrome two-color tiling pattern represented
+# as eight 8-bit bytes; the colors
+# that represent "black" and "white" could be set separately.
+
+import shlex
+import os
+
+def websafecolors():
+    colors = []
+    for r in range(6):
+        for g in range(6):
+            for b in range(6):
+                colors.append([r * 51, g * 51, b * 51])
+    return colors
+
+def classiccolors():
+    return [
+        [0, 0, 0],
+        [127, 127, 127],
+        [255, 255, 255],
+        [191, 191, 191],
+        [255, 0, 0],
+        [127, 0, 0],
+        [0, 255, 0],
+        [0, 127, 0],
+        [0, 0, 255],
+        [0, 0, 127],
+        [255, 0, 255],
+        [127, 0, 127],
+        [0, 255, 255],
+        [0, 127, 127],
+        [255, 255, 0],
+        [127, 127, 0],
+    ]
+
+def tileable():
+    return "\\( +clone -flip \\) -append \\( +clone -flop \\) +append"
+
+# Returns an ImageMagick filter string to generate a desktop background from an image, in three steps.
+# 1. If rgb1 and rgb2 are not nil, converts the input image to grayscale, then translates the grayscale
+# palette to a gradient starting at rgb1 for black (e.g., [2,10,255] where each
+# component is from 0 through 255) and ending at rgb2 for white (same format).
+# Raises an error if rgb1 or rgb2 has a length greater than 256.
+# The output image is the input for the next step.
+# 2. If hue is not 0, performs a hue shift, in degrees (-180 to 180), of the input image.
+# The output image is the input for the next step.
+# 3. If basecolors is not nil, performs a dithering operation on the input image; that is, it
+# reduces the number of colors of the image to those given in 'basecolors', which is a list
+# of colors (each color is a 3-item array of the red, green, and blue components in that order),
+# and scatters the remaining colors in the image so that they appear close to the original colors.
+# Raises an error if 'basecolors' has a length greater than 256. 'abstractImage' (default is False)
+# indicates whether the image to apply the filter to is an abstract or
+# geometric (rather than a photographic) image.
+def magickgradientditherfilter(rgb1=None, rgb2=None, basecolors=None, hue=0, abstractImage=False):
+    if hue < -180 or hue > 180:
+        raise ValueError
+    if rgb1 and len(rgb1) > 256:
+        raise ValueError
+    if rgb2 and len(rgb2) > 256:
+        raise ValueError
+    if basecolors and len(basecolors) > 256:
+        raise ValueError
+    huemod = (hue + 180) * 100.0 / 180.0
+    hueshift = "" if hue == 0 else ("-modulate 100,100,%.02f" % (huemod))
+    mgradient = None
+    if rgb1 != None and rgb2 != None:
+        r1 = "#%02x%02x%02x" % (int(rgb1[0]), int(rgb1[1]), int(rgb1[2]))
+        r2 = "#%02x%02x%02x" % (int(rgb2[0]), int(rgb2[1]), int(rgb2[2]))
+        mgradient = (
+            "\\( +clone -grayscale Rec709Luma \\) \\( -size 1x256 gradient:%s-%s \\) -delete 0 -clut"
+            % (r1, r2)
+        )
+    else:
+        mgradient = ""
+    if basecolors and len(basecolors) > 0:
+        bases = ["xc:#%02X%02X%02X" % (k[0], k[1], k[2]) for k in basecolors]
+        # ImageMagick command to generate the palette image
+        image = "-size 1x1 " + (" ".join(bases)) + " +append -write mpr:z +delete"
+        if abstractImage:
+        ditherkind = "-ordered-dither 4x4" if abstractImage else "-dither FloydSteinberg"
+        return "%s %s \\( %s \\) %s -remap mpr:z" % (
+            mgradient,
+            hueshift,
+            image,
+            ditherkind,
+        )
+    else:
+        return "%s" % (hueshift)
+
+def solid(bg=[192, 192, 192], w=64, h=64):
+    if bg == None or len(bg) < 3:
+        raise ValueError
+    bc = "#%02x%02x%02x" % (int(bg[0]), int(bg[1]), int(bg[2]))
+    return "-size %dx%d xc:%s" % (w, h, bg)
+
+def hautrelief(bg=[192, 192, 192], highlight=[255, 255, 255], shadow=[0, 0, 0]):
+    if bg == None or len(bg) < 3:
+        raise ValueError
+    if highlight == None or len(highlight) < 3:
+        raise ValueError
+    if shadow == None or len(shadow) < 3:
+        raise ValueError
+    bc = "#%02x%02x%02x" % (int(bg[0]), int(bg[1]), int(bg[2]))
+    hc = "#%02x%02x%02x" % (int(highlight[0]), int(highlight[1]), int(highlight[2]))
+    sc = "#%02x%02x%02x" % (int(shadow[0]), int(shadow[1]), int(shadow[2]))
+    return (
+        "-grayscale Rec709Luma -channel RGB -threshold 50%% -write mpr:z "
+        + '\\( -clone 0 -morphology Convolve "3:0,0,0 0,0,0 0,0,1" -write mpr:z1 \\) '
+        + '\\( -clone 0 -morphology Convolve "3:1,0,0 0,0,0 0,0,0" -write mpr:z2 \\) -delete 0 '
+        + "-compose Multiply -composite "
+        + "\\( mpr:z1 mpr:z2 -compose Screen -composite -negate \\) -compose Plus -composite "
+        + "\\( -size 1x1 xc:black xc:%s +append \\) -clut -write mpr:a1 -delete 0 "
+        + 'mpr:z1 \\( mpr:z -negate -morphology Convolve "3:1,0,0 0,0,0 0,0,0" \\) -compose Multiply -composite '
+        + "\\( -size 1x1 xc:black xc:%s +append \\) -clut -write mpr:a2 -delete 0 "
+        + '\\( mpr:z -negate -morphology Convolve "3:0,0,0 0,0,0 0,0,1" \\) mpr:z2 -compose Multiply -composite '
+        + "\\( -size 1x1 xc:black xc:%s +append \\) -clut mpr:a2 -compose Plus -composite mpr:a1 -compose Plus -composite"
+    ) % (bc, hc, sc)
+
+def basrelief(bg=[192, 192, 192], highlight=[255, 255, 255], shadow=[0, 0, 0]):
+    if bg == None or len(bg) < 3:
+        raise ValueError
+    if highlight == None or len(highlight) < 3:
+        raise ValueError
+    if shadow == None or len(shadow) < 3:
+        raise ValueError
+    bc = "#%02x%02x%02x" % (int(bg[0]), int(bg[1]), int(bg[2]))
+    hc = "#%02x%02x%02x" % (int(highlight[0]), int(highlight[1]), int(highlight[2]))
+    sc = "#%02x%02x%02x" % (int(shadow[0]), int(shadow[1]), int(shadow[2]))
+    return (
+        "-grayscale Rec709Luma -channel RGB -threshold 50%% -write mpr:z "
+        + '\\( -clone 0 -morphology Convolve "3:0,0,0 0,0,0 0,0,1" -write mpr:z1 \\) '
+        + '\\( -clone 0 -morphology Convolve "3:1,0,0 0,0,0 0,0,0" -write mpr:z2 \\) -delete 0--1 '
+        + "mpr:z2 \\( mpr:z -negate \\) -compose Multiply -composite -write mpr:a10 "
+        + "\\( -size 1x1 xc:black xc:%s +append \\) -clut -write mpr:a2 -delete 0 "
+        + "\\( mpr:z -negate \\) mpr:z1 -compose Multiply -composite -write mpr:a20 "
+        + "\\( -size 1x1 xc:black xc:%s +append \\) -clut -write mpr:a1 -delete 0 "
+        + "mpr:a10 mpr:a20 -compose Plus -composite -negate "
+        + "\\( -size 1x1 xc:black xc:%s +append \\) -clut mpr:a2 -compose Plus -composite "
+        + "mpr:a1 -compose Plus -composite"
+    ) % (sc, hc, bc)
+
+import random
+
+def magickgradientditherfilterrandom():
+    rgb1 = None
+    rgb2 = None
+    hue = 0
+    basecolors = None
+    while rgb1 == None and rgb2 == None and hue == 0 and basecolors == None:
+        if random.randint(0, 99) == 1:
+            return magickgradientditherfilter()
+        rgb1 = None
+        rgb2 = None
+        hue = 0
+        basecolors = None
+        if random.randint(0, 9) < 6:
+            rgb1 = [0, 0, 0]
+            rgb2 = [
+                random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255),
+            ]
+        if random.randint(0, 9) < 3:
+            hue = random.randint(0, 50) - 180
+        r = random.randint(0, 9)
+        if r < 3:
+            basecolors = classiccolors()
+        elif r < 6:
+            basecolors = websafecolors()
+        elif r < 8 and rgb1 != None:
+            basecolors = [rgb1, rgb2]
+    return magickgradientditherfilter(rgb1, rgb2, basecolors, hue=hue)
+
+# What follows are methods for generating scalable vector graphics (SVGs) of
+# classic OS style borders and button controls.  Although the SVGs are scalable
+# by definition, they are pixelated just as they would appear in classic OSs.
+#
+# NOTE: A more flexible approach for this kind of drawing
+# is to prepare an SVG defining the frame of a user interface element
+# with five different parts (in the form of 2D shapes): an "upper outer part", a
+# "lower outer part", an "upper inner part", a "lower inner part", and a "middle part".
+# Each of these five parts can be colored separately or filled with a pattern.
+
+# helper for rectangle drawing
+def _rect(x0, y0, x1, y1, c):
+    if x0 >= x1 or y0 >= y1:
+        return ""
+    return "<path style='stroke:none;fill:%s' d='M%d %dL%d %dL%d %dL%d %dZ'/>" % (
+        c,
+        x0,
+        y0,
+        x1,
+        y0,
+        x1,
+        y1,
+        x0,
+        y1,
+    )
+
+# helper for edge drawing (top left edge "dominates")
+# hilt = upper part of edge, dksh = lower part of edge
+def _drawedgetopdom(x0, y0, x1, y1, hilt, dksh=None, edgesize=1):
+    if x1 - x0 < edgesize * 2 or y1 - y0 < edgesize * 2:  # too narrow and short
+        return _drawedgebotdom(x0, y0, x1, y1, hilt, dksh, edgesize)
+    return (
+        _rect(x0, y0, x0 + edgesize, y1, hilt)  # left edge
+        + _rect(x0 + edgesize, y0, x1, y0 + edgesize, hilt)  # top edge
+        + _rect(x1 - edgesize, y0 + edgesize, x1, y1, dksh)  # right edge
+        + _rect(x0 + edgesize, y1 - edgesize, x1 - edgesize, y1, dksh)  # bottom edge
+    )
+
+def _drawface(x0, y0, x1, y1, face, edgesize=1):
+    if x1 - x0 < edgesize * 2 and y1 - y0 < edgesize * 2:  # too narrow and short
+        return ""
+    if x1 - x0 < edgesize * 2:  # too narrow
+        return _rect(x0, y0 + edgesize, x1, y0 - edgesize, face)
+    if y1 - y0 < edgesize * 2:  # too short
+        return _rect(x0 + edgesize, y0, x1 - edgesize, y1, face)
+    return _rect(x0 + edgesize, y0 + edgesize, x1 - edgesize, y1 - edgesize, face)
+
+# helper for edge drawing (bottom right edge "dominates")
+# hilt = upper part of edge, dksh = lower part of edge
+def _drawedgebotdom(x0, y0, x1, y1, hilt, dksh=None, edgesize=1):
+    if hilt and (dksh is None):
+        dksh = hilt
+    if dksh and (hilt is None):
+        hilt = dksh
+    if x1 - x0 < edgesize * 2 and y1 - y0 < edgesize * 2:  # too narrow and short
+        return _rect(x0, y0, x1, y1, dksh)
+    if x1 - x0 < edgesize * 2:  # too narrow
+        return (
+            _rect(x0, y0, x1, y0 + edgesize, hilt)
+            + _rect(x0, y0 + edgesize, x1, y0 - edgesize, hilt)
+            + _rect(x0, y1 - edgesize, x1, y1, dksh)
+        )
+    if y1 - y0 < edgesize * 2:  # too short
+        return (
+            _rect(x0, y0, x0 + edgesize, y1, dksh)
+            + _rect(x0 + edgesize, y0, x1 - edgesize, y1, hilt)
+            + _rect(x1 - edgesize, y0, x1, y1, dksh)
+        )
+    return (
+        _rect(x0, y0, x0 + edgesize, y1 - edgesize, hilt)  # left edge
+        + _rect(x0 + edgesize, y0, x1 - edgesize, y0 + edgesize, hilt)  # top edge
+        + _rect(x1 - edgesize, y0, x1, y1, dksh)  # right edge
+        + _rect(x0, y1 - edgesize, x1 - edgesize, y1, dksh)  # bottom edge
+    )
+
+# hilt = upper part of edge, dksh = lower part of edge
+def _drawroundedge(x0, y0, x1, y1, hilt, dksh=None, edgesize=1):
+    if hilt and (dksh is None):
+        dksh = hilt
+    if dksh and (hilt is None):
+        hilt = dksh
+    if x1 - x0 < edgesize * 2 and y1 - y0 < edgesize * 2:  # too narrow and short
+        return ""
+    if x1 - x0 < edgesize * 2:  # too narrow
+        return _rect(x0, y0 + edgesize, x1, y0 - edgesize, hilt)
+    if y1 - y0 < edgesize * 2:  # too short
+        return _rect(x0 + edgesize, y0, x1 - edgesize, y1, hilt)
+    return (
+        _rect(x0, y0 + edgesize, x0 + edgesize, y1 - edgesize, hilt)  # left edge
+        + _rect(x0 + edgesize, y0, x1 - edgesize, y0 + edgesize, hilt)  # top edge
+        + _rect(
+            x1 - edgesize,
+            y0 + edgesize,
+            x1,
+            y1 - edgesize,
+            hilt if dksh is None else dksh,
+        )  # right edge
+        + _rect(
+            x0 + edgesize,
+            y1 - edgesize,
+            x1 - edgesize,
+            y1,
+            hilt if dksh is None else dksh,
+        )  # bottom edge
+    )
+
+def _drawinnerface(x0, y0, x1, y1, face):
+    edgesize = 1
+    return _drawface(
+        x0 + edgesize,
+        y0 + edgesize,
+        x1 - edgesize,
+        y1 - edgesize,
+        face,
+        edgesize=edgesize,
+    )
+
+# highlight color, light color, shadow color, dark shadow color
+def drawraisedouter(x0, y0, x1, y1, hilt, lt, sh, dksh):
+    return _drawedgebotdom(x0, y0, x1, y1, lt, dksh)
+
+def drawraisedinner(x0, y0, x1, y1, hilt, lt, sh, dksh):
+    edgesize = 1
+    return _drawedgebotdom(
+        x0 + edgesize,
+        y0 + edgesize,
+        x1 - edgesize,
+        y1 - edgesize,
+        hilt, # draw the "upper part" with this color
+        sh,   # draw the "lower part" with this color
+        edgesize=edgesize,
+    )
+
+def drawsunkenouter(x0, y0, x1, y1, hilt, lt, sh, dksh):
+    return _drawedgebotdom(x0, y0, x1, y1, sh, hilt)
+
+def drawsunkeninner(x0, y0, x1, y1, hilt, lt, sh, dksh):
+    edgesize = 1
+    return _drawedgebotdom(
+        x0 + edgesize,
+        y0 + edgesize,
+        x1 - edgesize,
+        y1 - edgesize,
+        dksh, # draw the "upper part" with this color
+        lt, # draw the "lower part" with this color
+        edgesize=edgesize,
+    )
+
+# button edges (also known as "soft" edges)
+def drawraisedouterbutton(x0, y0, x1, y1, hilt, lt, sh, dksh):
+    return _drawedgebotdom(x0, y0, x1, y1, hilt, dksh)
+
+def drawraisedinnerbutton(x0, y0, x1, y1, hilt, lt, sh, dksh):
+    edgesize = 1
+    return _drawedgebotdom(
+        x0 + edgesize,
+        y0 + edgesize,
+        x1 - edgesize,
+        y1 - edgesize,
+        lt,# draw the "upper part" with this color
+        sh,# draw the "lower part" with this color
+        edgesize=edgesize,
+    )
+
+def drawsunkenouterbutton(x0, y0, x1, y1, hilt, lt, sh, dksh):
+    return _drawedgebotdom(x0, y0, x1, y1, dksh, hilt)
+
+def drawsunkeninnerbutton(x0, y0, x1, y1, hilt, lt, sh, dksh):
+    edgesize = 1
+    return _drawedgebotdom(
+        x0 + edgesize,
+        y0 + edgesize,
+        x1 - edgesize,
+        y1 - edgesize,
+        sh,# draw the "upper part" with this color
+        lt,# draw the "lower part" with this color
+        edgesize=edgesize,
+    )
+
+def monoborder( # "Monochrome" flat border
+    x0,
+    y0,
+    x1,
+    y1,
+    clientAreaColor, # draw the inner and middle parts with this color
+    windowFrameColor, # draw the outer parts with this color
+):
+    return (
+        drawraisedouter( # upper and lower outer parts
+            x0,
+            y0,
+            x1,
+            y1,
+            windowFrameColor,
+            windowFrameColor,
+            windowFrameColor,
+            windowFrameColor,
+        )
+        + drawraisedinner( # upper and lower inner parts
+            x0,
+            y0,
+            x1,
+            y1,
+            clientAreaColor,
+            clientAreaColor,
+            clientAreaColor,
+            clientAreaColor,
+        )
+        + _drawinnerface( # middle
+            x0,
+            y0,
+            x1,
+            y1,
+            clientAreaColor,
+            clientAreaColor,
+            clientAreaColor,
+            clientAreaColor,
+        )
+    )
+
+def flatborder( # Flat border
+    x0,
+    y0,
+    x1,
+    y1,
+    sh,  # draw the outer parts with this color
+    buttonFace,  # draw the inner and middle parts with this color
+):
+    return (
+        drawraisedouter(x0, y0, x1, y1, sh, sh, sh, sh)
+        + drawraisedinner(
+            x0, y0, x1, y1, buttonFace, buttonFace, buttonFace, buttonFace
+        )
+        + _drawinnerface(x0, y0, x1, y1, buttonFace, buttonFace, buttonFace, buttonFace)
+    )
+
+def windowborder(
+    x0,
+    y0,
+    x1,
+    y1,
+    hilt, # highlight color
+    lt, # light color
+    sh, # shadow color
+    dksh, # dark shadow color
+    face=None, # face color
+):
+    face = face if face else lt
+    return (
+        drawraisedouter(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + drawraisedinner(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + _drawinnerface(x0, y0, x1, y1, face)
+    )
+
+def buttonup(
+    x0,
+    y0,
+    x1,
+    y1,
+    hilt,
+    lt,
+    sh,
+    dksh,
+    face=None,
+):
+    face = face if face else lt
+    return (
+        drawraisedouterbutton(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + drawraisedinnerbutton(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + _drawinnerface(x0, y0, x1, y1, face)
+    )
+
+def buttondown(
+    x0,
+    y0,
+    x1,
+    y1,
+    hilt,
+    lt,
+    sh,
+    dksh,
+    face=None,
+):
+    face = face if face else lt
+    return (
+        drawsunkenouterbutton(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + drawsunkeninnerbutton(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + _drawinnerface(x0, y0, x1, y1, face)
+    )
+
+def fieldbox(
+    x0,
+    y0,
+    x1,
+    y1,
+    hilt,
+    lt,
+    sh,
+    dksh,
+    face=None,  # Usually the textbox face color if unpressed, button face if pressed
+    pressed=False,
+):
+    face = face if face else (lt if pressed else hilt)
+    return (
+        drawsunkenouter(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + drawsunkeninner(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + _drawinnerface(x0, y0, x1, y1, face)
+    )
+
+def wellborder(x0, y0, x1, y1, hilt, windowText):
+    face = face if face else (lt if pressed else hilt)
+    return (
+        drawsunkenouter(x0, y0, x1, y1, hilt, hilt, hilt, hilt)
+        + drawsunkeninner(
+            x0, y0, x1, y1, windowText, windowText, windowText, windowText
+        )
+        + drawsunkenouter(
+            x0 - 1,
+            y0 - 1,
+            x1 + 1,
+            y1 + 1,
+            windowText,
+            windowText,
+            windowText,
+            windowText,
+        )
+    )
+
+def groupingbox(
+    x0,
+    y0,
+    x1,
+    y1,
+    hilt,
+    lt,
+    sh,
+    dksh,
+    face=None,
+):
+    face = face if face else lt
+    return (
+        drawsunkenouter(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + drawraisedinner(x0, y0, x1, y1, hilt, lt, sh, dksh)
+        + _drawinnerface(x0, y0, x1, y1, face)
+    )
+
+def statusfieldbox(
+    x0,
+    y0,
+    x1,
+    y1,
+    hilt,
+    lt,
+    sh,
+    dksh,
+    face=None,
+):
+    face = face if face else lt
+    return drawsunkenouter(x0, y0, x1, y1, hilt, lt, sh, dksh) + _drawinnerface(
+        x0, y0, x1, y1, face
+    )
+
+def _drawrsedge(x0, y0, x1, y1, lt, sh, squareedge=False):
+    if squareedge:
+        return _drawedgebotdom(x0, y0, x1, y1, lt, sh)
+    else:
+        return _drawroundedge(x0, y0, x1, y1, lt, sh)
+
+def _dither(face, hilt, hiltIsScrollbarColor=False):
+    if hiltIsScrollbarColor:
+        return _rect(0, 0, 2, 2, hilt)
+    # if 256 or more colors and hilt is not white:
+    #    return _rect(0, 0, 2, 2, mix(face, hilt))
+    return (
+        _rect(0, 0, 1, 1, hilt)
+        + _rect(1, 1, 2, 2, hilt)
+        + _rect(0, 1, 1, 2, face)
+        + _rect(1, 0, 2, 1, face)
+    )
+
+def _ditherbg(idstr, face, hilt, hiltIsScrollbarColor=False):
+    if hiltIsScrollbarColor:
+        return hilt
+    if "'" in idstr:
+        raise ValueError
+    if '"' in idstr:
+        raise ValueError
+    return (
+        "<pattern patternUnits='userSpaceOnUse' id='"
+        + idstr
+        + "' width='2' height='2'>"
+        + _dither(face, hilt, hiltIsScrollbarColor)
+        + "</pattern>"
+    )
+
+def drawbutton(
+    x0,
+    y0,
+    x1,
+    y1,
+    hilt,
+    lt,
+    sh,
+    dksh,
+    btn,  # button face color
+    frame=None,  # optional frame color
+    squareedge=True,
+):
+    edge = 0 if frame == None else 1
+    return buttonup(
+        x0 + edge, y0 + edge, x1 - edge, y1 - edge, hilt, lt, sh, dksh, btn
+    ) + ("" if frame is None else _drawrsedge(x0, y0, x1, y1, frame, frame, squareedge))
+
+def draw16buttonsquare(x0, y0, x1, y1, lt, sh, btn, frame=None, squareedge=True):
+    return drawbutton(x0, y0, x1, y1, lt, btn, sh, sh, btn, frame, squareedge)
+
+def draw16buttonfocus(
+    x0,
+    y0,
+    x1,
+    y1,
+    lt,
+    sh,
+    btn,  # button face color
+    frame=None,  # optional frame color
+    squareframe=False,
+):
+    return draw16button(x0 + 1, y0 + 1, x1 - 1, y1 - 1, lt, sh, btn, None) + (
+        ""
+        if frame is None
+        else _drawrsedge(x0, y0, x1, y1, frame, frame, squareframe)
+        + _drawedgebotdom(x0 + 1, y0 + 1, x1 - 1, y1 - 1, frame, frame)
+    )
+
+def draw16buttonpush(
+    x0,
+    y0,
+    x1,
+    y1,
+    lt,
+    sh,
+    btn,  # button face color
+    frame=None,  # optional frame color
+    squareframe=False,
+):
+    return (
+        _drawedgetopdom(x0 + 2, y0 + 2, x1 - 2, y1 - 2, sh, btn)
+        + _rect(x0 + 3, y0 + 3, x1 - 3, y1 - 3, btn)
+        + (
+            ""
+            if frame is None
+            else _drawrsedge(x0, y0, x1, y1, frame, frame, squareframe)
+            + _drawedgebotdom(x0 + 1, y0 + 1, x1 - 1, y1 - 1, frame, frame)
+        )
+    )
+
+def draw16button(
+    x0,
+    y0,
+    x1,
+    y1,
+    lt,
+    sh,
+    btn,  # button face color
+    frame=None,  # optional frame color
+    squareframe=False,
+):
+    return (
+        _drawedgebotdom(x0 + 1, y0 + 1, x1 - 1, y1 - 1, lt, sh)
+        + _drawedgebotdom(x0 + 2, y0 + 2, x1 - 2, y1 - 2, lt, sh)
+        + _rect(x0 + 3, y0 + 3, x1 - 3, y1 - 3, btn)
+        + (
+            ""
+            if frame is None
+            else _drawrsedge(x0, y0, x1, y1, frame, frame, squareframe)
+        )
+    )
+
+def makesvg():
+    width = 100
+    height = 100
+    hilt = "white"
+    lt = "rgb(192,192,192)"
+    sh = "rgb(128,128,128)"
+    dksh = "black"
+    face = "rgb(192,192,192)"
+    face = "url(#ditherbg)"
+    frame = None  # "black"
+    return (
+        "<svg width='%dpx' height='%dpx' viewBox='0 0 %d %d'"
+        % (width, height, width, height)
+        + " xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>"
+        + _ditherbg("ditherbg", "rgb(192,192,192)", hilt)
+        + windowborder(
+            0 + 10, 0 + 10, width - 10, height - 10, hilt, lt, sh, dksh, face
+        )
+        + "</svg>"
+    )
