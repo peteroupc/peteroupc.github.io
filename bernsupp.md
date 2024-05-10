@@ -352,7 +352,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 > **Note:** A function $f(\lambda)$ is:
 >
-> - _Analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $\abs(\lambda-z)<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
+> - _Analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever abs($\lambda-z$) $<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
 > - In the _Zygmund class_ if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon>0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two "smaller" classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
 
 <a id=Notes></a>

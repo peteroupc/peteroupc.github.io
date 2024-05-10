@@ -22,18 +22,18 @@ These are suggestions to improve core and supplemental instructional materials, 
     - Structuring lessons in History and other aspects of Social Studies using the [**Four-Question Method**](https://4qmteaching.net/).
     - Structuring lessons in U.S. Civics using the questions in the civics portion of the naturalization test given by the U.S. government.
     - [**Instructional practices**](https://www.thescienceofmath.com/) for Mathematics.
-    - Offering numerous [**options to do beyond-grade-level content and exercises**](https://slatestarcodex.com/2018/09/04/acc-entry-does-the-education-system-adequately-serve-advanced-students/) for willing and ready students, as long as these options are always presented to all students (e.g., "Are you ready for more?" followed by a challenging exercise).
+    - Offering numerous [**options to do beyond-grade-level content and exercises**](https://slatestarcodex.com/2018/09/04/acc-entry-does-the-education-system-adequately-serve-advanced-students/) for willing and ready students, as long as these options are always presented to all students [^2].
 
 5. Instructional materials in Literacy should teach synonyms for new words to be learned and for other words and phrases prone to overuse.  In sixth grade and up, they should include copious lessons on grammatical analysis and knowledge of English syntax, as well as concrete guidance to help students avoid the following in their writing:
 
-    - Overuse of certain words or phrases, both within and across writings [^2].
+    - Overuse of certain words or phrases, both within and across writings [^3].
     - Imprecise word choices, especially choices of overused words.
     - Redundancy (which includes unnecessary words) not serving an expressive purpose.
     - Ambiguous language.
 
-These suggestions concern only instructional materials, so policies such as those that [**restrict mobile phones in school**](https://www.educationnext.org/take-away-their-cellphones-rewire-schools-belonging-achievement/) or encourage the [**reduction of classroom decorations**](https://www.learningandthebrain.com/blog/getting-the-principles-just-right-classroom-decoration/), while they may help reduce students' cognitive load, are outside the scope. [^3]
+These suggestions concern only instructional materials, so policies such as those that [**restrict mobile phones in school**](https://www.educationnext.org/take-away-their-cellphones-rewire-schools-belonging-achievement/) or encourage the [**reduction of classroom decorations**](https://www.learningandthebrain.com/blog/getting-the-principles-just-right-classroom-decoration/), while they may help reduce students' cognitive load, are outside the scope. [^4]
 
-Suggestion number 5, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of everyday vocabulary and linguistic variety (see, e.g., Emilio Bernal's "Good usage prevents abusage"). [^2]
+Suggestion number 5, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of everyday vocabulary and linguistic variety (see, e.g., Emilio Bernal's "Good usage prevents abusage"). [^3]
 
 <a id=License></a>
 
@@ -50,3 +50,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^2]: A list of some of the [**overused and discouraged words**](http://peteroupc.github.io/usage.html) is given elsewhere.  The works of Emilio Bernal Labrada, Theodore Bernstein, Mario Pei, Bill Bryson, and Richard Lederer, among others, provide guidance on good English usage.
 
 [^3]: Additional suggestions to improve education, which instructional materials could choose to address, are as follows: (1) Encouraging caregivers to keep mobile phones and social media away from their children, especially if the caregivers themselves use [**social media for 1 hour or more daily**](https://www.hhs.gov/surgeongeneral/priorities/youth-mental-health/social-media/index.html). (2) A playlist of made-for-kids videos relating to topics in the Core Knowledge Foundation's [**_Core Knowledge Sequence_**](https://www.coreknowledge.org/core-knowledge-sequence/) (especially videos that invite viewers to answer questions on the topics), for each grade from kindergarten to eighth grade, intended for children to optionally watch at home outside of instruction. (3) The "Good Behavior Game" as a way to encourage students to follow classroom norms. (4) For Literacy, a free and open-source English grammar reference book designed for middle school and secondary students. (5) The recognition that Social Studies encompasses history, geography (natural and human), culture, civics, and economics and instruction in Social Studies should be knowledge-rich and lay an accent on the country and locality where the instruction takes place.
+
+[^4]: One example, similar to the approach found in Illustrative Mathematics, is the presence in student workbooks of "Are you ready for more?" followed by a challenging exercise. Another example is a relatively short unit on basic calculus concepts such as limits and continuous functions at the end of Algebra 2, such as the last unit of [**Fishtank Learning's Algebra 2 course**](https://www.fishtanklearning.org/curriculum/math/algebra-2/).
