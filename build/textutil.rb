@@ -276,10 +276,15 @@ Dir.glob("*.md").sort.each{|fn|
 
   file=File.basename(fn).gsub(/\.md$/,"")
   r=IO.read("#{file}.md")
+  if r.include?(".svg")
+    outputengine="html5"
+  else
+    outputengine="latex"
+  end
   mtime=File.mtime("#{file}.md")
   title=markdownTitle(r)
   r=r.gsub(/\A\s*(?:<a\s+id.*)?\s*(\#+\s+.*)\n+/) {
-    $1+"\n\n" + sprintf("This version of the document is dated %04d-%02d-%02d.",
+    (outputengine=="latex" ? "" : ($1+"\n\n")) + sprintf("This version of the document is dated %04d-%02d-%02d.",
         mtime.year,mtime.mon,mtime.day) + "\n\n" }
   r=preparePandoc(r)
   #r=r.gsub(/_&lambda;_/,"$lambda$")
@@ -298,11 +303,6 @@ Dir.glob("*.md").sort.each{|fn|
     p rpdf
     # outputengine="markdown_github"
     #outputengine="latex"
-    if r.include?(".svg")
-       outputengine="html5"
-    else
-       outputengine="latex"
-    end
     output="-o '#{rtmppdf}'"
     #output="-o '#{rtex}'"
     File.delete(rtex) rescue nil
