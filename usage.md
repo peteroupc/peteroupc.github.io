@@ -17,12 +17,12 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | another [number] (e.g., _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
 | bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant | |
 | cause | lead to, produce, provoke, engender, beget, bring on, bring about, produce, result in | Verb. |
-| check out | discover, uncover, learn more about, find out about, see for yourself | |
+| check out | discover, uncover, learn more about, find out about, see for yourself | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
 | focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, concern, be anchored on, be devoted to | |
 | focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
-| happen | occur, manifest, produce itself, present itself, take place, unfold, come to pass. | Inspired by E. Bernal. |
+| happen | occur, manifest, produce itself, present itself, take place, unfold, come about, come to pass. | Inspired by E. Bernal. |
 | including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] many deaths |Inspired by E. Bernal. |
@@ -35,7 +35,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | many people | many | Inspired by E. Bernal. |
 | people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider gentile nouns; e.g.: _people living in Italy_ &rarr; _Italians_. |
 | (the) professors | the faculty, professorship, professor corps, professor body, body of professors | |
-| say | declare, affirm, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out, maintain, acknowledge, admit. | Spanish and French press articles tend to employ numerous synonyms for this word. |
+| say | declare, affirm, assert, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, conclude, reply, respond, answer, signal, indicate, point out, maintain, acknowledge, admit. | Spanish and French press articles tend to employ numerous synonyms for this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, talk with, converse with, chat with | Suggested by E. Bernal. |
 | [someone] says (that)... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
 | [someone] says (that)... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that... | Expressing an opinion. |
@@ -108,7 +108,7 @@ Even here, it is worth trying to rewrite a text to avoid discouraged words to th
 
 ## To Improve English Usage Through Word Processing Apps...
 
-What I would like to see is an open-source plugin for popular word-processing applications that finds overused and discouraged words and phrases in a document, such as those mentioned above, and suggests corresponding replacements.  (A similar practice is found in Web browsers' spell checkers.)  For example, the plugin could look for instances of "sit down with", underline them, and show suggestions such as "interview", "consult with", and so on in a menu when the phrase is right-clicked on.
+What I would like to see is an open-source plugin for popular word-processing applications that finds overused and discouraged words and phrases in a document, such as those mentioned above, and suggests corresponding replacements.  (A similar practice is found in Web browsers' spell checkers and as a built-in feature in some closed source word-processing apps.)  For example, the plugin could look for instances of "sit down with", underline them, and show suggestions such as "interview", "consult with", and so on in a menu when the phrase is right-clicked on.
 
 <a id=License></a>
 
