@@ -15,7 +15,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | Also, ... | in addition, furthermore, moreover, further, plus, to add to that, on top of that, what is more, apart from that | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
 | another [number] (e.g., _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
-| bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant | |
+| bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant, illegitimate actor | |
 | cause | lead to, produce, provoke, engender, beget, bring on, bring about, produce, result in | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
 | focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, concern, be anchored on, be devoted to | |
