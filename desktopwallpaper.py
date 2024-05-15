@@ -4,12 +4,6 @@
 # This script is released to the public domain; in case that is not possible, the
 # file is also licensed under Creative Commons Zero (CC0).
 
-# Suggestion for improving this file: Support the pattern format
-# from early versions of Microsoft Windows (such as Windows 3.1).
-# Namely it's an 8x8 monochrome two-color tiling pattern represented
-# as eight 8-bit bytes; the colors
-# that represent "black" and "white" could be set separately.
-
 import shlex
 import os
 
@@ -59,7 +53,9 @@ def tileable():
 # Raises an error if 'basecolors' has a length greater than 256. 'abstractImage' (default is False)
 # indicates whether the image to apply the filter to is an abstract or
 # geometric (rather than a photographic) image.
-def magickgradientditherfilter(rgb1=None, rgb2=None, basecolors=None, hue=0, abstractImage=False):
+def magickgradientditherfilter(
+    rgb1=None, rgb2=None, basecolors=None, hue=0, abstractImage=False
+):
     if hue < -180 or hue > 180:
         raise ValueError
     if rgb1 and len(rgb1) > 256:
@@ -84,8 +80,9 @@ def magickgradientditherfilter(rgb1=None, rgb2=None, basecolors=None, hue=0, abs
         bases = ["xc:#%02X%02X%02X" % (k[0], k[1], k[2]) for k in basecolors]
         # ImageMagick command to generate the palette image
         image = "-size 1x1 " + (" ".join(bases)) + " +append -write mpr:z +delete"
-        if abstractImage:
-        ditherkind = "-ordered-dither 4x4" if abstractImage else "-dither FloydSteinberg"
+        ditherkind = (
+            "-ordered-dither 4x4" if abstractImage else "-dither FloydSteinberg"
+        )
         return "%s %s \\( %s \\) %s -remap mpr:z" % (
             mgradient,
             hueshift,
@@ -307,8 +304,8 @@ def drawraisedinner(x0, y0, x1, y1, hilt, lt, sh, dksh):
         y0 + edgesize,
         x1 - edgesize,
         y1 - edgesize,
-        hilt, # draw the "upper part" with this color
-        sh,   # draw the "lower part" with this color
+        hilt,  # draw the "upper part" with this color
+        sh,  # draw the "lower part" with this color
         edgesize=edgesize,
     )
 
@@ -322,8 +319,8 @@ def drawsunkeninner(x0, y0, x1, y1, hilt, lt, sh, dksh):
         y0 + edgesize,
         x1 - edgesize,
         y1 - edgesize,
-        dksh, # draw the "upper part" with this color
-        lt, # draw the "lower part" with this color
+        dksh,  # draw the "upper part" with this color
+        lt,  # draw the "lower part" with this color
         edgesize=edgesize,
     )
 
@@ -338,8 +335,8 @@ def drawraisedinnerbutton(x0, y0, x1, y1, hilt, lt, sh, dksh):
         y0 + edgesize,
         x1 - edgesize,
         y1 - edgesize,
-        lt,# draw the "upper part" with this color
-        sh,# draw the "lower part" with this color
+        lt,  # draw the "upper part" with this color
+        sh,  # draw the "lower part" with this color
         edgesize=edgesize,
     )
 
@@ -353,21 +350,21 @@ def drawsunkeninnerbutton(x0, y0, x1, y1, hilt, lt, sh, dksh):
         y0 + edgesize,
         x1 - edgesize,
         y1 - edgesize,
-        sh,# draw the "upper part" with this color
-        lt,# draw the "lower part" with this color
+        sh,  # draw the "upper part" with this color
+        lt,  # draw the "lower part" with this color
         edgesize=edgesize,
     )
 
-def monoborder( # "Monochrome" flat border
+def monoborder(  # "Monochrome" flat border
     x0,
     y0,
     x1,
     y1,
-    clientAreaColor, # draw the inner and middle parts with this color
-    windowFrameColor, # draw the outer parts with this color
+    clientAreaColor,  # draw the inner and middle parts with this color
+    windowFrameColor,  # draw the outer parts with this color
 ):
     return (
-        drawraisedouter( # upper and lower outer parts
+        drawraisedouter(  # upper and lower outer parts
             x0,
             y0,
             x1,
@@ -377,7 +374,7 @@ def monoborder( # "Monochrome" flat border
             windowFrameColor,
             windowFrameColor,
         )
-        + drawraisedinner( # upper and lower inner parts
+        + drawraisedinner(  # upper and lower inner parts
             x0,
             y0,
             x1,
@@ -387,7 +384,7 @@ def monoborder( # "Monochrome" flat border
             clientAreaColor,
             clientAreaColor,
         )
-        + _drawinnerface( # middle
+        + _drawinnerface(  # middle
             x0,
             y0,
             x1,
@@ -399,7 +396,7 @@ def monoborder( # "Monochrome" flat border
         )
     )
 
-def flatborder( # Flat border
+def flatborder(  # Flat border
     x0,
     y0,
     x1,
@@ -420,11 +417,11 @@ def windowborder(
     y0,
     x1,
     y1,
-    hilt, # highlight color
-    lt, # light color
-    sh, # shadow color
-    dksh, # dark shadow color
-    face=None, # face color
+    hilt,  # highlight color
+    lt,  # light color
+    sh,  # shadow color
+    dksh,  # dark shadow color
+    face=None,  # face color
 ):
     face = face if face else lt
     return (
@@ -559,6 +556,35 @@ def _dither(face, hilt, hiltIsScrollbarColor=False):
         + _rect(1, 0, 2, 1, face)
     )
 
+# Generate SVG code for an 8x8 monochrome pattern.
+# 'idstr' is a string identifying the pattern in SVG.
+# 'pattern' is an 8-item array with integers in the interval [0,255].
+# The first integer represents the first row, the second, the second row, etc.
+# For each integer, the eight bits from most to least significant represent
+# the column from left to right. If a bit is set, the corresponding position
+# in the pattern is filled with 'black'; if clear, with 'white'.
+# 'black' is the black color (or pattern color), and 'white' is the white color
+# (or user-selected background color).
+# Either can be set to None to omit pixels of that color in the pattern
+def monopattern(idstr, pattern, black="black", white="white"):
+    if pattern is None or len(pattern) < 8:
+        raise ValueError
+    if black is None and white is None:
+        return ""
+    ret = (
+        "<pattern patternUnits='userSpaceOnUse' id='"
+        + idstr
+        + "' width='8' height='8' patternTransform='translate(4 4)'>"
+    )
+    bw = [white, black]
+    for y in range(8):
+        for x in range(8):
+            c = bw[(pattern[y] >> (7 - x)) & 1]
+            if c is None:
+                continue
+            ret += _rect(x, y, x + 1, y + 1, c)
+    return ret + "</pattern>"
+
 def _ditherbg(idstr, face, hilt, hiltIsScrollbarColor=False):
     if hiltIsScrollbarColor:
         return hilt
@@ -569,7 +595,7 @@ def _ditherbg(idstr, face, hilt, hiltIsScrollbarColor=False):
     return (
         "<pattern patternUnits='userSpaceOnUse' id='"
         + idstr
-        + "' width='2' height='2'>"
+        + "' width='2' height='2' patternTransform='translate(1 1)'>"
         + _dither(face, hilt, hiltIsScrollbarColor)
         + "</pattern>"
     )
@@ -671,9 +697,16 @@ def makesvg():
         "<svg width='%dpx' height='%dpx' viewBox='0 0 %d %d'"
         % (width, height, width, height)
         + " xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>"
-        + _ditherbg("ditherbg", "rgb(192,192,192)", hilt)
+        + monopattern(
+            "ditherbg", [64, 192, 200, 120, 120, 72, 0, 0], "rgb(192,192,192)", hilt
+        )
+        # + _ditherbg("ditherbg", "rgb(192,192,192)", hilt)
         + windowborder(
             0 + 10, 0 + 10, width - 10, height - 10, hilt, lt, sh, dksh, face
         )
         + "</svg>"
     )
+
+fo = open("/tmp/m.svg", "w")
+fo.write(makesvg())
+fo.close()
