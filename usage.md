@@ -42,6 +42,8 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | [someone] says (that) [something] is... | [someone] considers [something] (as)...<br>[someone] labels [something] (as)...<br>[someone] finds [something]...<br>[someone] calls [something]...<br>[someone] qualifies [something] as...<br>[something] is ... to [someone]<br>for [someone], [something] is... | |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
+| The fact that... | That... | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
+| The fact that _he appeared_ | That _he appeared_, _His appearance_, _His appearing_. | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
 | use | employ, utilize, make use of | Verb. |
 | what's happening | what's going on, what's occurring, what's [synonym for _happening_]. | Inspired by E. Bernal. |
@@ -61,9 +63,11 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | all day today | all day [if _today_ is understood], from dawn to dusk (today), from sunrise to sunset (today) |Inspired by E. Bernal. |
 | basically | [leave out] | |
 | before [something] happened, ... | before [something] |Inspired by E. Bernal. |
+| because of the fact that | because | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | blizzard conditions | blizzard |Inspired by E. Bernal. |
 | [adjective] day today (e.g., _nice day today_) | [adjective] day [if _today_ is understood], it's [adjective] today |Inspired by E. Bernal. |
 | dead people | the dead |Inspired by E. Bernal. |
+| due to the fact that | because | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | examples include but are not limited to | examples are | The word "examples" already conveys the idea that the list is not all-inclusive. |
 | family members | relatives, kin |'Relatives' suggested by E. Bernal. |
 | including but not limited to | including | |
@@ -96,6 +100,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | (their) lives, deaths, lifetimes, healths, sakes, identities, futures | their life, death, lifetime, health, sake, identity, future |Inspired by E. Bernal. |
 | This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We (now) welcome you to [program]; We (now) bring you [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]; It's time for [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
 | [time] before now | [time] ago |Inspired by E. Bernal. |
+| until such time as | until |  |
 | [verb] whether or not (e.g., _know whether or not_, _determine whether or not_) | [verb] whether\*\* | Suggested by E. Bernal. |
 
 Even here, it is worth trying to rewrite a text to avoid discouraged words to the greatest extent possible.
