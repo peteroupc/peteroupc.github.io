@@ -9,6 +9,20 @@
 # position for drawing the top left corner of the wallpaper pattern
 # (e.g., from the top left corner of the image
 # to some other position in the image).
+#
+# NOTE: I would welcome it if readers could contribute computer code (released
+# to the public domain or under Creative Commons Zero) to generate tileable—
+# - noise,
+# - procedural textures or patterns, or
+# - arrangements of symbols or small images with partial transparency,
+# without artificial intelligence, with a limited color palette and a small
+# resolution, as long as the resulting images do not employ
+# trademarks and are suitable for all ages.  For details on the color and
+# resolution options as well as a broader challenge to generate tileable
+# classic wallpapers, see:
+#
+# https://peteroupc.github.io/graphics.html#classic-wallpaper-challenge
+#
 
 import shlex
 import os

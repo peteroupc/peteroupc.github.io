@@ -100,7 +100,7 @@ Create a tileable desktop wallpaper image with one each of the following color a
     - Not preferred: Custom size up to 96&times;96.
     - Not preferred: Custom size up to 256&times;256.
 
-Also welcome would be computer code (released to the public domain or Creative Commons Zero) to generate tileable&mdash;
+Also welcome would be computer code (released to the public domain or under Creative Commons Zero) to generate tileable&mdash;
 
 - noise,
 - procedural textures or patterns, or
