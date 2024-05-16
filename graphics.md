@@ -40,6 +40,34 @@ These limitations were inspired by the graphics limitations of classic handheld 
 
 A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, or to reduce the number of colors per tile allowed).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^2]
 
+<a id=Classic_Wallpaper_Challenge></a>
+
+## Classic Wallpaper Challenge
+
+Create a tileable desktop wallpaper image with one each of the following color and resolution options.  The image is preferably abstract, should not employ trademarked images, and must be suitable for all ages.  The image may not be produced by artificial intelligence tools or with their help.
+
+- Colors:
+    - Two tints: Black and white.
+        - Allows for hue shifting to, say, a black-to-red palette.
+    - Three tints: black, gray (128, 128, 128), white.
+        - Allows for hue shifting to, say, a black-to-red palette.
+    - Four tints: black, gray (128, 128, 128), light gray (192, 192, 192), white.
+        - Allows for hue shifting to, say, a black-to-red palette.
+    - 16-color VGA palette (light gray; or each color component is 0 or 255; or each color component is 0 or 128).
+    - Up to four colors from the 16-color VGA palette.
+    - Up to eight colors from the 16-color VGA palette.
+    - 216-color "web safe" palette (each color component is a multiple of 51).
+    - 216-color "web safe" palette plus 16-color VGA palette.
+    - Up to 16 colors from the "web safe" palette.
+    - Up to 16 colors from the "web safe" and VGA palettes.
+    - 5- to 236-color grayscale palette (all color components the same).
+    - Not preferred: 237- to 256-color grayscale palette (all color components the same).
+- Resolutions:
+    - Preferred: 8&times;8, 16&times;16, 32&times;32, 64&times;64, 64&times;32, 32&times;64, 96&times;96, 128&times;128, 256&times;256.
+    - Not preferred: 320&times;240, 320&times;200.
+    - Not preferred: Custom size up to 96&times;96.
+    - Not preferred: Custom size up to 256&times;256.
+
 <a id=License></a>
 
 ## License
