@@ -76,8 +76,13 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
 
 Given that desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920&times;1080 or larger), I make the following challenge.
 
-Create a tileable desktop wallpaper image with one each of the following color and resolution options.  The image is preferably abstract, should not employ trademarked images, and must be suitable for all ages.  The image may not be produced by artificial intelligence tools or with their help.
+Create a tileable desktop wallpaper image meeting the following requirements.
 
+- Requirements:
+    - The image employs one of the following color options and one of the following resolution options.
+    - The image is preferably abstract, should not employ trademarked images, and is suitable for all ages.
+    - The image is in the public domain or licensed under Creative Commons Zero or Attribution or, less preferably, another open-source license.
+    - The image was not produced by artificial intelligence tools or with their help.
 - Colors:
     - Two tints: Black and white.
         - Allows for hue shifting to, say, a black-to-red or gray-to-blue palette.
@@ -106,7 +111,7 @@ Also welcome would be computer code (released to the public domain or under Crea
 - procedural textures or patterns, or
 - arrangements of symbols or small images with partial transparency,
 
-without artificial intelligence and using one each of the preceding color and resolution options, as long as the resulting images do not employ trademarks and are suitable for all ages.
+meeting the requirements given above.
 
 <a id=License></a>
 

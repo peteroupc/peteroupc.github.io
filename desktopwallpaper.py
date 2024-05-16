@@ -10,6 +10,10 @@
 # (e.g., from the top left corner of the image
 # to some other position in the image).
 #
+# NOTE: In Windows, if both an 8x8 monochrome pattern and a centered wallpaper
+# are set as the desktop background, both the pattern and the wallpaper
+# will be drawn on the desktop, the latter appearing above the former.
+#
 # NOTE: I would welcome it if readers could contribute computer code (released
 # to the public domain or under Creative Commons Zero) to generate tileable—
 # - noise,
@@ -581,12 +585,15 @@ def _dither(face, hilt, hiltIsScrollbarColor=False):
 # 'pattern' is an 8-item array with integers in the interval [0,255].
 # The first integer represents the first row, the second, the second row, etc.
 # For each integer, the eight bits from most to least significant represent
-# the column from left to right. If a bit is set, the corresponding position
+# the column from left to right (right to left if 'msbfirst' is False).
+# If a bit is set, the corresponding position
 # in the pattern is filled with 'black'; if clear, with 'white'.
 # 'black' is the black color (or pattern color), and 'white' is the white color
 # (or user-selected background color).
 # Either can be set to None to omit pixels of that color in the pattern
-def monopattern(idstr, pattern, black="black", white="white"):
+# 'msbfirst' is the bit order for each integer in 'pattern'.  If True,
+# the Windows convention is used; if False, the X pixmap convention is used.
+def monopattern(idstr, pattern, black="black", white="white", msbfirst=True):
     if pattern is None or len(pattern) < 8:
         raise ValueError
     if black is None and white is None:
