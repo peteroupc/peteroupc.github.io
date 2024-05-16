@@ -70,12 +70,6 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
     - The volume of all instruments in the sound bank should be normalized; some instruments should not sound louder than others.
 - An instrument sound bank for FM synthesis of all instruments and drum noises in the General MIDI specification. Instruments should correspond as closely as possible to those in the General MIDI specification.
 
-<a id=License></a>
-
-## License
-
-Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
-
 <a id=Classic_Wallpaper_Challenge></a>
 
 ## Classic Wallpaper Challenge
@@ -106,7 +100,7 @@ Create a tileable desktop wallpaper image with one each of the following color a
     - Not preferred: Custom size up to 96&times;96.
     - Not preferred: Custom size up to 256&times;256.
 
-<a id=License_2></a>
+<a id=License></a>
 
 ## License
 
