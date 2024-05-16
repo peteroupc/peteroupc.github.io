@@ -78,32 +78,30 @@ Given that desktop backgrounds today tend to cover the full computer screen, to 
 
 Create a tileable desktop wallpaper image meeting the following requirements.
 
-- Requirements:
-    - The image employs one of the following color options and one of the following resolution options.
-    - The image is preferably abstract, should not employ trademarked images, and is suitable for all ages.
-    - The image is in the public domain or licensed under Creative Commons Zero or Attribution or, less preferably, another open-source license.
-    - The image was not produced by artificial intelligence tools or with their help.
-- Colors:
-    - Two tints: Black and white.
-        - Allows for hue shifting to, say, a black-to-red or gray-to-blue palette.
+- The image employs one of the following color options:
+    - Two colors only.
+        - Such as black and white, which allows for hue shifting to, say, a black-to-red or gray-to-blue palette.
     - Three tints: black, gray (128, 128, 128), white.
         - Allows for hue shifting to, say, a black-to-red palette.
     - Four tints: black, gray (128, 128, 128), light gray (192, 192, 192), white.
         - Allows for hue shifting to, say, a black-to-red palette.
-    - 16-color VGA palette (light gray; or each color component is 0 or 255; or each color component is 0 or 128).
-    - Up to four colors from the 16-color VGA palette.
-    - Up to eight colors from the 16-color VGA palette.
-    - 216-color "web safe" palette (each color component is a multiple of 51).
-    - 216-color "web safe" palette plus 16-color VGA palette.
+    - 16-color VGA palette (light gray; or each color component is 0 or 255; or each color component is 0 or 128).[^3]
+    - Up to four colors from the VGA palette.
+    - Up to eight colors from the VGA palette.
+    - 216-color "web safe" palette (each color component is a multiple of 51).[^3]
+    - 216-color "web safe" palette plus VGA palette.[^3]
     - Up to 16 colors from the "web safe" palette.
     - Up to 16 colors from the "web safe" and VGA palettes.
     - 5- to 236-color grayscale palette (all color components the same).
     - Not preferred: 237- to 256-color grayscale palette (all color components the same).
-- Resolutions:
+- The image employs one of the following pixel dimensions:
     - Preferred: 8&times;8, 16&times;16, 32&times;32, 64&times;64, 64&times;32, 32&times;64, 96&times;96, 128&times;128, 256&times;256.
     - Not preferred: 320&times;240, 320&times;200.
     - Not preferred: Custom size up to 96&times;96.
     - Not preferred: Custom size up to 256&times;256.
+- The image is preferably abstract, should not employ trademarked images, and is suitable for all ages.
+- The image is in the public domain or licensed under Creative Commons Zero or Attribution or, less preferably, another open-source license.
+- The image was not produced by artificial intelligence tools or with their help.
 
 Also welcome would be computer code (released to the public domain or under Creative Commons Zero) to generate tileable&mdash;
 
@@ -124,3 +122,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^1]: I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
 
 [^2]: Especially if the library is self-contained and implements the specification with as little source code as possible.  It would not be within the spirit of this document to, say, display more polygons or vertices at a time than the maximum allowed using programming tricks, but any such tricks should not be hardware-accelerated.  An example of a 2D library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly, is called [**_Tilengine_**](https://github.com/megamarc/Tilengine).
+
+[^3]: Tileable wallpapers employing more than 256 colors are acceptable, though not preferable, if they otherwise meet all requirements here, since they can be dithered to this color palette using known techniques.
