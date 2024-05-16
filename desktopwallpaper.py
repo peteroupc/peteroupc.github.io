@@ -3,6 +3,12 @@
 #
 # This script is released to the public domain; in case that is not possible, the
 # file is also licensed under Creative Commons Zero (CC0).
+#
+# NOTE: Animation of tiled patterns composed from a wallpaper
+# image can be implemented by shifting, with each frame, the starting
+# position for drawing the top left corner of the wallpaper pattern
+# (e.g., from the top left corner of the image
+# to some other position in the image).
 
 import shlex
 import os

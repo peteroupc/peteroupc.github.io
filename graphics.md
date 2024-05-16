@@ -80,7 +80,7 @@ Create a tileable desktop wallpaper image with one each of the following color a
 
 - Colors:
     - Two tints: Black and white.
-        - Allows for hue shifting to, say, a black-to-red palette.
+        - Allows for hue shifting to, say, a black-to-red or gray-to-blue palette.
     - Three tints: black, gray (128, 128, 128), white.
         - Allows for hue shifting to, say, a black-to-red palette.
     - Four tints: black, gray (128, 128, 128), light gray (192, 192, 192), white.
@@ -99,6 +99,14 @@ Create a tileable desktop wallpaper image with one each of the following color a
     - Not preferred: 320&times;240, 320&times;200.
     - Not preferred: Custom size up to 96&times;96.
     - Not preferred: Custom size up to 256&times;256.
+
+Also welcome would be computer code (released to the public domain or Creative Commons Zero) to generate tileable&mdash;
+
+- noise,
+- procedural textures or patterns, or
+- arrangements of symbols or small images with partial transparency,
+
+without artificial intelligence and using one each of the preceding color and resolution options, as long as the resulting images do not employ trademarks and are suitable for all ages.
 
 <a id=License></a>
 
