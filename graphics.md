@@ -94,12 +94,12 @@ Create a tileable desktop wallpaper image meeting the following requirements.
     - Up to 16 colors from the "web safe" and VGA palettes.
     - 5- to 236-color grayscale palette (all color components the same).
     - Not preferred: 237- to 256-color grayscale palette (all color components the same).
-- The image employs one of the following pixel dimensions:
+- The image employs one of the following pixel dimension options:
     - Preferred: 8&times;8, 16&times;16, 32&times;32, 64&times;64, 64&times;32, 32&times;64, 96&times;96, 128&times;128, 256&times;256.
     - Not preferred: 320&times;240, 320&times;200.
     - Not preferred: Custom size up to 96&times;96.
     - Not preferred: Custom size up to 256&times;256.
-- The image is preferably abstract, should not employ trademarked images, and is suitable for all ages.
+- The image is preferably abstract, should not employ trademarks, and is suitable for all ages.
 - The image is in the public domain or licensed under Creative Commons Zero or Attribution or, less preferably, another open-source license.
 - The image was not produced by artificial intelligence tools or with their help.
 

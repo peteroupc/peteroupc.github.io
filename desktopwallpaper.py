@@ -40,23 +40,24 @@ def websafecolors():
     return colors
 
 def classiccolors():
+    # 16-color VGA palette
     return [
         [0, 0, 0],
-        [127, 127, 127],
+        [128, 128, 128],
         [255, 255, 255],
         [191, 191, 191],
         [255, 0, 0],
-        [127, 0, 0],
+        [128, 0, 0],
         [0, 255, 0],
-        [0, 127, 0],
+        [0, 128, 0],
         [0, 0, 255],
-        [0, 0, 127],
+        [0, 0, 128],
         [255, 0, 255],
-        [127, 0, 127],
+        [128, 0, 128],
         [0, 255, 255],
-        [0, 127, 127],
+        [0, 128, 128],
         [255, 255, 0],
-        [127, 127, 0],
+        [128, 128, 0],
     ]
 
 def tileable():
@@ -64,17 +65,19 @@ def tileable():
 
 # Returns an ImageMagick filter string to generate a desktop background from an image, in three steps.
 # 1. If rgb1 and rgb2 are not nil, converts the input image to grayscale, then translates the grayscale
-# palette to a gradient starting at rgb1 for black (e.g., [2,10,255] where each
-# component is from 0 through 255) and ending at rgb2 for white (same format).
-# Raises an error if rgb1 or rgb2 has a length greater than 256.
+# palette to a gradient starting at rgb1 for black ( a 3-item array of the red,
+# green, and blue components in that order; e.g., [2,10,255] where each
+# component is from 0 through 255) and ending at rgb2 for white (same format as rgb1).
+# Raises an error if rgb1 or rgb2 has a length less than 3.
 # The output image is the input for the next step.
 # 2. If hue is not 0, performs a hue shift, in degrees (-180 to 180), of the input image.
 # The output image is the input for the next step.
 # 3. If basecolors is not nil, performs a dithering operation on the input image; that is, it
 # reduces the number of colors of the image to those given in 'basecolors', which is a list
-# of colors (each color is a 3-item array of the red, green, and blue components in that order),
+# of colors (each color is of the same format as rgb1 and rgb2),
 # and scatters the remaining colors in the image so that they appear close to the original colors.
-# Raises an error if 'basecolors' has a length greater than 256. 'abstractImage' (default is False)
+# Raises an error if 'basecolors' has a length greater than 256.
+# 'abstractImage' (default is False)
 # indicates whether the image to apply the filter to is an abstract or
 # geometric (rather than a photographic) image.
 def magickgradientditherfilter(
@@ -82,12 +85,16 @@ def magickgradientditherfilter(
 ):
     if hue < -180 or hue > 180:
         raise ValueError
-    if rgb1 and len(rgb1) > 256:
+    if rgb1 and len(rgb1) < 3:
         raise ValueError
-    if rgb2 and len(rgb2) > 256:
+    if rgb2 and len(rgb2) < 3:
         raise ValueError
-    if basecolors and len(basecolors) > 256:
-        raise ValueError
+    if basecolors:
+        if len(basecolors) > 256:
+            raise ValueError
+        for k in basecolors:
+            if (not k) or len(k) < 3:
+                raise ValueError
     huemod = (hue + 180) * 100.0 / 180.0
     hueshift = "" if hue == 0 else ("-modulate 100,100,%.02f" % (huemod))
     mgradient = None
@@ -105,7 +112,7 @@ def magickgradientditherfilter(
         # ImageMagick command to generate the palette image
         image = "-size 1x1 " + (" ".join(bases)) + " +append -write mpr:z +delete"
         ditherkind = (
-            "-ordered-dither 4x4" if abstractImage else "-dither FloydSteinberg"
+            "-ordered-dither 8x8" if abstractImage else "-dither FloydSteinberg"
         )
         return "%s %s \\( %s \\) %s -remap mpr:z" % (
             mgradient,
@@ -114,7 +121,7 @@ def magickgradientditherfilter(
             ditherkind,
         )
     else:
-        return "%s" % (hueshift)
+        return "%s %s" % (mgradient, hueshift)
 
 def solid(bg=[192, 192, 192], w=64, h=64):
     if bg == None or len(bg) < 3:
@@ -593,7 +600,11 @@ def _dither(face, hilt, hiltIsScrollbarColor=False):
 # Either can be set to None to omit pixels of that color in the pattern
 # 'msbfirst' is the bit order for each integer in 'pattern'.  If True,
 # the Windows convention is used; if False, the X pixmap convention is used.
-def monopattern(idstr, pattern, black="black", white="white", msbfirst=True):
+# 'originX' and 'originY' give the initial offset of the monochrome pattern, from
+# the top left corner of the image.
+def monopattern(
+    idstr, pattern, black="black", white="white", msbfirst=True, originX=0, originY=0
+):
     if pattern is None or len(pattern) < 8:
         raise ValueError
     if black is None and white is None:
@@ -601,7 +612,10 @@ def monopattern(idstr, pattern, black="black", white="white", msbfirst=True):
     ret = (
         "<pattern patternUnits='userSpaceOnUse' id='"
         + idstr
-        + "' width='8' height='8' patternTransform='translate(4 4)'>"
+        + (
+            "' width='8' height='8' patternTransform='translate(%d %d)'>"
+            % (4 - originX, 4 - originY)
+        )
     )
     bw = [white, black]
     for y in range(8):

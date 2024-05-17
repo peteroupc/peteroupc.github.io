@@ -9,7 +9,7 @@ to see this site's source code.
 
 ### Articles
 
-Open-source articles on programming subjects.  Help me on my [**requests and open questions**](./requests.html) (and [**open questions on the Bernoulli factory problem**](./bernreq.html), and [**other open questions on probability**](./requestsother.html)).
+Open-source articles on randomness, programming, and more.  Help me on my [**requests and open questions**](./requests.html) (and [**open questions on the Bernoulli factory problem**](./bernreq.html), and [**other open questions on probability**](./requestsother.html)).
 
 **Random and Pseudorandom Number Generators**
 
@@ -41,20 +41,28 @@ In the articles above, I put an emphasis on random variate generation that:
 - Avoids floating-point arithmetic.
 - Avoids calculating transcendental functions when possible.
 
-**Other Articles**
+**Colors, Graphics, and Music**
 
-* [**Graphics and Music Challenges for Classic Computer Applications**](./graphics.html)
-* [**A Wish for a New Atlas**](./newatlas.html)
-* [**A Note on Hash Functions**](./hash.html)
-* [**Pseudocode Conventions**](./pseudocode.html)
-* [**Approximations in Bernstein Form**](./bernapprox.html)
-* [**File Name Support in Applications**](./filenames.html)
 * [**Color Topics for Programmers**](./colorgen.html)
 * [**Supplemental Color Topics for Programmers**](./suppcolor.html)
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
+* [**Graphics and Music Challenges for Classic Computer Applications**](./graphics.html)
+    - Three challenges: retro graphics engine, public-domain music synthesis, and classic tiled wallpapers.
+
+**Other Articles on Mathematics and Programming**
+
+* [**Approximations in Bernstein Form**](./bernapprox.html)
+    - Used above all in the supplemental notes for Bernoulli factories.
+* [**A Note on Hash Functions**](./hash.html)
+* [**Pseudocode Conventions**](./pseudocode.html)
 * [**On a claim of computational complexity**](https://peteroupc.github.io/complexity.html)
+* [**File Name Support in Applications**](./filenames.html)
+
+**Other Articles**
+
 * [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html)
 * [**Overused and Discouraged Words and Phrases**](https://peteroupc.github.io/usage.html)
+* [**A Wish for a New Atlas**](./newatlas.html)
 
 <a id=PDF_Versions></a>
 
@@ -105,6 +113,12 @@ of data files, for testing algorithms that parse file formats.
 * [**TurtleParser**](./TurtleParser): A portable library in C# and Java for parsing the Turtle RDF format
 * [**Calculator**](./Calculator): A calculator for .NET, intended to demonstrate
 two features of the [**CBOR library**](./CBOR): its arbitrary-precision arithmetic capabilities, and its data serialization possibilities.
+
+<a id=Python></a>
+
+### Python
+
+* [**desktopwallpaper.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/desktopwallpaper.py): Python module to aid in generating desktop wallpapers and button-like graphics.
 
 About
 -----------
