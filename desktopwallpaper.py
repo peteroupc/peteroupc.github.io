@@ -30,6 +30,7 @@
 
 import shlex
 import os
+import math
 
 def websafecolors():
     colors = []
@@ -45,7 +46,7 @@ def classiccolors():
         [0, 0, 0],
         [128, 128, 128],
         [255, 255, 255],
-        [191, 191, 191],
+        [192, 192, 192],
         [255, 0, 0],
         [128, 0, 0],
         [0, 255, 0],
@@ -63,6 +64,10 @@ def classiccolors():
 def tileable():
     return "\\( +clone -flip \\) -append \\( +clone -flop \\) +append"
 
+def isqrtceil(i):
+   r=math.isqrt(i)
+   return r if r*r==i else r+1
+
 # Returns an ImageMagick filter string to generate a desktop background from an image, in three steps.
 # 1. If rgb1 and rgb2 are not nil, converts the input image to grayscale, then translates the grayscale
 # palette to a gradient starting at rgb1 for black ( a 3-item array of the red,
@@ -77,9 +82,8 @@ def tileable():
 # of colors (each color is of the same format as rgb1 and rgb2),
 # and scatters the remaining colors in the image so that they appear close to the original colors.
 # Raises an error if 'basecolors' has a length greater than 256.
-# 'abstractImage' (default is False)
-# indicates whether the image to apply the filter to is an abstract or
-# geometric (rather than a photographic) image.
+# 'abstractImage' indicates that the image to apply the filter to
+# is abstract or geometric (as opposed to photographic).  Default is False.
 def magickgradientditherfilter(
     rgb1=None, rgb2=None, basecolors=None, hue=0, abstractImage=False
 ):
@@ -111,8 +115,20 @@ def magickgradientditherfilter(
         bases = ["xc:#%02X%02X%02X" % (k[0], k[1], k[2]) for k in basecolors]
         # ImageMagick command to generate the palette image
         image = "-size 1x1 " + (" ".join(bases)) + " +append -write mpr:z +delete"
+        # Apply Floyd-Steinberg error diffusion dither.
+        # NOTE: For abstractImage = True, ImageMagick's ordered 8x8 dithering
+        # algorithm ("-ordered-dither 8x8") is by default a per-channel monochrome
+        # (2-level) dither, not a true color dithering approach that takes much
+        # account of the color palette.
+        # As a result, for example, dithering a grayscale image with the algorithm will
+        # lead to an image with only black and white pixels, even if the palette contains,
+        # say, ten shades of gray.  The number after "8x8" is the number of color levels
+        # per color channel in the ordered dither algorithm, and this number is taken
+        # as the square root of the palette size, rounded up, minus 1, but not less
+        # than 2.
         ditherkind = (
-            "-ordered-dither 8x8" if abstractImage else "-dither FloydSteinberg"
+            ("-ordered-dither 8x8,%d" % (min(2, isqrtceil(len(basecolors))-1)) if abstractImage else \
+              "-dither FloydSteinberg"
         )
         return "%s %s \\( %s \\) %s -remap mpr:z" % (
             mgradient,
@@ -175,8 +191,6 @@ def basrelief(bg=[192, 192, 192], highlight=[255, 255, 255], shadow=[0, 0, 0]):
         + "mpr:a1 -compose Plus -composite"
     ) % (sc, hc, bc)
 
-import random
-
 def magickgradientditherfilterrandom():
     rgb1 = None
     rgb2 = None
@@ -206,6 +220,20 @@ def magickgradientditherfilterrandom():
         elif r < 8 and rgb1 != None:
             basecolors = [rgb1, rgb2]
     return magickgradientditherfilter(rgb1, rgb2, basecolors, hue=hue)
+
+def diaggradient(f):
+  size=64
+  fd=open(f,"wb")
+  fd.write(bytes("P6\n%d %d\n255\n"% (size,size),"utf-8"))
+  row=[0 for i in range(size*3)]
+  for y in range(size):
+    for x in range(size):
+      r=abs(x-(63-y))*255//(size-1)
+      row[x*3]=r
+      row[x*3+1]=r
+      row[x*3+2]=r
+    fd.write(bytes(row))
+  fd.close()
 
 # What follows are methods for generating scalable vector graphics (SVGs) of
 # classic OS style borders and button controls.  Although the SVGs are scalable
@@ -747,7 +775,3 @@ def makesvg():
         )
         + "</svg>"
     )
-
-fo = open("/tmp/m.svg", "w")
-fo.write(makesvg())
-fo.close()

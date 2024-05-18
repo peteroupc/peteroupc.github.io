@@ -1410,7 +1410,7 @@ There are several methods of finding the kind or kinds of colors that appear mos
 > 1. **Scale down**: For all these techniques, in the case of a raster image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
 > 2. **Color reduction**: Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [**nearest dominant colors**](#Nearest_Colors)), or
->     - applying a [**"dithering"**](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.[^36]
+>     - applying a _dithering_ technique (especially to reduce undesirable color "banding" in certain cases).[^36]
 > 3. **Unique colors**: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.[^37]
 > 4. **Disqualifying dominant colors**:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image's edges, can ignore certain kinds of colors (for example, gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the dominant color list.
 > 5. Averaging the colors of an image, component-by-component, can lead to a meaningless result, especially if there is a wide color variety represented in the image (see `stackoverflow.com/questions/43111029`).
@@ -1821,7 +1821,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 [^35]: Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas." Optical Society of America, 23(1), 597&ndash;610.
 
-[^36]: One way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.
+[^36]: A _dither_ technique is a way to reduce the colors in an image to a limited set while retaining visual similarity to the original image. Detailing the various dithering techniques is outside the scope of this article, but see the [**Wikipedia article on dithering**](https://en.wikipedia.org/wiki/Dither) as will as [**Joel Yliluoma's algorithm and his review of other dithering algorithms**](https://bisqwit.iki.fi/story/howto/dither/jy/). Another way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.
 
 [^37]: This document does not cover how to implement hash tables.
 
