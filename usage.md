@@ -77,7 +77,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | is something that is | is |Inspired by E. Bernal. |
 | it is midnight tonight | it is midnight |Inspired by E. Bernal. |
 | least favorite | least desired |Inspired by E. Bernal. |
-| literally | absolutely, totally; [leave out]\*\*\* | |
+| literally (in the sense of _absolutely_) | absolutely, totally, utterly, downright, completely; [leave out]\*\*\* | |
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
 | myth (_when a story is not meant_) | falsehood, untruth | |

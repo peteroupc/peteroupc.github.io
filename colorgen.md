@@ -1821,7 +1821,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 [^35]: Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas." Optical Society of America, 23(1), 597&ndash;610.
 
-[^36]: A _dither_ technique is a way to reduce the colors in an image to a limited set while retaining visual similarity to the original image. Detailing the various dithering techniques is outside the scope of this article, but see the [**Wikipedia article on dithering**](https://en.wikipedia.org/wiki/Dither) as will as [**Joel Yliluoma's algorithm and his review of other dithering algorithms**](https://bisqwit.iki.fi/story/howto/dither/jy/). Another way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.
+[^36]: A _dithering_ technique is a way to reduce the colors in an image to a limited set while retaining visual similarity to the original image. Detailing the various dithering techniques is outside the scope of this article, but see the [**Wikipedia article on dithering**](https://en.wikipedia.org/wiki/Dither) as will as [**Joel Yliluoma's algorithm and his review of other dithering algorithms**](https://bisqwit.iki.fi/story/howto/dither/jy/). Another way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.
 
 [^37]: This document does not cover how to implement hash tables.
 

@@ -64,7 +64,7 @@ def classiccolors():
 def tileable():
     return "\\( +clone -flip \\) -append \\( +clone -flop \\) +append"
 
-def isqrtceil(i):
+def _isqrtceil(i):
    r=math.isqrt(i)
    return r if r*r==i else r+1
 
@@ -127,7 +127,7 @@ def magickgradientditherfilter(
         # as the square root of the palette size, rounded up, minus 1, but not less
         # than 2.
         ditherkind = (
-            ("-ordered-dither 8x8,%d" % (min(2, isqrtceil(len(basecolors))-1)) if abstractImage else \
+            ("-ordered-dither 8x8,%d" % (min(2, _isqrtceil(len(basecolors))-1)) if abstractImage else \
               "-dither FloydSteinberg"
         )
         return "%s %s \\( %s \\) %s -remap mpr:z" % (
