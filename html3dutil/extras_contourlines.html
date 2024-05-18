@@ -22,7 +22,8 @@ import * as CustomModuleName from "extras/contourlines.js";
 <h3 id="methods">Methods</h3>
 
 <ul>
-  <li><a href="#extras_contourlines.contourLines">contourLines</a><br />Generates contour lines for two-dimensional data.</li>
+  <li><a href="#extras_contourlines.contourLines">contourLines</a><br />Generates contour lines for two-dimensional data, using Paul Bourke’s
+CONREC algorithm.</li>
   <li><a href="#extras_contourlines.contourLines3D">contourLines3D</a><br />Generates a mesh buffer of
 contour lines along the surface of a 3-dimensional triangle mesh.</li>
 </ul>
@@ -30,7 +31,8 @@ contour lines along the surface of a 3-dimensional triangle mesh.</li>
 <p><a name="extras_contourlines.contourLines"></a>
 ### (static) module:extras/contourlines.contourLines(func, levels, u1, u2, v1, v2, usize, vsize)</p>
 
-<p>Generates contour lines for two-dimensional data.</p>
+<p>Generates contour lines for two-dimensional data, using Paul Bourke’s
+CONREC algorithm.</p>
 
 <h4 id="parameters">Parameters</h4>
 
@@ -47,7 +49,7 @@ contour lines along the surface of a 3-dimensional triangle mesh.</li>
 
 <h4 id="return-value">Return Value</h4>
 
-<p>A mesh buffer of line segments for the contour lines. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+<p>A mesh buffer of line segments for the contour lines. (Type: MeshBuffer)</p>
 
 <h4 id="examples">Examples</h4>
 
@@ -68,7 +70,7 @@ contour lines along the surface of a 3-dimensional triangle mesh.</p>
 <h4 id="parameters-1">Parameters</h4>
 
 <ul>
-  <li><code>mesh</code> (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<br />A triangle mesh. It must contain a “POSITION” buffer attribute with three elements per value. If the number of vertices in the mesh is not divisible by 3, any excess vertices at the end are ignored.</li>
+  <li><code>mesh</code> (Type: MeshBuffer)<br />A triangle mesh. It must contain a “POSITION” buffer attribute with three elements per value. If the number of vertices in the mesh is not divisible by 3, any excess vertices at the end are ignored.</li>
   <li><code>planes</code> (Type: Array.&lt;Array.&lt;number»)<br />An array of 4-element arrays that serve as contour planes. The contour lines will be drawn at the intersection of the contour planes and the surface of the mesh. Each 4-element array describes a plane (A, B, C, D), in that order, whose points satisfy the equation <code>Ax + By + Cz + D = 0</code>, where (x, y, z) is a point lying on the plane.</li>
 </ul>
 
@@ -77,7 +79,7 @@ contour lines along the surface of a 3-dimensional triangle mesh.</p>
 <p>A mesh buffer containing the generated contour lines.
 Returns null if the input mesh’s primitive type isn’t triangles, or if
 the input mesh doesn’t contain a “POSITION” buffer attribute with
-three elements per value. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+three elements per value. (Type: MeshBuffer)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
@@ -93,26 +95,6 @@ three elements per value. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Promise.html">Promise</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="Shape.html">Shape</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_arrow.html">module:extras/arrow</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>

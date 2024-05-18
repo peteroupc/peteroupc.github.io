@@ -8,8 +8,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a id="Version_History"></a>
-## Version History</p>
+<p><a id="Version_History"></a></p>
+
+<h2 id="version-history">Version History</h2>
 
 <p>Version 2.0.0-beta3:</p>
 
@@ -84,18 +85,18 @@ new H3DU.PbrMaterial class.</li>
 <p>There are many, many changes to version 2.0.0-beta1 from version 1.5.1. Here are some of them, including the most important ones.</p>
 
 <ul>
-  <li>All classes in the main library are moved to a new namespace called <code>H3DU</code>.  For example, <code>Shape</code> is now <a href="Shape.html">Shape</a> and <code>Mesh</code> is now Mesh.  Many classes in the “extras” directory are also moved to the <code>H3DU</code> namespace.</li>
+  <li>All classes in the main library are moved to a new namespace called <code>H3DU</code>.  For example, <code>Shape</code> is now Shape and <code>Mesh</code> is now Mesh.  Many classes in the “extras” directory are also moved to the <code>H3DU</code> namespace.</li>
   <li><code>Scene3D</code>, now Scene3D, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new Batch3D class. Scene3D’s <code>render</code> method now takes an array of <code>Batch3D</code>s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as <code>makeShape</code> and <code>setPerspective</code>, can still be used until <code>H3DU.Scene3D</code> renders a custom <code>H3DU.Batch3D</code>. This compatibility behavior may be dropped in the future.</li>
   <li>Alpha is disabled in WebGL contexts created with the get3DOr2DContext method.</li>
   <li>The <code>Scene3D</code> Scene3D#useProgram method was deprecated and now does nothing.</li>
   <li>New RenderPass3D class holds information about how a batch of 3D models is to be rendered. It replaces the <code>Scene3D</code> Scene3D#useFilter method, which now does nothing.</li>
   <li>New FrameBufferInfo class holds information about a frame buffer; it replaces FrameBuffer.</li>
-  <li>The <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code> classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use <a href="MeshBuffer.html">MeshBuffer</a>, FrameBufferInfo, and ShaderInfo, respectively, which are not coupled to WebGL contexts.</li>
+  <li>The <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code> classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use MeshBuffer, FrameBufferInfo, and ShaderInfo, respectively, which are not coupled to WebGL contexts.</li>
   <li>Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.</li>
-  <li>The <a href="Shape.html">Shape</a> object is no longer coupled to vertex buffers.</li>
+  <li>The Shape object is no longer coupled to vertex buffers.</li>
   <li>The LightSource class now supports a radius of the light.</li>
   <li>The TextureLoader class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code>, which are tied to the WebGL context.</li>
-  <li><code>GLMath</code>, now Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="MathUtil.html#MathUtil.vec3perp">MathUtil.vec3perp</a>, <a href="MathUtil.html#MathUtil.vec3toWindowPoint">MathUtil.vec3toWindowPoint</a>, and <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a>.</li>
+  <li><code>GLMath</code>, now Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include MathUtil.vec3perp, MathUtil.vec3toWindowPoint, and MathUtil.mat4projectVec3.</li>
   <li>Two new classes in the “extras” folder support 2D text rendering and texture atlases (as sprite sheets), namely, TextFont and TextureAtlas.</li>
   <li>The “doc” folder contains the documentation to the library in the form of Markdown text files.</li>
   <li>The Camera class, now Camera, was rewritten.</li>
@@ -107,7 +108,7 @@ new H3DU.PbrMaterial class.</li>
   <li>The experimental 2D canvas renderer in <em>surfaces2d.html</em>, was abandoned.</li>
   <li>Added <code>dispose</code> method to <code>H3DU.Scene3D</code>.</li>
   <li>Added <code>createPointedStar</code> and <code>createLathe</code> methods to <code>H3DU.Meshes</code>.</li>
-  <li>Added <code>getBounds</code> and <code>toLinePath</code> methods to <a href="GraphicsPath.html">GraphicsPath</a>, an extra, as well
+  <li>Added <code>getBounds</code> and <code>toLinePath</code> methods to GraphicsPath, an extra, as well
  as an extra that adds methods that compute the intersection, difference, union, and XOR of two
  polygons. Path triangulation now supports polygons with holes.</li>
   <li>The default light configuration is no lights when creating a LightSource. The exception, for compatibility purposes, is when using a Scene3D without rendering a custom <code>Batch3D</code>, in which case the default is one light source with its default values.</li>
@@ -298,26 +299,6 @@ now uses a new getTransform method and the Transform class</li>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Promise.html">Promise</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="Shape.html">Shape</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_arrow.html">module:extras/arrow</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>

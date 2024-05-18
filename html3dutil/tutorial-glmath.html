@@ -13,8 +13,9 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 
 <p>Here is an overview of these data types.</p>
 
-<p><a id="Contents"></a>
-## Contents</p>
+<p><a id="Contents"></a></p>
+
+<h2 id="contents">Contents</h2>
 
 <ul>
   <li><a href="#Contents"><strong>Contents</strong></a></li>
@@ -65,8 +66,9 @@ of math functions for working with vectors, matrices, and quaternions.</p>
   </li>
 </ul>
 
-<p><a id="Vectors"></a>
-## Vectors</p>
+<p><a id="Vectors"></a></p>
+
+<h2 id="vectors">Vectors</h2>
 
 <p>A vector is a line segment pointing in a certain <em>direction</em> in space and
 having a certain <em>length</em> and an unspecified starting point.
@@ -90,8 +92,9 @@ fourth element is anything other than 0, the vector is in <em>homogeneous
 coordinates</em>, where the 3D position equals the first three elements divided
 by the fourth.)</p>
 
-<p><a id="Unit_Vectors"></a>
-### Unit Vectors</p>
+<p><a id="Unit_Vectors"></a></p>
+
+<h3 id="unit-vectors">Unit Vectors</h3>
 
 <p>A <em>unit vector</em> is a vector with a length of 1. (A vector’s <em>length</em>,  or <em>norm</em>, is the square root
 of the sum of the squares of its components.) A vector can be “normalized” to
@@ -101,17 +104,18 @@ the vector’s direction).</p>
 <p>The following functions normalize vectors and find their length.</p>
 
 <ul>
-  <li><a href="MathUtil.html#MathUtil.vec3normalize">MathUtil.vec3normalize</a> - Converts a 3-element vector to a unit vector.</li>
-  <li><a href="MathUtil.html#MathUtil.vec4normalize">MathUtil.vec4normalize</a> - Converts a 4-element vector to a unit vector.</li>
-  <li><a href="MathUtil.html#MathUtil.vec3length">MathUtil.vec3length</a> - Finds a 3-element vector’s length.</li>
-  <li><a href="MathUtil.html#MathUtil.vec4length">MathUtil.vec4length</a> - Finds a 4-element vector’s length.</li>
+  <li>MathUtil.vec3normalize - Converts a 3-element vector to a unit vector.</li>
+  <li>MathUtil.vec4normalize - Converts a 4-element vector to a unit vector.</li>
+  <li>MathUtil.vec3length - Finds a 3-element vector’s length.</li>
+  <li>MathUtil.vec4length - Finds a 4-element vector’s length.</li>
 </ul>
 
 <p>Note that due to rounding error, normalizing a vector with a <code>MathUtil</code> method
 might not necessarily result in a vector with a length of 1.</p>
 
-<p><a id="Matrices"></a>
-## Matrices</p>
+<p><a id="Matrices"></a></p>
+
+<h2 id="matrices">Matrices</h2>
 
 <p>A matrix is a rectangular array that can describe a
 transformation from one coordinate system to another. Transformations
@@ -120,38 +124,41 @@ Functions dealing with matrices begin with “mat”.
 A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.
 For more details, see the <a href="tutorial-matrixdetails.html">Matrix Details</a> tutorial.</p>
 
-<p><a id="Translation"></a>
-### Translation</p>
+<p><a id="Translation"></a></p>
+
+<h3 id="translation">Translation</h3>
 
 <p>A translation is a shifting of an object’s position.</p>
 
-<p>To create a translation matrix, use <a href="MathUtil.html#MathUtil.mat4translated">MathUtil.mat4translated()</a>,
+<p>To create a translation matrix, use MathUtil.mat4translated(),
 and specify the X-offset, the Y-offset, and the Z-offset. For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
 
 <p>To multiply an existing matrix by a translation, use
-<a href="MathUtil.html#MathUtil.mat4translate">MathUtil.mat4translate()</a>. This will put the translation
+MathUtil.mat4translate(). This will put the translation
 before the other transformations.</p>
 
-<p><a id="Scaling"></a>
-### Scaling</p>
+<p><a id="Scaling"></a></p>
+
+<h3 id="scaling">Scaling</h3>
 
 <p>Scaling changes an object’s size.</p>
 
-<p>To create a scaling matrix, use <a href="MathUtil.html#MathUtil.mat4scaled">MathUtil.mat4scaled()</a>,
+<p>To create a scaling matrix, use MathUtil.mat4scaled(),
 and specify the scaling factors for the X, Y, and Z axis. Each point is multiplied by the scaling
 factors to change the object’s size. For example, a Y-factor of 2 doubles an object’s height.</p>
 
 <p>To multiply an existing matrix by a scaling, use
-<a href="MathUtil.html#MathUtil.mat4scale">MathUtil.mat4scale()</a>. This will put the scaling
+MathUtil.mat4scale(). This will put the scaling
 before the other transformations.</p>
 
-<p><a id="Rotation"></a>
-### Rotation</p>
+<p><a id="Rotation"></a></p>
+
+<h3 id="rotation">Rotation</h3>
 
 <p>Rotation changes an object’s orientation.</p>
 
-<p>To create a rotation matrix, use <a href="MathUtil.html#MathUtil.mat4rotated">MathUtil.mat4rotated()</a>,
+<p>To create a rotation matrix, use MathUtil.mat4rotated(),
 and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>. For example:</p>
 
 <ul>
@@ -164,41 +171,44 @@ starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</li>
  <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.</p>
 
 <p>To multiply an existing matrix by a rotation, use
-<a href="MathUtil.html#MathUtil.mat4rotate">MathUtil.mat4rotate()</a>. This will put the rotation
+MathUtil.mat4rotate(). This will put the rotation
 before the other transformations.</p>
 
-<p><a id="Combining_Transforms"></a>
-### Combining Transforms</p>
+<p><a id="Combining_Transforms"></a></p>
+
+<h3 id="combining-transforms">Combining Transforms</h3>
 
 <p>The order in which you do transforms is important. In general, scaling then translating is
 not the same as translating then scaling. Assuming your geometry is centered at the origin
 (0, 0, 0), you should create a transformation in this order:</p>
 
 <ul>
-  <li>Call <a href="MathUtil.html#MathUtil.mat4identity"><code>MathUtil.mat4identity()</code></a>, creating a matrix without a transformation.</li>
-  <li>Do your translations if needed, using <a href="MathUtil.html#MathUtil.mat4translate"><code>mat4translate()</code></a>.</li>
-  <li>Do your rotations if needed, using <a href="MathUtil.html#MathUtil.mat4rotate"><code>mat4rotate()</code></a>.</li>
-  <li>Do your scalings if needed, using <a href="MathUtil.html#MathUtil.mat4scale"><code>mat4scale()</code></a>.</li>
+  <li>Call <code>MathUtil.mat4identity()</code>, creating a matrix without a transformation.</li>
+  <li>Do your translations if needed, using <code>mat4translate()</code>.</li>
+  <li>Do your rotations if needed, using <code>mat4rotate()</code>.</li>
+  <li>Do your scalings if needed, using <code>mat4scale()</code>.</li>
 </ul>
 
 <p>This way, the scalings and rotations will affect the object while it’s still centered, and
 before the translations (shifts) take place.</p>
 
-<p>You can also multiply transforms using <a href="MathUtil.html#MathUtil.mat4multiply">MathUtil.mat4multiply()</a>.
+<p>You can also multiply transforms using MathUtil.mat4multiply().
 This takes two matrices and returns one combined matrix. The combined matrix will have the effect
 of doing the second matrix’s transform, then the first matrix’s transform.</p>
 
-<p><a id="Describing_Rotations"></a>
-## Describing Rotations</p>
+<p><a id="Describing_Rotations"></a></p>
+
+<h2 id="describing-rotations">Describing Rotations</h2>
 
 <p>Rotations in 3D space can be described in many ways, including
 quaternions, Tait-Bryan angles, and an angle and axis.</p>
 
-<p><a id="Axis_of_Rotation"></a>
-### Axis of Rotation</p>
+<p><a id="Axis_of_Rotation"></a></p>
+
+<h3 id="axis-of-rotation">Axis of Rotation</h3>
 
 <p>A rotation of vectors or points can be described using an <em>angle</em>
-and an <em>axis of rotation</em>, for example, in the <a href="MathUtil.html#MathUtil.mat4rotate">MathUtil.mat4rotate</a> method.</p>
+and an <em>axis of rotation</em>, for example, in the MathUtil.mat4rotate method.</p>
 
 <p>An axis of rotation is a vector pointing in a certain direction.  When a point (or vector)
 is rotated at any angle around this axis, the new point (or vector) will lie
@@ -229,29 +239,32 @@ describe the same axis of rotation.</p>
 <p>Unless stated otherwise, an axis of rotation passed to a <code>MathUtil</code>
 method need not be a <a href="#Unit_Vectors"><strong>unit vector</strong></a>.</p>
 
-<p><a id="Quaternions"></a>
-### Quaternions</p>
+<p><a id="Quaternions"></a></p>
+
+<h3 id="quaternions">Quaternions</h3>
 
 <p>A quaternion is a 4-element vector that can describe a
 3D rotation. Functions dealing with quaternions begin with “quat”.</p>
 
-<p><a id="Generating_Quaternions"></a>
-#### Generating Quaternions</p>
+<p><a id="Generating_Quaternions"></a></p>
+
+<h4 id="generating-quaternions">Generating Quaternions</h4>
 
 <p>Functions that generate quaternions include:</p>
 
 <ul>
-  <li><a href="MathUtil.html#MathUtil.quatIdentity">MathUtil.quatIdentity</a> - Generates a quaternion describing an
+  <li>MathUtil.quatIdentity - Generates a quaternion describing an
 absence of rotations.</li>
-  <li><a href="MathUtil.html#MathUtil.quatFromVectors">MathUtil.quatFromVectors</a> - Generates a quaternion describing
+  <li>MathUtil.quatFromVectors - Generates a quaternion describing
 a rotation from one vector to another.</li>
-  <li><a href="MathUtil.html#MathUtil.quatFromMat4">MathUtil.quatFromMat4</a> - Generates a quaternion from a <a href="#Matrices"><strong>4x4 matrix</strong></a>.</li>
-  <li><a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> - Generates a quaternion from an angle and <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>.</li>
-  <li><a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a> - Generates a quaternion from Tait-Bryan angles.</li>
+  <li>MathUtil.quatFromMat4 - Generates a quaternion from a <a href="#Matrices"><strong>4x4 matrix</strong></a>.</li>
+  <li>MathUtil.quatFromAxisAngle - Generates a quaternion from an angle and <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>.</li>
+  <li>MathUtil.quatFromTaitBryan - Generates a quaternion from Tait-Bryan angles.</li>
 </ul>
 
-<p><a id="Using_Quaternions"></a>
-#### Using Quaternions</p>
+<p><a id="Using_Quaternions"></a></p>
+
+<h4 id="using-quaternions">Using Quaternions</h4>
 
 <p>For best results when using quaternions:</p>
 
@@ -260,23 +273,25 @@ a rotation from one vector to another.</li>
   <li>As rotations happen each frame, convert the rotation (which may be
 in pitch/yaw/roll or another form, depending on the input device) to a quaternion
 (see <a href="#Generating_Quaternions"><strong>“Generating Quaternions”</strong></a>
-and <a href="MathUtil.html#MathUtil.quatMultiply">multiply</a> that quaternion by the current
+and multiply that quaternion by the current
 quaternion to get the object’s new rotation.</li>
-  <li>Normalize the rotation quaternion (using <a href="MathUtil.html#MathUtil.quatNormalize"><code>quatNormalize()</code></a>
- or <a href="MathUtil.html#MathUtil.quatNormalizeInPlace"><code>quatNormalizeInPlace()</code></a>)
+  <li>Normalize the rotation quaternion (using <code>quatNormalize()</code>
+ or <code>quatNormalizeInPlace()</code>)
 every few frames. (Quaternions that describe a 3D rotation should be <a href="#Unit_Vectors"><strong>unit vectors</strong></a>.)</li>
 </ul>
 
-<p><a id="Multiplying_Quaternions"></a>
-#### Multiplying Quaternions</p>
+<p><a id="Multiplying_Quaternions"></a></p>
+
+<h4 id="multiplying-quaternions">Multiplying Quaternions</h4>
 
 <p>When two quaternions are multiplied (for example, with {@MathUtil.quatMultiply}),
 the result is a combined rotation in which the second rotation happens
 before the first rotation (when applied in the global coordinate frame).
 Like matrix multiplication, the order in which you multiply quaternions is important.</p>
 
-<p><a id="Tait_Bryan_angles"></a>
-### Tait-Bryan angles</p>
+<p><a id="Tait_Bryan_angles"></a></p>
+
+<h3 id="tait-bryan-angles">Tait-Bryan angles</h3>
 
 <p>Pitch-yaw-roll angles (also called Tait-Bryan angles) describe three different rotations
 of the same vector around three different axes, called the pitch, yaw, and roll axes
@@ -297,19 +312,21 @@ axis), so that a rotation along that axis will do nothing.</li>
 <p>Related functions:</p>
 
 <ul>
-  <li><a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan()</a> -
+  <li>MathUtil.quatFromTaitBryan() -
 Converts from Tait-Bryan angles to a quaternion</li>
-  <li><a href="MathUtil.html#MathUtil.quatToTaitBryan">MathUtil.quatToTaitBryan()</a> -
+  <li>MathUtil.quatToTaitBryan() -
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
 
-<p><a id="4x4_Matrices"></a>
-### 4x4 Matrices</p>
+<p><a id="4x4_Matrices"></a></p>
+
+<h3 id="x4-matrices">4x4 Matrices</h3>
 
 <p>A 4x4 matrix can describe a 3D vector rotation; see <a href="#Rotation"><strong>“Rotation”, above</strong></a>.</p>
 
-<p><a id="Planes"></a>
-## Planes</p>
+<p><a id="Planes"></a></p>
+
+<h2 id="planes">Planes</h2>
 
 <p>A 4-element array can describe a plane in the following manner:</p>
 
@@ -336,12 +353,13 @@ negative if it points away from the origin.
 <p>There is one method that deals with planes:</p>
 
 <ul>
-  <li><a href="MathUtil.html#MathUtil.planeNormalizeInPlace">MathUtil.planeNormalizeInPlace</a> - Converts the plane to a form in which
+  <li>MathUtil.planeNormalizeInPlace - Converts the plane to a form in which
 its normal has a length of 1.</li>
 </ul>
 
-<p><a id="Boxes"></a>
-## Boxes</p>
+<p><a id="Boxes"></a></p>
+
+<h2 id="boxes">Boxes</h2>
 
 <p>An array of six numbers can describe an axis-aligned bounding box (AABB).
 If it does, the first three numbers are the box’s minimum X, Y, and Z coordinates,
@@ -353,13 +371,14 @@ box is considered empty.</p>
 <p>Methods that deal with boxes include:</p>
 
 <ul>
-  <li><a href="MathUtil.html#MathUtil.boxCenter">MathUtil.boxCenter</a> - Finds a box’s center.</li>
-  <li><a href="MathUtil.html#MathUtil.boxDimensions">MathUtil.boxDimensions</a> - Finds a box’s dimensions.</li>
-  <li><a href="MathUtil.html#MathUtil.boxIsEmpty">MathUtil.boxIsEmpty</a> - Determines whether a box is empty.</li>
+  <li>MathUtil.boxCenter - Finds a box’s center.</li>
+  <li>MathUtil.boxDimensions - Finds a box’s dimensions.</li>
+  <li>MathUtil.boxIsEmpty - Determines whether a box is empty.</li>
 </ul>
 
-<p><a id="Coordinate_Systems"></a>
-## Coordinate Systems</p>
+<p><a id="Coordinate_Systems"></a></p>
+
+<h2 id="coordinate-systems">Coordinate Systems</h2>
 
 <p>There are two conventions of 3D coordinate systems, left-handed and
 right-handed:</p>
@@ -376,18 +395,20 @@ right-handed), if the positive X axis points in the thumb’s
 direction and the positive Y axis points in the index finger’s direction, the Z axis will
 point in the direction the other three fingers point.</p>
 
-<p>As used here, the Z axis is the <a href="MathUtil.html#MathUtil.vec3cross">cross product</a>
+<p>As used here, the Z axis is the cross product
 of two perpendicular axes, namely the X axis and the Y axis, in that order.
 Which of the X, Y, or Z axes is the right, up, or forward axis is
 arbitrary; for example, some conventions may have the Z axis, rather than Y,
 be the up axis.  Therefore, these three axes are defined here to avoid
 confusion.</p>
 
-<p><a id="Differences_in_Behavior"></a>
-### Differences in Behavior</p>
+<p><a id="Differences_in_Behavior"></a></p>
 
-<p><a id="Projection_and_view_matrices"></a>
-#### Projection and view matrices</p>
+<h3 id="differences-in-behavior">Differences in Behavior</h3>
+
+<p><a id="Projection_and_view_matrices"></a></p>
+
+<h4 id="projection-and-view-matrices">Projection and view matrices</h4>
 
 <p>The difference between a left-handed and right-handed coordinate system
 affects how 3D points are transformed, mainly in the projection and view
@@ -395,8 +416,9 @@ matrices.  The projection and view matrices returned by Math
 matrix methods are designed for a right-handed coordinate system.  Their
 documentation describes how to adjust them for a left-handed coordinate system.</p>
 
-<p><a id="Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate"></a>
-#### Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</p>
+<p><a id="Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate"></a></p>
+
+<h4 id="rotation-angles-such-as-used-in-mat4rotate-and-quatrotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</h4>
 
 <p>While the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a> points backward from the “eye”, if the angle’s value
 is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</strong></a> is…</p>
@@ -409,8 +431,9 @@ is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</str
 <p>While the axis of rotation points backward from the “eye”, if the angle’s value
 is negative, then the angle runs in the opposite direction.</p>
 
-<p><a id="Cross_product_vec3cross_and_normals"></a>
-#### Cross product (<code>vec3cross</code>) and normals</p>
+<p><a id="Cross_product_vec3cross_and_normals"></a></p>
+
+<h4 id="cross-product-vec3cross-and-normals">Cross product (<code>vec3cross</code>) and normals</h4>
 
 <p>Given a triangle formed by…</p>
 
@@ -419,7 +442,7 @@ is negative, then the angle runs in the opposite direction.</p>
   <li>points A, B, and (0, 0, 0), in that order,</li>
 </ul>
 
-<p>the <a href="MathUtil.html#MathUtil.vec3cross">cross product</a> of the first point with the second,
+<p>the cross product of the first point with the second,
 in that order, is a <em>normal</em> of that triangle (a vector that’s perpendicular to the triangle’s surface).</p>
 
 <p>While this particular normal points backward from the “eye”, the triangle’s vertices
@@ -427,16 +450,18 @@ run in a counterclockwise path for right-handed coordinate systems, or a clockwi
 for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)</p>
 
-<p><a id="Winding_and_face_classification"></a>
-### Winding and face classification</p>
+<p><a id="Winding_and_face_classification"></a></p>
+
+<h3 id="winding-and-face-classification">Winding and face classification</h3>
 
 <p>A two-dimensional triangle has counterclockwise <em>winding</em> if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex. Otherwise, it has clockwise winding. If the triangle is in 3D space, it’s first transformed into 2D <em>window coordinates</em> before its winding is found. (Window coordinates roughly correspond to screen pixels.)</p>
 
-<p>By default, in the GL pipeline, triangles with counterclockwise winding are <em>front faces</em>, and
+<p>By default, in the WebGL pipeline, triangles with counterclockwise winding are <em>front faces</em>, and
 other triangles are <em>back faces</em>.</p>
 
-<p><a id="Finding_a_triangle_s_winding"></a>
-#### Finding a triangle’s winding</p>
+<p><a id="Finding_a_triangle_s_winding"></a></p>
+
+<h4 id="finding-a-triangles-winding">Finding a triangle’s winding</h4>
 
 <p>To find a triangle’s winding, do the following calculation (X1, X2, X3 and Y1, Y2, Y3 are the window coordinates of its vertices). Note that half of the result will be the triangle’s signed area.</p>
 
@@ -467,26 +492,6 @@ other triangles are <em>back faces</em>.</p>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Promise.html">Promise</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="Shape.html">Shape</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_arrow.html">module:extras/arrow</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>

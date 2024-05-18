@@ -8,8 +8,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a id="Introduction"></a>
-## Introduction</p>
+<p><a id="Introduction"></a></p>
+
+<h2 id="introduction">Introduction</h2>
 
 <p>This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
@@ -19,8 +20,9 @@ it draw triangles, lines, and other graphics primitives.</p>
 
 <p><strong>Source code for the latest version of the library is available at the</strong> <a href="https://github.com/peteroupc/html3dutil"><strong>Geometry Utilities Library’s project page</strong></a><strong>.</strong></p>
 
-<p><a id="Contents"></a>
-## Contents</p>
+<p><a id="Contents"></a></p>
+
+<h2 id="contents">Contents</h2>
 
 <ul>
   <li><a href="#Introduction"><strong>Introduction</strong></a></li>
@@ -40,10 +42,11 @@ it draw triangles, lines, and other graphics primitives.</p>
   <li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
 </ul>
 
-<p><a id="Overview_of_Transformations"></a>
-### Overview of Transformations</p>
+<p><a id="Overview_of_Transformations"></a></p>
 
-<p>Most modern 3D rendering engines use the following transformations:</p>
+<h3 id="overview-of-transformations">Overview of Transformations</h3>
+
+<p>Many 3D rendering engines use the following transformations:</p>
 
 <ul>
   <li>A <em>world matrix</em> transforms an object’s own coordinates to <em>world space</em>,
@@ -59,16 +62,18 @@ merely for the convenience of the rendering engine; all the graphics pipeline ex
 space coordinates of the things it draws. The pipeline uses those coordinates
 and their transformed <em>window coordinates</em> when rendering things on the screen.</p>
 
-<p><a id="Projection_Transform"></a>
-## Projection Transform</p>
+<p><a id="Projection_Transform"></a></p>
+
+<h2 id="projection-transform">Projection Transform</h2>
 
 <p>A <em>projection transform</em> (usually in the form of a <em>projection matrix</em>) transforms coordinates in eye space to <em>clip space</em>.</p>
 
 <p>Two commonly used projections in 3D graphics are the perspective projection and
 orthographic projection, described below. (Other kinds of projections, such as oblique projections, isometric projections, and nonlinear projection functions, are not treated here.)</p>
 
-<p><a id="Perspective_Projection"></a>
-### Perspective Projection</p>
+<p><a id="Perspective_Projection"></a></p>
+
+<h3 id="perspective-projection">Perspective Projection</h3>
 
 <p>A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects look bigger than more distant objects with the same size, making the projection similar to how our eyes see the world.</p>
 
@@ -99,7 +104,7 @@ and others would be.</p>
 
 <p>The following methods define a perspective projection.</p>
 
-<p><strong><a href="MathUtil.html#MathUtil.mat4perspective"><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
+<p><strong><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></strong></p>
 
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
@@ -123,8 +128,9 @@ of where they meet the near clipping plane.</li>
   <li><code>near</code>, <code>far</code> - Distance from the “camera” to the near and far clipping planes.</li>
 </ul>
 
-<p><a id="Orthographic_Projection"></a>
-### Orthographic Projection</p>
+<p><a id="Orthographic_Projection"></a></p>
+
+<h3 id="orthographic-projection">Orthographic Projection</h3>
 
 <p>An orthographic projection is one in which the left and right clipping planes are parallel to each other,
 and the top and bottom clipping planes are parallel to each other. This results in the near and far clipping
@@ -165,8 +171,9 @@ or squished in case the view volume’s aspect ratio and the scene’s aspect ra
   <li><code>aspect</code> - Aspect ratio of the viewport.</li>
 </ul>
 
-<p><a id="View_Transform"></a>
-## View Transform</p>
+<p><a id="View_Transform"></a></p>
+
+<h2 id="view-transform">View Transform</h2>
 
 <p>The view matrix transforms <em>world space</em> coordinates, shared by every object in a scene, to coordinates in <em>eye space</em>
 (also called <em>camera space</em> or <em>view space</em>), in which the “camera” is located at the center of the coordinate system: (0, 0, 0).
@@ -195,8 +202,9 @@ This is optional. The default is [0, 0, 0].</li>
 This is optional. The default is [0, 1, 0].</li>
 </ul>
 
-<p><a id="Vertex_Coordinates_in_the_Graphics_System"></a>
-## Vertex Coordinates in the Graphics System</p>
+<p><a id="Vertex_Coordinates_in_the_Graphics_System"></a></p>
+
+<h2 id="vertex-coordinates-in-the-graphics-system">Vertex Coordinates in the Graphics System</h2>
 
 <p>The concepts of <em>eye space</em>, <em>camera space</em>, and <em>world space</em>, as well as
 the use of matrices related to them, such as <em>projection</em>, <em>view</em>, <em>model-view</em>,
@@ -215,7 +223,7 @@ without transforming them.</p>
 <p>As the name suggests, clip space coordinates are used for clipping primitives to the
 screen. Each clip space vertex is in <em>homogeneous coordinates</em>, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
-perspective matrix returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, for example,
+perspective matrix returned by MathUtil.mat4perspective, for example,
 transforms W to the negative Z coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the “eye” or “camera”.</p>
 
@@ -225,15 +233,16 @@ which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current <em>viewport</em>. A viewport is a rectangle
 whose size and position are generally expressed in pixels.</p>
 
-<p>For the perspective matrix returned by <a href="MathUtil.html#MathUtil.mat4perspective"><code>mat4perspective</code></a>, dividing
+<p>For the perspective matrix returned by <code>mat4perspective</code>, dividing
 the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the “eye” or “camera”),
 the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This
 is the <em>perspective</em> effect mentioned earlier: objects will appear smaller and smaller
 as they are more and more distant from the “camera”.</p>
 
-<p><a id="Other_Pages"></a>
-## Other Pages</p>
+<p><a id="Other_Pages"></a></p>
+
+<h2 id="other-pages">Other Pages</h2>
 
 <p>The following pages of mine on CodeProject also discuss the Geometry Utilities Library, formerly the Public-Domain HTML 3D Library:</p>
 
@@ -256,26 +265,6 @@ as they are more and more distant from the “camera”.</p>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Promise.html">Promise</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="Shape.html">Shape</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_arrow.html">module:extras/arrow</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>

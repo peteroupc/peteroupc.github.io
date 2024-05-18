@@ -8,8 +8,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a id="Public_Domain_Geometry_Utilities_Library"></a>
-## Public-Domain Geometry Utilities Library</p>
+<p><a id="Public_Domain_Geometry_Utilities_Library"></a></p>
+
+<h2 id="public-domain-geometry-utilities-library">Public-Domain Geometry Utilities Library</h2>
 
 <p>This page will introduce the <a href="https://github.com/peteroupc/html3dutil"><strong>Geometry Utilities Library</strong></a>, an open-source JavaScript library that I wrote.</p>
 
@@ -23,15 +24,17 @@
   <p><strong>Note:</strong> The Geometry Utilities Library was formerly called the Public-Domain HTML 3D Library.  Classes that involved the HTML 3D canvas, shaders, or the 3-D scene graph were removed, to make this library much more general-purpose.  In any case, such classes are not as trivial to port to other 3-D rendering APIs or other programming languages as classes that merely generate and store 3-D geometry or implement math functions (however, shader-based filters are still included as extras, even though the Geometry Utilities Library currently doesn’t use them directly).</p>
 </blockquote>
 
-<p><a id="Example"></a>
-## Example</p>
+<p><a id="Example"></a></p>
+
+<h2 id="example">Example</h2>
 
 <p>The following is a screen shot of a scene generated with the help of the former Public Domain HTML 3D Library.  Currently, however, the Geometry Utilities library has no means to render 3-D geometry directly.</p>
 
 <p><img src="https://peteroupc.github.io/html3dutil/html3d.png" alt="" /></p>
 
-<p><a id="Contents"></a>
-## Contents</p>
+<p><a id="Contents"></a></p>
+
+<h2 id="contents">Contents</h2>
 
 <ul>
   <li><a href="#Public_Domain_Geometry_Utilities_Library"><strong>Public-Domain Geometry Utilities Library</strong></a></li>
@@ -49,8 +52,9 @@
   <li><a href="#History"><strong>History</strong></a></li>
 </ul>
 
-<p><a id="How_to_Use"></a>
-## How to Use</p>
+<p><a id="How_to_Use"></a></p>
+
+<h2 id="how-to-use">How to Use</h2>
 
 <ol>
   <li><a href="https://github.com/peteroupc/html3dutil/releases"><strong>Download the Geometry Utilities Library</strong></a>.</li>
@@ -71,9 +75,10 @@ import * as H3DU from "h3du_module.js";
   </li>
 </ol>
 
-<p><a id="List_of_Classes"></a>
-### List of Classes
-This is an overview of most of the JavaScript classes available in this library:</p>
+<p><a id="List_of_Classes"></a></p>
+
+<h3 id="list-of-classes">List of Classes</h3>
+<p>This is an overview of most of the JavaScript classes available in this library:</p>
 
 <ul>
   <li><a href="https://peteroupc.github.io/html3dutil/html"><strong><code>H3DU</code></strong></a> - Contains various utility methods in the Geometry Utilities Library.</li>
@@ -92,14 +97,16 @@ This is an overview of most of the JavaScript classes available in this library:
 
 <p>The following sections detail how an application that renders 3-D graphics can use this library.</p>
 
-<p><a id="The_Camera"></a>
-### The “Camera”</p>
+<p><a id="The_Camera"></a></p>
+
+<h3 id="the-camera">The “Camera”</h3>
 
 <p>The <code>MathUtil</code> class contains methods that support the concepts of a “projection transform” and a “view transform”, as are common in many 3D rendering libraries. If we
 use the concept of a “camera”, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>MathUtil</code> has methods for generating 4x4 matrices that represent some kinds of projection and view transformations, including <code>MathUtil.mat4perspective</code> (a perspective projection) and <code>MathUtil.mat4lookat</code> (a look-at view transform). For more information, see <a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><strong><em>The “Camera” and Geometric Transforms</em></strong></a>.</p>
 
-<p><a id="3D_Models"></a>
-### 3D Models</p>
+<p><a id="3D_Models"></a></p>
+
+<h3 id="d-models">3D Models</h3>
 
 <p>Most 3D scenes are made up of <em>meshes</em>, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the <code>MeshBuffer</code> class, or create a built-in geometric shape using a method in the <code>Meshes</code> class. The example below shows how you can create a box mesh:</p>
 
@@ -134,8 +141,9 @@ var mesh=Meshes.createBox(10,20,25);
    See my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html"><strong>colors tutorial</strong></a>.</li>
 </ul>
 
-<p><a id="Shapes"></a>
-### Shapes</p>
+<p><a id="Shapes"></a></p>
+
+<h3 id="shapes">Shapes</h3>
 
 <p>The <code>Shape</code> constructor method assigns a linear or perspective transformation (including shifting position, scaling, and rotation) to meshes.  The library calls this a 3D shape.</p>
 
@@ -162,8 +170,9 @@ shape.setPosition(1,0,0);
   <br />Creates a copy of this shape.</li>
 </ul>
 
-<p><a id="The_Render_Loop"></a>
-### The Render Loop</p>
+<p><a id="The_Render_Loop"></a></p>
+
+<h3 id="the-render-loop">The Render Loop</h3>
 
 <p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many “frames” a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. The exact details of rendering depend on the 3D rendering library in use; the Geometry Utilities Library has no means to directly render 3D objects.</p>
 
@@ -181,8 +190,9 @@ requestAnimationFrame(rafCallback);
 
 <p>In this example, the callback to <code>requestAnimationFrame</code> takes a parameter (here “time”), containing the number of milliseconds since the page was started.  This can be used to implement frame-rate independent animations.</p>
 
-<p><a id="History"></a>
-## History</p>
+<p><a id="History"></a></p>
+
+<h2 id="history">History</h2>
 
 <p>See <a href="https://peteroupc.github.io/html3dutil/tutorial-history.html"><strong>version history</strong></a>.</p>
 
@@ -200,26 +210,6 @@ requestAnimationFrame(rafCallback);
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Promise.html">Promise</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="Shape.html">Shape</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_arrow.html">module:extras/arrow</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>

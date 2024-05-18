@@ -8,8 +8,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a id="Introduction"></a>
-## Introduction</p>
+<p><a id="Introduction"></a></p>
+
+<h2 id="introduction">Introduction</h2>
 
 <p>This page describes what graphics filters are and how they work in my
 public domain <a href="http://peteroupc.github.io/html3dutil"><strong>HTML 3D Library</strong></a>.
@@ -17,8 +18,9 @@ It also describes several examples of graphics filters.</p>
 
 <p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">**HTML 3D Library’s Releases page**</a>.</strong></p>
 
-<p><a id="Contents"></a>
-## Contents</p>
+<p><a id="Contents"></a></p>
+
+<h2 id="contents">Contents</h2>
 
 <ul>
   <li><a href="#Introduction"><strong>Introduction</strong></a></li>
@@ -37,8 +39,9 @@ It also describes several examples of graphics filters.</p>
   <li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
 </ul>
 
-<p><a id="Graphics_Filters"></a>
-## Graphics Filters</p>
+<p><a id="Graphics_Filters"></a></p>
+
+<h2 id="graphics-filters-1">Graphics Filters</h2>
 
 <p>In the HTML 3D Library, graphics filters are functions used to modify the appearance
 of the screen after each frame. They are implemented in a language called GLSL, or GL
@@ -52,8 +55,9 @@ affecting the other pixels, and GPUs are often much better designed for parallel
 a <em>frame buffer</em>. The frame buffer acts like a texture which will be rendered back to
 the screen with the help of the graphics filter’s shader program.</p>
 
-<p><a id="Writing_Graphics_Filters"></a>
-## Writing Graphics Filters</p>
+<p><a id="Writing_Graphics_Filters"></a></p>
+
+<h2 id="writing-graphics-filters">Writing Graphics Filters</h2>
 
 <p>In the HTML 3D Library, use the <code>makeEffect</code> method of the <code>H3DU.ShaderInfo</code> class to create
 graphics filters:</p>
@@ -100,8 +104,9 @@ width, and <code>textureSize.y</code> is the height.</li>
 <p>A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
 be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.</p>
 
-<p><a id="Using_Graphics_Filters"></a>
-## Using Graphics Filters</p>
+<p><a id="Using_Graphics_Filters"></a></p>
+
+<h2 id="using-graphics-filters">Using Graphics Filters</h2>
 
 <p>To use a graphics filter, the application needs to prepare for its use by following these steps.</p>
 
@@ -163,8 +168,9 @@ passes mentioned above, the following happens.</p>
   </li>
 </ul>
 
-<p><a id="Sample_Code"></a>
-## Sample Code</p>
+<p><a id="Sample_Code"></a></p>
+
+<h2 id="sample-code">Sample Code</h2>
 
 <p>Here is sample code for using a graphics filter.</p>
 
@@ -186,8 +192,9 @@ var renders=[
 scene.render(renders);
 </pre>
 
-<p><a id="Mirror_Filter"></a>
-### Mirror Filter</p>
+<p><a id="Mirror_Filter"></a></p>
+
+<h3 id="mirror-filter">Mirror Filter</h3>
 
 <p><img src="filters7.png" alt="**Mirror filtered image**" /></p>
 
@@ -206,8 +213,9 @@ return H3DU.ShaderInfo.makeEffect(context,[
 
 <p>With a simple change, this filter can be modified to do a vertical flip (<code>1.0-uvCoord.y</code>) or even both flips.</p>
 
-<p><a id="Pixelate_Filter"></a>
-### Pixelate Filter</p>
+<p><a id="Pixelate_Filter"></a></p>
+
+<h3 id="pixelate-filter">Pixelate Filter</h3>
 
 <p><img src="filters5.png" alt="**Pixelate filtered image**" /></p>
 
@@ -231,8 +239,9 @@ return H3DU.ShaderInfo.makeEffect([
 
 <p>The demo changes the “coarseness” parameter with time to animate the pixelation effect.</p>
 
-<p><a id="Wave_Filter"></a>
-### Wave Filter</p>
+<p><a id="Wave_Filter"></a></p>
+
+<h3 id="wave-filter">Wave Filter</h3>
 
 <p><img src="filters3.png" alt="**Wave filtered image**" /></p>
 
@@ -242,8 +251,9 @@ frame for the undulation effect.</p>
 
 <p>This filter is implemented in the function <code>makeWave</code> in the demo.</p>
 
-<p><a id="Waterpaint_Filter"></a>
-### Waterpaint Filter</p>
+<p><a id="Waterpaint_Filter"></a></p>
+
+<h3 id="waterpaint-filter">Waterpaint Filter</h3>
 
 <p><img src="filters6.png" alt="**Waterpaint filtered image**" /></p>
 
@@ -252,8 +262,9 @@ named “Themaister”.</p>
 
 <p>This filter is implemented in the function <code>makeWaterpaint</code> in the demo.</p>
 
-<p><a id="Other_Pages"></a>
-## Other Pages</p>
+<p><a id="Other_Pages"></a></p>
+
+<h2 id="other-pages">Other Pages</h2>
 
 <p>The following pages of mine on CodeProject also discuss this library:</p>
 
@@ -278,26 +289,6 @@ named “Themaister”.</p>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-  <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Promise.html">Promise</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="Shape.html">Shape</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_arrow.html">module:extras/arrow</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
