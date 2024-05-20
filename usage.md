@@ -25,7 +25,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | happen | occur, manifest, produce itself, present itself, take place, unfold, come about, come to pass. | Inspired by E. Bernal. |
 | including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone] |Inspired by E. Bernal. |
-| _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] many deaths |Inspired by E. Bernal. |
+| _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] the death of many |Inspired by E. Bernal. |
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) injured | _an event_ injures many; _an event_ [synonym for _causes_] many injuries|Inspired by E. Bernal. |
 little house | housie, housette, houselet, minihouse | Diminutive. |
@@ -77,7 +77,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | is something that is | is |Inspired by E. Bernal. |
 | it is midnight tonight | it is midnight |Inspired by E. Bernal. |
 | least favorite | least desired |Inspired by E. Bernal. |
-| literally (in the sense of _absolutely_) | absolutely, totally, utterly, downright, completely; [leave out]\*\*\* | |
+| literally (_in the sense of 'absolutely'_) | absolutely, totally, utterly, downright, completely; [leave out]\*\*\* | |
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
 | myth (_when a story is not meant_) | falsehood, untruth | |

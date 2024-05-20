@@ -26,7 +26,7 @@ Limit 3D graphics to the following:
     * A vertex consists of an XYZ position, an XY texture coordinate, and an RGB vertex color.
     * For each color, the red component is 5 bits, the green, 5 bits, and the blue, 5 bits.
 
-4. Textures must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format.  Texture rendering supports flips and repeats on either or both axes.  Maximum image size of textures is 192 kibibytes.
+4. Textures must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format.  Texture rendering supports flips and repeats on either or both axes.  A texture's maximum image size is 192 kibibytes.
 5. Depth tests, clear colors, and fog colors are supported.
 6. The 3D graphics buffer's resolution is the same as the screen resolution.
 

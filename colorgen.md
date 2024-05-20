@@ -1210,7 +1210,7 @@ More generally&mdash;
 
 The following approaches can generate a lighter or darker version of a color. In the examples, `color` is an RGB color in 0-1 format, and `value` is positive to lighten a color, or negative to darken a color, and -1 or greater and 1 or less.
 
-- **RGB additive.** `[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]`.
+- **RGB additive.** `[min(max(color[0]+value,0),1),` `min(max(color[1]+value,0),1),` `min(max(color[2]+value,0),1)]`.
 - **HSL "lightness" additive.** `HslToRgb(hsl[0], hsl[1], min(max(hsl[2] + value, 0), 1))`, where `hsl = RgbToHsl(color)`.
 - **CIELAB lightness additive.** Adds a number to the _L\*_ component of the color's CIELAB version.  For example, given a CIELAB color `lab`, this is: `[min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2]]`.
 - **Tints and shades.** A "tint" is a lighter version, and a "shade" is a darker version.  See "[**Alpha Blending**](#Alpha_Blending)".
@@ -1500,7 +1500,7 @@ The following pseudocode, `LinearGradientPoint`, gets the color at the specified
         return lastStop[1]
     end
 
-> **Note:** Linear gradients are often the basis for 2-dimensional gradients such as radial gradients, or even gradients in higher dimensions.  They can generally be described in terms of a _contouring function_, which returns a point on a linear gradient given an N-dimensional point.  For instance, a _radial gradient_ can be implemented by using the following contouring function: `sqrt(x*x+y*y)`, where `x` and `y` are the coordinates of an arbitrary point in 2-dimensional space.  The value of the radial gradient function can then be passed to `LinearGradientPoint` to generate the appropriate color at the given 2-dimensional point.  Note, however, that generating multidimensional gradients can cause undesirable "banding" of colors (see the notes in [**"Dominant_Colors_of_an_Image"**](#Dominant_Colors_of_an_Image)).  Ways to solve banding include either dithering techniques or adding/subtracting a small random offset ("noise") to the value of the contouring function for each 2-dimensional point.
+> **Note:** Linear gradients are often the basis for 2-dimensional gradients such as radial gradients, or even gradients in higher dimensions.  They can generally be described in terms of a _contouring function_, which returns a point on a linear gradient given an N-dimensional point.  For instance, a _radial gradient_ can be implemented by using the following contouring function: `sqrt(x*x+y*y)`, where `x` and `y` are the coordinates of an arbitrary point in 2-dimensional space.  The value of the radial gradient function can then be passed to `LinearGradientPoint` to generate the appropriate color at the given 2-dimensional point.  Note, however, that generating multidimensional gradients can cause undesirable "banding" of colors (see the notes in [**"Dominant_Colors_of_an_Image"**](#Dominant_Colors_of_an_Image)).  Ways to solve banding include either dithering techniques[^36] or adding/subtracting a small random offset ("noise") to the value of the contouring function for each 2-dimensional point.
 
 <a id=Pseudocode></a>
 
