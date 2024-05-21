@@ -95,7 +95,9 @@ Create a tileable desktop wallpaper image meeting the following requirements.
     - Up to 16 colors from the "web safe" palette.
     - Up to 16 colors from the "web safe" and VGA palettes.
     - Up to 16 colors from those displayable by EGA monitors (each color component is 0, 85, 170, or 255).
-    - 5- to 236-color grayscale palette (all color components the same).
+    - 5- to 64-color grayscale palette (all color components the same).
+    - Not preferred: Up to 16 colors from those displayable by pure VGA monitors (each color component modulo 4 is 0).
+    - Not preferred: 65- to 236-color grayscale palette (all color components the same).
     - Not preferred: 237- to 256-color grayscale palette (all color components the same).
 - The image employs one of the following pixel dimension options:
     - Preferred: 8&times;8, 16&times;16, 32&times;32, 64&times;64, 64&times;32, 32&times;64, 96&times;96, 128&times;128, 256&times;256.
