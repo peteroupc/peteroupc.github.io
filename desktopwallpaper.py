@@ -40,6 +40,39 @@ def websafecolors():
                 colors.append([r * 51, g * 51, b * 51])
     return colors
 
+def egacolors():
+    # 64 colors displayable by EGA displays
+    colors = []
+    for r in range(4):
+        for g in range(4):
+            for b in range(4):
+                colors.append([r * 85, g * 85, b * 85])
+    return colors
+
+def cgacolors():
+    # Canonical 16-color CGA palette
+    # see also: https://int10h.org/blog/2022/06/ibm-5153-color-true-cga-palette/
+    return [
+        [0, 0, 0],
+        [0, 0, 170],
+        [0, 170, 0],
+        [0, 170, 170],
+        [170, 0, 0],
+        [170, 0, 170],
+        [170, 85, 0], # [170, 170, 0] is another variant, given
+                      # that exact color values for CGA's 16 colors
+                      # are unstandardized beyond the notion of 'RGBI'.
+        [170, 170, 170],
+        [85, 85, 85],
+        [85, 85, 255],
+        [85, 255, 85],
+        [85, 255, 255],
+        [255, 85, 85],
+        [255, 85, 255],
+        [255, 255, 85],
+        [255, 255, 255],
+    ]
+
 def classiccolors():
     # 16-color VGA palette
     return [

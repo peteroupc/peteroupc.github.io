@@ -46,7 +46,7 @@ General:
 - A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size, say, 2048 kibibytes.  This does not limit the size or number of graphics assets a game can have.
 - Music:  Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis.[^1]  As much as possible, instruments should match their meanings in the General MIDI System level 1.
 
-A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution. (For example, if the resolution is 640&times;480 with up to 60 frames per second, these maximums are multiplied by 6.25 = (640&times;480) / (256&times;192).  Other resolutions used in classic games include 320&times;200, 320&times;240, and 512&times;384.)
+A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution. (For example, if the resolution is 640&times;480 with up to 60 frames per second, these maximums are multiplied by 6.25 = (640&times;480) / (256&times;192).  Other resolutions used in classic games include 320&times;200, 320&times;240, 640&times;350, and 512&times;384.)
 
 These limitations were inspired by the graphics limitations of classic handheld game consoles.
 
@@ -85,13 +85,16 @@ Create a tileable desktop wallpaper image meeting the following requirements.
         - Allows for hue shifting to, say, a black-to-red palette.
     - Four tints: black, gray (128, 128, 128), light gray (192, 192, 192), white.
         - Allows for hue shifting to, say, a black-to-red palette.
+    - 16-color [**canonical CGA palette**](https://int10h.org/blog/2022/06/ibm-5153-color-true-cga-palette/) (each color component is 85 or 255; or each color component is 0 or 170, except (170,85,0) instead of (170,170,0)).
     - 16-color VGA palette (light gray; or each color component is 0 or 255; or each color component is 0 or 128).[^3]
     - Up to four colors from the VGA palette.
+    - Up to four colors from the canonical CGA palette.
     - Up to eight colors from the VGA palette.
     - 216-color "web safe" palette (each color component is a multiple of 51).[^3]
     - 216-color "web safe" palette plus VGA palette.[^3]
     - Up to 16 colors from the "web safe" palette.
     - Up to 16 colors from the "web safe" and VGA palettes.
+    - Up to 16 colors from those displayable by EGA monitors (each color component is 0, 85, 170, or 255).
     - 5- to 236-color grayscale palette (all color components the same).
     - Not preferred: 237- to 256-color grayscale palette (all color components the same).
 - The image employs one of the following pixel dimension options:
