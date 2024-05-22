@@ -85,13 +85,14 @@ Create a tileable desktop wallpaper image meeting the following requirements.
         - Allows for hue shifting to, say, a black-to-red palette.
     - Four tints: black, gray (128, 128, 128), light gray (192, 192, 192), white.
         - Allows for hue shifting to, say, a black-to-red palette.
-    - 16-color [**canonical CGA palette**](https://int10h.org/blog/2022/06/ibm-5153-color-true-cga-palette/) (each color component is 85 or 255; or each color component is 0 or 170, except (170,85,0) instead of (170,170,0)).
+    - 16-color [**canonical CGA palette**](https://int10h.org/blog/2022/06/ibm-5153-color-true-cga-palette/) (each color component is 85 or 255; or each color component is 0 or 170, except (170, 85, 0) instead of (170, 170, 0)).[^3]
     - 16-color VGA palette (light gray; or each color component is 0 or 255; or each color component is 0 or 128).[^3]
     - Up to four colors from the VGA palette.
     - Up to four colors from the canonical CGA palette.
     - Up to eight colors from the VGA palette.
     - 216-color "web safe" palette (each color component is a multiple of 51).[^3]
     - 216-color "web safe" palette plus VGA palette.[^3]
+    - The 64 colors displayable by EGA monitors (each color component is 0, 85, 170, or 255).[^3]
     - Up to 16 colors from the "web safe" palette.
     - Up to 16 colors from the "web safe" and VGA palettes.
     - Up to 16 colors from those displayable by EGA monitors (each color component is 0, 85, 170, or 255).
