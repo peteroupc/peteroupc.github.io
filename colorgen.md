@@ -1738,11 +1738,11 @@ The following topics may be added in the future based on reader interest:
 - The perception-based color spaces OkLab, OkLch, and HSLuv.
 - Color rendering metrics for light sources, including color rendering index (CRI) and the metrics given in TM-30-15 by the Illuminating Engineering Society.
 
-The following topics would greatly enrich this document:
+Descriptions on the following methods would greatly enhance this document, as long as the methods are not covered by any active patents or pending patent applications and can be implemented by public-domain source code (usable for any purpose):
 
-- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card or white balance card, provided that method is not covered by any active patents or pending patent applications.
-- Reference source code for a method to convert two RGB colors into an RGB color that closely matches how the mixture of two pigments of the input colors would appear on paper, provided that method is not covered by any active patents or pending patent applications.
-- Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
+- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card or white balance card.
+- A method to convert two RGB colors into an RGB color that closely matches how the mixture of two pigments of the input colors would appear on paper.  (Mixbox appears to satisfy this, but the [**repository's source code**](https://github.com/scrtwpns/mixbox) is under a noncommercial license; whether the algorithm itself is so is uncertain.)
+- A method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations.
 
 <a id=Notes></a>
 
