@@ -59,9 +59,9 @@ def cgacolors():
         [0, 170, 170],
         [170, 0, 0],
         [170, 0, 170],
-        [170, 85, 0], # [170, 170, 0] is another variant, given
-                      # that exact color values for CGA's 16 colors
-                      # are unstandardized beyond the notion of 'RGBI'.
+        [170, 85, 0],  # [170, 170, 0] is another variant, given
+        # that exact color values for CGA's 16 colors
+        # are unstandardized beyond the notion of 'RGBI'.
         [170, 170, 170],
         [85, 85, 85],
         [85, 85, 255],
@@ -98,8 +98,8 @@ def tileable():
     return "\\( +clone -flip \\) -append \\( +clone -flop \\) +append"
 
 def _isqrtceil(i):
-   r=math.isqrt(i)
-   return r if r*r==i else r+1
+    r = math.isqrt(i)
+    return r if r * r == i else r + 1
 
 # Returns an ImageMagick filter string to generate a desktop background from an image, in three steps.
 # 1. If rgb1 and rgb2 are not nil, converts the input image to grayscale, then translates the grayscale
@@ -160,8 +160,9 @@ def magickgradientditherfilter(
         # as the square root of the palette size, rounded up, minus 1, but not less
         # than 2.
         ditherkind = (
-            ("-ordered-dither 8x8,%d" % (min(2, _isqrtceil(len(basecolors))-1)) if abstractImage else \
-              "-dither FloydSteinberg"
+            "-ordered-dither 8x8,%d" % (min(2, _isqrtceil(len(basecolors)) - 1))
+            if abstractImage
+            else "-dither FloydSteinberg"
         )
         return "%s %s \\( %s \\) %s -remap mpr:z" % (
             mgradient,
@@ -255,18 +256,18 @@ def magickgradientditherfilterrandom():
     return magickgradientditherfilter(rgb1, rgb2, basecolors, hue=hue)
 
 def diaggradient(f):
-  size=64
-  fd=open(f,"wb")
-  fd.write(bytes("P6\n%d %d\n255\n"% (size,size),"utf-8"))
-  row=[0 for i in range(size*3)]
-  for y in range(size):
-    for x in range(size):
-      r=abs(x-(63-y))*255//(size-1)
-      row[x*3]=r
-      row[x*3+1]=r
-      row[x*3+2]=r
-    fd.write(bytes(row))
-  fd.close()
+    size = 64
+    fd = open(f, "wb")
+    fd.write(bytes("P6\n%d %d\n255\n" % (size, size), "utf-8"))
+    row = [0 for i in range(size * 3)]
+    for y in range(size):
+        for x in range(size):
+            r = abs(x - (63 - y)) * 255 // (size - 1)
+            row[x * 3] = r
+            row[x * 3 + 1] = r
+            row[x * 3 + 2] = r
+        fd.write(bytes(row))
+    fd.close()
 
 # What follows are methods for generating scalable vector graphics (SVGs) of
 # classic OS style borders and button controls.  Although the SVGs are scalable
