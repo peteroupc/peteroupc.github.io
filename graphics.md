@@ -74,7 +74,7 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
 
 ## Classic Wallpaper Challenge
 
-Given that desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920&times;1080 or larger), I make the following challenge.
+Given that desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920&times;1080 or larger), rendering tileable backgrounds with limited colors and pixel size ever harder to find, I make the following challenge.
 
 Create a tileable desktop wallpaper image meeting the following requirements.
 
