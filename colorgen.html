@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/05/22"><meta name="citation_online_date" content="2024/05/22"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/05/23"><meta name="citation_online_date" content="2024/05/23"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -214,7 +214,7 @@
 <p>A color can be specified in one of two ways:</p>
 
 <ul>
-  <li><strong>As a point in space</strong>, that is, as a small set of numbers (usually three numbers) showing where the color lies in a color space. This is what mostly happens in practice. Some color spaces include the following:
+  <li><strong>As a point in space</strong>, that is, as a small set of numbers (usually three numbers) showing where the color lies in a color space. This is the usual practice. Some color spaces include the following:
     <ul>
       <li><a href="#RGB_Color_Model"><strong>RGB</strong></a> color spaces describe proportions of “red”, “green”, and “blue” dots of light.</li>
       <li><a href="#HSV"><strong>HSV</strong></a>, <a href="#HSL"><strong>HSL</strong></a>, and <a href="#HWB"><strong>HWB</strong></a> color spaces transform RGB colors to make their presentation more intuitive, but are not perception-based.</li>
@@ -2012,7 +2012,7 @@ END METHOD
 
 <ul>
   <li>A method for performing color calibration and color matching using a smartphone’s camera and, possibly, a color calibration card or white balance card.</li>
-  <li>A method to convert two RGB colors into an RGB color that closely matches how the mixture of two pigments of the input colors would appear on paper.  (Mixbox appears to satisfy this, but the <a href="https://github.com/scrtwpns/mixbox"><strong>repository’s source code</strong></a> is under a noncommercial license; whether the algorithm itself is so is uncertain.)</li>
+  <li>A method to convert two RGB colors into an RGB color that closely matches how the mixture of two pigments of the input colors would appear on paper.<sup id="fnref:47" role="doc-noteref"><a href="#fn:47" class="footnote" rel="footnote">47</a></sup></li>
   <li>A method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations.</li>
 </ul>
 
@@ -2169,6 +2169,9 @@ END METHOD
     </li>
     <li id="fn:46" role="doc-endnote">
       <p>Walowit, E.  “Spectrophotometric color formulation based on two-constant Kubelka-Munk theory”. Thesis, Rochester Institute of Technology, 1985. <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:47" role="doc-endnote">
+      <p>Mixbox appears to satisfy this, but the <a href="https://github.com/scrtwpns/mixbox"><strong>repository’s source code</strong></a> is under a noncommercial license; whether the algorithm itself is so is uncertain. <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

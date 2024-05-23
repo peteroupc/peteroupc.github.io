@@ -155,7 +155,7 @@ In addition to humans, many other animals possess color vision to a greater or l
 
 A color can be specified in one of two ways:
 
-* **As a point in space**, that is, as a small set of numbers (usually three numbers) showing where the color lies in a color space. This is what mostly happens in practice. Some color spaces include the following:
+* **As a point in space**, that is, as a small set of numbers (usually three numbers) showing where the color lies in a color space. This is the usual practice. Some color spaces include the following:
     - [**RGB**](#RGB_Color_Model) color spaces describe proportions of "red", "green", and "blue" dots of light.
     - [**HSV**](#HSV), [**HSL**](#HSL), and [**HWB**](#HWB) color spaces transform RGB colors to make their presentation more intuitive, but are not perception-based.
     - [**XYZ**](#CIE_XYZ), [**CIELAB**](#CIELAB), and [**CIELUV**](#CIELUV) color spaces are based on human color perception.
@@ -1741,7 +1741,7 @@ The following topics may be added in the future based on reader interest:
 Descriptions on the following methods would greatly enhance this document, as long as the methods are not covered by any active patents or pending patent applications and can be implemented by public-domain source code (usable for any purpose):
 
 - A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card or white balance card.
-- A method to convert two RGB colors into an RGB color that closely matches how the mixture of two pigments of the input colors would appear on paper.  (Mixbox appears to satisfy this, but the [**repository's source code**](https://github.com/scrtwpns/mixbox) is under a noncommercial license; whether the algorithm itself is so is uncertain.)
+- A method to convert two RGB colors into an RGB color that closely matches how the mixture of two pigments of the input colors would appear on paper.[^47]
 - A method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations.
 
 <a id=Notes></a>
@@ -1844,6 +1844,8 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 [^45]: As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [for example, the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
 
 [^46]: Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.
+
+[^47]: Mixbox appears to satisfy this, but the [**repository's source code**](https://github.com/scrtwpns/mixbox) is under a noncommercial license; whether the algorithm itself is so is uncertain.
 
 <a id=License></a>
 
