@@ -25,7 +25,7 @@
 # resolution options as well as a broader challenge to generate tileable
 # classic wallpapers, see:
 #
-# https://peteroupc.github.io/graphics.html#classic-wallpaper-challenge
+# https://github.com/peteroupc/classic-wallpaper
 #
 
 import shlex
@@ -205,8 +205,8 @@ def hautrelief(bg=[192, 192, 192], highlight=[255, 255, 255], shadow=[0, 0, 0]):
 def emboss():
     # Emboss a two-color black and white image into a 3-color (black/gray/white) image
     return (
-        "\( +clone \( +clone \) -append \( +clone \) +append -crop 50%x50%+1+1 \( "
-        + "-size 1x2 gradient:#FFFFFF-#808080 \) -clut \) -compose Multiply -composite"
+        "\\( +clone \\( +clone \\) -append \\( +clone \\) +append -crop 50%x50%+1+1 \\( "
+        + "-size 1x2 gradient:#FFFFFF-#808080 \\) -clut \\) -compose Multiply -composite"
     )
 
 def basrelief(bg=[192, 192, 192], highlight=[255, 255, 255], shadow=[0, 0, 0]):
@@ -261,6 +261,44 @@ def magickgradientditherfilterrandom():
         elif r < 8 and rgb1 != None:
             basecolors = [rgb1, rgb2]
     return magickgradientditherfilter(rgb1, rgb2, basecolors, hue=hue)
+
+def horizhatch(f, hatchspace=8):
+    size = hatchspace * 4
+    fd = open(f, "wb")
+    fd.write(bytes("P6\n%d %d\n255\n" % (size, size), "utf-8"))
+    for y in range(size):
+        b = 0 if y % hatchspace == 0 else 255
+        fd.write(bytes([b for i in range(size * 3)]))
+    fd.close()
+
+def crosshatch(f, hhatchspace=8, vhatchspace=8):
+    fd = open(f, "wb")
+    width = vhatchspace * 4
+    height = hhatchspace * 4
+    fd.write(bytes("P6\n%d %d\n255\n" % (width, height), "utf-8"))
+    for y in range(height * 4):
+        if y % hhatchspace == 0:
+            fd.write(bytes([0 for i in range(width * 3)]))
+        else:
+            fd.write(
+                bytes(
+                    [
+                        0 if (i // 3) % vhatchspace == 0 else 255
+                        for i in range(width * 3)
+                    ]
+                )
+            )
+    fd.close()
+
+def verthatch(f, hatchspace=8):
+    size = hatchspace * 4
+    fd = open(f, "wb")
+    fd.write(bytes("P6\n%d %d\n255\n" % (size, size), "utf-8"))
+    for y in range(size):
+        fd.write(
+            bytes([0 if (i // 3) % hatchspace == 0 else 255 for i in range(size * 3)])
+        )
+    fd.close()
 
 def diaggradient(f):
     size = 64
@@ -689,7 +727,11 @@ def monopattern(
     bw = [white, black]
     for y in range(8):
         for x in range(8):
-            c = bw[(pattern[y] >> (7 - x)) & 1]
+            c = (
+                bw[(pattern[y] >> (7 - x)) & 1]
+                if msbfirst
+                else bw[(pattern[y] >> x) & 1]
+            )
             if c is None:
                 continue
             ret += _rect(x, y, x + 1, y + 1, c)

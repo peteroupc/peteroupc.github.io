@@ -71,28 +71,6 @@ def wallpapercmd(outfile,wallpaper=false)
      " ; gsettings set org.gnome.desktop.background picture-options "+(wallpaper ? "wallpaper" : "stretched")
 end
 
-def torgb(x)
- return (x[0]<<16)+(x[1]<<8)+x[2]
-end
-
-VgaColors=[
-  0x000000,
-  0x000080,
-  0x008000,
-  0x008080,
-  0x800000,
-  0x800080,
-  0x808000,
-  0x808080,
-  0xc0c0c0,
-  0x0000ff,
-  0x00ff00,
-  0x00ffff,
-  0xff0000,
-  0xff00ff,
-  0xffff00,
-  0xffffff ]
-
 def nearestColor(r,g,b,pal)
   i=0;best=-1;bestIndex=0
   while i<pal.length
@@ -107,10 +85,6 @@ def nearestColor(r,g,b,pal)
   end
   return pal[bestIndex]
 end
-
-VgaClosestIndices=[
-0, 0, 0, 1, 1, 1, 9, 9, 0, 0, 0, 1, 1, 1, 9, 9, 0, 0, 0, 1, 1, 1, 9, 9, 2, 2, 2, 3, 3, 3, 3, 9, 2, 2, 2, 3, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 11, 10, 10, 10, 3, 3, 3, 11, 11, 10, 10, 10, 10, 3, 11, 11, 11, 0, 0, 0, 1, 1, 1, 9, 9, 0, 0, 0, 1, 1, 1, 9, 9, 0, 0, 0, 1, 1, 1, 9, 9, 2, 2, 2, 3, 3, 3, 3, 9, 2, 2, 2, 3, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 11, 10, 10, 10, 3, 3, 3, 11, 11, 10, 10, 10, 10, 3, 11, 11, 11, 0, 0, 0, 1, 1, 1, 9, 9, 0, 0, 0, 1, 1, 1, 9, 9, 0, 0, 0, 1, 1, 1, 9, 9, 2, 2, 2, 3, 3, 3, 3, 9, 2, 2, 2, 3, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 11, 10, 10, 10, 3, 3, 3, 11, 11, 10, 10, 10, 10, 3, 11, 11, 11, 4, 4, 4, 5, 5, 5, 5, 9, 4, 4, 4, 5, 5, 5, 5, 9, 4, 4, 4, 5, 5, 5, 5, 9, 6, 6, 6, 7, 7, 7, 7, 7, 6, 6, 6, 7, 7, 7, 7, 7, 6, 6, 6, 7, 7, 7, 7, 7, 6, 6, 6, 7, 7, 7, 7, 8, 10, 10, 10, 7, 7, 7, 8, 11, 4, 4, 4, 5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 6, 6, 6, 7, 7, 7, 7, 7, 6, 6, 6, 7, 7, 7, 7, 8, 6, 6, 6, 7, 7, 7, 8, 8, 6, 6, 6, 7, 7, 8, 8, 8, 4, 4, 4, 5, 5, 5, 5, 13, 4, 4, 4, 5, 5, 5, 5, 13, 4, 4, 4, 5, 5, 5, 5, 13, 6, 6, 6, 7, 7, 7, 7, 7, 6, 6, 6, 7, 7, 7, 7, 8, 6, 6, 6, 7, 7, 7, 8, 8, 6, 6, 6, 7, 7, 8, 8, 8, 14, 14, 14, 7, 8, 8, 8, 8, 12, 12, 12, 5, 5, 5, 13, 13, 12, 12, 12, 5, 5, 5, 13, 13, 12, 12, 12, 5, 5, 5, 13, 13, 6, 6, 6, 7, 7, 7, 7, 8, 6, 6, 6, 7, 7, 7, 8, 8, 6, 6, 6, 7, 7, 8, 8, 8, 14, 14, 14, 7, 8, 8, 8, 8, 14, 14, 14, 8, 8, 8, 8, 8, 12, 12, 12, 12, 5, 13, 13, 13, 12, 12, 12, 12, 5, 13, 13, 13, 12, 12, 12, 12, 5, 13, 13, 13, 12, 12, 12, 7, 7, 7, 8, 13, 6, 6, 6, 7, 7, 8, 8, 8, 14, 14, 14, 7, 8, 8, 8, 8, 14, 14, 14, 8, 8, 8, 8, 8, 14, 14, 14, 14, 8, 8, 8, 15
-]
 
 DitherMatrix=[ # Bayer 8x8 ordered dither matrix
     0, 32,  8, 40,  2, 34, 10, 42,
@@ -214,46 +188,6 @@ def p6pixmap(fn)
  end
  }
  return [w,h,pixmap]
-end
-
-def adjustpixmap(fn,bases)
- pm=p6pixmap(fn)
- w=pm[0];h=pm[1];pixmap=pm[2]
- i=0
- for y in 0...h
-   for x in 0...w
-     pix=[pixmap[i],pixmap[i+1],pixmap[i+2]]
-     c=torgb(pix)
-     bc=bases[c]
-     raise pix.to_s if !bc
-     c2=bc[(x+y)%2]
-     pixmap[i]=(c2>>16)&0xff
-     pixmap[i+1]=(c2>>8)&0xff
-     pixmap[i+2]=(c2)&0xff
-     i+=3
-   end
- end
- outfn=fn if !fn
- File.open(outfn,"wb"){|f|
- f.write(sprintf("P6\n%d %d\n255\n",w,h))
- f.write(pixmap.pack("C*"))
- }
-end
-
-def tobases2(basecolors)
- bases2={}
- for b in basecolors
-  bases2[torgb(b)]=[torgb(b),torgb(b)]
- end
- for i in 0...basecolors.length
-  for j in (i+1)...basecolors.length
-   bi=basecolors[i]
-   bj=basecolors[j]
-   b=[(bi[0]+bj[0])/2,(bi[1]+bj[1])/2,(bi[2]+bj[2])/2]
-   bases2[torgb(b)]=[torgb(bi),torgb(bj)]
-  end
- end
- return bases2
 end
 
 # Resembles the brushed steel-like background used in Apple
