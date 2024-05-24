@@ -202,6 +202,13 @@ def hautrelief(bg=[192, 192, 192], highlight=[255, 255, 255], shadow=[0, 0, 0]):
         + "\\( -size 1x1 xc:black xc:%s +append \\) -clut mpr:a2 -compose Plus -composite mpr:a1 -compose Plus -composite"
     ) % (bc, hc, sc)
 
+def emboss():
+    # Emboss a two-color black and white image into a 3-color (black/gray/white) image
+    return (
+        "\( +clone \( +clone \) -append \( +clone \) +append -crop 50%x50%+1+1 \( "
+        + "-size 1x2 gradient:#FFFFFF-#808080 \) -clut \) -compose Multiply -composite"
+    )
+
 def basrelief(bg=[192, 192, 192], highlight=[255, 255, 255], shadow=[0, 0, 0]):
     if bg == None or len(bg) < 3:
         raise ValueError
