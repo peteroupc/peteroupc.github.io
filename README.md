@@ -10,32 +10,30 @@ on several of my projects on GitHub.
 
 ### Articles
 
-Open-source articles on programming subjects.  Help me on my:
-
-- [**requests and open questions**](https://peteroupc.github.io/requests.html), and
-- [**open questions on the Bernoulli factory problem**](https://peteroupc.github.io/bernreq.html), and
-- [**other open questions on probability**](https://peteroupc.github.io/requestsother.html).
+Open-source articles on randomness, programming, and more.  Help me on my [**requests and open questions**](./requests.html) (and [**open questions on the Bernoulli factory problem**](./bernreq.html), and [**other open questions on probability**](./requestsother.html)).
 
 **Random and Pseudorandom Number Generators**
 
-* [**Random Number Generator Recommendations for Applications**](https://peteroupc.github.io/random.html)
-* [**A Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html)
-* [**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.html)
-* [**Examples of High-Quality PRNGs**](https://peteroupc.github.io/hqprng.html)
-* [**Notes on Jumping PRNGs Ahead**](https://peteroupc.github.io/jump.html)
-* [**A Note on the Bays&ndash;Durham Shuffle**](https://peteroupc.github.io/bdshuffle.html)
+* [**Random Number Generator Recommendations for Applications**](./random.html)
+* [**A Note on Randomness Extraction**](./randextract.html)
+* [**Testing PRNGs for High-Quality Randomness**](./randomtest.html)
+* [**Examples of High-Quality PRNGs**](./hqprng.html)
+* [**Notes on Jumping PRNGs Ahead**](./jump.html)
+* [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.html)
 
 **Random Variate Generation, Randomization, and Exact Sampling**
 
-* [**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)
-* [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html)
-* [**The Most Common Topics Involving Randomization**](https://peteroupc.github.io/randomcommon.html)
-* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](https://peteroupc.github.io/exporand.html)
-* [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
-* [**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)
-* [**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html)
-* [**Code Generator for Discrete Distributions**](https://peteroupc.github.io/autodist.html)
-* [**Randomized Estimation Algorithms**](https://peteroupc.github.io/estimation.html)
+* [**Randomization and Sampling Methods**](./randomfunc.html)
+* [**More Random Sampling Methods**](./randomnotes.html)
+* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.html)
+* [**Bernoulli Factory Algorithms**](./bernoulli.html)
+* [**Supplemental Notes for Bernoulli Factory Algorithms**](./bernsupp.html)
+* [**Miscellaneous Observations on Randomization**](./randmisc.html)
+* [**Randomized Estimation Algorithms**](./estimation.html)
+* [**The Sampling Problem**](./sampling.html)
+* More:
+    * [**The Most Common Topics Involving Randomization**](./randomcommon.html)
+    * [**Code Generator for Discrete Distributions**](./autodist.html)
 
 In the articles above, I put an emphasis on random variate generation that:
 
@@ -44,37 +42,50 @@ In the articles above, I put an emphasis on random variate generation that:
 - Avoids floating-point arithmetic.
 - Avoids calculating transcendental functions when possible.
 
+**Colors, Graphics, and Music**
+
+* [**Color Topics for Programmers**](./colorgen.html)
+* [**Supplemental Color Topics for Programmers**](./suppcolor.html)
+* [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
+* [**Graphics and Music Challenges for Classic Computer Applications**](./graphics.html)
+    - Three challenges: retro graphics engine, public-domain music synthesis, and classic tiled wallpapers.
+
+**Other Articles on Mathematics and Programming**
+
+* [**Approximations in Bernstein Form**](./bernapprox.html)
+    - Used above all in the supplemental notes for Bernoulli factories.
+* [**A Note on Hash Functions**](./hash.html)
+* [**Pseudocode Conventions**](./pseudocode.html)
+* [**On a claim of computational complexity**](https://peteroupc.github.io/complexity.html)
+* [**File Name Support in Applications**](./filenames.html)
+
 **Other Articles**
 
-* [**A Wish for a New Atlas**](https://peteroupc.github.io/newatlas.html)
-* [**A Note on Hash Functions**](https://peteroupc.github.io/hash.html)
-* [**Pseudocode Conventions**](https://peteroupc.github.io/pseudocode.html)
-* [**File Name Support in Applications**](https://peteroupc.github.io/filenames.html)
-* [**Color Topics for Programmers**](https://peteroupc.github.io/colorgen.html)
-* [**Supplemental Color Topics for Programmers**](https://peteroupc.github.io/suppcolor.html)
-* [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
+* [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html)
+* [**Overused and Discouraged Words and Phrases**](https://peteroupc.github.io/usage.html)
+* [**A Wish for a New Atlas**](./newatlas.html)
 
 <a id=PDF_Versions></a>
 
 #### PDF Versions
 
-* [**Pseudocode Conventions**](https://peteroupc.github.io/pseudocode.pdf)
-* [**Random Number Generator Recommendations for Applications**](https://peteroupc.github.io/random.pdf)
-* [**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.pdf)
-* [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.pdf)
-* [**The Most Common Topics Involving Randomization**](https://peteroupc.github.io/randomcommon.pdf)
-* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](https://peteroupc.github.io/exporand.pdf)
-* [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.pdf)
-* [**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.pdf)
+* [**Pseudocode Conventions**](./pseudocode.pdf)
+* [**Random Number Generator Recommendations for Applications**](./random.pdf)
+* [**Randomization and Sampling Methods**](./randomfunc.pdf)
+* [**More Random Sampling Methods**](./randomnotes.pdf)
+* [**The Most Common Topics Involving Randomization**](./randomcommon.pdf)
+* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.pdf)
+* [**Bernoulli Factory Algorithms**](./bernoulli.pdf)
+* [**Testing PRNGs for High-Quality Randomness**](./randomtest.pdf)
 * [**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.pdf)
-* [**Examples of High-Quality PRNGs**](https://peteroupc.github.io/hqprng.pdf)
-* [**Notes on Jumping PRNGs Ahead**](https://peteroupc.github.io/jump.pdf)
-* [**A Note on Hash Functions**](https://peteroupc.github.io/hash.pdf)
-* [**A Note on Randomness Extraction**](https://peteroupc.github.io/randextract.pdf)
-* [**A Note on the Bays&ndash;Durham Shuffle**](https://peteroupc.github.io/bdshuffle.pdf)
-* [**File Name Support in Applications**](https://peteroupc.github.io/filenames.pdf)
-* [**Color Topics for Programmers**](https://peteroupc.github.io/colorgen.pdf)
-* [**Supplemental Color Topics for Programmers**](https://peteroupc.github.io/suppcolor.pdf)
+* [**Examples of High-Quality PRNGs**](./hqprng.pdf)
+* [**Notes on Jumping PRNGs Ahead**](./jump.pdf)
+* [**A Note on Hash Functions**](./hash.pdf)
+* [**A Note on Randomness Extraction**](./randextract.pdf)
+* [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.pdf)
+* [**File Name Support in Applications**](./filenames.pdf)
+* [**Color Topics for Programmers**](./colorgen.pdf)
+* [**Supplemental Color Topics for Programmers**](./suppcolor.pdf)
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.pdf)
 
 <a id=HTML_JavaScript></a>
