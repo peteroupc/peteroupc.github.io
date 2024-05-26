@@ -47,7 +47,7 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**Supplemental Color Topics for Programmers**](./suppcolor.html)
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
 * [**Graphics and Music Challenges for Classic Computer Applications**](./graphics.html)
-    - Three challenges: retro graphics engine, public-domain music synthesis, and classic tiled wallpapers.
+    - Three challenges: retro graphics engine, public-domain music synthesis, and [**classic tiled wallpapers**](https://github.com/peteroupc/classic-wallpaper).
 
 **Other Articles on Mathematics and Programming**
 
