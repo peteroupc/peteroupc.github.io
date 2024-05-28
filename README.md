@@ -10,30 +10,30 @@ on several of my projects on GitHub.
 
 ### Articles
 
-Open-source articles on randomness, programming, and more.  Help me on my [**requests and open questions**](./requests.html) (and [**open questions on the Bernoulli factory problem**](./bernreq.html), and [**other open questions on probability**](./requestsother.html)).
+Open-source articles on randomness, programming, and more.  Help me on my [**requests and open questions**](./requests.md) (and [**open questions on the Bernoulli factory problem**](./bernreq.md), and [**other open questions on probability**](./requestsother.md)).
 
 **Random and Pseudorandom Number Generators**
 
-* [**Random Number Generator Recommendations for Applications**](./random.html)
-* [**A Note on Randomness Extraction**](./randextract.html)
-* [**Testing PRNGs for High-Quality Randomness**](./randomtest.html)
-* [**Examples of High-Quality PRNGs**](./hqprng.html)
-* [**Notes on Jumping PRNGs Ahead**](./jump.html)
-* [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.html)
+* [**Random Number Generator Recommendations for Applications**](./random.md)
+* [**A Note on Randomness Extraction**](./randextract.md)
+* [**Testing PRNGs for High-Quality Randomness**](./randomtest.md)
+* [**Examples of High-Quality PRNGs**](./hqprng.md)
+* [**Notes on Jumping PRNGs Ahead**](./jump.md)
+* [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.md)
 
 **Random Variate Generation, Randomization, and Exact Sampling**
 
-* [**Randomization and Sampling Methods**](./randomfunc.html)
-* [**More Random Sampling Methods**](./randomnotes.html)
-* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.html)
-* [**Bernoulli Factory Algorithms**](./bernoulli.html)
-* [**Supplemental Notes for Bernoulli Factory Algorithms**](./bernsupp.html)
-* [**Miscellaneous Observations on Randomization**](./randmisc.html)
-* [**Randomized Estimation Algorithms**](./estimation.html)
-* [**The Sampling Problem**](./sampling.html)
+* [**Randomization and Sampling Methods**](./randomfunc.md)
+* [**More Random Sampling Methods**](./randomnotes.md)
+* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.md)
+* [**Bernoulli Factory Algorithms**](./bernoulli.md)
+* [**Supplemental Notes for Bernoulli Factory Algorithms**](./bernsupp.md)
+* [**Miscellaneous Observations on Randomization**](./randmisc.md)
+* [**Randomized Estimation Algorithms**](./estimation.md)
+* [**The Sampling Problem**](./sampling.md)
 * More:
-    * [**The Most Common Topics Involving Randomization**](./randomcommon.html)
-    * [**Code Generator for Discrete Distributions**](./autodist.html)
+    * [**The Most Common Topics Involving Randomization**](./randomcommon.md)
+    * [**Code Generator for Discrete Distributions**](./autodist.md)
 
 In the articles above, I put an emphasis on random variate generation that:
 
@@ -44,26 +44,26 @@ In the articles above, I put an emphasis on random variate generation that:
 
 **Colors, Graphics, and Music**
 
-* [**Color Topics for Programmers**](./colorgen.html)
-* [**Supplemental Color Topics for Programmers**](./suppcolor.html)
-* [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
-* [**Graphics and Music Challenges for Classic Computer Applications**](./graphics.html)
+* [**Color Topics for Programmers**](./colorgen.md)
+* [**Supplemental Color Topics for Programmers**](./suppcolor.md)
+* [**Essentials of SVG**](https://peteroupc.github.io/svg.md)
+* [**Graphics and Music Challenges for Classic Computer Applications**](./graphics.md)
     - Three challenges: retro graphics engine, public-domain music synthesis, and classic tiled wallpapers.
 
 **Other Articles on Mathematics and Programming**
 
-* [**Approximations in Bernstein Form**](./bernapprox.html)
+* [**Approximations in Bernstein Form**](./bernapprox.md)
     - Used above all in the supplemental notes for Bernoulli factories.
-* [**A Note on Hash Functions**](./hash.html)
-* [**Pseudocode Conventions**](./pseudocode.html)
-* [**On a claim of computational complexity**](https://peteroupc.github.io/complexity.html)
-* [**File Name Support in Applications**](./filenames.html)
+* [**A Note on Hash Functions**](./hash.md)
+* [**Pseudocode Conventions**](./pseudocode.md)
+* [**On a claim of computational complexity**](https://peteroupc.github.io/complexity.md)
+* [**File Name Support in Applications**](./filenames.md)
 
 **Other Articles**
 
-* [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html)
-* [**Overused and Discouraged Words and Phrases**](https://peteroupc.github.io/usage.html)
-* [**A Wish for a New Atlas**](./newatlas.html)
+* [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.md)
+* [**Overused and Discouraged Words and Phrases**](https://peteroupc.github.io/usage.md)
+* [**A Wish for a New Atlas**](./newatlas.md)
 
 <a id=PDF_Versions></a>
 
