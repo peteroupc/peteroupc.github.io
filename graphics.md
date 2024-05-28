@@ -42,7 +42,7 @@ Limit 2D graphics to the following:
 General:
 
 - The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order.
-- 256&times;192 screen resolution with up to 60 frames per second, or 256&times;384 screen resolution with up to 30 frames per second.
+- 256&times;192 screen resolution (256 pixels wide by 192 pixels high) with up to 60 frames per second, or 256&times;384 screen resolution with up to 30 frames per second.
 - A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size, say, 2048 kibibytes.  This does not limit the size or number of graphics assets a game can have.
 - Music:  Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis.[^1]  As much as possible, instruments should match their meanings in the General MIDI System level 1.
 
