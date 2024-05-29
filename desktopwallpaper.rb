@@ -130,43 +130,6 @@ def websafedither(fn,outfn=nil)
  }
 end
 
-def vgadither(fn,outfn=nil)
- pm=p6pixmap(fn)
- w=pm[0];h=pm[1];pixmap=pm[2]
- i=0
- for y in 0...h
-   for x in 0...w
-     r=pixmap[i]
-     g=pixmap[i+1]
-     b=pixmap[i+2]
-     # Get dither matrix value based on
-     # X and Y coordinates
-     d=DitherMatrix[((y&7)<<3)|(x&7)]-32;
-     # Add dither matrix value to each component
-     # to get a dithered version
-     r=[[r+d,0].max,255].min
-     g=[[g+d,0].max,255].min
-     b=[[b+d,0].max,255].min
-     # Coarsen the dithered color
-     r&=0xE0
-     g&=0xE0
-     b&=0xE0
-     # Find the index to the closest version to the dithered
-     # color in the VGA palette
-     c2=VgaColors[VgaClosestIndices[(b>>5)+((g>>5)<<3)+((r>>5)<<6)]]
-     pixmap[i]=(c2>>16)&0xff
-     pixmap[i+1]=(c2>>8)&0xff
-     pixmap[i+2]=(c2)&0xff
-     i+=3
-   end
- end
- outfn=fn if !fn
- File.open(outfn,"wb"){|f|
- f.write(sprintf("P6\n%d %d\n255\n",w,h))
- f.write(pixmap.pack("C*"))
- }
-end
-
 def p6pixmap(fn)
  w=0;h=0;pixmap=nil
  File.open(fn,"rb"){|f|
@@ -190,8 +153,9 @@ def p6pixmap(fn)
  return [w,h,pixmap]
 end
 
-# Resembles the brushed steel-like background used in Apple
-# products from the mid-2000s.
+# Resembles the brushed metal background used in
+# Mac OS X Panther (10.3) and other Apple products
+# around the time of that OS's release
 def steel(output,width=256, height=256,strength=1,vert=false)
  raise if width<=0 or height<=0
  raise if !output
