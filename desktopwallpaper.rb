@@ -1,8 +1,5 @@
 require 'tmpdir'
 
-# This Ruby script helps generate interesting variations on desktop
-# wallpapers based on existing image files.
-#
 # This script is released to the public domain; in case that is not possible, the
 # file is also licensed under Creative Commons Zero (CC0).
 
@@ -128,27 +125,4 @@ def websafedither(fn,outfn=nil)
  f.write(sprintf("P6\n%d %d\n255\n",w,h))
  f.write(pixmap.pack("C*"))
  }
-end
-
-def p6pixmap(fn)
- w=0;h=0;pixmap=nil
- File.open(fn,"rb"){|f|
- fr=f.read(3)
- #p fr
- raise if fr!="P6\n"
- s=f.gets()
- #p s
- raise if s.length>20
- raise if !s[/\A(\d+) (\d+)\n/]
- w=$1.to_i
- h=$2.to_i
- raise if f.read(4)!="255\n"
- pixmap=f.read().unpack("C*")
- if pixmap.length>w*h*3
-  pixmap=pixmap[0,w*h*3]
- elsif pixmap.length<w*h*3
-  raise
- end
- }
- return [w,h,pixmap]
 end
