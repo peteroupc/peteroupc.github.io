@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/05/10"><meta name="citation_online_date" content="2024/05/10"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/06/18"><meta name="citation_online_date" content="2024/06/18"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -791,29 +791,11 @@
 
 <p>In the following lemmas, let $p(\lambda)=a_0 \lambda^0 + … + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Lemma:</strong> If $p$’s coin-flipping degree is $n$, then $</td>
-      <td>a_i</td>
-      <td>\le 2^i {n\choose i}$.</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Lemma:</strong> If $p$’s coin-flipping degree is $n$, then $\text{abs}(a_i)\le 2^i {n\choose i}$.</p>
 
 <p><em>Proof</em>: Consider the matrix that transforms a polynomial’s Bernstein coefficients to “power” coefficients, which is $n\times n$ if the polynomial’s degree is $n$ (Ray and Nataraj 2012, eq. (8))<sup id="fnref:21" role="doc-noteref"><a href="#fn:21" class="footnote" rel="footnote">21</a></sup>.  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$’s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding “power” coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  □</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Lemma:</strong>  $</td>
-      <td>a_i</td>
-      <td>\le</td>
-      <td>b_i</td>
-      <td>$, where $b_i$ is the corresponding power coefficient of the following polynomial: \(q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,\) and where $T_n(x)$ is the <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> of degree $n$.</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Lemma:</strong>  $\text{abs}(a_i)\le \text{abs}(b_i)$, where $b_i$ is the corresponding power coefficient of the following polynomial: \(q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,\) and where $T_n(x)$ is the <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> of degree $n$.</p>
 
 <p>See <em>MathOverflow</em> for a <a href="https://mathoverflow.net/questions/449135"><strong>proof of this lemma</strong></a> by Fedor Petrov.</p>
 
@@ -866,21 +848,7 @@
 <ol>
   <li><em>ω</em> is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] − <em>f</em>(<em>k</em>/(2 * <em>n</em>))) ≤ <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) − <em>f</em>(<em>k</em>/(2 * <em>n</em>))] ≤ <strong>E</strong>[<em>ω</em>(abs(<em>X</em>/<em>n</em> − <em>k</em>/(2 * <em>n</em>))] (by the definition of <em>ω</em>) ≤ <em>ω</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> − <em>k</em>/(2 * <em>n</em>))]) (by Jensen’s inequality and because <em>ω</em> is concave) ≤ <em>ω</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> − <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>ω</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>ω</em>(sqrt((<em>k</em>*(2 * <em>n</em>−<em>k</em>)/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)))) ≤ <em>ω</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)))) = <em>ω</em>(sqrt((1/(8*<em>n</em>−4)))) = <em>ρ</em>, and for every integer <em>n</em>≥4, <em>ρ</em> ≤ <em>ω</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] − <em>f</em>(<em>k</em>/(2 * <em>n</em>))) ≤ <em>ω</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) ≤ <em>ω</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] − <em>f</em>(<em>k</em>/(2 * <em>n</em>))) ≤ <em>ω</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)))) = <em>ω</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1−<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>−1) )).</li>
   <li>By the definition of Hölder continuous functions, take <em>ω</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>α</em></sup>.  Because <em>ω</em> is a concave modulus of continuity on the closed unit interval, the result follows from part 1.</li>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)<sup id="fnref:1:8" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f’(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $</td>
-          <td>f(x)-f(s)-f’(x)(x-s)</td>
-          <td>\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)<sup id="fnref:23" role="doc-noteref"><a href="#fn:23" class="footnote" rel="footnote">23</a></sup>, so— $$E[</td>
-          <td>f(X/n)-f(k/(2n))</td>
-          <td>]=</td>
-          <td>E[f(X/n)-f(k/(2n))-f’(k/(2n))(X/n-k/(2n))]</td>
-          <td>\(\)\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1’s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>−<em>k</em>)/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) ≤ (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>−4)) = <em>ρ</em>.  For every integer <em>n</em>≥4, <em>ρ</em> ≤  (<em>M</em>/2)*(1/(7*<em>n</em>)). □</td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
+  <li>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)<sup id="fnref:1:8" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f’(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f’(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)<sup id="fnref:23" role="doc-noteref"><a href="#fn:23" class="footnote" rel="footnote">23</a></sup>, so— \(E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])\) \(\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).\)  By part 1’s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>−<em>k</em>)/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) ≤ (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>−4)) = <em>ρ</em>.  For every integer <em>n</em>≥4, <em>ρ</em> ≤  (<em>M</em>/2)*(1/(7*<em>n</em>)). □</li>
 </ol>
 
 <blockquote>
@@ -901,19 +869,7 @@
   </ol>
 </blockquote>
 
-<table>
-  <tbody>
-    <tr>
-      <td>There are weaker bounds for Lemma 2, part 1, which work even if $f$’s modulus of continuity $\omega$ is not concave. According to Pascu et al. (2017, Lemma 5.1)<sup id="fnref:27" role="doc-noteref"><a href="#fn:27" class="footnote" rel="footnote">27</a></sup>: $$</td>
-      <td>\mathbb{E}[f(Y)] - f(\mathbb{E}[Y])</td>
-      <td>\le \omega(\delta) + \omega(\delta)\text{Var}[Y]/\delta^2,\(where $f$ is a continuous function, $Y$ is a discrete random variable on a closed interval, and $\delta&gt;0$.  Given that $Y = X/n$ (where $X$ is as in Lemma 2), taking $\delta=1/n^{1/2}$ leads to:\)</td>
-      <td>\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])</td>
-      <td>=</td>
-      <td>\mathbb{E}[f(Y)]-f(k/(2n))</td>
-      <td>\le\omega(1/n^{1/2}) (1+n\cdot\text{Var}[Y]),$$ and in turn, plugging in bounds for $\text{Var}[Y]$ leads to the following bounds for Lemma 2, part 1:</td>
-    </tr>
-  </tbody>
-</table>
+<p>There are weaker bounds for Lemma 2, part 1, which work even if $f$’s modulus of continuity $\omega$ is not concave. According to Pascu et al. (2017, Lemma 5.1)<sup id="fnref:27" role="doc-noteref"><a href="#fn:27" class="footnote" rel="footnote">27</a></sup>: \(\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y])) \le \omega(\delta) + \omega(\delta)\text{Var}[Y]/\delta^2,\) where $f$ is a continuous function, $Y$ is a discrete random variable on a closed interval, and $\delta&gt;0$.  Given that $Y = X/n$ (where $X$ is as in Lemma 2), taking $\delta=1/n^{1/2}$ leads to: \(\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))=\text{abs}(\mathbb{E}[f(Y)]-f(k/(2n)))\le\omega(1/n^{1/2}) (1+n\cdot\text{Var}[Y]),\) and in turn, plugging in bounds for $\text{Var}[Y]$ leads to the following bounds for Lemma 2, part 1:</p>
 
 <ul>
   <li>$\omega(1/n^{1/2}) (1+n/(8n-4))$.</li>
@@ -1113,15 +1069,7 @@
   <li>$(g_{m}-g_n)$ <em>and</em> $(h_{n}-h_{m})$ <em>are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$.</em></li>
 </ol>
 
-<table>
-  <tbody>
-    <tr>
-      <td>_Then for each $n$ in $S$, $</td>
-      <td>f(\lambda) - B_n(W_n(\lambda))</td>
-      <td>\le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._</td>
-    </tr>
-  </tbody>
-</table>
+<p><em>Then for each $n$ in $S$, $\text{abs}(f(\lambda) - B_n(W_n(\lambda))) \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$.</em></p>
 
 <p><em>Proof:</em> $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, property 4 in the lemma corresponds to condition (iv) of Nacu and Peres (2005)<sup id="fnref:1:19" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, which implies that, for every $m&gt;n$, $g_{n}(\lambda)\le g_{m}(\lambda)\le f(\lambda)$ (the lower polynomials “increase”) and $h_{n}(\lambda)\ge h_{m}(\lambda)\ge f(\lambda)$ (the upper polynomials “decrease”) for every $n\ge 1$ (Nacu and Peres 2005, Remark A)<sup id="fnref:1:20" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</p>
 
@@ -1129,25 +1077,9 @@
 
 <p>Likewise, if $B_n(W_n(\lambda)) &gt; f(\lambda)$ for some $\lambda$ in the closed unit interval, shifting the left-hand side downward by $\epsilon_n(f)$ means that $g_n = B_n(W_n(\lambda))-\epsilon_n(f) \le f(\lambda)$, and rearranging this expression leads to $B_n(W_n(\lambda)) - f(\lambda) \le \epsilon_n(f)$.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>This combined means that $</td>
-      <td>f(x) - B_n(W_n(\lambda))</td>
-      <td>\le \epsilon_n(f)$ whenever $0\le \lambda\le 1$.  □</td>
-    </tr>
-  </tbody>
-</table>
+<p>This combined means that $\text{abs}(f(x) - B_n(W_n(\lambda))) \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$.  □</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Corollary 4</strong>.  _If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that’s a power of 2; that is, $</td>
-      <td>B_n(f(\lambda))</td>
-      <td>\le \eta(n)$ for every such $n$._</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Corollary 4</strong>.  <em>If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that’s a power of 2; that is, $\text{abs}(B_n(f(\lambda))) \le \eta(n)$ for every such $n$.</em></p>
 
 <p><strong>Lemma 5</strong>. Let $n\ge 1$ be an integer.  Suppose $g_{2n}$ and $g_{n}$ are polynomials in Bernstein form of degree $2n$ and $n$, respectively, and their domain is the closed unit interval. Suppose $g_{2n}$ and $g_n$ satisfy the property:</p>
 
@@ -1173,15 +1105,7 @@
 
 <p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), …, W_{2^n}(\lambda),…$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>For each integer $n\ge1$ that’s a power of 2, suppose that there is $D&gt;0$ such that— $$</td>
-      <td>f(\lambda)-B_n(W_n(\lambda))</td>
-      <td>\le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</td>
-    </tr>
-  </tbody>
-</table>
+<p>For each integer $n\ge1$ that’s a power of 2, suppose that there is $D&gt;0$ such that— \(\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},\) whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
 
 <p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:</p>
 
@@ -1191,15 +1115,7 @@
   <li>$(g_{n+1}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $n+1$.</li>
 </ol>
 
-<table>
-  <tbody>
-    <tr>
-      <td>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that’s a power of 2— $$\left</td>
-      <td>\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right</td>
-      <td>\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</td>
-    </tr>
-  </tbody>
-</table>
+<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that’s a power of 2— \(\left\text{abs}(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le \frac{C_1 M}{n^{r/2}},\tag{PB}\) whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
 
 <p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 
@@ -1208,34 +1124,8 @@
 
   <ol>
     <li>If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).</li>
-    <li>
-      <table>
-        <tbody>
-          <tr>
-            <td>If $W_n$ is a “linear operator”, the left-hand side of (PB) is not greater than $</td>
-            <td>(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))</td>
-            <td>$ + $</td>
-            <td>W_n(k/(2n))-f(k/(2n))</td>
-            <td>$  + $</td>
-            <td>W_{2n}(k/(2n))-f(k/(2n))</td>
-            <td>$.</td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
-    <li>
-      <table>
-        <tbody>
-          <tr>
-            <td>If $W_n$ is a “linear operator” and satisfies $</td>
-            <td>f(\lambda)-W_n(\lambda)</td>
-            <td>\le DM/n^{r/2}$, then the left-hand side of (PB) is not greater than $</td>
-            <td>(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))</td>
-            <td>$ + $\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}$.</td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
+    <li>If $W_n$ is a “linear operator”, the left-hand side of (PB) is not greater than $\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))$ + $\text{abs}(W_n(k/(2n))-f(k/(2n)))$  + $\text{abs}(W_{2n}(k/(2n))-f(k/(2n)))$.</li>
+    <li>If $W_n$ is a “linear operator” and satisfies $\text{abs}(f(\lambda)-W_n(\lambda))\le DM/n^{r/2}$, then the left-hand side of (PB) is not greater than $\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))$ + $\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}$.</li>
     <li>By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3)<sup id="fnref:1:21" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</li>
   </ol>
 </blockquote>

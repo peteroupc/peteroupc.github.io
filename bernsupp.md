@@ -572,11 +572,11 @@ _Proof_:  This can be seen by evaluating $p(1) = a_0 + ... + a_n$.  If $p(1)$ is
 
 In the following lemmas, let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.
 
-**Lemma:** If $p$'s coin-flipping degree is $n$, then $|a_i|\le 2^i {n\choose i}$.
+**Lemma:** If $p$'s coin-flipping degree is $n$, then $\text{abs}(a_i)\le 2^i {n\choose i}$.
 
 _Proof_: Consider the matrix that transforms a polynomial's Bernstein coefficients to "power" coefficients, which is $n\times n$ if the polynomial's degree is $n$ (Ray and Nataraj 2012, eq. (8))[^21].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$'s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding "power" coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;
 
-**Lemma:**  $|a_i|\le |b_i|$, where $b_i$ is the corresponding power coefficient of the following polynomial: $$q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,$$ and where $T_n(x)$ is the [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) of degree $n$.
+**Lemma:**  $\text{abs}(a_i)\le \text{abs}(b_i)$, where $b_i$ is the corresponding power coefficient of the following polynomial: $$q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,$$ and where $T_n(x)$ is the [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) of degree $n$.
 
 See _MathOverflow_ for a [**proof of this lemma**](https://mathoverflow.net/questions/449135) by Fedor Petrov.
 
@@ -615,7 +615,7 @@ _Proof._
 
 1. _&omega;_ is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2 \* _n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2 \* _n_))] (by the definition of _&omega;_) &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for every integer _n_&ge;4, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).  To prove the fourth bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt( (_k_/(2\*_n_)) \* (1&minus;_k_/(2\*_n_)) / (2\*_n_&minus;1) )).
 2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on the closed unit interval, the result follows from part 1.
-3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $|f(x)-f(s)-f'(x)(x-s)|\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^23], so&mdash; $$E[|f(X/n)-f(k/(2n))|]=|E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))]|$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)). &#x25a1;
+3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f'(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^23], so&mdash; $$E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)). &#x25a1;
 
 > **Notes:**
 >
@@ -628,7 +628,7 @@ _Proof._
 >     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^26].
 
-There are weaker bounds for Lemma 2, part 1, which work even if $f$'s modulus of continuity $\omega$ is not concave. According to Pascu et al. (2017, Lemma 5.1)[^27]\: $$|\mathbb{E}[f(Y)] - f(\mathbb{E}[Y])| \le \omega(\delta) + \omega(\delta)\text{Var}[Y]/\delta^2,$$ where $f$ is a continuous function, $Y$ is a discrete random variable on a closed interval, and $\delta>0$.  Given that $Y = X/n$ (where $X$ is as in Lemma 2), taking $\delta=1/n^{1/2}$ leads to: $$|\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])|=|\mathbb{E}[f(Y)]-f(k/(2n))|\le\omega(1/n^{1/2}) (1+n\cdot\text{Var}[Y]),$$ and in turn, plugging in bounds for $\text{Var}[Y]$ leads to the following bounds for Lemma 2, part 1:
+There are weaker bounds for Lemma 2, part 1, which work even if $f$'s modulus of continuity $\omega$ is not concave. According to Pascu et al. (2017, Lemma 5.1)[^27]\: $$\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y])) \le \omega(\delta) + \omega(\delta)\text{Var}[Y]/\delta^2,$$ where $f$ is a continuous function, $Y$ is a discrete random variable on a closed interval, and $\delta>0$.  Given that $Y = X/n$ (where $X$ is as in Lemma 2), taking $\delta=1/n^{1/2}$ leads to: $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))=\text{abs}(\mathbb{E}[f(Y)]-f(k/(2n)))\le\omega(1/n^{1/2}) (1+n\cdot\text{Var}[Y]),$$ and in turn, plugging in bounds for $\text{Var}[Y]$ leads to the following bounds for Lemma 2, part 1:
 
 - $\omega(1/n^{1/2}) (1+n/(8n-4))$.
 - $\omega(1/n^{1/2}) (1+n/(7n)) = \frac{8}{7}\omega(1/n^{1/2})$ if n&ge;4.
@@ -784,7 +784,7 @@ The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials u
 3. _$g_n$ and $h_n$ converge to $f$ as $n$ gets large._
 4. $(g_{m}-g_n)$ _and_ $(h_{n}-h_{m})$ _are polynomials with nonnegative Bernstein coefficients once they are rewritten to polynomials in Bernstein form of degree exactly $m$, where $m$ is the smallest number greater than $n$ in $S$._
 
-_Then for each $n$ in $S$, $|f(\lambda) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
+_Then for each $n$ in $S$, $\text{abs}(f(\lambda) - B_n(W_n(\lambda))) \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the Bernstein polynomial of degree $n$ of the function $W_n(\lambda)$._
 
 _Proof:_ $W_n(k/n)$ is the $k$-th Bernstein coefficient of $B_n(W_n(\lambda))$, which is $g_n$ and $h_n$ before they are shifted downward and upward, respectively, by $\epsilon_n(f)$.  Moreover, property 4 in the lemma corresponds to condition (iv) of Nacu and Peres (2005)[^1], which implies that, for every $m>n$, $g_{n}(\lambda)\le g_{m}(\lambda)\le f(\lambda)$ (the lower polynomials "increase") and $h_{n}(\lambda)\ge h_{m}(\lambda)\ge f(\lambda)$ (the upper polynomials "decrease") for every $n\ge 1$ (Nacu and Peres 2005, Remark A)[^1].
 
@@ -792,9 +792,9 @@ Then if $B_n(W_n(\lambda)) < f(\lambda)$ for some $\lambda$ in the closed unit i
 
 Likewise, if $B_n(W_n(\lambda)) > f(\lambda)$ for some $\lambda$ in the closed unit interval, shifting the left-hand side downward by $\epsilon_n(f)$ means that $g_n = B_n(W_n(\lambda))-\epsilon_n(f) \le f(\lambda)$, and rearranging this expression leads to $B_n(W_n(\lambda)) - f(\lambda) \le \epsilon_n(f)$.
 
-This combined means that $|f(x) - B_n(W_n(\lambda))| \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$.  &#x25a1;
+This combined means that $\text{abs}(f(x) - B_n(W_n(\lambda))) \le \epsilon_n(f)$ whenever $0\le \lambda\le 1$.  &#x25a1;
 
-**Corollary 4**.  _If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that's a power of 2; that is, $|B_n(f(\lambda))| \le \eta(n)$ for every such $n$._
+**Corollary 4**.  _If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that's a power of 2; that is, $\text{abs}(B_n(f(\lambda))) \le \eta(n)$ for every such $n$._
 
 **Lemma 5**. Let $n\ge 1$ be an integer.  Suppose $g_{2n}$ and $g_{n}$ are polynomials in Bernstein form of degree $2n$ and $n$, respectively, and their domain is the closed unit interval. Suppose $g_{2n}$ and $g_n$ satisfy the property:
 
@@ -818,7 +818,7 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
 
-For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$|f(\lambda)-B_n(W_n(\lambda))| \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
+For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
 Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:
 
@@ -826,15 +826,15 @@ Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $
 2. $g_n$ converges to $f$ as $n$ gets large.
 3. $(g_{n+1}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $n+1$.
 
-Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left|\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right|\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
+Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left\text{abs}(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
 
 It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
 > **Notes:**
 >
 > 1. If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).
-> 2. If $W_n$ is a "linear operator", the left-hand side of (PB) is not greater than $|(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))|$ + $|W_n(k/(2n))-f(k/(2n))|$  + $|W_{2n}(k/(2n))-f(k/(2n))|$.
-> 3. If $W_n$ is a "linear operator" and satisfies $|f(\lambda)-W_n(\lambda)|\le DM/n^{r/2}$, then the left-hand side of (PB) is not greater than $|(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))|$ + $\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}$.
+> 2. If $W_n$ is a "linear operator", the left-hand side of (PB) is not greater than $\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))$ + $\text{abs}(W_n(k/(2n))-f(k/(2n)))$  + $\text{abs}(W_{2n}(k/(2n))-f(k/(2n)))$.
+> 3. If $W_n$ is a "linear operator" and satisfies $\text{abs}(f(\lambda)-W_n(\lambda))\le DM/n^{r/2}$, then the left-hand side of (PB) is not greater than $\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))$ + $\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}$.
 > 3. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
 
 ---------------------

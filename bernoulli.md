@@ -2544,8 +2544,8 @@ _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the
 This proof of the **general martingale algorithm** is similar to the proof for certain alternating series with only nonzero power coefficients, given in Łatuszyński et al. (2019/2011)[^21], section 3.1.  Suppose a coin that shows heads with probability $g(\lambda)$ is flipped repeatedly and the following results are achieved: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
 
 - $U_0=d_0$ and $L_0=0$.
-- For each $n>0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n > 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if no nonzero power coefficients follow $a_n$ and $a_n < 0$, otherwise $U_{n-1}$.
-- For each $n>0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n < 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if no nonzero power coefficients follow $a_n$ and $a_n > 0$, otherwise $L_{n-1}$.
+- For each $n>0$, $U_n$ is $L_{n-1} + \text{abs}(a_n)\times X_1\times...\times X_n$ if $a_n > 0$, otherwise $U_{n-1} - \text{abs}(a_n)\times X_1\times...\times X_n$ if no nonzero power coefficients follow $a_n$ and $a_n < 0$, otherwise $U_{n-1}$.
+- For each $n>0$, $L_n$ is $U_{n-1} - \text{abs}(a_n)\times X_1\times...\times X_n$ if $a_n < 0$, otherwise $L_{n-1} + \text{abs}(a_n)\times X_1\times...\times X_n$ if no nonzero power coefficients follow $a_n$ and $a_n > 0$, otherwise $L_{n-1}$.
 
 Then it's clear that with probability 1, for every $n\ge 1$&mdash;
 

@@ -5,6 +5,12 @@ def prepareMarkdown(data)
   data=data.gsub(/<a\s+(id|name)[^>]*>\s*<\/a>\n+/,"")
   data=data.gsub(/\#\n*\#\#/,"###")
   data=data.gsub(/\t/," "*8)
+  # Fix an issue with "|¨ characters within LaTeX markup
+  # being misinterpreted as table notation
+  data=data.gsub(/\$([^\n\$]+)\$/){
+    next $& if !$1.include?("|")
+    next "$"+($1.gsub(/\|(?!\|)([^\|]+)\|/){ "\\text{abs}("+$1+")" })+"$"
+  }
   notetexts={}
   textstorefs={} # to help remove duplicate note texts
   data.scan(/<sup\s+id\s*\=\s*([^>]+)>\s*\(\d+\)\s*<\/sup>\s*([\s\S]+?)(?=<sup\s+id|\#\#|\z)/){|n|
