@@ -36,7 +36,11 @@ This page contains several questions about the [**Bernoulli factory**](https://p
 
 This question involves solving the Bernoulli factory problem with polynomials.[^2]
 
-In this question, a polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash; $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$ where $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.
+In this question, a polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash;
+
+$$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$
+
+where $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.
 
 The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.
 
@@ -105,7 +109,11 @@ The following are some strategies for answering these questions:
 - For the "[**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5)" (Holtz et al. 2011)[^5], find explicit bounds, with no hidden constants, on the approximation error for the operator $Q_{n,r}(f)$ and for the polynomials $(f_n)$ and $(g_n)$ formed with it, and find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in the paper.  Or verify my proof of the order-2 operator's error bounds in [**my Proposition B10A**](https://peteroupc.github.io/bernapprox.html#Results_Used_in_Approximations_by_Polynomials).  The bounds should have the form $C\cdot\max((\lambda(1-\lambda)/n)^{1/2}, 1/n)^r$, where $C$ is an explicitly given constant depending only on $f$ and $r$.
 - Let $f:[-1,1]\to [0,1]$ be continuous.  Find explicit bounds, with no hidden constants, on the error in approximating $f$ with the following polynomials: The polynomials are similar to Chebyshev interpolants, but evaluate $f$ at _rational_ values of $\lambda$ that converge to Chebyshev or Legendre points (e.g., converging to $\cos(j\pi/n)$ with increasing $n$). The error bounds must be close to those of Chebyshev interpolants (see, e.g., chapters 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013).
 - Find other polynomial operators meeting the requirements of the main question (see "Main Question", above) and having explicit error bounds, with no hidden constants, especially operators that preserve polynomials of a higher degree than linear functions.
-- Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left\text{abs}(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)=\text{abs}(\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n]))\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, where $M = \max(L, \max\text{abs}(f^{(0)}), ...,\max\text{abs}(f^{(r-1)}))$, $L$ is $\max\text{abs}(f^{(r)})$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 3 and 4 in** "[**End Notes**](#End_Notes)" **as well as** "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)".)
+- Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
+
+    $$\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)=\text{abs}(\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n]))\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
+
+    whenever $0\le k\le 2n$, where $M = \max(L, \max\text{abs}(f^{(0)}), ...,\max\text{abs}(f^{(r-1)}))$, $L$ is $\max\text{abs}(f^{(r)})$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 3 and 4 in** "[**End Notes**](#End_Notes)" **as well as** "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)".)
 
 <a id=Other_Questions></a>
 
