@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/06/18"><meta name="citation_online_date" content="2024/06/18"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/06/19"><meta name="citation_online_date" content="2024/06/19"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -538,8 +538,14 @@
   <p><strong>Note:</strong> A function $f(\lambda)$ is:</p>
 
   <ul>
-    <li><em>Analytic</em> at a point $z$ if there is a positive number $r$ such that $f$ is writable as— \(f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,\) whenever abs($\lambda-z$) $&lt;r$, where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
-    <li>In the <em>Zygmund class</em> if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon&gt;0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two “smaller” classes of Lipschitz continuous functions (see “Definitions”) and functions with a continuous derivative.</li>
+    <li>
+      <p><em>Analytic</em> at a point $z$ if there is a positive number $r$ such that $f$ is writable as—</p>
+
+      <p>\(f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,\) whenever abs($\lambda-z$) &lt; $r$, where $f^{(i)}$ is the $i$-th derivative of $f$.</p>
+    </li>
+    <li>
+      <p>In the <em>Zygmund class</em> if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon&gt;0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two “smaller” classes of Lipschitz continuous functions (see “Definitions”) and functions with a continuous derivative.</p>
+    </li>
   </ul>
 </blockquote>
 
@@ -750,8 +756,16 @@
 
 <ul>
   <li>If $0\le\min(b_0, …, b_m)\le\max(b_0, …, b_m)\le 1$, then the coin-flipping degree is bounded above by $m$.</li>
-  <li>If $0\le\min(b_0, …, b_m)$ and $\max(b_0, …, b_m)\gt 1$, then the coin-flipping degree is bounded above by— \(m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),\) where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)<sup id="fnref:19" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup>.</li>
-  <li>If $\min(b_0, …, b_m)\lt 0$ and $\max(b_0, …, b_m)\le 1$, then the coin-flipping degree is bounded above by— \(m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),\) where $\text{Pmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)<sup id="fnref:19:1" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup>.</li>
+  <li>
+    <p>If $0\le\min(b_0, …, b_m)$ and $\max(b_0, …, b_m)\gt 1$, then the coin-flipping degree is bounded above by—</p>
+
+    <p>\(m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),\) where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)<sup id="fnref:19" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup>.</p>
+  </li>
+  <li>
+    <p>If $\min(b_0, …, b_m)\lt 0$ and $\max(b_0, …, b_m)\le 1$, then the coin-flipping degree is bounded above by—</p>
+
+    <p>\(m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),\) where $\text{Pmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)<sup id="fnref:19:1" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup>.</p>
+  </li>
   <li>
     <p>Suppose $m\ge 2$, that $b_0=0$ or $b_m=0$ or both, and that the following necessary conditions are satisfied (Mok and To 2008; Theorem 1 and Corollary 3)<sup id="fnref:20" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>:</p>
 
@@ -762,7 +776,11 @@
       <li>For every $i$ such that $1-b_i\lt 0$, if $1-b_0=0$, there must be $j\lt i$ such that $1-b_j\gt 0$.</li>
     </ul>
 
-    <p>Then the coin-flipping degree is bounded above by— \(\max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),\) where— \(M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),\) and where:
+    <p>Then the coin-flipping degree is bounded above by—</p>
+
+    <p>\(\max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),\) where—</p>
+
+    <p>\(M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),\) and where:
   - $a_{\max} = \max(\max(0,\beta_0),  …, \max(0, \beta_m))$.
   - $a_{\min}$ is the minimum of $(\beta_i{m\choose i})$ over all values of $i$ such that $\beta_i&gt;0$.
   - $c$ is the smallest number $r$ that satisfies $FN(\lambda)/FP(\lambda)\le r$ where $0\lt\lambda\lt 1$.  $c$ can also be a greater number but less than 1.
@@ -777,7 +795,11 @@
   <p><strong>Examples:</strong></p>
 
   <ol>
-    <li>Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$’s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)<sup id="fnref:17:1" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>.  $p$ meets the conditions to use the coin-flipping degree derived from Mok and To (2008)<sup id="fnref:20:2" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.  In this case, after some calculations, the coin-flipping degree is bounded above by— \(\text{ceil}\left(\max\left(\max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.94492)}\frac{7/3}{1}\right), \max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.70711)}\frac{8/3}{1}\right)\right)\right)\le 128.\)</li>
+    <li>
+      <p>Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$’s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)<sup id="fnref:17:1" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>.  $p$ meets the conditions to use the coin-flipping degree derived from Mok and To (2008)<sup id="fnref:20:2" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.  In this case, after some calculations, the coin-flipping degree is bounded above by—</p>
+
+\[\text{ceil}\left(\max\left(\max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.94492)}\frac{7/3}{1}\right), \max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.70711)}\frac{8/3}{1}\right)\right)\right)\le 128.\]
+    </li>
     <li>An exhaustive search shows that 46 is the highest possible coin-flipping degree for a degree-3 polynomial whose “power” coefficients are integers.</li>
     <li>The degree-4 polynomial $-43\lambda^4 + 81\lambda^3 - 47\lambda^2 + 9\lambda$ has a coin-flipping degree of 5284.</li>
   </ol>
@@ -848,7 +870,11 @@
 <ol>
   <li><em>ω</em> is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] − <em>f</em>(<em>k</em>/(2 * <em>n</em>))) ≤ <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) − <em>f</em>(<em>k</em>/(2 * <em>n</em>))] ≤ <strong>E</strong>[<em>ω</em>(abs(<em>X</em>/<em>n</em> − <em>k</em>/(2 * <em>n</em>))] (by the definition of <em>ω</em>) ≤ <em>ω</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> − <em>k</em>/(2 * <em>n</em>))]) (by Jensen’s inequality and because <em>ω</em> is concave) ≤ <em>ω</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> − <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>ω</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>ω</em>(sqrt((<em>k</em>*(2 * <em>n</em>−<em>k</em>)/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)))) ≤ <em>ω</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)))) = <em>ω</em>(sqrt((1/(8*<em>n</em>−4)))) = <em>ρ</em>, and for every integer <em>n</em>≥4, <em>ρ</em> ≤ <em>ω</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] − <em>f</em>(<em>k</em>/(2 * <em>n</em>))) ≤ <em>ω</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) ≤ <em>ω</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] − <em>f</em>(<em>k</em>/(2 * <em>n</em>))) ≤ <em>ω</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)))) = <em>ω</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1−<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>−1) )).</li>
   <li>By the definition of Hölder continuous functions, take <em>ω</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>α</em></sup>.  Because <em>ω</em> is a concave modulus of continuity on the closed unit interval, the result follows from part 1.</li>
-  <li>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)<sup id="fnref:1:8" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f’(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f’(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)<sup id="fnref:23" role="doc-noteref"><a href="#fn:23" class="footnote" rel="footnote">23</a></sup>, so— \(E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])\) \(\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).\)  By part 1’s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>−<em>k</em>)/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) ≤ (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>−4)) = <em>ρ</em>.  For every integer <em>n</em>≥4, <em>ρ</em> ≤  (<em>M</em>/2)*(1/(7*<em>n</em>)). □</li>
+  <li>
+    <p>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)<sup id="fnref:1:8" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f’(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f’(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)<sup id="fnref:23" role="doc-noteref"><a href="#fn:23" class="footnote" rel="footnote">23</a></sup>, so—</p>
+
+    <p>\(E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])\) \(\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).\)  By part 1’s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>−<em>k</em>)/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) ≤ (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>−4)) = <em>ρ</em>.  For every integer <em>n</em>≥4, <em>ρ</em> ≤  (<em>M</em>/2)*(1/(7*<em>n</em>)). □</p>
+  </li>
 </ol>
 
 <blockquote>
@@ -884,7 +910,9 @@
 
 <p>Suppose <em>Y</em> = <em>X</em>/<em>n</em>, where <em>X</em> is as in Lemma 2.  Then <em>Y</em>’s variance (<strong>Var</strong>[<em>Y</em>]) is less than or equal to 1/(8*<em>n</em>− 4), and the left-hand side of Strukov and Timan’s bound is the same as the expression (1).</p>
 
-<p>Since <em>f</em> is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Therefore, applying Strukov and Timan’s bound and the bound on <em>Y</em>’s variance leads to— \(\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)\) \(\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.\) □</p>
+<p>Since <em>f</em> is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Therefore, applying Strukov and Timan’s bound and the bound on <em>Y</em>’s variance leads to—</p>
+
+<p>\(\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)\) \(\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.\) □</p>
 
 <blockquote>
   <p><strong>Note:</strong> A <em>second-order modulus of continuity</em> is a nonnegative and nowhere decreasing function <em>ω</em><sub>2</sub>(<em>h</em>) with <em>h</em> ≥ 0, for which <em>ω<sub>2</sub></em>(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) ≤ $\omega_2(\text{abs}((y-x)/2))$ whenever <em>f</em> is continuous and <em>x</em> and <em>y</em> are in <em>f</em>’s domain.</p>
@@ -1105,7 +1133,9 @@
 
 <p>Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), …, W_{2^n}(\lambda),…$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).</p>
 
-<p>For each integer $n\ge1$ that’s a power of 2, suppose that there is $D&gt;0$ such that— \(\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},\) whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
+<p>For each integer $n\ge1$ that’s a power of 2, suppose that there is $D&gt;0$ such that—</p>
+
+<p>\(\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},\) whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
 
 <p>Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:</p>
 
@@ -1115,7 +1145,9 @@
   <li>$(g_{n+1}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $n+1$.</li>
 </ol>
 
-<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that’s a power of 2— \(\left\text{abs}(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le \frac{C_1 M}{n^{r/2}},\tag{PB}\) whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
+<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that, for each integer $n\ge 1$ that’s a power of 2—</p>
+
+<p>\(\left\text{abs}(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le \frac{C_1 M}{n^{r/2}},\tag{PB}\) whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
 
 <p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
 

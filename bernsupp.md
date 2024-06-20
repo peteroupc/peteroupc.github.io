@@ -352,7 +352,9 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 > **Note:** A function $f(\lambda)$ is:
 >
-> - _Analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash; $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever abs($\lambda-z$) $<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
+> - _Analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash;
+>
+>      $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever abs($\lambda-z$) &lt; $r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
 > - In the _Zygmund class_ if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon>0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two "smaller" classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
 
 <a id=Notes></a>
@@ -540,8 +542,12 @@ The following results give upper bounds on $p$'s coin-flipping degree.
 Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0, ..., b_m$.  Then:
 
 - If $0\le\min(b_0, ..., b_m)\le\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by $m$.
-- If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
-- If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash; $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$ where $\text{Pmin}$ is the _minimum_ value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
+- If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash;
+
+    $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
+- If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash;
+
+    $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$ where $\text{Pmin}$ is the _minimum_ value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
 - Suppose $m\ge 2$, that $b_0=0$ or $b_m=0$ or both, and that the following necessary conditions are satisfied (Mok and To 2008; Theorem 1 and Corollary 3)[^20]\:
 
     - For every $i$ such that $b_i\lt 0$, if $b_m=0$, there must be $j\gt i$ such that $b_j\gt 0$.
@@ -549,7 +555,11 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
     - For every $i$ such that $1-b_i\lt 0$, if $1-b_m=0$, there must be $j\gt i$ such that $1-b_j\gt 0$.
     - For every $i$ such that $1-b_i\lt 0$, if $1-b_0=0$, there must be $j\lt i$ such that $1-b_j\gt 0$.
 
-    Then the coin-flipping degree is bounded above by&mdash; $$ \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$ where&mdash; $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),$$ and where:
+    Then the coin-flipping degree is bounded above by&mdash;
+
+    $$ \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$ where&mdash;
+
+    $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),$$ and where:
     - $a_{\max} = \max(\max(0,\beta_0),  ..., \max(0, \beta_m))$.
     - $a_{\min}$ is the minimum of $(\beta_i{m\choose i})$ over all values of $i$ such that $\beta_i>0$.
     - $c$ is the smallest number $r$ that satisfies $FN(\lambda)/FP(\lambda)\le r$ where $0\lt\lambda\lt 1$.  $c$ can also be a greater number but less than 1.
@@ -560,7 +570,9 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 
 > **Examples:**
 >
-> 1. Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$'s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)[^17].  $p$ meets the conditions to use the coin-flipping degree derived from Mok and To (2008)[^20].  In this case, after some calculations, the coin-flipping degree is bounded above by&mdash; $$\text{ceil}\left(\max\left(\max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.94492)}\frac{7/3}{1}\right), \max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.70711)}\frac{8/3}{1}\right)\right)\right)\le 128.$$
+> 1. Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$'s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)[^17].  $p$ meets the conditions to use the coin-flipping degree derived from Mok and To (2008)[^20].  In this case, after some calculations, the coin-flipping degree is bounded above by&mdash;
+>
+>     $$\text{ceil}\left(\max\left(\max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.94492)}\frac{7/3}{1}\right), \max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.70711)}\frac{8/3}{1}\right)\right)\right)\le 128.$$
 > 2. An exhaustive search shows that 46 is the highest possible coin-flipping degree for a degree-3 polynomial whose "power" coefficients are integers.
 > 3. The degree-4 polynomial $-43\lambda^4 + 81\lambda^3 - 47\lambda^2 + 9\lambda$ has a coin-flipping degree of 5284.
 >
@@ -615,7 +627,9 @@ _Proof._
 
 1. _&omega;_ is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2 \* _n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2 \* _n_))] (by the definition of _&omega;_) &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for every integer _n_&ge;4, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).  To prove the fourth bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt( (_k_/(2\*_n_)) \* (1&minus;_k_/(2\*_n_)) / (2\*_n_&minus;1) )).
 2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on the closed unit interval, the result follows from part 1.
-3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f'(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^23], so&mdash; $$E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)). &#x25a1;
+3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f'(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^23], so&mdash;
+
+    $$E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)). &#x25a1;
 
 > **Notes:**
 >
@@ -641,7 +655,9 @@ _Proof._ Strukov and Timan (1977)[^28] proved the following bound: $$\
 
 Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**[_Y_]) is less than or equal to 1/(8\*_n_&minus; 4), and the left-hand side of Strukov and Timan's bound is the same as the expression (1).
 
-Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Therefore, applying Strukov and Timan's bound and the bound on _Y_'s variance leads to&mdash; $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$ &#x25a1;
+Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Therefore, applying Strukov and Timan's bound and the bound on _Y_'s variance leads to&mdash;
+
+$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$ &#x25a1;
 
 > **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever _f_ is continuous and _x_ and _y_ are in _f_'s domain.
 
@@ -818,7 +834,9 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
 
-For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash; $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
+For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
+
+$$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
 Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:
 
@@ -826,7 +844,9 @@ Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $
 2. $g_n$ converges to $f$ as $n$ gets large.
 3. $(g_{n+1}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $n+1$.
 
-Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash; $$\left\text{abs}(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
+Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
+
+$$\left\text{abs}(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
 
 It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
