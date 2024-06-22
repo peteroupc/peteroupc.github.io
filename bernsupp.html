@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/06/19"><meta name="citation_online_date" content="2024/06/19"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/06/23"><meta name="citation_online_date" content="2024/06/23"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -491,7 +491,7 @@
 
 <ul>
   <li><em>λ</em>, the unknown probability of heads, is <em>ε</em> or greater and (1−<em>ε</em>) or less for some <em>ε</em> &gt; 0.</li>
-  <li>The simulation makes use of unbiased random bits in addition to input coin flips.</li>
+  <li>The simulation makes use of a <em>fair coin</em> (a coin that shows 1 or 0 with equal probability) in addition to input coin flips.</li>
   <li><em>Δ</em>(<em>n</em>, <em>r</em>, <em>λ</em>) = max(sqrt(<em>λ</em>*(1−<em>λ</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>.</li>
 </ul>
 
@@ -1350,7 +1350,7 @@ for i in range(20):
 
 <p>(By the properties of the Bernstein form, <em>a</em>[0] will equal <em>f</em>(0) and <em>a</em>[<em>n</em>] will equal <em>f</em>(1) whenever 0 or 1 is in the domain of <em>f</em>, respectively.)</p>
 
-<p>Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup id="fnref:31" role="doc-noteref"><a href="#fn:31" class="footnote" rel="footnote">31</a></sup>), then using the algorithm in “<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>” to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn’t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. □</p>
+<p>Step 4 is done by first generating fair coin flips (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup id="fnref:31" role="doc-noteref"><a href="#fn:31" class="footnote" rel="footnote">31</a></sup>), then using the algorithm in “<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>” to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn’t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. □</p>
 
 <p><strong>Proposition 2.</strong> <em>If f(λ) is described in the strong simulability statement, and if either f is constant on its domain or f meets the additional conditions below, then f is strongly simulable.</em></p>
 
@@ -1379,7 +1379,7 @@ for i in range(20):
     <p>Now let <em>h</em>(<em>λ</em>) = <em>f</em>(<em>λ</em>)/<em>g</em>(<em>λ</em>).  By the conditions in the lemma, <em>h</em> will be positive everywhere in that interval.</p>
   </li>
   <li>Return 1 if <em>h</em> has the following property: <em>h</em>(<em>λ</em>) = 0 whenever 0 &lt; <em>λ</em> &lt; 1 and <em>λ</em> is in <em>f</em>’s domain.</li>
-  <li>Otherwise, we run a Bernoulli factory algorithm for <em>h</em>(<em>λ</em>) that uses the input coin (and possibly outside randomness).  Since <em>h</em> is continuous and polynomially bounded and the input coin’s probability of heads is neither 0 nor 1, <em>h</em> is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.</li>
+  <li>Otherwise, we run a Bernoulli factory algorithm for <em>h</em>(<em>λ</em>) that uses the input coin (and possibly outside randomness).  Since <em>h</em> is continuous and polynomially bounded and the input coin’s probability of heads is neither 0 nor 1, <em>h</em> is strongly simulable; the von Neumann trick lets the input coin serve as a fair coin, thus doing away with outside randomness in the algorithm.</li>
 </ol>
 
 <p>Thus, <em>f</em> admits an algorithm that uses nothing but the input coin as a source of randomness, and so is strongly simulable. □</p>
@@ -1409,7 +1409,7 @@ for i in range(20):
 
 <p>Now let <em>r</em>(<em>λ</em>) = (<em>f</em>(<em>λ</em>) − <em>ω</em>(<em>λ</em>)) / (<em>g</em>(<em>λ</em>) − <em>ω</em>(<em>λ</em>)).  By the conditions in the lemma, <em>h</em>(<em>λ</em>) will be positive wherever 0 &lt; <em>λ</em> &lt; 1 and <em>λ</em> is in the domain of <em>f</em>.</p>
 
-<p>Now, run a Bernoulli factory algorithm for <em>r</em>(<em>λ</em>) that uses the input coin (and possibly outside randomness).  Since <em>r</em> is continuous and polynomially bounded and the input coin’s probability of heads is neither 0 nor 1, <em>r</em> is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.</p>
+<p>Now, run a Bernoulli factory algorithm for <em>r</em>(<em>λ</em>) that uses the input coin (and possibly outside randomness).  Since <em>r</em> is continuous and polynomially bounded and the input coin’s probability of heads is neither 0 nor 1, <em>r</em> is strongly simulable; the von Neumann trick lets the input coin serve as a fair coin, thus doing away with outside randomness in the algorithm.</p>
 
 <p>Thus, <em>f</em> admits an algorithm that uses nothing but the input coin as a source of randomness, and so is strongly simulable. □</p>
 
@@ -1474,24 +1474,24 @@ for i in range(20):
 
 <ul>
   <li>The functions <em>λ</em> and 1 − <em>λ</em>.</li>
-  <li>Constants <em>c</em> satisfying 0 ≤ <em>c</em> ≤ 1.  As Nacu and Peres (2005)<sup id="fnref:1:23" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> already showed, any such constant admits an optimal factory: generate unbiased random bits using Peres’s iterated von Neumann extractor (Peres 1992)<sup id="fnref:32" role="doc-noteref"><a href="#fn:32" class="footnote" rel="footnote">32</a></sup>, then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)<sup id="fnref:33" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup>.</li>
+  <li>Constants <em>c</em> satisfying 0 ≤ <em>c</em> ≤ 1.  As Nacu and Peres (2005)<sup id="fnref:1:23" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> already showed, any such constant admits an optimal factory: turn flips of the input coin into <em>fair coin flips</em> (numbers that each equal 1 or 0 with equal probability) using Peres’s iterated von Neumann extractor (Peres 1992)<sup id="fnref:32" role="doc-noteref"><a href="#fn:32" class="footnote" rel="footnote">32</a></sup>, then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)<sup id="fnref:33" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup>.</li>
 </ul>
 
 <p>It is easy to see that if an <em>optimal factory</em> exists for <em>f</em>(<em>λ</em>), then one also exists for 1 − <em>f</em>(<em>λ</em>): simply change all ones returned by the <em>f</em>(<em>λ</em>) factory into zeros and vice versa.</p>
 
-<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>λ</em>) = <em>λ</em>/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup id="fnref:14:2" role="doc-noteref"><a href="#fn:14" class="footnote" rel="footnote">14</a></sup>, then multiply each unbiased bit with another input coin flip to get a sample from <em>λ</em>/2.  Given that the sample is equal to 0, there are three possibilities that can “be extracted to produce more fair bits”: either the unbiased bit is 0, or the coin flip is 0, or both are 0.</p>
+<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>λ</em>) = <em>λ</em>/2: the key is to flip the input coin enough times to produce fair coin flips using his extractor (Peres 1992)<sup id="fnref:14:2" role="doc-noteref"><a href="#fn:14" class="footnote" rel="footnote">14</a></sup>, then multiply each fair coin flip with another input coin flip to get a sample from <em>λ</em>/2.  Given that the sample is equal to 0, there are three possibilities that can “be extracted to produce more fair bits”: either the fair coin flip is 0, or the coin flip is 0, or both are 0.</p>
 
-<p>This algorithm, though, doesn’t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)<sup id="fnref:32:1" role="doc-noteref"><a href="#fn:32" class="footnote" rel="footnote">32</a></sup>.  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
+<p>This algorithm, though, doesn’t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce fair coin flips from bits that are not necessarily from fair coin flips (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)<sup id="fnref:32:1" role="doc-noteref"><a href="#fn:32" class="footnote" rel="footnote">32</a></sup>.  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
 
 <ol>
   <li>If the number of outputs generated so far is divisible by 20, do the following:
     <ul>
-      <li>Generate an unbiased random bit (see below).  If that bit is zero, output 0, then repeat this step unless the desired number of outputs has been generated.  If the bit is 1, flip the input coin and output the result.</li>
+      <li>Generate a fair coin using the method given later in this section.  If that bit is zero, output 0, then repeat this step unless the desired number of outputs has been generated.  If the bit is 1, flip the input coin and output the result.</li>
     </ul>
   </li>
   <li>Otherwise, do the following:
     <ol>
-      <li>Generate an unbiased random bit (see below), call it <em>fc</em>.  Then flip the input coin and call the result <em>bc</em>.</li>
+      <li>Generate a fair coin using the method given later in this section, call it <em>fc</em>.  Then flip the input coin and call the result <em>bc</em>.</li>
       <li>Output <em>fc</em>*<em>bc</em>.</li>
       <li>(The following steps pass “unused” randomness to the extractor in a specific way to ensure correctness.) If <em>fc</em> is 0, and <em>bc</em> is 1, append 0 to extractor 2’s input bits.</li>
       <li>If <em>fc</em> and <em>bc</em> are both 0, append 1 then 1 to extractor 2’s input bits.</li>
@@ -1514,7 +1514,7 @@ for i in range(20):
 <ol>
   <li>Set <em>iter</em> to 0.</li>
   <li>Flip the input coin <em>k</em> times.  Then build a bitstring <em>B1</em> consisting of the coin flip results in the order they occurred.  Let <em>i</em> be the number of ones in <em>B1</em>.</li>
-  <li>Generate 2*<em>r</em> unbiased random bits (see below).  (Rather than flipping the input coin 2*<em>r</em> times, as in the algorithm of Proposition 2.5.)  Then build a bitstring <em>B2</em> consisting of the coin flip results in the order they occurred.</li>
+  <li>Generate 2*<em>r</em> a fair coin using the method given later in this section.  (Rather than flipping the input coin 2*<em>r</em> times, as in the algorithm of Proposition 2.5.)  Then build a bitstring <em>B2</em> consisting of the coin flip results in the order they occurred.</li>
   <li>If the number of ones in <em>B2</em> is other than <em>r</em>: Translate <em>B1</em> + <em>B2</em> to an integer under mapping 1, then pass that number to extractor 2 (†), then add 1 to <em>iter</em>, then go to step 2.</li>
   <li>Translate <em>B1</em> + <em>B2</em> to an integer under mapping 2, call the integer <em>β</em>.  If <em>β</em> &lt; <em>d</em>[<em>i</em>], pass <em>β</em> to extractor 3, then pass <em>iter</em> to extractor 6, then output a 1.  Otherwise, if <em>β</em> &lt; <em>e</em>[<em>i</em>], pass <em>β</em> − <em>d</em>[<em>i</em>] to extractor 4, then pass <em>iter</em> to extractor 6, then output a 0.  Otherwise, pass <em>β</em> − <em>e</em>[<em>i</em>] to extractor 5, then add 1 to <em>iter</em>, then go to step 2.</li>
 </ol>
@@ -1536,7 +1536,7 @@ for i in range(20):
   </li>
 </ol>
 
-<p>In this algorithm, an unbiased random bit is generated as follows.  Let <em>m</em> be an even integer that is 32 or greater (in general, the greater <em>m</em> is, the more efficient the overall algorithm is in terms of coin flips).</p>
+<p>In this algorithm, a fair coin flip is generated as follows.  Let <em>m</em> be an even integer that is 32 or greater (in general, the greater <em>m</em> is, the more efficient the overall algorithm is in terms of coin flips).</p>
 
 <ol>
   <li>Use extractor 1 to extract outputs from floor(<em>n</em>/<em>m</em>)*<em>m</em> inputs, where <em>n</em> is the number of input bits available to that extractor.  Do the same for the remaining extractors.</li>
@@ -1551,9 +1551,9 @@ for i in range(20):
   <li>outputting either 0 or 1 in that step would be <em>P01</em> = <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup>*<em>E</em>(<em>λ</em>),</li>
 </ul>
 
-<p>so that the algorithm would simulate <em>f</em>(<em>λ</em>) = <em>P1</em> / <em>P01</em>.  Observe that the <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup> cancels out in the division.  Thus, we could replace the input coin with unbiased random bits and still simulate <em>f</em>(<em>λ</em>); the <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup> above would then be (1/2)<sup>2*<em>r</em></sup>.</p>
+<p>so that the algorithm would simulate <em>f</em>(<em>λ</em>) = <em>P1</em> / <em>P01</em>.  Observe that the <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup> cancels out in the division.  Thus, we could replace flips of the input coin with fair coin flips and still simulate <em>f</em>(<em>λ</em>); the <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup> above would then be (1/2)<sup>2*<em>r</em></sup>.</p>
 
-<p>While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if <em>f</em>(<em>λ</em>) maps each value <em>a</em> or greater and <em>b</em> or less to a small range of values, so that the algorithm could, for example, generate a uniform random variate between 0 and 1 using unbiased random bits and see whether that variate lies outside that range of values — and thus produce a sample from <em>f</em>(<em>λ</em>) without flipping the input coin again.</p>
+<p>While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if <em>f</em>(<em>λ</em>) maps each value <em>a</em> or greater and <em>b</em> or less to a small range of values, so that the algorithm could, for example, generate a uniform random variate between 0 and 1 using fair coin flips and see whether that variate lies outside that range of values — and thus produce a sample from <em>f</em>(<em>λ</em>) without flipping the input coin again.</p>
 
 <p><small>(†) For example, by translating the number to input bits via Pae’s entropy-preserving binarization (Pae 2018)<sup id="fnref:35" role="doc-noteref"><a href="#fn:35" class="footnote" rel="footnote">35</a></sup>.  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>λ</em>.</small></p>
 

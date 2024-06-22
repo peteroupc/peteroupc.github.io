@@ -1,10 +1,10 @@
 =begin
 Implements a streaming algorithm that extracts
-uniform random bits from a biased-coin source, as found in:
+uniform random bits from an unfair-coin source, as found in:
 
 Zhou, H. and Bruck, J., 2012. Streaming algorithms for optimal generation of random bits. arXiv preprint arXiv:1209.0730.
 
-Because this algorithm is stateful, it is best implemented on biased-coin sources whose bias does not change significantly over time.
+Because this algorithm is stateful, it is best implemented on unfair-coin sources whose probability of heads does not change significantly over time.
 
 Written by Peter O. Any copyright to this work is released to the Public Domain under Creative Commons CC0.
 
@@ -26,10 +26,9 @@ MAXDEPTH = 15
 # random sums of rolling 2 six-sided dice, and a third
 # source outputs coin flips with a bias of 0.75, there
 # should be three extractor trees.  At least if those three
-# sources are independent, the extracted bit sequences will be
-# independent and unbiased, so that those sequences
-# can then be concatenated to each other without
-# introducing bias (Zhou and Bruck, "A Universal Scheme
+# sources are independent, the bits in the extracted bit sequences will be
+# independent and each bit in each sequence equals 0 or 1 with equal probability
+# (Zhou and Bruck, "A Universal Scheme
 # for Transforming Binary Algorithms to Generate Random
 # Bits from Loaded Dice", arXiv:1209.0726 [cs.IT], 2012).
 def newtree()
@@ -107,8 +106,8 @@ end
 # Uses the given extractor tree to
 # extract randomness from the given bit (0 or 1)
 # and write output bits to the given array.
-# The bit is assumed to come from a biased-coin
-# source. Depth is an internal parameter.
+# The bit is assumed to come from an unfair coin.
+# Depth is an internal parameter.
 def extract(tree, bit, output, depth=0)
   node=tree
   if node[0]==PHI
@@ -159,11 +158,11 @@ end
 # extracting random bits", The Annals of Statistics 1992,20,1,
 # pp.590-597.
 # According to Remark 3 in the paper, to produce m
-# unbiased bits, take peres(block1)+peres(block2)+... until
+# bits that show 1 or 0 with equal probability, take peres(block1)+peres(block2)+... until
 # at least m bits are produced this way, where each block has
 # a fixed number of bits greater than 1; this should be done
-# rather than the practice of generating biased bits until
-# peres(biased_bits) produces at least m unbiased bits.
+# rather than the practice of generating input bits until
+# peres(input_bits) outputs at least m bits.
 def peres(bits,output)
   u=[]
   v=[]

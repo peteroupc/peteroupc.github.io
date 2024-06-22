@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randextract.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randextract.html"><meta name="citation_date" content="2023/06/13"><meta name="citation_online_date" content="2023/06/13"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randextract.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randextract.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randextract.html"><meta name="citation_date" content="2024/06/23"><meta name="citation_online_date" content="2024/06/23"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randextract.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -8,7 +8,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p><em>Randomness extraction</em> (also known as <em>unbiasing</em>, <em>debiasing</em>, <em>deskewing</em>, <em>whitening</em>, or <em>entropy extraction</em>) is a set of techniques for generating unbiased random bits from biased sources.  This note covers some useful extraction techniques.</p>
+<p><em>Randomness extraction</em> (also known as <em>unbiasing</em>, <em>debiasing</em>, <em>deskewing</em>, <em>whitening</em>, or <em>entropy extraction</em>) is a set of techniques for turning data sources into random bits that each equal 1 or 0 with equal probability.  This note covers some useful extraction techniques.</p>
 
 <p><a id="In_Information_Security"></a></p>
 
@@ -120,11 +120,11 @@
 
 <p>More formally, P(<em>X</em> &lt; <em>Y</em>) must be equal to P(<em>X</em> &gt; <em>Y</em>).  This relationship is equivalent to <em>statistical indifference</em> (Montes Gutiérrez 2014)<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>, (De Schuymer et al. 2003)<sup id="fnref:16" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>. This relationship works even if <em>X</em> and <em>Y</em> are dependent on each other but independent of everything else; this is easy to see if we treat <em>X</em> and <em>Y</em> as a single random “vector” [<em>X</em>, <em>Y</em>].  This is shown by the following two propositions.  In the propositions below, a random variable is <em>non-degenerate</em> if it does not take on a single value with probability 1.</p>
 
-<p><strong>Proposition 1.</strong> <em>Let X and Y be real-valued non-degenerate random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent.</em></p>
+<p><strong>Proposition 1.</strong> <em>Let X and Y be real-valued non-degenerate random variables.  Then Algorithm M outputs 1 or 0 with equal probability if and only if X and Y are statistically indifferent.</em></p>
 
 <p><em>Proof.</em> For every <em>X</em> and every <em>Y</em> there are only three mutually exclusive possibilities, <em>X</em>&gt;<em>Y</em>, <em>Y</em>&gt;<em>X</em>, and <em>X</em>=<em>Y</em>. Because both random variables are nondegenerate, P(<em>X</em>&gt;<em>Y</em>) or P(<em>Y</em>&gt;<em>X</em>) or both are nonzero, and P(<em>X</em>=<em>Y</em>) &lt; 1.   For the algorithm to return 0, <em>X</em> must be less than <em>Y</em>, and for it to return 1, <em>X</em> must be greater than <em>Y</em>.</p>
 
-<p>For the “only if” part: For the algorithm to return 0 or 1 with equal probability, it must be that P(<em>X</em>&gt;<em>Y</em>) = P(<em>Y</em>&gt;<em>X</em>).  But this necessarily means that P(<em>X</em>&gt;<em>Y</em>) and P(<em>Y</em>&gt;<em>X</em>) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(<em>X</em>=<em>Y</em>)) to each probability, we get—</p>
+<p>For the “only if” part: For the algorithm to return 1 or 0 with equal probability, it must be that P(<em>X</em>&gt;<em>Y</em>) = P(<em>Y</em>&gt;<em>X</em>).  But this necessarily means that P(<em>X</em>&gt;<em>Y</em>) and P(<em>Y</em>&gt;<em>X</em>) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(<em>X</em>=<em>Y</em>)) to each probability, we get—</p>
 
 <ul>
   <li>P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>=<em>Y</em>)/2 = 1/2, and</li>
@@ -133,7 +133,7 @@
 
 <p>and thus, <em>X</em> and <em>Y</em> must be statistically indifferent by definition (see below).</p>
 
-<p>For the “if” part:  If <em>X</em> and <em>Y</em> are statistically indifferent, this means that α = P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>=<em>Y</em>)/2 and β = P(<em>Y</em>&gt;<em>X</em>) + P(<em>X</em>=<em>Y</em>)/2 are equal and α = β = 1/2.  Since both α and β are equal and P(<em>X</em>=<em>Y</em>) in α and β are also equal, this must mean that P(<em>X</em>&gt;<em>Y</em>) = P(<em>Y</em>&gt;<em>X</em>).  It thus follows that for <em>X</em> and <em>Y</em>, the algorithm will return 0 or 1 with equal probability.  ◻</p>
+<p>For the “if” part:  If <em>X</em> and <em>Y</em> are statistically indifferent, this means that α = P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>=<em>Y</em>)/2 and β = P(<em>Y</em>&gt;<em>X</em>) + P(<em>X</em>=<em>Y</em>)/2 are equal and α = β = 1/2.  Since both α and β are equal and P(<em>X</em>=<em>Y</em>) in α and β are also equal, this must mean that P(<em>X</em>&gt;<em>Y</em>) = P(<em>Y</em>&gt;<em>X</em>).  It thus follows that for <em>X</em> and <em>Y</em>, the algorithm will return 1 or 0 with equal probability.  ◻</p>
 
 <p><strong>Proposition 2.</strong> <em>Let X and Y be real-valued non-degenerate random variables that are independent, identically distributed, and defined on the same probability space.  Then X and Y are statistically indifferent.</em></p>
 

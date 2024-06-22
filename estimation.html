@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2023/08/01"><meta name="citation_online_date" content="2023/08/01"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2024/06/23"><meta name="citation_online_date" content="2024/06/23"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -165,7 +165,7 @@
 <p>The standard deviation sub-algorithm follows.</p>
 
 <ol>
-  <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 0.</li>
+  <li>Generate 1 or 0 with equal probability.  If 1 was generated this way, return 0.</li>
   <li>Get two samples from the stream, call them <em>x</em> and <em>y</em>.</li>
   <li>Generate <em>u</em>, a uniform random variate between 0 and 1.</li>
   <li>If <em>u</em> is less than (<em>x</em>−<em>y</em>)<sup>2</sup>, return 1.  Otherwise, return 0.</li>
@@ -364,7 +364,7 @@
       <td><em>n</em> = ceil(ln(2/<em>δ</em>)/(2*<em>γ</em><sup>2</sup>)).</td>
     </tr>
     <tr>
-      <td>Bernoulli (that is, zero or one with unknown probability).</td>
+      <td>Bernoulli (that is, 1 or 0 with unknown probability).</td>
       <td>Continuous; maps the closed unit interval to itself.</td>
       <td><em>n</em> can be computed by a method given in Chen (2011)<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>, letting the <em>ε</em> in that paper equal <em>γ</em>.  See also Table 1 in that paper.  For example, <em>n</em>=101 if <em>γ</em>=1/10 and <em>δ</em>=1/20.</td>
     </tr>
@@ -515,7 +515,7 @@ pprint(Max(1,kappa))
   <li>Sort the <em>P</em>[<em>i</em>] in decreasing order by their values.</li>
   <li>If <em>r</em> is 1, return the labels to the first <em>k</em> items in the list <em>P</em>, and the algorithm is done.</li>
   <li>Set <em>μ</em> to ceil(<em>k</em> + <em>m</em>/ilog(<em>m</em>, <em>r</em>− 1)).</li>
-  <li>Let <em>C</em> be the coins whose labels are given in the first <em>μ</em> items in the list (these are the <em>μ</em> many coins found to be the most biased by this algorithm).</li>
+  <li>Let <em>C</em> be the coins whose labels are given in the first <em>μ</em> items in the list (these are the <em>μ</em> many coins found to be the “most unfair” by this algorithm).</li>
   <li>If <em>μ</em> ≤ 2*<em>k</em>, do a recursive run of this algorithm, using only the coins in <em>C</em> and with <em>δ</em> = <em>δ</em>/2 and <em>r</em> = 1.</li>
   <li>If <em>μ</em> &gt; 2*<em>k</em>, do a recursive run of this algorithm, using only the coins in <em>C</em> and with <em>δ</em> = <em>δ</em>/2 and <em>r</em> = <em>r</em> − 1.</li>
 </ol>

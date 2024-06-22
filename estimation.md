@@ -126,7 +126,7 @@ The algorithm, called **Algorithm B** in this document, follows.
 
 The standard deviation sub-algorithm follows.
 
-1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 0.
+1. Generate 1 or 0 with equal probability.  If 1 was generated this way, return 0.
 2. Get two samples from the stream, call them _x_ and _y_.
 3. Generate _u_, a uniform random variate between 0 and 1.
 4. If _u_ is less than (_x_&minus;_y_)<sup>2</sup>, return 1.  Otherwise, return 0.
@@ -260,7 +260,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 | Stream's distribution | Property of _f_ | Sample size |
   ---- | ---- | ---- |
 | Bounded; lies in the closed unit interval.[^14] | Continuous; maps the closed unit interval to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
-| Bernoulli (that is, zero or one with unknown probability). | Continuous; maps the closed unit interval to itself. | _n_ can be computed by a method given in Chen (2011)[^15], letting the _&epsilon;_ in that paper equal _&gamma;_.  See also Table 1 in that paper.  For example, _n_=101 if _&gamma;_=1/10 and _&delta;_=1/20. |
+| Bernoulli (that is, 1 or 0 with unknown probability). | Continuous; maps the closed unit interval to itself. | _n_ can be computed by a method given in Chen (2011)[^15], letting the _&epsilon;_ in that paper equal _&gamma;_.  See also Table 1 in that paper.  For example, _n_=101 if _&gamma;_=1/10 and _&delta;_=1/20. |
 | Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^16] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
 | Unbounded and subgaussian[^17]; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^18] | _f_(_x_) = _x_. | _n_ = $(2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)})/(\epsilon^{2})$. |
 
@@ -362,7 +362,7 @@ Agarwal et al. (2017\)[^23] called this algorithm "aggressive elimination", and 
 3. Sort the _P_\[_i_\] in decreasing order by their values.
 4. If _r_ is 1, return the labels to the first _k_ items in the list _P_, and the algorithm is done.
 5. Set _&mu;_ to ceil(_k_ + _m_/ilog(_m_, _r_&minus; 1)).
-6. Let _C_ be the coins whose labels are given in the first _&mu;_ items in the list (these are the _&mu;_ many coins found to be the most biased by this algorithm).
+6. Let _C_ be the coins whose labels are given in the first _&mu;_ items in the list (these are the _&mu;_ many coins found to be the "most unfair" by this algorithm).
 6. If _&mu;_ &le; 2\*_k_, do a recursive run of this algorithm, using only the coins in _C_ and with _&delta;_ = _&delta;_/2 and _r_ = 1.
 7. If _&mu;_ > 2\*_k_, do a recursive run of this algorithm, using only the coins in _C_ and with _&delta;_ = _&delta;_/2 and _r_ = _r_ &minus; 1.
 

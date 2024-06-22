@@ -3250,7 +3250,7 @@ class RandomGen:
         The algorithm is simple to describe: "Flip a coin until it shows heads
            _k_ times.  The estimated probability of heads is then `(k-1)/GammaDist(r, 1)`,
            where _r_ is the total number of coin flips."
-        The estimate is unbiased (multiple estimates average to the coin's probability of heads) but has nonzero probability of being
+        The estimate is unbiased (the average of multiple estimates tends to the coin's probability of heads) but has nonzero probability of being
         greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
         Assumes the probability of heads is in the interval (0, 1].
         [[[NOTE: As can be seen in Feng et al., the following are equivalent to the previous

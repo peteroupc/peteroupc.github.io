@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-_Randomness extraction_ (also known as _unbiasing_, _debiasing_, _deskewing_, _whitening_, or _entropy extraction_) is a set of techniques for generating unbiased random bits from biased sources.  This note covers some useful extraction techniques.
+_Randomness extraction_ (also known as _unbiasing_, _debiasing_, _deskewing_, _whitening_, or _entropy extraction_) is a set of techniques for turning data sources into random bits that each equal 1 or 0 with equal probability.  This note covers some useful extraction techniques.
 
 <a id=In_Information_Security></a>
 
@@ -127,18 +127,18 @@ Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with wh
 
 More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014\)[^15], (De Schuymer et al. 2003\)[^16]. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions.  In the propositions below, a random variable is _non-degenerate_ if it does not take on a single value with probability 1.
 
-**Proposition 1.** _Let X and Y be real-valued non-degenerate random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent._
+**Proposition 1.** _Let X and Y be real-valued non-degenerate random variables.  Then Algorithm M outputs 1 or 0 with equal probability if and only if X and Y are statistically indifferent._
 
 _Proof._ For every _X_ and every _Y_ there are only three mutually exclusive possibilities, _X_>_Y_, _Y_>_X_, and _X_=_Y_. Because both random variables are nondegenerate, P(_X_>_Y_) or P(_Y_>_X_) or both are nonzero, and P(_X_=_Y_) < 1.   For the algorithm to return 0, _X_ must be less than _Y_, and for it to return 1, _X_ must be greater than _Y_.
 
-For the "only if" part: For the algorithm to return 0 or 1 with equal probability, it must be that P(_X_>_Y_) = P(_Y_>_X_).  But this necessarily means that P(_X_>_Y_) and P(_Y_>_X_) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(_X_=_Y_)) to each probability, we get&mdash;
+For the "only if" part: For the algorithm to return 1 or 0 with equal probability, it must be that P(_X_>_Y_) = P(_Y_>_X_).  But this necessarily means that P(_X_>_Y_) and P(_Y_>_X_) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(_X_=_Y_)) to each probability, we get&mdash;
 
 - P(_X_>_Y_) + P(_X_=_Y_)/2 = 1/2, and
 - P(_Y_>_X_) + P(_X_=_Y_)/2 = 1/2,
 
 and thus, _X_ and _Y_ must be statistically indifferent by definition (see below).
 
-For the "if" part:  If _X_ and _Y_ are statistically indifferent, this means that &alpha; = P(_X_>_Y_) + P(_X_=_Y_)/2 and &beta; = P(_Y_>_X_) + P(_X_=_Y_)/2 are equal and &alpha; = &beta; = 1/2.  Since both &alpha; and &beta; are equal and P(_X_=_Y_) in &alpha; and &beta; are also equal, this must mean that P(_X_>_Y_) = P(_Y_>_X_).  It thus follows that for _X_ and _Y_, the algorithm will return 0 or 1 with equal probability.  ◻
+For the "if" part:  If _X_ and _Y_ are statistically indifferent, this means that &alpha; = P(_X_>_Y_) + P(_X_=_Y_)/2 and &beta; = P(_Y_>_X_) + P(_X_=_Y_)/2 are equal and &alpha; = &beta; = 1/2.  Since both &alpha; and &beta; are equal and P(_X_=_Y_) in &alpha; and &beta; are also equal, this must mean that P(_X_>_Y_) = P(_Y_>_X_).  It thus follows that for _X_ and _Y_, the algorithm will return 1 or 0 with equal probability.  ◻
 
 **Proposition 2.** _Let X and Y be real-valued non-degenerate random variables that are independent, identically distributed, and defined on the same probability space.  Then X and Y are statistically indifferent._
 

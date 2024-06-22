@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2024/06/18"><meta name="citation_online_date" content="2024/06/18"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2024/06/23"><meta name="citation_online_date" content="2024/06/23"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -92,11 +92,11 @@
 <p>Take the following sampler of a binomial(<em>n</em>, 1/2) distribution, where <em>n</em> is even, which is equivalent to the one that appeared in Bringmann et al. (2014)<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, and adapted to be more programmer-friendly.</p>
 
 <ol>
-  <li>If <em>n</em> is less than 4, generate <em>n</em> unbiased random bits (each bit is zero or one with equal probability) and return their sum.  Otherwise, if <em>n</em> is odd<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, set <em>ret</em> to the result of this algorithm with <em>n</em> = <em>n</em> − 1, then add an unbiased random bit’s value to <em>ret</em>, then return <em>ret</em>.</li>
+  <li>If <em>n</em> is less than 4, generate <em>n</em> numbers that are each 1 or 0 with equal probability and return their sum.  Otherwise, if <em>n</em> is odd<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, set <em>ret</em> to the result of this algorithm with <em>n</em> = <em>n</em> − 1, then return <em>ret</em> plus a number that is 1 or 0 with equal probability.</li>
   <li>Set <em>m</em> to floor(sqrt(<em>n</em>)) + 1.</li>
-  <li>(First, sample from an envelope of the binomial curve.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
+  <li>(First, sample from an envelope of the binomial curve.) Generate numbers that are each 1 or 0 with equal probability until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
   <li>Set <em>s</em> to an integer in [0, <em>m</em>) chosen uniformly at random, then set <em>i</em> to <em>k</em>*<em>m</em> + <em>s</em>.</li>
-  <li>Generate an unbiased random bit.  If that bit is 0, set <em>ret</em> to (<em>n</em>/2)+<em>i</em>.  Otherwise, set <em>ret</em> to (<em>n</em>/2)−<em>i</em>−1.</li>
+  <li>Generate 1 or 0 with equal probability.  If that bit is 0, set <em>ret</em> to (<em>n</em>/2)+<em>i</em>.  Otherwise, set <em>ret</em> to (<em>n</em>/2)−<em>i</em>−1.</li>
   <li>(Second, accept or reject <em>ret</em>.) If <em>ret</em> &lt; 0 or <em>ret</em> &gt; <em>n</em>, go to step 3.</li>
   <li>With probability choose(<em>n</em>, <em>ret</em>)*<em>m</em>*2<sup><em>k</em>−<em>n</em>−2</sup>, return <em>ret</em>.  Otherwise, go to step 3. (Here, choose(<em>n</em>, <em>k</em>) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>)</li>
 </ol>
@@ -119,7 +119,7 @@
   <p><strong>Notes:</strong></p>
 
   <ul>
-    <li>A binomial(<em>n</em>, 1/2) random variate, where <em>n</em> is odd<sup id="fnref:2:1" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, can be generated by adding an unbiased random bit’s value (either zero or one with equal probability) to a binomial(<em>n</em>−1, 1/2) random variate.</li>
+    <li>A binomial(<em>n</em>, 1/2) random variate, where <em>n</em> is odd<sup id="fnref:2:1" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, can be generated by outputting a binomial(<em>n</em>−1, 1/2) random variate plus either 1 or 0 with equal probability.</li>
     <li>As pointed out by Farach-Colton and Tsai (2015)<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>, a binomial(<em>n</em>, <em>p</em>) random variate, where <em>p</em> is in the interval (0, 1), can be generated using binomial(<em>n</em>, 1/2) numbers using a procedure equivalent to the following:
       <ol>
         <li>Set <em>k</em> to 0 and <em>ret</em> to 0.</li>
@@ -159,7 +159,7 @@
   <li>If <em>j</em> is even<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> + <em>pden</em>*<em>qnum</em>*choose(<em>n</em>,<em>j</em>). Otherwise, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> − <em>pden</em>*<em>qnum</em>*choose(<em>n</em>,<em>j</em>).</li>
   <li>Multiply <em>pden</em> by <em>qden</em>, then multiply <em>qnum</em> by <em>px</em>, then multiply <em>qden</em> by <em>py</em>, then add 1 to <em>j</em>.</li>
   <li>If <em>j</em> is less than or equal to 2 and less than or equal to <em>n</em>, go to step 2.</li>
-  <li>Multiply <em>r</em> by 2, then add an unbiased random bit’s value (either 0 or 1 with equal probability) to <em>r</em>.</li>
+  <li>Multiply <em>r</em> by 2, then set <em>r</em> to <em>r</em> plus either 1 or 0 with equal probability.</li>
   <li>If <em>r</em> ≤ floor((<em>pnum</em>*<em>i</em>)/<em>pden</em>) − 2, return 1. If <em>r</em> ≥ floor((<em>pnum</em>*<em>i</em>)/<em>pden</em>) + 1, return 0.  If neither is the case, multiply <em>i</em> by 2 and go to step 2.</li>
 </ol>
 
@@ -169,16 +169,16 @@
   <li>Set <em>r</em> and <em>m</em> to 0.</li>
   <li>Set <em>b</em> to 0, then while <em>b</em> is less than <em>k</em>:
     <ol>
-      <li>(Sum <em>b</em>+2 summands of the binomial equivalent of the desired probability.  First, append an additional bit to <em>m</em>, from most to least significant.) Generate an unbiased random bit (either 0 or 1 with equal probability).  If that bit is 1, add 2<sup><em>k</em>−<em>b</em></sup> to <em>m</em>.</li>
+      <li>(Sum <em>b</em>+2 summands of the binomial equivalent of the desired probability.  First, append an additional bit to <em>m</em>, from most to least significant.) Generate 1 or 0 with equal probability.  If that bit is 1, add 2<sup><em>k</em>−<em>b</em></sup> to <em>m</em>.</li>
       <li>(Now build up the binomial probability.) Set <em>pnum</em>, <em>pden</em>, and <em>j</em>  to 1, then set <em>qnum</em> to <em>px</em>, and <em>qden</em> to <em>py</em>.</li>
       <li>If <em>j</em> is greater than <em>m</em> or greater than <em>b</em> + 2, go to the sixth substep.</li>
       <li>If <em>j</em> is even<sup id="fnref:8:1" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> + <em>pden</em>*<em>qnum</em>*choose(<em>m</em>,<em>j</em>). Otherwise, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> − <em>pden</em>*<em>qnum</em>*choose(<em>m</em>,<em>j</em>).</li>
       <li>Multiply <em>pden</em> by <em>qden</em>, then multiply <em>qnum</em> by <em>px</em>, then multiply <em>qden</em> by <em>py</em>, then add 1 to <em>j</em>, then go to the third substep.</li>
-      <li>(Now check the probability.) Multiply <em>r</em> by 2, then add an unbiased random bit’s value (either 0 or 1 with equal probability) to <em>r</em>.</li>
+      <li>(Now check the probability.) Multiply <em>r</em> by 2, then set <em>r</em> to <em>r</em> plus either 1 or 0 with equal probability.</li>
       <li>If <em>r</em> ≤ floor((<em>pnum</em>*2<sup><em>b</em></sup>)/<em>pden</em>) − 2, add a uniform random integer in [0, 2<sup><em>k</em>*<em>b</em></sup>) to <em>m</em> and return <em>m</em> (and, if requested, the number <em>k</em>−<em>b</em>−1). If <em>r</em> ≥ floor((<em>pnum</em>*2<sup><em>b</em></sup>)/<em>pden</em>) + 1, return −1 (and, if requested, an arbitrary value).  If neither is the case, add 1 to <em>b</em>.</li>
     </ol>
   </li>
-  <li>Add an unbiased random bit to <em>m</em>. (At this point, <em>m</em> is fully sampled.)</li>
+  <li>Set <em>m</em> to <em>m</em> plus either 1 or 0 with equal probability. (At this point, <em>m</em> is fully sampled.)</li>
   <li>Run the first sub-algorithm with <em>n</em> = <em>m</em>, except in step 1 of that sub-algorithm, set <em>r</em> to the value of <em>r</em> built up by this algorithm, rather than 0, and set <em>i</em> to 2<sup><em>k</em></sup>, rather than 2.  If that sub-algorithm returns 1, return <em>m</em> (and, if requested, the number −1).  Otherwise, return −1 (and, if requested, an arbitrary value).</li>
 </ol>
 
@@ -196,7 +196,7 @@
     <ol>
       <li>Run the second sub-algorithm above, except return two values, rather than one, in the situations given in the sub-algorithm.  Call these two values <em>m</em> and <em>mbit</em>.</li>
       <li>If <em>m</em> &lt; 0, go to the first substep.</li>
-      <li>If <em>mbit</em> ≥ 0, add 2<sup><em>mbit</em></sup> times an unbiased random bit to <em>m</em> and subtract 1 from <em>mbit</em>.  If that bit is 1 or <em>mbit</em> &lt; 0, go to the next substep; otherwise, repeat this substep.</li>
+      <li>If <em>mbit</em> ≥ 0, set <em>m</em> to <em>m</em> plus 2<sup><em>mbit</em></sup> times either 1 or 0 with equal probability, and subtract 1 from <em>mbit</em>.  If that bit is 1 or <em>mbit</em> &lt; 0, go to the next substep; otherwise, repeat this substep.</li>
       <li>Return <em>n</em> if <em>d</em>*2<sup><em>k</em></sup> is greater than or equal to <em>m2</em>.</li>
       <li>Add a uniform random integer in [0, 2<sup><em>mbit</em>+1</sup>) to <em>m</em>, then return min(<em>n</em>, <em>d</em>*2<sup><em>k</em></sup>+<em>m</em>).</li>
     </ol>
@@ -228,7 +228,7 @@
   <li>Run the <strong>ExpMinus</strong> algorithm with parameter <em>u</em>/<em>t</em>.   If it returns 0, go to step 1.</li>
   <li>Run the <strong>ExpMinus</strong> algorithm with parameter 1, until a run returns 0, then set <em>n</em> to the number of times the algorithm returned 1 this way.</li>
   <li>Set <em>y</em> to floor((<em>u</em>+<em>n</em>*<em>t</em>)/<em>s</em>).</li>
-  <li>Generate an unbiased random bit (either zero or one with equal probability).  If the bit is 0, return <em>y</em>.  Otherwise, if <em>y</em> is 0, go to step 1.  Otherwise, return −<em>y</em>.</li>
+  <li>Generate 1 or 0 with equal probability.  If 0 was generated this way, return <em>y</em>.  Otherwise, if <em>y</em> is 0, go to step 1.  Otherwise, return −<em>y</em>.</li>
 </ol>
 
 <p><a id="Weighted_Choice_for_Special_Distributions"></a></p>
@@ -616,7 +616,7 @@
   <li>a random variate distributed as X otherwise.</li>
 </ul>
 
-<p>For example, a <em>zero-inflated beta</em> random variate is 0 with probability <em>α</em> and a beta random variate otherwise (the parameter <em>c</em> is 0) (Ospina and Ferrari 2010)<sup id="fnref:49" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">50</a></sup>  A zero-and-one inflated X distribution is 0 or 1 with probability <em>α</em> and distributed as X otherwise.  For example, to generate a <em>zero-and-one-inflated unit Lindley</em> random variate (with parameters <em>α</em>, <em>θ</em>, and <em>p</em>) (Chakraborty and Bhattacharjee 2021)<sup id="fnref:50" role="doc-noteref"><a href="#fn:50" class="footnote" rel="footnote">51</a></sup>:</p>
+<p>For example, a <em>zero-inflated beta</em> random variate is 0 with probability <em>α</em> and a beta random variate otherwise (the parameter <em>c</em> is 0) (Ospina and Ferrari 2010)<sup id="fnref:49" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">50</a></sup>  A zero-and-one inflated X distribution is 1 or 0 with probability <em>α</em> and distributed as X otherwise.  For example, to generate a <em>zero-and-one-inflated unit Lindley</em> random variate (with parameters <em>α</em>, <em>θ</em>, and <em>p</em>) (Chakraborty and Bhattacharjee 2021)<sup id="fnref:50" role="doc-noteref"><a href="#fn:50" class="footnote" rel="footnote">51</a></sup>:</p>
 
 <ol>
   <li>With probability <em>α</em>, return a number that is 0 with probability <em>p</em> and 1 otherwise.</li>
@@ -774,7 +774,7 @@
   <tbody>
     <tr>
       <td>Offset-symmetric Gaussian (Sadeghi and Korki 2021)<sup id="fnref:70" role="doc-noteref"><a href="#fn:70" class="footnote" rel="footnote">70</a></sup></td>
-      <td>(1) Generate an unbiased random bit <em>b</em> (either 0 or 1 with equal probability); (2) generate <em>Y</em>, a Normal(0, <em>σ</em>) random variate (standard deviation <em>σ</em>), and if <em>Y</em> &lt; <em>m</em>, repeat this step; (3) return (<em>Y</em> − <em>m</em>)*(<em>b</em>*2 − 1).</td>
+      <td>(1) Generate either 1 or 0 with equal probability, call it <em>b</em>; (2) generate <em>Y</em>, a Normal(0, <em>σ</em>) random variate (standard deviation <em>σ</em>), and if <em>Y</em> &lt; <em>m</em>, repeat this step; (3) return (<em>Y</em> − <em>m</em>)*(<em>b</em>*2 − 1).</td>
       <td><em>m</em>&gt;0; <em>σ</em>&gt;0.</td>
     </tr>
     <tr>
@@ -917,7 +917,7 @@
   <tbody>
     <tr>
       <td>The issue of finding <em>P</em>(<em>X</em></td>
-      <td><em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup id="fnref:82" role="doc-noteref"><a href="#fn:82" class="footnote" rel="footnote">82</a></sup>, <em>P</em>(<em>X</em></td>
+      <td><em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by numbers that each equal 1 or 0 with equal probability and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup id="fnref:82" role="doc-noteref"><a href="#fn:82" class="footnote" rel="footnote">82</a></sup>, <em>P</em>(<em>X</em></td>
       <td><em>Y</em>) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled <em>Y</em> up to depth <em>X</em> (where the weight for depth <em>z</em> is 1/2<sup><em>z</em></sup>), then divide it by a weighted count of all leaves labeled <em>Y</em> at all depths (for instance, if the tree has two leaves labeled <em>Y</em> at <em>z</em>=2, three at <em>z</em>=3, and three at <em>z</em>=4, and <em>X</em> is 3, then <em>P</em>(<em>X</em></td>
       <td><em>Y</em>) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled <em>Y</em> at every depth, this is implemented by finding <em>P</em>(<em>Y</em>), or the probability to output <em>Y</em>, then chopping <em>P</em>(<em>Y</em>) up to the <em>X</em><sup>th</sup> binary digit after the point and dividing by the original <em>P</em>(<em>Y</em>) (for instance, if <em>X</em> is 4 and P(<em>Y</em>) is 0.101011…, then <em>P</em>(<em>X</em></td>
       <td><em>Y</em>) is 0.1010 / 0.101011…).</td>
@@ -937,7 +937,7 @@
 <ol>
   <li>Let <em>z</em> be abs(<em>X</em>−<em>lastX</em>), where <em>lastX</em> is either the last value of <em>X</em> fed to this extractor for this batch or 0 if there is no such value.</li>
   <li>If <em>z</em> is greater than 0, feed the bits of <em>z</em> from most significant to least significant to a queue of extractor inputs.</li>
-  <li>Now, when the sampler consumes a random bit, it checks the input queue.  As long as 64 bits or more are in the input queue, the sampler dequeues 64 bits from it, runs the extractor on those bits, and adds the extracted bits to an output queue. (The number 64 can instead be any even number greater than 2.)  Then, if the output queue is not empty, the sampler dequeues a bit from that queue and uses that bit; otherwise it generates an unbiased random bit as usual.</li>
+  <li>Now, when the sampler would generate 1 or 0 with equal probability, it first checks the input queue.  As long as 64 bits or more are in the input queue, the sampler dequeues 64 bits from it, runs the extractor on those bits, and adds the extracted bits to an output queue. (The number 64 can instead be any even number greater than 2.)  Then, if the output queue is not empty, the sampler dequeues a bit from that queue and uses that bit; otherwise it generates 1 or 0 with equal probability, as usual.</li>
 </ol>
 
 <p><a id="Sampling_Distributions_Using_Incomplete_Information"></a></p>
@@ -1060,7 +1060,7 @@
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected value or “long-run average”) is not the same as averaging to <em>f</em>(<em>μ</em>) where <em>μ</em> is the mean of the oracle’s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 0 or 1 with equal probability, and <em>f</em>(<em>ν</em>) = exp(−<em>ν</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(−1) − exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(−1/2).</li>
+    <li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected value or “long-run average”) is not the same as averaging to <em>f</em>(<em>μ</em>) where <em>μ</em> is the mean of the oracle’s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 1 or 0 with equal probability, and <em>f</em>(<em>ν</em>) = exp(−<em>ν</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(−1) − exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(−1/2).</li>
     <li>
       <p>(Lee et al. 2014, Corollary 4)<sup id="fnref:87:2" role="doc-noteref"><a href="#fn:87" class="footnote" rel="footnote">87</a></sup>: If <em>f</em>(<em>μ</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>δ</em>, <em>δ</em> &gt; <em>b</em>, and <em>δ</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
 
@@ -1398,7 +1398,7 @@
       <p>Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux). <a href="#fnref:84" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:84:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:84:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:85" role="doc-endnote">
-      <p>There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won’t use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs <em>arbitrary</em> but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3). <a href="#fnref:85" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>There are many distributions that can be sampled using the oracle, often with the help of randomness extraction methods, but then these distributions won’t use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs <em>arbitrary</em> but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3). <a href="#fnref:85" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:86" role="doc-endnote">
       <p>Keane,  M.  S.,  and  O’Brien,  G.  L., “A Bernoulli factory”, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994. <a href="#fnref:86" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

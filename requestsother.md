@@ -54,7 +54,7 @@ In the transition rules above, _digit_ is either a base-N digit or the empty str
 
 See also Yao 1985.
 
-A _finite-state generator_ (Knuth and Yao 1976) is the special case of a pushdown generator where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used. (In other words, a finite-state generator is a _finite automaton_ driven by unbiased random bits.)
+A _finite-state generator_ (Knuth and Yao 1976) is the special case of a pushdown generator where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used. (In other words, a finite-state generator is a _finite automaton_ driven by fair coin flips.)
 
 <a id=Distributions_Computable_by_Pushdown_Generators></a>
 
