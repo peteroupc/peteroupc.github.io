@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-**Abstract:** This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming "truly random" numbers are available.  The page links to a Python module that implements several Bernoulli factories.
+**Abstract:** This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming "truly random" numbers are available.  The page links to a Python module that implements several Bernoulli factories.
 
 **2020 Mathematics Subject Classification:** 68W20, 60-08, 60-04.
 
@@ -14,8 +14,8 @@ Suppose a coin shows heads with an unknown probability, _&lambda;_. The goal is 
 
 This page:
 
-- Catalogs algorithms to solve the Bernoulli factory problem for a wide variety of functions, algorithms known as _Bernoulli factories_.  For many of these algorithms, step-by-step instructions are provided.  (Many of these algorithms were suggested in (Flajolet et al., 2010\)[^1], but without step-by-step instructions in many cases.)
-- Contains algorithms to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An _irrational number_ is a number that can't be written as a ratio of two integers.) Again, many of these algorithms were suggested in (Flajolet et al., 2010\)[^1].
+- Catalogs methods to solve the Bernoulli factory problem for a wide variety of functions, methods known as _Bernoulli factories_.  For many of these algorithms, step-by-step instructions are provided.  (Many of these methods were suggested in (Flajolet et al., 2010\)[^1], but without step-by-step instructions in many cases.)
+- Contains methods to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An _irrational number_ is a number that can't be written as a ratio of two integers.) Again, many of these methods were suggested in (Flajolet et al., 2010\)[^1].
 - Assumes knowledge of **computer programming and mathematics**, but **little or no familiarity with calculus**.
 - Is focused on methods that _exactly_ sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that a fair coin is available).
 
@@ -167,7 +167,7 @@ A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an _algorithm_ (or collec
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads.
 - The Bernoulli factory's outputs are statistically independent, and so are those of the input coin.
 - Many Bernoulli factories also use a _fair coin_ in addition to the input coin.  A fair coin shows heads or tails with equal probability, and represents a source of randomness outside the input coin.
-- A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed unit interval (defined below) or a subset of that interval, and maps an input in its domain to an output in that interval.
+- A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed unit interval (defined next) or a subset of that interval, and maps an input in its domain to an output in that interval.
 - The _closed unit interval_ is the set of numbers consisting of 0, 1, and all real numbers in between.
 - If a Bernoulli factory algorithm exists for a given function, then it's said that the function _admits a Bernoulli factory_ and is _simulated_ by that algorithm.
 
@@ -1750,9 +1750,9 @@ The algorithm follows.
 The algorithm follows.
 
 - Do the following process repeatedly, until this algorithm returns a value:
-    1. Generate 1 or 0 with equal probability (either 1 or 0 with equal probability).
-    2. If the bit generated in step 1 is 1, flip the _&mu;_ input coin.  If it returns 1, return 1.
-    3. If the bit generated in step 1 is 0, run the **algorithm for _&lambda;_ &minus; _&mu;_** with _&#x03F5;_ = _&#x03F5;_. If it returns 1, return 0.
+    1. Generate 1 or 0 with equal probability.
+    2. If 1 was generated in step 1, flip the _&mu;_ input coin.  If it returns 1, return 1.
+    3. If 0 was generated in step 1, run the **algorithm for _&lambda;_ &minus; _&mu;_** with _&#x03F5;_ = _&#x03F5;_. If it returns 1, return 0.
 
 <a id=lambda____x___y></a>
 
