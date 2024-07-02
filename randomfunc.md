@@ -16,7 +16,7 @@ This page catalogs _randomization methods_ and _sampling methods_.  A randomizat
 - ways to generate randomized content and conditions, such as [**true/false conditions**](#Boolean_True_False_Conditions), [**shuffling**](#Shuffling), and [**sampling unique items from a list**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
 - non-uniform distributions, including [**weighted choice**](#Weighted_Choice), the [**Poisson distribution**](#Poisson_Distribution), and [**other probability distributions**](#Index_of_Non_Uniform_Distributions).
 
-This page is focused on randomization and sampling methods that _exactly_ sample from the distribution described, without introducing additional errors beyond those already present in the inputs (and assuming that an ideal "source of random numbers" is available).  This will be the case if there is a finite number of values to choose from.  But for the normal distribution and other distributions that take on infinitely many values, there will always be some level of approximation involved; in this case, the focus of this page is on methods that _minimize_ the error they introduce.
+This page is devoted to randomization and sampling methods that _exactly_ sample from the distribution described, without introducing additional errors beyond those already present in the inputs (and assuming that an ideal "source of random numbers" is available).  This will be the case if there is a finite number of values to choose from.  But for the normal distribution and other distributions that take on infinitely many values, there will always be some level of approximation involved; in this case, the focus of this page is on methods that _minimize_ the error they introduce.
 
 This document shows pseudocode for many of the methods, and [**sample Python code**](https://peteroupc.github.io/randomgen.zip) that implements many of the methods in this document is available, together with [**documentation for the code**](https://peteroupc.github.io/randomgendoc.html).
 
@@ -32,7 +32,7 @@ The randomization methods presented on this page assume we have an endless sourc
 - This document does not cover randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_).  See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html).
 - "Variance reduction" methods, such as importance sampling or common random numbers, are outside the scope of this document.
 
-In addition, this page is not focused on sampling methods used for computer graphics rendering (such as Poisson disk sampling, multiple importance sampling, blue noise, and gradient noise), because this application tends to give performance and visual acceptability a greater importance than accuracy and exact sampling.
+In addition, this page is not devoted to sampling methods used for computer graphics rendering (such as Poisson disk sampling, multiple importance sampling, blue noise, and gradient noise), because this application tends to give performance and visual acceptability a greater importance than accuracy and exact sampling.
 
 <a id=About_This_Document></a>
 
@@ -165,7 +165,7 @@ Specifically:
 | If the underlying source produces: | Then `NEXTRAND()` is: | And `MODULUS` is: |
  --------- | ------ | ------ |
 | Non-uniform numbers[^3]. | The next bit from a new source formed by taking the underlying source's outputs as input to a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) technique to produce independent random integers that equal 1 or 0 with equal probability. | 2. |
-| Uniform numbers not described below. | Same as above. | 2<sup>_n_</sup>. | 2<sup>_n_</sup>. |
+| Uniform numbers not described below. | Same as above. | 2<sup>_n_</sup>. |
 | Uniform 32-bit nonnegative integers. | The next number from the source. | 2<sup>32</sup>. |
 | Uniform 64-bit nonnegative integers. | The next number from the source. | 2<sup>64</sup>. |
 | Uniform integers in the interval \[0, _n_\). | The next number from the source. | _n_. |
@@ -2163,8 +2163,7 @@ The following are some additional articles I have written on the topic of random
 
 [^28]: V. Batagelj and U. Brandes, "Efficient generation of large random networks", Phys.Rev. E 71:036113, 2005.
 
-[^29]: Costantini, Lucia. "Algorithms for sampling spanning trees uniformly at random."
-Master's thesis, Universitat Politècnica de Catalunya, 2020.
+[^29]: Costantini, Lucia. "Algorithms for sampling spanning trees uniformly at random." Master's thesis, Universitat Politècnica de Catalunya, 2020.
 [**https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf**](https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf)
 
 [^30]: Penschuck, M., et al., "[**Recent Advances in Scalable Network Generation**](https://arxiv.org/abs/2003.00736v1)", arXiv:2003.00736v1  [cs.DS], 2020.
@@ -2225,8 +2224,7 @@ Master's thesis, Universitat Politècnica de Catalunya, 2020.
 
 [^58]: Durfee, et al., "l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent", _Proceedings of Machine Learning Research_ 75(1), 2018.
 
-[^59]: The NVIDIA white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)",
-and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, discuss issues with floating-point numbers in much more detail.
+[^59]: The NVIDIA white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)", and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, discuss issues with floating-point numbers in much more detail.
 
 [^60]: "Uniform" in quotes means, as close to the uniform distribution as possible for the number format.  Both bounds are excluded because, mathematically, any specific real number from the uniform distribution occurs with probability 0.
 

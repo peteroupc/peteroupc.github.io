@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2024/06/23"><meta name="citation_online_date" content="2024/06/23"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2024/06/29"><meta name="citation_online_date" content="2024/06/29"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -3103,7 +3103,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
   <li>Certain operations it uses can introduce numerical errors unless care is taken.  These operations include evaluating the PDF (or a constant times the PDF) and finding its maximum and minimum values at an interval.</li>
-  <li>This article is focused on algorithms that don’t rely on calculations of irrational numbers.</li>
+  <li>This article lays weight on algorithms that don’t rely on calculations of irrational numbers.</li>
 </ul>
 
 <p>Moreover, there is additional approximation error from generating <em>y</em> with a fixed number of digits, unless <em>y</em> is a uniform PSRN (see also “<a href="#Application_to_Weighted_Reservoir_Sampling"><strong>Application to Weighted Reservoir Sampling</strong></a>”).  For practical purposes, the lower and upper bounds calculated in step 4 should depend on <em>prefixLength</em> (the higher <em>prefixLength</em> is, the more accurate).</p>
@@ -3145,7 +3145,7 @@ def contbernoullidist(b, lamda, precision=53):
 </ol>
 
 <blockquote>
-  <p><strong>Notes:</strong> This algorithm is related to the Bernoulli factory problem, where the input probability is unknown.  However, the algorithm doesn’t exactly solve that problem because it has access to the input probability’s value to some extent.  Moreover, this article is focused on algorithms that don’t rely on calculations of irrational numbers.  For these two reasons, this section appears in the appendix.</p>
+  <p><strong>Notes:</strong> This algorithm is related to the Bernoulli factory problem, where the input probability is unknown.  However, the algorithm doesn’t exactly solve that problem because it has access to the input probability’s value to some extent.  Moreover, this article is devoted to algorithms that don’t rely on calculations of irrational numbers.  For these two reasons, this section appears in the appendix.</p>
 </blockquote>
 
 <p><a id="Ratio_of_Uniforms"></a></p>
@@ -3190,7 +3190,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
   <li>Certain operations it uses can introduce numerical errors unless care is taken.  These operations can include calculating upper and lower bounds of transcendental functions which, while it’s possible to achieve in rational arithmetic (Daumas et al., 2007)<sup id="fnref:31:1" role="doc-noteref"><a href="#fn:31" class="footnote" rel="footnote">31</a></sup>, is less elegant than, say, the normal distribution sampler by Karney (2016)<sup id="fnref:1:10" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, which doesn’t require calculating logarithms or other transcendental functions.</li>
-  <li>This article is focused on algorithms that don’t rely on calculations of irrational numbers.</li>
+  <li>This article is devoted to algorithms that don’t rely on calculations of irrational numbers.</li>
 </ul>
 
 <blockquote>

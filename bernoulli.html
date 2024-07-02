@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2024/06/23"><meta name="citation_online_date" content="2024/06/23"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2024/07/02"><meta name="citation_online_date" content="2024/07/02"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -8,7 +8,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p><strong>Abstract:</strong> This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as <em>Bernoulli factories</em>.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is focused on methods that <em>exactly</em> sample a given probability without introducing new errors, assuming “truly random” numbers are available.  The page links to a Python module that implements several Bernoulli factories.</p>
+<p><strong>Abstract:</strong> This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as <em>Bernoulli factories</em>.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that <em>exactly</em> sample a given probability without introducing new errors, assuming “truly random” numbers are available.  The page links to a Python module that implements several Bernoulli factories.</p>
 
 <p><strong>2020 Mathematics Subject Classification:</strong> 68W20, 60-08, 60-04.</p>
 
@@ -16,15 +16,15 @@
 
 <h2 id="introduction">Introduction</h2>
 
-<p>Suppose a coin shows heads with an unknown probability, <em>λ</em>. The goal is to use that coin (and possibly also a fair coin) to build a “new” coin that shows heads with a probability that depends on <em>λ</em>, call it <em>f</em>(<em>λ</em>). This is the <em>Bernoulli factory problem</em>.</p>
+<p>Suppose a coin shows heads with an unknown probability, <em>λ</em>. The goal is to use that coin (and possibly also a fair coin) to build a “new” coin that shows heads with a probability that depends on <em>λ</em>, which is a <em>function</em> that can be called <em>f</em>(<em>λ</em>). This is the <em>Bernoulli factory problem</em>.</p>
 
 <p>This page:</p>
 
 <ul>
-  <li>Catalogs methods to solve the Bernoulli factory problem for a wide variety of functions, methods known as <em>Bernoulli factories</em>.  For many of these algorithms, step-by-step instructions are provided.  (Many of these methods were suggested in (Flajolet et al., 2010)<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, but without step-by-step instructions in many cases.)</li>
-  <li>Contains methods to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An <em>irrational number</em> is a number that can’t be written as a ratio of two integers.) Again, many of these methods were suggested in (Flajolet et al., 2010)<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</li>
+  <li>Catalogs methods to solve the Bernoulli factory problem for a wide variety of functions, methods known as <em>Bernoulli factories</em>.  For many of these algorithms, step-by-step instructions are provided.  Many of these methods were suggested in (Flajolet et al., 2010)<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, but without step-by-step instructions in many cases.</li>
+  <li>Brings together methods to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An <em>irrational number</em> is a number that can’t be written as a ratio of two integers.) Again, many of these methods were suggested in (Flajolet et al., 2010)<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</li>
   <li>Assumes knowledge of <strong>computer programming and mathematics</strong>, but <strong>little or no familiarity with calculus</strong>.</li>
-  <li>Is focused on methods that <em>exactly</em> sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that a fair coin is available).</li>
+  <li>Is devoted to methods that <em>exactly</em> sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that a fair coin is available).</li>
 </ul>
 
 <p>The Python module <a href="https://peteroupc.github.io/bernoulli.py"><strong><em>bernoulli.py</em></strong></a> includes implementations of several Bernoulli factories.  For extra notes, see: <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a>.</p>
@@ -342,13 +342,13 @@
 
 <p>This section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.</p>
 
-<p>The algorithms as described here are not always the fastest.  An implementation may change these algorithms as long as they produce the same results as the algorithms given here.</p>
+<p>The algorithms as described here are not always the fastest.  Indeed, there are many ways to write computer code that <em>implements</em> the algorithms given here, that is, they have the same results as the results of following those algorithms step by step.</p>
 
 <blockquote>
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>Most of the algorithms assume that a fair coin (see the previous section) is available, in addition to the input coins.  But in many cases, they can be implemented using nothing but those coins as a source of randomness.  See the <a href="#Appendix"><strong>appendix</strong></a> for details.</li>
+    <li>Most of the algorithms assume that a fair coin (see the previous section) is available, in addition to the input coins.  But in many cases, the algorithms can be written using nothing but those coins as a source of randomness.  See the <a href="#Appendix"><strong>appendix</strong></a> for details.</li>
     <li>Bernoulli factory algorithms that sample the probability <em>f</em>(<em>λ</em>) act as unbiased estimators of <em>f</em>(<em>λ</em>) (their “long run average” equals <em>f</em>(<em>λ</em>)). See the <a href="#Bernoulli_Factories_and_Unbiased_Estimation"><strong>appendix</strong></a> for details.</li>
   </ol>
 </blockquote>
@@ -357,15 +357,20 @@
 
 <h3 id="implementation-notes">Implementation Notes</h3>
 
-<p>This section shows implementation notes that apply to the algorithms in this article.  They should be followed to avoid introducing error in the algorithms.</p>
+<p>This section shows notes that apply to the algorithms in this article.  When writing computer code that implements the algorithms, they should be followed to avoid introducing errors.</p>
+
+<p>The rest of this page may draw from the following concepts and language from mathematics:</p>
+
+<ul>
+  <li><strong>Binomial coefficients</strong>: choose(<em>n</em>, <em>k</em>) = (1*2*3*…*<em>n</em>)/((1*…*<em>k</em>)*(1*…*(<em>n</em>−<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> − <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>−<em>i</em>+1) for each integer <em>i</em> satisfying <em>n</em>−<em>k</em>+1 ≤ <em>i</em> ≤ <em>n</em>, then multiplying the results (Manolopoulos 2002)<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>.  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>−1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</li>
+  <li><strong>Factorials</strong>: <em>n</em>! = 1*2*3*…*<em>n</em> is also known as <em>n</em> factorial; in this document, (0!) = 1.</li>
+  <li><strong>Summation notation</strong>, involving the Greek capital letter sigma (Σ), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+…+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+…$.</li>
+</ul>
 
 <p>In the following algorithms:</p>
 
 <ul>
   <li>The Greek letter lambda (<em>λ</em>) represents the unknown probability of heads of the input coin.</li>
-  <li>choose(<em>n</em>, <em>k</em>) = (1*2*3*…*<em>n</em>)/((1*…*<em>k</em>)*(1*…*(<em>n</em>−<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> − <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>−<em>i</em>+1) for each integer <em>i</em> satisfying <em>n</em>−<em>k</em>+1 ≤ <em>i</em> ≤ <em>n</em>, then multiplying the results (Manolopoulos 2002)<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>.  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>−1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</li>
-  <li><em>n</em>! = 1*2*3*…*<em>n</em> is also known as <em>n</em> factorial; in this document, (0!) = 1.</li>
-  <li><em>Summation notation</em>, involving the Greek capital sigma (Σ), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+…+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+…$.</li>
   <li>The instruction to “generate a uniform random variate between 0 and 1” can be implemented—
     <ul>
       <li>by creating a <a href="https://peteroupc.github.io/exporand.html"><strong>uniform partially-sampled random number (PSRN)</strong></a> with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or</li>
@@ -483,7 +488,7 @@
   <li>Return 1.</li>
 </ol>
 
-<p>The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form <em>P</em> = $\sum{j=1}^k$ <em>c</em>[<em>j</em>]*<em>M</em>[<em>j</em>](<strong><em>λ</em></strong>), where there are <em>k</em> monomials, <em>M</em>[<em>j</em>](.) identifies monomial <em>j</em>, <strong><em>λ</em></strong> identifies the coins’ probabilities of heads, and <em>c</em>[<em>j</em>] ≥ 0 is the weight for monomial <em>j</em>.</p>
+<p>The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form <em>P</em> = $\sum_{j=1}^k$ <em>c</em>[<em>j</em>]*<em>M</em>[<em>j</em>](<strong><em>λ</em></strong>), where there are <em>k</em> monomials, <em>M</em>[<em>j</em>](.) identifies monomial <em>j</em>, <strong><em>λ</em></strong> identifies the coins’ probabilities of heads, and <em>c</em>[<em>j</em>] ≥ 0 is the weight for monomial <em>j</em>.</p>
 
 <p>Let <em>C</em> be the sum of all <em>c</em>[<em>j</em>].  To simulate the probability <em>P</em>/<em>C</em>, choose one of the monomials with probability proportional to its weight (see “<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>”), then run the algorithm above on that monomial (see also “<a href="#Convex_Combinations"><strong>Convex Combinations</strong></a>”, later).</p>
 
@@ -598,7 +603,7 @@
 
 <ul>
   <li>The power coefficients are arbitrary, but can be split into two parts.</li>
-  <li>The power coefficients alternate in sign, and their absolute values form a decreasing sequence.</li>
+  <li>The power coefficients alternate in sign and decrease in their <em>absolute values</em> (their values without regard to sign).</li>
   <li>The power coefficients are nonnegative and sum to 1 or less.</li>
   <li>The power coefficients are nonnegative and may sum to 1 or greater.</li>
 </ul>
@@ -707,7 +712,7 @@
   <li>is <em>convex</em> (its “slope” or “velocity” doesn’t decrease as <em>λ</em> increases; for a proof, see Lemma A1 in “<a href="https://peteroupc.github.io/bernapprox.html"><strong>Approximations in Bernstein Form</strong></a>”).</li>
 </ul>
 
-<p>Suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where—</p>
+<p>In addition, suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where—</p>
 
 <p>\(f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,\) where each sum is taken over all nonnegative values of $n$ where $a_n &gt; 0$. (For notation details, see “<a href="#Implementation_Notes"><strong>Implementation Notes</strong></a>”.)</p>
 
@@ -816,8 +821,8 @@
 <p><em>B</em> is not a parameter, but is the maximum allowed value for $g(\lambda)$ (probability of heads), and is greater than 0 and less than 1.  The following algorithm is based on that algorithm, but runs a Bernoulli factory for $g(\lambda)$ instead of flipping the input coin with probability of heads $\lambda$.</p>
 
 <ol>
-  <li>Create a <em>ν</em> input coin that does the following: “(1) Set <em>n</em> to 0. (2) With probability <em>ϵ</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 − $a_n\cdot t^n$, return 0. (4) Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> <em>n</em> times, <em>x</em>/<em>y</em> = 1/(<em>t</em> − <em>ϵ</em>), and <em>ϵ</em> = <em>ϵ</em>.  If the linear Bernoulli factory would flip the input coin, the coin is ‘flipped’ by running a Bernoulli factory for $g(\lambda)$.  If any run of the linear Bernoulli factory returns 0, return 0.  Otherwise, return 1.”</li>
-  <li>Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> once, using the <em>ν</em> input coin described earlier, <em>x</em>/<em>y</em> = <em>t</em>/<em>ϵ</em>, and <em>ϵ</em> = <em>ϵ</em>, and return the result.</li>
+  <li>Create a <em>ν</em> input coin that does the following: “(1) Set <em>n</em> to 0. (2) With probability <em>ϵ</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 − $a_n\cdot t^n$, return 0. (4) Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> <em>n</em> times, with parameters <em>x</em>/<em>y</em> = 1/(<em>t</em> − <em>ϵ</em>), and <em>ϵ</em> = <em>ϵ</em>.  If the linear Bernoulli factory would flip the input coin, the coin is ‘flipped’ by running a Bernoulli factory for $g(\lambda)$.  If any run of the linear Bernoulli factory returns 0, return 0.  Otherwise, return 1.”</li>
+  <li>Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> once, using the <em>ν</em> input coin described earlier, with parameters <em>x</em>/<em>y</em> = <em>t</em>/<em>ϵ</em>, and <em>ϵ</em> = <em>ϵ</em>, and return the result.</li>
 </ol>
 
 <p><strong><em>Power Series Examples</em></strong>:</p>
@@ -3572,7 +3577,7 @@ Due to a suggestion by Michael Shoemate who suggested it was “easy to get lost
 
 <p>is not necessarily an unbiased estimator of <em>f</em>(<em>λ</em>), even if <em>λ′</em> is an unbiased estimator.</p>
 
-<p>This page focuses on <em>unbiased</em> estimators because “exact sampling” depends on an algorithm being an unbiased estimator. See also (Mossel and Peres 2005, section 4)<sup id="fnref:16:2" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>.</p>
+<p>This page is devoted to <em>unbiased</em> estimators because “exact sampling” depends on an algorithm being an unbiased estimator. See also (Mossel and Peres 2005, section 4)<sup id="fnref:16:2" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>.</p>
 
 <blockquote>
   <p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for <em>f</em>(<em>λ</em>) equals <em>f</em>(<em>λ</em>) * (1−<em>f</em>(<em>λ</em>)) and can go as high as 1/4.  (“Variance reduction” methods are outside the scope of this document.)  An estimation algorithm’s <em>mean squared error</em> equals variance plus square of bias.</p>

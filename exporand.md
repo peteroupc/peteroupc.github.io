@@ -2501,7 +2501,7 @@ The following describes an algorithm described by Oberhoff for sampling a contin
 This algorithm appears here in the appendix rather than in the main text, because:
 
 - Certain operations it uses can introduce numerical errors unless care is taken.  These operations include evaluating the PDF (or a constant times the PDF) and finding its maximum and minimum values at an interval.
-- This article is focused on algorithms that don't rely on calculations of irrational numbers.
+- This article lays weight on algorithms that don't rely on calculations of irrational numbers.
 
 Moreover, there is additional approximation error from generating _y_ with a fixed number of digits, unless _y_ is a uniform PSRN (see also "[**Application to Weighted Reservoir Sampling**](#Application_to_Weighted_Reservoir_Sampling)").  For practical purposes, the lower and upper bounds calculated in step 4 should depend on _prefixLength_ (the higher _prefixLength_ is, the more accurate).
 
@@ -2531,7 +2531,7 @@ The algorithm follows.
 4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is _&pi;_/5, _b_ is 10, and _k_ is 3, _pk_ is 628.
 5. If _pk_ + 1 &le; _v_, return 0. If _pk_ &minus; 2 &ge; _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
 
-> **Notes:** This algorithm is related to the Bernoulli factory problem, where the input probability is unknown.  However, the algorithm doesn't exactly solve that problem because it has access to the input probability's value to some extent.  Moreover, this article is focused on algorithms that don't rely on calculations of irrational numbers.  For these two reasons, this section appears in the appendix.
+> **Notes:** This algorithm is related to the Bernoulli factory problem, where the input probability is unknown.  However, the algorithm doesn't exactly solve that problem because it has access to the input probability's value to some extent.  Moreover, this article is devoted to algorithms that don't rely on calculations of irrational numbers.  For these two reasons, this section appears in the appendix.
 
 <a id=Ratio_of_Uniforms></a>
 
@@ -2564,7 +2564,7 @@ The algorithm follows.
 This algorithm appears here in the appendix rather than in the main text, because:
 
 - Certain operations it uses can introduce numerical errors unless care is taken.  These operations can include calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)[^31], is less elegant than, say, the normal distribution sampler by Karney (2016)[^1], which doesn't require calculating logarithms or other transcendental functions.
-- This article is focused on algorithms that don't rely on calculations of irrational numbers.
+- This article is devoted to algorithms that don't rely on calculations of irrational numbers.
 
 > **Note:** The ratio-of-uniforms shape is convex if and only if &minus;1/sqrt(_PDF_(_x_)) is a concave function (loosely speaking, its "slope" never increases) (Leydold 2000)[^61].
 >

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-**Abstract:** This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming "truly random" numbers are available.  The page links to a Python module that implements several Bernoulli factories.
+**Abstract:** This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming "truly random" numbers are available.  The page links to a Python module that implements several Bernoulli factories.
 
 **2020 Mathematics Subject Classification:** 68W20, 60-08, 60-04.
 
@@ -10,14 +10,14 @@
 
 ## Introduction
 
-Suppose a coin shows heads with an unknown probability, _&lambda;_. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _&lambda;_, call it _f_(_&lambda;_). This is the _Bernoulli factory problem_.
+Suppose a coin shows heads with an unknown probability, _&lambda;_. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _&lambda;_, which is a _function_ that can be called _f_(_&lambda;_). This is the _Bernoulli factory problem_.
 
 This page:
 
-- Catalogs methods to solve the Bernoulli factory problem for a wide variety of functions, methods known as _Bernoulli factories_.  For many of these algorithms, step-by-step instructions are provided.  (Many of these methods were suggested in (Flajolet et al., 2010\)[^1], but without step-by-step instructions in many cases.)
-- Contains methods to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An _irrational number_ is a number that can't be written as a ratio of two integers.) Again, many of these methods were suggested in (Flajolet et al., 2010\)[^1].
+- Catalogs methods to solve the Bernoulli factory problem for a wide variety of functions, methods known as _Bernoulli factories_.  For many of these algorithms, step-by-step instructions are provided.  Many of these methods were suggested in (Flajolet et al., 2010\)[^1], but without step-by-step instructions in many cases.
+- Brings together methods to exactly sample probabilities that are irrational numbers, which is related to the Bernoulli factory problem.  (An _irrational number_ is a number that can't be written as a ratio of two integers.) Again, many of these methods were suggested in (Flajolet et al., 2010\)[^1].
 - Assumes knowledge of **computer programming and mathematics**, but **little or no familiarity with calculus**.
-- Is focused on methods that _exactly_ sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that a fair coin is available).
+- Is devoted to methods that _exactly_ sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that a fair coin is available).
 
 The Python module [**_bernoulli.py_**](https://peteroupc.github.io/bernoulli.py) includes implementations of several Bernoulli factories.  For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html).
 
@@ -218,25 +218,28 @@ unless outside randomness (besides the input coin) is available.
 
 This section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.
 
-The algorithms as described here are not always the fastest.  An implementation may change these algorithms as long as they produce the same results as the algorithms given here.
+The algorithms as described here are not always the fastest.  Indeed, there are many ways to write computer code that _implements_ the algorithms given here, that is, they have the same results as the results of following those algorithms step by step.
 
 > **Notes:**
 >
-> 1. Most of the algorithms assume that a fair coin (see the previous section) is available, in addition to the input coins.  But in many cases, they can be implemented using nothing but those coins as a source of randomness.  See the [**appendix**](#Appendix) for details.
+> 1. Most of the algorithms assume that a fair coin (see the previous section) is available, in addition to the input coins.  But in many cases, the algorithms can be written using nothing but those coins as a source of randomness.  See the [**appendix**](#Appendix) for details.
 > 2. Bernoulli factory algorithms that sample the probability _f_(_&lambda;_) act as unbiased estimators of _f_(_&lambda;_) (their "long run average" equals _f_(_&lambda;_)). See the [**appendix**](#Bernoulli_Factories_and_Unbiased_Estimation) for details.
 
 <a id=Implementation_Notes></a>
 
 ### Implementation Notes
 
-This section shows implementation notes that apply to the algorithms in this article.  They should be followed to avoid introducing error in the algorithms.
+This section shows notes that apply to the algorithms in this article.  When writing computer code that implements the algorithms, they should be followed to avoid introducing errors.
+
+The rest of this page may draw from the following concepts and language from mathematics:
+
+- **Binomial coefficients**: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Manolopoulos 2002\)[^6].  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
+- **Factorials**: _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
+- **Summation notation**, involving the Greek capital letter sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
 
 In the following algorithms:
 
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads of the input coin.
--  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Manolopoulos 2002\)[^6].  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
-- _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
-- _Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
 - The instruction to "generate a uniform random variate between 0 and 1" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating a uniform random variate greater than 0 and less than 1 (for example, `RNDRANGEMinMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
@@ -320,7 +323,7 @@ Because the Bernstein coefficients _a_\[_i_\] must be 0 or greater, but not grea
      2. Flip the _&lambda;_\[_i_] input coin _b_\[_i_\] times.  If any of the flips returns 1, return 0.
 2. Return 1.
 
-The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form _P_ = $\sum{j=1}^k$ _c_\[_j_\]\*_M_\[_j_\](**_&lambda;_**), where there are _k_ monomials, _M_\[_j_\](.) identifies monomial _j_, **_&lambda;_** identifies the coins' probabilities of heads, and _c_\[_j_\] &ge; 0 is the weight for monomial _j_.
+The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form _P_ = $\sum_{j=1}^k$ _c_\[_j_\]\*_M_\[_j_\](**_&lambda;_**), where there are _k_ monomials, _M_\[_j_\](.) identifies monomial _j_, **_&lambda;_** identifies the coins' probabilities of heads, and _c_\[_j_\] &ge; 0 is the weight for monomial _j_.
 
 Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)"), then run the algorithm above on that monomial (see also "[**Convex Combinations**](#Convex_Combinations)", later).
 
@@ -407,7 +410,7 @@ $$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^
 Depending on the power coefficients, different algorithms can be built to simulate a generalized power series:
 
 - The power coefficients are arbitrary, but can be split into two parts.
-- The power coefficients alternate in sign, and their absolute values form a decreasing sequence.
+- The power coefficients alternate in sign and decrease in their _absolute values_ (their values without regard to sign).
 - The power coefficients are nonnegative and sum to 1 or less.
 - The power coefficients are nonnegative and may sum to 1 or greater.
 
@@ -484,7 +487,7 @@ If $g(\lambda) = \lambda$, this kind of function&mdash;
 - is either constant or strictly increasing, and
 - is _convex_ (its "slope" or "velocity" doesn't decrease as _&lambda;_ increases; for a proof, see Lemma A1 in "[**Approximations in Bernstein Form**](https://peteroupc.github.io/bernapprox.html)").
 
-Suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash;
+In addition, suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash;
 
 $$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$ where each sum is taken over all nonnegative values of $n$ where $a_n > 0$. (For notation details, see "[**Implementation Notes**](#Implementation_Notes)".)
 
@@ -549,8 +552,8 @@ then Nacu and Peres (2005, proposition 16\)[^21] gave an algorithm which takes t
 
 _B_ is not a parameter, but is the maximum allowed value for $g(\lambda)$ (probability of heads), and is greater than 0 and less than 1.  The following algorithm is based on that algorithm, but runs a Bernoulli factory for $g(\lambda)$ instead of flipping the input coin with probability of heads $\lambda$.
 
-1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&#x03F5;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; $a_n\cdot t^n$, return 0. (4) Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories) _n_ times, _x_/_y_ = 1/(_t_ &minus; _&#x03F5;_), and _&#x03F5;_ = _&#x03F5;_.  If the linear Bernoulli factory would flip the input coin, the coin is 'flipped' by running a Bernoulli factory for $g(\lambda)$.  If any run of the linear Bernoulli factory returns 0, return 0.  Otherwise, return 1."
-2. Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories) once, using the _&nu;_ input coin described earlier, _x_/_y_ = _t_/_&#x03F5;_, and _&#x03F5;_ = _&#x03F5;_, and return the result.
+1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&#x03F5;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; $a_n\cdot t^n$, return 0. (4) Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories) _n_ times, with parameters _x_/_y_ = 1/(_t_ &minus; _&#x03F5;_), and _&#x03F5;_ = _&#x03F5;_.  If the linear Bernoulli factory would flip the input coin, the coin is 'flipped' by running a Bernoulli factory for $g(\lambda)$.  If any run of the linear Bernoulli factory returns 0, return 0.  Otherwise, return 1."
+2. Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories) once, using the _&nu;_ input coin described earlier, with parameters _x_/_y_ = _t_/_&#x03F5;_, and _&#x03F5;_ = _&#x03F5;_, and return the result.
 
 **_Power Series Examples_**:
 
@@ -2558,7 +2561,7 @@ On the other hand&mdash;
 
 is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.
 
-This page focuses on _unbiased_ estimators because "exact sampling" depends on an algorithm being an unbiased estimator. See also (Mossel and Peres 2005, section 4\)[^16].
+This page is devoted to _unbiased_ estimators because "exact sampling" depends on an algorithm being an unbiased estimator. See also (Mossel and Peres 2005, section 4\)[^16].
 
 > **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for _f_(_&lambda;_) equals _f_(_&lambda;_) \* (1&minus;_f_(_&lambda;_)) and can go as high as 1/4.  ("Variance reduction" methods are outside the scope of this document.)  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 

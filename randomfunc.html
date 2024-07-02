@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2024/06/23"><meta name="citation_online_date" content="2024/06/23"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2024/06/29"><meta name="citation_online_date" content="2024/06/29"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -24,7 +24,7 @@
   <li>non-uniform distributions, including <a href="#Weighted_Choice"><strong>weighted choice</strong></a>, the <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a>, and <a href="#Index_of_Non_Uniform_Distributions"><strong>other probability distributions</strong></a>.</li>
 </ul>
 
-<p>This page is focused on randomization and sampling methods that <em>exactly</em> sample from the distribution described, without introducing additional errors beyond those already present in the inputs (and assuming that an ideal “source of random numbers” is available).  This will be the case if there is a finite number of values to choose from.  But for the normal distribution and other distributions that take on infinitely many values, there will always be some level of approximation involved; in this case, the focus of this page is on methods that <em>minimize</em> the error they introduce.</p>
+<p>This page is devoted to randomization and sampling methods that <em>exactly</em> sample from the distribution described, without introducing additional errors beyond those already present in the inputs (and assuming that an ideal “source of random numbers” is available).  This will be the case if there is a finite number of values to choose from.  But for the normal distribution and other distributions that take on infinitely many values, there will always be some level of approximation involved; in this case, the focus of this page is on methods that <em>minimize</em> the error they introduce.</p>
 
 <p>This document shows pseudocode for many of the methods, and <a href="https://peteroupc.github.io/randomgen.zip"><strong>sample Python code</strong></a> that implements many of the methods in this document is available, together with <a href="https://peteroupc.github.io/randomgendoc.html"><strong>documentation for the code</strong></a>.</p>
 
@@ -42,7 +42,7 @@
   <li>“Variance reduction” methods, such as importance sampling or common random numbers, are outside the scope of this document.</li>
 </ul>
 
-<p>In addition, this page is not focused on sampling methods used for computer graphics rendering (such as Poisson disk sampling, multiple importance sampling, blue noise, and gradient noise), because this application tends to give performance and visual acceptability a greater importance than accuracy and exact sampling.</p>
+<p>In addition, this page is not devoted to sampling methods used for computer graphics rendering (such as Poisson disk sampling, multiple importance sampling, blue noise, and gradient noise), because this application tends to give performance and visual acceptability a greater importance than accuracy and exact sampling.</p>
 
 <p><a id="About_This_Document"></a></p>
 
@@ -225,7 +225,6 @@
       <th>If the underlying source produces:</th>
       <th>Then <code>NEXTRAND()</code> is:</th>
       <th>And <code>MODULUS</code> is:</th>
-      <th> </th>
     </tr>
   </thead>
   <tbody>
@@ -233,43 +232,36 @@
       <td>Non-uniform numbers<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>.</td>
       <td>The next bit from a new source formed by taking the underlying source’s outputs as input to a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> technique to produce independent random integers that equal 1 or 0 with equal probability.</td>
       <td>2.</td>
-      <td> </td>
     </tr>
     <tr>
       <td>Uniform numbers not described below.</td>
       <td>Same as above.</td>
-      <td>2<sup><em>n</em></sup>.</td>
       <td>2<sup><em>n</em></sup>.</td>
     </tr>
     <tr>
       <td>Uniform 32-bit nonnegative integers.</td>
       <td>The next number from the source.</td>
       <td>2<sup>32</sup>.</td>
-      <td> </td>
     </tr>
     <tr>
       <td>Uniform 64-bit nonnegative integers.</td>
       <td>The next number from the source.</td>
       <td>2<sup>64</sup>.</td>
-      <td> </td>
     </tr>
     <tr>
       <td>Uniform integers in the interval [0, <em>n</em>).</td>
       <td>The next number from the source.</td>
       <td><em>n</em>.</td>
-      <td> </td>
     </tr>
     <tr>
       <td>Uniform numbers in the interval [0, 1) known to be evenly spaced by a number <em>p</em> (for example, dSFMT).</td>
       <td>The next number from the source, multiplied by <em>p</em>.</td>
       <td>1/<em>p</em>.</td>
-      <td> </td>
     </tr>
     <tr>
       <td>Uniform numbers in the interval [0, 1), where numbers in [0, 0.5) and those in [0.5, 1) are known to occur with equal probability (for example, Java’s <code>Math.random()</code>).</td>
       <td>0 if the source outputs a number less than 0.5, or 1 otherwise.</td>
       <td>2.</td>
-      <td> </td>
     </tr>
   </tbody>
 </table>
@@ -2609,10 +2601,7 @@ END METHOD
 
 <h2 id="notes">Notes</h2>
 
-<p>Master’s thesis, Universitat Politècnica de Catalunya, 2020.
-<a href="https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf"><strong>https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf</strong></a></p>
-
-<p>and “<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/"><strong>Floating-Point Determinism</strong></a>” by Bruce Dawson, discuss issues with floating-point numbers in much more detail.</p>
+<p><a href="https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf"><strong>https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf</strong></a></p>
 
 <p><a id="Appendix"></a></p>
 
@@ -2772,7 +2761,7 @@ END METHOD
       <p>V. Batagelj and U. Brandes, “Efficient generation of large random networks”, Phys.Rev. E 71:036113, 2005. <a href="#fnref:28" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:29" role="doc-endnote">
-      <p>Costantini, Lucia. “Algorithms for sampling spanning trees uniformly at random.” <a href="#fnref:29" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Costantini, Lucia. “Algorithms for sampling spanning trees uniformly at random.” Master’s thesis, Universitat Politècnica de Catalunya, 2020. <a href="#fnref:29" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:30" role="doc-endnote">
       <p>Penschuck, M., et al., “<a href="https://arxiv.org/abs/2003.00736v1"><strong>Recent Advances in Scalable Network Generation</strong></a>”, arXiv:2003.00736v1  [cs.DS], 2020. <a href="#fnref:30" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2862,7 +2851,7 @@ END METHOD
       <p>Durfee, et al., “l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent”, <em>Proceedings of Machine Learning Research</em> 75(1), 2018. <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:59" role="doc-endnote">
-      <p>The NVIDIA white paper “<a href="https://docs.nvidia.com/cuda/floating-point/"><strong>Floating Point and IEEE 754 Compliance for NVIDIA GPUs</strong></a>”, <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>The NVIDIA white paper “<a href="https://docs.nvidia.com/cuda/floating-point/"><strong>Floating Point and IEEE 754 Compliance for NVIDIA GPUs</strong></a>”, and “<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/"><strong>Floating-Point Determinism</strong></a>” by Bruce Dawson, discuss issues with floating-point numbers in much more detail. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:60" role="doc-endnote">
       <p>“Uniform” in quotes means, as close to the uniform distribution as possible for the number format.  Both bounds are excluded because, mathematically, any specific real number from the uniform distribution occurs with probability 0. <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
