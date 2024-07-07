@@ -45,7 +45,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 ## Endnotes
 
-[^1]: Other principles of explicit instruction are also found in _Explicit Direct Instruction: The Power of the Well-Crafted, Well-Taught Lesson_ (Hollingsworth and Ybarra) and _Direct Instruction: A Practitioner's Handbook_ (Kurt Engelmann).
+[^1]: Other principles of explicit instruction are also found in _Explicit Direct Instruction: The Power of the Well-Crafted, Well-Taught Lesson_ (Hollingsworth and Ybarra), _Teach FAST_ (Tavernetti), and _Direct Instruction: A Practitioner's Handbook_ (Kurt Engelmann).
 
 [^2]: One example, similar to the approach found in _Illustrative Mathematics_, is the presence in student workbooks of "Are you ready for more?" followed by a challenging exercise. Another example is a relatively short unit on basic calculus concepts such as limits and continuous functions at the end of Algebra 2, such as the last unit of [**Fishtank Learning's Algebra 2 course**](https://www.fishtanklearning.org/curriculum/math/algebra-2/).
 
