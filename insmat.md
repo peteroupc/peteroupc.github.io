@@ -31,7 +31,7 @@ These are suggestions to improve core and supplemental instructional materials, 
     - Redundancy (which includes unnecessary words) not serving an expressive purpose.
     - Ambiguous language.
 
-These suggestions concern only instructional materials, so policies such as those that [**restrict mobile phones in school**](https://www.educationnext.org/take-away-their-cellphones-rewire-schools-belonging-achievement/) or encourage the [**reduction of classroom decorations**](https://teachthinkblog.wordpress.com/2021/04/06/minimising-classroom-displays/), while they may help reduce students' cognitive load, are outside the scope. [^4]
+These suggestions concern only instructional materials; outside the scope are policies that promote eliminating distractions to learning, distractions which include [**classroom noise**](https://www.nathanielswain.com/cognitoriumblog/2024/6/quiet-and-silence), [**classroom overdecoration**](https://teachthinkblog.wordpress.com/2021/04/06/minimising-classroom-displays/), student misbehavior, and [**mobile phones during school days**](https://www.educationnext.org/take-away-their-cellphones-rewire-schools-belonging-achievement/). [^4]
 
 Suggestion number 5, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of everyday vocabulary and linguistic variety (see, e.g., Emilio Bernal's "Good usage prevents abusage"). [^3]
 
