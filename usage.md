@@ -72,6 +72,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | examples include but are not limited to | examples are | The word "examples" already conveys the idea that the list is not all-inclusive. |
 | family members | relatives, kin |'Relatives' suggested by E. Bernal. |
 | including but not limited to | including | |
+| individual people | individuals |Inspired by E. Bernal. |
 | injured people | the injured |Inspired by E. Bernal. |
 | is someone who is | is |Inspired by E. Bernal. |
 | is someone who is [adjective] (e.g., _is someone who is reliable_) | is [adjective]; is a(n) [adjective] one |Inspired by E. Bernal. |
