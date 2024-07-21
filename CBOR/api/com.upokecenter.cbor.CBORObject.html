@@ -180,6 +180,10 @@
  type is Integer.</p>
   </li>
   <li>
+    <p><code>UUID AsGuid()</code><br />
+ Converts this object to a java.util.UUID.</p>
+  </li>
+  <li>
     <p><code>int AsInt32()</code><br />
  Converts this object to a 32-bit signed integer.</p>
   </li>
@@ -387,6 +391,10 @@
  bits.</p>
   </li>
   <li>
+    <p><code>static CBORObject FromGuid(UUID value)</code><br />
+ Generates a CBOR object from a java.util.UUID.</p>
+  </li>
+  <li>
     <p><code>static CBORObject FromInt16(short value)</code><br />
  Generates a CBOR object from a 16-bit signed integer.</p>
   </li>
@@ -461,6 +469,10 @@
  JSONOptions jsonoptions)</code><br />
  Generates a CBOR object from a text string in JavaScript object Notation
  (JSON) format, using the specified options to control the decoding process.</p>
+  </li>
+  <li>
+    <p><code>static CBORObject FromMap(Iterable&lt;Map.Entry&lt;CBORObject,CBORObject&gt;&gt; keysAndValues)</code><br />
+ Creates a new CBOR map that stores its keys in an undefined order.</p>
   </li>
   <li>
     <p><code>static CBORObject FromObject(boolean value)</code><br />
@@ -578,6 +590,10 @@ Use FromCBORObjectAndTag instead.</p>
  com.upokecenter.numbers.EInteger bigintTag)</code><br />
  Deprecated.
 Use FromCBORObjectAndTag instead.</p>
+  </li>
+  <li>
+    <p><code>static CBORObject FromOrderedMap(Iterable&lt;Map.Entry&lt;CBORObject,CBORObject&gt;&gt; keysAndValues)</code><br />
+ Creates a new CBOR map that ensures that keys are stored in order.</p>
   </li>
   <li>
     <p><code>static CBORObject FromSimpleValue(int simpleValue)</code><br />
@@ -2903,6 +2919,22 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
   <li>A CBOR object.</li>
 </ul>
 
+<h3 id="fromguid">FromGuid</h3>
+<pre>public static CBORObject FromGuid(UUID value) Generates a CBOR object from a java.util.UUID.
+</pre>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li><code>value</code> - The parameter <code>value</code> is a java.util.UUID.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>A CBOR object.</li>
+</ul>
+
 <h3 id="fromobject-7">FromObject</h3>
 <pre>@Deprecated public static CBORObject FromObject(int value) Generates a CBOR object from a 32-bit signed integer.
 </pre>
@@ -3678,9 +3710,41 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
   <li>A new CBOR map.</li>
 </ul>
 
+<h3 id="frommap">FromMap</h3>
+<pre>public static CBORObject FromMap(Iterable&lt;Map.Entry&lt;CBORObject,CBORObject&gt;&gt; keysAndValues) Creates a new CBOR map that stores its keys in an undefined order.
+</pre>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li><code>keysAndValues</code> - A sequence of key-value pairs.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>A new CBOR map.</li>
+</ul>
+
 <h3 id="neworderedmap">NewOrderedMap</h3>
 <pre>public static CBORObject NewOrderedMap() Creates a new empty CBOR map that ensures that keys are stored in the order  in which they are first inserted.
 </pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>A new CBOR map.</li>
+</ul>
+
+<h3 id="fromorderedmap">FromOrderedMap</h3>
+<pre>public static CBORObject FromOrderedMap(Iterable&lt;Map.Entry&lt;CBORObject,CBORObject&gt;&gt; keysAndValues) Creates a new CBOR map that ensures that keys are stored in order.
+</pre>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+  <li><code>keysAndValues</code> - A sequence of key-value pairs.</li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
@@ -5079,6 +5143,27 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
   <li><code>IllegalStateException</code> - This object does not represent a number (for
  this purpose, infinities and not-a-number or NaN values, but not
  CBORObject.Null, are considered numbers).</li>
+</ul>
+
+<h3 id="asguid">AsGuid</h3>
+<pre>public UUID AsGuid() Converts this object to a java.util.UUID.
+</pre>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+  <li>A java.util.UUID.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+  <li>
+    <p><code>IllegalStateException</code> - This object does not represent a java.util.UUID.</p>
+  </li>
+  <li>
+    <p><code>CBORException</code> - This object does not have the expected tag.</p>
+  </li>
 </ul>
 
 <h3 id="asstring">AsString</h3>
