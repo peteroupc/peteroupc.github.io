@@ -405,7 +405,9 @@ Then the algorithm is as follows:
 
 Some functions can be written as&mdash;
 
-$$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$ where $a_i$ are _power coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  The right-hand side of (1) is called a _power series_ as long as $g(\lambda) = \lambda$.  A function writable as (1) will be called a _generalized power series_ here. Not all power series sum to a definite value, but all generalized power series that matter in this section do, and they must be Bernoulli factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function, too.)
+$$f(\lambda) = a_0 (g(\lambda))^0 + a_1 (g(\lambda))^1 + ... + a_i (g(\lambda))^i + ...,\tag{1}$$
+
+where $a_i$ are _power coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  The right-hand side of (1) is called a _power series_ as long as $g(\lambda) = \lambda$.  A function writable as (1) will be called a _generalized power series_ here. Not all power series sum to a definite value, but all generalized power series that matter in this section do, and they must be Bernoulli factory functions.  (In particular, $g(\lambda)$ must be a Bernoulli factory function, too.)
 
 Depending on the power coefficients, different algorithms can be built to simulate a generalized power series:
 
@@ -453,13 +455,18 @@ Suppose the following for a generalized power series $f(\lambda)$:
 
 - $f$ is written as in equation $(1)$.
 - There is a rational number $Z$ defined as follows. For every $\lambda$ that satisfies $0 \le \lambda \le 1$, it is true that $0 \le f(\lambda) \le Z \lt 1$.
-- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)").  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  As an example, if $C$ is a generalized power series described in the section "Certain Alternating Series", above, then $C$ admits a Bernoulli factory algorithm, namely the **general martingale algorithm**.
+- There is an even integer $m$ defined as follows. The series in equation $(1)$ can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)").  Specifically:
+
+    $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$
+
+    As an example, if $C$ is a generalized power series described in the section "Certain Alternating Series", above, then $C$ admits a Bernoulli factory algorithm, namely the **general martingale algorithm**.
 
 In addition, the algorithm will be simpler if each power coefficient $a_i$ is a rational number.
 
 Then rewrite the function as&mdash;
 
-$$f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),$$ where&mdash;
+$$f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),$$
+where&mdash;
 
 - $A(\lambda) = f(\lambda) - C(\lambda) = \sum_{i=0}^{m-1} a_i (g(\lambda))^i$ is a polynomial in $g(\lambda)$ of degree $m-1$, and
 - $B(\lambda) = C(\lambda) / (g(\lambda))^{m} = \sum_{i\ge m} a_{m+i} (g(\lambda))^i$.
@@ -489,7 +496,8 @@ If $g(\lambda) = \lambda$, this kind of function&mdash;
 
 In addition, suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash;
 
-$$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$ where each sum is taken over all nonnegative values of $n$ where $a_n > 0$. (For notation details, see "[**Implementation Notes**](#Implementation_Notes)".)
+$$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$
+where each sum is taken over all nonnegative values of $n$ where $a_n > 0$. (For notation details, see "[**Implementation Notes**](#Implementation_Notes)".)
 
 Then the key to simulating $f(\lambda)$ is to "tuck" the values $a_n$ under a function $w(n)$ such that&mdash;
 
@@ -567,7 +575,8 @@ Examples 1 to 4 show how **Algorithm 1** leads to algorithms for simulating cert
 - $f$ satisfies $m=8$ since splitting the series at 8 leads to two functions that admit Bernoulli factories.
 - Thus, $f$ can be written as&mdash;
 
-$$f(\lambda) = A(\lambda) + \lambda^m \left(\sum_{i\ge 0} a_{m+i} \lambda^i\right),$$ where $m=8$, and where $a_i = \frac{3^i}{i! \times 2}(-1)^{(i-1)/2}$ if $i$ is odd and 0 otherwise.
+$$f(\lambda) = A(\lambda) + \lambda^m \left(\sum_{i\ge 0} a_{m+i} \lambda^i\right),$$
+where $m=8$, and where $a_i = \frac{3^i}{i! \times 2}(-1)^{(i-1)/2}$ if $i$ is odd and 0 otherwise.
 - $A$ has power coefficients $a_0, ..., a_{m-1}$.  Those power coefficients are transformed to the following _Bernstein coefficients_, in order: [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].
 - Now, **Algorithm 1** can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
     - $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
@@ -616,7 +625,8 @@ To simulate a function in the table, run the **general martingale algorithm** wi
 
 Examples 7 to 9 use **Algorithm 2** to simulate generalized power series where the power coefficients $a_0$ are nonnegative.
 
-**Example 7:** The hyperbolic cosine minus 1, denoted as cosh(_&lambda;_)&minus;1, can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},$$ where:
+**Example 7:** The hyperbolic cosine minus 1, denoted as cosh(_&lambda;_)&minus;1, can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},$$
+where:
 
 - Each sum given above is taken over all values of _n_ that can occur after step 1 is complete (in this case, all values of _n_ that are even and greater than 0).
 - $a_n$ is $1/(n!)$.[^26]
@@ -730,7 +740,8 @@ In the algorithm (see also (Brassard et al., 2019\)[^29], (Devroye 1986, p. 769\
 
 A _simple continued fraction_ is a way to write a real number between 0 and 1. A simple continued fraction has the form&mdash;
 
-$$0 + 1 / (a[1] + 1 / (a[2] + 1 / (a[3] + ... ))),$$ where the _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.
+$$0 + 1 / (a[1] + 1 / (a[2] + 1 / (a[3] + ... ))),$$
+where the _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.
 
 Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions"\)[^1], I developed the following algorithm.
 
@@ -908,7 +919,8 @@ $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w
 >
 > 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1 (except _T_ must equal 1), and let $c$ be a constant written as&mdash;
 
-$$c=a_1+a_2+a_3+...,$$ where&mdash;
+$$c=a_1+a_2+a_3+...,$$
+where&mdash;
 >
 >     - $a_n$ are each 0 or greater and sum to 1 or less, and
 >     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 1$.
@@ -1003,9 +1015,11 @@ Flajolet et al. (2010\)[^1] described two schemes for probability simulation, in
 
 **Certain algebraic functions.** Flajolet et al. (2010\)[^1] showed a sampling method modeled on _pushdown automata_ (state machines with a stack) that are given flips of a coin with unknown heads probability _&lambda;_.[^48] These flips form a _bitstring_, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".  If a pushdown automaton terminates, it accepts a bitstring with probability _f_(_&lambda;_), where _f_ must be an _algebraic function over rationals_ (a function that can be a solution of a nonzero polynomial equation whose power coefficients are rational numbers) (Mossel and Peres 2005\)[^16].
 
-Specifically, the method simulates the following function (not necessarily algebraic): $$f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda),$$ where the paper uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$, so that&mdash;
+Specifically, the method simulates the following function (not necessarily algebraic): $$f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda),$$
+where the paper uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$, so that&mdash;
 
-$$f(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$ where:
+$$f(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$
+where:
 
 - $W(k)$ returns a number in the interval \[0, $\beta^k$\].  If $W(k)$ is an integer for every $k$, then $W(k)$ is the number of $k$-letter words that can be produced by the stochastic grammar in question.
 - $\beta \ge 2$ is an integer.  This is the alphabet size, or the number of "letters" in the alphabet.  This is 2 for the cases discussed in the Flajolet paper (binary stochastic grammars), but it can be greater than 2 for more general stochastic grammars.
@@ -1019,25 +1033,29 @@ The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the inp
 >
 > 1. The following is an example from the Flajolet et al. paper. An _X_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree: "2. If _X_ is 0, return 0.  Otherwise, set _i_ to 1 and _d_ to 1.; 2a. Generate 1 or 0 with equal probability (that is, either 0 or 1, chosen with equal probability), then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise.; 2b. Add 1 to _i_. Then, if _i_ < _X_ and _d_ > 0, go to step 3a.; 2c. Return 1 if _d_ is 0 and _i_ is _X_, or 0 otherwise."
 > 2. $h_X(\lambda)$ can have the form&mdash;
-
-$${X\choose X/t}\cdot(1-\mathtt{Coin}(\lambda))^{X-X/t}\cdot(\mathtt{Coin}(\lambda))^{X/t},$$ if _X_ is divisible by _t_, and 0 otherwise, where `Coin`(_&lambda;_) is a Bernoulli factory function, and _t_ &ge; 2 is an integer.  One special case is when `Coin`(_&lambda;_) = 1/_&beta;_, where _&beta;_ &ge; 2 is the alphabet size and is an integer.  In that case, $W(X)$ is **the number of _X_-letter words with exactly _X_/_t_ A's, for an alphabet size of _&beta;_**, is equal to $h_X(\lambda) \beta^X$, and also has the following form: $${X\choose X/t} (\beta-1)^{X-X/t} = {X\choose X/t} (1-1/\beta)^{X-X/t} (1/\beta)^{X/t} \beta^X,$$ if _X_ is divisible by _t_, and 0 otherwise. (Here, $\beta-1^{X-X/t}$ is the number of (_X_&minus;_X_/t)-letter words with only letters other than A.) Then step 2 of the algorithm can be done as follows: "2. If _X_ is not divisible by _t_, return 0. Otherwise, run a Bernoulli factory algorithm for `Coin`(_&lambda;_), _X_ times, and set _y_ to the number of runs that return 1 this way (for example, if `Coin`(_&lambda;_) = 1/_&beta;_, generate _X_ uniform random integers in the interval [0, _&beta;_), then set _y_ to the number of zeros generated this way), then return 1 if _y_ equals _X_/_t_, or 0 otherwise."  If _&beta;_ = 2, then this reproduces another example from the Flajolet paper, namely, lattice paths with upward steps of size _t_&minus;1 and downward steps of size 1.<br>Although not required, `Coin`(_&lambda;_) can be a rational function (a ratio of two polynomials) whose Bernstein coefficients are rational numbers; if so, _f_ will be an _algebraic function_ and can be simulated by a _pushdown automaton_.<br>An alternative algorithm is: "Set _d_ to 0, then do the following process repeatedly until this run of the algorithm returns a value: (a) Flip the input coin. If it returns 1, go to substep (b). Otherwise, return either 1 if _d_ is 0, or 0 otherwise. (b) Run a Bernoulli factory algorithm for `Coin`(_&lambda;_). If the run returns 1, add (_t_&minus;1) to _d_. Otherwise, subtract 1 from _d_."
-> 3. $h_X(\lambda)$ can have the form&mdash;
-
-$${X\alpha\choose X}\cdot(1-\mathtt{Coin}(\lambda))^{X\cdot \alpha-X}\cdot(\mathtt{Coin}(\lambda))^{X},$$ where `Coin`(_&lambda;_) is a Bernoulli factory function (as in example 2), and _&alpha;_ &ge; 1 is an integer.  One special case is when `Coin`(_&lambda;_) = 1/_&beta;_, where _&beta;_ &ge; 2 is the alphabet size and is an integer.  In that case, $W(X)$ is equal to $h_X(\lambda) \beta^X$ and also has the following form:$${X\alpha\choose X}\cdot(\beta-1)^{X\cdot \alpha-X} (1/\beta)^{X\cdot \alpha-X} = {X\alpha\choose X}\cdot(1-1/\beta)^{X\cdot \alpha-X}.$$ Then step 2 of the algorithm can be done as follows: "2. Run a Bernoulli factory algorithm for `Coin`(_&lambda;_), _X_ * _&alpha;_ times, and set _y_ to the number of runs that return 1 this way, then return 1 if _y_ equals _X_, or 0 otherwise."  If _&alpha;_ = 2 and _&beta;_ = 2 (or `Coin`(_&lambda;_) = 1/2), then this expresses the _square-root construction_ sqrt(1 &minus; _&lambda;_), mentioned in the Flajolet et al. paper.  If _&alpha;_ is 1, the modified algorithm simulates the following probability: (_&lambda;_&minus;1)/(_&lambda;_\*`Coin`(_&lambda;_)&minus;1).  If _&alpha;_=2, the probability is $(1-\lambda)/\sqrt{1+4\lambda\mathtt{Coin}(\lambda)(\mathtt{Coin}(\lambda)-1)}$.<br>Interestingly, I have found that if _&alpha;_ is 2 or greater, the probability simplifies to involve a hypergeometric function.  Specifically, if `Coin`(_&lambda;_) = 1/_&beta;_, the probability becomes&mdash;
-
-$$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha}{(\alpha-1)^{\alpha-1}2^{\alpha}}\right),$$ if _&beta;_ = 2, or more generally&mdash;
-
-$$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha(\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha}}\right).$$
 >
+>     $${X\choose X/t}\cdot(1-\mathtt{Coin}(\lambda))^{X-X/t}\cdot(\mathtt{Coin}(\lambda))^{X/t},$$
+>
+>     if _X_ is divisible by _t_, and 0 otherwise, where `Coin`(_&lambda;_) is a Bernoulli factory function, and _t_ &ge; 2 is an integer.  One special case is when `Coin`(_&lambda;_) = 1/_&beta;_, where _&beta;_ &ge; 2 is the alphabet size and is an integer.  In that case, $W(X)$ is **the number of _X_-letter words with exactly _X_/_t_ A's, for an alphabet size of _&beta;_**, is equal to $h_X(\lambda) \beta^X$, and also has the following form:
+>
+>     $${X\choose X/t} (\beta-1)^{X-X/t} = {X\choose X/t} (1-1/\beta)^{X-X/t} (1/\beta)^{X/t} \beta^X,$$
+>
+>     if _X_ is divisible by _t_, and 0 otherwise. (Here, $\beta-1^{X-X/t}$ is the number of (_X_&minus;_X_/t)-letter words with only letters other than A.) Then step 2 of the algorithm can be done as follows: "2. If _X_ is not divisible by _t_, return 0. Otherwise, run a Bernoulli factory algorithm for `Coin`(_&lambda;_), _X_ times, and set _y_ to the number of runs that return 1 this way (for example, if `Coin`(_&lambda;_) = 1/_&beta;_, generate _X_ uniform random integers in the interval [0, _&beta;_), then set _y_ to the number of zeros generated this way), then return 1 if _y_ equals _X_/_t_, or 0 otherwise."  If _&beta;_ = 2, then this reproduces another example from the Flajolet paper, namely, lattice paths with upward steps of size _t_&minus;1 and downward steps of size 1.<br>Although not required, `Coin`(_&lambda;_) can be a rational function (a ratio of two polynomials) whose Bernstein coefficients are rational numbers; if so, _f_ will be an _algebraic function_ and can be simulated by a _pushdown automaton_.<br>An alternative algorithm is: "Set _d_ to 0, then do the following process repeatedly until this run of the algorithm returns a value: (a) Flip the input coin. If it returns 1, go to substep (b). Otherwise, return either 1 if _d_ is 0, or 0 otherwise. (b) Run a Bernoulli factory algorithm for `Coin`(_&lambda;_). If the run returns 1, add (_t_&minus;1) to _d_. Otherwise, subtract 1 from _d_."
+> 3. $h_X(\lambda)$ can have the form&mdash;
+>
+>     $${X\alpha\choose X}\cdot(1-\mathtt{Coin}(\lambda))^{X\cdot \alpha-X}\cdot(\mathtt{Coin}(\lambda))^{X},$$
+>
+>     where `Coin`(_&lambda;_) is a Bernoulli factory function (as in example 2), and _&alpha;_ &ge; 1 is an integer.  One special case is when `Coin`(_&lambda;_) = 1/_&beta;_, where _&beta;_ &ge; 2 is the alphabet size and is an integer.  In that case, $W(X)$ is equal to $h_X(\lambda) \beta^X$ and also has the following form:$${X\alpha\choose X}\cdot(\beta-1)^{X\cdot \alpha-X} (1/\beta)^{X\cdot \alpha-X} = {X\alpha\choose X}\cdot(1-1/\beta)^{X\cdot \alpha-X}.$$ Then step 2 of the algorithm can be done as follows: "2. Run a Bernoulli factory algorithm for `Coin`(_&lambda;_), _X_ * _&alpha;_ times, and set _y_ to the number of runs that return 1 this way, then return 1 if _y_ equals _X_, or 0 otherwise."  If _&alpha;_ = 2 and _&beta;_ = 2 (or `Coin`(_&lambda;_) = 1/2), then this expresses the _square-root construction_ sqrt(1 &minus; _&lambda;_), mentioned in the Flajolet et al. paper.  If _&alpha;_ is 1, the modified algorithm simulates the following probability: (_&lambda;_&minus;1)/(_&lambda;_\*`Coin`(_&lambda;_)&minus;1).  If _&alpha;_=2, the probability is $(1-\lambda)/\sqrt{1+4\lambda\mathtt{Coin}(\lambda)(\mathtt{Coin}(\lambda)-1)}$.<br>Interestingly, I have found that if _&alpha;_ is 2 or greater, the probability simplifies to involve a hypergeometric function.  Specifically, if `Coin`(_&lambda;_) = 1/_&beta;_, the probability becomes&mdash;
+>
+>     $$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha}{(\alpha-1)^{\alpha-1}2^{\alpha}}\right),$$ if _&beta;_ = 2, or more generally&mdash;
+>     $$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha(\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha}}\right).$$
 >     The ordinary generating function for this modified algorithm is thus&mdash;
-
-$$OGF(z) = 1\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; z\frac{\alpha^\alpha (\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha-1}}\right).$$
+>     $$OGF(z) = 1\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; z\frac{\alpha^\alpha (\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha-1}}\right).$$
 > 4.  The probability involved in example 2 likewise involves hypergeometric functions: $$f(\lambda)=(1-\lambda)\times_{t-1} F_{t-2}\left(\frac{1}{t},\frac{2}{t},...,\frac{t-1}{t}; \frac{1}{t-1},\frac{2}{t-1},...,\frac{t-2}{t-1}; \lambda^t \frac{t^t (\beta-1)^{t-1}}{(t-1)^{t-1} \beta^t}\right).$$
 > 5. If $W(X)$ is **the number of $X$-letter words with a two-letter alphabet that meet some condition**, where the chance of the letter "heads" is `Coin`(_&lambda;_), and `Coin`(_&lambda;_) is a Bernoulli factory function (as in example 2), then $h_X(\lambda)$ can be written as&mdash;
-
-$$\sum_{m=0}^X V(X,m) (\mathtt{Coin}(\lambda))^m (1-\mathtt{Coin}(\lambda))^{X-m},$$ where $V(X,m)$ satisfies $0\le V(X,m)\le {X\choose m}$ and is the number of $X$-letter words that have $m$ heads and meet that condition, so that&mdash;
-
-$$W(X) = h_X(\lambda) (1/\mathtt{Coin}(\lambda))^X = \sum_{m=0}^X V(X,m) \left(\frac{1-\mathtt{Coin}(\lambda)}{\mathtt{Coin}(\lambda)}\right)^{X-m}.$$
+>     $$\sum_{m=0}^X V(X,m) (\mathtt{Coin}(\lambda))^m (1-\mathtt{Coin}(\lambda))^{X-m},$$
+where $V(X,m)$ satisfies $0\le V(X,m)\le {X\choose m}$ and is the number of $X$-letter words that have $m$ heads and meet that condition, so that&mdash;
+>     $$W(X) = h_X(\lambda) (1/\mathtt{Coin}(\lambda))^X = \sum_{m=0}^X V(X,m) \left(\frac{1-\mathtt{Coin}(\lambda)}{\mathtt{Coin}(\lambda)}\right)^{X-m}.$$
 
 **The von Neumann schema.** Flajolet et al. (2010\)[^1], section 2, describes what it calls the _von Neumann schema_, which produces random integers based on a coin with unknown heads probability.  To describe the schema, the following definition is needed:
 
@@ -1045,9 +1063,11 @@ $$W(X) = h_X(\lambda) (1/\mathtt{Coin}(\lambda))^X = \sum_{m=0}^X V(X,m) \left(\
 
 Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 0$, with probability equal to&mdash;
 
-$$w_n(\lambda) = \frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)},$$ where the schema uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$, so that&mdash;
+$$w_n(\lambda) = \frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)},$$
+where the schema uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$, so that&mdash;
 
-$$w_n(\lambda)=\frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)} = \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where:
+$$w_n(\lambda)=\frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)} = \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$
+where:
 
 - $V(n)$ returns a number in the interval \[0, _n_!\].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.
 - $EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an _exponential generating function_, which completely determines a permutation class.
@@ -1084,8 +1104,8 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 >
 > 5. For the class of _alternating permutations of odd size_ (see example 1), step 2 in **Algorithm BR** can be implemented as in example 4, except 2a reads: "(2a.) (Limited to odd-sized permutations.) If _X_ is even[^27], reject _X_ (and go to step 1)." (Flajolet et al. 2010, sec. 2.2\)[^1].
 > 6. By computing&mdash;
-
-$$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), it is found that the von Neumann schema's output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$, where $sinh$ is the hyperbolic sine function.
+>     $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$
+>     (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), it is found that the von Neumann schema's output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$, where $sinh$ is the hyperbolic sine function.
 > 7. The _X_ generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because **Algorithm BR** is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if _X_ is a Poisson random variate with mean _z_<sup>2</sup>/4, where _z_ &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
 
 **Examples for the von Neumann schema**.  Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^1].  In the table:
@@ -1140,7 +1160,8 @@ namely the following algorithm:
 
 **Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash;
 
-$$\int_a^b f(\lambda u)\,du,$$ where $0\le a\lt b\le 1$, using the following algorithm:
+$$\int_a^b f(\lambda u)\,du,$$
+where $0\le a\lt b\le 1$, using the following algorithm:
 
 1. Generate _u_, a uniform random variate between 0 and 1.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
@@ -2625,9 +2646,11 @@ The following algorithm returns 1 with probability sin(_&lambda;_\*_&pi;_/2) and
 >
 >  1.  The following is a derivation of this algorithm.  Write&mdash;
 
-$$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$ where&mdash;
+$$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$
+where&mdash;
 
-$$g(\mu) = 1-\sin((1-\mu) \pi/2)$$ $$= \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}$$ $$= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.$$  This is a [**convex combination**](#Convex_Combinations) of $w_n(1)$ and $\frac{w_n(\mu)}{w_n(1)}$ &mdash; to simulate $g(\mu)$, first an integer _n_ is chosen with probability $w_n(1)$ and then a coin that shows heads with probability $\frac{w_n(\mu)}{w_n(1)}$ is flipped.  Finally, to simulate $f(\lambda)$, the input coin is "inverted" ($\mu = 1-\lambda$), $g(\mu)$ is simulated using the "inverted" coin, and 1 minus the simulation result is returned.<br><br>As given above, each term $w_n(\mu)$ is a polynomial in $\mu$, and is strictly increasing and equals 1 or less everywhere on the closed unit interval, and $w_n(1)$ is a constant so that $\frac{w_n(\mu)}{w_n(1)}$ remains a polynomial.  Each polynomial $\frac{w_n(\mu)}{w_n(1)}$ can be transformed into a polynomial that has the following Bernstein coefficients: $$(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1),$$ where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}} = 16 (n+1) (4n+3)$.  These are the Bernstein coefficients used in steps 4 through 7 of the algorithm above.
+$$g(\mu) = 1-\sin((1-\mu) \pi/2)$$ $$= \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}$$ $$= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.$$  This is a [**convex combination**](#Convex_Combinations) of $w_n(1)$ and $\frac{w_n(\mu)}{w_n(1)}$ &mdash; to simulate $g(\mu)$, first an integer _n_ is chosen with probability $w_n(1)$ and then a coin that shows heads with probability $\frac{w_n(\mu)}{w_n(1)}$ is flipped.  Finally, to simulate $f(\lambda)$, the input coin is "inverted" ($\mu = 1-\lambda$), $g(\mu)$ is simulated using the "inverted" coin, and 1 minus the simulation result is returned.<br><br>As given above, each term $w_n(\mu)$ is a polynomial in $\mu$, and is strictly increasing and equals 1 or less everywhere on the closed unit interval, and $w_n(1)$ is a constant so that $\frac{w_n(\mu)}{w_n(1)}$ remains a polynomial.  Each polynomial $\frac{w_n(\mu)}{w_n(1)}$ can be transformed into a polynomial that has the following Bernstein coefficients: $$(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1),$$
+where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}} = 16 (n+1) (4n+3)$.  These are the Bernstein coefficients used in steps 4 through 7 of the algorithm above.
 >
 > 2. sin(_&lambda;_\*_&pi;_/2) = cos((1&minus;_&lambda;_)\*_&pi;_/2).
 >
