@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/07/13"><meta name="citation_online_date" content="2024/07/13"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/07/27"><meta name="citation_online_date" content="2024/07/27"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -653,19 +653,29 @@
   <li>If $r$ is even and greater than 0, $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}$ for every integer $n\ge 2$, where $\gamma$ is 8 if $r\le 42$ and 6 otherwise.</li>
 </ol>
 
-<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)<sup id="fnref:37" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup>, which applies for any integer $r\ge 0$, bounds that Lagrange remainder <sup id="fnref:38" role="doc-noteref"><a href="#fn:38" class="footnote" rel="footnote">38</a></sup>.  By that result, because $f$’s $r$-th derivative is Lipschitz continuous—
-\(\text{abs}(R_{f,r}(\lambda, x_0))\le \frac{\text{abs}(\lambda-x_0)^r}{r!} M \frac{\text{abs}(\lambda-x_0)}{r+1}=M\frac{\text{abs}(\lambda-x_0)^{r+1}}{(r+1)!}.\)</p>
+<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)<sup id="fnref:37" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup>, which applies for any integer $r\ge 0$, bounds that Lagrange remainder <sup id="fnref:38" role="doc-noteref"><a href="#fn:38" class="footnote" rel="footnote">38</a></sup>.  By that result, because $f$’s $r$-th derivative is Lipschitz continuous—</p>
+
+\[\text{abs}(R_{f,r}(\lambda, x_0))\le \frac{\text{abs}(\lambda-x_0)^r}{r!} M \frac{\text{abs}(\lambda-x_0)}{r+1}=M\frac{\text{abs}(\lambda-x_0)^{r+1}}{(r+1)!}.\]
 
 <p>The goal is now to bound the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$.  This is easiest to do if $r$ is odd.</p>
 
-<p>If $r$ is odd, then $(\lambda-x_0)^{r+1} = \text{abs}(\lambda-x_0)^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows: \(\text{abs}(B_n((\lambda-x_0)^{r+1})(x_0)) \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),\) where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore—
-\(\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!} \text{abs}(B_n((\lambda-x_0)^{r+1})(x_0))\) \(\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.\)</p>
+<p>If $r$ is odd, then $(\lambda-x_0)^{r+1} = \text{abs}(\lambda-x_0)^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows:</p>
 
-<p>If $r$ is 0, then the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{1}$ is bounded by $\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$ (Cheng 1983)<sup id="fnref:39" role="doc-noteref"><a href="#fn:39" class="footnote" rel="footnote">39</a></sup>, so—
-\(\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.\)</p>
+<p>\(\text{abs}(B_n((\lambda-x_0)^{r+1})(x_0)) \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),\)\</p>
 
-<p>If $r$ is even and greater than 0, the Bernstein polynomial for $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows for every $n\ge 2$, using <a href="https://mathworld.wolfram.com/SchwarzsInequality.html"><strong>Schwarz’s inequality</strong></a> (see also Bojanic and Shisha [1975]<sup id="fnref:40" role="doc-noteref"><a href="#fn:40" class="footnote" rel="footnote">40</a></sup> for the case $r=4$): \(B_n(\text{abs}(\lambda-x_0)^{r+1})(x_0)=B_n((\text{abs}(\lambda-x_0)^{r/2}\text{abs}(\lambda-x_0)^{(r+2)/2})^2)(x_0)\) \(\le\sqrt{\text{abs}(S_{n,r}(x_0))}\sqrt{\text{abs}(S_{n,r+2}(x_0))}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}\) \(\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},\)where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore—
-\(\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}.\)□</p>
+<p>where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore—</p>
+
+\[\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!} \text{abs}(B_n((\lambda-x_0)^{r+1})(x_0))\]
+
+\[\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.\]
+
+<p>If $r$ is 0, then the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{1}$ is bounded by $\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$ (Cheng 1983)<sup id="fnref:39" role="doc-noteref"><a href="#fn:39" class="footnote" rel="footnote">39</a></sup>, so—</p>
+
+\[\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.\]
+
+<p>If $r$ is even and greater than 0, the Bernstein polynomial for $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows for every $n\ge 2$, using <a href="https://mathworld.wolfram.com/SchwarzsInequality.html"><strong>Schwarz’s inequality</strong></a> (see also Bojanic and Shisha [1975]<sup id="fnref:40" role="doc-noteref"><a href="#fn:40" class="footnote" rel="footnote">40</a></sup> for the case $r=4$): \(B_n(\text{abs}(\lambda-x_0)^{r+1})(x_0)=B_n((\text{abs}(\lambda-x_0)^{r/2}\text{abs}(\lambda-x_0)^{(r+2)/2})^2)(x_0)\) \(\le\sqrt{\text{abs}(S_{n,r}(x_0))}\sqrt{\text{abs}(S_{n,r+2}(x_0))}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}\) \(\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},\)where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore—</p>
+
+<p>\(\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}.\)□</p>
 
 <blockquote>
   <p><strong>Notes:</strong></p>
@@ -815,15 +825,9 @@
     <li>
       <p>A function $f(x)$ is <em>analytic</em> at a point $z$ if there is a positive number $r$ such that $f$ is writable as—</p>
 
-      <table>
-        <tbody>
-          <tr>
-            <td>\(f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,\) whenever $</td>
-            <td>\lambda-z</td>
-            <td>&lt;r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the <em>radius of convergence</em> of $f$ at $z$.</td>
-          </tr>
-        </tbody>
-      </table>
+\[f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,\]
+
+      <p>whenever $\text{abs}(\lambda-z)&lt;r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the <em>radius of convergence</em> of $f$ at $z$.</p>
     </li>
   </ol>
 </blockquote>

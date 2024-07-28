@@ -509,17 +509,27 @@ By Result B5A, $c+d=264$ when $r=2$, $c+d\lt 6165.27$ when $r=3$, and $c+d=19667
 4. If $r$ is even and greater than 0, $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}$ for every integer $n\ge 2$, where $\gamma$ is 8 if $r\le 42$ and 6 otherwise.
 
 _Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Lagrange remainder_,  $R_{f,r}(\lambda, x_0)$. A result found in Gonska et al. (2006)[^37], which applies for any integer $r\ge 0$, bounds that Lagrange remainder [^38].  By that result, because $f$'s $r$-th derivative is Lipschitz continuous&mdash;
+
 $$\text{abs}(R_{f,r}(\lambda, x_0))\le \frac{\text{abs}(\lambda-x_0)^r}{r!} M \frac{\text{abs}(\lambda-x_0)}{r+1}=M\frac{\text{abs}(\lambda-x_0)^{r+1}}{(r+1)!}.$$
 
 The goal is now to bound the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$.  This is easiest to do if $r$ is odd.
 
-If $r$ is odd, then $(\lambda-x_0)^{r+1} = \text{abs}(\lambda-x_0)^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows: $$\text{abs}(B_n((\lambda-x_0)^{r+1})(x_0)) \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),$$ where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore&mdash;
-$$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!} \text{abs}(B_n((\lambda-x_0)^{r+1})(x_0))$$ $$\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.$$
+If $r$ is odd, then $(\lambda-x_0)^{r+1} = \text{abs}(\lambda-x_0)^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows:
+
+$$\text{abs}(B_n((\lambda-x_0)^{r+1})(x_0)) \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),$$\
+
+where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore&mdash;
+
+$$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!} \text{abs}(B_n((\lambda-x_0)^{r+1})(x_0))$$
+
+$$\le \frac{M}{(r+1)!}\frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \frac{M}{(((r+1)/2)!)(\beta n)^{(r+1)/2}}.$$
 
 If $r$ is 0, then the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{1}$ is bounded by $\sqrt{x_0(1-x_0)/n}$ for every integer $n\ge 1$ (Cheng 1983)[^39], so&mdash;
+
 $$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$
 
 If $r$ is even and greater than 0, the Bernstein polynomial for $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows for every $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanic and Shisha [1975][^40] for the case $r=4$): $$B_n(\text{abs}(\lambda-x_0)^{r+1})(x_0)=B_n((\text{abs}(\lambda-x_0)^{r/2}\text{abs}(\lambda-x_0)^{(r+2)/2})^2)(x_0)$$ $$\le\sqrt{\text{abs}(S_{n,r}(x_0))}\sqrt{\text{abs}(S_{n,r+2}(x_0))}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$ $$\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},$$where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore&mdash;
+
 $$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$&#x25a1;
 
 > **Notes:**
@@ -618,7 +628,9 @@ $$p(\lambda)=\sum_{k=0}^n c_k T_k(2\frac{\lambda-a}{b-a}-1),$$ where&mdash;
 > 3. It would be of interest to build Chebyshev-like interpolants that sample $f(\lambda)$ at _rational_ values of $\lambda$ that get closer to the Chebyshev points (e.g., $\cos(j\pi/n)$) with increasing $n$, and to find results that provide explicit bounds (with no hidden constants) on the approximation error that are close to those for Chebyshev interpolants.
 > 4. A function $f(x)$ is _analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash;
 >
->     $$f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever $|\lambda-z|<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the _radius of convergence_ of $f$ at $z$.
+>     $$f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$
+>
+>     whenever $\text{abs}(\lambda-z)<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the _radius of convergence_ of $f$ at $z$.
 
 <a id=License></a>
 
