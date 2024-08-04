@@ -12,7 +12,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 
 | Instead of just saying... | Try saying... | Notes |
  --- | ---- | -- |
-| Also, ... | in addition, furthermore, moreover, further, plus, to add to that, on top of that, what is more, apart from that | |
+| Also, ... | in addition, furthermore, moreover, further, plus, besides, to add to that, on top of that, what is more, apart from that | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
 | another [number] (e.g., _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
 | bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant, illegitimate actor | |
@@ -41,7 +41,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, talk with, converse with, chat with | Suggested by E. Bernal. |
 | [someone] says (that)... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
 | [someone] says (that)... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that... | Expressing an opinion. |
-| [someone] says (that) [something] is... | [someone] considers [something] (as)...<br>[someone] labels [something] (as)...<br>[someone] finds [something]...<br>[someone] calls [something]...<br>[someone] qualifies [something] as...<br>[something] is ... to [someone]<br>for [someone], [something] is... | |
+| [someone] says (that) [something] is... | [someone] considers [something] (as)...<br>[someone] labels [something] (as)...<br>[someone] finds [something]...<br>[someone] calls [something]...<br>[something] declares [something] (as)...<br>[someone] qualifies [something] as...<br>[something] is ... to [someone]<br>for [someone], [something] is... | |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
 | The fact that... | That... | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
@@ -80,7 +80,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | is something that is | is |Inspired by E. Bernal. |
 | it is midnight tonight | it is midnight |Inspired by E. Bernal. |
 | least favorite | least desired |Inspired by E. Bernal. |
-| literally (_in the sense of 'absolutely'_) | absolutely, totally, utterly, downright, completely, certainly; [leave out]\*\*\* | |
+| literally (_in the sense of 'absolutely'_) | absolutely, totally, utterly, altogether, downright, completely, certainly; [leave out]\*\*\* | |
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
 | myth (_when a story is not meant_) | falsehood, untruth | |
