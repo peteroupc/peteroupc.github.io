@@ -8,7 +8,7 @@
 
 /*
  Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under Creative Commons Zero (CC0): https://creativecommons.org/publicdomain/zero/1.0/
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 // Adapted by Peter O. from gears.c (3D Gears), a public domain program
 // written by Brian Paul.
