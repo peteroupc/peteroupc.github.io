@@ -20,7 +20,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | cause | lead to, provoke, engender, occasion, beget, breed, bring on, bring about, give rise to, produce, result in | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
 | focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, concern, relate to, be anchored on, be devoted to, devote [_itself_] to | |
-| focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to | |
+| focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to, oriented on | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
 | happen | occur, manifest, produce itself, present itself, take place, unfold, come about, come to pass. | Inspired by E. Bernal. |
