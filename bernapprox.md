@@ -516,7 +516,7 @@ The goal is now to bound the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r
 
 If $r$ is odd, then $(\lambda-x_0)^{r+1} = \text{abs}(\lambda-x_0)^{r+1}$, so by Results B4 and B6, the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows:
 
-$$\text{abs}(B_n((\lambda-x_0)^{r+1})(x_0)) \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),$$\
+$$\text{abs}(B_n((\lambda-x_0)^{r+1})(x_0)) \le \frac{(r+1)!}{(((r+1)/2)!)\beta^{(r+1)/2}}\frac{1}{n^{(r+1)/2}} = \sigma(r,n),$$
 
 where $\beta$ is 8 if $r\le 43$ and 6 otherwise.  Therefore&mdash;
 
@@ -528,9 +528,19 @@ If $r$ is 0, then the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{1}$ is b
 
 $$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!}\sqrt{x_0(1-x_0)/n}\le \frac{M}{(r+1)!}\frac{1}{2n^{1/2}}=\frac{M}{2n^{1/2}}.$$
 
-If $r$ is even and greater than 0, the Bernstein polynomial for $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows for every $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanic and Shisha [1975][^40] for the case $r=4$): $$B_n(\text{abs}(\lambda-x_0)^{r+1})(x_0)=B_n((\text{abs}(\lambda-x_0)^{r/2}\text{abs}(\lambda-x_0)^{(r+2)/2})^2)(x_0)$$ $$\le\sqrt{\text{abs}(S_{n,r}(x_0))}\sqrt{\text{abs}(S_{n,r+2}(x_0))}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$ $$\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},$$where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore&mdash;
+If $r$ is even and greater than 0, the Bernstein polynomial for $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded as follows for every $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanic and Shisha [1975][^40] for the case $r=4$):
 
-$$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$&#x25a1;
+$$B_n(\text{abs}(\lambda-x_0)^{r+1})(x_0)=B_n((\text{abs}(\lambda-x_0)^{r/2}\text{abs}(\lambda-x_0)^{(r+2)/2})^2)(x_0)$$
+
+$$\le\sqrt{\text{abs}(S_{n,r}(x_0))}\sqrt{\text{abs}(S_{n,r+2}(x_0))}\le\sqrt{\sigma(r,n)}\sqrt{\sigma(r+2,n)}$$
+
+$$\le\frac{1}{n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2},$$
+
+where $\gamma$ is 8 if $r\le 42$ and 6 otherwise. Therefore&mdash;
+
+$$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!\cdot n^{(r+1)/2}}\left(\frac{2\cdot(r+1)!(r)!}{\gamma^{r+1}((r/2)!)^2}\right)^{1/2}. $$
+
+&#x25a1;
 
 > **Notes:**
 >
@@ -557,7 +567,11 @@ Because $f$ has a Lipschitz continuous third derivative, $f$ has the Lagrange re
 
 It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^42], Butzer (1955)[^6], May (1976)[^43].  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.
 
-Therefore&mdash;$$\text{abs}(L_{3,n/4}(f(\lambda))(x_0) - f(x_0)) = \text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))).$$ Now denote $\sigma_n$ as the maximum of $|B_n(R_{f,3}(\lambda, x_0))(x_0)|$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash;
+Therefore&mdash;
+
+$$\text{abs}(L_{3,n/4}(f(\lambda))(x_0) - f(x_0)) = \text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))).$$
+
+Now denote $\sigma_n$ as the maximum of $\text{abs}(B_n(R_{f,3}(\lambda, x_0))(x_0))$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash;
 $$\text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$ $$\le (1/3)\frac{M_4}{128 (n/4)^2} + 2\frac{M_4}{128 (n/2)^2} + (8/3)\frac{M_4}{128 n^2} =M_4/(8 n^2).$$ &#x25a1;
 
 The proof of Proposition B10 shows how to prove an upper bound on the approximation error for polynomials written as&mdash;
@@ -566,7 +580,10 @@ $$P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B
 **Proposition B10A:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ be the _Lorentz operator_ of order 2 (Holtz et al. 2011\)[^7], (Lorentz 1966)[^9], which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.
 
 _Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^7] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;
-$$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f'',0}(\lambda,x_0)))$$ $$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2}).$$ &#x25a1;
+
+$$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f'',0}(\lambda,x_0)))$$ $$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2}).$$
+
+&#x25a1;
 
 **Corollary B10B:** Let $f(\lambda)$ have a continuous second derivative on the closed unit interval.  Then $B_n(f)$ is within $\frac{M_2}{8n}$ of $f$, where $M_2$ is the maximum of that second derivative's absolute value or greater.
 
@@ -574,19 +591,47 @@ _Proof_: Follows from Lorentz (1963)[^10] and the well-known fact that $M_2$ is 
 
 In the following propositions, $f^{(r)}$ means the $r$-th derivative of the function $f$ and $\max(\text{abs}(f))$ means the maximum of the absolute value of the function $f$.
 
-**Proposition B10C:** Let $f(\lambda)$ have a Hölder continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_2$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2},$$ where $M_2$ is the maximum of that second derivative's absolute value or greater.
+**Proposition B10C:** Let $f(\lambda)$ have a Hölder continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_2$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
+
+$$\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2},$$
+
+where $M_2$ is the maximum of that second derivative's absolute value or greater.
 
 _Proof_: This proof is inspired by a result in Draganov (2004, Theorem 4.1)[^45].
 
-The error to be bounded can be expressed as $\text{abs}((B_n(f)-f)( B_n(f)-f ))$.  Following Corollary B10B: $$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \max(\text{abs}((B_n(f))^{(2)}-f^{(2)})).\tag{B10C-1}$$ It thus remains to estimate the right-hand side of the bound.  A result by Knoop and Pottinger (1976)[^25], which works for every $n\ge 3$, is what is known as a _simultaneous approximation_ error bound, showing that the second derivative of the Bernstein polynomial approaches that of $f$ as $n$ increases.  Using this result: $$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2},$$ so&mdash;
-$$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2}\right)$$ $$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$ &#x25a1;
+The error to be bounded can be expressed as $\text{abs}((B_n(f)-f)( B_n(f)-f ))$.  Following Corollary B10B:
+
+$$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \max(\text{abs}((B_n(f))^{(2)}-f^{(2)})).\tag{B10C-1}$$
+
+It thus remains to estimate the right-hand side of the bound.  A result by Knoop and Pottinger (1976)[^25], which works for every $n\ge 3$, is what is known as a _simultaneous approximation_ error bound, showing that the second derivative of the Bernstein polynomial approaches that of $f$ as $n$ increases.  Using this result:
+
+$$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2},$$
+
+so&mdash;
+
+$$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+(5/4) H_2/n^{\alpha/2}\right)$$
+
+$$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{32}\frac{1}{n^{1+\alpha/2}}.$$
+
+&#x25a1;
 
 > **Note**: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be non-negative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda <1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.
 
-**Proposition B10D:** Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows: $$\text{abs}(f-U_{n,2}(f))\le \frac{\max(\text{abs}(f^{(2)}))+\max(\text{abs}(f^{(3)}))}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$ $$\le \frac{9H_3+8\max(\text{abs}(f^{(2)}))+8\max(\text{abs}(f^{(3)}))}{64n^{(3+\alpha)/2}}.$$
+**Proposition B10D:** Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
-_Proof_: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^46], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result: $$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$ $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$ where $r=2$, $M_2 = \max(|f^{(2)}|)$, and $M_3=\max(|f^{(3)}|)$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^47].  Therefore&mdash;
-$$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9H_3}{64 n^{(3+\alpha)/2}}\le \frac{9H_3+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$ &#x25a1;
+$$\text{abs}(f-U_{n,2}(f))\le \frac{\max(\text{abs}(f^{(2)}))+\max(\text{abs}(f^{(3)}))}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$ $$\le \frac{9H_3+8\max(\text{abs}(f^{(2)}))+8\max(\text{abs}(f^{(3)}))}{64n^{(3+\alpha)/2}}.$$
+
+_Proof_: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^46], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:
+
+$$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$
+
+$$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$
+
+where $r=2$, $M_2 = \max(\text{abs}(f^{(2)}))$, and $M_3=\max(\text{abs}(f^{(3)}))$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^47].  Therefore&mdash;
+
+$$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right)$$ $$\le \frac{M_2+M_3}{8n^2} + \frac{9H_3}{64 n^{(3+\alpha)/2}}\le \frac{9H_3+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$
+
+&#x25a1;
 
 In a similar way, it's possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder continuous fourth or fifth derivative, by expressing the error bound as $\text{abs}((B_n(f)-f)((B_n(f)-f)(B_n(f)-f)))$ and replacing the values for $M_2$, $M_3$, and $H_3$ in the bound proved at the end of Proposition B10D with upper bounds for $\text{abs}((B_n(f))^{(2)}-f^{(2)})$, $\text{abs}((B_n(f))^{(3)}-f^{(3)})$, and $\text{abs}((B_n(f))^{(4)}-f^{(4)})$, respectively.
 

@@ -833,7 +833,7 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
         2. If _z_ is 0 and _P_(_t_) is less than 0, return 1.
     5. Set _r_ to _r_\*2+_z_, then multiply _d_ by 2.
 
-> **Example** (Penaud and Roques 2002\)[^35]\:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  When 0 &le; _x_ &le; 1, this is a polynomial whose only root 1 is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_ or about 0.618, and _P_(0) > 0.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
+> **Example** (Penaud and Roques 2002\)[^35]\:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  When 0 &le; _x_ &le; 1, this is a polynomial whose only root is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_ or about 0.618, and _P_(0) > 0.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
 
 <a id=Certain_Converging_Series></a>
 
@@ -914,20 +914,23 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 >     - For each integer _n_&ge;1, if $g(n)>0$, the function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories".
 >
 >     Then by **generating _X_ and outputting 0 if _X_ is 0, and otherwise flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, the probability _f_(_&lambda;_) can be simulated as the convex combination&mdash;
-
-$$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019\)[^24].
+>
+>     $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019\)[^24].
 >
 > 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1 (except _T_ must equal 1), and let $c$ be a constant written as&mdash;
-
-$$c=a_1+a_2+a_3+...,$$
-where&mdash;
+>
+>     $$c=a_1+a_2+a_3+...,$$
+>
+>     where&mdash;
 >
 >     - $a_n$ are each 0 or greater and sum to 1 or less, and
 >     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 1$.
 >
 >     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_&minus;1</sub>/_g_(_X_)**, the probability  _c_ can be simulated as the convex combination&mdash;
-
-$$f(\lambda)=g(1) \frac{a_1}{g(1)} + g(2) \frac{a_2}{g(2)} + ...,$$ letting 0/0 = 0.
+>
+>     $$f(\lambda)=g(1) \frac{a_1}{g(1)} + g(2) \frac{a_2}{g(2)} + ...,$$
+>
+>    letting 0/0 = 0.
 >
 > **Examples:**
 >
@@ -944,7 +947,7 @@ $$f(\lambda)=g(1) \frac{a_1}{g(1)} + g(2) \frac{a_2}{g(2)} + ...,$$ letting 0/0 
 >
 >     Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the _Szász operator_ (or _Szász&ndash;Mirakyan operator_) of $f$ of degree $n$ (e.g., Szász (1950)[^44]).  Indeed, the Szász operator can be written as a convex combination with $g(i)$ equal to the probability of getting $i$ in step 1 and with $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012\)[^7], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.
 > 8. **The original Bernoulli factories.**  Keane and O'Brien's \(1994\)[^2] paper introducing Bernoulli factories showed that any Bernoulli factory function $f(\lambda)$ can be written as a convex combination of polynomials.  In their proof, $g(i) = (1/4)\cdot(3/4)^{i-1}$ (and $g(0)=0$), and each $h_i(\lambda)$ is a polynomial, not necessarily of degree _i_, whose Bernstein coefficients are each either 0 or 1 (see "[**Certain Polynomials**](#Certain_Polynomials)").
-> 9. **Polynomials to zero-and-one polynomials.** Suppose $f(\lambda)$ is a polynomial of degree-$n$  and each of its Bernstein coefficients $(a[0], a[1], ..., a[n])$ (see "[**Certain Polynomials**](#Certain_Polynomials)") is 0 or greater and 1 or less. Then $f$ can be written as a convex combination of polynomials with only 0 and 1 as Bernstein coefficients.<br>Specifically, $g(i)=(1/2)^i$ and $g(0)=0$, and $h_i(\lambda)$ is a polynomial whose Bernstein coefficients are $(b[i][0], b[i][1], ..., b[i][n])$, where $b[i][j]$ is 1 if $a[j]$ is 1 or if floor($a[j]\cdot 2^i$) (or the $i$-th binary digit after the point in $a[j]$'s binary expansion) is odd[^25], or 0 otherwise.
+> 9. **Polynomials to zero-and-one polynomials.** Suppose $f(\lambda)$ is a polynomial of degree $n$  and each of its Bernstein coefficients $(a[0], a[1], ..., a[n])$ (see "[**Certain Polynomials**](#Certain_Polynomials)") is 0 or greater and 1 or less. Then $f$ can be written as a convex combination of polynomials with only 0 and 1 as Bernstein coefficients.<br>Specifically, $g(i)=(1/2)^i$ and $g(0)=0$, and $h_i(\lambda)$ is a polynomial whose Bernstein coefficients are $(b[i][0], b[i][1], ..., b[i][n])$, where $b[i][j]$ is 1 if $a[j]$ is 1 or if floor($a[j]\cdot 2^i$) (or the $i$-th binary digit after the point in $a[j]$'s binary expansion) is odd[^25], or 0 otherwise.
 
 The previous algorithm can be generalized further, so that an input coin that simulates the probability _&lambda;_ helps generate the random integer in step 1.  Now, the overall algorithm returns 1 with probability&mdash;
 
@@ -1002,8 +1005,8 @@ In addition, the set of integers to choose from can be infinite.  This algorithm
 >
 > 1. Step 1 of this algorithm is incomplete, since it doesn't explain how to generate $X$ exactly.  That depends on the weights $g(k,\lambda)$.
 > 2. The probability that $s$ many values of _X_ are rejected by this algorithm is $p(1 − p)^s$, where&mdash;
-
-$$p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda)}.$$
+>
+> $$p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda)}.$$
 >
 > **Example:** Step 1 can read "Flip the input coin for _&lambda;_ repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way." Then step 1 generates _X_ with probability $g(X,\lambda)=\lambda^X (1-\lambda)$.[^45]
 
@@ -1031,7 +1034,7 @@ The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the inp
 >
 > **Examples:**
 >
-> 1. The following is an example from the Flajolet et al. paper. An _X_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree: "2. If _X_ is 0, return 0.  Otherwise, set _i_ to 1 and _d_ to 1.; 2a. Generate 1 or 0 with equal probability (that is, either 0 or 1, chosen with equal probability), then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise.; 2b. Add 1 to _i_. Then, if _i_ < _X_ and _d_ > 0, go to step 3a.; 2c. Return 1 if _d_ is 0 and _i_ is _X_, or 0 otherwise."
+> 1. The following is an example from the Flajolet et al. paper. An _X_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree (a tree structure where each node can have three child nodes or none): "2. If _X_ is 0, return 0.  Otherwise, set _i_ to 1 and _d_ to 1.; 2a. Generate 1 or 0 with equal probability (that is, either 0 or 1, chosen with equal probability), then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise.; 2b. Add 1 to _i_. Then, if _i_ < _X_ and _d_ > 0, go to step 3a.; 2c. Return 1 if _d_ is 0 and _i_ is _X_, or 0 otherwise."
 > 2. $h_X(\lambda)$ can have the form&mdash;
 >
 >     $${X\choose X/t}\cdot(1-\mathtt{Coin}(\lambda))^{X-X/t}\cdot(\mathtt{Coin}(\lambda))^{X/t},$$
@@ -1060,7 +1063,7 @@ The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the inp
 >
 >     $$\sum_{m=0}^X V(X,m) (\mathtt{Coin}(\lambda))^m (1-\mathtt{Coin}(\lambda))^{X-m},$$
 >
-where $V(X,m)$ satisfies $0\le V(X,m)\le {X\choose m}$ and is the number of $X$-letter words that have $m$ heads and meet that condition, so that&mdash;
+>     where $V(X,m)$ satisfies $0\le V(X,m)\le {X\choose m}$ and is the number of $X$-letter words that have $m$ heads and meet that condition, so that&mdash;
 >
 >     $$W(X) = h_X(\lambda) (1/\mathtt{Coin}(\lambda))^X = \sum_{m=0}^X V(X,m) \left(\frac{1-\mathtt{Coin}(\lambda)}{\mathtt{Coin}(\lambda)}\right)^{X-m}.$$
 
@@ -1111,7 +1114,9 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 >
 > 5. For the class of _alternating permutations of odd size_ (see example 1), step 2 in **Algorithm BR** can be implemented as in example 4, except 2a reads: "(2a.) (Limited to odd-sized permutations.) If _X_ is even[^27], reject _X_ (and go to step 1)." (Flajolet et al. 2010, sec. 2.2\)[^1].
 > 6. By computing&mdash;
+>
 >     $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$
+>
 >     (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), it is found that the von Neumann schema's output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$, where $sinh$ is the hyperbolic sine function.
 > 7. The _X_ generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because **Algorithm BR** is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if _X_ is a Poisson random variate with mean _z_<sup>2</sup>/4, where _z_ &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
 

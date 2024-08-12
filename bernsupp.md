@@ -347,14 +347,16 @@ The following table summarizes the rate of simulation (in terms of the number of
 | Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
 | Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_, and for large enough _n_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011, Theorem 13\)[^15]. |
 | Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_, and for large enough _n_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011, Theorem 8\)[^15]. Assumes _f_ is bounded away from 0 and 1. |
-| "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^13]. | If and only if _f_ is analytic at every point in its domain (see note below) (Nacu and Peres 2005\)[^1].   |
+| "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially or faster as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^13]. | If and only if _f_ is analytic at every point in its domain (see note below) (Nacu and Peres 2005\)[^1].   |
 | Average number of flips greater than or equal to (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^14]. |
 
 > **Note:** A function $f(\lambda)$ is:
 >
 > - _Analytic_ at a point $z$ if there is a positive number $r$ such that $f$ is writable as&mdash;
 >
->      $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$ whenever abs($\lambda-z$) &lt; $r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
+>      $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$
+>
+>      whenever abs($\lambda-z$) &lt; $r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
 > - In the _Zygmund class_ if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon>0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two "smaller" classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
 
 <a id=Notes></a>
