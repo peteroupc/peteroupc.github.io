@@ -447,7 +447,10 @@ _Proof:_ By inspection, $f(x)$ is a power series and is nonnegative wherever $x\
 Since all of these terms have a maximum at 1 on the domain, so does their sum.
 
 The derivative of $f$ is&mdash;
-$$f'(x) = 1\cdot a_1 x^0 + ... + i\cdot a_i x^{i-1} + ...,$$ which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f'$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.
+
+$$f'(x) = 1\cdot a_1 x^0 + ... + i\cdot a_i x^{i-1} + ...,$$
+
+which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f'$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.
 
 Now, since the second derivative is nonnegative wherever $x\ge 0$, and thus on its domain, $f$ is convex, which completes the proof. &#x25a1;
 
@@ -557,7 +560,7 @@ $$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!\cdot n^{(r+1)/
 > 1. If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor's theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^41] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)).  Thus, by this estimate, $\text{abs}(R_{f,r}(\lambda, x_0)) \le \frac{M}{r!} (\lambda-x_0)^r.$
 > 2. It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded in this way (Lorentz 1966)[^9].
 
-**Corollary B9A**: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative's Lipschitz constant or greater.  Then, for every $0\le x_0 \le 1$:
+**Corollary B9A**: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative's Lipschitz constant or greater.  Let $R_{f,r}(\lambda, x_0)$ be as in Lemma B9.  Then, for every $0\le x_0 \le 1$:
 
 | If $r$ is: | Then $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le$ ... |
  --- | --- |
@@ -597,7 +600,7 @@ $$P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B
 
 **Proposition B10A:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ be the _Lorentz operator_ of order 2 (Holtz et al. 2011\)[^7], (Lorentz 1966)[^9], which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.
 
-_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^7] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f'',0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;
+_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14\)[^7] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f\prime\prime,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;
 
 $$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f'',0}(\lambda,x_0)))$$
 

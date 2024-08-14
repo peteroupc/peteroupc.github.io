@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/08/12"><meta name="citation_online_date" content="2024/08/12"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/08/13"><meta name="citation_online_date" content="2024/08/13"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -581,8 +581,11 @@
 
 <p>Since all of these terms have a maximum at 1 on the domain, so does their sum.</p>
 
-<p>The derivative of $f$ is—
-\(f'(x) = 1\cdot a_1 x^0 + ... + i\cdot a_i x^{i-1} + ...,\) which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f’$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.</p>
+<p>The derivative of $f$ is—</p>
+
+\[f'(x) = 1\cdot a_1 x^0 + ... + i\cdot a_i x^{i-1} + ...,\]
+
+<p>which is still a power series with nonnegative values of $a_n$, so the proof so far applies to $f’$ instead of $f$.  By induction, the proof so far applies to all derivatives of $f$, including its second derivative.</p>
 
 <p>Now, since the second derivative is nonnegative wherever $x\ge 0$, and thus on its domain, $f$ is convex, which completes the proof. □</p>
 
@@ -706,7 +709,7 @@
   </ol>
 </blockquote>
 
-<p><strong>Corollary B9A</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative’s Lipschitz constant or greater.  Then, for every $0\le x_0 \le 1$:</p>
+<p><strong>Corollary B9A</strong>: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative’s Lipschitz constant or greater.  Let $R_{f,r}(\lambda, x_0)$ be as in Lemma B9.  Then, for every $0\le x_0 \le 1$:</p>
 
 <table>
   <thead>
@@ -775,7 +778,7 @@
 
 <p><strong>Proposition B10A:</strong> Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f’’)(x)$ be the <em>Lorentz operator</em> of order 2 (Holtz et al. 2011)<sup id="fnref:7:1" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, (Lorentz 1966)<sup id="fnref:9:2" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>, which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative’s Lipschitz constant or greater.</p>
 
-<p><em>Proof</em>: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup> and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f’’$, the second derivative of $f$, has the Lagrange remainder $R_{f’‘,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as—</p>
+<p><em>Proof</em>: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup> and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f’’$, the second derivative of $f$, has the Lagrange remainder $R_{f\prime\prime,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as—</p>
 
 \[\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f'',0}(\lambda,x_0)))\]
 
