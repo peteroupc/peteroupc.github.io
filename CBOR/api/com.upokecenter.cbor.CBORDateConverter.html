@@ -202,6 +202,13 @@ public static final CBORDateConverter UntaggedNumber A converter object where Fr
  otherwise.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+  <li><code>NullPointerException</code> - The parameter <code>year</code> or <code>
+ lesserFields</code> is null, or contains fewer elements than required.</li>
+</ul>
+
 <h3 id="datetimefieldstocborobject">DateTimeFieldsToCBORObject</h3>
 <pre>public CBORObject DateTimeFieldsToCBORObject(int smallYear, int month, int day) Converts a date/time in the form of a year, month, and day to a CBOR object.  The hour, minute, and second are treated as 00:00:00 by this method, and the  time offset is treated as 0 by this method.
 </pre>
