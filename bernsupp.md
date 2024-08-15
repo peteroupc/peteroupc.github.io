@@ -61,6 +61,7 @@ The following terms can describe a function $f(x)$, specifically how "well-behav
 - A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the function's "steepness" is no greater than that of _L_\*_x_.<br>If the function has a derivative on its domain, _L_ can be the maximum of the absolute value of that derivative.
 - A _convex_ function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes down, then it's convex.
 - A _concave_ function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes up, then it's concave.
+- The function $f$ is _bounded_ if there are two numbers $a$ and $b$ such that $a\le f(x)\le b$ whenever $x$ is in the function's domain.
 
 > **Note**: The "good behavior" of a function can be important when designing Bernoulli factory algorithms.  This page mostly cares how $f$ behaves when its domain is the closed unit interval, that is, when $0 \le x \le 1$.
 
@@ -356,7 +357,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 >
 >      $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$
 >
->      whenever abs($\lambda-z$) &lt; $r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
+>      for every point $\lambda$ satisfying abs($\lambda-z$) &lt; $r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
 > - In the _Zygmund class_ if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon>0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two "smaller" classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
 
 <a id=Notes></a>
@@ -506,13 +507,13 @@ Functions continuous except possibly at one point &rarr; Continuous functions &r
 
 **Finding parameters _&alpha;_ and _L_ for Hölder continuous functions.** If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (_&alpha;_) and Hölder constant (_L_) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.
 
-First, if $f$ has a continuous first derivative on its domain, then _&alpha;_ is 1 ($f$ is **Lipschitz continuous**) and _L_ is the maximum of the absolute value of that derivative.
+First, if $f$ has a bounded and continuous first derivative on its domain, then _&alpha;_ is 1 ($f$ is **Lipschitz continuous**) and _L_ is the maximum of the absolute value of that derivative.
 
 Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\text{abs}(\lambda-c))^\alpha)$, or 0 if $\lambda=c$, where $0\lt\alpha\le 1$ is a Hölder exponent to test. For a given $\alpha$, let $g(\lambda)$ be the maximum of $h(\lambda,c)$ over all points $c$ where $f$ has a "vertical slope" or the "steepest slope exhibited".  If $g(\lambda)$ is bounded for a given $\alpha$ on $f$'s domain (in this case, the closed unit interval), then $f$ is Hölder continuous with Hölder exponent $\alpha$ and Hölder constant (_L_) equal to or greater than the maximum value of $g(\lambda)$ on its domain.
 
 The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: `lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c, 0), h.subs(c,1)), (lamda, 0, 1))`.
 
-**Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the table below, if $f$ has a continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
+**Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the table below, if $f$ has a bounded and continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
 
 | Function $f(\lambda)$ | Derivative's Hölder exponent (_&alpha;_) and an upper bound of the derivative's Hölder constant (_L_): | Notes |
  ---- | ---- | ---- |
@@ -546,22 +547,31 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 - If $0\le\min(b_0, ..., b_m)\le\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by $m$.
 - If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash;
 
-    $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$ where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
+    $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}} - m\right),$$
+
+    where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
 - If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash;
 
-    $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$ where $\text{Pmin}$ is the _minimum_ value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
+    $$m+\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} - m\right),$$
+
+    where $\text{Pmin}$ is the _minimum_ value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19].
 - Suppose $m\ge 2$, that $b_0=0$ or $b_m=0$ or both, and that the following necessary conditions are satisfied (Mok and To 2008; Theorem 1 and Corollary 3)[^20]\:
 
     - For every $i$ such that $b_i\lt 0$, if $b_m=0$, there must be $j\gt i$ such that $b_j\gt 0$.
     - For every $i$ such that $b_i\lt 0$, if $b_0=0$, there must be $j\lt i$ such that $b_j\gt 0$.
-    - For every $i$ such that $1-b_i\lt 0$, if $1-b_m=0$, there must be $j\gt i$ such that $1-b_j\gt 0$.
-    - For every $i$ such that $1-b_i\lt 0$, if $1-b_0=0$, there must be $j\lt i$ such that $1-b_j\gt 0$.
+    - For every $i$ such that $b_i\gt 1$, if $b_m=1$, there must be $j\gt i$ such that $b_j\lt 1$.
+    - For every $i$ such that $b_i\gt 1$, if $b_0=1$, there must be $j\lt i$ such that $b_j\lt 1$.
 
     Then the coin-flipping degree is bounded above by&mdash;
 
-    $$ \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$ where&mdash;
+    $$ \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$
 
-    $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),$$ and where:
+    where&mdash;
+
+    $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),$$
+
+    and where:
+
     - $a_{\max} = \max(\max(0,\beta_0),  ..., \max(0, \beta_m))$.
     - $a_{\min}$ is the minimum of $(\beta_i{m\choose i})$ over all values of $i$ such that $\beta_i>0$.
     - $c$ is the smallest number $r$ that satisfies $FN(\lambda)/FP(\lambda)\le r$ where $0\lt\lambda\lt 1$.  $c$ can also be a greater number but less than 1.
@@ -590,7 +600,11 @@ In the following lemmas, let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be
 
 _Proof_: Consider the matrix that transforms a polynomial's Bernstein coefficients to "power" coefficients, which is $n\times n$ if the polynomial's degree is $n$ (Ray and Nataraj 2012, eq. (8))[^21].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$'s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding "power" coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;
 
-**Lemma:**  $\text{abs}(a_i)\le \text{abs}(b_i)$, where $b_i$ is the corresponding power coefficient of the following polynomial: $$q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,$$ and where $T_n(x)$ is the [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) of degree $n$.
+**Lemma:**  $\text{abs}(a_i)\le \text{abs}(b_i)$, where $b_i$ is the corresponding power coefficient of the following polynomial:
+
+$$q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,$$
+
+and where $T_n(x)$ is the [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) of degree $n$.
 
 See _MathOverflow_ for a [**proof of this lemma**](https://mathoverflow.net/questions/449135) by Fedor Petrov.
 
@@ -631,7 +645,9 @@ _Proof._
 2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on the closed unit interval, the result follows from part 1.
 3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f'(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^23], so&mdash;
 
-    $$E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$  By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)). &#x25a1;
+     $$E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$
+
+     By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)). &#x25a1;
 
 > **Notes:**
 >
@@ -644,7 +660,15 @@ _Proof._
 >     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^26].
 
-There are weaker bounds for Lemma 2, part 1, which work even if $f$'s modulus of continuity $\omega$ is not concave. According to Pascu et al. (2017, Lemma 5.1)[^27]\: $$\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y])) \le \omega(\delta) + \omega(\delta)\text{Var}[Y]/\delta^2,$$ where $f$ is a continuous function, $Y$ is a discrete random variable on a closed interval, and $\delta>0$.  Given that $Y = X/n$ (where $X$ is as in Lemma 2), taking $\delta=1/n^{1/2}$ leads to: $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))=\text{abs}(\mathbb{E}[f(Y)]-f(k/(2n)))\le\omega(1/n^{1/2}) (1+n\cdot\text{Var}[Y]),$$ and in turn, plugging in bounds for $\text{Var}[Y]$ leads to the following bounds for Lemma 2, part 1:
+There are weaker bounds for Lemma 2, part 1, which work even if $f$'s modulus of continuity $\omega$ is not concave. According to Pascu et al. (2017, Lemma 5.1)[^27]\:
+
+$$\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y])) \le \omega(\delta) + \omega(\delta)\text{Var}[Y]/\delta^2,$$
+
+where $f$ is a continuous function, $Y$ is a discrete random variable on a closed interval, and $\delta>0$.  Given that $Y = X/n$ (where $X$ is as in Lemma 2), taking $\delta=1/n^{1/2}$ leads to:
+
+$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))=\text{abs}(\mathbb{E}[f(Y)]-f(k/(2n)))\le\omega(1/n^{1/2}) (1+n\cdot\text{Var}[Y]),$$
+
+and in turn, plugging in bounds for $\text{Var}[Y]$ leads to the following bounds for Lemma 2, part 1:
 
 - $\omega(1/n^{1/2}) (1+n/(8n-4))$.
 - $\omega(1/n^{1/2}) (1+n/(7n)) = \frac{8}{7}\omega(1/n^{1/2})$ if n&ge;4.
@@ -652,14 +676,19 @@ There are weaker bounds for Lemma 2, part 1, which work even if $f$'s modulus of
 
 **Lemma 2A.**  _Let f(&lambda;) map the closed unit interval to itself, and let $C=15$.  Suppose $f$ is in the Zygmund class with constant $D$ or less.  Then, for every integer $n$ &ge; 1, the expression (1) in Lemma 2 is less than or equal to $(C/2) D\sqrt{1/(8n-4)}$.
 
-_Proof._ Strukov and Timan (1977)[^28] proved the following bound: $$\
-|\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])|\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$ where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values in a closed interval, such as the closed unit interval in this case.
+_Proof._ Strukov and Timan (1977)[^28] proved the following bound:
+
+$$\\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$
+
+where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values in a closed interval, such as the closed unit interval in this case.
 
 Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**[_Y_]) is less than or equal to 1/(8\*_n_&minus; 4), and the left-hand side of Strukov and Timan's bound is the same as the expression (1).
 
 Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Therefore, applying Strukov and Timan's bound and the bound on _Y_'s variance leads to&mdash;
 
-$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$ &#x25a1;
+$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$
+
+&#x25a1;
 
 > **Note:** A _second-order modulus of continuity_ is a nonnegative and nowhere decreasing function _&omega;_<sub>2</sub>(_h_) with _h_ &ge; 0, for which _&omega;<sub>2</sub>_(0) = 0, and for which abs($f(x)+f(y)-2 f((x+y)/2)$) &le; $\omega_2(\text{abs}((y-x)/2))$ whenever _f_ is continuous and _x_ and _y_ are in _f_'s domain.
 

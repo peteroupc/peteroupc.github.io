@@ -160,7 +160,9 @@ Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\la
 4. $f$'s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M_{n+1}/((n+1)!)$, and
 5. $f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.
 
-Then the $n$-th _Taylor polynomial_ centered at 0, given below, is within $\epsilon$ of $f$: $$P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,$$
+Then the $n$-th _Taylor polynomial_ centered at 0, given below, is within $\epsilon$ of $f$:
+
+$$P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,$$
 
 where $a_0 = f(0)$ and $a_i = f^{(i)}(0)/(i!)$ for $i\ge 1$.
 
@@ -480,7 +482,7 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^32], showi
 
 _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^10] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
-The following results deal with useful quantities when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows:
+The following results deal with useful quantities when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made, where $n$ is 1 or greater.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows:
 
 $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k},$$
 
@@ -705,7 +707,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
 >
 >     $$f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$
 >
->     whenever $\text{abs}(\lambda-z)<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the _radius of convergence_ of $f$ at $z$.
+>     for every point $\lambda$ satisfying $\text{abs}(\lambda-z)<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the _radius of convergence_ of $f$ at $z$.
 
 <a id=License></a>
 
