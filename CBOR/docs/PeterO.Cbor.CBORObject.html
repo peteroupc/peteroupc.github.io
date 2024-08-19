@@ -61,7 +61,6 @@
   <li><code>[AsDoubleBits()](#AsDoubleBits)</code> - Converts this object to the bits of a 64-bit floating-point number if this CBOR object’s type is FloatingPoint.</li>
   <li><code>[AsDoubleValue()](#AsDoubleValue)</code> - Converts this object to a 64-bit floating-point number if this CBOR object’s type is FloatingPoint.</li>
   <li><code>[AsEIntegerValue()](#AsEIntegerValue)</code> - Converts this object to an arbitrary-precision integer if this CBOR object’s type is Integer.</li>
-  <li><code>[AsGuid()](#AsGuid)</code> - Converts this object to a Guid.</li>
   <li><code>[AsInt32()](#AsInt32)</code> - Converts this object to a 32-bit signed integer.</li>
   <li><code>[AsInt32Value()](#AsInt32Value)</code> - Converts this object to a 32-bit signed integer if this CBOR object’s type is Integer.</li>
   <li><code>[AsInt64Value()](#AsInt64Value)</code> - Converts this object to a 64-bit signed integer if this CBOR object’s type is Integer.</li>
@@ -112,7 +111,6 @@
   <li><code>[FromEInteger(PeterO.Numbers.EInteger)](#FromEInteger_PeterO_Numbers_EInteger)</code> - Generates a CBOR object from an arbitrary-precision integer.</li>
   <li><code>[FromERational(PeterO.Numbers.ERational)](#FromERational_PeterO_Numbers_ERational)</code> - Generates a CBOR object from an arbitrary-precision rational number.</li>
   <li><code>[FromFloatingPointBits(long, int)](#FromFloatingPointBits_long_int)</code> - Generates a CBOR object from a floating-point number represented by its bits.</li>
-  <li><code>[FromGuid(System.Guid)](#FromGuid_System_Guid)</code> - Generates a CBOR object from a Guid.</li>
   <li><code>[FromInt16(short)](#FromInt16_short)</code> - Generates a CBOR object from a 16-bit signed integer.</li>
   <li><code>[FromInt32(int)](#FromInt32_int)</code> - Generates a CBOR object from a 32-bit signed integer.</li>
   <li><code>[FromInt64(long)](#FromInt64_long)</code> - Generates a CBOR object from a 64-bit signed integer.</li>
@@ -126,7 +124,6 @@
   <li><code>[FromJSONString(string, int, int)](#FromJSONString_string_int_int)</code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format.</li>
   <li><code>[FromJSONString(string, int, int, PeterO.Cbor.JSONOptions)](#FromJSONString_string_int_int_PeterO_Cbor_JSONOptions)</code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
   <li><code>[FromJSONString(string, PeterO.Cbor.JSONOptions)](#FromJSONString_string_PeterO_Cbor_JSONOptions)</code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
-  <li><code>[FromMap(System.Collections.Generic.IEnumerable)](#FromMap_System_Collections_Generic_IEnumerable)</code> -</li>
   <li><code>[FromObject(bool)](#FromObject_bool)</code> - <b>Deprecated:</b> Use FromBool instead.</li>
   <li><code>[FromObject(byte[])](#FromObject_byte)</code> - <b>Deprecated:</b> Use FromByte instead. <b>Deprecated:</b> Use FromByteArray instead.</li>
   <li><code>[FromObject(decimal)](#FromObject_decimal)</code> - <b>Deprecated:</b> Use FromDecimal instead</li>
@@ -151,7 +148,6 @@
   <li><code>[FromObject(ushort)](#FromObject_ushort)</code> - <b>Deprecated:</b> Use FromUShort instead</li>
   <li><code>[FromObjectAndTag(object, int)](#FromObjectAndTag_object_int)</code> - <b>Deprecated:</b> Use FromCBORObjectAndTag instead.</li>
   <li><code>[FromObjectAndTag(object, PeterO.Numbers.EInteger)](#FromObjectAndTag_object_PeterO_Numbers_EInteger)</code> - <b>Deprecated:</b> Use FromCBORObjectAndTag instead.</li>
-  <li><code>[FromOrderedMap(System.Collections.Generic.IEnumerable)](#FromOrderedMap_System_Collections_Generic_IEnumerable)</code> -</li>
   <li><code>[FromSbyte(sbyte)](#FromSbyte_sbyte)</code> - Converts a signed 8-bit integer to a CBOR object.</li>
   <li><code>[FromSimpleValue(int)](#FromSimpleValue_int)</code> - Creates a CBOR object from a simple value number.</li>
   <li><code>[FromSingle(float)](#FromSingle_float)</code> - Generates a CBOR object from a 32-bit floating-point number.</li>
@@ -828,31 +824,6 @@ This object’s type is not  <code>CBORType.FloatingPoint</code> .</li>
 <ul>
   <li>System.InvalidOperationException:
 This object’s type is not  <code>CBORType.Integer</code> .</li>
-</ul>
-
-<p><a id="AsGuid"></a>
-### AsGuid</p>
-
-<pre>public System.Guid AsGuid();
-</pre>
-
-<p>Converts this object to a Guid.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>A Guid.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-  <li>
-    <p>System.InvalidOperationException:
-This object does not represent a Guid.</p>
-  </li>
-  <li>
-    <p>PeterO.Cbor.CBORException:
-This object does not have the expected tag.</p>
-  </li>
 </ul>
 
 <p><a id="AsInt32"></a>
@@ -2279,26 +2250,6 @@ The parameter  <i>bigintTag</i>
 The parameter  <i>byteCount</i>
  is other than 2, 4, or 8.</li>
 </ul>
-
-<p><a id="FromGuid_System_Guid"></a>
-### FromGuid</p>
-
-<pre>public static PeterO.Cbor.CBORObject FromGuid(
-    System.Guid value);
-</pre>
-
-<p>Generates a CBOR object from a Guid.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>value</i>: The parameter  <i>value</i>
- is a Guid.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A CBOR object.</p>
 
 <p><a id="FromInt16_short"></a>
 ### FromInt16</p>
