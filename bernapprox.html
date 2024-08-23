@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/08/15"><meta name="citation_online_date" content="2024/08/15"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/08/22"><meta name="citation_online_date" content="2024/08/22"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -752,7 +752,7 @@
   </tbody>
 </table>
 
-<p><strong>Proposition B10</strong>: Let $f(\lambda)$ have a Lipschitz continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M_4/(8 n^2)$ of $f$, where $M_4$ is the maximum of the absolute value of that fourth derivative.</p>
+<p><strong>Proposition B10</strong>: Let $f(\lambda)$ have a Lipschitz continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\Lambda_3/(8 n^2)$ of $f$, where $\Lambda_3$ is the maximum of that third derivative’s Lipschitz constant or greater.</p>
 
 <p><em>Proof</em>: This proof is inspired by the proof technique in Tachev (2022)<sup id="fnref:5:2" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>.</p>
 
@@ -768,7 +768,7 @@
 
 \[\text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n\]
 
-\[\le (1/3)\frac{M_4}{128 (n/4)^2} + 2\frac{M_4}{128 (n/2)^2} + (8/3)\frac{M_4}{128 n^2} =M_4/(8 n^2).\]
+\[\le (1/3)\frac{\Lambda_3}{128 (n/4)^2} + 2\frac{\Lambda_3}{128 (n/2)^2} + (8/3)\frac{\Lambda_3}{128 n^2} =\Lambda_3/(8 n^2).\]
 
 <p>□</p>
 

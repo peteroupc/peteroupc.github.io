@@ -574,7 +574,7 @@ $$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!\cdot n^{(r+1)/
 | 4. | $\sqrt{5}M/(1280 n^{5/2}) < 0.001747 M/n^{5/2}$ for every integer $n\ge 2$. |
 | 5. | $M/(3072 n^3)$ for every integer $n\ge 1$. |
 
-**Proposition B10**: Let $f(\lambda)$ have a Lipschitz continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $M_4/(8 n^2)$ of $f$, where $M_4$ is the maximum of the absolute value of that fourth derivative.
+**Proposition B10**: Let $f(\lambda)$ have a Lipschitz continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\Lambda_3/(8 n^2)$ of $f$, where $\Lambda_3$ is the maximum of that third derivative's Lipschitz constant or greater.
 
 _Proof_: This proof is inspired by the proof technique in Tachev (2022)[^5].
 
@@ -590,7 +590,7 @@ Now denote $\sigma_n$ as the maximum of $\text{abs}(B_n(R_{f,3}(\lambda, x_0))(x
 
 $$\text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$
 
-$$\le (1/3)\frac{M_4}{128 (n/4)^2} + 2\frac{M_4}{128 (n/2)^2} + (8/3)\frac{M_4}{128 n^2} =M_4/(8 n^2).$$
+$$\le (1/3)\frac{\Lambda_3}{128 (n/4)^2} + 2\frac{\Lambda_3}{128 (n/2)^2} + (8/3)\frac{\Lambda_3}{128 n^2} =\Lambda_3/(8 n^2).$$
 
 &#x25a1;
 
