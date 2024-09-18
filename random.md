@@ -408,7 +408,7 @@ A _pseudorandom function_ is a kind of hash function that takes&mdash;
 - a _secret_ (such as a password or a long-term key), and
 - additional data such as a _salt_ (which is designed to mitigate precomputation attacks) or a _nonce_,
 
-and outputs a pseudorandom number whose bits behave like independent uniform random bits.  (If the output is encryption keys, the function is also called a _key derivation function_; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess &mdash; examples of such functions include PBKDF2 (RFC 2898), `scrypt` (RFC 7914), and Ethash.  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.
+and outputs a pseudorandom number whose bits behave like independent uniform random bits.  (If the output is encryption keys, the function is also called a _key derivation function_; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess &mdash; examples of such functions include PBKDF2 (RFC 2898) and `scrypt` (RFC 7914).  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.
 
 <a id=RNG_Topics></a>
 
