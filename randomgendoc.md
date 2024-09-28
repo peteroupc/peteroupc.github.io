@@ -1184,7 +1184,16 @@ CLASSES
      |        need not be equal to 1. 'xstart' should be
      |      chosen such that `pdf(xstart)>0`.
      |
-     |  spsa_minimize(self, func, guess, iterations=200, constrain=None, a=None, c=None, acap=None)
+     |  spsa_minimize(
+     |      self,
+     |      func,
+     |      guess,
+     |      iterations=200,
+     |      constrain=None,
+     |      a=None,
+     |      c=None,
+     |      acap=None
+     |  )
      |      Tries to find a choice of parameters that minimizes the value
      |      of a scoring function, also called the objective function or loss
      |      function, starting from an initial guess.  This method uses an
