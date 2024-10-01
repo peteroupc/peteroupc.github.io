@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/06/28"><meta name="citation_online_date" content="2024/06/28"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/10/01"><meta name="citation_online_date" content="2024/10/01"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -98,6 +98,7 @@
       <li><a href="#Color_Schemes_and_Harmonies"><strong>Color Schemes and Harmonies</strong></a></li>
       <li><a href="#Contrast_Between_Two_Colors"><strong>Contrast Between Two Colors</strong></a></li>
       <li><a href="#Porter_ndash_Duff_Formulas"><strong>Porter–Duff Formulas</strong></a></li>
+      <li><a href="#Raster_Operations"><strong>Raster Operations</strong></a></li>
       <li><a href="#Blend_Modes"><strong>Blend Modes</strong></a></li>
       <li><a href="#Color_Matrices"><strong>Color Matrices</strong></a></li>
       <li><a href="#Lighten_Darken"><strong>Lighten/Darken</strong></a></li>
@@ -1320,6 +1321,28 @@ END METHOD
 - <strong>Destination</strong>: <code>dst</code>.
 - <strong>Clear</strong>: <code>[0, 0, 0, 0]</code>.
 - <strong>Xor</strong>: <code>[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]</code>.</p>
+
+<p><a id="Raster_Operations"></a></p>
+
+<h3 id="raster-operations">Raster Operations</h3>
+
+<p><em>Raster operations</em> define Boolean operations, or combinations between the bits of the input color (“in”) and the bits of the output color (“out”).  There are sixteen <em>binary raster operations</em> in all, each operation taking two bits (where each bit is either 0 or 1):</p>
+
+<p>0, in AND out, in AND NOT out, in, out AND NOT in, out, in XOR out, in OR out,
+NOT (in OR out), NOT (in XOR out), NOT out, NOT (out AND NOT in), NOT in, NOT (in AND NOT out), NOT (in AND out), 1.</p>
+
+<p>In the list of operations above:</p>
+
+<ul>
+  <li>NOT <em>a</em> means 0 if <em>a</em> is 1, or 1 if <em>a</em> is 0.</li>
+  <li><em>a</em> AND <em>b</em> means 1 if <em>a</em> and <em>b</em> are both 1, or 0 otherwise.</li>
+  <li><em>a</em> OR <em>b</em> means 1 if <em>a</em> is 1 or <em>b</em> is 1 or both, or 0 otherwise.</li>
+  <li><em>a</em> XOR <em>b</em> means 1 if <em>a</em> does not equal <em>b</em>, or 0 otherwise.</li>
+</ul>
+
+<p>There are also 256 <em>ternary raster operations</em>, involving bit combinations of the input color, the output color, and a so-called <em>brush pattern</em> color.  They can be represented by taking “in” as the bit corresponding to the brush pattern color, and “out” as the result of the raster operation for the corresponding input and output color bits.</p>
+
+<p>Binary and ternary raster operations are prevalent in bit block transfers, which copy or transfer parts of images onto other images.</p>
 
 <p><a id="Blend_Modes"></a></p>
 

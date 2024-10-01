@@ -65,6 +65,7 @@ This document presents an overview of many common color topics that are of gener
     - [**Color Schemes and Harmonies**](#Color_Schemes_and_Harmonies)
     - [**Contrast Between Two Colors**](#Contrast_Between_Two_Colors)
     - [**Porter&ndash;Duff Formulas**](#Porter_ndash_Duff_Formulas)
+    - [**Raster Operations**](#Raster_Operations)
     - [**Blend Modes**](#Blend_Modes)
     - [**Color Matrices**](#Color_Matrices)
     - [**Lighten/Darken**](#Lighten_Darken)
@@ -1161,6 +1162,26 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 - **Destination**: `dst`.
 - **Clear**: `[0, 0, 0, 0]`.
 - **Xor**: `[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]`.
+
+<a id=Raster_Operations></a>
+
+### Raster Operations
+
+_Raster operations_ define Boolean operations, or combinations between the bits of the input color ("in") and the bits of the output color ("out").  There are sixteen _binary raster operations_ in all, each operation taking two bits (where each bit is either 0 or 1):
+
+0, in AND out, in AND NOT out, in, out AND NOT in, out, in XOR out, in OR out,
+NOT (in OR out), NOT (in XOR out), NOT out, NOT (out AND NOT in), NOT in, NOT (in AND NOT out), NOT (in AND out), 1.
+
+In the list of operations above:
+
+- NOT _a_ means 0 if _a_ is 1, or 1 if _a_ is 0.
+- _a_ AND _b_ means 1 if _a_ and _b_ are both 1, or 0 otherwise.
+- _a_ OR _b_ means 1 if _a_ is 1 or _b_ is 1 or both, or 0 otherwise.
+- _a_ XOR _b_ means 1 if _a_ does not equal _b_, or 0 otherwise.
+
+There are also 256 _ternary raster operations_, involving bit combinations of the input color, the output color, and a so-called _brush pattern_ color.  They can be represented by taking "in" as the bit corresponding to the brush pattern color, and "out" as the result of the raster operation for the corresponding input and output color bits.
+
+Binary and ternary raster operations are prevalent in bit block transfers, which copy or transfer parts of images onto other images.
 
 <a id=Blend_Modes></a>
 
