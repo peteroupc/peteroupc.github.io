@@ -1326,21 +1326,145 @@ END METHOD
 
 <h3 id="raster-operations">Raster Operations</h3>
 
-<p><em>Raster operations</em> define Boolean operations, or combinations between the bits of the input color (“in”) and the bits of the output color (“out”).  There are sixteen <em>binary raster operations</em> in all, each operation taking two bits (where each bit is either 0 or 1):</p>
+<p><em>Raster operations</em> define Boolean operations, or bit-by-bit combinations of an input or source color (“in”) and an output or destination color (“out”).  There are sixteen <em>binary raster operations</em>, each operation taking two bits (where each bit is either 0 or 1):</p>
 
-<p>0, in AND out, in AND NOT out, in, out AND NOT in, out, in XOR out, in OR out,
-NOT (in OR out), NOT (in XOR out), NOT out, NOT (out AND NOT in), NOT in, NOT (in AND NOT out), NOT (in AND out), 1.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Operation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>NOT (in OR out)</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>out AND NOT in</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>NOT in</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>in AND NOT out</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>NOT out</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>in XOR out</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>NOT (in AND out)</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>in AND out</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>NOT (in XOR out)</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>out</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>NOT (in AND NOT out)</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>in</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>NOT (out AND NOT in)</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>in OR out</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>In the list of operations above:</p>
 
 <ul>
-  <li>NOT <em>a</em> means 0 if <em>a</em> is 1, or 1 if <em>a</em> is 0.</li>
-  <li><em>a</em> AND <em>b</em> means 1 if <em>a</em> and <em>b</em> are both 1, or 0 otherwise.</li>
-  <li><em>a</em> OR <em>b</em> means 1 if <em>a</em> is 1 or <em>b</em> is 1 or both, or 0 otherwise.</li>
-  <li><em>a</em> XOR <em>b</em> means 1 if <em>a</em> does not equal <em>b</em>, or 0 otherwise.</li>
+  <li>“NOT <em>a</em>” means 0 if <em>a</em> is 1, or 1 if <em>a</em> is 0.</li>
+  <li>“<em>a</em> AND <em>b</em>” means 1 if <em>a</em> and <em>b</em> are both 1, or 0 otherwise.</li>
+  <li>“<em>a</em> OR <em>b</em>” means 1 if <em>a</em> is 1 or <em>b</em> is 1 or both, or 0 otherwise.</li>
+  <li>“<em>a</em> XOR <em>b</em>” means 1 if <em>a</em> does not equal <em>b</em>, or 0 otherwise.</li>
 </ul>
 
-<p>There are also 256 <em>ternary raster operations</em>, involving bit combinations of the input color, the output color, and a so-called <em>brush pattern</em> color.  They can be represented by taking “in” as the bit corresponding to the brush pattern color, and “out” as the result of the raster operation for the corresponding input and output color bits.</p>
+<p>The table below illustrates the result of some binary raster operations.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>in</th>
+      <th>out</th>
+      <th>8: in AND out</th>
+      <th>6: in XOR out</th>
+      <th>3: NOT in</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>There are also 256 <em>ternary raster operations</em>, involving bit-by-bit combinations of the input color (“in”), the output color (“out”), and a so-called <em>brush pattern</em> color (“pat”).  Each operation has a code equal to <code>codeH * 16 + codeL</code>, and the corresponding operation has the form—</p>
+
+<ul>
+  <li>(<em>opH</em> AND pat) XOR (<em>opL</em> AND NOT pat),</li>
+</ul>
+
+<p>where <em>opH</em> is the binary raster operation for the input and output colors with the code <em>codeH</em>, and <em>opL</em>, with the code <em>codeL</em>.  In other words, if the brush pattern bit is 1, use <em>opH</em>; if 0, use <em>opL</em>.</p>
+
+<p>For example, code 28 is a ternary raster operation made up of binary raster operations <em>codeH</em> = 1, <em>opH</em> = NOT (in OR out), <em>codeL</em> = 12, and <em>opL</em> = in. (<code>1 * 16 + 12 = 28</code>.)  This ternary operation can be expressed as <code>((NOT (in OR out)) AND pat) XOR (in AND NOT pat)</code>; that is, if the brush pattern bit is 1, use <code>NOT (in OR out)</code>; if 0, use <code>in</code>.</p>
 
 <p>Binary and ternary raster operations are prevalent in bit block transfers, which copy or transfer parts of images onto other images.</p>
 

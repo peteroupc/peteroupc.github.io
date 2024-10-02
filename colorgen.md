@@ -1167,19 +1167,50 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 
 ### Raster Operations
 
-_Raster operations_ define Boolean operations, or combinations between the bits of the input color ("in") and the bits of the output color ("out").  There are sixteen _binary raster operations_ in all, each operation taking two bits (where each bit is either 0 or 1):
+_Raster operations_ define Boolean operations, or bit-by-bit combinations of an input or source color ("in") and an output or destination color ("out").  There are sixteen _binary raster operations_, each operation taking two bits (where each bit is either 0 or 1):
 
-0, in AND out, in AND NOT out, in, out AND NOT in, out, in XOR out, in OR out,
-NOT (in OR out), NOT (in XOR out), NOT out, NOT (out AND NOT in), NOT in, NOT (in AND NOT out), NOT (in AND out), 1.
+| Code | Operation |
+ -- | ---- |
+| 0 | 0 |
+| 1 | NOT (in OR out) |
+| 2 | out AND NOT in |
+| 3 | NOT in |
+| 4 | in AND NOT out |
+| 5 | NOT out |
+| 6 | in XOR out |
+| 7 | NOT (in AND out) |
+| 8 | in AND out |
+| 9 | NOT (in XOR out) |
+| 10 | out |
+| 11 | NOT (in AND NOT out) |
+| 12 | in |
+| 13 | NOT (out AND NOT in) |
+| 14 | in OR out |
+| 15 | 1 |
 
 In the list of operations above:
 
-- NOT _a_ means 0 if _a_ is 1, or 1 if _a_ is 0.
-- _a_ AND _b_ means 1 if _a_ and _b_ are both 1, or 0 otherwise.
-- _a_ OR _b_ means 1 if _a_ is 1 or _b_ is 1 or both, or 0 otherwise.
-- _a_ XOR _b_ means 1 if _a_ does not equal _b_, or 0 otherwise.
+- "NOT _a_" means 0 if _a_ is 1, or 1 if _a_ is 0.
+- "_a_ AND _b_" means 1 if _a_ and _b_ are both 1, or 0 otherwise.
+- "_a_ OR _b_" means 1 if _a_ is 1 or _b_ is 1 or both, or 0 otherwise.
+- "_a_ XOR _b_" means 1 if _a_ does not equal _b_, or 0 otherwise.
 
-There are also 256 _ternary raster operations_, involving bit combinations of the input color, the output color, and a so-called _brush pattern_ color.  They can be represented by taking "in" as the bit corresponding to the brush pattern color, and "out" as the result of the raster operation for the corresponding input and output color bits.
+The table below illustrates the result of some binary raster operations.
+
+| in  | out| 8: in AND out | 6: in XOR out | 3: NOT in |
+  --  | -- | ---- | ---- | ---- |
+|  0  | 0  |  0   |   0  |  1   |
+|  0  | 1  |  0   |   1  |  1   |
+|  1  | 0  |  0   |   1  |  0   |
+|  1  | 1  |  1   |   0  |  0   |
+
+There are also 256 _ternary raster operations_, involving bit-by-bit combinations of the input color ("in"), the output color ("out"), and a so-called _brush pattern_ color ("pat").  Each operation has a code equal to `codeH * 16 + codeL`, and the corresponding operation has the form&mdash;
+
+- (_opH_ AND pat) XOR (_opL_ AND NOT pat),
+
+where _opH_ is the binary raster operation for the input and output colors with the code _codeH_, and _opL_, with the code _codeL_.  In other words, if the brush pattern bit is 1, use _opH_; if 0, use _opL_.
+
+For example, code 28 is a ternary raster operation made up of binary raster operations _codeH_ = 1, _opH_ = NOT (in OR out), _codeL_ = 12, and _opL_ = in. (`1 * 16 + 12 = 28`.)  This ternary operation can be expressed as `((NOT (in OR out)) AND pat) XOR (in AND NOT pat)`; that is, if the brush pattern bit is 1, use `NOT (in OR out)`; if 0, use `in`.
 
 Binary and ternary raster operations are prevalent in bit block transfers, which copy or transfer parts of images onto other images.
 
