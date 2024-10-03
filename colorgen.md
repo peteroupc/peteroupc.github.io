@@ -1204,6 +1204,8 @@ The table below illustrates the result of some binary raster operations.
 |  1  | 0  |  0   |   1  |  0   |
 |  1  | 1  |  1   |   0  |  0   |
 
+The result of a binary raster operation `rop` (where `rop` is one of the codes given in the table of binary raster operations), given bits `in` and `out`, equals `(rop>>((in * 2) + out)) AND 1`, where `>>` is a right-shift bit operation that involves the left-hand side `L` and the right-hand side `R` and is equivalent to `floor(L / pow(2, R))`.
+
 There are also 256 _ternary raster operations_, involving bit-by-bit combinations of the input color ("in"), the output color ("out"), and a so-called _brush pattern_ color ("pat").  Each operation has a code equal to `codeH * 16 + codeL`, and the corresponding operation has the form&mdash;
 
 - (_opH_ AND pat) XOR (_opL_ AND NOT pat),
