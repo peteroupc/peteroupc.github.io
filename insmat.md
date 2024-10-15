@@ -14,6 +14,7 @@ These are suggestions to improve core and supplemental instructional materials, 
 
     - Increasing rigor and quality of [**Latino American content**](https://unidosus.org/publications/analyzing-inclusion-of-latino-contributions-in-us-history-curricula-for-high-school/) and [**black American content**](https://hub.jhu.edu/2021/02/10/black-history-curricula-lacking-rigor-and-quality/) in U.S. History instructional materials.
     - Improving [**cultural responsiveness**](https://steinhardt.nyu.edu/sites/default/files/2020-12/CRE%20Scorecard%20Revised%20Aug%202020.pdf) in Literacy instructional materials.
+    - [**Content**](https://www.coreknowledge.org/core-knowledge-sequence/) that could form part of a knowledge-rich curriculum up to eighth grade.
     - The length of daily Social Studies and Science instruction up to fifth grade: [**45 minutes**](https://ccsso.org/sites/default/files/2018-11/Elementary%20SS%20Brief%2045%20Minute%20Version_0.pdf) and [**60 minutes**](https://www.nsta.org/nstas-official-positions/elementary-school-science), respectively.
     - Structuring lessons in History and other aspects of Social Studies using the [**Four-Question Method**](https://4qmteaching.net/).
     - Structuring lessons in U.S. Civics using the questions in the civics portion of the naturalization test given by the U.S. government.
