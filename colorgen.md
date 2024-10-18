@@ -93,7 +93,7 @@ This document presents an overview of many common color topics that are of gener
 ## Notation and Definitions
 
 - The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
-- **bpc.** Bits per color component.
+- **bpc.** Bits per color component, also known as bits per color channel.
 - **CIE.** French initials for the International Commission on Illumination.
 - **Color model.** Describes, in general terms, the relationship of colors in a theoretical space.
 - **Color space.** A mapping from colors to numbers that follows a particular color model.
@@ -258,7 +258,7 @@ For both kinds of colors, the lowest value of each component is 0, and its highe
 
 The following are examples of these formats:
 - **5/6/5 RGB colors:** As 16-bit integers (5 bits each for red and blue, and 6 bits for green).
-- **5-bpc:** As 15-bit integers (5 bpc [bits per color component] RGB).
+- **5-bpc:** As 15-bit integers (5 bpc [bits per color channel] RGB).
 - **8-bpc:** As 24-bit integers (8 bpc RGB), or as 32-bit integers with an alpha component.
 - **10-bpc:** As 30-bit integers (10 bpc RGB), or as 40-bit integers with an alpha component.
 - **16-bpc:** As 48-bit integers (16 bpc RGB), or as 64-bit integers with an alpha component.
