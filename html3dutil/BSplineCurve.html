@@ -115,7 +115,7 @@ another, see the example.</p>
 
 <ul>
   <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number»)<br />An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point’s length represents the size of all the control points.</li>
-  <li><code>knots</code> (Type: Array.&lt;number&gt;)<br />Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br /> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1 results in straight line segments.<br /> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve’s degree. If the difference between one knot and the next isn’t the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater. (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.html">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene’s definition by repeating the first knot at the beginning and repeating the last knot at the end.)</li>
+  <li><code>knots</code> (Type: Array.&lt;number&gt;)<br />Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br /> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1 results in straight line segments.<br /> The knot vector must be a nowhere increasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve’s degree. If the difference between one knot and the next isn’t the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater. (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.html">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene’s definition by repeating the first knot at the beginning and repeating the last knot at the end.)</li>
   <li><code>bits</code> (Type: number) (optional)<br />Bits for defining input and controlling output. Zero or more of <a href="BSplineCurve.html#BSplineCurve.DIVIDE_BIT">BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.</li>
 </ul>
 
@@ -262,7 +262,7 @@ The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <co
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.</p>
 
-<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a glmath.</p>
 
 <h4 id="parameters-1">Parameters</h4>
 
@@ -553,7 +553,7 @@ The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <co
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.</p>
 
-<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a glmath.</p>
 
 <h4 id="parameters-11">Parameters</h4>
 
@@ -575,7 +575,7 @@ method if it implements it; otherwise, does a numerical differentiation using th
 
 <p>The <b>principal normal</b> of a curve is the derivative of the “normalized” velocity
 vector divided by that derivative’s length. The normal returned by this method
-<i>should</i> be “normalized” to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)</p>
+<i>should</i> be “normalized” to a glmath. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)</p>
 
 <h4 id="parameters-12">Parameters</h4>
 
@@ -738,6 +738,22 @@ if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number&
 <h3 id="navigation">Navigation</h3>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

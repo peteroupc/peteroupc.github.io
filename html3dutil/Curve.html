@@ -134,7 +134,7 @@ The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <co
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.</p>
 
-<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a glmath.</p>
 
 <h4 id="parameters-1">Parameters</h4>
 
@@ -313,7 +313,7 @@ The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <co
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.</p>
 
-<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a glmath.</p>
 
 <h4 id="parameters-8">Parameters</h4>
 
@@ -335,7 +335,7 @@ method if it implements it; otherwise, does a numerical differentiation using th
 
 <p>The <b>principal normal</b> of a curve is the derivative of the “normalized” velocity
 vector divided by that derivative’s length. The normal returned by this method
-<i>should</i> be “normalized” to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)</p>
+<i>should</i> be “normalized” to a glmath. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)</p>
 
 <h4 id="parameters-9">Parameters</h4>
 
@@ -407,7 +407,7 @@ The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <co
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).</p>
 
-<p>The <b>velocity</b> of a curve is a vector which is the derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>The <b>velocity</b> of a curve is a vector which is the derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a glmath.</p>
 
 <h4 id="parameters-11">Parameters</h4>
 
@@ -434,6 +434,22 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <h3 id="navigation">Navigation</h3>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

@@ -11,6 +11,8 @@
 <p><a name="MeshBuffer"></a>
 ### new MeshBuffer()</p>
 
+<p><strong>Deprecated: It is planned to render this class obsolete and rely on three.js’s BufferGeometry.</strong></p>
+
 <p>A geometric mesh in the form of buffer objects.
 A mesh buffer is made up of one or more <a href="BufferAccessor.html">vertex attribute objects</a>,
 and an optional array of vertex indices. Each vertex attribute object contains
@@ -47,7 +49,6 @@ var attributeNames=["position","normal","uv","color"]
 for(var i=0;i&lt;attributes.length;i++) {
 if(attributes[i]) {
 var a=attributes[i]
-//console.log(a)
 var attr=new THREE.InterleavedBufferAttribute(
 new THREE.InterleavedBuffer(a.buffer,a.stride),
 a.countPerValue,a.offset)
@@ -98,16 +99,12 @@ vertex data in buffer attributes.</li>
   <li><a href="#MeshBuffer_getIndices">getIndices</a><br />Gets the array of vertex indices used by this mesh buffer.</li>
   <li><a href="#MeshBuffer_getPositions">getPositions</a><br />Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive.</li>
-  <li><a href="#MeshBuffer.lineLoopIndices">lineLoopIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</li>
-  <li><a href="#MeshBuffer.lineStripIndices">lineStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</li>
   <li><a href="#MeshBuffer_merge">merge</a><br />Merges the vertices from another mesh into this one.</li>
-  <li><a href="#MeshBuffer_normalizeNormals">normalizeNormals</a><br />Modifies this mesh buffer by converting the normals it defines to <a href="tutorial-glmath.html">unit vectors</a>
+  <li><a href="#MeshBuffer_normalizeNormals">normalizeNormals</a><br />Modifies this mesh buffer by converting the normals it defines to glmath
 (“normalized” vectors with a length of 1).</li>
   <li><a href="#MeshBuffer_primitiveCount">primitiveCount</a><br />Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.</li>
   <li><a href="#MeshBuffer_primitiveType">primitiveType</a><br />Gets the type of primitive stored in this mesh buffer.</li>
-  <li><a href="#MeshBuffer.quadStripIndices">quadStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals.</li>
-  <li><a href="#MeshBuffer.quadsIndices">quadsIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</li>
   <li><a href="#MeshBuffer_recalcNormals">recalcNormals</a><br />Recalculates the normal vectors (directions that generally point up and away from the mesh buffer’s surface) for triangles
 in this mesh buffer, in order to give the shape described by this buffer a flat or smooth appearance or to shade the shape from the inside or the outside upon rendering.</li>
   <li><a href="#MeshBuffer_reverseNormals">reverseNormals</a><br />Modifies this mesh buffer by reversing the sign of normals it defines.</li>
@@ -126,9 +123,7 @@ to the given color.</li>
   <li><a href="#MeshBuffer_setIndices">setIndices</a><br />Sets the vertex indices used by this mesh buffer.</li>
   <li><a href="#MeshBuffer_setType">setType</a><br />Sets the type of graphics primitives stored in this mesh buffer.</li>
   <li><a href="#MeshBuffer_transform">transform</a><br />Transforms the positions and normals of all the vertices currently
-in this mesh, with the help of a <a href="tutorial-glmath.html">4x4 matrix</a>.</li>
-  <li><a href="#MeshBuffer.triangleFanIndices">triangleFanIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.</li>
-  <li><a href="#MeshBuffer.triangleStripIndices">triangleStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle strip.</li>
+in this mesh, with the help of a glmath.</li>
   <li><a href="#MeshBuffer_vertexCount">vertexCount</a><br />Gets the number of vertices in this mesh buffer, that
 is, the number of vertex indices in its index buffer (some of which
 may be duplicates), or if there is no index buffer, the lowest maximum
@@ -710,54 +705,6 @@ each of which holds the vertices that make up that primitive.
 If this mesh holds triangles, each primitive will contain three
 vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex’s coordinates (for example, if the attribute holds 3 elements per value, the coordinates are X, Y, and Z coordinates, in that order). (Type: Array.&lt;Array.&lt;number»)</p>
 
-<p><a name="MeshBuffer.lineLoopIndices"></a>
-### (static) MeshBuffer.lineLoopIndices(vertexCount)</p>
-
-<p>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</p>
-
-<h4 id="parameters-8">Parameters</h4>
-
-<ul>
-  <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the line loop.</li>
-</ul>
-
-<h4 id="return-value-13">Return Value</h4>
-
-<p>Array of vertex indices corresponding to line segments that make up the line loop. Every two indices in the array is a separate line segment. Returns an empty array if ‘vertexCount’ is less than 2. (Type: Array.&lt;number&gt;)</p>
-
-<h4 id="examples-8">Examples</h4>
-
-<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in line loop vertex order.</p>
-
-<pre>mesh.setIndices(
-MeshBuffer.lineLoopIndices(mesh.vertexCount())
-.map(x=&gt;mesh.getIndex(x)));
-</pre>
-
-<p><a name="MeshBuffer.lineStripIndices"></a>
-### (static) MeshBuffer.lineStripIndices(vertexCount)</p>
-
-<p>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</p>
-
-<h4 id="parameters-9">Parameters</h4>
-
-<ul>
-  <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the line loop.</li>
-</ul>
-
-<h4 id="return-value-14">Return Value</h4>
-
-<p>Array of vertex indices corresponding to line segments that make up the line strip. Every two indices in the array is a separate line segment. Returns an empty array if ‘vertexCount’ is less than 2. (Type: Array.&lt;number&gt;)</p>
-
-<h4 id="examples-9">Examples</h4>
-
-<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in line strip vertex order.</p>
-
-<pre>mesh.setIndices(
-MeshBuffer.lineStripIndices(mesh.vertexCount())
-.map(x=&gt;mesh.getIndex(x)));
-</pre>
-
 <p><a name="MeshBuffer_merge"></a>
 ### MeshBuffer#merge(other)</p>
 
@@ -765,17 +712,17 @@ MeshBuffer.lineStripIndices(mesh.vertexCount())
 The vertices from the other mesh will be copied into this one,
 and the other mesh’s indices copied or adapted.</p>
 
-<h4 id="parameters-10">Parameters</h4>
+<h4 id="parameters-8">Parameters</h4>
 
 <ul>
   <li><code>other</code> (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<br />A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh’s primitive type is not the same as the other mesh’s primitive type.</li>
 </ul>
 
-<h4 id="return-value-15">Return Value</h4>
+<h4 id="return-value-13">Return Value</h4>
 
 <p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
 
-<h4 id="examples-10">Examples</h4>
+<h4 id="examples-8">Examples</h4>
 
 <pre>var copiedMesh = new MeshBuffer().merge(meshToCopy);
 </pre>
@@ -783,13 +730,13 @@ and the other mesh’s indices copied or adapted.</p>
 <p><a name="MeshBuffer_normalizeNormals"></a>
 ### MeshBuffer#normalizeNormals()</p>
 
-<p>Modifies this mesh buffer by converting the normals it defines to <a href="tutorial-glmath.html">unit vectors</a>
+<p>Modifies this mesh buffer by converting the normals it defines to glmath
 (“normalized” vectors with a length of 1).
 Has no effect if this mesh buffer doesn’t define any normals.
 All attributes with the semantic <code>NORMAL</code>,
 regardless of semantic index, are affected.</p>
 
-<h4 id="return-value-16">Return Value</h4>
+<h4 id="return-value-14">Return Value</h4>
 
 <p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
 
@@ -799,7 +746,7 @@ regardless of semantic index, are affected.</p>
 <p>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.</p>
 
-<h4 id="return-value-17">Return Value</h4>
+<h4 id="return-value-15">Return Value</h4>
 
 <p>Return value. (Type: number)</p>
 
@@ -808,60 +755,10 @@ and points) composed by all shapes in this mesh.</p>
 
 <p>Gets the type of primitive stored in this mesh buffer.</p>
 
-<h4 id="return-value-18">Return Value</h4>
+<h4 id="return-value-16">Return Value</h4>
 
 <p>Either <a href="MeshBuffer.html#MeshBuffer.TRIANGLES">MeshBuffer.TRIANGLES</a>,
 <a href="MeshBuffer.html#MeshBuffer.LINES">MeshBuffer.LINES</a>, or <a href="MeshBuffer.html#MeshBuffer.POINTS">MeshBuffer.POINTS</a>. (Type: number)</p>
-
-<p><a name="MeshBuffer.quadStripIndices"></a>
-### (static) MeshBuffer.quadStripIndices(vertexCount)</p>
-
-<p>Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals. For a quadrilateral strip, the first 4 vertices make up the first quadrilateral, and each additional
-quadrilateral is made up of the last 2 vertices of the previous quadrilateral and
-2 new vertices.</p>
-
-<h4 id="parameters-11">Parameters</h4>
-
-<ul>
-  <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the quadrilateral strip.</li>
-</ul>
-
-<h4 id="return-value-19">Return Value</h4>
-
-<p>Array of vertex indices corresponding to triangles that make up the quadrilateral strip. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 4. If ‘vertexCount’ is not divisible by 2, the excess vertex is ignored. (Type: Array.&lt;number&gt;)</p>
-
-<h4 id="examples-11">Examples</h4>
-
-<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral strip vertex order.</p>
-
-<pre>mesh.setIndices(
-MeshBuffer.quadStripIndices(mesh.vertexCount())
-.map(x=&gt;mesh.getIndex(x)));
-</pre>
-
-<p><a name="MeshBuffer.quadsIndices"></a>
-### (static) MeshBuffer.quadsIndices(vertexCount)</p>
-
-<p>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</p>
-
-<h4 id="parameters-12">Parameters</h4>
-
-<ul>
-  <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the quadrilaterals.</li>
-</ul>
-
-<h4 id="return-value-20">Return Value</h4>
-
-<p>Array of vertex indices corresponding to triangles that make up the quadrilaterals. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 4. If ‘vertexCount’ is not divisible by 4, any excess vertices are ignored. (Type: Array.&lt;number&gt;)</p>
-
-<h4 id="examples-12">Examples</h4>
-
-<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral vertex order.</p>
-
-<pre>mesh.setIndices(
-MeshBuffer.quadsIndices(mesh.vertexCount())
-.map(x=&gt;mesh.getIndex(x)));
-</pre>
 
 <p><a name="MeshBuffer_recalcNormals"></a>
 ### MeshBuffer#recalcNormals([flat], [inward])</p>
@@ -1049,7 +946,7 @@ This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)
 ### MeshBuffer#transform(matrix)
 
 Transforms the positions and normals of all the vertices currently
-in this mesh, with the help of a <a href="tutorial-glmath.html">4x4 matrix</a>. Only values with the attribute semantic <code>POSITION_0</code>
+in this mesh, with the help of a glmath. Only values with the attribute semantic <code>POSITION_0</code>
 or <code>NORMAL_0</code> will be affected by this method; values of
 other attributes will be unaffected.
 
@@ -1072,54 +969,6 @@ The following example transforms positions
 and normals to double the mesh's size.
 
     mesh.transform(MathUtil.mat4scaled(2, 2, 2));
-
-<a name="MeshBuffer.triangleFanIndices"></a>
-### (static) MeshBuffer.triangleFanIndices(vertexCount)
-
-Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon. For triangle fans and convex polygons, the first 3
-vertices make up the first triangle, and each additional
-triangle is made up of the last vertex, the first vertex of
-the first trangle, and 1 new vertex.
-
-#### Parameters
-
-* `vertexCount` (Type: number)<br />Number of vertices that make up the triangle fan or convex polygon.
-
-#### Return Value
-
-Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 3. (Type: Array.&lt;number&gt;)
-
-#### Examples
-
-The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle fan vertex order.
-
-    mesh.setIndices(
-    MeshBuffer.triangleFanIndices(mesh.vertexCount())
-    .map(x=&gt;mesh.getIndex(x)));
-
-<a name="MeshBuffer.triangleStripIndices"></a>
-### (static) MeshBuffer.triangleStripIndices(vertexCount)
-
-Creates an array of vertex indices corresponding to triangles that make up a triangle strip. For a triangle strip, the first 3
-vertices make up the first triangle, and each additional
-triangle is made up of the last 2 vertices and 1
-new vertex.
-
-#### Parameters
-
-* `vertexCount` (Type: number)<br />Number of vertices that make up the triangle strip.
-
-#### Return Value
-
-Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 3. (Type: Array.&lt;number&gt;)
-
-#### Examples
-
-The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle strip vertex order.
-
-    mesh.setIndices(
-    MeshBuffer.triangleStripIndices(mesh.vertexCount())
-    .map(x=&gt;mesh.getIndex(x)));
 
 <a name="MeshBuffer_vertexCount"></a>
 ### MeshBuffer#vertexCount()
@@ -1173,6 +1022,22 @@ This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)
 <h3 id="navigation">Navigation</h3>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

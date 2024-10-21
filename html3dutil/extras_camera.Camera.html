@@ -32,9 +32,9 @@ the HTML 3D Library. Example:</p>
 <h4 id="parameters">Parameters</h4>
 
 <ul>
-  <li><code>fov</code> (Type: number)<br />Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See MathUtil.mat4perspective.</li>
-  <li><code>nearZ</code> (Type: number)<br />The distance from the camera to the near clipping plane. Objects closer than this distance won’t be seen. See MathUtil.mat4perspective. This should be slightly greater than 0.</li>
-  <li><code>farZ</code> (Type: number)<br />The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See MathUtil.mat4perspective.</li>
+  <li><code>fov</code> (Type: number)<br />Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.</li>
+  <li><code>nearZ</code> (Type: number)<br />The distance from the camera to the near clipping plane. Objects closer than this distance won’t be seen. See <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>. This should be slightly greater than 0.</li>
+  <li><code>farZ</code> (Type: number)<br />The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.</li>
 </ul>
 
 <h3 id="methods">Methods</h3>
@@ -92,7 +92,7 @@ point to the camera’s position.</p>
 <h4 id="return-value-2">Return Value</h4>
 
 <p>The return value as a unit
-vector (a “normalized” vector with a length of 1).
+vector (a <a href="MathUtil.html#MathUtil.vec3normalize">“normalized” vector</a> with a length of 1).
 Returns (0,0,0) if the reference point is the same as the camera’s position. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name="extras_camera_Camera_moveAngleHorizontal"></a>
@@ -283,6 +283,22 @@ on the state of an input tracker.</p>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

@@ -21,14 +21,14 @@ from one coordinate system to another.</p>
   <li><a href="#Transform_getMatrix">getMatrix</a><br />Gets the transformation matrix used by an object.</li>
   <li><a href="#Transform_getPosition">getPosition</a><br />Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
 of an object relative to its original position.</li>
-  <li><a href="#Transform_getQuaternion">getQuaternion</a><br />Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.html">quaternion</a>.</li>
+  <li><a href="#Transform_getQuaternion">getQuaternion</a><br />Returns a copy of the rotation of an object in the form of a glmath.</li>
   <li><a href="#Transform_getScale">getScale</a><br />Returns a copy of a three-element array giving the scaling for an object’s width,
 height, and depth, respectively.</li>
   <li><a href="#Transform_isIdentity">isIdentity</a><br />Returns whether this transform is the identity transform.</li>
   <li><a href="#Transform_movePosition">movePosition</a><br />Moves the relative position of an object from its original
 position.</li>
   <li><a href="#Transform_multQuaternion">multQuaternion</a><br />Combines an object’s current rotation with another rotation
-described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+described by a glmath (a 4-element array
 for describing 3D rotations).</li>
   <li><a href="#Transform_multRotation">multRotation</a><br />Combines an object’s current rotation with another rotation
 in the form of an angle and an axis of
@@ -37,7 +37,7 @@ rotation.</li>
   <li><a href="#Transform_setMatrix">setMatrix</a><br />Sets this transform’s transformation matrix.</li>
   <li><a href="#Transform_setPosition">setPosition</a><br />Sets the relative position of an object from its original
 position.</li>
-  <li><a href="#Transform_setQuaternion">setQuaternion</a><br />Sets this transform’s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+  <li><a href="#Transform_setQuaternion">setQuaternion</a><br />Sets this transform’s rotation in the form of a glmath (a 4-element array
 for describing 3D rotations).</li>
   <li><a href="#Transform_setRotation">setRotation</a><br />Sets this transform’s rotation in the form of an angle and an axis of
 rotation.</li>
@@ -85,7 +85,7 @@ Return value. (Type: Array.&lt;number&gt;)
 <a name="Transform_getQuaternion"></a>
 ### Transform#getQuaternion()
 
-Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.html">quaternion</a>.
+Returns a copy of the rotation of an object in the form of a glmath.
 
 #### Return Value
 
@@ -132,7 +132,7 @@ This object. (Type: <a href="Transform.html">Transform</a>)
 ### Transform#multQuaternion(quat)
 
 Combines an object's current rotation with another rotation
-described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+described by a glmath (a 4-element array
 for describing 3D rotations). The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
 Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
@@ -229,7 +229,7 @@ This object. (Type: <a href="Transform.html">Transform</a>)
 <a name="Transform_setQuaternion"></a>
 ### Transform#setQuaternion(quat)
 
-Sets this transform's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+Sets this transform's rotation in the form of a glmath (a 4-element array
 for describing 3D rotations). Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
 and the transform wasn't reset yet with Transform#resetTransform.
 
@@ -313,6 +313,22 @@ This object. (Type: <a href="Transform.html">Transform</a>)
 <h3 id="navigation">Navigation</h3>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

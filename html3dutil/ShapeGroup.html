@@ -12,7 +12,7 @@
 ### new ShapeGroup()</p>
 
 <p>Represents a grouping of shapes. This object
-can hold both <a href="Shape.html">Shape</a> objects and
+can hold both Shape objects and
 other <a href="ShapeGroup.html">ShapeGroup</a> objects.</p>
 
 <h3 id="methods">Methods</h3>
@@ -34,7 +34,7 @@ and points) composed by all shapes in this shape group.</li>
   <li><a href="#ShapeGroup_removeShape">removeShape</a><br />Removes all instances of a 3D shape from this shape group</li>
   <li><a href="#ShapeGroup_setPosition">setPosition</a><br />Sets the relative position of the shapes in this group
 from their original position.</li>
-  <li><a href="#ShapeGroup_setQuaternion">setQuaternion</a><br />Sets this shape group’s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.</li>
+  <li><a href="#ShapeGroup_setQuaternion">setQuaternion</a><br />Sets this shape group’s rotation in the form of a glmath.</li>
   <li><a href="#ShapeGroup_setScale">setScale</a><br />Sets the scale of this shape group relative to its original
 size.</li>
   <li><a href="#ShapeGroup_setShape">setShape</a><br />Sets a shape or shape group at the given index in this shape group.</li>
@@ -60,7 +60,7 @@ will be stored in the list of shapes.</p>
     <table>
       <tbody>
         <tr>
-          <td><code>shape</code> (Type: <a href="Shape.html">Shape</a></td>
+          <td><code>shape</code> (Type: Shape</td>
           <td><a href="ShapeGroup.html">ShapeGroup</a>)<br />A 3D shape. Throws an error if null.</td>
         </tr>
       </tbody>
@@ -128,7 +128,7 @@ in this shape group at the given index.</p>
 <h4 id="return-value-4">Return Value</h4>
 
 <p>The shape or shape group located
-in this shape group at the given index, or null if none is found there. (Type: <a href="Shape.html">Shape</a> | <a href="ShapeGroup.html">ShapeGroup</a>)</p>
+in this shape group at the given index, or null if none is found there. (Type: Shape | <a href="ShapeGroup.html">ShapeGroup</a>)</p>
 
 <p><a name="ShapeGroup_getTransform"></a>
 ### ShapeGroup#getTransform()</p>
@@ -170,7 +170,7 @@ and points) composed by all shapes in this shape group.</p>
     <table>
       <tbody>
         <tr>
-          <td><code>shape</code> (Type: <a href="Shape.html">Shape</a></td>
+          <td><code>shape</code> (Type: Shape</td>
           <td><a href="ShapeGroup.html">ShapeGroup</a>)<br />The 3D shape to remove.</td>
         </tr>
       </tbody>
@@ -215,7 +215,7 @@ rather than the transform for each shape in the group.</p>
 <p><a name="ShapeGroup_setQuaternion"></a>
 ### ShapeGroup#setQuaternion(quat)</p>
 
-<p>Sets this shape group’s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
+<p>Sets this shape group’s rotation in the form of a glmath.
 See <a href="Transform.html#Transform_setQuaternion">Transform#setQuaternion</a>.
 This method will modify this shape group’s transform
 rather than the transform for each shape in the group.</p>
@@ -272,7 +272,7 @@ rather than the transform for each shape in the group.</p>
     <table>
       <tbody>
         <tr>
-          <td><code>shape</code> (Type: <a href="Shape.html">Shape</a></td>
+          <td><code>shape</code> (Type: Shape</td>
           <td><a href="ShapeGroup.html">ShapeGroup</a>)<br />Shape object to set at the given index.</td>
         </tr>
       </tbody>
@@ -351,6 +351,22 @@ are direct children of this shape group.</p>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
