@@ -1216,6 +1216,12 @@ For example, code 28 is a ternary raster operation made up of binary raster oper
 
 Binary and ternary raster operations are prevalent in bit block transfers, which copy or transfer parts of images onto other images.
 
+> **Note:** Raster operations also function, in principle, when the input and output color values are interpreted as indices to a color palette (e.g, color value 3 refers to the fourth entry in a palette of RGB colors), rather than as intensities (such as RGB colors).  But this is a more delicate case than the usual one, and functions best when&mdash;
+>
+> - the number of colors in the color palette is a power of two (e.g., 2, 8, 16, 256),
+> - each color value can be as low as 0 and as high as the number of colors in the color palette minus 1, and
+> - the colors in the palette are sorted by their intensity (so that, for example, the color closest to "black" appears first and the color closest to "white" appears last).
+
 <a id=Blend_Modes></a>
 
 ### Blend Modes

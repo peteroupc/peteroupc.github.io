@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/10/16"><meta name="citation_online_date" content="2024/10/16"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/11/02"><meta name="citation_online_date" content="2024/11/02"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1469,6 +1469,16 @@ END METHOD
 <p>For example, code 28 is a ternary raster operation made up of binary raster operations <em>codeH</em> = 1, <em>opH</em> = NOT (in OR out), <em>codeL</em> = 12, and <em>opL</em> = in. (<code>1 * 16 + 12 = 28</code>.)  This ternary operation can be expressed as <code>((NOT (in OR out)) AND pat) XOR (in AND NOT pat)</code>; that is, if the brush pattern bit is 1, use <code>NOT (in OR out)</code>; if 0, use <code>in</code>.</p>
 
 <p>Binary and ternary raster operations are prevalent in bit block transfers, which copy or transfer parts of images onto other images.</p>
+
+<blockquote>
+  <p><strong>Note:</strong> Raster operations also function, in principle, when the input and output color values are interpreted as indices to a color palette (e.g, color value 3 refers to the fourth entry in a palette of RGB colors), rather than as intensities (such as RGB colors).  But this is a more delicate case than the usual one, and functions best when—</p>
+
+  <ul>
+    <li>the number of colors in the color palette is a power of two (e.g., 2, 8, 16, 256),</li>
+    <li>each color value can be as low as 0 and as high as the number of colors in the color palette minus 1, and</li>
+    <li>the colors in the palette are sorted by their intensity (so that, for example, the color closest to “black” appears first and the color closest to “white” appears last).</li>
+  </ul>
+</blockquote>
 
 <p><a id="Blend_Modes"></a></p>
 
