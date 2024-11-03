@@ -13,6 +13,7 @@ from betadist import (
     realIsLess,
 )
 
+
 class BinomialSampler:
     def __init__(self, rg=None):
         self.rg = randomgen.RandomGen() if rg == None else rg
