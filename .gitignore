@@ -1,7 +1,7 @@
 *.Cache
 *.Settings
-*.bat
 *.backup
+*.bat
 *.cache
 *.class
 *.jar
