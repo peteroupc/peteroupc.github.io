@@ -198,7 +198,7 @@ The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delt
 
 ## Terminal Graphics
 
-Some command-line terminals (or terminal emulators) support coloring the background or foreground of text.  In such programs that support [**"ANSI" (American National Standards Institute) color codes**](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "&#x5b;" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
+Some command-line terminals (or terminal emulators) support coloring the background or foreground of text.  In such programs that support [**"ANSI" (American National Standards Institute) graphics codes**](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "&#x5b;" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
 
 - "0": Reset the foreground and background color and other graphic properties to default.  (The graphic control sequence U+001B followed by "&#x5b;m" has the same effect.)
 - "1": Set the following text in bold.
@@ -213,7 +213,7 @@ Some command-line terminals (or terminal emulators) support coloring the backgro
 - "9" followed by color number: Brighter version of foreground color.
 - "10" followed by color number: Brighter version of background color.
 
-The _color number_ is one of the following: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all terminals or terminal emulators support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
+The _color number_ is one of the following (only eight colors were defined by ANSI X3.64): "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all terminals or terminal emulators support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
 
 <a id=Color_Measurement_Devices></a>
 
