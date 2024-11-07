@@ -47,139 +47,128 @@ Functions dealing with matrices begin with “mat”.
 A 3x3 or 4x4 matrix has 9 or 16 elements, respectively. In mathematical publications,
 matrices are often notated in column-major order, in which each
 element of the matrix is placed in columns as opposed to rows, as in the following example:</p>
-
 <math>
 <mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mi>matrix[0]</mi></mtd>
- <mtd><mi>matrix[4]</mi></mtd>
- <mtd><mi>matrix[8]</mi></mtd>
- <mtd><mi>matrix[12]</mi></mtd>
- </mtr>
- <mtr>
- <mtd><mi>matrix[1]</mi></mtd>
- <mtd><mi>matrix[5]</mi></mtd>
- <mtd><mi>matrix[9]</mi></mtd>
- <mtd><mi>matrix[13]</mi></mtd>
- </mtr>
- <mtr>
- <mtd><mi>matrix[2]</mi></mtd>
- <mtd><mi>matrix[6]</mi></mtd>
- <mtd><mi>matrix[10]</mi></mtd>
- <mtd><mi>matrix[14]</mi></mtd>
- </mtr>
- <mtr>
- <mtd><mi>matrix[3]</mi></mtd>
- <mtd><mi>matrix[7]</mi></mtd>
- <mtd><mi>matrix[11]</mi></mtd>
- <mtd><mi>matrix[15]</mi></mtd>
- </mtr>
+<mtable>
+<mtr>
+<mtd><mi>matrix[0]</mi></mtd>
+<mtd><mi>matrix[4]</mi></mtd>
+<mtd><mi>matrix[8]</mi></mtd>
+<mtd><mi>matrix[12]</mi></mtd>
+</mtr>
+<mtr>
+<mtd><mi>matrix[1]</mi></mtd>
+<mtd><mi>matrix[5]</mi></mtd>
+<mtd><mi>matrix[9]</mi></mtd>
+<mtd><mi>matrix[13]</mi></mtd>
+</mtr>
+<mtr>
+<mtd><mi>matrix[2]</mi></mtd>
+<mtd><mi>matrix[6]</mi></mtd>
+<mtd><mi>matrix[10]</mi></mtd>
+<mtd><mi>matrix[14]</mi></mtd>
+</mtr>
+<mtr>
+<mtd><mi>matrix[3]</mi></mtd>
+<mtd><mi>matrix[7]</mi></mtd>
+<mtd><mi>matrix[11]</mi></mtd>
+<mtd><mi>matrix[15]</mi></mtd>
+</mtr>
 </mtable>
 </mfenced>
 </math>
-
 <p>The numbers in brackets in the matrix above are the zero-based indices
-into the matrix arrays passed to <code>MathUtil</code>’s matrix methods.</p>
-
-<p>For 3x3 matrices, the elements are arranged in the following order:</p>
-
+into the matrix arrays passed to <code>MathUtil</code>’s matrix methods.
+For 3x3 matrices, the elements are arranged in the following order:</p>
 <math>
 <mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mi>matrix[0]</mi></mtd>
- <mtd><mi>matrix[3]</mi></mtd>
- <mtd><mi>matrix[6]</mi></mtd>
- </mtr>
- <mtr>
- <mtd><mi>matrix[1]</mi></mtd>
- <mtd><mi>matrix[4]</mi></mtd>
- <mtd><mi>matrix[7]</mi></mtd>
- </mtr>
- <mtr>
- <mtd><mi>matrix[2]</mi></mtd>
- <mtd><mi>matrix[5]</mi></mtd>
- <mtd><mi>matrix[8]</mi></mtd>
- </mtr>
+<mtable>
+<mtr>
+<mtd><mi>matrix[0]</mi></mtd>
+<mtd><mi>matrix[3]</mi></mtd>
+<mtd><mi>matrix[6]</mi></mtd>
+</mtr>
+<mtr>
+<mtd><mi>matrix[1]</mi></mtd>
+<mtd><mi>matrix[4]</mi></mtd>
+<mtd><mi>matrix[7]</mi></mtd>
+</mtr>
+<mtr>
+<mtd><mi>matrix[2]</mi></mtd>
+<mtd><mi>matrix[5]</mi></mtd>
+<mtd><mi>matrix[8]</mi></mtd>
+</mtr>
 </mtable>
 </mfenced>
 </math>
-
-<p><b>A Matrix Transforms Between Coordinate Systems:</b> A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate system. These are four 3-element vectors that describe how the three axes and the center map to the new coordinate system in relation to the old coordinate system.</p>
-
-<p>The following depiction of a 4x4 matrix illustrates the meaning of each of its elements. To keep things
+<p><b>A Matrix Transforms Between Coordinate Systems:</b> A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate system. These are four 3-element vectors that describe how the three axes and the center map to the new coordinate system in relation to the old coordinate system.
+The following depiction of a 4x4 matrix illustrates the meaning of each of its elements. To keep things
 simple, this matrix’s transformation is one that keeps straight lines straight and parallel lines parallel.</p>
-
 <math>
 <mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mi>[0] X-axis X</mi></mtd>
- <mtd><mi>[4] Y-axis X</mi></mtd>
- <mtd><mi>[8] Z-axis X</mi></mtd>
- <mtd><mi>[12] Center X</mi></mtd>
- </mtr>
- <mtr>
- <mtd><mi>[1] X-axis Y</mi></mtd>
- <mtd><mi>[5] Y-axis Y</mi></mtd>
- <mtd><mi>[9] Z-axis Y</mi></mtd>
- <mtd><mi>[13] Center Y</mi></mtd>
- </mtr>
- <mtr>
- <mtd><mi>[2] X-axis Z</mi></mtd>
- <mtd><mi>[6] Y-axis Z</mi></mtd>
- <mtd><mi>[10] Z-axis Z</mi></mtd>
- <mtd><mi>[14] Center Z</mi></mtd>
- </mtr>
- <mtr>
- <mtd><mi>[3] 0</mi></mtd>
- <mtd><mi>[7] 0</mi></mtd>
- <mtd><mi>[11] 0</mi></mtd>
- <mtd><mi>[15] 1</mi></mtd>
- </mtr>
+<mtable>
+<mtr>
+<mtd><mi>[0] X axis X</mi></mtd>
+<mtd><mi>[4] Y axis X</mi></mtd>
+<mtd><mi>[8] Z axis X</mi></mtd>
+<mtd><mi>[12] Center X</mi></mtd>
+</mtr>
+<mtr>
+<mtd><mi>[1] X axis Y</mi></mtd>
+<mtd><mi>[5] Y axis Y</mi></mtd>
+<mtd><mi>[9] Z axis Y</mi></mtd>
+<mtd><mi>[13] Center Y</mi></mtd>
+</mtr>
+<mtr>
+<mtd><mi>[2] X axis Z</mi></mtd>
+<mtd><mi>[6] Y axis Z</mi></mtd>
+<mtd><mi>[10] Z axis Z</mi></mtd>
+<mtd><mi>[14] Center Z</mi></mtd>
+</mtr>
+<mtr>
+<mtd><mi>[3] 0</mi></mtd>
+<mtd><mi>[7] 0</mi></mtd>
+<mtd><mi>[11] 0</mi></mtd>
+<mtd><mi>[15] 1</mi></mtd>
+</mtr>
 </mtable>
 </mfenced>
 </math>
-
 <p>The following is an example of a transformation matrix.</p>
-
 <math>
 <mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>2</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mi>0.5</mi></mtd>
- <mtd><mo>-0.866025&lt;/mtd&gt;
- <mtd><mn>3</mn></mtd>
- &lt;/mtr&gt;
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mi>0.866025&lt;/mtd&gt;
- <mtd><mi>0.5&lt;/mtd&gt;
- <mtd><mn>4</mn></mtd>
- &lt;/mtr&gt;
- <mtr>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mn>1</mn></mtd>
- </mtr>
+<mtable>
+<mtr>
+<mtd><mn>1</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>2</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mi>0.5</mi></mtd>
+<mtd><mo>-0.866025&lt;/mtd&gt;
+<mtd><mn>3</mn></mtd>
+&lt;/mtr&gt;
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mi>0.866025&lt;/mtd&gt;
+<mtd><mi>0.5&lt;/mtd&gt;
+<mtd><mn>4</mn></mtd>
+&lt;/mtr&gt;
+<mtr>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mn>1</mn></mtd>
+</mtr>
 &lt;/mtable&gt;
 &lt;/mfenced&gt;
 &lt;/math&gt;
-
-Here, the first column shows an X-axis vector at (1, 0, 0),
-the second column shows a Y-axis vector at (0, 0.5, 0.866025),
-the third column shows a Z-axis vector at (0, -0.866025, 0.5),
+Here, the first column shows an X axis vector at (1, 0, 0),
+the second column shows a Y axis vector at (0, 0.5, 0.866025),
+the third column shows a Z axis vector at (0, -0.866025, 0.5),
 and the fourth column centers the coordinate system at (2, 3, 4).
-
 Provided the matrix can be inverted (see the documentation for mat4invert), the three axis vectors are
 _basis vectors_ of the coordinate system.
 \*Why a 4x4 matrix?\*\* A matrix can describe _linear transformations_ from one vector in space
@@ -187,12 +176,10 @@ to another. These transformations, which include [\*\*scaling\*\*](#Scaling),
 [\*\*rotation\*\*](#Rotation), and shearing, can change where a vector points _at_,
 but not where it points _from_. It's enough to use a 3x3 matrix to describe
 linear transformations in 3D space.
-
 But certain other transformations, such as [\*\*translation\*\*](#Translation) and
 [\*\*perspective\*\*](#Projective_Transformations), are common in 3D computer graphics.
 To describe translation and perspective in 3D, the 3x3 matrix must be
 augmented by an additional row and column, turning it into a 4x4 matrix.
-
 A 4x4 matrix can describe linear transformations in 4D space and
 transform 4-element vectors. A 4-element vector has four components:
 X, Y, Z, and W. If a 4-element vector represents a 3D point, these
@@ -201,7 +188,6 @@ vector's W is 0). To convert these coordinates back to 3D, divide
 X, Y, and Z by W. This is usually only required, however, if the
 matrix describes a perspective projection (see
 [\*\*"Projective Transformations"\*\*](#Projective_Transformations)).
-
 A similar situation applies in 2D between 2x2 and 3x3 matrices as it does
 in 3D between 3x3 and 4x4 matrices.
 \*Transforming points.\*\* The transformation formula multiplies a matrix by a 3D point to change that point's
@@ -210,7 +196,6 @@ position:
 \*\*a&prime;\*\*<sub>_y_</sub> = matrix[1] &#x22c5; \*\*a\*\*<sub>_x_</sub> + matrix[5] &#x22c5; \*\*a\*\*<sub>_y_</sub> + matrix[9] &#x22c5; \*\*a\*\*<sub>_z_</sub> + matrix[13] &#x22c5; \*\*a\*\*<sub>_w_</sub>
 \*\*a&prime;\*\*<sub>_z_</sub> = matrix[2] &#x22c5; \*\*a\*\*<sub>_x_</sub> + matrix[6] &#x22c5; \*\*a\*\*<sub>_y_</sub> + matrix[10] &#x22c5; \*\*a\*\*<sub>_z_</sub> + matrix[14] &#x22c5; \*\*a\*\*<sub>_w_</sub>
 \*\*a&prime;\*\*<sub>_w_</sub> = matrix[3] &#x22c5; \*\*a\*\*<sub>_x_</sub> + matrix[7] &#x22c5; \*\*a\*\*<sub>_y_</sub> + matrix[11] &#x22c5; \*\*a\*\*<sub>_z_</sub> + matrix[15] &#x22c5; \*\*a\*\*<sub>_w_</sub>
-
 For more on why \*\*a&prime;\*\*<sub>_w_</sub> appears here, see \*\*"Why a 4x4 Matrix?"\*\*, above. In each formula that follows, \*\*a\*\*<sub>_w_</sub> is assumed to be 1 (indicating a conventional 3D point).
 \* Scaling.\*\* Scaling changes an object's size.
 To create a scaling matrix, use <a href="MathUtil.html#MathUtil.mat4scaled">MathUtil.mat4scaled()</a>,
@@ -219,56 +204,49 @@ factors to change the object's size. For example, a Y-factor of 2 doubles an obj
 To multiply an existing matrix by a scaling, use
 <a href="MathUtil.html#MathUtil.mat4scale">MathUtil.mat4scale()</a>. This will put the scaling
 before the other transformations.
- Scaling uses the 1st, 6th, and 11th elements of the matrix as seen here:
-
+Scaling uses the 1st, 6th, and 11th elements of the matrix as seen here:
 <math>
 <mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mi>sx</mi></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mi>sy</mi></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mi>sz</mi></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mn>1</mn></mtd>
- </mtr>
+<mtable>
+<mtr>
+<mtd><mi>sx</mi></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mi>sy</mi></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mi>sz</mi></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mn>1</mn></mtd>
+</mtr>
 </mtable>
 </mfenced>
 </math>
-
 where the X coordinate is multiplied by `sx`, the Y coordinate is multiplied by `sy`, and
 the Z coordinate is multiplied by `sz`.
-
 The scaling formula would look like:
 \*\*a&prime;\*\*<sub>_x_</sub> = sx &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 0
 \*\*a&prime;\*\*<sub>_y_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + sy &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 0
 \*\*a&prime;\*\*<sub>_z_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + sz &#x22c5; \*\*a\*\*<sub>_z_</sub> + 0
 \*\*a&prime;\*\*<sub>_w_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 1 = 1
-
 For example, we multiply the input x by `sx` to get the output x. If `sx` is 1, x
 remains unchanged. Likewise for y (`sy`) and z (`sz`).
-
 If `sx`, `sy`, or `sz` is -1, that coordinate is _reflected_ along the corresponding axis.
-
 If `sx`, `sy`, and `sz` are all 1, we have an _identity matrix_, where the input vector
 is equal to the output vector.
-
 When the transformed X, Y, or Z axis has a length other than 1, the coordinate
 system will be scaled up or down along that axis. The scalings given
 here will scale the lengths of the corresponding axes. For example,
@@ -282,45 +260,42 @@ To multiply an existing matrix by a translation, use
 before the other transformations. In a transformation matrix,
 translation effectively occurs after all other transformations such as scaling and rotation.
 It uses the 13th, 14th, and 15th elements of the matrix as seen here:
-
 <math>
 <mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>tx</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>ty</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>tz</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mn>1</mn></mtd>
- </mtr>
+<mtable>
+<mtr>
+<mtd><mn>1</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>tx</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>1</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>ty</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>1</mn></mtd>
+<mtd><mn>tz</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mn>1</mn></mtd>
+</mtr>
 </mtable>
 </mfenced>
 </math>
-
 where `tx` is added to the X coordinate, `ty` is added to the Y coordinate, and
 `tz` is added to the Z coordinate. The transformation formulas would look like:
 \*\*a&prime;\*\*<sub>_x_</sub> = 1 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_z_</sub> + tx
 \*\*a&prime;\*\*<sub>_y_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 1 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_z_</sub> + ty
 \*\*a&prime;\*\*<sub>_z_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 1 &#x22c5; \*\*a\*\*<sub>_z_</sub> + tz
 \*\*a&prime;\*\*<sub>_w_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 1 = 1
-
 For example, we add the input x and `tx` to get the output x. If `tx` is 0, x
 remains unchanged. Likewise for y (`ty`) and z (`tz`).
 \*Rotation.\*\* Rotation changes an object's orientation.
@@ -337,35 +312,34 @@ before the other transformations.
 Given an angle of rotation, &theta;,
 the transformation matrix for rotating 3D points is as follows. (For a list of common
 sines and cosines, see the end of this section.)
-
 <figure>
 <math>
 <mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
- <mtd><mo>-</mo><mi>sin</mi><mi>&theta;</mi></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mi>sin</mi><mi>&theta;</mi></mtd>
- <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mn>1</mn></mtd>
- </mtr>
+<mtable>
+<mtr>
+<mtd><mn>1</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+<mtd><mo>-</mo><mi>sin</mi><mi>&theta;</mi></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mi>sin</mi><mi>&theta;</mi></mtd>
+<mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mn>1</mn></mtd>
+</mtr>
 </mtable>
 </mfenced>
 </math>
@@ -373,31 +347,31 @@ sines and cosines, see the end of this section.)
 <figure>
 <math>
 <mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mi>sin</mi><mi>&theta;</mi></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mo>-</mo><mi>sin</mi><mi>&theta;</mi></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mn>1</mn></mtd>
- </mtr>
+<mtable>
+<mtr>
+<mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mi>sin</mi><mi>&theta;</mi></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>1</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mo>-</mo><mi>sin</mi><mi>&theta;</mi></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mn>1</mn></mtd>
+</mtr>
 </mtable>
 </mfenced>
 </math>
@@ -405,36 +379,35 @@ sines and cosines, see the end of this section.)
 <figure>
 <math>
 <mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
- <mtd><mo>-</mo><mi>sin</mi><mi>&theta;</mi></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mi>sin</mi><mi>&theta;</mi></mtd>
- <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>0</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mn>1</mn></mtd>
- </mtr>
+<mtable>
+<mtr>
+<mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+<mtd><mo>-</mo><mi>sin</mi><mi>&theta;</mi></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mi>sin</mi><mi>&theta;</mi></mtd>
+<mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>0</mn></mtd>
+<mtd><mn>1</mn></mtd>
+<mtd><mn>0</mn></mtd>
+</mtr>
+<mtr>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mi>0</mi></mtd>
+<mtd><mn>1</mn></mtd>
+</mtr>
 </mtable>
 </mfenced>
 </math>
 <figcaption>Rotation about the Z axis.</figcaption></figure>
-
 Note that:
 When we rotate a point about the X axis, the X coordinate is unchanged
 and the Y and Z coordinates are adjusted in the rotation. For rotations about the
@@ -446,34 +419,26 @@ counterclockwise rotation in right-handed coordinate systems. For example,
 clockwise.
 Rotating a point around an arbitrary axis of rotation is more complicated to describe.
 When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
- <code>[0, 1, 0]</code> is the Y axis, and <code>[0, 0, 1]</code> is the Z axis.
-
+<code>[0, 1, 0]</code> is the Y axis, and <code>[0, 0, 1]</code> is the Z axis.
 See [\*\*"Rotation example"\*\*](#Rotation_Example) for an illustration of a rotation
 transformation.
-
 Related functions:
 <a href="MathUtil.html#MathUtil.mat4rotated">MathUtil.mat4rotated()</a> -
- Returns a rotation matrix
+Returns a rotation matrix
 <a href="MathUtil.html#MathUtil.mat4rotate">MathUtil.mat4rotate()</a> -
- Multiplies a matrix by a translation.
-
+Multiplies a matrix by a translation.
 A list of common sines and cosines follows. Values
 shown with three decimal places are approximate.
-
 | &nbsp; | 0&deg;| 22.5&deg;| 30&deg;| 45&deg;| 60&deg;| 67.5&deg;| 90&deg;| 112.5&deg;| 120&deg;| 135&deg;| 150&deg;| 157.5&deg;| 180&deg;|
- -------|---|------|----|----|----|------|----|------|-----|-----|-----|-------|-----|
+-------|---|------|----|----|----|------|----|------|-----|-----|-----|-------|-----|
 | sin | 0 | 0.383 | 0.5 | 0.707 | 0.866 | 0.924 | 1 | 0.924 | 0.866 | 0.707 | 0.5 | 0.383 | 0 |
 | cos | 1 | 0.924 | 0.866 | 0.707 | 0.5 | 0.383 | 0 | -0.383 | -0.5 | -0.707 | -0.866 | -0.924 | -1 |
-
 | &nbsp; | 180&deg;| 202.5&deg;| 210&deg;| 225&deg;| 240&deg;| 247.5&deg;| 270&deg;| 292.5&deg;| 300&deg;| 315&deg;| 330&deg;| 337.5&deg;| 360&deg;|
- -------|---|------|----|----|----|------|----|------|-----|-----|-----|-------|-----|
+-------|---|------|----|----|----|------|----|------|-----|-----|-----|-------|-----|
 | sin | 0 | -0.383 | -0.5 | -0.707 | -0.866 | -0.924 | -1 | -0.924 | -0.866 | -0.707 | -0.5 | -0.383 | 0 |
 | cos | -1 | -0.924 | -0.866 | -0.707 | -0.5 | -0.383 | 0 | 0.383 | 0.5 | 0.707 | 0.866 | 0.924 | 1 |
-
 <a id="Matrix_Multiplication"></a>
-
 ### Matrix Multiplication
-
 The order in which you do transforms is important. In general, scaling then translating is
 not the same as translating then scaling. Assuming your geometry is centered at the origin
 (0, 0, 0), you should create a transformation in this order:
@@ -491,9 +456,7 @@ that the transformations they describe happen in reverse
 order. For example, if the first matrix (input matrix) describes a translation and the second
 matrix describes a scaling, the multiplied matrix will
 describe the effect of scaling then translation.
-
 Matrix multiplication is not commutative; the order of multiplying matrices is important.
-
 To get an insight of how matrix multiplication works, treat the second matrix as a group
 of column vectors (with the same number of rows as the number of columns in the
 first matrix). Multiplying the two matrices transforms these vectors to new ones in the
@@ -501,56 +464,44 @@ same way as if the column vectors were transformed individually. (This also expl
 be one or more column vectors in the second matrix and not just four in the case of a 4x4 matrix,
 and also why transforming a 4-element column vector is the same as multiplying a 4x4 matrix by a
 matrix with one column and four rows.\*)
-
 This insight reveals a practical use of matrix multiplication: transforming four 4-element
 vectors at once using a single matrix operation involving two 4x4 matrices. After the
 matrix multiplication, each of the transformed vectors will be contained in one of the four columns
 of the output matrix.
-
 The methods `mat4multiply`, `mat4scale`, `mat4scaleInPlace`, `mat4translate`, and
 mat4rotate involve multiplying 4x4 matrices.
-
 Related functions:
 <a href="MathUtil.html#MathUtil.mat4multiply">MathUtil.mat4multiply()</a> -
- Multiplies two matrices
-
+Multiplies two matrices
 \\* Reading the [\*\*tutorial by Dmitry Sokolov\*\*](https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection)
 led me to this highly useful insight.
 \*Projective transformations.\*\* In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1). (Such transformations are called _affine transformations_, those that
 keep straight lines straight and parallel lines parallel.) However, this is not the case for
 some transformations in the `MathUtil` class.
-
 Transformations that don't necessarily preserve parallelism of lines are called _projective transformations_.
 An NxN matrix can describe certain projective transformations if it has one more row and one more column
 than the number of dimensions. For example, a 4x4 matrix can describe 3D projective transformations
 in the form of linear transformations on homogeneous coordinates (see
 [\*\*"Why a 4x4 Matrix?"\*\*](#Why_a_4x4_Matrix)). For a 3D projective transformation, the last row
 in the matrix is not necessarily (0, 0, 0, 1).
-
 One example of a projective transformation is found in a _perspective projection_ matrix,
 as returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a> or <a href="MathUtil.html#MathUtil.mat4frustum">MathUtil.mat4frustum</a>. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative Z coordinate in _eye space_, or more specifically, as follows:
 \*\*a&prime;\*\*<sub>_w_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + -1 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 0
-
 For more on perspective projections, see <a href="tutorial-camera.html">_The "Camera" and Geometric Transforms_</a>.
-
 Related functions:
 <a href="MathUtil.html#MathUtil.mat4frustum">MathUtil.mat4frustum()</a> -
- Returns a frustum matrix
+Returns a frustum matrix
 <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective()</a> -
- Returns a field-of-view perspective matrix
-
+Returns a field-of-view perspective matrix
 <a id="Rotation_Example"></a>
-
 ## Rotation Example
-
 As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0, 0)`,
 &theta; = 60&deg;). First, we find the rotation formula for the X axis:
 \*\*a&prime;\*\*<sub>_x_</sub> = 1 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 0
 \*\*a&prime;\*\*<sub>_y_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + (cos &theta;) &#x22c5; \*\*a\*\*<sub>_y_</sub> + -(sin &theta;) &#x22c5; \*\*a\*\*<sub>_z_</sub> + 0
 \*\*a&prime;\*\*<sub>_z_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + (sin &theta;) &#x22c5; \*\*a\*\*<sub>_y_</sub> + (cos &theta;) &#x22c5; \*\*a\*\*<sub>_z_</sub> + 0
 \*\*a&prime;\*\*<sub>_w_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 1 = 1
-
 We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
 We plug those numbers into the rotation formula to get a formula for rotating a
 point 60 degrees about the X axis.
@@ -558,7 +509,6 @@ point 60 degrees about the X axis.
 \*\*a&prime;\*\*<sub>_y_</sub> ~= 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0.5 &#x22c5; \*\*a\*\*<sub>_y_</sub> + -0.866025 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 0
 \*\*a&prime;\*\*<sub>_z_</sub> ~= 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0.866025 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0.5 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 0
 \*\*a&prime;\*\*<sub>_w_</sub> = 0 &#x22c5; \*\*a\*\*<sub>_x_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_y_</sub> + 0 &#x22c5; \*\*a\*\*<sub>_z_</sub> + 1 = 1
-
 If a point is located at (10, 20, 30), the rotated point would now be:
 \*\*a&prime;\*\*<sub>_x_</sub> = 1 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 0
 = 1 &#x22c5; 10
@@ -573,7 +523,6 @@ If a point is located at (10, 20, 30), the rotated point would now be:
 ~= 32.3205
 \*\*a&prime;\*\*<sub>_w_</sub> = 0 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 1
 = 1
-
 So the rotated point would be at about (10, -15.98075, 32.3205).
 ## Describing Rotations
 Rotations in 3D space can be described in many ways, including
@@ -604,7 +553,7 @@ method need not be a [\*\*unit vector\*\*](#Unit_Vectors).
 ### Quaternions
 A quaternion is a 4-element vector that can describe a 3D rotation. Functions dealing with quaternions begin with "quat". Functions that generate quaternions include: <a href="MathUtil.html#MathUtil.quatIdentity">MathUtil.quatIdentity</a>, which generates a quaternion describing an
 absence of rotations; <a href="MathUtil.html#MathUtil.quatFromVectors">MathUtil.quatFromVectors</a>, which generates a quaternion describing
-a rotation from one vector to another; <a href="MathUtil.html#MathUtil.quatFromMat4">MathUtil.quatFromMat4</a>, which generates a quaternion from a [\*\*4x4 matrix\*\*](#Matrices); <a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a>, which generates a quaternion from an angle and [\*\*axis of rotation\*\*](#Axis_of_Rotation); <a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a>, which generates a quaternion from Tait-Bryan angles.
+a rotation from one vector to another; <a href="MathUtil.html#MathUtil.quatFromMat4">MathUtil.quatFromMat4</a>, which generates a quaternion from a [\*\*4x4 matrix\*\*](#Matrices); <a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a>, which generates a quaternion from an angle and [\*\*axis of rotation\*\*](#Axis_of_Rotation); MathUtil.quatFromTaitBryan, which generates a quaternion from Tait-Bryan angles.
 <a id="Using_Quaternions"></a>
 #### Using Quaternions
 For best results when using quaternions:
@@ -638,10 +587,8 @@ Pitch-yaw-roll angles can cause a problem called "gimbal lock", in which a rotat
 one axis (say, a pitch) can cause a vector to be parallel to another axis (say, the roll
 axis), so that a rotation along that axis will do nothing.
 Related functions:
-<a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan()</a> -
+MathUtil.quatFromTaitBryan() -
 Converts from Tait-Bryan angles to a quaternion
-<a href="MathUtil.html#MathUtil.quatToTaitBryan">MathUtil.quatToTaitBryan()</a> -
-Converts from a quaternion to Tait-Bryan angles
 <a id="4x4_Matrices"></a>
 ### 4x4 Matrices
 A 4x4 matrix can describe a 3D vector rotation; see [\*\*"Rotation", above\*\*](#Rotation).
@@ -855,7 +802,6 @@ unless all the normal's components are 0, and sets this plane to the result.
 * [quatFromAxisAngle](#MathUtil.quatFromAxisAngle)<br />Generates a quaternion from a rotation transformation that rotates vectors
 by the given rotation angle and around the given glmath,
 * [quatFromMat4](#MathUtil.quatFromMat4)<br />Generates a quaternion from the vector rotation described in a 4x4 matrix.
-* [quatFromTaitBryan](#MathUtil.quatFromTaitBryan)<br />Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).
 * [quatFromVectors](#MathUtil.quatFromVectors)<br />Generates a quaternion describing a rotation between
 two 3-element vectors.
 * [quatIdentity](#MathUtil.quatIdentity)<br />Returns the identity quaternion of multiplication, (0, 0, 0, 1).
@@ -881,8 +827,6 @@ of the angle to rotate the vector by and an glmath to
 rotate that vector around.
 * [quatToMat4](#MathUtil.quatToMat4)<br />Generates a 4x4 matrix describing the rotation
 described by this quaternion.
-* [quatToTaitBryan](#MathUtil.quatToTaitBryan)<br />Converts this quaternion to the same version of the rotation
-in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
 * [quatTransform](#MathUtil.quatTransform)<br />Transforms a 3- or 4-element vector using a
 quaternion's vector rotation.
 * [vec2abs](#MathUtil.vec2abs)<br />Returns a new 2-element
@@ -1496,49 +1440,41 @@ can't be inverted, returns the identity 3x3 matrix. (Type: Array.&lt;number&gt;)
 ### (static) MathUtil.mat4invert(m)
 
 Finds the inverse of a 4x4 matrix.
-
 An inverted matrix can describe a transformation in three-dimensional space that undoes another transformation. For
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
 size.
-
 To invert a \*\*translation\*\*, reverse the sign of the translation elements (given above as `tx`, `ty`, and `tz`)
 and generate a new translation matrix with the new translation elements. For example,
 to invert the translation (5, 2, -3), use the translation (-5, -2, 3).
-
 To invert a \*\*scaling\*\*, use 1 divided by each of the scaling elements (given above as `sx`, `sy`, and `sz`)
 and generate a new scaling matrix with those elements.
 For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
-
 To invert a \*\*rotation\*\* for a 4x4 matrix, swap the 2nd and 5th elements of the matrix,
 the 3rd and 9th elements, and the 7th and 10th elements of the matrix (zero-based
 elements 1, 4, 2, 8, 6, and 9 respectively). The effect is like reversing the angle of the
 rotation to reset an object to its previous orientation. In general, to invert an NxN
 rotation matrix, _transpose_ that matrix (so that its rows become its columns and vice versa).
 \*Inverting a general NxN matrix.\*\* Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4x4 or 3x3 matrices can be inverted using the <a href="MathUtil.html#MathUtil.mat4invert">MathUtil.mat4invert()</a> or <a href="MathUtil.html#MathUtil.mat3invert">MathUtil.mat3invert()</a> methods, respectively.
-
 To describe how inverting a matrix works, we will need to define some terms:
 A matrix cell's _row index_ and _column index_ tell where that cell appears in the matrix. For example, a cell on the first row has row index 0 and a cell on the second column has column index 1.
 A matrix's _determinant_ is its overall
- scaling factor. Only an NxN matrix with a determinant other
- than 0 can be inverted. To find a matrix's determinant:
- 1. For each cell in the first row (or first column), find the matrix's _minor_ at that cell (that is, the determinant of a matrix generated by eliminating the row and column where that cell appears in the original matrix).
- 2. Label the minors (A, B, C, D, ...), in that order.
- 3. The matrix's determinant is (A - B + C - D + ...).
-
- A 1x1 matrix's determinant is simply the value of its only cell.
-
+scaling factor. Only an NxN matrix with a determinant other
+than 0 can be inverted. To find a matrix's determinant:
+1. For each cell in the first row (or first column), find the matrix's _minor_ at that cell (that is, the determinant of a matrix generated by eliminating the row and column where that cell appears in the original matrix).
+2. Label the minors (A, B, C, D, ...), in that order.
+3. The matrix's determinant is (A - B + C - D + ...).
+A 1x1 matrix's determinant is simply the value of its only cell.
 To invert an NxN matrix:
-
 1. Create a new NxN matrix.
 2. For each cell in the original matrix, find its minor at that cell (that is, the determinant of a matrix generated by eliminating the row and column where that cell appears in the original matrix), and set the corresponding cell
- in the new matrix to that value.
+in the new matrix to that value.
 3. In the new matrix, reverse the sign of each cell whose row index
- plus column index is odd. (These cells will alternate in a checkerboard
- pattern in the matrix.)
+plus column index is odd. (These cells will alternate in a checkerboard
+pattern in the matrix.)
 4. Transpose the new matrix (convert its rows to columns
- and vice versa).
+and vice versa).
 5. Find the original matrix's determinant and divide each
- cell in the new matrix by that value.
+cell in the new matrix by that value.
 6. The new matrix will be the inverted form of the original NxN matrix.
 
 #### Parameters
@@ -2300,23 +2236,6 @@ other than rotation.
 
 The resulting quaternion. (Type: Array.&lt;number&gt;)
 
-<a name="MathUtil.quatFromTaitBryan"></a>
-### (static) MathUtil.quatFromTaitBryan(pitchDegrees, yawDegrees, rollDegrees, [mode])
-
-Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).
-See "Axis of Rotation" in "glmath" for the meaning of each angle.
-
-#### Parameters
-
-* `pitchDegrees` (Type: number)<br />Vector rotation about the X axis (upward or downward turn), in degrees. This can instead be a 3-element array giving the rotation about the X axis, Y axis, and Z axis, respectively.
-* `yawDegrees` (Type: number)<br />Vector rotation about the Y axis (left or right turn), in degrees. May be null or omitted if "pitchDegrees" is an array.
-* `rollDegrees` (Type: number)<br />Vector rotation about the Z axis (swaying side by side), in degrees. May be null or omitted if "pitchDegrees" is an array.
-* `mode` (Type: number) (optional)<br />Specifies the order in which the rotations will occur (in terms of their effect). This is one of the <a href="MathUtil.html">MathUtil</a> constants such as <a href="MathUtil.html#MathUtil.LocalPitchYawRoll">MathUtil.LocalPitchYawRoll</a> and <a href="MathUtil.html#MathUtil.GlobalYawRollPitch">MathUtil.GlobalYawRollPitch</a>. If null, undefined, or omitted, the default is <a href="MathUtil.html#MathUtil.GlobalRollPitchYaw">MathUtil.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object's new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.
-
-#### Return Value
-
-The generated quaternion. (Type: Array.&lt;number&gt;)
-
 <a name="MathUtil.quatFromVectors"></a>
 ### (static) MathUtil.quatFromVectors(vec1, vec2)
 
@@ -2618,23 +2537,6 @@ described by this quaternion.
 #### Return Value
 
 The generated 4x4 matrix. (Type: Array.&lt;number&gt;)
-
-<a name="MathUtil.quatToTaitBryan"></a>
-### (static) MathUtil.quatToTaitBryan(a, [mode])
-
-Converts this quaternion to the same version of the rotation
-in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
-
-#### Parameters
-
-* `a` (Type: Array.&lt;number&gt;)<br />A quaternion. Should be a glmath.
-* `mode` (Type: number) (optional)<br />Specifies the order in which the rotations will occur (in terms of their effect, not in terms of how they will be returned by this method). This is one of the <a href="MathUtil.html">MathUtil</a> constants such as <a href="MathUtil.html#MathUtil.LocalPitchYawRoll">MathUtil.LocalPitchYawRoll</a> and <a href="MathUtil.html#MathUtil.GlobalYawRollPitch">MathUtil.GlobalYawRollPitch</a>. If null, undefined, or omitted, the default is <a href="MathUtil.html#MathUtil.GlobalRollPitchYaw">MathUtil.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object's new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.
-
-#### Return Value
-
-A 3-element array containing the
-pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order and in degrees, by which to rotate vectors.
-See "Axis of Rotation" in "glmath" for the meaning of each angle. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.quatTransform"></a>
 ### (static) MathUtil.quatTransform(q, v)
