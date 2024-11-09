@@ -2,11 +2,11 @@
 
 The following are three challenges I make to the computer community, relating to:
 
-- Graphics for retro-style game development.
-- MIDI music synthesis for retro-style games and apps.
-- Tileable wallpapers with limited colors and resolution.
+- [**Graphics for retro-style game development**](#Graphics_Challenge_for_Retro_Style_Games).
+- [**MIDI music synthesis for retro-style games and apps**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
+- [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).
 
-All three serve to arouse nostalgia among 90s computer users.
+All three serve to arouse nostalgia among 1990s computer users.
 
 <a id=Graphics_Challenge_for_Retro_Style_Games></a>
 
