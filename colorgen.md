@@ -1216,11 +1216,10 @@ For example, code 28 is a ternary raster operation made up of binary raster oper
 
 Binary and ternary raster operations are prevalent in bit block transfers, which copy or transfer parts of images onto other images.
 
-> **Note:** Raster operations also function, in principle, when the input and output color values are interpreted as indices to a color palette (e.g, color value 3 refers to the fourth entry in a palette of RGB colors), rather than as intensities (such as RGB colors).  But this is a more delicate case than the usual one, and functions best when&mdash;
+> **Note:** Raster operations also function, in principle, when the input and output color values are interpreted as zero-based indices to a color palette (that is, color value 0 refers to the first entry in a palette of RGB colors; color value 1, the second; and so on), rather than as intensities (such as RGB colors).  But this is a more delicate case than the usual one, and functions best when&mdash;
 >
-> - the number of colors in the color palette is a power of two (e.g., 2, 8, 16, 256),
-> - each color value can be as low as 0 and as high as the number of colors in the color palette minus 1, and
-> - the colors in the palette are sorted by their intensity (so that, for example, the color closest to "black" appears first and the color closest to "white" appears last).
+> - the number of colors in the color palette is a power of two (e.g., 2, 8, 16, 256), and
+> - for each color index _i_, the color at index _i_ is the same as (or at least "close" to) the "inversion" of the color at index _n_ &minus; 1 &minus; _i_ (a less technical but less preferable alternative is: the colors in the palette are sorted by their intensity, so that, for example, the color closest to "black" appears first and the color closest to "white" appears last).
 
 <a id=Blend_Modes></a>
 
@@ -1883,7 +1882,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 [^35]: Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas." Optical Society of America, 23(1), 597&ndash;610.
 
-[^36]: _Dithering_ an image involves the scattering of colors in a limited set to simulate colors outside that set. Detailing the various dithering techniques is outside the scope of this article, but see the [**Wikipedia article on dithering**](https://en.wikipedia.org/wiki/Dither) as will as [**Joel Yliluoma's algorithm and his review of other dithering algorithms**](https://bisqwit.iki.fi/story/howto/dither/jy/). Another way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.
+[^36]: _Dithering_ is the scattering of colors in a limited set to simulate colors outside that set. Detailing the various dithering techniques is outside the scope of this article, but see the [**Wikipedia article on dithering**](https://en.wikipedia.org/wiki/Dither) as will as [**Joel Yliluoma's algorithm and his review of other dithering algorithms**](https://bisqwit.iki.fi/story/howto/dither/jy/). Another way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.
 
 [^37]: This document does not cover how to implement hash tables.
 
