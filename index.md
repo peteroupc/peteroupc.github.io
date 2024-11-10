@@ -50,6 +50,7 @@ In the articles above, I put an emphasis on random variate generation that:
     - [**Graphics for retro-style game development**](./graphics.html#Graphics_Challenge_for_Retro_Style_Games).
     - [**MIDI music synthesis for retro-style games and apps**](./graphics.html#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
     - [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).
+* [**Traditional User Interface Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md)
 
 **Other Articles on Mathematics and Programming**
 

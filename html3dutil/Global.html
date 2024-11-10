@@ -4,6 +4,15 @@
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
+<h3 id="members">Members</h3>
+
+<ul>
+  <li><a href="#toExtrudedMeshBuffer">toExtrudedMeshBuffer</a><br />Generates a mesh buffer consisting of “walls” that follow this graphics path approximately, and, optionally, a base and top.</li>
+  <li><a href="#toLineMeshBuffer">toLineMeshBuffer</a><br />Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.</li>
+  <li><a href="#toMeshBuffer">toMeshBuffer</a><br />Decomposes this path into triangles and generates a mesh
+buffer with those triangles.</li>
+</ul>
+
 <h3 id="methods">Methods</h3>
 
 <ul>
@@ -18,6 +27,24 @@ its work.</li>
 the last known time, where a frame’s length is 1/60 of a second.</li>
   <li><a href="#toGLColor">toGLColor</a><br />Creates a 4-element array representing a color.</li>
 </ul>
+
+<p><a name="toExtrudedMeshBuffer"></a>
+### toExtrudedMeshBuffer (constant)</p>
+
+<p>Generates a mesh buffer consisting of “walls” that follow this graphics path approximately, and, optionally, a base and top.</p>
+
+<p><a name="toLineMeshBuffer"></a>
+### toLineMeshBuffer (constant)</p>
+
+<p>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.</p>
+
+<p><a name="toMeshBuffer"></a>
+### toMeshBuffer (constant)</p>
+
+<p>Decomposes this path into triangles and generates a mesh
+buffer with those triangles. Each triangle’s normal will point
+toward the Z axis, and each triangle vertex’s texture coordinates will
+be the same as that vertex’s position.</p>
 
 <p><a name="getPromiseResults"></a>
 ### getPromiseResults(promises, [progressResolve], [progressReject])</p>
@@ -136,7 +163,7 @@ colors.
 \* HSL notation: `hsl(200,100%,50%)` or `hsla(200,100%,50%,80%`. (See _What is HSL notation?_, later.)
 \* The newly-added color name `rebeccapurple`.
 \* The word `transparent`, meaning a fully-transparent color.
-- \*\*What do some colors look like?\*\* Consult a [list of useful colors sorted by hue or color tone](https://peteroupc.github.io/html3dutil/websafe.svg). This particular list was historically called the "Web safe" colors or the "safety palette", and consists of 216 colors that are uniformly spaced in the red-green-blue color cube. Robert Hess's article "[The Safety Palette](https://learn.microsoft.com/en-us/previous-versions/ms976419(v=msdn.10))", 1996, described the advantage that images that use only colors in this palette won't dither when displayed by Web browsers on displays that can show at most 256 colors at once. (See also [\*\*Wikipedia\*\*](http://en.wikipedia.org/wiki/Web_colors). Dithering is the scattering of colors in a limited set to simulate colors outside that set.) Each entry in the list consists of a color swatch and the corresponding HTML name (see next question).
+- \*\*What do some colors look like?\*\* Consult a [list of useful colors sorted by hue or color tone](https://peteroupc.github.io/html3dutil/websafe.svg). This particular list was historically called the "Web safe" colors or the "safety palette", and consists of 216 colors that are uniformly spaced in the red&ndash;green&ndash;blue color cube. Robert Hess's article "[The Safety Palette](https://learn.microsoft.com/en-us/previous-versions/ms976419(v=msdn.10))", 1996, described the advantage that images that use only colors in this palette won't dither when displayed by Web browsers on displays that can show up to 256 colors at once. (See also [\*\*Wikipedia\*\*](http://en.wikipedia.org/wiki/Web_colors). Dithering is the scattering of colors in a limited set to simulate colors outside that set.) Each entry in the list consists of a color swatch and the corresponding HTML name (see next question).
 A [second list](https://peteroupc.github.io/html3dutil/colornames.svg) shows the colors defined in the [\*\*CSS3 Color Module section 4\*\*](http://www.w3.org/TR/css3-color/#colorunits), as well as the newly-added name `rebeccapurple`. Where `gray` is part of a name, it can be replaced with `grey`. Next to the name of each color in the list, the color's HTML notation is shown.
 - \*\*What is the syntax for HTML colors?\*\* The notation employed in the "safety palette" in the preceding section is HTML's way to define colors. It&#8217;s also known as &#8220;hex colors&#8221;. Take `#ff80cc` as an example. The color defined is a carnation pink. There are four parts to this example:
 \* The `#` identifies this code as a color.
@@ -158,7 +185,7 @@ After you choose the three values, combine them by writing the `#`, then the red
  The components of the RGB color (red, green, and blue, in that order) can range from `0` to `255`, or from `0%` to `100%`, but mixing ranges is not allowed. For example, `rgb(192,64,0)` and `rgb(80%,50%,0%)` are allowed, but not `rgb(192,50%,0%)`. The steps for "darkening", "lightening", and "desaturating" RGB colors are pretty much the same as with HTML colors. Another syntax for RGB colors supports the alpha component (see _What is an alpha component?_, later): in the example `rgba(192,64,0,0.5)`, the `0.5` is the alpha component. This component supports either range for RGB colors, either 0-255 or percentages. (Note that the example starts with `rgba`, not just `rgb`.)
 - \*\*What is HSL notation?\*\* A color in HSL notation is made of the following three components:
 \* _Hue_ ranges from 0 to 360 degrees. Each angle on the color wheel (which looks more like a hexagon than like a circle in HSL) stands for a different hue: red, yellow, green, cyan (sky-blue), blue, and magenta correspond roughly to hue 0 (say, 12 o&#8217;clock), 60, 120, 180, 240, and 300, respectively.
- \* "Saturation" and "lightness" range from 0% to 100%. "Saturation" is the distance of the color from gray (0% means gray; 100% means most distant from gray). "Lightness" is roughly the amount of black or white mixed with the color (0% means black; 100% means white; closer to 0 means closer to black; closer to 1 means clmagenta correspond roughly to hue 0 (say, 12 o&#8217;clock), 60, 120, 180, 240, and 300, respectively.
+ \* "Saturation" and "lightness" range from 0% to 100%. "Saturation" is the distance of the color from gray (0% means gray; 100% means most distant from gray). "Lightness" is roughly the amount of black or white mixed with the color (0% means black; 100% means white; closer to 0% means closer to black; closer to 100% means closer to white).
  &gt; \*\*Example:\*\* The value `hsl(240,100%,50%)` has a hue of 240 (blue), a "saturation" of 100% (fully saturated), and a "lightness" of 50% (neither black or white). It represents a vivid blue. If we lower "lightness" to 20%, we get a "darker" blue. If we also change the hue to 0, we get a "dark" red.
 An alternate syntax for HSL colors supports the alpha component (see next question): in the example `hsla(240,100%,50%,80%)`, the `80%` is the alpha component.
 - \*\*What is an alpha component?\*\* An alpha component shows how much the color is transparent (see-through) or opaque. The alpha component can range from `00`/`0.0`, or "fully transparent" (completely invisible), to `FF`/`1.0`, or "fully opaque" (letting nothing through it). If a color notation doesn't provide for an alpha component, the color is fully opaque.
