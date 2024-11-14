@@ -12,14 +12,15 @@ These are suggestions to improve core and supplemental instructional materials, 
 3. In Literacy, instructional materials should be knowledge-rich and follow the criteria given in the [**Knowledge Matters Campaign's review tool**](https://knowledgematterscampaign.org/review-tool/).  In other subjects, instructional materials should likewise be [**knowledge-rich**](https://teacherhead.com/2018/06/06/what-is-a-knowledge-rich-curriculum-principle-and-practice/).
 4. There is guidance for:
 
-    - Increasing rigor and quality of [**Latino American content**](https://unidosus.org/publications/analyzing-inclusion-of-latino-contributions-in-us-history-curricula-for-high-school/) and [**black American content**](https://hub.jhu.edu/2021/02/10/black-history-curricula-lacking-rigor-and-quality/) in U.S. History instructional materials.
-    - Improving [**cultural responsiveness**](https://steinhardt.nyu.edu/sites/default/files/2020-12/CRE%20Scorecard%20Revised%20Aug%202020.pdf) in Literacy instructional materials.
     - [**Content**](https://www.coreknowledge.org/core-knowledge-sequence/) that could form part of a knowledge-rich curriculum up to eighth grade.
-    - That at least [**45 minutes daily**](https://ccsso.org/sites/default/files/2018-11/Elementary%20SS%20Brief%2045%20Minute%20Version_0.pdf) devoted to Social Studies instruction up to fifth grade, and that [**at least as much daily time as other content subjects**](https://www.nsta.org/nstas-official-positions/elementary-school-science) be devoted to Science instruction.
-    - Structuring lessons in History and other aspects of Social Studies using the [**Four-Question Method**](https://4qmteaching.net/).
-    - Structuring lessons in U.S. Civics using the questions in the civics portion of the naturalization test given by the U.S. government.
-    - [**Instructional practices**](https://www.thescienceofmath.com/) and [**course content**](https://mathacademy.com/courses) for Mathematics; also see [**Merlo 2024**](https://www.cis.org.au/publication/the-science-of-mathematics-and-how-to-apply-it/).
+    - Improving [**cultural responsiveness**](https://steinhardt.nyu.edu/sites/default/files/2020-12/CRE%20Scorecard%20Revised%20Aug%202020.pdf) in Literacy instructional materials.
     - Offering numerous [**options to do beyond-grade-level content and exercises**](https://slatestarcodex.com/2018/09/04/acc-entry-does-the-education-system-adequately-serve-advanced-students/) for willing and ready students, as long as these options are always presented to all students [^3].
+    - [**Instructional practices**](https://www.thescienceofmath.com/) and [**course content**](https://mathacademy.com/courses) for Mathematics; also see [**Merlo 2024**](https://www.cis.org.au/publication/the-science-of-mathematics-and-how-to-apply-it/).
+    - Structuring lessons in History and other aspects of Social Studies using the [**Four-Question Method**](https://4qmteaching.net/).
+    - Structuring lessons in U.S. Civics using the questions in the civics portion of the naturalization test given by the U.S. government, or using such questions for retrieval practice.
+    - Increasing rigor and quality of [**Latino American content**](https://unidosus.org/publications/analyzing-inclusion-of-latino-contributions-in-us-history-curricula-for-high-school/) and [**black American content**](https://hub.jhu.edu/2021/02/10/black-history-curricula-lacking-rigor-and-quality/) in U.S. History instructional materials.
+    - Devoting at least [**45 minutes daily**](https://ccsso.org/sites/default/files/2018-11/Elementary%20SS%20Brief%2045%20Minute%20Version_0.pdf) to Social Studies instruction up to fifth grade.
+    - Devoting [**at least as much daily time as other content subjects**](https://www.nsta.org/nstas-official-positions/elementary-school-science) to Science instruction up to fifth grade.
 
 5. Instructional materials in Literacy should teach synonyms for new words to be learned and for other words and phrases prone to overuse.  In sixth grade and up, they should include copious lessons on grammatical analysis and knowledge of English syntax, as well as concrete guidance to help students avoid the following in their writing:
 
