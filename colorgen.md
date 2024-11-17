@@ -1219,7 +1219,7 @@ Binary and ternary raster operations are prevalent in bit block transfers, which
 > **Note:** Raster operations also function, in principle, when the input and output color values are interpreted as zero-based indices to a color palette (that is, color value 0 refers to the first entry in a palette of colors; color value 1, the second; and so on), rather than as intensities (such as RGB colors).  But this is a more delicate case than the usual one, and functions best when&mdash;
 >
 > - the number of colors in the color palette is a power of two (e.g., 2, 8, 16, 256), and
-> - for each color index _i_, the color at index _i_ is the same as (or at least "close" to) the "inversion" of the color at index _n_ &minus; 1 &minus; _i_ (a less technical but less preferable alternative is: the colors in the palette are sorted by their intensity, so that, for example, the color closest to "black" appears first and the color closest to "white" appears last).
+> - for each color index _i_, the color at index _i_ is the same as (or at least "close" to) the "inversion" of the color at index _n_ &minus; 1 &minus; _i_ (a less technical but less preferable alternative is: the colors in the palette are sorted by their intensity, so that, for example, the lowest-intensity color, the color closest to "black", appears first and the highest-intensity color, the color closest to "white", appears last).
 
 <a id=Blend_Modes></a>
 
