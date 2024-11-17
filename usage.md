@@ -95,7 +95,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | people/persons being held/jailed | (the) detainees, the jailed.<br>_In criminal cases:_ (the) inmates, the prisoners. |Inspired by E. Bernal. |
 | people/persons know | it is known, it is generally known, it is commonly known, we know |Inspired by E. Bernal. |
 | people/persons complaining | (the) complainants |Inspired by E. Bernal. |
-| people/persons present/attending | (the) attendees |Inspired by E. Bernal. |
+| people/persons present/attending | (the) attendees, the audience, the attending public |Inspired by E. Bernal. |
 | people/persons think | it is thought, it is commonly thought, it is believed, the general belief is, we think, they believe, by popular belief |Inspired by E. Bernal. |
 | point in time | time, instant, moment |Inspired by E. Bernal. |
 | prevent [something] from happening | prevent [something] |Inspired by E. Bernal. |
