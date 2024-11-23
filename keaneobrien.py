@@ -1,6 +1,7 @@
 from sympy import *
 import random
 
+
 def roughmaxiopen(func, x):
     # Rough version of maxiopen that samples points
     # in the open interval (0, 1) to find an approximate
@@ -8,6 +9,7 @@ def roughmaxiopen(func, x):
     return Max(
         *[ceiling(func.subs(x, S(i) / 100) * 100000) / 100000 for i in range(1, 100)]
     )
+
 
 def maxi(func, x):
     # Finds the maximum of a function whose domain is [0,1].
@@ -20,6 +22,7 @@ def maxi(func, x):
     # func=target function; x=variable used in 'func'
     return maximum(func, x, Interval(0, 1))
 
+
 def maxiopen(func, x):
     # Finds the maximum of a function whose domain is (0,1).
     # Unfortunately, SymPy's 'maximum' does not always work
@@ -30,6 +33,7 @@ def maxiopen(func, x):
     # with real analytic and/or algebraic pieces).
     # func=target function; x=variable used in 'func'
     return maximum(func, x, Interval.open(0, 1))
+
 
 def bernpoly(a, x):
     # Create a polynomial in Bernstein form using the given
@@ -44,6 +48,7 @@ def bernpoly(a, x):
         bino = v[i] if i < len(v) else v[n - i]
         ret += a[i] * bino * pt**i * (1 - pt) ** (n - i)
     return ret
+
 
 def kobevents(func, p, numpolys=12):
     # Generates 'func', a Bernoulli factory function,
@@ -145,6 +150,7 @@ def kobevents(func, p, numpolys=12):
     # plot(*[r[2] for r in results], (p, 0, 1))
     return fevents
 
+
 def kob(fevents, p):
     # Simulates a convex combination of polynomials
     # returned by kobevents, which will generally be an
@@ -159,6 +165,7 @@ def kob(fevents, p):
         return 0
     s = sum(1 if random.random() < p else 0 for i in range(len(fevents[geo]) - 1))
     return fevents[geo][s]
+
 
 p = symbols("p")  # Variable used in the example function
 # Example function
