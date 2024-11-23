@@ -45,6 +45,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | [someone] says (that) [something] is... | [someone] considers [something] (as)...<br>[someone] labels [something] (as)...<br>[someone] finds [something]...<br>[someone] calls [something]...<br>[someone] declares [something] (as)...<br>[someone] qualifies [something] as...<br>[something] is ... to [someone]<br>for [someone], [something] is... | |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
+| [something] is used to [do something else] | [something] serves to [do something else]. |  |
 | The fact that... | That... | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | The fact that _he appeared_ | That _he appeared_, _His appearance_, _His appearing_. | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |

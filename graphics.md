@@ -46,7 +46,7 @@ General:
 - A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size, say, 2048 kibibytes.  This does not limit the size or number of graphics assets a game can have.
 - Music:  Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis.[^1]  As much as possible, instruments should match their meanings in the General MIDI System level 1.
 
-A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution. (For example, if the resolution is 640&times;480 with up to 60 frames per second, these maximums are multiplied by 6.25 = (640&times;480) / (256&times;192).  Other resolutions used in classic games include 320&times;200, 320&times;240, 640&times;350, and 512&times;384.)
+A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution. (For example, if the resolution is 640&times;480 with up to 60 frames per second, these maximums are multiplied by 6.25 = (640&times;480) / (256&times;192).  Other resolutions used in classic games include 320&times;200, 320&times;240, 640&times;350, and 512&times;384; another choice is 160&times;120.)
 
 These limitations were inspired by the graphics limitations of classic handheld game consoles.
 
