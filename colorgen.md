@@ -657,6 +657,7 @@ Conventions for XYZ colors include the following:
 - **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.[^14] \(In sRGB, the white point's luminance is 80 cd/m<sup>2</sup>.)
 
 The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Spaces).  For example, the pseudocode below shows two methods that convert a color between **encoded sRGB** (`rgb`) and relative XYZ:
+
 - For `XYZFromsRGB(rgb)` and  `XYZTosRGB(xyz)`, the white point is the D65/2 white point.
 - For `XYZFromsRGBD50(rgb)` and  `XYZTosRGBD50(xyz)`, the white point is the D50/2 white point[^15].
 
@@ -713,6 +714,7 @@ Both methods are approximate conversions because the factors in the pseudocode a
 > 1. In the pseudocode just given, 3&times;3 matrices are used to transform a linear RGB color to or from XYZ form (see [**"Conversion Matrices Between XYZ and RGB"**](#Conversion_Matrices_Between_XYZ_and_RGB)).
 > 2. `XYZTosRGB` and `XYZTosRGBD50` can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, then the sRGB color can be converted to an in-range one. There are many such _gamut mapping_ conversions; for example, one such conversion involves clamping each component of the sRGB color using the idiom `min(max(compo,0), 1)`, where `compo` is that component.
 > 3. XYZ colors that have undergone **black point compensation** (see also ISO 18619) can be expressed as `Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))`, where&mdash;
+>
 >     - `wpoint` is the white point as an absolute or relative XYZ color,
 >     - `xyz` is a relative XYZ color (relative to `wpoint`), and
 >     - `blackSrc` and `blackDest` are the luminance factors of the source and destination black points.
@@ -814,11 +816,14 @@ _L\*C\*h_ form expresses CIELAB colors as cylindrical coordinates; the three com
 - _Hue_ (_h_, an angle\)[^11] ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta.
 
 In the following pseudocode:
+
 - The following methods convert an **encoded sRGB** color to and from CIELAB:
+
     - `SRGBToLab` and `SRGBFromLab` treat white as the D65/2 white point.
     - `SRGBToLabD50` and `SRGBFromLabD50` treat white as the D50/2 white point.[^15]
 
     Both methods are approximate conversions because the values in the pseudocode are rounded off to a limited number of decimal places.
+
 - `XYZToLab(xyz, wpoint)` and `LabToXYZ(lab, wpoint)` convert an XYZ color to or from CIELAB, respectively, treating `wpoint` (an XYZ color) as the white point.
 - `LabToChroma(lab)` and `LabToHue(lab)` find a CIELAB color's _chroma_ or _hue_, respectively.
 - `LchToLab(lch)` finds a CIELAB color given a 3-item list of lightness, chroma, and hue (_L\*C\*h_), in that order.

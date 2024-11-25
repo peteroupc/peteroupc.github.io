@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/11/17"><meta name="citation_online_date" content="2024/11/17"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/11/25"><meta name="citation_online_date" content="2024/11/25"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -772,9 +772,12 @@ END METHOD
   <li><strong>Relative XYZ.</strong> In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a <em>luminance factor</em>; the white point has a luminance factor of 1.<sup id="fnref:14" role="doc-noteref"><a href="#fn:14" class="footnote" rel="footnote">14</a></sup> (In sRGB, the white point’s luminance is 80 cd/m<sup>2</sup>.)</li>
 </ul>
 
-<p>The conversion between RGB and XYZ varies by <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>.  For example, the pseudocode below shows two methods that convert a color between <strong>encoded sRGB</strong> (<code>rgb</code>) and relative XYZ:
-- For <code>XYZFromsRGB(rgb)</code> and  <code>XYZTosRGB(xyz)</code>, the white point is the D65/2 white point.
-- For <code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code>, the white point is the D50/2 white point<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>.</p>
+<p>The conversion between RGB and XYZ varies by <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>.  For example, the pseudocode below shows two methods that convert a color between <strong>encoded sRGB</strong> (<code>rgb</code>) and relative XYZ:</p>
+
+<ul>
+  <li>For <code>XYZFromsRGB(rgb)</code> and  <code>XYZTosRGB(xyz)</code>, the white point is the D65/2 white point.</li>
+  <li>For <code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code>, the white point is the D50/2 white point<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>.</li>
+</ul>
 
 <p>Both methods are approximate conversions because the factors in the pseudocode are rounded off to a limited number of decimal places.</p>
 
@@ -831,7 +834,9 @@ END METHOD
   <ol>
     <li>In the pseudocode just given, 3×3 matrices are used to transform a linear RGB color to or from XYZ form (see <a href="#Conversion_Matrices_Between_XYZ_and_RGB"><strong>“Conversion Matrices Between XYZ and RGB”</strong></a>).</li>
     <li><code>XYZTosRGB</code> and <code>XYZTosRGBD50</code> can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, then the sRGB color can be converted to an in-range one. There are many such <em>gamut mapping</em> conversions; for example, one such conversion involves clamping each component of the sRGB color using the idiom <code>min(max(compo,0), 1)</code>, where <code>compo</code> is that component.</li>
-    <li>XYZ colors that have undergone <strong>black point compensation</strong> (see also ISO 18619) can be expressed as <code>Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))</code>, where—
+    <li>
+      <p>XYZ colors that have undergone <strong>black point compensation</strong> (see also ISO 18619) can be expressed as <code>Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))</code>, where—</p>
+
       <ul>
         <li><code>wpoint</code> is the white point as an absolute or relative XYZ color,</li>
         <li><code>xyz</code> is a relative XYZ color (relative to <code>wpoint</code>), and</li>
@@ -945,13 +950,25 @@ END METHOD
   <li><em>Hue</em> (<em>h</em>, an angle)<sup id="fnref:11:2" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup> ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta.</li>
 </ul>
 
-<p>In the following pseudocode:
-- The following methods convert an <strong>encoded sRGB</strong> color to and from CIELAB:
-    - <code>SRGBToLab</code> and <code>SRGBFromLab</code> treat white as the D65/2 white point.
-    - <code>SRGBToLabD50</code> and <code>SRGBFromLabD50</code> treat white as the D50/2 white point.<sup id="fnref:15:1" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup></p>
+<p>In the following pseudocode:</p>
 
-<pre>Both methods are approximate conversions because the values in the pseudocode are rounded off to a limited number of decimal places. - `XYZToLab(xyz, wpoint)` and `LabToXYZ(lab, wpoint)` convert an XYZ color to or from CIELAB, respectively, treating `wpoint` (an XYZ color) as the white point. - `LabToChroma(lab)` and `LabToHue(lab)` find a CIELAB color's _chroma_ or _hue_, respectively. - `LchToLab(lch)` finds a CIELAB color given a 3-item list of lightness, chroma, and hue (_L\*C\*h_), in that order. - `LabHueDifference(lab1, lab2)` finds the _metric hue difference_ (_&amp;Delta;H\*_) between two CIELAB colors.  The return value can be positive or negative, but in some cases, the absolute value of that return value can be important. - `LabChromaHueDifference(lab1, lab2)` finds the _chromaticness difference_ (&amp;Delta;_C_&lt;sub&gt;h&lt;/sub&gt;) between two CIELAB colors, as given, for example, in ISO 13655.
-</pre>
+<ul>
+  <li>
+    <p>The following methods convert an <strong>encoded sRGB</strong> color to and from CIELAB:</p>
+
+    <ul>
+      <li><code>SRGBToLab</code> and <code>SRGBFromLab</code> treat white as the D65/2 white point.</li>
+      <li><code>SRGBToLabD50</code> and <code>SRGBFromLabD50</code> treat white as the D50/2 white point.<sup id="fnref:15:1" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup></li>
+    </ul>
+
+    <p>Both methods are approximate conversions because the values in the pseudocode are rounded off to a limited number of decimal places.</p>
+  </li>
+  <li><code>XYZToLab(xyz, wpoint)</code> and <code>LabToXYZ(lab, wpoint)</code> convert an XYZ color to or from CIELAB, respectively, treating <code>wpoint</code> (an XYZ color) as the white point.</li>
+  <li><code>LabToChroma(lab)</code> and <code>LabToHue(lab)</code> find a CIELAB color’s <em>chroma</em> or <em>hue</em>, respectively.</li>
+  <li><code>LchToLab(lch)</code> finds a CIELAB color given a 3-item list of lightness, chroma, and hue (<em>L*C*h</em>), in that order.</li>
+  <li><code>LabHueDifference(lab1, lab2)</code> finds the <em>metric hue difference</em> (<em>ΔH*</em>) between two CIELAB colors.  The return value can be positive or negative, but in some cases, the absolute value of that return value can be important.</li>
+  <li><code>LabChromaHueDifference(lab1, lab2)</code> finds the <em>chromaticness difference</em> (Δ<em>C</em><sub>h</sub>) between two CIELAB colors, as given, for example, in ISO 13655.</li>
+</ul>
 
 <p> </p>
 
