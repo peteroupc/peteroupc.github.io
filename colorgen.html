@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/11/25"><meta name="citation_online_date" content="2024/11/25"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/11/26"><meta name="citation_online_date" content="2024/11/26"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1325,19 +1325,24 @@ END METHOD
 
 <h3 id="porterndashduff-formulas">Porter–Duff Formulas</h3>
 
-<p>Porter and Duff (1984) define twelve formulas for combining (compositing) two RGBA colors<sup id="fnref:29" role="doc-noteref"><a href="#fn:29" class="footnote" rel="footnote">29</a></sup>. In the formulas below, it is assumed that the two colors and the output are in the 0-1 format and have been <em>premultiplied</em> (that is, their red, green, and blue components have been multiplied beforehand by their alpha component).  Given <code>src</code>, the source RGBA color, and <code>dst</code>, the destination RGBA color, the Porter–Duff formulas are as follows.
-- <strong>Source Over</strong>: <code>[src[0]-dst[0]*(src[3] - 1), src[1]-dst[1]*(src[3] - 1), src[2]-dst[2]*(src[3] - 1), src[3]-dst[3]*(src[3] - 1)]</code>.
-- <strong>Source In</strong>: <code>[dst[3]*src[0], dst[3]*src[1], dst[3]*src[2], dst[3]*src[3]]</code>.
-- <strong>Source Held Out</strong>: <code>[src[0]*(1 - dst[3]), src[1]*(1 - dst[3]), src[2]*(1 - dst[3]), src[3]*(1 - dst[3])]</code>.
-- <strong>Source Atop</strong>: <code>[dst[0]*src[3] - src[0]*(dst[3] - 1), dst[1]*src[3] - src[1]*(dst[3] - 1), dst[2]*src[3] - src[2]*(dst[3] - 1), src[3]]</code>.
-- <strong>Destination Over</strong>: <code>[dst[0] - src[0]*(dst[3] - 1), dst[1] - src[1]*(dst[3] - 1), dst[2] - src[2]*(dst[3] - 1), dst[3] - src[3]*(dst[3] - 1)]</code>.
-- <strong>Destination In</strong>: <code>[dst[0]*src[3], dst[1]*src[3], dst[2]*src[3], dst[3]*src[3]]</code>.  Uses the destination color/alpha with the source alpha as the “mask”.
-- <strong>Destination Held Out</strong>: <code>[dst[0]*(1 - src[3]), dst[1]*(1 - src[3]), dst[2]*(1 - src[3]), dst[3]*(1 - src[3])]</code>.
-- <strong>Destination Atop</strong>: <code>[dst[3]*src[0] - dst[0]*(src[3] - 1), dst[3]*src[1] - dst[1]*(src[3] - 1), dst[3]*src[2] - dst[2]*(src[3] - 1), dst[3]]</code>.
-- <strong>Source</strong>: <code>src</code>.
-- <strong>Destination</strong>: <code>dst</code>.
-- <strong>Clear</strong>: <code>[0, 0, 0, 0]</code>.
-- <strong>Xor</strong>: <code>[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]</code>.</p>
+<p>Porter and Duff (1984) define twelve formulas for combining (compositing) two RGBA colors<sup id="fnref:29" role="doc-noteref"><a href="#fn:29" class="footnote" rel="footnote">29</a></sup>. In the formulas below, it is assumed that the two colors and the output are in the 0-1 format and have been <em>premultiplied</em> (that is, their red, green, and blue components have been multiplied beforehand by their alpha component).  Given <code>src</code>, the source RGBA color, and <code>dst</code>, the destination RGBA color, the Porter–Duff formulas are as follows.</p>
+
+<ul>
+  <li><strong>Source Over</strong>: <code>[src[0]-dst[0]*(src[3] - 1), src[1]-dst[1]*(src[3] - 1), src[2]-dst[2]*(src[3] - 1), src[3]-dst[3]*(src[3] - 1)]</code>.</li>
+  <li><strong>Source In</strong>: <code>[dst[3]*src[0], dst[3]*src[1], dst[3]*src[2], dst[3]*src[3]]</code>.</li>
+  <li><strong>Source Held Out</strong>: <code>[src[0]*(1 - dst[3]), src[1]*(1 - dst[3]), src[2]*(1 - dst[3]), src[3]*(1 - dst[3])]</code>.</li>
+  <li><strong>Source Atop</strong>: <code>[dst[3]*src[0] - dst[0]*(src[3] - 1), dst[3]*src[1] - dst[1]*(src[3] - 1), dst[3]*src[2] - dst[2]*(src[3] - 1), dst[3]]</code>.</li>
+  <li><strong>Destination Over</strong>: <code>[dst[0] - src[0]*(dst[3] - 1), dst[1] - src[1]*(dst[3] - 1), dst[2] - src[2]*(dst[3] - 1), dst[3] - src[3]*(dst[3] - 1)]</code>.</li>
+  <li><strong>Destination In</strong>: <code>[dst[0]*src[3], dst[1]*src[3], dst[2]*src[3], dst[3]*src[3]]</code>.  Uses the destination color/alpha with the source alpha as the “mask”.</li>
+  <li><strong>Destination Held Out</strong>: <code>[dst[0]*(1 - src[3]), dst[1]*(1 - src[3]), dst[2]*(1 - src[3]), dst[3]*(1 - src[3])]</code>.</li>
+  <li><strong>Destination Atop</strong>: <code>[dst[0]*src[3] - src[0]*(dst[3] - 1), dst[1]*src[3] - src[1]*(dst[3] - 1), dst[2]*src[3] - src[2]*(dst[3] - 1), src[3]]</code>.</li>
+  <li><strong>Source</strong>: <code>src</code>.</li>
+  <li><strong>Destination</strong>: <code>dst</code>.</li>
+  <li><strong>Clear</strong>: <code>[0, 0, 0, 0]</code>.</li>
+  <li><strong>Xor</strong>: <code>[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]</code>.</li>
+</ul>
+
+<p>The same paper by Porter and Duff also mentioned a <em>plus operator</em>, which is a simple adding of the source and destination RGBA colors’ components; however, the resulting color may have components greater than 1, which may lead to less than well-defined behavior.</p>
 
 <p><a id="Raster_Operations"></a></p>
 
