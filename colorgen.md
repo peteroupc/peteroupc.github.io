@@ -1175,7 +1175,9 @@ The same paper by Porter and Duff also mentioned a _plus operator_, which is a s
 
 ### Raster Operations
 
-_Raster operations_ define Boolean operations, or bit-by-bit combinations of an input or source color ("in") and an output or destination color ("out").  There are sixteen _binary raster operations_, each operation taking two bits (where each bit is either 0 or 1):
+_Raster operations_ define Boolean operations, or bit-by-bit combinations of an input or source color ("in") and an output or destination color ("out").  Unlike with most other color operations in this document, the input and output colors are integers, rather than made of components with fractional numbers from 0 through 1, and, if the colors are RGB colors, they can be linear or encoded.
+
+There are sixteen _binary raster operations_, each operation taking two bits (where each bit is either 0 or 1):
 
 | Code | Operation |
  -- | ---- |
