@@ -35,7 +35,7 @@ Limit 2D graphics to the following:
 1. Up to three tile-based 2D layers can be displayed at a time.  If 3D graphics are not being displayed, a fourth tile-based 2D layer can also be displayed.  Otherwise, a layer for the 3D graphics can be displayed.
 2. There are sixteen palettes of 16 colors each (using the color format for vertex colors).
 3. Each tile is 8&times;8 pixels and uses the colors of one of the sixteen palettes just described.
-4. The 2D and 3D layers may contain transparent parts.
+4. The 2D and 3D layers may contain transparent pixels.
 5. One of the 2D layers can undergo a 2D affine transformation.
 6. Separate from layers, 2D sprites can be displayed.  No more than 128 sprites may be displayed at a time. Each sprite may be tile-based or bitmap-based and must have a width and height of no more than 64 pixels each.  Sprites may contain transparent parts.
 
