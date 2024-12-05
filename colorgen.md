@@ -518,7 +518,7 @@ The following pseudocode converts colors between RGB and HSL.  The transformatio
         hue = hueval + pi * 2 / 3
         hue2 = hueval - pi * 2 / 3
         if hue >= pi * 2: hue = hue - pi * 2
-        if hues2 < 0: hues2 = hues2 + pi * 2
+        if hue2 < 0: hue2 = hue2 + pi * 2
         rgb = [a, a, a]
         hues = [hue, hueval, hue2]
         i = 0
@@ -1175,7 +1175,7 @@ The same paper by Porter and Duff also mentioned a _plus operator_, which is a s
 
 ### Raster Operations
 
-_Raster operations_ define Boolean operations, or bit-by-bit combinations of an input or source color ("in") and an output or destination color ("out").  Unlike with most other color operations in this document, the input and output colors are integers, rather than made of components with fractional numbers from 0 through 1, and, if the colors are RGB colors, they can be linear or encoded.
+_Raster operations_ define Boolean operations, or bit-by-bit combinations of an input or source color ("in") and an output or destination color ("out").  Unlike with most other color operations in this document, the input and output colors are nonnegative integers, rather than made of components with fractional numbers from 0 through 1, and, if the colors are RGB colors, they can be linear or encoded.
 
 There are sixteen _binary raster operations_, each operation taking two bits (where each bit is either 0 or 1):
 
